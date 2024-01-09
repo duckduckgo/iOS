@@ -21,6 +21,10 @@ import BrowserServicesKit
 
 struct SettingsState {
     
+    enum PrivacyProSubscriptionStatus {
+        case active, inactive, unknown
+    }
+    
     struct AddressBar {
         var enabled: Bool
         var position: AddressBarPosition
@@ -38,8 +42,8 @@ struct SettingsState {
     
     struct PrivacyPro {
         var enabled: Bool
-        var canPurchaseSubscription: Bool
-        var hasActiveSubscription: Bool
+        var canPurchase: Bool
+        var status: PrivacyProSubscriptionStatus
     }
     
     // Appearance properties
@@ -101,7 +105,7 @@ struct SettingsState {
             speechRecognitionEnabled: false,
             loginsEnabled: false,
             networkProtection: NetworkProtection(enabled: false, status: ""),
-            privacyPro: PrivacyPro(enabled: false, canPurchaseSubscription: false, hasActiveSubscription: false)
+            privacyPro: PrivacyPro(enabled: false, canPurchase: false, status: .unknown)
         )
     }
 }

@@ -41,6 +41,7 @@ final class SettingsViewModel: ObservableObject {
     private lazy var animator: FireButtonAnimator = FireButtonAnimator(appSettings: AppUserDefaults())
     private var legacyViewProvider: SettingsLegacyViewProvider
     private lazy var versionProvider: AppVersion = AppVersion.shared
+    private var accountManager: AccountManager
 
 #if NETWORK_PROTECTION
     private let connectionObserver = ConnectionStatusObserverThroughSession()
@@ -55,6 +56,8 @@ final class SettingsViewModel: ObservableObject {
     var onRequestPresentLegacyView: ((UIViewController, _ modal: Bool) -> Void)?
     var onRequestPopLegacyView: (() -> Void)?
     var onRequestDismissSettings: (() -> Void)?
+    
+    static let entitlementNames = ["dummy1", "dummy2", "dummy3"]
     
     // Our View State
     @Published private(set) var state: SettingsState
@@ -73,19 +76,6 @@ final class SettingsViewModel: ObservableObject {
     }
                 
     var shouldShowNoMicrophonePermissionAlert: Bool = false
-    
-    var shouldShowNetworkProtectionCell: Bool {
-#if NETWORK_PROTECTION
-        if #available(iOS 15, *) {
-            let accessController = NetworkProtectionAccessController()
-            return accessController.networkProtectionAccessType() != .none
-        } else {
-            return false
-        }
-#else
-        return false
-#endif
-    }
     
     // MARK: Bindings
     var themeBinding: Binding<ThemeName> {
@@ -188,9 +178,10 @@ final class SettingsViewModel: ObservableObject {
     }
 
     // MARK: Default Init
-    init(state: SettingsState? = nil, legacyViewProvider: SettingsLegacyViewProvider) {
+    init(state: SettingsState? = nil, legacyViewProvider: SettingsLegacyViewProvider, accountManager: AccountManager) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
+        self.accountManager = accountManager
     }
 }
  
@@ -233,22 +224,26 @@ extension SettingsViewModel {
             }(),
             privacyPro: {
                 var enabled = false
-                var canPurchaseSubscription = false
-                var hasActiveSubscription = false
+                var canPurchase = false
+                var status = SettingsState.PrivacyProSubscriptionStatus.unknown
 #if SUBSCRIPTION
                 enabled = featureFlagger.isFeatureOn(.privacyPro)
-                canPurchaseSubscription = SubscriptionPurchaseEnvironment.canPurchase
-                hasActiveSubscription = false
+                canPurchase = SubscriptionPurchaseEnvironment.canPurchase
+                status = SettingsState.PrivacyProSubscriptionStatus.unknown
 #endif
                 return SettingsState.PrivacyPro(enabled: enabled,
-                                                canPurchaseSubscription: canPurchaseSubscription,
-                                                hasActiveSubscription: hasActiveSubscription)
+                                                canPurchase: canPurchase,
+                                                status: status)
             }()
         )
         setupSubscribers()
 #if SUBSCRIPTION
         if #available(iOS 15, *) {
-            Task { await setupSubscriptionEnvironment() }
+            Task {
+                if state.privacyPro.enabled {
+                    await setupSubscriptionEnvironment()
+                }
+            }
         }
 #endif
     }
@@ -269,15 +264,45 @@ extension SettingsViewModel {
     }
 
 #if SUBSCRIPTION
-        @available(iOS 15.0, *)
-        private func setupSubscriptionEnvironment() async {
-            PurchaseManager.shared.$availableProducts
-                .receive(on: RunLoop.main)
-                .sink { [weak self] products in
-                    self?.state.privacyPro.enabled = !products.isEmpty
-                    self?.state.privacyPro.canPurchaseSubscription = !products.isEmpty
-                }.store(in: &cancellables)
-       
+    @available(iOS 15.0, *)
+    @MainActor
+    private func setupSubscriptionEnvironment() async {
+            
+        // Active subscription check
+        if let token = accountManager.accessToken {
+            
+            // Fetch available subscriptions from the backend (or sign out)
+            if case .success(let response) = await SubscriptionService.getSubscriptionDetails(token: token) {
+                if !response.isSubscriptionActive {
+                    AccountManager().signOut()
+                    setupSubscriptionPurchaseOptions()
+                    return
+                }
+                
+                // Check for valid entitlements
+                let hasEntitlements = await AccountManager().hasEntitlement(for: Self.entitlementNames.first!)
+                self.state.privacyPro.status = hasEntitlements ? .active : .inactive
+                
+                // Enable Subscription purchase if there's no active subscription
+                if self.state.privacyPro.status == .inactive {
+                    setupSubscriptionPurchaseOptions()
+                }
+            }
+        } else {
+            setupSubscriptionPurchaseOptions()
+        }
+
+        
+    }
+    
+    @available(iOS 15.0, *)
+    private func setupSubscriptionPurchaseOptions() {
+        self.state.privacyPro.status = .inactive
+        PurchaseManager.shared.$availableProducts
+            .receive(on: RunLoop.main)
+            .sink { [weak self] products in
+                self?.state.privacyPro.canPurchase = !products.isEmpty
+            }.store(in: &cancellables)
     }
 #endif
     

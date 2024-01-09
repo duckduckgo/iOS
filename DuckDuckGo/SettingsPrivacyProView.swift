@@ -42,6 +42,13 @@ struct SettingsPrivacyProView: View {
             .foregroundColor(Color.init(designSystemColor: .accent))
     }
     
+    private var manageSubscriptionView: some View {
+        Text(UserText.settingsPProManageSubscription)
+            .daxBodyRegular()
+            .foregroundColor(Color.init(designSystemColor: .accent))
+    }
+    
+    
     private var purchaseSubscriptionView: some View {
         return Group {
             SettingsCustomCell(content: { privacyProDescriptionView })
@@ -51,14 +58,32 @@ struct SettingsPrivacyProView: View {
         }
     }
     
+    private var subscriptionDetailsView: some View {
+        return Group {
+            SettingsCellView(label: UserText.settingsPProVPNTitle,
+                             subtitle: viewModel.state.networkProtection.status != "" ? viewModel.state.networkProtection.status : nil,
+                             action: { viewModel.presentLegacyView(.netP) },
+                             asLink: true,
+                             disclosureIndicator: true)
+            SettingsCellView(label: UserText.settingsPProDBPTitle, subtitle: UserText.settingsPProDBPSubTitle)
+            SettingsCellView(label: UserText.settingsPProITRTitle, subtitle: UserText.settingsPProITRSubTitle)
+            NavigationLink(destination: SubscriptionFlowView(viewModel: SubscriptionFlowViewModel())) {
+                SettingsCustomCell(content: { manageSubscriptionView })
+            }
+        }
+    }
+    
     var body: some View {
         
-        if viewModel.state.privacyPro.enabled {
+        if viewModel.state.privacyPro.enabled && viewModel.state.privacyPro.status != .unknown {
             Section(header: Text(UserText.settingsPProSection)) {
-                if viewModel.state.privacyPro.hasActiveSubscription {
-                    
-                } else {
+                switch viewModel.state.privacyPro.status {
+                case .active:
+                    subscriptionDetailsView
+                case .inactive:
                     purchaseSubscriptionView
+                default:
+                    EmptyView()
                 }
             }
         }

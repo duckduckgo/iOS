@@ -20,7 +20,7 @@
 "action.title.add" = "Ajouter";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Identifiants";
+"action.title.autofill.logins" = "Mots de passe";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Ajouter aux signets";
@@ -437,16 +437,16 @@
 "autofill.keep-enabled.alert.message" = "Cette fonction peut être désactivée à tout moment dans Paramètres.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Voulez-vous continuer à enregistrer les identifiants de connexion ?";
+"autofill.keep-enabled.alert.title" = "Voulez-vous continuer à enregistrer vos mots de passe ?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Voir";
 
 /* Message displayed after saving an autofill login */
-"autofill.login-saved.toast" = "Identifiant enregistré";
+"autofill.login-saved.toast" = "Le mot de passe a été enregistré";
 
 /* Message displayed after updating an autofill login */
-"autofill.login-updated.toast" = "Identifiant modifié";
+"autofill.login-updated.toast" = "Le mot de passe a été modifié";
 
 /* Menu item text for copying autofill login details */
 "autofill.logins.copy-prompt" = "Copier %@";
@@ -467,19 +467,19 @@
 "autofill.logins.details.address" = "URL du site Web";
 
 /* Title for autofill login details */
-"autofill.logins.details.default-title" = "Connexion";
+"autofill.logins.details.default-title" = "Mot de passe";
 
 /* Delete button when deleting an autofill login */
-"autofill.logins.details.delete" = "Supprimer l'identifiant";
+"autofill.logins.details.delete" = "Supprimer le mot de passe";
 
 /* Autofill alert button confirming delete autofill login */
-"autofill.logins.details.delete-confirmation.button" = "Supprimer l'identifiant";
+"autofill.logins.details.delete-confirmation.button" = "Supprimer le mot de passe";
 
 /* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Voulez-vous vraiment supprimer cet identifiant ?";
+"autofill.logins.details.delete-confirmation.title" = "Voulez-vous vraiment supprimer ce mot de passe ?";
 
 /* Title when editing autofill login details */
-"autofill.logins.details.edit-title" = "Modifier l'identifiant";
+"autofill.logins.details.edit-title" = "Modifier le mot de passe";
 
 /* Placeholder for password field on autofill login details */
 "autofill.logins.details.edit.password-placeholder" = "Mot de passe";
@@ -493,14 +493,14 @@
 /* Placeholder for userbane field on autofill login details */
 "autofill.logins.details.edit.username-placeholder" = "nomdutilisateur@exemple.com";
 
-/* Message displaying when the login was last updated by */
-"autofill.logins.details.last-updated" = "Dernière mise à jour de l'identifiant %@";
+/* Message displaying when the login was last updated */
+"autofill.logins.details.last-updated" = "Dernière modification : %@";
 
 /* Login name label for login details on autofill */
-"autofill.logins.details.login-name" = "Titre de l'identifiant";
+"autofill.logins.details.login-name" = "Titre";
 
 /* Title when adding new autofill login */
-"autofill.logins.details.new-title" = "Ajouter un identifiant";
+"autofill.logins.details.new-title" = "Ajouter un mot de passe";
 
 /* Notes label for login details on autofill */
 "autofill.logins.details.notes" = "Notes";
@@ -515,37 +515,37 @@
 "autofill.logins.details.save-duplicate-alert.action" = "OK";
 
 /* Message for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.message" = "Vous avez déjà un identifiant pour ce nom d'utilisateur et ce site Web.";
+"autofill.logins.details.save-duplicate-alert.message" = "Vous avez déjà enregistré un mot de passe pour ce nom d'utilisateur et ce site Web.";
 
 /* Title for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.title" = "Identifiant dupliqué";
+"autofill.logins.details.save-duplicate-alert.title" = "Mot de passe dupliqué";
 
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Nom d'utilisateur";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Les identifiants de connexion sont stockés en toute sécurité sur votre appareil.";
+"autofill.logins.empty-view.subtitle" = "Les mots de passe sont stockés en toute sécurité sur votre appareil.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Aucun identifiant enregistré pour l'instant";
+"autofill.logins.empty-view.title" = "Aucun mot de passe n'a été enregistré";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Annuler";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Déverrouiller l'appareil pour accéder aux identifiants enregistrés";
+"autofill.logins.list.auth.reason" = "Déverrouiller l'appareil pour accéder aux mots de passe";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Fermer";
 
 /* Title for a toggle that enables autofill */
-"autofill.logins.list.enable" = "Enregistrer et saisir automatiquement les identifiants";
+"autofill.logins.list.enable" = "Enregistrer et saisir automatiquement les mots de passe";
 
 /* Toast message when a login item is deleted */
-"autofill.logins.list.login-deleted-message" = "Identifiant pour %@ supprimé";
+"autofill.logins.list.login-deleted-message" = "Le mot de passe associé à %@ a été supprimé";
 
 /* Toast message when a login item without a title is deleted */
-"autofill.logins.list.login-deleted-message-no-title" = "Identifiant supprimé";
+"autofill.logins.list.login-deleted-message-no-title" = "Le mot de passe a été supprimé";
 
 /* Title for a button that allows a user to reset their list of never saved sites */
 "autofill.logins.list.never.saved" = "Réinitialiser les sites exclus";
@@ -557,28 +557,28 @@
 "autofill.logins.list.never.saved.reset.action.confirm" = "Réinitialiser les sites exclus";
 
 /* Alert title */
-"autofill.logins.list.never.saved.reset.action.title" = "Si vous réinitialisez les sites exclus, on vous invitera à enregistrer votre identifiant la prochaine fois que vous vous connecterez à l'un de ces sites.";
+"autofill.logins.list.never.saved.reset.action.title" = "Si vous réinitialisez les sites exclus, vous serez invité(e) à enregistrer votre mot de passe lors de votre prochaine connexion à l'un de ces sites.";
 
 /* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Recherche d'identifiants";
+"autofill.logins.list.search-placeholder" = "Rechercher un mot de passe";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Suggéré";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Identifiants";
+"autofill.logins.list.title" = "Mots de passe";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Un code d'accès est nécessaire pour protéger vos identifiants.";
+"autofill.logins.no-auth.subtitle" = "Un code d'accès est nécessaire pour protéger vos mots de passe.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Sécurisez votre appareil pour enregistrer des identifiants";
+"autofill.logins.no-auth.title" = "Sécurisez votre appareil pour enregistrer vos mots de passe";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Annuler";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Déverrouiller pour utiliser l'identifiant enregistré";
+"autofill.logins.prompt.auth.reason" = "Déverrouiller pour utiliser le mot de passe enregistré";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "À partir de ce site Web";
@@ -602,7 +602,7 @@
 "autofill.logins.search.no-results.title" = "Aucun résultat";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Les mots de passe sont stockés en toute sécurité sur votre appareil dans le menu Identifiants.";
+"autofill.password-generation-prompt.subtitle" = "Les mots de passe sont stockés en toute sécurité sur votre appareil.";
 
 /* Title for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.title" = "Utiliser un mot de passe fort généré par DuckDuckGo ?";
@@ -647,7 +647,7 @@
 "autofill.save-login.never-prompt.CTA" = "Ne jamais demander pour ce site";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Les mots de passe sont stockés en toute sécurité sur votre appareil dans le menu Identifiants.";
+"autofill.save-login.new-user.message" = "Les mots de passe sont stockés en toute sécurité sur votre appareil.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Voulez-vous que DuckDuckGo enregistre votre mot de passe ?";
@@ -656,7 +656,7 @@
 "autofill.save-login.not-now.CTA" = "Ne pas enregistrer";
 
 /* Title displayed on modal asking for the user to save the login */
-"autofill.save-login.title" = "Enregistrer l'identifiant ?";
+"autofill.save-login.title" = "Enregistrer le mot de passe ?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Enregistrer le mot de passe";

@@ -34,7 +34,7 @@ class SettingsHostingController: UIHostingController<AnyView> {
         }
         
         viewModel.onRequestPresentLegacyView = { [weak self] vc, modal in
-            self?.presentLegacyViewCOntroller(vc, modal: modal)
+            self?.presentLegacyViewController(vc, modal: modal)
         }
         
         viewModel.onRequestPopLegacyView = { [weak self] in
@@ -57,7 +57,7 @@ class SettingsHostingController: UIHostingController<AnyView> {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    func presentLegacyViewCOntroller(_ vc: UIViewController, modal: Bool = false) {
+    func presentLegacyViewController(_ vc: UIViewController, modal: Bool = false) {
         if modal {
             vc.modalPresentationStyle = .fullScreen
         }

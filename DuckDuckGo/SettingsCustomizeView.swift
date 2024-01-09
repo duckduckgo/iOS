@@ -26,7 +26,7 @@ struct SettingsCustomizeView: View {
     @State var shouldShowNoMicrophonePermissionAlert = false
 
     var body: some View {
-        Section(header: Text(UserText.settingsCustomizesection),
+        Section(header: Text(UserText.settingsCustomizeSection),
                 footer: Text(UserText.settingsAssociatedAppsDescription)) {
             
             SettingsCellView(label: UserText.settingsKeyboard,

@@ -50,12 +50,27 @@ struct SettingsView: View {
             viewModel.onRequestDismissSettings?()
         })
         .accentColor(Color(designSystemColor: .textPrimary))
-        
         .environmentObject(viewModel)
-        
+        .conditionalInsetGroupedListStyle()
         .onAppear {
             viewModel.onAppear()
         }
     }
     
+}
+
+struct InsetGroupedListStyleModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 15, *) {
+            return AnyView(content.applyInsetGroupedListStyle())
+        } else {
+            return AnyView(content)
+        }
+    }
+}
+        
+extension View {
+    func conditionalInsetGroupedListStyle() -> some View {
+        self.modifier(InsetGroupedListStyleModifier())
+    }
 }

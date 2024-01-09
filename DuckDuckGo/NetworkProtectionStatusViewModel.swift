@@ -192,7 +192,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @MainActor
     func didToggleNetP(to enabled: Bool) async {
         shouldDisableToggle = true
-        // isNetPEnabled = enabled
+        
         // This is to prevent weird looking animations on navigating to the screen.
         // It makes sense as animations should mostly only happen when a user has interacted.
         animationsOn = true

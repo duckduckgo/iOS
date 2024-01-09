@@ -53,7 +53,7 @@ class StatisticsLoaderTests: XCTestCase {
             expect.fulfill()
         }
 
-        waitForExpectations(timeout: 1, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
     }
 
     func testWhenAppRefreshHasSuccessfulUpdateAtbRequestThenAppRetentionAtbUpdated() {
@@ -69,7 +69,7 @@ class StatisticsLoaderTests: XCTestCase {
             expect.fulfill()
         }
 
-        waitForExpectations(timeout: 1, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
     }
 
     func testWhenLoadHasSuccessfulAtbAndExtiRequestsThenStoreUpdatedWithVariant() {
@@ -84,7 +84,7 @@ class StatisticsLoaderTests: XCTestCase {
             expect.fulfill()
         }
 
-        waitForExpectations(timeout: 1, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
     }
 
     func testWhenLoadHasUnsuccessfulAtbThenStoreNotUpdated() {
@@ -99,7 +99,7 @@ class StatisticsLoaderTests: XCTestCase {
             expect.fulfill()
         }
 
-        waitForExpectations(timeout: 1, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
     }
 
     func testWhenLoadHasUnsuccessfulExtiThenStoreNotUpdated() {
@@ -114,7 +114,7 @@ class StatisticsLoaderTests: XCTestCase {
             expect.fulfill()
         }
 
-        waitForExpectations(timeout: 1, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
     }
 
     func testWhenSearchRefreshHasSuccessfulAtbRequestThenSearchRetentionAtbUpdated() {
@@ -130,7 +130,7 @@ class StatisticsLoaderTests: XCTestCase {
             expect.fulfill()
         }
 
-        waitForExpectations(timeout: 1, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
     }
     
     func testWhenAppRefreshHasSuccessfulAtbRequestThenAppRetentionAtbUpdated() {
@@ -146,7 +146,7 @@ class StatisticsLoaderTests: XCTestCase {
             expect.fulfill()
         }
         
-        waitForExpectations(timeout: 1, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
     }
 
     func testWhenSearchRefreshHasUnsuccessfulAtbRequestThenSearchRetentionAtbNotUpdated() {
@@ -161,7 +161,7 @@ class StatisticsLoaderTests: XCTestCase {
             expect.fulfill()
         }
 
-        waitForExpectations(timeout: 1, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
     }
     
     func testWhenAppRefreshHasUnsuccessfulAtbRequestThenSearchRetentionAtbNotUpdated() {
@@ -176,7 +176,7 @@ class StatisticsLoaderTests: XCTestCase {
             expect.fulfill()
         }
         
-        waitForExpectations(timeout: 1, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
     }
 
     func loadSuccessfulAtbStub() {

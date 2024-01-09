@@ -23,7 +23,7 @@
 "action.title.add" = "Aggiungi";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Dati di accesso";
+"action.title.autofill.logins" = "Password";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Aggiungi ai segnalibri";
@@ -440,16 +440,16 @@
 "autofill.keep-enabled.alert.message" = "Puoi disattivare questa funzione in qualsiasi momento in Impostazioni.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Vuoi continuare a salvare i dati di accesso?";
+"autofill.keep-enabled.alert.title" = "Continuare a salvare le password?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Visualizza";
 
 /* Message displayed after saving an autofill login */
-"autofill.login-saved.toast" = "Dati di accesso salvati";
+"autofill.login-saved.toast" = "Password salvata";
 
 /* Message displayed after updating an autofill login */
-"autofill.login-updated.toast" = "Dati di accesso aggiornati";
+"autofill.login-updated.toast" = "Password aggiornata";
 
 /* Menu item text for copying autofill login details */
 "autofill.logins.copy-prompt" = "Copia %@";
@@ -470,19 +470,19 @@
 "autofill.logins.details.address" = "URL del sito Web";
 
 /* Title for autofill login details */
-"autofill.logins.details.default-title" = "Dati di accesso";
+"autofill.logins.details.default-title" = "Password";
 
 /* Delete button when deleting an autofill login */
-"autofill.logins.details.delete" = "Elimina dati di accesso";
+"autofill.logins.details.delete" = "Elimina password";
 
 /* Autofill alert button confirming delete autofill login */
-"autofill.logins.details.delete-confirmation.button" = "Elimina dati di accesso";
+"autofill.logins.details.delete-confirmation.button" = "Elimina password";
 
 /* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Vuoi davvero eliminare questi dati di accesso?";
+"autofill.logins.details.delete-confirmation.title" = "Eliminare questa password?";
 
 /* Title when editing autofill login details */
-"autofill.logins.details.edit-title" = "Modifica dati di accesso";
+"autofill.logins.details.edit-title" = "Modifica password";
 
 /* Placeholder for password field on autofill login details */
 "autofill.logins.details.edit.password-placeholder" = "Password";
@@ -496,14 +496,14 @@
 /* Placeholder for userbane field on autofill login details */
 "autofill.logins.details.edit.username-placeholder" = "username@esempio.com";
 
-/* Message displaying when the login was last updated by */
-"autofill.logins.details.last-updated" = "Ultimo aggiornamento dei dati di accesso: %@";
+/* Message displaying when the login was last updated */
+"autofill.logins.details.last-updated" = "Ultimo aggiornamento %@";
 
 /* Login name label for login details on autofill */
-"autofill.logins.details.login-name" = "Titolo dati di accesso";
+"autofill.logins.details.login-name" = "Titolo";
 
 /* Title when adding new autofill login */
-"autofill.logins.details.new-title" = "Aggiungi dati di accesso";
+"autofill.logins.details.new-title" = "Aggiungi password";
 
 /* Notes label for login details on autofill */
 "autofill.logins.details.notes" = "Note";
@@ -518,37 +518,37 @@
 "autofill.logins.details.save-duplicate-alert.action" = "OK";
 
 /* Message for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.message" = "Hai già creato i dati di accesso per questo nome utente e sito web.";
+"autofill.logins.details.save-duplicate-alert.message" = "Hai già salvato una password per questo nome utente e questo sito web.";
 
 /* Title for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.title" = "Dati di accesso duplicati";
+"autofill.logins.details.save-duplicate-alert.title" = "Password duplicata";
 
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Nome utente";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "I dati di accesso sono archiviati in modo sicuro sul tuo dispositivo.";
+"autofill.logins.empty-view.subtitle" = "Le password sono archiviate in modo sicuro sul tuo dispositivo.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Non vi sono ancora dati di accesso salvati";
+"autofill.logins.empty-view.title" = "Nessuna password ancora salvata";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Annulla";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Sblocca il dispositivo per accedere ai dati di accesso salvati";
+"autofill.logins.list.auth.reason" = "Sblocca il dispositivo per accedere alle password";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Chiudi";
 
 /* Title for a toggle that enables autofill */
-"autofill.logins.list.enable" = "Salva e compila automaticamente i dati di accesso";
+"autofill.logins.list.enable" = "Salva e compila automaticamente le password";
 
 /* Toast message when a login item is deleted */
-"autofill.logins.list.login-deleted-message" = "Dati di accesso per %@ eliminati";
+"autofill.logins.list.login-deleted-message" = "Password per %@ eliminata";
 
 /* Toast message when a login item without a title is deleted */
-"autofill.logins.list.login-deleted-message-no-title" = "Dati di accesso eliminati";
+"autofill.logins.list.login-deleted-message-no-title" = "Password eliminata";
 
 /* Title for a button that allows a user to reset their list of never saved sites */
 "autofill.logins.list.never.saved" = "Ripristina siti esclusi";
@@ -560,28 +560,28 @@
 "autofill.logins.list.never.saved.reset.action.confirm" = "Ripristina siti esclusi";
 
 /* Alert title */
-"autofill.logins.list.never.saved.reset.action.title" = "Se ripristini i siti esclusi, ti verrà richiesto di salvare i tuoi dati di accesso la prossima volta che accederai a uno di questi siti.";
+"autofill.logins.list.never.saved.reset.action.title" = "Se ripristini i siti esclusi, ti verrà richiesto di salvare la password la prossima volta che accederai a uno di questi siti.";
 
 /* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Cerca dati di accesso";
+"autofill.logins.list.search-placeholder" = "Cerca password";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Suggerimenti";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Dati di accesso";
+"autofill.logins.list.title" = "Password";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Per proteggere i dati di accesso è necessario impostare un passcode.";
+"autofill.logins.no-auth.subtitle" = "Per proteggere le tue password è necessario impostare un passcode.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Proteggi il tuo dispositivo per salvare i dati di accesso";
+"autofill.logins.no-auth.title" = "Proteggi il tuo dispositivo per salvare le password";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Annulla";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Sblocca per utilizzare i dati di accesso salvati";
+"autofill.logins.prompt.auth.reason" = "Sblocca per utilizzare la password salvata";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Da questo sito web";
@@ -605,7 +605,7 @@
 "autofill.logins.search.no-results.title" = "Nessun risultato";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Le password sono archiviate in modo sicuro sul tuo dispositivo nel menu Accessi.";
+"autofill.password-generation-prompt.subtitle" = "Le password sono archiviate in modo sicuro sul tuo dispositivo.";
 
 /* Title for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.title" = "Usare una password complessa da DuckDuckGo?";
@@ -650,7 +650,7 @@
 "autofill.save-login.never-prompt.CTA" = "Non chiedere mai per questo sito";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Le password sono archiviate in modo sicuro sul tuo dispositivo nel menu Accessi.";
+"autofill.save-login.new-user.message" = "Le password sono archiviate in modo sicuro sul tuo dispositivo.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vuoi che DuckDuckGo salvi la password?";
@@ -659,7 +659,7 @@
 "autofill.save-login.not-now.CTA" = "Non salvare";
 
 /* Title displayed on modal asking for the user to save the login */
-"autofill.save-login.title" = "Salvare dati di accesso?";
+"autofill.save-login.title" = "Salvare password?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Salva password";
@@ -851,7 +851,7 @@
 "dax.onboarding.browsing.without.trackers.cta" = "Fatto";
 
 /* Encourage user to try clearing data with the fire button */
-"dax.onboarding.fire.button" = "I dati personali possono accumularsi nel tuo browser. Non va bene! Usa il pulsante Proteggi per sbarazzarti di tutto. Prova subito! 👇";
+"dax.onboarding.fire.button" = "I dati personali possono accumularsi nel tuo browser. Non va bene! Usa il Fire Button (icona del fuoco) per sbarazzarti di tutto. Prova subito! 👇";
 
 /* Cancel action */
 "dax.onboarding.fire.button.cancelAction" = "Annulla";
@@ -1583,34 +1583,34 @@
 "pm.deactivate" = "Deactivate";
 
 /* No comment provided by engineer. */
-"preserveLogins.domain.list.footer" = "Per mantenere l'accesso degli utenti, i siti web si affidano ai cookie. Quando attivi la Protezione per un sito, i cookie non verranno cancellati e manterrai l'accesso, anche dopo aver usato il pulsante Proteggi (icona del fuoco). Continueremo a bloccare i tracker di terze parti che si trovano su siti web protetti.";
+"preserveLogins.domain.list.footer" = "Per mantenere l'accesso degli utenti, i siti web si affidano ai cookie. Quando attivi la Protezione dal fuoco per un sito, i cookie non verranno cancellati e manterrai l'accesso, anche dopo aver usato il Fire Button (icona del fuoco). Continueremo a bloccare i tracker di terze parti anche sui siti ignifughi.";
 
 /* Section header above Fireproofed websites list */
-"preserveLogins.domain.list.title" = "Siti protetti";
+"preserveLogins.domain.list.title" = "Siti a prova di fuoco";
 
 /* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
-"preserveLogins.fireproof.message" = "L'attivazione della protezione su questo sito ti consentirà di effettuare l'accesso dopo aver utilizzato il pulsante Proteggi (icona del fuoco).";
+"preserveLogins.fireproof.message" = "Proteggere dal fuoco questo sito manterrà valido l'accesso dopo aver utilizzato il Fire Button (icona del fuoco).";
 
 /* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
-"preserveLogins.fireproof.title" = "Rendere %@ resistente al fuoco per mantenere l'accesso?";
+"preserveLogins.fireproof.title" = "Proteggi dal fuoco %@ per mantenere l'accesso?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Proteggi";
+"preserveLogins.menu.confirm" = "Proteggi dal fuoco";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
-"preserveLogins.menu.confirm.message" = "%@ è adesso protetto";
+"preserveLogins.menu.confirm.message" = "%@ è ora a prova di fuoco";
 
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Non adesso";
 
 /* Disable fireproofing for site */
-"preserveLogins.menu.disable" = "Rimuovi protezione";
+"preserveLogins.menu.disable" = "Rimuovi protezione dal fuoco";
 
 /* Enable fireproofing for site */
-"preserveLogins.menu.enable" = "Attiva protezione per questo sito";
+"preserveLogins.menu.enable" = "Proteggi questo sito dal fuoco";
 
 /* Messege confirms that website is no longer fireproofed. */
-"preserveLogins.menu.removal.message" = "Protezione rimossa";
+"preserveLogins.menu.removal.message" = "Protezione dal fuoco rimossa";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Elimina tutto";

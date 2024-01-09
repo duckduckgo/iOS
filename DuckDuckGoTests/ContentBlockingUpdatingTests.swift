@@ -24,7 +24,7 @@ import TrackerRadarKit
 import BrowserServicesKit
 @testable import DuckDuckGo
 
-class ContentBlockingUpdatingTests: XCTestCase {
+final class ContentBlockingUpdatingTests: XCTestCase {
     let appSettings = AppSettingsMock()
     let configManager = PrivacyConfigurationManagerMock()
     let rulesManager = ContentBlockerRulesManagerMock()
@@ -278,8 +278,7 @@ class ContentBlockingUpdatingTests: XCTestCase {
 
     static let tracker = KnownTracker(domain: "tracker.com",
                                defaultAction: .block,
-                               owner: KnownTracker.Owner(name: "Tracker Inc",
-                                                         displayName: "Tracker Inc company"),
+                               owner: KnownTracker.Owner(name: "Tracker Inc", displayName: "Tracker Inc company"),
                                prevalence: 0.1,
                                subdomains: nil,
                                categories: nil,
@@ -313,24 +312,16 @@ class ContentBlockingUpdatingTests: XCTestCase {
 }
 
 extension UserContentControllerNewContent {
-    func rules(withName name: String) -> WKContentRuleList? {
-        rulesUpdate.rules.first(where: { $0.name == name })?.rulesList
-    }
+    func rules(withName name: String) -> WKContentRuleList? { rulesUpdate.rules.first(where: { $0.name == name })?.rulesList }
 
-    var isValid: Bool {
-        return rules(withName: "test") != nil
-    }
+    var isValid: Bool { rules(withName: "test") != nil }
 }
 
 extension WKContentRuleList {
 
     private static var isSwizzled = false
-    private static let originalDealloc = {
-        class_getInstanceMethod(WKContentRuleList.self, NSSelectorFromString("dealloc"))!
-    }()
-    private static let swizzledDealloc = {
-        class_getInstanceMethod(WKContentRuleList.self, #selector(swizzled_dealloc))!
-    }()
+    private static let originalDealloc = { class_getInstanceMethod(WKContentRuleList.self, NSSelectorFromString("dealloc"))! }()
+    private static let swizzledDealloc = { class_getInstanceMethod(WKContentRuleList.self, #selector(swizzled_dealloc))! }()
 
     static func swizzleDealloc() {
         guard !self.isSwizzled else { return }
@@ -345,7 +336,6 @@ extension WKContentRuleList {
     }
 
     @objc
-    func swizzled_dealloc() {
-    }
+    func swizzled_dealloc() { }
 
 }

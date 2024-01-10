@@ -41,12 +41,14 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     func updateDeviceName(_ name: String) {
         Task { @MainActor in
             rootView.model.devices = []
+            syncService.scheduler.cancelSyncAndSuspendSyncQueue()
             do {
                 let devices = try await syncService.updateDeviceName(name)
                 mapDevices(devices)
             } catch {
                 handleError(SyncError.unableToUpdateDeviceName, error: error)
             }
+            syncService.scheduler.resumeSyncQueue()
         }
     }
 

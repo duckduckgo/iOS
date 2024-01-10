@@ -19,10 +19,27 @@
 
 import UIKit
 
-enum ThemeName: String {
+enum ThemeName: String, CaseIterable, Identifiable, CustomStringConvertible {
     case systemDefault
     case light
     case dark
+
+    var id: String { self.rawValue }
+    
+    var description: String {
+        return descriptionText
+    }
+
+    var descriptionText: String {
+        switch self {
+        case .systemDefault:
+            return UserText.themeNameDefault
+        case .light:
+            return UserText.themeNameLight
+        case .dark:
+            return UserText.themeNameDark
+        }
+    }
 }
 
 protocol Theme {

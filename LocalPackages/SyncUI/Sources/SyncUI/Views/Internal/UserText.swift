@@ -21,7 +21,7 @@ import Foundation
 
 // swiftlint:disable line_length
 // Localise these later, when feature is closer to exernal release
-class UserText {
+struct UserText {
 
     // Sync Title
     static let syncTitle = NSLocalizedString("sync.title", bundle: Bundle.module, value: "Sync & Backup", comment: "Sync & Backup Title")
@@ -31,7 +31,7 @@ class UserText {
     // Sync With Another Device Card
     static let syncWithAnotherDeviceTitle = NSLocalizedString("sync.with.another.device.title", bundle: Bundle.module, value: "Begin Syncing", comment: "Title for syncing with another device")
     static let syncWithAnotherDeviceMessage = NSLocalizedString("sync.with.another.device.message", bundle: Bundle.module, value: "Securely sync bookmarks and passwords between your devices.", comment: "Message for syncing with another device")
-    static let syncWithAnotherDeviceButton = NSLocalizedString("sync.with.another.device.button", bundle: Bundle.module, value: "Sync with Another Device", comment: "Button label for syncing with another device")
+    static let syncWithAnotherDeviceButton = NSLocalizedString("sync.with.another.device.button", bundle: Bundle.module, value: "Sync With Another Device", comment: "Button label for syncing with another device")
     static let syncWithAnotherDeviceFooter = NSLocalizedString("sync.with.another.device.footer", bundle: Bundle.module, value: "Your data is end-to-end encrypted, and DuckDuckGo does not have access to the encryption key.", comment: "Footer message for syncing with another device")
     // Other Options
     static let syncAndBackUpThisDeviceLink = NSLocalizedString("sync.and.backup.this.device.link", bundle: Bundle.module, value: "Sync and Back Up This Device", comment: "Link label for syncing and backing up the device")
@@ -54,7 +54,7 @@ class UserText {
     static let syncedDevicesSyncWithAnotherDeviceLabel = NSLocalizedString("synced.devices.sync.with.another.device.label", bundle: Bundle.module, value: "Sync with Another Device", comment: "Synced Devices - Sync with Another Device Label")
     // Options
     static let optionsSectionHeader = NSLocalizedString("options.section.header", bundle: Bundle.module, value: "Options", comment: "Options - Section Header")
-    static let unifiedFavoritesTitle = NSLocalizedString("unified.favorites.title", bundle: Bundle.module, value: "Unify Favorites", comment: "Options - Unify Favorites Title")
+    static let unifiedFavoritesTitle = NSLocalizedString("unified.favorites.title", bundle: Bundle.module, value: "Unify Favorites Across Devices", comment: "Options - Unify Favorites Title")
     static let unifiedFavoritesInstruction = NSLocalizedString("unified.favorites.instruction", bundle: Bundle.module, value: "Use the same favorite bookmarks on all your devices. Leave off to keep mobile and desktop favorites separate.", comment: "Options - Unify Favorites Instruction")
     static let fetchFaviconsOptionTitle = NSLocalizedString("fetch.favicons.option.title", bundle: Bundle.module, value: "Auto-Download Icons", comment: "Options - Fetch Favicons Title")
     static let fetchFaviconsOptionCaption = NSLocalizedString("fetch.favicons.option.caption", bundle: Bundle.module, value: "Automatically download icons for your synced bookmarks. Icon downloads are exposed to your network.", comment: "Options - Fetch Favicons Description")
@@ -69,7 +69,7 @@ class UserText {
     static let connectWithServerSheetTitle = NSLocalizedString("connect.with.server.sheet.title", bundle: Bundle.module, value: "Sync and Back Up This Device", comment: "Connect With Server Sheet - Title")
     static let connectWithServerSheetDescriptionPart1 = NSLocalizedString("connect.with.server.sheet.description.part1", bundle: Bundle.module, value: "This creates an encrypted backup of your bookmarks and passwords on DuckDuckGo’s secure server, which can be synced with your other devices.", comment: "Connect With Server Sheet - Description Part 1")
     static let connectWithServerSheetDescriptionPart2 = NSLocalizedString("connect.with.server.sheet.description.part2", bundle: Bundle.module, value: "The encryption key is only stored on your device, DuckDuckGo cannot access it.", comment: "Connect With Server Sheet - Description Part 2")
-    static let connectWithServerSheetButton = NSLocalizedString("connect.with.server.sheet.button", bundle: Bundle.module, value: "Turn on Sync & Backup", comment: "Connect With Server Sheet - Button")
+    static let connectWithServerSheetButton = NSLocalizedString("connect.with.server.sheet.button", bundle: Bundle.module, value: "Turn On Sync & Back Up", comment: "Connect With Server Sheet - Button")
     static let connectWithServerSheetFooter = NSLocalizedString("connect.with.server.sheet.footer", bundle: Bundle.module, value: "You can sync with your other devices later.", comment: "Connect With Server Sheet - Footer")
 
     // Preparing To Sync Sheet
@@ -86,7 +86,7 @@ class UserText {
     static let saveRecoveryCodeSaveCodeCopiedToast = NSLocalizedString("save.recovery.code.code.copied.button", bundle: Bundle.module, value: "Recovery code copied to clipboard", comment: "Save Recovery Code Sheet - Copy Code Toast")
 
     // Device Synced Sheet
-    static let deviceSyncedSheetTitle = NSLocalizedString("device.synced.sheet.title", bundle: Bundle.module, value: "Your Data is Synced!", comment: "Device SyncedSheet - Title")
+    static let deviceSyncedSheetTitle = NSLocalizedString("device.synced.sheet.title", bundle: Bundle.module, value: "Your data is synced!", comment: "Device SyncedSheet - Title")
 
     // Recover Synced Data Sheet
     static let recoverSyncedDataTitle = NSLocalizedString("recover.synced.data.sheet.title", bundle: Bundle.module, value: "Recover Synced Data", comment: "Recover Synced Data Sheet - Title")
@@ -126,7 +126,6 @@ class UserText {
         return String(format: localized, syncMenuPath)
     }
 
-    static let scanOrSeeCodeInstructionPart3 = NSLocalizedString("scan.or.see.code.instruction.part3", bundle: Bundle.module, value: "in the DuckDuckGo Browser on another device and select ”Sync with Another Device.”", comment: "Scan or See Code View - Instruction Part 3")
     static let scanOrSeeCodeManuallyEnterCodeLink = NSLocalizedString("scan.or.see.code.manually.enter.code.link", bundle: Bundle.module, value: "Manually Enter Code", comment: "Scan or See Code View - Manually Enter Code Link")
     static let scanOrSeeCodeScanCodeInstructionsTitle = NSLocalizedString("scan.or.see.code.scan.code.instructions.title", bundle: Bundle.module, value: "Mobile-to-Mobile?", comment: "Scan or See Code View - Scan Code Instructions Title")
     static let scanOrSeeCodeScanCodeInstructionsBody = NSLocalizedString("scan.or.see.code.scan.code.instructions.body", bundle: Bundle.module, value: "Scan this code with another device to sync.", comment: "Scan or See Code View - Scan Code Instructions Body")

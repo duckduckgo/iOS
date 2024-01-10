@@ -72,6 +72,10 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
         observation = nil
     }
     
+    func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
+        print(#function)
+    }
+    
     private func scrollViewDidResizeContent(_ scrollView: UIScrollView) {
         if !canHideBars(for: scrollView) && animator.barsState != .revealed {
             animator.revealBars(animated: true)
@@ -79,17 +83,17 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
     }
         
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard !scrollView.isZooming else { return }
-        
-        guard dragging else { return }
-        guard canHideBars(for: scrollView) else {
-            if animator.barsState != .revealed {
-                animator.revealBars(animated: true)
-            }
-            return
-        }
-
-        animator.didScroll(in: scrollView)
+//        guard !scrollView.isZooming else { return }
+//        
+//        guard dragging else { return }
+//        guard canHideBars(for: scrollView) else {
+//            if animator.barsState != .revealed {
+//                animator.revealBars(animated: true)
+//            }
+//            return
+//        }
+//
+//        animator.didScroll(in: scrollView)
     }
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {

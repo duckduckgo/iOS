@@ -4,9 +4,6 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
-/* No comment provided by engineer. */
-"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Επεξεργασία";
 
@@ -874,6 +871,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Το Διαδίκτυο μπορεί να είναι κάπως ανατριχιαστικό.\n\nΜην ανησυχείτε! Το να πραγματοποιείτε αναζήτηση και περιήγηση ιδιωτικά είναι πιο εύκολο απ' όσο νομίζετε.";
 
+/* No comment provided by engineer. */
+"Debug" = "Debug";
+
 /* GPC Setting state */
 "donotsell.disabled" = "Απενεργοποιήθηκε";
 
@@ -1348,6 +1348,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Καλώς ορίσατε στο\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "Το DuckDuckGo για Mac έχει την ταχύτητα που χρειάζεστε, τις λειτουργίες περιήγησης που αναμένετε και περιλαμβάνει τις καλύτερες δυνατότητες απορρήτου στην κατηγορία μας.";
 
@@ -1411,17 +1414,104 @@
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
 
+/* Privacy Policy title for Network Protection */
+"network-protection.privacy-policy.title" = "Πολιτική ιδιωτικού απορρήτου";
+
+/* Title text for the Network Protection terms and conditions accept button */
+"network-protection.waitlist.agree-and-continue" = "Agree and Continue";
+
+/* Availability disclaimer for Network Protection join waitlist screen */
+"network-protection.waitlist.availability-disclaimer" = "Network Protection is free to use during early access.";
+
+/* Agree and Continue button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.agree-and-continue" = "Agree and Continue";
+
+/* Enable Notifications button for Network Protection joined waitlist screen */
+"network-protection.waitlist.button.enable-notifications" = "Enable Notifications";
+
+/* Button title for users who already have an invite code */
+"network-protection.waitlist.button.existing-invite-code" = "Διαθέτω Κωδικό πρόσκλησης";
+
+/* Join Waitlist button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.join-waitlist" = "Join the Waitlist";
+
+/* Button title text for the Network Protection waitlist confirmation prompt */
+"network-protection.waitlist.get-started" = "Ξεκινήστε";
+
+/* Subtitle for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.subtitle" = "Encrypt online traffic across your browsers and apps.";
+
+/* Title for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.title" = "Full-device coverage";
+
+/* Subtitle for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.subtitle" = "No need for a separate app. Connect in one click and see your connection status at a glance.";
+
+/* Title for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.title" = "Fast, reliable, and easy to use";
+
+/* Subtitle for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.subtitle" = "We do not log or save any data that can connect you to your online activity.";
+
+/* Title for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.title" = "Strict no-logging policy";
+
+/* Subtitle for Network Protection invited screen */
+"network-protection.waitlist.invited.subtitle" = "Get an extra layer of protection online with the VPN built for speed and simplicity. Encrypt your internet connection across your entire device and hide your location and IP address from sites you visit.";
+
+/* Title for Network Protection invited screen */
+"network-protection.waitlist.invited.title" = "You’re invited to try\nNetwork Protection early access!";
+
+/* First subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.1" = "Secure your connection anytime, anywhere with Network Protection, the VPN from DuckDuckGo.";
+
+/* Second subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.2" = "Join the waitlist, and we’ll notify you when it’s your turn.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
+
+/* Title for Network Protection joined waitlist screen */
+"network-protection.waitlist.joined.title" = "Βρίσκεστε στη λίστα!";
+
+/* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "New invites are sent every few days, on a first come, first served basis.";
+
+/* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "We’ll notify you when your invite is ready.";
+
+/* Body text for the alert to enable notifications */
+"network-protection.waitlist.notification-alert.description" = "We’ll send you a notification when your invite to test Network Protection is ready.";
+
+/* Subtitle for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-description" = "Get a notification when your copy of Network Protection early access is ready.";
+
+/* Title for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-title" = "Know the instant you're invited";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.text" = "Ανοίξτε την πρόσκλησή σας";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.title" = "Network Protection is ready!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Your invite is ready!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Βρίσκεστε στη λίστα!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Εγγραφείτε στην Ιδιωτική λίστα αναμονής";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+"network.protection.invite.dialog.title" = "You’re invited to try Network Protection";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
-
-/* Message explaining that netP is invite only */
-"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
 
 /* Message for the network protection invite success view */
 "network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
@@ -1453,7 +1543,7 @@
 /* Header title label text for the status view when netP is connected */
 "network.protection.status.header.title.on" = "Network Protection is On";
 
-/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+/* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 
 /* Connection details label shown in NetworkProtection's status view. */
@@ -1489,23 +1579,32 @@
 /* Title for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.title" = "Ειδοποιήσεις VPN";
 
-/* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.footer" = "Αυτόματη αποκατάσταση μιας σύνδεσης VPN έπειτα από διακοπή.";
+/* Footer text for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.";
 
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.title" = "Πάντα σε λειτουργία";
+/* Title for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.title" = "Exclude Local Networks";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Subtitle of countries item when there are multiple cities, example : */
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d cities";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
+"network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
+
+/* Title for the VPN Location screen. */
+"network.protection.vpn.location.title" = "VPN Location";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "Ειδοποιήσεις VPN";
@@ -1517,10 +1616,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Η Προστασία δικτύου αποτρέπει διαρροές DNS προς τον πάροχο υπηρεσιών διαδικτύου σας, δρομολογώντας ερωτήματα DNS μέσω της σήραγγας VPN στο δικό μας πρόγραμμα επίλυσης.";
-
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.title" = "Ασφαλές DNS";
+"network.protection.vpn.secure.dns.setting.footer" = "Our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Ρυθμίσεις VPN";
@@ -1648,8 +1744,110 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Αγαπημένα";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "Σχετικά με το DuckDuckGo";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "Σχετικά";
+
 /* about page */
 "settings.about.text" = "Το DuckDuckGo αποτελεί την ανεξάρτητη εταιρεία προστασίας προσωπικών δεδομένων στο διαδίκτυο που ιδρύθηκε το 2008 για όσους έχουν βαρεθεί να παρακολουθούνται στο διαδίκτυο και επιθυμούν μια εύκολη λύση. Αποτελούμε τρανή απόδειξη ότι μπορείτε να αποκτήσετε πραγματική προστασία του απορρήτου σας στο διαδίκτυο χωρίς συμβιβασμούς.\n\nο πρόγραμμα περιήγησης DuckDuckGo διαθέτει τις λειτουργίες που περιμένετε από ένα πρόγραμμα περιήγησης, όπως σελιδοδείκτες, καρτέλες, κωδικούς πρόσβασης και πολλά άλλα, καθώς και πάνω από [δώδεκα ισχυρές λειτουργίες προστασίες απορρήτου](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) που δεν προσφέρονται από τα περισσότερα δημοφιλή προγράμματα περιήγησης βάσει προεπιλογής. Αυτό το μοναδικά ολοκληρωμένο σύνολο προστασίας του απορρήτου συμβάλλει στην προστασία των διαδικτυακών δραστηριοτήτων σας, από αναζήτηση έως περιήγηση, αποστολή email και πολλά άλλα.\n\nΗ προστασία απορρήτου μας λειτουργεί χωρίς να χρειάζεται να γνωρίζετε τις τεχνικές λεπτομέρειες ή να ασχολείστε με περίπλοκες ρυθμίσεις. Το μόνο που έχετε να κάνετε είναι να αλλάξετε το πρόγραμμα περιήγησής σας σε DuckDuckGo σε όλες τις συσκευές σας και θα έχετε ιδιωτικότητα βάσει προεπιλογής.\n\nΑλλά αν *θέλετε* να ρίξετε μια αναλυτική ματιά, μπορείτε να βρείτε περισσότερες πληροφορίες σχετικά με το πώς λειτουργούν οι προστασίες απορρήτου του DuckDuckGo στις [σελίδες της ενότητας Βοήθεια](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Προσθήκη εφαρμογής στο Dock σας";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Προσθήκη μικροεφαρμογής στην Αρχική οθόνη";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Θέση γραμμής διευθύνσεων";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Εμφάνιση";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Ανοίξτε τους συνδέσμους στις σχετικές εφαρμογές";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Απενεργοποιήστε για να αποτρέψετε το αυτόματο άνοιγμα συνδέσμων σε άλλες εγκατεστημένες εφαρμογές.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Εμφάνιση προτάσεων αυτόματης συμπλήρωσης";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Κλείδωμα εφαρμογής";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Εάν έχει οριστεί Touch ID, Face ID ή κωδικός πρόσβασης συστήματος, θα σας ζητηθεί να ξεκλειδώσετε την εφαρμογή κατά το άνοιγμά της.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Αυτόματη απαλοιφή δεδομένων";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Διαχείριση αναδυόμενων παραθύρων cookies";
+
+/* Settings title for the customize section */
+"settings.customize" = "Προσαρμογή";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Ορισμός ως προεπιλεγμένο πρόγραμμα περιήγησης";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "Προστασία email";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Αποκλείστε εφαρμογές παρακολούθησης email και αποκρύψτε τη διεύθυνσή σας";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Κοινοποίηση σχολίου";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Κινούμενο κουμπί φωτιάς";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Ασφαλείς ιστότοποι";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Παγκόσμιος έλεγχος απορρήτου (GPC)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "Εικονίδιο Εφαρμογής";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Πληκτρολόγιο";
+
+/* Settings screen cell text for logins */
+"settings.logins" = "Συνδέσεις";
+
+/* Settings title for the 'More' section */
+"settings.more" = "Περισσότερα από το DuckDuckGo";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Προεπισκοπήσεις με παρατεταμένο πάτημα";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Ιδιωτικότητα";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Συγχρονισμός και δημιουργία αντιγράφων ασφαλείας";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Μέγεθος κειμένου";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Θέμα";
+
+/* Title for the Settings View */
+"settings.title" = "Ρυθμίσεις";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Μη προστατευόμενοι ιστότοποι";
+
+/* Settings cell for Version */
+"settings.version" = "Έκδοση";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Ιδιωτική φωνητική αναζήτηση";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Υποβολή αναφοράς";
@@ -1734,6 +1932,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Επιτρέψτε πρόσβαση στο Μικρόφωνο από τις Ρυθμίσεις συστήματος iOS για να κάνει το DuckDuckGo χρήση των φωνητικών λειτουργιών.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "Εντάξει";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Απαιτείται πρόσβαση στο μικρόφωνο";

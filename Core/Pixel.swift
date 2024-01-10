@@ -139,7 +139,9 @@ public class Pixel {
         static let tablet = "tablet"
         static let phone = "phone"
     }
-    
+
+    public static var isDryRun = false
+
     private static var isInternalUser: Bool {
         DefaultInternalUserDecider(store: InternalUserStore()).isInternalUser
     }
@@ -181,6 +183,18 @@ public class Pixel {
         if includedParameters.contains(.appVersion) {
             newParams[PixelParameters.appVersion] = AppVersion.shared.versionAndBuildNumber
         }
+
+        guard !isDryRun else {
+            os_log(.debug, log: .generalLog, "Pixel fired %{public}@ %{public}@",
+                   pixelName.replacingOccurrences(of: "_", with: "."),
+                   params.count > 0 ? "\(params)" : "")
+            // simulate server response time for Dry Run mode
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                onComplete(nil)
+            }
+            return
+        }
+
         if isDebugBuild {
             newParams[PixelParameters.test] = PixelValues.test
         }

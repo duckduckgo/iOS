@@ -101,6 +101,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 #endif
 
+        if isDebugBuild {
+            Pixel.isDryRun = true
+        } else {
+            Pixel.isDryRun = false
+        }
+
         ContentBlocking.shared.onCriticalError = presentPreemptiveCrashAlert
 
         // Can be removed after a couple of versions
@@ -124,6 +130,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = DefaultUserAgentManager.shared
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
+            Pixel.isDryRun = true
             _ = DefaultUserAgentManager.shared
             Database.shared.loadStore { _, _ in }
             _ = BookmarksDatabaseSetup(crashOnError: true).loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase)
@@ -308,6 +315,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         widgetRefreshModel.beginObservingVPNStatus()
         NetworkProtectionAccessController().refreshNetworkProtectionAccess()
 #endif
+        
+#if SUBSCRIPTION
+        setupSubscriptionsEnvironment()
+#endif
 
         return true
     }
@@ -340,6 +351,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             os_log("Failed to delete tmp dir")
         }
     }
+
+
+#if SUBSCRIPTION
+    private func setupSubscriptionsEnvironment() {
+        SubscriptionPurchaseEnvironment.current = .appStore
+    }
+#endif
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }

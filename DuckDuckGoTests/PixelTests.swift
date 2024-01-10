@@ -28,8 +28,16 @@ class PixelTests: XCTestCase {
     let host = "improving.duckduckgo.com"
     let testAgent = "Test Agent"
     let userAgentName = "User-Agent"
-    
+
+    override func setUp() {
+        super.setUp()
+
+        Pixel.isDryRun = false
+    }
+
     override func tearDown() {
+        Pixel.isDryRun = true
+        
         HTTPStubs.removeAllStubs()
         super.tearDown()
     }

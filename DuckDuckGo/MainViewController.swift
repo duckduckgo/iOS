@@ -1065,7 +1065,8 @@ class MainViewController: UIViewController {
             appSettings: appSettings,
             currentTabUrl: currentTabUrl,
             syncService: syncService,
-            syncDataProviders: syncDataProviders
+            syncDataProviders: syncDataProviders,
+            selectedAccount: nil
         )
         autofillSettingsViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: autofillSettingsViewController)

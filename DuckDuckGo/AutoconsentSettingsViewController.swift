@@ -39,7 +39,7 @@ final class AutoconsentSettingsViewController: UITableViewController {
         
         autoconsentToggle.isOn = appSettings.autoconsentEnabled
         
-        let fontSize = SettingsViewController.fontSizeForHeaderView
+        let fontSize = FontSettings.fontSizeForHeaderView
         let text = NSAttributedString(string: UserText.autoconsentInfoText, attributes: [
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize)
         ])

@@ -313,10 +313,10 @@ extension SyncSettingsView {
                 Image("Info-Color-16")
                 Text(UserText.syncRollOutBannerDescription)
                     .font(.system(size: 12))
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
             }
             .padding()
-            .background(RoundedRectangle(cornerRadius: 8).foregroundColor(.blue10))
+            .background(RoundedRectangle(cornerRadius: 8).foregroundColor(Color("RolloutBannerBackground")))
             .padding(.bottom, 10)
         }
     }

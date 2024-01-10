@@ -157,7 +157,7 @@ final class BrowsingMenuViewController: UIViewController {
 
         recalculatePreferredWidthConstraint()
         recalculateHeightConstraints()
-        webView.map(recalculateMenuConstraints(with:))
+        parent?.view.map(recalculateMenuConstraints(with:))
 
         if tableView.bounds.height < tableView.contentSize.height + tableView.contentInset.top + tableView.contentInset.bottom {
             tableView.isScrollEnabled = true
@@ -166,12 +166,12 @@ final class BrowsingMenuViewController: UIViewController {
         }
     }
 
-    private weak var webView: UIView?
-    private var webViewFrameObserver: NSKeyValueObservation?
-    func bindConstraints(to webView: UIView?) {
-        self.webView = webView
-        self.webViewFrameObserver = webView?.observe(\.frame, options: [.initial]) { [weak self] webView, _ in
-            self?.recalculateMenuConstraints(with: webView)
+    private weak var guideView: UIView?
+    private var guideViewFrameObserver: NSKeyValueObservation?
+    func bindConstraints(to guideView: UIView?) {
+        self.guideView = guideView
+        self.guideViewFrameObserver = guideView?.observe(\.frame, options: [.initial]) { [weak self] guideView, _ in
+            self?.recalculateMenuConstraints(with: guideView)
         }
     }
 
@@ -205,9 +205,9 @@ final class BrowsingMenuViewController: UIViewController {
         }
     }
 
-    private func recalculateMenuConstraints(with webView: UIView) {
-        guard let frame = webView.superview?.convert(webView.frame, to: webView.window),
-              let windowBounds = webView.window?.bounds
+    private func recalculateMenuConstraints(with guideView: UIView) {
+        guard let frame = guideView.superview?.convert(guideView.frame, to: guideView.window),
+              let windowBounds = guideView.window?.bounds
         else { return }
 
         let isIPad = AppWidthObserver.shared.isLargeWidth

@@ -182,7 +182,7 @@ public class WebCacheManager {
 
             storeIdManager.allocateNewContainerId()
             // If cookies is empty it's likely that the webview was not used since the last fire button so
-            //  don't overwrite previously saved cookes
+            //  don't overwrite previously saved cookies
             if let cookies, !cookies.isEmpty {
                 cookeStorage.cookies = cookies
             }

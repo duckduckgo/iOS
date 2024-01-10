@@ -1,5 +1,6 @@
 //
-//  AppStorePurchaseFlow.swift
+//  AppStoreRestoreFlow.swift
+//  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
 //
@@ -36,7 +37,9 @@ public final class AppStoreRestoreFlow {
     }
 
     public static func restoreAccountFromPastPurchase() async -> Result<Void, AppStoreRestoreFlow.Error> {
-        guard let lastTransactionJWSRepresentation = await PurchaseManager.mostRecentTransaction() else { return .failure(.missingAccountOrTransactions) }
+        guard let lastTransactionJWSRepresentation = await PurchaseManager.mostRecentTransaction() else {
+            return .failure(.missingAccountOrTransactions)
+        }
         
         let accountManager = AccountManager()
 

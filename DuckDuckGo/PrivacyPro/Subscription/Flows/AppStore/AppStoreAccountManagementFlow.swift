@@ -1,5 +1,6 @@
 //
 //  AppStoreAccountManagementFlow.swift
+//  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
 //
@@ -36,7 +37,9 @@ public final class AppStoreAccountManagementFlow {
 
             if #available(macOS 12.0, iOS 15.0, *) {
                 // In case of invalid token attempt store based authentication to obtain a new one
-                guard let lastTransactionJWSRepresentation = await PurchaseManager.mostRecentTransaction() else { return .failure(.noPastTransaction) }
+                guard let lastTransactionJWSRepresentation = await PurchaseManager.mostRecentTransaction() else {
+                    return .failure(.noPastTransaction)
+                }
 
                 switch await AuthService.storeLogin(signature: lastTransactionJWSRepresentation) {
                 case .success(let response):

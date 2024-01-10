@@ -1,5 +1,6 @@
 //
 //  SubscriptionService.swift
+//  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
 //
@@ -31,7 +32,9 @@ public struct SubscriptionService: APIService {
     // MARK: -
 
     public static func getSubscriptionDetails(token: String) async -> Result<GetSubscriptionDetailsResponse, APIServiceError> {
-        let result: Result<GetSubscriptionDetailsResponse, APIServiceError> = await executeAPICall(method: "GET", endpoint: "subscription", headers: makeAuthorizationHeader(for: token))
+        let result: Result<GetSubscriptionDetailsResponse, APIServiceError> = await executeAPICall(method: "GET",
+                                                                                                   endpoint: "subscription",
+                                                                                                   headers: makeAuthorizationHeader(for: token))
 
         switch result {
         case .success(let response):

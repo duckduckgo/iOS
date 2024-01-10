@@ -1,5 +1,6 @@
 //
 //  AuthService.swift
+//  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
 //
@@ -83,9 +84,11 @@ public struct AuthService: APIService {
         public let externalID: String
         public let status: String
 
+        // swiftlint:disable nesting
         enum CodingKeys: String, CodingKey {
             case authToken = "authToken", externalID = "externalId", status // no underscores due to keyDecodingStrategy = .convertFromSnakeCase
         }
+        // swiftlint:enable nesting
     }
 
     // MARK: -
@@ -105,8 +108,12 @@ public struct AuthService: APIService {
         public let id: Int
         public let status: String
 
+        // swiftlint:disable:next nesting
         enum CodingKeys: String, CodingKey {
-            case authToken = "authToken", email, externalID = "externalId", id, status // no underscores due to keyDecodingStrategy = .convertFromSnakeCase
+            case authToken = "authToken",
+                 email, externalID = "externalId",
+                 id,
+                 status // no underscores due to keyDecodingStrategy = .convertFromSnakeCase
         }
     }
 }

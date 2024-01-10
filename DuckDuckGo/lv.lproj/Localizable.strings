@@ -4,9 +4,6 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
-/* No comment provided by engineer. */
-"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Rediģēt";
 
@@ -23,7 +20,7 @@
 "action.title.add" = "Pievienot";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Pieteikšanās dati";
+"action.title.autofill.logins" = "Paroles";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Pievienot grāmatzīmēm";
@@ -440,16 +437,16 @@
 "autofill.keep-enabled.alert.message" = "Vari to jebkurā laikā atspējot iestatījumos.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Vai vēlies turpināt saglabāt pieteikšanās datus?";
+"autofill.keep-enabled.alert.title" = "Vai vēlaties turpināt saglabāt paroles?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Skatīt";
 
 /* Message displayed after saving an autofill login */
-"autofill.login-saved.toast" = "Pieteikšanās saglabāta";
+"autofill.login-saved.toast" = "Parole saglabāta";
 
 /* Message displayed after updating an autofill login */
-"autofill.login-updated.toast" = "Pieteikšanās atjaunināta";
+"autofill.login-updated.toast" = "Parole atjaunināta";
 
 /* Menu item text for copying autofill login details */
 "autofill.logins.copy-prompt" = "Kopēt %@";
@@ -470,19 +467,19 @@
 "autofill.logins.details.address" = "Tīmekļa vietnes URL";
 
 /* Title for autofill login details */
-"autofill.logins.details.default-title" = "Pieteikšanās dati";
+"autofill.logins.details.default-title" = "Parole";
 
 /* Delete button when deleting an autofill login */
-"autofill.logins.details.delete" = "Dzēst pieteikšanās datus";
+"autofill.logins.details.delete" = "Dzēst paroli";
 
 /* Autofill alert button confirming delete autofill login */
-"autofill.logins.details.delete-confirmation.button" = "Dzēst pieteikšanās datus";
+"autofill.logins.details.delete-confirmation.button" = "Dzēst paroli";
 
 /* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Vai tiešām vēlies dzēst šos pieteikšanās datus?";
+"autofill.logins.details.delete-confirmation.title" = "Vai tiešām vēlies dzēst šo paroli?";
 
 /* Title when editing autofill login details */
-"autofill.logins.details.edit-title" = "Rediģēt pieteikšanās datus";
+"autofill.logins.details.edit-title" = "Paroles rediģēšana";
 
 /* Placeholder for password field on autofill login details */
 "autofill.logins.details.edit.password-placeholder" = "Parole";
@@ -496,14 +493,14 @@
 /* Placeholder for userbane field on autofill login details */
 "autofill.logins.details.edit.username-placeholder" = "lietotajvards@piemers.com";
 
-/* Message displaying when the login was last updated by */
-"autofill.logins.details.last-updated" = "Pieteikšanās dati pēdējo reizi atjaunināti: %@";
+/* Message displaying when the login was last updated */
+"autofill.logins.details.last-updated" = "Pēdējoreiz atjaunināts %@";
 
 /* Login name label for login details on autofill */
-"autofill.logins.details.login-name" = "Pieteikšanās datu nosaukums";
+"autofill.logins.details.login-name" = "Nosaukums";
 
 /* Title when adding new autofill login */
-"autofill.logins.details.new-title" = "Pievienot pieteikšanās datus";
+"autofill.logins.details.new-title" = "Pievienot paroli";
 
 /* Notes label for login details on autofill */
 "autofill.logins.details.notes" = "Piezīmes";
@@ -518,37 +515,37 @@
 "autofill.logins.details.save-duplicate-alert.action" = "Labi";
 
 /* Message for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.message" = "Tev jau ir pieteikšanās dati šim lietotājvārdam un vietnei.";
+"autofill.logins.details.save-duplicate-alert.message" = "Tev jau ir saglabāta šī lietotājvārda un vietnes parole.";
 
 /* Title for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.title" = "Dublēti pieteikšanās dati";
+"autofill.logins.details.save-duplicate-alert.title" = "Dublēta parole";
 
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Lietotājvārds";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Pieteikšanās dati tiek droši saglabāti tavā ierīcē.";
+"autofill.logins.empty-view.subtitle" = "Paroles tiek droši glabātas tavā ierīcē.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Nav saglabātu pieteikšanās datu";
+"autofill.logins.empty-view.title" = "Vēl nav saglabāta neviena parole";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Atcelt";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Atbloķē ierīci, lai piekļūtu saglabātajiem pieteikšanās datiem";
+"autofill.logins.list.auth.reason" = "Atbloķē ierīci, lai piekļūtu parolēm";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Aizvērt";
 
 /* Title for a toggle that enables autofill */
-"autofill.logins.list.enable" = "Saglabāt un automātiski aizpildīt pieteikšanās datus";
+"autofill.logins.list.enable" = "Saglabāt un automātiski aizpildīt paroles";
 
 /* Toast message when a login item is deleted */
-"autofill.logins.list.login-deleted-message" = "%@ pieteikšanās dati izdzēsti";
+"autofill.logins.list.login-deleted-message" = "%@ parole dzēsta";
 
 /* Toast message when a login item without a title is deleted */
-"autofill.logins.list.login-deleted-message-no-title" = "Pieteikšanās dati izdzēsti";
+"autofill.logins.list.login-deleted-message-no-title" = "Parole dzēsta";
 
 /* Title for a button that allows a user to reset their list of never saved sites */
 "autofill.logins.list.never.saved" = "Atiestatīt izslēgtās vietnes";
@@ -560,28 +557,28 @@
 "autofill.logins.list.never.saved.reset.action.confirm" = "Atiestatīt izslēgtās vietnes";
 
 /* Alert title */
-"autofill.logins.list.never.saved.reset.action.title" = "Ja atiestatīsi izslēgtās vietnes, nākamreiz pierakstoties kādā no šīm vietnēm, tev tiks piedāvāts saglabāt savus pieteikšanās datus.";
+"autofill.logins.list.never.saved.reset.action.title" = "Ja atiestatīsi izslēgtās vietnes, tev tiks piedāvāts saglabāt savus pieteikšanās datus, kad nākamreiz tajās pierakstīsies.";
 
 /* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Meklēt pieteikšanās datus";
+"autofill.logins.list.search-placeholder" = "Meklēt paroles";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Ieteikts";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Pieteikšanās dati";
+"autofill.logins.list.title" = "Paroles";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Lai aizsargātu tavus pieteikšanās datus, ir nepieciešams piekļuves kods.";
+"autofill.logins.no-auth.subtitle" = "Lai aizsargātu tavas paroles, ir nepieciešams piekļuves kods.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Aizsargājiet savu ierīci, lai saglabātu pieteikšanās datus";
+"autofill.logins.no-auth.title" = "Aizsargā savu ierīci, lai saglabātu paroles";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Atcelt";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Atbloķē, lai izmantotu saglabātos pieteikšanās datus";
+"autofill.logins.prompt.auth.reason" = "Jāatbloķē, lai izmantotu saglabātu paroli";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "No šīs vietnes";
@@ -605,7 +602,7 @@
 "autofill.logins.search.no-results.title" = "Nav rezultātu";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Paroles tiek droši saglabātas tavā ierīcē, izvēlnē Pieteikšanās dati.";
+"autofill.password-generation-prompt.subtitle" = "Paroles tiek droši glabātas tavā ierīcē.";
 
 /* Title for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.title" = "Vai izmantot spēcīgu DuckDuckGo paroli?";
@@ -650,7 +647,7 @@
 "autofill.save-login.never-prompt.CTA" = "Nekad nejautāt par šo vietni";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Paroles tiek droši saglabātas tavā ierīcē, izvēlnē Pieteikšanās dati.";
+"autofill.save-login.new-user.message" = "Paroles tiek droši glabātas tavā ierīcē.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vai vēlies, lai DuckDuckGo saglabātu tavu paroli?";
@@ -659,7 +656,7 @@
 "autofill.save-login.not-now.CTA" = "Nesaglabāt";
 
 /* Title displayed on modal asking for the user to save the login */
-"autofill.save-login.title" = "Saglabāt pieteikšanās datus?";
+"autofill.save-login.title" = "Saglabāt paroli?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Saglabāt paroli";
@@ -873,6 +870,9 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internets var būt diezgan “mežonīgs”.\n\nBet neuztraucies! Meklēt un pārlūkot privātā režīmā ir vieglāk, nekā tu domā.";
+
+/* No comment provided by engineer. */
+"Debug" = "Debug";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Atspējota";
@@ -1348,6 +1348,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Laipni lūdzam\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo Mac datoram sniedz nepieciešamo ātrumu, ierastās pārlūkošanas funkcijas un savā klasē labākās privātuma pamatfunkcijas.";
 
@@ -1411,17 +1414,104 @@
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
 
+/* Privacy Policy title for Network Protection */
+"network-protection.privacy-policy.title" = "Privātuma politika";
+
+/* Title text for the Network Protection terms and conditions accept button */
+"network-protection.waitlist.agree-and-continue" = "Agree and Continue";
+
+/* Availability disclaimer for Network Protection join waitlist screen */
+"network-protection.waitlist.availability-disclaimer" = "Network Protection is free to use during early access.";
+
+/* Agree and Continue button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.agree-and-continue" = "Agree and Continue";
+
+/* Enable Notifications button for Network Protection joined waitlist screen */
+"network-protection.waitlist.button.enable-notifications" = "Enable Notifications";
+
+/* Button title for users who already have an invite code */
+"network-protection.waitlist.button.existing-invite-code" = "Man ir uzaicinājuma kods";
+
+/* Join Waitlist button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.join-waitlist" = "Join the Waitlist";
+
+/* Button title text for the Network Protection waitlist confirmation prompt */
+"network-protection.waitlist.get-started" = "Sākt darbu";
+
+/* Subtitle for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.subtitle" = "Encrypt online traffic across your browsers and apps.";
+
+/* Title for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.title" = "Full-device coverage";
+
+/* Subtitle for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.subtitle" = "No need for a separate app. Connect in one click and see your connection status at a glance.";
+
+/* Title for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.title" = "Fast, reliable, and easy to use";
+
+/* Subtitle for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.subtitle" = "We do not log or save any data that can connect you to your online activity.";
+
+/* Title for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.title" = "Strict no-logging policy";
+
+/* Subtitle for Network Protection invited screen */
+"network-protection.waitlist.invited.subtitle" = "Get an extra layer of protection online with the VPN built for speed and simplicity. Encrypt your internet connection across your entire device and hide your location and IP address from sites you visit.";
+
+/* Title for Network Protection invited screen */
+"network-protection.waitlist.invited.title" = "You’re invited to try\nNetwork Protection early access!";
+
+/* First subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.1" = "Secure your connection anytime, anywhere with Network Protection, the VPN from DuckDuckGo.";
+
+/* Second subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.2" = "Join the waitlist, and we’ll notify you when it’s your turn.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
+
+/* Title for Network Protection joined waitlist screen */
+"network-protection.waitlist.joined.title" = "Tu esi sarakstā!";
+
+/* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "New invites are sent every few days, on a first come, first served basis.";
+
+/* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "We’ll notify you when your invite is ready.";
+
+/* Body text for the alert to enable notifications */
+"network-protection.waitlist.notification-alert.description" = "We’ll send you a notification when your invite to test Network Protection is ready.";
+
+/* Subtitle for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-description" = "Get a notification when your copy of Network Protection early access is ready.";
+
+/* Title for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-title" = "Know the instant you're invited";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.text" = "Atver savu ielūgumu";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.title" = "Network Protection is ready!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Your invite is ready!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Tu esi sarakstā!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Pievienojies privātajam nogaides sarakstam";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+"network.protection.invite.dialog.title" = "You’re invited to try Network Protection";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
-
-/* Message explaining that netP is invite only */
-"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
 
 /* Message for the network protection invite success view */
 "network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
@@ -1453,7 +1543,7 @@
 /* Header title label text for the status view when netP is connected */
 "network.protection.status.header.title.on" = "Network Protection is On";
 
-/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+/* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 
 /* Connection details label shown in NetworkProtection's status view. */
@@ -1489,23 +1579,32 @@
 /* Title for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.title" = "VPN brīdinājumi";
 
-/* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.footer" = "Automātiski atjaunot VPN savienojumu pēc pārtraukuma.";
+/* Footer text for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.";
 
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.title" = "Vienmēr ieslēgts";
+/* Title for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.title" = "Exclude Local Networks";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Subtitle of countries item when there are multiple cities, example : */
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d cities";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
+"network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
+
+/* Title for the VPN Location screen. */
+"network.protection.vpn.location.title" = "VPN Location";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "VPN paziņojumi";
@@ -1517,10 +1616,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Tīkla aizsardzība novērš DNS noplūdi uz tavu interneta pakalpojumu sniedzēju, novirzot DNS vaicājumus caur VPN tuneli uz mūsu pašu atrisinātāju.";
-
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.title" = "Drošs DNS";
+"network.protection.vpn.secure.dns.setting.footer" = "Our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN iestatījumi";
@@ -1648,8 +1744,110 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Izlase";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "Par DuckDuckGo";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "Par";
+
 /* about page */
 "settings.about.text" = "DuckDuckGo ir neatkarīgs 2008. gadā dibināts interneta privātuma uzņēmums ikvienam, kam ir apnikusi izsekošana tiešsaistē un kas vēlas vienkāršu risinājumu. Mēs esam pierādījums tam, ka tiešsaistē var iegūt reālu privātuma aizsardzību bez kompromisiem.\n\nDuckDuckGo pārlūks sniedz visas iespējas, ko gaidi no pārlūkprogrammas, piemēram, grāmatzīmes, cilnes, paroles un citas, kā arī vairāk nekā [duci spēcīgu privātuma aizsardzības funkciju](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) pēc noklusējuma netiek piedāvāts lielākajā daļā populārāko pārlūkprogrammu. Šis unikāli visaptverošais privātuma aizsardzības komplekts palīdz aizsargāt tavas darbības tiešsaistē, sākot no meklēšanas līdz pārlūkošanai, e-pasta sūtīšanai u.c.\n\nMūsu privātuma aizsardzība darbojas vienmēr – tev nav jāpārzina sarežģīti tehniskie aspekti vai iestatījumi. Tev vienkārši jālieto DuckDuckGo pārlūks visās savās ierīcēs, un privātums būs tavs standarta risinājums.\n\nBet, ja vēlies paskatīties, kas lācītim vēderā, vairāk informācijas par to, kā darbojas DuckDuckGo privātuma aizsardzība, vari atrast mūsu [palīdzības lapās](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Pievienot lietotni dokam";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Pievienot logrīku sākuma ekrānam";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Adreses joslas pozīcija";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Parādas";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Atvērt saites saistītajās lietotnēs";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Atspējo, lai novērstu saišu automātisku atvēršanu citās instalētajās lietotnēs.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Automātiski pabeigt ieteikumus";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Lietojumprogrammas bloķēšana";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Ja ir iestatīts Touch ID, Face ID vai sistēmas piekļuves kods, atverot lietotni, tev tā būs jāatbloķē.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Automātiski notīrīt datus";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Pārvaldīt sīkfailu uznirstošos logus";
+
+/* Settings title for the customize section */
+"settings.customize" = "Pielāgošana";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Iestatīt kā noklusējuma pārlūku";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "E-pasta aizsardzība";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Bloķē e-pasta izsekotājus un paslēp savu adresi";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Kopīgot atsauksmi";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Uguns pogas animācija";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Ugunsdrošas vietnes";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Globālā privātuma kontrole (GPC)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "Lietotnes ikona";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Tastatūra";
+
+/* Settings screen cell text for logins */
+"settings.logins" = "Pieteikšanās dati";
+
+/* Settings title for the 'More' section */
+"settings.more" = "Vairāk no DuckDuckGo";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Ilgas nospiešanas rezultātu priekšskatījumi";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Privātums";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Sinhronizācija un dublēšana";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Burtu izmērs";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Motīvs";
+
+/* Title for the Settings View */
+"settings.title" = "Iestatījumi";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Neaizsargātas vietnes";
+
+/* Settings cell for Version */
+"settings.version" = "Versija";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Privātā balss meklēšana";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Iesniegt ziņojumu";
@@ -1734,6 +1932,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Lūdzu, atļauj piekļuvi mikrofonam iOS sistēmas iestatījumos, lai DuckDuckGo varētu izmantot balss funkcijas.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "Labi";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Nepieciešama piekļuve mikrofonam";

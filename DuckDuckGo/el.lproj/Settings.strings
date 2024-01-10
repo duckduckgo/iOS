@@ -46,8 +46,8 @@
 /* Class = "UILabel"; text = "Debug Menu"; ObjectID = "A9G-5I-RSn"; */
 "A9G-5I-RSn.text" = "Μενού επανόρθωσης σφαλμάτων";
 
-/* Class = "UILabel"; text = "Logins"; ObjectID = "And-cQ-SEu"; */
-"And-cQ-SEu.text" = "Συνδέσεις";
+/* Class = "UILabel"; text = "Passwords"; ObjectID = "And-cQ-SEu"; */
+"And-cQ-SEu.text" = "Κωδικοί πρόσβασης";
 
 /* Class = "UILabel"; text = "Animation"; ObjectID = "AtR-nS-Gun"; */
 "AtR-nS-Gun.text" = "Κίνηση";

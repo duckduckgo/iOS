@@ -1,15 +1,3 @@
-/* Class = "UILabel"; text = "Fireproof Sites"; ObjectID = "0DQ-yq-UuT"; */
-"0DQ-yq-UuT.text" = "Brannsikre nettsteder";
-
-/* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
-"0gU-rZ-pRc.footerTitle" = "Deaktiver for å forhindre at lenker automatisk åpnes i andre installerte apper.";
-
-/* Class = "UITableViewSection"; headerTitle = "Customize"; ObjectID = "0gU-rZ-pRc"; */
-"0gU-rZ-pRc.headerTitle" = "Tilpass";
-
-/* Class = "UILabel"; text = "Version"; ObjectID = "2ky-s9-1aZ"; */
-"2ky-s9-1aZ.text" = "Versjon";
-
 /* Class = "UINavigationItem"; title = "Keyboard"; ObjectID = "2pp-PM-6rW"; */
 "2pp-PM-6rW.title" = "Tastatur";
 
@@ -31,12 +19,6 @@
 /* Class = "UILabel"; text = "Clear Tabs and Data"; ObjectID = "9fc-9r-4aA"; */
 "9fc-9r-4aA.text" = "Lukk faner og slett data";
 
-/* Class = "UILabel"; text = "Text Size"; ObjectID = "9Ko-0g-T3h"; */
-"9Ko-0g-T3h.text" = "Tekststørrelse";
-
-/* Class = "UILabel"; text = "Title"; ObjectID = "9kt-6R-XiZ"; */
-"9kt-6R-XiZ.text" = "Tittel";
-
 /* Class = "UILabel"; text = "App Launch"; ObjectID = "13n-KI-KLq"; */
 "13n-KI-KLq.text" = "Appoversikt";
 
@@ -46,8 +28,8 @@
 /* Class = "UILabel"; text = "Debug Menu"; ObjectID = "A9G-5I-RSn"; */
 "A9G-5I-RSn.text" = "Feilsøkingsmeny";
 
-/* Class = "UILabel"; text = "Logins"; ObjectID = "And-cQ-SEu"; */
-"And-cQ-SEu.text" = "Pålogginger";
+/* Class = "UILabel"; text = "Passwords"; ObjectID = "And-cQ-SEu"; */
+"And-cQ-SEu.text" = "Passord";
 
 /* Class = "UILabel"; text = "Animation"; ObjectID = "AtR-nS-Gun"; */
 "AtR-nS-Gun.text" = "Animasjon";
@@ -64,53 +46,20 @@
 /* Class = "UINavigationItem"; title = "Manage Cookie Pop-ups"; ObjectID = "btj-ri-kRr"; */
 "btj-ri-kRr.title" = "Administrer vinduer om informasjonskapsler";
 
-/* Class = "UILabel"; text = "App Icon"; ObjectID = "cKo-er-HNj"; */
-"cKo-er-HNj.text" = "Appikon";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "CR5-Al-WIW"; */
-"CR5-Al-WIW.text" = "Etikett";
-
 /* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "cW7-OM-2oW"; */
 "cW7-OM-2oW.text" = "Global Privacy Control (GPC)";
 
 /* Class = "UIBarButtonItem"; title = "Add"; ObjectID = "CxT-QK-iVn"; */
 "CxT-QK-iVn.title" = "Legg til";
 
-/* Class = "UILabel"; text = "Hide your location and conceal your online activity"; ObjectID = "Cyw-ir-cSK"; */
-"Cyw-ir-cSK.text" = "Hide your location and conceal your online activity";
-
 /* Class = "UILabel"; text = "App Exit, Inactive for 15 Minutes"; ObjectID = "D0R-jp-UY8"; */
 "D0R-jp-UY8.text" = "når appen lukkes eller har vært inaktiv i 15 minutter";
-
-/* Class = "UILabel"; text = "10.0.1 (Build 10005)"; ObjectID = "d5n-vG-8kF"; */
-"d5n-vG-8kF.text" = "10.0.1 (Build 10005)";
-
-/* Class = "UILabel"; text = "Application Lock"; ObjectID = "dBZ-yq-FYj"; */
-"dBZ-yq-FYj.text" = "Applås";
-
-/* Class = "UITableViewSection"; headerTitle = "Appearance"; ObjectID = "dj9-vh-Rig"; */
-"dj9-vh-Rig.headerTitle" = "Utseende";
-
-/* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.footerTitle" = "Hvis du har touch-ID, face-ID eller systempassord, blir du bedt om å låse opp appen når du åpner den.";
-
-/* Class = "UITableViewSection"; headerTitle = "Privacy"; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.headerTitle" = "Personvern";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "dud-qo-Ces"; */
 "dud-qo-Ces.text" = "Etikett";
 
-/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Dyd-bm-goj"; */
-"Dyd-bm-goj.title" = "Innstillinger";
-
-/* Class = "UILabel"; text = "100%"; ObjectID = "EB8-09-gt2"; */
-"EB8-09-gt2.text" = "100 %";
-
 /* Class = "UILabel"; text = "Label"; ObjectID = "EIq-Ev-nfj"; */
 "EIq-Ev-nfj.text" = "Etikett";
-
-/* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "ekF-SJ-PAQ"; */
-"ekF-SJ-PAQ.text" = "Slett data automatisk";
 
 /* Class = "UILabel"; text = "App Exit, Inactive for 5 Minutes"; ObjectID = "ElX-yE-4PX"; */
 "ElX-yE-4PX.text" = "når appen lukkes eller har vært inaktiv i 5 minutter";
@@ -118,59 +67,20 @@
 /* Class = "UINavigationItem"; title = "App Icon"; ObjectID = "eMH-uv-Kms"; */
 "eMH-uv-Kms.title" = "Appikon";
 
-/* Class = "UILabel"; text = "Theme"; ObjectID = "f1O-6u-LFY"; */
-"f1O-6u-LFY.text" = "Utseende";
-
 /* Class = "UILabel"; text = "App Exit Only"; ObjectID = "Fal-1Y-o2S"; */
 "Fal-1Y-o2S.text" = "kun når appen lukkes";
 
 /* Class = "UITableViewController"; title = "Automatically Clear Data"; ObjectID = "fdJ-b1-Des"; */
 "fdJ-b1-Des.title" = "Slett data automatisk";
 
-/* Class = "UILabel"; text = "Unprotected Sites"; ObjectID = "FHC-1z-Z3v"; */
-"FHC-1z-Z3v.text" = "Ubeskyttede nettsteder";
-
-/* Class = "UITableViewSection"; headerTitle = "About"; ObjectID = "FpT-1C-xtx"; */
-"FpT-1C-xtx.headerTitle" = "Om";
-
 /* Class = "UITableViewController"; title = "Global Privacy Control (GPC)"; ObjectID = "fV3-86-QQj"; */
 "fV3-86-QQj.title" = "Global Privacy Control (GPC)";
-
-/* Class = "UILabel"; text = "Add Widget to Home Screen"; ObjectID = "Fxu-zn-51Z"; */
-"Fxu-zn-51Z.text" = "Legg til widgeten på startskjermen";
-
-/* Class = "UILabel"; text = "Fire Button Animation"; ObjectID = "gBo-Cu-e2k"; Note = "Fire button animation settings item"; */
-"gBo-Cu-e2k.text" = "Animasjon for brannknappen";
-
-/* Class = "UILabel"; text = "Default"; ObjectID = "Gbx-kl-uOO"; */
-"Gbx-kl-uOO.text" = "Standard";
-
-/* Class = "UILabel"; text = "Manage Cookie Pop-ups"; ObjectID = "GRv-M2-Kx1"; */
-"GRv-M2-Kx1.text" = "Administrer vinduer om informasjonskapsler";
-
-/* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
-"gS2-mg-l7R.title" = "Utseende";
-
-/* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
-"HLr-R8-xxF.text" = "Forhåndsvisning ved å trykke og holde";
-
-/* Class = "UILabel"; text = "Browse privately with our app for Windows"; ObjectID = "hoT-Nu-KXP"; */
-"hoT-Nu-KXP.text" = "Surf privat med vår app for Windows";
 
 /* Class = "UILabel"; text = "Privacy Protection enabled for all sites"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "Personvernbeskyttelse aktivert for alle nettsteder";
 
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Ikon";
-
-/* Class = "UILabel"; text = "Share Feedback"; ObjectID = "m23-t6-9cb"; */
-"m23-t6-9cb.text" = "Del tilbakemelding";
-
-/* Class = "UINavigationItem"; title = "Address Bar Position"; ObjectID = "mLn-1x-Fl5"; Note = "Fire button animation setting page title"; */
-"mLn-1x-Fl5.title" = "Plassering av adressefelt";
-
-/* Class = "UILabel"; text = "Address Bar Position"; ObjectID = "mqV-pf-NZ1"; Note = "Fire button animation settings item"; */
-"mqV-pf-NZ1.text" = "Plassering av adressefelt";
 
 /* Class = "UILabel"; text = "Let DuckDuckGo manage cookie consent pop-ups"; ObjectID = "nX1-F1-Frd"; */
 "nX1-F1-Frd.text" = "La DuckDuckGo administrere popup-vinduer om samtykke til informasjonskapsler";
@@ -181,35 +91,8 @@
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
 "OHV-qC-tL9.title" = "Ubeskyttede nettsteder";
 
-/* Class = "UILabel"; text = "About DuckDuckGo"; ObjectID = "oM7-1o-9oY"; */
-"oM7-1o-9oY.text" = "Om DuckDuckGo";
-
-/* Class = "UILabel"; text = "Top"; ObjectID = "opn-JO-idF"; */
-"opn-JO-idF.text" = "Topp";
-
-/* Class = "UITableViewSection"; headerTitle = "More From DuckDuckGo"; ObjectID = "OxE-MQ-uJk"; */
-"OxE-MQ-uJk.headerTitle" = "Mer fra DuckDuckGo";
-
-/* Class = "UILabel"; text = "Sync & Back Up"; ObjectID = "oXN-ez-gct"; */
-"oXN-ez-gct.text" = "Synkronisering og sikkerhetskopiering";
-
-/* Class = "UILabel"; text = "Browse privately with our app for Mac "; ObjectID = "P0F-ts-ekd"; */
-"P0F-ts-ekd.text" = "Surf privat med vår app for Mac ";
-
-/* Class = "UILabel"; text = "Network Protection"; ObjectID = "qah-gb-udB"; */
-"qah-gb-udB.text" = "Network Protection";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
-"qeN-SV-zy7.text" = "Etikett";
-
-/* Class = "UILabel"; text = "DuckDuckGo Windows App"; ObjectID = "RQ8-H1-Ez1"; */
-"RQ8-H1-Ez1.text" = "DuckDuckGo Windows-app";
-
 /* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
 "ssa-zd-L3T.title" = "Tekststørrelse";
-
-/* Class = "UILabel"; text = "Private Voice Search"; ObjectID = "Swa-O7-n8W"; */
-"Swa-O7-n8W.text" = "Privat talesøk";
 
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Vis tastatur i";
@@ -220,17 +103,8 @@
 /* Class = "UITableViewSection"; headerTitle = "Action"; ObjectID = "U2M-6p-6nl"; */
 "U2M-6p-6nl.headerTitle" = "Handling";
 
-/* Class = "UILabel"; text = "Autocomplete Suggestions"; ObjectID = "U8i-cQ-5WW"; */
-"U8i-cQ-5WW.text" = "Vis forslag fra autofullføring";
-
-/* Class = "UINavigationItem"; title = "Fire Button Animation"; ObjectID = "uns-8w-IwL"; Note = "Fire button animation setting page title"; */
-"uns-8w-IwL.title" = "Animasjon for brannknappen";
-
 /* Class = "UILabel"; text = "Remove All Fireproof Sites"; ObjectID = "UZx-52-aer"; */
 "UZx-52-aer.text" = "Fjern alle brannsikre nettsteder";
-
-/* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "vPz-uO-6gB"; */
-"vPz-uO-6gB.text" = "Global Privacy Control (GPC)";
 
 /* Class = "UITableViewSection"; footerTitle = "App exit is defined by swiping the app to close it while inactivity is when the app is in the background."; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
 "vSJ-YJ-bBs.footerTitle" = "Apper lukkes når de avsluttes ved sveiping, og regnes som inaktive når de ligger i bakgrunnen.";
@@ -238,23 +112,8 @@
 /* Class = "UITableViewSection"; headerTitle = "Desired timing"; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
 "vSJ-YJ-bBs.headerTitle" = "Utføres";
 
-/* Class = "UILabel"; text = "Set as Default Browser"; ObjectID = "xof-5k-PkI"; */
-"xof-5k-PkI.text" = "Gjør til standardnettleser";
-
 /* Class = "UINavigationItem"; title = "Fireproof Sites"; ObjectID = "xUX-nF-HOl"; */
 "xUX-nF-HOl.title" = "Brannsikre nettsteder";
-
-/* Class = "UILabel"; text = "Block email trackers and hide your address"; ObjectID = "Y6Y-wA-n6Z"; */
-"Y6Y-wA-n6Z.text" = "Blokker e-postsporere og skjul adressen din";
-
-/* Class = "UILabel"; text = "Keyboard"; ObjectID = "yoZ-jw-Cu3"; */
-"yoZ-jw-Cu3.text" = "Tastatur";
-
-/* Class = "UILabel"; text = "Add App to Your Dock"; ObjectID = "yvj-LL-MiR"; */
-"yvj-LL-MiR.text" = "Legg til appen i docken";
-
-/* Class = "UILabel"; text = "DuckDuckGo Mac App"; ObjectID = "Yz9-17-qnn"; */
-"Yz9-17-qnn.text" = "DuckDuckGo Mac-app";
 
 /* Class = "UILabel"; text = "New Tab"; ObjectID = "Zpg-h0-rYv"; */
 "Zpg-h0-rYv.text" = "Ny fane";

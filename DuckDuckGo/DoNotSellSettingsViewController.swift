@@ -71,7 +71,7 @@ extension DoNotSellSettingsViewController: Themable {
     
     /// Apply attributes for NSAtrtributedStrings for copy text
     func applyAtributes(theme: Theme) {
-        let fontSize = SettingsViewController.fontSizeForHeaderView
+        let fontSize = FontSettings.fontSizeForHeaderView
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.16
         let tempStr = NSMutableAttributedString(string: UserText.doNotSellInfoText + " ",

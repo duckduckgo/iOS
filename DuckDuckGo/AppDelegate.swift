@@ -21,7 +21,6 @@ import UIKit
 import Combine
 import Common
 import Core
-import CoreData
 import UserNotifications
 import Kingfisher
 import WidgetKit
@@ -101,6 +100,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 #endif
 
+        if isDebugBuild {
+            Pixel.isDryRun = true
+        } else {
+            Pixel.isDryRun = false
+        }
+
         ContentBlocking.shared.onCriticalError = presentPreemptiveCrashAlert
 
         // Can be removed after a couple of versions
@@ -124,19 +129,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = DefaultUserAgentManager.shared
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
+            Pixel.isDryRun = true
             _ = DefaultUserAgentManager.shared
             Database.shared.loadStore { _, _ in }
-            bookmarksDatabase.loadStore { context, error in
-                guard let context = context else {
-                    fatalError("Error: \(error?.localizedDescription ?? "<unknown>")")
-                }
-                
-                let legacyStorage = LegacyBookmarksCoreDataStorage()
-                legacyStorage?.loadStoreAndCaches()
-                LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
-                                                      to: context)
-                legacyStorage?.removeStore()
-            }
+            _ = BookmarksDatabaseSetup(crashOnError: true).loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase)
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
         }
@@ -175,66 +171,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DatabaseMigration.migrate(to: context)
         }
 
-        let preMigrationErrorHandling = EventMapping<BookmarkFormFactorFavoritesMigration.MigrationErrors> { _, error, _, _ in
-            if let error = error {
-                Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
-                           error: error)
-            } else {
-                Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase)
-            }
-
-            if shouldPresentInsufficientDiskSpaceAlertAndCrash {
-                return
-            } else {
-                Thread.sleep(forTimeInterval: 1)
-                fatalError("Could not create Bookmarks database stack: \(error?.localizedDescription ?? "err")")
-            }
+        if BookmarksDatabaseSetup(crashOnError: !shouldPresentInsufficientDiskSpaceAlertAndCrash)
+                .loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase) {
+            // MARK: post-Bookmarks migration logic
         }
 
-        let oldFavoritesOrder = BookmarkFormFactorFavoritesMigration
-            .getFavoritesOrderFromPreV4Model(
-                dbContainerLocation: BookmarksDatabase.defaultDBLocation,
-                dbFileURL: BookmarksDatabase.defaultDBFileURL,
-                errorEvents: preMigrationErrorHandling
-            )
-
-        bookmarksDatabase.loadStore { [weak self] context, error in
-            guard let context = context else {
-                if let error = error {
-                    Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
-                               error: error)
-                } else {
-                    Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase)
-                }
-
-                if shouldPresentInsufficientDiskSpaceAlertAndCrash {
-                    return
-                } else {
-                    Thread.sleep(forTimeInterval: 1)
-                    fatalError("Could not create Bookmarks database stack: \(error?.localizedDescription ?? "err")")
-                }
-            }
-            
-            let legacyStorage = LegacyBookmarksCoreDataStorage()
-            legacyStorage?.loadStoreAndCaches()
-            LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
-                                                  to: context)
-            legacyStorage?.removeStore()
-
-            do {
-                BookmarkFormFactorFavoritesMigration.migrateToFormFactorSpecificFavorites(byCopyingExistingTo: .mobile,
-                                                                                          preservingOrderOf: oldFavoritesOrder,
-                                                                                          in: context)
-                if context.hasChanges {
-                    try context.save(onErrorFire: .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders)
-                }
-            } catch {
-                Thread.sleep(forTimeInterval: 1)
-                fatalError("Could not prepare Bookmarks DB structure")
-            }
-
-            WidgetCenter.shared.reloadAllTimelines()
-        }
+        WidgetCenter.shared.reloadAllTimelines()
 
 #if APP_TRACKING_PROTECTION
         appTrackingProtectionDatabase.loadStore { context, error in
@@ -374,6 +316,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         widgetRefreshModel.beginObservingVPNStatus()
         NetworkProtectionAccessController().refreshNetworkProtectionAccess()
 #endif
+        
+#if SUBSCRIPTION
+        setupSubscriptionsEnvironment()
+#endif
 
         return true
     }
@@ -415,6 +361,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             PreserveLogins.shared.clearLegacyAllowedDomains()
         })
     }
+
+#if SUBSCRIPTION
+    private func setupSubscriptionsEnvironment() {
+        SubscriptionPurchaseEnvironment.current = .appStore
+    }
+#endif
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
@@ -546,10 +498,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func onApplicationLaunch(_ application: UIApplication) {
-        beginAuthentication()
-        initialiseBackgroundFetch(application)
-        applyAppearanceChanges()
-        refreshRemoteMessages()
+        Task { @MainActor in
+            await beginAuthentication()
+            initialiseBackgroundFetch(application)
+            applyAppearanceChanges()
+            refreshRemoteMessages()
+        }
     }
     
     private func applyAppearanceChanges() {
@@ -568,10 +522,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillEnterForeground(_ application: UIApplication) {
         ThemeManager.shared.updateUserInterfaceStyle()
 
-        beginAuthentication()
-        autoClear?.applicationWillMoveToForeground()
-        showKeyboardIfSettingOn = true
-        syncService.scheduler.resumeSyncQueue()
+        Task { @MainActor in
+            await beginAuthentication()
+            autoClear?.applicationWillMoveToForeground()
+            showKeyboardIfSettingOn = true
+            syncService.scheduler.resumeSyncQueue()
+        }
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -699,7 +655,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.isHidden = true
     }
 
-    private func beginAuthentication() {
+    private func beginAuthentication() async {
         
         guard privacyStore.authenticationEnabled else { return }
 
@@ -711,7 +667,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         
-        controller.beginAuthentication { [weak self] in
+        await controller.beginAuthentication { [weak self] in
             self?.removeOverlay()
             self?.showKeyboardOnLaunch()
         }

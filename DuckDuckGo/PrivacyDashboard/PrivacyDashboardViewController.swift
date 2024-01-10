@@ -235,16 +235,17 @@ extension PrivacyDashboardViewController {
         let blockedTrackerDomains = privacyInfo.trackerInfo.trackersBlocked.compactMap { $0.domain }
         let configuration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
         let protectionsState = configuration.isFeature(.contentBlocking, enabledForDomain: breakageAdditionalInfo.currentURL.host)
-
+        
         return WebsiteBreakage(siteUrl: breakageAdditionalInfo.currentURL,
                                category: category,
                                description: description,
                                osVersion: "\(ProcessInfo.processInfo.operatingSystemVersion)",
+                               manufacturer: "Apple",
                                upgradedHttps: breakageAdditionalInfo.httpsForced,
                                tdsETag: ContentBlocking.shared.contentBlockingManager.currentMainRules?.etag ?? "",
                                blockedTrackerDomains: blockedTrackerDomains,
                                installedSurrogates: privacyInfo.trackerInfo.installedSurrogates.map { $0 },
-                               isGPCEnabled: false,
+                               isGPCEnabled: AppDependencyProvider.shared.appSettings.sendDoNotSell,
                                ampURL: breakageAdditionalInfo.ampURLString,
                                urlParametersRemoved: breakageAdditionalInfo.urlParametersRemoved,
                                protectionsState: protectionsState,

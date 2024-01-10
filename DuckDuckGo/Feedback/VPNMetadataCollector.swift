@@ -97,13 +97,16 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
     private let errorStore: NetworkProtectionTunnelErrorStore
+    private let healthStore: NetworkProtectionTunnelHealthStore
 
     init(statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
          serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
-         errorStore: NetworkProtectionTunnelErrorStore = NetworkProtectionTunnelErrorStore()) {
+         errorStore: NetworkProtectionTunnelErrorStore = NetworkProtectionTunnelErrorStore(),
+         healthStore: NetworkProtectionTunnelHealthStore = NetworkProtectionTunnelHealthStore()) {
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
         self.errorStore = errorStore
+        self.healthStore = healthStore
     }
 
     func collectMetadata() async -> VPNMetadata {
@@ -143,17 +146,27 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
         var path: Network.NWPath?
         let startTime = CFAbsoluteTimeGetCurrent()
 
+        let dateFormatter = DateFormatter()
+        dateFormatter.calendar = Calendar.current
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
         while true {
             if !monitor.currentPath.availableInterfaces.isEmpty {
                 path = monitor.currentPath
+                healthStore.updateNetworkPath(path, updatesTimestamp: false)
                 monitor.cancel()
-                return .init(currentPath: path.debugDescription, lastPathChangeDate: "none", lastPathChange: "none")
+                return .init(currentPath: path.debugDescription,
+                             lastPathChangeDate: dateFormatter.string(from: healthStore.lastNetworkPathChangeDate),
+                             lastPathChange: healthStore.lastNetworkPathChange)
             }
 
             // Wait up to 3 seconds to fetch the path.
             let currentExecutionTime = CFAbsoluteTimeGetCurrent() - startTime
             if currentExecutionTime >= 3.0 {
-                return .init(currentPath: "Timed out fetching path", lastPathChangeDate: "none", lastPathChange: "none")
+                return .init(currentPath: "Timed out fetching path",
+                             lastPathChangeDate: dateFormatter.string(from: healthStore.lastNetworkPathChangeDate),
+                             lastPathChange: healthStore.lastNetworkPathChange)
             }
         }
     }

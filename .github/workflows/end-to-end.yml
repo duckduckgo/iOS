@@ -40,7 +40,7 @@ jobs:
       run: |
         set -o pipefail && xcodebuild \
           -scheme "DuckDuckGo" \
-          -destination "platform=iOS Simulator,name=iPhone 14,OS=16.4" \
+          -destination "platform=iOS Simulator,name=iPhone 15" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
         | tee xcodebuild.log

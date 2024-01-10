@@ -79,7 +79,7 @@ jobs:
       run: |
         set -o pipefail && xcodebuild test \
           -scheme "DuckDuckGo" \
-          -destination "platform=iOS Simulator,name=iPhone 15,OS=17.2" \
+          -destination "platform=iOS Simulator,name=iPhone 15" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
           DDG_SLOW_COMPILE_CHECK_THRESHOLD=250 \
@@ -181,7 +181,7 @@ jobs:
 
         set -o pipefail && xcodebuild \
         -scheme "DuckDuckGo" \
-        -destination "platform=iOS Simulator,name=iPhone 14" \
+        -destination "platform=iOS Simulator,name=iPhone 15" \
         -derivedDataPath "DerivedData" \
         -configuration "Release" \
         -skipPackagePluginValidation \

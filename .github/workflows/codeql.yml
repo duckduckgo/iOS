@@ -42,7 +42,7 @@ jobs:
         xcodebuild clean build \
         -target "DuckDuckGo" \
         -scheme "DuckDuckGo" \
-        -destination "platform=iOS Simulator,name=iPhone 14,OS=16.4"
+        -destination "platform=iOS Simulator,name=iPhone 15"
         -skipPackagePluginValidation \
 
     - name: Perform CodeQL Analysis

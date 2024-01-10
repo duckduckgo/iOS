@@ -44,7 +44,7 @@ jobs:
       run: |
         set -o pipefail && xcodebuild test \
           -scheme "AtbUITests" \
-          -destination "platform=iOS Simulator,name=iPhone 14,OS=16.4" \
+          -destination "platform=iOS Simulator,name=iPhone 15" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
           | tee xcodebuild.log \
@@ -86,7 +86,7 @@ jobs:
       run: |
         set -o pipefail && xcodebuild test \
           -scheme "FingerprintingUITests" \
-          -destination "platform=iOS Simulator,name=iPhone 14,OS=16.4" \
+          -destination "platform=iOS Simulator,name=iPhone 15" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
           | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml

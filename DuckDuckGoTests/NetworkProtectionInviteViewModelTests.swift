@@ -133,8 +133,15 @@ final class NetworkProtectionInviteViewModelTests: XCTestCase {
 }
 
 private class MockRedemptionCoordinator: NetworkProtectionCodeRedeeming {
+
     var callCount = 0
     func redeem(_ code: String) async throws {
         callCount += 1
     }
+
+    var exchangeCallCount = 0
+    func exchange(accessToken: String) async throws {
+        exchangeCallCount += 1
+    }
+
 }

@@ -4,9 +4,6 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
-/* No comment provided by engineer. */
-"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Bewerken";
 
@@ -23,7 +20,7 @@
 "action.title.add" = "Toevoegen";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Aanmeldgegevens";
+"action.title.autofill.logins" = "Wachtwoorden";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Toevoegen aan bladwijzers";
@@ -440,16 +437,16 @@
 "autofill.keep-enabled.alert.message" = "Je kunt dit op elk moment uitschakelen in de instellingen.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Wil je aanmeldgegevens blijven opslaan?";
+"autofill.keep-enabled.alert.title" = "Wil je wachtwoorden blijven opslaan?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Weergeven";
 
 /* Message displayed after saving an autofill login */
-"autofill.login-saved.toast" = "Login opgeslagen";
+"autofill.login-saved.toast" = "Wachtwoord opgeslagen";
 
 /* Message displayed after updating an autofill login */
-"autofill.login-updated.toast" = "Login bijgewerkt";
+"autofill.login-updated.toast" = "Wachtwoord bijgewerkt";
 
 /* Menu item text for copying autofill login details */
 "autofill.logins.copy-prompt" = "%@ kopiëren";
@@ -470,19 +467,19 @@
 "autofill.logins.details.address" = "URL van de website";
 
 /* Title for autofill login details */
-"autofill.logins.details.default-title" = "Inloggen";
+"autofill.logins.details.default-title" = "Wachtwoord";
 
 /* Delete button when deleting an autofill login */
-"autofill.logins.details.delete" = "Aanmeldgegevens verwijderen";
+"autofill.logins.details.delete" = "Wachtwoord verwijderen";
 
 /* Autofill alert button confirming delete autofill login */
-"autofill.logins.details.delete-confirmation.button" = "Aanmeldgegevens verwijderen";
+"autofill.logins.details.delete-confirmation.button" = "Wachtwoord verwijderen";
 
 /* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Weet je zeker dat je deze aanmeldgegevens wilt verwijderen?";
+"autofill.logins.details.delete-confirmation.title" = "Weet je zeker dat je dit wachtwoord wilt verwijderen?";
 
 /* Title when editing autofill login details */
-"autofill.logins.details.edit-title" = "Aanmeldgegevens bewerken";
+"autofill.logins.details.edit-title" = "Wachtwoord bewerken";
 
 /* Placeholder for password field on autofill login details */
 "autofill.logins.details.edit.password-placeholder" = "Wachtwoord";
@@ -496,14 +493,14 @@
 /* Placeholder for userbane field on autofill login details */
 "autofill.logins.details.edit.username-placeholder" = "gebruikersnaam@voorbeeld.com";
 
-/* Message displaying when the login was last updated by */
-"autofill.logins.details.last-updated" = "Aanmeldgegevens laatst bijgewerkt op %s";
+/* Message displaying when the login was last updated */
+"autofill.logins.details.last-updated" = "Laatst bijgewerkt op %@";
 
 /* Login name label for login details on autofill */
-"autofill.logins.details.login-name" = "Aanmeldgegevens Titel";
+"autofill.logins.details.login-name" = "Titel";
 
 /* Title when adding new autofill login */
-"autofill.logins.details.new-title" = "Aanmeldgegevens toevoegen";
+"autofill.logins.details.new-title" = "Wachtwoord toevoegen";
 
 /* Notes label for login details on autofill */
 "autofill.logins.details.notes" = "Opmerkingen";
@@ -518,37 +515,37 @@
 "autofill.logins.details.save-duplicate-alert.action" = "OK";
 
 /* Message for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.message" = "Je hebt al aanmeldgegevens voor deze gebruikersnaam en website.";
+"autofill.logins.details.save-duplicate-alert.message" = "Je hebt al een wachtwoord opgeslagen voor deze gebruikersnaam en website.";
 
 /* Title for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.title" = "Dubbele aanmeldgegevens";
+"autofill.logins.details.save-duplicate-alert.title" = "Wachtwoord dupliceren";
 
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Gebruikersnaam";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Aanmeldgegevens worden veilig opgeslagen op je apparaat.";
+"autofill.logins.empty-view.subtitle" = "Wachtwoorden worden veilig opgeslagen op je apparaat.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Nog geen aanmeldgegevens opgeslagen";
+"autofill.logins.empty-view.title" = "Nog geen wachtwoorden opgeslagen";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Annuleren";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Ontgrendel het apparaat om toegang te krijgen tot opgeslagen aanmeldgegevens";
+"autofill.logins.list.auth.reason" = "Ontgrendel het apparaat om toegang te krijgen tot wachtwoorden";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Sluiten";
 
 /* Title for a toggle that enables autofill */
-"autofill.logins.list.enable" = "Aanmeldgegevens opslaan en automatisch invullen";
+"autofill.logins.list.enable" = "Wachtwoorden opslaan en automatisch invullen";
 
 /* Toast message when a login item is deleted */
-"autofill.logins.list.login-deleted-message" = "Aanmeldgegevens voor %@ verwijderd";
+"autofill.logins.list.login-deleted-message" = "Wachtwoord voor %@ verwijderd";
 
 /* Toast message when a login item without a title is deleted */
-"autofill.logins.list.login-deleted-message-no-title" = "Aanmeldgegevens verwijderd";
+"autofill.logins.list.login-deleted-message-no-title" = "Wachtwoord verwijderd";
 
 /* Title for a button that allows a user to reset their list of never saved sites */
 "autofill.logins.list.never.saved" = "Uitgesloten sites opnieuw instellen";
@@ -560,28 +557,28 @@
 "autofill.logins.list.never.saved.reset.action.confirm" = "Uitgesloten sites opnieuw instellen";
 
 /* Alert title */
-"autofill.logins.list.never.saved.reset.action.title" = "Als je uitgesloten sites opnieuw instelt, zie je de volgende keer dat je bij een van deze sites inlogt een melding om je inloggegevens op te slaan.";
+"autofill.logins.list.never.saved.reset.action.title" = "Als je uitgesloten sites opnieuw instelt, zie je de volgende keer dat je bij een van deze sites inlogt een melding om je wachtwoord op te slaan.";
 
 /* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Aanmeldgegevens zoeken";
+"autofill.logins.list.search-placeholder" = "Wachtwoorden zoeken";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Aanbevolen";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Aanmeldgegevens";
+"autofill.logins.list.title" = "Wachtwoorden";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Er is een toegangscode vereist om je aanmeldgegevens te beschermen.";
+"autofill.logins.no-auth.subtitle" = "Er is een toegangscode vereist om je wachtwoorden te beschermen.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Beveilig je apparaat om aanmeldgegevens op te slaan";
+"autofill.logins.no-auth.title" = "Beveilig je apparaat om wachtwoorden op te slaan";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Annuleren";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Ontgrendelen om opgeslagen aanmeldgegevens te gebruiken";
+"autofill.logins.prompt.auth.reason" = "Ontgrendel om opgeslagen wachtwoord te gebruiken";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Van deze website";
@@ -605,7 +602,7 @@
 "autofill.logins.search.no-results.title" = "Geen resultaten";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Wachtwoorden worden veilig opgeslagen op je apparaat in het menu 'Aanmeldingen'.";
+"autofill.password-generation-prompt.subtitle" = "Wachtwoorden worden veilig opgeslagen op je apparaat.";
 
 /* Title for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.title" = "Een sterk wachtwoord van DuckDuckGo gebruiken?";
@@ -650,7 +647,7 @@
 "autofill.save-login.never-prompt.CTA" = "Nooit vragen voor deze site";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Wachtwoorden worden veilig opgeslagen op je apparaat in het menu 'Aanmeldingen'.";
+"autofill.save-login.new-user.message" = "Wachtwoorden worden veilig opgeslagen op je apparaat.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Wil je dat DuckDuckGo je wachtwoord opslaat?";
@@ -659,7 +656,7 @@
 "autofill.save-login.not-now.CTA" = "Niet opslaan";
 
 /* Title displayed on modal asking for the user to save the login */
-"autofill.save-login.title" = "Login opslaan?";
+"autofill.save-login.title" = "Wachtwoord opslaan?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Wachtwoord opslaan";
@@ -873,6 +870,9 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet kan best eng zijn.\n\nMaak je geen zorgen! Privé zoeken en browsen is eenvoudiger dan je denkt.";
+
+/* No comment provided by engineer. */
+"Debug" = "Debug";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Uitgeschakeld";
@@ -1348,6 +1348,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Welkom bij\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo voor Mac heeft de snelheid die je nodig hebt en de browsefuncties die je verwacht, en zit boordevol met onze allerbeste privacy essentials.";
 
@@ -1411,17 +1414,104 @@
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
 
+/* Privacy Policy title for Network Protection */
+"network-protection.privacy-policy.title" = "Privacybeleid";
+
+/* Title text for the Network Protection terms and conditions accept button */
+"network-protection.waitlist.agree-and-continue" = "Agree and Continue";
+
+/* Availability disclaimer for Network Protection join waitlist screen */
+"network-protection.waitlist.availability-disclaimer" = "Network Protection is free to use during early access.";
+
+/* Agree and Continue button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.agree-and-continue" = "Agree and Continue";
+
+/* Enable Notifications button for Network Protection joined waitlist screen */
+"network-protection.waitlist.button.enable-notifications" = "Enable Notifications";
+
+/* Button title for users who already have an invite code */
+"network-protection.waitlist.button.existing-invite-code" = "Ik heb een uitnodigingscode";
+
+/* Join Waitlist button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.join-waitlist" = "Join the Waitlist";
+
+/* Button title text for the Network Protection waitlist confirmation prompt */
+"network-protection.waitlist.get-started" = "Aan de slag";
+
+/* Subtitle for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.subtitle" = "Encrypt online traffic across your browsers and apps.";
+
+/* Title for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.title" = "Full-device coverage";
+
+/* Subtitle for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.subtitle" = "No need for a separate app. Connect in one click and see your connection status at a glance.";
+
+/* Title for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.title" = "Fast, reliable, and easy to use";
+
+/* Subtitle for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.subtitle" = "We do not log or save any data that can connect you to your online activity.";
+
+/* Title for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.title" = "Strict no-logging policy";
+
+/* Subtitle for Network Protection invited screen */
+"network-protection.waitlist.invited.subtitle" = "Get an extra layer of protection online with the VPN built for speed and simplicity. Encrypt your internet connection across your entire device and hide your location and IP address from sites you visit.";
+
+/* Title for Network Protection invited screen */
+"network-protection.waitlist.invited.title" = "You’re invited to try\nNetwork Protection early access!";
+
+/* First subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.1" = "Secure your connection anytime, anywhere with Network Protection, the VPN from DuckDuckGo.";
+
+/* Second subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.2" = "Join the waitlist, and we’ll notify you when it’s your turn.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
+
+/* Title for Network Protection joined waitlist screen */
+"network-protection.waitlist.joined.title" = "Je staat op de lijst!";
+
+/* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "New invites are sent every few days, on a first come, first served basis.";
+
+/* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "We’ll notify you when your invite is ready.";
+
+/* Body text for the alert to enable notifications */
+"network-protection.waitlist.notification-alert.description" = "We’ll send you a notification when your invite to test Network Protection is ready.";
+
+/* Subtitle for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-description" = "Get a notification when your copy of Network Protection early access is ready.";
+
+/* Title for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-title" = "Know the instant you're invited";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.text" = "Open je uitnodiging";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.title" = "Network Protection is ready!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Your invite is ready!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Je staat op de lijst!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Schrijf je in voor de privéwachtlijst";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+"network.protection.invite.dialog.title" = "You’re invited to try Network Protection";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
-
-/* Message explaining that netP is invite only */
-"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
 
 /* Message for the network protection invite success view */
 "network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
@@ -1453,7 +1543,7 @@
 /* Header title label text for the status view when netP is connected */
 "network.protection.status.header.title.on" = "Network Protection is On";
 
-/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+/* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 
 /* Connection details label shown in NetworkProtection's status view. */
@@ -1489,23 +1579,32 @@
 /* Title for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.title" = "VPN-meldingen";
 
-/* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.footer" = "Herstel een VPN-verbinding automatisch na onderbreking.";
+/* Footer text for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.";
 
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.title" = "Altijd aan";
+/* Title for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.title" = "Exclude Local Networks";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Subtitle of countries item when there are multiple cities, example : */
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d cities";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
+"network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
+
+/* Title for the VPN Location screen. */
+"network.protection.vpn.location.title" = "VPN Location";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "VPN-meldingen";
@@ -1517,10 +1616,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Netwerkbeveiliging voorkomt DNS-lekken naar je internetprovider door DNS-aanvragen via de VPN-tunnel naar onze eigen resolver te routeren.";
-
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.title" = "Veilige DNS";
+"network.protection.vpn.secure.dns.setting.footer" = "Our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-instellingen";
@@ -1648,8 +1744,110 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favorieten";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "Over DuckDuckGo";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "Over";
+
 /* about page */
 "settings.about.text" = "DuckDuckGo is het onafhankelijke internetprivacybedrijf, opgericht in 2008, voor iedereen die het beu is om online gevolgd te worden en daar een eenvoudige oplossing voor wil. Wij zijn het bewijs dat je privacy op internet écht beschermd kan worden zonder compromissen.\n\nDe DuckDuckGo-browser wordt geleverd met de functies die je van een webbrowser verwacht, zoals bladwijzers, tabbladen, wachtwoorden en meer, plus meer dan [een dozijn krachtige tools om je privacy te beschermen](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) die niet standaard worden aangeboden in de meeste populaire browsers. Deze unieke, uitgebreide privacybescherming helpt je online activiteiten te beschermen – of je nu zoekt, surft of mailt.\n\nJe hoeft niets te weten over de technische details of ingewikkelde instellingen om te profiteren van onze privacybescherming. Je hoeft alleen maar DuckDuckGo op al je apparaten te installeren en geniet dan standaard van privacy.\n\nMaar als je *een kijkje onder de motorkap* wilt, vind je meer informatie over de privacybescherming van DuckDuckGo op onze [hulppagina's](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "App toevoegen aan je dock";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Widget toevoegen aan startscherm";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Positie van adresbalk";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Uiterlijk";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Links openen in bijbehorende apps";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Uitschakelen om te voorkomen dat links automatisch geopend worden in andere geïnstalleerde apps.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Suggesties voor automatisch aanvullen weergeven";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "App-vergrendeling";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Als je Touch ID, Face ID of een systeemwachtwoord hebt ingesteld, word je gevraagd om de app te ontgrendelen als je deze opent.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Gegevens automatisch wissen";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Cookiepop-ups beheren";
+
+/* Settings title for the customize section */
+"settings.customize" = "Aanpassen";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Instellen als standaardbrowser";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "E-mailbescherming";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Blokkeer e-mailtrackers en verberg je adres";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Feedback delen";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Animatie vuurknop";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Brandveilige websites";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Global Privacy Control (GPC)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "App-pictogram";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Toetsenbord";
+
+/* Settings screen cell text for logins */
+"settings.logins" = "Aanmeldgegevens";
+
+/* Settings title for the 'More' section */
+"settings.more" = "Meer over DuckDuckGo";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Voorbeeldweergave bij lang indrukken";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Privacy";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Synchronisatie en back-up";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Lettergrootte";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Thema";
+
+/* Title for the Settings View */
+"settings.title" = "Instellingen";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Onbeschermde sites";
+
+/* Settings cell for Version */
+"settings.version" = "Versie";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Private spraakzoekopdracht";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Rapport versturen";
@@ -1734,6 +1932,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Sta microfoontoegang toe in de iOS-systeeminstellingen zodat DuckDuckGo spraakfuncties kan gebruiken.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "OK";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Toegang tot microfoon vereist";

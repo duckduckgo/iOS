@@ -40,7 +40,7 @@ class PrivacyDashboardViewController: UIViewController {
     private let privacyDashboardController: PrivacyDashboardController
     private let privacyConfigurationManager: PrivacyConfigurationManaging
     private let contentBlockingManager: ContentBlockerRulesManager
-    public var breakageReport: WebsiteBreakage?
+    public var breakageAdditionalInfo: BreakageAdditionaInfo?
     
     var source: WebsiteBreakage.Source {
         initMode == .reportBrokenSite ? .appMenu : .dashboard
@@ -58,12 +58,13 @@ class PrivacyDashboardViewController: UIViewController {
           privacyInfo: PrivacyInfo?,
           privacyConfigurationManager: PrivacyConfigurationManaging,
           contentBlockingManager: ContentBlockerRulesManager,
-          initMode: Mode) {
+          initMode: Mode,
+          breakageAdditionalInfo: BreakageAdditionaInfo?) {
         self.privacyDashboardController = PrivacyDashboardController(privacyInfo: privacyInfo)
         self.privacyConfigurationManager = privacyConfigurationManager
         self.contentBlockingManager = contentBlockingManager
         self.initMode = initMode
-        
+        self.breakageAdditionalInfo = breakageAdditionalInfo
         super.init(coder: coder)
         
         self.privacyDashboardController.privacyDashboardDelegate = self
@@ -195,13 +196,9 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
     
     func privacyDashboardController(_ privacyDashboardController: PrivacyDashboard.PrivacyDashboardController,
                                     didRequestSubmitBrokenSiteReportWithCategory category: String, description: String) {
-        
-        guard let breakageReport = breakageReport else {
-            assertionFailure("WebsiteBreakage not initialised")
-            return
-        }
-        
+                
         do {
+            let breakageReport = try makeWebsiteBreakage(category: category, description: description)
             try websiteBreakageReporter.report(breakage: breakageReport)
         } catch {
             os_log("Failed to generate or send the website breakage report: %@", type: .error, error.localizedDescription)
@@ -213,3 +210,48 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
 }
 
 extension PrivacyDashboardViewController: UIPopoverPresentationControllerDelegate {}
+
+extension PrivacyDashboardViewController {
+    
+    struct BreakageAdditionaInfo {
+        let currentURL: URL
+        let httpsForced: Bool
+        let ampURLString: String
+        let urlParametersRemoved: Bool
+        let isDesktop: Bool
+    }
+    
+    enum WebsiteBreakageError: Error {
+        case failedToFetchTheCurrentWebsiteInfo
+    }
+
+    private func makeWebsiteBreakage(category: String, description: String) throws -> WebsiteBreakage {
+        
+        guard let privacyInfo = privacyDashboardController.privacyInfo,
+              let breakageAdditionalInfo = breakageAdditionalInfo  else {
+            throw WebsiteBreakageError.failedToFetchTheCurrentWebsiteInfo
+        }
+        
+        let blockedTrackerDomains = privacyInfo.trackerInfo.trackersBlocked.compactMap { $0.domain }
+        let configuration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
+        let protectionsState = configuration.isFeature(.contentBlocking, enabledForDomain: breakageAdditionalInfo.currentURL.host)
+
+        return WebsiteBreakage(siteUrl: breakageAdditionalInfo.currentURL,
+                               category: category,
+                               description: description,
+                               osVersion: "\(ProcessInfo.processInfo.operatingSystemVersion)",
+                               upgradedHttps: breakageAdditionalInfo.httpsForced,
+                               tdsETag: ContentBlocking.shared.contentBlockingManager.currentMainRules?.etag ?? "",
+                               blockedTrackerDomains: blockedTrackerDomains,
+                               installedSurrogates: privacyInfo.trackerInfo.installedSurrogates.map { $0 },
+                               isGPCEnabled: false,
+                               ampURL: breakageAdditionalInfo.ampURLString,
+                               urlParametersRemoved: breakageAdditionalInfo.urlParametersRemoved,
+                               protectionsState: protectionsState,
+                               reportFlow: source,
+                               siteType: breakageAdditionalInfo.isDesktop ? .desktop : .mobile,
+                               atb: StatisticsUserDefaults().atb ?? "",
+                               model: UIDevice.current.model)
+                        
+    }
+}

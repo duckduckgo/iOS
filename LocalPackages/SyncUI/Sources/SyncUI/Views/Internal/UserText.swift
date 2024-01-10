@@ -25,12 +25,13 @@ struct UserText {
 
     // Sync Title
     static let syncTitle = NSLocalizedString("sync.title", value: "Sync & Backup", comment: "Sync & Backup Title")
+    static let syncRollOutBannerDescription = NSLocalizedString("preferences.sync.rollout-banner.description", value: "Sync & Backup is rolling out gradually and may not be available yet within DuckDuckGo on your other devices.", comment: "Description of rollout banner")
 
     // Sync Set Up
     // Sync With Another Device Card
     static let syncWithAnotherDeviceTitle = NSLocalizedString("sync.with.another.device.title", value: "Begin Syncing", comment: "Title for syncing with another device")
     static let syncWithAnotherDeviceMessage = NSLocalizedString("sync.with.another.device.message", value: "Securely sync bookmarks and passwords between your devices.", comment: "Message for syncing with another device")
-    static let syncWithAnotherDeviceButton = NSLocalizedString("sync.with.another.device.button", value: "Sync with Another Device", comment: "Button label for syncing with another device")
+    static let syncWithAnotherDeviceButton = NSLocalizedString("sync.with.another.device.button", value: "Sync With Another Device", comment: "Button label for syncing with another device")
     static let syncWithAnotherDeviceFooter = NSLocalizedString("sync.with.another.device.footer", value: "Your data is end-to-end encrypted, and DuckDuckGo does not have access to the encryption key.", comment: "Footer message for syncing with another device")
     // Other Options
     static let syncAndBackUpThisDeviceLink = NSLocalizedString("sync.and.backup.this.device.link", value: "Sync and Back Up This Device", comment: "Link label for syncing and backing up the device")
@@ -41,9 +42,8 @@ struct UserText {
     // Turn Sync Off
     static let turnSyncOff = NSLocalizedString("turn.sync.off", value: "Turn Off Sync & Backup...", comment: "Turn Sync Off - Button")
     static let turnSyncOffSectionHeader = NSLocalizedString("turn.sync.off.section.header", value: "Sync Enabled", comment: "Turn Sync Off - Section Header")
-    static let turnSyncOffSectionFooter = NSLocalizedString("turn.sync.off.section.footer", value: "Bookmarks and passwords are currently synced across your devices.", comment: "Turn Sync Off - Section Footer")
     // Sync Paused Errors
-    static let syncLimitExceededTitle = NSLocalizedString("sync.limit.exceeded.title", value: "⚠️ Sync Paused", comment: "Sync Paused Errors - Title")
+    static let syncLimitExceededTitle = NSLocalizedString("sync.limit.exceeded.title", value: "Sync Paused", comment: "Sync Paused Errors - Title")
     static let bookmarksLimitExceededDescription = NSLocalizedString("bookmarks.limit.exceeded.description", value: "Bookmark limit exceeded. Delete some to resume syncing.", comment: "Sync Paused Errors - Bookmarks Limit Exceeded Description")
     static let credentialsLimitExceededDescription = NSLocalizedString("credentials.limit.exceeded.description", value: "Logins limit exceeded. Delete some to resume syncing.", comment: "Sync Paused Errors - Credentials Limit Exceeded Description")
     static let bookmarksLimitExceededAction = NSLocalizedString("bookmarks.limit.exceeded.action", value: "Manage Bookmarks", comment: "Sync Paused Errors - Bookmarks Limit Exceeded Action")
@@ -51,13 +51,13 @@ struct UserText {
     // Synced Devices
     static let syncedDevicesSectionHeader = NSLocalizedString("synced.devices.section.header", value: "Synced Devices", comment: "Synced Devices - Section Header")
     static let syncedDevicesThisDeviceLabel = NSLocalizedString("synced.devices.this.device.label", value: "This Device", comment: "Synced Devices - This Device Label")
-    static let syncedDevicesSyncWithAnotherDeviceLabel = NSLocalizedString("synced.devices.sync.with.another.device.label", value: "Sync with Another Device", comment: "Synced Devices - Sync with Another Device Label")
+    static let syncedDevicesSyncWithAnotherDeviceLabel = NSLocalizedString("synced.devices.sync.with.another.device.label", value: "Sync With Another Device", comment: "Synced Devices - Sync with Another Device Label")
     // Options
     static let optionsSectionHeader = NSLocalizedString("options.section.header", value: "Options", comment: "Options - Section Header")
-    static let unifiedFavoritesTitle = NSLocalizedString("unified.favorites.title", value: "Unify Favorites", comment: "Options - Unify Favorites Title")
+    static let unifiedFavoritesTitle = NSLocalizedString("unified.favorites.title", value: "Unify Favorites Across Devices", comment: "Options - Unify Favorites Title")
     static let unifiedFavoritesInstruction = NSLocalizedString("unified.favorites.instruction", value: "Use the same favorite bookmarks on all your devices. Leave off to keep mobile and desktop favorites separate.", comment: "Options - Unify Favorites Instruction")
-    static let fetchFaviconsOptionTitle = NSLocalizedString("fetch.favicons.option.title", value: "Auto-Download Icons", comment: "Automatically download icons for your synced bookmarks. Icon downloads are exposed to your network.")
-    static let fetchFaviconsOptionCaption = NSLocalizedString("fetch.favicons.option.caption", value: "Automatically download icons for synced bookmarks.", comment: "Options - Fetch Favicons Caption")
+    static let fetchFaviconsOptionTitle = NSLocalizedString("fetch.favicons.option.title", value: "Auto-Download Icons", comment: "Options - Fetch Favicons Title")
+    static let fetchFaviconsOptionCaption = NSLocalizedString("fetch.favicons.option.caption", value: "Automatically download icons for your synced bookmarks. Icon downloads are exposed to your network.", comment: "Options - Fetch Favicons Description")
 
     // Save RecoveryPDF
     static let saveRecoveryPDFButton = NSLocalizedString("save.recovery.pdf.button", value: "Save Recovery PDF", comment: "Save RecoveryPDF - Button")
@@ -69,7 +69,7 @@ struct UserText {
     static let connectWithServerSheetTitle = NSLocalizedString("connect.with.server.sheet.title", value: "Sync and Back Up This Device", comment: "Connect With Server Sheet - Title")
     static let connectWithServerSheetDescriptionPart1 = NSLocalizedString("connect.with.server.sheet.description.part1", value: "This creates an encrypted backup of your bookmarks and passwords on DuckDuckGo’s secure server, which can be synced with your other devices.", comment: "Connect With Server Sheet - Description Part 1")
     static let connectWithServerSheetDescriptionPart2 = NSLocalizedString("connect.with.server.sheet.description.part2", value: "The encryption key is only stored on your device, DuckDuckGo cannot access it.", comment: "Connect With Server Sheet - Description Part 2")
-    static let connectWithServerSheetButton = NSLocalizedString("connect.with.server.sheet.button", value: "Turn on Sync & Backup", comment: "Connect With Server Sheet - Button")
+    static let connectWithServerSheetButton = NSLocalizedString("connect.with.server.sheet.button", value: "Turn On Sync & Back Up", comment: "Connect With Server Sheet - Button")
     static let connectWithServerSheetFooter = NSLocalizedString("connect.with.server.sheet.footer", value: "You can sync with your other devices later.", comment: "Connect With Server Sheet - Footer")
 
     // Preparing To Sync Sheet
@@ -86,7 +86,7 @@ struct UserText {
     static let saveRecoveryCodeSaveCodeCopiedToast = NSLocalizedString("save.recovery.code.code.copied.button", value: "Recovery code copied to clipboard", comment: "Save Recovery Code Sheet - Copy Code Toast")
 
     // Device Synced Sheet
-    static let deviceSyncedSheetTitle = NSLocalizedString("device.synced.sheet.title", value: "Your Data is Synced!", comment: "Device SyncedSheet - Title")
+    static let deviceSyncedSheetTitle = NSLocalizedString("device.synced.sheet.title", value: "Your data is synced!", comment: "Device SyncedSheet - Title")
 
     // Recover Synced Data Sheet
     static let recoverSyncedDataTitle = NSLocalizedString("recover.synced.data.sheet.title", value: "Recover Synced Data", comment: "Recover Synced Data Sheet - Title")
@@ -126,7 +126,6 @@ struct UserText {
         return String(format: localized, syncMenuPath)
     }
 
-    static let scanOrSeeCodeInstructionPart3 = NSLocalizedString("scan.or.see.code.instruction.part3", value: "in the DuckDuckGo Browser on another device and select ”Sync with Another Device.”", comment: "Scan or See Code View - Instruction Part 3")
     static let scanOrSeeCodeManuallyEnterCodeLink = NSLocalizedString("scan.or.see.code.manually.enter.code.link", value: "Manually Enter Code", comment: "Scan or See Code View - Manually Enter Code Link")
     static let scanOrSeeCodeScanCodeInstructionsTitle = NSLocalizedString("scan.or.see.code.scan.code.instructions.title", value: "Mobile-to-Mobile?", comment: "Scan or See Code View - Scan Code Instructions Title")
     static let scanOrSeeCodeScanCodeInstructionsBody = NSLocalizedString("scan.or.see.code.scan.code.instructions.body", value: "Scan this code with another device to sync.", comment: "Scan or See Code View - Scan Code Instructions Body")
@@ -159,6 +158,11 @@ struct UserText {
     static let fetchFaviconsOnboardingMessage = NSLocalizedString("fetch.favicons.onboarding.message", value: "Do you want this device to automatically download icons for any new bookmarks synced from your other devices? This will expose the download to your network any time a bookmark is synced.", comment: "Fetch Favicons Onboarding - Message")
     static let fetchFaviconsOnboardingButtonTitle = NSLocalizedString("fetch.favicons.onboarding.button.title", value: "Keep Bookmarks Icons Updated", comment: "Fetch Favicons Onboarding - Button Title")
 
+    // Sync Feature Flags
+    static let syncUnavailableTitle = NSLocalizedString("sync.warning.sync.unavailable", value: "Sync & Backup is Unavailable", comment: "Title of the warning message")
+    static let syncPausedTitle = NSLocalizedString("sync.warning.sync.paused", value: "Sync & Backup is Paused", comment: "Title of the warning message")
+    static let syncUnavailableMessage = NSLocalizedString("sync.warning.data.syncing.disabled", value: "Sorry, but Sync & Backup is currently unavailable. Please try again later.", comment: "Data syncing unavailable warning message")
+    static let syncUnavailableMessageUpgradeRequired = NSLocalizedString("sync.warning.data.syncing.disabled.upgrade.required", value: "Sorry, but Sync & Backup is no longer available in this app version. Please update DuckDuckGo to the latest version to continue.", comment: "Data syncing unavailable warning message")
 
     // swiftlint:enable line_length
 }

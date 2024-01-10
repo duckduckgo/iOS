@@ -22,6 +22,7 @@ import Common
 import Core
 import Bookmarks
 import BrowserServicesKit
+import SwiftUI
 import PrivacyDashboard
 
 extension MainViewController {
@@ -123,7 +124,6 @@ extension MainViewController {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
 
-        let brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
         guard let currentURL = currentTab?.url,
               let privacyInfo = currentTab?.makePrivacyInfo(url: currentURL) else {
             assertionFailure("Missing fundamental data")
@@ -132,11 +132,12 @@ extension MainViewController {
         
         let storyboard = UIStoryboard(name: "PrivacyDashboard", bundle: nil)
         let controller = storyboard.instantiateInitialViewController { coder in
-             PrivacyDashboardViewController(coder: coder,
+            PrivacyDashboardViewController(coder: coder,
                                            privacyInfo: privacyInfo,
                                            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                            contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
-                                           initMode: .reportBrokenSite)
+                                           initMode: .reportBrokenSite,
+                                           breakageAdditionalInfo: self.currentTab?.makeBreakageAdditionaInfo())
         }
         
         guard let controller = controller else {
@@ -146,7 +147,6 @@ extension MainViewController {
         
         currentTab?.privacyDashboard = controller
         controller.popoverPresentationController?.delegate = controller
-        controller.brokenSiteInfo = brokenSiteInfo
 
         if UIDevice.current.userInterfaceIdiom == .pad {
             controller.modalPresentationStyle = .formSheet
@@ -200,6 +200,12 @@ extension MainViewController {
         launchSettings()
     }
 
+    func segueToDebugSettings() {
+        os_log(#function, log: .generalLog, type: .debug)
+        hideAllHighlightsIfNeeded()
+        launchDebugSettings()
+    }
+
     func segueToSettingsCookiePopupManagement() {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
@@ -212,7 +218,7 @@ extension MainViewController {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
         launchSettings {
-            $0.openLogins(accountDetails: account)
+            $0.shouldPresentLoginsViewWithAccount(accountDetails: account)
         }
     }
 
@@ -220,20 +226,39 @@ extension MainViewController {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
         launchSettings {
-            $0.showSync()
+            $0.presentLegacyView(.sync)
+        }
+    }
+    
+    private func launchSettings(completion: ((SettingsViewModel) -> Void)? = nil) {
+        let legacyViewProvider = SettingsLegacyViewProvider(syncService: syncService,
+                                                            syncDataProviders: syncDataProviders,
+                                                            appSettings: appSettings,
+                                                            bookmarksDatabase: bookmarksDatabase)
+                        
+        let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider)
+        let settingsController = SettingsHostingController(viewModel: settingsViewModel, viewProvider: legacyViewProvider)
+        settingsController.applyTheme(ThemeManager.shared.currentTheme)
+        
+        // We are still presenting legacy views, so use a Navcontroller
+        let navController = UINavigationController(rootViewController: settingsController)
+        navController.applyTheme(ThemeManager.shared.currentTheme)
+        settingsController.modalPresentationStyle = .automatic
+
+        present(navController, animated: true) {
+            completion?(settingsViewModel)
         }
     }
 
-    private func launchSettings(completion: ((SettingsViewController) -> Void)? = nil) {
+    private func launchDebugSettings(completion: ((RootDebugViewController) -> Void)? = nil) {
         os_log(#function, log: .generalLog, type: .debug)
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
 
-        let settings = storyboard.instantiateViewController(identifier: "SettingsViewController") { coder in
-            SettingsViewController(coder: coder,
-                                   bookmarksDatabase: self.bookmarksDatabase,
-                                   syncService: self.syncService,
-                                   syncDataProviders: self.syncDataProviders,
-                                   internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+        let storyboard = UIStoryboard(name: "Debug", bundle: nil)
+        let settings = storyboard.instantiateViewController(identifier: "DebugMenu") { coder in
+            RootDebugViewController(coder: coder,
+                                    sync: self.syncService,
+                                    bookmarksDatabase: self.bookmarksDatabase,
+                                    internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
         }
 
         let controller = ThemableNavigationController(rootViewController: settings)
@@ -249,4 +274,5 @@ extension MainViewController {
             ViewHighlighter.hideAll()
         }
     }
+    
 }

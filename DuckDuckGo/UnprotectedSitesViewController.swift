@@ -48,7 +48,7 @@ class UnprotectedSitesViewController: UITableViewController {
         
         configureBackButton()
         
-        let fontSize = SettingsViewController.fontSizeForHeaderView
+        let fontSize = FontSettings.fontSizeForHeaderView
         let text = NSAttributedString(string: infoText.text ?? "", attributes: [
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize)
         ])

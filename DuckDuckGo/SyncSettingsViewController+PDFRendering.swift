@@ -53,7 +53,7 @@ private class RecoveryCodeItem: NSObject, UIActivityItemSource {
     }
 
     func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
-        return URL(fileURLWithPath: "DuckDuckGo Sync Recovery Code.pdf")
+        return URL(fileURLWithPath: "Sync Data Recovery - DuckDuckGo.pdf")
     }
 
     func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {

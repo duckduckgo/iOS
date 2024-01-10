@@ -160,6 +160,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 params[PixelParameters.function] = function
                 params[PixelParameters.line] = String(line)
                 pixelError = error
+            case .failedToRetrieveAuthToken:
+                return
             case .failedToFetchLocationList:
                 return
             case .failedToParseLocationListResponse:

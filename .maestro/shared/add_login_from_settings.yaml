@@ -1,7 +1,7 @@
 appId: com.duckduckgo.mobile.ios
 ---
 
-- tapOn: Logins
+- tapOn: Passwords
 - tapOn: Add 24
 - tapOn: Title
 - inputText: My Personal Website
@@ -10,6 +10,6 @@ appId: com.duckduckgo.mobile.ios
 - tapOn: example.com
 - inputText: mypersonalwebsite.com
 - tapOn: Save
-- tapOn: Logins
+- tapOn: Passwords
 - tapOn: Settings
 - tapOn: Done

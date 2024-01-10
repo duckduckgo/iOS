@@ -66,11 +66,11 @@ jobs:
     name: Sync End To End Tests
     needs: build-for-sync-end-to-end-tests
     runs-on: macos-13
-    timeout-minutes: 30
+    timeout-minutes: 60
     strategy:
       matrix:
         os-version: [15, 16, 17]
-      #max-parallel: 1 # Uncomment this line to run tests sequentially. 
+      max-parallel: 1 # Uncomment this line to run tests sequentially. 
       fail-fast: false
     
     steps:

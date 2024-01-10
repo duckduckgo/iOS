@@ -95,3 +95,4 @@ excluded:
   - vendor
   - LocalPackages/*/Package.swift
   - PacketTunnelProvider/ProxyServer
+  - .ruby-lsp

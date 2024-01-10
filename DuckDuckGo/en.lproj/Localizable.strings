@@ -140,7 +140,7 @@
 "alert.sync-credentials-paused-title" = "Passwords Sync is Paused";
 
 /* Title for sync error alert */
-"alert.sync-error" = "Sync Error";
+"alert.sync-error" = "Sync & Backup Error";
 
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Learn More";
@@ -163,23 +163,29 @@
 /* Save Favorite action */
 "alert.title.save.favorite" = "Save Favorite";
 
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "Unable to create the recovery PDF.";
+
 /* Description for unable to delete data error */
 "alert.unable-to-delete-data-description" = "Unable to delete data on the server.";
 
-/* Description for unable to get devices error */
-"alert.unable-to-get-devices-description" = "Unable to retrieve the list of connected devices.";
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "To pair these devices, turn off Sync & Backup on one device then tap \"Sync with Another Device\" on the other device.";
 
 /* Description for unable to remove device error */
-"alert.unable-to-remove-device-description" = "Unable to remove the specified device from the synchronized devices.";
+"alert.unable-to-remove-device-description" = "Unable to remove this device from Sync & Backup.";
 
-/* Description for unable to sync error */
-"alert.unable-to-sync-description" = "Unable to sync.";
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Unable to connect to the server.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Unable to Sync with another device.";
 
 /* Description for unable to turn sync off error */
-"alert.unable-to-turn-sync-off-description" = "Unable to turn sync off.";
+"alert.unable-to-turn-sync-off-description" = "Unable to turn Sync & Backup off.";
 
 /* Description for unable to update device name error */
-"alert.unable-to-update-device-name-description" = "Unable to update the name of the device.";
+"alert.unable-to-update-device-name-description" = "Unable to update the device name.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Unlock DuckDuckGo.";
@@ -1474,6 +1480,9 @@ https://duckduckgo.com/mac";
 /* Second subtitle for Network Protection join waitlist screen */
 "network-protection.waitlist.join.subtitle.2" = "Join the waitlist, and we’ll notify you when it’s your turn.";
 
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
+
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "You’re on the list!";
 
@@ -1741,6 +1750,12 @@ https://duckduckgo.com/mac";
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favorites";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "About DuckDuckGo";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "About";
+
 /* about page */
 "settings.about.text" = "DuckDuckGo is the independent Internet privacy company founded in 2008 for anyone who’s tired of being tracked online and wants an easy solution. We’re proof you can get real privacy protection online without tradeoffs.
 
@@ -1749,6 +1764,119 @@ The DuckDuckGo browser comes with the features you expect from a go-to browser, 
 Our privacy protections work without having to know anything about the technical details or deal with complicated settings. All you have to do is switch your browser to DuckDuckGo across all your devices and you get privacy by default.
 
 But if you *do* want a peek under the hood, you can find more information about how DuckDuckGo privacy protections work on our [help pages](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Add App to Your Dock";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Add Widget to Home Screen";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Address Bar Position";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Appearance";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Open Links in Associated Apps";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Disable to prevent links from automatically opening in other installed apps.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Autocomplete Suggestions";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Application Lock";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Automatically Clear Data";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Manage Cookie Pop-ups";
+
+/* Settings title for the customize section */
+"settings.customize" = "Customize";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Set as Default Browser";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "Email Protection";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Block email trackers and hide your address";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Share Feedback";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Fire Button Animation";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Fireproof Sites";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Global Privacy Control (GPC)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "App Icon";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Keyboard";
+
+/* Settings screen cell text for passwords */
+"settings.logins" = "Passwords";
+
+/* Settings title for the 'More' section */
+"settings.more" = "More from DuckDuckGo";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
+
+/* Privacy pro description subtext */
+"settings.ppro.description" = "More seamless privacy with three new protections, including:";
+
+/* Privacy pro features list */
+"settings.ppro.features" = " • VPN (Virtual Private Network)
+ • Personal Information Removal
+ • Identity Theft Restoration";
+
+/* Learn more button text for privacy pro */
+"settings.ppro.learn.more" = "Learn More";
+
+/* Call to action title for Privacy Pro */
+"settings.ppro.subscribe" = "Subscribe to Privacy Pro";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Long-Press Previews";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Privacy";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Sync & Backup";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Text Size";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Theme";
+
+/* Title for the Settings View */
+"settings.title" = "Settings";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Unprotected Sites";
+
+/* Settings cell for Version */
+"settings.version" = "Version";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Private Voice Search";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Submit Report";
@@ -1770,6 +1898,15 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "\"%@\" will no longer be able to access your synced data.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Sorry, but Sync & Backup is currently unavailable. Please try again later.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Sorry, but Sync & Backup is no longer available in this app version. Please update DuckDuckGo to the latest version to continue.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "Sync & Backup is Paused";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Close home tab";
@@ -1833,6 +1970,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Please allow Microphone access in iOS System Settings for DuckDuckGo to use voice features.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "OK";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Microphone Access Required";

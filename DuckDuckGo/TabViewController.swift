@@ -426,16 +426,16 @@ class TabViewController: UIViewController {
         
         if consumeCookies {
             consumeCookiesThenLoadRequest(request)
-        } else if let url = request?.url {
+        } else if let urlRequest = request {
             var loadingStopped = false
-            linkProtection.getCleanURL(from: url, onStartExtracting: { [weak self] in
+            linkProtection.getCleanURLRequest(from: urlRequest, onStartExtracting: { [weak self] in
                 if loadingInitiatedByParentTab {
                     // stop parent-initiated URL loading only if canonical URL extraction process has started
                     loadingStopped = true
                     self?.webView.stopLoading()
                 }
                 self?.showProgressIndicator()
-            }, onFinishExtracting: {}, completion: { [weak self] cleanURL in
+            }, onFinishExtracting: {}, completion: { [weak self] cleanURLRequest in
                 // restart the cleaned-up URL loading here if:
                 //   link protection provided an updated URL
                 //   OR if loading was stopped for a popup loaded by its parent
@@ -443,8 +443,8 @@ class TabViewController: UIViewController {
                 // the check is here to let an (about:blank) popup which has its loading
                 // initiated by its parent to keep its active request, otherwise we would
                 // break a js-initiated popup request such as printing from a popup
-                guard url != cleanURL || loadingStopped || !loadingInitiatedByParentTab else { return }
-                self?.load(urlRequest: .userInitiated(cleanURL))
+                guard self?.url != cleanURLRequest.url || loadingStopped || !loadingInitiatedByParentTab else { return }
+                self?.load(urlRequest: cleanURLRequest)
             })
         }
 
@@ -488,7 +488,7 @@ class TabViewController: UIViewController {
             webView.evaluateJavaScript(js)
         }
     }
-    
+
     public func load(url: URL) {
         webView.stopLoading()
         dismissJSAlertIfNeeded()
@@ -551,6 +551,7 @@ class TabViewController: UIViewController {
         }
 
         webView.stopLoading()
+        dismissJSAlertIfNeeded()
         webView.load(urlRequest)
     }
     
@@ -701,7 +702,7 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
             privacyDashboard = controller
-            privacyDashboard?.brokenSiteInfo = getCurrentWebsiteInfo()
+//            privacyDashboard?.breakageAdditionalInfo =
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
@@ -728,7 +729,8 @@ class TabViewController: UIViewController {
                                        privacyInfo: privacyInfo,
                                        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                        contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
-                                       initMode: .privacyDashboard)
+                                       initMode: .privacyDashboard,
+                                       breakageAdditionalInfo: makeBreakageAdditionaInfo())
     }
     
     private func addTextSizeObserver() {
@@ -891,23 +893,48 @@ class TabViewController: UIViewController {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.title))
     }
+
+    public func makeBreakageAdditionaInfo() -> PrivacyDashboardViewController.BreakageAdditionaInfo? {
         
-    public func getCurrentWebsiteInfo() -> BrokenSiteInfo {
-        let blockedTrackerDomains = privacyInfo?.trackerInfo.trackersBlocked.compactMap { $0.domain } ?? []
-
-        let configuration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
-        let protectionsState = configuration.isFeature(.contentBlocking, enabledForDomain: url?.host)
-
-        return BrokenSiteInfo(url: url,
-                              httpsUpgrade: httpsForced,
-                              blockedTrackerDomains: blockedTrackerDomains,
-                              installedSurrogates: privacyInfo?.trackerInfo.installedSurrogates.map { $0 } ?? [],
-                              isDesktop: tabModel.isDesktop,
-                              tdsETag: ContentBlocking.shared.contentBlockingManager.currentMainRules?.etag ?? "",
-                              ampUrl: linkProtection.lastAMPURLString,
-                              urlParametersRemoved: linkProtection.urlParametersRemoved,
-                              protectionsState: protectionsState)
+        guard let currentURL = url else {
+            return nil
+        }
+        return PrivacyDashboardViewController.BreakageAdditionaInfo(currentURL: currentURL,
+                                                                    httpsForced: httpsForced,
+                                                                    ampURLString: linkProtection.lastAMPURLString ?? "",
+                                                                    urlParametersRemoved: linkProtection.urlParametersRemoved,
+                                                                    isDesktop: tabModel.isDesktop)
     }
+    
+//    public func getCurrentWebsiteInfo() -> WebsiteBreakage? {
+//
+//        guard let privacyInfo = privacyInfo,
+//        let currentURL = url else {
+//            return nil
+//        }
+//        
+//        let blockedTrackerDomains = privacyInfo.trackerInfo.trackersBlocked.compactMap { $0.domain }
+//        let configuration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
+//        let protectionsState = configuration.isFeature(.contentBlocking, enabledForDomain: currentURL.host)
+//
+//        return WebsiteBreakage(siteUrl: currentURL,
+//                               category: <#T##String#>,
+//                               description: <#T##String?#>,
+//                               osVersion: "\(ProcessInfo.processInfo.operatingSystemVersion)",
+//                               upgradedHttps: httpsForced,
+//                               tdsETag: ContentBlocking.shared.contentBlockingManager.currentMainRules?.etag ?? "",
+//                               blockedTrackerDomains: blockedTrackerDomains,
+//                               installedSurrogates: privacyInfo.trackerInfo.installedSurrogates.map { $0 },
+//                               isGPCEnabled: false,
+//                               ampURL: linkProtection.lastAMPURLString ?? "",
+//                               urlParametersRemoved: linkProtection.urlParametersRemoved,
+//                               protectionsState: protectionsState,
+//                               reportFlow: <#T##WebsiteBreakage.Source#>,
+//                               siteType: tabModel.isDesktop ? .desktop : .mobile,
+//                               atb: StatisticsUserDefaults().atb ?? "",
+//                               model: UIDevice.current.model)
+//                        
+//    }
     
     public func print() {
         let printFormatter = webView.viewPrintFormatter()
@@ -1351,16 +1378,9 @@ extension TabViewController: WKNavigationDelegate {
                                                                            navigationAction: navigationAction,
                                                                            onStartExtracting: { showProgressIndicator() },
                                                                            onFinishExtracting: { },
-                                                                           onLinkRewrite: { [weak self] newURL, navigationAction in
+                                                                           onLinkRewrite: { [weak self] newRequest, _ in
                 guard let self = self else { return }
-                if self.isNewTargetBlankRequest(navigationAction: navigationAction) {
-                    self.delegate?.tab(self,
-                                       didRequestNewTabForUrl: newURL,
-                                       openedByPage: true,
-                                       inheritingAttribution: self.adClickAttributionLogic.state)
-                } else {
-                    self.load(url: newURL)
-                }
+                self.load(urlRequest: newRequest)
             },
                                                                            policyDecisionHandler: decisionHandler)
 

@@ -46,8 +46,8 @@
 /* Class = "UILabel"; text = "Debug Menu"; ObjectID = "A9G-5I-RSn"; */
 "A9G-5I-RSn.text" = "Menu de débogage";
 
-/* Class = "UILabel"; text = "Logins"; ObjectID = "And-cQ-SEu"; */
-"And-cQ-SEu.text" = "Identifiants";
+/* Class = "UILabel"; text = "Passwords"; ObjectID = "And-cQ-SEu"; */
+"And-cQ-SEu.text" = "Mots de passe";
 
 /* Class = "UILabel"; text = "Animation"; ObjectID = "AtR-nS-Gun"; */
 "AtR-nS-Gun.text" = "Animation";

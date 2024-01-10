@@ -33,6 +33,7 @@ jobs:
   make-alpha:
     runs-on: macos-13
     name: Make TestFlight Alpha Build
+    timeout-minutes: 30
 
     env:
       destination: ${{ github.event.inputs.destination || inputs.destination }}
@@ -76,7 +77,7 @@ jobs:
 
       # Using Xcode 15 as the alpha build uses iOS 17 APIs
     - name: Select Xcode
-      run: sudo xcode-select -s /Applications/Xcode_15.0.1.app/Contents/Developer
+      run: sudo xcode-select -s /Applications/Xcode_$(<.xcode-version).app/Contents/Developer
 
     - name: Prepare fastlane
       run: bundle install

@@ -20,6 +20,7 @@
 import Foundation
 import JavaScriptCore
 import BrowserServicesKit
+import Network
 
 extension URL {
 
@@ -48,10 +49,19 @@ extension URL {
             break
         case .none:
             // assume http by default
-            guard let urlWithScheme = URL(string: URLProtocol.http.scheme + text),
-                  // only allow 2nd+ level domains or "localhost" without scheme
-                  urlWithScheme.host?.contains(".") == true || urlWithScheme.host == .localhost
-            else { return nil }
+            guard let urlWithScheme = URL(string: URLProtocol.http.scheme + text), let host = urlWithScheme.host else {
+                return nil
+            }
+            // only allow 2nd+ level domains or "localhost" without scheme
+            guard host.contains(".") == true || host == .localhost else {
+                return nil
+            }
+            if IPv4Address(host) != nil {
+                // Require 4 octets specified explicitly for an IPv4 address (avoid 1.4 -> 1.0.0.4 expansion)
+                guard host.split(separator: ".").count == 4 else {
+                    return nil
+                }
+            }
             url = urlWithScheme
 
         default:

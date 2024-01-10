@@ -47,9 +47,23 @@ class PrivacyConfigurationMock: PrivacyConfiguration {
         return enabledFeaturesForVersions[featureKey]?.contains(versionProvider.appVersion() ?? "") ?? false
     }
 
+    func stateFor(featureKey: BrowserServicesKit.PrivacyFeature, versionProvider: BrowserServicesKit.AppVersionProvider) -> BrowserServicesKit.PrivacyConfigurationFeatureState {
+        if isEnabled(featureKey: featureKey, versionProvider: versionProvider) {
+            return .enabled
+        }
+        return .disabled(.disabledInConfig) // this is not used in platform tests, so mocking this poorly for now
+    }
+
     var enabledSubfeaturesForVersions: [String: Set<String>] = [:]
     func isSubfeatureEnabled(_ subfeature: any PrivacySubfeature, versionProvider: AppVersionProvider, randomizer: (Range<Double>) -> Double) -> Bool {
         return enabledSubfeaturesForVersions[subfeature.rawValue]?.contains(versionProvider.appVersion() ?? "") ?? false
+    }
+
+    func stateFor(_ subfeature: any PrivacySubfeature, versionProvider: BrowserServicesKit.AppVersionProvider, randomizer: (Range<Double>) -> Double) -> BrowserServicesKit.PrivacyConfigurationFeatureState {
+        if isSubfeatureEnabled(subfeature, versionProvider: versionProvider, randomizer: randomizer) {
+            return .enabled
+        }
+        return .disabled(.disabledInConfig) // this is not used in platform tests, so mocking this poorly for now
     }
 
     var protectedDomains = Set<String>()
@@ -105,6 +119,7 @@ class PrivacyConfigurationManagerMock: PrivacyConfigurationManaging {
     }
 
     var privacyConfig: PrivacyConfiguration = PrivacyConfigurationMock()
+    var internalUserDecider: InternalUserDecider = DefaultInternalUserDecider()
 
     var reloadFired = [(etag: String?, data: Data?)]()
     var reloadResult: PrivacyConfigurationManager.ReloadResult = .embedded

@@ -28,8 +28,16 @@ final class DailyPixelTests: XCTestCase {
     let host = "improving.duckduckgo.com"
     
     let dailyPixelStorage = UserDefaults(suiteName: "com.duckduckgo.daily.pixel.storage")!
-        
+
+    override func setUp() {
+        super.setUp()
+
+        Pixel.isDryRun = false
+    }
+
     override func tearDown() {
+        Pixel.isDryRun = true
+        
         HTTPStubs.removeAllStubs()
         resetDailyPixelStorage()
         super.tearDown()

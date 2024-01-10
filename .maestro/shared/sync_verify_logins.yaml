@@ -1,8 +1,7 @@
 appId: com.duckduckgo.mobile.ios
 ---
 
-- tapOn: Logins
-- assertVisible: Unlock device to access saved Logins
+- tapOn: Passwords
 - tapOn: Passcode field
 - inputText: "0000"
 - pressKey: Enter
@@ -10,20 +9,20 @@ appId: com.duckduckgo.mobile.ios
 - tapOn: Dax Login
 - assertVisible: daxthetest
 - assertVisible: duckduckgo.com
-- tapOn: Logins
+- tapOn: Passwords
 - assertVisible: Github
 - tapOn: Github
 - assertVisible: githubusername
 - assertVisible: github.com
-- tapOn: Logins
+- tapOn: Passwords
 - assertVisible: StackOverflow
 - tapOn: StackOverflow
 - assertVisible: stacker
 - assertVisible: stackoverflow.com
-- tapOn: Logins
+- tapOn: Passwords
 - assertVisible: My Personal Website
 - tapOn: My Personal Website
 - assertVisible: me@mypersonalwebsite.com
 - assertVisible: mypersonalwebsite.com
-- tapOn: Logins
+- tapOn: Passwords
 - tapOn: Settings

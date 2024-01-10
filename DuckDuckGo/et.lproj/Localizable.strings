@@ -4,9 +4,6 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
-/* No comment provided by engineer. */
-"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Redigeeri";
 
@@ -23,7 +20,7 @@
 "action.title.add" = "Lisa";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Sisselogimisandmed";
+"action.title.autofill.logins" = "Paroolid";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Lisa järjehoidjatesse";
@@ -440,16 +437,16 @@
 "autofill.keep-enabled.alert.message" = "Saad selle igal ajal sätetes keelata.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Kas soovid sisselogimisandmete salvestamist jätkata?";
+"autofill.keep-enabled.alert.title" = "Kas soovid jätkata paroolide salvestamist?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Kuva";
 
 /* Message displayed after saving an autofill login */
-"autofill.login-saved.toast" = "Sisselogimisandmed salvestatud";
+"autofill.login-saved.toast" = "Parool salvestatud";
 
 /* Message displayed after updating an autofill login */
-"autofill.login-updated.toast" = "Sisselogimisandmed värskendatud";
+"autofill.login-updated.toast" = "Parool uuendatud";
 
 /* Menu item text for copying autofill login details */
 "autofill.logins.copy-prompt" = "Kopeeri %@";
@@ -470,19 +467,19 @@
 "autofill.logins.details.address" = "Veebisaidi URL";
 
 /* Title for autofill login details */
-"autofill.logins.details.default-title" = "Logi sisse";
+"autofill.logins.details.default-title" = "Parool";
 
 /* Delete button when deleting an autofill login */
-"autofill.logins.details.delete" = "Kustuta sisselogimisandmed";
+"autofill.logins.details.delete" = "Kustuta parool";
 
 /* Autofill alert button confirming delete autofill login */
-"autofill.logins.details.delete-confirmation.button" = "Kustuta sisselogimisandmed";
+"autofill.logins.details.delete-confirmation.button" = "Kustuta parool";
 
 /* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Kas oled kindel, et soovid need sisselogimisandmed kustutada?";
+"autofill.logins.details.delete-confirmation.title" = "Kas oled kindel, et soovid selle parooli kustutada?";
 
 /* Title when editing autofill login details */
-"autofill.logins.details.edit-title" = "Muuda sisselogimist";
+"autofill.logins.details.edit-title" = "Parooli muutmine";
 
 /* Placeholder for password field on autofill login details */
 "autofill.logins.details.edit.password-placeholder" = "Parool";
@@ -496,14 +493,14 @@
 /* Placeholder for userbane field on autofill login details */
 "autofill.logins.details.edit.username-placeholder" = "username@example.com";
 
-/* Message displaying when the login was last updated by */
-"autofill.logins.details.last-updated" = "Sisselogimisandmeid värskendati viimati %s";
+/* Message displaying when the login was last updated */
+"autofill.logins.details.last-updated" = "Viimati uuendatud %@";
 
 /* Login name label for login details on autofill */
-"autofill.logins.details.login-name" = "Sisselogimise pealkiri";
+"autofill.logins.details.login-name" = "Pealkiri";
 
 /* Title when adding new autofill login */
-"autofill.logins.details.new-title" = "Lisa sisselogimisandmed";
+"autofill.logins.details.new-title" = "Parooli lisamine";
 
 /* Notes label for login details on autofill */
 "autofill.logins.details.notes" = "Märkused";
@@ -518,37 +515,37 @@
 "autofill.logins.details.save-duplicate-alert.action" = "OK";
 
 /* Message for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.message" = "Sul on juba selle kasutajanime ja veebisaidiga sisselogimisandmed.";
+"autofill.logins.details.save-duplicate-alert.message" = "Sul on juba selle kasutajanime ja veebisaidiga parool salvestatud.";
 
 /* Title for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.title" = "Duplikaat sisselogimisandmed";
+"autofill.logins.details.save-duplicate-alert.title" = "Parooli duplikaat";
 
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Kasutajanimi";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Sisselogimisandmed salvestatakse turvaliselt sinu seadmesse.";
+"autofill.logins.empty-view.subtitle" = "Paroolid salvestatakse turvaliselt sinu seadmesse.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Sisselogimisandmeid pole veel salvestatud";
+"autofill.logins.empty-view.title" = "Paroole ei ole veel salvestatud";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Tühista";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Salvestatud sisselogimisandmetele juurde pääsemiseks ava seade lukust.";
+"autofill.logins.list.auth.reason" = "Paroolidele juurdepääsuks ava seade";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Sulge";
 
 /* Title for a toggle that enables autofill */
-"autofill.logins.list.enable" = "Salvesta ja täida sisselogimisandmed automaatselt";
+"autofill.logins.list.enable" = "Paroolide salvestamine ja automaatne sisestamine";
 
 /* Toast message when a login item is deleted */
-"autofill.logins.list.login-deleted-message" = "Saidi %@ sisselogimisandmed on kustutatud";
+"autofill.logins.list.login-deleted-message" = "Parool (%@) on kustutatud";
 
 /* Toast message when a login item without a title is deleted */
-"autofill.logins.list.login-deleted-message-no-title" = "Sisselogimisandmed kustutati";
+"autofill.logins.list.login-deleted-message-no-title" = "Parool on kustutatud";
 
 /* Title for a button that allows a user to reset their list of never saved sites */
 "autofill.logins.list.never.saved" = "Lähtesta välistatud saidid";
@@ -560,28 +557,28 @@
 "autofill.logins.list.never.saved.reset.action.confirm" = "Lähtesta välistatud saidid";
 
 /* Alert title */
-"autofill.logins.list.never.saved.reset.action.title" = "Kui lähtestad välistatud saidid, küsitakse järgmisel mõnele neist saitidest sisselogimisel, kas soovid salvestada oma sisselogimisandmed.";
+"autofill.logins.list.never.saved.reset.action.title" = "Kui lähtestad välistatud saidid, pakutakse sulle järgmisel korral, kui logid neile saitidele sisse, võimalust parool salvestada.";
 
 /* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Otsi sisselogimisandmeid";
+"autofill.logins.list.search-placeholder" = "Otsi paroole";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Soovitatud";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Sisselogimisandmed";
+"autofill.logins.list.title" = "Paroolid";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Sinu sisselogimisandmete kaitsmiseks on vaja pääsukoodi.";
+"autofill.logins.no-auth.subtitle" = "Paroolide kaitsmiseks on vaja pääsukoodi.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Sisselogimisandmete salvestamiseks kaitse oma seadet";
+"autofill.logins.no-auth.title" = "Paroolide salvestamiseks muuda oma seade turvaliseks";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Tühista";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Salvestatud sisselogimisandmete kasutamiseks ava lukust";
+"autofill.logins.prompt.auth.reason" = "Ava salvestatud parooli kasutamiseks";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Sellelt veebisaidilt";
@@ -605,7 +602,7 @@
 "autofill.logins.search.no-results.title" = "Tulemusi pole";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Paroole hoitakse turvaliselt sinu seadmes sisselogimisandmete menüüs.";
+"autofill.password-generation-prompt.subtitle" = "Paroolid salvestatakse turvaliselt sinu seadmesse.";
 
 /* Title for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.title" = "Kas kasutada DuckDuckGo tugevat parooli?";
@@ -650,7 +647,7 @@
 "autofill.save-login.never-prompt.CTA" = "Ära selle saidi kohta rohkem küsi";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Paroole hoitakse turvaliselt sinu seadmes sisselogimisandmete menüüs.";
+"autofill.save-login.new-user.message" = "Paroolid salvestatakse turvaliselt sinu seadmesse.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Kas soovid, et DuckDuckGo salvestaks sinu parooli?";
@@ -659,7 +656,7 @@
 "autofill.save-login.not-now.CTA" = "Ära salvesta";
 
 /* Title displayed on modal asking for the user to save the login */
-"autofill.save-login.title" = "Kas salvestada sisselogimisandmed?";
+"autofill.save-login.title" = "Kas salvestada parool?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Salvesta parool";
@@ -873,6 +870,9 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet võib olla üsna jube.\n\nÄra muretse! Privaatselt otsimine ja sirvimine on lihtsam kui arvad.";
+
+/* No comment provided by engineer. */
+"Debug" = "Debug";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Keelatud";
@@ -1348,6 +1348,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Tere tulemast\nDuckDuckGo kasutajaks!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo for Mac on just nii kiire, kui vajad, oodatud sirvimisfunktsioonidega ja tulvil meie oma klassi parimaid privaatsuselemente.";
 
@@ -1411,17 +1414,104 @@
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
 
+/* Privacy Policy title for Network Protection */
+"network-protection.privacy-policy.title" = "Privaatsuspoliitika";
+
+/* Title text for the Network Protection terms and conditions accept button */
+"network-protection.waitlist.agree-and-continue" = "Agree and Continue";
+
+/* Availability disclaimer for Network Protection join waitlist screen */
+"network-protection.waitlist.availability-disclaimer" = "Network Protection is free to use during early access.";
+
+/* Agree and Continue button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.agree-and-continue" = "Agree and Continue";
+
+/* Enable Notifications button for Network Protection joined waitlist screen */
+"network-protection.waitlist.button.enable-notifications" = "Enable Notifications";
+
+/* Button title for users who already have an invite code */
+"network-protection.waitlist.button.existing-invite-code" = "Mul on kutse kood";
+
+/* Join Waitlist button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.join-waitlist" = "Join the Waitlist";
+
+/* Button title text for the Network Protection waitlist confirmation prompt */
+"network-protection.waitlist.get-started" = "Alustage";
+
+/* Subtitle for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.subtitle" = "Encrypt online traffic across your browsers and apps.";
+
+/* Title for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.title" = "Full-device coverage";
+
+/* Subtitle for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.subtitle" = "No need for a separate app. Connect in one click and see your connection status at a glance.";
+
+/* Title for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.title" = "Fast, reliable, and easy to use";
+
+/* Subtitle for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.subtitle" = "We do not log or save any data that can connect you to your online activity.";
+
+/* Title for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.title" = "Strict no-logging policy";
+
+/* Subtitle for Network Protection invited screen */
+"network-protection.waitlist.invited.subtitle" = "Get an extra layer of protection online with the VPN built for speed and simplicity. Encrypt your internet connection across your entire device and hide your location and IP address from sites you visit.";
+
+/* Title for Network Protection invited screen */
+"network-protection.waitlist.invited.title" = "You’re invited to try\nNetwork Protection early access!";
+
+/* First subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.1" = "Secure your connection anytime, anywhere with Network Protection, the VPN from DuckDuckGo.";
+
+/* Second subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.2" = "Join the waitlist, and we’ll notify you when it’s your turn.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
+
+/* Title for Network Protection joined waitlist screen */
+"network-protection.waitlist.joined.title" = "Oled ootenimekirjas!";
+
+/* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "New invites are sent every few days, on a first come, first served basis.";
+
+/* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "We’ll notify you when your invite is ready.";
+
+/* Body text for the alert to enable notifications */
+"network-protection.waitlist.notification-alert.description" = "We’ll send you a notification when your invite to test Network Protection is ready.";
+
+/* Subtitle for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-description" = "Get a notification when your copy of Network Protection early access is ready.";
+
+/* Title for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-title" = "Know the instant you're invited";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.text" = "Ava oma kutse";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.title" = "Network Protection is ready!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Your invite is ready!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Oled ootenimekirjas!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Liituge privaatse ootenimekirjaga";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+"network.protection.invite.dialog.title" = "You’re invited to try Network Protection";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
-
-/* Message explaining that netP is invite only */
-"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
 
 /* Message for the network protection invite success view */
 "network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
@@ -1453,7 +1543,7 @@
 /* Header title label text for the status view when netP is connected */
 "network.protection.status.header.title.on" = "Network Protection is On";
 
-/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+/* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 
 /* Connection details label shown in NetworkProtection's status view. */
@@ -1489,23 +1579,32 @@
 /* Title for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.title" = "VPN-i hoiatused";
 
-/* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.footer" = "VPN-ühendus taastatakse pärast katkestust automaatselt.";
+/* Footer text for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.";
 
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.title" = "Alati sisse lülitatud";
+/* Title for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.title" = "Exclude Local Networks";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Subtitle of countries item when there are multiple cities, example : */
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d cities";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
+"network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
+
+/* Title for the VPN Location screen. */
+"network.protection.vpn.location.title" = "VPN Location";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "VPN-i teavitused";
@@ -1517,10 +1616,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Network Protection takistab DNS-i lekkeid sinu internetiteenuse pakkujale, suunates DNS-päringud läbi VPN-tunneli meie enda aadressiteisendusteenusesse.";
-
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.title" = "Turvaline DNS";
+"network.protection.vpn.secure.dns.setting.footer" = "Our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-i seaded";
@@ -1648,8 +1744,110 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Lemmikud";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "DuckDuckGo'st";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "Teave";
+
 /* about page */
 "settings.about.text" = "DuckDuckGo on 2008. aastal asutatud sõltumatu internetiprivaatsuse ettevõte igaühele, kellel on kõrini varjatud jälgimisest internetis ja kes soovib lihtsat lahendust selle vältimiseks. Me oleme tõestuseks, et internetis on võimalik saada tõelist privaatsuskaitset ilma kompromisse tegemata.\n\nDuckDuckGo brauseril on kõik funktsioonid, mida sa brauserilt ootad, nagu järjehoidjad, vahekaardid, paroolid ja palju muud, lisaks sellele aga ka üle [tosina võimsa privaatsuskaitse funktsiooni](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/), mida enamik populaarsemaid brausereid vaikimisi ei paku. See ainulaadselt terviklik privaatsuskaitse aitab kaitsta sinu tegevust internetis alates otsingutest kuni sirvimiseni, meilide saatmiseni ja palju muuni.\n\nMeie privaatsuskaitse toimib ilma, et peaksid teadma midagi tehnilistest nüanssidest või tegelema keeruliste seadistustega. Ainus, mis sa pead tegema, on vahetada oma brauser kõigis seadmetes DuckDuckGo vastu – ja vaikeprivaatsus ongi tagatud.\n\nKui aga *soovid* piiluda kapoti alla, leiate lisateavet DuckDuckGo privaatsuskaitse tööpõhimõtete kohta meie [abilehtedelt](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Lisa rakendus oma dokki";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Lisa vidin avakuvale";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Aadressiriba asukoht";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Välimus";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Ava lingid seotud rakendustes";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Keela, et takistada linkide automaatset avanemist teistes installitud rakendustes.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Automaatselt täidetavad ettepanekud";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Rakenduse lukk";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Kui on määratud Touch ID, Face ID või süsteemi pääsukood, palutakse avamisel rakendus avada.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Kustuta andmed automaatselt";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Halda küpsiste hüpikaknaid";
+
+/* Settings title for the customize section */
+"settings.customize" = "Kohanda";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Määrake vaikebrauseriks";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "E-posti kaitse";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Blokeeri meilijälgurid ja peida oma aadress";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Jaga tagasisidet";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Tulenupu animatsioon";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Tulekindlad veebisaidid";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Üleilmne privaatsuskontroll (Global Privacy Control (GPC))";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "Rakenduse ikoon";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Klaviatuur";
+
+/* Settings screen cell text for logins */
+"settings.logins" = "Sisselogimisandmed";
+
+/* Settings title for the 'More' section */
+"settings.more" = "Veel DuckDuckGo'lt";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Pika vajutusega eelvaated";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Privaatsus";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Sünkroonimine ja varundamine";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Teksti suurus";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Teema";
+
+/* Title for the Settings View */
+"settings.title" = "Seaded";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Kaitseta saidid";
+
+/* Settings cell for Version */
+"settings.version" = "Versioon";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Privaatne häälotsing";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Saada aruanne";
@@ -1734,6 +1932,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Häälfunktsioonide kasutamiseks lubage DuckDuckGo jaoks juurdepääs mikrofonile iOS-i süsteemiseadetes.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "OK";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Vajalik juurdepääs mikrofonile";

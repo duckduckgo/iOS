@@ -27,9 +27,9 @@ public class SyncMetricsEventsHandler: EventMapping<MetricsEvent> {
         super.init { event, _, _, _ in
             switch event {
             case .overrideEmailProtectionSettings:
-                Pixel.fire(pixel: .syncDuckAddressOverride)
+                Pixel.fire(pixel: .syncDuckAddressOverride, includedParameters: [.appVersion])
             case .localTimestampResolutionTriggered(let feature):
-                Pixel.fire(pixel: .syncLocalTimestampResolutionTriggered(feature))
+                Pixel.fire(pixel: .syncLocalTimestampResolutionTriggered(feature), includedParameters: [.appVersion])
             }
         }
     }

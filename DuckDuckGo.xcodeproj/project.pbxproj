@@ -788,7 +788,6 @@
 		D6D12CA62B291CAA0054390C /* AppStoreRestoreFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C952B291CA90054390C /* AppStoreRestoreFlow.swift */; };
 		D6D12CA72B291CAA0054390C /* AppStoreAccountManagementFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C962B291CA90054390C /* AppStoreAccountManagementFlow.swift */; };
 		D6D12CA82B291CAA0054390C /* PurchaseFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C972B291CA90054390C /* PurchaseFlow.swift */; };
-		D6D12CA92B291CAA0054390C /* StripePurchaseFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C992B291CA90054390C /* StripePurchaseFlow.swift */; };
 		D6D12CAA2B291CAA0054390C /* SubscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C9B2B291CA90054390C /* SubscriptionService.swift */; };
 		D6D12CAB2B291CAA0054390C /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C9C2B291CA90054390C /* APIService.swift */; };
 		D6D12CAC2B291CAA0054390C /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C9D2B291CA90054390C /* AuthService.swift */; };
@@ -2427,7 +2426,6 @@
 		D6D12C952B291CA90054390C /* AppStoreRestoreFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStoreRestoreFlow.swift; sourceTree = "<group>"; };
 		D6D12C962B291CA90054390C /* AppStoreAccountManagementFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStoreAccountManagementFlow.swift; sourceTree = "<group>"; };
 		D6D12C972B291CA90054390C /* PurchaseFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseFlow.swift; sourceTree = "<group>"; };
-		D6D12C992B291CA90054390C /* StripePurchaseFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StripePurchaseFlow.swift; sourceTree = "<group>"; };
 		D6D12C9B2B291CA90054390C /* SubscriptionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionService.swift; sourceTree = "<group>"; };
 		D6D12C9C2B291CA90054390C /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		D6D12C9D2B291CA90054390C /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -4579,7 +4577,6 @@
 			children = (
 				D6D12C932B291CA90054390C /* AppStore */,
 				D6D12C972B291CA90054390C /* PurchaseFlow.swift */,
-				D6D12C982B291CA90054390C /* Stripe */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -4592,14 +4589,6 @@
 				D6D12C962B291CA90054390C /* AppStoreAccountManagementFlow.swift */,
 			);
 			path = AppStore;
-			sourceTree = "<group>";
-		};
-		D6D12C982B291CA90054390C /* Stripe */ = {
-			isa = PBXGroup;
-			children = (
-				D6D12C992B291CA90054390C /* StripePurchaseFlow.swift */,
-			);
-			path = Stripe;
 			sourceTree = "<group>";
 		};
 		D6D12C9A2B291CA90054390C /* Services */ = {
@@ -6474,7 +6463,6 @@
 				B623C1C42862CD670043013E /* WKDownloadSession.swift in Sources */,
 				EEFD562F2A65B6CA00DAEC48 /* NetworkProtectionInviteViewModel.swift in Sources */,
 				1E8AD1D927C4FEC100ABA377 /* DownloadsListSectioningHelper.swift in Sources */,
-				D6D12CA92B291CAA0054390C /* StripePurchaseFlow.swift in Sources */,
 				1E4DCF4827B6A35400961E25 /* DownloadsListModel.swift in Sources */,
 				C12726F02A5FF89900215B02 /* EmailSignupPromptViewModel.swift in Sources */,
 				D6E83C642B238432006C8AFB /* SettingsAboutView.swift in Sources */,

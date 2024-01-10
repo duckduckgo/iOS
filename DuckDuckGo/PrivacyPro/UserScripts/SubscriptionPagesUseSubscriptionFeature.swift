@@ -89,14 +89,16 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     struct Subscription: Encodable {
         let token: String
     }
-
+    
     /// Values that the Frontend can use to determine the current state.
+    // swiftlint:disable nesting
     struct SubscriptionValues: Codable {
         enum CodingKeys: String, CodingKey {
             case token
         }
         let token: String
     }
+    // swiftlint:enable nesting
     
     // Manage transation in progress flag
     private func withTransactionInProgress<T>(_ work: () async throws -> T) async rethrows -> T {

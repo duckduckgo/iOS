@@ -1,5 +1,6 @@
 //
 //  AppStorePurchaseFlow.swift
+//  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
 //
@@ -67,7 +68,9 @@ public final class AppStorePurchaseFlow {
             case .subscriptionExpired(let expiredAccountDetails):
                 externalID = expiredAccountDetails.externalID
                 accountManager.storeAuthToken(token: expiredAccountDetails.authToken)
-                accountManager.storeAccount(token: expiredAccountDetails.accessToken, email: expiredAccountDetails.email, externalID: expiredAccountDetails.externalID)
+                accountManager.storeAccount(token: expiredAccountDetails.accessToken,
+                                            email: expiredAccountDetails.email,
+                                            externalID: expiredAccountDetails.externalID)
             case .missingAccountOrTransactions:
                 // No history, create new account
                 switch await AuthService.createAccount(emailAccessToken: emailAccessToken) {

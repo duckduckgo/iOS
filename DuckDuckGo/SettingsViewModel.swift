@@ -16,7 +16,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
-
+// swiftlint:disable file_length
 import Core
 import BrowserServicesKit
 import Persistence
@@ -428,3 +428,4 @@ extension SettingsViewModel: AutofillLoginSettingsListViewControllerDelegate {
         onRequestPopLegacyView?()
     }
 }
+// swiftlint:enable file_length

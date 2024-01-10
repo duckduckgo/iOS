@@ -97,7 +97,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         guard let error else { return }
         guard let syncError = error as? SyncError else { return }
         if !syncError.isServerError {
-            Pixel.fire(pixel: .syncLoginError, error: syncError)
+            Pixel.fire(pixel: .syncLoginError, withAdditionalParameters: syncError.errorParameters)
         }
     }
 

@@ -316,6 +316,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         widgetRefreshModel.beginObservingVPNStatus()
         NetworkProtectionAccessController().refreshNetworkProtectionAccess()
 #endif
+        
+#if SUBSCRIPTION
+        setupSubscriptionsEnvironment()
+#endif
 
         return true
     }
@@ -357,6 +361,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             PreserveLogins.shared.clearLegacyAllowedDomains()
         })
     }
+
+#if SUBSCRIPTION
+    private func setupSubscriptionsEnvironment() {
+        SubscriptionPurchaseEnvironment.current = .appStore
+    }
+#endif
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }

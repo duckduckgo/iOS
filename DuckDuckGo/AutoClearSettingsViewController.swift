@@ -20,6 +20,7 @@
 import UIKit
 import MessageUI
 import Core
+import SwiftUI
 
 class AutoClearSettingsViewController: UITableViewController {
     

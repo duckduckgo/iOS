@@ -221,6 +221,26 @@
                                             <segue destination="TDP-d3-gtB" kind="show" destinationCreationSelector="onCreateNetPDebugScreen:sender:segueIdentifier:" id="bS9-Ic-OhH"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="2HN-ZT-QyE" style="IBUITableViewCellStyleDefault" id="OZk-lw-UOA">
+                                        <rect key="frame" x="0.0" y="441.5" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OZk-lw-UOA" id="P5Y-e6-1P8">
+                                            <rect key="frame" x="0.0" y="0.0" width="383.5" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subscriptions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2HN-ZT-QyE">
+                                                    <rect key="frame" x="20" y="0.0" width="355.5" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="8L3-is-GEH" kind="show" id="YLL-xH-2nF"/>
+                                        </connections>
+                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" tag="665" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="iau-ES-Bnx">
                                         <rect key="frame" x="0.0" y="485" width="414" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -819,6 +839,35 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QaV-OV-ECp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4699" y="968"/>
+        </scene>
+        <!--Subscriptions Debug Menu-->
+        <scene sceneID="mX6-Fm-Jh8">
+            <objects>
+                <tableViewController id="8L3-is-GEH" userLabel="Subscriptions Debug Menu" customClass="SubscriptionDebugViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="8JI-NA-RGa">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="gpq-tH-ki5">
+                                <rect key="frame" x="0.0" y="50" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gpq-tH-ki5" id="Jxo-Ud-82c">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="8L3-is-GEH" id="KAa-lC-eO2"/>
+                            <outlet property="delegate" destination="8L3-is-GEH" id="9gT-aZ-8m1"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="zeA-E8-1uK"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="82a-uF-T02" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5399" y="968"/>
         </scene>
         <!--Configuration URLs-->
         <scene sceneID="Doa-ql-21j">

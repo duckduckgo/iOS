@@ -4,9 +4,6 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
-/* No comment provided by engineer. */
-"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Редактировать";
 
@@ -874,6 +871,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Интернет набит трекерами.\n\nНо выход есть! Пользоваться сетью без слежки проще, чем вы думали.";
 
+/* No comment provided by engineer. */
+"Debug" = "Debug";
+
 /* GPC Setting state */
 "donotsell.disabled" = "Отключено";
 
@@ -1348,6 +1348,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Добро пожаловать в\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "Приложение DuckDuckGo для Mac — это высокая скорость, функциональность и беспрецедентная конфиденциальность.";
 
@@ -1411,17 +1414,104 @@
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
 
+/* Privacy Policy title for Network Protection */
+"network-protection.privacy-policy.title" = "Политика конфиденциальности";
+
+/* Title text for the Network Protection terms and conditions accept button */
+"network-protection.waitlist.agree-and-continue" = "Agree and Continue";
+
+/* Availability disclaimer for Network Protection join waitlist screen */
+"network-protection.waitlist.availability-disclaimer" = "Network Protection is free to use during early access.";
+
+/* Agree and Continue button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.agree-and-continue" = "Agree and Continue";
+
+/* Enable Notifications button for Network Protection joined waitlist screen */
+"network-protection.waitlist.button.enable-notifications" = "Enable Notifications";
+
+/* Button title for users who already have an invite code */
+"network-protection.waitlist.button.existing-invite-code" = "У меня есть пригласительный код";
+
+/* Join Waitlist button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.join-waitlist" = "Join the Waitlist";
+
+/* Button title text for the Network Protection waitlist confirmation prompt */
+"network-protection.waitlist.get-started" = "Приступим!";
+
+/* Subtitle for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.subtitle" = "Encrypt online traffic across your browsers and apps.";
+
+/* Title for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.title" = "Full-device coverage";
+
+/* Subtitle for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.subtitle" = "No need for a separate app. Connect in one click and see your connection status at a glance.";
+
+/* Title for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.title" = "Fast, reliable, and easy to use";
+
+/* Subtitle for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.subtitle" = "We do not log or save any data that can connect you to your online activity.";
+
+/* Title for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.title" = "Strict no-logging policy";
+
+/* Subtitle for Network Protection invited screen */
+"network-protection.waitlist.invited.subtitle" = "Get an extra layer of protection online with the VPN built for speed and simplicity. Encrypt your internet connection across your entire device and hide your location and IP address from sites you visit.";
+
+/* Title for Network Protection invited screen */
+"network-protection.waitlist.invited.title" = "You’re invited to try\nNetwork Protection early access!";
+
+/* First subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.1" = "Secure your connection anytime, anywhere with Network Protection, the VPN from DuckDuckGo.";
+
+/* Second subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.2" = "Join the waitlist, and we’ll notify you when it’s your turn.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
+
+/* Title for Network Protection joined waitlist screen */
+"network-protection.waitlist.joined.title" = "Вы в списке!";
+
+/* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "New invites are sent every few days, on a first come, first served basis.";
+
+/* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "We’ll notify you when your invite is ready.";
+
+/* Body text for the alert to enable notifications */
+"network-protection.waitlist.notification-alert.description" = "We’ll send you a notification when your invite to test Network Protection is ready.";
+
+/* Subtitle for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-description" = "Get a notification when your copy of Network Protection early access is ready.";
+
+/* Title for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-title" = "Know the instant you're invited";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.text" = "Откройте приглашение";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.title" = "Network Protection is ready!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Your invite is ready!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Вы в списке!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Приглашаем встать в очередь";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+"network.protection.invite.dialog.title" = "You’re invited to try Network Protection";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
-
-/* Message explaining that netP is invite only */
-"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
 
 /* Message for the network protection invite success view */
 "network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
@@ -1453,7 +1543,7 @@
 /* Header title label text for the status view when netP is connected */
 "network.protection.status.header.title.on" = "Network Protection is On";
 
-/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+/* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 
 /* Connection details label shown in NetworkProtection's status view. */
@@ -1489,23 +1579,32 @@
 /* Title for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.title" = "Оповещения о VPN";
 
-/* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.footer" = "Автоматически восстанавливать VPN-соединение в случае его прерывания.";
+/* Footer text for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.";
 
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.title" = "Всегда включено";
+/* Title for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.title" = "Exclude Local Networks";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Subtitle of countries item when there are multiple cities, example : */
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d cities";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
+"network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
+
+/* Title for the VPN Location screen. */
+"network.protection.vpn.location.title" = "VPN Location";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "Уведомления о VPN";
@@ -1517,10 +1616,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Защита сети предотвращает утечку данных через DNS вашему интернет-провайдеру, направляя DNS-запросы через VPN-туннель к нашему собственному сопоставителю.";
-
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.title" = "Безопасный DNS";
+"network.protection.vpn.secure.dns.setting.footer" = "Our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Настройки VPN";
@@ -1648,8 +1744,110 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Избранное";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "Несколько слов о DuckDuckGo";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "О нас";
+
 /* about page */
 "settings.about.text" = "DuckDuckGo — независимая компания, которая c 2008 года предоставляет услуги защиты личных данных в интернете. Мы предлагаем простое решение для тех, кому надоело отслеживание онлайн. Своим примером DuckDuckGo показывает, что защита конфиденциальности в Сети не требует компромиссов.\n\nВ универсальном браузере DuckDuckGo вы найдете все те же привычные функции — вкладки, закладки, пароли, — а также более [десятка мощных средств защиты личной информации](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/), которых нет в стандартных пакетах других популярных веб-обозревателей. Наш всесторонний набор инструментов скроет от посторонних глаз всю вашу онлайн-активность, включая поиск, просмотр сайтов и чтение почты.\n\nСервисы DuckDuckGo не требуют особых технических познаний или работы со сложными настройками. Достаточно сменить свой браузер на DuckDuckGo на всех устройствах, и конфиденциальность онлайн станет вашим спутником по умолчанию.\n\nЕсли же вас интересует наша «кухня», вы можете почитать о том, как устроены инструменты защиты DuckDuckGo, на [страницах нашего справочного центра](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Добавьте приложение на док-панель";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Добавьте виджет на домашний экран";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Положение адресной строки";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Внешний вид";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Открывать ссылки в связанных приложениях";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Отключение этой функции не позволит ссылкам автоматически открываться в других приложениях.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Показать предложения автозаполнения";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Блокировка";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Если система защищена технологией Touch ID или Face ID либо кодом доступа, при запуске вам придется разблокировать приложение.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Автоудаление данных";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Управление окнами выбора куки-файлов";
+
+/* Settings title for the customize section */
+"settings.customize" = "Собственная настройка";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Сделать браузером по умолчанию";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "Защита электронной почты";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Блокировка почтовых трекеров и скрытие адреса";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Оставьте нам отзыв";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Aнимация кнопки «Огонь»";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Огнеупорные сайты";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Глобальный контроль конфиденциальности (GPC)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "Значок приложения";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Клавиатура";
+
+/* Settings screen cell text for logins */
+"settings.logins" = "Логины";
+
+/* Settings title for the 'More' section */
+"settings.more" = "DuckDuckGo также предлагает...";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Предпросмотр долгим нажатием";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Настройки конфиденциальности";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Синхронизация и резервное копирование";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Размер текста";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Тема";
+
+/* Title for the Settings View */
+"settings.title" = "Настройки";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Незащищенные сайты";
+
+/* Settings cell for Version */
+"settings.version" = "Версия";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Конфиденциальный голосовой поиск";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Отправить жалобу";
@@ -1734,6 +1932,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Чтобы пользоваться голосовыми функциями, откройте DuckDuckGo доступ к микрофону в системных настройках iOS.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "Хорошо";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Требуется доступ к микрофону";

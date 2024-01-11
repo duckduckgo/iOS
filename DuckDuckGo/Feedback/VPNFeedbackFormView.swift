@@ -24,13 +24,17 @@ import NetworkProtection
 
 @available(iOS 15.0, *)
 struct VPNFeedbackFormCategoryView: View {
+    @Environment(\.dismiss) private var dismiss
+
     var body: some View {
         VStack {
             List {
                 Section {
                     ForEach(VPNFeedbackCategory.allCases, id: \.self) { category in
                         NavigationLink(category.displayName,
-                                       destination: VPNFeedbackFormView(viewModel: VPNFeedbackFormViewModel(category: category)))
+                                       destination: VPNFeedbackFormView(
+                                        viewModel: VPNFeedbackFormViewModel(category: category),
+                                        onDismiss: { dismiss() }))
                             .daxBodyRegular()
                             .foregroundColor(.init(designSystemColor: .textPrimary))
                     }
@@ -70,7 +74,9 @@ struct VPNFeedbackFormCategoryView: View {
 struct VPNFeedbackFormView: View {
     @ObservedObject public var viewModel: VPNFeedbackFormViewModel
     @Environment(\.dismiss) private var dismiss
-    
+
+    var onDismiss: () -> Void
+
     var body: some View {
         VStack {
             header()
@@ -154,6 +160,7 @@ struct VPNFeedbackFormView: View {
                 let success = await viewModel.process()
                 if success {
                     dismiss()
+                    onDismiss()
                 }
             }
         } label: {

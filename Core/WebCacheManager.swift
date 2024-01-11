@@ -158,7 +158,7 @@ public class WebCacheManager {
     }
 
     @available(iOS 17, *)
-    func containerBasedClearing(cookeStorage: CookieStorage = CookieStorage(),
+    func containerBasedClearing(cookieStorage: CookieStorage = CookieStorage(),
                                 logins: PreserveLogins,
                                 storeIdManager: DataStoreIdManager,
                                 completion: @escaping () -> Void) {
@@ -184,7 +184,7 @@ public class WebCacheManager {
             // If cookies is empty it's likely that the webview was not used since the last fire button so
             //  don't overwrite previously saved cookies
             if let cookies, !cookies.isEmpty {
-                cookeStorage.cookies = cookies
+                cookieStorage.cookies = cookies
             }
 
             completion()

@@ -239,7 +239,7 @@ extension PrivacyDashboardViewController {
         return WebsiteBreakage(siteUrl: breakageAdditionalInfo.currentURL,
                                category: category,
                                description: description,
-                               osVersion: "\(ProcessInfo.processInfo.operatingSystemVersion)",
+                               osVersion: "\(ProcessInfo().operatingSystemVersion.majorVersion)",
                                manufacturer: "Apple",
                                upgradedHttps: breakageAdditionalInfo.httpsForced,
                                tdsETag: ContentBlocking.shared.contentBlockingManager.currentMainRules?.etag ?? "",

@@ -63,6 +63,7 @@ struct SubscriptionFlowView: View {
                 }
             )
         }
+        .navigationBarBackButtonHidden(viewModel.transactionInProgress)
     }
 }
 #endif

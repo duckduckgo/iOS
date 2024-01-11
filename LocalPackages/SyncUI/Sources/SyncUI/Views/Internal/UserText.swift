@@ -21,10 +21,10 @@ import Foundation
 
 // swiftlint:disable line_length
 // Localise these later, when feature is closer to exernal release
-struct UserText {
+public struct UserText {
 
     // Sync Title
-    static let syncTitle = NSLocalizedString("sync.title", bundle: Bundle.module, value: "Sync & Backup", comment: "Sync & Backup Title")
+    public static let syncTitle = NSLocalizedString("sync.title", bundle: Bundle.module, value: "Sync & Backup", comment: "Sync & Backup Title")
     static let syncRollOutBannerDescription = NSLocalizedString("preferences.sync.rollout-banner.description", bundle: Bundle.module, value: "Sync & Backup is rolling out gradually and may not be available yet within DuckDuckGo on your other devices.", comment: "Description of rollout banner")
 
     // Sync Set Up

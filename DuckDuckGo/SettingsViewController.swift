@@ -22,6 +22,7 @@ import Core
 import BrowserServicesKit
 import Persistence
 import SwiftUI
+import SyncUI
 import Common
 import DDGSync
 import Combine
@@ -259,10 +260,10 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureSyncCell() {
-        syncCell.textLabel?.text = "Sync & Backup"
+        syncCell.textLabel?.text = SyncUI.UserText.syncTitle
         let isDataSyncingDisabled = !syncService.featureFlags.contains(.dataSyncing) && syncService.authState == .active
         if SyncBookmarksAdapter.isSyncBookmarksPaused || SyncCredentialsAdapter.isSyncCredentialsPaused || isDataSyncingDisabled {
-            syncCell.textLabel?.text = "⚠️ " + "Sync & Backup"
+            syncCell.textLabel?.text = "⚠️ " + SyncUI.UserText.syncTitle
         }
         syncCell.isHidden = !shouldShowSyncCell
     }

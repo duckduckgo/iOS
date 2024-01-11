@@ -20,6 +20,7 @@
 import Foundation
 import UserScript
 import Combine
+import Core
 
 #if SUBSCRIPTION
 @available(iOS 15.0, *)
@@ -39,6 +40,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
     @Published var transactionInProgress = false
     @Published var shouldReloadWebview = false
     
+    @UserDefaultsWrapper(key: .privacyProhasActiveSubscription, defaultValue: false)
+    static private var cachedHasActiveSubscription: Bool
     
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
@@ -58,10 +61,13 @@ final class SubscriptionFlowViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
+        self.hasActiveSubscription = Self.cachedHasActiveSubscription
+        
         subFeature.$hasActiveSubscription
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 self?.hasActiveSubscription = value
+                Self.cachedHasActiveSubscription = value
             }
             .store(in: &cancellables)
     }

@@ -848,7 +848,7 @@ But if you *do* want a peek under the hood, you can find more information about 
         return message.format(arguments: deviceName)
     }
     public static let syncRemoveDeviceConfirmAction = NSLocalizedString("sync.remove-device.action", value:"Remove", comment: "Caption for a button to remove device from Sync")
-    public static let syncCodeCopied = NSLocalizedString("sync.code.copied", value:"Recovery Code copied", comment: "Message confirming that recovery code was copied to clipboard")
+    public static let syncCodeCopied = NSLocalizedString("sync.code.copied", value:"Recovery Code copied to clipboard", comment: "Message confirming that recovery code was copied to clipboard")
 
     // MARK: Errors
 

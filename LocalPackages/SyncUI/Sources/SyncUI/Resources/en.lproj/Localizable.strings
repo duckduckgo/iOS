@@ -26,7 +26,7 @@
 "cancel.button" = "Cancel";
 
 /* Connect With Server Sheet - Button */
-"connect.with.server.sheet.button" = "Turn on Sync & Backup";
+"connect.with.server.sheet.button" = "Turn On Sync & Back Up";
 
 /* Connect With Server Sheet - Description Part 1 */
 "connect.with.server.sheet.description.part1" = "This creates an encrypted backup of your bookmarks and passwords on DuckDuckGo’s secure server, which can be synced with your other devices.";
@@ -50,7 +50,7 @@
 "delete.server.data" = "Turn Off and Delete Server Data...";
 
 /* Device SyncedSheet - Title */
-"device.synced.sheet.title" = "Your Data is Synced!";
+"device.synced.sheet.title" = "Your data is synced!";
 
 /* Standard Buttons - Done Button */
 "done.button" = "Done";
@@ -184,9 +184,6 @@
 /* Scan or See Code View - Instruction with syncMenuPath */
 "scan.or.see.code.instruction.attributed" = "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync with Another Device.”.";
 
-/* Scan or See Code View - Instruction Part 3 */
-"scan.or.see.code.instruction.part3" = "in the DuckDuckGo Browser on another device and select ”Sync with Another Device.”";
-
 /* Scan or See Code View - Manually Enter Code Link */
 "scan.or.see.code.manually.enter.code.link" = "Manually Enter Code";
 
@@ -227,7 +224,7 @@
 "sync.warning.sync.unavailable" = "Sync & Backup is Unavailable";
 
 /* Button label for syncing with another device */
-"sync.with.another.device.button" = "Sync with Another Device";
+"sync.with.another.device.button" = "Sync With Another Device";
 
 /* Footer message for syncing with another device */
 "sync.with.another.device.footer" = "Your data is end-to-end encrypted, and DuckDuckGo does not have access to the encryption key.";
@@ -257,7 +254,7 @@
 "unified.favorites.instruction" = "Use the same favorite bookmarks on all your devices. Leave off to keep mobile and desktop favorites separate.";
 
 /* Options - Unify Favorites Title */
-"unified.favorites.title" = "Unify Favorites";
+"unified.favorites.title" = "Unify Favorites Across Devices";
 
 /* View Text Code menu item */
 "view.text.code.menu.item" = "View Text Code";

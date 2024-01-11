@@ -211,42 +211,9 @@ extension SettingsViewModel {
             voiceSearchEnabled: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
             speechRecognitionEnabled: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
             loginsEnabled: featureFlagger.isFeatureOn(.autofillAccessCredentialManagement),
-            networkProtection: {
-                var enabled = false
-                #if NETWORK_PROTECTION
-                    if #available(iOS 15, *) {
-                        let accessController = NetworkProtectionAccessController()
-                        enabled = accessController.networkProtectionAccessType() != .none
-                    }
-                #endif
-                return SettingsState.NetworkProtection(enabled: enabled, status: "")
-            }(),
-            privacyPro: {
-                var enabled = false
-                var canPurchase = false
-                var status = SettingsState.PrivacyProSubscriptionStatus.unknown
-                #if SUBSCRIPTION
-                    enabled = featureFlagger.isFeatureOn(.privacyPro)
-                    canPurchase = SubscriptionPurchaseEnvironment.canPurchase
-                    status = SettingsState.PrivacyProSubscriptionStatus.unknown
-                #endif
-                return SettingsState.PrivacyPro(enabled: enabled,
-                                                canPurchase: canPurchase,
-                                                status: status)
-            }(),
-            sync: SettingsState.SyncSettings(enabled: legacyViewProvider.syncService.featureFlags.contains(.userInterface),
-                                     title: {
-                                         let syncService = legacyViewProvider.syncService
-                                         let isDataSyncingDisabled = !syncService.featureFlags.contains(.dataSyncing)
-                                          && syncService.authState == .active
-                                         if SyncBookmarksAdapter.isSyncBookmarksPaused
-                                             || SyncCredentialsAdapter.isSyncCredentialsPaused
-                                             || isDataSyncingDisabled {
-                                             return "⚠️ \(UserText.settingsSync)"
-                                         }
-                                         return UserText.settingsSync
-                                     }()
-            )
+            networkProtection: getNetworkProtectionState(),
+            privacyPro: getPrivacyProState(),
+            sync: getSyncState()
         )
         
         setupSubscribers()
@@ -260,6 +227,46 @@ extension SettingsViewModel {
             }
         }
         #endif
+    }
+    
+    private func getNetworkProtectionState() -> SettingsState.NetworkProtection {
+        var enabled = false
+        #if NETWORK_PROTECTION
+            if #available(iOS 15, *) {
+                let accessController = NetworkProtectionAccessController()
+                enabled = accessController.networkProtectionAccessType() != .none
+            }
+        #endif
+        return SettingsState.NetworkProtection(enabled: enabled, status: "")
+    }
+    
+    private func getPrivacyProState() -> SettingsState.PrivacyPro {
+        var enabled = false
+        var canPurchase = false
+        var status = SettingsState.PrivacyProSubscriptionStatus.unknown
+        #if SUBSCRIPTION
+            enabled = featureFlagger.isFeatureOn(.privacyPro)
+            canPurchase = SubscriptionPurchaseEnvironment.canPurchase
+            status = SettingsState.PrivacyProSubscriptionStatus.unknown
+        #endif
+        return SettingsState.PrivacyPro(enabled: enabled,
+                                        canPurchase: canPurchase,
+                                        status: status)
+    }
+    
+    private func getSyncState() -> SettingsState.SyncSettings {
+        SettingsState.SyncSettings(enabled: legacyViewProvider.syncService.featureFlags.contains(.userInterface),
+                                 title: {
+                                     let syncService = legacyViewProvider.syncService
+                                     let isDataSyncingDisabled = !syncService.featureFlags.contains(.dataSyncing)
+                                      && syncService.authState == .active
+                                     if SyncBookmarksAdapter.isSyncBookmarksPaused
+                                         || SyncCredentialsAdapter.isSyncCredentialsPaused
+                                         || isDataSyncingDisabled {
+                                         return "⚠️ \(UserText.settingsSync)"
+                                     }
+                                     return UserText.settingsSync
+                                 }())
     }
         
     private func firePixel(_ event: Pixel.Event) {

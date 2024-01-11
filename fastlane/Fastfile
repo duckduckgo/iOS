@@ -77,7 +77,8 @@ lane :adhoc do |options|
     export_method: "ad-hoc",
     scheme: "DuckDuckGo",
     export_options: "adhocExportOptions.plist",
-    derived_data_path: "DerivedData"
+    derived_data_path: "DerivedData",
+    xcargs: "-skipPackagePluginValidation"
   )
 
   if is_ci

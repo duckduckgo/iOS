@@ -973,7 +973,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     public static let settingsPProLearnMore = NSLocalizedString("settings.ppro.learn.more", value: "Learn More", comment: "Learn more button text for privacy pro")
     
-    public static let settingsPProManageSubscription = NSLocalizedString("settings.ppro.manage", value: "Manage Subscription", comment: "Manage Subscription button text for privacy pro")
+    public static let settingsPProManageSubscription = NSLocalizedString("settings.ppro.manage", value: "Subscription Settings", comment: "Subscription Settings button text for privacy pro")
     
     public static let settingsPProVPNTitle = NSLocalizedString("settings.ppro.VPN.title", value: "VPN (Virtual Private Network", comment: "VPN cell title for privacy pro")
     public static let settingsPProDBPTitle = NSLocalizedString("settings.ppro.DBP.title", value: "Personal Information Removal", comment: "Data Broker protection cell title for privacy pro")

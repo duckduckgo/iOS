@@ -1860,8 +1860,8 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Learn more button text for privacy pro */
 "settings.ppro.learn.more" = "Learn More";
 
-/* Manage Subscription button text for privacy pro */
-"settings.ppro.manage" = "Manage Subscription";
+/* Subscription Settings button text for privacy pro */
+"settings.ppro.manage" = "Subscription Settings";
 
 /* Call to action title for Privacy Pro */
 "settings.ppro.subscribe" = "Subscribe to Privacy Pro";

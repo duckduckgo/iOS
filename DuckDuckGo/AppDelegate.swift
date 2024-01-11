@@ -36,6 +36,7 @@ import SyncDataProviders
 
 #if NETWORK_PROTECTION
 import NetworkProtection
+import WebKit
 #endif
 
 // swiftlint:disable file_length
@@ -282,8 +283,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         autoClear = AutoClear(worker: main)
         autoClear?.applicationDidLaunch()
         
-        clearLegacyAllowedDomainCookies()
-        
         AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
 
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
@@ -353,14 +352,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    private func clearLegacyAllowedDomainCookies() {
-        let domains = PreserveLogins.shared.legacyAllowedDomains
-        guard !domains.isEmpty else { return }
-        WebCacheManager.shared.removeCookies(forDomains: domains, completion: {
-            os_log("Removed cookies for %d legacy allowed domains", domains.count)
-            PreserveLogins.shared.clearLegacyAllowedDomains()
-        })
-    }
 
 #if SUBSCRIPTION
     private func setupSubscriptionsEnvironment() {

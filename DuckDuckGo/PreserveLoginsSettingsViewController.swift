@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import WebKit
 
 class PreserveLoginsSettingsViewController: UITableViewController {
     
@@ -145,8 +146,8 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         let domain = model.remove(at: indexPath.row)
         PreserveLogins.shared.remove(domain: domain)
         Favicons.shared.removeFireproofFavicon(forDomain: domain)
-        WebCacheManager.shared.removeCookies(forDomains: [domain]) { }
-        
+        WebCacheManager.shared.removeCookies(forDomains: [domain], dataStore: WKWebsiteDataStore.current()) { }
+
         if self.model.isEmpty {
             self.endEditing()
             tableView.reloadData()
@@ -208,7 +209,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         PreserveLoginsAlert.showClearAllAlert(usingController: self, cancelled: { [weak self] in
             self?.refreshModel()
         }, confirmed: { [weak self] in
-            WebCacheManager.shared.removeCookies(forDomains: self?.model ?? []) { }
+            WebCacheManager.shared.removeCookies(forDomains: self?.model ?? [], dataStore: WKWebsiteDataStore.current()) { }
             PreserveLogins.shared.clearAll()
             self?.refreshModel()
             self?.endEditing()

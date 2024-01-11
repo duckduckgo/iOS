@@ -836,19 +836,19 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     // MARK: Sync
 
-    public static let syncTurnOffConfirmTitle = "Turn Off Sync?"
-    public static let syncTurnOffConfirmMessage = "This Device will no longer be able to access your synced data."
-    public static let syncTurnOffConfirmAction = "Remove"
-    public static let syncDeleteAllConfirmTitle = "Delete Server Data?"
-    public static let syncDeleteAllConfirmMessage = "All devices will be disconnected and your synced data will be deleted from the server."
-    public static let syncDeleteAllConfirmAction = "Delete Server Data"
-    public static let syncRemoveDeviceTitle = "Remove Device?"
+    public static let syncTurnOffConfirmTitle = NSLocalizedString("sync.turn.off.confirm.title", value:"Turn Off Sync?", comment: "Title of the dialog to confirm turning off Sync")
+    public static let syncTurnOffConfirmMessage = NSLocalizedString("sync.turn.off.confirm.message", value:"This Device will no longer be able to access your synced data.", comment: "Message for the dialog to confirm turning off Sync")
+    public static let syncTurnOffConfirmAction = NSLocalizedString("sync.turn.off.confirm.action", value:"Remove", comment: "Caption for a button to remove current device from Sync")
+    public static let syncDeleteAllConfirmTitle = NSLocalizedString("sync.delete.all.confirm.title", value:"Delete Server Data?", comment: "Title of the dialog to confirm deleting Sync server data")
+    public static let syncDeleteAllConfirmMessage = NSLocalizedString("sync.delete.all.confirm.message", value:"All devices will be disconnected and your synced data will be deleted from the server.", comment: "Message for the dialog to confirm deleting Sync server data")
+    public static let syncDeleteAllConfirmAction = NSLocalizedString("sync.delete.all.confirm.action", value:"Delete Server Data", comment: "Caption for a button to delete Sync server data")
+    public static let syncRemoveDeviceTitle = NSLocalizedString("sync.remove-device.title", value:"Remove Device?", comment: "Title of the dialog to remove device from Sync")
     public static func syncRemoveDeviceMessage(_ deviceName: String) -> String {
         let message = NSLocalizedString("sync.remove-device.message", value: "\"%@\" will no longer be able to access your synced data.", comment: "")
         return message.format(arguments: deviceName)
     }
-    public static let syncRemoveDeviceConfirmAction = "Remove"
-    public static let syncCodeCopied = "Recovery Code copied"
+    public static let syncRemoveDeviceConfirmAction = NSLocalizedString("sync.remove-device.action", value:"Remove", comment: "Caption for a button to remove device from Sync")
+    public static let syncCodeCopied = NSLocalizedString("sync.code.copied", value:"Recovery Code copied", comment: "Message confirming that recovery code was copied to clipboard")
 
     // MARK: Errors
 

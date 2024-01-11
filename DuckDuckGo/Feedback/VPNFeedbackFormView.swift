@@ -31,12 +31,13 @@ struct VPNFeedbackFormCategoryView: View {
             List {
                 Section {
                     ForEach(VPNFeedbackCategory.allCases, id: \.self) { category in
-                        NavigationLink(category.displayName,
-                                       destination: VPNFeedbackFormView(
-                                        viewModel: VPNFeedbackFormViewModel(category: category),
-                                        onDismiss: { dismiss() }))
-                            .daxBodyRegular()
-                            .foregroundColor(.init(designSystemColor: .textPrimary))
+                        NavigationLink {
+                            VPNFeedbackFormView(viewModel: VPNFeedbackFormViewModel(category: category))
+                        } label: {
+                            Text(category.displayName)
+                                .daxBodyRegular()
+                                .foregroundColor(.init(designSystemColor: .textPrimary))
+                        }
                     }
                 } header: {
                     header()
@@ -72,10 +73,7 @@ struct VPNFeedbackFormCategoryView: View {
 
 @available(iOS 15.0, *)
 struct VPNFeedbackFormView: View {
-    @ObservedObject public var viewModel: VPNFeedbackFormViewModel
-    @Environment(\.dismiss) private var dismiss
-
-    var onDismiss: () -> Void
+    @ObservedObject var viewModel: VPNFeedbackFormViewModel
 
     var body: some View {
         VStack {
@@ -159,8 +157,6 @@ struct VPNFeedbackFormView: View {
             Task {
                 let success = await viewModel.process()
                 if success {
-                    dismiss()
-                    onDismiss()
                 }
             }
         } label: {

@@ -164,9 +164,13 @@ struct NetworkProtectionStatusView: View {
     @ViewBuilder
     private func feedback() -> some View {
         Section {
-            NavigationLink(UserText.netPStatusViewShareFeedback, destination: VPNFeedbackFormCategoryView())
-                .daxBodyRegular()
-                .foregroundColor(.init(designSystemColor: .textPrimary))
+            NavigationLink {
+                VPNFeedbackFormCategoryView()
+            } label: {
+                Text(UserText.netPStatusViewShareFeedback)
+                    .daxBodyRegular()
+                    .foregroundColor(.init(designSystemColor: .textPrimary))
+            }
         }
         .listRowBackground(Color(designSystemColor: .surface))
     }

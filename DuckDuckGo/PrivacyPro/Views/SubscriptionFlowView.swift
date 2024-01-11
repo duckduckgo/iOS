@@ -56,7 +56,7 @@ struct SubscriptionFlowView: View {
                 title: Text("Subscription Found"),
                 message: Text("We found a subscription associated with this Apple ID."),
                 primaryButton: .cancel(Text("Cancel")) {
-                    // viewModel.cancelledSubscriptionRestore()
+                    // TODO: Handle subscription Restore cancellation
                 },
                 secondaryButton: .default(Text("Restore")) {
                     viewModel.restoreAppstoreTransaction()

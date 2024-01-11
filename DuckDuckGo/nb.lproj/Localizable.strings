@@ -4,9 +4,6 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
-/* No comment provided by engineer. */
-"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Rediger";
 
@@ -874,6 +871,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internettet kan være ganske skummelt.\n\nMen ikke vær redd! Det er enklere enn du tror å søke og surfe privat.";
 
+/* No comment provided by engineer. */
+"Debug" = "Debug";
+
 /* GPC Setting state */
 "donotsell.disabled" = "Deaktivert";
 
@@ -1348,6 +1348,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Velkommen til\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo for Mac har hastigheten du trenger, nettleserfunksjonene du forventer, og er stappfull av våre førsteklasses personvernfunksjoner.";
 
@@ -1411,17 +1414,104 @@
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
 
+/* Privacy Policy title for Network Protection */
+"network-protection.privacy-policy.title" = "Personvernerklæring";
+
+/* Title text for the Network Protection terms and conditions accept button */
+"network-protection.waitlist.agree-and-continue" = "Agree and Continue";
+
+/* Availability disclaimer for Network Protection join waitlist screen */
+"network-protection.waitlist.availability-disclaimer" = "Network Protection is free to use during early access.";
+
+/* Agree and Continue button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.agree-and-continue" = "Agree and Continue";
+
+/* Enable Notifications button for Network Protection joined waitlist screen */
+"network-protection.waitlist.button.enable-notifications" = "Enable Notifications";
+
+/* Button title for users who already have an invite code */
+"network-protection.waitlist.button.existing-invite-code" = "Jeg har en invitasjonskode";
+
+/* Join Waitlist button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.join-waitlist" = "Join the Waitlist";
+
+/* Button title text for the Network Protection waitlist confirmation prompt */
+"network-protection.waitlist.get-started" = "Kom i gang";
+
+/* Subtitle for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.subtitle" = "Encrypt online traffic across your browsers and apps.";
+
+/* Title for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.title" = "Full-device coverage";
+
+/* Subtitle for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.subtitle" = "No need for a separate app. Connect in one click and see your connection status at a glance.";
+
+/* Title for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.title" = "Fast, reliable, and easy to use";
+
+/* Subtitle for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.subtitle" = "We do not log or save any data that can connect you to your online activity.";
+
+/* Title for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.title" = "Strict no-logging policy";
+
+/* Subtitle for Network Protection invited screen */
+"network-protection.waitlist.invited.subtitle" = "Get an extra layer of protection online with the VPN built for speed and simplicity. Encrypt your internet connection across your entire device and hide your location and IP address from sites you visit.";
+
+/* Title for Network Protection invited screen */
+"network-protection.waitlist.invited.title" = "You’re invited to try\nNetwork Protection early access!";
+
+/* First subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.1" = "Secure your connection anytime, anywhere with Network Protection, the VPN from DuckDuckGo.";
+
+/* Second subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.2" = "Join the waitlist, and we’ll notify you when it’s your turn.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
+
+/* Title for Network Protection joined waitlist screen */
+"network-protection.waitlist.joined.title" = "Du står på listen!";
+
+/* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "New invites are sent every few days, on a first come, first served basis.";
+
+/* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "We’ll notify you when your invite is ready.";
+
+/* Body text for the alert to enable notifications */
+"network-protection.waitlist.notification-alert.description" = "We’ll send you a notification when your invite to test Network Protection is ready.";
+
+/* Subtitle for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-description" = "Get a notification when your copy of Network Protection early access is ready.";
+
+/* Title for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-title" = "Know the instant you're invited";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.text" = "Åpne invitasjonen din";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.title" = "Network Protection is ready!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Your invite is ready!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Du står på listen!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Sett deg på den private ventelisten";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+"network.protection.invite.dialog.title" = "You’re invited to try Network Protection";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
-
-/* Message explaining that netP is invite only */
-"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
 
 /* Message for the network protection invite success view */
 "network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
@@ -1453,7 +1543,7 @@
 /* Header title label text for the status view when netP is connected */
 "network.protection.status.header.title.on" = "Network Protection is On";
 
-/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+/* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 
 /* Connection details label shown in NetworkProtection's status view. */
@@ -1489,23 +1579,32 @@
 /* Title for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.title" = "VPN-varsler";
 
-/* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.footer" = "Gjenopprett automatisk VPN-tilkobling etter avbrudd.";
+/* Footer text for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.";
 
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.title" = "Alltid på";
+/* Title for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.title" = "Exclude Local Networks";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Subtitle of countries item when there are multiple cities, example : */
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d cities";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
+"network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
+
+/* Title for the VPN Location screen. */
+"network.protection.vpn.location.title" = "VPN Location";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "VPN-varsler";
@@ -1517,10 +1616,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Nettverksbeskyttelse forhindrer DNS-lekkasjer til internettleverandøren din ved å rute DNS-forespørsler gjennom VPN-tunnelen til vår egen resolver.";
-
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.title" = "Sikker DNS";
+"network.protection.vpn.secure.dns.setting.footer" = "Our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-innstillinger";
@@ -1648,8 +1744,110 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favoritter";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "Om DuckDuckGo";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "Om";
+
 /* about page */
 "settings.about.text" = "DuckDuckGo er et uavhengig personvernselskap som ble grunnlagt i 2008, for alle som er lei av å bli sporet på nettet og vil ha en enkel løsning. Vi er beviset på at ekte personvern er mulig på nettet uten å fire på kravene.\n\nDuckDuckGo-nettleseren har funksjoner du kan forvente i en vanlig nettleser, som bokmerker, faner, passord med mer, pluss over [en rekke kraftige personvernfunksjoner](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) ikke tilbys i de fleste populære nettlesere som standard. Disse usedvanlig omfattende personvernfunksjonene bidrar til å beskytte nettaktivitetene dine, fra søk til surfing, e-poster med mer.\n\nPersonvernfunksjonene fungerer uten at du behøver å kunne noe om de tekniske detaljene eller forholde deg til kompliserte innstillinger. Det eneste du behøver å gjøre, er å bytte nettleser til DuckDuckGo på alle enhetene dine, så får du personvern som standard.\n\nMen hvis du *vil* ta en titt under panseret, kan du finne mer informasjon om hvordan DuckDuckGos personvern fungerer på våre [hjelpesider](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Legg til appen i docken";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Legg til widgeten på startskjermen";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Plassering av adressefelt";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Utseende";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Åpne lenker i tilknyttede apper";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Deaktiver for å forhindre at lenker automatisk åpnes i andre installerte apper.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Vis forslag fra autofullføring";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Applås";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Hvis du har touch-ID, face-ID eller systempassord, blir du bedt om å låse opp appen når du åpner den.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Slett data automatisk";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Administrer vinduer om informasjonskapsler";
+
+/* Settings title for the customize section */
+"settings.customize" = "Tilpass";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Gjør til standardnettleser";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "E-postbeskyttelse";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Blokker e-postsporere og skjul adressen din";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Del tilbakemelding";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Animasjon for brannknappen";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Brannsikre nettsteder";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Global Privacy Control (GPC)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "Appikon";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Tastatur";
+
+/* Settings screen cell text for logins */
+"settings.logins" = "Pålogginger";
+
+/* Settings title for the 'More' section */
+"settings.more" = "Mer fra DuckDuckGo";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Forhåndsvisning ved å trykke og holde";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Personvern";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Synkronisering og sikkerhetskopiering";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Tekststørrelse";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Utseende";
+
+/* Title for the Settings View */
+"settings.title" = "Innstillinger";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Ubeskyttede nettsteder";
+
+/* Settings cell for Version */
+"settings.version" = "Versjon";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Privat talesøk";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Send inn rapport";
@@ -1734,6 +1932,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "For å bruke talefunksjoner må du gi DuckDuckGo mikrofontilgang i systeminnstillingene i iOS.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "OK";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Mikrofontilgang kreves";

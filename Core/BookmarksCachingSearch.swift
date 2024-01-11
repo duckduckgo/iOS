@@ -74,8 +74,8 @@ public class CoreDataBookmarksSearchStore: BookmarksSearchStore {
         fetchRequest.relationshipKeyPathsForPrefetching = [#keyPath(BookmarkEntity.favoriteFolders)]
         
         context.perform {
-            let result = try? context.fetch(fetchRequest) as? [Dictionary<String, Any>]
-            
+            let result = try? context.fetch(fetchRequest) as? [[String: Any]]
+
             let bookmarksAndFavorites = result?.compactMap(BookmarksCachingSearch.ScoredBookmark.init) ?? []
 
             DispatchQueue.main.async {

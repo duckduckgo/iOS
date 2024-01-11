@@ -465,9 +465,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private func updateConstraintConstants() {
         let isIPhoneLandscape = traitCollection.containsTraits(in: UITraitCollection(verticalSizeClass: .compact))
         if isIPhoneLandscape {
-            let viewVerticalCenter = view.frame.height / 2
-            let lockedViewHeight = max(lockedView.frame.height, 120.0)
-            lockedViewBottomConstraint.constant = viewVerticalCenter - (lockedViewHeight / 2.0)
+            lockedViewBottomConstraint.constant = (view.frame.height / 2.0 - max(lockedView.frame.height, 120.0) / 2.0)
         } else {
             lockedViewBottomConstraint.constant = view.frame.height * 0.15
         }

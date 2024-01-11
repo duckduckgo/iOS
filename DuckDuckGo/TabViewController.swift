@@ -1145,9 +1145,12 @@ extension TabViewController: WKNavigationDelegate {
     
     func preparePreview(completion: @escaping (UIImage?) -> Void) {
         DispatchQueue.main.async { [weak self] in
-            guard let webView = self?.webView,
+            guard let main = self?.parent as? MainViewController,
+                  let webView = self?.webView,
                   webView.bounds.height > 0 && webView.bounds.width > 0 else { completion(nil); return }
-            UIGraphicsBeginImageContextWithOptions(webView.bounds.size, false, UIScreen.main.scale)
+            
+            UIGraphicsBeginImageContextWithOptions(main.viewCoordinator.contentContainer.frame.size, false, UIScreen.main.scale)
+            UIGraphicsGetCurrentContext()?.translateBy(x: 0, y: -webView.scrollView.contentInset.top)
             webView.drawHierarchy(in: webView.bounds, afterScreenUpdates: true)
             if let jsAlertController = self?.jsAlertController {
                 jsAlertController.view.drawHierarchy(in: jsAlertController.view.bounds,

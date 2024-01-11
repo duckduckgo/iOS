@@ -1334,19 +1334,16 @@ extension MainViewController: BrowserChromeDelegate {
         }
   
         func completion(_ finished: Bool) {
+            let top: CGFloat = viewCoordinator.statusBackground.frame.height * percent
+            let bottom: CGFloat
             if self.appSettings.currentAddressBarPosition == .top {
-                let top: CGFloat = self.viewCoordinator.statusBackground.frame.height * percent
-                let bottom: CGFloat = (self.viewCoordinator.toolbar.frame.height * percent) 
-                                        + self.view.safeAreaInsets.bottom + self.additionalSafeAreaInsets.bottom
-                print("***", bottom, top, percent, animated)
-                self.currentTab?.webView.scrollView.contentInset = .init(top: top, left: 0, bottom: bottom, right: 0)
+                bottom = (viewCoordinator.toolbar.frame.height * percent)
+                    + view.safeAreaInsets.bottom + additionalSafeAreaInsets.bottom
             } else {
-                let top: CGFloat = self.viewCoordinator.statusBackground.frame.height * percent
-                let bottom: CGFloat = ((self.viewCoordinator.toolbar.frame.height + self.viewCoordinator.navigationBarContainer.frame.height) * percent)
-                                        + self.view.safeAreaInsets.bottom + self.additionalSafeAreaInsets.bottom
-                print("***", bottom, top, percent, animated)
-                self.currentTab?.webView.scrollView.contentInset = .init(top: top, left: 0, bottom: bottom, right: 0)
+                bottom = ((viewCoordinator.toolbar.frame.height + viewCoordinator.navigationBarContainer.frame.height) * percent)
+                    + view.safeAreaInsets.bottom + additionalSafeAreaInsets.bottom
             }
+            currentTab?.webView.scrollView.contentInset = .init(top: top, left: 0, bottom: bottom, right: 0)
         }
         
         if animated {

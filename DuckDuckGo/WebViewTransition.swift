@@ -90,7 +90,7 @@ class FromWebViewTransition: WebViewTransition {
         solidBackground.backgroundColor = theme.backgroundColor
         solidBackground.frame = webViewFrame
         
-        imageContainer.frame = webViewFrame
+        imageContainer.frame = mainViewController.viewCoordinator.contentContainer.frame
         imageView.frame = imageContainer.bounds
         imageView.image = preview
         
@@ -165,11 +165,12 @@ class ToWebViewTransition: WebViewTransition {
         scrollIfOutsideViewport(collectionView: tabSwitcherViewController.collectionView, rowIndex: rowIndex, attributes: layoutAttr)
         
         UIView.animate(withDuration: TabSwitcherTransition.Constants.duration, animations: {
+            let frame = CGRect(x: 0, y: webView.scrollView.contentInset.top, width: webViewFrame.width, height: webViewFrame.height)
             self.imageContainer.frame = mainViewController.viewCoordinator.contentContainer.frame
             self.imageContainer.layer.cornerRadius = 0
-//            self.imageView.frame = self.destinationImageFrame(for: webViewFrame.size,
-//                                                              preview: preview)
-            self.imageView.frame = mainViewController.viewCoordinator.contentContainer.frame
+
+            self.imageView.frame = self.destinationImageFrame(for: webViewFrame.size,
+                                                              preview: preview)
             self.imageView.alpha = 1
             
             self.solidBackground.alpha = 1

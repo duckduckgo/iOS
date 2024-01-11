@@ -72,10 +72,6 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
         observation = nil
     }
     
-    func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
-        print(#function)
-    }
-    
     private func scrollViewDidResizeContent(_ scrollView: UIScrollView) {
         if !canHideBars(for: scrollView) && animator.barsState != .revealed {
             animator.revealBars(animated: true)

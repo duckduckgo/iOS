@@ -48,7 +48,7 @@ struct SubscriptionFlowView: View {
             Task { await viewModel.initializeViewData() }
         })
         .navigationTitle(viewModel.viewTitle)
-
+        .navigationBarBackButtonHidden(viewModel.transactionInProgress)
         
         // Active subscription found Alert
         .alert(isPresented: $viewModel.hasActiveSubscription) {

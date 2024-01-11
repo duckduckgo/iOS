@@ -84,7 +84,8 @@ public struct PasteCodeView: View {
                             .foregroundColor(.white.opacity(0.6))
                             .padding()
                     } else {
-                        Text(UserText.manuallyEnterCodeInstruction)
+                        Text(UserText.manuallyEnterCodeInstructionAttributed(syncMenuPath: UserText.syncMenuPath,
+                                                                             menuItem: UserText.viewTextCodeMenuItem))
                             .lineLimit(nil)
                             .multilineTextAlignment(.center)
                             .foregroundColor(.white.opacity(0.6))

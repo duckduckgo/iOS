@@ -77,9 +77,6 @@
 "fetch.favicons.option.title" = "Auto-Download Icons";
 
 /* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
-"manually.enter.code.instruction" = "Go to Settings > Sync & Backup > Sync With Another Device and select Sync Menu Path in the DuckDuckGo App on another synced device and paste the code here to sync this device.";
-
-/* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
 "manually.enter.code.instruction.attributed" = "Go to %1$@ and select %2$@ in the DuckDuckGo App on another synced device and paste the code here to sync this device.";
 
 /* Manually Enter Code View - Title */

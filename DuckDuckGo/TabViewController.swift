@@ -712,7 +712,6 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
             privacyDashboard = controller
-//            privacyDashboard?.breakageAdditionalInfo =
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
@@ -915,36 +914,6 @@ class TabViewController: UIViewController {
                                                                     urlParametersRemoved: linkProtection.urlParametersRemoved,
                                                                     isDesktop: tabModel.isDesktop)
     }
-    
-//    public func getCurrentWebsiteInfo() -> WebsiteBreakage? {
-//
-//        guard let privacyInfo = privacyInfo,
-//        let currentURL = url else {
-//            return nil
-//        }
-//        
-//        let blockedTrackerDomains = privacyInfo.trackerInfo.trackersBlocked.compactMap { $0.domain }
-//        let configuration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
-//        let protectionsState = configuration.isFeature(.contentBlocking, enabledForDomain: currentURL.host)
-//
-//        return WebsiteBreakage(siteUrl: currentURL,
-//                               category: <#T##String#>,
-//                               description: <#T##String?#>,
-//                               osVersion: "\(ProcessInfo.processInfo.operatingSystemVersion)",
-//                               upgradedHttps: httpsForced,
-//                               tdsETag: ContentBlocking.shared.contentBlockingManager.currentMainRules?.etag ?? "",
-//                               blockedTrackerDomains: blockedTrackerDomains,
-//                               installedSurrogates: privacyInfo.trackerInfo.installedSurrogates.map { $0 },
-//                               isGPCEnabled: false,
-//                               ampURL: linkProtection.lastAMPURLString ?? "",
-//                               urlParametersRemoved: linkProtection.urlParametersRemoved,
-//                               protectionsState: protectionsState,
-//                               reportFlow: <#T##WebsiteBreakage.Source#>,
-//                               siteType: tabModel.isDesktop ? .desktop : .mobile,
-//                               atb: StatisticsUserDefaults().atb ?? "",
-//                               model: UIDevice.current.model)
-//                        
-//    }
     
     public func print() {
         let printFormatter = webView.viewPrintFormatter()

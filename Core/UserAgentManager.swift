@@ -91,6 +91,7 @@ struct UserAgent {
         case ddg
         case ddgFixed
         case closest
+        case brand
 
     }
     
@@ -125,17 +126,21 @@ struct UserAgent {
     
     private let baseAgent: String
     private let baseDesktopAgent: String
+    private let version: String
     private let versionComponent: String
     private let safariComponent: String
+    private let brandComponent: String
     private let applicationComponent = "DuckDuckGo/\(AppVersion.shared.majorVersionNumber)"
     private let statistics: StatisticsStore
     private let isTesting: Bool = ProcessInfo().arguments.contains("testing")
 
     init(defaultAgent: String = Constants.fallbackDefaultAgent, statistics: StatisticsStore = StatisticsUserDefaults()) {
-        versionComponent = UserAgent.createVersionComponent(fromAgent: defaultAgent)
+        version = UserAgent.getVersion(fromAgent: defaultAgent)
+        versionComponent = UserAgent.createVersionComponent(withVersion: version)
         baseAgent = UserAgent.createBaseAgent(fromAgent: defaultAgent, versionComponent: versionComponent)
         baseDesktopAgent = UserAgent.createBaseDesktopAgent(fromAgent: defaultAgent, versionComponent: versionComponent)
         safariComponent = UserAgent.createSafariComponent(fromAgent: baseAgent)
+        brandComponent = UserAgent.createBrandComponent(withVersion: version)
         self.statistics = statistics
     }
     
@@ -147,6 +152,7 @@ struct UserAgent {
     }
 
     private func defaultPolicy(forConfig config: PrivacyConfiguration) -> DefaultPolicy {
+        return .brand
         let uaSettings = config.settings(for: .customUserAgent)
         guard let policy = uaSettings[Constants.defaultPolicyConfigKey] as? String else { return .ddg }
 
@@ -225,6 +231,15 @@ struct UserAgent {
             } else {
                 return oldLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
             }
+        case .brand:
+            var ua: String
+            if canUseClosestLogic {
+                ua = closestLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+            } else {
+                ua = oldLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+            }
+            ua.append(" \(brandComponent)")
+            return ua
         }
     }
 
@@ -274,9 +289,9 @@ struct UserAgent {
                               isDesktop: Bool,
                               privacyConfig: PrivacyConfiguration) -> String {
         if isDesktop {
-            return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"
+            return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) \(versionComponent) Safari/605.1.15"
         }
-        return "Mozilla/5.0 (" + deviceProfile + ") AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1"
+        return "Mozilla/5.0 (" + deviceProfile + ") AppleWebKit/605.1.15 (KHTML, like Gecko) \(versionComponent) Mobile/15E148 Safari/604.1"
     }
 
     private var canUseClosestLogic: Bool {
@@ -311,25 +326,27 @@ struct UserAgent {
             .compactMap { $0 }
             .joined(separator: " ")
     }
-    
-    private static func createVersionComponent(fromAgent agent: String) -> String {
+
+    private static func getVersion(fromAgent agent: String) -> String {
         let regex = try? NSRegularExpression(pattern: Regex.osVersion)
         let match = regex?.firstMatch(in: agent, options: [], range: NSRange(location: 0, length: agent.count))
-        
+
         guard let range = match?.range(at: 1) else {
             return Constants.fallbackVersionComponent
         }
-        
+
         let version = (agent as NSString).substring(with: range)
         let versionComponents = version.split(separator: "_").prefix(2)
-        
+
         guard versionComponents.count > 1 else {
             return Constants.fallbackVersionComponent
         }
-        
-        return "Version/\(versionComponents.joined(separator: "."))"
+
+        return versionComponents.joined(separator: ".")
     }
-    
+
+    private static func createVersionComponent(withVersion version: String) -> String { "Version/\(version)" }
+
     private static func createSafariComponent(fromAgent agent: String) -> String {
         let regex = try? NSRegularExpression(pattern: Regex.webKitVersion)
         let match = regex?.firstMatch(in: agent, options: [], range: NSRange(location: 0, length: agent.count))
@@ -341,7 +358,9 @@ struct UserAgent {
         let version = (agent as NSString).substring(with: range)
         return "Safari/\(version)"
     }
-    
+
+    private static func createBrandComponent(withVersion version: String) -> String { "Ddg/\(version)" }
+
     private static func createBaseAgent(fromAgent agent: String,
                                         versionComponent: String) -> String {
         var agentComponents = agent.split(separator: " ")

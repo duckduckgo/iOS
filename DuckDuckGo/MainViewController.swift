@@ -886,7 +886,7 @@ class MainViewController: UIViewController {
         addChild(tab)
         viewCoordinator.webViewContainer.subviews.forEach { $0.removeFromSuperview() }
         viewCoordinator.webViewContainer.addSubview(tab.view)
-        tab.view.frame = self.view.frame
+        tab.view.frame = self.viewCoordinator.webViewContainer.bounds
         tab.didMove(toParent: self)
         
         viewCoordinator.logoContainer.isHidden = true

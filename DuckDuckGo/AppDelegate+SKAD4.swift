@@ -19,7 +19,7 @@
 
 import Foundation
 import StoreKit
-import Common
+import os.log
 
 extension AppDelegate {
     

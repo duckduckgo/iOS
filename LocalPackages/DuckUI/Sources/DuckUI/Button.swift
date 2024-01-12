@@ -40,6 +40,9 @@ public struct PrimaryButtonStyle: ButtonStyle {
         let foregroundColor = disabled ? disabledForegroundColor : standardForegroundColor
 
         configuration.label
+            .fixedSize(horizontal: false, vertical: true)
+            .multilineTextAlignment(.center)
+            .lineLimit(nil)
             .font(Font(UIFont.boldAppFont(ofSize: compact ? Consts.fontSize - 1 : Consts.fontSize)))
             .foregroundColor(configuration.isPressed ? standardForegroundColor.opacity(Consts.pressedOpacity) : foregroundColor)
             .padding()

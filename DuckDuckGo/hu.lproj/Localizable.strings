@@ -145,6 +145,9 @@
 /* Title for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-title" = "A jelszavak szinkronizálása szünetel";
 
+/* Title for sync error alert */
+"alert.sync-error" = "Szinkronizálási és biztonsági mentési hiba";
+
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "További részletek";
 
@@ -165,6 +168,30 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Kedvenc mentése";
+
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "Nem sikerült létrehozni a helyreállítási PDF-fájlt.";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "Nem sikerült adatokat törölni a szerveren.";
+
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "Az eszközök párosításához kapcsold ki a Szinkronizálás és biztonsági mentés funkciót az egyik eszközön, majd koppints a „Szinkronizálás másik eszközzel” lehetőségre a másik eszközön.";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "Az eszközt nem sikerült eltávolítani a Szinkronizálás és biztonsági mentés funkcióból.";
+
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Nem sikerült csatlakozni a szerverhez.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Nem sikerült a másik eszközzel szinkronizálni.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "Nem sikerült kikapcsolni a Szinkronizálás és biztonsági mentés funkciót.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "Nem sikerült frissíteni az eszköz nevét.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Oldd fel a DuckDuckGo-t.";
@@ -871,9 +898,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Az internet meglehetősen undok hely lehet.\n\nNe aggódj! A bizalmas keresés és böngészés egyszerűbb, mint hinnéd.";
 
-/* No comment provided by engineer. */
-"Debug" = "Debug";
-
 /* GPC Setting state */
 "donotsell.disabled" = "Letiltva";
 
@@ -1348,9 +1372,6 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Üdvözlünk a\nDuckDuckGo-ban!";
 
-/* No comment provided by engineer. */
-"LOREM IPSUM" = "LOREM IPSUM";
-
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "A DuckDuckGo Mac verziója gyors, böngészési funkciókban gazdag, és kategóriája legjobb adatvédelmi megoldásait kínálja.";
 
@@ -1418,85 +1439,82 @@
 "network-protection.privacy-policy.title" = "Adatvédelmi szabályzat";
 
 /* Title text for the Network Protection terms and conditions accept button */
-"network-protection.waitlist.agree-and-continue" = "Agree and Continue";
+"network-protection.waitlist.agree-and-continue" = "Elfogadás és folytatás";
 
 /* Availability disclaimer for Network Protection join waitlist screen */
-"network-protection.waitlist.availability-disclaimer" = "Network Protection is free to use during early access.";
+"network-protection.waitlist.availability-disclaimer" = "A hálózatvédelem a korai hozzáférés során ingyenesen használható.";
 
 /* Agree and Continue button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.agree-and-continue" = "Agree and Continue";
+"network-protection.waitlist.button.agree-and-continue" = "Elfogadás és folytatás";
 
 /* Enable Notifications button for Network Protection joined waitlist screen */
-"network-protection.waitlist.button.enable-notifications" = "Enable Notifications";
+"network-protection.waitlist.button.enable-notifications" = "Értesítések engedélyezése";
 
 /* Button title for users who already have an invite code */
 "network-protection.waitlist.button.existing-invite-code" = "Van meghívókódom";
 
 /* Join Waitlist button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.join-waitlist" = "Join the Waitlist";
+"network-protection.waitlist.button.join-waitlist" = "Csatlakozás a várólistához";
 
 /* Button title text for the Network Protection waitlist confirmation prompt */
 "network-protection.waitlist.get-started" = "Első lépések";
 
 /* Subtitle for section 1 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-1.subtitle" = "Encrypt online traffic across your browsers and apps.";
+"network-protection.waitlist.invited.section-1.subtitle" = "Titkosítsd a böngészők és az alkalmazások online adatforgalmat.";
 
 /* Title for section 1 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-1.title" = "Full-device coverage";
+"network-protection.waitlist.invited.section-1.title" = "Teljes eszközszintű lefedettség";
 
 /* Subtitle for section 2 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-2.subtitle" = "No need for a separate app. Connect in one click and see your connection status at a glance.";
+"network-protection.waitlist.invited.section-2.subtitle" = "Nincs szükség külön alkalmazásra. Egyetlen kattintással csatlakozhatsz, és megtekintheted a kapcsolat állapotát.";
 
 /* Title for section 2 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-2.title" = "Fast, reliable, and easy to use";
+"network-protection.waitlist.invited.section-2.title" = "Gyors, megbízható és könnyen használható";
 
 /* Subtitle for section 3 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-3.subtitle" = "We do not log or save any data that can connect you to your online activity.";
+"network-protection.waitlist.invited.section-3.subtitle" = "Nem naplózunk vagy mentünk olyan adatokat, amelyek az online tevékenységedhez kapcsolhatók.";
 
 /* Title for section 3 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-3.title" = "Strict no-logging policy";
+"network-protection.waitlist.invited.section-3.title" = "Szigorú naplózástilalmi szabályzat";
 
 /* Subtitle for Network Protection invited screen */
-"network-protection.waitlist.invited.subtitle" = "Get an extra layer of protection online with the VPN built for speed and simplicity. Encrypt your internet connection across your entire device and hide your location and IP address from sites you visit.";
+"network-protection.waitlist.invited.subtitle" = "Tegyél szert extra online védelemre a gyors és egyszerű VPN segítségével. Titkosítsd a teljes eszközöd internetkapcsolatát, és rejtsd el a tartózkodási helyed, illetve az IP-címed a meglátogatott webhelyek elől.";
 
 /* Title for Network Protection invited screen */
-"network-protection.waitlist.invited.title" = "You’re invited to try\nNetwork Protection early access!";
+"network-protection.waitlist.invited.title" = "Meghívót kaptál a hálózatvédelem\nkorai hozzáférésének kipróbálására!";
 
 /* First subtitle for Network Protection join waitlist screen */
-"network-protection.waitlist.join.subtitle.1" = "Secure your connection anytime, anywhere with Network Protection, the VPN from DuckDuckGo.";
+"network-protection.waitlist.join.subtitle.1" = "A DuckDuckGo VPN-megoldásának, a hálózatvédelmi funkciónak a segítségével bármikor és bárhol biztonságosabbá teheted a kapcsolatod.";
 
 /* Second subtitle for Network Protection join waitlist screen */
-"network-protection.waitlist.join.subtitle.2" = "Join the waitlist, and we’ll notify you when it’s your turn.";
-
-/* Title for Network Protection join waitlist screen */
-"network-protection.waitlist.join.title" = "Network Protection Early Access";
+"network-protection.waitlist.join.subtitle.2" = "Iratkozz fel a várólistára, és értesítést kapsz, ha rád kerül a sor.";
 
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "Felkerültél a listára!";
 
 /* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
-"network-protection.waitlist.joined.with-notifications.subtitle.1" = "New invites are sent every few days, on a first come, first served basis.";
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Érkezési sorrend szerint pár naponta új meghívókat küldünk szét.";
 
 /* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
-"network-protection.waitlist.joined.with-notifications.subtitle.2" = "We’ll notify you when your invite is ready.";
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "Értesítünk, ha elkészült a meghívód.";
 
 /* Body text for the alert to enable notifications */
-"network-protection.waitlist.notification-alert.description" = "We’ll send you a notification when your invite to test Network Protection is ready.";
+"network-protection.waitlist.notification-alert.description" = "Értesítést küldünk, ha a hálózatvédelem tesztelésére szóló meghívód elkészült.";
 
 /* Subtitle for the alert to confirm enabling notifications */
-"network-protection.waitlist.notification-prompt-description" = "Get a notification when your copy of Network Protection early access is ready.";
+"network-protection.waitlist.notification-prompt-description" = "Értesítést kapsz, ha a hálózatvédelmi funkció korai hozzáférésű változata elérhetővé válik.";
 
 /* Title for the alert to confirm enabling notifications */
-"network-protection.waitlist.notification-prompt-title" = "Know the instant you're invited";
+"network-protection.waitlist.notification-prompt-title" = "Értesülj azonnal a meghívásról";
 
 /* Title for Network Protection waitlist notification */
 "network-protection.waitlist.notification.text" = "Meghívó megnyitása";
 
 /* Title for Network Protection waitlist notification */
-"network-protection.waitlist.notification.title" = "Network Protection is ready!";
+"network-protection.waitlist.notification.title" = "A hálózatvédelem elérhető!";
 
 /* Subtitle text for the Network Protection settings row */
-"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Your invite is ready!";
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "A meghívód elkészült!";
 
 /* Subtitle text for the Network Protection settings row */
 "network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Felkerültél a listára!";
@@ -1508,7 +1526,7 @@
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You’re invited to try Network Protection";
+"network.protection.invite.dialog.title" = "Meghívót kaptál a hálózatvédelem kipróbálására";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
@@ -1580,22 +1598,22 @@
 "network.protection.vpn.alerts.toggle.title" = "VPN-figyelmeztetések";
 
 /* Footer text for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.footer" = "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.";
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Engedd, hogy a helyi forgalom megkerülje a VPN-t, és csatlakozz a helyi hálózaton található eszközökhöz úgy, mint egy nyomtatóhoz.";
 
 /* Title for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.title" = "Exclude Local Networks";
+"network.protection.vpn.exclude.local.networks.setting.title" = "Helyi hálózatok kizárása";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
 
 /* Subtitle of countries item when there are multiple cities, example : */
-"network.protection.vpn.location.country.item.formatted.cities.count" = "%d cities";
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d város";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find.";
+"network.protection.vpn.location.recommended.section.footer" = "Automatikus csatlakozás az általunk talált legközelebbi szerverhez.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
@@ -1604,7 +1622,7 @@
 "network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
 
 /* Title for the VPN Location screen. */
-"network.protection.vpn.location.title" = "VPN Location";
+"network.protection.vpn.location.title" = "VPN-helyszín";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "VPN-értesítések";
@@ -1616,7 +1634,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.";
+"network.protection.vpn.secure.dns.setting.footer" = "A VPN-ünk biztonságos DNS használatával tartja titokban az online tevékenységedet, így az internetszolgáltatód nem láthatja, hogy milyen webhelyeket látogatsz meg.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-beállítások";
@@ -1744,110 +1762,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Kedvencek";
 
-/* Settings cell for About DDG */
-"settings.about.ddg" = "A DuckDuckGóról";
-
-/* Settings section title for About DuckDuckGo */
-"settings.about.section" = "Rólunk";
-
 /* about page */
 "settings.about.text" = "A 2008-ban alapított független internetes adatvédelmi cég, a DuckDuckGo egyszerű megoldást kínál azoknak, akiknek elegük van abból, hogy állandóan nyomon követik őket az interneten. Mi vagyunk annak a bizonyítéka, hogy kompromisszumok nélkül is lehet valódi online adatvédelmet biztosítani.\n\nA DuckDuckGo böngésző rendelkezik a böngészőktől elvárt funkciókkal, mint például könyvjelzők, lapok, jelszavak és egyéb funkciók, valamint több mint [egy tucat olyan hatékony adatvédelmi megoldással](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/), amelyet a legtöbb népszerű böngésző nem kínál alapértelmezés szerint. Ezek az egyedülállóan átfogó adatvédelmi megoldások segítenek megvédeni online tevékenységeid, legyen szó keresésről, böngészésről, e-mailezésről vagy sok minden másról.\n\nAdatvédelmi megoldásaink anélkül működnek, hogy bármit is tudnod kellene a technikai részletekről vagy bonyolult beállításokkal kellene foglalkoznod. Mindössze annyit kell tenned, hogy minden eszközödön a DuckDuckGo böngészőre váltasz, és máris igénybe veheted az alapértelmezés szerinti adatvédelmet.\n\nHa azonban *igazán* szeretnél bepillantani a motorháztető alá is, a [súgóoldalainkon](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/) további információkat találhatsz a DuckDuckGo adatvédelmi megoldásainak működéséről.";
-
-/* Settings screen cell text for adding the app to the dock */
-"settings.add.to.dock" = "Alkalmazás hozzáadása a dokkodhoz";
-
-/* Settings screen cell text for add widget to the home screen */
-"settings.add.widget" = "Minialkalmazás hozzáadása a kezdőképernyőhöz";
-
-/* Settings screen cell text for addess bar position */
-"settings.address.bar" = "Címsor elhelyezkedése";
-
-/* Settings screen appearance section title */
-"settings.appearance" = "Megjelenés";
-
-/* Settings screen cell for opening links in associated apps */
-"settings.associated.apps" = "Hivatkozások megnyitása társított alkalmazásokban";
-
-/* Description for associated apps description */
-"settings.associated.apps.description" = "Letiltásával megakadályozhatod, hogy a hivatkozások automatikusan megnyíljanak más telepített alkalmazásokban.";
-
-/* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Automatikus kiegészítési javaslatok megjelenítése";
-
-/* Settings screen cell text for Application Lock */
-"settings.autolock" = "Alkalmazás zárolás";
-
-/* Section footer Autolock description */
-"settings.autolock.description" = "Ha be van állítva ujjlenyomat- vagy arcfelismerés, illetve rendszerjelszó, megnyitásakor fel kell oldanod az alkalmazást.";
-
-/* Settings screen cell text for Automatically Clearing Data */
-"settings.clear.data" = "Adatok automatikus törlése";
-
-/* Settings screen cell text for Cookie popups */
-"settings.cookie.popups" = "Felugró sütiablakok kezelése";
-
-/* Settings title for the customize section */
-"settings.customize" = "Testreszabás";
-
-/* Settings screen cell text for setting the app as default browser */
-"settings.default.browser" = "Beállítás alapértelmezett böngészőként";
-
-/* Settings cell for Email Protection */
-"settings.emailProtection" = "E-mail védelem";
-
-/* Settings cell for Email Protection */
-"settings.emailProtection.description" = "E-mail nyomkövetők letiltása, és a cím elrejtése";
-
-/* Settings cell for Feedback */
-"settings.feedback" = "Visszajelzés megosztása";
-
-/* Settings screen cell text for fire button animation */
-"settings.firebutton" = "Tűz gomb animáció";
-
-/* Settings screen cell text for Fireproof Sites */
-"settings.fireproof.sites" = "Tűzálló weboldalak";
-
-/* Settings screen cell text for GPC */
-"settings.gpc" = "Nemzetközi adatvédelmi szabályozás (Global Privacy Control, GPC)";
-
-/* Settings screen cell text for app icon selection */
-"settings.icon" = "Alkalmazásikon";
-
-/* Settings screen cell for Keyboard */
-"settings.keyboard" = "Billentyűzet";
-
-/* Settings screen cell text for logins */
-"settings.logins" = "Bejelentkezések";
-
-/* Settings title for the 'More' section */
-"settings.more" = "Továbbiak a DuckDuckGo-tól";
-
-/* Settings screen cell for long press previews */
-"settings.previews" = "Hosszú lenyomásos előnézetek";
-
-/* Settings title for the privacy section */
-"settings.privacy" = "Adatvédelem";
-
-/* Settings screen cell text for sync and backup */
-"settings.sync" = "Szinkronizálás és biztonsági mentés";
-
-/* Settings screen cell text for text size */
-"settings.text.size" = "Szövegméret";
-
-/* Settings screen cell text for theme */
-"settings.theme" = "Kinézet";
-
-/* Title for the Settings View */
-"settings.title" = "Beállítások";
-
-/* Settings screen cell text for Unprotected Sites */
-"settings.unprotected.sites" = "Védelem nélküli weboldalak";
-
-/* Settings cell for Version */
-"settings.version" = "Változat";
-
-/* Settings screen cell for voice search */
-"settings.voice.search" = "Privát beszédhangalapú keresés";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Jelentés beküldése";
@@ -1869,6 +1785,15 @@
 
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "A(z) „%@” többé nem férhet hozzá a szinkronizált adatokhoz.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "A szinkronizálás és biztonsági mentés jelenleg sajnos nem érhető el. Próbálkozz újra később.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "A szinkronizálás és biztonsági mentés az alkalmazás ezen verziójában már nem érhető el. A folytatáshoz frissíts a DuckDuckGo a legújabb verziójára.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "A szinkronizálás és biztonsági mentés szünetel";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Kezdőlap bezárása";
@@ -1932,9 +1857,6 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "A beszédhangfunkciók használatához az iOS rendszerbeállításaiban engedélyezd a DuckDuckGo számára a Mikrofon-hozzáférést.";
-
-/* OK button alert warning the user about missing microphone permission */
-"voiceSearch.alert.no-permission.ok" = "OK";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Mikrofon-hozzáférés szükséges";

@@ -145,6 +145,9 @@
 /* Title for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-title" = "Synchronizace hesel je pozastavená";
 
+/* Title for sync error alert */
+"alert.sync-error" = "Chyba synchronizace a zálohování";
+
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Více informací";
 
@@ -165,6 +168,30 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Uložit oblíbené";
+
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "Soubor PDF pro obnovení nejde vytvořit.";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "Data na serveru se nedají smazat.";
+
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "Pokud chceš tahle zařízení spárovat, vypni na jednom z nich synchronizaci a zálohování a na druhém klepni na Synchronizovat s jiným zařízením.";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "Tohle zařízení nejde ze synchronizace a zálohování odebrat.";
+
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Nejde se připojit k serveru.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Synchronizaci s jiným zařízením nejde provést.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "Synchronizaci a zálohování nejde vypnout.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "Název zařízení nejde aktualizovat.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Odemkněte DuckDuckGo.";
@@ -871,9 +898,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet může být trochu strašidelný.\n\nNebojte se! Anonymní vyhledávání a procházení je jednodušší, než si myslíte.";
 
-/* No comment provided by engineer. */
-"Debug" = "Debug";
-
 /* GPC Setting state */
 "donotsell.disabled" = "Zakázáno";
 
@@ -1348,9 +1372,6 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Vítejte na\nDuckDuckGo!";
 
-/* No comment provided by engineer. */
-"LOREM IPSUM" = "LOREM IPSUM";
-
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo pro Mac má rychlost, kterou potřebuješ, funkce prohlížeče, které očekáváš, a obsahuje naše nejlepší nástroje na ochranu soukromí.";
 
@@ -1418,85 +1439,82 @@
 "network-protection.privacy-policy.title" = "Zásady ochrany osobních údajů";
 
 /* Title text for the Network Protection terms and conditions accept button */
-"network-protection.waitlist.agree-and-continue" = "Agree and Continue";
+"network-protection.waitlist.agree-and-continue" = "Přijmout a pokračovat";
 
 /* Availability disclaimer for Network Protection join waitlist screen */
-"network-protection.waitlist.availability-disclaimer" = "Network Protection is free to use during early access.";
+"network-protection.waitlist.availability-disclaimer" = "Ochrana sítě je k dispozici zadarmo v rámci předběžného přístupu.";
 
 /* Agree and Continue button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.agree-and-continue" = "Agree and Continue";
+"network-protection.waitlist.button.agree-and-continue" = "Přijmout a pokračovat";
 
 /* Enable Notifications button for Network Protection joined waitlist screen */
-"network-protection.waitlist.button.enable-notifications" = "Enable Notifications";
+"network-protection.waitlist.button.enable-notifications" = "Povolit oznámení";
 
 /* Button title for users who already have an invite code */
 "network-protection.waitlist.button.existing-invite-code" = "Mám zvací kód";
 
 /* Join Waitlist button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.join-waitlist" = "Join the Waitlist";
+"network-protection.waitlist.button.join-waitlist" = "Zapsat se na čekací listinu";
 
 /* Button title text for the Network Protection waitlist confirmation prompt */
 "network-protection.waitlist.get-started" = "Začínáme";
 
 /* Subtitle for section 1 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-1.subtitle" = "Encrypt online traffic across your browsers and apps.";
+"network-protection.waitlist.invited.section-1.subtitle" = "Šifruj online provoz ve všech svých prohlížečích a aplikacích.";
 
 /* Title for section 1 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-1.title" = "Full-device coverage";
+"network-protection.waitlist.invited.section-1.title" = "Ochrana pro všechna tvoje zařízení";
 
 /* Subtitle for section 2 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-2.subtitle" = "No need for a separate app. Connect in one click and see your connection status at a glance.";
+"network-protection.waitlist.invited.section-2.subtitle" = "Nepotřebuješ žádnou samostatnou aplikaci. Stačí se jedním kliknutím připojit a hned zjistíš stav připojení.";
 
 /* Title for section 2 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-2.title" = "Fast, reliable, and easy to use";
+"network-protection.waitlist.invited.section-2.title" = "Rychlé, spolehlivé a intuitivní";
 
 /* Subtitle for section 3 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-3.subtitle" = "We do not log or save any data that can connect you to your online activity.";
+"network-protection.waitlist.invited.section-3.subtitle" = "Nezaznamenáváme ani neukládáme žádná data, která by propojila tvoji osobu a online aktivitu.";
 
 /* Title for section 3 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-3.title" = "Strict no-logging policy";
+"network-protection.waitlist.invited.section-3.title" = "Přísné zásady ohledně zákazu protokolování";
 
 /* Subtitle for Network Protection invited screen */
-"network-protection.waitlist.invited.subtitle" = "Get an extra layer of protection online with the VPN built for speed and simplicity. Encrypt your internet connection across your entire device and hide your location and IP address from sites you visit.";
+"network-protection.waitlist.invited.subtitle" = "VPN vytvořená pro rychlost a jednoduchost ti zajistí další vrstvu ochrany na internetu. Při všech aktivitách na zařízení využívej šifrované připojení k internetu a skrývej svou polohu a IP adresu před navštěvovanými weby.";
 
 /* Title for Network Protection invited screen */
-"network-protection.waitlist.invited.title" = "You’re invited to try\nNetwork Protection early access!";
+"network-protection.waitlist.invited.title" = "Přišla ti pozvánka – vyzkoušej ochranu sítě v předběžném přístupu!";
 
 /* First subtitle for Network Protection join waitlist screen */
-"network-protection.waitlist.join.subtitle.1" = "Secure your connection anytime, anywhere with Network Protection, the VPN from DuckDuckGo.";
+"network-protection.waitlist.join.subtitle.1" = "Zabezpeč své připojení pomocí ochrany sítě – kdykoli a kdekoli s VPN od DuckDuckGo.";
 
 /* Second subtitle for Network Protection join waitlist screen */
-"network-protection.waitlist.join.subtitle.2" = "Join the waitlist, and we’ll notify you when it’s your turn.";
-
-/* Title for Network Protection join waitlist screen */
-"network-protection.waitlist.join.title" = "Network Protection Early Access";
+"network-protection.waitlist.join.subtitle.2" = "Zapiš se na čekací listinu a my tě upozorníme, až budeš na řadě.";
 
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "Jsi v pořadníku!";
 
 /* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
-"network-protection.waitlist.joined.with-notifications.subtitle.1" = "New invites are sent every few days, on a first come, first served basis.";
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Nové pozvánky se rozesílají každých pár dní podle pořadí na čekací listině.";
 
 /* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
-"network-protection.waitlist.joined.with-notifications.subtitle.2" = "We’ll notify you when your invite is ready.";
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "Až bude tvoje pozvánka připravená, dáme ti vědět.";
 
 /* Body text for the alert to enable notifications */
-"network-protection.waitlist.notification-alert.description" = "We’ll send you a notification when your invite to test Network Protection is ready.";
+"network-protection.waitlist.notification-alert.description" = "Až bude tvoje pozvánka k otestování funkce ochrany sítě připravená, dáme ti vědět.";
 
 /* Subtitle for the alert to confirm enabling notifications */
-"network-protection.waitlist.notification-prompt-description" = "Get a notification when your copy of Network Protection early access is ready.";
+"network-protection.waitlist.notification-prompt-description" = "Nech si poslat upozornění, až pro tebe bude funkce ochrany sítě dostupná v předběžném přístupu.";
 
 /* Title for the alert to confirm enabling notifications */
-"network-protection.waitlist.notification-prompt-title" = "Know the instant you're invited";
+"network-protection.waitlist.notification-prompt-title" = "Zjisti to hned, co ti dorazí pozvánka";
 
 /* Title for Network Protection waitlist notification */
 "network-protection.waitlist.notification.text" = "Otevřít pozvánku";
 
 /* Title for Network Protection waitlist notification */
-"network-protection.waitlist.notification.title" = "Network Protection is ready!";
+"network-protection.waitlist.notification.title" = "Ochrana sítě je připravená!";
 
 /* Subtitle text for the Network Protection settings row */
-"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Your invite is ready!";
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Tvoje pozvánka je připravená!";
 
 /* Subtitle text for the Network Protection settings row */
 "network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Jsi v pořadníku!";
@@ -1508,7 +1526,7 @@
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You’re invited to try Network Protection";
+"network.protection.invite.dialog.title" = "Přišla ti pozvánka k vyzkoušení ochrany sítě";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
@@ -1580,22 +1598,22 @@
 "network.protection.vpn.alerts.toggle.title" = "Upozornění VPN";
 
 /* Footer text for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.footer" = "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.";
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Místní provoz může obejít síť VPN a připojit se k zařízením v místní síti, třeba k tiskárně.";
 
 /* Title for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.title" = "Exclude Local Networks";
+"network.protection.vpn.exclude.local.networks.setting.title" = "Vyloučení místních sítí";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
 
 /* Subtitle of countries item when there are multiple cities, example : */
-"network.protection.vpn.location.country.item.formatted.cities.count" = "%d cities";
+"network.protection.vpn.location.country.item.formatted.cities.count" = "Měst: %d";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find.";
+"network.protection.vpn.location.recommended.section.footer" = "Automatické připojení k nejbližšímu nalezenému serveru.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
@@ -1604,7 +1622,7 @@
 "network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
 
 /* Title for the VPN Location screen. */
-"network.protection.vpn.location.title" = "VPN Location";
+"network.protection.vpn.location.title" = "Umístění VPN";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "Oznámení sítě VPN";
@@ -1616,7 +1634,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.";
+"network.protection.vpn.secure.dns.setting.footer" = "Naše VPN používá systém Secure DNS, aby tvoje online aktivity zůstaly soukromé a tvůj poskytovatel internetu neviděl, jaké webové stránky navštěvuješ.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Nastavení sítě VPN";
@@ -1744,110 +1762,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Oblíbené";
 
-/* Settings cell for About DDG */
-"settings.about.ddg" = "O DuckDuckGo";
-
-/* Settings section title for About DuckDuckGo */
-"settings.about.section" = "O společnosti";
-
 /* about page */
 "settings.about.text" = "DuckDuckGo je nezávislá společnost založená v roce 2008, která se zabývá ochranou soukromí pro všechny, kdo už mají dost sledování na internetu a chtějí snadné řešení. Jsme důkazem, že skutečná ochrana soukromí na internetu nemusí mít kompromisy.\n\nProhlížeč DuckDuckGo má všechno, co od prohlížeče očekáváš, jako jsou záložky, karty, hesla a další funkce. A k tomu má víc než [desítku účinných funkcí na ochranu soukromí](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/), které většina oblíbených prohlížečů ve výchozím nastavení nenabízí. Tahle jedinečná komplexní sada na ochranu soukromí pomáhá chránit tvoje aktivity na internetu, ať už zrovna něco vyhledáváš, jen tak surfuješ, nebo posíláš e-maily.\n\nAby naše ochrana soukromí fungovala, nemusíš znát technické detaily ani řešit žádná složitá nastavení. Stačí přejít na prohlížeč DuckDuckGo ve všech zařízeních a dostaneš soukromí pro všechny své aktivity.\n\nJestli chceš nahlédnout pod pokličku, víc informací o tom, jak ochrana soukromí DuckDuckGo funguje, najdeš v naší [nápovědě](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
-
-/* Settings screen cell text for adding the app to the dock */
-"settings.add.to.dock" = "Přidat aplikaci do docku";
-
-/* Settings screen cell text for add widget to the home screen */
-"settings.add.widget" = "Přidat widget na domovskou obrazovku";
-
-/* Settings screen cell text for addess bar position */
-"settings.address.bar" = "Pozice adresního řádku";
-
-/* Settings screen appearance section title */
-"settings.appearance" = "Vzhled";
-
-/* Settings screen cell for opening links in associated apps */
-"settings.associated.apps" = "Otevřít odkazy v přidružených aplikacích";
-
-/* Description for associated apps description */
-"settings.associated.apps.description" = "Zakažte, chcete-li zabránit automatickému otevírání odkazů v jiných nainstalovaných aplikacích.";
-
-/* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Zobrazit návrhy automatického doplňování";
-
-/* Settings screen cell text for Application Lock */
-"settings.autolock" = "Zámek aplikace";
-
-/* Section footer Autolock description */
-"settings.autolock.description" = "Pokud je nastaveno Touch ID, Face ID nebo přístupový kód k systému, budete při otevírání požádáni o odemknutí aplikace.";
-
-/* Settings screen cell text for Automatically Clearing Data */
-"settings.clear.data" = "Automaticky vymazat data";
-
-/* Settings screen cell text for Cookie popups */
-"settings.cookie.popups" = "Správa vyskakovacích oken ohledně cookies";
-
-/* Settings title for the customize section */
-"settings.customize" = "Přizpůsobit";
-
-/* Settings screen cell text for setting the app as default browser */
-"settings.default.browser" = "Nastavit jako výchozí prohlížeč";
-
-/* Settings cell for Email Protection */
-"settings.emailProtection" = "Ochrana e-mailu";
-
-/* Settings cell for Email Protection */
-"settings.emailProtection.description" = "Blokování trackerů v e-mailu a skrytí adresy";
-
-/* Settings cell for Feedback */
-"settings.feedback" = "Podělte se o zpětnou vazbu";
-
-/* Settings screen cell text for fire button animation */
-"settings.firebutton" = "Animace tlačítka pro mazání";
-
-/* Settings screen cell text for Fireproof Sites */
-"settings.fireproof.sites" = "Stránky s ochranou";
-
-/* Settings screen cell text for GPC */
-"settings.gpc" = "Globální kontrola ochrany osobních údajů (GPC)";
-
-/* Settings screen cell text for app icon selection */
-"settings.icon" = "Ikona aplikace";
-
-/* Settings screen cell for Keyboard */
-"settings.keyboard" = "Klávesnice";
-
-/* Settings screen cell text for logins */
-"settings.logins" = "Přihlášení";
-
-/* Settings title for the 'More' section */
-"settings.more" = "Další od DuckDuckGo";
-
-/* Settings screen cell for long press previews */
-"settings.previews" = "Náhledy dlouhého stisknutí";
-
-/* Settings title for the privacy section */
-"settings.privacy" = "Soukromí";
-
-/* Settings screen cell text for sync and backup */
-"settings.sync" = "Synchronizace a zálohování";
-
-/* Settings screen cell text for text size */
-"settings.text.size" = "Velikost textu";
-
-/* Settings screen cell text for theme */
-"settings.theme" = "Téma";
-
-/* Title for the Settings View */
-"settings.title" = "Nastavení";
-
-/* Settings screen cell text for Unprotected Sites */
-"settings.unprotected.sites" = "Nechráněné stránky";
-
-/* Settings cell for Version */
-"settings.version" = "Verze";
-
-/* Settings screen cell for voice search */
-"settings.voice.search" = "Soukromé hlasové vyhledávání";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Odešlete zprávu";
@@ -1869,6 +1785,15 @@
 
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "„%@“ už nebude mít přístup k synchronizovaným datům.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Omlouváme se, ale funkce synchronizace a zálohování teď není dostupná. Zkus to znovu později.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Omlouváme se, ale funkce synchronizace a zálohování není v téhle verzi aplikace dostupná. Pro pokračování aktualizuj DuckDuckGo na nejnovější verzi.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "Funkce synchronizace a zálohování je pozastavená";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Zavřít kartu Domů";
@@ -1932,9 +1857,6 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Pro používání hlasových funkcí DuckDuckGo je potřeba v Nastaveních iOS povolit přístup k mikrofonu.";
-
-/* OK button alert warning the user about missing microphone permission */
-"voiceSearch.alert.no-permission.ok" = "DOBŘE";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Je nutný přístup k mikrofonu";

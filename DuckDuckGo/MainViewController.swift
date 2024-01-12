@@ -137,6 +137,8 @@ class MainViewController: UIViewController {
     
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
+        
+    private var keyboardHeight: CGFloat = 0.0
 
     required init?(coder: NSCoder) {
         fatalError("Use init?(code:")
@@ -476,7 +478,8 @@ class MainViewController: UIViewController {
         height = intersection.height
 
         findInPageBottomLayoutConstraint.constant = height
-        currentTab?.webView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+        keyboardHeight = height
+        refreshWebViewContentInsets()
 
         if let suggestionsTray = suggestionTrayController {
             let suggestionsFrameInView = suggestionsTray.view.convert(suggestionsTray.contentFrame, to: view)
@@ -1347,22 +1350,19 @@ extension MainViewController: BrowserChromeDelegate {
     func refreshWebViewContentInsets() {
         guard let webView = currentTab?.webView else { return }
 
-        let top: CGFloat
+        let top = viewCoordinator.statusBackground.frame.height
         let bottom: CGFloat
         if isToolbarHidden {
-            
-            top = 0.0
-            bottom = 0.0
-            
+            bottom = 0
+        } else if appSettings.currentAddressBarPosition.isBottom {
+            bottom = viewCoordinator.toolbar.frame.height
+                + viewCoordinator.navigationBarContainer.frame.height
+                + view.safeAreaInsets.bottom + additionalSafeAreaInsets.bottom
+                + keyboardHeight
         } else {
-            top = viewCoordinator.statusBackground.frame.height
-            if self.appSettings.currentAddressBarPosition == .top {
-                bottom = (viewCoordinator.toolbar.frame.height)
-                    + view.safeAreaInsets.bottom + additionalSafeAreaInsets.bottom
-            } else {
-                bottom = ((viewCoordinator.toolbar.frame.height + viewCoordinator.navigationBarContainer.frame.height))
-                    + view.safeAreaInsets.bottom + additionalSafeAreaInsets.bottom
-            }
+            bottom = viewCoordinator.toolbar.frame.height
+                + view.safeAreaInsets.bottom + additionalSafeAreaInsets.bottom
+                + keyboardHeight
         }
         
         currentTab?.webView.scrollView.contentInset = .init(top: top, left: 0, bottom: bottom, right: 0)

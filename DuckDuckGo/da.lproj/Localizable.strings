@@ -4,9 +4,6 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
-/* No comment provided by engineer. */
-"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Rediger";
 
@@ -23,7 +20,7 @@
 "action.title.add" = "Tilføj";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Logins";
+"action.title.autofill.logins" = "Adgangskoder";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Føj til bogmærker";
@@ -148,6 +145,9 @@
 /* Title for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-title" = "Synkronisering af adgangskoder er sat på pause";
 
+/* Title for sync error alert */
+"alert.sync-error" = "Fejl ved synkronisering og sikkerhedskopiering";
+
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Mere info";
 
@@ -168,6 +168,30 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Gem favorit";
+
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "Kan ikke oprette gendannelses-PDF.";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "Kan ikke slette data på serveren.";
+
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "For at parre disse enheder skal du slå synkronisering og sikkerhedskopiering fra på den ene enhed og derefter trykke på \"Synkroniser med en anden enhed\" på den anden enhed.";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "Denne enhed kunne ikke fjernes fra synkronisering og sikkerhedskopiering.";
+
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Kan ikke oprette forbindelse til serveren.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Kan ikke synkronisere med en anden enhed.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "Synkronisering og sikkerhedskopiering kunne ikke slås fra.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "Enhedens navn kunne ikke opdateres.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Lås DuckDuckGo op.";
@@ -440,16 +464,16 @@
 "autofill.keep-enabled.alert.message" = "Du kan til enhver tid deaktivere automatisk udfyldning i Indstillinger.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Vil du fortsat gemme logins?";
+"autofill.keep-enabled.alert.title" = "Vil du fortsætte med at gemme adgangskoder?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Se";
 
 /* Message displayed after saving an autofill login */
-"autofill.login-saved.toast" = "Login er gemt";
+"autofill.login-saved.toast" = "Adgangskode gemt";
 
 /* Message displayed after updating an autofill login */
-"autofill.login-updated.toast" = "Login er opdateret";
+"autofill.login-updated.toast" = "Adgangskode opdateret";
 
 /* Menu item text for copying autofill login details */
 "autofill.logins.copy-prompt" = "Kopiér %@";
@@ -470,19 +494,19 @@
 "autofill.logins.details.address" = "URL til webstedet";
 
 /* Title for autofill login details */
-"autofill.logins.details.default-title" = "Log på";
+"autofill.logins.details.default-title" = "Adgangskode";
 
 /* Delete button when deleting an autofill login */
-"autofill.logins.details.delete" = "Slet login";
+"autofill.logins.details.delete" = "Slet adgangskode";
 
 /* Autofill alert button confirming delete autofill login */
-"autofill.logins.details.delete-confirmation.button" = "Slet login";
+"autofill.logins.details.delete-confirmation.button" = "Slet adgangskode";
 
 /* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Er du sikker på, at du vil slette dette login?";
+"autofill.logins.details.delete-confirmation.title" = "Er du sikker på, at du vil slette denne adgangskode?";
 
 /* Title when editing autofill login details */
-"autofill.logins.details.edit-title" = "Rediger login";
+"autofill.logins.details.edit-title" = "Rediger adgangskode";
 
 /* Placeholder for password field on autofill login details */
 "autofill.logins.details.edit.password-placeholder" = "Adgangskode";
@@ -496,14 +520,14 @@
 /* Placeholder for userbane field on autofill login details */
 "autofill.logins.details.edit.username-placeholder" = "brugernavn@eksempel.dk";
 
-/* Message displaying when the login was last updated by */
-"autofill.logins.details.last-updated" = "Login sidst opdateret %s";
+/* Message displaying when the login was last updated */
+"autofill.logins.details.last-updated" = "Sidst opdateret %@";
 
 /* Login name label for login details on autofill */
-"autofill.logins.details.login-name" = "Login-titel";
+"autofill.logins.details.login-name" = "Titel";
 
 /* Title when adding new autofill login */
-"autofill.logins.details.new-title" = "Tilføj login";
+"autofill.logins.details.new-title" = "Tilføj adgangskode";
 
 /* Notes label for login details on autofill */
 "autofill.logins.details.notes" = "Noter";
@@ -518,37 +542,37 @@
 "autofill.logins.details.save-duplicate-alert.action" = "Okay";
 
 /* Message for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.message" = "Du har allerede et login til dette brugernavn og websted.";
+"autofill.logins.details.save-duplicate-alert.message" = "Du har allerede gemt en adgangskode til dette brugernavn og websted.";
 
 /* Title for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.title" = "Duplikeret login";
+"autofill.logins.details.save-duplicate-alert.title" = "Duplikeret adgangskode";
 
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Brugernavn";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Login gemmes sikkert på din enhed.";
+"autofill.logins.empty-view.subtitle" = "Adgangskoder gemmes sikkert på din enhed.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Ingen logins gemt endnu";
+"autofill.logins.empty-view.title" = "Ingen adgangskoder gemt endnu";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Annullér";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Lås enheden op for at få adgang til gemte logins";
+"autofill.logins.list.auth.reason" = "Lås enheden op for at få adgang til adgangskoder";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Luk";
 
 /* Title for a toggle that enables autofill */
-"autofill.logins.list.enable" = "Gem og udfyld automatisk logins";
+"autofill.logins.list.enable" = "Gem og udfyld adgangskoder automatisk";
 
 /* Toast message when a login item is deleted */
-"autofill.logins.list.login-deleted-message" = "Login til %@ slettet";
+"autofill.logins.list.login-deleted-message" = "Adgangskode til %@ slettet";
 
 /* Toast message when a login item without a title is deleted */
-"autofill.logins.list.login-deleted-message-no-title" = "Login slettet";
+"autofill.logins.list.login-deleted-message-no-title" = "Adgangskode slettet";
 
 /* Title for a button that allows a user to reset their list of never saved sites */
 "autofill.logins.list.never.saved" = "Nulstil ekskluderede websteder";
@@ -560,28 +584,28 @@
 "autofill.logins.list.never.saved.reset.action.confirm" = "Nulstil ekskluderede websteder";
 
 /* Alert title */
-"autofill.logins.list.never.saved.reset.action.title" = "Hvis du nulstiller ekskluderede websteder, vil du blive bedt om at gemme dit login, næste gang du logger ind på en af disse sider.";
+"autofill.logins.list.never.saved.reset.action.title" = "Hvis du nulstiller ekskluderede websteder, vil du blive bedt om at gemme din adgangskode, næste gang du logger ind på en af disse sider.";
 
 /* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Søg logins";
+"autofill.logins.list.search-placeholder" = "Søg adgangskoder";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Foreslået";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Logins";
+"autofill.logins.list.title" = "Adgangskoder";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "En adgangskode er påkrævet for at beskytte dine logins.";
+"autofill.logins.no-auth.subtitle" = "En adgangskode er påkrævet for at beskytte dine adgangskoder.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Beskyt din enhed for at gemme logins";
+"autofill.logins.no-auth.title" = "Beskyt din enhed for at gemme adgangskoder";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Annullér";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Lås op for at bruge gemte logins";
+"autofill.logins.prompt.auth.reason" = "Lås op for at bruge gemt adgangskode";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Fra dette websted";
@@ -605,7 +629,7 @@
 "autofill.logins.search.no-results.title" = "Ingen resultater";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Adgangskoder gemmes sikkert på din enhed i menuen Logins.";
+"autofill.password-generation-prompt.subtitle" = "Adgangskoder gemmes sikkert på din enhed.";
 
 /* Title for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.title" = "Brug en stærk adgangskode fra DuckDuckGo?";
@@ -650,7 +674,7 @@
 "autofill.save-login.never-prompt.CTA" = "Spørg aldrig på dette websted";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Adgangskoder gemmes sikkert på din enhed i menuen Logins.";
+"autofill.save-login.new-user.message" = "Adgangskoder gemmes sikkert på din enhed.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Skal DuckDuckGo gemme din adgangskode?";
@@ -659,7 +683,7 @@
 "autofill.save-login.not-now.CTA" = "Gem ikke";
 
 /* Title displayed on modal asking for the user to save the login */
-"autofill.save-login.title" = "Gem login?";
+"autofill.save-login.title" = "Gem adgangskode?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Gem adgangskode";
@@ -1411,17 +1435,101 @@
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
 
+/* Privacy Policy title for Network Protection */
+"network-protection.privacy-policy.title" = "Privatlivspolitik";
+
+/* Title text for the Network Protection terms and conditions accept button */
+"network-protection.waitlist.agree-and-continue" = "Accepter og fortsæt";
+
+/* Availability disclaimer for Network Protection join waitlist screen */
+"network-protection.waitlist.availability-disclaimer" = "Netværksbeskyttelse er gratis at bruge under den tidlige adgang.";
+
+/* Agree and Continue button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.agree-and-continue" = "Acceptér og fortsæt";
+
+/* Enable Notifications button for Network Protection joined waitlist screen */
+"network-protection.waitlist.button.enable-notifications" = "Aktivér notifikationer";
+
+/* Button title for users who already have an invite code */
+"network-protection.waitlist.button.existing-invite-code" = "Jeg har en invitationskode";
+
+/* Join Waitlist button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.join-waitlist" = "Skriv dig på ventelisten";
+
+/* Button title text for the Network Protection waitlist confirmation prompt */
+"network-protection.waitlist.get-started" = "Kom igang";
+
+/* Subtitle for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.subtitle" = "Krypter onlinetrafik på tværs af dine browsere og apps.";
+
+/* Title for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.title" = "Fuld dækning af enheder";
+
+/* Subtitle for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.subtitle" = "Der er ikke behov for en separat app. Opret forbindelse med et enkelt klik, og se nemt din forbindelsesstatus.";
+
+/* Title for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.title" = "Hurtig, pålidelig og nem at bruge";
+
+/* Subtitle for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.subtitle" = "Vi logger eller gemmer ikke data, der kan forbinde dig til din onlineaktivitet.";
+
+/* Title for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.title" = "Streng politik mod logning";
+
+/* Subtitle for Network Protection invited screen */
+"network-protection.waitlist.invited.subtitle" = "Få et ekstra lag af beskyttelse online med en VPN, der er bygget til hastighed og enkelhed. Kryptér din internetforbindelse på hele din enhed, og skjul din placering og IP-adresse fra websteder, du besøger.";
+
+/* Title for Network Protection invited screen */
+"network-protection.waitlist.invited.title" = "Du er inviteret til at prøve \n Network Protection med tidlig adgang!";
+
+/* First subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.1" = "Beskyt din forbindelse når som helst og hvor som helst med Network Protection, VPN'en fra DuckDuckGo.";
+
+/* Second subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.2" = "Tilmeld dig ventelisten – vi giver dig besked, når det er din tur.";
+
+/* Title for Network Protection joined waitlist screen */
+"network-protection.waitlist.joined.title" = "Du er på listen!";
+
+/* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Nye invitationer sendes næsten dagligt efter først-til-mølle-princippet.";
+
+/* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "Vi giver dig besked, når din invitation er klar.";
+
+/* Body text for the alert to enable notifications */
+"network-protection.waitlist.notification-alert.description" = "Vi sender dig en besked, når din invitation til at teste Network Protection er klar.";
+
+/* Subtitle for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-description" = "Få besked, når dit eksemplar af Network Protection med tidlig adgang er klar.";
+
+/* Title for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-title" = "Få besked i samme øjeblik, du bliver inviteret";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.text" = "Åbn din invitation";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.title" = "Network Protection er klar!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Din invitation er klar!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Du er på listen!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Slut dig til den private venteliste";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+"network.protection.invite.dialog.title" = "Du er inviteret til at prøve Network Protection";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
-
-/* Message explaining that netP is invite only */
-"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
 
 /* Message for the network protection invite success view */
 "network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
@@ -1453,7 +1561,7 @@
 /* Header title label text for the status view when netP is connected */
 "network.protection.status.header.title.on" = "Network Protection is On";
 
-/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+/* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 
 /* Connection details label shown in NetworkProtection's status view. */
@@ -1489,23 +1597,32 @@
 /* Title for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.title" = "VPN-advarsler";
 
-/* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.footer" = "Gendan automatisk en VPN-forbindelse efter afbrydelse.";
+/* Footer text for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Lad lokal trafik omgå VPN'en og oprette forbindelse til enheder på dit lokale netværk, f.eks. en printer.";
 
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.title" = "Altid aktiv";
+/* Title for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.title" = "Ekskluder lokale netværk";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Subtitle of countries item when there are multiple cities, example : */
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d byer";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+"network.protection.vpn.location.recommended.section.footer" = "Opret automatisk forbindelse til den nærmeste server, vi kan finde.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
+"network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
+
+/* Title for the VPN Location screen. */
+"network.protection.vpn.location.title" = "VPN-placering";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "VPN-meddelelser";
@@ -1517,10 +1634,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Network Protection forhindrer DNS-lækager til din internetudbyder ved at dirigere DNS-forespørgsler gennem VPN-tunnelen til vores egen resolver.";
-
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.title" = "Sikker DNS";
+"network.protection.vpn.secure.dns.setting.footer" = "Vores VPN bruger Secure DNS til at holde din onlineaktivitet privat, så din internetudbyder ikke kan se, hvilke hjemmesider du besøger.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-indstillinger";
@@ -1671,6 +1785,15 @@
 
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "\"%@ \" kan ikke længere få adgang til dine synkroniserede data.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Beklager, men synkronisering og sikkerhedskopiering er ikke tilgængelig i øjeblikket. Prøv igen senere.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Beklager, men synkronisering og sikkerhedskopiering er ikke længere tilgængelig i denne app-version. Opdater DuckDuckGo til den nyeste version for at fortsætte.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "Synkronisering og sikkerhedskopiering er sat på pause";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Luk hjemmefanen";

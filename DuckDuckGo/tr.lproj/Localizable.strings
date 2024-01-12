@@ -4,9 +4,6 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
-/* No comment provided by engineer. */
-"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Düzenle";
 
@@ -23,7 +20,7 @@
 "action.title.add" = "Ekle";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Giriş bilgileri";
+"action.title.autofill.logins" = "Şifreler";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Yer İmlerine Ekle";
@@ -148,6 +145,9 @@
 /* Title for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-title" = "Şifre Senkronizasyonu Duraklatıldı";
 
+/* Title for sync error alert */
+"alert.sync-error" = "Senkronizasyon ve Yedekleme Hatası";
+
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Daha Fazla Bilgi";
 
@@ -168,6 +168,30 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Favori Kaydet";
+
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "Kurtarma PDF'i oluşturulamıyor.";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "Sunucudaki veriler silinemiyor.";
+
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "Bu cihazları eşleştirmek için bir cihazda Senkronizasyon ve Yedeklemeyi kapattıktan sonra diğer cihazda \"Başka bir Cihazla Senkronizasyon\" ögesine dokunun.";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "Bu cihaz Senkronizasyon ve Yedekleme'den kaldırılamıyor.";
+
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Sunucuya bağlanılamıyor.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Başka bir cihazla senkronize edilemiyor.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "Senkronizasyon ve Yedekleme kapatılamıyor.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "Cihaz adı güncellenemiyor.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "DuckDuckGo'nun kilidini açın.";
@@ -440,16 +464,16 @@
 "autofill.keep-enabled.alert.message" = "Bunu dilediğiniz zaman Ayarlar'dan devre dışı bırakabilirsiniz.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Giriş bilgilerini kaydetmeye devam etmek istiyor musunuz?";
+"autofill.keep-enabled.alert.title" = "Şifreleri kaydetmeye devam etmek istiyor musunuz?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Görüntüle";
 
 /* Message displayed after saving an autofill login */
-"autofill.login-saved.toast" = "Giriş kaydedildi";
+"autofill.login-saved.toast" = "Şifre kaydedildi";
 
 /* Message displayed after updating an autofill login */
-"autofill.login-updated.toast" = "Giriş güncellendi";
+"autofill.login-updated.toast" = "Şifre güncellendi";
 
 /* Menu item text for copying autofill login details */
 "autofill.logins.copy-prompt" = "%@ Ögesini Kopyala";
@@ -470,19 +494,19 @@
 "autofill.logins.details.address" = "Web sitesi URL'si";
 
 /* Title for autofill login details */
-"autofill.logins.details.default-title" = "Oturum Aç";
+"autofill.logins.details.default-title" = "Parola";
 
 /* Delete button when deleting an autofill login */
-"autofill.logins.details.delete" = "Girişi Sil";
+"autofill.logins.details.delete" = "Şifreyi Sil";
 
 /* Autofill alert button confirming delete autofill login */
-"autofill.logins.details.delete-confirmation.button" = "Girişi Sil";
+"autofill.logins.details.delete-confirmation.button" = "Şifreyi Sil";
 
 /* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Bu Girişi silmek istediğinizden emin misiniz?";
+"autofill.logins.details.delete-confirmation.title" = "Bu şifreyi silmek istediğinizden emin misiniz?";
 
 /* Title when editing autofill login details */
-"autofill.logins.details.edit-title" = "Girişi Düzenle";
+"autofill.logins.details.edit-title" = "Şifreyi Düzenle";
 
 /* Placeholder for password field on autofill login details */
 "autofill.logins.details.edit.password-placeholder" = "Parola";
@@ -496,14 +520,14 @@
 /* Placeholder for userbane field on autofill login details */
 "autofill.logins.details.edit.username-placeholder" = "kullaniciadi@ornek.com";
 
-/* Message displaying when the login was last updated by */
-"autofill.logins.details.last-updated" = "Giriş son güncelleme: %@";
+/* Message displaying when the login was last updated */
+"autofill.logins.details.last-updated" = "Son güncelleme %@";
 
 /* Login name label for login details on autofill */
-"autofill.logins.details.login-name" = "Giriş Başlığı";
+"autofill.logins.details.login-name" = "Title";
 
 /* Title when adding new autofill login */
-"autofill.logins.details.new-title" = "Giriş Ekle";
+"autofill.logins.details.new-title" = "Şifre Ekle";
 
 /* Notes label for login details on autofill */
 "autofill.logins.details.notes" = "Notlar";
@@ -518,37 +542,37 @@
 "autofill.logins.details.save-duplicate-alert.action" = "Tamam";
 
 /* Message for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.message" = "Bu kullanıcı adı ve web sitesi için zaten bir girişiniz var.";
+"autofill.logins.details.save-duplicate-alert.message" = "Bu kullanıcı adı ve web sitesi için zaten kayıtlı bir şifreniz var.";
 
 /* Title for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.title" = "Yinelenen Giriş";
+"autofill.logins.details.save-duplicate-alert.title" = "Yinelenen Şifre";
 
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Kullanıcı adı";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Giriş bilgileri cihazınızda güvenli bir şekilde saklanır.";
+"autofill.logins.empty-view.subtitle" = "Şifreler cihazınızda güvenli bir şekilde saklanır.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Henüz kaydedilmiş Giriş yok";
+"autofill.logins.empty-view.title" = "Henüz şifre kaydedilmedi";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "İptal";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Kayıtlı Giriş bilgilerine erişmek için cihazın kilidini açın";
+"autofill.logins.list.auth.reason" = "Şifrelere erişmek için cihazın kilidini açın";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Kapat";
 
 /* Title for a toggle that enables autofill */
-"autofill.logins.list.enable" = "Girişleri Kaydet ve Otomatik Doldur";
+"autofill.logins.list.enable" = "Şifreleri kaydedin ve otomatik doldurun";
 
 /* Toast message when a login item is deleted */
-"autofill.logins.list.login-deleted-message" = "%@ için giriş silindi";
+"autofill.logins.list.login-deleted-message" = "@@ için şifre silindi";
 
 /* Toast message when a login item without a title is deleted */
-"autofill.logins.list.login-deleted-message-no-title" = "Giriş bilgileri silindi";
+"autofill.logins.list.login-deleted-message-no-title" = "Şifre silindi";
 
 /* Title for a button that allows a user to reset their list of never saved sites */
 "autofill.logins.list.never.saved" = "Hariç Tutulan Siteleri Sıfırla";
@@ -560,28 +584,28 @@
 "autofill.logins.list.never.saved.reset.action.confirm" = "Hariç Tutulan Siteleri Sıfırla";
 
 /* Alert title */
-"autofill.logins.list.never.saved.reset.action.title" = "Hariç tutulan siteleri sıfırlarsanız, bu sitelerden herhangi birinde bir sonraki oturum açışınızda Giriş bilgilerinizi kaydetmeniz istenecektir.";
+"autofill.logins.list.never.saved.reset.action.title" = "Hariç tutulan siteleri sıfırlarsanız, bu sitelerden herhangi birinde bir sonraki oturum açtığınızda şifrenizi kaydetmeniz istenecektir.";
 
 /* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Giriş Ara";
+"autofill.logins.list.search-placeholder" = "Şifreleri ara";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Önerilen";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Giriş bilgileri";
+"autofill.logins.list.title" = "Şifreler";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Giriş bilgilerinizi korumak için parola gereklidir.";
+"autofill.logins.no-auth.subtitle" = "Şifrelerinizi korumak için bir şifre gereklidir.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Giriş bilgilerini kaydetmek için cihazınızın güvenliğini sağlayın";
+"autofill.logins.no-auth.title" = "Şifreleri kaydetmek için cihazınızın güvenliğini sağlayın";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "İptal";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Kayıtlı Girişi Kullanmak İçin Kilidi Açın";
+"autofill.logins.prompt.auth.reason" = "Kayıtlı şifreyi kullanmak için kilidi açın";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Bu web sitesinden";
@@ -605,7 +629,7 @@
 "autofill.logins.search.no-results.title" = "Sonuç yok";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Şifreler cihazınızdaki Oturum Açma menüsünde güvenli bir şekilde saklanır.";
+"autofill.password-generation-prompt.subtitle" = "Şifreler cihazınızda güvenli bir şekilde saklanır.";
 
 /* Title for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.title" = "DuckDuckGo'nun oluşturduğu güçlü bir şifre kullanmak ister misiniz?";
@@ -650,7 +674,7 @@
 "autofill.save-login.never-prompt.CTA" = "Bu Site için Hiçbir Zaman Sorma";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Şifreler cihazınızdaki Oturum Açma menüsünde güvenli bir şekilde saklanır.";
+"autofill.save-login.new-user.message" = "Şifreler cihazınızda güvenli bir şekilde saklanır.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "DuckDuckGo'nun şifrenizi kaydetmesini istiyor musunuz?";
@@ -659,7 +683,7 @@
 "autofill.save-login.not-now.CTA" = "Kaydetme";
 
 /* Title displayed on modal asking for the user to save the login */
-"autofill.save-login.title" = "Giriş Kaydedilsin mi?";
+"autofill.save-login.title" = "Şifre Kaydedilsin mi?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Şifre Kaydet";
@@ -1411,17 +1435,101 @@
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
 
+/* Privacy Policy title for Network Protection */
+"network-protection.privacy-policy.title" = "Gizlilik Politikası";
+
+/* Title text for the Network Protection terms and conditions accept button */
+"network-protection.waitlist.agree-and-continue" = "Kabul Et ve Devam Et";
+
+/* Availability disclaimer for Network Protection join waitlist screen */
+"network-protection.waitlist.availability-disclaimer" = "Ağ Korumasının kullanımı erken erişim sırasında ücretsizdir.";
+
+/* Agree and Continue button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.agree-and-continue" = "Kabul Et ve Devam Et";
+
+/* Enable Notifications button for Network Protection joined waitlist screen */
+"network-protection.waitlist.button.enable-notifications" = "Bildirimleri Etkinleştir";
+
+/* Button title for users who already have an invite code */
+"network-protection.waitlist.button.existing-invite-code" = "Davet Kodum var";
+
+/* Join Waitlist button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.join-waitlist" = "Bekleme Listesine Katıl";
+
+/* Button title text for the Network Protection waitlist confirmation prompt */
+"network-protection.waitlist.get-started" = "Başlayın";
+
+/* Subtitle for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.subtitle" = "Tarayıcılarınız ve uygulamalarınız arasındaki çevrimiçi trafiği şifreleyin.";
+
+/* Title for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.title" = "Tam cihaz kapsamı";
+
+/* Subtitle for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.subtitle" = "Ayrı bir uygulamaya gerek yok. Tek tıklamayla bağlanın ve bağlantı durumunuzu bir bakışta görün.";
+
+/* Title for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.title" = "Hızlı, güvenilir ve kullanımı kolay";
+
+/* Subtitle for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.subtitle" = "Sizi çevrimiçi etkinliğinizle ilişkilendirebilecek hiçbir veriyi izlemiyor ve kaydetmiyoruz.";
+
+/* Title for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.title" = "Veri kaydetmeye ilişkin katı politika";
+
+/* Subtitle for Network Protection invited screen */
+"network-protection.waitlist.invited.subtitle" = "Hız ve basitlik için tasarlanmış VPN ile internette ekstra bir koruma katmanı edinin. İnternet bağlantınızı cihazınız genelinde şifreleyerek konumunuzu ve IP adresinizi ziyaret ettiğiniz sitelerden gizleyin.";
+
+/* Title for Network Protection invited screen */
+"network-protection.waitlist.invited.title" = "Ağ Koruması erken erişimini\ndenemeye davetlisiniz!";
+
+/* First subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.1" = "DuckDuckGo'nun sunduğu VPN hizmeti Ağ Koruması ile bağlantınızı her zaman, her yerde güvence altına alın.";
+
+/* Second subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.2" = "Bekleme listesine katılın. Sıra size geldiğinde sizi bilgilendireceğiz.";
+
+/* Title for Network Protection joined waitlist screen */
+"network-protection.waitlist.joined.title" = "Listedesiniz!";
+
+/* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Yeni davetiyeler birkaç günde bir, ilk gelen alır esasına göre gönderilir.";
+
+/* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "Davetiyeniz hazır olduğunda sizi bilgilendireceğiz.";
+
+/* Body text for the alert to enable notifications */
+"network-protection.waitlist.notification-alert.description" = "Ağ Korumasını test etmek için davetiyeniz hazır olduğunda size bildirim göndereceğiz.";
+
+/* Subtitle for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-description" = "Ağ Koruması için erken erişiminiz hazır olduğunda bildirim alın.";
+
+/* Title for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-title" = "Davet edildiğiniz anda haberdar olun";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.text" = "Davetiyenizi açın";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.title" = "Ağ Koruması hazır!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Davetiyeniz hazır!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Listedesiniz!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Özel Bekleme Listesine Katılın";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+"network.protection.invite.dialog.title" = "Ağ Korumasını denemeye davetlisiniz";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
-
-/* Message explaining that netP is invite only */
-"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
 
 /* Message for the network protection invite success view */
 "network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
@@ -1453,7 +1561,7 @@
 /* Header title label text for the status view when netP is connected */
 "network.protection.status.header.title.on" = "Network Protection is On";
 
-/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+/* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 
 /* Connection details label shown in NetworkProtection's status view. */
@@ -1489,23 +1597,32 @@
 /* Title for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.title" = "VPN Uyarıları";
 
-/* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.footer" = "Kesintiden sonra VPN bağlantısını otomatik olarak geri yükleyin.";
+/* Footer text for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Yerel trafiğin VPN'i atlamasını ve yerel ağınızdaki yazıcı gibi cihazlara bağlanmasını sağlayın.";
 
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.title" = "Her Zaman Açık";
+/* Title for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.title" = "Yerel Ağları Hariç Tut";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Subtitle of countries item when there are multiple cities, example : */
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d şehir";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+"network.protection.vpn.location.recommended.section.footer" = "Bulabildiğimiz en yakın sunucuya otomatik olarak bağlanın.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
+"network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
+
+/* Title for the VPN Location screen. */
+"network.protection.vpn.location.title" = "VPN Konumu";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "VPN Bildirimleri";
@@ -1517,10 +1634,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Ağ Koruması, DNS sorgularını VPN tüneli üzerinden kendi çözümleyicimize yönlendirerek İnternet Servis Sağlayıcınıza DNS sızıntılarını önler.";
-
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.title" = "Güvenli DNS";
+"network.protection.vpn.secure.dns.setting.footer" = "VPN'imiz çevrim içi etkinliğinizi gizli tutmak için Güvenli DNS kullanır. Böylece internet sağlayıcınız hangi web sitelerini ziyaret ettiğinizi göremez.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN Ayarları";
@@ -1671,6 +1785,15 @@
 
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "\"%@\" artık senkronize edilmiş verilerinize erişemeyecektir.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Üzgünüz, ancak Senkronizasyon ve Yedekleme şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Üzgünüz, Senkronizasyon ve Yedekleme bu uygulama sürümünde artık kullanılamıyor. Devam etmek için lütfen DuckDuckGo'yu en son sürüme güncelleyin.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "Senkronizasyon ve Yedekleme Duraklatıldı";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Ana sekmeyi kapat";

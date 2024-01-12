@@ -1,5 +1,5 @@
 /* Standard Buttons - Back Button */
-"back.button" = "Back";
+"back.button" = "Geri";
 
 /* Sync Paused Errors - Bookmarks Limit Exceeded Action */
 "bookmarks.limit.exceeded.action" = "Manage Bookmarks";
@@ -8,7 +8,7 @@
 "bookmarks.limit.exceeded.description" = "Bookmark limit exceeded. Delete some to resume syncing.";
 
 /* Camera View - Go to Settings Button */
-"camera.go.to.settings.button" = "Go to Settings";
+"camera.go.to.settings.button" = "Ayarlar'a gidin";
 
 /* Camera View - Unavailable Title */
 "camera.is.unavailable.title" = "Camera is Unavailable";
@@ -22,11 +22,11 @@
 /* Camera View - Point Camera Indication */
 "camera.point.camera.indication" = "Point camera at QR code to sync";
 
-/* Standard Buttons - Cancel Button */
-"cancel.button" = "Cancel";
+/* No comment provided by engineer. */
+"Cancel" = "İptal";
 
-/* Connect With Server Sheet - Button */
-"connect.with.server.sheet.button" = "Turn on Sync & Backup";
+/* Standard Buttons - Cancel Button */
+"cancel.button" = "İptal";
 
 /* Connect With Server Sheet - Description Part 1 */
 "connect.with.server.sheet.description.part1" = "This creates an encrypted backup of your bookmarks and passwords on DuckDuckGo’s secure server, which can be synced with your other devices.";
@@ -49,17 +49,17 @@
 /* Delete Server Data - Button */
 "delete.server.data" = "Turn Off and Delete Server Data...";
 
-/* Device SyncedSheet - Title */
-"device.synced.sheet.title" = "Your Data is Synced!";
+/* No comment provided by engineer. */
+"Dev environment" = "Dev environment";
 
 /* Standard Buttons - Done Button */
-"done.button" = "Done";
+"done.button" = "Bitti";
 
 /* Edit Device View - Header */
-"edit.device.header" = "Device Name";
+"edit.device.header" = "Cihaz Adı";
 
 /* Edit Device View - Title */
-"edit.device.title" = "Edit \(name)";
+"edit.device.title" = "Edit %@";
 
 /* Fetch Favicons Onboarding - Button Title */
 "fetch.favicons.onboarding.button.title" = "Keep Bookmarks Icons Updated";
@@ -76,8 +76,8 @@
 /* Options - Fetch Favicons Title */
 "fetch.favicons.option.title" = "Auto-Download Icons";
 
-/* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
-"manually.enter.code.instruction" = "Go to Settings > Sync & Backup > Sync With Another Device and select Sync Menu Path in the DuckDuckGo App on another synced device and paste the code here to sync this device.";
+/* No comment provided by engineer. */
+"Keep Development" = "Keep Development";
 
 /* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
 "manually.enter.code.instruction.attributed" = "Go to %1$@ and select %2$@ in the DuckDuckGo App on another synced device and paste the code here to sync this device.";
@@ -92,13 +92,13 @@
 "manually.enter.code.validating.code.failed.action" = "Invalid code.";
 
 /* Standard Buttons - Next Button */
-"next.button" = "Next";
+"next.button" = "Sonraki";
 
 /* Standard Buttons - Not Now Button */
-"not.now.button" = "Not Now";
+"not.now.button" = "Şimdi Değil";
 
 /* Options - Section Header */
-"options.section.header" = "Options";
+"options.section.header" = "Seçenekler";
 
 /* Section header for other syncing options */
 "other.options.section.header" = "Other Options";
@@ -122,7 +122,7 @@
 "recover.synced.data.link" = "Recover Synced Data";
 
 /* Recover Synced Data Sheet - Button */
-"recover.synced.data.sheet.button" = "Get Started";
+"recover.synced.data.sheet.button" = "Başlayın";
 
 /* Recover Synced Data Sheet - Description */
 "recover.synced.data.sheet.description" = "To restore your synced data, you'll need the Recovery Code you saved when you first set up Sync. This code may have been saved as a PDF on the device you originally used to set up Sync.";
@@ -134,7 +134,7 @@
 "remove.device.button" = "Remove Device";
 
 /* Remove Device View - Message */
-"remove.device.message" = "\"\(name)\" will no longer be able to access your synced data.";
+"remove.device.message" = "\"%@\" artık senkronize edilmiş verilerinize erişemeyecektir.";
 
 /* Remove Device View - Title */
 "remove.device.title" = "Remove Device?";
@@ -184,9 +184,6 @@
 /* Scan or See Code View - Instruction with syncMenuPath */
 "scan.or.see.code.instruction.attributed" = "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync with Another Device.”.";
 
-/* Scan or See Code View - Instruction Part 3 */
-"scan.or.see.code.instruction.part3" = "in the DuckDuckGo Browser on another device and select ”Sync with Another Device.”";
-
 /* Scan or See Code View - Manually Enter Code Link */
 "scan.or.see.code.manually.enter.code.link" = "Manually Enter Code";
 
@@ -202,6 +199,9 @@
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Scan QR Code";
 
+/* No comment provided by engineer. */
+"Switch to Production" = "Switch to Production";
+
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Sync and Back Up This Device";
 
@@ -212,22 +212,19 @@
 "sync.menu.path" = "Settings > Sync & Backup > Sync With Another Device";
 
 /* Sync & Backup Title */
-"sync.title" = "Sync & Backup";
+"sync.title" = "Senkronizasyon ve Yedekleme";
 
 /* Data syncing unavailable warning message */
-"sync.warning.data.syncing.disabled" = "Sorry, but Sync & Backup is currently unavailable. Please try again later.";
+"sync.warning.data.syncing.disabled" = "Üzgünüz, ancak Senkronizasyon ve Yedekleme şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin.";
 
 /* Data syncing unavailable warning message */
-"sync.warning.data.syncing.disabled.upgrade.required" = "Sorry, but Sync & Backup is no longer available in this app version. Please update DuckDuckGo to the latest version to continue.";
+"sync.warning.data.syncing.disabled.upgrade.required" = "Üzgünüz, Senkronizasyon ve Yedekleme bu uygulama sürümünde artık kullanılamıyor. Devam etmek için lütfen DuckDuckGo'yu en son sürüme güncelleyin.";
 
 /* Title of the warning message */
-"sync.warning.sync.paused" = "Sync & Backup is Paused";
+"sync.warning.sync.paused" = "Senkronizasyon ve Yedekleme Duraklatıldı";
 
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Sync & Backup is Unavailable";
-
-/* Button label for syncing with another device */
-"sync.with.another.device.button" = "Sync with Another Device";
 
 /* Footer message for syncing with another device */
 "sync.with.another.device.footer" = "Your data is end-to-end encrypted, and DuckDuckGo does not have access to the encryption key.";
@@ -256,9 +253,9 @@
 /* Options - Unify Favorites Instruction */
 "unified.favorites.instruction" = "Use the same favorite bookmarks on all your devices. Leave off to keep mobile and desktop favorites separate.";
 
-/* Options - Unify Favorites Title */
-"unified.favorites.title" = "Unify Favorites";
-
 /* View Text Code menu item */
 "view.text.code.menu.item" = "View Text Code";
+
+/* No comment provided by engineer. */
+"You're using Sync Development environment" = "You're using Sync Development environment";
 

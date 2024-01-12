@@ -4,9 +4,6 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
-/* No comment provided by engineer. */
-"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Editați";
 
@@ -23,7 +20,7 @@
 "action.title.add" = "Adăugați";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Conectări";
+"action.title.autofill.logins" = "Parole";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Adaugă la marcaje";
@@ -148,6 +145,9 @@
 /* Title for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-title" = "Sincronizarea parolelor este întreruptă";
 
+/* Title for sync error alert */
+"alert.sync-error" = "Eroare de sincronizare și backup";
+
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Află mai multe";
 
@@ -168,6 +168,30 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Salvează preferința";
+
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "Nu se poate crea fișierul PDF de recuperare.";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "Nu se pot șterge datele de pe server.";
+
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "Pentru a asocia aceste dispozitive, dezactivează Sincronizare și backup pe un dispozitiv, apoi atinge „Sincronizează cu un alt dispozitiv” pe celălalt dispozitiv.";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "Nu se poate elimina acest dispozitiv din Sincronizare și backup.";
+
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Nu se poate conecta la server.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Nu se poate sincroniza cu un alt dispozitiv.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "Nu se pot opri Sincronizare și backup.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "Nu se poate actualiza numele dispozitivului.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Deblochează DuckDuckGo.";
@@ -440,16 +464,16 @@
 "autofill.keep-enabled.alert.message" = "Poți dezactiva oricând acest lucru din Setări.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Vrei să salvezi în continuare datele de conectare?";
+"autofill.keep-enabled.alert.title" = "Dorești să continui să salvezi parolele?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Vezi";
 
 /* Message displayed after saving an autofill login */
-"autofill.login-saved.toast" = "Autentificare salvată";
+"autofill.login-saved.toast" = "Parolă salvată";
 
 /* Message displayed after updating an autofill login */
-"autofill.login-updated.toast" = "Autentificare actualizată";
+"autofill.login-updated.toast" = "Parolă actualizată";
 
 /* Menu item text for copying autofill login details */
 "autofill.logins.copy-prompt" = "Copiază %@";
@@ -470,19 +494,19 @@
 "autofill.logins.details.address" = "URL-ul site-ului";
 
 /* Title for autofill login details */
-"autofill.logins.details.default-title" = "Autentificare";
+"autofill.logins.details.default-title" = "Parolă";
 
 /* Delete button when deleting an autofill login */
-"autofill.logins.details.delete" = "Șterge datele de autentificare";
+"autofill.logins.details.delete" = "Șterge parola";
 
 /* Autofill alert button confirming delete autofill login */
-"autofill.logins.details.delete-confirmation.button" = "Șterge datele de autentificare";
+"autofill.logins.details.delete-confirmation.button" = "Șterge parola";
 
 /* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Sigur dorești să ștergi aceste date de autentificare?";
+"autofill.logins.details.delete-confirmation.title" = "Sigur dorești să ștergi această parolă?";
 
 /* Title when editing autofill login details */
-"autofill.logins.details.edit-title" = "Editează datele de autentificare";
+"autofill.logins.details.edit-title" = "Editează parola";
 
 /* Placeholder for password field on autofill login details */
 "autofill.logins.details.edit.password-placeholder" = "Parolă";
@@ -496,14 +520,14 @@
 /* Placeholder for userbane field on autofill login details */
 "autofill.logins.details.edit.username-placeholder" = "numedeutilizator@exemplu.com";
 
-/* Message displaying when the login was last updated by */
-"autofill.logins.details.last-updated" = "Datele de autentificare au fost actualizate ultima dată la %s";
+/* Message displaying when the login was last updated */
+"autofill.logins.details.last-updated" = "Ultima actualizare la %@";
 
 /* Login name label for login details on autofill */
-"autofill.logins.details.login-name" = "Titlu autentificare";
+"autofill.logins.details.login-name" = "Titlu";
 
 /* Title when adding new autofill login */
-"autofill.logins.details.new-title" = "Adaugă date de autentificare";
+"autofill.logins.details.new-title" = "Adaugă parola";
 
 /* Notes label for login details on autofill */
 "autofill.logins.details.notes" = "Note";
@@ -518,37 +542,37 @@
 "autofill.logins.details.save-duplicate-alert.action" = "OK";
 
 /* Message for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.message" = "Ai deja date de autentificare pentru acest nume de utilizator și site.";
+"autofill.logins.details.save-duplicate-alert.message" = "Ai deja o parolă salvată pentru acest nume de utilizator și site.";
 
 /* Title for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.title" = "Date de autentificare duplicate";
+"autofill.logins.details.save-duplicate-alert.title" = "Parolă duplicată";
 
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Nume utilizator";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Datele de conectare sunt stocate în siguranță pe dispozitivul tău.";
+"autofill.logins.empty-view.subtitle" = "Parolele sunt stocate în siguranță pe dispozitivul tău.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Nu au fost salvate încă date de conectare";
+"autofill.logins.empty-view.title" = "Nici o parolă nu a fost salvată încă";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Renunță";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Deblochează dispozitivul pentru a accesa datele de conectare salvate";
+"autofill.logins.list.auth.reason" = "Deblochează dispozitivul pentru a accesa parolele";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Închidere";
 
 /* Title for a toggle that enables autofill */
-"autofill.logins.list.enable" = "Salvează și completează automat datele de autentificare";
+"autofill.logins.list.enable" = "Salvează și completează automat parolele";
 
 /* Toast message when a login item is deleted */
-"autofill.logins.list.login-deleted-message" = "S-a șters autentificarea pentru %@";
+"autofill.logins.list.login-deleted-message" = "Parola pentru %@ a fost ștearsă";
 
 /* Toast message when a login item without a title is deleted */
-"autofill.logins.list.login-deleted-message-no-title" = "Date de conectare șterse";
+"autofill.logins.list.login-deleted-message-no-title" = "Parolă ștearsă";
 
 /* Title for a button that allows a user to reset their list of never saved sites */
 "autofill.logins.list.never.saved" = "Resetează site-urile excluse";
@@ -560,28 +584,28 @@
 "autofill.logins.list.never.saved.reset.action.confirm" = "Resetează site-urile excluse";
 
 /* Alert title */
-"autofill.logins.list.never.saved.reset.action.title" = "Dacă resetezi site-urile excluse, ți se va cere să îți salvezi datele de conectare data viitoare când te conectezi la oricare dintre aceste site-uri.";
+"autofill.logins.list.never.saved.reset.action.title" = "Dacă resetezi site-urile excluse, ți se va solicita să îți salvezi parola data viitoare când te conectezi la oricare dintre aceste site-uri.";
 
 /* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Date de autentificare pentru căutare";
+"autofill.logins.list.search-placeholder" = "Caută parole";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Sugerat";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Conectări";
+"autofill.logins.list.title" = "Parole";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Este necesară o parolă pentru a-ți proteja datele de conectare.";
+"autofill.logins.no-auth.subtitle" = "Este necesar un cod de acces pentru a-ți proteja parolele.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Securizează-ți dispozitivul pentru a salva conectările";
+"autofill.logins.no-auth.title" = "Securizează-ți dispozitivul pentru a salva parolele";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Renunță";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Deblochează pentru a utiliza Datele de autentificare salvate";
+"autofill.logins.prompt.auth.reason" = "Deblochează pentru a utiliza parola salvată";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "De pe acest site web";
@@ -605,7 +629,7 @@
 "autofill.logins.search.no-results.title" = "Niciun rezultat";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Parolele sunt stocate în siguranță pe dispozitivul dvs. în meniul Autentificări.";
+"autofill.password-generation-prompt.subtitle" = "Parolele sunt stocate în siguranță pe dispozitivul tău.";
 
 /* Title for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.title" = "Folosiți o parolă puternică de la DuckDuckGo?";
@@ -650,7 +674,7 @@
 "autofill.save-login.never-prompt.CTA" = "Nu solicita niciodată pentru acest site";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Parolele sunt stocate în siguranță pe dispozitivul dvs. în meniul Autentificări.";
+"autofill.save-login.new-user.message" = "Parolele sunt stocate în siguranță pe dispozitivul tău.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Dorești ca DuckDuckGo să-ți salveze parola?";
@@ -659,7 +683,7 @@
 "autofill.save-login.not-now.CTA" = "Nu salva";
 
 /* Title displayed on modal asking for the user to save the login */
-"autofill.save-login.title" = "Salvezi autentificarea?";
+"autofill.save-login.title" = "Salvezi parola?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Salvează parola";
@@ -1411,17 +1435,101 @@
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
 
+/* Privacy Policy title for Network Protection */
+"network-protection.privacy-policy.title" = "Politica de confidențialitate";
+
+/* Title text for the Network Protection terms and conditions accept button */
+"network-protection.waitlist.agree-and-continue" = "De acord și continuă";
+
+/* Availability disclaimer for Network Protection join waitlist screen */
+"network-protection.waitlist.availability-disclaimer" = "Protecția rețelei poate fi utilizată gratuit în timpul accesului timpuriu.";
+
+/* Agree and Continue button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.agree-and-continue" = "De acord și continuă";
+
+/* Enable Notifications button for Network Protection joined waitlist screen */
+"network-protection.waitlist.button.enable-notifications" = "Activează notificările";
+
+/* Button title for users who already have an invite code */
+"network-protection.waitlist.button.existing-invite-code" = "Am un cod de invitație";
+
+/* Join Waitlist button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.join-waitlist" = "Înscrie-te pe lista de așteptare";
+
+/* Button title text for the Network Protection waitlist confirmation prompt */
+"network-protection.waitlist.get-started" = "Să începem";
+
+/* Subtitle for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.subtitle" = "Criptează traficul online în browserele și aplicațiile utilizate.";
+
+/* Title for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.title" = "Acoperire totală a dispozitivului";
+
+/* Subtitle for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.subtitle" = "Nu este nevoie de o aplicație separată. Conectează-te cu un singur clic și vezi starea conexiunii dintr-o singură privire.";
+
+/* Title for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.title" = "Rapid, sigur și ușor de utilizat";
+
+/* Subtitle for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.subtitle" = "Nu înregistrăm și nu salvăm date care pot face legătura cu activitatea ta online.";
+
+/* Title for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.title" = "Politică strictă de interzicere a jurnalelor";
+
+/* Subtitle for Network Protection invited screen */
+"network-protection.waitlist.invited.subtitle" = "Obține un nivel suplimentar de protecție online cu VPN-ul creat pentru viteză și simplitate. Criptează conexiunea la internet pe întregul dispozitiv și ascunde-ți locația și adresa IP de pe site-urile pe care le accesezi.";
+
+/* Title for Network Protection invited screen */
+"network-protection.waitlist.invited.title" = "Ești invitat să încerci\naccesul timpuriu la Network Protection!";
+
+/* First subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.1" = "Obține o conexiune sigură oricând și oriunde cu Network Protection, VPN-ul de la DuckDuckGo.";
+
+/* Second subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.2" = "Alătură-te listei de așteptare și te vom anunța când îți vine rândul.";
+
+/* Title for Network Protection joined waitlist screen */
+"network-protection.waitlist.joined.title" = "Ești pe listă!";
+
+/* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Noile invitații sunt trimise la fiecare câteva zile pe baza principiului „primul venit, primul servit”.";
+
+/* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "Te vom anunța când invitația ta este gata.";
+
+/* Body text for the alert to enable notifications */
+"network-protection.waitlist.notification-alert.description" = "Îți vom trimite o notificare atunci când invitația de a testa Network Protection este gata.";
+
+/* Subtitle for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-description" = "Primești o notificare atunci când copia ta pentru acces timpuriu la Network Protection este gata.";
+
+/* Title for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-title" = "Află momentul exact în care ești invitat(ă)";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.text" = "Deschide invitația ta";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.title" = "Network Protection este gata!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Invitația ta este gata!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Ești pe listă!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Alătură-te listei de așteptare private";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+"network.protection.invite.dialog.title" = "Ești invitat(ă) să încerci Network Protection";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
-
-/* Message explaining that netP is invite only */
-"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
 
 /* Message for the network protection invite success view */
 "network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
@@ -1453,7 +1561,7 @@
 /* Header title label text for the status view when netP is connected */
 "network.protection.status.header.title.on" = "Network Protection is On";
 
-/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+/* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 
 /* Connection details label shown in NetworkProtection's status view. */
@@ -1489,23 +1597,32 @@
 /* Title for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.title" = "Alerte VPN";
 
-/* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.footer" = "Restaurează automat o conexiune VPN după întrerupere.";
+/* Footer text for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Lasă traficul local să ocolească VPN-ul și să se conecteze la dispozitivele din rețeaua locală, cum ar fi o imprimantă.";
 
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.title" = "Întotdeauna activat";
+/* Title for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.title" = "Exclude rețelele locale";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Subtitle of countries item when there are multiple cities, example : */
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d orașe";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+"network.protection.vpn.location.recommended.section.footer" = "Conectează-te automat la cel mai apropiat server pe care îl putem găsi.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
+"network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
+
+/* Title for the VPN Location screen. */
+"network.protection.vpn.location.title" = "Locația VPN";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "Notificări VPN";
@@ -1517,10 +1634,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Network Protection previne scurgerile DNS către furnizorul tău de servicii de internet prin direcționarea interogărilor DNS prin tunelul VPN către propriul nostru resolver.";
-
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.title" = "DNS securizat";
+"network.protection.vpn.secure.dns.setting.footer" = "VPN-ul nostru utilizează DNS securizat pentru a-ți păstra activitatea online privată, astfel încât furnizorul tău de internet să nu poată vedea ce site-uri web accesezi.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Setări VPN";
@@ -1671,6 +1785,15 @@
 
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "„%@” nu va mai putea accesa datele tale sincronizate.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Ne pare rău, dar Sincronizarea și copierea de rezervă nu este disponibilă momentan. Încearcă din nou mai târziu.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Ne pare rău, dar Sincronizarea și copierea de rezervă nu mai este disponibilă în această versiune de aplicație. Te rugăm să actualizezi DuckDuckGo la cea mai recentă versiune pentru a continua.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "Sincronizarea și copierea de rezervă este întreruptă";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Închide fila de pornire";

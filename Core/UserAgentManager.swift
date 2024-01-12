@@ -152,7 +152,6 @@ struct UserAgent {
     }
 
     private func defaultPolicy(forConfig config: PrivacyConfiguration) -> DefaultPolicy {
-        return .brand
         let uaSettings = config.settings(for: .customUserAgent)
         guard let policy = uaSettings[Constants.defaultPolicyConfigKey] as? String else { return .ddg }
 
@@ -289,7 +288,7 @@ struct UserAgent {
                               isDesktop: Bool,
                               privacyConfig: PrivacyConfiguration) -> String {
         if isDesktop {
-            return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) \(versionComponent) Safari/605.1.15"
+            return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"
         }
         return "Mozilla/5.0 (" + deviceProfile + ") AppleWebKit/605.1.15 (KHTML, like Gecko) \(versionComponent) Mobile/15E148 Safari/604.1"
     }

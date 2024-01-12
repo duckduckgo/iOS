@@ -644,7 +644,7 @@ class MainViewController: UIViewController {
             guard let tab = tabManager.current(createIfNeeded: true) else {
                 fatalError("Unable to create tab")
             }
-            addToView(tab: tab)
+            addToWebViewContainer(tab: tab)
             refreshControls()
         } else {
             attachHomeScreen()
@@ -704,7 +704,7 @@ class MainViewController: UIViewController {
         controller.chromeDelegate = self
         controller.delegate = self
 
-        addToView(controller: controller)
+        addToContentContainer(controller: controller)
 
         refreshControls()
         syncService.scheduler.requestSyncImmediately()
@@ -853,7 +853,7 @@ class MainViewController: UIViewController {
     private func addTab(url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) {
         let tab = tabManager.add(url: url, inheritedAttribution: inheritedAttribution)
         dismissOmniBar()
-        addToView(tab: tab)
+        addToWebViewContainer(tab: tab)
     }
 
     func select(tabAt index: Int) {
@@ -867,7 +867,7 @@ class MainViewController: UIViewController {
         if tab.link == nil {
             attachHomeScreen()
         } else {
-            addToView(tab: tab)
+            addToWebViewContainer(tab: tab)
             refreshControls()
         }
         tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
@@ -876,17 +876,16 @@ class MainViewController: UIViewController {
         }
     }
 
-    private func addToView(tab: TabViewController) {
+    private func addToWebViewContainer(tab: TabViewController) {
         removeHomeScreen()
         updateFindInPage()
         currentTab?.progressWorker.progressBar = nil
         currentTab?.chromeDelegate = nil
         currentTab?.webView.scrollView.contentInsetAdjustmentBehavior = .never
-
-        // addToView(controller: tab)
+        
         addChild(tab)
-        tab.willMove(toParent: self)
-        view.insertSubview(tab.view, at: 0)
+        viewCoordinator.webViewContainer.subviews.forEach { $0.removeFromSuperview() }
+        viewCoordinator.webViewContainer.addSubview(tab.view)
         tab.view.frame = self.view.frame
         tab.didMove(toParent: self)
         
@@ -898,7 +897,7 @@ class MainViewController: UIViewController {
         tab.chromeDelegate = self
     }
 
-    private func addToView(controller: UIViewController) {
+    private func addToContentContainer(controller: UIViewController) {
         viewCoordinator.contentContainer.isHidden = false
         addChild(controller)
         viewCoordinator.contentContainer.subviews.forEach { $0.removeFromSuperview() }
@@ -1733,7 +1732,7 @@ extension MainViewController: TabDelegate {
             guard self.tabManager.model.tabs.contains(newTab.tabModel) else { return }
 
             self.dismissOmniBar()
-            self.addToView(tab: newTab)
+            self.addToWebViewContainer(tab: newTab)
             self.refreshOmniBar()
         }
 

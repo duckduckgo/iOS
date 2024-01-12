@@ -4,9 +4,6 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
-/* No comment provided by engineer. */
-"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Uredi";
 
@@ -148,6 +145,9 @@
 /* Title for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-title" = "Sinhronizacija gesel je zaustavljena";
 
+/* Title for sync error alert */
+"alert.sync-error" = "Napaka pri sinhronizaciji in varnostnem kopiranju";
+
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Več";
 
@@ -168,6 +168,30 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Shrani priljubljeno";
+
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "PDF-ja za obnovitev ni bilo mogoče ustvariti.";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "Podatkov na strežniku ni bilo mogoče izbrisati.";
+
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "Če želite seznaniti ti napravi, izklopite možnost »Sinhronizacija in varnostno kopiranje« v eni napravi in nato v drugi napravi tapnite »Sinhronizacija z drugo napravo«.";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "Te naprave ni bilo mogoče odstraniti iz sinhronizacije in varnostnega kopiranja.";
+
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Ni bilo mogoče vzpostaviti povezave s strežnikom.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Ni bilo mogoče sinhronizirati z drugo napravo.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "Sinhronizacije in varnostnega kopiranja ni bilo mogoče izklopiti.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "Imena naprave ni bilo mogoče posodobiti.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Odkleni DuckDuckGo.";
@@ -1411,17 +1435,101 @@
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
 
+/* Privacy Policy title for Network Protection */
+"network-protection.privacy-policy.title" = "Pravilnik o zasebnosti";
+
+/* Title text for the Network Protection terms and conditions accept button */
+"network-protection.waitlist.agree-and-continue" = "Strinjam se in želim nadaljevati";
+
+/* Availability disclaimer for Network Protection join waitlist screen */
+"network-protection.waitlist.availability-disclaimer" = "Omrežna zaščita Network Protection je med zgodnjim dostopom brezplačna.";
+
+/* Agree and Continue button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.agree-and-continue" = "Strinjam se in želim nadaljevati";
+
+/* Enable Notifications button for Network Protection joined waitlist screen */
+"network-protection.waitlist.button.enable-notifications" = "Omogoči obvestila";
+
+/* Button title for users who already have an invite code */
+"network-protection.waitlist.button.existing-invite-code" = "Imam kodo povabila";
+
+/* Join Waitlist button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.join-waitlist" = "Pridruži se čakalni listi";
+
+/* Button title text for the Network Protection waitlist confirmation prompt */
+"network-protection.waitlist.get-started" = "Začni";
+
+/* Subtitle for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.subtitle" = "Šifrirajte spletni promet v svojih brskalnikih in aplikacijah.";
+
+/* Title for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.title" = "Pokritost celotne naprave";
+
+/* Subtitle for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.subtitle" = "Ne potrebujete ločene aplikacije. Povežite se z enim klikom in si na hitro oglejte stanje povezave.";
+
+/* Title for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.title" = "Hitra, zanesljiva in preprosta za uporabo";
+
+/* Subtitle for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.subtitle" = "Ne beležimo in ne shranjujemo nobenih podatkov, ki bi vas lahko povezali z vašo spletno dejavnostjo.";
+
+/* Title for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.title" = "Stroga politika, ki prepoveduje beleženje";
+
+/* Subtitle for Network Protection invited screen */
+"network-protection.waitlist.invited.subtitle" = "Pridobite dodatno raven zaščite na spletu z VPN-jem, ustvarjenim za hitrost in preprostost. Šifrirajte internetno povezavo v celotni napravi ter skrijte svojo lokacijo in naslov IP pred spletnimi mesti, ki jih obiščete.";
+
+/* Title for Network Protection invited screen */
+"network-protection.waitlist.invited.title" = "Vabimo vas, da preizkusite\nzgodnji dostop do zaščite omrežja Network Protection!";
+
+/* First subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.1" = "Z zaščito omrežja Network Protection, VPN-jem podjetja DuckDuckGo, zaščitite povezavo kjer koli in kadar koli.";
+
+/* Second subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.2" = "Pridružite se čakalni listi in obvestili vas bomo, ko boste na vrsti.";
+
+/* Title for Network Protection joined waitlist screen */
+"network-protection.waitlist.joined.title" = "Na seznamu ste!";
+
+/* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Nova povabila pošljemo vsakih nekaj dni, in sicer po načelu kdor prej pride, prej melje.";
+
+/* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "Ko bo vaše povabilo pripravljeno, vas bomo obvestili.";
+
+/* Body text for the alert to enable notifications */
+"network-protection.waitlist.notification-alert.description" = "Poslali vam bomo obvestilo, ko bo vaše povabilo za preizkušanje zaščite omrežja Network Protection pripravljeno.";
+
+/* Subtitle for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-description" = "Prejmite obvestilo, ko bo vaš zgodnji dostop do zaščite omrežja Network Protection pripravljen.";
+
+/* Title for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-title" = "Bodite obveščeni, takoj ko ste povabljeni";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.text" = "Odprite svoje povabilo";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.title" = "Zaščita omrežja Network Protection je pripravljena!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Vaše povabilo je pripravljeno!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Na seznamu ste!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Pridruži se zasebnemu čakalnemu seznamu";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+"network.protection.invite.dialog.title" = "Vabimo vas, da preizkusite zaščito omrežja Network Protection";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
-
-/* Message explaining that netP is invite only */
-"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
 
 /* Message for the network protection invite success view */
 "network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
@@ -1453,7 +1561,7 @@
 /* Header title label text for the status view when netP is connected */
 "network.protection.status.header.title.on" = "Network Protection is On";
 
-/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+/* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 
 /* Connection details label shown in NetworkProtection's status view. */
@@ -1489,23 +1597,32 @@
 /* Title for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.title" = "Opozorila VPN";
 
-/* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.footer" = "Samodejno obnovite povezavo VPN po prekinitvi.";
+/* Footer text for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Omogočite, da lahko lokalni promet zaobide omrežje VPN in se poveže z napravami v lokalnem omrežju, na primer s tiskalnikom.";
 
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.title" = "Vedno vklopljeno";
+/* Title for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.title" = "Izključitev lokalnih omrežij";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Subtitle of countries item when there are multiple cities, example : */
+"network.protection.vpn.location.country.item.formatted.cities.count" = "Mesta: %d";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+"network.protection.vpn.location.recommended.section.footer" = "Samodejno se poveže z najbližjim strežnikom, ki ga najdemo.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
+"network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
+
+/* Title for the VPN Location screen. */
+"network.protection.vpn.location.title" = "Lokacija VPN";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "Obvestila VPN";
@@ -1517,10 +1634,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Zaščita omrežja preprečuje uhajanje podatkov DNS k ponudniku internetnih storitev, saj poizvedbe DNS usmerja prek tunela VPN k lastnemu razreševalniku.";
-
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.title" = "Varen DNS";
+"network.protection.vpn.secure.dns.setting.footer" = "Naš VPN za ohranjanje zasebnosti vaših spletnih dejavnosti uporablja varni DNS, zato da ponudnik interneta ne more videti, katera spletna mesta obiskujete.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Nastavitve VPN";
@@ -1671,6 +1785,15 @@
 
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "Aplikacija »%@« ne bo več mogla dostopati do sinhroniziranih podatkov.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Sinhronizacija in varnostno kopiranje žal trenutno nista na voljo. Poskusite znova pozneje.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Sinhronizacija in varnostno kopiranje v tej različici aplikacije žal nista več na voljo. Za nadaljevanje DuckDuckGo posodobite na najnovejšo različico.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "Sinhronizacija in varnostno kopiranje sta zaustavljena";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Zapri zavihek Domov";

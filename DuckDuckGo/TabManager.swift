@@ -38,6 +38,7 @@ class TabManager {
     @UserDefaultsWrapper(key: .faviconTabsCacheNeedsCleanup, defaultValue: true)
     var tabsCacheNeedsCleanup: Bool
 
+    @MainActor
     init(model: TabsModel,
          previewsSource: TabPreviewsSource,
          bookmarksDatabase: CoreDataDatabase,
@@ -58,11 +59,13 @@ class TabManager {
         registerForNotifications()
     }
 
+    @MainActor
     private func buildController(forTab tab: Tab, inheritedAttribution: AdClickAttributionLogic.State?) -> TabViewController {
         let url = tab.link?.url
         return buildController(forTab: tab, url: url, inheritedAttribution: inheritedAttribution)
     }
 
+    @MainActor
     private func buildController(forTab tab: Tab, url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) -> TabViewController {
         let configuration =  WKWebViewConfiguration.persistent()
         let controller = TabViewController.loadFromStoryboard(model: tab, bookmarksDatabase: bookmarksDatabase, syncService: syncService)
@@ -75,18 +78,20 @@ class TabManager {
         return controller
     }
 
-    var current: TabViewController? {
-
+    @MainActor
+    func current(createIfNeeded: Bool = false) -> TabViewController? {
         let index = model.currentIndex
         let tab = model.tabs[index]
 
         if let controller = controller(for: tab) {
             return controller
-        } else {
+        } else if createIfNeeded {
             os_log("Tab not in cache, creating", log: .generalLog, type: .debug)
             let controller = buildController(forTab: tab, inheritedAttribution: nil)
             tabControllerCache.append(controller)
             return controller
+        } else {
+            return nil
         }
     }
     
@@ -106,12 +111,13 @@ class TabManager {
         return model.count
     }
 
+    @MainActor
     func select(tabAt index: Int) -> TabViewController {
-        current?.dismiss()
+        current()?.dismiss()
         model.select(tabAt: index)
 
         save()
-        return current!
+        return current(createIfNeeded: true)!
     }
 
     func addURLRequest(_ request: URLRequest,
@@ -174,10 +180,11 @@ class TabManager {
         save()
     }
 
+    @MainActor
     func add(url: URL?, inBackground: Bool = false, inheritedAttribution: AdClickAttributionLogic.State?) -> TabViewController {
 
         if !inBackground {
-            current?.dismiss()
+            current()?.dismiss()
         }
 
         let link = url == nil ? nil : Link(title: nil, url: url!)
@@ -218,14 +225,16 @@ class TabManager {
         model.clearAll()
         for controller in tabControllerCache {
             removeFromCache(controller)
+            // controller.prepareForDataClearing()
         }
         save()
     }
 
+    @MainActor
     func invalidateCache(forController controller: TabViewController) {
-        if current === controller {
+        if current() === controller {
             Pixel.fire(pixel: .webKitTerminationDidReloadCurrentTab)
-            current?.reload()
+            current()?.reload()
         } else {
             removeFromCache(controller)
         }
@@ -235,12 +244,14 @@ class TabManager {
         model.save()
     }
     
+    @MainActor
     func prepareAllTabsExceptCurrentForDataClearing() {
-        tabControllerCache.filter { $0 != current }.forEach { $0.prepareForDataClearing() }
+        tabControllerCache.filter { $0 !== current() }.forEach { $0.prepareForDataClearing() }
     }
     
+    @MainActor
     func prepareCurrentTabForDataClearing() {
-        current?.prepareForDataClearing()
+        current()?.prepareForDataClearing()
     }
 
     func cleanupTabsFaviconCache() {

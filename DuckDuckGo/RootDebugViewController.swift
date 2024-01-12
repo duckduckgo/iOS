@@ -47,9 +47,9 @@ class RootDebugViewController: UITableViewController {
         presentShareSheet(withItems: [DiagnosticReportDataSource(delegate: self)], fromButtonItem: shareButton)
     }
 
-    private let bookmarksDatabase: CoreDataDatabase
-    private let sync: DDGSyncing
-    private let internalUserDecider: DefaultInternalUserDecider?
+    private var bookmarksDatabase: CoreDataDatabase?
+    private var sync: DDGSyncing?
+    private var internalUserDecider: DefaultInternalUserDecider?
 
     init?(coder: NSCoder,
           sync: DDGSyncing,
@@ -61,14 +61,20 @@ class RootDebugViewController: UITableViewController {
         self.internalUserDecider = internalUserDecider as? DefaultInternalUserDecider
         super.init(coder: coder)
     }
+        
+    func configure(sync: DDGSyncing, bookmarksDatabase: CoreDataDatabase, internalUserDecider: InternalUserDecider) {
+        self.sync = sync
+        self.bookmarksDatabase = bookmarksDatabase
+        self.internalUserDecider = internalUserDecider as? DefaultInternalUserDecider
+    }
 
     required init?(coder: NSCoder) {
-        fatalError("Not implemented")
+        super.init(coder: coder)
     }
 
     @IBSegueAction func onCreateImageCacheDebugScreen(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> ImageCacheDebugViewController {
         guard let controller = ImageCacheDebugViewController(coder: coder,
-                                                             bookmarksDatabase: bookmarksDatabase) else {
+                                                             bookmarksDatabase: self.bookmarksDatabase!) else {
             fatalError("Failed to create controller")
         }
 
@@ -77,8 +83,8 @@ class RootDebugViewController: UITableViewController {
 
     @IBSegueAction func onCreateSyncDebugScreen(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> SyncDebugViewController {
         guard let controller = SyncDebugViewController(coder: coder,
-                                                       sync: sync,
-                                                       bookmarksDatabase: bookmarksDatabase) else {
+                                                       sync: self.sync!,
+                                                       bookmarksDatabase: self.bookmarksDatabase!) else {
             fatalError("Failed to create controller")
         }
 
@@ -222,14 +228,11 @@ class DiagnosticReportDataSource: UIActivityItemProvider {
     }
 
     func fireproofingReport() -> String {
-
         let allowedDomains = PreserveLogins.shared.allowedDomains.map { "* \($0)" }
-        let legacyAllowedDomains = PreserveLogins.shared.legacyAllowedDomains.map { "* \($0)" }
 
         let allowedDomainsEntry = ["### Allowed Domains"] + (allowedDomains.isEmpty ? [""] : allowedDomains)
-        let legacyAllowedDomainsEntry = ["### Legacy Allowed Domains"] + (legacyAllowedDomains.isEmpty ? [""] : legacyAllowedDomains)
 
-        return (["## Fireproofing Report"] + allowedDomainsEntry + legacyAllowedDomainsEntry).joined(separator: "\n")
+        return (["## Fireproofing Report"] + allowedDomainsEntry).joined(separator: "\n")
     }
 
     func imageCacheReport() -> String {

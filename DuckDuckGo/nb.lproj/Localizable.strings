@@ -4,9 +4,6 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
-/* No comment provided by engineer. */
-"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Rediger";
 
@@ -148,6 +145,9 @@
 /* Title for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-title" = "Synkronisering av passord er satt på pause";
 
+/* Title for sync error alert */
+"alert.sync-error" = "Synkroniserings- og sikkerhetskopieringsfeil";
+
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Finn ut mer";
 
@@ -168,6 +168,30 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Lagre favoritt";
+
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "Kan ikke opprette gjenopprettings-PDF-en.";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "Kan ikke slette data på serveren.";
+
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "For å pare disse enhetene må du slå av «Synkronisering og sikkerhetskopiering» på den ene enheten og trykke på «Synkroniser med en annen enhet» på den andre.";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "Kan ikke fjerne denne enheten fra Synkronisering og sikkerhetskopiering.";
+
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Kan ikke koble til serveren.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Kan ikke synkronisere med en annen enhet.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "Kan ikke slå av Synkronisering og sikkerhetskopiering.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "Kan ikke oppdatere enhetens navn.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Lås opp DuckDuckGo.";
@@ -1411,17 +1435,101 @@
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
 
+/* Privacy Policy title for Network Protection */
+"network-protection.privacy-policy.title" = "Personvernerklæring";
+
+/* Title text for the Network Protection terms and conditions accept button */
+"network-protection.waitlist.agree-and-continue" = "Enig og fortsett";
+
+/* Availability disclaimer for Network Protection join waitlist screen */
+"network-protection.waitlist.availability-disclaimer" = "Bruk av Nettverksbeskyttelse er gratis under tidlig tilgang.";
+
+/* Agree and Continue button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.agree-and-continue" = "Godta og fortsett";
+
+/* Enable Notifications button for Network Protection joined waitlist screen */
+"network-protection.waitlist.button.enable-notifications" = "Aktiver varslinger";
+
+/* Button title for users who already have an invite code */
+"network-protection.waitlist.button.existing-invite-code" = "Jeg har en invitasjonskode";
+
+/* Join Waitlist button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.join-waitlist" = "Sett deg på ventelisten";
+
+/* Button title text for the Network Protection waitlist confirmation prompt */
+"network-protection.waitlist.get-started" = "Kom i gang";
+
+/* Subtitle for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.subtitle" = "Krypter netttrafikk på tvers av nettlesere og apper.";
+
+/* Title for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.title" = "Full enhetsdekning";
+
+/* Subtitle for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.subtitle" = "Du trenger ikke en egen app. Koble til med ett klikk. Sjekk status med et øyekast.";
+
+/* Title for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.title" = "Rask, pålitelig og brukervennlig";
+
+/* Subtitle for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.subtitle" = "Vi logger ikke og lagrer ikke data som kan forbinde deg med nettaktiviteten din.";
+
+/* Title for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.title" = "Strenge retningslinjer, ingen logging";
+
+/* Subtitle for Network Protection invited screen */
+"network-protection.waitlist.invited.subtitle" = "Få et ekstra lag med beskyttelse på nett med et raskt og lettvint VPN. Krypter internettforbindelsen på hele enheten, og hold posisjonen og IP-adressen din skjult for nettsteder du besøker.";
+
+/* Title for Network Protection invited screen */
+"network-protection.waitlist.invited.title" = "Du er invitert til å prøve\ntidlig tilgang til Nettverksbeskyttelse!";
+
+/* First subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.1" = "Sikre tilkoblingen din når som helst og hvor som helst med Nettverksbeskyttelse, VPN-et fra DuckDuckGo.";
+
+/* Second subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.2" = "Sett deg på ventelisten, så varsler vi deg når det er din tur.";
+
+/* Title for Network Protection joined waitlist screen */
+"network-protection.waitlist.joined.title" = "Du står på listen!";
+
+/* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Nye invitasjoner sendes ut med noen dagers mellomrom, etter først-til-mølla-prinsippet.";
+
+/* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "Vi varsler deg når invitasjonen din er klar.";
+
+/* Body text for the alert to enable notifications */
+"network-protection.waitlist.notification-alert.description" = "Vi sender deg en varsling når invitasjonen din til å teste Nettverksbeskyttelse er klar.";
+
+/* Subtitle for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-description" = "Få en varsling når eksemplaret ditt av tidlig tilgang til Nettverksbeskyttelse er klart.";
+
+/* Title for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-title" = "Få beskjed umiddelbart når du inviteres";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.text" = "Åpne invitasjonen din";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.title" = "Nettverksbeskyttelsen er klar!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Invitasjonen din er klar!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Du står på listen!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Sett deg på den private ventelisten";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+"network.protection.invite.dialog.title" = "Du er invitert til å prøve Nettverksbeskyttelse";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
-
-/* Message explaining that netP is invite only */
-"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
 
 /* Message for the network protection invite success view */
 "network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
@@ -1453,7 +1561,7 @@
 /* Header title label text for the status view when netP is connected */
 "network.protection.status.header.title.on" = "Network Protection is On";
 
-/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+/* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 
 /* Connection details label shown in NetworkProtection's status view. */
@@ -1489,23 +1597,32 @@
 /* Title for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.title" = "VPN-varsler";
 
-/* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.footer" = "Gjenopprett automatisk VPN-tilkobling etter avbrudd.";
+/* Footer text for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.footer" = "La lokal trafikk omgå VPN-et og koble til enheter på det lokale nettverket, for eksempel en skriver.";
 
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.title" = "Alltid på";
+/* Title for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.title" = "Ekskluder lokale nettverk";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Subtitle of countries item when there are multiple cities, example : */
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d byer";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+"network.protection.vpn.location.recommended.section.footer" = "Koble automatisk til nærmeste server vi kan finne.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
+"network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
+
+/* Title for the VPN Location screen. */
+"network.protection.vpn.location.title" = "VPN-lokasjon";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "VPN-varsler";
@@ -1517,10 +1634,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Nettverksbeskyttelse forhindrer DNS-lekkasjer til internettleverandøren din ved å rute DNS-forespørsler gjennom VPN-tunnelen til vår egen resolver.";
-
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.title" = "Sikker DNS";
+"network.protection.vpn.secure.dns.setting.footer" = "Vi holder nettaktiviteten din privat med Secure DNS, slik at internettleverandøren din ikke kan se hvilke nettsteder du besøker.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-innstillinger";
@@ -1671,6 +1785,15 @@
 
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "\"%@\" vil ikke lenger ha tilgang til dine synkroniserte data.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Beklager, men synkronisering og sikkerhetskopiering er ikke tilgjengelig for øyeblikket. Prøv igjen senere.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Beklager, men synkronisering og sikkerhetskopiering er ikke lenger tilgjengelig i denne appversjonen. Oppdater DuckDuckGo til den nyeste versjonen for å fortsette.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "Synkronisering og sikkerhetskopiering er satt på pause";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Lukk hjem-fane";

@@ -4,9 +4,6 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
-/* No comment provided by engineer. */
-"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Muokkaa";
 
@@ -148,6 +145,9 @@
 /* Title for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-title" = "Salasanojen synkronointi on keskeytetty";
 
+/* Title for sync error alert */
+"alert.sync-error" = "Synkronointi- ja varmuuskopiointivirhe";
+
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Lue lisää";
 
@@ -168,6 +168,30 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Tallenna suosikki";
+
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "PDF-palautustiedoston luominen epäonnistui.";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "Tietojen poisto palvelimelta epäonnistui.";
+
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "Jos haluat yhdistää laitteet, poista yhdeltä laitteelta käytöstä Synkronointi ja varmuuskopiointi, ja napauta toisessa laitteessa \"Synkronoi toisen laitteen kanssa\".";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "Tätä laitetta ei voida poistaa synkronoinnista ja varmuuskopioinnista.";
+
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Yhteyden muodostaminen palvelimeen ei onnistu.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Synkronointi toisen laitteen kanssa ei onnistu.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "Synkronointia ja varmuuskopiointia ei voida poistaa käytöstä.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "Laitteen nimen päivittäminen ei onnistu.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Avaa DuckDuckGo.";
@@ -1411,17 +1435,101 @@
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
 
+/* Privacy Policy title for Network Protection */
+"network-protection.privacy-policy.title" = "Tietosuojakäytäntö";
+
+/* Title text for the Network Protection terms and conditions accept button */
+"network-protection.waitlist.agree-and-continue" = "Hyväksy ja jatka";
+
+/* Availability disclaimer for Network Protection join waitlist screen */
+"network-protection.waitlist.availability-disclaimer" = "Network Protection on ilmainen ennakkokäytön aikana.";
+
+/* Agree and Continue button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.agree-and-continue" = "Hyväksy ja jatka";
+
+/* Enable Notifications button for Network Protection joined waitlist screen */
+"network-protection.waitlist.button.enable-notifications" = "Ota ilmoitukset käyttöön";
+
+/* Button title for users who already have an invite code */
+"network-protection.waitlist.button.existing-invite-code" = "Minulla on kutsukoodi";
+
+/* Join Waitlist button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.join-waitlist" = "Tule odotuslistalle";
+
+/* Button title text for the Network Protection waitlist confirmation prompt */
+"network-protection.waitlist.get-started" = "Aloita";
+
+/* Subtitle for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.subtitle" = "Salaa verkkoliikenne selaimissasi ja sovelluksissasi.";
+
+/* Title for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.title" = "Täysi laitekattavuus";
+
+/* Subtitle for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.subtitle" = "Erillistä sovellusta ei tarvita. Muodosta yhteys yhdellä klikkauksella ja tarkista yhteyden tila yhdellä silmäyksellä.";
+
+/* Title for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.title" = "Nopea, luotettava ja helppokäyttöinen";
+
+/* Subtitle for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.subtitle" = "Emme kirjaa emmekä tallenna tietoja, jotka voivat yhdistää sinut toimintaasi verkossa.";
+
+/* Title for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.title" = "Tiukka ei lokeja -käytäntö";
+
+/* Subtitle for Network Protection invited screen */
+"network-protection.waitlist.invited.subtitle" = "Hanki lisäsuojaa verkossa VPN:llä, joka on suunniteltu nopeutta ja yksinkertaisuutta silmällä pitäen. Salaa verkkoyhteytesi koko laitteellasi ja piilota sijaintisi ja IP-osoitteesi sivustoilta, joilla käyt.";
+
+/* Title for Network Protection invited screen */
+"network-protection.waitlist.invited.title" = "Sinut on kutsuttu kokeilemaan\nNetwork Protectionia varhaiskäytössä!";
+
+/* First subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.1" = "Suojaa yhteytesi missä ja milloin vain DuckDuckGon VPN:n, Network Protectionin avulla.";
+
+/* Second subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.2" = "Tule odotuslistalle, niin ilmoitamme milloin on sinun vuorosi.";
+
+/* Title for Network Protection joined waitlist screen */
+"network-protection.waitlist.joined.title" = "Olet odotuslistalla!";
+
+/* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Uusia kutsuja lähetetään muutaman päivän välein pyyntöjen saapumisjärjestyksessä.";
+
+/* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "Ilmoitamme, kun sinun kutsusi on valmis.";
+
+/* Body text for the alert to enable notifications */
+"network-protection.waitlist.notification-alert.description" = "Lähetämme sinulle ilmoituksen, kun kutsusi kokeilla Network Protectionia on valmis.";
+
+/* Subtitle for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-description" = "Saat ilmoituksen, kun Network Protectionin ennakkokäyttö on valmis.";
+
+/* Title for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-title" = "Saat ilmoituksen heti, kun sinut kutsutaan";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.text" = "Avaa kutsusi";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.title" = "Network Protection on käytössä!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Kutsusi on valmis!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Olet odotuslistalla!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Liity yksityiselle odotuslistalle";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+"network.protection.invite.dialog.title" = "Sinut on kutsuttu kokeilemaan Network Protectionia";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
-
-/* Message explaining that netP is invite only */
-"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
 
 /* Message for the network protection invite success view */
 "network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
@@ -1453,7 +1561,7 @@
 /* Header title label text for the status view when netP is connected */
 "network.protection.status.header.title.on" = "Network Protection is On";
 
-/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+/* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 
 /* Connection details label shown in NetworkProtection's status view. */
@@ -1489,23 +1597,32 @@
 /* Title for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.title" = "VPN-ilmoitukset";
 
-/* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.footer" = "Palauta VPN-yhteys automaattisesti keskeytyksen jälkeen.";
+/* Footer text for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Anna paikallisen liikenteen ohittaa VPN ja muodosta yhteys lähiverkkosi laitteisiin, kuten tulostimeen.";
 
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.title" = "Aina käytössä";
+/* Title for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.title" = "Sulje lähiverkot pois";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Subtitle of countries item when there are multiple cities, example : */
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d kaupunkia";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+"network.protection.vpn.location.recommended.section.footer" = "Muodostaa yhteyden automaattisesti lähimpään löytämäämme palvelimeen.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
+"network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
+
+/* Title for the VPN Location screen. */
+"network.protection.vpn.location.title" = "VPN-sijainti";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "VPN-ilmoitukset";
@@ -1517,10 +1634,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Network Protection estää DNS-vuodot internetpalveluntarjoajallesi ohjaamalla DNS-pyynnöt VPN-verkon kautta omalle välittäjällemme.";
-
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.title" = "Suojattu DNS";
+"network.protection.vpn.secure.dns.setting.footer" = "VPN käyttää Secure DNS:ää pitääkseen verkkotoimintasi yksityisenä, jotta internetpalveluntarjoajasi ei näe, millä sivustoilla käyt.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-asetukset";
@@ -1671,6 +1785,15 @@
 
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "\"%@\" ei enää pääse käsiksi synkronoituihin tietoihisi.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Sync & Backup ei valitettavasti ole tällä hetkellä käytettävissä. Yritä myöhemmin uudelleen.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Sync & Backup ei valitettavasti ole käytettävissä tässä sovellusversiossa. Päivitä DuckDuckGo uusimpaan versioon jatkaaksesi.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "Sync & Backup on keskeytetty";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Sulje koti-välilehti";

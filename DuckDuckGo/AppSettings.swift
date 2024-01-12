@@ -19,6 +19,28 @@
 
 import Bookmarks
 
+enum AddressBarPosition: String, CaseIterable, CustomStringConvertible {
+    case top
+    case bottom
+
+    var isBottom: Bool {
+        self == .bottom
+    }
+    
+    var description: String {
+        return descriptionText
+    }
+
+    var descriptionText: String {
+        switch self {
+        case .top:
+            return UserText.addressBarPositionTop
+        case .bottom:
+            return UserText.addressBarPositionBottom
+        }
+    }
+}
+
 protocol AppSettings: AnyObject {
     var autocomplete: Bool { get set }
     var currentThemeName: ThemeName { get set }

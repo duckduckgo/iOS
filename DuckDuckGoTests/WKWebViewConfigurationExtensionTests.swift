@@ -28,6 +28,7 @@ class WKWebViewConfigurationExtensionTests: XCTestCase {
         XCTAssertFalse(webView.configuration.websiteDataStore.isPersistent)
     }
     
+    @MainActor
     func testWhenWebViewCreatedWithPersistenceThenDataStoreIsPersistent() {
         let configuration = WKWebViewConfiguration.persistent()
         let webView = WKWebView(frame: CGRect(), configuration: configuration)

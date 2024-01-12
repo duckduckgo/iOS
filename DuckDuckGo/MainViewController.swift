@@ -430,6 +430,7 @@ class MainViewController: UIViewController {
     @objc func onAddressBarPositionChanged() {
         viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
         refreshViewsBasedOnAddressBarPosition(appSettings.currentAddressBarPosition)
+        refreshWebViewContentInsets()
     }
 
     func refreshViewsBasedOnAddressBarPosition(_ position: AddressBarPosition) {
@@ -1346,15 +1347,24 @@ extension MainViewController: BrowserChromeDelegate {
     func refreshWebViewContentInsets() {
         guard let webView = currentTab?.webView else { return }
 
-        let top: CGFloat = viewCoordinator.statusBackground.frame.height
+        let top: CGFloat
         let bottom: CGFloat
-        if self.appSettings.currentAddressBarPosition == .top {
-            bottom = (viewCoordinator.toolbar.frame.height)
-                + view.safeAreaInsets.bottom + additionalSafeAreaInsets.bottom
+        if isToolbarHidden {
+            
+            top = 0.0
+            bottom = 0.0
+            
         } else {
-            bottom = ((viewCoordinator.toolbar.frame.height + viewCoordinator.navigationBarContainer.frame.height))
-                + view.safeAreaInsets.bottom + additionalSafeAreaInsets.bottom
+            top = viewCoordinator.statusBackground.frame.height
+            if self.appSettings.currentAddressBarPosition == .top {
+                bottom = (viewCoordinator.toolbar.frame.height)
+                    + view.safeAreaInsets.bottom + additionalSafeAreaInsets.bottom
+            } else {
+                bottom = ((viewCoordinator.toolbar.frame.height + viewCoordinator.navigationBarContainer.frame.height))
+                    + view.safeAreaInsets.bottom + additionalSafeAreaInsets.bottom
+            }
         }
+        
         currentTab?.webView.scrollView.contentInset = .init(top: top, left: 0, bottom: bottom, right: 0)
     }
     

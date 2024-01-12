@@ -19,12 +19,73 @@
 
 import Foundation
 import SwiftUI
+import DesignResourcesKit
 
 @available(iOS 15.0, *)
 struct SubscriptionSettingsView: View {
     
-    var body: some View {
-        Text("This is the subscription Management View")
-    }
+    @ObservedObject var viewModel: SubscriptionSettingsViewModel
+    @Environment(\.presentationMode) var presentationMode
     
+    var body: some View {
+            List {
+                Section(header: Text(viewModel.subscriptionDetails)
+                                    .lineLimit(nil)
+                                    .daxBodyRegular()
+                                    .fixedSize(horizontal: false, vertical: true)) {
+                    EmptyView()
+                    .frame(height: 0)
+                    .hidden()
+                }.textCase(nil)
+                Section(header: Text(UserText.privacyProManageDevices)) {
+                    
+                    SettingsCustomCell(content: {
+                        Text(UserText.privacyProAddDevice)
+                            .daxBodyRegular()
+                            .foregroundColor(Color.init(designSystemColor: .accent))
+                    },
+                                       action: {},
+                                       asLink: true)
+                    
+                    SettingsCustomCell(content: {
+                        Text(UserText.privacyProRemoveFromDevice)
+                            .daxBodyRegular()
+                            .foregroundColor(Color.init(designSystemColor: .accent))},
+                                       action: {
+                        viewModel.shouldDisplayRemovalNotice.toggle()
+                        print(viewModel.shouldDisplayRemovalNotice)
+                    },
+                                       asLink: true)
+                    
+                }
+                Section(header: Text(UserText.privacyProManagePlan)) {
+                    SettingsCustomCell(content: {
+                        Text(UserText.privacyProChangePlan)
+                            .daxBodyRegular()
+                    })
+                }
+                Section(header: Text(UserText.privacyProHelpAndSupport),
+                        footer: Text(UserText.privacyProFAQFooter)) {
+                    SettingsCustomCell(content: {
+                        Text(UserText.privacyProFAQ)
+                            .daxBodyRegular()
+                    })
+                }
+            }
+            .navigationTitle(UserText.settingsPProManageSubscription)
+            
+            // Remove subscription
+            .alert(isPresented: $viewModel.shouldDisplayRemovalNotice) {
+                Alert(
+                    title: Text(UserText.privacyProRemoveFromDeviceConfirmTitle),
+                    message: Text(UserText.privacyProRemoveFromDeviceConfirmText),
+                    primaryButton: .cancel(Text(UserText.privacyProRemoveSubscriptionCancel)) {
+                    },
+                    secondaryButton: .destructive(Text(UserText.privacyProRemoveSubscription)) {
+                        viewModel.removeSubscription()
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                )
+            }
+        }
 }

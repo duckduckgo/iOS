@@ -982,7 +982,6 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsPProITRSubTitle = NSLocalizedString("settings.ppro.ITR.subtitle", value: "If your identity is stolen, we'll help restore it", comment: "Identity theft restoration cell subtitle for privacy pro")
     
     
-    
     // Customize Section
     public static let settingsCustomizeSection = NSLocalizedString("settings.customize", value: "Customize", comment: "Settings title for the customize section")
     public static let settingsKeyboard = NSLocalizedString("settings.keyboard", value: "Keyboard", comment: "Settings screen cell for Keyboard")
@@ -1003,6 +1002,24 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsVersion = NSLocalizedString("settings.version", value: "Version", comment: "Settings cell for Version")
     public static let settingsFeedback = NSLocalizedString("settings.feedback", value: "Share Feedback", comment: "Settings cell for Feedback")
     
+    // Privacy Pro Subscriptions
+    static func privacyProSubscriptionInfo(expiration: String) -> String {
+        let localized = NSLocalizedString("ppro.subscription.active.caption", value: "Your Privacy Pro subscription renews on %@", comment: "Subscription Expiration Data")
+        return String(format: localized, expiration)
+    }
+    public static let privacyProManageDevices = NSLocalizedString("ppro.manage.device", value: "Manage Devices", comment: "Header for the device management section")
+    public static let privacyProAddDevice = NSLocalizedString("ppro.add.device", value: "Add to Another Device", comment: "Add to another device button")
+    public static let privacyProRemoveFromDevice = NSLocalizedString("ppro.remove.from.device", value: "Remove From This Device", comment: "Remove from this device button")
+    public static let privacyProManagePlan = NSLocalizedString("ppro.manage.plan", value: "Manage Plan", comment: "Manage Plan header")
+    public static let privacyProChangePlan = NSLocalizedString("ppro.change.plan", value: "Change Plan Or Billing", comment: "Change plan or billing title")
+    public static let privacyProHelpAndSupport = NSLocalizedString("ppro.help", value: "Help and support", comment: "Help and support Section header")
+    public static let privacyProFAQ = NSLocalizedString("ppro.faq", value: "Privacy Pro FAQ", comment: "FAQ Button")
+    public static let privacyProFAQFooter = NSLocalizedString("ppro.faq.description", value: "Visit our Privacy Pro help pages for answers to frequently asked questions", comment: "FAQ Description")
+    public static let privacyProRemoveFromDeviceConfirmTitle = NSLocalizedString("ppro.remove.from.device.title", value: "Remove From This Device?", comment: "Remove from device confirmation dialog title")
+    public static let privacyProRemoveFromDeviceConfirmText = NSLocalizedString("ppro.remove.from.device.text", value: "You will no longer be able to access your Privacy Pro subscription on this device. This will not cancel your subscription, and it will remain active on your other devices.", comment: "Remove from device confirmation dialog text")
+    public static let privacyProRemoveSubscription = NSLocalizedString("ppro.remove.subscription", value: "Remove Subscription", comment: "Remove subscription button text")
+    public static let privacyProRemoveSubscriptionCancel = NSLocalizedString("ppro.remove.subscription.cancel", value: "Cancel", comment: "Remove subscription cancel button text")
     
-
+    
+    
 }

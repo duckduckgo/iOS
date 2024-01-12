@@ -1684,6 +1684,45 @@ https://duckduckgo.com/mac";
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
 
+/* Add to another device button */
+"ppro.add.device" = "Add to Another Device";
+
+/* Change plan or billing title */
+"ppro.change.plan" = "Change Plan Or Billing";
+
+/* FAQ Button */
+"ppro.faq" = "Privacy Pro FAQ";
+
+/* FAQ Description */
+"ppro.faq.description" = "Visit our Privacy Pro help pages for answers to frequently asked questions";
+
+/* Help and support Section header */
+"ppro.help" = "Help and support";
+
+/* Header for the device management section */
+"ppro.manage.device" = "Manage Devices";
+
+/* Manage Plan header */
+"ppro.manage.plan" = "Manage Plan";
+
+/* Remove from this device button */
+"ppro.remove.from.device" = "Remove From This Device";
+
+/* Remove from device confirmation dialog text */
+"ppro.remove.from.device.text" = "You will no longer be able to access your Privacy Pro subscription on this device. This will not cancel your subscription, and it will remain active on your other devices.";
+
+/* Remove from device confirmation dialog title */
+"ppro.remove.from.device.title" = "Remove From This Device?";
+
+/* Remove subscription button text */
+"ppro.remove.subscription" = "Remove Subscription";
+
+/* Remove subscription cancel button text */
+"ppro.remove.subscription.cancel" = "Cancel";
+
+/* Subscription Expiration Data */
+"ppro.subscription.active.caption" = "Your Privacy Pro subscription renews on %@";
+
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Websites rely on cookies to keep you signed in. When you Fireproof a site, cookies won’t be erased and you’ll stay signed in, even after using the Fire Button. We still block third-party trackers found on Fireproof websites.";
 

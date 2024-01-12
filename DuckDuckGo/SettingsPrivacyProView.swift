@@ -69,7 +69,7 @@ struct SettingsPrivacyProView: View {
             SettingsCellView(label: UserText.settingsPProDBPTitle, subtitle: UserText.settingsPProDBPSubTitle)
             SettingsCellView(label: UserText.settingsPProITRTitle, subtitle: UserText.settingsPProITRSubTitle)
             
-            NavigationLink(destination: SubscriptionSettingsView()) {
+            NavigationLink(destination: SubscriptionSettingsView(viewModel: SubscriptionSettingsViewModel())) {
                 SettingsCustomCell(content: { manageSubscriptionView })
             }
         }

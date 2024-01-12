@@ -1705,6 +1705,15 @@ https://duckduckgo.com/mac";
 /* Manage Plan header */
 "ppro.manage.plan" = "Manage Plan";
 
+/* Progress view title when completing the purchase */
+"ppro.progress.view.completing.purchase" = "Completing purchase...";
+
+/* Progress view title when starting the purchase */
+"ppro.progress.view.purchasing.subscription" = "Purchase in progress...";
+
+/* Progress view title when restoring past subscription purchase */
+"ppro.progress.view.restoring.subscription" = "Restoring subscription...";
+
 /* Remove from this device button */
 "ppro.remove.from.device" = "Remove From This Device";
 

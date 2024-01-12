@@ -37,7 +37,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     // State variables
     var purchaseURL = URL.purchaseSubscription
     @Published var hasActiveSubscription = false
-    @Published var transactionInProgress = false
+    @Published var transactionStatus: SubscriptionPagesUseSubscriptionFeature.TransactionStatus = .idle
     @Published var shouldReloadWebview = false
         
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
@@ -51,10 +51,11 @@ final class SubscriptionFlowViewModel: ObservableObject {
     // Observe transaction status
     private func setupTransactionObserver() async {
         
-        subFeature.$transactionInProgress
+        subFeature.$transactionStatus
             .sink { [weak self] status in
                 guard let self = self else { return }
-                Task { await self.setTransactionInProgress(status) }
+                Task { await self.setTransactionStatus(status) }
+
             }
             .store(in: &cancellables)
         
@@ -67,8 +68,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
     
     @MainActor
-    private func setTransactionInProgress(_ inProgress: Bool) {
-        self.transactionInProgress = inProgress
+    private func setTransactionStatus(_ status: SubscriptionPagesUseSubscriptionFeature.TransactionStatus) {
+        self.transactionStatus = status
     }
     
     func initializeViewData() async {

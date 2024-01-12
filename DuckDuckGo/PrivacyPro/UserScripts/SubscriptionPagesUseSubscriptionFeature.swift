@@ -59,7 +59,11 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         static let year = "yearly"
     }
     
-    @Published var transactionInProgress = false
+    enum TransactionStatus {
+        case idle, purchasing, restoring, polling
+    }
+    
+    @Published var transactionStatus: TransactionStatus = .idle
     @Published var hasActiveSubscription = false
     @Published var purchaseError: AppStorePurchaseFlow.Error?
     
@@ -108,9 +112,9 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     // Manage transation in progress flag
     private func withTransactionInProgress<T>(_ work: () async throws -> T) async rethrows -> T {
-        transactionInProgress = true
+        transactionStatus = transactionStatus
         defer {
-            transactionInProgress = false
+            transactionStatus = .idle
         }
         return try await work()
     }
@@ -129,6 +133,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         
         await withTransactionInProgress {
             
+            transactionStatus = .purchasing
             resetSubscriptionFlow()
                         
             switch await AppStorePurchaseFlow.subscriptionOptions() {
@@ -146,6 +151,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         
         await withTransactionInProgress {
             
+            transactionStatus = .purchasing
             resetSubscriptionFlow()
             
             struct SubscriptionSelection: Decodable {
@@ -179,6 +185,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
                     return nil
                 }
                 
+                transactionStatus = .polling
                 switch await AppStorePurchaseFlow.completeSubscriptionPurchase() {
                 case .success(let purchaseUpdate):
                     await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
@@ -262,6 +269,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func restoreAccountFromAppStorePurchase() async -> Bool {
         
         await withTransactionInProgress {
+            transactionStatus = .restoring
             switch await AppStoreRestoreFlow.restoreAccountFromPastPurchase() {
             case .success(let update):
                 return true

@@ -248,7 +248,7 @@ extension SettingsViewModel {
     private func getPrivacyProState() -> SettingsState.PrivacyPro {
         var enabled = false
         var canPurchase = false
-        var hasActiveSubscription = Self.cachedHasActiveSubscription
+        let hasActiveSubscription = Self.cachedHasActiveSubscription
         #if SUBSCRIPTION
             enabled = featureFlagger.isFeatureOn(.privacyPro)
             canPurchase = SubscriptionPurchaseEnvironment.canPurchase

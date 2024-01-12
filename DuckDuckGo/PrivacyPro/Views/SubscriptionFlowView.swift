@@ -26,6 +26,19 @@ struct SubscriptionFlowView: View {
         
     @ObservedObject var viewModel: SubscriptionFlowViewModel
     
+    private func getTransactionStatus() -> String {
+        switch viewModel.transactionStatus {
+        case .polling:
+            return UserText.privacyProCompletingPurchaseTitle
+        case .purchasing:
+            return UserText.privacyProPurchasingSubscriptionTitle
+        case .restoring:
+            return UserText.privacyProPestoringSubscriptionTitle
+        case .idle:
+            return ""
+        }
+    }
+    
     var body: some View {
         ZStack {
             AsyncHeadlessWebView(url: $viewModel.purchaseURL,
@@ -34,8 +47,8 @@ struct SubscriptionFlowView: View {
                                  shouldReload: $viewModel.shouldReloadWebview).background()
 
             // Overlay that appears when transaction is in progress
-            if viewModel.transactionInProgress {
-                PurchaseInProgressView()
+            if viewModel.transactionStatus != .idle {
+                PurchaseInProgressView(status: getTransactionStatus())
             }
         }
         .onChange(of: viewModel.shouldReloadWebview) { shouldReload in
@@ -48,7 +61,7 @@ struct SubscriptionFlowView: View {
             Task { await viewModel.initializeViewData() }
         })
         .navigationTitle(viewModel.viewTitle)
-        .navigationBarBackButtonHidden(viewModel.transactionInProgress)
+        .navigationBarBackButtonHidden(viewModel.transactionStatus != .idle)
         
         // Active subscription found Alert
         .alert(isPresented: $viewModel.hasActiveSubscription) {
@@ -63,7 +76,7 @@ struct SubscriptionFlowView: View {
                 }
             )
         }
-        .navigationBarBackButtonHidden(viewModel.transactionInProgress)
+        .navigationBarBackButtonHidden(viewModel.transactionStatus != .idle)
     }
 }
 #endif

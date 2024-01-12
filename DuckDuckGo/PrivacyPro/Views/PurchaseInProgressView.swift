@@ -21,25 +21,42 @@ import SwiftUI
 struct PurchaseInProgressView: View {
     @Environment(\.colorScheme) var colorScheme
     
+    var status: String
+    
     // TODO: Update colors and design
     var body: some View {
         ZStack {
             Color(colorScheme == .dark ? .black : .white)
-                .opacity(0.0)
+                .opacity(0.6)
                 .edgesIgnoringSafeArea(.all)
                 .disabled(true)
                         
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
                     .fill(colorScheme == .dark ? .black : .white)
-                    .frame(width: 120, height: 120)
+                    .frame(width: 220, height: 120)
                     .shadow(color: colorScheme == .dark ? .black : .gray30, radius: 10)
                 
-                SwiftUI.ProgressView()
-                    .scaleEffect(2)
-                    .progressViewStyle(CircularProgressViewStyle(tint: Color(colorScheme == .dark ? .gray30 : .gray70)))
+                VStack {
+                    SwiftUI.ProgressView()
+                        .scaleEffect(2)
+                        .progressViewStyle(CircularProgressViewStyle(tint: Color(colorScheme == .dark ? .gray30 : .gray70)))
+                        .padding(.bottom, 18)
+                        .padding(.top, 10)
+                    Text(status).daxSubheadRegular()
+                        .frame(width: 200, height: 20)
+                }
             }
                 
         }
+    }
+}
+
+struct PurchaseInProgressView_Previews: PreviewProvider {
+    static var previews: some View {
+        PurchaseInProgressView(status: "Completing Purchase...")
+            .preferredColorScheme(.light) // Preview in light mode
+            .previewLayout(.sizeThatFits)
+            .padding()
     }
 }

@@ -1002,6 +1002,11 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsFeedback = NSLocalizedString("settings.feedback", value: "Share Feedback", comment: "Settings cell for Feedback")
     
     // Privacy Pro Subscriptions
+    
+    static let privacyProPurchasingSubscriptionTitle = NSLocalizedString("ppro.progress.view.purchasing.subscription", value: "Purchase in progress...", comment: "Progress view title when starting the purchase")
+        static let privacyProPestoringSubscriptionTitle = NSLocalizedString("ppro.progress.view.restoring.subscription", value: "Restoring subscription...", comment: "Progress view title when restoring past subscription purchase")
+        static let privacyProCompletingPurchaseTitle = NSLocalizedString("ppro.progress.view.completing.purchase", value: "Completing purchase...", comment: "Progress view title when completing the purchase")
+    
     static func privacyProSubscriptionInfo(expiration: String) -> String {
         let localized = NSLocalizedString("ppro.subscription.active.caption", value: "Your Privacy Pro subscription renews on %@", comment: "Subscription Expiration Data")
         return String(format: localized, expiration)

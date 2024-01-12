@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+// swiftlint:disable file_length
+
 import Foundation
 import WebKit
 import BrowserServicesKit

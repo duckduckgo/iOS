@@ -1364,7 +1364,7 @@ extension MainViewController: BrowserChromeDelegate {
                 + keyboardHeight
         }
         
-        currentTab?.webView.scrollView.contentInset = .init(top: top, left: 0, bottom: bottom, right: 0)
+        webView.scrollView.contentInset = .init(top: top, left: 0, bottom: bottom, right: 0)
     }
     
     func setNavigationBarHidden(_ hidden: Bool) {

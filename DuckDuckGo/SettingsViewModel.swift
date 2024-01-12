@@ -16,11 +16,13 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
+
 // swiftlint:disable file_length
 import Core
 import BrowserServicesKit
 import Persistence
 import SwiftUI
+import SyncUI
 import Common
 import Combine
 
@@ -86,7 +88,16 @@ final class SettingsViewModel: ObservableObject {
         return false
 #endif
     }
-    
+
+    var syncCellTitle: String {
+        let syncService = legacyViewProvider.syncService
+        let isDataSyncingDisabled = !syncService.featureFlags.contains(.dataSyncing) && syncService.authState == .active
+        if SyncBookmarksAdapter.isSyncBookmarksPaused || SyncCredentialsAdapter.isSyncCredentialsPaused || isDataSyncingDisabled {
+            return "⚠️ \(SyncUI.UserText.syncTitle)"
+        }
+        return SyncUI.UserText.syncTitle
+    }
+
     // MARK: Bindings
     var themeBinding: Binding<ThemeName> {
         Binding<ThemeName>(
@@ -217,7 +228,7 @@ extension SettingsViewModel {
             activeWebsiteAccount: nil,
             version: versionProvider.versionAndBuildNumber,
             debugModeEnabled: featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild,
-            syncEnabled: featureFlagger.isFeatureOn(.sync),
+            syncEnabled: legacyViewProvider.syncService.featureFlags.contains(.userInterface),
             voiceSearchEnabled: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
             speechRecognitionEnabled: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
             loginsEnabled: featureFlagger.isFeatureOn(.autofillAccessCredentialManagement),

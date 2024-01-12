@@ -157,7 +157,7 @@ final class BrowsingMenuViewController: UIViewController {
 
         recalculatePreferredWidthConstraint()
         recalculateHeightConstraints()
-        parent?.view.map(recalculateMenuConstraints(with:))
+        guideView.map(recalculateMenuConstraints(with:))
 
         if tableView.bounds.height < tableView.contentSize.height + tableView.contentInset.top + tableView.contentInset.bottom {
             tableView.isScrollEnabled = true

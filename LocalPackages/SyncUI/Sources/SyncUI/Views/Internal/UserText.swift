@@ -21,10 +21,10 @@ import Foundation
 
 // swiftlint:disable line_length
 // Localise these later, when feature is closer to exernal release
-struct UserText {
+public struct UserText {
 
     // Sync Title
-    static let syncTitle = NSLocalizedString("sync.title", bundle: Bundle.module, value: "Sync & Backup", comment: "Sync & Backup Title")
+    public static let syncTitle = NSLocalizedString("sync.title", bundle: Bundle.module, value: "Sync & Backup", comment: "Sync & Backup Title")
     static let syncRollOutBannerDescription = NSLocalizedString("preferences.sync.rollout-banner.description", bundle: Bundle.module, value: "Sync & Backup is rolling out gradually and may not be available yet within DuckDuckGo on your other devices.", comment: "Description of rollout banner")
 
     // Sync Set Up
@@ -114,7 +114,6 @@ struct UserText {
         let localized = NSLocalizedString("manually.enter.code.instruction.attributed", bundle: Bundle.module, value: "Go to %@ and select %@ in the DuckDuckGo App on another synced device and paste the code here to sync this device.", comment: "Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted")
         return String(format: localized, syncMenuPath, menuItem)
     }
-    static let manuallyEnterCodeInstruction = NSLocalizedString("manually.enter.code.instruction", bundle: Bundle.module, value: "Go to Settings > Sync & Backup > Sync With Another Device and select Sync Menu Path in the DuckDuckGo App on another synced device and paste the code here to sync this device.", comment: "Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted")
     static let syncMenuPath = NSLocalizedString("sync.menu.path", bundle: Bundle.module, value: "Settings > Sync & Backup > Sync With Another Device", comment: "Sync Menu Path")
     static let viewTextCodeMenuItem = NSLocalizedString("view.text.code.menu.item", bundle: Bundle.module, value: "View Text Code", comment: "View Text Code menu item")
 

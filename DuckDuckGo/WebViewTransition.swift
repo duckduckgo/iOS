@@ -73,16 +73,17 @@ class FromWebViewTransition: WebViewTransition {
         tabSwitcherViewController.view.frame = transitionContext.finalFrame(for: tabSwitcherViewController)
         tabSwitcherViewController.prepareForPresentation()
         
-        guard let webView = mainViewController.currentTab!.webView,
-            let tab = mainViewController.currentTab?.tabModel,
-        let rowIndex = tabSwitcherViewController.tabsModel.indexOf(tab: tab),
-        let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: IndexPath(row: rowIndex, section: 0)),
-        let preview = tabSwitcherViewController.previewsSource.preview(for: tab)
-            else {
-                tabSwitcherViewController.view.alpha = 1
-                return
+        guard let webView = mainViewController.currentTab?.webView,
+              let tab = mainViewController.tabManager.model.currentTab,
+              let rowIndex = tabSwitcherViewController.tabsModel.indexOf(tab: tab),
+              let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: IndexPath(row: rowIndex, section: 0)),
+              let preview = tabSwitcherViewController.previewsSource.preview(for: tab)
+        else {
+            tabSwitcherViewController.view.alpha = 1
+            transitionContext.completeTransition(true)
+            return
         }
-        
+
         let theme = ThemeManager.shared.currentTheme
         let webViewFrame = webView.convert(webView.bounds, to: nil)
         
@@ -126,12 +127,13 @@ class ToWebViewTransition: WebViewTransition {
         prepareSubviews(using: transitionContext)
         
         guard let mainViewController = transitionContext.viewController(forKey: .to) as? MainViewController,
-            let webView = mainViewController.currentTab!.webView,
-            let tab = mainViewController.currentTab?.tabModel,
-            let rowIndex = tabSwitcherViewController.tabsModel.indexOf(tab: tab),
-            let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: IndexPath(row: rowIndex, section: 0))
-            else {
-                return
+              let webView = mainViewController.currentTab?.webView,
+              let tab = mainViewController.currentTab?.tabModel,
+              let rowIndex = tabSwitcherViewController.tabsModel.indexOf(tab: tab),
+              let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: IndexPath(row: rowIndex, section: 0))
+        else {
+            transitionContext.completeTransition(true)
+            return
         }
                 
         let theme = ThemeManager.shared.currentTheme

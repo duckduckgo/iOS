@@ -124,7 +124,7 @@ class MainViewController: UIViewController {
 
     lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
-        return tabManager?.current
+        return tabManager?.current(createIfNeeded: false)
     }
 
     var searchBarRect: CGRect {
@@ -634,7 +634,12 @@ class MainViewController: UIViewController {
     }
 
     private func loadInitialView() {
-        if let tab = currentTab, tab.link != nil {
+        // if let tab = currentTab, tab.link != nil {
+        // if let tab = tabManager.current(create: true), tab.link != nil {
+        if tabManager.model.currentTab?.link != nil {
+            guard let tab = tabManager.current(createIfNeeded: true) else {
+                fatalError("Unable to create tab")
+            }
             addToView(tab: tab)
             refreshControls()
         } else {
@@ -670,17 +675,20 @@ class MainViewController: UIViewController {
         removeHomeScreen()
         AppDependencyProvider.shared.homePageConfiguration.refresh()
 
-        let tabModel = currentTab?.tabModel
+        // Access the tab model directly as we don't want to create a new tab controller here
+        guard let tabModel = tabManager.model.currentTab else {
+            fatalError("No tab model")
+        }
 
 #if APP_TRACKING_PROTECTION
-        let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel,
                                                                favoritesViewModel: favoritesViewModel,
                                                                appSettings: appSettings,
                                                                syncService: syncService,
                                                                syncDataProviders: syncDataProviders,
                                                                appTPDatabase: appTrackingProtectionDatabase)
 #else
-        let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel,
                                                                favoritesViewModel: favoritesViewModel,
                                                                appSettings: appSettings,
                                                                syncService: syncService,
@@ -802,7 +810,7 @@ class MainViewController: UIViewController {
 
     func loadUrl(_ url: URL) {
         prepareTabForRequest {
-            currentTab?.load(url: url)
+            self.currentTab?.load(url: url)
         }
     }
 
@@ -821,8 +829,19 @@ class MainViewController: UIViewController {
     private func prepareTabForRequest(request: () -> Void) {
         viewCoordinator.navigationBarContainer.alpha = 1
         allowContentUnderflow = false
-        request()
+
+        if currentTab == nil {
+            if tabManager.current(createIfNeeded: true) == nil {
+                fatalError("failed to create tab")
+            }
+
+            // Likely this hasn't happened yet so the publishers won't be loaded and will block the webview from loading
+            _ = ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+        }
+
         guard let tab = currentTab else { fatalError("no tab") }
+        
+        request()
         dismissOmniBar()
         select(tab: tab)
     }
@@ -1722,13 +1741,13 @@ extension MainViewController: TabDelegate {
             showBars()
             newTabAnimation {
                 self.loadUrlInNewTab(url, inheritedAttribution: attribution)
-                self.tabManager.current?.openedByPage = true
-                self.tabManager.current?.openingTab = tab
+                self.currentTab?.openedByPage = true
+                self.currentTab?.openingTab = tab
             }
             tabSwitcherButton.incrementAnimated()
         } else {
             loadUrlInNewTab(url, inheritedAttribution: attribution)
-            self.tabManager.current?.openingTab = tab
+            self.currentTab?.openingTab = tab
         }
 
     }
@@ -1808,7 +1827,7 @@ extension MainViewController: TabDelegate {
     func tab(_ tab: TabViewController,
              didRequestPresentingTrackerAnimation privacyInfo: PrivacyInfo,
              isCollapsing: Bool) {
-        guard tabManager.current === tab else { return }
+        guard currentTab === tab else { return }
         viewCoordinator.omniBar?.startTrackersAnimation(privacyInfo, forDaxDialog: !isCollapsing)
     }
     
@@ -1852,7 +1871,7 @@ extension MainViewController: TabDelegate {
     }
 
     func tabCheckIfItsBeingCurrentlyPresented(_ tab: TabViewController) -> Bool {
-        return tabManager.current === tab
+        return currentTab === tab
     }
 }
 
@@ -1922,17 +1941,19 @@ extension MainViewController: TabSwitcherButtonDelegate {
     }
 
     func showTabSwitcher() {
-        if let currentTab = currentTab {
-            currentTab.preparePreview(completion: { image in
-                if let image = image {
-                    self.previewsSource.update(preview: image,
-                                               forTab: currentTab.tabModel)
-                    
-                }
-                ViewHighlighter.hideAll()
-                self.segueToTabSwitcher()
-            })
+        guard let currentTab = currentTab ?? tabManager?.current(createIfNeeded: true) else {
+            fatalError("Unable to get current tab")
         }
+        
+        currentTab.preparePreview(completion: { image in
+            if let image = image {
+                self.previewsSource.update(preview: image,
+                                           forTab: currentTab.tabModel)
+
+            }
+            ViewHighlighter.hideAll()
+            self.segueToTabSwitcher()
+        })
     }
 }
 
@@ -1976,9 +1997,11 @@ extension MainViewController: AutoClearWorker {
     }
 
     func forgetTabs() {
-        DaxDialogs.shared.resumeRegularFlow()
         findInPageView?.done()
         tabManager.removeAll()
+    }
+
+    func refreshUIAfterClear() {
         showBars()
         attachHomeScreen()
         tabsBarController?.refresh(tabsModel: tabManager.model)
@@ -1986,21 +2009,22 @@ extension MainViewController: AutoClearWorker {
     }
     
     func forgetData() {
-        findInPageView?.done()
-        
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
         let pixel = TimedPixel(.forgetAllDataCleared)
         WebCacheManager.shared.clear(tabCountInfo: tabCountInfo) {
             pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
-        }
-        
-        AutoconsentManagement.shared.clearCache()
-        DaxDialogs.shared.clearHeldURLData()
 
-        if syncService.authState == .inactive {
-            bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
+            AutoconsentManagement.shared.clearCache()
+            DaxDialogs.shared.clearHeldURLData()
+
+            if self.syncService.authState == .inactive {
+                self.bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
+            }
+
+            self.refreshUIAfterClear()
         }
+
     }
     
     func stopAllOngoingDownloads() {
@@ -2017,11 +2041,10 @@ extension MainViewController: AutoClearWorker {
         
         fireButtonAnimator.animate {
             self.tabManager.prepareCurrentTabForDataClearing()
-            
             self.stopAllOngoingDownloads()
+            self.forgetTabs()
             self.forgetData()
             DaxDialogs.shared.resumeRegularFlow()
-            self.forgetTabs()
         } onTransitionCompleted: {
             ActionMessageView.present(message: UserText.actionForgetAllDone,
                                       presentationLocation: .withBottomBar(andAddressBarBottom: self.appSettings.currentAddressBarPosition.isBottom))

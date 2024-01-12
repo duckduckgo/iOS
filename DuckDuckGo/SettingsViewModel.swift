@@ -23,6 +23,7 @@ import Persistence
 import SwiftUI
 import Common
 import Combine
+import SyncUI
 
 #if APP_TRACKING_PROTECTION
 import NetworkExtension
@@ -52,7 +53,7 @@ final class SettingsViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     // Defaults
-    @UserDefaultsWrapper(key: .privacyProhasActiveSubscription, defaultValue: false)
+    @UserDefaultsWrapper(key: .privacyProHasActiveSubscription, defaultValue: false)
     static private var cachedHasActiveSubscription: Bool
 
     // Closures to interact with legacy view controllers throught the container
@@ -268,7 +269,7 @@ extension SettingsViewModel {
                                          || isDataSyncingDisabled {
                                          return "⚠️ \(UserText.settingsSync)"
                                      }
-                                     return UserText.settingsSync
+                                     return SyncUI.UserText.syncTitle
                                  }())
     }
         

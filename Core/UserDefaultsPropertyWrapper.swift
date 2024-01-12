@@ -120,7 +120,7 @@ public struct UserDefaultsWrapper<T> {
         
         case privacyConfigCustomURL = "com.duckduckgo.ios.privacyConfigCustomURL"
         
-        case privacyProhasActiveSubscription = "com.duckduckgo.ios.privacyPro.hasActiveSubscription"
+        case privacyProHasActiveSubscription = "com.duckduckgo.ios.privacyPro.hasActiveSubscription"
     }
 
     private let key: Key

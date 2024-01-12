@@ -4,7 +4,7 @@ appId: com.duckduckgo.mobile.ios
 - scroll
 - scroll
 - scroll
-- assertVisible: Debug Menu
-- tapOn: Debug Menu
+- assertVisible: All debug options
+- tapOn: All debug options
 - tapOn: Internal User State
 - tapOn: Settings

@@ -1775,7 +1775,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "siteFeedback.urlPlaceholder" = "Which website is broken?";
 
 /* Message confirming that recovery code was copied to clipboard */
-"sync.code.copied" = "Recovery Code copied";
+"sync.code.copied" = "Recovery code copied to clipboard";
 
 /* Caption for a button to delete Sync server data */
 "sync.delete.all.confirm.action" = "Delete Server Data";

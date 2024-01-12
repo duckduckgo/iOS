@@ -145,6 +145,9 @@
 /* Title for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-title" = "Sinkronizacija lozinki je pauzirana";
 
+/* Title for sync error alert */
+"alert.sync-error" = "Pogreška Sinkronizacije i sigurnosnog kopiranja";
+
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Saznajte više";
 
@@ -165,6 +168,30 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Spremi u Omiljeno";
+
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "Nije moguće izraditi PDF za oporavak.";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "Nije moguće izbrisati podatke na poslužitelju.";
+
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "Za uparivanje tih uređaja, isključi Sinkronizaciju i sigurnosno kopiranje na jednom uređaju, a zatim dodirni \"Sinkroniziraj s drugim uređajem\" na drugom uređaju.";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "Nije moguće ukloniti ovaj uređaj iz Sinkronizacije i sigurnosnog kopiranja.";
+
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Nije moguće spojiti se na poslužitelj.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Nije moguće sinkronizirati s drugim uređajem.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "Nije moguće isključiti Sinkronizaciju i sigurnosno kopiranje.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "Nije moguće ažurirati naziv uređaja.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Otključaj DuckDuckGo.";
@@ -871,9 +898,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet može biti pomalo neugodan.\n\nNe brini! Privatno pretraživanje i pregledavanje lakše je nego što misliš.";
 
-/* No comment provided by engineer. */
-"Debug" = "Debug";
-
 /* GPC Setting state */
 "donotsell.disabled" = "Onemogućeno";
 
@@ -1348,9 +1372,6 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Dobro došao/la u\nDuckDuckGo!";
 
-/* No comment provided by engineer. */
-"LOREM IPSUM" = "LOREM IPSUM";
-
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "Aplikacija DuckDuckGo za Mac pruža ti potrebnu brzinu i značajke pretraživanja kakve očekuješ, a isporučuje se s našim najboljim alatima za privatnost u svojoj klasi - privacy essentials.";
 
@@ -1418,85 +1439,82 @@
 "network-protection.privacy-policy.title" = "Pravila o zaštiti privatnosti";
 
 /* Title text for the Network Protection terms and conditions accept button */
-"network-protection.waitlist.agree-and-continue" = "Agree and Continue";
+"network-protection.waitlist.agree-and-continue" = "Prihvati i nastavi";
 
 /* Availability disclaimer for Network Protection join waitlist screen */
-"network-protection.waitlist.availability-disclaimer" = "Network Protection is free to use during early access.";
+"network-protection.waitlist.availability-disclaimer" = "Zaštita je besplatna za korištenje tijekom ranog pristupa.";
 
 /* Agree and Continue button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.agree-and-continue" = "Agree and Continue";
+"network-protection.waitlist.button.agree-and-continue" = "Prihvati i nastavi";
 
 /* Enable Notifications button for Network Protection joined waitlist screen */
-"network-protection.waitlist.button.enable-notifications" = "Enable Notifications";
+"network-protection.waitlist.button.enable-notifications" = "Omogući obavijesti";
 
 /* Button title for users who already have an invite code */
 "network-protection.waitlist.button.existing-invite-code" = "Imam pozivnu šifru";
 
 /* Join Waitlist button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.join-waitlist" = "Join the Waitlist";
+"network-protection.waitlist.button.join-waitlist" = "Pridruži se listi čekanja";
 
 /* Button title text for the Network Protection waitlist confirmation prompt */
 "network-protection.waitlist.get-started" = "Započnite";
 
 /* Subtitle for section 1 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-1.subtitle" = "Encrypt online traffic across your browsers and apps.";
+"network-protection.waitlist.invited.section-1.subtitle" = "Šifriraj mrežni promet u svojim preglednicima i aplikacijama.";
 
 /* Title for section 1 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-1.title" = "Full-device coverage";
+"network-protection.waitlist.invited.section-1.title" = "Pokrivenost cijelog uređaja";
 
 /* Subtitle for section 2 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-2.subtitle" = "No need for a separate app. Connect in one click and see your connection status at a glance.";
+"network-protection.waitlist.invited.section-2.subtitle" = "Nema potrebe za zasebnom aplikacijom. Poveži se jednim klikom i odmah pogledaj status veze.";
 
 /* Title for section 2 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-2.title" = "Fast, reliable, and easy to use";
+"network-protection.waitlist.invited.section-2.title" = "Brzo, pouzdano i jednostavno za korištenje";
 
 /* Subtitle for section 3 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-3.subtitle" = "We do not log or save any data that can connect you to your online activity.";
+"network-protection.waitlist.invited.section-3.subtitle" = "Ne bilježimo niti spremamo nikakve podatke koji bi te mogli povezati s tvojim mrežnim aktivnostima.";
 
 /* Title for section 3 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-3.title" = "Strict no-logging policy";
+"network-protection.waitlist.invited.section-3.title" = "Stroga politika zabrane zapisivanja";
 
 /* Subtitle for Network Protection invited screen */
-"network-protection.waitlist.invited.subtitle" = "Get an extra layer of protection online with the VPN built for speed and simplicity. Encrypt your internet connection across your entire device and hide your location and IP address from sites you visit.";
+"network-protection.waitlist.invited.subtitle" = "Za tebe smo pripremili dodatni sloj mrežne zaštite, s VPN-om dizajniranim za brzinu i jednostavnost. Šifriraj svoju internetsku vezu na cijelom uređaju i sakrij svoju lokaciju i IP adresu od stranica koje posjećuješ.";
 
 /* Title for Network Protection invited screen */
-"network-protection.waitlist.invited.title" = "You’re invited to try\nNetwork Protection early access!";
+"network-protection.waitlist.invited.title" = "Pozivamo te da isprobaš rani pristup\nNetwork Protectionu!";
 
 /* First subtitle for Network Protection join waitlist screen */
-"network-protection.waitlist.join.subtitle.1" = "Secure your connection anytime, anywhere with Network Protection, the VPN from DuckDuckGo.";
+"network-protection.waitlist.join.subtitle.1" = "Osiguraj svoju vezu bilo kada i bilo gdje uz Network Protection, VPN tvrtke DuckDuckGo.";
 
 /* Second subtitle for Network Protection join waitlist screen */
-"network-protection.waitlist.join.subtitle.2" = "Join the waitlist, and we’ll notify you when it’s your turn.";
-
-/* Title for Network Protection join waitlist screen */
-"network-protection.waitlist.join.title" = "Network Protection Early Access";
+"network-protection.waitlist.join.subtitle.2" = "Pridruži se listi čekanja, a mi ćemo te obavijestiti kada dođeš na red.";
 
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "Na popisu ste!";
 
 /* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
-"network-protection.waitlist.joined.with-notifications.subtitle.1" = "New invites are sent every few days, on a first come, first served basis.";
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Nove pozivnice šalju se svakih nekoliko dana, po principu tko prvi dođe, prvi je poslužen.";
 
 /* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
-"network-protection.waitlist.joined.with-notifications.subtitle.2" = "We’ll notify you when your invite is ready.";
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "Obavijestit ćemo te kada tvoja pozivnica bude spremna.";
 
 /* Body text for the alert to enable notifications */
-"network-protection.waitlist.notification-alert.description" = "We’ll send you a notification when your invite to test Network Protection is ready.";
+"network-protection.waitlist.notification-alert.description" = "Poslat ćemo ti obavijest kada tvoja pozivnica za testiranje Network Protectiona bude spremna.";
 
 /* Subtitle for the alert to confirm enabling notifications */
-"network-protection.waitlist.notification-prompt-description" = "Get a notification when your copy of Network Protection early access is ready.";
+"network-protection.waitlist.notification-prompt-description" = "Primi obavijest kada tvoj primjerak Network Protectiona uz rani pristup bude spreman.";
 
 /* Title for the alert to confirm enabling notifications */
-"network-protection.waitlist.notification-prompt-title" = "Know the instant you're invited";
+"network-protection.waitlist.notification-prompt-title" = "Primi obavijest čim je tvoj poziv spreman";
 
 /* Title for Network Protection waitlist notification */
 "network-protection.waitlist.notification.text" = "Otvori svoju pozivnicu";
 
 /* Title for Network Protection waitlist notification */
-"network-protection.waitlist.notification.title" = "Network Protection is ready!";
+"network-protection.waitlist.notification.title" = "Network Protection je spreman!";
 
 /* Subtitle text for the Network Protection settings row */
-"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Your invite is ready!";
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Tvoja pozivnica je spremna!";
 
 /* Subtitle text for the Network Protection settings row */
 "network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Na popisu ste!";
@@ -1508,7 +1526,7 @@
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You’re invited to try Network Protection";
+"network.protection.invite.dialog.title" = "Imaš poziv za isprobavanje Network Protectiona";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
@@ -1580,22 +1598,22 @@
 "network.protection.vpn.alerts.toggle.title" = "VPN upozorenja";
 
 /* Footer text for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.footer" = "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.";
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Neka lokalni promet zaobiđe VPN i poveže se s uređajima na tvojoj lokalnoj mreži, poput pisača.";
 
 /* Title for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.title" = "Exclude Local Networks";
+"network.protection.vpn.exclude.local.networks.setting.title" = "Izostavi lokalne mreže";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
 
 /* Subtitle of countries item when there are multiple cities, example : */
-"network.protection.vpn.location.country.item.formatted.cities.count" = "%d cities";
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d gradova";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find.";
+"network.protection.vpn.location.recommended.section.footer" = "Automatski se poveži s najbližim poslužiteljem koji možemo pronaći.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
@@ -1604,7 +1622,7 @@
 "network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
 
 /* Title for the VPN Location screen. */
-"network.protection.vpn.location.title" = "VPN Location";
+"network.protection.vpn.location.title" = "VPN lokacija";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "VPN obavijesti";
@@ -1616,7 +1634,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.";
+"network.protection.vpn.secure.dns.setting.footer" = "Naš VPN koristi Secure DNS kako bi tvoje mrežne aktivnosti bile privatne, tako da tvoj davatelj internetskih usluga ne može vidjeti koje web stranice posjećuješ.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN postavke";
@@ -1744,110 +1762,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Omiljeno";
 
-/* Settings cell for About DDG */
-"settings.about.ddg" = "O DuckDuckGou";
-
-/* Settings section title for About DuckDuckGo */
-"settings.about.section" = "O nama";
-
 /* about page */
 "settings.about.text" = "DuckDuckGo neovisna je tvrtka za privatnost na internetu osnovana 2008. godine. Namijenjena je svakome tko je umoran od toga da ga prate na internetu i želi jednostavno rješenje za to. Mi smo dokaz da je prava zaštita privatnosti na internetu moguća bez kompromisa.\n\nPreglednik DuckDuckGo dolazi sa značajkama koje očekujete od preglednika, kao što su oznake, kartice, lozinke i još mnogo toga, plus više od [desetak moćnih zaštita privatnosti](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) nije ponuđeno u većini popularnih preglednika prema zadanim postavkama. Ovaj jedinstveno sveobuhvatan skup zaštita privatnosti pomaže u zaštiti tvojih mrežnih aktivnosti, od pretraživanja do pregledavanja, slanja e-pošte i još mnogo toga.\n\nNaša zaštita privatnosti funkcionira bez potrebe da znamo bilo što o tehničkim detaljima ili da se bavimo kompliciranim postavkama. Sve što trebaš učiniti jest prebaciti svoj preglednik na DuckDuckGo na svim svojim uređajima i prema zadanim postavkama dobivaš našu zaštitu privatnosti.\n\nAli ako *želite* zaviriti \"ispod haube\", više o tome kako DuckDuckGo zaštita privatnosti funkcionira možeš pronaći na našim [stranicama pomoći](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
-
-/* Settings screen cell text for adding the app to the dock */
-"settings.add.to.dock" = "Dodajte aplikaciju na Dock";
-
-/* Settings screen cell text for add widget to the home screen */
-"settings.add.widget" = "Dodajte widget na početni zaslon";
-
-/* Settings screen cell text for addess bar position */
-"settings.address.bar" = "Položaj adresne trake";
-
-/* Settings screen appearance section title */
-"settings.appearance" = "Izgled";
-
-/* Settings screen cell for opening links in associated apps */
-"settings.associated.apps" = "Otvori veze u povezanim aplikacijama";
-
-/* Description for associated apps description */
-"settings.associated.apps.description" = "Onemogući da spriječiš automatsko otvaranje poveznica u drugim instaliranim aplikacijama.";
-
-/* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Prikaži prijedloge za automatsko ispunjavanje";
-
-/* Settings screen cell text for Application Lock */
-"settings.autolock" = "Zaključavanje aplikacije";
-
-/* Section footer Autolock description */
-"settings.autolock.description" = "Ako su postavljeni Touch ID, Face ID ili pristupni kôd sustava, od tebe će se tražiti da otključaš aplikaciju prilikom otvaranja.";
-
-/* Settings screen cell text for Automatically Clearing Data */
-"settings.clear.data" = "Automatsko brisanje podataka";
-
-/* Settings screen cell text for Cookie popups */
-"settings.cookie.popups" = "Upravljanje skočnim prozorima kolačića";
-
-/* Settings title for the customize section */
-"settings.customize" = "Prilagodba";
-
-/* Settings screen cell text for setting the app as default browser */
-"settings.default.browser" = "Postavi kao zadani preglednik";
-
-/* Settings cell for Email Protection */
-"settings.emailProtection" = "Zaštita e-pošte";
-
-/* Settings cell for Email Protection */
-"settings.emailProtection.description" = "Blokiraj programe za praćenje e-pošte i sakrij svoju adresu";
-
-/* Settings cell for Feedback */
-"settings.feedback" = "Podijeli povratne informacije";
-
-/* Settings screen cell text for fire button animation */
-"settings.firebutton" = "Animacija gumba Vatre";
-
-/* Settings screen cell text for Fireproof Sites */
-"settings.fireproof.sites" = "Zaštićena web-mjesta";
-
-/* Settings screen cell text for GPC */
-"settings.gpc" = "Globalna kontrola privatnosti (GPC)";
-
-/* Settings screen cell text for app icon selection */
-"settings.icon" = "Ikona aplikacije";
-
-/* Settings screen cell for Keyboard */
-"settings.keyboard" = "Tipkovnica";
-
-/* Settings screen cell text for logins */
-"settings.logins" = "Prijave";
-
-/* Settings title for the 'More' section */
-"settings.more" = "Više od DuckDuckGoa";
-
-/* Settings screen cell for long press previews */
-"settings.previews" = "Pretpregledi na dugi pritisak";
-
-/* Settings title for the privacy section */
-"settings.privacy" = "Zaštita privatnosti";
-
-/* Settings screen cell text for sync and backup */
-"settings.sync" = "Sinkronizacija i sigurnosno kopiranje";
-
-/* Settings screen cell text for text size */
-"settings.text.size" = "Veličina teksta";
-
-/* Settings screen cell text for theme */
-"settings.theme" = "Tema";
-
-/* Title for the Settings View */
-"settings.title" = "Postavke";
-
-/* Settings screen cell text for Unprotected Sites */
-"settings.unprotected.sites" = "Nezaštićena web-mjesta";
-
-/* Settings cell for Version */
-"settings.version" = "Verzija";
-
-/* Settings screen cell for voice search */
-"settings.voice.search" = "Privatno glasovno pretraživanje";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pošalji izvješće";
@@ -1869,6 +1785,15 @@
 
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "\"%@\" više neće moći pristupiti tvojim sinkroniziranim podacima.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Nažalost, Sync & Backup (sinkronizacija i sigurnosno kopiranje) trenutno nisu dostupni. Pokušaj ponovno nešto kasnije.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Žao nam je, ali Sync & Backup (sinkronizacija i sigurnosno kopiranje) više nisu dostupni u ovoj verziji aplikacije. Molimo te da za nastavak ažuriraš DuckDuckGo na najnoviju verziju.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "Sync & Backup pauziran";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Zatvori početnu karticu";
@@ -1932,9 +1857,6 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Dopustite pristup mikrofonu u postavkama sustava iOS kako bi DuckDuckGo mogao koristiti glasovne funkcije.";
-
-/* OK button alert warning the user about missing microphone permission */
-"voiceSearch.alert.no-permission.ok" = "U redu";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Potreban je pristup mikrofonu";

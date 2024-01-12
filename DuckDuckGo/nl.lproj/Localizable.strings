@@ -145,6 +145,9 @@
 /* Title for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-title" = "Synchronisatie van wachtwoorden is gepauzeerd";
 
+/* Title for sync error alert */
+"alert.sync-error" = "Synchronisatie- en back-upfout";
+
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Meer informatie";
 
@@ -165,6 +168,30 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Favoriet opslaan";
+
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "Het PDF-bestand voor herstel kan niet worden gemaakt.";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "Kan gegevens niet verwijderen op de server.";
+
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "Schakel 'Synchronisatie en back-up' uit op één apparaat en tik op 'Synchroniseren met een ander apparaat' op het andere apparaat om de apparaten te koppelen.";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "Het apparaat kan niet worden verwijderd uit 'Synchronisatie en back-up'.";
+
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Er kan geen verbinding worden gemaakt met de server.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Er kan niet worden gesynchroniseerd met een ander apparaat.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "'Synchronisatie en back-up' kan niet worden uitgeschakeld.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "De naam van het apparaat kan niet worden bijgewerkt.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "DuckDuckGo ontgrendelen.";
@@ -871,9 +898,6 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet kan best eng zijn.\n\nMaak je geen zorgen! Privé zoeken en browsen is eenvoudiger dan je denkt.";
 
-/* No comment provided by engineer. */
-"Debug" = "Debug";
-
 /* GPC Setting state */
 "donotsell.disabled" = "Uitgeschakeld";
 
@@ -1348,9 +1372,6 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Welkom bij\nDuckDuckGo!";
 
-/* No comment provided by engineer. */
-"LOREM IPSUM" = "LOREM IPSUM";
-
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo voor Mac heeft de snelheid die je nodig hebt en de browsefuncties die je verwacht, en zit boordevol met onze allerbeste privacy essentials.";
 
@@ -1418,85 +1439,82 @@
 "network-protection.privacy-policy.title" = "Privacybeleid";
 
 /* Title text for the Network Protection terms and conditions accept button */
-"network-protection.waitlist.agree-and-continue" = "Agree and Continue";
+"network-protection.waitlist.agree-and-continue" = "Akkoord en doorgaan";
 
 /* Availability disclaimer for Network Protection join waitlist screen */
-"network-protection.waitlist.availability-disclaimer" = "Network Protection is free to use during early access.";
+"network-protection.waitlist.availability-disclaimer" = "Netwerkbeveiliging is gratis te gebruiken tijdens vroege toegang.";
 
 /* Agree and Continue button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.agree-and-continue" = "Agree and Continue";
+"network-protection.waitlist.button.agree-and-continue" = "Akkoord en doorgaan";
 
 /* Enable Notifications button for Network Protection joined waitlist screen */
-"network-protection.waitlist.button.enable-notifications" = "Enable Notifications";
+"network-protection.waitlist.button.enable-notifications" = "Meldingen inschakelen";
 
 /* Button title for users who already have an invite code */
 "network-protection.waitlist.button.existing-invite-code" = "Ik heb een uitnodigingscode";
 
 /* Join Waitlist button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.join-waitlist" = "Join the Waitlist";
+"network-protection.waitlist.button.join-waitlist" = "Inscrhijven op de wachtlijst";
 
 /* Button title text for the Network Protection waitlist confirmation prompt */
 "network-protection.waitlist.get-started" = "Aan de slag";
 
 /* Subtitle for section 1 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-1.subtitle" = "Encrypt online traffic across your browsers and apps.";
+"network-protection.waitlist.invited.section-1.subtitle" = "Versleutel online verkeer in je browsers en apps.";
 
 /* Title for section 1 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-1.title" = "Full-device coverage";
+"network-protection.waitlist.invited.section-1.title" = "Volledige bescherming";
 
 /* Subtitle for section 2 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-2.subtitle" = "No need for a separate app. Connect in one click and see your connection status at a glance.";
+"network-protection.waitlist.invited.section-2.subtitle" = "Geen aparte app nodig. Maak met één klik verbinding en bekijk je verbindingsstatus in één oogopslag.";
 
 /* Title for section 2 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-2.title" = "Fast, reliable, and easy to use";
+"network-protection.waitlist.invited.section-2.title" = "Snel, betrouwbaar en gebruiksvriendelijk";
 
 /* Subtitle for section 3 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-3.subtitle" = "We do not log or save any data that can connect you to your online activity.";
+"network-protection.waitlist.invited.section-3.subtitle" = "We registreren of bewaren geen gegevens die je in verband kunnen brengen met je online activiteiten.";
 
 /* Title for section 3 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-3.title" = "Strict no-logging policy";
+"network-protection.waitlist.invited.section-3.title" = "Strikt no-log-beleid";
 
 /* Subtitle for Network Protection invited screen */
-"network-protection.waitlist.invited.subtitle" = "Get an extra layer of protection online with the VPN built for speed and simplicity. Encrypt your internet connection across your entire device and hide your location and IP address from sites you visit.";
+"network-protection.waitlist.invited.subtitle" = "Krijg online extra bescherming met een snelle en eenvoudige VPN. Versleutel je internetverbinding op je hele apparaat en verberg je locatie en IP-adres voor sites die je bezoekt.";
 
 /* Title for Network Protection invited screen */
-"network-protection.waitlist.invited.title" = "You’re invited to try\nNetwork Protection early access!";
+"network-protection.waitlist.invited.title" = "Je bent uitgenodigd om \n Netwerk Protection als een van de eersten te proberen!";
 
 /* First subtitle for Network Protection join waitlist screen */
-"network-protection.waitlist.join.subtitle.1" = "Secure your connection anytime, anywhere with Network Protection, the VPN from DuckDuckGo.";
+"network-protection.waitlist.join.subtitle.1" = "Beveilig je verbinding altijd en overal met Network Protection, de VPN van DuckDuckGo.";
 
 /* Second subtitle for Network Protection join waitlist screen */
-"network-protection.waitlist.join.subtitle.2" = "Join the waitlist, and we’ll notify you when it’s your turn.";
-
-/* Title for Network Protection join waitlist screen */
-"network-protection.waitlist.join.title" = "Network Protection Early Access";
+"network-protection.waitlist.join.subtitle.2" = "Schrijf je in op de wachtlijst, dan laten wij je weten wanneer je Network Protection kan testen.";
 
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "Je staat op de lijst!";
 
 /* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
-"network-protection.waitlist.joined.with-notifications.subtitle.1" = "New invites are sent every few days, on a first come, first served basis.";
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Elke paar dagen versturen we nieuwe uitnodigingen en hanteren hierbij het principe ''first come, first served\".";
 
 /* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
-"network-protection.waitlist.joined.with-notifications.subtitle.2" = "We’ll notify you when your invite is ready.";
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "We laten je weten wanneer je uitgenodigd wordt.";
 
 /* Body text for the alert to enable notifications */
-"network-protection.waitlist.notification-alert.description" = "We’ll send you a notification when your invite to test Network Protection is ready.";
+"network-protection.waitlist.notification-alert.description" = "We sturen je een melding wanneer je uitnodiging om Network Protection te testen klaar is.";
 
 /* Subtitle for the alert to confirm enabling notifications */
-"network-protection.waitlist.notification-prompt-description" = "Get a notification when your copy of Network Protection early access is ready.";
+"network-protection.waitlist.notification-prompt-description" = "Ontvang een melding wanneer je Network Protection als een van de eersten mag gebruiken.";
 
 /* Title for the alert to confirm enabling notifications */
-"network-protection.waitlist.notification-prompt-title" = "Know the instant you're invited";
+"network-protection.waitlist.notification-prompt-title" = "Weet het meteen wanneer je bent uitgenodigd";
 
 /* Title for Network Protection waitlist notification */
 "network-protection.waitlist.notification.text" = "Open je uitnodiging";
 
 /* Title for Network Protection waitlist notification */
-"network-protection.waitlist.notification.title" = "Network Protection is ready!";
+"network-protection.waitlist.notification.title" = "Network Protection is klaar!";
 
 /* Subtitle text for the Network Protection settings row */
-"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Your invite is ready!";
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Je uitnodiging is klaar!";
 
 /* Subtitle text for the Network Protection settings row */
 "network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Je staat op de lijst!";
@@ -1508,7 +1526,7 @@
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You’re invited to try Network Protection";
+"network.protection.invite.dialog.title" = "Je bent uitgenodigd om Network Protection uit te proberen";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
@@ -1580,22 +1598,22 @@
 "network.protection.vpn.alerts.toggle.title" = "VPN-meldingen";
 
 /* Footer text for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.footer" = "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.";
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Laat lokaal verkeer de VPN omzeilen en maak verbinding met apparaten in je lokale netwerk, zoals een printer.";
 
 /* Title for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.title" = "Exclude Local Networks";
+"network.protection.vpn.exclude.local.networks.setting.title" = "Lokale netwerken uitsluiten";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
 
 /* Subtitle of countries item when there are multiple cities, example : */
-"network.protection.vpn.location.country.item.formatted.cities.count" = "%d cities";
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d steden";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find.";
+"network.protection.vpn.location.recommended.section.footer" = "Maak automatisch verbinding met de dichtstbijzijnde server die we kunnen vinden.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
@@ -1604,7 +1622,7 @@
 "network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
 
 /* Title for the VPN Location screen. */
-"network.protection.vpn.location.title" = "VPN Location";
+"network.protection.vpn.location.title" = "VPN-locatie";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "VPN-meldingen";
@@ -1616,7 +1634,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.";
+"network.protection.vpn.secure.dns.setting.footer" = "Onze VPN gebruikt beveiligde DNS om je online activiteiten privé te houden, zodat je internetprovider niet kan zien welke websites je bezoekt.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-instellingen";
@@ -1744,110 +1762,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favorieten";
 
-/* Settings cell for About DDG */
-"settings.about.ddg" = "Over DuckDuckGo";
-
-/* Settings section title for About DuckDuckGo */
-"settings.about.section" = "Over";
-
 /* about page */
 "settings.about.text" = "DuckDuckGo is het onafhankelijke internetprivacybedrijf, opgericht in 2008, voor iedereen die het beu is om online gevolgd te worden en daar een eenvoudige oplossing voor wil. Wij zijn het bewijs dat je privacy op internet écht beschermd kan worden zonder compromissen.\n\nDe DuckDuckGo-browser wordt geleverd met de functies die je van een webbrowser verwacht, zoals bladwijzers, tabbladen, wachtwoorden en meer, plus meer dan [een dozijn krachtige tools om je privacy te beschermen](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) die niet standaard worden aangeboden in de meeste populaire browsers. Deze unieke, uitgebreide privacybescherming helpt je online activiteiten te beschermen – of je nu zoekt, surft of mailt.\n\nJe hoeft niets te weten over de technische details of ingewikkelde instellingen om te profiteren van onze privacybescherming. Je hoeft alleen maar DuckDuckGo op al je apparaten te installeren en geniet dan standaard van privacy.\n\nMaar als je *een kijkje onder de motorkap* wilt, vind je meer informatie over de privacybescherming van DuckDuckGo op onze [hulppagina's](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
-
-/* Settings screen cell text for adding the app to the dock */
-"settings.add.to.dock" = "App toevoegen aan je dock";
-
-/* Settings screen cell text for add widget to the home screen */
-"settings.add.widget" = "Widget toevoegen aan startscherm";
-
-/* Settings screen cell text for addess bar position */
-"settings.address.bar" = "Positie van adresbalk";
-
-/* Settings screen appearance section title */
-"settings.appearance" = "Uiterlijk";
-
-/* Settings screen cell for opening links in associated apps */
-"settings.associated.apps" = "Links openen in bijbehorende apps";
-
-/* Description for associated apps description */
-"settings.associated.apps.description" = "Uitschakelen om te voorkomen dat links automatisch geopend worden in andere geïnstalleerde apps.";
-
-/* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Suggesties voor automatisch aanvullen weergeven";
-
-/* Settings screen cell text for Application Lock */
-"settings.autolock" = "App-vergrendeling";
-
-/* Section footer Autolock description */
-"settings.autolock.description" = "Als je Touch ID, Face ID of een systeemwachtwoord hebt ingesteld, word je gevraagd om de app te ontgrendelen als je deze opent.";
-
-/* Settings screen cell text for Automatically Clearing Data */
-"settings.clear.data" = "Gegevens automatisch wissen";
-
-/* Settings screen cell text for Cookie popups */
-"settings.cookie.popups" = "Cookiepop-ups beheren";
-
-/* Settings title for the customize section */
-"settings.customize" = "Aanpassen";
-
-/* Settings screen cell text for setting the app as default browser */
-"settings.default.browser" = "Instellen als standaardbrowser";
-
-/* Settings cell for Email Protection */
-"settings.emailProtection" = "E-mailbescherming";
-
-/* Settings cell for Email Protection */
-"settings.emailProtection.description" = "Blokkeer e-mailtrackers en verberg je adres";
-
-/* Settings cell for Feedback */
-"settings.feedback" = "Feedback delen";
-
-/* Settings screen cell text for fire button animation */
-"settings.firebutton" = "Animatie vuurknop";
-
-/* Settings screen cell text for Fireproof Sites */
-"settings.fireproof.sites" = "Brandveilige websites";
-
-/* Settings screen cell text for GPC */
-"settings.gpc" = "Global Privacy Control (GPC)";
-
-/* Settings screen cell text for app icon selection */
-"settings.icon" = "App-pictogram";
-
-/* Settings screen cell for Keyboard */
-"settings.keyboard" = "Toetsenbord";
-
-/* Settings screen cell text for logins */
-"settings.logins" = "Aanmeldgegevens";
-
-/* Settings title for the 'More' section */
-"settings.more" = "Meer over DuckDuckGo";
-
-/* Settings screen cell for long press previews */
-"settings.previews" = "Voorbeeldweergave bij lang indrukken";
-
-/* Settings title for the privacy section */
-"settings.privacy" = "Privacy";
-
-/* Settings screen cell text for sync and backup */
-"settings.sync" = "Synchronisatie en back-up";
-
-/* Settings screen cell text for text size */
-"settings.text.size" = "Lettergrootte";
-
-/* Settings screen cell text for theme */
-"settings.theme" = "Thema";
-
-/* Title for the Settings View */
-"settings.title" = "Instellingen";
-
-/* Settings screen cell text for Unprotected Sites */
-"settings.unprotected.sites" = "Onbeschermde sites";
-
-/* Settings cell for Version */
-"settings.version" = "Versie";
-
-/* Settings screen cell for voice search */
-"settings.voice.search" = "Private spraakzoekopdracht";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Rapport versturen";
@@ -1869,6 +1785,15 @@
 
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "'%@' heeft geen toegang meer tot je gesynchroniseerde gegevens.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Sorry, maar synchroniseren en back-up is momenteel niet beschikbaar. Probeer het later opnieuw.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Synchroniseren en back-up is helaas niet langer beschikbaar in deze versie van de app. Werk DuckDuckGo bij naar de nieuwste versie om door te gaan.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "Synchronisatie en back-up is gepauzeerd";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Starttabblad sluiten";
@@ -1932,9 +1857,6 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Sta microfoontoegang toe in de iOS-systeeminstellingen zodat DuckDuckGo spraakfuncties kan gebruiken.";
-
-/* OK button alert warning the user about missing microphone permission */
-"voiceSearch.alert.no-permission.ok" = "OK";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Toegang tot microfoon vereist";

@@ -228,14 +228,11 @@ class DiagnosticReportDataSource: UIActivityItemProvider {
     }
 
     func fireproofingReport() -> String {
-
         let allowedDomains = PreserveLogins.shared.allowedDomains.map { "* \($0)" }
-        let legacyAllowedDomains = PreserveLogins.shared.legacyAllowedDomains.map { "* \($0)" }
 
         let allowedDomainsEntry = ["### Allowed Domains"] + (allowedDomains.isEmpty ? [""] : allowedDomains)
-        let legacyAllowedDomainsEntry = ["### Legacy Allowed Domains"] + (legacyAllowedDomains.isEmpty ? [""] : legacyAllowedDomains)
 
-        return (["## Fireproofing Report"] + allowedDomainsEntry + legacyAllowedDomainsEntry).joined(separator: "\n")
+        return (["## Fireproofing Report"] + allowedDomainsEntry).joined(separator: "\n")
     }
 
     func imageCacheReport() -> String {

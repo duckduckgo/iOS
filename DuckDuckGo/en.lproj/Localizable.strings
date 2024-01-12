@@ -1914,8 +1914,35 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Which website is broken?";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Recovery code copied to clipboard";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Delete Server Data";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "All devices will be disconnected and your synced data will be deleted from the server.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Delete Server Data?";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Remove";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "\"%@\" will no longer be able to access your synced data.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Remove Device?";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Remove";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "This Device will no longer be able to access your synced data.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Turn Off Sync?";
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "Sorry, but Sync & Backup is currently unavailable. Please try again later.";

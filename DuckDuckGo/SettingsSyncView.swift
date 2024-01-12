@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import SyncUI
 import UIKit
 import Core
 import DDGSync
@@ -33,7 +34,7 @@ struct SettingsSyncView: View {
     var body: some View {
         if viewModel.state.sync.enabled {
             Section {
-                SettingsCellView(label: viewModel.state.sync.title,
+                SettingsCellView(label: SyncUI.UserText.syncTitle,
                                  action: { viewModel.presentLegacyView(.sync) },
                                  asLink: true,
                                  disclosureIndicator: true)

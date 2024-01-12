@@ -31,24 +31,29 @@ public struct ScanOrSeeCode: View {
     }
 
     public var body: some View {
-        VStack(spacing: 10) {
-            VStack(spacing: 10) {
-                titleView()
-                CameraView(model: model)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(UserText.cancelButton, action: model.cancel)
-                        .foregroundColor(Color.white)
+        GeometryReader { geometry in
+            ScrollView {
+                VStack(spacing: 10) {
+                    let heightFactor = geometry.size.width < 380 ? 1 : 0.84
+                    titleView()
+                    CameraView(model: model)
+                        .frame(width: geometry.size.width)
+                        .frame(minHeight: geometry.size.width * heightFactor)
+                    qrCodeView(width: geometry.size.width)
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(UserText.scanOrSeeCodeManuallyEnterCodeLink, destination: {
-                        PasteCodeView(model: model)
-                    })
-                    .foregroundColor(Color(designSystemColor: .accent))
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(UserText.cancelButton, action: model.cancel)
+                            .foregroundColor(Color.white)
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink(UserText.scanOrSeeCodeManuallyEnterCodeLink, destination: {
+                            PasteCodeView(model: model)
+                        })
+                        .foregroundColor(Color(designSystemColor: .accent))
+                    }
                 }
             }
-            qrCodeView()
         }
     }
 
@@ -85,7 +90,14 @@ public struct ScanOrSeeCode: View {
 
 
     @ViewBuilder
-    func qrCodeView() -> some View {
+    func qrCodeView(width: CGFloat) -> some View {
+        var maxWidth: CGFloat {
+            let basedOnScreenWidth = (width - 70) / 3 * 2
+            if width < 390 {
+                return basedOnScreenWidth
+            }
+            return 180
+        }
         VStack(spacing: 8) {
             HStack(alignment: .top, spacing: 20) {
                 QRCodeView(string: qrCodeModel.code ?? "", size: 120)
@@ -93,7 +105,8 @@ public struct ScanOrSeeCode: View {
                     HStack {
                         Text(UserText.scanOrSeeCodeScanCodeInstructionsTitle)
                             .daxBodyBold()
-                            .fixedSize()
+                            .fixedSize(horizontal: false, vertical: true)
+                            .multilineTextAlignment(.leading)
                         Spacer()
                         Image("SyncDeviceType_phone")
                             .padding(2)
@@ -107,24 +120,17 @@ public struct ScanOrSeeCode: View {
                         .fixedSize(horizontal: false, vertical: true)
                         .multilineTextAlignment(.leading)
                 }
+                .frame(maxWidth: maxWidth)
             }
+            .frame(width: width)
             .padding(20)
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color(designSystemColor: .panel))
+                    .frame(width: width - 20)
             )
             .padding(20)
-            HStack {
-                Text(UserText.scanOrSeeCodeFooter)
-                HStack(alignment: .center) {
-                    Text(UserText.scanOrSeeCodeShareCodeLink)
-                        .foregroundColor(Color(designSystemColor: .accent))
-                        .onTapGesture {
-                            model.showShareCodeSheet()
-                        }
-                    Image("Arrow-Circle-Right-12")
-                }
-            }
+            cantScanView()
         }
         .padding(.bottom, 40)
         .onAppear {
@@ -132,6 +138,22 @@ public struct ScanOrSeeCode: View {
                 self.qrCodeModel.code = recoveryCode
             } else {
                 self.qrCodeModel = model.startConnectMode()
+            }
+        }
+        .frame(width: width)
+    }
+
+    @ViewBuilder
+    func cantScanView() -> some View {
+        HStack {
+            Text(UserText.scanOrSeeCodeFooter)
+            HStack(alignment: .center) {
+                Text(UserText.scanOrSeeCodeShareCodeLink)
+                    .foregroundColor(Color(designSystemColor: .accent))
+                    .onTapGesture {
+                        model.showShareCodeSheet()
+                    }
+                Image("Arrow-Circle-Right-12")
             }
         }
     }

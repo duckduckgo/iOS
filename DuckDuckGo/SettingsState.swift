@@ -43,7 +43,7 @@ struct SettingsState {
     struct PrivacyPro {
         var enabled: Bool
         var canPurchase: Bool
-        var status: PrivacyProSubscriptionStatus
+        var hasActiveSubscription: Bool
     }
     
     struct SyncSettings {
@@ -111,7 +111,8 @@ struct SettingsState {
             speechRecognitionEnabled: false,
             loginsEnabled: false,
             networkProtection: NetworkProtection(enabled: false, status: ""),
-            privacyPro: PrivacyPro(enabled: false, canPurchase: false, status: .unknown),
+            privacyPro: PrivacyPro(enabled: false, canPurchase: false,
+                                   hasActiveSubscription: false),
             sync: SyncSettings(enabled: false, title: "")
         )
     }

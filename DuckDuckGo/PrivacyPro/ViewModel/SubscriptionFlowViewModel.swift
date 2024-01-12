@@ -39,7 +39,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     @Published var hasActiveSubscription = false
     @Published var transactionInProgress = false
     @Published var shouldReloadWebview = false
-    
+        
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
          purchaseManager: PurchaseManager = PurchaseManager.shared) {

@@ -77,15 +77,12 @@ struct SettingsPrivacyProView: View {
     
     var body: some View {
         
-        if viewModel.state.privacyPro.enabled && viewModel.state.privacyPro.status != .unknown {
+        if viewModel.state.privacyPro.enabled {
             Section(header: Text(UserText.settingsPProSection)) {
-                switch viewModel.state.privacyPro.status {
-                case .active:
+                if viewModel.state.privacyPro.hasActiveSubscription {
                     subscriptionDetailsView
-                case .inactive:
+                } else {
                     purchaseSubscriptionView
-                default:
-                    EmptyView()
                 }
             }
         }

@@ -1332,28 +1332,32 @@ extension MainViewController: BrowserChromeDelegate {
             self.viewCoordinator.tabBarContainer.alpha = percent
             self.viewCoordinator.toolbar.alpha = percent
         }
-  
-        func completion(_ finished: Bool) {
-            let top: CGFloat = viewCoordinator.statusBackground.frame.height * percent
-            let bottom: CGFloat
-            if self.appSettings.currentAddressBarPosition == .top {
-                bottom = (viewCoordinator.toolbar.frame.height * percent)
-                    + view.safeAreaInsets.bottom + additionalSafeAreaInsets.bottom
-            } else {
-                bottom = ((viewCoordinator.toolbar.frame.height + viewCoordinator.navigationBarContainer.frame.height) * percent)
-                    + view.safeAreaInsets.bottom + additionalSafeAreaInsets.bottom
-            }
-            currentTab?.webView.scrollView.contentInset = .init(top: top, left: 0, bottom: bottom, right: 0)
-        }
-        
+           
         if animated {
-            UIView.animate(withDuration: ChromeAnimationConstants.duration, animations: updateBlock, completion: completion)
+            UIView.animate(withDuration: ChromeAnimationConstants.duration, animations: updateBlock) { _ in
+                self.refreshWebViewContentInsets()
+            }
         } else {
             updateBlock()
-            completion(true)
+            self.refreshWebViewContentInsets()
         }
     }
 
+    func refreshWebViewContentInsets() {
+        guard let webView = currentTab?.webView else { return }
+
+        let top: CGFloat = viewCoordinator.statusBackground.frame.height
+        let bottom: CGFloat
+        if self.appSettings.currentAddressBarPosition == .top {
+            bottom = (viewCoordinator.toolbar.frame.height)
+                + view.safeAreaInsets.bottom + additionalSafeAreaInsets.bottom
+        } else {
+            bottom = ((viewCoordinator.toolbar.frame.height + viewCoordinator.navigationBarContainer.frame.height))
+                + view.safeAreaInsets.bottom + additionalSafeAreaInsets.bottom
+        }
+        currentTab?.webView.scrollView.contentInset = .init(top: top, left: 0, bottom: bottom, right: 0)
+    }
+    
     func setNavigationBarHidden(_ hidden: Bool) {
         if hidden { hideKeyboard() }
         
@@ -1823,6 +1827,7 @@ extension MainViewController: TabDelegate {
 
     func showBars() {
         chromeManager.reset()
+        refreshWebViewContentInsets()
     }
     
     func tabDidRequestFindInPage(tab: TabViewController) {

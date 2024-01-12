@@ -63,7 +63,13 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     func removeSubscription() {
         AccountManager().signOut()
-        
+    }
+    
+    func manageSubscription() {
+        let url = URL.manageSubscriptionsIniOSAppStoreAppURL
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
     
     

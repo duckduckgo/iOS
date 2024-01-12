@@ -66,8 +66,13 @@ struct SettingsPrivacyProView: View {
                              asLink: true,
                              disclosureIndicator: true)
             
-            SettingsCellView(label: UserText.settingsPProDBPTitle, subtitle: UserText.settingsPProDBPSubTitle)
-            SettingsCellView(label: UserText.settingsPProITRTitle, subtitle: UserText.settingsPProITRSubTitle)
+            NavigationLink(destination: Text("Data Broker Protection")) {
+                SettingsCellView(label: UserText.settingsPProDBPTitle, subtitle: UserText.settingsPProDBPSubTitle)
+            }
+            
+            NavigationLink(destination: Text("Identity Theft Restoration")) {
+                SettingsCellView(label: UserText.settingsPProITRTitle, subtitle: UserText.settingsPProITRSubTitle)
+            }
             
             NavigationLink(destination: SubscriptionSettingsView(viewModel: SubscriptionSettingsViewModel())) {
                 SettingsCustomCell(content: { manageSubscriptionView })

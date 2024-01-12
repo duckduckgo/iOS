@@ -51,10 +51,7 @@ struct SubscriptionSettingsView: View {
                         Text(UserText.privacyProRemoveFromDevice)
                             .daxBodyRegular()
                             .foregroundColor(Color.init(designSystemColor: .accent))},
-                                       action: {
-                        viewModel.shouldDisplayRemovalNotice.toggle()
-                        print(viewModel.shouldDisplayRemovalNotice)
-                    },
+                                       action: { viewModel.shouldDisplayRemovalNotice.toggle() },
                                        asLink: true)
                     
                 }
@@ -62,14 +59,20 @@ struct SubscriptionSettingsView: View {
                     SettingsCustomCell(content: {
                         Text(UserText.privacyProChangePlan)
                             .daxBodyRegular()
-                    })
+                    },
+                                       action: { viewModel.manageSubscription() },
+                                       asLink: true)
                 }
                 Section(header: Text(UserText.privacyProHelpAndSupport),
                         footer: Text(UserText.privacyProFAQFooter)) {
-                    SettingsCustomCell(content: {
-                        Text(UserText.privacyProFAQ)
-                            .daxBodyRegular()
-                    })
+                    NavigationLink(destination: Text("Privacy Pro FAQ")) {
+                        SettingsCustomCell(content: {
+                            Text(UserText.privacyProFAQ)
+                                .daxBodyRegular()
+                        },
+                                           action: { viewModel.manageSubscription() },
+                                           disclosureIndicator: false)
+                    }
                 }
             }
             .navigationTitle(UserText.settingsPProManageSubscription)

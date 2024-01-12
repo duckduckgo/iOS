@@ -35,14 +35,11 @@ final class SubscriptionFlowViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     // State variables
-    @Published var purchaseURL = URL.purchaseSubscription
+    var purchaseURL = URL.purchaseSubscription
     @Published var hasActiveSubscription = false
     @Published var transactionInProgress = false
     @Published var shouldReloadWebview = false
-    
-    @UserDefaultsWrapper(key: .privacyProhasActiveSubscription, defaultValue: false)
-    static private var cachedHasActiveSubscription: Bool
-    
+        
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
          purchaseManager: PurchaseManager = PurchaseManager.shared) {
@@ -61,13 +58,10 @@ final class SubscriptionFlowViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        self.hasActiveSubscription = Self.cachedHasActiveSubscription
-        
         subFeature.$hasActiveSubscription
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 self?.hasActiveSubscription = value
-                Self.cachedHasActiveSubscription = value
             }
             .store(in: &cancellables)
     }

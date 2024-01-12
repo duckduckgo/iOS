@@ -28,19 +28,41 @@ struct SubscriptionFlowView: View {
     
     var body: some View {
         ZStack {
-            AsyncHeadlessWebView(url: viewModel.purchaseURL,
+            AsyncHeadlessWebView(url: $viewModel.purchaseURL,
                                  userScript: viewModel.userScript,
-                                 subFeature: viewModel.subFeature).background()
+                                 subFeature: viewModel.subFeature,
+                                 shouldReload: $viewModel.shouldReloadWebview).background()
 
             // Overlay that appears when transaction is in progress
             if viewModel.transactionInProgress {
                 PurchaseInProgressView()
             }
         }
+        .onChange(of: viewModel.shouldReloadWebview) { shouldReload in
+            if shouldReload {
+                print("WebView reload triggered")
+                viewModel.shouldReloadWebview = false
+            }
+        }
         .onAppear(perform: {
             Task { await viewModel.initializeViewData() }
         })
         .navigationTitle(viewModel.viewTitle)
+        .navigationBarBackButtonHidden(viewModel.transactionInProgress)
+        
+        // Active subscription found Alert
+        .alert(isPresented: $viewModel.hasActiveSubscription) {
+            Alert(
+                title: Text("Subscription Found"),
+                message: Text("We found a subscription associated with this Apple ID."),
+                primaryButton: .cancel(Text("Cancel")) {
+                    // TODO: Handle subscription Restore cancellation
+                },
+                secondaryButton: .default(Text("Restore")) {
+                    viewModel.restoreAppstoreTransaction()
+                }
+            )
+        }
     }
 }
 #endif

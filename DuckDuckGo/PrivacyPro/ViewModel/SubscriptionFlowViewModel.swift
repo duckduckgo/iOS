@@ -20,6 +20,7 @@
 import Foundation
 import UserScript
 import Combine
+import Core
 
 #if SUBSCRIPTION
 @available(iOS 15.0, *)
@@ -29,12 +30,16 @@ final class SubscriptionFlowViewModel: ObservableObject {
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     let purchaseManager: PurchaseManager
     
-    let purchaseURL = URL.purchaseSubscription
     let viewTitle = UserText.settingsPProSection
-        
-    @Published var transactionInProgress = false
+    
     private var cancellables = Set<AnyCancellable>()
-
+    
+    // State variables
+    var purchaseURL = URL.purchaseSubscription
+    @Published var hasActiveSubscription = false
+    @Published var transactionInProgress = false
+    @Published var shouldReloadWebview = false
+        
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
          purchaseManager: PurchaseManager = PurchaseManager.shared) {
@@ -45,10 +50,18 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     // Observe transaction status
     private func setupTransactionObserver() async {
+        
         subFeature.$transactionInProgress
             .sink { [weak self] status in
                 guard let self = self else { return }
                 Task { await self.setTransactionInProgress(status) }
+            }
+            .store(in: &cancellables)
+        
+        subFeature.$hasActiveSubscription
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.hasActiveSubscription = value
             }
             .store(in: &cancellables)
     }
@@ -60,6 +73,18 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     func initializeViewData() async {
         await self.setupTransactionObserver()
+    }
+    
+    func restoreAppstoreTransaction() {
+        Task {
+            if await subFeature.restoreAccountFromAppStorePurchase() {
+                await MainActor.run { shouldReloadWebview = true }
+            } else {
+                await MainActor.run {
+                    // TODO: Display error when restoring subscription
+                }
+            }
+        }
     }
     
 }

@@ -89,20 +89,25 @@ struct SettingsCellView: View, Identifiable {
     }
     
     var body: some View {
+        if asLink {
+            Button(action: action) {
+                cellContent
+                .disabled(!enabled)
+            }
+            .buttonStyle(PlainButtonStyle())
+            .contentShape(Rectangle())
+        } else {
+            cellContent
+        }
+    }
+    
+    private var cellContent: some View {
         Group {
             switch accesory {
             case .custom(let customView):
-                Button(action: action) { customView }
-                    .buttonStyle(.plain)
-                    .disabled(!enabled)
-
+                customView
             default:
-                if asLink {
-                    Button(action: action) { defaultView }
-                        .buttonStyle(.plain)
-                } else {
-                    defaultView
-                }
+                defaultView
             }
         }
     }
@@ -234,6 +239,19 @@ struct SettingsCustomCell<Content: View>: View {
     }
 
     var body: some View {
+        if asLink {
+            Button(action: action) {
+                cellContent
+            }
+            .buttonStyle(PlainButtonStyle())
+            .contentShape(Rectangle())
+        } else {
+            cellContent
+        }
+    }
+
+    
+    private var cellContent: some View {
         HStack {
             content
             Spacer()
@@ -241,7 +259,6 @@ struct SettingsCustomCell<Content: View>: View {
                 SettingsCellComponents.chevron
             }
         }
-        .onTapGesture(perform: action)
     }
 }
 

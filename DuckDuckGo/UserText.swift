@@ -972,6 +972,16 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     public static let settingsPProLearnMore = NSLocalizedString("settings.ppro.learn.more", value: "Learn More", comment: "Learn more button text for privacy pro")
     
+    public static let settingsPProManageSubscription = NSLocalizedString("settings.ppro.manage", value: "Subscription Settings", comment: "Subscription Settings button text for privacy pro")
+    
+    public static let settingsPProVPNTitle = NSLocalizedString("settings.ppro.VPN.title", value: "VPN", comment: "VPN cell title for privacy pro")
+    public static let settingsPProDBPTitle = NSLocalizedString("settings.ppro.DBP.title", value: "Personal Information Removal", comment: "Data Broker protection cell title for privacy pro")
+    public static let settingsPProDBPSubTitle = NSLocalizedString("settings.ppro.DBP.subtitle", value: "Remove your info from sites that sell it", comment: "Data Broker protection cell subtitle for privacy pro")
+    public static let settingsPProITRTitle = NSLocalizedString("settings.ppro.ITR.title", value: "Identity Theft Restoration", comment: "Identity theft restoration cell title for privacy pro")
+    public static let settingsPProITRSubTitle = NSLocalizedString("settings.ppro.ITR.subtitle", value: "If your identity is stolen, we'll help restore it", comment: "Identity theft restoration cell subtitle for privacy pro")
+    
+    
+    
     // Customize Section
     public static let settingsCustomizeSection = NSLocalizedString("settings.customize", value: "Customize", comment: "Settings title for the customize section")
     public static let settingsKeyboard = NSLocalizedString("settings.keyboard", value: "Keyboard", comment: "Settings screen cell for Keyboard")
@@ -991,6 +1001,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsAboutDDG = NSLocalizedString("settings.about.ddg", value: "About DuckDuckGo", comment: "Settings cell for About DDG")
     public static let settingsVersion = NSLocalizedString("settings.version", value: "Version", comment: "Settings cell for Version")
     public static let settingsFeedback = NSLocalizedString("settings.feedback", value: "Share Feedback", comment: "Settings cell for Feedback")
+    
     
 
 }

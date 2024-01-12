@@ -121,6 +121,8 @@ public struct UserDefaultsWrapper<T> {
         case bookmarksMigrationVersion = "com.duckduckgo.ios.bookmarksMigrationVersion"
         
         case privacyConfigCustomURL = "com.duckduckgo.ios.privacyConfigCustomURL"
+        
+        case privacyProHasActiveSubscription = "com.duckduckgo.ios.privacyPro.hasActiveSubscription"
     }
 
     private let key: Key

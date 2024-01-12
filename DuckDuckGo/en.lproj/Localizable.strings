@@ -1837,6 +1837,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
+/* Data Broker protection cell subtitle for privacy pro */
+"settings.ppro.DBP.subtitle" = "Remove your info from sites that sell it";
+
+/* Data Broker protection cell title for privacy pro */
+"settings.ppro.DBP.title" = "Personal Information Removal";
+
 /* Privacy pro description subtext */
 "settings.ppro.description" = "More seamless privacy with three new protections, including:";
 
@@ -1845,11 +1851,23 @@ But if you *do* want a peek under the hood, you can find more information about 
  • Personal Information Removal
  • Identity Theft Restoration";
 
+/* Identity theft restoration cell subtitle for privacy pro */
+"settings.ppro.ITR.subtitle" = "If your identity is stolen, we'll help restore it";
+
+/* Identity theft restoration cell title for privacy pro */
+"settings.ppro.ITR.title" = "Identity Theft Restioration";
+
 /* Learn more button text for privacy pro */
 "settings.ppro.learn.more" = "Learn More";
 
+/* Subscription Settings button text for privacy pro */
+"settings.ppro.manage" = "Subscription Settings";
+
 /* Call to action title for Privacy Pro */
 "settings.ppro.subscribe" = "Subscribe to Privacy Pro";
+
+/* VPN cell title for privacy pro */
+"settings.ppro.VPN.title" = "VPN (Virtual Private Network";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Long-Press Previews";

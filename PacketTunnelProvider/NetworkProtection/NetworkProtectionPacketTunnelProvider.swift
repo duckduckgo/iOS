@@ -55,6 +55,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelFailureDetected)
             case .failureRecovered:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelFailureRecovered)
+            case .networkPathChanged(let newPath):
+                NetworkProtectionTunnelHealthStore().updateNetworkPath(newPath)
             }
         case .reportLatency(result: let result):
             switch result {

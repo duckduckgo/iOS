@@ -154,7 +154,7 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
         while true {
             if !monitor.currentPath.availableInterfaces.isEmpty {
                 path = monitor.currentPath
-                healthStore.updateNetworkPath(path, updatesTimestamp: false)
+                healthStore.updateNetworkPath(path?.debugDescription, updatesTimestamp: false)
                 monitor.cancel()
                 return .init(currentPath: path.debugDescription,
                              lastPathChangeDate: dateFormatter.string(from: healthStore.lastNetworkPathChangeDate),

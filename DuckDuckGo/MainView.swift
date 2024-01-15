@@ -392,7 +392,7 @@ class MainViewCoordinator {
         addressBarPosition = position
     }
 
-    func hideNavigationWithForBottomPosition() {
+    func hideNavigationBarWithBottomPosition() {
         guard addressBarPosition.isBottom else {
             return
         }

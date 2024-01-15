@@ -1803,7 +1803,7 @@ extension MainViewController: TabDelegate {
         updateFindInPage()
         _ = findInPageView?.becomeFirstResponder()
 
-        viewCoordinator.hideNavigationWithForBottomPosition()
+        viewCoordinator.hideNavigationBarWithBottomPosition()
     }
 
     func closeFindInPage(tab: TabViewController) {

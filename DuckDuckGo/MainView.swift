@@ -392,6 +392,29 @@ class MainViewCoordinator {
         addressBarPosition = position
     }
 
+    func hideNavigationWithForBottomPosition() {
+        guard addressBarPosition == .bottom else {
+            return
+        }
+
+        // Hiding the container won't suffice as it still defines the contentContainer.bottomY through constraints
+        navigationBarContainer.isHidden = true
+
+        constraints.contentContainerBottomToNavigationBarContainerTop.isActive = false
+        constraints.contentContainerBottomToToolbarTop.isActive = true
+    }
+
+    func showNavigationBarWithBottomPosition() {
+        guard addressBarPosition.isBottom else {
+            return
+        }
+
+        constraints.contentContainerBottomToToolbarTop.isActive = false
+        constraints.contentContainerBottomToNavigationBarContainerTop.isActive = true
+
+        navigationBarContainer.isHidden = false
+    }
+
     func setAddressBarTopActive(_ active: Bool) {
         constraints.contentContainerBottomToToolbarTop.isActive = active
         constraints.navigationBarContainerTop.isActive = active

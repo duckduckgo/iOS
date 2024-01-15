@@ -2067,6 +2067,15 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Title for the 'unable to install' category of the VPN feedback form */
 "vpn.feedback-form.category.unable-to-install" = "Unable to install VPN";
 
+/* Action title for the alert when the VPN feedback form can't be submitted */
+"vpn.feedback-form.error.action" = "OK";
+
+/* Message for the alert when the VPN feedback form can't be submitted */
+"vpn.feedback-form.error.message" = "Failed to share your feedback. Please try again.";
+
+/* Title for the alert when the VPN feedback form can't be submitted */
+"vpn.feedback-form.error.title" = "Error";
+
 /* Title for the feedback sent view description of the VPN feedback form */
 "vpn.feedback-form.sending-confirmation.description" = "Your feedback will help us improve the\nDuckDuckGo VPN.";
 
@@ -2075,6 +2084,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Title for the feedback sent view title of the VPN feedback form */
 "vpn.feedback-form.sending-confirmation.title" = "Thank you!";
+
+/* Toast message when the VPN feedback form is submitted successfully */
+"vpn.feedback-form.submitted.message" = "Thank You! Feedback submitted.";
 
 /* Text for the body of the VPN feedback form */
 "vpn.feedback-form.text-1" = "Please describe what's happening, what you expected to happen, and the steps that led to the issue:";

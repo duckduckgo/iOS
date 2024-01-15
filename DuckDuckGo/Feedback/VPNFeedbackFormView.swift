@@ -32,7 +32,13 @@ struct VPNFeedbackFormCategoryView: View {
                 Section {
                     ForEach(VPNFeedbackCategory.allCases, id: \.self) { category in
                         NavigationLink {
-                            VPNFeedbackFormView(viewModel: VPNFeedbackFormViewModel(category: category)) { dismiss() }
+                            VPNFeedbackFormView(viewModel: VPNFeedbackFormViewModel(category: category)) {
+                                dismiss()
+                                DispatchQueue.main.async {
+                                    ActionMessageView.present(message: UserText.vpnFeedbackFormSubmittedMessage,
+                                                              presentationLocation: .withoutBottomBar)
+                                }
+                            }
                         } label: {
                             Text(category.displayName)
                                 .daxBodyRegular()
@@ -75,17 +81,52 @@ struct VPNFeedbackFormCategoryView: View {
 struct VPNFeedbackFormView: View {
     @ObservedObject var viewModel: VPNFeedbackFormViewModel
     @Environment(\.dismiss) private var dismiss
+    @State private var showsError = false
+    @FocusState private var isTextEditorFocused: Bool
 
     var onDismiss: () -> Void
 
     var body: some View {
-        VStack {
-            header()
-            textEditor()
-            submitButton()
-        }
+        configuredForm()
         .applyBackground()
         .navigationTitle(UserText.netPStatusViewShareFeedback)
+        .alert(isPresented: $showsError) {
+            Alert(title: Text(UserText.vpnFeedbackFormErrorTitle),
+                  message: Text(UserText.vpnFeedbackFormErrorMessage),
+                  dismissButton: .default(Text(UserText.vpnFeedbackFormErrorAction)))
+        }
+    }
+
+    @ViewBuilder
+    private func form() -> some View {
+        ScrollView {
+            ScrollViewReader { scrollView in
+                VStack {
+                    header()
+                    textEditor()
+                        .focused($isTextEditorFocused)
+                        .onChange(of: isTextEditorFocused) { isFocused in
+                            guard isFocused else { return }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                withAnimation {
+                                    scrollView.scrollTo(1, anchor: .bottom)
+                                }
+                            }
+                        }
+                    submitButton()
+                        .id(1)
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func configuredForm() -> some View {
+        if #available(iOS 16, *) {
+            form().scrollDismissesKeyboard(.interactively)
+        } else {
+            form()
+        }
     }
 
     @ViewBuilder
@@ -119,6 +160,8 @@ struct VPNFeedbackFormView: View {
             TextEditor(text: $viewModel.feedbackFormText)
                 .font(.body)
                 .foregroundColor(.primary)
+                .frame(height: 150)
+                .fixedSize(horizontal: false, vertical: true)
                 .onChange(of: viewModel.feedbackFormText) {
                     viewModel.feedbackFormText = String($0.prefix(1000))
                 }
@@ -162,6 +205,8 @@ struct VPNFeedbackFormView: View {
                 if success {
                     dismiss()
                     onDismiss()
+                } else {
+                    showsError = true
                 }
             }
         } label: {

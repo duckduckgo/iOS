@@ -22,6 +22,7 @@ import BrowserServicesKit
 import Core
 import Common
 import NetworkProtection
+import NetworkExtension
 import Network
 
 struct VPNMetadata: Encodable {
@@ -172,14 +173,52 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     @MainActor
     func collectVPNState() async -> VPNMetadata.VPNState {
         let connectionState = String(describing: statusObserver.recentValue)
-        let lastDisconnectError = errorStore.lastDisconnectErrorMessage ?? "none"
         let connectedServer = serverInfoObserver.recentValue.serverLocation ?? "none"
         let connectedServerIP = serverInfoObserver.recentValue.serverAddress ?? "none"
 
         return .init(connectionState: connectionState,
-                     lastDisconnectError: lastDisconnectError,
+                     lastDisconnectError: await lastDisconnectError(),
                      connectedServer: connectedServer,
                      connectedServerIP: connectedServerIP)
+    }
+
+    private func lastDisconnectError() async -> String {
+        if #available(iOS 16, *) {
+            guard let tunnelManager = try? await NETunnelProviderManager.loadAllFromPreferences().first else {
+                return "none"
+            }
+
+            return await withCheckedContinuation { continuation in
+                tunnelManager.connection.fetchLastDisconnectError { error in
+                    let message = {
+                        if let error = error as? NSError {
+                            if error.domain == NEVPNConnectionErrorDomain, let code = NEDNSSettingsManagerError(rawValue: error.code) {
+                                switch code {
+                                case .configurationCannotBeRemoved:
+                                    return "configurationCannotBeRemoved"
+                                case .configurationDisabled:
+                                    return "configurationDisabled"
+                                case .configurationInvalid:
+                                    return "configurationInvalid"
+                                case .configurationStale:
+                                    return "configurationStale"
+                                default:
+                                    return error.localizedDescription
+                                }
+                            } else {
+                                return error.localizedDescription
+                            }
+                        }
+
+                        return "none"
+                    }()
+
+                    continuation.resume(returning: message)
+                }
+            }
+        }
+
+        return "none"
     }
 
     func collectVPNSettingsState() -> VPNMetadata.VPNSettingsState {

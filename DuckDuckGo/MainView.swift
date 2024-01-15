@@ -393,7 +393,7 @@ class MainViewCoordinator {
     }
 
     func hideNavigationWithForBottomPosition() {
-        guard addressBarPosition == .bottom else {
+        guard addressBarPosition.isBottom else {
             return
         }
 

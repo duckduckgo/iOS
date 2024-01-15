@@ -50,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
       "state" : {
-        "revision" : "5597bc17709c8acf454ecaad4f4082007986242a",
-        "version" : "10.0.2"
+        "revision" : "b972bc0ab6ee1d57a0a18a197dcc31e40ae6ac57",
+        "version" : "10.0.3"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/GRDB.swift.git",
       "state" : {
-        "revision" : "77d9a83191a74e319a5cfa27b0e3145d15607573",
-        "version" : "2.2.0"
+        "revision" : "9f049d7b97b1e68ffd86744b500660d34a9e79b8",
+        "version" : "2.3.0"
       }
     },
     {

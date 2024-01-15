@@ -4,9 +4,6 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
-/* No comment provided by engineer. */
-"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Rediģēt";
 
@@ -148,6 +145,9 @@
 /* Title for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-title" = "Paroļu sinhronizācija ir apturēta";
 
+/* Title for sync error alert */
+"alert.sync-error" = "Sinhronizācijas un dublēšanas kļūda";
+
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Uzzināt vairāk";
 
@@ -168,6 +168,30 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Saglabāt izlasi";
+
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "Nevar izveidot atkopšanas PDF failu.";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "Nespēj izdzēst datus serverī.";
+
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "Lai šīs ierīces savienotu pārī, vienā ierīcē izslēdz sinhronizēšanu un dublēšanu un pēc tam otrā ierīcē nospied \"Sinhronizēt ar citu ierīci\".";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "Nevar noņemt šo ierīci no sinhronizācijas un dublēšanas.";
+
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Nevar izveidot savienojumu ar serveri.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Nevar sinhronizēt ar citu ierīci.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "Nevar izslēgt sinhronizāciju un dublēšanu.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "Nevar atjaunināt ierīces nosaukumu.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Atbloķēt DuckDuckGo.";
@@ -1411,17 +1435,101 @@
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
 
+/* Privacy Policy title for Network Protection */
+"network-protection.privacy-policy.title" = "Privātuma politika";
+
+/* Title text for the Network Protection terms and conditions accept button */
+"network-protection.waitlist.agree-and-continue" = "Piekrist un turpināt";
+
+/* Availability disclaimer for Network Protection join waitlist screen */
+"network-protection.waitlist.availability-disclaimer" = "Agrīnās piekļuves laikā Network Protection var izmantot bez maksas.";
+
+/* Agree and Continue button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.agree-and-continue" = "Piekrist un turpināt";
+
+/* Enable Notifications button for Network Protection joined waitlist screen */
+"network-protection.waitlist.button.enable-notifications" = "Iespējot paziņojumus";
+
+/* Button title for users who already have an invite code */
+"network-protection.waitlist.button.existing-invite-code" = "Man ir uzaicinājuma kods";
+
+/* Join Waitlist button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.join-waitlist" = "Pievienoties gaidīšanas sarakstam";
+
+/* Button title text for the Network Protection waitlist confirmation prompt */
+"network-protection.waitlist.get-started" = "Sākt darbu";
+
+/* Subtitle for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.subtitle" = "Šifrē tiešsaistes datplūsmu savās pārlūkprogrammās un lietotnēs.";
+
+/* Title for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.title" = "Visas ierīces segums";
+
+/* Subtitle for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.subtitle" = "Nav nepieciešama atsevišķa lietotne. Izveido savienojumu ar vienu klikšķi un ērti skati savienojuma statusu.";
+
+/* Title for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.title" = "Ātri, uzticami un viegli";
+
+/* Subtitle for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.subtitle" = "Mēs nereģistrējam un nesaglabājam nekādus datus, kas varētu tevi saistīt ar tavām darbībām tiešsaistē.";
+
+/* Title for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.title" = "Stingra nereģistrēšanās politika";
+
+/* Subtitle for Network Protection invited screen */
+"network-protection.waitlist.invited.subtitle" = "Iegūsti papildu aizsardzības līmeni tiešsaistē, izmantojot ātru un vienkāršu VPN. Šifrē interneta savienojumu visā ierīcē un paslēp savu atrašanās vietu un IP adresi no apmeklētajām vietnēm.";
+
+/* Title for Network Protection invited screen */
+"network-protection.waitlist.invited.title" = "Aicinām tevi izmēģināt\nNetwork Protection agrīno piekļuvi!";
+
+/* First subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.1" = "Parūpējies par sava savienojuma drošumu jebkurā laikā un vietā, izmantojot DuckDuckGo VPN – Network Protection.";
+
+/* Second subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.2" = "Pievienojies gaidīšanas sarakstam, un mēs paziņosim, kad pienāks tava kārta.";
+
+/* Title for Network Protection joined waitlist screen */
+"network-protection.waitlist.joined.title" = "Tu esi sarakstā!";
+
+/* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Jauni ielūgumi tiek izsūtīti ik pēc dažām dienām, ievērojot rindas kārtības principu.";
+
+/* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "Mēs tev paziņosim, kad tavs ielūgums būs gatavs.";
+
+/* Body text for the alert to enable notifications */
+"network-protection.waitlist.notification-alert.description" = "Mēs tev nosūtīsim paziņojumu, kad tavs uzaicinājums testēt Network Protection būs gatavs.";
+
+/* Subtitle for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-description" = "Saņem paziņojumu, kad tava Network Protection agrīnā piekļuve būs gatava.";
+
+/* Title for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-title" = "Uzzini uzreiz, kad esi uzaicināts";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.text" = "Atver savu ielūgumu";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.title" = "Network Protection ir gatavs!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Tavs ielūgums ir gatavs!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Tu esi sarakstā!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Pievienojies privātajam nogaides sarakstam";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+"network.protection.invite.dialog.title" = "Tu esi uzaicināts izmēģināt Network Protection";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
-
-/* Message explaining that netP is invite only */
-"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
 
 /* Message for the network protection invite success view */
 "network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
@@ -1453,7 +1561,7 @@
 /* Header title label text for the status view when netP is connected */
 "network.protection.status.header.title.on" = "Network Protection is On";
 
-/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+/* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 
 /* Connection details label shown in NetworkProtection's status view. */
@@ -1489,23 +1597,32 @@
 /* Title for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.title" = "VPN brīdinājumi";
 
-/* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.footer" = "Automātiski atjaunot VPN savienojumu pēc pārtraukuma.";
+/* Footer text for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Ļauj vietējai datplūsmai apiet VPN un izveidot savienojumu ar ierīcēm tavā vietējā tīklā, piemēram, printeri.";
 
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.title" = "Vienmēr ieslēgts";
+/* Title for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.title" = "Neietvert vietējos tīklus";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Subtitle of countries item when there are multiple cities, example : */
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d pilsētas";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+"network.protection.vpn.location.recommended.section.footer" = "Automātiski izveido savienojumu ar tuvāko serveri, ko varam atrast.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
+"network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
+
+/* Title for the VPN Location screen. */
+"network.protection.vpn.location.title" = "VPN atrašanās vieta";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "VPN paziņojumi";
@@ -1517,10 +1634,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Tīkla aizsardzība novērš DNS noplūdi uz tavu interneta pakalpojumu sniedzēju, novirzot DNS vaicājumus caur VPN tuneli uz mūsu pašu atrisinātāju.";
-
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.title" = "Drošs DNS";
+"network.protection.vpn.secure.dns.setting.footer" = "Mūsu VPN izmanto Secure DNS, lai saglabātu tavu privātumu tiešsaistē un lai interneta pakalpojumu sniedzējs neredzētu, kādas vietnes tu apmeklē.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN iestatījumi";
@@ -1671,6 +1785,15 @@
 
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "\"%@\" vairs nevarēs piekļūt taviem sinhronizētajiem datiem.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Diemžēl sinhronizācija un dublēšana pašlaik nav pieejama. Lūdzu, mēģini vēlreiz vēlāk.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Diemžēl sinhronizācija un dublēšana šajā lietotnes versijā vairs nav pieejama. Lai turpinātu, lūdzu, atjaunini DuckDuckGo uz jaunāko versiju.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "Sinhronizācija un dublēšana ir pauzēta";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Aizvērt sākuma cilni";

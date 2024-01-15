@@ -22,6 +22,7 @@ import Common
 import Core
 import Bookmarks
 import BrowserServicesKit
+import SwiftUI
 import PrivacyDashboard
 
 extension MainViewController {
@@ -218,7 +219,7 @@ extension MainViewController {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
         launchSettings {
-            $0.openLogins(accountDetails: account)
+            $0.shouldPresentLoginsViewWithAccount(accountDetails: account)
         }
     }
 
@@ -226,26 +227,29 @@ extension MainViewController {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
         launchSettings {
-            $0.showSync()
+            $0.presentLegacyView(.sync)
         }
     }
+    
+    private func launchSettings(completion: ((SettingsViewModel) -> Void)? = nil) {
+        let legacyViewProvider = SettingsLegacyViewProvider(syncService: syncService,
+                                                            syncDataProviders: syncDataProviders,
+                                                            appSettings: appSettings,
+                                                            bookmarksDatabase: bookmarksDatabase)
+                        
+        let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider, accountManager: AccountManager())
+        let settingsController = SettingsHostingController(viewModel: settingsViewModel, viewProvider: legacyViewProvider)
+        settingsController.applyTheme(ThemeManager.shared.currentTheme)
+        
+        // We are still presenting legacy views, so use a Navcontroller
+        let navController = UINavigationController(rootViewController: settingsController)
+        navController.applyTheme(ThemeManager.shared.currentTheme)
+        settingsController.modalPresentationStyle = .automatic
 
-    private func launchSettings(completion: ((SettingsViewController) -> Void)? = nil) {
-        os_log(#function, log: .generalLog, type: .debug)
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-
-        let settings = storyboard.instantiateViewController(identifier: "SettingsViewController") { coder in
-            SettingsViewController(coder: coder,
-                                   bookmarksDatabase: self.bookmarksDatabase,
-                                   syncService: self.syncService,
-                                   syncDataProviders: self.syncDataProviders,
-                                   internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
-        }
-
-        let controller = ThemableNavigationController(rootViewController: settings)
-        controller.modalPresentationStyle = .automatic
-        present(controller, animated: true) {
-            completion?(settings)
+        settingsController.isModalInPresentation = true
+        
+        present(navController, animated: true) {
+            completion?(settingsViewModel)
         }
     }
 
@@ -273,4 +277,5 @@ extension MainViewController {
             ViewHighlighter.hideAll()
         }
     }
+    
 }

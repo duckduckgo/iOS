@@ -42,6 +42,7 @@ struct VPNMetadata: Encodable {
         let currentPath: String
         let lastPathChangeDate: String
         let lastPathChange: String
+        let secondsSincePathChange: TimeInterval
     }
 
     struct VPNState: Encodable {
@@ -97,14 +98,11 @@ protocol VPNMetadataCollector {
 final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
-    private let errorStore: NetworkProtectionTunnelErrorStore
 
     init(statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
-         serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
-         errorStore: NetworkProtectionTunnelErrorStore = NetworkProtectionTunnelErrorStore()) {
+         serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession()) {
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
-        self.errorStore = errorStore
     }
 
     func collectMetadata() async -> VPNMetadata {
@@ -150,22 +148,28 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
 
         let networkPathChange = VPNSettings(defaults: .networkProtectionGroupDefaults).networkPathChange
+        let now = Date()
 
         while true {
             if !monitor.currentPath.availableInterfaces.isEmpty {
                 path = monitor.currentPath
                 monitor.cancel()
+
+                let changeDate = networkPathChange?.date ?? .distantPast
                 return .init(currentPath: path.debugDescription,
-                             lastPathChangeDate: dateFormatter.string(from: networkPathChange?.date ?? .distantPast),
-                             lastPathChange: String(describing: networkPathChange))
+                             lastPathChangeDate: dateFormatter.string(from: changeDate),
+                             lastPathChange: String(describing: networkPathChange),
+                             secondsSincePathChange: now.timeIntervalSince(changeDate))
             }
 
             // Wait up to 3 seconds to fetch the path.
             let currentExecutionTime = CFAbsoluteTimeGetCurrent() - startTime
             if currentExecutionTime >= 3.0 {
+                let changeDate = networkPathChange?.date ?? .distantPast
                 return .init(currentPath: "Timed out fetching path",
-                             lastPathChangeDate: dateFormatter.string(from: networkPathChange?.date ?? .distantPast),
-                             lastPathChange: String(describing: networkPathChange))
+                             lastPathChangeDate: dateFormatter.string(from: changeDate),
+                             lastPathChange: String(describing: networkPathChange),
+                             secondsSincePathChange: now.timeIntervalSince(changeDate))
             }
         }
     }

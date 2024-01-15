@@ -1273,8 +1273,9 @@ extension MainViewController: FindInPageViewDelegate {
     func done(findInPageView: FindInPageView) {
         currentTab?.findInPage = nil
         viewCoordinator.toolbar.accessibilityElementsHidden = false
+
+        viewCoordinator.showNavigationBarWithBottomPosition()
     }
-    
 }
 
 extension MainViewController: BrowserChromeDelegate {
@@ -1801,6 +1802,8 @@ extension MainViewController: TabDelegate {
     func tabDidRequestFindInPage(tab: TabViewController) {
         updateFindInPage()
         _ = findInPageView?.becomeFirstResponder()
+
+        viewCoordinator.hideNavigationBarWithBottomPosition()
     }
 
     func closeFindInPage(tab: TabViewController) {

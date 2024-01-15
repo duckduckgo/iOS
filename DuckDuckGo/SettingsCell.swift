@@ -207,6 +207,7 @@ struct SettingsPickerCellView<T: CaseIterable & Hashable & CustomStringConvertib
                     Image(systemName: "chevron.up.chevron.down")
                         .font(Font.system(.footnote).weight(.bold))
                         .foregroundColor(Color(UIColor.tertiaryLabel))
+                        .padding(.trailing, -2)
                 }
             }
         }
@@ -222,8 +223,6 @@ struct SettingsPickerCellView<T: CaseIterable & Hashable & CustomStringConvertib
                         Image(systemName: "checkmark")
                     }
                     Text(option)
-                        .daxBodyRegular()
-                        .foregroundColor(Color(designSystemColor: .textSecondary))
                 }
             }
         }

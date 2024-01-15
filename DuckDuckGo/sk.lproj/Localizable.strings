@@ -898,6 +898,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet môže byť dosť nevyspytateľný.\n\nNemajte žiadne obavy! Súkromné vyhľadávanie a prehliadanie je jednoduchšie, ako si myslíte.";
 
+/* No comment provided by engineer. */
+"Debug" = "Debug";
+
 /* GPC Setting state */
 "donotsell.disabled" = "Zakázané";
 
@@ -1372,6 +1375,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Vitajte v\nprehliadači DuckDuckGo!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo pre Mac má rýchlosť, ktorú potrebujete, funkcie prehliadania, ktoré očakávate, a obsahuje naše prvotriedne privacy essentials.";
 
@@ -1488,6 +1494,9 @@
 
 /* Second subtitle for Network Protection join waitlist screen */
 "network-protection.waitlist.join.subtitle.2" = "Pridajte sa na zoznam čakateľov a my vás upozorníme, keď na vás príde rad.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
 
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "Ste na zozname čakateľov!";
@@ -1762,8 +1771,107 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Obľúbené položky";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "O službe DuckDuckGo";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "O nás";
+
 /* about page */
 "settings.about.text" = "DuckDuckGo je nezávislá spoločnosť na ochranu súkromia na internete, ktorá bola založená v roku 2008 pre všetkých, ktorých už nebaví sledovanie na internete a chcú jednoduché riešenie. Sme dôkazom, že skutočnú online ochranu súkromia môžete získať bez kompromisov.\n\nPrehliadač DuckDuckGo je vybavený funkciami, ktoré od prehliadača očakávate, ako sú napríklad záložky, karty, heslá a ďalšie funkcie. Navyše obsahuje viac ako [tucet účinných ochranných opatrení na ochranu súkromia](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) sa vo väčšine populárnych prehliadačov štandardne neponúka. Tento jedinečne komplexný súbor ochrany súkromia pomáha chrániť vaše online aktivity od vyhľadávania po prehliadanie, posielanie e-mailov a ďalšie.\n\nNaša ochrana súkromia funguje bez toho, aby ste museli poznať technické detaily alebo riešiť zložité nastavenia. Stačí prepnúť prehliadač na DuckDuckGo vo všetkých zariadeniach a získate predvolené súkromie.\n\nAk však chcete nahliadnuť pod pokrievku, viac informácií o tom, ako funguje ochrana súkromia DuckDuckGo, nájdete na našich [stránkach pomoci](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Pridať aplikáciu do Docku";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Pridať miniaplikáciu na domovskú obrazovku";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Poloha riadku s adresou";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Vzhľad";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Otvárať odkazy v pridružených aplikáciách";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Zakážte a zabráňte tak automatickému otváraniu odkazov v iných nainštalovaných aplikáciách.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Zobraziť návrhy automatického dopĺňania";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Zámok aplikácie";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Ak je nastavená funkcia Touch ID, Face ID alebo systémový prístupový kód, pri otvorení aplikácie sa zobrazí výzva na odomknutie aplikácie.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Automaticky vymazať údaje";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Správa kontextových okien súborov cookie";
+
+/* Settings title for the customize section */
+"settings.customize" = "Prispôsobiť";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Nastaviť ako predvolený prehliadač";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "Ochrana e-mailu";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Zablokujte nástroje na sledovanie e‑mailov a skryte vašu adresu";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Zdieľať spätnú väzbu";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Animácia tlačidla ohňa";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Zabezpečené stránky";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Globálna kontrola súkromia (GPC)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "Ikona aplikácie";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Klávesnica";
+
+/* Settings title for the 'More' section */
+"settings.more" = "Viac od DuckDuckGo";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Náhľady po dlhodobom stlačení";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Súkromie";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Synchronizácia a zálohovanie";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Veľkosť textu";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Motív";
+
+/* Title for the Settings View */
+"settings.title" = "Nastavenia";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Nezabezpečené webové stránky";
+
+/* Settings cell for Version */
+"settings.version" = "Verzia";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Súkromné hlasové vyhľadávanie";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Odoslať správu";
@@ -1857,6 +1965,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Ak chcete používať hlasové funkcie, povoľte pre DuckDuckGo prístup k mikrofónu v nastaveniach systému iOS.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "OK";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Vyžaduje sa prístup k mikrofónu";

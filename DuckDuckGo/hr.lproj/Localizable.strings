@@ -898,6 +898,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet može biti pomalo neugodan.\n\nNe brini! Privatno pretraživanje i pregledavanje lakše je nego što misliš.";
 
+/* No comment provided by engineer. */
+"Debug" = "Debug";
+
 /* GPC Setting state */
 "donotsell.disabled" = "Onemogućeno";
 
@@ -1372,6 +1375,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Dobro došao/la u\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "Aplikacija DuckDuckGo za Mac pruža ti potrebnu brzinu i značajke pretraživanja kakve očekuješ, a isporučuje se s našim najboljim alatima za privatnost u svojoj klasi - privacy essentials.";
 
@@ -1488,6 +1494,9 @@
 
 /* Second subtitle for Network Protection join waitlist screen */
 "network-protection.waitlist.join.subtitle.2" = "Pridruži se listi čekanja, a mi ćemo te obavijestiti kada dođeš na red.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
 
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "Na popisu ste!";
@@ -1762,8 +1771,107 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Omiljeno";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "O DuckDuckGou";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "O nama";
+
 /* about page */
 "settings.about.text" = "DuckDuckGo neovisna je tvrtka za privatnost na internetu osnovana 2008. godine. Namijenjena je svakome tko je umoran od toga da ga prate na internetu i želi jednostavno rješenje za to. Mi smo dokaz da je prava zaštita privatnosti na internetu moguća bez kompromisa.\n\nPreglednik DuckDuckGo dolazi sa značajkama koje očekujete od preglednika, kao što su oznake, kartice, lozinke i još mnogo toga, plus više od [desetak moćnih zaštita privatnosti](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) nije ponuđeno u većini popularnih preglednika prema zadanim postavkama. Ovaj jedinstveno sveobuhvatan skup zaštita privatnosti pomaže u zaštiti tvojih mrežnih aktivnosti, od pretraživanja do pregledavanja, slanja e-pošte i još mnogo toga.\n\nNaša zaštita privatnosti funkcionira bez potrebe da znamo bilo što o tehničkim detaljima ili da se bavimo kompliciranim postavkama. Sve što trebaš učiniti jest prebaciti svoj preglednik na DuckDuckGo na svim svojim uređajima i prema zadanim postavkama dobivaš našu zaštitu privatnosti.\n\nAli ako *želite* zaviriti \"ispod haube\", više o tome kako DuckDuckGo zaštita privatnosti funkcionira možeš pronaći na našim [stranicama pomoći](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Dodajte aplikaciju na Dock";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Dodajte widget na početni zaslon";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Položaj adresne trake";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Izgled";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Otvori veze u povezanim aplikacijama";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Onemogući da spriječiš automatsko otvaranje poveznica u drugim instaliranim aplikacijama.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Prikaži prijedloge za automatsko ispunjavanje";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Zaključavanje aplikacije";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Ako su postavljeni Touch ID, Face ID ili pristupni kôd sustava, od tebe će se tražiti da otključaš aplikaciju prilikom otvaranja.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Automatsko brisanje podataka";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Upravljanje skočnim prozorima kolačića";
+
+/* Settings title for the customize section */
+"settings.customize" = "Prilagodba";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Postavi kao zadani preglednik";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "Zaštita e-pošte";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Blokiraj programe za praćenje e-pošte i sakrij svoju adresu";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Podijeli povratne informacije";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Animacija gumba Vatre";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Zaštićena web-mjesta";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Globalna kontrola privatnosti (GPC)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "Ikona aplikacije";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Tipkovnica";
+
+/* Settings title for the 'More' section */
+"settings.more" = "Više od DuckDuckGoa";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Pretpregledi na dugi pritisak";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Zaštita privatnosti";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Sinkronizacija i sigurnosno kopiranje";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Veličina teksta";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Tema";
+
+/* Title for the Settings View */
+"settings.title" = "Postavke";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Nezaštićena web-mjesta";
+
+/* Settings cell for Version */
+"settings.version" = "Verzija";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Privatno glasovno pretraživanje";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pošalji izvješće";
@@ -1857,6 +1965,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Dopustite pristup mikrofonu u postavkama sustava iOS kako bi DuckDuckGo mogao koristiti glasovne funkcije.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "U redu";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Potreban je pristup mikrofonu";

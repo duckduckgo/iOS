@@ -898,6 +898,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internettet kan være ret uhyggeligt.\n\nBare rolig! Det er lettere at søge og browse privat, end du tror.";
 
+/* No comment provided by engineer. */
+"Debug" = "Debug";
+
 /* GPC Setting state */
 "donotsell.disabled" = "Deaktiveret";
 
@@ -1372,6 +1375,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Velkommen til\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo til Mac har den hastighed, du har brug for, de browserfunktioner, du forventer, og leveres spækket med vores bedste privatlivsartikler i klassen.";
 
@@ -1488,6 +1494,9 @@
 
 /* Second subtitle for Network Protection join waitlist screen */
 "network-protection.waitlist.join.subtitle.2" = "Tilmeld dig ventelisten – vi giver dig besked, når det er din tur.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
 
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "Du er på listen!";
@@ -1762,8 +1771,107 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favoritter";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "Om DuckDuckGo";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "Omkring";
+
 /* about page */
 "settings.about.text" = "DuckDuckGo er en uafhængig virksomhed, grundlagt i 2008, der beskytter privatlivet på internettet for alle, der er trætte af at blive sporet online og ønsker en nem løsning. Vi er bevis på, at du kan få ægte beskyttelse af privatlivet online uden at gå på kompromis.\n\nDuckDuckGo-browseren kommer med de funktioner, du forventer af en standardbrowser, som bogmærker, faner, adgangskoder og meget mere, plus over [et dusin kraftfulde beskyttelser af privatlivet](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/), som ikke tilbydes i de fleste populære browsere som standard. Dette unikke og omfattende sæt af beskyttelsesfunktioner hjælper med at beskytte dine onlineaktiviteter, fra søgning til browsing, e-mailing og meget mere.\n\nVores beskyttelse af privatlivet fungerer, uden at du behøver at vide noget om de tekniske detaljer eller håndtere komplicerede indstillinger. Det eneste, du skal gøre, er at skifte din browser til DuckDuckGo på alle dine enheder, så får du privatliv som standard.\n\nMen hvis du gerne vil have et kig under motorhjelmen, kan du finde flere oplysninger om, hvordan DuckDuckGos beskyttelse af privatlivet fungerer, på vores [hjælpesider](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Føj appen til din dock";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Tilføj widget til startskærmen";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Placering af adresselinje";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "udseende";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Åbn links i tilknyttede apps";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Deaktiver for at forhindre, at links automatisk åbnes i andre installerede apps.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Vis forslag til Autoudfyld";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Applikationslås";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Hvis Touch ID, Face ID eller en systemadgangskode er indstillet, bliver du bedt om at låse appen op, når du åbner.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Ryd data automatisk";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Administrer cookie pop op-vinduer";
+
+/* Settings title for the customize section */
+"settings.customize" = "Tilpas";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Angiv som standardbrowser";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "E-mailbeskyttelse";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Bloker e-mailtrackere, og skjul din adresse";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Del feedback";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Ildknap-animation";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Brandsikre websteder";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Global Privacy Control (GPC)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "App-ikon";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Tastatur";
+
+/* Settings title for the 'More' section */
+"settings.more" = "Mere fra DuckDuckGo";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Eksempler med lang tryk";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Privatliv";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Synkronisering og sikkerhedskopiering";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Tekststørrelse";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Tema";
+
+/* Title for the Settings View */
+"settings.title" = "Indstillinger";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Ubeskyttede websteder";
+
+/* Settings cell for Version */
+"settings.version" = "Version";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Privat stemmesøgning";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Indsend rapport";
@@ -1857,6 +1965,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Tillad mikrofonadgang i iOS-systemindstillinger for DuckDuckGo for at bruge stemmefunktioner.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "Okay";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Mikrofonadgang påkrævet";

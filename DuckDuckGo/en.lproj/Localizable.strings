@@ -1855,7 +1855,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "settings.ppro.ITR.subtitle" = "If your identity is stolen, we'll help restore it";
 
 /* Identity theft restoration cell title for privacy pro */
-"settings.ppro.ITR.title" = "Identity Theft Restioration";
+"settings.ppro.ITR.title" = "Identity Theft Restoration";
 
 /* Learn more button text for privacy pro */
 "settings.ppro.learn.more" = "Learn More";
@@ -1867,7 +1867,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "settings.ppro.subscribe" = "Subscribe to Privacy Pro";
 
 /* VPN cell title for privacy pro */
-"settings.ppro.VPN.title" = "VPN (Virtual Private Network";
+"settings.ppro.VPN.title" = "VPN";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Long-Press Previews";

@@ -25,6 +25,7 @@ import NetworkProtection
 @available(iOS 15, *)
 struct NetworkProtectionStatusView: View {
     @StateObject public var statusModel: NetworkProtectionStatusViewModel
+    @State private var isFeedbackFormActive = false
 
     var body: some View {
         List {
@@ -39,7 +40,6 @@ struct NetworkProtectionStatusView: View {
                 connectionDetails()
             }
             settings()
-            feedback()
         }
         .padding(.top, statusModel.error == nil ? 0 : -20)
         .if(statusModel.animationsOn, transform: {
@@ -154,25 +154,25 @@ struct NetworkProtectionStatusView: View {
 
     @ViewBuilder
     private func inviteOnlyFooter() -> some View {
-        Text(UserText.networkProtectionWaitlistAvailabilityDisclaimer)
+        Text("\(UserText.networkProtectionWaitlistAvailabilityDisclaimer) [\(UserText.netPStatusViewShareFeedback)](share-feedback)")
             .foregroundColor(.init(designSystemColor: .textSecondary))
             .accentColor(.init(designSystemColor: .accent))
             .daxFootnoteRegular()
             .padding(.top, 6)
-    }
-
-    @ViewBuilder
-    private func feedback() -> some View {
-        Section {
-            NavigationLink {
+            .background(NavigationLink(isActive: $isFeedbackFormActive) {
                 VPNFeedbackFormCategoryView()
             } label: {
-                Text(UserText.netPStatusViewShareFeedback)
-                    .daxBodyRegular()
-                    .foregroundColor(.init(designSystemColor: .textPrimary))
-            }
-        }
-        .listRowBackground(Color(designSystemColor: .surface))
+                EmptyView()
+            })
+            .environment(\.openURL, OpenURLAction { url in
+                switch url.absoluteString {
+                case "share-feedback":
+                    isFeedbackFormActive = true
+                    return .handled
+                default:
+                    return .discarded
+                }
+            })
     }
 }
 

@@ -61,7 +61,7 @@ final class BrowsingMenuAnimator: NSObject, UIViewControllerAnimatedTransitionin
             transitionContext.containerView.addSubview(fromSnapshot)
         }
 
-        toViewController.bindConstraints(to: fromViewController.currentTab?.webView)
+        toViewController.bindConstraints(to: fromViewController.viewCoordinator.contentContainer)
         toViewController.view.layoutIfNeeded()
 
         let snapshot = toViewController.menuView.snapshotView(afterScreenUpdates: true)

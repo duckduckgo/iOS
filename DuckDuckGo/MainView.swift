@@ -54,6 +54,7 @@ class MainViewFactory {
 extension MainViewFactory {
 
     private func createViews() {
+        createWebViewContainer()
         createLogoBackground()
         createContentContainer()
         createSuggestionTrayContainer()
@@ -64,13 +65,19 @@ extension MainViewFactory {
         createProgressView()
         createToolbar()
     }
+    
+    final class WebViewContainerView: UIView { }
+    private func createWebViewContainer() {
+        coordinator.webViewContainer = WebViewContainerView()
+        superview.addSubview(coordinator.webViewContainer)
+    }
 
     private func createProgressView() {
         coordinator.progress = ProgressView()
         superview.addSubview(coordinator.progress)
     }
 
-    class NavigationBarContainer: UIView { }
+    final class NavigationBarContainer: UIView { }
     private func createNavigationBarContainer() {
         coordinator.omniBar = OmniBar.loadFromXib()
         coordinator.omniBar.translatesAutoresizingMaskIntoConstraints = false
@@ -79,31 +86,31 @@ extension MainViewFactory {
         superview.addSubview(coordinator.navigationBarContainer)
     }
 
-    class NotificationBarContainer: UIView { }
+    final class NotificationBarContainer: UIView { }
     private func createNotificationBarContainer() {
         coordinator.notificationBarContainer = NotificationBarContainer()
         superview.addSubview(coordinator.notificationBarContainer)
     }
 
-    class ContentContainer: UIView { }
+    final class ContentContainer: UIView { }
     private func createContentContainer() {
         coordinator.contentContainer = ContentContainer()
         superview.addSubview(coordinator.contentContainer)
     }
 
-    class StatusBackgroundView: UIView { }
+    final class StatusBackgroundView: UIView { }
     private func createStatusBackground() {
         coordinator.statusBackground = StatusBackgroundView()
         superview.addSubview(coordinator.statusBackground)
     }
 
-    class TabBarContainer: UIView { }
+    final class TabBarContainer: UIView { }
     private func createTabBarContainer() {
         coordinator.tabBarContainer = TabBarContainer()
         superview.addSubview(coordinator.tabBarContainer)
     }
 
-    class SuggestionTrayContainer: UIView { }
+    final class SuggestionTrayContainer: UIView { }
     private func createSuggestionTrayContainer() {
         coordinator.suggestionTrayContainer = SuggestionTrayContainer()
         coordinator.suggestionTrayContainer.isHidden = true
@@ -136,7 +143,7 @@ extension MainViewFactory {
         ], animated: true)
     }
 
-    class LogoBackgroundView: UIView { }
+    final class LogoBackgroundView: UIView { }
     private func createLogoBackground() {
         coordinator.logoContainer = LogoBackgroundView()
         coordinator.logo = UIImageView(image: UIImage(named: "Logo"))
@@ -156,6 +163,7 @@ extension MainViewFactory {
 extension MainViewFactory {
 
     private func constrainViews() {
+        constrainWebViewContainer()
         constrainLogoBackground()
         constrainContentContainer()
         constrainSuggestionTrayContainer()
@@ -165,6 +173,16 @@ extension MainViewFactory {
         constrainNavigationBarContainer()
         constrainProgress()
         constrainToolbar()
+    }
+    
+    private func constrainWebViewContainer() {
+        let webViewContainer = coordinator.webViewContainer!
+        NSLayoutConstraint.activate([
+            webViewContainer.constrainView(superview, by: .width),
+            webViewContainer.constrainView(superview, by: .height),
+            webViewContainer.constrainView(superview, by: .centerX),
+            webViewContainer.constrainView(superview, by: .centerY),
+        ])
     }
 
     private func constrainProgress() {
@@ -333,6 +351,7 @@ class MainViewCoordinator {
     var toolbarFireButton: UIBarButtonItem!
     var toolbarForwardButton: UIBarButtonItem!
     var toolbarTabSwitcherButton: UIBarButtonItem!
+    var webViewContainer: UIView!
 
     let constraints = Constraints()
 

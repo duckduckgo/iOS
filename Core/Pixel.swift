@@ -106,6 +106,7 @@ public struct PixelParameters {
     public static let emailKeychainKeychainOperation = "keychain_operation"
 
     public static let bookmarkErrorOrphanedFolderCount = "bookmark_error_orphaned_count"
+    public static let bookmarksLastGoodVersion = "previous_app_version"
 
     // Remote messaging
     public static let message = "message"
@@ -126,8 +127,6 @@ public struct PixelParameters {
     public static let returnUserErrorCode = "error_code"
     public static let returnUserOldATB = "old_atb"
     public static let returnUserNewATB = "new_atb"
-
-    public static let autofillDefaultState = "default_state"
 }
 
 public struct PixelValues {
@@ -140,7 +139,9 @@ public class Pixel {
         static let tablet = "tablet"
         static let phone = "phone"
     }
-    
+
+    public static var isDryRun = false
+
     private static var isInternalUser: Bool {
         DefaultInternalUserDecider(store: InternalUserStore()).isInternalUser
     }
@@ -182,6 +183,18 @@ public class Pixel {
         if includedParameters.contains(.appVersion) {
             newParams[PixelParameters.appVersion] = AppVersion.shared.versionAndBuildNumber
         }
+
+        guard !isDryRun else {
+            os_log(.debug, log: .generalLog, "Pixel fired %{public}@ %{public}@",
+                   pixelName.replacingOccurrences(of: "_", with: "."),
+                   params.count > 0 ? "\(params)" : "")
+            // simulate server response time for Dry Run mode
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                onComplete(nil)
+            }
+            return
+        }
+
         if isDebugBuild {
             newParams[PixelParameters.test] = PixelValues.test
         }
@@ -205,7 +218,7 @@ public class Pixel {
                                                      headers: headers)
         let request = APIRequest(configuration: configuration, urlSession: .session(useMainThreadCallbackQueue: true))
         request.fetch { _, error in
-            os_log("Pixel fired %s %s", log: .generalLog, type: .debug, pixelName, "\(params)")
+            os_log("Pixel fired %{public}s %{public}s", log: .generalLog, type: .debug, pixelName, "\(params)")
             onComplete(error)
         }
     }
@@ -216,13 +229,14 @@ extension Pixel {
     
     public static func fire(pixel: Pixel.Event,
                             error: Error?,
+                            includedParameters: [QueryParameters] = [.appVersion],
                             withAdditionalParameters params: [String: String] = [:],
                             onComplete: @escaping (Error?) -> Void = { _ in }) {
         var newParams = params
         if let error {
             newParams.appendErrorPixelParams(error: error)
         }
-        fire(pixel: pixel, withAdditionalParameters: newParams, includedParameters: [], onComplete: onComplete)
+        fire(pixel: pixel, withAdditionalParameters: newParams, includedParameters: includedParameters, onComplete: onComplete)
     }
 }
 

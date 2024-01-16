@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.7
 //  Package.swift
 //  DuckDuckGo
 //
@@ -30,10 +30,17 @@ let package = Package(
             name: "DuckUI",
             targets: ["DuckUI"])
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/duckduckgo/BrowserServicesKit", exact: "101.1.0"),
+    ],
     targets: [
         .target(
             name: "DuckUI",
-            dependencies: [])
+            dependencies: [],
+            swiftSettings: [
+                .define("DEBUG", .when(configuration: .debug))
+            ],
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "BrowserServicesKit")]
+        )
     ]
 )

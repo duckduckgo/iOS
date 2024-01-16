@@ -4,8 +4,11 @@ tags:
 
 ---
 
+# Clear and launch
 - clearState
 - launchApp
+
+# Run onboarding Flow
 - runFlow: 
     when: 
       visible: 
@@ -14,144 +17,67 @@ tags:
     file: ../shared/onboarding.yaml
 
 # Add local favorite and bookmark
-- tapOn:
-    id: searchEntry
-- inputText: www.duckduckgo.com
-- pressKey: Enter
 - runFlow:
-    when:
-      visible:
-        text: "Got It"
-    commands:
-      - tapOn: Got It
-- tapOn: Browsing Menu
-- tapOn: Add Favorite
-- tapOn:
-    id: searchEntry
-- inputText: www.spreadprivacy.com
-- pressKey: Enter
-- tapOn: Browsing Menu
-- tapOn: Add Bookmark
+    file: ../shared/add_bookmarks_and_favorites.yaml
+- tapOn: Close Tabs and Clear Data
+- tapOn: Close Tabs and Clear Data
 
 # Add local login
-- tapOn: Browsing Menu
-- tapOn: Settings
-- tapOn: Logins
-- tapOn: Add 24
-- tapOn: Title
-- inputText: My Personal Website
-- tapOn: username@example.com
-- inputText: me@mypersonalwebsite.com
-- tapOn: example.com
-- inputText: mypersonalwebsite.com
-- tapOn: Save
-- tapOn: Logins
-- tapOn: Settings
-- tapOn: Done
-
-# Sync data
-# <WORKAROUND>This is a workaround to:
-# - Put the code in the clipboard on Maestro Cloud
-# - Prevent iOS from showing the Paste permission alert as Maestro can't handle it
-- tapOn:
-    id: searchEntry
-- inputText: ${CODE}
-- repeat:
-    while:
-      notVisible: "Select All"
-    commands:
-      - tapOn:
-            id: searchEntry
-- tapOn: Select All
-- tapOn: Cut
-- tapOn:
-    id: searchEntry
-- longPressOn:
-    id: searchEntry
-- tapOn: Paste
-- tapOn: Cancel
-
-- tapOn: Close Tabs and Clear Data
-- tapOn: Close Tabs and Clear Data
-- runFlow:
-    when:
-      visible:
-        text: "Cancel"
-    commands:
-      - tapOn: Cancel
-#</WORKAROUND>
-
 - tapOn: Settings
 - runFlow:
-    file: ../shared/set_internal_user.yaml
-- assertVisible: Sync & Back Up
-- tapOn: Sync & Back Up
-- assertVisible: Sync & Back up
-- tapOn: Recover Your Data
-- tapOn: Enter Text Code
-- tapOn: Paste
-- assertVisible: Device Synced!
-- tapOn: Next
-- tapOn: Not Now
+    file: ../shared/add_login_from_settings.yaml
+
+#  Copy Recovery Code
+- tapOn: Settings
+- runFlow:
+    file: ../shared/copy_recovery_code_from_settings.yaml
+    env:
+        CODE: ${CODE}
+
+# Set Internal User
+- runFlow:
+    file: ../shared/set_internal_user_from_settings.yaml
+
+# Login
+- assertVisible: Sync & Backup
+- tapOn: Sync & Backup
+- runFlow:
+    file: ../shared/sync_login.yaml
+- assertVisible: Sync & Backup
+
+# Log Out
+- runFlow:
+    file: ../shared/sync_logout.yaml
 - tapOn: Settings
 - tapOn: Done
 
-# Verify bookmarks and favorites have been merged
-- tapOn: Bookmarks
+# Remove bookmarks that were added locally
+- runFlow:
+    file: ../shared/remove_local_bookmarks.yaml
 
-- assertVisible: Spread Privacy
-- assertVisible: Stack Overflow - Where Developers Learn, Share, & Build Careers
-- assertVisible: DuckDuckGo — Privacy, simplified.
-- assertVisible: DuckDuckGo · GitHub
-- assertVisible: "Wolfram|Alpha: Computational Intelligence"
-- assertVisible: news
-- assertVisible: code
-- assertVisible: sports
-- tapOn: news
-- assertVisible: Breaking News, Latest News and Videos | CNN
-- assertVisible: News, sport and opinion from the Guardian's global edition | The Guardian
-- tapOn: Bookmarks
-- tapOn: code
-- assertVisible: "GitHub - duckduckgo/Android: DuckDuckGo Android App"
-- assertVisible: "GitHub - duckduckgo/iOS: DuckDuckGo iOS Application"
-- tapOn: Bookmarks
-- tapOn: sports
-- assertVisible: NFL.com | Official Site of the National Football League
-- assertVisible: AS.com - Diario online deportivo. Fútbol, motor y mucho más
-- tapOn: Bookmarks
-- tapOn: Favorites
-- assertVisible: DuckDuckGo — Privacy, simplified.
-- assertVisible: NFL.com | Official Site of the National Football League
-- assertVisible: DuckDuckGo · GitHub
-- assertVisible: Stack Overflow - Where Developers Learn, Share, & Build Careers
+# Remove Login that were added locally
+- runFlow:
+    file: ../shared/remove_local_logins.yaml
+
+# Login
+- tapOn: Settings
+- tapOn: Sync & Backup
+- runFlow:
+    file: ../shared/sync_login.yaml
+
+# Verify bookmarks have been merged
+- tapOn: Settings
+- runFlow:
+    file: ../shared/sync_verify_bookmarks.yaml
+
+# Verify favorites are unified
 - tapOn: Done
+- tapOn: Settings
+- runFlow:
+    file: ../shared/sync_verify_unified_favorites.yaml
 
 # Verify logins
 - tapOn: Settings
-- tapOn: Logins
-- assertVisible: Unlock device to access saved Logins
-- tapOn: Passcode field
-- inputText: "0000"
-- pressKey: Enter
-- assertVisible: Dax Login
-- tapOn: Dax Login
-- assertVisible: daxthetest
-- assertVisible: duckduckgo.com
-- tapOn: Logins
-- assertVisible: Github
-- tapOn: Github
-- assertVisible: githubusername
-- assertVisible: github.com
-- tapOn: Logins
-- assertVisible: StackOverflow
-- tapOn: StackOverflow
-- assertVisible: stacker
-- assertVisible: stackoverflow.com
-- tapOn: Logins
-- assertVisible: My Personal Website
-- tapOn: My Personal Website
-- assertVisible: me@mypersonalwebsite.com
-- assertVisible: mypersonalwebsite.com
-- tapOn: Logins
-- tapOn: Settings
-- tapOn: Done
+- runFlow:
+    file: ../shared/sync_verify_logins.yaml
+

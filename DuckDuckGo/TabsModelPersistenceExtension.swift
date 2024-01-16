@@ -18,6 +18,8 @@
 //
 
 import Foundation
+import Core
+import Common
 
 extension TabsModel {
 
@@ -26,8 +28,21 @@ extension TabsModel {
     }
 
     public static func get() -> TabsModel? {
-        guard let data = UserDefaults.app.object(forKey: Constants.key) as? Data else { return nil }
-        return try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? TabsModel
+        guard let data = UserDefaults.app.object(forKey: Constants.key) as? Data else {
+            return nil
+        }
+        var tabsModel: TabsModel?
+        do {
+            let unarchiver = try NSKeyedUnarchiver(forReadingFrom: data)
+            unarchiver.requiresSecureCoding = false
+            tabsModel = unarchiver.decodeObject(of: self, forKey: NSKeyedArchiveRootObjectKey)
+            if let error = unarchiver.error {
+                throw error
+            }
+        } catch {
+            os_log("Something went wrong unarchiving TabsModel %@", log: .generalLog, type: .error, error.localizedDescription)
+        }
+        return tabsModel
     }
 
     public static func clear() {
@@ -35,8 +50,11 @@ extension TabsModel {
     }
 
     func save() {
-        guard let data = try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false) else { return }
-        UserDefaults.app.set(data, forKey: Constants.key)
+        do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
+            UserDefaults.app.set(data, forKey: Constants.key)
+        } catch {
+            os_log("Something went wrong archiving TabsModel %@", log: .generalLog, type: .error, error.localizedDescription)
+        }
     }
-    
 }

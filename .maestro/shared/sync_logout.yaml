@@ -1,0 +1,8 @@
+appId: com.duckduckgo.mobile.ios
+---
+
+- assertVisible: Sync & Backup
+- tapOn: Turn Off Sync & Backup...
+- assertVisible: Turn Off Sync?
+- tapOn: Remove
+- assertVisible: Begin Syncing

@@ -77,7 +77,8 @@ lane :adhoc do |options|
     export_method: "ad-hoc",
     scheme: "DuckDuckGo",
     export_options: "adhocExportOptions.plist",
-    derived_data_path: "DerivedData"
+    derived_data_path: "DerivedData",
+    xcargs: "-skipPackagePluginValidation"
   )
 
   if is_ci
@@ -168,7 +169,8 @@ private_lane :build_release do |options|
     export_method: "app-store",
     scheme: "DuckDuckGo",
     export_options: "appStoreExportOptions.plist",
-    derived_data_path: "DerivedData"
+    derived_data_path: "DerivedData",
+    xcargs: "-skipPackagePluginValidation"
   )
 end
 
@@ -180,7 +182,8 @@ private_lane :build_alpha do |options|
     configuration: "Alpha",
     scheme: "DuckDuckGo-Alpha",
     export_options: "alphaExportOptions.plist",
-    derived_data_path: "DerivedData"
+    derived_data_path: "DerivedData",
+    xcargs: "-skipPackagePluginValidation"
   )
 end
 

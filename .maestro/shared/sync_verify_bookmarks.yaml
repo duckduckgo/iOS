@@ -1,0 +1,33 @@
+appId: com.duckduckgo.mobile.ios
+---
+
+- tapOn: Settings
+- tapOn: Done
+- tapOn: Bookmarks
+- runFlow: 
+    when: 
+      visible:
+        text: Download Missing Icons?
+    commands:
+      - tapOn: Not Now
+
+- assertVisible: Spread Privacy
+- assertVisible: Stack Overflow - Where Developers Learn, Share, & Build Careers
+- assertVisible: DuckDuckGo — Privacy, simplified.
+- assertVisible: DuckDuckGo · GitHub
+- assertVisible: "Wolfram|Alpha: Computational Intelligence"
+- assertVisible: news
+- assertVisible: code
+- assertVisible: sports
+- tapOn: news
+- assertVisible: Breaking News, Latest News and Videos | CNN
+- assertVisible: News, sport and opinion from the Guardian's global edition | The Guardian
+- tapOn: Bookmarks
+- tapOn: code
+- assertVisible: "GitHub - duckduckgo/Android: DuckDuckGo Android App"
+- assertVisible: "GitHub - duckduckgo/iOS: DuckDuckGo iOS Application"
+- tapOn: Bookmarks
+- tapOn: sports
+- assertVisible: NFL.com | Official Site of the National Football League
+- assertVisible: AS.com - Diario online deportivo. Fútbol, motor y mucho más
+- tapOn: Bookmarks

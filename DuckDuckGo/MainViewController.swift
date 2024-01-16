@@ -89,10 +89,17 @@ class MainViewController: UIViewController {
     private var favoritesViewModel: FavoritesListInteracting
     let syncService: DDGSyncing
     let syncDataProviders: SyncDataProviders
+
+    @UserDefaultsWrapper(key: .syncDidShowSyncPausedByFeatureFlagAlert, defaultValue: false)
+    private var syncDidShowSyncPausedByFeatureFlagAlert: Bool
+
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
+    private var syncFeatureFlagsCancellable: AnyCancellable?
     private var favoritesDisplayModeCancellable: AnyCancellable?
     private var emailCancellables = Set<AnyCancellable>()
+
+    private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
 
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = {
         let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
@@ -117,7 +124,7 @@ class MainViewController: UIViewController {
 
     lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
-        return tabManager?.current
+        return tabManager?.current(createIfNeeded: false)
     }
 
     var searchBarRect: CGRect {
@@ -130,6 +137,8 @@ class MainViewController: UIViewController {
     
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
+        
+    private var keyboardHeight: CGFloat = 0.0
 
     required init?(coder: NSCoder) {
         fatalError("Use init?(code:")
@@ -250,7 +259,6 @@ class MainViewController: UIViewController {
         registerForApplicationEvents()
         registerForCookiesManagedNotification()
         registerForSettingsChangeNotifications()
-        registerForOrientationChangeNotification()
 
         tabManager.cleanupTabsFaviconCache()
 
@@ -274,17 +282,6 @@ class MainViewController: UIViewController {
     override func performSegue(withIdentifier identifier: String, sender: Any?) {
         assertionFailure()
         super.performSegue(withIdentifier: identifier, sender: sender)
-    }
-
-    func registerForOrientationChangeNotification() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(orientationDidChange),
-                                               name: UIDevice.orientationDidChangeNotification,
-                                               object: nil)
-    }
-
-    @objc func orientationDidChange() {
-        onAddressBarPositionChanged()
     }
 
     func loadSuggestionTray() {
@@ -361,6 +358,21 @@ class MainViewController: UIViewController {
             selector: #selector(showSyncPausedError),
             name: SyncCredentialsAdapter.credentialsSyncLimitReached,
             object: nil)
+        syncFeatureFlagsCancellable = syncService.featureFlagsPublisher
+            .dropFirst()
+            .map { $0.contains(.dataSyncing) }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isDataSyncingAvailable in
+                guard let self else {
+                    return
+                }
+                if isDataSyncingAvailable {
+                    self.syncDidShowSyncPausedByFeatureFlagAlert = false
+                } else if self.syncService.authState == .active, !self.syncDidShowSyncPausedByFeatureFlagAlert {
+                    self.showSyncPausedByFeatureFlagAlert()
+                    self.syncDidShowSyncPausedByFeatureFlagAlert = true
+                }
+            }
     }
 
     @objc private func showSyncPausedError(_ notification: Notification) {
@@ -390,6 +402,26 @@ class MainViewController: UIViewController {
         }
     }
 
+    private func showSyncPausedByFeatureFlagAlert(upgradeRequired: Bool = false) {
+        let title = UserText.syncPausedTitle
+        let description = upgradeRequired ? UserText.syncUnavailableMessageUpgradeRequired : UserText.syncUnavailableMessage
+        if self.presentedViewController is SyncSettingsViewController {
+            return
+        }
+        self.presentedViewController?.dismiss(animated: true)
+        let alert = UIAlertController(title: title,
+                                      message: description,
+                                      preferredStyle: .alert)
+        if syncService.featureFlags.contains(.userInterface) {
+            let learnMoreAction = UIAlertAction(title: UserText.syncPausedAlertLearnMoreButton, style: .default) { _ in
+                self.segueToSettingsSync()
+            }
+            alert.addAction(learnMoreAction)
+        }
+        alert.addAction(UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .cancel))
+        self.present(alert, animated: true)
+    }
+
     func registerForSettingsChangeNotifications() {
         NotificationCenter.default.addObserver(self, selector:
                                                 #selector(onAddressBarPositionChanged),
@@ -400,6 +432,7 @@ class MainViewController: UIViewController {
     @objc func onAddressBarPositionChanged() {
         viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
         refreshViewsBasedOnAddressBarPosition(appSettings.currentAddressBarPosition)
+        refreshWebViewContentInsets()
     }
 
     func refreshViewsBasedOnAddressBarPosition(_ position: AddressBarPosition) {
@@ -445,7 +478,8 @@ class MainViewController: UIViewController {
         height = intersection.height
 
         findInPageBottomLayoutConstraint.constant = height
-        currentTab?.webView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+        keyboardHeight = height
+        refreshWebViewContentInsets()
 
         if let suggestionsTray = suggestionTrayController {
             let suggestionsFrameInView = suggestionsTray.view.convert(suggestionsTray.contentFrame, to: view)
@@ -604,8 +638,13 @@ class MainViewController: UIViewController {
     }
 
     private func loadInitialView() {
-        if let tab = currentTab, tab.link != nil {
-            addToView(tab: tab)
+        // if let tab = currentTab, tab.link != nil {
+        // if let tab = tabManager.current(create: true), tab.link != nil {
+        if tabManager.model.currentTab?.link != nil {
+            guard let tab = tabManager.current(createIfNeeded: true) else {
+                fatalError("Unable to create tab")
+            }
+            addToWebViewContainer(tab: tab)
             refreshControls()
         } else {
             attachHomeScreen()
@@ -640,15 +679,24 @@ class MainViewController: UIViewController {
         removeHomeScreen()
         AppDependencyProvider.shared.homePageConfiguration.refresh()
 
-        let tabModel = currentTab?.tabModel
+        // Access the tab model directly as we don't want to create a new tab controller here
+        guard let tabModel = tabManager.model.currentTab else {
+            fatalError("No tab model")
+        }
 
 #if APP_TRACKING_PROTECTION
-        let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel,
                                                                favoritesViewModel: favoritesViewModel,
                                                                appSettings: appSettings,
+                                                               syncService: syncService,
+                                                               syncDataProviders: syncDataProviders,
                                                                appTPDatabase: appTrackingProtectionDatabase)
 #else
-        let controller = HomeViewController.loadFromStoryboard(model: tabModel!, favoritesViewModel: favoritesViewModel, appSettings: appSettings)
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel,
+                                                               favoritesViewModel: favoritesViewModel,
+                                                               appSettings: appSettings,
+                                                               syncService: syncService,
+                                                               syncDataProviders: syncDataProviders)
 #endif
 
         homeController = controller
@@ -656,7 +704,7 @@ class MainViewController: UIViewController {
         controller.chromeDelegate = self
         controller.delegate = self
 
-        addToView(controller: controller)
+        addToContentContainer(controller: controller)
 
         refreshControls()
         syncService.scheduler.requestSyncImmediately()
@@ -686,10 +734,10 @@ class MainViewController: UIViewController {
     func onQuickFirePressed() {
         wakeLazyFireButtonAnimator()
         
-        self.forgetAllWithAnimation {}
-        self.dismiss(animated: true)
+        forgetAllWithAnimation {}
+        dismiss(animated: true)
         if KeyboardSettings().onAppLaunch {
-            self.enterSearch()
+            enterSearch()
         }
     }
     
@@ -766,7 +814,7 @@ class MainViewController: UIViewController {
 
     func loadUrl(_ url: URL) {
         prepareTabForRequest {
-            currentTab?.load(url: url)
+            self.currentTab?.load(url: url)
         }
     }
 
@@ -785,8 +833,19 @@ class MainViewController: UIViewController {
     private func prepareTabForRequest(request: () -> Void) {
         viewCoordinator.navigationBarContainer.alpha = 1
         allowContentUnderflow = false
-        request()
+
+        if currentTab == nil {
+            if tabManager.current(createIfNeeded: true) == nil {
+                fatalError("failed to create tab")
+            }
+
+            // Likely this hasn't happened yet so the publishers won't be loaded and will block the webview from loading
+            _ = ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+        }
+
         guard let tab = currentTab else { fatalError("no tab") }
+        
+        request()
         dismissOmniBar()
         select(tab: tab)
     }
@@ -794,7 +853,7 @@ class MainViewController: UIViewController {
     private func addTab(url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) {
         let tab = tabManager.add(url: url, inheritedAttribution: inheritedAttribution)
         dismissOmniBar()
-        addToView(tab: tab)
+        addToWebViewContainer(tab: tab)
     }
 
     func select(tabAt index: Int) {
@@ -808,7 +867,7 @@ class MainViewController: UIViewController {
         if tab.link == nil {
             attachHomeScreen()
         } else {
-            addToView(tab: tab)
+            addToWebViewContainer(tab: tab)
             refreshControls()
         }
         tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
@@ -817,18 +876,29 @@ class MainViewController: UIViewController {
         }
     }
 
-    private func addToView(tab: TabViewController) {
+    private func addToWebViewContainer(tab: TabViewController) {
         removeHomeScreen()
         updateFindInPage()
         currentTab?.progressWorker.progressBar = nil
         currentTab?.chromeDelegate = nil
-        addToView(controller: tab)
+        currentTab?.webView.scrollView.contentInsetAdjustmentBehavior = .never
+        
+        addChild(tab)
+        viewCoordinator.webViewContainer.subviews.forEach { $0.removeFromSuperview() }
+        viewCoordinator.webViewContainer.addSubview(tab.view)
+        tab.view.frame = self.viewCoordinator.webViewContainer.bounds
+        tab.didMove(toParent: self)
+        
+        viewCoordinator.logoContainer.isHidden = true
+        viewCoordinator.contentContainer.isHidden = true
+        
         tab.progressWorker.progressBar = viewCoordinator.progress
         chromeManager.attach(to: tab.webView.scrollView)
         tab.chromeDelegate = self
     }
 
-    private func addToView(controller: UIViewController) {
+    private func addToContentContainer(controller: UIViewController) {
+        viewCoordinator.contentContainer.isHidden = false
         addChild(controller)
         viewCoordinator.contentContainer.subviews.forEach { $0.removeFromSuperview() }
         viewCoordinator.contentContainer.addSubview(controller.view)
@@ -1010,7 +1080,8 @@ class MainViewController: UIViewController {
             appSettings: appSettings,
             currentTabUrl: currentTabUrl,
             syncService: syncService,
-            syncDataProviders: syncDataProviders
+            syncDataProviders: syncDataProviders,
+            selectedAccount: nil
         )
         autofillSettingsViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: autofillSettingsViewController)
@@ -1217,8 +1288,9 @@ extension MainViewController: FindInPageViewDelegate {
     func done(findInPageView: FindInPageView) {
         currentTab?.findInPage = nil
         viewCoordinator.toolbar.accessibilityElementsHidden = false
+
+        viewCoordinator.showNavigationBarWithBottomPosition()
     }
-    
 }
 
 extension MainViewController: BrowserChromeDelegate {
@@ -1257,21 +1329,45 @@ extension MainViewController: BrowserChromeDelegate {
         let updateBlock = {
             self.updateToolbarConstant(percent)
             self.updateNavBarConstant(percent)
-            
+          
             self.view.layoutIfNeeded()
             
-            self.viewCoordinator.omniBar.alpha = percent
+            self.viewCoordinator.navigationBarContainer.alpha = percent
             self.viewCoordinator.tabBarContainer.alpha = percent
             self.viewCoordinator.toolbar.alpha = percent
         }
-        
+           
         if animated {
-            UIView.animate(withDuration: ChromeAnimationConstants.duration, animations: updateBlock)
+            UIView.animate(withDuration: ChromeAnimationConstants.duration, animations: updateBlock) { _ in
+                self.refreshWebViewContentInsets()
+            }
         } else {
             updateBlock()
+            self.refreshWebViewContentInsets()
         }
     }
 
+    func refreshWebViewContentInsets() {
+        guard let webView = currentTab?.webView else { return }
+
+        let top = viewCoordinator.statusBackground.frame.height
+        let bottom: CGFloat
+        if isToolbarHidden {
+            bottom = 0
+        } else if appSettings.currentAddressBarPosition.isBottom {
+            bottom = viewCoordinator.toolbar.frame.height
+                + viewCoordinator.navigationBarContainer.frame.height
+                + view.safeAreaInsets.bottom + additionalSafeAreaInsets.bottom
+                + keyboardHeight
+        } else {
+            bottom = viewCoordinator.toolbar.frame.height
+                + view.safeAreaInsets.bottom + additionalSafeAreaInsets.bottom
+                + keyboardHeight
+        }
+        
+        webView.scrollView.contentInset = .init(top: top, left: 0, bottom: bottom, right: 0)
+    }
+    
     func setNavigationBarHidden(_ hidden: Bool) {
         if hidden { hideKeyboard() }
         
@@ -1279,6 +1375,7 @@ extension MainViewController: BrowserChromeDelegate {
         viewCoordinator.omniBar.alpha = hidden ? 0 : 1
         viewCoordinator.tabBarContainer.alpha = hidden ? 0 : 1
         viewCoordinator.statusBackground.alpha = hidden ? 0 : 1
+        
     }
     
     var canHideBars: Bool {
@@ -1424,7 +1521,15 @@ extension MainViewController: OmniBarDelegate {
         }
         segueToSettings()
     }
-    
+
+    func onSettingsLongPressed() {
+        if featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild {
+            segueToDebugSettings()
+        } else {
+            segueToSettings()
+        }
+    }
+
     func onCancelPressed() {
         dismissOmniBar()
         hideSuggestionTray()
@@ -1469,9 +1574,17 @@ extension MainViewController: OmniBarDelegate {
     func onSharePressed() {
         hideSuggestionTray()
         guard let link = currentTab?.link else { return }
-        currentTab?.onShareAction(forLink: link, fromView: viewCoordinator.omniBar.shareButton, orginatedFromMenu: false)
+        currentTab?.onShareAction(forLink: link, fromView: viewCoordinator.omniBar.shareButton)
     }
-    
+
+    func onShareLongPressed() {
+        if featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild {
+            segueToDebugSettings()
+        } else {
+            onSharePressed()
+        }
+    }
+
     func onVoiceSearchPressed() {
         SpeechRecognizer.requestMicAccess { permission in
             if permission {
@@ -1620,7 +1733,7 @@ extension MainViewController: TabDelegate {
             guard self.tabManager.model.tabs.contains(newTab.tabModel) else { return }
 
             self.dismissOmniBar()
-            self.addToView(tab: newTab)
+            self.addToWebViewContainer(tab: newTab)
             self.refreshOmniBar()
         }
 
@@ -1669,13 +1782,13 @@ extension MainViewController: TabDelegate {
             showBars()
             newTabAnimation {
                 self.loadUrlInNewTab(url, inheritedAttribution: attribution)
-                self.tabManager.current?.openedByPage = true
-                self.tabManager.current?.openingTab = tab
+                self.currentTab?.openedByPage = true
+                self.currentTab?.openingTab = tab
             }
             tabSwitcherButton.incrementAnimated()
         } else {
             loadUrlInNewTab(url, inheritedAttribution: attribution)
-            self.tabManager.current?.openingTab = tab
+            self.currentTab?.openingTab = tab
         }
 
     }
@@ -1724,11 +1837,14 @@ extension MainViewController: TabDelegate {
 
     func showBars() {
         chromeManager.reset()
+        refreshWebViewContentInsets()
     }
     
     func tabDidRequestFindInPage(tab: TabViewController) {
         updateFindInPage()
         _ = findInPageView?.becomeFirstResponder()
+
+        viewCoordinator.hideNavigationBarWithBottomPosition()
     }
 
     func closeFindInPage(tab: TabViewController) {
@@ -1755,7 +1871,7 @@ extension MainViewController: TabDelegate {
     func tab(_ tab: TabViewController,
              didRequestPresentingTrackerAnimation privacyInfo: PrivacyInfo,
              isCollapsing: Bool) {
-        guard tabManager.current === tab else { return }
+        guard currentTab === tab else { return }
         viewCoordinator.omniBar?.startTrackersAnimation(privacyInfo, forDaxDialog: !isCollapsing)
     }
     
@@ -1799,7 +1915,7 @@ extension MainViewController: TabDelegate {
     }
 
     func tabCheckIfItsBeingCurrentlyPresented(_ tab: TabViewController) -> Bool {
-        return tabManager.current === tab
+        return currentTab === tab
     }
 }
 
@@ -1869,17 +1985,19 @@ extension MainViewController: TabSwitcherButtonDelegate {
     }
 
     func showTabSwitcher() {
-        if let currentTab = currentTab {
-            currentTab.preparePreview(completion: { image in
-                if let image = image {
-                    self.previewsSource.update(preview: image,
-                                               forTab: currentTab.tabModel)
-                    
-                }
-                ViewHighlighter.hideAll()
-                self.segueToTabSwitcher()
-            })
+        guard let currentTab = currentTab ?? tabManager?.current(createIfNeeded: true) else {
+            fatalError("Unable to get current tab")
         }
+        
+        currentTab.preparePreview(completion: { image in
+            if let image = image {
+                self.previewsSource.update(preview: image,
+                                           forTab: currentTab.tabModel)
+
+            }
+            ViewHighlighter.hideAll()
+            self.segueToTabSwitcher()
+        })
     }
 }
 
@@ -1923,9 +2041,11 @@ extension MainViewController: AutoClearWorker {
     }
 
     func forgetTabs() {
-        DaxDialogs.shared.resumeRegularFlow()
         findInPageView?.done()
         tabManager.removeAll()
+    }
+
+    func refreshUIAfterClear() {
         showBars()
         attachHomeScreen()
         tabsBarController?.refresh(tabsModel: tabManager.model)
@@ -1933,21 +2053,22 @@ extension MainViewController: AutoClearWorker {
     }
     
     func forgetData() {
-        findInPageView?.done()
-        
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
         let pixel = TimedPixel(.forgetAllDataCleared)
         WebCacheManager.shared.clear(tabCountInfo: tabCountInfo) {
             pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
-        }
-        
-        AutoconsentManagement.shared.clearCache()
-        DaxDialogs.shared.clearHeldURLData()
 
-        if syncService.authState == .inactive {
-            bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
+            AutoconsentManagement.shared.clearCache()
+            DaxDialogs.shared.clearHeldURLData()
+
+            if self.syncService.authState == .inactive {
+                self.bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
+            }
+
+            self.refreshUIAfterClear()
         }
+
     }
     
     func stopAllOngoingDownloads() {
@@ -1964,11 +2085,10 @@ extension MainViewController: AutoClearWorker {
         
         fireButtonAnimator.animate {
             self.tabManager.prepareCurrentTabForDataClearing()
-            
             self.stopAllOngoingDownloads()
+            self.forgetTabs()
             self.forgetData()
             DaxDialogs.shared.resumeRegularFlow()
-            self.forgetTabs()
         } onTransitionCompleted: {
             ActionMessageView.present(message: UserText.actionForgetAllDone,
                                       presentationLocation: .withBottomBar(andAddressBarBottom: self.appSettings.currentAddressBarPosition.isBottom))

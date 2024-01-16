@@ -15,17 +15,30 @@ let package = Package(
             targets: ["Waitlist", "WaitlistMocks"])
     ],
     dependencies: [
+        .package(url: "https://github.com/duckduckgo/BrowserServicesKit", exact: "101.1.0"),
         .package(url: "https://github.com/duckduckgo/DesignResourcesKit", exact: "2.0.0")
     ],
     targets: [
         .target(
             name: "Waitlist",
-            dependencies: ["DesignResourcesKit"]),
+            dependencies: ["DesignResourcesKit"],
+            swiftSettings: [
+                .define("DEBUG", .when(configuration: .debug))
+            ],
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "BrowserServicesKit")]
+        ),
         .target(
             name: "WaitlistMocks",
-            dependencies: ["Waitlist"]),
+            dependencies: ["Waitlist"],
+            swiftSettings: [
+                .define("DEBUG", .when(configuration: .debug))
+            ],
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "BrowserServicesKit")]
+        ),
         .testTarget(
             name: "WaitlistTests",
-            dependencies: ["Waitlist", "WaitlistMocks"])
+            dependencies: ["Waitlist", "WaitlistMocks"],
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "BrowserServicesKit")]
+        )
     ]
 )

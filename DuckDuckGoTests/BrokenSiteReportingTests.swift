@@ -36,14 +36,23 @@ final class BrokenSiteReportingTests: XCTestCase {
     private enum Resource {
         static let tests = "privacy-reference-tests/broken-site-reporting/tests.json"
     }
-    
+
+    override func setUp() {
+        super.setUp()
+
+        Pixel.isDryRun = false
+    }
+
     override func tearDown() {
+        Pixel.isDryRun = true
+        
         HTTPStubs.removeAllStubs()
         super.tearDown()
     }
 
     func testBrokenSiteReporting() throws {
         let testJSON = data.fromJsonFile(Resource.tests)
+        let testString = String(data: testJSON, encoding: .utf8)
         let testData = try JSONDecoder().decode(BrokenSiteReportingTestData.self, from: testJSON)
 
         referenceTests = testData.reportURL.tests.filter {
@@ -64,7 +73,6 @@ final class BrokenSiteReportingTests: XCTestCase {
             return
         }
         
-        
         os_log("Testing [%s]", type: .info, test.name)
         
         let brokenSiteInfo = BrokenSiteInfo(url: URL(string: test.siteURL),
@@ -81,7 +89,6 @@ final class BrokenSiteReportingTests: XCTestCase {
                                             systemVersion: test.os ?? "",
                                             gpc: test.gpcEnabled)
         
-
         stub(condition: isHost(host)) { request -> HTTPStubsResponse in
             
             guard let requestURL = request.url else {
@@ -117,7 +124,7 @@ final class BrokenSiteReportingTests: XCTestCase {
             return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
         }
         
-        brokenSiteInfo.send(with: test.category, description: "")
+        brokenSiteInfo.send(with: test.category, description: "", source: .dashboard)
     }
 }
 
@@ -135,7 +142,6 @@ private struct ReportURL: Codable {
 }
 
 // MARK: - Test
-
 private struct Test: Codable {
     let name: String
     let siteURL: String

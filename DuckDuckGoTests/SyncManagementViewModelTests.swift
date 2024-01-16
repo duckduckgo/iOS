@@ -26,7 +26,7 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
     fileprivate var monitor = Monitor<SyncManagementViewModelDelegate>()
 
     lazy var model: SyncSettingsViewModel = {
-        let model = SyncSettingsViewModel()
+        let model = SyncSettingsViewModel(isOnDevEnvironment: { false }, switchToProdEnvironment: {})
         model.delegate = self
         return model
     }()
@@ -42,6 +42,16 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
         XCTAssertNotNil(caprturedOptionModel)
     }
 
+    func testWhenShowRecoveryPDFPressed_ShowRecoveryPDFIsShown() {
+        model.delegate?.showRecoveryPDF()
+
+        // You can either test one individual call was made x number of times or check for a whole number of calls
+        monitor.assert(#selector(showRecoveryPDF).description, calls: 1)
+        monitor.assertCalls([
+            #selector(showRecoveryPDF).description: 1
+        ])
+    }
+
     func testWhenScanQRCodePressed_ThenSyncWithAnotherDeviceViewIsShown() {
         model.scanQRCode()
 
@@ -52,23 +62,34 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
         ])
     }
 
-    func testWhenSyncIsNotSetup_EnterTextCodePressed_ThenSyncWithAnotherDeviceEnterTextViewIsShown() {
-        model.showEnterTextView()
+    func testWhenCopyCodePressed_CodeIsCopied() {
+        model.copyCode()
 
         // You can either test one individual call was made x number of times or check for a whole number of calls
-        monitor.assert(#selector(showSyncWithAnotherDeviceEnterText).description, calls: 1)
+        monitor.assert(#selector(copyCode).description, calls: 1)
         monitor.assertCalls([
-            #selector(showSyncWithAnotherDeviceEnterText).description: 1
+            #selector(copyCode).description: 1
         ])
     }
 
-    func testWhenRecoverYourDataPressed_RecoverDataViewIsShown() {
-        model.showRecoverDataView()
+
+    func testWhenManageBookmarkPressed_BookmarkVCIsLaunched() {
+        model.manageBookmarks()
 
         // You can either test one individual call was made x number of times or check for a whole number of calls
-        monitor.assert(#selector(showRecoverData).description, calls: 1)
+        monitor.assert(#selector(launchBookmarksViewController).description, calls: 1)
         monitor.assertCalls([
-            #selector(showRecoverData).description: 1
+            #selector(launchBookmarksViewController).description: 1
+        ])
+    }
+
+    func testWhenManageLoginsPressed_LoginsVCIsLaunched() {
+        model.manageLogins()
+
+        // You can either test one individual call was made x number of times or check for a whole number of calls
+        monitor.assert(#selector(launchAutofillViewController).description, calls: 1)
+        monitor.assertCalls([
+            #selector(launchAutofillViewController).description: 1
         ])
     }
 
@@ -102,13 +123,23 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
         ])
     }
 
+
+    func testWhenRecoverSyncDataPressed_RecoverDataViewShown() {
+        model.recoverSyncDataPressed()
+
+        // You can either test one individual call was made x number of times or check for a whole number of calls
+        monitor.assert(#selector(showRecoverData).description, calls: 1)
+        monitor.assertCalls([
+            #selector(showRecoverData).description: 1
+        ])
+    }
     // MARK: Delegate functions
 
     func showSyncWithAnotherDeviceEnterText() {
         monitor.incrementCalls(function: #function.cleaningFunctionName())
     }
 
-    func createAccountAndStartSyncing(optionsViewModel: SyncSettingsViewModel) {
+   func createAccountAndStartSyncing(optionsViewModel: SyncSettingsViewModel) {
         createAccountAndStartSyncingCalled = true
         caprturedOptionModel = optionsViewModel
     }

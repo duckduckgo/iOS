@@ -57,8 +57,9 @@ class ThemeManager {
             }
         }
     }
-    
-    private static func makeTheme(name: ThemeName) -> Theme {
+
+    public static func makeTheme(name: ThemeName) -> Theme {
+
         switch name {
         case .systemDefault:
             return obtainSystemTheme()
@@ -66,7 +67,6 @@ class ThemeManager {
             return DarkTheme()
         case .light:
             return LightTheme()
-
         }
     }
     

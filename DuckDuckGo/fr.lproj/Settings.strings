@@ -22,9 +22,6 @@
 /* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "5YD-Od-uDU"; */
 "5YD-Od-uDU.text" = "Effacer automatiquement les données";
 
-/* Class = "UIButton"; normalTitle = "More at duckduckgo.com/about"; ObjectID = "7nt-uS-sOh"; */
-"7nt-uS-sOh.normalTitle" = "Pour en savoir plus, visitez duckduckgo.com/about";
-
 /* Class = "UIButton"; normalTitle = "Settings"; ObjectID = "8YG-7Q-Czd"; */
 "8YG-7Q-Czd.normalTitle" = "Paramètres";
 
@@ -49,8 +46,8 @@
 /* Class = "UILabel"; text = "Debug Menu"; ObjectID = "A9G-5I-RSn"; */
 "A9G-5I-RSn.text" = "Menu de débogage";
 
-/* Class = "UILabel"; text = "Logins"; ObjectID = "And-cQ-SEu"; */
-"And-cQ-SEu.text" = "Identifiants";
+/* Class = "UILabel"; text = "Passwords"; ObjectID = "And-cQ-SEu"; */
+"And-cQ-SEu.text" = "Mots de passe";
 
 /* Class = "UILabel"; text = "Animation"; ObjectID = "AtR-nS-Gun"; */
 "AtR-nS-Gun.text" = "Animation";
@@ -148,9 +145,6 @@
 /* Class = "UILabel"; text = "Default"; ObjectID = "Gbx-kl-uOO"; */
 "Gbx-kl-uOO.text" = "Défaut";
 
-/* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
-"gji-Fs-EET.text" = "La confidentialité, simplifiée. ";
-
 /* Class = "UILabel"; text = "Manage Cookie Pop-ups"; ObjectID = "GRv-M2-Kx1"; */
 "GRv-M2-Kx1.text" = "Gérer les fenêtres contextuelles (cookies)";
 
@@ -165,9 +159,6 @@
 
 /* Class = "UILabel"; text = "Privacy Protection enabled for all sites"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "La protection de la confidentialité est activée pour tous les sites";
-
-/* Class = "UIImageView"; accessibilityLabel = "DuckDuckGo"; ObjectID = "iNd-oh-m3g"; */
-"iNd-oh-m3g.accessibilityLabel" = "DuckDuckGo";
 
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Icône";
@@ -199,8 +190,8 @@
 /* Class = "UITableViewSection"; headerTitle = "More From DuckDuckGo"; ObjectID = "OxE-MQ-uJk"; */
 "OxE-MQ-uJk.headerTitle" = "Plus de la part de DuckDuckGo";
 
-/* Class = "UILabel"; text = "Sync"; ObjectID = "oXN-ez-gct"; */
-"oXN-ez-gct.text" = "Synchronisation";
+/* Class = "UILabel"; text = "Sync & Backup"; ObjectID = "oXN-ez-gct"; */
+"oXN-ez-gct.text" = "Synchronisation et sauvegarde";
 
 /* Class = "UILabel"; text = "Browse privately with our app for Mac "; ObjectID = "P0F-ts-ekd"; */
 "P0F-ts-ekd.text" = "Naviguez incognito avec notre application pour Mac ";

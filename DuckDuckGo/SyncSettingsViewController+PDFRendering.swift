@@ -31,10 +31,14 @@ extension SyncSettingsViewController {
 
         let pdf = RecoveryCodeItem(data: data)
         navigationController?.visibleViewController?.presentShareSheet(withItems: [pdf],
-                                                                       fromView: view) { [weak self] _, success, _, _ in
-            guard success else { return }
-            self?.navigationController?.visibleViewController?.dismiss(animated: true)
-        }
+                                                                       fromView: view)
+    }
+
+    func shareCode(_ code: String) {
+
+        navigationController?.visibleViewController?.presentShareSheet(withItems: [code],
+                                                                       fromView: view,
+                                                                       overrideInterfaceStyle: .dark)
     }
 
 }
@@ -49,7 +53,7 @@ private class RecoveryCodeItem: NSObject, UIActivityItemSource {
     }
 
     func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
-        return URL(fileURLWithPath: "DuckDuckGo Sync Recovery Code.pdf")
+        return URL(fileURLWithPath: "Sync Data Recovery - DuckDuckGo.pdf")
     }
 
     func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {

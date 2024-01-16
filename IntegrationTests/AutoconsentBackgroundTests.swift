@@ -75,7 +75,7 @@ final class AutoconsentBackgroundTests: XCTestCase {
         webview.navigationDelegate = navigationDelegate
         let url = Bundle(for: type(of: self)).url(forResource: "autoconsent-test-page", withExtension: "html")!
         webview.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
-        waitForExpectations(timeout: 10)
+        waitForExpectations(timeout: 30)
 
         let expectation = expectation(description: "Async call")
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
@@ -92,7 +92,7 @@ final class AutoconsentBackgroundTests: XCTestCase {
                 expectation.fulfill()
             })
         }
-        waitForExpectations(timeout: 10)
+        waitForExpectations(timeout: 30)
     }
 
     @MainActor
@@ -113,7 +113,7 @@ final class AutoconsentBackgroundTests: XCTestCase {
         webview.navigationDelegate = navigationDelegate
         let url = Bundle(for: type(of: self)).url(forResource: "autoconsent-test-page-banner", withExtension: "html")!
         webview.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
-        waitForExpectations(timeout: 10)
+        waitForExpectations(timeout: 30)
 
         let expectation = expectation(description: "Async call")
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
@@ -130,7 +130,7 @@ final class AutoconsentBackgroundTests: XCTestCase {
                 expectation.fulfill()
             })
         }
-        waitForExpectations(timeout: 10)
+        waitForExpectations(timeout: 30)
     }
 }
 

@@ -1,0 +1,39 @@
+# all.yaml
+
+appId: com.duckduckgo.mobile.ios
+---
+
+# Set up 
+- clearState
+- launchApp
+- runFlow: 
+    when: 
+      visible: 
+        text: "Let’s Do It!"
+        index: 0
+    file: ../shared/onboarding.yaml
+
+# Load Site
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://privacy-test-pages.site/security/address-bar-spoofing/"
+- pressKey: Enter
+
+# Manage onboarding
+- runFlow:
+    when:
+      visible:
+        text: "Got It"
+        index: 0
+    file: ../shared/onboarding_browsing.yaml
+
+# Run AddressBarSpoofing tests
+- runFlow: ./1_-_AddressBarSpoof,_basicauth.yaml
+- runFlow: ./2_-_AddressBarSpoof,_aboutblank.yaml
+- runFlow: ./3_-_AddressBarSpoof,_appschemes.yaml
+- runFlow: ./4_-_AddressBarSpoof,_b64_html.yaml
+- runFlow: ./5_-_AddressBarSpoof,_downloadpath.yaml
+- runFlow: ./6_-_AddressBarSpoof,_formaction.yaml
+- runFlow: ./7_-_AddressBarSpoof,_pagerewrite.yaml

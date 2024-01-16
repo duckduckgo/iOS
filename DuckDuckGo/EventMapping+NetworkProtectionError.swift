@@ -88,7 +88,8 @@ extension EventMapping where Event == NetworkProtectionError {
                 .wireGuardInvalidState,
                 .wireGuardDnsResolution,
                 .wireGuardSetNetworkSettings,
-                .startWireGuardBackend:
+                .startWireGuardBackend,
+                .failedToRetrieveAuthToken:
             pixelEvent = .networkProtectionUnhandledError
             params[PixelParameters.function] = #function
             params[PixelParameters.line] = String(#line)

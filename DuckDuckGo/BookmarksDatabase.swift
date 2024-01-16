@@ -39,6 +39,10 @@ public class BookmarksDatabase {
         return url
     }()
 
+    public static var defaultDBFileURL: URL = {
+        return defaultDBLocation.appendingPathComponent("Bookmarks.sqlite", conformingTo: .database)
+    }()
+
     public static func make(location: URL = defaultDBLocation, readOnly: Bool = false) -> CoreDataDatabase {
         os_log("BookmarksDatabase.make - IN - %s", location.absoluteString)
         let bundle = Bookmarks.bundle

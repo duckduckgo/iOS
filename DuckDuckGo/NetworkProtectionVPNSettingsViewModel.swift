@@ -24,26 +24,62 @@ import NetworkProtection
 import Combine
 
 final class NetworkProtectionVPNSettingsViewModel: ObservableObject {
-    private let tunnelSettings: TunnelSettings
-    private var cancellable: AnyCancellable?
+    private let settings: VPNSettings
+    private var cancellables: Set<AnyCancellable> = []
 
-    @Published public var preferredLocation: String = UserText.netPPreferredLocationNearest
+    @Published public var preferredLocation: NetworkProtectionLocationSettingsItemModel
+    @Published public var excludeLocalNetworks: Bool = true
 
-    init(tunnelSettings: TunnelSettings) {
-        self.tunnelSettings = tunnelSettings
-        cancellable = tunnelSettings.selectedLocationPublisher.map { selectedLocation in
-            guard let selectedLocation = selectedLocation.location else {
-                return UserText.netPPreferredLocationNearest
-            }
-            guard let city = selectedLocation.city else {
-                return Self.localizedString(forRegionCode: selectedLocation.country)
-            }
-            return "\(city), \(Self.localizedString(forRegionCode: selectedLocation.country))"
-        }.assign(to: \.preferredLocation, onWeaklyHeld: self)
+    init(settings: VPNSettings) {
+        self.settings = settings
+        self.preferredLocation = NetworkProtectionLocationSettingsItemModel(selectedLocation: settings.selectedLocation)
+        settings.selectedLocationPublisher
+            .receive(on: DispatchQueue.main)
+            .map(NetworkProtectionLocationSettingsItemModel.init(selectedLocation:))
+            .assign(to: \.preferredLocation, onWeaklyHeld: self)
+            .store(in: &cancellables)
+        
+        settings.excludeLocalNetworksPublisher
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.excludeLocalNetworks, onWeaklyHeld: self)
+            .store(in: &cancellables)
+    }
+
+    func toggleExcludeLocalNetworks() {
+        settings.excludeLocalNetworks.toggle()
     }
 
     private static func localizedString(forRegionCode: String) -> String {
         Locale.current.localizedString(forRegionCode: forRegionCode) ?? forRegionCode.capitalized
+    }
+}
+
+struct NetworkProtectionLocationSettingsItemModel {
+    enum LocationIcon {
+        case defaultIcon
+        case emoji(String)
+    }
+
+    let title: String
+    let icon: LocationIcon
+
+    init(selectedLocation: VPNSettings.SelectedLocation) {
+        switch selectedLocation {
+        case .nearest:
+            title = UserText.netPPreferredLocationNearest
+            icon = .defaultIcon
+        case .location(let location):
+            let countryLabelsModel = NetworkProtectionVPNCountryLabelsModel(country: location.country)
+            if let city = location.city {
+                title = UserText.netPVPNSettingsLocationSubtitleFormattedCityAndCountry(
+                    city: city,
+                    country: countryLabelsModel.title
+                )
+            } else {
+                title = countryLabelsModel.title
+            }
+            icon = .emoji(countryLabelsModel.emoji)
+        }
     }
 }
 

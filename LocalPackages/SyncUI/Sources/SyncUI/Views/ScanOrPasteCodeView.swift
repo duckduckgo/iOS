@@ -20,260 +20,141 @@
 import SwiftUI
 import DesignResourcesKit
 
-/// Handles scanning or pasting a code.
-public struct ScanOrPasteCodeView: View {
-
+public struct ScanOrSeeCode: View {
     @ObservedObject var model: ScanOrPasteCodeViewModel
+    @State var qrCodeModel = ShowQRCodeViewModel()
+
+    @State private var isShareSheetPresented: Bool = false
 
     public init(model: ScanOrPasteCodeViewModel) {
         self.model = model
     }
 
-    @State var isInvalidCode = false
-
-    @ViewBuilder
-    func fullscreenCameraBackground() -> some View {
-        Group {
-            if model.showCamera {
-                QRCodeScannerView {
-                    return await model.codeScanned($0)
-                } onCameraUnavailable: {
-                    model.cameraUnavailable()
-                } onInvalidCodeScanned: {
-                    withAnimation(.linear.delay(0.0)) {
-                        isInvalidCode = true
-                    }
-
-                    withAnimation(.linear.delay(0.2)) {
-                        isInvalidCode = false
-                    }
-                }
-            } else {
-                Rectangle()
-                    .fill(.black)
-            }
-        }
-        .ignoresSafeArea()
-    }
-
-    @ViewBuilder
-    func waitingForCameraPermission() -> some View {
-        if model.videoPermission == .unknown {
-            SwiftUI.ProgressView()
-        }
-    }
-
-    @ViewBuilder
-    func cameraPermissionDenied() -> some View {
-        if model.videoPermission == .denied {
-            VStack(spacing: 0) {
-
-                Image("SyncCameraPermission")
-                    .padding(.top, 40)
-                    .padding(.bottom, 20)
-
-                Text(UserText.cameraPermissionRequired)
-                    .daxTitle3()
-                    .lineSpacing(1.05)
-                    .padding(.bottom, 8)
-
-                Text(UserText.cameraPermissionInstructions)
-                    .lineLimit(nil)
-                    .multilineTextAlignment(.center)
-                    .daxBodyRegular()
-                    .lineSpacing(1.1)
-
-                Spacer()
-
-                Button {
-                    model.gotoSettings()
-                } label: {
-                    HStack {
-                        Image("SyncGotoButton")
-                        Text(UserText.goToSettingsButton)
-                    }
-                }
-                .buttonStyle(SyncLabelButtonStyle())
-                .padding(.bottom, 40)
-            }
-            .padding(.horizontal, 40)
-        }
-    }
-
-    @ViewBuilder
-    func cameraUnavailable() -> some View {
-        if model.videoPermission == .authorised && !model.showCamera {
-            VStack(spacing: 0) {
-
-                Image("SyncCameraUnavailable")
-                    .padding(.top, 40)
-                    .padding(.bottom, 20)
-
-                Text(UserText.cameraIsUnavailableTitle)
-                    .daxTitle3()
-                    .lineSpacing(1.05)
-
-            }
-            .padding(.horizontal, 40)
-        }
-    }
-
-    @ViewBuilder
-    func instructions() -> some View {
-
-        Text(model.showConnectMode ? UserText.connectDeviceInstructions : UserText.recoveryModeInstructions)
-            .lineLimit(nil)
-            .multilineTextAlignment(.center)
-            .daxCaption()
-            .foregroundColor(.white.opacity(0.6))
-            .padding(.top, 20)
-
-    }
-
-    @ViewBuilder
-    func buttons() -> some View {
-
-        Group {
-            Section {
-                NavigationLink {
-                    PasteCodeView(model: model)
-                } label: {
-                    HStack(spacing: 16) {
-                        Image("SyncKeyboardIcon")
-                        Text(UserText.manuallyEnterCodeTitle)
-                            .daxButton()
-                            .foregroundColor(.white.opacity(0.84))
-                    }
-                }
-            }
-            Section {
-                if model.showConnectMode {
-                    NavigationLink {
-                        ConnectModeView(model: model)
-                    } label: {
-                        HStack(spacing: 16) {
-                            Image("SyncQRCodeIcon")
-
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(UserText.showQRCodeLabel)
-                                    .daxButton()
-                                    .foregroundColor(.white.opacity(0.84))
-                                Text(UserText.showQRCodeSubLabel)
-                                    .daxCaption()
-                                    .foregroundColor(.white.opacity(0.6))
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                    }
-                }
-            }
-        }
-        .frame(height: 40)
-        .foregroundColor(.primary)
-        .onAppear {
-            model.endConnectMode()
-        }
-    }
-
-    @ViewBuilder
-    func cameraViewPort() -> some View {
-        ZStack(alignment: .center) {
-            waitingForCameraPermission()
-            cameraTarget()
-        }
-    }
-
-    @ViewBuilder
-    func cameraTarget() -> some View {
-        if model.showCamera {
-            ZStack {
-                ForEach([0.0, 90.0, 180.0, 270.0], id: \.self) { degrees in
-                    RoundedCorner()
-                        .stroke(lineWidth: 8)
-                        .foregroundColor(isInvalidCode ? .red.opacity(0.6) : .white.opacity(0.8))
-                        .rotationEffect(.degrees(degrees), anchor: .center)
-                        .frame(width: 300, height: 300)
-                }
-            }
-        }
-    }
-
     public var body: some View {
-        GeometryReader { g in
-            ZStack(alignment: .top) {
-                fullscreenCameraBackground()
-
-                VStack(spacing: 0) {
-                    Rectangle() // Also acts as the blur for the camera
-                        .fill(.black)
-                        .frame(height: g.safeAreaInsets.top)
-
-                    ZStack {
-                        // Background in case fullscreen camera view doesn't work
-                        if !model.showCamera {
-                            Rectangle().fill(Color.black)
-                        }
-                        
-                        cameraViewPort()
-                            .frame(width: g.size.width, height: g.size.width)
-                            .frame(maxHeight: g.size.height - 300)
-
-                        Group {
-                            cameraPermissionDenied()
-                            cameraUnavailable()
-                        }
-                        .padding(.horizontal, 0)
-                    }
-
-                    ZStack {
-                        Rectangle() // Also acts as the blur for the camera
-                            .fill(.black)
-                            .regularMaterialBackground()
-
-                        VStack(spacing: 0) {
-                            Section {
-                                instructions()
-                                    .padding(.horizontal, 20)
-                            }
-
-                            List {
-                                buttons()
-                            }
-                            .ignoresSafeArea()
-                            .disableScrolling()
-                        }
-                        .frame(maxWidth: Constants.maxFullScreenWidth)
-                    }
+        GeometryReader { geometry in
+            ScrollView {
+                VStack(spacing: 10) {
+                    let heightFactor = geometry.size.width < 380 ? 1 : 0.84
+                    titleView()
+                    CameraView(model: model)
+                        .frame(width: geometry.size.width)
+                        .frame(minHeight: geometry.size.width * heightFactor)
+                    qrCodeView(width: geometry.size.width)
                 }
-                .ignoresSafeArea()
-            }
-            .navigationTitle("Scan QR Code")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel", action: model.cancel)
-                    .foregroundColor(Color.white)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(UserText.cancelButton, action: model.cancel)
+                            .foregroundColor(Color.white)
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink(UserText.scanOrSeeCodeManuallyEnterCodeLink, destination: {
+                            PasteCodeView(model: model)
+                        })
+                        .foregroundColor(Color(designSystemColor: .accent))
+                    }
                 }
             }
         }
     }
-}
 
-private struct RoundedCorner: Shape {
-
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        let c = 50.0
-        let r = 30.0
-        let e = c - r
-
-        path.move(to: CGPoint(x: 0, y: c))
-        path.addLine(to: CGPoint(x: 0, y: e))
-        path.addCurve(to: CGPoint(x: e, y: 0),
-                      control1: CGPoint(x: 0, y: 0),
-                      control2: CGPoint(x: e, y: 0))
-        path.addLine(to: CGPoint(x: c, y: 0))
-
-        return path
+    @ViewBuilder
+    func titleView() -> some View {
+        VStack(spacing: 10) {
+            Text(UserText.scanOrSeeCodeTitle)
+                .daxTitle2()
+            instructionsText()
+                .daxFootnoteRegular()
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 16)
+        }
+        .padding(.top, 10)
     }
 
+    func instructionsText() -> some View {
+        if #available(iOS 15.0, *) {
+            return Text(instructionsString)
+        } else {
+            return Text(UserText.scanOrSeeCodeInstruction)
+        }
+    }
+
+    @available(iOS 15, *)
+    var instructionsString: AttributedString {
+        let baseString = UserText.scanOrSeeCodeInstructionAttributed(syncMenuPath: UserText.syncMenuPath)
+        var instructions = AttributedString(baseString)
+        if let range = instructions.range(of: UserText.syncMenuPath) {
+            instructions[range].font = .boldSystemFont(ofSize: 13)
+        }
+        return instructions
+    }
+
+
+    @ViewBuilder
+    func qrCodeView(width: CGFloat) -> some View {
+        var maxWidth: CGFloat {
+            let basedOnScreenWidth = (width - 70) / 3 * 2
+            if width < 390 {
+                return basedOnScreenWidth
+            }
+            return 180
+        }
+        VStack(spacing: 8) {
+            HStack(alignment: .top, spacing: 20) {
+                QRCodeView(string: qrCodeModel.code ?? "", size: 120)
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack {
+                        Text(UserText.scanOrSeeCodeScanCodeInstructionsTitle)
+                            .daxBodyBold()
+                            .fixedSize(horizontal: false, vertical: true)
+                            .multilineTextAlignment(.leading)
+                        Spacer()
+                        Image("SyncDeviceType_phone")
+                            .padding(2)
+                            .background(
+                                RoundedRectangle(cornerRadius: 2)
+                                    .fill(Color(designSystemColor: .lines))
+                            )
+                    }
+                    Text(UserText.scanOrSeeCodeScanCodeInstructionsBody)
+                        .foregroundColor(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .multilineTextAlignment(.leading)
+                }
+                .frame(maxWidth: maxWidth)
+            }
+            .frame(width: width)
+            .padding(20)
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color(designSystemColor: .panel))
+                    .frame(width: width - 20)
+            )
+            .padding(20)
+            cantScanView()
+        }
+        .padding(.bottom, 40)
+        .onAppear {
+            if let recoveryCode = model.recoveryCode {
+                self.qrCodeModel.code = recoveryCode
+            } else {
+                self.qrCodeModel = model.startConnectMode()
+            }
+        }
+        .frame(width: width)
+    }
+
+    @ViewBuilder
+    func cantScanView() -> some View {
+        HStack {
+            Text(UserText.scanOrSeeCodeFooter)
+            HStack(alignment: .center) {
+                Text(UserText.scanOrSeeCodeShareCodeLink)
+                    .foregroundColor(Color(designSystemColor: .accent))
+                    .onTapGesture {
+                        model.showShareCodeSheet()
+                    }
+                Image("Arrow-Circle-Right-12")
+            }
+        }
+    }
 }

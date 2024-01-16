@@ -84,8 +84,12 @@ class HomeCollectionView: UICollectionView {
                 renderers.install(renderer: NavigationSearchHomeViewSectionRenderer(fixed: fixed))
                 
             case .favorites:
-                renderers.install(renderer: FavoritesHomeViewSectionRenderer(viewModel: favoritesViewModel))
-                
+                let renderer = FavoritesHomeViewSectionRenderer(viewModel: favoritesViewModel)
+                renderer.onFaviconMissing = { _ in
+                    controller.faviconsFetcherOnboarding.presentOnboardingIfNeeded(from: controller)
+                }
+                renderers.install(renderer: renderer)
+
             case .homeMessage:
                 renderers.install(renderer: HomeMessageViewSectionRenderer(homePageConfiguration: homePageConfiguration))
 

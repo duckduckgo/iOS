@@ -22,9 +22,6 @@
 /* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "5YD-Od-uDU"; */
 "5YD-Od-uDU.text" = "Automaticky vymazať údaje";
 
-/* Class = "UIButton"; normalTitle = "More at duckduckgo.com/about"; ObjectID = "7nt-uS-sOh"; */
-"7nt-uS-sOh.normalTitle" = "Viac informácií na stránke duckduckgo.com/about";
-
 /* Class = "UIButton"; normalTitle = "Settings"; ObjectID = "8YG-7Q-Czd"; */
 "8YG-7Q-Czd.normalTitle" = "Nastavenia";
 
@@ -49,8 +46,8 @@
 /* Class = "UILabel"; text = "Debug Menu"; ObjectID = "A9G-5I-RSn"; */
 "A9G-5I-RSn.text" = "Ponuka ladenia";
 
-/* Class = "UILabel"; text = "Logins"; ObjectID = "And-cQ-SEu"; */
-"And-cQ-SEu.text" = "Prihlasovacie údaje";
+/* Class = "UILabel"; text = "Passwords"; ObjectID = "And-cQ-SEu"; */
+"And-cQ-SEu.text" = "Heslo";
 
 /* Class = "UILabel"; text = "Animation"; ObjectID = "AtR-nS-Gun"; */
 "AtR-nS-Gun.text" = "Animácia";
@@ -148,9 +145,6 @@
 /* Class = "UILabel"; text = "Default"; ObjectID = "Gbx-kl-uOO"; */
 "Gbx-kl-uOO.text" = "Štandardný";
 
-/* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
-"gji-Fs-EET.text" = "Súkromie, zjednodušene. ";
-
 /* Class = "UILabel"; text = "Manage Cookie Pop-ups"; ObjectID = "GRv-M2-Kx1"; */
 "GRv-M2-Kx1.text" = "Správa kontextových okien súborov cookie";
 
@@ -165,9 +159,6 @@
 
 /* Class = "UILabel"; text = "Privacy Protection enabled for all sites"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "Ochrana súkromia je zapnutá pre všetky webové stránky";
-
-/* Class = "UIImageView"; accessibilityLabel = "DuckDuckGo"; ObjectID = "iNd-oh-m3g"; */
-"iNd-oh-m3g.accessibilityLabel" = "DuckDuckGo";
 
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Ikona";
@@ -199,8 +190,8 @@
 /* Class = "UITableViewSection"; headerTitle = "More From DuckDuckGo"; ObjectID = "OxE-MQ-uJk"; */
 "OxE-MQ-uJk.headerTitle" = "Viac od DuckDuckGo";
 
-/* Class = "UILabel"; text = "Sync"; ObjectID = "oXN-ez-gct"; */
-"oXN-ez-gct.text" = "Synchronizácia";
+/* Class = "UILabel"; text = "Sync & Backup"; ObjectID = "oXN-ez-gct"; */
+"oXN-ez-gct.text" = "Synchronizácia a zálohovanie";
 
 /* Class = "UILabel"; text = "Browse privately with our app for Mac "; ObjectID = "P0F-ts-ekd"; */
 "P0F-ts-ekd.text" = "Prezerajte si súkromne stránky s našou aplikáciou pre Mac ";

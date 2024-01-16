@@ -133,7 +133,7 @@ public class ProductWaitlistRequest: WaitlistRequest {
 
     private var endpoint: URL {
 #if DEBUG
-        return URL(string: "https://quackdev.duckduckgo.com/api/auth/waitlist/")!
+        return URL(string: "https://quack.duckduckgo.com/api/auth/waitlist/")!
 #else
         return URL(string: "https://quack.duckduckgo.com/api/auth/waitlist/")!
 #endif

@@ -31,16 +31,16 @@ enum NetworkProtectionNotificationsViewKind: Equatable {
 
 final class NetworkProtectionVPNNotificationsViewModel: ObservableObject {
     private var notificationsAuthorization: NotificationsAuthorizationControlling
-    private var notificationsSettingsStore: NetworkProtectionNotificationsSettingsStore
+    private var settings: VPNSettings
     @Published var viewKind: NetworkProtectionNotificationsViewKind = .loading
     var alertsEnabled: Bool {
-        self.notificationsSettingsStore.alertsEnabled
+        self.settings.notifyStatusChanges
     }
 
     init(notificationsAuthorization: NotificationsAuthorizationControlling,
-         notificationsSettingsStore: NetworkProtectionNotificationsSettingsStore) {
+         settings: VPNSettings) {
         self.notificationsAuthorization = notificationsAuthorization
-        self.notificationsSettingsStore = notificationsSettingsStore
+        self.settings = settings
         self.notificationsAuthorization.delegate = self
     }
 
@@ -55,7 +55,7 @@ final class NetworkProtectionVPNNotificationsViewModel: ObservableObject {
     }
 
     func didToggleAlerts(to enabled: Bool) {
-        notificationsSettingsStore.alertsEnabled = enabled
+        settings.notifyStatusChanges = enabled
     }
 
     private func updateViewKind(for authorizationStatus: UNAuthorizationStatus) {

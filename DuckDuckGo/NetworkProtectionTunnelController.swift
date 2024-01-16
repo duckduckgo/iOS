@@ -67,6 +67,10 @@ final class NetworkProtectionTunnelController: TunnelController {
         tunnelManager.connection.stopVPNTunnel()
     }
 
+    func removeVPN() async {
+        try? await tunnelManager?.removeFromPreferences()
+    }
+
     // MARK: - Connection Status Querying
 
     /// Queries Network Protection to know if its VPN is connected.
@@ -128,6 +132,12 @@ final class NetworkProtectionTunnelController: TunnelController {
 
         do {
             try tunnelManager.connection.startVPNTunnel(options: options)
+            UniquePixel.fire(pixel: .networkProtectionNewUser) { error in
+                guard error != nil else { return }
+                VPNSettings(defaults: .networkProtectionGroupDefaults).vpnFirstEnabled = Pixel.Event.networkProtectionNewUser.lastFireDate(
+                    uniquePixelStorage: UniquePixel.storage
+                )
+            }
         } catch {
             Pixel.fire(pixel: .networkProtectionActivationRequestFailed, error: error)
             throw error

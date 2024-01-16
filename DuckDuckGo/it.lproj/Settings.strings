@@ -1,5 +1,5 @@
 /* Class = "UILabel"; text = "Fireproof Sites"; ObjectID = "0DQ-yq-UuT"; */
-"0DQ-yq-UuT.text" = "Siti protetti";
+"0DQ-yq-UuT.text" = "Siti ignifughi";
 
 /* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
 "0gU-rZ-pRc.footerTitle" = "Disattiva per impedire che i collegamenti si aprano automaticamente in altre app installate.";
@@ -21,9 +21,6 @@
 
 /* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "5YD-Od-uDU"; */
 "5YD-Od-uDU.text" = "Cancellazione automatica dei dati";
-
-/* Class = "UIButton"; normalTitle = "More at duckduckgo.com/about"; ObjectID = "7nt-uS-sOh"; */
-"7nt-uS-sOh.normalTitle" = "Scopri di più su duckduckgo.com/about";
 
 /* Class = "UIButton"; normalTitle = "Settings"; ObjectID = "8YG-7Q-Czd"; */
 "8YG-7Q-Czd.normalTitle" = "Impostazioni";
@@ -49,8 +46,8 @@
 /* Class = "UILabel"; text = "Debug Menu"; ObjectID = "A9G-5I-RSn"; */
 "A9G-5I-RSn.text" = "Menu di debug";
 
-/* Class = "UILabel"; text = "Logins"; ObjectID = "And-cQ-SEu"; */
-"And-cQ-SEu.text" = "Dati di accesso";
+/* Class = "UILabel"; text = "Passwords"; ObjectID = "And-cQ-SEu"; */
+"And-cQ-SEu.text" = "Password";
 
 /* Class = "UILabel"; text = "Animation"; ObjectID = "AtR-nS-Gun"; */
 "AtR-nS-Gun.text" = "Animazione";
@@ -62,7 +59,7 @@
 "BGs-JL-4ib.footerTitle" = "I dati e/o le schede saranno cancellati al riavvio dell'app.";
 
 /* Class = "UILabel"; text = "Ask to Fireproof sites on sign-in"; ObjectID = "bIg-0T-UWq"; */
-"bIg-0T-UWq.text" = "Chiedi di rendere i siti web resistenti al fuoco al momento dell'accesso";
+"bIg-0T-UWq.text" = "Chiedi di proteggere dal fuoco quando accedi a un sito";
 
 /* Class = "UINavigationItem"; title = "Manage Cookie Pop-ups"; ObjectID = "btj-ri-kRr"; */
 "btj-ri-kRr.title" = "Gestione popup dei cookie";
@@ -143,13 +140,10 @@
 "Fxu-zn-51Z.text" = "Aggiungi widget alla schermata iniziale";
 
 /* Class = "UILabel"; text = "Fire Button Animation"; ObjectID = "gBo-Cu-e2k"; Note = "Fire button animation settings item"; */
-"gBo-Cu-e2k.text" = "Animazione pulsante fuoco";
+"gBo-Cu-e2k.text" = "Animazione Fire Button";
 
 /* Class = "UILabel"; text = "Default"; ObjectID = "Gbx-kl-uOO"; */
 "Gbx-kl-uOO.text" = "Predefinito";
-
-/* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
-"gji-Fs-EET.text" = "La privacy semplificata. ";
 
 /* Class = "UILabel"; text = "Manage Cookie Pop-ups"; ObjectID = "GRv-M2-Kx1"; */
 "GRv-M2-Kx1.text" = "Gestisci popup dei cookie";
@@ -165,9 +159,6 @@
 
 /* Class = "UILabel"; text = "Privacy Protection enabled for all sites"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "Tutela della privacy attivata per tutti i siti";
-
-/* Class = "UIImageView"; accessibilityLabel = "DuckDuckGo"; ObjectID = "iNd-oh-m3g"; */
-"iNd-oh-m3g.accessibilityLabel" = "DuckDuckGo";
 
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Icona";
@@ -185,7 +176,7 @@
 "nX1-F1-Frd.text" = "Consenti a DuckDuckGo di gestire i popup per il consenso ai cookie";
 
 /* Class = "UILabel"; text = "No Fireproof sites yet"; ObjectID = "OfP-Kw-IOk"; */
-"OfP-Kw-IOk.text" = "Non esistono ancora siti resistenti al fuoco";
+"OfP-Kw-IOk.text" = "Non hai ancora aggiunto siti resistenti al fuoco";
 
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
 "OHV-qC-tL9.title" = "Siti non protetti";
@@ -199,8 +190,8 @@
 /* Class = "UITableViewSection"; headerTitle = "More From DuckDuckGo"; ObjectID = "OxE-MQ-uJk"; */
 "OxE-MQ-uJk.headerTitle" = "Ulteriori informazioni su DuckDuckGo";
 
-/* Class = "UILabel"; text = "Sync"; ObjectID = "oXN-ez-gct"; */
-"oXN-ez-gct.text" = "Sincronizzazione";
+/* Class = "UILabel"; text = "Sync & Backup"; ObjectID = "oXN-ez-gct"; */
+"oXN-ez-gct.text" = "Sincronizzazione e backup";
 
 /* Class = "UILabel"; text = "Browse privately with our app for Mac "; ObjectID = "P0F-ts-ekd"; */
 "P0F-ts-ekd.text" = "Naviga in privato con la nostra app per Mac ";
@@ -233,10 +224,10 @@
 "U8i-cQ-5WW.text" = "Mostra suggerimenti di completamento automatico";
 
 /* Class = "UINavigationItem"; title = "Fire Button Animation"; ObjectID = "uns-8w-IwL"; Note = "Fire button animation setting page title"; */
-"uns-8w-IwL.title" = "Animazione pulsante fuoco";
+"uns-8w-IwL.title" = "Animazione Fire Button";
 
 /* Class = "UILabel"; text = "Remove All Fireproof Sites"; ObjectID = "UZx-52-aer"; */
-"UZx-52-aer.text" = "Rimuovi tutti i siti protetti";
+"UZx-52-aer.text" = "Rimuovi tutti i siti ignifughi";
 
 /* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "vPz-uO-6gB"; */
 "vPz-uO-6gB.text" = "Global Privacy Control (GPC)";
@@ -251,7 +242,7 @@
 "xof-5k-PkI.text" = "Imposta come browser predefinito";
 
 /* Class = "UINavigationItem"; title = "Fireproof Sites"; ObjectID = "xUX-nF-HOl"; */
-"xUX-nF-HOl.title" = "Siti protetti";
+"xUX-nF-HOl.title" = "Siti ignifughi";
 
 /* Class = "UILabel"; text = "Block email trackers and hide your address"; ObjectID = "Y6Y-wA-n6Z"; */
 "Y6Y-wA-n6Z.text" = "Blocca i sistemi di tracciamento delle email e nascondi il tuo indirizzo";

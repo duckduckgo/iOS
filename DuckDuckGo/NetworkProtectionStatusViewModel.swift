@@ -37,6 +37,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     private let serverInfoObserver: ConnectionServerInfoObserver
     private let errorObserver: ConnectionErrorObserver
     private var cancellables: Set<AnyCancellable> = []
+    private var delayedToggleReenableCancellable: Cancellable?
 
     // MARK: Error
 
@@ -71,7 +72,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     public init(tunnelController: TunnelController = NetworkProtectionTunnelController(),
                 statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
                 serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
-                errorObserver: ConnectionErrorObserver = ConnectionErrorObserverThroughSession()) {
+                errorObserver: ConnectionErrorObserver = ConnectionErrorObserverThroughSession(),
+                locationListRepository: NetworkProtectionLocationListRepository = NetworkProtectionLocationListCompositeRepository()) {
         self.tunnelController = tunnelController
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
@@ -85,6 +87,11 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         setUpStatusMessagePublishers()
         setUpDisableTogglePublisher()
         setUpServerInfoPublishers()
+
+        // Prefetching this now for snappy load times on the locations screens
+        Task {
+            _ = try? await locationListRepository.fetchLocationList()
+        }
     }
 
     private func setUpIsConnectedStatePublishers() {
@@ -140,10 +147,23 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     }
 
     private func setUpDisableTogglePublisher() {
-        statusObserver.publisher
-            .map { $0.isLoading }
+        let isLoadingPublisher = statusObserver.publisher.map { $0.isLoading }
+
+        isLoadingPublisher
             .receive(on: DispatchQueue.main)
             .assign(to: \.shouldDisableToggle, onWeaklyHeld: self)
+            .store(in: &cancellables)
+
+        // Set up a delayed publisher to fire just once that reenables the toggle
+        // Each event cancels the previous delayed publisher
+        isLoadingPublisher
+            .filter { $0 }
+            .map {
+                Just(!$0)
+                    .delay(for: 2.0, scheduler: DispatchQueue.main)
+                    .assign(to: \.shouldDisableToggle, onWeaklyHeld: self)
+            }
+            .assign(to: \.delayedToggleReenableCancellable, onWeaklyHeld: self)
             .store(in: &cancellables)
     }
 
@@ -171,6 +191,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     @MainActor
     func didToggleNetP(to enabled: Bool) async {
+        shouldDisableToggle = true
+        
         // This is to prevent weird looking animations on navigating to the screen.
         // It makes sense as animations should mostly only happen when a user has interacted.
         animationsOn = true

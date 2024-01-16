@@ -4,9 +4,11 @@ tags:
 
 ---
 
-# Create an account
+# Clear and launch
 - clearState
 - launchApp
+
+# Run onboarding Flow
 - runFlow: 
     when: 
       visible: 
@@ -14,29 +16,24 @@ tags:
         index: 0
     file: ../shared/onboarding.yaml
 
+#  Copy Recovery Code
 - tapOn: Settings
 - runFlow:
-    file: ../shared/set_internal_user.yaml
-- runFlow:
-    file: ../shared/sync_create.yaml
+    file: ../shared/copy_recovery_code_from_settings.yaml
+    env:
+        CODE: ${CODE}
 
-# Copy Sync Code and Log Out
-- tapOn: Copy Code
-- tapOn: Not Now
-- assertVisible: Sync & Back Up
-- tapOn: Turn Off Sync & Back Up
-- assertVisible: Turn Off Sync?
-- tapOn: Remove
+# Set Internal User
+- runFlow:
+    file: ../shared/set_internal_user_from_settings.yaml
 
 # Login
-- assertVisible: Sync & Back Up
-- tapOn: Enter Text Code
-- tapOn: Paste
-- assertVisible: Device Synced!
-- tapOn: Next
-- tapOn: Not Now
+- assertVisible: Sync & Backup
+- tapOn: Sync & Backup
+- runFlow:
+    file: ../shared/sync_login.yaml
+- assertVisible: Sync & Backup
 
 # Clean up
-- assertVisible: Sync & Back Up
 - runFlow:
-    file: ../shared/sync_delete.yaml
+    file: ../shared/sync_logout.yaml

@@ -13,3 +13,13 @@ for dir in "$@"; do
 	iconv -f UTF-16 -t UTF8 "${dir}/en.lproj/Localizable.strings" > "${dir}/en.lproj/Localizable-UTF8.strings"
 	mv "${dir}/en.lproj/Localizable-UTF8.strings" "${dir}/en.lproj/Localizable.strings"
 done
+
+# Add LocalPackages sub-directories here when needed
+set -- "${base_dir}/LocalPackages/SyncUI/Sources/SyncUI"
+
+for dir in "$@"; do
+	echo "Processing ${dir}"
+	find "${dir}/" -name "*.swift" -print0 | xargs -0 xcrun extractLocStrings -o "${dir}/Resources/en.lproj"
+	iconv -f UTF-16 -t UTF8 "${dir}/Resources/en.lproj/Localizable.strings" > "${dir}/Resources/en.lproj/Localizable-UTF8.strings"
+	mv "${dir}/Resources/en.lproj/Localizable-UTF8.strings" "${dir}/Resources/en.lproj/Localizable.strings"
+done

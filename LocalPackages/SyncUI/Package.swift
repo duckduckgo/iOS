@@ -21,6 +21,7 @@ import PackageDescription
 
 let package = Package(
     name: "SyncUI",
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v14)
     ],
@@ -32,6 +33,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../DuckUI"),
+        .package(url: "https://github.com/duckduckgo/BrowserServicesKit", exact: "101.1.0"),
         .package(url: "https://github.com/duckduckgo/DesignResourcesKit", exact: "2.0.0")
     ],
     targets: [
@@ -40,6 +42,11 @@ let package = Package(
             dependencies: [
                 .product(name: "DuckUI", package: "DuckUI"),
                 "DesignResourcesKit"
-            ])
+            ],
+            swiftSettings: [
+                .define("DEBUG", .when(configuration: .debug))
+            ],
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "BrowserServicesKit")]
+        )
     ]
 )

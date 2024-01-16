@@ -50,11 +50,15 @@ extension UIViewController {
         present(controller: shareController, fromButtonItem: buttonItem)
     }
 
-    public func presentShareSheet(withItems activityItems: [Any], fromView sourceView: UIView, atPoint point: Point? = nil, completion: UIActivityViewController.CompletionWithItemsHandler? = nil) {
+    public func presentShareSheet(withItems activityItems: [Any], fromView sourceView: UIView, atPoint point: Point? = nil, overrideInterfaceStyle: UIUserInterfaceStyle? = nil, completion: UIActivityViewController.CompletionWithItemsHandler? = nil) {
         let activities = buildActivities()
         let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: activities)
         shareController.completionWithItemsHandler = completion
-        shareController.overrideUserInterfaceStyle()
+        if let overrideInterfaceStyle {
+            shareController.overrideUserInterfaceStyle = overrideInterfaceStyle
+        } else {
+            shareController.overrideUserInterfaceStyle()
+        }
         shareController.excludedActivityTypes = [.markupAsPDF]
         present(controller: shareController, fromView: sourceView, atPoint: point)
     }

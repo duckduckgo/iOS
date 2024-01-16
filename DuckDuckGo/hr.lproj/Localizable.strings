@@ -20,7 +20,7 @@
 "action.title.add" = "Dodaj";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Prijave";
+"action.title.autofill.logins" = "Lozinke";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Dodaj u Knjižne oznake";
@@ -133,6 +133,27 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Postojeće knjižne oznake neće se duplicirati.";
 
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Prekoračeno je ograničenje sinkronizacije oznaka. Pokušaj izbrisati neke oznake. Dok se to ne riješi, tvoje se oznake neće sigurnosno kopirati.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Sinkronizacija oznaka je pauzirana";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Prekoračeno je ograničenje sinkronizacije lozinki. Pokušaj izbrisati neke lozinke. Dok se to ne riješi, tvoje se lozinke neće sigurnosno kopirati.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Sinkronizacija lozinki je pauzirana";
+
+/* Title for sync error alert */
+"alert.sync-error" = "Pogreška Sinkronizacije i sigurnosnog kopiranja";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "Saznajte više";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "U redu";
+
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Označi sve kartice?";
 
@@ -147,6 +168,30 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Spremi u Omiljeno";
+
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "Nije moguće izraditi PDF za oporavak.";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "Nije moguće izbrisati podatke na poslužitelju.";
+
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "Za uparivanje tih uređaja, isključi Sinkronizaciju i sigurnosno kopiranje na jednom uređaju, a zatim dodirni \"Sinkroniziraj s drugim uređajem\" na drugom uređaju.";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "Nije moguće ukloniti ovaj uređaj iz Sinkronizacije i sigurnosnog kopiranja.";
+
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Nije moguće spojiti se na poslužitelj.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Nije moguće sinkronizirati s drugim uređajem.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "Nije moguće isključiti Sinkronizaciju i sigurnosno kopiranje.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "Nije moguće ažurirati naziv uređaja.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Otključaj DuckDuckGo.";
@@ -419,16 +464,16 @@
 "autofill.keep-enabled.alert.message" = "Ovo možeš onemogućiti u svakom trenutku u Postavkama.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Želiš li nastaviti spremati prijave?";
+"autofill.keep-enabled.alert.title" = "Želiš li nastaviti spremati lozinke?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Pregled";
 
 /* Message displayed after saving an autofill login */
-"autofill.login-saved.toast" = "Prijava je spremljena";
+"autofill.login-saved.toast" = "Lozinka je spremljena";
 
 /* Message displayed after updating an autofill login */
-"autofill.login-updated.toast" = "Prijava je ažurirana";
+"autofill.login-updated.toast" = "Lozinka je ažurirana";
 
 /* Menu item text for copying autofill login details */
 "autofill.logins.copy-prompt" = "Kopiraj %@";
@@ -449,19 +494,19 @@
 "autofill.logins.details.address" = "URL web lokacije";
 
 /* Title for autofill login details */
-"autofill.logins.details.default-title" = "Prijava";
+"autofill.logins.details.default-title" = "Lozinka";
 
 /* Delete button when deleting an autofill login */
-"autofill.logins.details.delete" = "Izbriši prijavu";
+"autofill.logins.details.delete" = "Izbriši lozinku";
 
 /* Autofill alert button confirming delete autofill login */
-"autofill.logins.details.delete-confirmation.button" = "Izbriši prijavu";
+"autofill.logins.details.delete-confirmation.button" = "Izbriši lozinku";
 
 /* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Jesi li siguran da želiš izbrisati ovu prijavu?";
+"autofill.logins.details.delete-confirmation.title" = "Sigurno želiš izbrisati ovu lozinku?";
 
 /* Title when editing autofill login details */
-"autofill.logins.details.edit-title" = "Uredi prijavu";
+"autofill.logins.details.edit-title" = "Uredi lozinku";
 
 /* Placeholder for password field on autofill login details */
 "autofill.logins.details.edit.password-placeholder" = "Lozinka";
@@ -475,14 +520,14 @@
 /* Placeholder for userbane field on autofill login details */
 "autofill.logins.details.edit.username-placeholder" = "korisničkoime@primjer.com";
 
-/* Message displaying when the login was last updated by */
-"autofill.logins.details.last-updated" = "Prijava posljednji put ažurirana %@";
+/* Message displaying when the login was last updated */
+"autofill.logins.details.last-updated" = "Posljednje ažuriranje: %@";
 
 /* Login name label for login details on autofill */
-"autofill.logins.details.login-name" = "Naslov prijave";
+"autofill.logins.details.login-name" = "Naslov";
 
 /* Title when adding new autofill login */
-"autofill.logins.details.new-title" = "Dodaj prijavu";
+"autofill.logins.details.new-title" = "Dodaj lozinku";
 
 /* Notes label for login details on autofill */
 "autofill.logins.details.notes" = "Bilješke";
@@ -497,37 +542,37 @@
 "autofill.logins.details.save-duplicate-alert.action" = "U redu";
 
 /* Message for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.message" = "Već imaš prijavu za ovo korisničko ime i web lokaciju.";
+"autofill.logins.details.save-duplicate-alert.message" = "Već imaš spremljenu lozinku za ovo korisničko ime i web lokaciju.";
 
 /* Title for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.title" = "Ova prijava već postoji";
+"autofill.logins.details.save-duplicate-alert.title" = "Ova lozinka već postoji";
 
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Korisničko ime";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Prijave su sigurno pohranjene na tvom uređaju.";
+"autofill.logins.empty-view.subtitle" = "Lozinke su sigurno pohranjene na tvom uređaju.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Još nema spremljenih prijava";
+"autofill.logins.empty-view.title" = "Još nema spremljenih lozinki";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Otkaži";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Otključaj uređaj za pristup spremljenim prijavama";
+"autofill.logins.list.auth.reason" = "Otključaj uređaj za pristup lozinkama";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Zatvori";
 
 /* Title for a toggle that enables autofill */
-"autofill.logins.list.enable" = "Spremi i automatski popuni prijave";
+"autofill.logins.list.enable" = "Spremi i automatski popuni lozinke";
 
 /* Toast message when a login item is deleted */
-"autofill.logins.list.login-deleted-message" = "Prijava za %@ izbrisana";
+"autofill.logins.list.login-deleted-message" = "Lozinka za %@ je izbrisana";
 
 /* Toast message when a login item without a title is deleted */
-"autofill.logins.list.login-deleted-message-no-title" = "Prijava je izbrisana";
+"autofill.logins.list.login-deleted-message-no-title" = "Lozinka je izbrisana";
 
 /* Title for a button that allows a user to reset their list of never saved sites */
 "autofill.logins.list.never.saved" = "Vrati izvorne isključene web lokacije";
@@ -539,28 +584,28 @@
 "autofill.logins.list.never.saved.reset.action.confirm" = "Resetiraj isključene web lokacije";
 
 /* Alert title */
-"autofill.logins.list.never.saved.reset.action.title" = "Ako resetiraš isključene web lokacije, od tebe će se zatražiti da spremiš svoju prijavu sljedeći put kad se prijaviš na bilo koju od ovih lokacija.";
+"autofill.logins.list.never.saved.reset.action.title" = "Ako resetiraš isključene web lokacije, od tebe će se zatražiti da spremiš svoju lozinku sljedeći put kad se prijaviš na bilo koju od ovih lokacija.";
 
 /* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Pretraživanje prijava";
+"autofill.logins.list.search-placeholder" = "Pretraživanje lozinki";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Predloženo";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Prijave";
+"autofill.logins.list.title" = "Lozinke";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Za zaštitu tvojih prijava potrebna je lozinka.";
+"autofill.logins.no-auth.subtitle" = "Za zaštitu tvojih lozinki potrebna je šifra.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Osiguraj svoj uređaj kako bi spremio prijave";
+"autofill.logins.no-auth.title" = "Osiguraj svoj uređaj za spremanje lozinki";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Otkaži";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Otključaj za korištenje spremljene prijave";
+"autofill.logins.prompt.auth.reason" = "Otključaj za korištenje spremljene lozinke";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "S ove web lokacije";
@@ -584,7 +629,7 @@
 "autofill.logins.search.no-results.title" = "Nema rezultata";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Lozinke su sigurno pohranjene na tvom uređaju u izborniku Prijava.";
+"autofill.password-generation-prompt.subtitle" = "Lozinke su sigurno pohranjene na tvom uređaju.";
 
 /* Title for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.title" = "Koristiti jaku lozinku od DuckDuckGoa?";
@@ -629,7 +674,7 @@
 "autofill.save-login.never-prompt.CTA" = "Nikada ne traži za ovu web lokaciju";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Lozinke su sigurno pohranjene na tvom uređaju u izborniku Prijava.";
+"autofill.save-login.new-user.message" = "Lozinke su sigurno pohranjene na tvom uređaju.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Želiš li da DuckDuckGo spremi tvoju lozinku?";
@@ -638,7 +683,7 @@
 "autofill.save-login.not-now.CTA" = "Nemoj spremiti";
 
 /* Title displayed on modal asking for the user to save the login */
-"autofill.save-login.title" = "Želiš li spremiti prijavu?";
+"autofill.save-login.title" = "Želiš li spremiti lozinku?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Spremi lozinku";
@@ -754,48 +799,6 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Uvezite HTML datoteku oznaka iz drugog preglednika ili izvezite postojeće oznake.";
 
-/* Broken Site Category */
-"brokensite.category.comments" = "Komentari se nisu učitali";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Nedostaje sadržaj";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "Nisu određena pravila za skočne prozore kolačića";
-
-/* Broken Site Category */
-"brokensite.category.images" = "Slike se nisu učitale";
-
-/* Broken Site Category */
-"brokensite.category.links" = "Poveznice ili gumbi ne funkcioniraju";
-
-/* Broken Site Category */
-"brokensite.category.login" = "Ne mogu se prijaviti";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Nešto drugo";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "Web-mjesto zatražilo je da onemogućim";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "Preglednik nije kompatibilan";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "Videozapis se nije reproducirao";
-
-/* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Odaberi svoj problem s popisa...";
-
-/* Broken Site Category Section Title */
-"brokensite.categoryTitle" = "ODABERI KATEGORIJU";
-
-/* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "Dijeljenje više pojedinosti može nam pomoći u rješavanju ovog problema";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "OPIŠITE ŠTO SE DOGODILO";
-
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: %@";
 
@@ -894,6 +897,9 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet može biti pomalo neugodan.\n\nNe brini! Privatno pretraživanje i pregledavanje lakše je nego što misliš.";
+
+/* No comment provided by engineer. */
+"Debug" = "Debug";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Onemogućeno";
@@ -1071,6 +1077,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Ukloni";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "Svi favoriti na uređaju";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Odaberi koje favorite želiš prikazati na novoj kartici na temelju njihove izvorne lokacije.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Željeni prikaz";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Samo favoriti na mobilnom uređaju";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blokiranje oglasa i skočnih prozora";
@@ -1357,6 +1375,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Dobro došao/la u\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "Aplikacija DuckDuckGo za Mac pruža ti potrebnu brzinu i značajke pretraživanja kakve očekuješ, a isporučuje se s našim najboljim alatima za privatnost u svojoj klasi - privacy essentials.";
 
@@ -1420,23 +1441,113 @@
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
 
+/* Privacy Policy title for Network Protection */
+"network-protection.privacy-policy.title" = "Pravila o zaštiti privatnosti";
+
+/* Title text for the Network Protection terms and conditions accept button */
+"network-protection.waitlist.agree-and-continue" = "Prihvati i nastavi";
+
+/* Availability disclaimer for Network Protection join waitlist screen */
+"network-protection.waitlist.availability-disclaimer" = "Zaštita je besplatna za korištenje tijekom ranog pristupa.";
+
+/* Agree and Continue button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.agree-and-continue" = "Prihvati i nastavi";
+
+/* Enable Notifications button for Network Protection joined waitlist screen */
+"network-protection.waitlist.button.enable-notifications" = "Omogući obavijesti";
+
+/* Button title for users who already have an invite code */
+"network-protection.waitlist.button.existing-invite-code" = "Imam pozivnu šifru";
+
+/* Join Waitlist button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.join-waitlist" = "Pridruži se listi čekanja";
+
+/* Button title text for the Network Protection waitlist confirmation prompt */
+"network-protection.waitlist.get-started" = "Započnite";
+
+/* Subtitle for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.subtitle" = "Šifriraj mrežni promet u svojim preglednicima i aplikacijama.";
+
+/* Title for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.title" = "Pokrivenost cijelog uređaja";
+
+/* Subtitle for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.subtitle" = "Nema potrebe za zasebnom aplikacijom. Poveži se jednim klikom i odmah pogledaj status veze.";
+
+/* Title for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.title" = "Brzo, pouzdano i jednostavno za korištenje";
+
+/* Subtitle for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.subtitle" = "Ne bilježimo niti spremamo nikakve podatke koji bi te mogli povezati s tvojim mrežnim aktivnostima.";
+
+/* Title for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.title" = "Stroga politika zabrane zapisivanja";
+
+/* Subtitle for Network Protection invited screen */
+"network-protection.waitlist.invited.subtitle" = "Za tebe smo pripremili dodatni sloj mrežne zaštite, s VPN-om dizajniranim za brzinu i jednostavnost. Šifriraj svoju internetsku vezu na cijelom uređaju i sakrij svoju lokaciju i IP adresu od stranica koje posjećuješ.";
+
+/* Title for Network Protection invited screen */
+"network-protection.waitlist.invited.title" = "Pozivamo te da isprobaš rani pristup\nNetwork Protectionu!";
+
+/* First subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.1" = "Osiguraj svoju vezu bilo kada i bilo gdje uz Network Protection, VPN tvrtke DuckDuckGo.";
+
+/* Second subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.2" = "Pridruži se listi čekanja, a mi ćemo te obavijestiti kada dođeš na red.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
+
+/* Title for Network Protection joined waitlist screen */
+"network-protection.waitlist.joined.title" = "Na popisu ste!";
+
+/* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Nove pozivnice šalju se svakih nekoliko dana, po principu tko prvi dođe, prvi je poslužen.";
+
+/* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "Obavijestit ćemo te kada tvoja pozivnica bude spremna.";
+
+/* Body text for the alert to enable notifications */
+"network-protection.waitlist.notification-alert.description" = "Poslat ćemo ti obavijest kada tvoja pozivnica za testiranje Network Protectiona bude spremna.";
+
+/* Subtitle for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-description" = "Primi obavijest kada tvoj primjerak Network Protectiona uz rani pristup bude spreman.";
+
+/* Title for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-title" = "Primi obavijest čim je tvoj poziv spreman";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.text" = "Otvori svoju pozivnicu";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.title" = "Network Protection je spreman!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Tvoja pozivnica je spremna!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Na popisu ste!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Pridružite se privatnoj listi čekanja";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+"network.protection.invite.dialog.title" = "Imaš poziv za isprobavanje Network Protectiona";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
-
-/* Message explaining that netP is invite only */
-"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
 
 /* Message for the network protection invite success view */
 "network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
 
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
+
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "Otvori VPN";
 
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected - %@";
@@ -1459,7 +1570,7 @@
 /* Header title label text for the status view when netP is connected */
 "network.protection.status.header.title.on" = "Network Protection is On";
 
-/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+/* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 
 /* Connection details label shown in NetworkProtection's status view. */
@@ -1477,8 +1588,65 @@
 /* Location label shown in NetworkProtection's status view. */
 "network.protection.status.view.location" = "Location";
 
+/* Label shown on the title of the settings section in NetworkProtection's status view. */
+"network.protection.status.view.settings.section.title" = "Upravljanje";
+
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Uključi obavijesti";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Dopusti DuckDuckGou da te obavijesti ako se tvoja veza prekine ili se status VPN-a promijeni.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Primaj obavijesti ako se tvoja veza prekine ili se status VPN-a promijeni.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "VPN upozorenja";
+
+/* Footer text for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Neka lokalni promet zaobiđe VPN i poveže se s uređajima na tvojoj lokalnoj mreži, poput pisača.";
+
+/* Title for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.title" = "Izostavi lokalne mreže";
+
+/* Title for the VPN Location screen's All Countries section. */
+"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Subtitle of countries item when there are multiple cities, example : */
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d gradova";
+
+/* Title for the VPN Location screen's Nearest Available selection item. */
+"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+
+/* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
+"network.protection.vpn.location.recommended.section.footer" = "Automatski se poveži s najbližim poslužiteljem koji možemo pronaći.";
+
+/* Title for the VPN Location screen's Recommended section. */
+"network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
+"network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
+
+/* Title for the VPN Location screen. */
+"network.protection.vpn.location.title" = "VPN lokacija";
+
+/* Title for the VPN Notifications management screen. */
+"network.protection.vpn.notifications.title" = "VPN obavijesti";
+
+/* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
+"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+
+/* Title for the Preferred Location VPN Settings item. */
+"network.protection.vpn.preferred.location.title" = "Preferred Location";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "Naš VPN koristi Secure DNS kako bi tvoje mrežne aktivnosti bile privatne, tako da tvoj davatelj internetskih usluga ne može vidjeti koje web stranice posjećuješ.";
+
+/* Title for the VPN Settings screen. */
+"network.protection.vpn.settings.title" = "VPN postavke";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1595,9 +1763,6 @@
 "prompt.custom.url.scheme.title" = "Otvori u drugoj aplikaciji?";
 
 /* No comment provided by engineer. */
-"report.brokensite.header" = "Slanje anonimnog izvješća o neispravnom web-mjestu pomaže nam da ispravimo te probleme i poboljšamo aplikaciju.";
-
-/* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Pretraži ili unesi adresu";
 
 /* No comment provided by engineer. */
@@ -1606,8 +1771,107 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Omiljeno";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "O DuckDuckGou";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "O nama";
+
 /* about page */
 "settings.about.text" = "DuckDuckGo neovisna je tvrtka za privatnost na internetu osnovana 2008. godine. Namijenjena je svakome tko je umoran od toga da ga prate na internetu i želi jednostavno rješenje za to. Mi smo dokaz da je prava zaštita privatnosti na internetu moguća bez kompromisa.\n\nPreglednik DuckDuckGo dolazi sa značajkama koje očekujete od preglednika, kao što su oznake, kartice, lozinke i još mnogo toga, plus više od [desetak moćnih zaštita privatnosti](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) nije ponuđeno u većini popularnih preglednika prema zadanim postavkama. Ovaj jedinstveno sveobuhvatan skup zaštita privatnosti pomaže u zaštiti tvojih mrežnih aktivnosti, od pretraživanja do pregledavanja, slanja e-pošte i još mnogo toga.\n\nNaša zaštita privatnosti funkcionira bez potrebe da znamo bilo što o tehničkim detaljima ili da se bavimo kompliciranim postavkama. Sve što trebaš učiniti jest prebaciti svoj preglednik na DuckDuckGo na svim svojim uređajima i prema zadanim postavkama dobivaš našu zaštitu privatnosti.\n\nAli ako *želite* zaviriti \"ispod haube\", više o tome kako DuckDuckGo zaštita privatnosti funkcionira možeš pronaći na našim [stranicama pomoći](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Dodajte aplikaciju na Dock";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Dodajte widget na početni zaslon";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Položaj adresne trake";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Izgled";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Otvori veze u povezanim aplikacijama";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Onemogući da spriječiš automatsko otvaranje poveznica u drugim instaliranim aplikacijama.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Prikaži prijedloge za automatsko ispunjavanje";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Zaključavanje aplikacije";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Ako su postavljeni Touch ID, Face ID ili pristupni kôd sustava, od tebe će se tražiti da otključaš aplikaciju prilikom otvaranja.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Automatsko brisanje podataka";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Upravljanje skočnim prozorima kolačića";
+
+/* Settings title for the customize section */
+"settings.customize" = "Prilagodba";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Postavi kao zadani preglednik";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "Zaštita e-pošte";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Blokiraj programe za praćenje e-pošte i sakrij svoju adresu";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Podijeli povratne informacije";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Animacija gumba Vatre";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Zaštićena web-mjesta";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Globalna kontrola privatnosti (GPC)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "Ikona aplikacije";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Tipkovnica";
+
+/* Settings title for the 'More' section */
+"settings.more" = "Više od DuckDuckGoa";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Pretpregledi na dugi pritisak";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Zaštita privatnosti";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Sinkronizacija i sigurnosno kopiranje";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Veličina teksta";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Tema";
+
+/* Title for the Settings View */
+"settings.title" = "Postavke";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Nezaštićena web-mjesta";
+
+/* Settings cell for Version */
+"settings.version" = "Verzija";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Privatno glasovno pretraživanje";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pošalji izvješće";
@@ -1629,6 +1893,15 @@
 
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "\"%@\" više neće moći pristupiti tvojim sinkroniziranim podacima.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Nažalost, Sync & Backup (sinkronizacija i sigurnosno kopiranje) trenutno nisu dostupni. Pokušaj ponovno nešto kasnije.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Žao nam je, ali Sync & Backup (sinkronizacija i sigurnosno kopiranje) više nisu dostupni u ovoj verziji aplikacije. Molimo te da za nastavak ažuriraš DuckDuckGo na najnoviju verziju.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "Sync & Backup pauziran";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Zatvori početnu karticu";
@@ -1692,6 +1965,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Dopustite pristup mikrofonu u postavkama sustava iOS kako bi DuckDuckGo mogao koristiti glasovne funkcije.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "U redu";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Potreban je pristup mikrofonu";

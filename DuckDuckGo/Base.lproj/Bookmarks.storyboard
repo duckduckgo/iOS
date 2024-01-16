@@ -561,10 +561,10 @@
                                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                         </textField>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fVp-1a-TkJ">
-                                            <rect key="frame" x="88" y="44" width="255" height="0.5"/>
+                                            <rect key="frame" x="88" y="44" width="255" height="0.0"/>
                                             <color key="backgroundColor" name="BookmarksCellSeperatorColor"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" priority="750" constant="0.5" id="RDj-dx-Yf1"/>
+                                                <constraint firstAttribute="height" priority="750" constant="0.33000000000000002" id="RDj-dx-Yf1"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -587,7 +587,6 @@
                                 <color key="backgroundColor" name="surface"/>
                                 <connections>
                                     <outlet property="faviconImageView" destination="gf7-Lt-ftk" id="kIT-Vf-ZxY"/>
-                                    <outlet property="seperatorViewHeight" destination="RDj-dx-Yf1" id="f1A-nY-fdp"/>
                                     <outlet property="titleTextField" destination="rT4-Yr-P8D" id="4f9-bl-KM7"/>
                                     <outlet property="urlTextField" destination="YqY-sP-hhb" id="b8Y-vb-Msu"/>
                                 </connections>

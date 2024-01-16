@@ -24,14 +24,20 @@ public class SaveRecoveryKeyViewModel: ObservableObject {
 
     let key: String
     let showRecoveryPDFAction: () -> Void
+    let onDismiss: () -> Void
 
-    public init(key: String, showRecoveryPDFAction: @escaping () -> Void) {
+    public init(key: String, showRecoveryPDFAction: @escaping () -> Void, onDismiss: @escaping () -> Void) {
         self.key = key
         self.showRecoveryPDFAction = showRecoveryPDFAction
+        self.onDismiss = onDismiss
     }
 
     func copyKey() {
         UIPasteboard.general.string = key
+    }
+
+    func dismissed() {
+        onDismiss()
     }
 
 }

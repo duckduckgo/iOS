@@ -30,17 +30,14 @@ public struct PasteCodeView: View {
 
     @State var isEditingCode = false
 
-    var isFirstScreen: Bool
-
-    public init(model: ScanOrPasteCodeViewModel, isfirstScreen: Bool = false) {
+    public init(model: ScanOrPasteCodeViewModel) {
         self.model = model
-        self.isFirstScreen = isfirstScreen
     }
 
     @ViewBuilder
     func pasteButton() -> some View {
         Button(action: model.pasteCode) {
-            Label(UserText.pasteLabel, image: "SyncPaste")
+            Label(UserText.pasteButton, image: "SyncPaste")
         }
     }
 
@@ -67,20 +64,33 @@ public struct PasteCodeView: View {
                 if model.isValidating {
                     HStack(spacing: 4) {
                         SwiftUI.ProgressView()
-                        Text(UserText.validatingCode)
+                        Text(UserText.manuallyEnterCodeValidatingCodeAction)
                             .foregroundColor(.white.opacity(0.36))
                     }
                     .padding(.horizontal)
                 } else if model.invalidCode {
                     HStack {
                         Image("SyncAlert")
-                        Text(UserText.validatingCodeFailed)
+                        Text(UserText.manuallyEnterCodeValidatingCodeFailedAction)
                             .foregroundColor(.white.opacity(0.36))
                     }
                     .padding(.horizontal)
                 } else {
 
-                    instructions()
+                    if #available(iOS 15.0, *) {
+                        Text(instructionsString)
+                            .lineLimit(nil)
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.white.opacity(0.6))
+                            .padding()
+                    } else {
+                        Text(UserText.manuallyEnterCodeInstructionAttributed(syncMenuPath: UserText.syncMenuPath,
+                                                                             menuItem: UserText.viewTextCodeMenuItem))
+                            .lineLimit(nil)
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.white.opacity(0.6))
+                            .padding()
+                    }
 
                     Spacer()
                 }
@@ -95,13 +105,17 @@ public struct PasteCodeView: View {
         .padding()
     }
 
-    @ViewBuilder
-    func instructions() -> some View {
-        Text(UserText.pasteCodeInstructions)
-            .lineLimit(nil)
-            .multilineTextAlignment(.center)
-            .foregroundColor(.white.opacity(0.6))
-            .padding()
+    @available(iOS 15, *)
+    var instructionsString: AttributedString {
+        let baseString = UserText.manuallyEnterCodeInstructionAttributed(syncMenuPath: UserText.syncMenuPath, menuItem: UserText.viewTextCodeMenuItem)
+        var instructions = AttributedString(baseString)
+        if let range1 = instructions.range(of: UserText.syncMenuPath) {
+            instructions[range1].font = .boldSystemFont(ofSize: 16)
+        }
+        if let range2 = instructions.range(of: UserText.viewTextCodeMenuItem) {
+            instructions[range2].font = .boldSystemFont(ofSize: 16)
+        }
+        return instructions
     }
 
     @ViewBuilder
@@ -119,13 +133,9 @@ public struct PasteCodeView: View {
     }
 
     public var body: some View {
-        if isFirstScreen {
-            pastCodeWiewWithNoModifier()
-                .modifier(CancelButtonModifier(action: model.cancel))
-        } else {
-            pastCodeWiewWithNoModifier()
-                .modifier(BackButtonModifier())
-        }
+        pastCodeWiewWithNoModifier()
+            .modifier(BackButtonModifier())
+
     }
 
 }

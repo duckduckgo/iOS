@@ -44,7 +44,7 @@ class AutocompleteRequest {
         var request = URLRequest.developerInitiated(url)
         request.allHTTPHeaderFields = APIRequest.Headers().httpHeaders
 
-        task = AutocompleteRequest.session.dataTask(with: request) { [weak self] (data, _, error) -> Void in
+        task = AutocompleteRequest.session.dataTask(with: request) { [weak self] (data, _, error) in
             guard let weakSelf = self else { return }
             do {
                 let suggestions = try weakSelf.processResult(data: data, error: error)

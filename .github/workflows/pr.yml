@@ -2,7 +2,7 @@ name: PR Checks
 
 on:
   push:
-    branches: [ develop, "release/**" ]
+    branches: [ main, "release/**" ]
   pull_request:
 
 jobs:
@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: SwiftLint
-      uses: docker://norionomura/swiftlint:0.53.0
+      uses: docker://norionomura/swiftlint:0.54.0_swift-5.9.0
       with:
         args: swiftlint --reporter github-actions-logging --strict
 
@@ -53,7 +53,7 @@ jobs:
 
     - name: Set cache key hash
       run: |
-         has_only_tags=$(jq '[ .object.pins[].state | has("version") ] | all' DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
+         has_only_tags=$(jq '[ .pins[].state | has("version") ] | all' DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
          if [[ "$has_only_tags" == "true" ]]; then
            echo "cache_key_hash=${{ hashFiles('DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}" >> $GITHUB_ENV
          else
@@ -79,14 +79,15 @@ jobs:
       run: |
         set -o pipefail && xcodebuild test \
           -scheme "DuckDuckGo" \
-          -destination "platform=iOS Simulator,name=iPhone 14,OS=16.4" \
+          -destination "platform=iOS Simulator,name=iPhone 15,OS=17.2" \
           -derivedDataPath "DerivedData" \
+          -skipPackagePluginValidation \
           DDG_SLOW_COMPILE_CHECK_THRESHOLD=250 \
           | tee xcodebuild.log \
           | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
 
     - name: Upload logs if workflow failed
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: failure()
       with:
         name: BuildLogs
@@ -114,7 +115,7 @@ jobs:
           | xargs -L 1 ./scripts/report-failed-unit-test.sh -s ${{ vars.APPLE_CI_FAILING_TESTS_FAILED_TESTS_SECTION_ID }}
 
     - name: Fetch latest commit author
-      if: always() && github.ref_name == 'develop'
+      if: always() && github.ref_name == 'main'
       id: fetch_commit_author
       env:
         GH_TOKEN: ${{ github.token }}
@@ -144,7 +145,7 @@ jobs:
 
     - name: Set cache key hash
       run: |
-        has_only_tags=$(jq '[ .object.pins[].state | has("version") ] | all' DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
+        has_only_tags=$(jq '[ .pins[].state | has("version") ] | all' DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
         if [[ "$has_only_tags" == "true" ]]; then
           echo "cache_key_hash=${{ hashFiles('DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}" >> $GITHUB_ENV
         else
@@ -183,13 +184,14 @@ jobs:
         -destination "platform=iOS Simulator,name=iPhone 14" \
         -derivedDataPath "DerivedData" \
         -configuration "Release" \
+        -skipPackagePluginValidation \
         | xcbeautify
 
   create-asana-task:
     name: Create Asana Task
     needs: [swiftlint, unit-tests, shellcheck, release-build]
 
-    if: failure() && github.ref_name == 'develop' && github.run_attempt == 1
+    if: failure() && github.ref_name == 'main' && github.run_attempt == 1
 
     runs-on: ubuntu-latest
 
@@ -206,7 +208,7 @@ jobs:
     name: Close Asana Task
     needs: [swiftlint, unit-tests, shellcheck, release-build]
 
-    if: success() && github.ref_name == 'develop' && github.run_attempt > 1
+    if: success() && github.ref_name == 'main' && github.run_attempt > 1
 
     runs-on: ubuntu-latest
 

@@ -54,6 +54,8 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
 
     var isEditing = false
 
+    var onFaviconMissing: ((String) -> Void)?
+
     private let allowsEditing: Bool
     private let cellWidth: CGFloat
     private let cellHeight: CGFloat
@@ -148,7 +150,9 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             self?.removeFavorite(cell, collectionView)
         }
 
-        cell.updateFor(favorite: favorite)
+        cell.updateFor(favorite: favorite, onFaviconMissing: { [weak self] domain in
+            self?.onFaviconMissing?(domain)
+        })
         cell.isEditing = isEditing
         return cell
 

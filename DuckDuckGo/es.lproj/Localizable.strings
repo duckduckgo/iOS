@@ -20,7 +20,7 @@
 "action.title.add" = "Añadir";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Inicios de sesión";
+"action.title.autofill.logins" = "Contraseñas";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Añadir a marcadores";
@@ -133,6 +133,27 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Los marcadores existentes no se duplicarán.";
 
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Has superado el límite de sincronización de marcadores. Prueba a eliminar algunos marcadores. No se realizará una copia de seguridad de los marcadores hasta que se resuelva esto.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "La sincronización de marcadores está en pausa";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Ha superado el límite de sincronización de contraseñas. Prueba a eliminar algunas contraseñas. No se realizará una copia de seguridad de las contraseñas hasta que se resuelva esto.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "La sincronización de contraseñas está en pausa";
+
+/* Title for sync error alert */
+"alert.sync-error" = "Error de sincronización y copia de seguridad";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "Más información";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "De acuerdo";
+
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "¿Añadir todas las pestañas a marcadores?";
 
@@ -147,6 +168,30 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Guardar favorito";
+
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "No se puede crear el PDF de recuperación.";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "No se pueden eliminar los datos en el servidor.";
+
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "Para emparejar estos dispositivos, desactiva Sincronización y copia de seguridad en un dispositivo y luego toca «Sincronizar con otro dispositivo» en el otro dispositivo.";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "No se puede eliminar este dispositivo de Sincronización y copia de seguridad.";
+
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "No se puede conectar al servidor.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "No se puede sincronizar con otro dispositivo.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "No se puede desactivar Sincronización y copia de seguridad.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "No se puede actualizar el nombre del dispositivo.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Desbloquear DuckDuckGo.";
@@ -419,16 +464,16 @@
 "autofill.keep-enabled.alert.message" = "Puedes desactivar esta opción en cualquier momento en Configuración.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "¿Deseas seguir guardando inicios de sesión?";
+"autofill.keep-enabled.alert.title" = "¿Quieres seguir guardando contraseñas?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Ver";
 
 /* Message displayed after saving an autofill login */
-"autofill.login-saved.toast" = "Inicio de sesión guardado";
+"autofill.login-saved.toast" = "Contraseña guardada";
 
 /* Message displayed after updating an autofill login */
-"autofill.login-updated.toast" = "Inicio de sesión actualizado";
+"autofill.login-updated.toast" = "Contraseña actualizada";
 
 /* Menu item text for copying autofill login details */
 "autofill.logins.copy-prompt" = "Copiar %@";
@@ -449,19 +494,19 @@
 "autofill.logins.details.address" = "URL del sitio web";
 
 /* Title for autofill login details */
-"autofill.logins.details.default-title" = "Iniciar sesión";
+"autofill.logins.details.default-title" = "Contraseña";
 
 /* Delete button when deleting an autofill login */
-"autofill.logins.details.delete" = "Borrar inicio de sesión";
+"autofill.logins.details.delete" = "Eliminar contraseña";
 
 /* Autofill alert button confirming delete autofill login */
-"autofill.logins.details.delete-confirmation.button" = "Borrar inicio de sesión";
+"autofill.logins.details.delete-confirmation.button" = "Eliminar contraseña";
 
 /* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "¿Seguro de que quieres borrar este inicio de sesión?";
+"autofill.logins.details.delete-confirmation.title" = "¿Seguro de que quieres borrar esta contraseña?";
 
 /* Title when editing autofill login details */
-"autofill.logins.details.edit-title" = "Editar inicio de sesión";
+"autofill.logins.details.edit-title" = "Editar contraseña";
 
 /* Placeholder for password field on autofill login details */
 "autofill.logins.details.edit.password-placeholder" = "Contraseña";
@@ -475,14 +520,14 @@
 /* Placeholder for userbane field on autofill login details */
 "autofill.logins.details.edit.username-placeholder" = "usuario@ejemplo.com";
 
-/* Message displaying when the login was last updated by */
-"autofill.logins.details.last-updated" = "Última actualización del inicio de sesión el %@";
+/* Message displaying when the login was last updated */
+"autofill.logins.details.last-updated" = "Última actualización % @";
 
 /* Login name label for login details on autofill */
-"autofill.logins.details.login-name" = "Título de inicio de sesión";
+"autofill.logins.details.login-name" = "Título";
 
 /* Title when adding new autofill login */
-"autofill.logins.details.new-title" = "Añadir inicio de sesión";
+"autofill.logins.details.new-title" = "Añadir contraseña";
 
 /* Notes label for login details on autofill */
 "autofill.logins.details.notes" = "Notas";
@@ -497,37 +542,37 @@
 "autofill.logins.details.save-duplicate-alert.action" = "De acuerdo";
 
 /* Message for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.message" = "Ya tienes un inicio de sesión para este nombre de usuario y sitio web.";
+"autofill.logins.details.save-duplicate-alert.message" = "Ya tienes una contraseña guardada para este nombre de usuario y sitio web.";
 
 /* Title for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.title" = "Inicio de sesión duplicado";
+"autofill.logins.details.save-duplicate-alert.title" = "Duplicar contraseña";
 
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Nombre de usuario";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Los inicios de sesión se almacenan de forma segura en tu dispositivo.";
+"autofill.logins.empty-view.subtitle" = "Las contraseñas se almacenan de forma segura en tu dispositivo.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Aún no hay inicios de sesión guardados";
+"autofill.logins.empty-view.title" = "Aún no hay contraseñas guardadas";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Cancelar";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Desbloquea el dispositivo para acceder a los inicios de sesión guardados";
+"autofill.logins.list.auth.reason" = "Desbloquear dispositivo para acceder a contraseñas";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Cerrar";
 
 /* Title for a toggle that enables autofill */
-"autofill.logins.list.enable" = "Guardar y autocompletar inicios de sesión";
+"autofill.logins.list.enable" = "Guardar y autocompletar contraseñas";
 
 /* Toast message when a login item is deleted */
-"autofill.logins.list.login-deleted-message" = "Inicio de sesión para %@ eliminado";
+"autofill.logins.list.login-deleted-message" = "Contraseña para %@ borrada";
 
 /* Toast message when a login item without a title is deleted */
-"autofill.logins.list.login-deleted-message-no-title" = "Inicio de sesión eliminado";
+"autofill.logins.list.login-deleted-message-no-title" = "Contraseña borrada";
 
 /* Title for a button that allows a user to reset their list of never saved sites */
 "autofill.logins.list.never.saved" = "Restablecer sitios excluidos";
@@ -539,28 +584,28 @@
 "autofill.logins.list.never.saved.reset.action.confirm" = "Restablecer sitios excluidos";
 
 /* Alert title */
-"autofill.logins.list.never.saved.reset.action.title" = "Si restableces los sitios excluidos, se te pedirá que guardes tus datos de inicio de sesión la próxima vez que accedas a cualquiera de estos sitios.";
+"autofill.logins.list.never.saved.reset.action.title" = "Si restableces los sitios excluidos, se te pedirá que guardes tu contraseña la próxima vez que accedas a cualquiera de estos sitios.";
 
 /* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Buscar inicios de sesión";
+"autofill.logins.list.search-placeholder" = "Buscar contraseñas";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Sugerencias";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Inicios de sesión";
+"autofill.logins.list.title" = "Contraseñas";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Se requiere un código de acceso para proteger tus inicios de sesión.";
+"autofill.logins.no-auth.subtitle" = "Se requiere un código de acceso para proteger tus contraseñas.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Protege tu dispositivo para guardar los inicios de sesión";
+"autofill.logins.no-auth.title" = "Protege tu dispositivo para guardar contraseñas";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Cancelar";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Desbloquear para usar el inicio de sesión guardado";
+"autofill.logins.prompt.auth.reason" = "Desbloquear para usar la contraseña guardada";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Desde este sitio web";
@@ -584,7 +629,7 @@
 "autofill.logins.search.no-results.title" = "Sin resultados";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Las contraseñas se almacenan de forma segura en tu dispositivo en el menú Inicios de sesión.";
+"autofill.password-generation-prompt.subtitle" = "Las contraseñas se almacenan de forma segura en tu dispositivo.";
 
 /* Title for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.title" = "¿Usar una contraseña segura de DuckDuckGo?";
@@ -629,7 +674,7 @@
 "autofill.save-login.never-prompt.CTA" = "No preguntar nunca para esta página";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Las contraseñas se almacenan de forma segura en tu dispositivo en el menú Inicios de sesión.";
+"autofill.save-login.new-user.message" = "Las contraseñas se almacenan de forma segura en tu dispositivo.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "¿Quieres que DuckDuckGo guarde tu contraseña?";
@@ -638,7 +683,7 @@
 "autofill.save-login.not-now.CTA" = "No guardar";
 
 /* Title displayed on modal asking for the user to save the login */
-"autofill.save-login.title" = "¿Guardar inicio de sesión?";
+"autofill.save-login.title" = "¿Guardar contraseña?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Guardar contraseña";
@@ -754,48 +799,6 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Importa un archivo HTML de marcadores desde otro navegador o exporta tus marcadores existentes.";
 
-/* Broken Site Category */
-"brokensite.category.comments" = "No se han cargado los comentarios";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Falta contenido";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "No se ha gestionado la ventana emergente de cookies";
-
-/* Broken Site Category */
-"brokensite.category.images" = "No se han cargado las imágenes";
-
-/* Broken Site Category */
-"brokensite.category.links" = "No funcionan los enlaces o botones";
-
-/* Broken Site Category */
-"brokensite.category.login" = "No puedo iniciar sesión";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Otro problema";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "El sitio me pidió que desactivara";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "El navegador es incompatible";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "No se ha reproducido el vídeo";
-
-/* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Elige tu problema en la lista...";
-
-/* Broken Site Category Section Title */
-"brokensite.categoryTitle" = "SELECCIONA UNA CATEGORÍA";
-
-/* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "Si compartes más detalles, nos ayudarás a resolver esta incidencia";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "DESCRIBE QUÉ PASÓ";
-
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: %@";
 
@@ -894,6 +897,9 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet puede ser un lugar horrible.\n\nNo te preocupes. Buscar y navegar de forma privada es más fácil de lo que piensas.";
+
+/* No comment provided by engineer. */
+"Debug" = "Debug";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Desactivado";
@@ -1071,6 +1077,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Eliminar";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "Todos los favoritos del dispositivo";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Elige qué favoritos mostrar en una nueva pestaña en función de su origen.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Preferencias de visualización";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Solo favoritos móviles";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Bloquear anuncios y mensajes emergentes";
@@ -1357,6 +1375,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "¡Bienvenido a\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo para Mac tiene la velocidad que necesitas, las funciones de navegación que esperas y viene repleta de nuestros mejores Privacy Essentials.";
 
@@ -1420,23 +1441,113 @@
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
 
+/* Privacy Policy title for Network Protection */
+"network-protection.privacy-policy.title" = "Política de privacidad";
+
+/* Title text for the Network Protection terms and conditions accept button */
+"network-protection.waitlist.agree-and-continue" = "Aceptar y continuar";
+
+/* Availability disclaimer for Network Protection join waitlist screen */
+"network-protection.waitlist.availability-disclaimer" = "Network Protection es gratuito durante el acceso anticipado.";
+
+/* Agree and Continue button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.agree-and-continue" = "Aceptar y continuar";
+
+/* Enable Notifications button for Network Protection joined waitlist screen */
+"network-protection.waitlist.button.enable-notifications" = "Activar notificaciones";
+
+/* Button title for users who already have an invite code */
+"network-protection.waitlist.button.existing-invite-code" = "Tengo un código de invitación";
+
+/* Join Waitlist button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.join-waitlist" = "Únete a la lista de espera";
+
+/* Button title text for the Network Protection waitlist confirmation prompt */
+"network-protection.waitlist.get-started" = "Empezar";
+
+/* Subtitle for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.subtitle" = "Cifra el tráfico online en tus navegadores y aplicaciones.";
+
+/* Title for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.title" = "Cobertura completa del dispositivo";
+
+/* Subtitle for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.subtitle" = "No hace falta una aplicación independiente. Conéctate en un clic y consulta el estado de tu conexión de un vistazo.";
+
+/* Title for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.title" = "Rápido, fiable y fácil de usar";
+
+/* Subtitle for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.subtitle" = "No registramos ni guardamos ningún dato que pueda conectarte a tu actividad en línea.";
+
+/* Title for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.title" = "Estricta política sin registro";
+
+/* Subtitle for Network Protection invited screen */
+"network-protection.waitlist.invited.subtitle" = "Obtén una capa adicional de protección en línea con la VPN diseñada para ofrecer velocidad y simplicidad. Cifra tu conexión a Internet en todo tu dispositivo y oculta tu ubicación y dirección IP en los sitios que visitas.";
+
+/* Title for Network Protection invited screen */
+"network-protection.waitlist.invited.title" = "¡Estás invitado a probar el acceso anticipado a \n Network Protection!";
+
+/* First subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.1" = "Protege tu conexión en cualquier momento y lugar con Network Protection, la VPN de DuckDuckGo.";
+
+/* Second subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.2" = "Únete a la lista de espera y te avisaremos cuando sea tu turno.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
+
+/* Title for Network Protection joined waitlist screen */
+"network-protection.waitlist.joined.title" = "¡Estás en la lista!";
+
+/* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Se envían nuevas invitaciones cada pocos días, por orden de llegada.";
+
+/* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "Te avisaremos cuando tu invitación esté lista.";
+
+/* Body text for the alert to enable notifications */
+"network-protection.waitlist.notification-alert.description" = "Te enviaremos una notificación cuando esté lista tu invitación para probar Network Protection.";
+
+/* Subtitle for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-description" = "Recibe una notificación cuando esté lista tu copia de acceso anticipado a Network Protection.";
+
+/* Title for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-title" = "Entérate al instante de tu invitación";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.text" = "Abrir tu invitación";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.title" = "¡Network Protection está listo!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "¡Tu invitación está lista!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "¡Estás en la lista!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Unirse a la lista de espera privada";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+"network.protection.invite.dialog.title" = "Estás invitado a probar Network Protection";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
-
-/* Message explaining that netP is invite only */
-"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
 
 /* Message for the network protection invite success view */
 "network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
 
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
+
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "Abrir VPN";
 
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected - %@";
@@ -1459,7 +1570,7 @@
 /* Header title label text for the status view when netP is connected */
 "network.protection.status.header.title.on" = "Network Protection is On";
 
-/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+/* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 
 /* Connection details label shown in NetworkProtection's status view. */
@@ -1477,8 +1588,65 @@
 /* Location label shown in NetworkProtection's status view. */
 "network.protection.status.view.location" = "Location";
 
+/* Label shown on the title of the settings section in NetworkProtection's status view. */
+"network.protection.status.view.settings.section.title" = "Gestionar";
+
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Activar notificaciones";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Permite que DuckDuckGo te notifique si tu conexión se cae o si cambia el estado de la VPN.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Recibe notificaciones si tu conexión se cae o cambia el estado de la VPN.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "Alertas de VPN";
+
+/* Footer text for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Deja que el tráfico local sortee la VPN y conéctate a dispositivos de tu red local, como una impresora.";
+
+/* Title for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.title" = "Excluir redes locales";
+
+/* Title for the VPN Location screen's All Countries section. */
+"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Subtitle of countries item when there are multiple cities, example : */
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d ciudades";
+
+/* Title for the VPN Location screen's Nearest Available selection item. */
+"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+
+/* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
+"network.protection.vpn.location.recommended.section.footer" = "Conectarte automáticamente al servidor más cercano que encontremos.";
+
+/* Title for the VPN Location screen's Recommended section. */
+"network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
+"network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
+
+/* Title for the VPN Location screen. */
+"network.protection.vpn.location.title" = "Ubicación de VPN";
+
+/* Title for the VPN Notifications management screen. */
+"network.protection.vpn.notifications.title" = "Notificaciones de VPN";
+
+/* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
+"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+
+/* Title for the Preferred Location VPN Settings item. */
+"network.protection.vpn.preferred.location.title" = "Preferred Location";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "Nuestra VPN utiliza DNS seguro para mantener la privacidad de tu actividad en línea, de modo que tu proveedor de Internet no pueda ver qué sitios web visitas.";
+
+/* Title for the VPN Settings screen. */
+"network.protection.vpn.settings.title" = "Configuración de VPN";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1595,9 +1763,6 @@
 "prompt.custom.url.scheme.title" = "¿Abrir en otra aplicación?";
 
 /* No comment provided by engineer. */
-"report.brokensite.header" = "Enviar un informe anónimo del sitio dañado nos ayuda a depurar estos problemas y mejorar la aplicación.";
-
-/* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Buscar o introducir dirección";
 
 /* No comment provided by engineer. */
@@ -1606,8 +1771,107 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favoritos";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "Acerca de DuckDuckGo";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "Acerca de";
+
 /* about page */
 "settings.about.text" = "DuckDuckGo es la empresa de privacidad en internet independiente fundada en 2008 para quienes estén cansados de ser rastreados en línea y quieran una solución sencilla. Somos la prueba de que es posible obtener protección de privacidad real en línea sin concesiones.\n\nEl navegador DuckDuckGo incluye las funciones que esperas de un navegador de referencia, como marcadores, pestañas, contraseñas y más, así como más de [una docena de potentes funciones de protección de privacidad](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) no se ofrece en la mayoría de los navegadores populares de forma predeterminada. Este conjunto completo de funciones de protección de privacidad ayuda a proteger tu actividad en línea, desde la búsqueda hasta la navegación, el correo electrónico y mucho más.\n\nNuestra protección de privacidad funciona sin necesidad de conocimientos técnicos y sin tener que lidiar con configuraciones complicadas. Lo único que tienes que hacer es cambiar el navegador a DuckDuckGo en todos tus dispositivos y obtener privacidad de forma predeterminada.\n\nSin embargo, si quieres conocer los entresijos, puedes encontrar más información sobre cómo funcionan las protecciones de privacidad de DuckDuckGo en nuestras [páginas de ayuda](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Añadir una aplicación a tu Dock";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Añadir widget a la pantalla de inicio";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Posición de la barra de direcciones";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Apariencia";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Abrir enlaces en aplicaciones asociadas";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Desactivar para evitar que los enlaces se abran automáticamente en otras aplicaciones instaladas.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Sugerencias de autocompletado";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Bloqueo de aplicación";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Si se establece Touch ID, Face ID o una contraseña del sistema, deberás desbloquear la aplicación al abrirla.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Borrar datos automáticamente";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Administrar ventanas emergentes de cookies";
+
+/* Settings title for the customize section */
+"settings.customize" = "Personalizar";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Definir como navegador predeterminado";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "Protección del correo electrónico";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Bloquea los rastreadores de correo electrónico y oculta tu dirección";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Compartir opiniones";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Animación del botón Fuego";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Sitios web a prueba de fuego";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Control Global de Privacidad (GPC)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "Icono de la aplicación";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Teclado";
+
+/* Settings title for the 'More' section */
+"settings.more" = "Más sobre DuckDuckGo";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Vistas previas con pulsación larga";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Privacidad";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Sincronización y copia de seguridad";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Tamaño del texto";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Tema";
+
+/* Title for the Settings View */
+"settings.title" = "Ajustes";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Sitios no protegidos";
+
+/* Settings cell for Version */
+"settings.version" = "Versión";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Búsqueda privada por voz";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Enviar informe";
@@ -1629,6 +1893,15 @@
 
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "\"%@\" ya no podrá acceder a tus datos sincronizados.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Lo sentimos, pero la sincronización y la copia de seguridad no están disponibles en este momento. Inténtalo de nuevo más tarde.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Lo sentimos, pero la sincronización y la copia de seguridad ya no están disponibles en esta versión de la aplicación. Actualiza DuckDuckGo a la última versión para continuar.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "Sincronización y copia de seguridad en pausa";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Cerrar la pestaña inicio";
@@ -1692,6 +1965,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Permite el acceso al micrófono en la configuración del sistema de iOS para que DuckDuckGo use las funciones de voz.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "De acuerdo";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Se requiere acceso al micrófono";

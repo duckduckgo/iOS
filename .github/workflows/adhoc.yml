@@ -58,13 +58,13 @@ jobs:
           echo "dsyms_path=${{ github.workspace }}/${{ env.dsyms_filename }}" >> $GITHUB_ENV
 
       - name: Upload IPA artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.ipa_filename }}
           path: ${{ env.ipa_path }}
 
       - name: Upload dSYMs artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.dsyms_filename }}
           path: ${{ env.dsyms_path }}

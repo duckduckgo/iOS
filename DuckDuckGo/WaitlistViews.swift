@@ -23,11 +23,11 @@ import Waitlist
 struct WaitlistDownloadBrowserContentView: View {
 
     let action: WaitlistViewActionHandler
-    let constants: BrowserDowloadLinkConstants
+    let constants: BrowserDownloadLinkConstants
 
-    init(platform: BrowserDowloadLink, action: @escaping WaitlistViewActionHandler) {
+    init(platform: BrowserDownloadLink, action: @escaping WaitlistViewActionHandler) {
         self.action = action
-        self.constants = BrowserDowloadLinkConstants(platform: platform)
+        self.constants = BrowserDownloadLinkConstants(platform: platform)
     }
 
     @State private var shareButtonFrame: CGRect = .zero
@@ -115,13 +115,13 @@ private struct ShareButtonFramePreferenceKey: PreferenceKey {
     static func reduce(value: inout CGRect, nextValue: () -> CGRect) {}
 }
 
-enum BrowserDowloadLink {
+enum BrowserDownloadLink {
     case windows
     case mac
 }
 
-struct BrowserDowloadLinkConstants {
-    let platform: BrowserDowloadLink
+struct BrowserDownloadLinkConstants {
+    let platform: BrowserDownloadLink
 
     var imageName: String {
         switch platform {

@@ -204,6 +204,24 @@ final class AppURLsTests: XCTestCase {
         XCTAssertEqual(url.getParameter(named: "q"), "query")
     }
 
+    func testSearchUrlCreatesSearchUrlWhenFloatingPointNumberIsPassed() {
+        let url = URL.makeSearchURL(query: "1.4")
+        XCTAssertEqual(url?.getParameter(named: "q"), "1.4")
+    }
+
+    func testSearchUrlCreatesSearchUrlWhenFloatingPointNumbersDivisionIsPassed() {
+        let url = URL.makeSearchURL(query: "1.4/3.4")
+        XCTAssertEqual(url?.getParameter(named: "q"), "1.4/3.4")
+
+        let url2 = URL.makeSearchURL(query: "4/3.4")
+        XCTAssertEqual(url2?.getParameter(named: "q"), "4/3.4")
+    }
+
+    func testSearchUrlCreatesWebUrlWhenIPv4WithFourOctetsIsPassed() {
+        let url = URL.makeSearchURL(query: "1.0.0.4/3.4")
+        XCTAssertEqual(url?.absoluteString, "http://1.0.0.4/3.4")
+    }
+
     func testExtiUrlCreatesUrlWithAtbParam() throws {
         let url = URL.makeExtiURL(atb: "x")
         XCTAssertEqual(url.getParameter(named: "atb"), "x")
@@ -272,7 +290,7 @@ final class AppURLsTests: XCTestCase {
         let result = url.searchQuery
         XCTAssertNil(result)
     }
-    
+
     func testExternalDependencyURLsNotChanged() {
         XCTAssertEqual(URL.surrogates.absoluteString, "https://staticcdn.duckduckgo.com/surrogates.txt")
         XCTAssertEqual(URL.privacyConfig.absoluteString, "https://staticcdn.duckduckgo.com/trackerblocking/config/v4/ios-config.json")

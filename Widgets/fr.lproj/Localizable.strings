@@ -1,4 +1,16 @@
 /* No comment provided by engineer. */
+"Connect" = "Connect";
+
+/* No comment provided by engineer. */
+"Disconnect" = "Disconnect";
+
+/* No comment provided by engineer. */
+"Error" = "Erreur";
+
+/* No comment provided by engineer. */
+"iOS 17 required" = "iOS 17 required";
+
+/* No comment provided by engineer. */
 "Label" = "Label";
 
 /* Description shown to the user when adding the Email Protection lock screen widget */
@@ -30,6 +42,9 @@
 
 /* Title shown to the user when adding the Voice Search lock screen widget */
 "lock.screen.widget.voice.title" = "Recherche vocale";
+
+/* No comment provided by engineer. */
+"VPN Not Configured" = "VPN Not Configured";
 
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Recherchez ou visitez vos sites favoris en privé et d'un seul mouvement.";

@@ -1,0 +1,16 @@
+# copy_recovery_code_from_settings.yaml
+
+appId: com.duckduckgo.mobile.ios
+---
+
+- scroll
+- scroll
+- scroll
+- assertVisible: Debug Menu
+- tapOn: Debug Menu
+- tapOn: Sync Info
+- tapOn: Paste and Copy Recovery Code
+- inputText: ${CODE}
+- tapOn: Copy
+- tapOn: Debug
+- tapOn: Settings

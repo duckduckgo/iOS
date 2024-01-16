@@ -1,0 +1,9 @@
+appId: com.duckduckgo.mobile.ios
+---
+# # - Put the code in the clipboard on Maestro Cloud
+# # - Prevent iOS from showing the Paste permission alert as Maestro can't handle it
+- tapOn: Sync Info
+- tapOn: Paste and Copy Recovery Code
+- inputText: ${CODE}
+- tapOn: Copy
+- tapOn: Debug

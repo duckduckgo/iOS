@@ -22,8 +22,12 @@ import Core
 import Bookmarks
 import Combine
 import Common
+import DDGSync
 import Persistence
 
+// swiftlint:disable file_length
+
+// swiftlint:disable:next type_body_length
 class HomeViewController: UIViewController {
     
     @IBOutlet weak var ctaContainerBottom: NSLayoutConstraint!
@@ -64,21 +68,25 @@ class HomeViewController: UIViewController {
     private let tabModel: Tab
     private let favoritesViewModel: FavoritesListInteracting
     private let appSettings: AppSettings
+    private let syncService: DDGSyncing
+    private let syncDataProviders: SyncDataProviders
     private var viewModelCancellable: AnyCancellable?
     private var favoritesDisplayModeCancellable: AnyCancellable?
 
 #if APP_TRACKING_PROTECTION
     private let appTPHomeViewModel: AppTPHomeViewModel
 #endif
-    
+
 #if APP_TRACKING_PROTECTION
+    // swiftlint:disable:next function_parameter_count
     static func loadFromStoryboard(
         model: Tab,
         favoritesViewModel: FavoritesListInteracting,
         appSettings: AppSettings,
+        syncService: DDGSyncing,
+        syncDataProviders: SyncDataProviders,
         appTPDatabase: CoreDataDatabase
     ) -> HomeViewController {
-
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "HomeViewController", creator: { coder in
             HomeViewController(
@@ -86,16 +94,31 @@ class HomeViewController: UIViewController {
                 tabModel: model,
                 favoritesViewModel: favoritesViewModel,
                 appSettings: appSettings,
+                syncService: syncService,
+                syncDataProviders: syncDataProviders,
                 appTPDatabase: appTPDatabase
             )
         })
         return controller
     }
 #else
-    static func loadFromStoryboard(model: Tab, favoritesViewModel: FavoritesListInteracting, appSettings: AppSettings) -> HomeViewController {
+    static func loadFromStoryboard(
+        model: Tab,
+        favoritesViewModel: FavoritesListInteracting,
+        appSettings: AppSettings,
+        syncService: DDGSyncing,
+        syncDataProviders: SyncDataProviders
+    ) -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "HomeViewController", creator: { coder in
-            HomeViewController(coder: coder, tabModel: model, favoritesViewModel: favoritesViewModel, appSettings: appSettings)
+            HomeViewController(
+                coder: coder,
+                tabModel: model,
+                favoritesViewModel: favoritesViewModel,
+                appSettings: appSettings,
+                syncService: syncService,
+                syncDataProviders: syncDataProviders
+            )
         })
         return controller
     }
@@ -107,20 +130,34 @@ class HomeViewController: UIViewController {
         tabModel: Tab,
         favoritesViewModel: FavoritesListInteracting,
         appSettings: AppSettings,
+        syncService: DDGSyncing,
+        syncDataProviders: SyncDataProviders,
         appTPDatabase: CoreDataDatabase
     ) {
         self.tabModel = tabModel
         self.favoritesViewModel = favoritesViewModel
         self.appSettings = appSettings
+        self.syncService = syncService
+        self.syncDataProviders = syncDataProviders
+
         self.appTPHomeViewModel = AppTPHomeViewModel(appTrackingProtectionDatabase: appTPDatabase)
 
         super.init(coder: coder)
     }
 #else
-    required init?(coder: NSCoder, tabModel: Tab, favoritesViewModel: FavoritesListInteracting, appSettings: AppSettings) {
+    required init?(
+        coder: NSCoder,
+        tabModel: Tab,
+        favoritesViewModel: FavoritesListInteracting,
+        appSettings: AppSettings,
+        syncService: DDGSyncing,
+        syncDataProviders: SyncDataProviders
+    ) {
         self.tabModel = tabModel
         self.favoritesViewModel = favoritesViewModel
         self.appSettings = appSettings
+        self.syncService = syncService
+        self.syncDataProviders = syncDataProviders
 
         super.init(coder: coder)
     }
@@ -330,6 +367,9 @@ class HomeViewController: UIViewController {
     func launchNewSearch() {
         collectionView.launchNewSearch()
     }
+
+    private(set) lazy var faviconsFetcherOnboarding: FaviconsFetcherOnboarding =
+        .init(syncService: syncService, syncBookmarksAdapter: syncDataProviders.bookmarksAdapter)
 }
 
 extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {

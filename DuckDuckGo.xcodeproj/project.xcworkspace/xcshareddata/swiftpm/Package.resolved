@@ -1,178 +1,175 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "BloomFilter",
-        "repositoryURL": "https://github.com/duckduckgo/bloom_cpp.git",
-        "state": {
-          "branch": null,
-          "revision": "8076199456290b61b4544bf2f4caf296759906a0",
-          "version": "3.0.0"
-        }
-      },
-      {
-        "package": "BrowserServicesKit",
-        "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
-        "state": {
-          "branch": null,
-          "revision": "c211f45fd2e56d80cd0b60a02f3a0458ae8c111e",
-          "version": null
-        }
-      },
-      {
-        "package": "CocoaAsyncSocket",
-        "repositoryURL": "https://github.com/robbiehanson/CocoaAsyncSocket",
-        "state": {
-          "branch": null,
-          "revision": "dbdc00669c1ced63b27c3c5f052ee4d28f10150c",
-          "version": "7.6.5"
-        }
-      },
-      {
-        "package": "ContentScopeScripts",
-        "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
-        "state": {
-          "branch": null,
-          "revision": "254b23cf292140498650421bb31fd05740f4579b",
-          "version": "4.40.0"
-        }
-      },
-      {
-        "package": "DesignResourcesKit",
-        "repositoryURL": "https://github.com/duckduckgo/DesignResourcesKit",
-        "state": {
-          "branch": null,
-          "revision": "d7ea2561ec7624c224f52e1c9b349075ddf1c782",
-          "version": "2.0.0"
-        }
-      },
-      {
-        "package": "Autofill",
-        "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
-        "state": {
-          "branch": null,
-          "revision": "93677cc02cfe650ce7f417246afd0e8e972cd83e",
-          "version": "10.0.0"
-        }
-      },
-      {
-        "package": "GRDB",
-        "repositoryURL": "https://github.com/duckduckgo/GRDB.swift.git",
-        "state": {
-          "branch": null,
-          "revision": "77d9a83191a74e319a5cfa27b0e3145d15607573",
-          "version": "2.2.0"
-        }
-      },
-      {
-        "package": "FindInPageIOSJSSupport",
-        "repositoryURL": "https://github.com/duckduckgo/ios-js-support",
-        "state": {
-          "branch": null,
-          "revision": "6a6789ac8104a587316c58af75539753853b50d9",
-          "version": "2.0.0"
-        }
-      },
-      {
-        "package": "Kingfisher",
-        "repositoryURL": "https://github.com/onevcat/Kingfisher.git",
-        "state": {
-          "branch": null,
-          "revision": "af4be924ad984cf4d16f4ae4df424e79a443d435",
-          "version": "7.6.2"
-        }
-      },
-      {
-        "package": "Lottie",
-        "repositoryURL": "https://github.com/duckduckgo/lottie-ios.git",
-        "state": {
-          "branch": null,
-          "revision": "abf5510e261c85ffddd29de0bca9b72592ea2bdd",
-          "version": "3.3.0"
-        }
-      },
-      {
-        "package": "OHHTTPStubs",
-        "repositoryURL": "https://github.com/AliSoftware/OHHTTPStubs.git",
-        "state": {
-          "branch": null,
-          "revision": "12f19662426d0434d6c330c6974d53e2eb10ecd9",
-          "version": "9.1.0"
-        }
-      },
-      {
-        "package": "PrivacyDashboardResources",
-        "repositoryURL": "https://github.com/duckduckgo/privacy-dashboard",
-        "state": {
-          "branch": null,
-          "revision": "b4ac92a444e79d5651930482623b9f6dc9265667",
-          "version": "2.0.0"
-        }
-      },
-      {
-        "package": "Punycode",
-        "repositoryURL": "https://github.com/gumob/PunycodeSwift.git",
-        "state": {
-          "branch": null,
-          "revision": "4356ec54e073741449640d3d50a1fd24fd1e1b8b",
-          "version": "2.1.0"
-        }
-      },
-      {
-        "package": "swift-argument-parser",
-        "repositoryURL": "https://github.com/apple/swift-argument-parser",
-        "state": {
-          "branch": null,
-          "revision": "6b2aa2748a7881eebb9f84fb10c01293e15b52ca",
-          "version": "0.5.0"
-        }
-      },
-      {
-        "package": "Swifter",
-        "repositoryURL": "https://github.com/httpswift/swifter.git",
-        "state": {
-          "branch": null,
-          "revision": "9483a5d459b45c3ffd059f7b55f9638e268632fd",
-          "version": "1.5.0"
-        }
-      },
-      {
-        "package": "SwiftSoup",
-        "repositoryURL": "https://github.com/scinfu/SwiftSoup",
-        "state": {
-          "branch": null,
-          "revision": "41e7c263fb8c277e980ebcb9b0b5f6031d3d4886",
-          "version": "2.4.2"
-        }
-      },
-      {
-        "package": "DDGSyncCrypto",
-        "repositoryURL": "https://github.com/duckduckgo/sync_crypto",
-        "state": {
-          "branch": null,
-          "revision": "2ab6ab6f0f96b259c14c2de3fc948935fc16ac78",
-          "version": "0.2.0"
-        }
-      },
-      {
-        "package": "TrackerRadarKit",
-        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit",
-        "state": {
-          "branch": null,
-          "revision": "4684440d03304e7638a2c8086895367e90987463",
-          "version": "1.2.1"
-        }
-      },
-      {
-        "package": "WireGuardKit",
-        "repositoryURL": "https://github.com/duckduckgo/wireguard-apple",
-        "state": {
-          "branch": null,
-          "revision": "2d8172c11478ab11b0f5ad49bdb4f93f4b3d5e0d",
-          "version": "1.1.1"
-        }
+  "pins" : [
+    {
+      "identity" : "bloom_cpp",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/bloom_cpp.git",
+      "state" : {
+        "revision" : "8076199456290b61b4544bf2f4caf296759906a0",
+        "version" : "3.0.0"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "browserserviceskit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
+      "state" : {
+        "revision" : "7fbd5640d7b0f9a6817bf4615d7cb20fcc5409be"
+      }
+    },
+    {
+      "identity" : "cocoaasyncsocket",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/robbiehanson/CocoaAsyncSocket",
+      "state" : {
+        "revision" : "dbdc00669c1ced63b27c3c5f052ee4d28f10150c",
+        "version" : "7.6.5"
+      }
+    },
+    {
+      "identity" : "content-scope-scripts",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/content-scope-scripts",
+      "state" : {
+        "revision" : "bb027f14bec7fbb1a85d308139e7a66686da160e",
+        "version" : "4.59.0"
+      }
+    },
+    {
+      "identity" : "designresourceskit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/DesignResourcesKit",
+      "state" : {
+        "revision" : "d7ea2561ec7624c224f52e1c9b349075ddf1c782",
+        "version" : "2.0.0"
+      }
+    },
+    {
+      "identity" : "duckduckgo-autofill",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
+      "state" : {
+        "revision" : "b972bc0ab6ee1d57a0a18a197dcc31e40ae6ac57",
+        "version" : "10.0.3"
+      }
+    },
+    {
+      "identity" : "grdb.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/GRDB.swift.git",
+      "state" : {
+        "revision" : "9f049d7b97b1e68ffd86744b500660d34a9e79b8",
+        "version" : "2.3.0"
+      }
+    },
+    {
+      "identity" : "ios-js-support",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/ios-js-support",
+      "state" : {
+        "revision" : "6a6789ac8104a587316c58af75539753853b50d9",
+        "version" : "2.0.0"
+      }
+    },
+    {
+      "identity" : "kingfisher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onevcat/Kingfisher.git",
+      "state" : {
+        "revision" : "af4be924ad984cf4d16f4ae4df424e79a443d435",
+        "version" : "7.6.2"
+      }
+    },
+    {
+      "identity" : "lottie-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/lottie-ios.git",
+      "state" : {
+        "revision" : "abf5510e261c85ffddd29de0bca9b72592ea2bdd",
+        "version" : "3.3.0"
+      }
+    },
+    {
+      "identity" : "ohhttpstubs",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AliSoftware/OHHTTPStubs.git",
+      "state" : {
+        "revision" : "12f19662426d0434d6c330c6974d53e2eb10ecd9",
+        "version" : "9.1.0"
+      }
+    },
+    {
+      "identity" : "privacy-dashboard",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/privacy-dashboard",
+      "state" : {
+        "revision" : "38336a574e13090764ba09a6b877d15ee514e371",
+        "version" : "3.1.1"
+      }
+    },
+    {
+      "identity" : "punycodeswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/gumob/PunycodeSwift.git",
+      "state" : {
+        "revision" : "4356ec54e073741449640d3d50a1fd24fd1e1b8b",
+        "version" : "2.1.0"
+      }
+    },
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser",
+      "state" : {
+        "revision" : "c8ed701b513cf5177118a175d85fbbbcd707ab41",
+        "version" : "1.3.0"
+      }
+    },
+    {
+      "identity" : "swifter",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/httpswift/swifter.git",
+      "state" : {
+        "revision" : "9483a5d459b45c3ffd059f7b55f9638e268632fd",
+        "version" : "1.5.0"
+      }
+    },
+    {
+      "identity" : "swiftsoup",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/scinfu/SwiftSoup",
+      "state" : {
+        "revision" : "41e7c263fb8c277e980ebcb9b0b5f6031d3d4886",
+        "version" : "2.4.2"
+      }
+    },
+    {
+      "identity" : "sync_crypto",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/sync_crypto",
+      "state" : {
+        "revision" : "2ab6ab6f0f96b259c14c2de3fc948935fc16ac78",
+        "version" : "0.2.0"
+      }
+    },
+    {
+      "identity" : "trackerradarkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/TrackerRadarKit",
+      "state" : {
+        "revision" : "a6b7ba151d9dc6684484f3785293875ec01cc1ff",
+        "version" : "1.2.2"
+      }
+    },
+    {
+      "identity" : "wireguard-apple",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/wireguard-apple",
+      "state" : {
+        "revision" : "2d8172c11478ab11b0f5ad49bdb4f93f4b3d5e0d",
+        "version" : "1.1.1"
+      }
+    }
+  ],
+  "version" : 2
 }

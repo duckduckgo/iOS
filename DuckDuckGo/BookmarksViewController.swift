@@ -96,7 +96,14 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     fileprivate let viewModel: BookmarkListInteracting
 
     fileprivate lazy var dataSource: BookmarksDataSource = {
-        return BookmarksDataSource(viewModel: viewModel)
+        let dataSource = BookmarksDataSource(viewModel: viewModel)
+        dataSource.onFaviconMissing = { [weak self] _ in
+            guard let self else {
+                return
+            }
+            self.faviconsFetcherOnboarding.presentOnboardingIfNeeded(from: self)
+        }
+        return dataSource
     }()
 
     var searchDataSource: SearchBookmarksDataSource
@@ -833,6 +840,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         }
     }
 
+    private(set) lazy var faviconsFetcherOnboarding: FaviconsFetcherOnboarding =
+        .init(syncService: syncService, syncBookmarksAdapter: syncDataProviders.bookmarksAdapter)
 }
 
 extension BookmarksViewController: UISearchBarDelegate {
@@ -926,7 +935,6 @@ extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
     func showBookmarkDeletedMessage(_ bookmark: BookmarkEntity) {
         guard let parent = bookmark.parent,
               let index = parent.childrenArray.firstIndex(of: bookmark),
-              let domain = bookmark.urlObject?.host,
               let title = bookmark.title,
               let url = bookmark.url else {
             assertionFailure()
@@ -953,9 +961,11 @@ extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
             self?.tableView.reloadData()
             self?.refreshAll()
         } onDidDismiss: {
-            NotificationCenter.default.post(name: FireproofFaviconUpdater.deleteFireproofFaviconNotification,
-                                            object: nil,
-                                            userInfo: [FireproofFaviconUpdater.UserInfoKeys.faviconDomain: domain])
+            if let domain = bookmark.urlObject?.host {
+                NotificationCenter.default.post(name: FireproofFaviconUpdater.deleteFireproofFaviconNotification,
+                                                object: nil,
+                                                userInfo: [FireproofFaviconUpdater.UserInfoKeys.faviconDomain: domain])
+            }
         }
     }
 

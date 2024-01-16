@@ -30,8 +30,4 @@ struct AutofillSettingStatus {
         let canAuthenticate = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
         return appSettings.autofillCredentialsEnabled && canAuthenticate
     }
-
-    static var defaultState: String {
-        return appSettings.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary ? "on" : "off"
-    }
 }

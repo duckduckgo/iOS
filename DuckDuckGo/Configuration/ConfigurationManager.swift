@@ -66,8 +66,8 @@ struct ConfigurationManager {
         }
     }
 
-    func update() async -> UpdateResult {
-        async let didFetchAnyTrackerBlockingDependencies = fetchAndUpdateTrackerBlockingDependencies()
+    func update(isDebug: Bool = false) async -> UpdateResult {
+        async let didFetchAnyTrackerBlockingDependencies = fetchAndUpdateTrackerBlockingDependencies(isDebug: isDebug)
         async let didFetchExcludedDomains = fetchAndUpdateBloomFilterExcludedDomains()
         async let didFetchBloomFilter = fetchAndUpdateBloomFilter()
 
@@ -80,21 +80,21 @@ struct ConfigurationManager {
     }
 
     @discardableResult
-    func fetchAndUpdateTrackerBlockingDependencies() async -> Bool {
-        let didFetchAnyTrackerBlockingDependencies = await fetchTrackerBlockingDependencies()
+    func fetchAndUpdateTrackerBlockingDependencies(isDebug: Bool = false) async -> Bool {
+        let didFetchAnyTrackerBlockingDependencies = await fetchTrackerBlockingDependencies(isDebug: isDebug)
         if didFetchAnyTrackerBlockingDependencies {
             updateTrackerBlockingDependencies()
         }
         return didFetchAnyTrackerBlockingDependencies
     }
 
-    private func fetchTrackerBlockingDependencies() async -> Bool {
+    private func fetchTrackerBlockingDependencies(isDebug: Bool = false) async -> Bool {
         var didFetchAnyTrackerBlockingDependencies = false
 
         var tasks = [Configuration: Task<(), Swift.Error>]()
         tasks[.trackerDataSet] = Task { try await fetcher.fetch(.trackerDataSet) }
         tasks[.surrogates] = Task { try await fetcher.fetch(.surrogates) }
-        tasks[.privacyConfiguration] = Task { try await fetcher.fetch(.privacyConfiguration) }
+        tasks[.privacyConfiguration] = Task { try await fetcher.fetch(.privacyConfiguration, isDebug: isDebug) }
 
         for (configuration, task) in tasks {
             do {

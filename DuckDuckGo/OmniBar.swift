@@ -92,6 +92,8 @@ class OmniBar: UIView {
         super.awakeFromNib()
         configureMenuButton()
         configureTextField()
+        configureSettingsLongPressButton()
+        configureShareLongPressButton()
         registerNotifications()
         
         configureSeparator()
@@ -102,7 +104,31 @@ class OmniBar: UIView {
         
         privacyInfoContainer.isHidden = true
     }
-    
+
+    private func configureSettingsLongPressButton() {
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleSettingsLongPress(_:)))
+        longPressGesture.minimumPressDuration = 0.7
+        settingsButton.addGestureRecognizer(longPressGesture)
+    }
+
+    private func configureShareLongPressButton() {
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleShareLongPress(_:)))
+        longPressGesture.minimumPressDuration = 0.7
+        shareButton.addGestureRecognizer(longPressGesture)
+    }
+
+    @objc private func handleSettingsLongPress(_ gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            omniDelegate?.onSettingsLongPressed()
+        }
+    }
+
+    @objc private func handleShareLongPress(_ gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            omniDelegate?.onShareLongPressed()
+        }
+    }
+
     private func registerNotifications() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(textDidChange),
@@ -162,7 +188,7 @@ class OmniBar: UIView {
 
     private func configureEditingMenu() {
         let title = UserText.actionPasteAndGo
-        UIMenuController.shared.menuItems = [UIMenuItem(title: title, action: #selector(pasteAndGo))]
+        UIMenuController.shared.menuItems = [UIMenuItem(title: title, action: #selector(self.pasteURLAndGo))]
     }
     
     var textFieldBottomSpacing: CGFloat {
@@ -179,7 +205,7 @@ class OmniBar: UIView {
         }
     }
 
-    @objc func pasteAndGo(sender: UIMenuItem) {
+    @objc func pasteURLAndGo(sender: UIMenuItem) {
         guard let pastedText = UIPasteboard.general.string else { return }
         textField.text = pastedText
         onQuerySubmitted()
@@ -446,9 +472,10 @@ class OmniBar: UIView {
     }
 
     @IBAction func onSettingsButtonPressed(_ sender: Any) {
+        Pixel.fire(pixel: .addressBarSettings)
         omniDelegate?.onSettingsPressed()
     }
-    
+
     @IBAction func onCancelPressed(_ sender: Any) {
         omniDelegate?.onCancelPressed()
     }
@@ -474,6 +501,7 @@ class OmniBar: UIView {
     }
     
     @IBAction func onSharePressed(_ sender: Any) {
+        Pixel.fire(pixel: .addressBarShare)
         omniDelegate?.onSharePressed()
     }
     

@@ -61,8 +61,8 @@ public class FirewallManager: FirewallManaging {
     public static let apptpLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "AppTP")
     
     var manager: NETunnelProviderManager?
-    public var delegate: FirewallDelegate?
-    
+    public weak var delegate: FirewallDelegate?
+
     public init() {
         NotificationCenter.default.addObserver(self, selector: #selector(statusDidChange),
                                                name: .NEVPNStatusDidChange, object: nil)

@@ -34,7 +34,7 @@ struct MacBrowserWaitlist: Waitlist {
 
     static let backgroundTaskName = "Mac Browser Waitlist Status Task"
     static let backgroundRefreshTaskIdentifier = "com.duckduckgo.app.macBrowserWaitlistStatus"
-    static let notificationIdentitier = "com.duckduckgo.ios.mac-browser.invite-code-available"
+    static let notificationIdentifier = "com.duckduckgo.ios.mac-browser.invite-code-available"
     static let inviteAvailableNotificationTitle = UserText.macWaitlistAvailableNotificationTitle
     static let inviteAvailableNotificationBody = UserText.waitlistAvailableNotificationBody
 

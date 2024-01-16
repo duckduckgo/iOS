@@ -36,6 +36,7 @@ import SyncDataProviders
 
 #if NETWORK_PROTECTION
 import NetworkProtection
+import WebKit
 #endif
 
 // swiftlint:disable file_length
@@ -79,8 +80,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private(set) var syncDataProviders: SyncDataProviders!
     private var syncDidFinishCancellable: AnyCancellable?
     private var syncStateCancellable: AnyCancellable?
+    private var isSyncInProgressCancellable: AnyCancellable?
 
     // MARK: lifecycle
+
+    @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
+    private var privacyConfigCustomURL: String?
 
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -96,6 +101,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 #endif
 
+        if isDebugBuild {
+            Pixel.isDryRun = true
+        } else {
+            Pixel.isDryRun = false
+        }
+
         ContentBlocking.shared.onCriticalError = presentPreemptiveCrashAlert
 
         // Can be removed after a couple of versions
@@ -103,7 +114,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         cleanUpIncrementalRolloutPixelTest()
 
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
-        Configuration.setURLProvider(AppConfigurationURLProvider())
+
+        if isDebugBuild, let privacyConfigCustomURL, let url = URL(string: privacyConfigCustomURL) {
+            Configuration.setURLProvider(CustomConfigurationURLProvider(customPrivacyConfigurationURL: url))
+        } else {
+            Configuration.setURLProvider(AppConfigurationURLProvider())
+        }
 
         CrashCollection.start {
             Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [])
@@ -114,19 +130,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = DefaultUserAgentManager.shared
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
+            Pixel.isDryRun = true
             _ = DefaultUserAgentManager.shared
             Database.shared.loadStore { _, _ in }
-            bookmarksDatabase.loadStore { context, error in
-                guard let context = context else {
-                    fatalError("Error: \(error?.localizedDescription ?? "<unknown>")")
-                }
-                
-                let legacyStorage = LegacyBookmarksCoreDataStorage()
-                legacyStorage?.loadStoreAndCaches()
-                LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
-                                                      to: context)
-                legacyStorage?.removeStore()
-            }
+            _ = BookmarksDatabaseSetup(crashOnError: true).loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase)
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
         }
@@ -165,48 +172,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DatabaseMigration.migrate(to: context)
         }
 
-        var shouldResetBookmarksSyncTimestamp = false
-
-        bookmarksDatabase.loadStore { [weak self] context, error in
-            guard let context = context else {
-                if let error = error {
-                    Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
-                               error: error)
-                } else {
-                    Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase)
-                }
-
-                if shouldPresentInsufficientDiskSpaceAlertAndCrash {
-                    return
-                } else {
-                    Thread.sleep(forTimeInterval: 1)
-                    fatalError("Could not create Bookmarks database stack: \(error?.localizedDescription ?? "err")")
-                }
-            }
-            
-            let legacyStorage = LegacyBookmarksCoreDataStorage()
-            legacyStorage?.loadStoreAndCaches()
-            LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
-                                                  to: context)
-            legacyStorage?.removeStore()
-
-            do {
-                BookmarkUtils.migrateToFormFactorSpecificFavorites(byCopyingExistingTo: .mobile, in: context)
-                if context.hasChanges {
-                    try context.save(onErrorFire: .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders)
-                    if let syncDataProviders = self?.syncDataProviders {
-                        syncDataProviders.bookmarksAdapter.shouldResetBookmarksSyncTimestamp = true
-                    } else {
-                        shouldResetBookmarksSyncTimestamp = true
-                    }
-                }
-            } catch {
-                Thread.sleep(forTimeInterval: 1)
-                fatalError("Could not prepare Bookmarks DB structure")
-            }
-
-            WidgetCenter.shared.reloadAllTimelines()
+        if BookmarksDatabaseSetup(crashOnError: !shouldPresentInsufficientDiskSpaceAlertAndCrash)
+                .loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase) {
+            // MARK: post-Bookmarks migration logic
         }
+
+        WidgetCenter.shared.reloadAllTimelines()
 
 #if APP_TRACKING_PROTECTION
         appTrackingProtectionDatabase.loadStore { context, error in
@@ -262,11 +233,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
         )
-        syncDataProviders.bookmarksAdapter.shouldResetBookmarksSyncTimestamp = shouldResetBookmarksSyncTimestamp
 
-        let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog, environment: environment)
+        let syncService = DDGSync(
+            dataProvidersSource: syncDataProviders,
+            errorEvents: SyncErrorHandler(),
+            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+            log: .syncLog,
+            environment: environment
+        )
         syncService.initializeIfNeeded()
         self.syncService = syncService
+
+        isSyncInProgressCancellable = syncService.isSyncInProgressPublisher
+            .filter { $0 }
+            .sink { [weak syncService] _ in
+                DailyPixel.fire(pixel: .syncDaily, includedParameters: [.appVersion])
+                syncService?.syncDailyStats.sendStatsIfNeeded(handler: { params in
+                    Pixel.fire(pixel: .syncSuccessRateDaily,
+                               withAdditionalParameters: params,
+                               includedParameters: [.appVersion])
+                })
+            }
 
 #if APP_TRACKING_PROTECTION
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
@@ -296,14 +283,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         autoClear = AutoClear(worker: main)
         autoClear?.applicationDidLaunch()
         
-        clearLegacyAllowedDomainCookies()
-        
         AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
 
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
         WindowsBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
+
+#if NETWORK_PROTECTION
+        VPNWaitlist.shared.registerBackgroundRefreshTaskHandler()
+#endif
+
         RemoteMessaging.registerBackgroundRefreshTaskHandler(
             bookmarksDatabase: bookmarksDatabase,
             favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
@@ -323,6 +313,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if NETWORK_PROTECTION
         widgetRefreshModel.beginObservingVPNStatus()
+        NetworkProtectionAccessController().refreshNetworkProtectionAccess()
+#endif
+        
+#if SUBSCRIPTION
+        setupSubscriptionsEnvironment()
 #endif
 
         return true
@@ -357,14 +352,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    private func clearLegacyAllowedDomainCookies() {
-        let domains = PreserveLogins.shared.legacyAllowedDomains
-        guard !domains.isEmpty else { return }
-        WebCacheManager.shared.removeCookies(forDomains: domains, completion: {
-            os_log("Removed cookies for %d legacy allowed domains", domains.count)
-            PreserveLogins.shared.clearLegacyAllowedDomains()
-        })
+
+#if SUBSCRIPTION
+    private func setupSubscriptionsEnvironment() {
+        Task {  SubscriptionPurchaseEnvironment.current = .appStore
+            await AccountManager().checkSubscriptionState()
+        }
     }
+#endif
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
@@ -405,18 +400,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        WindowsBrowserWaitlist.shared.fetchInviteCodeIfAvailable { error in
-            guard error == nil else { return }
-            WindowsBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
-        }
-
-        BGTaskScheduler.shared.getPendingTaskRequests { tasks in
-            let hasWindowsBrowserWaitlistTask = tasks.contains { $0.identifier == WindowsBrowserWaitlist.backgroundRefreshTaskIdentifier }
-            if !hasWindowsBrowserWaitlistTask {
-                WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
-            }
-        }
-
+        checkWaitlists()
         syncService.scheduler.notifyAppLifecycleEvent()
         fireFailedCompilationsPixelIfNeeded()
         refreshShortcuts()
@@ -507,10 +491,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func onApplicationLaunch(_ application: UIApplication) {
-        beginAuthentication()
-        initialiseBackgroundFetch(application)
-        applyAppearanceChanges()
-        refreshRemoteMessages()
+        Task { @MainActor in
+            await beginAuthentication()
+            initialiseBackgroundFetch(application)
+            applyAppearanceChanges()
+            refreshRemoteMessages()
+        }
     }
     
     private func applyAppearanceChanges() {
@@ -529,10 +515,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillEnterForeground(_ application: UIApplication) {
         ThemeManager.shared.updateUserInterfaceStyle()
 
-        beginAuthentication()
-        autoClear?.applicationWillMoveToForeground()
-        showKeyboardIfSettingOn = true
-        syncService.scheduler.resumeSyncQueue()
+        Task { @MainActor in
+            await beginAuthentication()
+            autoClear?.applicationWillMoveToForeground()
+            showKeyboardIfSettingOn = true
+            syncService.scheduler.resumeSyncQueue()
+        }
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -541,6 +529,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         lastBackgroundDate = Date()
         AppDependencyProvider.shared.autofillLoginSession.endSession()
         suspendSync()
+        syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
     }
 
     private func suspendSync() {
@@ -659,7 +648,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.isHidden = true
     }
 
-    private func beginAuthentication() {
+    private func beginAuthentication() async {
         
         guard privacyStore.authenticationEnabled else { return }
 
@@ -671,7 +660,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         
-        controller.beginAuthentication { [weak self] in
+        await controller.beginAuthentication { [weak self] in
             self?.removeOverlay()
             self?.showKeyboardOnLaunch()
         }
@@ -812,13 +801,18 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
             let identifier = response.notification.request.identifier
-            if identifier == WindowsBrowserWaitlist.notificationIdentitier {
+            if identifier == WindowsBrowserWaitlist.notificationIdentifier {
                 presentWindowsBrowserWaitlistSettingsModal()
             }
 
 #if NETWORK_PROTECTION
             if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
                 presentNetworkProtectionStatusSettingsModal()
+            }
+
+            if identifier == VPNWaitlist.notificationIdentifier {
+                presentNetworkProtectionWaitlistModal()
+                DailyPixel.fire(pixel: .networkProtectionWaitlistNotificationLaunched)
             }
 #endif
         }
@@ -832,6 +826,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
 #if NETWORK_PROTECTION
+    private func presentNetworkProtectionWaitlistModal() {
+        if #available(iOS 15, *) {
+            let networkProtectionRoot = VPNWaitlistViewController(nibName: nil, bundle: nil)
+            presentSettings(with: networkProtectionRoot)
+        }
+    }
+
     func presentNetworkProtectionStatusSettingsModal() {
         if #available(iOS 15, *) {
             let networkProtectionRoot = NetworkProtectionRootViewController()

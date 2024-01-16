@@ -46,7 +46,7 @@ struct WidgetEducationView: View {
                 .padding(.horizontal)
                 .padding(.top, Const.Padding.top)
             }
-        }
+        }.navigationBarTitle(UserText.settingsAddWidget, displayMode: .inline)
     }
     
     private var secondParagraphText: Text {

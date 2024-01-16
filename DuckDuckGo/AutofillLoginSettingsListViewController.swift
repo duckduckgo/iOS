@@ -24,9 +24,9 @@ import BrowserServicesKit
 import Common
 import DDGSync
 import DesignResourcesKit
+import SwiftUI
 
 // swiftlint:disable file_length type_body_length
-
 protocol AutofillLoginSettingsListViewControllerDelegate: AnyObject {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController)
 }
@@ -102,14 +102,17 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                            multiplier: 1,
                            constant: (tableView.frame.height / 2))
     }()
+    
+    var selectedAccount: SecureVaultModels.WebsiteAccount?
 
-    init(appSettings: AppSettings, currentTabUrl: URL? = nil, syncService: DDGSyncing, syncDataProviders: SyncDataProviders) {
+    init(appSettings: AppSettings, currentTabUrl: URL? = nil, syncService: DDGSyncing, syncDataProviders: SyncDataProviders, selectedAccount: SecureVaultModels.WebsiteAccount?) {
         let secureVault = try? AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared)
         if secureVault == nil {
             os_log("Failed to make vault")
         }
         self.viewModel = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: secureVault, currentTabUrl: currentTabUrl)
         self.syncService = syncService
+        self.selectedAccount = selectedAccount
         super.init(nibName: nil, bundle: nil)
 
         syncUpdatesCancellable = syncDataProviders.credentialsAdapter.syncDidCompletePublisher
@@ -148,6 +151,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         authenticate()
+
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -290,8 +294,16 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                     self.delegate?.autofillLoginSettingsListViewControllerDidFinish(self)
                 }
             } else {
+                showSelectedAccountIfRequired()
                 self.syncService.scheduler.requestSyncImmediately()
             }
+        }
+    }
+    
+    private func showSelectedAccountIfRequired() {
+        if let account = selectedAccount {
+            showAccountDetails(account)
+            selectedAccount = nil
         }
     }
 
@@ -453,9 +465,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private func updateConstraintConstants() {
         let isIPhoneLandscape = traitCollection.containsTraits(in: UITraitCollection(verticalSizeClass: .compact))
         if isIPhoneLandscape {
-            let viewVerticalCenter = view.frame.height / 2
-            let lockedViewHeight = max(lockedView.frame.height, 120.0)
-            lockedViewBottomConstraint.constant = viewVerticalCenter - (lockedViewHeight / 2.0)
+            lockedViewBottomConstraint.constant = (view.frame.height / 2.0 - max(lockedView.frame.height, 120.0) / 2.0)
         } else {
             lockedViewBottomConstraint.constant = view.frame.height * 0.15
         }
@@ -552,6 +562,21 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
             return 0
         }
     }
+
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection: Int) {
+        if let view = view as? UITableViewHeaderFooterView {
+            let theme = ThemeManager.shared.currentTheme
+            view.textLabel?.textColor = theme.tableHeaderTextColor
+        }
+    }
+
+    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection: Int) {
+        if let view = view as? UITableViewHeaderFooterView {
+            let theme = ThemeManager.shared.currentTheme
+            view.textLabel?.textColor = theme.tableHeaderTextColor
+        }
+    }
+
 }
 
 // MARK: UITableViewDataSource
@@ -693,11 +718,9 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
 extension AutofillLoginSettingsListViewController: EnableAutofillSettingsTableViewCellDelegate {
     func enableAutofillSettingsTableViewCell(_ cell: EnableAutofillSettingsTableViewCell, didChangeSettings value: Bool) {
         if value {
-            Pixel.fire(pixel: .autofillLoginsSettingsEnabled,
-                       withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
+            Pixel.fire(pixel: .autofillLoginsSettingsEnabled)
         } else {
-            Pixel.fire(pixel: .autofillLoginsSettingsDisabled,
-                       withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
+            Pixel.fire(pixel: .autofillLoginsSettingsDisabled)
         }
         
         viewModel.isAutofillEnabledInSettings = value

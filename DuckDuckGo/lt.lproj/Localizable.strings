@@ -20,7 +20,7 @@
 "action.title.add" = "Papildyti";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Prisijungimai";
+"action.title.autofill.logins" = "Slaptažodžiai";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Pridėti prie žymų";
@@ -133,6 +133,27 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Esamos žymės nebus kopijuojamos.";
 
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Viršijote žymių sinchronizavimo limitą. Pabandykite ištrinti kai kurias žymes. Kol ši problema nebus išspręsta, nebus kuriamos atsarginės jūsų žymių kopijos.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Žymių sinchronizavimas pristabdytas";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Viršijote slaptažodžių sinchronizavimo limitą. Pabandykite ištrinti kai kuriuos slaptažodžius. Kol ši problema nebus išspręsta, nebus kuriamos atsarginės jūsų slaptažodžių kopijos.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Slaptažodžių sinchronizavimas pristabdytas";
+
+/* Title for sync error alert */
+"alert.sync-error" = "Sinchronizavimo ir atsarginės kopijos kūrimo klaida";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "Sužinoti daugiau";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "GERAI";
+
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Pažymėti visus skirtukus?";
 
@@ -147,6 +168,30 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Įrašyti mėgstamą";
+
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "Nepavyko sukurti atkūrimo PDF.";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "Nepavyko ištrinti duomenų serveryje.";
+
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "Šiems įrenginiams susieti viename įrenginyje išjunk funkciją „Sinchronizuoti ir sukurti atsarginę kopiją“, tada kitame įrenginyje bakstelėk „Sinchronizuoti su kitu įrenginiu“.";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "Nepavyko pašalinti šio įrenginio iš sinchronizavimo ir atsarginės kopijos kūrimo.";
+
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Nepavyko prisijungti prie serverio.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Nepavyko sinchronizuoti su kitu įrenginiu.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "Nepavyko išjungti sinchronizavimo ir atsarginės kopijos kūrimo.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "Nepavyko atnaujinti įrenginio pavadinimo.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Atrakinti „DuckDuckGo“.";
@@ -419,16 +464,16 @@
 "autofill.keep-enabled.alert.message" = "Tai galite bet kada išjungti nustatymuose.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Ar norite toliau įrašyti prisijungimus?";
+"autofill.keep-enabled.alert.title" = "Ar norite toliau saugoti slaptažodžius?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Peržiūrėti";
 
 /* Message displayed after saving an autofill login */
-"autofill.login-saved.toast" = "Prisijungimas išsaugotas";
+"autofill.login-saved.toast" = "Slaptažodis išsaugotas";
 
 /* Message displayed after updating an autofill login */
-"autofill.login-updated.toast" = "Prisijungimas atnaujintas";
+"autofill.login-updated.toast" = "Slaptažodis atnaujintas";
 
 /* Menu item text for copying autofill login details */
 "autofill.logins.copy-prompt" = "Kopijuoti %@";
@@ -449,19 +494,19 @@
 "autofill.logins.details.address" = "Svetainės URL";
 
 /* Title for autofill login details */
-"autofill.logins.details.default-title" = "Prisijungti";
+"autofill.logins.details.default-title" = "Slaptažodis";
 
 /* Delete button when deleting an autofill login */
-"autofill.logins.details.delete" = "Ištrinti prisijungimą";
+"autofill.logins.details.delete" = "Ištrinti slaptažodį";
 
 /* Autofill alert button confirming delete autofill login */
-"autofill.logins.details.delete-confirmation.button" = "Ištrinti prisijungimą";
+"autofill.logins.details.delete-confirmation.button" = "Ištrinti slaptažodį";
 
 /* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Ar tikrai norite ištrinti šį prisijungimą?";
+"autofill.logins.details.delete-confirmation.title" = "Ar tikrai norite ištrinti šį slaptažodį?";
 
 /* Title when editing autofill login details */
-"autofill.logins.details.edit-title" = "Redaguoti prisijungimą";
+"autofill.logins.details.edit-title" = "Redaguoti slaptažodį";
 
 /* Placeholder for password field on autofill login details */
 "autofill.logins.details.edit.password-placeholder" = "Slaptažodis";
@@ -475,14 +520,14 @@
 /* Placeholder for userbane field on autofill login details */
 "autofill.logins.details.edit.username-placeholder" = "username@example.com";
 
-/* Message displaying when the login was last updated by */
-"autofill.logins.details.last-updated" = "Prisijungimas paskutinį kartą atnaujintas %@";
+/* Message displaying when the login was last updated */
+"autofill.logins.details.last-updated" = "Paskutinį kartą atnaujinta %@";
 
 /* Login name label for login details on autofill */
-"autofill.logins.details.login-name" = "Prisijungimo pavadinimas";
+"autofill.logins.details.login-name" = "Pavadinimas";
 
 /* Title when adding new autofill login */
-"autofill.logins.details.new-title" = "Pridėti prisijungimą";
+"autofill.logins.details.new-title" = "Pridėti slaptažodį";
 
 /* Notes label for login details on autofill */
 "autofill.logins.details.notes" = "Pastabos";
@@ -497,37 +542,37 @@
 "autofill.logins.details.save-duplicate-alert.action" = "GERAI";
 
 /* Message for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.message" = "Jūs jau turite prisijungimą prie šio naudotojo vardo ir svetainės.";
+"autofill.logins.details.save-duplicate-alert.message" = "Jau turite išsaugoję šio naudotojo vardo ir svetainės slaptažodį.";
 
 /* Title for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.title" = "Dvigubas prisijungimas";
+"autofill.logins.details.save-duplicate-alert.title" = "Pasikartojantis slaptažodis";
 
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Naudotojo vardas";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Prisijungimai saugiai laikomi jūsų įrenginyje.";
+"autofill.logins.empty-view.subtitle" = "Slaptažodžiai saugiai saugomi jūsų įrenginyje.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Dar nėra išsaugotų prisijungimų";
+"autofill.logins.empty-view.title" = "Dar nėra išsaugotų slaptažodžių";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Atšaukti";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Atrakinkite įrenginį, kad pasiektumėte įrašytus prisijungimus";
+"autofill.logins.list.auth.reason" = "Atrakinkite įrenginį, kad galėtumėte pasiekti slaptažodžius";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Uždaryti";
 
 /* Title for a toggle that enables autofill */
-"autofill.logins.list.enable" = "Išsaugoti ir automatiškai pildyti prisijungimus";
+"autofill.logins.list.enable" = "Išsaugokite ir automatiškai užpildykite slaptažodžius";
 
 /* Toast message when a login item is deleted */
-"autofill.logins.list.login-deleted-message" = "Prisijungimas prie %@ ištrintas";
+"autofill.logins.list.login-deleted-message" = "Ištrintas %@ slaptažodis";
 
 /* Toast message when a login item without a title is deleted */
-"autofill.logins.list.login-deleted-message-no-title" = "Prisijungimas ištrintas";
+"autofill.logins.list.login-deleted-message-no-title" = "Slaptažodis ištrintas";
 
 /* Title for a button that allows a user to reset their list of never saved sites */
 "autofill.logins.list.never.saved" = "Iš naujo nustatyti neįtrauktas svetaines";
@@ -539,28 +584,28 @@
 "autofill.logins.list.never.saved.reset.action.confirm" = "Iš naujo nustatyti neįtrauktas svetaines";
 
 /* Alert title */
-"autofill.logins.list.never.saved.reset.action.title" = "Jei iš naujo nustatysite neįtrauktas svetaines, kitą kartą, kai prisijungsite prie bet kurios iš šių svetainių, būsite paraginti išsaugoti savo prisijungimo vardą.";
+"autofill.logins.list.never.saved.reset.action.title" = "Jei iš naujo nustatysite neįtrauktas svetaines, kitą kartą, kai prisijungsite prie bet kurios iš šių svetainių, būsite paraginti išsaugoti savo slaptažodį.";
 
 /* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Ieškoti prisijungimų";
+"autofill.logins.list.search-placeholder" = "Ieškoti slaptažodžių";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Siūloma";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Prisijungimai";
+"autofill.logins.list.title" = "Slaptažodžiai";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Norint apsaugoti prisijungimus, reikalingas slaptažodis.";
+"autofill.logins.no-auth.subtitle" = "Slaptažodžiams apsaugoti reikalingas prieigos kodas.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Apsaugokite įrenginį, kad išsaugotumėte prisijungimus";
+"autofill.logins.no-auth.title" = "Apsaugokite savo įrenginį, kad išsaugotumėte slaptažodžius";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Atšaukti";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Atrakinkite norėdami naudoti išsaugotą prisijungimą";
+"autofill.logins.prompt.auth.reason" = "Atrakinkite, kad galėtumėte naudoti išsaugotą slaptažodį";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Iš šios svetainės";
@@ -584,7 +629,7 @@
 "autofill.logins.search.no-results.title" = "Rezultatų nerasta";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Slaptažodžiai saugiai saugomi jūsų įrenginio meniu „Prisijungimai“.";
+"autofill.password-generation-prompt.subtitle" = "Slaptažodžiai saugiai saugomi jūsų įrenginyje.";
 
 /* Title for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.title" = "Naudoti stiprų „DuckDuckGo“ slaptažodį?";
@@ -629,7 +674,7 @@
 "autofill.save-login.never-prompt.CTA" = "Niekada neklauskite šioje svetainėje";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Slaptažodžiai saugiai saugomi jūsų įrenginio meniu „Prisijungimai“.";
+"autofill.save-login.new-user.message" = "Slaptažodžiai saugiai saugomi jūsų įrenginyje.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Ar norite, kad „DuckDuckGo“ išsaugotų jūsų slaptažodį?";
@@ -638,7 +683,7 @@
 "autofill.save-login.not-now.CTA" = "Neišsaugokite";
 
 /* Title displayed on modal asking for the user to save the login */
-"autofill.save-login.title" = "Išsaugoti prisijungimą?";
+"autofill.save-login.title" = "Išsaugoti slaptažodį?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Išsaugoti slaptažodį";
@@ -754,48 +799,6 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Eksportuoti HTML žymelių failą iš kitos naršyklės arba eksportuoti esamas žymeles.";
 
-/* Broken Site Category */
-"brokensite.category.comments" = "Komentarai neįkelti";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Trūksta turinio";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "Iškylantysis slapukų langas nebuvo sutvarkytas";
-
-/* Broken Site Category */
-"brokensite.category.images" = "Vaizdai neįkelti";
-
-/* Broken Site Category */
-"brokensite.category.links" = "Nuorodos ar mygtukai neveikia";
-
-/* Broken Site Category */
-"brokensite.category.login" = "Negaliu prisijungti";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Kažkas kito";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "Svetainė paprašė manęs išjungti";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "Naršyklė nesuderinama";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "Vaizdo įrašas nepaleistas";
-
-/* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Pasirinkite problemą iš sąrašo...";
-
-/* Broken Site Category Section Title */
-"brokensite.categoryTitle" = "PASIRINKITE KATEGORIJĄ";
-
-/* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "Jei pasidalinsime daugiau informacijos, galime padėti išspręsti šią problemą";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "APRAŠYKITE, KAS ATSITIKO";
-
 /* No comment provided by engineer. */
 "bucket: %@" = "talpykla: %@";
 
@@ -894,6 +897,9 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internetas gali būti bauginantis.\n\nNesijaudink! Ieškoti ir naršyti privačiai yra lengviau, nei manai.";
+
+/* No comment provided by engineer. */
+"Debug" = "Debug";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Išjungta";
@@ -1071,6 +1077,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Pašalinti";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "Visi įrenginio mėgstamiausi";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Pasirinkite, kuriuos mėgstamiausius rodyti naujame skirtuke pagal jų vietą.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Ekrano nuostatos";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Tik mobiliojo mėgstamiausi";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Reklamų ir iššokančiųjų langų blokavimas";
@@ -1357,6 +1375,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Sveiki atvykę į\n„DuckDuckGo“!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "„Mac“ skirta „DuckDuckGo“ pasižymi jums reikiama sparta, naršymo funkcijomis ir aukščiausios klasės privatumo įrankiais.";
 
@@ -1420,23 +1441,113 @@
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
 
+/* Privacy Policy title for Network Protection */
+"network-protection.privacy-policy.title" = "Privatumo Politika";
+
+/* Title text for the Network Protection terms and conditions accept button */
+"network-protection.waitlist.agree-and-continue" = "Sutikti ir tęsti";
+
+/* Availability disclaimer for Network Protection join waitlist screen */
+"network-protection.waitlist.availability-disclaimer" = "Tinklo apsauga galima nemokamai naudotis ankstyvos prieigos metu.";
+
+/* Agree and Continue button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.agree-and-continue" = "Sutikti ir tęsti";
+
+/* Enable Notifications button for Network Protection joined waitlist screen */
+"network-protection.waitlist.button.enable-notifications" = "Įjungti pranešimus";
+
+/* Button title for users who already have an invite code */
+"network-protection.waitlist.button.existing-invite-code" = "Turiu kvietimo kodą";
+
+/* Join Waitlist button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.join-waitlist" = "Prisijungti prie laukiančiųjų sąrašo";
+
+/* Button title text for the Network Protection waitlist confirmation prompt */
+"network-protection.waitlist.get-started" = "Pradėti";
+
+/* Subtitle for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.subtitle" = "Užšifruokite interneto srautą naršyklėse ir programose.";
+
+/* Title for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.title" = "Viso įrenginio aprėptis";
+
+/* Subtitle for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.subtitle" = "Nereikia atskiros programos. Prisijunkite vienu spustelėjimu ir iškart matykite ryšio būseną.";
+
+/* Title for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.title" = "Greita, patikima ir paprasta naudoti";
+
+/* Subtitle for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.subtitle" = "Mes neregistruojame ir nesaugome jokių duomenų, kurie gali būti susiję su jūsų veikla internete.";
+
+/* Title for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.title" = "Griežta neregistravimo politika";
+
+/* Subtitle for Network Protection invited screen */
+"network-protection.waitlist.invited.subtitle" = "Gaukite papildomą apsaugos internete lygį naudodami VPN, sukurtą greičiui ir paprastumui užtikrinti. Užšifruokite interneto ryšį visame įrenginyje ir paslėpkite savo buvimo vietą bei IP adresą lankomose svetainėse.";
+
+/* Title for Network Protection invited screen */
+"network-protection.waitlist.invited.title" = "Kviečiame išbandyti ankstyvą prieigą prie\ntinklo apsaugos!";
+
+/* First subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.1" = "Apsaugokite savo ryšį bet kada ir bet kur naudodami „DuckDuckGo“ VPN tinklo apsaugą.";
+
+/* Second subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.2" = "Prisijunkite prie laukiančiųjų sąrašo ir mes jums pranešime, kai ateis jūsų eilė.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
+
+/* Title for Network Protection joined waitlist screen */
+"network-protection.waitlist.joined.title" = "Esate sąraše!";
+
+/* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Nauji pakvietimai siunčiami kas kelias dienas, laikantis eiliškumo principo.";
+
+/* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "Pranešime jums, kai jūsų pakvietimas bus paruoštas.";
+
+/* Body text for the alert to enable notifications */
+"network-protection.waitlist.notification-alert.description" = "Atsiųsime jums pranešimą, kai bus paruoštas jūsų pakvietimas išbandyti tinklo apsaugą.";
+
+/* Subtitle for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-description" = "Gaukite pranešimą, kai bus paruošta ankstyvos prieigos prie tinklo apsaugos kopija.";
+
+/* Title for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-title" = "Sužinokite iš karto pakvietimo akimirką";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.text" = "Atidaryti pakvietimą";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.title" = "Tinklo apsauga paruošta!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Jūsų pakvietimas paruoštas!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Esate sąraše!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Prisijungti prie privataus laukimo sąrašo";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+"network.protection.invite.dialog.title" = "Kviečiame išbandyti tinklo apsaugą";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
-
-/* Message explaining that netP is invite only */
-"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
 
 /* Message for the network protection invite success view */
 "network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
 
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
+
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "Atviras VPN";
 
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected - %@";
@@ -1459,7 +1570,7 @@
 /* Header title label text for the status view when netP is connected */
 "network.protection.status.header.title.on" = "Network Protection is On";
 
-/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+/* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 
 /* Connection details label shown in NetworkProtection's status view. */
@@ -1477,8 +1588,65 @@
 /* Location label shown in NetworkProtection's status view. */
 "network.protection.status.view.location" = "Location";
 
+/* Label shown on the title of the settings section in NetworkProtection's status view. */
+"network.protection.status.view.settings.section.title" = "Tvarkyti";
+
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Įjungti pranešimus";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Leiskite „DuckDuckGo“ pranešti, jei nutrūksta ryšys arba pasikeičia VPN būsena.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Gaukite pranešimą, jei nutrūksta ryšys arba pasikeičia VPN būsena.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "VPN įspėjimai";
+
+/* Footer text for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Leiskite vietiniam srautui apeiti VPN ir prisijungti prie vietinio tinklo įrenginių, pavyzdžiui, spausdintuvo.";
+
+/* Title for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.title" = "Neįtraukti vietinių tinklų";
+
+/* Title for the VPN Location screen's All Countries section. */
+"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Subtitle of countries item when there are multiple cities, example : */
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d miest.";
+
+/* Title for the VPN Location screen's Nearest Available selection item. */
+"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+
+/* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
+"network.protection.vpn.location.recommended.section.footer" = "Automatiškai prisijungti prie artimiausio serverio, kurį randame.";
+
+/* Title for the VPN Location screen's Recommended section. */
+"network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
+"network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
+
+/* Title for the VPN Location screen. */
+"network.protection.vpn.location.title" = "VPN vieta";
+
+/* Title for the VPN Notifications management screen. */
+"network.protection.vpn.notifications.title" = "VPN pranešimai";
+
+/* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
+"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+
+/* Title for the Preferred Location VPN Settings item. */
+"network.protection.vpn.preferred.location.title" = "Preferred Location";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "Mūsų VPN naudoja saugų DNS siekiant apsaugoti jūsų privatumą internete, kad jūsų interneto tiekėjas negalėtų matyti, kokiose svetainėse lankotės.";
+
+/* Title for the VPN Settings screen. */
+"network.protection.vpn.settings.title" = "VPN nustatymai";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1595,9 +1763,6 @@
 "prompt.custom.url.scheme.title" = "Atidaryti kitoje programoje?";
 
 /* No comment provided by engineer. */
-"report.brokensite.header" = "Pateikdami anoniminę sugadintos svetainės ataskaitą, galime padėti išspręsti šias problemas ir patobulinti programėlę.";
-
-/* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Ieškoti arba įvesti adresą";
 
 /* No comment provided by engineer. */
@@ -1606,8 +1771,107 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Mėgstami";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "Apie DuckDuckGo";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "Apie";
+
 /* about page */
 "settings.about.text" = "„DuckDuckGo“ yra nepriklausoma interneto privatumo bendrovė, įkurta 2008 metais ir skirta visiems, kurie pavargo nuo sekimo internete ir nori lengvo sprendimo. Esame įrodymas, kad galite gauti tikrą privatumo apsaugą internete be kompromisų.\n\n„DuckDuckGo“ naršyklėje yra funkcijos, kurių tikitės iš pagrindinės naršyklės, pvz., žymės, skirtukai, slaptažodžiai ir dar daugiau, taip pat [keliolika galingų privatumo apsaugos priemonių](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) pagal numatytuosius nustatymus nėra siūlomas daugelyje populiarių naršyklių. Šis unikalus išsamus privatumo apsaugos rinkinys padeda apsaugoti jūsų veiklą internete – nuo paieškos iki naršymo, el. pašto ir kt.\n\nMūsų privatumo apsaugos priemonės veikia nereikalaudamos nieko žinoti apie technines detales ar naudotis sudėtingais nustatymais. Tereikia visuose įrenginiuose perjungti naršyklę į „DuckDuckGo“ ir privatumas bus užtikrintas pagal numatytuosius nustatymus.\n\nTačiau jei norite žvilgtelėti po gaubtu, daugiau informacijos apie tai, kaip veikia „DuckDuckGo“ privatumo apsauga, galite rasti mūsų [pagalbos puslapiuose] (ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Įtraukti programėlę į stotelę";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Įtraukti valdiklį į pagrindinį ekraną";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Adreso juostos padėtis";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Išvaizda";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Atidaryti nuorodas susijusiose programose";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Išjungti, kad nuorodos automatiškai neatsidarytų kitose įdiegtose programose.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Rodyti automatinio užbaigimo pasiūlymus";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Programos užraktas";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Jei nustatytas „Touch ID“, „Face ID“ arba sistemos slaptažodis, prieš atidarydami būsite paprašyti atrakinti programą.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Automatiškai valyti duomenis";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Valdyti slapukų iššokančiuosius langus";
+
+/* Settings title for the customize section */
+"settings.customize" = "Tinkinti";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Nustatyti kaip numatytąją naršyklę";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "El. pašto apsauga";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Blokuokite el. laiškų sekimo priemones ir paslėpkite savo adresą";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Bendrinti atsiliepimą";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Mygtuko „Fire“ animacija";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Apsaugoti svetaines";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Visuotinė privatumo kontrolė (VPK)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "Programėlės piktograma";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Klaviatūra";
+
+/* Settings title for the 'More' section */
+"settings.more" = "Daugiau iš „DuckDuckGo“";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Peržiūros ilgai spaudžiant";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Privatumas";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Sinchronizuoti ir kurti atsarginę kopiją";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Teksto dydis";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Tema";
+
+/* Title for the Settings View */
+"settings.title" = "Nustatymai";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Neapsaugotos svetainės";
+
+/* Settings cell for Version */
+"settings.version" = "Versija";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Privati paieška balsu";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pateikti ataskaitą";
@@ -1629,6 +1893,15 @@
 
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "„%@“ nebegalės pasiekti jūsų sinchronizuotų duomenų.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Atsiprašome, bet sinchronizavimas ir atsarginės kopijos kūrimas šiuo metu nepasiekiami. Pabandykite dar kartą vėliau.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Atsiprašome, bet šioje programos versijoje nepasiekiamos sinchronizavimo ir atsarginės kopijos kūrimo funkcijos. Norėdami tęsti, atnaujinkite „DuckDuckGo“ į naujausią versiją.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "Sinchronizavimas ir atsarginės kopijos kūrimas pristabdyti";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Uždaryti pagrindinio puslapio skirtuką";
@@ -1692,6 +1965,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Patvirtinkite prieigą prie mikrofono „iOS“ sistemos nustatymuose, kad galėtumėte naudotis „DuckDuckGo“ balsu valdomomis funkcijomis.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "GERAI";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Būtina prieiga prie mikrofono";

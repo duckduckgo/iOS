@@ -20,6 +20,7 @@
 import UIKit
 import MessageUI
 import Core
+import SwiftUI
 
 class AutoClearSettingsViewController: UITableViewController {
     
@@ -114,7 +115,6 @@ class AutoClearSettingsViewController: UITableViewController {
         
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
         
         // Checkmark color
         cell.tintColor = theme.buttonTintColor

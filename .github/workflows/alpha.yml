@@ -31,7 +31,7 @@ on:
 
 jobs:
   make-alpha:
-    runs-on: macos-13
+    runs-on: macos-13-xlarge
     name: Make TestFlight Alpha Build
     timeout-minutes: 30
 

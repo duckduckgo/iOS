@@ -1023,7 +1023,9 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let privacyProRemoveFromDeviceConfirmText = NSLocalizedString("ppro.remove.from.device.text", value: "You will no longer be able to access your Privacy Pro subscription on this device. This will not cancel your subscription, and it will remain active on your other devices.", comment: "Remove from device confirmation dialog text")
     public static let privacyProRemoveSubscription = NSLocalizedString("ppro.remove.subscription", value: "Remove Subscription", comment: "Remove subscription button text")
     public static let privacyProRemoveSubscriptionCancel = NSLocalizedString("ppro.remove.subscription.cancel", value: "Cancel", comment: "Remove subscription cancel button text")
-    
-    
-    
+    public static let privacyProSubscriptionFoundTitle = NSLocalizedString("ppro.subscription.found.tite", value: "Subscription Found", comment: "Title for the existing subscription dialog")
+    public static let privacyProSubscriptionFoundText = NSLocalizedString("ppro.subscription.found.text", value: "We found a subscription associated with this Apple ID.", comment: "Message for the existing subscription dialog")
+    public static let privacyProSubscriptionFoundCancel = NSLocalizedString("ppro.subscription.found.cancel", value: "Cancel", comment: "Cancel action for the existing subscription dialog")
+    public static let privacyProSubscriptionFoundRestore = NSLocalizedString("ppro.subscription.found.restore", value: "Restore", comment: "Restore action for the existing subscription dialog")
+
 }

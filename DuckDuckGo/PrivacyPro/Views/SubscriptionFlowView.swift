@@ -70,11 +70,11 @@ struct SubscriptionFlowView: View {
         // Active subscription found Alert
         .alert(isPresented: $viewModel.hasActiveSubscription) {
             Alert(
-                title: Text("Subscription Found"),
-                message: Text("We found a subscription associated with this Apple ID."),
-                primaryButton: .cancel(Text("Cancel")) {
+                title: Text(UserText.privacyProSubscriptionFoundTitle),
+                message: Text(UserText.privacyProSubscriptionFoundText),
+                primaryButton: .cancel(Text(UserText.privacyProSubscriptionFoundCancel)) {
                 },
-                secondaryButton: .default(Text("Restore")) {
+                secondaryButton: .default(Text(UserText.privacyProSubscriptionFoundCancel)) {
                     viewModel.restoreAppstoreTransaction()
                 }
             )

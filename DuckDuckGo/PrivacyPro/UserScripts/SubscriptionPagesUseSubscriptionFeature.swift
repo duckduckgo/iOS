@@ -166,8 +166,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
                     return nil
                 }
                 
-                print("Selected: \(subscriptionSelection.id)")
-                
                 // Check for active subscriptions
                 if await PurchaseManager.hasActiveSubscription() {
                     hasActiveSubscription = true
@@ -230,7 +228,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func activateSubscription(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        print(">>> Selected to activate a subscription -- show the activation settings screen")
         return nil
     }
 
@@ -243,8 +240,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             assertionFailure("SubscriptionPagesUserScript: expected JSON representation of FeatureSelection")
             return nil
         }
-
-        print(">>> Selected a feature -- show the corresponding UI", featureSelection)
+        
         return nil
     }
 
@@ -261,8 +257,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
 
     func pushAction(method: SubscribeActionName, webView: WKWebView, params: Encodable) {
         let broker = UserScriptMessageBroker(context: SubscriptionPagesUserScript.context, requiresRunInPageContentWorld: true )
-
-        print(">>> Pushing into WebView:", method.rawValue, String(describing: params))
+        
         broker.push(method: method.rawValue, params: params, for: self, into: webView)
     }
     

@@ -53,13 +53,11 @@ struct SubscriptionFlowView: View {
         }
         .onChange(of: viewModel.shouldReloadWebview) { shouldReload in
             if shouldReload {
-                print("WebView reload triggered")
                 viewModel.shouldReloadWebview = false
             }
         }
         .onChange(of: viewModel.shouldReloadWebview) { shouldReload in
             if shouldReload {
-                print("WebView reload triggered")
                 viewModel.shouldReloadWebview = false
             }
         }

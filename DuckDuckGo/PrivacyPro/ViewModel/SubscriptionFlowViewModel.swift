@@ -89,7 +89,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 await MainActor.run { shouldReloadWebview = true }
             } else {
                 await MainActor.run {
-                    // TODO: Display error when restoring subscription
                 }
             }
         }

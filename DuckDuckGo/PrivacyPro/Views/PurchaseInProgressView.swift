@@ -22,8 +22,7 @@ struct PurchaseInProgressView: View {
     @Environment(\.colorScheme) var colorScheme
     
     var status: String
-    
-    // TODO: Update colors and design
+        
     var body: some View {
         ZStack {
             Color(colorScheme == .dark ? .black : .white)

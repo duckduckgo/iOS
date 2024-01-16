@@ -140,7 +140,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             case .success(let subscriptionOptions):
                 return subscriptionOptions
             case .failure:
-                // TODO: handle errors - no products found
+                
                 return nil
             }
                         
@@ -188,7 +188,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
                 case .success(let purchaseUpdate):
                     await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
                 case .failure:
-                    // TODO: handle errors - missing entitlements on post purchase check
                     purchaseError = .missingEntitlements
                     await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate(type: "completed"))
                 }
@@ -221,8 +220,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
             accountManager.storeAccount(token: accessToken, email: accountDetails.email, externalID: accountDetails.externalID)
         }
-
-        // TODO: Navigate back to settings
 
         return nil
     }

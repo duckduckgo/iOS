@@ -898,6 +898,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internetul poate fi cam terifiant.\n\nNu te îngrijora! Căutarea și navigarea în mod confidențial sunt mai ușoare decât crezi.";
 
+/* No comment provided by engineer. */
+"Debug" = "Debug";
+
 /* GPC Setting state */
 "donotsell.disabled" = "Dezactivat";
 
@@ -1372,6 +1375,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Bine ai venit la\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo pentru Mac are viteza de care ai nevoie, funcționalitățile de răsfoire pe care ți le dorești și este prevăzută cu cele mai bune caracteristici de bază în privința confidențialității din domeniu.";
 
@@ -1488,6 +1494,9 @@
 
 /* Second subtitle for Network Protection join waitlist screen */
 "network-protection.waitlist.join.subtitle.2" = "Alătură-te listei de așteptare și te vom anunța când îți vine rândul.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
 
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "Ești pe listă!";
@@ -1762,8 +1771,107 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Preferințe";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "Despre DuckDuckGo";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "Despre";
+
 /* about page */
 "settings.about.text" = "DuckDuckGo este o companie independentă înființată în 2008, care oferă confidențialitate pe internet tuturor celor care s-au săturat să fie urmăriți online și își doresc o soluție simplă. Suntem dovada că protecția confidențialității online fără compromisuri este reală.\n\nBrowserul DuckDuckGo oferă funcțiile pe care le aștepți de la browserul predilect, cum ar fi marcajele, filele, parolele și multe altele, plus peste [o duzină de instrumente puternice de protecție a confidențialității](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) care nu sunt oferite implicit de majoritatea browserelor populare. Acest set unic și cuprinzător de măsuri de protecție a confidențialității te ajută să îți protejezi activitățile online, de la căutări la navigare, e-mailuri și multe altele.\n\nMăsurile noastre robuste de protecție a confidențialității funcționează fără a necesita cunoștințe tehnice din partea ta și fără a fi nevoie să faci setări complicate. Tot ce trebuie să faci este să folosești browserul DuckDuckGo pe toate dispozitivele și vei beneficia implicit de confidențialitate.\n\nDar dacă *chiar dorești* să consulți detaliile mai tehnice, poți găsi mai multe informații despre modul în care funcționează instrumentele DuckDuckGo de protecție a confidențialității în [paginile noastre de asistență](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Adaugă aplicația la secțiunea ta fixă";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Adaugă un widget la ecranul de întâmpinare";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Poziția barei de adrese";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Aspect";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Deschide linkuri în aplicațiile asociate";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Dezactivează pentru a preveni deschiderea automată a linkurilor în alte aplicații instalate.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Afișează sugestiile de completare automată";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Blocarea aplicației";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Dacă este setat Touch ID, Face ID sau o parolă de sistem, ți se va solicita să deblochezi aplicația la deschidere.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Șterge automat datele";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Gestionare pop-up-uri pentru module cookie";
+
+/* Settings title for the customize section */
+"settings.customize" = "Personalizare";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Setare ca browser implicit";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "Protecția comunicațiilor prin e-mail";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Blochează tehnologiile de urmărire prin e-mail și ascunde-ți adresa";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Partajează feedback";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Animație buton Foc";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Site-uri cu ștergerea activității și istoricului din browser la ieșire";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Global Privacy Control (GPC)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "Pictograma aplicației";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Tastatură";
+
+/* Settings title for the 'More' section */
+"settings.more" = "Mai multe de la DuckDuckGo";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Previzualizări prin apăsare lungă";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Confidențialitate";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Sincronizare și copiere de rezervă";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Dimensiune text";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Temă";
+
+/* Title for the Settings View */
+"settings.title" = "Setări";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Site-uri neprotejate";
+
+/* Settings cell for Version */
+"settings.version" = "Versiune";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Căutare vocală privată";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Trimite raportul";
@@ -1857,6 +1965,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Permite accesul la microfon din setările sistemului de operare iOS, pentru ca DuckDuckGo să folosească funcționalitățile vocale.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "OK";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Este necesar accesul la microfon";

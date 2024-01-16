@@ -193,8 +193,11 @@ struct SettingsPickerCellView<T: CaseIterable & Hashable & CustomStringConvertib
             Spacer()
             Menu {
                 ForEach(options, id: \.self) { option in
-                    getButtonWithAction(action: { self.selectedOption = option },
-                                        option: option.description)
+                    Group {
+                        getButtonWithAction(action: { self.selectedOption = option },
+                                            option: option.description,
+                                            selected: option == selectedOption)
+                    }
                 }
             } label: {
                 HStack {
@@ -204,16 +207,24 @@ struct SettingsPickerCellView<T: CaseIterable & Hashable & CustomStringConvertib
                     Image(systemName: "chevron.up.chevron.down")
                         .font(Font.system(.footnote).weight(.bold))
                         .foregroundColor(Color(UIColor.tertiaryLabel))
+                        .padding(.trailing, -2)
                 }
             }
         }
     }
     
-    private func getButtonWithAction(action: @escaping () -> Void, option: String) -> some View {
-        return Button(action: action) {
-            Text(option)
-                .daxBodyRegular()
-                .foregroundColor(Color(designSystemColor: .textSecondary))
+    private func getButtonWithAction(action: @escaping () -> Void,
+                                     option: String,
+                                     selected: Bool) -> some View {
+        return Group {
+            Button(action: action) {
+                HStack {
+                    if selected {
+                        Image(systemName: "checkmark")
+                    }
+                    Text(option)
+                }
+            }
         }
     }
 }

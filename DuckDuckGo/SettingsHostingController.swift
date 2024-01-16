@@ -64,3 +64,22 @@ class SettingsHostingController: UIHostingController<AnyView> {
         navigationController?.present(vc, animated: true)
     }
 }
+
+extension SettingsHostingController: Themable {
+    
+    func decorate(with theme: Theme) {
+        // Apply Theme
+        navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
+        navigationController?.navigationBar.tintColor = theme.navigationBarTintColor
+
+        if #available(iOS 15.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.shadowColor = .clear
+            appearance.backgroundColor = theme.backgroundColor
+
+            navigationController?.navigationBar.standardAppearance = appearance
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        }
+    }
+    
+}

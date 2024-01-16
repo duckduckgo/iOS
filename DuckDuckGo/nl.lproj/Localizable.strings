@@ -898,6 +898,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet kan best eng zijn.\n\nMaak je geen zorgen! Privé zoeken en browsen is eenvoudiger dan je denkt.";
 
+/* No comment provided by engineer. */
+"Debug" = "Debug";
+
 /* GPC Setting state */
 "donotsell.disabled" = "Uitgeschakeld";
 
@@ -1372,6 +1375,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Welkom bij\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo voor Mac heeft de snelheid die je nodig hebt en de browsefuncties die je verwacht, en zit boordevol met onze allerbeste privacy essentials.";
 
@@ -1488,6 +1494,9 @@
 
 /* Second subtitle for Network Protection join waitlist screen */
 "network-protection.waitlist.join.subtitle.2" = "Schrijf je in op de wachtlijst, dan laten wij je weten wanneer je Network Protection kan testen.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
 
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "Je staat op de lijst!";
@@ -1762,8 +1771,107 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favorieten";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "Over DuckDuckGo";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "Over";
+
 /* about page */
 "settings.about.text" = "DuckDuckGo is het onafhankelijke internetprivacybedrijf, opgericht in 2008, voor iedereen die het beu is om online gevolgd te worden en daar een eenvoudige oplossing voor wil. Wij zijn het bewijs dat je privacy op internet écht beschermd kan worden zonder compromissen.\n\nDe DuckDuckGo-browser wordt geleverd met de functies die je van een webbrowser verwacht, zoals bladwijzers, tabbladen, wachtwoorden en meer, plus meer dan [een dozijn krachtige tools om je privacy te beschermen](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) die niet standaard worden aangeboden in de meeste populaire browsers. Deze unieke, uitgebreide privacybescherming helpt je online activiteiten te beschermen – of je nu zoekt, surft of mailt.\n\nJe hoeft niets te weten over de technische details of ingewikkelde instellingen om te profiteren van onze privacybescherming. Je hoeft alleen maar DuckDuckGo op al je apparaten te installeren en geniet dan standaard van privacy.\n\nMaar als je *een kijkje onder de motorkap* wilt, vind je meer informatie over de privacybescherming van DuckDuckGo op onze [hulppagina's](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "App toevoegen aan je dock";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Widget toevoegen aan startscherm";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Positie van adresbalk";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Uiterlijk";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Links openen in bijbehorende apps";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Uitschakelen om te voorkomen dat links automatisch geopend worden in andere geïnstalleerde apps.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Suggesties voor automatisch aanvullen weergeven";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "App-vergrendeling";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Als je Touch ID, Face ID of een systeemwachtwoord hebt ingesteld, word je gevraagd om de app te ontgrendelen als je deze opent.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Gegevens automatisch wissen";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Cookiepop-ups beheren";
+
+/* Settings title for the customize section */
+"settings.customize" = "Aanpassen";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Instellen als standaardbrowser";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "E-mailbescherming";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Blokkeer e-mailtrackers en verberg je adres";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Feedback delen";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Animatie vuurknop";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Brandveilige websites";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Global Privacy Control (GPC)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "App-pictogram";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Toetsenbord";
+
+/* Settings title for the 'More' section */
+"settings.more" = "Meer over DuckDuckGo";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Voorbeeldweergave bij lang indrukken";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Privacy";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Synchronisatie en back-up";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Lettergrootte";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Thema";
+
+/* Title for the Settings View */
+"settings.title" = "Instellingen";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Onbeschermde sites";
+
+/* Settings cell for Version */
+"settings.version" = "Versie";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Private spraakzoekopdracht";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Rapport versturen";
@@ -1857,6 +1965,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Sta microfoontoegang toe in de iOS-systeeminstellingen zodat DuckDuckGo spraakfuncties kan gebruiken.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "OK";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Toegang tot microfoon vereist";

@@ -23,6 +23,12 @@ tags:
 - tapOn: Close Tabs and Clear Data
 
 # Add local login
+- runFlow:
+    when:
+      visible:
+        text: "Cancel"
+    commands:
+      - tapOn: Cancel
 - tapOn: Settings
 - runFlow:
     file: ../shared/add_login_from_settings.yaml

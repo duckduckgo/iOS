@@ -45,6 +45,7 @@ jobs:
           -destination "platform=iOS Simulator,name=iPhone 14" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
+          ONLY_ACTIVE_ARCH=NO \
         | tee xcodebuild.log
 
     - name: Store Binary

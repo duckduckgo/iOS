@@ -23,39 +23,69 @@ struct PurchaseInProgressView: View {
     @Environment(\.colorScheme) var colorScheme
     
     var status: String
-        
+    enum DesignConstants {
+        static let coverOpacity = 0.6
+        static let cornerRadius = 12.0
+        static let shadowRadius = 10.0
+        static let lightShadowColor = Color.gray50
+        static let darkShadowColor = Color.black
+        static let spinnerScale = 2.0
+        static let internalZStackWidth = 220.0
+        static let horizontalPadding = 20.0
+        static let verticalPadding = 100.0
+    }
+    
+    @State private var viewHeight: CGFloat = 0 // State to store the height of the VStack
+
     var body: some View {
         ZStack {
             Color(designSystemColor: .background)
-                .opacity(0.6)
+                .opacity(Self.DesignConstants.coverOpacity)
                 .edgesIgnoringSafeArea(.all)
                 .disabled(true)
                         
             ZStack {
-                RoundedRectangle(cornerRadius: 12)
+                RoundedRectangle(cornerRadius: DesignConstants.cornerRadius)
                     .fill(Color(designSystemColor: .background))
-                    .frame(width: 220, height: 120)
-                    .shadow(color: colorScheme == .dark ? .black : .gray50, radius: 10)
+                    .frame(width: DesignConstants.internalZStackWidth, height: viewHeight) // Use the dynamic height
+                    .shadow(color: colorScheme == .dark ? DesignConstants.darkShadowColor : DesignConstants.lightShadowColor,
+                            radius: DesignConstants.shadowRadius)
                 
                 VStack {
                     SwiftUI.ProgressView()
-                        .scaleEffect(2)
+                        .scaleEffect(DesignConstants.spinnerScale)
                         .progressViewStyle(CircularProgressViewStyle(tint: Color(designSystemColor: DesignSystemColor.icons)))
                         .padding(.bottom, 18)
                         .padding(.top, 10)
-                    Text(status).daxSubheadRegular().foregroundColor(Color(designSystemColor: .textPrimary))
-                        .frame(width: 200, height: 20)
+                    
+                    Text(status)
+                        .daxSubheadRegular()
+                        .foregroundColor(Color(designSystemColor: .textPrimary))
+                        .frame(width: DesignConstants.internalZStackWidth - 2 * DesignConstants.horizontalPadding)
+                        .multilineTextAlignment(.center)
+                        .background(GeometryReader { geometry in
+                            Color.clear.onAppear {
+                                viewHeight = geometry.size.height + DesignConstants.verticalPadding
+                            }
+                        })
                 }
+                .frame(width: DesignConstants.internalZStackWidth)
             }
-                
         }
+    }
+}
+
+// Preference key to store the height of the content
+struct ViewHeightKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = max(value, nextValue())
     }
 }
 
 struct PurchaseInProgressView_Previews: PreviewProvider {
     static var previews: some View {
-        PurchaseInProgressView(status: "Completing Purchase...")
-            .preferredColorScheme(.dark)
+        PurchaseInProgressView(status: "Completing Purchase... ")
             .previewLayout(.sizeThatFits)
             .padding()
     }

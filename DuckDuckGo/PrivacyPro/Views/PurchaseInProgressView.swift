@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 import SwiftUI
+import DesignResourcesKit
 
 struct PurchaseInProgressView: View {
     @Environment(\.colorScheme) var colorScheme
@@ -25,24 +26,24 @@ struct PurchaseInProgressView: View {
         
     var body: some View {
         ZStack {
-            Color(colorScheme == .dark ? .black : .white)
+            Color(designSystemColor: .background)
                 .opacity(0.6)
                 .edgesIgnoringSafeArea(.all)
                 .disabled(true)
                         
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(colorScheme == .dark ? .black : .white)
+                    .fill(Color(designSystemColor: .background))
                     .frame(width: 220, height: 120)
-                    .shadow(color: colorScheme == .dark ? .black : .gray30, radius: 10)
+                    .shadow(color: colorScheme == .dark ? .black : .gray50, radius: 10)
                 
                 VStack {
                     SwiftUI.ProgressView()
                         .scaleEffect(2)
-                        .progressViewStyle(CircularProgressViewStyle(tint: Color(colorScheme == .dark ? .gray30 : .gray70)))
+                        .progressViewStyle(CircularProgressViewStyle(tint: Color(designSystemColor: DesignSystemColor.icons)))
                         .padding(.bottom, 18)
                         .padding(.top, 10)
-                    Text(status).daxSubheadRegular()
+                    Text(status).daxSubheadRegular().foregroundColor(Color(designSystemColor: .textPrimary))
                         .frame(width: 200, height: 20)
                 }
             }
@@ -54,7 +55,7 @@ struct PurchaseInProgressView: View {
 struct PurchaseInProgressView_Previews: PreviewProvider {
     static var previews: some View {
         PurchaseInProgressView(status: "Completing Purchase...")
-            .preferredColorScheme(.light) // Preview in light mode
+            .preferredColorScheme(.dark)
             .previewLayout(.sizeThatFits)
             .padding()
     }

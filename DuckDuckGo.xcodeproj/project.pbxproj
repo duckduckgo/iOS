@@ -770,7 +770,7 @@
 		D63657192A7BAE7C001AF19D /* EmailManagerRequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63657182A7BAE7C001AF19D /* EmailManagerRequestDelegate.swift */; };
 		D652498E2B515A6A0056B0DE /* SubscriptionSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D652498D2B515A6A0056B0DE /* SubscriptionSettingsViewModel.swift */; };
 		D664C7B62B289AA200CBFA76 /* SubscriptionFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7942B289AA000CBFA76 /* SubscriptionFlowViewModel.swift */; };
-		D664C7B72B289AA200CBFA76 /* PrivacyPro.storekit in Resources */ = {isa = PBXBuildFile; fileRef = D664C7952B289AA000CBFA76 /* PrivacyPro.storekit */; };
+		D664C7B72B289AA200CBFA76 /* Subscription.storekit in Resources */ = {isa = PBXBuildFile; fileRef = D664C7952B289AA000CBFA76 /* Subscription.storekit */; };
 		D664C7B92B289AA200CBFA76 /* WKUserContentController+Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7982B289AA000CBFA76 /* WKUserContentController+Handler.swift */; };
 		D664C7C72B289AA200CBFA76 /* PurchaseInProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7AD2B289AA000CBFA76 /* PurchaseInProgressView.swift */; };
 		D664C7C82B289AA200CBFA76 /* SubscriptionFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7AE2B289AA000CBFA76 /* SubscriptionFlowView.swift */; };
@@ -778,7 +778,7 @@
 		D664C7CC2B289AA200CBFA76 /* SubscriptionPagesUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7B32B289AA000CBFA76 /* SubscriptionPagesUserScript.swift */; };
 		D664C7CE2B289AA200CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7B52B289AA000CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift */; };
 		D664C7DD2B28A02800CBFA76 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D664C7DC2B28A02800CBFA76 /* StoreKit.framework */; };
-		D69FBF762B28BE3600B505F1 /* SettingsPrivacyProView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69FBF752B28BE3600B505F1 /* SettingsPrivacyProView.swift */; };
+		D69FBF762B28BE3600B505F1 /* SettingsSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69FBF752B28BE3600B505F1 /* SettingsSubscriptionView.swift */; };
 		D6D12C9F2B291CA90054390C /* URL+Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C8B2B291CA90054390C /* URL+Subscription.swift */; };
 		D6D12CA02B291CA90054390C /* SubscriptionPurchaseEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C8C2B291CA90054390C /* SubscriptionPurchaseEnvironment.swift */; };
 		D6D12CA12B291CA90054390C /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C8D2B291CA90054390C /* Logging.swift */; };
@@ -2411,7 +2411,7 @@
 		D63657182A7BAE7C001AF19D /* EmailManagerRequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailManagerRequestDelegate.swift; sourceTree = "<group>"; };
 		D652498D2B515A6A0056B0DE /* SubscriptionSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionSettingsViewModel.swift; sourceTree = "<group>"; };
 		D664C7942B289AA000CBFA76 /* SubscriptionFlowViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionFlowViewModel.swift; sourceTree = "<group>"; };
-		D664C7952B289AA000CBFA76 /* PrivacyPro.storekit */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PrivacyPro.storekit; sourceTree = "<group>"; };
+		D664C7952B289AA000CBFA76 /* Subscription.storekit */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Subscription.storekit; sourceTree = "<group>"; };
 		D664C7982B289AA000CBFA76 /* WKUserContentController+Handler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WKUserContentController+Handler.swift"; sourceTree = "<group>"; };
 		D664C7AD2B289AA000CBFA76 /* PurchaseInProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseInProgressView.swift; sourceTree = "<group>"; };
 		D664C7AE2B289AA000CBFA76 /* SubscriptionFlowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionFlowView.swift; sourceTree = "<group>"; };
@@ -2419,7 +2419,7 @@
 		D664C7B32B289AA000CBFA76 /* SubscriptionPagesUserScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionPagesUserScript.swift; sourceTree = "<group>"; };
 		D664C7B52B289AA000CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionPagesUseSubscriptionFeature.swift; sourceTree = "<group>"; };
 		D664C7DC2B28A02800CBFA76 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		D69FBF752B28BE3600B505F1 /* SettingsPrivacyProView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPrivacyProView.swift; sourceTree = "<group>"; };
+		D69FBF752B28BE3600B505F1 /* SettingsSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSubscriptionView.swift; sourceTree = "<group>"; };
 		D6D12C8B2B291CA90054390C /* URL+Subscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Subscription.swift"; sourceTree = "<group>"; };
 		D6D12C8C2B291CA90054390C /* SubscriptionPurchaseEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseEnvironment.swift; sourceTree = "<group>"; };
 		D6D12C8D2B291CA90054390C /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
@@ -3770,7 +3770,7 @@
 				85AE668C20971FCA0014CF04 /* Notifications */,
 				F1C4A70C1E5771F800A6CA1B /* OmniBar */,
 				F1AE54DB1F0425BB00D9A700 /* Privacy */,
-				D664C7922B289AA000CBFA76 /* PrivacyPro */,
+				D664C7922B289AA000CBFA76 /* Subscription */,
 				F1DF09502B039E6E008CC908 /* PrivacyDashboard */,
 				02ECEC602A965074009F0654 /* PrivacyInfo.xcprivacy */,
 				C1B7B51D28941F160098FD6A /* RemoteMessaging */,
@@ -4507,17 +4507,17 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		D664C7922B289AA000CBFA76 /* PrivacyPro */ = {
+		D664C7922B289AA000CBFA76 /* Subscription */ = {
 			isa = PBXGroup;
 			children = (
-				D664C7952B289AA000CBFA76 /* PrivacyPro.storekit */,
+				D664C7952B289AA000CBFA76 /* Subscription.storekit */,
 				D664C7932B289AA000CBFA76 /* ViewModel */,
 				D664C7AC2B289AA000CBFA76 /* Views */,
 				D664C7B02B289AA000CBFA76 /* UserScripts */,
 				D664C7962B289AA000CBFA76 /* Extensions */,
 				D6D12C8A2B291CA90054390C /* Subscription */,
 			);
-			path = PrivacyPro;
+			path = Subscription;
 			sourceTree = "<group>";
 		};
 		D664C7932B289AA000CBFA76 /* ViewModel */ = {
@@ -4618,7 +4618,7 @@
 				D6E83C3C2B1F2C03006C8AFB /* SettingsLoginsView.swift */,
 				D6E83C402B1FC285006C8AFB /* SettingsAppeareanceView.swift */,
 				D6E83C592B2213ED006C8AFB /* SettingsPrivacyView.swift */,
-				D69FBF752B28BE3600B505F1 /* SettingsPrivacyProView.swift */,
+				D69FBF752B28BE3600B505F1 /* SettingsSubscriptionView.swift */,
 				D6E83C5D2B224676006C8AFB /* SettingsCustomizeView.swift */,
 				D6E83C612B23298B006C8AFB /* SettingsMoreView.swift */,
 				D6E83C632B238432006C8AFB /* SettingsAboutView.swift */,
@@ -6087,7 +6087,7 @@
 				1EE411FD2858B9300003FE64 /* dark-trackers-2.json in Resources */,
 				AA4D6ABC23DE4D15007E8790 /* AppIconYellow60x60@3x.png in Resources */,
 				98D98A9B25ED954100D8E3DF /* BrowsingMenuButton.xib in Resources */,
-				D664C7B72B289AA200CBFA76 /* PrivacyPro.storekit in Resources */,
+				D664C7B72B289AA200CBFA76 /* Subscription.storekit in Resources */,
 				AA4D6AA823DE4CC4007E8790 /* AppIconBlue40x40@2x.png in Resources */,
 				AA4D6AE723DE4D33007E8790 /* AppIconGreen29x29@2x.png in Resources */,
 				1EE412002858B9300003FE64 /* dark-shield-dot.json in Resources */,
@@ -6569,7 +6569,7 @@
 				1E908BF329827C480008C8F3 /* AutoconsentManagement.swift in Sources */,
 				CB9B8739278C8E72001F4906 /* WidgetEducationViewController.swift in Sources */,
 				F4D9C4FA25117A0F00814B71 /* HomeMessageStorage.swift in Sources */,
-				D69FBF762B28BE3600B505F1 /* SettingsPrivacyProView.swift in Sources */,
+				D69FBF762B28BE3600B505F1 /* SettingsSubscriptionView.swift in Sources */,
 				D664C7CC2B289AA200CBFA76 /* SubscriptionPagesUserScript.swift in Sources */,
 				AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */,
 				85C297042476C1FD0063A335 /* DaxDialogsSettings.swift in Sources */,

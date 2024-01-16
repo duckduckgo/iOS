@@ -37,10 +37,10 @@ struct SubscriptionSettingsView: View {
                     .frame(height: 0)
                     .hidden()
                 }.textCase(nil)
-                Section(header: Text(UserText.privacyProManageDevices)) {
+                Section(header: Text(UserText.subscriptionManageDevices)) {
                     
                     SettingsCustomCell(content: {
-                        Text(UserText.privacyProAddDevice)
+                        Text(UserText.subscriptionAddDevice)
                             .daxBodyRegular()
                             .foregroundColor(Color.init(designSystemColor: .accent))
                     },
@@ -48,26 +48,26 @@ struct SubscriptionSettingsView: View {
                                        asLink: true)
                     
                     SettingsCustomCell(content: {
-                        Text(UserText.privacyProRemoveFromDevice)
+                        Text(UserText.subscriptionRemoveFromDevice)
                             .daxBodyRegular()
                             .foregroundColor(Color.init(designSystemColor: .accent))},
                                        action: { viewModel.shouldDisplayRemovalNotice.toggle() },
                                        asLink: true)
                     
                 }
-                Section(header: Text(UserText.privacyProManagePlan)) {
+                Section(header: Text(UserText.subscriptionManagePlan)) {
                     SettingsCustomCell(content: {
-                        Text(UserText.privacyProChangePlan)
+                        Text(UserText.subscriptionChangePlan)
                             .daxBodyRegular()
                     },
                                        action: { viewModel.manageSubscription() },
                                        asLink: true)
                 }
-                Section(header: Text(UserText.privacyProHelpAndSupport),
-                        footer: Text(UserText.privacyProFAQFooter)) {
-                    NavigationLink(destination: Text(UserText.privacyProFAQ)) {
+                Section(header: Text(UserText.subscriptionHelpAndSupport),
+                        footer: Text(UserText.subscriptionFAQFooter)) {
+                    NavigationLink(destination: Text(UserText.subscriptionFAQ)) {
                         SettingsCustomCell(content: {
-                            Text(UserText.privacyProFAQ)
+                            Text(UserText.subscriptionFAQ)
                                 .daxBodyRegular()
                         },
                                            action: { viewModel.manageSubscription() },
@@ -80,11 +80,11 @@ struct SubscriptionSettingsView: View {
             // Remove subscription
             .alert(isPresented: $viewModel.shouldDisplayRemovalNotice) {
                 Alert(
-                    title: Text(UserText.privacyProRemoveFromDeviceConfirmTitle),
-                    message: Text(UserText.privacyProRemoveFromDeviceConfirmText),
-                    primaryButton: .cancel(Text(UserText.privacyProRemoveSubscriptionCancel)) {
+                    title: Text(UserText.subscriptionRemoveFromDeviceConfirmTitle),
+                    message: Text(UserText.subscriptionRemoveFromDeviceConfirmText),
+                    primaryButton: .cancel(Text(UserText.subscriptionRemoveCancel)) {
                     },
-                    secondaryButton: .destructive(Text(UserText.privacyProRemoveSubscription)) {
+                    secondaryButton: .destructive(Text(UserText.subscriptionRemove)) {
                         viewModel.removeSubscription()
                         presentationMode.wrappedValue.dismiss()
                     }

@@ -29,11 +29,11 @@ struct SubscriptionFlowView: View {
     private func getTransactionStatus() -> String {
         switch viewModel.transactionStatus {
         case .polling:
-            return UserText.privacyProCompletingPurchaseTitle
+            return UserText.subscriptionCompletingPurchaseTitle
         case .purchasing:
-            return UserText.privacyProPurchasingSubscriptionTitle
+            return UserText.subscriptionPurchasingTitle
         case .restoring:
-            return UserText.privacyProPestoringSubscriptionTitle
+            return UserText.subscriptionPestoringTitle
         case .idle:
             return ""
         }
@@ -70,11 +70,11 @@ struct SubscriptionFlowView: View {
         // Active subscription found Alert
         .alert(isPresented: $viewModel.hasActiveSubscription) {
             Alert(
-                title: Text(UserText.privacyProSubscriptionFoundTitle),
-                message: Text(UserText.privacyProSubscriptionFoundText),
-                primaryButton: .cancel(Text(UserText.privacyProSubscriptionFoundCancel)) {
+                title: Text(UserText.subscriptionFoundTitle),
+                message: Text(UserText.subscriptionFoundText),
+                primaryButton: .cancel(Text(UserText.subscriptionFoundCancel)) {
                 },
-                secondaryButton: .default(Text(UserText.privacyProSubscriptionFoundCancel)) {
+                secondaryButton: .default(Text(UserText.subscriptionFoundCancel)) {
                     viewModel.restoreAppstoreTransaction()
                 }
             )

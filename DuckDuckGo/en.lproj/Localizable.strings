@@ -1684,54 +1684,6 @@ https://duckduckgo.com/mac";
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
 
-/* Add to another device button */
-"ppro.add.device" = "Add to Another Device";
-
-/* Change plan or billing title */
-"ppro.change.plan" = "Change Plan Or Billing";
-
-/* FAQ Button */
-"ppro.faq" = "Privacy Pro FAQ";
-
-/* FAQ Description */
-"ppro.faq.description" = "Visit our Privacy Pro help pages for answers to frequently asked questions";
-
-/* Help and support Section header */
-"ppro.help" = "Help and support";
-
-/* Header for the device management section */
-"ppro.manage.device" = "Manage Devices";
-
-/* Manage Plan header */
-"ppro.manage.plan" = "Manage Plan";
-
-/* Progress view title when completing the purchase */
-"ppro.progress.view.completing.purchase" = "Completing purchase...";
-
-/* Progress view title when starting the purchase */
-"ppro.progress.view.purchasing.subscription" = "Purchase in progress...";
-
-/* Progress view title when restoring past subscription purchase */
-"ppro.progress.view.restoring.subscription" = "Restoring subscription...";
-
-/* Remove from this device button */
-"ppro.remove.from.device" = "Remove From This Device";
-
-/* Remove from device confirmation dialog text */
-"ppro.remove.from.device.text" = "You will no longer be able to access your Privacy Pro subscription on this device. This will not cancel your subscription, and it will remain active on your other devices.";
-
-/* Remove from device confirmation dialog title */
-"ppro.remove.from.device.title" = "Remove From This Device?";
-
-/* Remove subscription button text */
-"ppro.remove.subscription" = "Remove Subscription";
-
-/* Remove subscription cancel button text */
-"ppro.remove.subscription.cancel" = "Cancel";
-
-/* Subscription Expiration Data */
-"ppro.subscription.active.caption" = "Your Privacy Pro subscription renews on %@";
-
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Websites rely on cookies to keep you signed in. When you Fireproof a site, cookies won’t be erased and you’ll stay signed in, even after using the Fire Button. We still block third-party trackers found on Fireproof websites.";
 
@@ -1885,43 +1837,43 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
-/* Data Broker protection cell subtitle for privacy pro */
-"settings.ppro.DBP.subtitle" = "Remove your info from sites that sell it";
-
-/* Data Broker protection cell title for privacy pro */
-"settings.ppro.DBP.title" = "Personal Information Removal";
-
-/* Privacy pro description subtext */
-"settings.ppro.description" = "More seamless privacy with three new protections, including:";
-
-/* Privacy pro features list */
-"settings.ppro.features" = " • VPN (Virtual Private Network)
- • Personal Information Removal
- • Identity Theft Restoration";
-
-/* Identity theft restoration cell subtitle for privacy pro */
-"settings.ppro.ITR.subtitle" = "If your identity is stolen, we'll help restore it";
-
-/* Identity theft restoration cell title for privacy pro */
-"settings.ppro.ITR.title" = "Identity Theft Restoration";
-
-/* Learn more button text for privacy pro */
-"settings.ppro.learn.more" = "Learn More";
-
-/* Subscription Settings button text for privacy pro */
-"settings.ppro.manage" = "Subscription Settings";
-
-/* Call to action title for Privacy Pro */
-"settings.ppro.subscribe" = "Subscribe to Privacy Pro";
-
-/* VPN cell title for privacy pro */
-"settings.ppro.VPN.title" = "VPN";
-
 /* Settings screen cell for long press previews */
 "settings.previews" = "Long-Press Previews";
 
 /* Settings title for the privacy section */
 "settings.privacy" = "Privacy";
+
+/* Data Broker protection cell subtitle for privacy pro */
+"settings.subscription.DBP.subtitle" = "Remove your info from sites that sell it";
+
+/* Data Broker protection cell title for privacy pro */
+"settings.subscription.DBP.title" = "Personal Information Removal";
+
+/* Privacy pro description subtext */
+"settings.subscription.description" = "More seamless privacy with three new protections, including:";
+
+/* Privacy pro features list */
+"settings.subscription.features" = " • VPN (Virtual Private Network)
+ • Personal Information Removal
+ • Identity Theft Restoration";
+
+/* Identity theft restoration cell subtitle for privacy pro */
+"settings.subscription.ITR.subtitle" = "If your identity is stolen, we'll help restore it";
+
+/* Identity theft restoration cell title for privacy pro */
+"settings.subscription.ITR.title" = "Identity Theft Restoration";
+
+/* Learn more button text for privacy pro */
+"settings.subscription.learn.more" = "Learn More";
+
+/* Subscription Settings button text for privacy pro */
+"settings.subscription.manage" = "Subscription Settings";
+
+/* Call to action title for Privacy Pro */
+"settings.subscription.subscribe" = "Subscribe to Privacy Pro";
+
+/* VPN cell title for privacy pro */
+"settings.subscription.VPN.title" = "VPN";
 
 /* Settings screen cell text for sync and backup */
 "settings.sync" = "Sync & Backup";
@@ -1961,6 +1913,66 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Which website is broken?";
+
+/* Add to another device button */
+"subscription.add.device" = "Add to Another Device";
+
+/* Change plan or billing title */
+"subscription.change.plan" = "Change Plan Or Billing";
+
+/* FAQ Button */
+"subscription.faq" = "Privacy Pro FAQ";
+
+/* FAQ Description */
+"subscription.faq.description" = "Visit our Privacy Pro help pages for answers to frequently asked questions";
+
+/* Help and support Section header */
+"subscription.help" = "Help and support";
+
+/* Header for the device management section */
+"subscription.manage.device" = "Manage Devices";
+
+/* Manage Plan header */
+"subscription.manage.plan" = "Manage Plan";
+
+/* Progress view title when completing the purchase */
+"subscription.progress.view.completing.purchase" = "Completing purchase...";
+
+/* Progress view title when starting the purchase */
+"subscription.progress.view.purchasing.subscription" = "Purchase in progress...";
+
+/* Progress view title when restoring past subscription purchase */
+"subscription.progress.view.restoring.subscription" = "Restoring subscription...";
+
+/* Remove from this device button */
+"subscription.remove.from.device" = "Remove From This Device";
+
+/* Remove from device confirmation dialog text */
+"subscription.remove.from.device.text" = "You will no longer be able to access your Privacy Pro subscription on this device. This will not cancel your subscription, and it will remain active on your other devices.";
+
+/* Remove from device confirmation dialog title */
+"subscription.remove.from.device.title" = "Remove From This Device?";
+
+/* Remove subscription button text */
+"subscription.remove.subscription" = "Remove Subscription";
+
+/* Remove subscription cancel button text */
+"subscription.remove.subscription.cancel" = "Cancel";
+
+/* Subscription Expiration Data */
+"subscription.subscription.active.caption" = "Your Privacy Pro subscription renews on %@";
+
+/* Cancel action for the existing subscription dialog */
+"subscription.subscription.found.cancel" = "Cancel";
+
+/* Restore action for the existing subscription dialog */
+"subscription.subscription.found.restore" = "Restore";
+
+/* Message for the existing subscription dialog */
+"subscription.subscription.found.text" = "We found a subscription associated with this Apple ID.";
+
+/* Title for the existing subscription dialog */
+"subscription.subscription.found.tite" = "Subscription Found";
 
 /* Message confirming that recovery code was copied to clipboard */
 "sync.code.copied" = "Recovery code copied to clipboard";

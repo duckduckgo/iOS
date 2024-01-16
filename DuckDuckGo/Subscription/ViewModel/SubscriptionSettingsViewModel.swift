@@ -58,7 +58,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     private func updateSubscriptionDetails(date: Date) {
-        self.subscriptionDetails = UserText.privacyProSubscriptionInfo(expiration: dateFormatter.string(from: date))
+        self.subscriptionDetails = UserText.subscriptionInfo(expiration: dateFormatter.string(from: date))
     }
     
     func removeSubscription() {

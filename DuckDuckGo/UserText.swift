@@ -961,24 +961,24 @@ But if you *do* want a peek under the hood, you can find more information about 
     
     // Privacy Pro Section
     public static let settingsPProSection = NSLocalizedString("settings.ppro", value: "Privacy Pro", comment: "Product name for the subscription bundle")
-    public static let settingsPProSubscribe = NSLocalizedString("settings.ppro.subscribe", value: "Subscribe to Privacy Pro", comment: "Call to action title for Privacy Pro")
-    public static let settingsPProDescription = NSLocalizedString("settings.ppro.description", value:"More seamless privacy with three new protections, including:", comment: "Privacy pro description subtext")
-    public static let settingsPProFeatures = NSLocalizedString("settings.ppro.features", value:
+    public static let settingsPProSubscribe = NSLocalizedString("settings.subscription.subscribe", value: "Subscribe to Privacy Pro", comment: "Call to action title for Privacy Pro")
+    public static let settingsPProDescription = NSLocalizedString("settings.subscription.description", value:"More seamless privacy with three new protections, including:", comment: "Privacy pro description subtext")
+    public static let settingsPProFeatures = NSLocalizedString("settings.subscription.features", value:
                                                                 """
                                                                  • VPN (Virtual Private Network)
                                                                  • Personal Information Removal
                                                                  • Identity Theft Restoration
                                                                 """, comment: "Privacy pro features list")
 
-    public static let settingsPProLearnMore = NSLocalizedString("settings.ppro.learn.more", value: "Learn More", comment: "Learn more button text for privacy pro")
+    public static let settingsPProLearnMore = NSLocalizedString("settings.subscription.learn.more", value: "Learn More", comment: "Learn more button text for privacy pro")
     
-    public static let settingsPProManageSubscription = NSLocalizedString("settings.ppro.manage", value: "Subscription Settings", comment: "Subscription Settings button text for privacy pro")
+    public static let settingsPProManageSubscription = NSLocalizedString("settings.subscription.manage", value: "Subscription Settings", comment: "Subscription Settings button text for privacy pro")
     
-    public static let settingsPProVPNTitle = NSLocalizedString("settings.ppro.VPN.title", value: "VPN", comment: "VPN cell title for privacy pro")
-    public static let settingsPProDBPTitle = NSLocalizedString("settings.ppro.DBP.title", value: "Personal Information Removal", comment: "Data Broker protection cell title for privacy pro")
-    public static let settingsPProDBPSubTitle = NSLocalizedString("settings.ppro.DBP.subtitle", value: "Remove your info from sites that sell it", comment: "Data Broker protection cell subtitle for privacy pro")
-    public static let settingsPProITRTitle = NSLocalizedString("settings.ppro.ITR.title", value: "Identity Theft Restoration", comment: "Identity theft restoration cell title for privacy pro")
-    public static let settingsPProITRSubTitle = NSLocalizedString("settings.ppro.ITR.subtitle", value: "If your identity is stolen, we'll help restore it", comment: "Identity theft restoration cell subtitle for privacy pro")
+    public static let settingsPProVPNTitle = NSLocalizedString("settings.subscription.VPN.title", value: "VPN", comment: "VPN cell title for privacy pro")
+    public static let settingsPProDBPTitle = NSLocalizedString("settings.subscription.DBP.title", value: "Personal Information Removal", comment: "Data Broker protection cell title for privacy pro")
+    public static let settingsPProDBPSubTitle = NSLocalizedString("settings.subscription.DBP.subtitle", value: "Remove your info from sites that sell it", comment: "Data Broker protection cell subtitle for privacy pro")
+    public static let settingsPProITRTitle = NSLocalizedString("settings.subscription.ITR.title", value: "Identity Theft Restoration", comment: "Identity theft restoration cell title for privacy pro")
+    public static let settingsPProITRSubTitle = NSLocalizedString("settings.subscription.ITR.subtitle", value: "If your identity is stolen, we'll help restore it", comment: "Identity theft restoration cell subtitle for privacy pro")
     
     
     // Customize Section
@@ -1003,30 +1003,29 @@ But if you *do* want a peek under the hood, you can find more information about 
     
     // Privacy Pro Subscriptions
     
-    static let privacyProPurchasingSubscriptionTitle = NSLocalizedString("ppro.progress.view.purchasing.subscription", value: "Purchase in progress...", comment: "Progress view title when starting the purchase")
-        static let privacyProPestoringSubscriptionTitle = NSLocalizedString("ppro.progress.view.restoring.subscription", value: "Restoring subscription...", comment: "Progress view title when restoring past subscription purchase")
-        static let privacyProCompletingPurchaseTitle = NSLocalizedString("ppro.progress.view.completing.purchase", value: "Completing purchase...", comment: "Progress view title when completing the purchase")
+    static let subscriptionPurchasingTitle = NSLocalizedString("subscription.progress.view.purchasing.subscription", value: "Purchase in progress...", comment: "Progress view title when starting the purchase")
+    static let subscriptionPestoringTitle = NSLocalizedString("subscription.progress.view.restoring.subscription", value: "Restoring subscription...", comment: "Progress view title when restoring past subscription purchase")
+    static let subscriptionCompletingPurchaseTitle = NSLocalizedString("subscription.progress.view.completing.purchase", value: "Completing purchase...", comment: "Progress view title when completing the purchase")
     
-    static func privacyProSubscriptionInfo(expiration: String) -> String {
-        let localized = NSLocalizedString("ppro.subscription.active.caption", value: "Your Privacy Pro subscription renews on %@", comment: "Subscription Expiration Data")
+    static func subscriptionInfo(expiration: String) -> String {
+        let localized = NSLocalizedString("subscription.subscription.active.caption", value: "Your Privacy Pro subscription renews on %@", comment: "Subscription Expiration Data")
         return String(format: localized, expiration)
     }
-    public static let privacyProManageDevices = NSLocalizedString("ppro.manage.device", value: "Manage Devices", comment: "Header for the device management section")
-    public static let privacyProAddDevice = NSLocalizedString("ppro.add.device", value: "Add to Another Device", comment: "Add to another device button")
-    public static let privacyProRemoveFromDevice = NSLocalizedString("ppro.remove.from.device", value: "Remove From This Device", comment: "Remove from this device button")
-    public static let privacyProManagePlan = NSLocalizedString("ppro.manage.plan", value: "Manage Plan", comment: "Manage Plan header")
-    public static let privacyProChangePlan = NSLocalizedString("ppro.change.plan", value: "Change Plan Or Billing", comment: "Change plan or billing title")
-    public static let privacyProHelpAndSupport = NSLocalizedString("ppro.help", value: "Help and support", comment: "Help and support Section header")
-    public static let privacyProFAQ = NSLocalizedString("ppro.faq", value: "Privacy Pro FAQ", comment: "FAQ Button")
-    public static let privacyProFAQFooter = NSLocalizedString("ppro.faq.description", value: "Visit our Privacy Pro help pages for answers to frequently asked questions", comment: "FAQ Description")
-    public static let privacyProRemoveFromDeviceConfirmTitle = NSLocalizedString("ppro.remove.from.device.title", value: "Remove From This Device?", comment: "Remove from device confirmation dialog title")
-    public static let privacyProRemoveFromDeviceConfirmText = NSLocalizedString("ppro.remove.from.device.text", value: "You will no longer be able to access your Privacy Pro subscription on this device. This will not cancel your subscription, and it will remain active on your other devices.", comment: "Remove from device confirmation dialog text")
-    public static let privacyProRemoveSubscription = NSLocalizedString("ppro.remove.subscription", value: "Remove Subscription", comment: "Remove subscription button text")
-    public static let privacyProRemoveSubscriptionCancel = NSLocalizedString("ppro.remove.subscription.cancel", value: "Cancel", comment: "Remove subscription cancel button text")
-    public static let privacyProSubscriptionFoundTitle = NSLocalizedString("ppro.subscription.found.tite", value: "Subscription Found", comment: "Title for the existing subscription dialog")
-    public static let privacyProSubscriptionFoundText = NSLocalizedString("ppro.subscription.found.text", value: "We found a subscription associated with this Apple ID.", comment: "Message for the existing subscription dialog")
-    public static let privacyProSubscriptionFoundCancel = NSLocalizedString("ppro.subscription.found.cancel", value: "Cancel", comment: "Cancel action for the existing subscription dialog")
-    public static let privacyProSubscriptionFoundRestore = NSLocalizedString("ppro.subscription.found.restore", value: "Restore", comment: "Restore action for the existing subscription dialog")
-    
+    public static let subscriptionManageDevices = NSLocalizedString("subscription.manage.device", value: "Manage Devices", comment: "Header for the device management section")
+    public static let subscriptionAddDevice = NSLocalizedString("subscription.add.device", value: "Add to Another Device", comment: "Add to another device button")
+    public static let subscriptionRemoveFromDevice = NSLocalizedString("subscription.remove.from.device", value: "Remove From This Device", comment: "Remove from this device button")
+    public static let subscriptionManagePlan = NSLocalizedString("subscription.manage.plan", value: "Manage Plan", comment: "Manage Plan header")
+    public static let subscriptionChangePlan = NSLocalizedString("subscription.change.plan", value: "Change Plan Or Billing", comment: "Change plan or billing title")
+    public static let subscriptionHelpAndSupport = NSLocalizedString("subscription.help", value: "Help and support", comment: "Help and support Section header")
+    public static let subscriptionFAQ = NSLocalizedString("subscription.faq", value: "Privacy Pro FAQ", comment: "FAQ Button")
+    public static let subscriptionFAQFooter = NSLocalizedString("subscription.faq.description", value: "Visit our Privacy Pro help pages for answers to frequently asked questions", comment: "FAQ Description")
+    public static let subscriptionRemoveFromDeviceConfirmTitle = NSLocalizedString("subscription.remove.from.device.title", value: "Remove From This Device?", comment: "Remove from device confirmation dialog title")
+    public static let subscriptionRemoveFromDeviceConfirmText = NSLocalizedString("subscription.remove.from.device.text", value: "You will no longer be able to access your Privacy Pro subscription on this device. This will not cancel your subscription, and it will remain active on your other devices.", comment: "Remove from device confirmation dialog text")
+    public static let subscriptionRemove = NSLocalizedString("subscription.remove.subscription", value: "Remove Subscription", comment: "Remove subscription button text")
+    public static let subscriptionRemoveCancel = NSLocalizedString("subscription.remove.subscription.cancel", value: "Cancel", comment: "Remove subscription cancel button text")
+    public static let subscriptionFoundTitle = NSLocalizedString("subscription.subscription.found.tite", value: "Subscription Found", comment: "Title for the existing subscription dialog")
+    public static let subscriptionFoundText = NSLocalizedString("subscription.subscription.found.text", value: "We found a subscription associated with this Apple ID.", comment: "Message for the existing subscription dialog")
+    public static let subscriptionFoundCancel = NSLocalizedString("subscription.subscription.found.cancel", value: "Cancel", comment: "Cancel action for the existing subscription dialog")
+    public static let subscriptionFoundRestore = NSLocalizedString("subscription.subscription.found.restore", value: "Restore", comment: "Restore action for the existing subscription dialog")
 
 }

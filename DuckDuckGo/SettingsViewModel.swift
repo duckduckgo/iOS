@@ -53,7 +53,7 @@ final class SettingsViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     // Defaults
-    @UserDefaultsWrapper(key: .privacyProHasActiveSubscription, defaultValue: false)
+    @UserDefaultsWrapper(key: .subscriptionIsActive, defaultValue: false)
     static private var cachedHasActiveSubscription: Bool
 
     // Closures to interact with legacy view controllers throught the container
@@ -217,7 +217,7 @@ extension SettingsViewModel {
             speechRecognitionEnabled: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
             loginsEnabled: featureFlagger.isFeatureOn(.autofillAccessCredentialManagement),
             networkProtection: getNetworkProtectionState(),
-            privacyPro: getPrivacyProState(),
+            subscription: getSubscriptionState(),
             sync: getSyncState()
         )
         
@@ -226,7 +226,7 @@ extension SettingsViewModel {
         #if SUBSCRIPTION
         if #available(iOS 15, *) {
             Task {
-                if state.privacyPro.enabled {
+                if state.subscription.enabled {
                     await setupSubscriptionEnvironment()
                 }
             }
@@ -245,15 +245,15 @@ extension SettingsViewModel {
         return SettingsState.NetworkProtection(enabled: enabled, status: "")
     }
     
-    private func getPrivacyProState() -> SettingsState.PrivacyPro {
+    private func getSubscriptionState() -> SettingsState.Subscription {
         var enabled = false
         var canPurchase = false
         let hasActiveSubscription = Self.cachedHasActiveSubscription
         #if SUBSCRIPTION
-            enabled = featureFlagger.isFeatureOn(.privacyPro)
+            enabled = featureFlagger.isFeatureOn(.subscription)
             canPurchase = SubscriptionPurchaseEnvironment.canPurchase
         #endif
-        return SettingsState.PrivacyPro(enabled: enabled,
+        return SettingsState.Subscription(enabled: enabled,
                                         canPurchase: canPurchase,
                                         hasActiveSubscription: hasActiveSubscription)
     }
@@ -307,13 +307,13 @@ extension SettingsViewModel {
                 
                 // Check for valid entitlements
                 let hasEntitlements = await AccountManager().hasEntitlement(for: Self.entitlementNames.first!)
-                self.state.privacyPro.hasActiveSubscription = hasEntitlements ? true : false
+                self.state.subscription.hasActiveSubscription = hasEntitlements ? true : false
                 
                 // Cache Subscription state
-                Self.cachedHasActiveSubscription = self.state.privacyPro.hasActiveSubscription
+                Self.cachedHasActiveSubscription = self.state.subscription.hasActiveSubscription
                 
                 // Enable Subscription purchase if there's no active subscription
-                if self.state.privacyPro.hasActiveSubscription == false {
+                if self.state.subscription.hasActiveSubscription == false {
                     setupSubscriptionPurchaseOptions()
                 }
             }
@@ -324,11 +324,11 @@ extension SettingsViewModel {
     
     @available(iOS 15.0, *)
     private func setupSubscriptionPurchaseOptions() {
-        self.state.privacyPro.hasActiveSubscription = false
+        self.state.subscription.hasActiveSubscription = false
         PurchaseManager.shared.$availableProducts
             .receive(on: RunLoop.main)
             .sink { [weak self] products in
-                self?.state.privacyPro.canPurchase = !products.isEmpty
+                self?.state.subscription.canPurchase = !products.isEmpty
             }.store(in: &cancellables)
     }
     #endif

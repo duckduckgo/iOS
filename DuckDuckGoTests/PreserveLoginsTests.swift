@@ -34,14 +34,6 @@ class PreserveLoginsTests: XCTestCase {
         logins.addToAllowed(domain: "example.com")
         XCTAssertTrue(logins.isAllowed(fireproofDomain: "example.com"))
     }
-
-    func testWhenLegacyAllowedDomainsThenMigratedAndCleared() {
-        UserDefaults.app.set(["domain1.com"], forKey: UserDefaultsWrapper<Any>.Key.preserveLoginsLegacyAllowedDomains.rawValue)
-        let logins = PreserveLogins()
-        XCTAssertEqual(["domain1.com"], logins.legacyAllowedDomains)
-        logins.clearLegacyAllowedDomains()
-        XCTAssertNil(UserDefaults.app.object(forKey: UserDefaultsWrapper<Any>.Key.preserveLoginsLegacyAllowedDomains.rawValue))
-    }
     
     func testWhenNewThenAllowedDomainsIsEmpty() {
         let logins = PreserveLogins()

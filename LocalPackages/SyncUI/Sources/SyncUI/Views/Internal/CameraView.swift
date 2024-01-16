@@ -96,12 +96,15 @@ public struct CameraView: View {
 
                 Text(UserText.cameraPermissionRequired)
                     .daxTitle3()
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
                     .lineSpacing(1.05)
                     .padding(.bottom, 8)
 
                 Text(UserText.cameraPermissionInstructions)
                     .lineLimit(nil)
                     .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
                     .daxBodyRegular()
                     .lineSpacing(1.1)
 

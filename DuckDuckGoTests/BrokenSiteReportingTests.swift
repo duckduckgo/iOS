@@ -36,8 +36,16 @@ final class BrokenSiteReportingTests: XCTestCase {
     private enum Resource {
         static let tests = "privacy-reference-tests/broken-site-reporting/tests.json"
     }
-    
+
+    override func setUp() {
+        super.setUp()
+
+        Pixel.isDryRun = false
+    }
+
     override func tearDown() {
+        Pixel.isDryRun = true
+        
         HTTPStubs.removeAllStubs()
         super.tearDown()
     }

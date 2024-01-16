@@ -36,6 +36,7 @@ import SyncDataProviders
 
 #if NETWORK_PROTECTION
 import NetworkProtection
+import WebKit
 #endif
 
 // swiftlint:disable file_length
@@ -100,6 +101,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 #endif
 
+        if isDebugBuild {
+            Pixel.isDryRun = true
+        } else {
+            Pixel.isDryRun = false
+        }
+
         ContentBlocking.shared.onCriticalError = presentPreemptiveCrashAlert
 
         // Can be removed after a couple of versions
@@ -123,6 +130,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = DefaultUserAgentManager.shared
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
+            Pixel.isDryRun = true
             _ = DefaultUserAgentManager.shared
             Database.shared.loadStore { _, _ in }
             _ = BookmarksDatabaseSetup(crashOnError: true).loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase)
@@ -275,8 +283,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         autoClear = AutoClear(worker: main)
         autoClear?.applicationDidLaunch()
         
-        clearLegacyAllowedDomainCookies()
-        
         AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
 
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
@@ -308,6 +314,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if NETWORK_PROTECTION
         widgetRefreshModel.beginObservingVPNStatus()
         NetworkProtectionAccessController().refreshNetworkProtectionAccess()
+#endif
+        
+#if SUBSCRIPTION
+        setupSubscriptionsEnvironment()
 #endif
 
         return true
@@ -342,14 +352,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    private func clearLegacyAllowedDomainCookies() {
-        let domains = PreserveLogins.shared.legacyAllowedDomains
-        guard !domains.isEmpty else { return }
-        WebCacheManager.shared.removeCookies(forDomains: domains, completion: {
-            os_log("Removed cookies for %d legacy allowed domains", domains.count)
-            PreserveLogins.shared.clearLegacyAllowedDomains()
-        })
+
+#if SUBSCRIPTION
+    private func setupSubscriptionsEnvironment() {
+        Task {  SubscriptionPurchaseEnvironment.current = .appStore
+            await AccountManager().checkSubscriptionState()
+        }
     }
+#endif
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
@@ -481,10 +491,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func onApplicationLaunch(_ application: UIApplication) {
-        beginAuthentication()
-        initialiseBackgroundFetch(application)
-        applyAppearanceChanges()
-        refreshRemoteMessages()
+        Task { @MainActor in
+            await beginAuthentication()
+            initialiseBackgroundFetch(application)
+            applyAppearanceChanges()
+            refreshRemoteMessages()
+        }
     }
     
     private func applyAppearanceChanges() {
@@ -503,10 +515,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillEnterForeground(_ application: UIApplication) {
         ThemeManager.shared.updateUserInterfaceStyle()
 
-        beginAuthentication()
-        autoClear?.applicationWillMoveToForeground()
-        showKeyboardIfSettingOn = true
-        syncService.scheduler.resumeSyncQueue()
+        Task { @MainActor in
+            await beginAuthentication()
+            autoClear?.applicationWillMoveToForeground()
+            showKeyboardIfSettingOn = true
+            syncService.scheduler.resumeSyncQueue()
+        }
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -634,7 +648,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.isHidden = true
     }
 
-    private func beginAuthentication() {
+    private func beginAuthentication() async {
         
         guard privacyStore.authenticationEnabled else { return }
 
@@ -646,7 +660,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         
-        controller.beginAuthentication { [weak self] in
+        await controller.beginAuthentication { [weak self] in
             self?.removeOverlay()
             self?.showKeyboardOnLaunch()
         }

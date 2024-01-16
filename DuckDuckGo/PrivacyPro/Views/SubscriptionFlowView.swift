@@ -57,6 +57,12 @@ struct SubscriptionFlowView: View {
                 viewModel.shouldReloadWebview = false
             }
         }
+        .onChange(of: viewModel.shouldReloadWebview) { shouldReload in
+            if shouldReload {
+                print("WebView reload triggered")
+                viewModel.shouldReloadWebview = false
+            }
+        }
         .onAppear(perform: {
             Task { await viewModel.initializeViewData() }
         })

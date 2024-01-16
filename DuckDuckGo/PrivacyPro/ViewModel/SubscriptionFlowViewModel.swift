@@ -65,6 +65,13 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 self?.hasActiveSubscription = value
             }
             .store(in: &cancellables)
+        
+        subFeature.$hasActiveSubscription
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.hasActiveSubscription = value
+            }
+            .store(in: &cancellables)
     }
     
     @MainActor

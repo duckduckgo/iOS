@@ -898,6 +898,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet può essere un po' inquietante.\n\nNon preoccuparti! Effettuare ricerche e navigare in modo privato è più facile di quanto pensi.";
 
+/* No comment provided by engineer. */
+"Debug" = "Debug";
+
 /* GPC Setting state */
 "donotsell.disabled" = "Disattivato";
 
@@ -1372,6 +1375,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "DuckDuckGo\nti dà il benvenuto!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo per Mac ti offre la velocità di cui hai bisogno, le funzioni di navigazione che desideri e i migliori strumenti per la privacy.";
 
@@ -1488,6 +1494,9 @@
 
 /* Second subtitle for Network Protection join waitlist screen */
 "network-protection.waitlist.join.subtitle.2" = "Iscriviti alla lista d'attesa e ti avviseremo quando sarà il tuo turno.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
 
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "Sei in lista d'attesa.";
@@ -1762,8 +1771,107 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Preferiti";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "Info su DuckDuckGo";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "Informazioni";
+
 /* about page */
 "settings.about.text" = "Fondata nel 2008, DuckDuckGo è un'azienda indipendente che tutela la privacy online per tutti coloro che sono stanchi di essere tracciati online e vogliono una soluzione semplice. Siamo la dimostrazione che si può garantire una vera protezione della privacy online senza compromessi.\n\nIl browser DuckDuckGo è ricco di funzioni essenziali come i segnalibri, le schede, le password e molto altro ancora, [oltre a numerose e potenti protezioni della privacy](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) che normalmente non vengono offerte dai browser più comuni. Stiamo parlando di uno straordinario set completo per la protezione della privacy, che aiuta a proteggere le attività online, dalla ricerca alla navigazione, alle e-mail e molto altro ancora.\n\nCon le nostre protezioni della privacy non è necessario conoscere particolari tecnici o dover affrontare configurazioni complesse. È sufficiente scegliere il browser DuckDuckGo su tutti i dispositivi personali per avere automaticamente garantita la privacy.\n\nPer saperne di più su come funzionano le protezioni della privacy di DuckDuckGo, è possibile consultare le nostre [pagine di aiuto](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Aggiungi app al tuo dock";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Aggiungi widget alla schermata iniziale";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Posizione Barra degli indirizzi";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Aspetto";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Apri i collegamenti nelle loro app associate";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Disattiva per impedire che i collegamenti si aprano automaticamente in altre app installate.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Mostra suggerimenti di completamento automatico";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Blocco applicazione";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Se hai impostato Touch ID, Face ID o un codice di accesso al sistema, ti verrà richiesto di sbloccare l'app all'apertura.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Cancellazione automatica dei dati";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Gestione popup dei cookie";
+
+/* Settings title for the customize section */
+"settings.customize" = "Personalizza";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Imposta come browser predefinito";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "Protezione email";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Blocca i sistemi di tracciamento delle email e nascondi il tuo indirizzo";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Condividi feedback";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Animazione pulsante fuoco";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Siti protetti";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Global Privacy Control (GPC)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "Icona dell'app";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Tastiera";
+
+/* Settings title for the 'More' section */
+"settings.more" = "Ulteriori informazioni su DuckDuckGo";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Anteprime con pressione prolungata";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Privacy";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Sincronizzazione e backup";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Dimensione testo";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Tema";
+
+/* Title for the Settings View */
+"settings.title" = "Impostazioni";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Siti non protetti";
+
+/* Settings cell for Version */
+"settings.version" = "Versione";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Ricerca vocale privata";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Invia segnalazione";
@@ -1857,6 +1965,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Consenti l'accesso al microfono nelle impostazioni di sistema di iOS, in modo che DuckDuckGo possa utilizzare le funzioni vocali.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "OK";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Accesso al microfono obbligatorio";

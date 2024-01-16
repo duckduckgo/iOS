@@ -41,7 +41,7 @@ jobs:
       run: |
         set -o pipefail && xcodebuild \
           -scheme "DuckDuckGo" \
-          -destination "platform=iOS Simulator,name=iPhone 15" \
+          -destination "platform=iOS Simulator,name=iPhone 15,OS=17.2" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
           ONLY_ACTIVE_ARCH=NO \
@@ -54,6 +54,7 @@ jobs:
         app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
         workspace: .maestro
         include-tags: release
+        ios-version: 17
 
     - name: Privacy tests
       uses: mobile-dev-inc/action-maestro-cloud@v1.8.0
@@ -62,6 +63,7 @@ jobs:
         app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
         workspace: .maestro
         include-tags: privacy
+        ios-version: 17
     
     - name: Ad Click Detection Flow tests
       uses: mobile-dev-inc/action-maestro-cloud@v1.8.0
@@ -70,6 +72,7 @@ jobs:
         app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
         workspace: .maestro
         include-tags: adClick
+        ios-version: 17
 
     - name: Create Asana task when workflow failed
       if: ${{ failure() }}

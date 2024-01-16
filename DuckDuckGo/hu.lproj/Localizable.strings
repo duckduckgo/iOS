@@ -898,6 +898,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Az internet meglehetősen undok hely lehet.\n\nNe aggódj! A bizalmas keresés és böngészés egyszerűbb, mint hinnéd.";
 
+/* No comment provided by engineer. */
+"Debug" = "Debug";
+
 /* GPC Setting state */
 "donotsell.disabled" = "Letiltva";
 
@@ -1372,6 +1375,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Üdvözlünk a\nDuckDuckGo-ban!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "A DuckDuckGo Mac verziója gyors, böngészési funkciókban gazdag, és kategóriája legjobb adatvédelmi megoldásait kínálja.";
 
@@ -1488,6 +1494,9 @@
 
 /* Second subtitle for Network Protection join waitlist screen */
 "network-protection.waitlist.join.subtitle.2" = "Iratkozz fel a várólistára, és értesítést kapsz, ha rád kerül a sor.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
 
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "Felkerültél a listára!";
@@ -1762,8 +1771,107 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Kedvencek";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "A DuckDuckGóról";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "Rólunk";
+
 /* about page */
 "settings.about.text" = "A 2008-ban alapított független internetes adatvédelmi cég, a DuckDuckGo egyszerű megoldást kínál azoknak, akiknek elegük van abból, hogy állandóan nyomon követik őket az interneten. Mi vagyunk annak a bizonyítéka, hogy kompromisszumok nélkül is lehet valódi online adatvédelmet biztosítani.\n\nA DuckDuckGo böngésző rendelkezik a böngészőktől elvárt funkciókkal, mint például könyvjelzők, lapok, jelszavak és egyéb funkciók, valamint több mint [egy tucat olyan hatékony adatvédelmi megoldással](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/), amelyet a legtöbb népszerű böngésző nem kínál alapértelmezés szerint. Ezek az egyedülállóan átfogó adatvédelmi megoldások segítenek megvédeni online tevékenységeid, legyen szó keresésről, böngészésről, e-mailezésről vagy sok minden másról.\n\nAdatvédelmi megoldásaink anélkül működnek, hogy bármit is tudnod kellene a technikai részletekről vagy bonyolult beállításokkal kellene foglalkoznod. Mindössze annyit kell tenned, hogy minden eszközödön a DuckDuckGo böngészőre váltasz, és máris igénybe veheted az alapértelmezés szerinti adatvédelmet.\n\nHa azonban *igazán* szeretnél bepillantani a motorháztető alá is, a [súgóoldalainkon](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/) további információkat találhatsz a DuckDuckGo adatvédelmi megoldásainak működéséről.";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Alkalmazás hozzáadása a dokkodhoz";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Minialkalmazás hozzáadása a kezdőképernyőhöz";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Címsor elhelyezkedése";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Megjelenés";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Hivatkozások megnyitása társított alkalmazásokban";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Letiltásával megakadályozhatod, hogy a hivatkozások automatikusan megnyíljanak más telepített alkalmazásokban.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Automatikus kiegészítési javaslatok megjelenítése";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Alkalmazás zárolás";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Ha be van állítva ujjlenyomat- vagy arcfelismerés, illetve rendszerjelszó, megnyitásakor fel kell oldanod az alkalmazást.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Adatok automatikus törlése";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Felugró sütiablakok kezelése";
+
+/* Settings title for the customize section */
+"settings.customize" = "Testreszabás";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Beállítás alapértelmezett böngészőként";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "E-mail védelem";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "E-mail nyomkövetők letiltása, és a cím elrejtése";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Visszajelzés megosztása";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Tűz gomb animáció";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Tűzálló weboldalak";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Nemzetközi adatvédelmi szabályozás (Global Privacy Control, GPC)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "Alkalmazásikon";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Billentyűzet";
+
+/* Settings title for the 'More' section */
+"settings.more" = "Továbbiak a DuckDuckGo-tól";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Hosszú lenyomásos előnézetek";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Adatvédelem";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Szinkronizálás és biztonsági mentés";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Szövegméret";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Kinézet";
+
+/* Title for the Settings View */
+"settings.title" = "Beállítások";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Védelem nélküli weboldalak";
+
+/* Settings cell for Version */
+"settings.version" = "Változat";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Privát beszédhangalapú keresés";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Jelentés beküldése";
@@ -1857,6 +1965,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "A beszédhangfunkciók használatához az iOS rendszerbeállításaiban engedélyezd a DuckDuckGo számára a Mikrofon-hozzáférést.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "OK";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Mikrofon-hozzáférés szükséges";

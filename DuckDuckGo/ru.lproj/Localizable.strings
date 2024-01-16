@@ -898,6 +898,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Интернет набит трекерами.\n\nНо выход есть! Пользоваться сетью без слежки проще, чем вы думали.";
 
+/* No comment provided by engineer. */
+"Debug" = "Debug";
+
 /* GPC Setting state */
 "donotsell.disabled" = "Отключено";
 
@@ -1372,6 +1375,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Добро пожаловать в\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "Приложение DuckDuckGo для Mac — это высокая скорость, функциональность и беспрецедентная конфиденциальность.";
 
@@ -1488,6 +1494,9 @@
 
 /* Second subtitle for Network Protection join waitlist screen */
 "network-protection.waitlist.join.subtitle.2" = "Записывайтесь в очередь, и мы будем держать вас в курсе.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
 
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "Вы в списке!";
@@ -1762,8 +1771,107 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Избранное";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "Несколько слов о DuckDuckGo";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "О нас";
+
 /* about page */
 "settings.about.text" = "DuckDuckGo — независимая компания, которая c 2008 года предоставляет услуги защиты личных данных в интернете. Мы предлагаем простое решение для тех, кому надоело отслеживание онлайн. Своим примером DuckDuckGo показывает, что защита конфиденциальности в Сети не требует компромиссов.\n\nВ универсальном браузере DuckDuckGo вы найдете все те же привычные функции — вкладки, закладки, пароли, — а также более [десятка мощных средств защиты личной информации](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/), которых нет в стандартных пакетах других популярных веб-обозревателей. Наш всесторонний набор инструментов скроет от посторонних глаз всю вашу онлайн-активность, включая поиск, просмотр сайтов и чтение почты.\n\nСервисы DuckDuckGo не требуют особых технических познаний или работы со сложными настройками. Достаточно сменить свой браузер на DuckDuckGo на всех устройствах, и конфиденциальность онлайн станет вашим спутником по умолчанию.\n\nЕсли же вас интересует наша «кухня», вы можете почитать о том, как устроены инструменты защиты DuckDuckGo, на [страницах нашего справочного центра](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Добавьте приложение на док-панель";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Добавьте виджет на домашний экран";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Положение адресной строки";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Внешний вид";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Открывать ссылки в связанных приложениях";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Отключение этой функции не позволит ссылкам автоматически открываться в других приложениях.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Показать предложения автозаполнения";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Блокировка";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Если система защищена технологией Touch ID или Face ID либо кодом доступа, при запуске вам придется разблокировать приложение.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Автоудаление данных";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Управление окнами выбора куки-файлов";
+
+/* Settings title for the customize section */
+"settings.customize" = "Собственная настройка";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Сделать браузером по умолчанию";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "Защита электронной почты";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Блокировка почтовых трекеров и скрытие адреса";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Оставьте нам отзыв";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Aнимация кнопки «Огонь»";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Огнеупорные сайты";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Глобальный контроль конфиденциальности (GPC)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "Значок приложения";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Клавиатура";
+
+/* Settings title for the 'More' section */
+"settings.more" = "DuckDuckGo также предлагает...";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Предпросмотр долгим нажатием";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Настройки конфиденциальности";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Синхронизация и резервное копирование";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Размер текста";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Тема";
+
+/* Title for the Settings View */
+"settings.title" = "Настройки";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Незащищенные сайты";
+
+/* Settings cell for Version */
+"settings.version" = "Версия";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Конфиденциальный голосовой поиск";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Отправить жалобу";
@@ -1857,6 +1965,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Чтобы пользоваться голосовыми функциями, откройте DuckDuckGo доступ к микрофону в системных настройках iOS.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "Хорошо";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Требуется доступ к микрофону";

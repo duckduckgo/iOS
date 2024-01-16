@@ -72,8 +72,8 @@ tags:
 - assertVisible: "Bookmarks"
 - tapOn: "Bookmarks"
 - assertVisible: "Privacy Test Pages - Home"
-- assertVisible: "Delete Privacy Test Pages - Home"
-- tapOn: "Delete Privacy Test Pages - Home"
+- assertVisible: "Remove Privacy Test Pages - Home"
+- tapOn: "Remove Privacy Test Pages - Home"
 - assertVisible: 
     text: "Delete"
     index: 0

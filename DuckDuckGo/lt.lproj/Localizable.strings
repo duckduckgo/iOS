@@ -898,6 +898,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internetas gali būti bauginantis.\n\nNesijaudink! Ieškoti ir naršyti privačiai yra lengviau, nei manai.";
 
+/* No comment provided by engineer. */
+"Debug" = "Debug";
+
 /* GPC Setting state */
 "donotsell.disabled" = "Išjungta";
 
@@ -1372,6 +1375,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Sveiki atvykę į\n„DuckDuckGo“!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "„Mac“ skirta „DuckDuckGo“ pasižymi jums reikiama sparta, naršymo funkcijomis ir aukščiausios klasės privatumo įrankiais.";
 
@@ -1488,6 +1494,9 @@
 
 /* Second subtitle for Network Protection join waitlist screen */
 "network-protection.waitlist.join.subtitle.2" = "Prisijunkite prie laukiančiųjų sąrašo ir mes jums pranešime, kai ateis jūsų eilė.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
 
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "Esate sąraše!";
@@ -1762,8 +1771,107 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Mėgstami";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "Apie DuckDuckGo";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "Apie";
+
 /* about page */
 "settings.about.text" = "„DuckDuckGo“ yra nepriklausoma interneto privatumo bendrovė, įkurta 2008 metais ir skirta visiems, kurie pavargo nuo sekimo internete ir nori lengvo sprendimo. Esame įrodymas, kad galite gauti tikrą privatumo apsaugą internete be kompromisų.\n\n„DuckDuckGo“ naršyklėje yra funkcijos, kurių tikitės iš pagrindinės naršyklės, pvz., žymės, skirtukai, slaptažodžiai ir dar daugiau, taip pat [keliolika galingų privatumo apsaugos priemonių](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) pagal numatytuosius nustatymus nėra siūlomas daugelyje populiarių naršyklių. Šis unikalus išsamus privatumo apsaugos rinkinys padeda apsaugoti jūsų veiklą internete – nuo paieškos iki naršymo, el. pašto ir kt.\n\nMūsų privatumo apsaugos priemonės veikia nereikalaudamos nieko žinoti apie technines detales ar naudotis sudėtingais nustatymais. Tereikia visuose įrenginiuose perjungti naršyklę į „DuckDuckGo“ ir privatumas bus užtikrintas pagal numatytuosius nustatymus.\n\nTačiau jei norite žvilgtelėti po gaubtu, daugiau informacijos apie tai, kaip veikia „DuckDuckGo“ privatumo apsauga, galite rasti mūsų [pagalbos puslapiuose] (ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Įtraukti programėlę į stotelę";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Įtraukti valdiklį į pagrindinį ekraną";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Adreso juostos padėtis";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Išvaizda";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Atidaryti nuorodas susijusiose programose";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Išjungti, kad nuorodos automatiškai neatsidarytų kitose įdiegtose programose.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Rodyti automatinio užbaigimo pasiūlymus";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Programos užraktas";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Jei nustatytas „Touch ID“, „Face ID“ arba sistemos slaptažodis, prieš atidarydami būsite paprašyti atrakinti programą.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Automatiškai valyti duomenis";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Valdyti slapukų iššokančiuosius langus";
+
+/* Settings title for the customize section */
+"settings.customize" = "Tinkinti";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Nustatyti kaip numatytąją naršyklę";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "El. pašto apsauga";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Blokuokite el. laiškų sekimo priemones ir paslėpkite savo adresą";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Bendrinti atsiliepimą";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Mygtuko „Fire“ animacija";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Apsaugoti svetaines";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Visuotinė privatumo kontrolė (VPK)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "Programėlės piktograma";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Klaviatūra";
+
+/* Settings title for the 'More' section */
+"settings.more" = "Daugiau iš „DuckDuckGo“";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Peržiūros ilgai spaudžiant";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Privatumas";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Sinchronizuoti ir kurti atsarginę kopiją";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Teksto dydis";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Tema";
+
+/* Title for the Settings View */
+"settings.title" = "Nustatymai";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Neapsaugotos svetainės";
+
+/* Settings cell for Version */
+"settings.version" = "Versija";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Privati paieška balsu";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pateikti ataskaitą";
@@ -1857,6 +1965,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Patvirtinkite prieigą prie mikrofono „iOS“ sistemos nustatymuose, kad galėtumėte naudotis „DuckDuckGo“ balsu valdomomis funkcijomis.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "GERAI";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Būtina prieiga prie mikrofono";

@@ -898,6 +898,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet voi olla pelottava paikka.\n\nMutta ei hätää! Yksityinen haku ja selaaminen on helpompaa kuin luulet.";
 
+/* No comment provided by engineer. */
+"Debug" = "Debug";
+
 /* GPC Setting state */
 "donotsell.disabled" = "Pois käytöstä";
 
@@ -1372,6 +1375,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Tervetuloa\nDuckDuckGo-sovellukseen!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "Macin DuckDuckGo tarjoaa kaipaamasi nopeuden, odottamasi selaintoiminnot ja luokkansa parhaat tietosuojaominaisuudet.";
 
@@ -1488,6 +1494,9 @@
 
 /* Second subtitle for Network Protection join waitlist screen */
 "network-protection.waitlist.join.subtitle.2" = "Tule odotuslistalle, niin ilmoitamme milloin on sinun vuorosi.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
 
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "Olet odotuslistalla!";
@@ -1762,8 +1771,107 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Suosikit";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "Tietoa DuckDuckGo:sta";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "Tietoja";
+
 /* about page */
 "settings.about.text" = "DuckDuckGo on vuonna 2008 perustettu riippumaton internetissä tietosuojaa tarjoava yritys niille, jotka ovat kyllästyneet siihen, että heitä seurataan netissä, ja haluavat yksinkertaisen ratkaisun. Olemme todiste siitä, että voit saada todellista tietosuojaa verkossa ilman kompromisseja.\n\nDuckDuckGo-selaimessa on kaikki parhaiden selainten ominaisuudet, kuten kirjanmerkit, välilehdet, salasanat ja paljon muuta, sekä yli [kymmenkunta tehokasta tietosuojausta](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) ei tarjolla oletuksena suosituimmissa selaimissa. Tämä ainutlaatuisen kattava tietosuoja auttaa turvaamaan haut, selaamisen, sähköpostin lähettämiseen ja muun toimintasi verkossa.\n\nTietosuojamme toimivat, vaikka et tietäisi mitään teknisistä yksityiskohdista tai osaisi käsitellä monimutkaisia asetuksia. Sinun tarvitsee vain vaihtaa selaimesi DuckDuckGohon kaikilla laitteillasi, ja saat tietosuojan oletuksena.\n\nJos kuitenkin haluat kurkistaa konepellin alle, lisätietoja DuckDuckGon tietosuojan toiminnasta on [ohjesivuillamme](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Lisää sovellus telakkaasi";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Lisää widget aloitusnäyttöön";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Osoitepalkin sijainti";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Ulkoasu";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Avaa linkit liittyvissä sovelluksissa";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Ota pois käytöstä estääksesi linkkejä avautumasta automaattisesti muissa asennetuissa sovelluksissa.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Näytä automaattisen täydennyksen ehdotukset";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Sovelluksen lukitus";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Jos käytössä on Touch ID, Face ID tai järjestelmän salasana, sinua pyydetään poistamaan lukitus, kun avaat sovelluksen.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Tyhjennä tiedot automaattisesti";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Evästeiden hallinnan ponnahdusikkunat";
+
+/* Settings title for the customize section */
+"settings.customize" = "Mukauta";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Aseta oletusselaimeksi";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "Sähköpostisuojaus";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Estä sähköpostiseuraajat ja piilota osoitteesi";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Jaa palaute";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Liekki-painikkeen animaatio";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Tee sivustoista palonkestäviä";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Global Privacy Control (GPC)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "Sovelluskuvake";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Näppäimistö";
+
+/* Settings title for the 'More' section */
+"settings.more" = "Lisää DuckDuckGolta";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Esikatselu pitkällä painalluksella";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Tietosuoja";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Synkronoi ja varmuuskopioi";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Tekstin koko";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Teema";
+
+/* Title for the Settings View */
+"settings.title" = "Asetukset";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Suojaamattomat sivustot";
+
+/* Settings cell for Version */
+"settings.version" = "Versio";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Yksityinen äänihaku";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Lähetä raportti";
@@ -1857,6 +1965,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Salli mikrofonin käyttö DuckDuckGolle iOS-järjestelmäasetuksissa, jotta voit käyttää ääniominaisuuksia.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "OK";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Mikrofonin käyttöoikeus vaaditaan";

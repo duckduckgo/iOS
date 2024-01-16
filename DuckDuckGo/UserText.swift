@@ -1027,5 +1027,6 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let privacyProSubscriptionFoundText = NSLocalizedString("ppro.subscription.found.text", value: "We found a subscription associated with this Apple ID.", comment: "Message for the existing subscription dialog")
     public static let privacyProSubscriptionFoundCancel = NSLocalizedString("ppro.subscription.found.cancel", value: "Cancel", comment: "Cancel action for the existing subscription dialog")
     public static let privacyProSubscriptionFoundRestore = NSLocalizedString("ppro.subscription.found.restore", value: "Restore", comment: "Restore action for the existing subscription dialog")
+    
 
 }

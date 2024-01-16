@@ -65,7 +65,7 @@ struct SubscriptionSettingsView: View {
                 }
                 Section(header: Text(UserText.privacyProHelpAndSupport),
                         footer: Text(UserText.privacyProFAQFooter)) {
-                    NavigationLink(destination: Text("Privacy Pro FAQ")) {
+                    NavigationLink(destination: Text(UserText.privacyProFAQ)) {
                         SettingsCustomCell(content: {
                             Text(UserText.privacyProFAQ)
                                 .daxBodyRegular()

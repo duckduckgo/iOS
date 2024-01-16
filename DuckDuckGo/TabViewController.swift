@@ -415,7 +415,15 @@ class TabViewController: UIViewController {
         webView.navigationDelegate = self
         webView.uiDelegate = self
         webViewContainer.addSubview(webView)
+        webView.scrollView.refreshControl = UIRefreshControl()
+        webView.scrollView.refreshControl?.addAction(UIAction { [weak self] _ in
+            self?.reload()
+            self?.webView.scrollView.refreshControl?.endRefreshing()
+        }, for: .valueChanged)
 
+        webView.scrollView.refreshControl?.backgroundColor = .systemBackground
+        webView.scrollView.refreshControl?.tintColor = .label
+                
         updateContentMode()
 
         if #available(iOS 16.4, *) {
@@ -1175,6 +1183,8 @@ extension TabViewController: WKNavigationDelegate {
     private func onWebpageDidFinishLoading() {
         os_log("webpageLoading finished", log: .generalLog, type: .debug)
                 
+        Swift.print("***", #function, webView.scrollView.contentOffset, webView.scrollView.contentInset)
+        
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
 
@@ -2289,6 +2299,11 @@ extension TabViewController: Themable {
         error?.backgroundColor = theme.backgroundColor
         errorHeader.textColor = theme.barTintColor
         errorMessage.textColor = theme.barTintColor
+        
+        if let webView {
+            webView.scrollView.refreshControl?.backgroundColor = theme.mainViewBackgroundColor
+            webView.scrollView.refreshControl?.tintColor = .secondaryLabel
+        }
         
         switch theme.currentImageSet {
         case .light:

@@ -63,8 +63,8 @@ struct SettingsSubscriptionView: View {
             SettingsCellView(label: UserText.settingsPProVPNTitle,
                              subtitle: viewModel.state.networkProtection.status != "" ? viewModel.state.networkProtection.status : nil,
                              action: { viewModel.presentLegacyView(.netP) },
-                             asLink: true,
-                             disclosureIndicator: true)
+                             disclosureIndicator: true,
+                             isButton: true)
             
             NavigationLink(destination: Text("Data Broker Protection")) {
                 SettingsCellView(label: UserText.settingsPProDBPTitle, subtitle: UserText.settingsPProDBPSubTitle)

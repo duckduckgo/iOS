@@ -36,8 +36,8 @@ struct SettingsSyncView: View {
             Section {
                 SettingsCellView(label: SyncUI.UserText.syncTitle,
                                  action: { viewModel.presentLegacyView(.sync) },
-                                 asLink: true,
-                                 disclosureIndicator: true)
+                                 disclosureIndicator: true,
+                                 isButton: true)
             }
 
         }

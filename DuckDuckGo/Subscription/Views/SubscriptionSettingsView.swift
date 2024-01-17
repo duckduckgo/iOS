@@ -38,21 +38,19 @@ struct SubscriptionSettingsView: View {
                     .hidden()
                 }.textCase(nil)
                 Section(header: Text(UserText.subscriptionManageDevices)) {
-                    
                     SettingsCustomCell(content: {
                         Text(UserText.subscriptionAddDevice)
                             .daxBodyRegular()
                             .foregroundColor(Color.init(designSystemColor: .accent))
                     },
-                                       action: {},
-                                       asLink: true)
+                                       action: {})
                     
                     SettingsCustomCell(content: {
                         Text(UserText.subscriptionRemoveFromDevice)
-                            .daxBodyRegular()
-                            .foregroundColor(Color.init(designSystemColor: .accent))},
+                                .daxBodyRegular()
+                                .foregroundColor(Color.init(designSystemColor: .accent))},
                                        action: { viewModel.shouldDisplayRemovalNotice.toggle() },
-                                       asLink: true)
+                                       isButton: true)
                     
                 }
                 Section(header: Text(UserText.subscriptionManagePlan)) {
@@ -61,7 +59,7 @@ struct SubscriptionSettingsView: View {
                             .daxBodyRegular()
                     },
                                        action: { viewModel.manageSubscription() },
-                                       asLink: true)
+                                       isButton: true)
                 }
                 Section(header: Text(UserText.subscriptionHelpAndSupport),
                         footer: Text(UserText.subscriptionFAQFooter)) {

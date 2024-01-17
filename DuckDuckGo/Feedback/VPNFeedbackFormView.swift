@@ -109,12 +109,11 @@ struct VPNFeedbackFormView: View {
                             guard isFocused else { return }
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                                 withAnimation {
-                                    scrollView.scrollTo(1, anchor: .bottom)
+                                    scrollView.scrollTo(1, anchor: .top)
                                 }
                             }
                         }
                     submitButton()
-                        .id(1)
                 }
             }
         }
@@ -158,9 +157,10 @@ struct VPNFeedbackFormView: View {
                 .fixedSize(horizontal: false, vertical: true)
 
             TextEditor(text: $viewModel.feedbackFormText)
+                .id(1)
                 .font(.body)
                 .foregroundColor(.primary)
-                .frame(height: 150)
+                .frame(height: 100)
                 .fixedSize(horizontal: false, vertical: true)
                 .onChange(of: viewModel.feedbackFormText) {
                     viewModel.feedbackFormText = String($0.prefix(1000))

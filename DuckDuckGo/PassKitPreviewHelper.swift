@@ -21,6 +21,8 @@ import Common
 import UIKit
 import PassKit
 
+import ZIPFoundation
+
 class PassKitPreviewHelper: FilePreview {
     private weak var viewController: UIViewController?
     private let filePath: URL
@@ -40,5 +42,47 @@ class PassKitPreviewHelper: FilePreview {
         } catch {
             os_log("Can't present passkit: %s", type: .debug, error.localizedDescription)
         }
+    }
+}
+
+class ZippedPassKitPreviewHelper: FilePreview {
+    private weak var viewController: UIViewController?
+    private let filePath: URL
+    
+    required init(_ filePath: URL, viewController: UIViewController) {
+        self.filePath = filePath
+        self.viewController = viewController
+    }
+    
+    func preview() {
+        if let passes: [PKPass] = extractDataFromZip(at: self.filePath)?.compactMap({ try? PKPass(data: $0) }),
+           passes.count > 0,
+           let controller = PKAddPassesViewController(passes: passes) {
+            viewController?.present(controller, animated: true)
+        } else {
+            os_log("Can't present passkit: No passes in passes file", type: .debug)
+        }
+    }
+ 
+    func extractDataFromZip(at zipPath: URL) -> [Data]? {
+        var dataObjects = [Data]()
+        do {
+            let archive = try Archive(url: zipPath, accessMode: .read)
+            try archive.forEach { entry in
+                var passData = Data()
+                _ = try archive.extract(entry, skipCRC32: true) { data in
+                    passData.append(data)
+                }
+                
+                if passData.count > 0 {
+                    dataObjects.append(passData)
+                }
+            }
+        } catch {
+            os_log("Error reading pkpasses file: %s", type: .debug, error.localizedDescription)
+            return nil
+        }
+
+        return dataObjects
     }
 }

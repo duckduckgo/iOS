@@ -27,7 +27,7 @@ protocol VPNFeedbackSender {
 struct DefaultVPNFeedbackSender: VPNFeedbackSender {
 
     func send(metadata: VPNMetadata, category: VPNFeedbackCategory, userText: String) async throws {
-        let encodedUserText = userText.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? userText
+        let encodedUserText = userText.addingPercentEncoding(withAllowedCharacters: .alphanumerics.union(.init(charactersIn: "-._~"))) ?? userText
 
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             Pixel.fire(pixel: .networkProtectionBreakageReport, withAdditionalParameters: [

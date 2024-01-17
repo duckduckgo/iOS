@@ -24,7 +24,6 @@ import Combine
 import Core
 import NetworkExtension
 import NetworkProtection
-import Common
 
 final class NetworkProtectionTunnelController: TunnelController {
     static var shouldSimulateFailure: Bool = false

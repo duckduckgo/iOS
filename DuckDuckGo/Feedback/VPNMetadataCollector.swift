@@ -42,7 +42,7 @@ struct VPNMetadata: Encodable {
         let currentPath: String
         let lastPathChangeDate: String
         let lastPathChange: String
-        let secondsSincePathChange: TimeInterval
+        let secondsSincePathChange: String
     }
 
     struct VPNState: Encodable {
@@ -98,11 +98,14 @@ protocol VPNMetadataCollector {
 final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
+    private let settings: VPNSettings
 
     init(statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
-         serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession()) {
+         serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
+         settings: VPNSettings = .init(defaults: .networkProtectionGroupDefaults)) {
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
+        self.settings = settings
     }
 
     func collectMetadata() async -> VPNMetadata {
@@ -147,29 +150,35 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
 
-        let networkPathChange = VPNSettings(defaults: .networkProtectionGroupDefaults).networkPathChange
-        let now = Date()
+        let networkPathChange = settings.networkPathChange
+
+        let lastPathChange = String(describing: networkPathChange)
+        var lastPathChangeDate = "unknown"
+        var secondsSincePathChange = "unknown"
+
+        if let changeDate = networkPathChange?.date {
+            lastPathChangeDate = dateFormatter.string(from: changeDate)
+            secondsSincePathChange = String(Date().timeIntervalSince(changeDate))
+        }
 
         while true {
             if !monitor.currentPath.availableInterfaces.isEmpty {
                 path = monitor.currentPath
                 monitor.cancel()
 
-                let changeDate = networkPathChange?.date ?? .distantPast
                 return .init(currentPath: path.debugDescription,
-                             lastPathChangeDate: dateFormatter.string(from: changeDate),
-                             lastPathChange: String(describing: networkPathChange),
-                             secondsSincePathChange: now.timeIntervalSince(changeDate))
+                             lastPathChangeDate: lastPathChangeDate,
+                             lastPathChange: lastPathChange,
+                             secondsSincePathChange: secondsSincePathChange)
             }
 
             // Wait up to 3 seconds to fetch the path.
             let currentExecutionTime = CFAbsoluteTimeGetCurrent() - startTime
             if currentExecutionTime >= 3.0 {
-                let changeDate = networkPathChange?.date ?? .distantPast
                 return .init(currentPath: "Timed out fetching path",
-                             lastPathChangeDate: dateFormatter.string(from: changeDate),
-                             lastPathChange: String(describing: networkPathChange),
-                             secondsSincePathChange: now.timeIntervalSince(changeDate))
+                             lastPathChangeDate: lastPathChangeDate,
+                             lastPathChange: lastPathChange,
+                             secondsSincePathChange: secondsSincePathChange)
             }
         }
     }
@@ -226,8 +235,6 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     }
 
     func collectVPNSettingsState() -> VPNMetadata.VPNSettingsState {
-        let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
-
         return .init(
             connectOnLoginEnabled: settings.connectOnLogin,
             includeAllNetworksEnabled: settings.includeAllNetworks,

@@ -1181,7 +1181,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func onWebpageDidFinishLoading() {
-        os_log("webpageLoading finished", log: .generalLog, type: .debug)                
+        os_log("webpageLoading finished", log: .generalLog, type: .debug)
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
 

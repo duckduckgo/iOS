@@ -25,6 +25,7 @@ class SceneEnvironment: ObservableObject {
     weak var windowScene: UIWindowScene?
 }
 
+#if SUBSCRIPTION
 @available(iOS 15.0, *)
 struct SubscriptionSettingsView: View {
     
@@ -95,3 +96,4 @@ struct SubscriptionSettingsView: View {
             }
         }
 }
+#endif

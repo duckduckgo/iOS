@@ -21,11 +21,16 @@ import Foundation
 import SwiftUI
 import DesignResourcesKit
 
+class SceneEnvironment: ObservableObject {
+    weak var windowScene: UIWindowScene?
+}
+
 @available(iOS 15.0, *)
 struct SubscriptionSettingsView: View {
     
     @ObservedObject var viewModel: SubscriptionSettingsViewModel
     @Environment(\.presentationMode) var presentationMode
+    @StateObject var sceneEnvironment = SceneEnvironment()
     
     var body: some View {
             List {
@@ -58,7 +63,7 @@ struct SubscriptionSettingsView: View {
                         Text(UserText.subscriptionChangePlan)
                             .daxBodyRegular()
                     },
-                                       action: { viewModel.manageSubscription() },
+                                       action: { Task { await viewModel.manageSubscription() } },
                                        isButton: true)
                 }
                 Section(header: Text(UserText.subscriptionHelpAndSupport),
@@ -68,7 +73,7 @@ struct SubscriptionSettingsView: View {
                             Text(UserText.subscriptionFAQ)
                                 .daxBodyRegular()
                         },
-                                           action: { viewModel.manageSubscription() },
+                                           action: {},
                                            disclosureIndicator: false)
                     }
                 }

@@ -28,6 +28,9 @@
 /* Standard Buttons - Cancel Button */
 "cancel.button" = "Annulla";
 
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "Attiva Sincronizzazione e backup";
+
 /* Connect With Server Sheet - Description Part 1 */
 "connect.with.server.sheet.description.part1" = "La funzione crea un backup criptato dei tuoi segnalibri e delle tue password sul server sicuro di DuckDuckGo, in modo che possa essere sincronizzato con gli altri dispositivi.";
 
@@ -51,6 +54,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Ambiente di sviluppo";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "I tuoi dati sono sincronizzati!";
 
 /* Standard Buttons - Done Button */
 "done.button" = "Fatto";
@@ -226,6 +232,9 @@
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Sincronizzazione e backup non disponibile";
 
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Sincronizza con un altro dispositivo";
+
 /* Footer message for syncing with another device */
 "sync.with.another.device.footer" = "I tuoi dati sono crittografati end-to-end e DuckDuckGo non ha accesso alla chiave di crittografia.";
 
@@ -252,6 +261,9 @@
 
 /* Options - Unify Favorites Instruction */
 "unified.favorites.instruction" = "Usa gli stessi segnalibri preferiti su tutti i tuoi dispositivi. Lascia l'opzione disattivata per tenere separati i preferiti per dispositivi mobili e desktop.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Unifica i preferiti su tutti i dispositivi";
 
 /* View Text Code menu item */
 "view.text.code.menu.item" = "Voce di menu Visualizza codice SMS";

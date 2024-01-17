@@ -28,6 +28,9 @@
 /* Standard Buttons - Cancel Button */
 "cancel.button" = "Отмени";
 
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "Включване на Синхронизиране и архивиране";
+
 /* Connect With Server Sheet - Description Part 1 */
 "connect.with.server.sheet.description.part1" = "Създава криптирано резервно копие на Вашите отметки и пароли на защитения сървър на DuckDuckGo, което може да бъде синхронизирано с други Ваши устройства.";
 
@@ -51,6 +54,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Среда за разработване";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "Данните Ви са синхронизирани!";
 
 /* Standard Buttons - Done Button */
 "done.button" = "Готово";
@@ -226,6 +232,9 @@
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Функцията за синхронизиране и архивиране не е достъпна";
 
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Синхронизиране с друго устройство";
+
 /* Footer message for syncing with another device */
 "sync.with.another.device.footer" = "Данните Ви са изцяло криптирани и DuckDuckGo няма достъп до ключа за криптиране.";
 
@@ -252,6 +261,9 @@
 
 /* Options - Unify Favorites Instruction */
 "unified.favorites.instruction" = "Използвайте едни и същи любими отметки на всички Ваши устройства. Оставете изключено, ако имате различни предпочитания за мобилни устройства и настолни компютри.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Обединяване на любимите на всички устройства";
 
 /* View Text Code menu item */
 "view.text.code.menu.item" = "Преглед на текстов код";

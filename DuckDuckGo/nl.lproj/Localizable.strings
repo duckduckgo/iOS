@@ -1843,8 +1843,14 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Toetsenbord";
 
+/* Settings screen cell text for passwords */
+"settings.logins" = "Wachtwoorden";
+
 /* Settings title for the 'More' section */
 "settings.more" = "Meer over DuckDuckGo";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Voorbeeldweergave bij lang indrukken";
@@ -1891,8 +1897,35 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Welke website is defect?";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Herstelcode gekopieerd naar klembord";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Servergegevens verwijderen";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "De verbinding met alle apparaten wordt verbroken en je gesynchroniseerde gegevens worden van de server verwijderd.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Wil je de servergegevens verwijderen?";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Verwijderen";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "'%@' heeft geen toegang meer tot je gesynchroniseerde gegevens.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Apparaat verwijderen?";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Verwijderen";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "Dit apparaat heeft geen toegang meer tot je gesynchroniseerde gegevens.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Synchronisatie uitschakelen?";
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "Sorry, maar synchroniseren en back-up is momenteel niet beschikbaar. Probeer het later opnieuw.";

@@ -1843,8 +1843,14 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Tastatur";
 
+/* Settings screen cell text for passwords */
+"settings.logins" = "Adgangskoder";
+
 /* Settings title for the 'More' section */
 "settings.more" = "Mere fra DuckDuckGo";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Eksempler med lang tryk";
@@ -1891,8 +1897,35 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Hvilket websted er ødelagt?";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Gendannelseskode kopieret til udklipsholder";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Slet serverdata";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "Alle enheder vil blive afbrudt, og dine synkroniserede data vil blive slettet fra serveren.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Slet serverdata?";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Fjern";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "\"%@ \" kan ikke længere få adgang til dine synkroniserede data.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Fjern enhed?";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Fjern";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "Denne enhed vil ikke længere have adgang til dine synkroniserede data.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Slå synkronisering fra?";
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "Beklager, men synkronisering og sikkerhedskopiering er ikke tilgængelig i øjeblikket. Prøv igen senere.";

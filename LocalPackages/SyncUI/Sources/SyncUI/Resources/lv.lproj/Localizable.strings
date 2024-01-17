@@ -28,6 +28,9 @@
 /* Standard Buttons - Cancel Button */
 "cancel.button" = "Atcelt";
 
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "Ieslēgt sinhronizāciju un dublēšanu";
+
 /* Connect With Server Sheet - Description Part 1 */
 "connect.with.server.sheet.description.part1" = "Tādējādi DuckDuckGo drošajā serverī tiek izveidota šifrēta grāmatzīmju un paroļu dublējumkopija, ko var sinhronizēt ar citām ierīcēm.";
 
@@ -51,6 +54,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Izstrādes vide";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "Tavi dati ir sinhronizēti!";
 
 /* Standard Buttons - Done Button */
 "done.button" = "Gatavs";
@@ -226,6 +232,9 @@
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Sinhronizācija un dublēšana nav pieejama";
 
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Sinhronizēt ar citu ierīci";
+
 /* Footer message for syncing with another device */
 "sync.with.another.device.footer" = "Tavi dati tiek šifrēti no gala līdz galam, un DuckDuckGo nav piekļuves šifrēšanas atslēgai.";
 
@@ -252,6 +261,9 @@
 
 /* Options - Unify Favorites Instruction */
 "unified.favorites.instruction" = "Izmanto vienas grāmatzīmes visās savās ierīcēs. Atstāj opciju izslēgtu, lai nodalītu mobilās un galddatora izlases.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Izlases apvienošana visās ierīcēs";
 
 /* View Text Code menu item */
 "view.text.code.menu.item" = "Skatīt teksta kodu";

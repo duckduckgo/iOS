@@ -33,36 +33,37 @@ struct SettingsPrivacyView: View {
                           accesory: .rightDetail(viewModel.state.sendDoNotSell
                                                  ? UserText.doNotSellEnabled
                                                  : UserText.doNotSellDisabled),
-                          asLink: true,
-                          disclosureIndicator: true)
+                          disclosureIndicator: true,
+                          isButton: true)
 
             SettingsCellView(label: UserText.settingsCookiePopups,
                               action: { viewModel.presentLegacyView(.autoconsent) },
                               accesory: .rightDetail(viewModel.state.autoconsentEnabled
                                                      ? UserText.autoconsentEnabled
                                                      : UserText.autoconsentDisabled),
-                              asLink: true,
-                              disclosureIndicator: true)
+                              disclosureIndicator: true,
+                              isButton: true)
 
             SettingsCellView(label: UserText.settingsUnprotectedSites,
                               action: { viewModel.presentLegacyView(.unprotectedSites) },
-                              asLink: true,
-                              disclosureIndicator: true)
+                              disclosureIndicator: true,
+                              isButton: true)
              
             SettingsCellView(label: UserText.settingsFireproofSites,
                               action: { viewModel.presentLegacyView(.fireproofSites) },
-                              asLink: true,
-                              disclosureIndicator: true)
-             
+                             disclosureIndicator: true,
+                             isButton: true)
+
             SettingsCellView(label: UserText.settingsClearData,
                               action: { viewModel.presentLegacyView(.autoclearData) },
                               accesory: .rightDetail(viewModel.state.autoclearDataEnabled
                                                      ? UserText.autoClearAccessoryOn
                                                      : UserText.autoClearAccessoryOff),
-                              asLink: true,
-                              disclosureIndicator: true)
-             
-            SettingsCellView(label: UserText.settingsAutolock, accesory: .toggle(isOn: viewModel.applicationLockBinding))
+                              disclosureIndicator: true,
+                              isButton: true)
+
+            SettingsCellView(label: UserText.settingsAutolock,
+                             accesory: .toggle(isOn: viewModel.applicationLockBinding))
              
         }
     }

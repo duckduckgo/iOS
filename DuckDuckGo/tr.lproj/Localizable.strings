@@ -898,6 +898,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "İnternet bazen ürkütücü olabilir.\n\nEndişelenmeyin! İnternette kimsenin göremeyeceği şekilde arama yapmak ve gezinmek sandığınızdan çok daha kolay.";
 
+/* No comment provided by engineer. */
+"Debug" = "Debug";
+
 /* GPC Setting state */
 "donotsell.disabled" = "Devre Dışı";
 
@@ -1372,6 +1375,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "DuckDuckGo'ya\nHoş Geldiniz!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "Mac için DuckDuckGo, ihtiyacınız olan hız ve beklediğiniz tarama özelliklerinin yanı sıra sınıfındaki en iyi gizlilik özelliklerini (Privacy Essentials) sunuyor.";
 
@@ -1488,6 +1494,9 @@
 
 /* Second subtitle for Network Protection join waitlist screen */
 "network-protection.waitlist.join.subtitle.2" = "Bekleme listesine katılın. Sıra size geldiğinde sizi bilgilendireceğiz.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
 
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "Listedesiniz!";
@@ -1762,8 +1771,107 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favoriler";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "DuckDuckGo Hakkında";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "Hakkında";
+
 /* about page */
 "settings.about.text" = "DuckDuckGo, çevrim içi takip edilmeyi hiç istemeyen ve pratik bir çözüm arayan herkese hizmet veren, 2008 yılında kurulmuş bağımsız bir İnternet gizlilik şirketidir. Biz, çevrim içi ortamda ödün vermeden gerçek gizlilik koruması elde edebileceğinizin kanıtıyız.\n\nDuckDuckGo tarayıcı; yer imleri, sekmeler, parolalar ve daha fazlası gibi en çok kullandığınız tarayıcıdan beklediğiniz ama çoğu popüler tarayıcıda varsayılan olarak bulunmayan özelliklerin yanı sıra [sayısı ondan fazla güçlü gizlilik koruması](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) ile birlikte gelir. Son derece kapsamlı olan bu gizlilik koruma seti; aramadan gezinmeye, e-posta göndermeye ve daha fazlasına kadar çevrim içi etkinliklerinizde koruma sağlamaya yardımcı olur.\n\nGizlilik korumalarımız, teknik ayrıntılar hakkında hiçbir şey bilmenize veya karmaşık ayarlarla uğraşmanıza gerek kalmadan çalışır. Tüm cihazlarınızda tarayıcı olarak DuckDuckGo'yu kullanarak aradığınız gizliliği sağlayabilirsiniz.\n\nAncak ayrıntılara bir göz atmak *istiyorsanız*, DuckDuckGo gizlilik korumalarının nasıl çalıştığı hakkında daha fazla bilgiyi [yardım sayfalarımızda](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/) bulabilirsiniz.";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Uygulamayı Dock'a Ekle";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Widget'ı Ana Ekrana Ekle";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Adres Çubuğu Konumu";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Görünüm";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Bağlantıları İlişkili Uygulamalarda Aç";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Bağlantıların yüklenmiş olan diğer uygulamalarda otomatik olarak açılmasını önlemek için devre dışı bırakın.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Otomatik Tamamlama Önerileri";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Uygulama Kilidi";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Touch ID, Face ID veya sistem parolası belirlenmişse uygulamayı açarken kilidini açmanız istenir.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Verileri Otomatik Olarak Temizle";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Çerez Açılır Pencerelerini Yönetin";
+
+/* Settings title for the customize section */
+"settings.customize" = "Özelleştir";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Varsayılan Tarayıcı olarak ayarla";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "E-posta Koruması";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "E-posta izleyicileri engelleyin ve adresinizi gizleyin";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Geri Bildirim Paylaş";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Yangın Düğmesi Animasyonu";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Korumalı Siteler";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Küresel Gizlilik Kontrolü (GPC)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "Uygulama Simgesi";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Klavye";
+
+/* Settings title for the 'More' section */
+"settings.more" = "DuckDuckGo'dan daha fazlası";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Uzun Basma Önizlemeleri";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Gizlilik";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Senkronizasyon ve Yedekleme";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Metin Boyutu";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Tema";
+
+/* Title for the Settings View */
+"settings.title" = "Ayarlar";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Korumasız Siteler";
+
+/* Settings cell for Version */
+"settings.version" = "Versiyon";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Özel Sesli Arama";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Rapor Gönder";
@@ -1857,6 +1965,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Ses özelliklerini kullanmak istiyorsanız iOS Sistem Ayarları'ndan DuckDuckGo için Mikrofon erişimine izin verin.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "Tamam";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Mikrofon Erişimi Gerekli";

@@ -3,7 +3,7 @@ appId: com.duckduckgo.mobile.ios
 
 - tapOn: Sync & Backup
 - scroll
-- assertVisible: Unify Favorites
+- assertVisible: Unify Favorites Across Devices
 - tapOn:
      rightOf: 
       id: "UnifiedFavoritesToggle"

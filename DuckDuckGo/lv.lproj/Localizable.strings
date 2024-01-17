@@ -898,6 +898,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internets var būt diezgan “mežonīgs”.\n\nBet neuztraucies! Meklēt un pārlūkot privātā režīmā ir vieglāk, nekā tu domā.";
 
+/* No comment provided by engineer. */
+"Debug" = "Debug";
+
 /* GPC Setting state */
 "donotsell.disabled" = "Atspējota";
 
@@ -1372,6 +1375,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Laipni lūdzam\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo Mac datoram sniedz nepieciešamo ātrumu, ierastās pārlūkošanas funkcijas un savā klasē labākās privātuma pamatfunkcijas.";
 
@@ -1488,6 +1494,9 @@
 
 /* Second subtitle for Network Protection join waitlist screen */
 "network-protection.waitlist.join.subtitle.2" = "Pievienojies gaidīšanas sarakstam, un mēs paziņosim, kad pienāks tava kārta.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
 
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "Tu esi sarakstā!";
@@ -1762,8 +1771,107 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Izlase";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "Par DuckDuckGo";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "Par";
+
 /* about page */
 "settings.about.text" = "DuckDuckGo ir neatkarīgs 2008. gadā dibināts interneta privātuma uzņēmums ikvienam, kam ir apnikusi izsekošana tiešsaistē un kas vēlas vienkāršu risinājumu. Mēs esam pierādījums tam, ka tiešsaistē var iegūt reālu privātuma aizsardzību bez kompromisiem.\n\nDuckDuckGo pārlūks sniedz visas iespējas, ko gaidi no pārlūkprogrammas, piemēram, grāmatzīmes, cilnes, paroles un citas, kā arī vairāk nekā [duci spēcīgu privātuma aizsardzības funkciju](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) pēc noklusējuma netiek piedāvāts lielākajā daļā populārāko pārlūkprogrammu. Šis unikāli visaptverošais privātuma aizsardzības komplekts palīdz aizsargāt tavas darbības tiešsaistē, sākot no meklēšanas līdz pārlūkošanai, e-pasta sūtīšanai u.c.\n\nMūsu privātuma aizsardzība darbojas vienmēr – tev nav jāpārzina sarežģīti tehniskie aspekti vai iestatījumi. Tev vienkārši jālieto DuckDuckGo pārlūks visās savās ierīcēs, un privātums būs tavs standarta risinājums.\n\nBet, ja vēlies paskatīties, kas lācītim vēderā, vairāk informācijas par to, kā darbojas DuckDuckGo privātuma aizsardzība, vari atrast mūsu [palīdzības lapās](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Pievienot lietotni dokam";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Pievienot logrīku sākuma ekrānam";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Adreses joslas pozīcija";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Parādas";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Atvērt saites saistītajās lietotnēs";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Atspējo, lai novērstu saišu automātisku atvēršanu citās instalētajās lietotnēs.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Automātiski pabeigt ieteikumus";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Lietojumprogrammas bloķēšana";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Ja ir iestatīts Touch ID, Face ID vai sistēmas piekļuves kods, atverot lietotni, tev tā būs jāatbloķē.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Automātiski notīrīt datus";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Pārvaldīt sīkfailu uznirstošos logus";
+
+/* Settings title for the customize section */
+"settings.customize" = "Pielāgošana";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Iestatīt kā noklusējuma pārlūku";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "E-pasta aizsardzība";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Bloķē e-pasta izsekotājus un paslēp savu adresi";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Kopīgot atsauksmi";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Uguns pogas animācija";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Ugunsdrošas vietnes";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Globālā privātuma kontrole (GPC)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "Lietotnes ikona";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Tastatūra";
+
+/* Settings title for the 'More' section */
+"settings.more" = "Vairāk no DuckDuckGo";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Ilgas nospiešanas rezultātu priekšskatījumi";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Privātums";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Sinhronizācija un dublēšana";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Burtu izmērs";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Motīvs";
+
+/* Title for the Settings View */
+"settings.title" = "Iestatījumi";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Neaizsargātas vietnes";
+
+/* Settings cell for Version */
+"settings.version" = "Versija";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Privātā balss meklēšana";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Iesniegt ziņojumu";
@@ -1857,6 +1965,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Lūdzu, atļauj piekļuvi mikrofonam iOS sistēmas iestatījumos, lai DuckDuckGo varētu izmantot balss funkcijas.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "Labi";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Nepieciešama piekļuve mikrofonam";

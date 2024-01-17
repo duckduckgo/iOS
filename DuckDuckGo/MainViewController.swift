@@ -644,7 +644,7 @@ class MainViewController: UIViewController {
             guard let tab = tabManager.current(createIfNeeded: true) else {
                 fatalError("Unable to create tab")
             }
-            addToWebViewContainer(tab: tab)
+            attachTab(tab: tab)
             refreshControls()
         } else {
             attachHomeScreen()
@@ -853,7 +853,7 @@ class MainViewController: UIViewController {
     private func addTab(url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) {
         let tab = tabManager.add(url: url, inheritedAttribution: inheritedAttribution)
         dismissOmniBar()
-        addToWebViewContainer(tab: tab)
+        attachTab(tab: tab)
     }
 
     func select(tabAt index: Int) {
@@ -867,7 +867,7 @@ class MainViewController: UIViewController {
         if tab.link == nil {
             attachHomeScreen()
         } else {
-            addToWebViewContainer(tab: tab)
+            attachTab(tab: tab)
             refreshControls()
         }
         tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
@@ -876,21 +876,15 @@ class MainViewController: UIViewController {
         }
     }
 
-    private func addToWebViewContainer(tab: TabViewController) {
+    private func attachTab(tab: TabViewController) {
         removeHomeScreen()
         updateFindInPage()
         currentTab?.progressWorker.progressBar = nil
         currentTab?.chromeDelegate = nil
-        currentTab?.webView.scrollView.contentInsetAdjustmentBehavior = .never
-        
-        addChild(tab)
-        viewCoordinator.webViewContainer.subviews.forEach { $0.removeFromSuperview() }
-        viewCoordinator.webViewContainer.addSubview(tab.view)
-        tab.view.frame = self.viewCoordinator.webViewContainer.bounds
-        tab.didMove(toParent: self)
-        
+            
+        addToContentContainer(controller: tab)
+
         viewCoordinator.logoContainer.isHidden = true
-        viewCoordinator.contentContainer.isHidden = true
         
         tab.progressWorker.progressBar = viewCoordinator.progress
         chromeManager.attach(to: tab.webView.scrollView)
@@ -1365,7 +1359,8 @@ extension MainViewController: BrowserChromeDelegate {
                 + keyboardHeight
         }
         
-        webView.scrollView.contentInset = .init(top: top, left: 0, bottom: bottom, right: 0)
+        // webView.scrollView.contentInset = .init(top: top, left: 0, bottom: bottom, right: 0)
+        // webView.invalidateIntrinsicContentSize()
     }
     
     func setNavigationBarHidden(_ hidden: Bool) {
@@ -1733,7 +1728,7 @@ extension MainViewController: TabDelegate {
             guard self.tabManager.model.tabs.contains(newTab.tabModel) else { return }
 
             self.dismissOmniBar()
-            self.addToWebViewContainer(tab: newTab)
+            self.attachTab(tab: newTab)
             self.refreshOmniBar()
         }
 

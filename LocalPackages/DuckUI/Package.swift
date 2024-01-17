@@ -31,7 +31,7 @@ let package = Package(
             targets: ["DuckUI"])
     ],
     dependencies: [
-        .package(url: "https://github.com/duckduckgo/BrowserServicesKit", branch: "bhall/bump-content-scope-scripts"),
+        .package(url: "https://github.com/duckduckgo/BrowserServicesKit", exact: "101.1.3"),
     ],
     targets: [
         .target(

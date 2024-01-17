@@ -159,40 +159,36 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             }
             
             let message = original
-            
-            if #available(iOS 15, *) {
-                guard let subscriptionSelection: SubscriptionSelection = DecodableHelper.decode(from: params) else {
-                    assertionFailure("SubscriptionPagesUserScript: expected JSON representation of SubscriptionSelection")
-                    return nil
-                }
-                
-                // Check for active subscriptions
-                if await PurchaseManager.hasActiveSubscription() {
-                    hasActiveSubscription = true
-                    return nil
-                }
-                
-                let emailAccessToken = try? EmailManager().getToken()
-
-                switch await AppStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id, emailAccessToken: emailAccessToken) {
-                case .success:
-                    break
-                case .failure:
-                    purchaseError = .purchaseFailed
-                    originalMessage = original
-                    return nil
-                }
-                
-                transactionStatus = .polling
-                switch await AppStorePurchaseFlow.completeSubscriptionPurchase() {
-                case .success(let purchaseUpdate):
-                    await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
-                case .failure:
-                    purchaseError = .missingEntitlements
-                    await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate(type: "completed"))
-                }
+            guard let subscriptionSelection: SubscriptionSelection = DecodableHelper.decode(from: params) else {
+                assertionFailure("SubscriptionPagesUserScript: expected JSON representation of SubscriptionSelection")
+                return nil
             }
             
+            // Check for active subscriptions
+            if await PurchaseManager.hasActiveSubscription() {
+                hasActiveSubscription = true
+                return nil
+            }
+            
+            let emailAccessToken = try? EmailManager().getToken()
+
+            switch await AppStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id, emailAccessToken: emailAccessToken) {
+            case .success:
+                break
+            case .failure:
+                purchaseError = .purchaseFailed
+                originalMessage = original
+                return nil
+            }
+            
+            transactionStatus = .polling
+            switch await AppStorePurchaseFlow.completeSubscriptionPurchase() {
+            case .success(let purchaseUpdate):
+                await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
+            case .failure:
+                purchaseError = .missingEntitlements
+                await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate(type: "completed"))
+            }
             return nil
         }
     }

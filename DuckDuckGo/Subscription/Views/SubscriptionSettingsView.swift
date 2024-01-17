@@ -63,7 +63,7 @@ struct SubscriptionSettingsView: View {
                         Text(UserText.subscriptionChangePlan)
                             .daxBodyRegular()
                     },
-                                       action: { Task { await viewModel.manageSubscription() } },
+                                       action: { Task { viewModel.manageSubscription() } },
                                        isButton: true)
                 }
                 Section(header: Text(UserText.subscriptionHelpAndSupport),

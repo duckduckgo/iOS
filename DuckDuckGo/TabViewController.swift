@@ -418,7 +418,6 @@ class TabViewController: UIViewController {
         webView.scrollView.refreshControl = UIRefreshControl()
         webView.scrollView.refreshControl?.addAction(UIAction { [weak self] _ in
             self?.reload()
-            self?.webView.scrollView.refreshControl?.endRefreshing()
         }, for: .valueChanged)
 
         webView.scrollView.refreshControl?.backgroundColor = .systemBackground
@@ -654,6 +653,7 @@ class TabViewController: UIViewController {
     
     private func hideProgressIndicator() {
         progressWorker.didFinishLoading()
+        webView.scrollView.refreshControl?.endRefreshing()
     }
 
     public func reload() {
@@ -1181,10 +1181,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func onWebpageDidFinishLoading() {
-        os_log("webpageLoading finished", log: .generalLog, type: .debug)
-                
-        Swift.print("***", #function, webView.scrollView.contentOffset, webView.scrollView.contentInset)
-        
+        os_log("webpageLoading finished", log: .generalLog, type: .debug)                
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
 

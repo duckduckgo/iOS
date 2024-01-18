@@ -306,19 +306,18 @@ extension SyncSettingsView {
 
     @ViewBuilder
     func rolloutBanner() -> some View {
-        Section {
-            EmptyView()
-        } header: {
-            HStack(alignment: .top, spacing: 16) {
-                Image("Info-Color-16")
-                Text(UserText.syncRollOutBannerDescription)
-                    .font(.system(size: 12))
-                    .foregroundColor(.primary)
-            }
-            .padding()
-            .background(RoundedRectangle(cornerRadius: 8).foregroundColor(Color("RolloutBannerBackground")))
-            .padding(.bottom, 10)
+        HStack(alignment: .top, spacing: 16) {
+            Image("Info-Color-16")
+            Text(UserText.syncRollOutBannerDescription)
+                .font(.system(size: 12))
+                .foregroundColor(.primary)
+                .multilineTextAlignment(.leading)
+                .fixedSize(horizontal: false, vertical: true)
         }
+        .padding()
+        .background(RoundedRectangle(cornerRadius: 8).foregroundColor(Color("RolloutBannerBackground")))
+        .padding(.bottom, 10)
+        .padding(.horizontal, 16)
     }
 
     enum LimitedItemType {

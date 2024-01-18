@@ -54,7 +54,6 @@ class MainViewFactory {
 extension MainViewFactory {
 
     private func createViews() {
-        createWebViewContainer()
         createLogoBackground()
         createContentContainer()
         createSuggestionTrayContainer()
@@ -66,12 +65,6 @@ extension MainViewFactory {
         createToolbar()
     }
     
-    final class WebViewContainerView: UIView { }
-    private func createWebViewContainer() {
-        coordinator.webViewContainer = WebViewContainerView()
-        superview.addSubview(coordinator.webViewContainer)
-    }
-
     private func createProgressView() {
         coordinator.progress = ProgressView()
         superview.addSubview(coordinator.progress)
@@ -163,7 +156,6 @@ extension MainViewFactory {
 extension MainViewFactory {
 
     private func constrainViews() {
-        constrainWebViewContainer()
         constrainLogoBackground()
         constrainContentContainer()
         constrainSuggestionTrayContainer()
@@ -173,16 +165,6 @@ extension MainViewFactory {
         constrainNavigationBarContainer()
         constrainProgress()
         constrainToolbar()
-    }
-    
-    private func constrainWebViewContainer() {
-        let webViewContainer = coordinator.webViewContainer!
-        NSLayoutConstraint.activate([
-            webViewContainer.constrainView(superview, by: .width),
-            webViewContainer.constrainView(superview, by: .height),
-            webViewContainer.constrainView(superview, by: .centerX),
-            webViewContainer.constrainView(superview, by: .centerY),
-        ])
     }
 
     private func constrainProgress() {
@@ -351,7 +333,6 @@ class MainViewCoordinator {
     var toolbarFireButton: UIBarButtonItem!
     var toolbarForwardButton: UIBarButtonItem!
     var toolbarTabSwitcherButton: UIBarButtonItem!
-    var webViewContainer: UIView!
 
     let constraints = Constraints()
 

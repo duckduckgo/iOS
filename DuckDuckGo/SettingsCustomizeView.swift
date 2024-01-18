@@ -31,8 +31,8 @@ struct SettingsCustomizeView: View {
             
             SettingsCellView(label: UserText.settingsKeyboard,
                              action: { viewModel.presentLegacyView(.keyboard) },
-                             asLink: true,
-                             disclosureIndicator: true)
+                             disclosureIndicator: true,
+                             isButton: true)
             
             SettingsCellView(label: UserText.settingsAutocomplete,
                              accesory: .toggle(isOn: viewModel.autocompleteBinding))

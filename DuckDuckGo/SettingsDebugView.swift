@@ -29,8 +29,8 @@ struct SettingsDebugView: View {
             
             SettingsCellView(label: "All debug options",
                              action: { viewModel.presentLegacyView(.debug) },
-                             asLink: true,
-                             disclosureIndicator: true)
+                             disclosureIndicator: true,
+                             isButton: true)
                         
         }
 

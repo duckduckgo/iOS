@@ -31,13 +31,18 @@ final class FavoritesDisplayModeSyncHandler: FavoritesDisplayModeSyncHandlerBase
     override func setValue(_ value: String?, shouldDetectOverride: Bool) throws {
         if let value, let displayMode = FavoritesDisplayMode(value) {
             appSettings.favoritesDisplayMode = displayMode
-            NotificationCenter.default.post(name: AppUserDefaults.Notifications.favoritesDisplayModeChange, object: nil)
+            NotificationCenter.default.post(name: AppUserDefaults.Notifications.favoritesDisplayModeChange, object: self)
         }
     }
 
     override var valueDidChangePublisher: AnyPublisher<Void, Never> {
         NotificationCenter.default
             .publisher(for: AppUserDefaults.Notifications.favoritesDisplayModeChange)
+            .filter({ [weak self] n in
+                guard let self else { return false }
+                guard let object = n.object as? AnyObject else { return true }
+                return object !== self
+            })
             .map { _ in }
             .eraseToAnyPublisher()
     }

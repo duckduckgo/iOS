@@ -7,7 +7,7 @@ on:
 jobs:
   end-to-end-tests:
     name: End to end Tests
-    runs-on: macos-13
+    runs-on: macos-13-xlarge
 
     steps:
     - name: Check out the code
@@ -43,6 +43,7 @@ jobs:
           -destination "platform=iOS Simulator,name=iPhone 15,OS=17.2" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
+          ONLY_ACTIVE_ARCH=NO \
         | tee xcodebuild.log
 
     - name: Release tests

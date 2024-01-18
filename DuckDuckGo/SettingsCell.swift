@@ -27,6 +27,7 @@ struct SettingsCellComponents {
             .foregroundColor(Color(UIColor.tertiaryLabel))
     }
 }
+
 /// Encapsulates a View representing a Cell with different configurations
 struct SettingsCellView: View, Identifiable {
     
@@ -44,9 +45,9 @@ struct SettingsCellView: View, Identifiable {
     var action: () -> Void = {}
     var enabled: Bool = true
     var accesory: Accessory
-    var asLink: Bool
     var disclosureIndicator: Bool
     var id: UUID = UUID()
+    var isButton: Bool
     
     /// Initializes a `SettingsCellView` with the specified label and accesory.
     ///
@@ -58,17 +59,17 @@ struct SettingsCellView: View, Identifiable {
     ///   - action: The closure to execute when the view is tapped. (If not embedded in a NavigationLink)
     ///   - accesory: The type of cell to display. Excludes the custom cell type.
     ///   - enabled: A Boolean value that determines whether the cell is enabled.
-    ///   - asLink: Wraps the view inside a Button.  Used for views not wrapped in a NavigationLink
     ///   - disclosureIndicator: Forces Adds a disclosure indicator on the right (chevron)
-    init(label: String, subtitle: String? = nil, image: Image? = nil, action: @escaping () -> Void = {}, accesory: Accessory = .none, enabled: Bool = true, asLink: Bool = false, disclosureIndicator: Bool = false) {
+    ///   - isButton: Disables the tap actions on the cell if true
+    init(label: String, subtitle: String? = nil, image: Image? = nil, action: @escaping () -> Void = {}, accesory: Accessory = .none, enabled: Bool = true, disclosureIndicator: Bool = false, isButton: Bool = false) {
         self.label = label
         self.subtitle = subtitle
         self.image = image
         self.action = action
         self.enabled = enabled
         self.accesory = accesory
-        self.asLink = asLink
         self.disclosureIndicator = disclosureIndicator
+        self.isButton = isButton
     }
 
     /// Initializes a `SettingsCellView` for custom content.
@@ -84,21 +85,24 @@ struct SettingsCellView: View, Identifiable {
         self.action = action
         self.enabled = enabled
         self.accesory = .custom(customView())
-        self.asLink = false
         self.disclosureIndicator = false
+        self.isButton = false
     }
     
     var body: some View {
-        if asLink {
-            Button(action: action) {
+        Group {
+            if isButton {
+                Button(action: action) {
+                    cellContent
+                        .disabled(!enabled)
+                }
+                .buttonStyle(PlainButtonStyle())
+                .contentShape(Rectangle())
+            } else {
                 cellContent
-                .disabled(!enabled)
             }
-            .buttonStyle(PlainButtonStyle())
-            .contentShape(Rectangle())
-        } else {
-            cellContent
-        }
+        }.frame(maxWidth: .infinity)
+        
     }
     
     private var cellContent: some View {
@@ -233,35 +237,42 @@ struct SettingsPickerCellView<T: CaseIterable & Hashable & CustomStringConvertib
 struct SettingsCustomCell<Content: View>: View {
     var content: Content
     var action: () -> Void
-    var asLink: Bool
     var disclosureIndicator: Bool
+    var isButton: Bool
 
     /// Initializes a `SettingsCustomCell`.
     /// - Parameters:
     ///   - content: A SwiftUI View to be displayed in the cell.
     ///   - action: The closure to execute when the view is tapped.
-    ///   - asLink: A Boolean value that determines if the cell behaves like a link.
-    ///   - disclosureIndicator: A Boolean value that determines if the cell shows a disclosure indicator.
-    init(@ViewBuilder content: () -> Content, action: @escaping () -> Void = {}, asLink: Bool = false, disclosureIndicator: Bool = false) {
+    ///   - disclosureIndicator: A Boolean value that determines if the cell shows a disclosure
+    ///    indicator.
+    ///   - isButton: Disables the tap actions on the cell if true
+    init(@ViewBuilder content: () -> Content, action: @escaping () -> Void = {}, disclosureIndicator: Bool = false, isButton: Bool = false) {
         self.content = content()
         self.action = action
-        self.asLink = asLink
         self.disclosureIndicator = disclosureIndicator
+        self.isButton = isButton
     }
 
     var body: some View {
-        if asLink {
-            Button(action: action) {
-                cellContent
+        if isButton {
+            ZStack {
+                Button(action: action) {
+                    cellContent
+                }
+                .buttonStyle(PlainButtonStyle())
+                .contentShape(Rectangle())
+                .frame(maxWidth: .infinity)
+                .onTapGesture {
+                    action() // We need this to make sute tap target is expanded to frame
+                }
             }
-            .buttonStyle(PlainButtonStyle())
-            .contentShape(Rectangle())
+            .frame(maxWidth: .infinity)
         } else {
             cellContent
         }
     }
 
-    
     private var cellContent: some View {
         HStack {
             content
@@ -288,94 +299,72 @@ struct SettingsCellView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             List {
-                SettingsCellView(label: "Nulla commodo augue nec",
-                                 asLink: true,
+                SettingsCellView(label: "Cell with disclosure",
                                  disclosureIndicator: true)
                     .previewLayout(.sizeThatFits)
                 
-                SettingsCellView(label: "Nulla commodo augue nec",
+                SettingsCellView(label: "Multi-line Cell with disclosure \nLine 2\nLine 3",
                                  subtitle: "Curabitur erat massa, cursus sed velit",
-                                 asLink: true,
                                  disclosureIndicator: true)
                     .previewLayout(.sizeThatFits)
                 
-                SettingsCellView(label: "Maecenas ac purus",
+                SettingsCellView(label: "Image cell with disclosure ",
                                  accesory: .image(Image(systemName: "person.circle")),
-                                 asLink: true,
                                  disclosureIndicator: true)
                     .previewLayout(.sizeThatFits)
                 
-                SettingsCellView(label: "Maecenas ac purus",
-                                 subtitle: "Curabitur erat massa",
+                SettingsCellView(label: "Subtitle image cell with disclosure",
+                                 subtitle: "This is the subtitle",
                                  accesory: .image(Image(systemName: "person.circle")),
-                                 asLink: true,
                                  disclosureIndicator: true)
                     .previewLayout(.sizeThatFits)
                 
-                SettingsCellView(label: "Curabitur erat",
-                                 accesory: .rightDetail("Curabi"),
-                                 asLink: true,
+                SettingsCellView(label: "Right Detail cell with disclosure",
+                                 accesory: .rightDetail("Detail"),
                                  disclosureIndicator: true)
+                    .previewLayout(.sizeThatFits)
+                
+                SettingsCellView(label: "Switch Cell",
+                                 accesory: .toggle(isOn: .constant(true)))
+                    .previewLayout(.sizeThatFits)
+                
+                SettingsCellView(label: "Switch Cell",
+                                 subtitle: "Subtitle goes here",
+                                 accesory: .toggle(isOn: .constant(true)))
                     .previewLayout(.sizeThatFits)
 
-                SettingsCellView(label: "Curabitur erat",
-                                 subtitle: "Nulla commodo augue",
-                                 accesory: .rightDetail("Aagittis"),
-                                 asLink: true,
-                                 disclosureIndicator: true)
-                    .previewLayout(.sizeThatFits)
-                
-                SettingsCellView(label: "Proin tempor urna",
-                                 accesory: .toggle(isOn: .constant(true)),
-                                 asLink: false,
-                                 disclosureIndicator: false)
-                    .previewLayout(.sizeThatFits)
-                
-                SettingsCellView(label: "Proin tempor urna",
-                                 subtitle: "Fusce elementum quis",
-                                 accesory: .toggle(isOn: .constant(true)),
-                                 asLink: false,
-                                 disclosureIndicator: false)
-                    .previewLayout(.sizeThatFits)
                 
                 @State var selectedOption: SampleOption = .optionOne
                 SettingsPickerCellView(label: "Proin tempor urna", options: SampleOption.allCases, selectedOption: $selectedOption)
                     .previewLayout(.sizeThatFits)
                 
-                SettingsCellView(label: "Proin tempor urna",
-                                 subtitle: "Fusce elementum quis",
-                                 accesory: .toggle(isOn: .constant(true)),
-                                 asLink: false,
-                                 disclosureIndicator: false)
-                    .previewLayout(.sizeThatFits)
-                
                 let cellContent: () -> some View = {
                     HStack(spacing: 15) {
-                        Image(systemName: "hand.wave")
+                        Image(systemName: "bird.circle")
                             .foregroundColor(.orange)
                             .imageScale(.large)
-                        Image(systemName: "hand.wave")
+                        Image(systemName: "bird.circle")
                             .foregroundColor(.orange)
                             .imageScale(.medium)
                       
                         Spacer()
-                        VStack(alignment: .leading) {
+                        VStack(alignment: .center) {
                             Text("LOREM IPSUM")
                                 .font(.headline)
                         }
                         Spacer()
-                        Image(systemName: "hand.wave")
+                        Image(systemName: "bird.circle")
                             .foregroundColor(.orange)
                             .imageScale(.medium)
-                        Image(systemName: "hand.wave")
+                        Image(systemName: "bird.circle")
                             .foregroundColor(.orange)
                             .imageScale(.large)
                     }
                 }
                 // For some unknown reason, this breaks on CI, but works normally
                 // Perhaps an XCODE version issue?
-                // SettingsCustomCell(content: cellContent)
-                    // .previewLayout(.sizeThatFits)
+                SettingsCustomCell(content: cellContent)
+                     .previewLayout(.sizeThatFits)
 
                                
             }

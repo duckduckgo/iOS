@@ -21,7 +21,7 @@ import BrowserServicesKit
 
 struct SettingsState {
     
-    enum PrivacyProSubscriptionStatus {
+    enum SubscriptionStatus {
         case active, inactive, unknown
     }
     
@@ -40,7 +40,7 @@ struct SettingsState {
         var status: String
     }
     
-    struct PrivacyPro {
+    struct Subscription {
         var enabled: Bool
         var canPurchase: Bool
         var hasActiveSubscription: Bool
@@ -85,7 +85,7 @@ struct SettingsState {
     var networkProtection: NetworkProtection
     
     // Subscriptions Properties
-    var privacyPro: PrivacyPro
+    var subscription: Subscription
     
     // Sync Propertiers
     var sync: SyncSettings
@@ -111,7 +111,7 @@ struct SettingsState {
             speechRecognitionEnabled: false,
             loginsEnabled: false,
             networkProtection: NetworkProtection(enabled: false, status: ""),
-            privacyPro: PrivacyPro(enabled: false, canPurchase: false,
+            subscription: Subscription(enabled: false, canPurchase: false,
                                    hasActiveSubscription: false),
             sync: SyncSettings(enabled: false, title: "")
         )

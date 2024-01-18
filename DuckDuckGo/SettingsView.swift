@@ -35,7 +35,7 @@ struct SettingsView: View {
             SettingsPrivacyView()
 #if SUBSCRIPTION
             if #available(iOS 15, *) {
-                SettingsPrivacyProView()
+                SettingsSubscriptionView()
             }
 #endif
             SettingsCustomizeView()

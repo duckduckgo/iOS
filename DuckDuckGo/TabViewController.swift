@@ -417,7 +417,9 @@ class TabViewController: UIViewController {
         webViewContainer.addSubview(webView)
         webView.scrollView.refreshControl = UIRefreshControl()
         webView.scrollView.refreshControl?.addAction(UIAction { [weak self] _ in
-            self?.reload()
+            guard let self else { return }
+            self.reload()
+            Pixel.fire(pixel: .pullToRefresh)
         }, for: .valueChanged)
 
         webView.scrollView.refreshControl?.backgroundColor = .systemBackground

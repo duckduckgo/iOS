@@ -32,6 +32,7 @@ extension Pixel {
         
         case appLaunch
         case refreshPressed
+        case pullToRefresh
         
         case forgetAllPressedBrowsing
         case forgetAllPressedTabSwitching
@@ -523,7 +524,8 @@ extension Pixel.Event {
         switch self {
         case .appLaunch: return "ml"
         case .refreshPressed: return "m_r"
-            
+        case .pullToRefresh: return "m_pull-to-reload"
+
         case .forgetAllPressedBrowsing: return "mf_bp"
         case .forgetAllPressedTabSwitching: return "mf_tp"
         case .forgetAllExecuted: return "mf"

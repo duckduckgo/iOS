@@ -46,7 +46,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 let devices = try await syncService.updateDeviceName(name)
                 mapDevices(devices)
             } catch {
-                handleError(SyncError.unableToUpdateDeviceName, error: error)
+                handleError(SyncErrorMessage.unableToUpdateDeviceName, error: error, event: .syncUpdateDeviceError)
             }
             syncService.scheduler.resumeSyncQueue()
         }
@@ -63,13 +63,14 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 self.refreshDevices()
                 navigationController?.topViewController?.dismiss(animated: true, completion: showRecoveryPDF)
             } catch {
-                handleError(SyncError.unableToSyncToServer, error: error)
+                handleError(SyncErrorMessage.unableToSyncToServer, error: error, event: .syncSignupError)
             }
         }
     }
 
     @MainActor
-    func handleError(_ type: SyncError, error: Error?) {
+    func handleError(_ type: SyncErrorMessage, error: Error?, event: Pixel.Event) {
+        firePixelIfNeededFor(event: event, error: error)
         let alertController = UIAlertController(
             title: type.title,
             message: [type.description, error?.localizedDescription].compactMap({ $0 }).joined(separator: "\n"),
@@ -91,6 +92,13 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             self.dismissPresentedViewController { [weak self] in
                 self?.present(alertController, animated: true, completion: nil)
             }
+        }
+    }
+
+    private func firePixelIfNeededFor(event: Pixel.Event, error: Error?) {
+        guard let syncError = error as? SyncError else { return }
+        if !syncError.isServerError {
+            Pixel.fire(pixel: event, withAdditionalParameters: syncError.errorParameters)
         }
     }
 
@@ -186,7 +194,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                         AppUserDefaults().isSyncCredentialsPaused = false
                         continuation.resume(returning: true)
                     } catch {
-                        self.handleError(SyncError.unableToTurnSyncOff, error: error)
+                        self.handleError(SyncErrorMessage.unableToTurnSyncOff, error: error, event: .syncLogoutError)
                         continuation.resume(returning: false)
                     }
                 }
@@ -212,7 +220,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                         AppUserDefaults().isSyncCredentialsPaused = false
                         continuation.resume(returning: true)
                     } catch {
-                        self.handleError(SyncError.unableToDeleteData, error: error)
+                        self.handleError(SyncErrorMessage.unableToDeleteData, error: error, event: .syncDeleteAccountError)
                         continuation.resume(returning: false)
                     }
                 }
@@ -248,7 +256,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 try await syncService.disconnect(deviceId: device.id)
                 refreshDevices()
             } catch {
-                handleError(SyncError.unableToRemoveDevice, error: error)
+                handleError(SyncErrorMessage.unableToRemoveDevice, error: error, event: .syncRemoveDeviceError)
             }
         }
     }
@@ -286,7 +294,7 @@ private class PortraitNavigationController: UINavigationController {
 
 }
 
-enum SyncError {
+enum SyncErrorMessage {
     case unableToSyncToServer
     case unableToSyncWithDevice
     case unableToMergeTwoAccounts

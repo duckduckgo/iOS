@@ -1843,8 +1843,14 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Tastatură";
 
+/* Settings screen cell text for passwords */
+"settings.logins" = "Parole";
+
 /* Settings title for the 'More' section */
 "settings.more" = "Mai multe de la DuckDuckGo";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Previzualizări prin apăsare lungă";
@@ -1891,8 +1897,35 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Ce site este defect?";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Codul de recuperare a fost copiat în clipboard";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Șterge datele serverului";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "Toate dispozitivele vor fi deconectate, iar datele tale sincronizate vor fi șterse de pe server.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Ștergi datele serverului?";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Elimină";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "„%@” nu va mai putea accesa datele tale sincronizate.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Elimini dispozitivul?";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Elimină";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "Acest dispozitiv nu va mai putea accesa datele tale sincronizate.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Oprești sincronizarea?";
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "Ne pare rău, dar Sincronizarea și copierea de rezervă nu este disponibilă momentan. Încearcă din nou mai târziu.";

@@ -28,6 +28,9 @@
 /* Standard Buttons - Cancel Button */
 "cancel.button" = "Mégsem";
 
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "Szinkronizálás és biztonsági mentés bekapcsolása";
+
 /* Connect With Server Sheet - Description Part 1 */
 "connect.with.server.sheet.description.part1" = "Ez a DuckDuckGo biztonságos szerverén egy titkosított biztonsági másolatot készít a könyvjelzőidről és jelszavaidról, amelyet más eszközökkel szinkronizálhatsz.";
 
@@ -51,6 +54,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Fejlesztői környezet";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "Az adatszinkronizálás megtörtént.";
 
 /* Standard Buttons - Done Button */
 "done.button" = "Kész";
@@ -226,6 +232,9 @@
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Szinkronizálás és biztonsági mentés nem érhető el";
 
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Szinkronizálás másik eszközzel";
+
 /* Footer message for syncing with another device */
 "sync.with.another.device.footer" = "Az adataid végponttól végpontig titkosítva vannak, a DuckDuckGo pedig nem fér hozzá a titkosítási kulcshoz.";
 
@@ -252,6 +261,9 @@
 
 /* Options - Unify Favorites Instruction */
 "unified.favorites.instruction" = "Használd ugyanazokat a kedvenc könyvjelzőket minden eszközön. Hagyd kikapcsolva a mobil és asztali kedvencek különválasztásához.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Kedvencek egyesítése az eszközökön";
 
 /* View Text Code menu item */
 "view.text.code.menu.item" = "Szöveges kód megtekintése";

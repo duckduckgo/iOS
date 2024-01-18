@@ -1,15 +1,3 @@
-/* Class = "UILabel"; text = "Fireproof Sites"; ObjectID = "0DQ-yq-UuT"; */
-"0DQ-yq-UuT.text" = "Огнеупорные сайты";
-
-/* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
-"0gU-rZ-pRc.footerTitle" = "Отключение этой функции не позволит ссылкам автоматически открываться в других приложениях.";
-
-/* Class = "UITableViewSection"; headerTitle = "Customize"; ObjectID = "0gU-rZ-pRc"; */
-"0gU-rZ-pRc.headerTitle" = "Собственная настройка";
-
-/* Class = "UILabel"; text = "Version"; ObjectID = "2ky-s9-1aZ"; */
-"2ky-s9-1aZ.text" = "Версия";
-
 /* Class = "UINavigationItem"; title = "Keyboard"; ObjectID = "2pp-PM-6rW"; */
 "2pp-PM-6rW.title" = "Клавиатура";
 
@@ -31,29 +19,8 @@
 /* Class = "UILabel"; text = "Clear Tabs and Data"; ObjectID = "9fc-9r-4aA"; */
 "9fc-9r-4aA.text" = "Сбросить вкладки и данные";
 
-/* Class = "UILabel"; text = "Text Size"; ObjectID = "9Ko-0g-T3h"; */
-"9Ko-0g-T3h.text" = "Размер текста";
-
-/* Class = "UILabel"; text = "Title"; ObjectID = "9kt-6R-XiZ"; */
-"9kt-6R-XiZ.text" = "Название";
-
 /* Class = "UILabel"; text = "App Launch"; ObjectID = "13n-KI-KLq"; */
 "13n-KI-KLq.text" = "При запуске приложения";
-
-/* Class = "UILabel"; text = "Open Links in Associated Apps"; ObjectID = "a1T-ui-4Nw"; */
-"a1T-ui-4Nw.text" = "Открывать ссылки в связанных приложениях";
-
-/* Class = "UILabel"; text = "Debug Menu"; ObjectID = "A9G-5I-RSn"; */
-"A9G-5I-RSn.text" = "Меню отладки";
-
-/* Class = "UILabel"; text = "Passwords"; ObjectID = "And-cQ-SEu"; */
-"And-cQ-SEu.text" = "Пароли";
-
-/* Class = "UILabel"; text = "Animation"; ObjectID = "AtR-nS-Gun"; */
-"AtR-nS-Gun.text" = "Анимация";
-
-/* Class = "UILabel"; text = "Email Protection"; ObjectID = "azf-Nc-kvW"; */
-"azf-Nc-kvW.text" = "Защита электронной почты";
 
 /* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
 "BGs-JL-4ib.footerTitle" = "Данные и/или вкладки будут сброшены при следующем запуске приложения.";
@@ -64,53 +31,20 @@
 /* Class = "UINavigationItem"; title = "Manage Cookie Pop-ups"; ObjectID = "btj-ri-kRr"; */
 "btj-ri-kRr.title" = "Управление окнами выбора куки-файлов";
 
-/* Class = "UILabel"; text = "App Icon"; ObjectID = "cKo-er-HNj"; */
-"cKo-er-HNj.text" = "Значок приложения";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "CR5-Al-WIW"; */
-"CR5-Al-WIW.text" = "Метка";
-
 /* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "cW7-OM-2oW"; */
 "cW7-OM-2oW.text" = "Глобальный контроль конфиденциальности (GPC)";
 
 /* Class = "UIBarButtonItem"; title = "Add"; ObjectID = "CxT-QK-iVn"; */
 "CxT-QK-iVn.title" = "Добавить";
 
-/* Class = "UILabel"; text = "Hide your location and conceal your online activity"; ObjectID = "Cyw-ir-cSK"; */
-"Cyw-ir-cSK.text" = "Hide your location and conceal your online activity";
-
 /* Class = "UILabel"; text = "App Exit, Inactive for 15 Minutes"; ObjectID = "D0R-jp-UY8"; */
 "D0R-jp-UY8.text" = "После выхода из приложения, через 15 минут бездействия";
-
-/* Class = "UILabel"; text = "10.0.1 (Build 10005)"; ObjectID = "d5n-vG-8kF"; */
-"d5n-vG-8kF.text" = "10.0.1 (сборка 10005)";
-
-/* Class = "UILabel"; text = "Application Lock"; ObjectID = "dBZ-yq-FYj"; */
-"dBZ-yq-FYj.text" = "Блокировка";
-
-/* Class = "UITableViewSection"; headerTitle = "Appearance"; ObjectID = "dj9-vh-Rig"; */
-"dj9-vh-Rig.headerTitle" = "Внешний вид";
-
-/* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.footerTitle" = "Если система защищена технологией Touch ID или Face ID либо кодом доступа, при запуске вам придется разблокировать приложение.";
-
-/* Class = "UITableViewSection"; headerTitle = "Privacy"; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.headerTitle" = "Настройки конфиденциальности";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "dud-qo-Ces"; */
 "dud-qo-Ces.text" = "Метка";
 
-/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Dyd-bm-goj"; */
-"Dyd-bm-goj.title" = "Настройки";
-
-/* Class = "UILabel"; text = "100%"; ObjectID = "EB8-09-gt2"; */
-"EB8-09-gt2.text" = "100 %";
-
 /* Class = "UILabel"; text = "Label"; ObjectID = "EIq-Ev-nfj"; */
 "EIq-Ev-nfj.text" = "Метка";
-
-/* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "ekF-SJ-PAQ"; */
-"ekF-SJ-PAQ.text" = "Автоудаление данных";
 
 /* Class = "UILabel"; text = "App Exit, Inactive for 5 Minutes"; ObjectID = "ElX-yE-4PX"; */
 "ElX-yE-4PX.text" = "После выхода из приложения, через 5 минут бездействия";
@@ -118,59 +52,20 @@
 /* Class = "UINavigationItem"; title = "App Icon"; ObjectID = "eMH-uv-Kms"; */
 "eMH-uv-Kms.title" = "Значок приложения";
 
-/* Class = "UILabel"; text = "Theme"; ObjectID = "f1O-6u-LFY"; */
-"f1O-6u-LFY.text" = "Тема";
-
 /* Class = "UILabel"; text = "App Exit Only"; ObjectID = "Fal-1Y-o2S"; */
 "Fal-1Y-o2S.text" = "Только после выхода из приложения";
 
 /* Class = "UITableViewController"; title = "Automatically Clear Data"; ObjectID = "fdJ-b1-Des"; */
 "fdJ-b1-Des.title" = "Автоудаление данных";
 
-/* Class = "UILabel"; text = "Unprotected Sites"; ObjectID = "FHC-1z-Z3v"; */
-"FHC-1z-Z3v.text" = "Незащищенные сайты";
-
-/* Class = "UITableViewSection"; headerTitle = "About"; ObjectID = "FpT-1C-xtx"; */
-"FpT-1C-xtx.headerTitle" = "О нас";
-
 /* Class = "UITableViewController"; title = "Global Privacy Control (GPC)"; ObjectID = "fV3-86-QQj"; */
 "fV3-86-QQj.title" = "Глобальный контроль конфиденциальности (GPC)";
-
-/* Class = "UILabel"; text = "Add Widget to Home Screen"; ObjectID = "Fxu-zn-51Z"; */
-"Fxu-zn-51Z.text" = "Добавьте виджет на домашний экран";
-
-/* Class = "UILabel"; text = "Fire Button Animation"; ObjectID = "gBo-Cu-e2k"; Note = "Fire button animation settings item"; */
-"gBo-Cu-e2k.text" = "Aнимация кнопки «Огонь»";
-
-/* Class = "UILabel"; text = "Default"; ObjectID = "Gbx-kl-uOO"; */
-"Gbx-kl-uOO.text" = "По умолчанию";
-
-/* Class = "UILabel"; text = "Manage Cookie Pop-ups"; ObjectID = "GRv-M2-Kx1"; */
-"GRv-M2-Kx1.text" = "Управление окнами выбора куки-файлов";
-
-/* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
-"gS2-mg-l7R.title" = "Тема";
-
-/* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
-"HLr-R8-xxF.text" = "Предпросмотр долгим нажатием";
-
-/* Class = "UILabel"; text = "Browse privately with our app for Windows"; ObjectID = "hoT-Nu-KXP"; */
-"hoT-Nu-KXP.text" = "Полная конфиденциальность в Интернете, благодаря нашему приложению для Windows";
 
 /* Class = "UILabel"; text = "Privacy Protection enabled for all sites"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "Защита конфиденциальности включена на всех сайтах";
 
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Значок";
-
-/* Class = "UILabel"; text = "Share Feedback"; ObjectID = "m23-t6-9cb"; */
-"m23-t6-9cb.text" = "Оставьте нам отзыв";
-
-/* Class = "UINavigationItem"; title = "Address Bar Position"; ObjectID = "mLn-1x-Fl5"; Note = "Fire button animation setting page title"; */
-"mLn-1x-Fl5.title" = "Положение адресной строки";
-
-/* Class = "UILabel"; text = "Address Bar Position"; ObjectID = "mqV-pf-NZ1"; Note = "Fire button animation settings item"; */
-"mqV-pf-NZ1.text" = "Положение адресной строки";
 
 /* Class = "UILabel"; text = "Let DuckDuckGo manage cookie consent pop-ups"; ObjectID = "nX1-F1-Frd"; */
 "nX1-F1-Frd.text" = "Разрешить DuckDuckGo управлять окнами выбора куки-файлов";
@@ -181,35 +76,8 @@
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
 "OHV-qC-tL9.title" = "Незащищенные сайты";
 
-/* Class = "UILabel"; text = "About DuckDuckGo"; ObjectID = "oM7-1o-9oY"; */
-"oM7-1o-9oY.text" = "Несколько слов о DuckDuckGo";
-
-/* Class = "UILabel"; text = "Top"; ObjectID = "opn-JO-idF"; */
-"opn-JO-idF.text" = "Вверх";
-
-/* Class = "UITableViewSection"; headerTitle = "More From DuckDuckGo"; ObjectID = "OxE-MQ-uJk"; */
-"OxE-MQ-uJk.headerTitle" = "DuckDuckGo также предлагает...";
-
-/* Class = "UILabel"; text = "Sync & Backup"; ObjectID = "oXN-ez-gct"; */
-"oXN-ez-gct.text" = "Синхронизация и резервное копирование";
-
-/* Class = "UILabel"; text = "Browse privately with our app for Mac "; ObjectID = "P0F-ts-ekd"; */
-"P0F-ts-ekd.text" = "Интернет без трекеров с нашим приложением для Mac ";
-
-/* Class = "UILabel"; text = "Network Protection"; ObjectID = "qah-gb-udB"; */
-"qah-gb-udB.text" = "Network Protection";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
-"qeN-SV-zy7.text" = "Метка";
-
-/* Class = "UILabel"; text = "DuckDuckGo Windows App"; ObjectID = "RQ8-H1-Ez1"; */
-"RQ8-H1-Ez1.text" = "Приложение DuckDuckGo для Windows";
-
 /* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
 "ssa-zd-L3T.title" = "Размер текста";
-
-/* Class = "UILabel"; text = "Private Voice Search"; ObjectID = "Swa-O7-n8W"; */
-"Swa-O7-n8W.text" = "Конфиденциальный голосовой поиск";
 
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Показывать клавиатуру";
@@ -220,17 +88,8 @@
 /* Class = "UITableViewSection"; headerTitle = "Action"; ObjectID = "U2M-6p-6nl"; */
 "U2M-6p-6nl.headerTitle" = "Действие";
 
-/* Class = "UILabel"; text = "Autocomplete Suggestions"; ObjectID = "U8i-cQ-5WW"; */
-"U8i-cQ-5WW.text" = "Показать предложения автозаполнения";
-
-/* Class = "UINavigationItem"; title = "Fire Button Animation"; ObjectID = "uns-8w-IwL"; Note = "Fire button animation setting page title"; */
-"uns-8w-IwL.title" = "Анимация кнопки «Огонь»";
-
 /* Class = "UILabel"; text = "Remove All Fireproof Sites"; ObjectID = "UZx-52-aer"; */
 "UZx-52-aer.text" = "Удалить все огнеупорные сайты";
-
-/* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "vPz-uO-6gB"; */
-"vPz-uO-6gB.text" = "Глобальный контроль конфиденциальности (GPC)";
 
 /* Class = "UITableViewSection"; footerTitle = "App exit is defined by swiping the app to close it while inactivity is when the app is in the background."; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
 "vSJ-YJ-bBs.footerTitle" = "Под выходом из приложения подразумевается закрытие свайпом, а под бездействием — работа в фоновом режиме.";
@@ -238,23 +97,8 @@
 /* Class = "UITableViewSection"; headerTitle = "Desired timing"; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
 "vSJ-YJ-bBs.headerTitle" = "Предпочитаемое время";
 
-/* Class = "UILabel"; text = "Set as Default Browser"; ObjectID = "xof-5k-PkI"; */
-"xof-5k-PkI.text" = "Сделать браузером по умолчанию";
-
 /* Class = "UINavigationItem"; title = "Fireproof Sites"; ObjectID = "xUX-nF-HOl"; */
 "xUX-nF-HOl.title" = "Огнеупорные сайты";
-
-/* Class = "UILabel"; text = "Block email trackers and hide your address"; ObjectID = "Y6Y-wA-n6Z"; */
-"Y6Y-wA-n6Z.text" = "Блокировка почтовых трекеров и скрытие адреса";
-
-/* Class = "UILabel"; text = "Keyboard"; ObjectID = "yoZ-jw-Cu3"; */
-"yoZ-jw-Cu3.text" = "Клавиатура";
-
-/* Class = "UILabel"; text = "Add App to Your Dock"; ObjectID = "yvj-LL-MiR"; */
-"yvj-LL-MiR.text" = "Добавьте приложение на док-панель";
-
-/* Class = "UILabel"; text = "DuckDuckGo Mac App"; ObjectID = "Yz9-17-qnn"; */
-"Yz9-17-qnn.text" = "Приложение DuckDuckGo для Mac";
 
 /* Class = "UILabel"; text = "New Tab"; ObjectID = "Zpg-h0-rYv"; */
 "Zpg-h0-rYv.text" = "Новая вкладка";

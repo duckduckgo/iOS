@@ -28,6 +28,9 @@
 /* Standard Buttons - Cancel Button */
 "cancel.button" = "Peruuta";
 
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "Ota käyttöön synkronointi ja varmuuskopiointi";
+
 /* Connect With Server Sheet - Description Part 1 */
 "connect.with.server.sheet.description.part1" = "Tämä luo salatun varmuuskopion kirjanmerkeistäsi ja salasanoistasi DuckDuckGon suojatulle palvelimelle. Voit synkronoida varmuuskopion muiden laitteittesi kanssa.";
 
@@ -51,6 +54,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Dev-ympäristö";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "Tietosi on synkronoitu!";
 
 /* Standard Buttons - Done Button */
 "done.button" = "Valmis";
@@ -226,6 +232,9 @@
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Synkronointi ja varmuuskopiointi ei ole käytettävissä";
 
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Synkronoi toisen laitteen kanssa";
+
 /* Footer message for syncing with another device */
 "sync.with.another.device.footer" = "Tietosi on salattu päästä päähän, eikä DuckDuckGolla ole hallussaan salausavainta.";
 
@@ -252,6 +261,9 @@
 
 /* Options - Unify Favorites Instruction */
 "unified.favorites.instruction" = "Käytä samoja suosikkikirjanmerkkejä kaikilla laitteillasi. Jätä pois, jos haluat pitää mobiili- ja työpöytäsuosikit erillään.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Yhdistä suosikit eri laitteilla";
 
 /* View Text Code menu item */
 "view.text.code.menu.item" = "Näytä tekstikoodi";

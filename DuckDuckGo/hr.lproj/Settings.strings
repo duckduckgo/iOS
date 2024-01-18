@@ -1,15 +1,3 @@
-/* Class = "UILabel"; text = "Fireproof Sites"; ObjectID = "0DQ-yq-UuT"; */
-"0DQ-yq-UuT.text" = "Zaštićena web-mjesta";
-
-/* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
-"0gU-rZ-pRc.footerTitle" = "Onemogući da spriječiš automatsko otvaranje poveznica u drugim instaliranim aplikacijama.";
-
-/* Class = "UITableViewSection"; headerTitle = "Customize"; ObjectID = "0gU-rZ-pRc"; */
-"0gU-rZ-pRc.headerTitle" = "Prilagodba";
-
-/* Class = "UILabel"; text = "Version"; ObjectID = "2ky-s9-1aZ"; */
-"2ky-s9-1aZ.text" = "Verzija";
-
 /* Class = "UINavigationItem"; title = "Keyboard"; ObjectID = "2pp-PM-6rW"; */
 "2pp-PM-6rW.title" = "Tipkovnica";
 
@@ -31,29 +19,8 @@
 /* Class = "UILabel"; text = "Clear Tabs and Data"; ObjectID = "9fc-9r-4aA"; */
 "9fc-9r-4aA.text" = "Obriši kartice i podatke";
 
-/* Class = "UILabel"; text = "Text Size"; ObjectID = "9Ko-0g-T3h"; */
-"9Ko-0g-T3h.text" = "Veličina teksta";
-
-/* Class = "UILabel"; text = "Title"; ObjectID = "9kt-6R-XiZ"; */
-"9kt-6R-XiZ.text" = "Naslov";
-
 /* Class = "UILabel"; text = "App Launch"; ObjectID = "13n-KI-KLq"; */
 "13n-KI-KLq.text" = "Pokretanje aplikacije";
-
-/* Class = "UILabel"; text = "Open Links in Associated Apps"; ObjectID = "a1T-ui-4Nw"; */
-"a1T-ui-4Nw.text" = "Otvori veze u povezanim aplikacijama";
-
-/* Class = "UILabel"; text = "Debug Menu"; ObjectID = "A9G-5I-RSn"; */
-"A9G-5I-RSn.text" = "Izbornik za ispravljanje pogrešaka";
-
-/* Class = "UILabel"; text = "Passwords"; ObjectID = "And-cQ-SEu"; */
-"And-cQ-SEu.text" = "Lozinke";
-
-/* Class = "UILabel"; text = "Animation"; ObjectID = "AtR-nS-Gun"; */
-"AtR-nS-Gun.text" = "Animacija";
-
-/* Class = "UILabel"; text = "Email Protection"; ObjectID = "azf-Nc-kvW"; */
-"azf-Nc-kvW.text" = "Zaštita e-pošte";
 
 /* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
 "BGs-JL-4ib.footerTitle" = "Podaci i/ili kartice bit će uklonjeni nakon ponovnog pokretanja aplikacije.";
@@ -64,53 +31,20 @@
 /* Class = "UINavigationItem"; title = "Manage Cookie Pop-ups"; ObjectID = "btj-ri-kRr"; */
 "btj-ri-kRr.title" = "Upravljanje skočnim prozorima kolačića";
 
-/* Class = "UILabel"; text = "App Icon"; ObjectID = "cKo-er-HNj"; */
-"cKo-er-HNj.text" = "Ikona aplikacije";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "CR5-Al-WIW"; */
-"CR5-Al-WIW.text" = "Label";
-
 /* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "cW7-OM-2oW"; */
 "cW7-OM-2oW.text" = "Globalna kontrola privatnosti (GPC)";
 
 /* Class = "UIBarButtonItem"; title = "Add"; ObjectID = "CxT-QK-iVn"; */
 "CxT-QK-iVn.title" = "Dodaj";
 
-/* Class = "UILabel"; text = "Hide your location and conceal your online activity"; ObjectID = "Cyw-ir-cSK"; */
-"Cyw-ir-cSK.text" = "Hide your location and conceal your online activity";
-
 /* Class = "UILabel"; text = "App Exit, Inactive for 15 Minutes"; ObjectID = "D0R-jp-UY8"; */
 "D0R-jp-UY8.text" = "Izlaz iz aplikacije, neaktivna 15 minuta";
-
-/* Class = "UILabel"; text = "10.0.1 (Build 10005)"; ObjectID = "d5n-vG-8kF"; */
-"d5n-vG-8kF.text" = "10.0.1 (Verzija 10005)";
-
-/* Class = "UILabel"; text = "Application Lock"; ObjectID = "dBZ-yq-FYj"; */
-"dBZ-yq-FYj.text" = "Zaključavanje aplikacije";
-
-/* Class = "UITableViewSection"; headerTitle = "Appearance"; ObjectID = "dj9-vh-Rig"; */
-"dj9-vh-Rig.headerTitle" = "Izgled";
-
-/* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.footerTitle" = "Ako su postavljeni Touch ID, Face ID ili pristupni kôd sustava, od tebe će se tražiti da otključaš aplikaciju prilikom otvaranja.";
-
-/* Class = "UITableViewSection"; headerTitle = "Privacy"; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.headerTitle" = "Zaštita privatnosti";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "dud-qo-Ces"; */
 "dud-qo-Ces.text" = "Label";
 
-/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Dyd-bm-goj"; */
-"Dyd-bm-goj.title" = "Postavke";
-
-/* Class = "UILabel"; text = "100%"; ObjectID = "EB8-09-gt2"; */
-"EB8-09-gt2.text" = "100 %";
-
 /* Class = "UILabel"; text = "Label"; ObjectID = "EIq-Ev-nfj"; */
 "EIq-Ev-nfj.text" = "Label";
-
-/* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "ekF-SJ-PAQ"; */
-"ekF-SJ-PAQ.text" = "Automatsko brisanje podataka";
 
 /* Class = "UILabel"; text = "App Exit, Inactive for 5 Minutes"; ObjectID = "ElX-yE-4PX"; */
 "ElX-yE-4PX.text" = "Izlaz iz aplikacije, neaktivna 5 minuta";
@@ -118,59 +52,20 @@
 /* Class = "UINavigationItem"; title = "App Icon"; ObjectID = "eMH-uv-Kms"; */
 "eMH-uv-Kms.title" = "Ikona aplikacije";
 
-/* Class = "UILabel"; text = "Theme"; ObjectID = "f1O-6u-LFY"; */
-"f1O-6u-LFY.text" = "Tema";
-
 /* Class = "UILabel"; text = "App Exit Only"; ObjectID = "Fal-1Y-o2S"; */
 "Fal-1Y-o2S.text" = "Samo izlaz iz aplikacije";
 
 /* Class = "UITableViewController"; title = "Automatically Clear Data"; ObjectID = "fdJ-b1-Des"; */
 "fdJ-b1-Des.title" = "Automatsko brisanje podataka";
 
-/* Class = "UILabel"; text = "Unprotected Sites"; ObjectID = "FHC-1z-Z3v"; */
-"FHC-1z-Z3v.text" = "Nezaštićena web-mjesta";
-
-/* Class = "UITableViewSection"; headerTitle = "About"; ObjectID = "FpT-1C-xtx"; */
-"FpT-1C-xtx.headerTitle" = "O nama";
-
 /* Class = "UITableViewController"; title = "Global Privacy Control (GPC)"; ObjectID = "fV3-86-QQj"; */
 "fV3-86-QQj.title" = "Globalna kontrola privatnosti (GPC)";
-
-/* Class = "UILabel"; text = "Add Widget to Home Screen"; ObjectID = "Fxu-zn-51Z"; */
-"Fxu-zn-51Z.text" = "Dodajte widget na početni zaslon";
-
-/* Class = "UILabel"; text = "Fire Button Animation"; ObjectID = "gBo-Cu-e2k"; Note = "Fire button animation settings item"; */
-"gBo-Cu-e2k.text" = "Animacija gumba Vatre";
-
-/* Class = "UILabel"; text = "Default"; ObjectID = "Gbx-kl-uOO"; */
-"Gbx-kl-uOO.text" = "Zadano";
-
-/* Class = "UILabel"; text = "Manage Cookie Pop-ups"; ObjectID = "GRv-M2-Kx1"; */
-"GRv-M2-Kx1.text" = "Upravljanje skočnim prozorima kolačića";
-
-/* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
-"gS2-mg-l7R.title" = "Tema";
-
-/* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
-"HLr-R8-xxF.text" = "Pretpregledi na dugi pritisak";
-
-/* Class = "UILabel"; text = "Browse privately with our app for Windows"; ObjectID = "hoT-Nu-KXP"; */
-"hoT-Nu-KXP.text" = "Privatno pregledavanje s našom aplikacijom za Windows";
 
 /* Class = "UILabel"; text = "Privacy Protection enabled for all sites"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "Zaštita privatnosti omogućena za sva web-mjesta";
 
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Ikona";
-
-/* Class = "UILabel"; text = "Share Feedback"; ObjectID = "m23-t6-9cb"; */
-"m23-t6-9cb.text" = "Podijeli povratne informacije";
-
-/* Class = "UINavigationItem"; title = "Address Bar Position"; ObjectID = "mLn-1x-Fl5"; Note = "Fire button animation setting page title"; */
-"mLn-1x-Fl5.title" = "Položaj adresne trake";
-
-/* Class = "UILabel"; text = "Address Bar Position"; ObjectID = "mqV-pf-NZ1"; Note = "Fire button animation settings item"; */
-"mqV-pf-NZ1.text" = "Položaj adresne trake";
 
 /* Class = "UILabel"; text = "Let DuckDuckGo manage cookie consent pop-ups"; ObjectID = "nX1-F1-Frd"; */
 "nX1-F1-Frd.text" = "Neka DuckDuckGo upravlja skočnim prozorima za pristanak na kolačiće";
@@ -181,35 +76,8 @@
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
 "OHV-qC-tL9.title" = "Nezaštićena web-mjesta";
 
-/* Class = "UILabel"; text = "About DuckDuckGo"; ObjectID = "oM7-1o-9oY"; */
-"oM7-1o-9oY.text" = "O DuckDuckGou";
-
-/* Class = "UILabel"; text = "Top"; ObjectID = "opn-JO-idF"; */
-"opn-JO-idF.text" = "Vrh";
-
-/* Class = "UITableViewSection"; headerTitle = "More From DuckDuckGo"; ObjectID = "OxE-MQ-uJk"; */
-"OxE-MQ-uJk.headerTitle" = "Više od DuckDuckGoa";
-
-/* Class = "UILabel"; text = "Sync & Backup"; ObjectID = "oXN-ez-gct"; */
-"oXN-ez-gct.text" = "Sinkronizacija i sigurnosno kopiranje";
-
-/* Class = "UILabel"; text = "Browse privately with our app for Mac "; ObjectID = "P0F-ts-ekd"; */
-"P0F-ts-ekd.text" = "Pretražujte privatno s našom aplikacijom za Mac ";
-
-/* Class = "UILabel"; text = "Network Protection"; ObjectID = "qah-gb-udB"; */
-"qah-gb-udB.text" = "Network Protection";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
-"qeN-SV-zy7.text" = "Label";
-
-/* Class = "UILabel"; text = "DuckDuckGo Windows App"; ObjectID = "RQ8-H1-Ez1"; */
-"RQ8-H1-Ez1.text" = "Aplikacija DuckDuckGo za Windows";
-
 /* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
 "ssa-zd-L3T.title" = "Veličina teksta";
-
-/* Class = "UILabel"; text = "Private Voice Search"; ObjectID = "Swa-O7-n8W"; */
-"Swa-O7-n8W.text" = "Privatno glasovno pretraživanje";
 
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Prikaži tipkovnicu";
@@ -220,17 +88,8 @@
 /* Class = "UITableViewSection"; headerTitle = "Action"; ObjectID = "U2M-6p-6nl"; */
 "U2M-6p-6nl.headerTitle" = "Radnja";
 
-/* Class = "UILabel"; text = "Autocomplete Suggestions"; ObjectID = "U8i-cQ-5WW"; */
-"U8i-cQ-5WW.text" = "Prikaži prijedloge za automatsko ispunjavanje";
-
-/* Class = "UINavigationItem"; title = "Fire Button Animation"; ObjectID = "uns-8w-IwL"; Note = "Fire button animation setting page title"; */
-"uns-8w-IwL.title" = "Animacija gumba Vatre";
-
 /* Class = "UILabel"; text = "Remove All Fireproof Sites"; ObjectID = "UZx-52-aer"; */
 "UZx-52-aer.text" = "Ukloni sva zaštićena web-mjesta";
-
-/* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "vPz-uO-6gB"; */
-"vPz-uO-6gB.text" = "Globalna kontrola privatnosti (GPC)";
 
 /* Class = "UITableViewSection"; footerTitle = "App exit is defined by swiping the app to close it while inactivity is when the app is in the background."; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
 "vSJ-YJ-bBs.footerTitle" = "Izlaz iz aplikacije definira se povlačenjem prsta po zaslonu za zatvaranje, a neaktivnost znači da je aplikacija otvorena u pozadini.";
@@ -238,23 +97,8 @@
 /* Class = "UITableViewSection"; headerTitle = "Desired timing"; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
 "vSJ-YJ-bBs.headerTitle" = "Željeno vrijeme brisanja";
 
-/* Class = "UILabel"; text = "Set as Default Browser"; ObjectID = "xof-5k-PkI"; */
-"xof-5k-PkI.text" = "Postavi kao zadani preglednik";
-
 /* Class = "UINavigationItem"; title = "Fireproof Sites"; ObjectID = "xUX-nF-HOl"; */
 "xUX-nF-HOl.title" = "Zaštićena web-mjesta";
-
-/* Class = "UILabel"; text = "Block email trackers and hide your address"; ObjectID = "Y6Y-wA-n6Z"; */
-"Y6Y-wA-n6Z.text" = "Blokiraj programe za praćenje e-pošte i sakrij svoju adresu";
-
-/* Class = "UILabel"; text = "Keyboard"; ObjectID = "yoZ-jw-Cu3"; */
-"yoZ-jw-Cu3.text" = "Tipkovnica";
-
-/* Class = "UILabel"; text = "Add App to Your Dock"; ObjectID = "yvj-LL-MiR"; */
-"yvj-LL-MiR.text" = "Dodajte aplikaciju na Dock";
-
-/* Class = "UILabel"; text = "DuckDuckGo Mac App"; ObjectID = "Yz9-17-qnn"; */
-"Yz9-17-qnn.text" = "Aplikacija DuckDuckGo za Mac";
 
 /* Class = "UILabel"; text = "New Tab"; ObjectID = "Zpg-h0-rYv"; */
 "Zpg-h0-rYv.text" = "Nova kartica";

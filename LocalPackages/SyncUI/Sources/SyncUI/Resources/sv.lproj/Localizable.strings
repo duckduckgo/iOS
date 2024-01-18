@@ -28,6 +28,9 @@
 /* Standard Buttons - Cancel Button */
 "cancel.button" = "Avbryt";
 
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "Aktivera synkronisering och säkerhetskopiering";
+
 /* Connect With Server Sheet - Description Part 1 */
 "connect.with.server.sheet.description.part1" = "Detta skapar en krypterad säkerhetskopia av dina bokmärken och lösenord på DuckDuckGos säkra server, som kan synkroniseras med dina andra enheter.";
 
@@ -51,6 +54,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Utvecklingsmiljö";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "Dina data har synkroniserats!";
 
 /* Standard Buttons - Done Button */
 "done.button" = "Klart";
@@ -226,6 +232,9 @@
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Synkronisering och säkerhetskopiering är inte tillgängligt";
 
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Synkronisera med en annan enhet";
+
 /* Footer message for syncing with another device */
 "sync.with.another.device.footer" = "Dina data krypteras under hela vägen och DuckDuckGo har inte tillgång till krypteringsnyckeln.";
 
@@ -252,6 +261,9 @@
 
 /* Options - Unify Favorites Instruction */
 "unified.favorites.instruction" = "Använd samma favoritbokmärken på alla dina enheter. Använd inte funktionen om du vill skilja på favoriter mellan mobil och dator.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Samla alla favoriter på olika enheter";
 
 /* View Text Code menu item */
 "view.text.code.menu.item" = "Visa textkod";

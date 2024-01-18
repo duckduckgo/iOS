@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sabrina/sync-flow-pixels",
-        "revision" : "846d5c81cd50b5f2258e47cee141532a653d7bb2"
+        "revision" : "7f9eb807af196ec3db8fe6f0b168df89ea16a11c",
+        "version" : "101.1.4"
       }
     },
     {

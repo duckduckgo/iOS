@@ -4,9 +4,6 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
-/* No comment provided by engineer. */
-"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Redigeeri";
 
@@ -148,6 +145,9 @@
 /* Title for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-title" = "Paroolide sünkroonimine on peatatud";
 
+/* Title for sync error alert */
+"alert.sync-error" = "Sünkroonimise ja varundamise tõrge";
+
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Loe edasi";
 
@@ -168,6 +168,30 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Salvesta lemmikusse";
+
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "Taaste-PDFi ei saa luua.";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "Serveris olevaid andmeid ei saa kustutada.";
+
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "Nende seadmete sidumiseks lülita sünkroonimine ja varundus ühes seadmes välja ning puuduta siis teises seadmes suvandit „Sünkrooni teise seadmega“.";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "Seda seadet ei saa sünkroonimisest ja varundamisest eemaldada.";
+
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Serveriga ei saa ühendust luua.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Teise seadmega ei saa sünkroonida.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "Sünkroonimist ja varundamist ei saa välja lülitada.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "Seadme nime ei saa uuendada.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Vabasta DuckDuckGo.";
@@ -874,6 +898,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Internet võib olla üsna jube.\n\nÄra muretse! Privaatselt otsimine ja sirvimine on lihtsam kui arvad.";
 
+/* No comment provided by engineer. */
+"Debug" = "Debug";
+
 /* GPC Setting state */
 "donotsell.disabled" = "Keelatud";
 
@@ -1348,6 +1375,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Tere tulemast\nDuckDuckGo kasutajaks!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo for Mac on just nii kiire, kui vajad, oodatud sirvimisfunktsioonidega ja tulvil meie oma klassi parimaid privaatsuselemente.";
 
@@ -1411,17 +1441,104 @@
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
 
+/* Privacy Policy title for Network Protection */
+"network-protection.privacy-policy.title" = "Privaatsuspoliitika";
+
+/* Title text for the Network Protection terms and conditions accept button */
+"network-protection.waitlist.agree-and-continue" = "Nõustun ja jätkan";
+
+/* Availability disclaimer for Network Protection join waitlist screen */
+"network-protection.waitlist.availability-disclaimer" = "Network Protection on varajase juurdepääsu ajal tasuta kasutamiseks.";
+
+/* Agree and Continue button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.agree-and-continue" = "Nõustun ja jätkan";
+
+/* Enable Notifications button for Network Protection joined waitlist screen */
+"network-protection.waitlist.button.enable-notifications" = "Luba teavitused";
+
+/* Button title for users who already have an invite code */
+"network-protection.waitlist.button.existing-invite-code" = "Mul on kutse kood";
+
+/* Join Waitlist button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.join-waitlist" = "Liitu ootenimekirjaga";
+
+/* Button title text for the Network Protection waitlist confirmation prompt */
+"network-protection.waitlist.get-started" = "Alustage";
+
+/* Subtitle for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.subtitle" = "Krüpti veebiliiklus oma brauserites ja rakendustes.";
+
+/* Title for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.title" = "Hõlmab kogu seadet";
+
+/* Subtitle for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.subtitle" = "Eraldi rakendust pole vaja. Loo ühendus ühe klõpsuga ja vaata oma ühenduse olekut hetkega.";
+
+/* Title for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.title" = "Kiire, usaldusväärne ja lihtne kasutada";
+
+/* Subtitle for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.subtitle" = "Me ei logi ega salvesta mingeid andmeid, mille põhjal saaks sinu tegevust võrgus sinuga seostada.";
+
+/* Title for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.title" = "Range logimiskeelu põhimõte";
+
+/* Subtitle for Network Protection invited screen */
+"network-protection.waitlist.invited.subtitle" = "Täiendava võrguturvalisuse kaitse tagab VPN, mille loomisel on silmas peetud kiirust ja kasutushõlpsust. Krüpti oma internetiühendus kogu seadmes ning varja oma asukohta ja IP-aadressi külastatavate veebisaitide eest.";
+
+/* Title for Network Protection invited screen */
+"network-protection.waitlist.invited.title" = "Oled kutsutud proovima\nNetwork Protectioni varajast juurdepääsu!";
+
+/* First subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.1" = "Kaitse oma ühendust igal pool ja igal ajal, kasutades DuckDuckGo VPN-lahendust Network Protection.";
+
+/* Second subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.2" = "Liitu ootenimekirjaga ja me anname teada, kui on sinu kord.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
+
+/* Title for Network Protection joined waitlist screen */
+"network-protection.waitlist.joined.title" = "Oled ootenimekirjas!";
+
+/* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Uusi kutseid saadetakse iga paari päeva tagant põhimõttel „kes ees, see mees“.";
+
+/* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "Anname teada, kui sinu kutse on valmis.";
+
+/* Body text for the alert to enable notifications */
+"network-protection.waitlist.notification-alert.description" = "Saadame sulle teate, kui sinu kutse Network Protectioni testimiseks on valmis.";
+
+/* Subtitle for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-description" = "Saad teate, kui sinu Network Protectioni varajane juurdepääs on saadaval.";
+
+/* Title for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-title" = "Saa kohe teada, kui sind kutsutakse";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.text" = "Ava oma kutse";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.title" = "Network Protection on valmis!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Sinu kutse on valmis!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Oled ootenimekirjas!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Liituge privaatse ootenimekirjaga";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+"network.protection.invite.dialog.title" = "Oled kutsutud proovima Network Protectionit";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
-
-/* Message explaining that netP is invite only */
-"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
 
 /* Message for the network protection invite success view */
 "network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
@@ -1453,7 +1570,7 @@
 /* Header title label text for the status view when netP is connected */
 "network.protection.status.header.title.on" = "Network Protection is On";
 
-/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+/* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 
 /* Connection details label shown in NetworkProtection's status view. */
@@ -1489,23 +1606,32 @@
 /* Title for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.title" = "VPN-i hoiatused";
 
-/* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.footer" = "VPN-ühendus taastatakse pärast katkestust automaatselt.";
+/* Footer text for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Suuna kohalik võrguliiklus VPN-ist mööda ja loo ühendus kohtvõrgu seadmete, nt printeriga.";
 
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.title" = "Alati sisse lülitatud";
+/* Title for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.title" = "Kohtvõrkude välistamine";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Subtitle of countries item when there are multiple cities, example : */
+"network.protection.vpn.location.country.item.formatted.cities.count" = "Linnad riigis %d";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+"network.protection.vpn.location.recommended.section.footer" = "Loob automaatselt ühenduse lähima leitud serveriga.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
+"network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
+
+/* Title for the VPN Location screen. */
+"network.protection.vpn.location.title" = "VPN-i asukoht";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "VPN-i teavitused";
@@ -1517,10 +1643,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Network Protection takistab DNS-i lekkeid sinu internetiteenuse pakkujale, suunates DNS-päringud läbi VPN-tunneli meie enda aadressiteisendusteenusesse.";
-
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.title" = "Turvaline DNS";
+"network.protection.vpn.secure.dns.setting.footer" = "Meie VPN kasutab turvalist DNS-i, et kaitsta sinu veebitegevuse privaatsust, nii et sinu internetiteenuse pakkuja ei näe, milliseid veebisaite sa külastad.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-i seaded";
@@ -1648,8 +1771,107 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Lemmikud";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "DuckDuckGo'st";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "Teave";
+
 /* about page */
 "settings.about.text" = "DuckDuckGo on 2008. aastal asutatud sõltumatu internetiprivaatsuse ettevõte igaühele, kellel on kõrini varjatud jälgimisest internetis ja kes soovib lihtsat lahendust selle vältimiseks. Me oleme tõestuseks, et internetis on võimalik saada tõelist privaatsuskaitset ilma kompromisse tegemata.\n\nDuckDuckGo brauseril on kõik funktsioonid, mida sa brauserilt ootad, nagu järjehoidjad, vahekaardid, paroolid ja palju muud, lisaks sellele aga ka üle [tosina võimsa privaatsuskaitse funktsiooni](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/), mida enamik populaarsemaid brausereid vaikimisi ei paku. See ainulaadselt terviklik privaatsuskaitse aitab kaitsta sinu tegevust internetis alates otsingutest kuni sirvimiseni, meilide saatmiseni ja palju muuni.\n\nMeie privaatsuskaitse toimib ilma, et peaksid teadma midagi tehnilistest nüanssidest või tegelema keeruliste seadistustega. Ainus, mis sa pead tegema, on vahetada oma brauser kõigis seadmetes DuckDuckGo vastu – ja vaikeprivaatsus ongi tagatud.\n\nKui aga *soovid* piiluda kapoti alla, leiate lisateavet DuckDuckGo privaatsuskaitse tööpõhimõtete kohta meie [abilehtedelt](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "Lisa rakendus oma dokki";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Lisa vidin avakuvale";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Aadressiriba asukoht";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Välimus";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Ava lingid seotud rakendustes";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Keela, et takistada linkide automaatset avanemist teistes installitud rakendustes.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Automaatselt täidetavad ettepanekud";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Rakenduse lukk";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Kui on määratud Touch ID, Face ID või süsteemi pääsukood, palutakse avamisel rakendus avada.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Kustuta andmed automaatselt";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Halda küpsiste hüpikaknaid";
+
+/* Settings title for the customize section */
+"settings.customize" = "Kohanda";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Määrake vaikebrauseriks";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "E-posti kaitse";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "Blokeeri meilijälgurid ja peida oma aadress";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Jaga tagasisidet";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Tulenupu animatsioon";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Tulekindlad veebisaidid";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Üleilmne privaatsuskontroll (Global Privacy Control (GPC))";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "Rakenduse ikoon";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Klaviatuur";
+
+/* Settings title for the 'More' section */
+"settings.more" = "Veel DuckDuckGo'lt";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Pika vajutusega eelvaated";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Privaatsus";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Sünkroonimine ja varundamine";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Teksti suurus";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Teema";
+
+/* Title for the Settings View */
+"settings.title" = "Seaded";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Kaitseta saidid";
+
+/* Settings cell for Version */
+"settings.version" = "Versioon";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Privaatne häälotsing";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Saada aruanne";
@@ -1671,6 +1893,15 @@
 
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "%@ ei pääse enam sinu sünkroonitud andmetele juurde.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Kahjuks pole sünkroonimine ja varundamine praegu saadaval. Proovi hiljem uuesti.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Vabandust, kuid sünkroonimine ja varundus pole selles rakenduse versioonis enam saadaval. Jätkamiseks värskenda DuckDuckGo uusimale versioonile.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "Sünkroonimine ja varundamine on peatatud";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Sulge avalehe vahekaart";
@@ -1734,6 +1965,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Häälfunktsioonide kasutamiseks lubage DuckDuckGo jaoks juurdepääs mikrofonile iOS-i süsteemiseadetes.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "OK";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Vajalik juurdepääs mikrofonile";

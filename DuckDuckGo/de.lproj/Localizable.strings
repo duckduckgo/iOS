@@ -4,9 +4,6 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
-/* No comment provided by engineer. */
-"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Bearbeiten";
 
@@ -148,6 +145,9 @@
 /* Title for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-title" = "Passwortsynchronisierung ist angehalten";
 
+/* Title for sync error alert */
+"alert.sync-error" = "Synchronisierungs- und Sicherungsfehler";
+
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Mehr erfahren";
 
@@ -168,6 +168,30 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Favorit speichern";
+
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "Das Wiederherstellungs-PDF kann nicht erstellt werden.";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "Daten auf dem Server können nicht gelöscht werden.";
+
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "Um diese Geräte zu koppeln, deaktiviere „Synchronisieren und sichern“ auf einem Gerät und tippe dann auf dem anderen Gerät auf „Mit anderem Gerät synchronisieren“.";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "Dieses Gerät kann nicht aus „Synchronisieren und sichern“ entfernt werden.";
+
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Es kann keine Verbindung zum Server hergestellt werden.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Synchronisierung mit einem anderen Gerät nicht möglich.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "„Synchronisieren und sichern“ kann nicht deaktiviert werden.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "Der Gerätename kann nicht aktualisiert werden.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "DuckDuckGo entsperren.";
@@ -874,6 +898,9 @@
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "Das Internet kann ein bisschen gruselig sein.\n\nKeine Sorge! Privat zu suchen und zu browsen ist einfacher als du denkst.";
 
+/* No comment provided by engineer. */
+"Debug" = "Debug";
+
 /* GPC Setting state */
 "donotsell.disabled" = "Deaktiviert";
 
@@ -1348,6 +1375,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Willkommen bei\nDuckDuckGo!";
 
+/* No comment provided by engineer. */
+"LOREM IPSUM" = "LOREM IPSUM";
+
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo für Mac hat die Geschwindigkeit, die du brauchst, die Browserfunktionen, die du erwartest, und ist vollgepackt mit unseren grundlegenden Funktionen für den Datenschutz.";
 
@@ -1411,17 +1441,104 @@
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
 
+/* Privacy Policy title for Network Protection */
+"network-protection.privacy-policy.title" = "Datenschutzrichtlinie";
+
+/* Title text for the Network Protection terms and conditions accept button */
+"network-protection.waitlist.agree-and-continue" = "Zustimmen und fortfahren";
+
+/* Availability disclaimer for Network Protection join waitlist screen */
+"network-protection.waitlist.availability-disclaimer" = "Die Nutzung von Network Protection ist während der Early-Access-Phase kostenlos.";
+
+/* Agree and Continue button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.agree-and-continue" = "Zustimmen und fortfahren";
+
+/* Enable Notifications button for Network Protection joined waitlist screen */
+"network-protection.waitlist.button.enable-notifications" = "Benachrichtigungen aktivieren";
+
+/* Button title for users who already have an invite code */
+"network-protection.waitlist.button.existing-invite-code" = "Ich habe einen Einladungscode";
+
+/* Join Waitlist button for Network Protection join waitlist screen */
+"network-protection.waitlist.button.join-waitlist" = "Auf Warteliste setzen";
+
+/* Button title text for the Network Protection waitlist confirmation prompt */
+"network-protection.waitlist.get-started" = "Los geht's!";
+
+/* Subtitle for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.subtitle" = "Verschlüssle den Online-Datenverkehr in deinen Browsern und Apps.";
+
+/* Title for section 1 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-1.title" = "Vollständige Geräteabdeckung";
+
+/* Subtitle for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.subtitle" = "Eine separate App ist nicht nötig. Verbinde dich mit einem Klick und sieh deinen Verbindungsstatus auf einen Blick.";
+
+/* Title for section 2 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-2.title" = "Schnell, zuverlässig und benutzerfreundlich";
+
+/* Subtitle for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.subtitle" = "Wir protokollieren oder speichern keine Daten, die dich mit deiner Online-Aktivität in Verbindung bringen können.";
+
+/* Title for section 3 of the Network Protection invited screen */
+"network-protection.waitlist.invited.section-3.title" = "Strenge Keine-Logs-Richtlinie";
+
+/* Subtitle for Network Protection invited screen */
+"network-protection.waitlist.invited.subtitle" = "Erhalte einen zusätzlichen Schutz im Internet mit einem VPN, das auf Geschwindigkeit und Einfachheit ausgelegt ist. Verschlüssle deine Internetverbindung über dein gesamtes Gerät und verstecke deinen Standort und deine IP-Adresse vor den Websites, die du besuchst.";
+
+/* Title for Network Protection invited screen */
+"network-protection.waitlist.invited.title" = "Du bist eingeladen, Network Protection frühzeitig zu testen!";
+
+/* First subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.1" = "Sichere deine Verbindung jederzeit und überall mit Network Protection, dem VPN von DuckDuckGo.";
+
+/* Second subtitle for Network Protection join waitlist screen */
+"network-protection.waitlist.join.subtitle.2" = "Trage dich in die Warteliste ein, und wir benachrichtigen dich, wenn du an der Reihe bist.";
+
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
+
+/* Title for Network Protection joined waitlist screen */
+"network-protection.waitlist.joined.title" = "Du stehst auf der Liste!";
+
+/* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Neue Einladungen werden alle paar Tage nach dem Prinzip „Wer zuerst kommt, mahlt zuerst“ verschickt.";
+
+/* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "Wir werden dich benachrichtigen, wenn deine Einladung vorliegt.";
+
+/* Body text for the alert to enable notifications */
+"network-protection.waitlist.notification-alert.description" = "Wir schicken dir eine Benachrichtigung, wenn deine Einladung zum Testen von Network Protection bereit ist.";
+
+/* Subtitle for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-description" = "Erhalte eine Benachrichtigung, wenn dein Exemplar von Network Protection Early Access fertig ist.";
+
+/* Title for the alert to confirm enabling notifications */
+"network-protection.waitlist.notification-prompt-title" = "Erfahre sofort, wenn du eingeladen wirst";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.text" = "Öffne deine Einladung";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.title" = "Network Protection ist bereit!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Deine Einladung liegt vor!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Du stehst auf der Liste!";
+
+/* Subtitle text for the Network Protection settings row */
+"network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Auf die private Warteliste setzen";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+"network.protection.invite.dialog.title" = "Du bist herzlich eingeladen, Network Protection auszuprobieren";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
-
-/* Message explaining that netP is invite only */
-"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
 
 /* Message for the network protection invite success view */
 "network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
@@ -1453,7 +1570,7 @@
 /* Header title label text for the status view when netP is connected */
 "network.protection.status.header.title.on" = "Network Protection is On";
 
-/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+/* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 
 /* Connection details label shown in NetworkProtection's status view. */
@@ -1489,23 +1606,32 @@
 /* Title for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.title" = "VPN-Benachrichtigungen";
 
-/* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.footer" = "Stelle eine VPN-Verbindung nach einer Unterbrechung automatisch wieder her.";
+/* Footer text for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Lass den lokalen Datenverkehr das VPN umgehen und dich mit Geräten in deinem lokalen Netzwerk verbinden, beispielsweise einem Drucker.";
 
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.title" = "Immer aktiviert";
+/* Title for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.title" = "Lokale Netzwerke ausschließen";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Subtitle of countries item when there are multiple cities, example : */
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d Städte";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+"network.protection.vpn.location.recommended.section.footer" = "Verbinde dich automatisch mit dem nächstgelegenen Server, den wir finden können.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
+"network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
+
+/* Title for the VPN Location screen. */
+"network.protection.vpn.location.title" = "VPN-Standort";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "VPN-Benachrichtigungen";
@@ -1517,10 +1643,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Network Protection verhindert DNS-Lecks zu deinem Internetanbieter, indem DNS-Anfragen über den VPN-Tunnel an unseren eigenen Resolver weitergeleitet werden.";
-
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.title" = "Sicheres DNS";
+"network.protection.vpn.secure.dns.setting.footer" = "Unser VPN nutzt Secure DNS, um deine Online-Aktivitäten geheim zu halten, damit dein Internetanbieter nicht sehen kann, welche Websites du besuchst.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-Einstellungen";
@@ -1648,8 +1771,107 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favoriten";
 
+/* Settings cell for About DDG */
+"settings.about.ddg" = "Über DuckDuckGo";
+
+/* Settings section title for About DuckDuckGo */
+"settings.about.section" = "Über";
+
 /* about page */
 "settings.about.text" = "DuckDuckGo ist die unabhängige Firma für Internet-Datenschutz, die 2008 für alle gegründet wurde, die es leid sind, online getrackt zu werden, und eine einfache Lösung suchen. Wir sind der Beweis, dass du echten Online-Datenschutz ohne Kompromisse erhalten kannst.\n\nDer DuckDuckGo-Browser bietet die Funktionen, die von einem alltagstauglichen Browser erwartet werden, wie Lesezeichen, Tabs, Passwörter und mehr, sowie über [ein Dutzend leistungsstarke Datenschutzmaßnahmen](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/), die in den meisten gängigen Browsern nicht standardmäßig angeboten werden. Dieser einzigartige, umfassende Datenschutz hilft dir, deine Online-Aktivitäten zu schützen – von der Suche über das Browsen bis hin zu E-Mails und vielem mehr.\n\nUnser Datenschutz funktioniert, ohne dass du etwas über die technischen Details wissen oder dich mit komplizierten Einstellungen auseinandersetzen musst. Du musst lediglich den Browser auf allen deinen Geräten auf DuckDuckGo umstellen und schon erhältst du echte Privatsphäre als Standard.\n\nWenn du jedoch einen Blick unter die Haube werfen möchtest, findest du auf unseren [Hilfeseiten](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/) weitere Informationen darüber, wie der Datenschutz bei DuckDuckGo funktioniert.";
+
+/* Settings screen cell text for adding the app to the dock */
+"settings.add.to.dock" = "App zum Dock hinzufügen";
+
+/* Settings screen cell text for add widget to the home screen */
+"settings.add.widget" = "Widget zum Startbildschirm hinzufügen";
+
+/* Settings screen cell text for addess bar position */
+"settings.address.bar" = "Position der Adressleiste";
+
+/* Settings screen appearance section title */
+"settings.appearance" = "Aussehen";
+
+/* Settings screen cell for opening links in associated apps */
+"settings.associated.apps" = "Links in den dazugehörigen Apps öffnen";
+
+/* Description for associated apps description */
+"settings.associated.apps.description" = "Aktivieren, damit sich Links nicht automatisch in anderen installierten Apps öffnen.";
+
+/* Settings screen cell for autocomplete */
+"settings.autocomplete" = "Vorschläge für die Autovervollständigung";
+
+/* Settings screen cell text for Application Lock */
+"settings.autolock" = "Anwendungssperre";
+
+/* Section footer Autolock description */
+"settings.autolock.description" = "Wenn Touch ID, Face ID oder ein Systempasswort eingestellt sind, wirst du aufgefordert, die App beim Öffnen zu entsperren.";
+
+/* Settings screen cell text for Automatically Clearing Data */
+"settings.clear.data" = "Daten automatisch löschen";
+
+/* Settings screen cell text for Cookie popups */
+"settings.cookie.popups" = "Cookie-Pop-ups verwalten";
+
+/* Settings title for the customize section */
+"settings.customize" = "Anpassen";
+
+/* Settings screen cell text for setting the app as default browser */
+"settings.default.browser" = "Als Standard-Browser festlegen";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection" = "E-Mail-Schutz";
+
+/* Settings cell for Email Protection */
+"settings.emailProtection.description" = "E-Mail-Tracker blockieren und deine Adresse verbergen";
+
+/* Settings cell for Feedback */
+"settings.feedback" = "Feedback teilen";
+
+/* Settings screen cell text for fire button animation */
+"settings.firebutton" = "Animation der Schaltfläche „Feuer“";
+
+/* Settings screen cell text for Fireproof Sites */
+"settings.fireproof.sites" = "Feuerfeste Seiten";
+
+/* Settings screen cell text for GPC */
+"settings.gpc" = "Global Privacy Control (GPC)";
+
+/* Settings screen cell text for app icon selection */
+"settings.icon" = "App-Symbol";
+
+/* Settings screen cell for Keyboard */
+"settings.keyboard" = "Tastatur";
+
+/* Settings title for the 'More' section */
+"settings.more" = "Mehr von DuckDuckGo";
+
+/* Settings screen cell for long press previews */
+"settings.previews" = "Vorschau durch langes Tippen";
+
+/* Settings title for the privacy section */
+"settings.privacy" = "Privatsphäre";
+
+/* Settings screen cell text for sync and backup */
+"settings.sync" = "Synchronisieren und sichern";
+
+/* Settings screen cell text for text size */
+"settings.text.size" = "Textgröße";
+
+/* Settings screen cell text for theme */
+"settings.theme" = "Design";
+
+/* Title for the Settings View */
+"settings.title" = "Einstellungen";
+
+/* Settings screen cell text for Unprotected Sites */
+"settings.unprotected.sites" = "Ungeschützte Websites";
+
+/* Settings cell for Version */
+"settings.version" = "Version";
+
+/* Settings screen cell for voice search */
+"settings.voice.search" = "Private Sprachsuche";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Bericht senden";
@@ -1671,6 +1893,15 @@
 
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "„%@“ kann nicht mehr auf deine synchronisierten Daten zugreifen.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Leider ist Synchronisieren und sichern derzeit nicht verfügbar. Bitte versuche es zu einem späteren Zeitpunkt erneut.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Synchronisieren und sichern ist in dieser App-Version leider nicht mehr verfügbar. Bitte aktualisiere DuckDuckGo auf die neueste Version, um fortzufahren.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "Synchronisieren und sichern ist angehalten";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Startseiten-Tab schließen";
@@ -1734,6 +1965,9 @@
 
 /* Message for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.message" = "Bitte erlaube den Mikrofonzugriff in den iOS-Systemeinstellungen, damit DuckDuckGo Sprachfunktionen nutzen kann.";
+
+/* OK button alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.ok" = "OK";
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Mikrofonzugriff erforderlich";

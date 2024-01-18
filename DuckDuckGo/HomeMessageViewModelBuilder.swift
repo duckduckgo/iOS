@@ -49,10 +49,10 @@ extension RemoteAction {
         case .share(let value, let title):
             return .share(value: value, title: title)
 
-        case .appStore, .url:
+        case .appStore, .url, .surveyURL:
             return .default
 
-        default:
+        case .dismiss:
             return .cancel
         }
     }

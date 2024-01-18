@@ -81,7 +81,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
             .store(in: &cancellables)
 
         rootView.model.delegate = self
-        navigationItem.title = UserText.syncTitle
+        navigationItem.title = SyncUI.UserText.syncTitle
     }
     
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
@@ -135,7 +135,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     private func setUpFavoritesDisplayModeSwitch(_ viewModel: SyncSettingsViewModel, _ appSettings: AppSettings) {
         viewModel.isUnifiedFavoritesEnabled = appSettings.favoritesDisplayMode.isDisplayUnified
 
-        viewModel.$isUnifiedFavoritesEnabled.dropFirst()
+        viewModel.$isUnifiedFavoritesEnabled.dropFirst().removeDuplicates()
             .sink { [weak self] isEnabled in
                 appSettings.favoritesDisplayMode = isEnabled ? .displayUnified(native: .mobile) : .displayNative(.mobile)
                 NotificationCenter.default.post(name: AppUserDefaults.Notifications.favoritesDisplayModeChange, object: self)

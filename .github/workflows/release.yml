@@ -29,7 +29,7 @@ on:
 jobs:
   make-release:
     if: github.event.action == 0 || github.event.pull_request.merged == true # empty string returns 0; for case when workflow is triggered manually
-    runs-on: macos-13
+    runs-on: macos-13-xlarge
     name: Make App Store Connect Release
 
     steps:

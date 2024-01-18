@@ -43,10 +43,8 @@ public struct SyncSettingsView: View {
                     }
                 }
         } else {
+            rolloutBanner()
             List {
-
-                rolloutBanner()
-
                 if model.isSyncEnabled {
                     
                     syncUnavailableViewWhileLoggedIn()
@@ -76,7 +74,6 @@ public struct SyncSettingsView: View {
                     syncWithAnotherDeviceView()
 
                     otherOptions()
-
                 }
             }
             .navigationTitle(UserText.syncTitle)

@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+// swiftlint:disable file_length
+
 import Common
 import WebKit
 import GRDB
@@ -35,8 +37,22 @@ public protocol WebCacheManagerDataStore {
     
     var cookieStore: WebCacheManagerCookieStore? { get }
     
-    func removeAllDataExceptCookies(completion: @escaping () -> Void)
+    func legacyClearingRemovingAllDataExceptCookies(completion: @escaping () -> Void)
     
+    func preservedCookies(_ preservedLogins: PreserveLogins) async -> [HTTPCookie]
+
+}
+
+extension WebCacheManagerDataStore {
+
+    public static func current(dataStoreIdManager: DataStoreIdManager = .shared) -> WebCacheManagerDataStore {
+        if #available(iOS 17, *), let id = dataStoreIdManager.id {
+            return WKWebsiteDataStore(forIdentifier: id)
+        } else {
+            return WKWebsiteDataStore.default()
+        }
+    }
+
 }
 
 public class WebCacheManager {
@@ -46,19 +62,15 @@ public class WebCacheManager {
     }
     
     public static var shared = WebCacheManager()
-    
+
     private init() { }
 
-    /// This function is used to extract cookies stored in CookieStorage and restore them to WKWebView's HTTP cookie store during the Fire button operation.
-    /// The Fire button no longer persists and restores cookies, but this function remains in the event that cookies have been stored and not yet restored.
+    /// We save cookies from the current container rather than copying them to a new container because
+    ///  the container only persists cookies to disk when the web view is used.  If the user presses the fire button
+    ///  twice then the fire proofed cookies will be lost and the user will be logged out any sites they're logged in to.
     public func consumeCookies(cookieStorage: CookieStorage = CookieStorage(),
-                               httpCookieStore: WebCacheManagerCookieStore? = WKWebsiteDataStore.default().cookieStore,
+                               httpCookieStore: WebCacheManagerCookieStore,
                                completion: @escaping () -> Void) {
-        
-        guard let httpCookieStore = httpCookieStore else {
-            completion()
-            return
-        }
         
         let cookies = cookieStorage.cookies
         
@@ -78,11 +90,7 @@ public class WebCacheManager {
                 group.leave()
             }
         }
-        
-        Pixel.fire(pixel: .legacyCookieMigration, withAdditionalParameters: [
-            PixelParameters.count: "\(consumedCookiesCount)"
-        ])
-        
+
         DispatchQueue.global(qos: .userInitiated).async {
             group.wait()
             
@@ -91,10 +99,10 @@ public class WebCacheManager {
                 completion()
                 
                 if cookieStorage.cookies.count > 0 {
-                    os_log("Error removing cookies: %d cookies left in legacy CookieStorage",
+                    os_log("Error removing cookies: %d cookies left in CookieStorage",
                            log: .generalLog, type: .debug, cookieStorage.cookies.count)
                     
-                    Pixel.fire(pixel: .legacyCookieCleanupError, withAdditionalParameters: [
+                    Pixel.fire(pixel: .debugCookieCleanupError, withAdditionalParameters: [
                         PixelParameters.count: "\(cookieStorage.cookies.count)"
                     ])
                 }
@@ -103,7 +111,7 @@ public class WebCacheManager {
     }
 
     public func removeCookies(forDomains domains: [String],
-                              dataStore: WebCacheManagerDataStore = WKWebsiteDataStore.default(),
+                              dataStore: WebCacheManagerDataStore,
                               completion: @escaping () -> Void) {
 
         guard let cookieStore = dataStore.cookieStore else {
@@ -139,30 +147,112 @@ public class WebCacheManager {
 
     }
 
-    public func clear(dataStore: WebCacheManagerDataStore = WKWebsiteDataStore.default(),
+    @available(iOS 17, *)
+    func checkForLeftBehindDataStores() async {
+        let ids = await WKWebsiteDataStore.allDataStoreIdentifiers
+        if ids.count > 1 {
+            Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedMultiple)
+        } else if ids.count > 0 {
+            Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedOne)
+        }
+    }
+
+    @available(iOS 17, *)
+    func containerBasedClearing(cookieStorage: CookieStorage = CookieStorage(),
+                                logins: PreserveLogins,
+                                storeIdManager: DataStoreIdManager,
+                                completion: @escaping () -> Void) {
+
+        guard let containerId = storeIdManager.id else {
+            completion()
+            return
+        }
+
+        Task { @MainActor in
+            var dataStore: WKWebsiteDataStore? = WKWebsiteDataStore(forIdentifier: containerId)
+            let cookies = await dataStore?.preservedCookies(logins)
+            dataStore = nil
+
+            let uuids = await WKWebsiteDataStore.allDataStoreIdentifiers
+            for uuid in uuids {
+                try? await WKWebsiteDataStore.remove(forIdentifier: uuid)
+            }
+
+            await checkForLeftBehindDataStores()
+
+            storeIdManager.allocateNewContainerId()
+            // If cookies is empty it's likely that the webview was not used since the last fire button so
+            //  don't overwrite previously saved cookies
+            if let cookies, !cookies.isEmpty {
+                cookieStorage.cookies = cookies
+            }
+
+            completion()
+        }
+    }
+
+    public func clear(cookieStorage: CookieStorage = CookieStorage(),
                       logins: PreserveLogins = PreserveLogins.shared,
                       tabCountInfo: TabCountInfo? = nil,
+                      dataStoreIdManager: DataStoreIdManager = .shared,
                       completion: @escaping () -> Void) {
 
-        dataStore.removeAllDataExceptCookies {
+        if #available(iOS 17, *), dataStoreIdManager.hasId {
+            containerBasedClearing(logins: logins, storeIdManager: dataStoreIdManager) {
+                // Perform legacy clearing anyway, just to be sure
+                self.legacyDataClearing(logins: logins) { _ in completion() }
+            }
+        } else {
+            legacyDataClearing(logins: logins) { cookies in
+                if #available(iOS 17, *) {
+                    // From this point onwards... use containers
+                    dataStoreIdManager.allocateNewContainerId()
+                    Task { @MainActor in
+                        cookieStorage.cookies = cookies
+                        completion()
+                    }
+                } else {
+                    completion()
+                }
+            }
+        }
+
+    }
+    
+    // swiftlint:disable function_body_length
+    private func legacyDataClearing(logins: PreserveLogins,
+                                    tabCountInfo: TabCountInfo? = nil,
+                                    completion: @escaping ([HTTPCookie]) -> Void) {
+
+        func keep(_ cookie: HTTPCookie) -> Bool {
+            return logins.isAllowed(cookieDomain: cookie.domain) ||
+                Constants.cookieDomainsToPreserve.contains(cookie.domain)
+        }
+
+        let dataStore = WKWebsiteDataStore.default()
+        dataStore.legacyClearingRemovingAllDataExceptCookies {
             guard let cookieStore = dataStore.cookieStore else {
-                completion()
+                completion([])
                 return
             }
-            
+
             let cookieClearingSummary = WebStoreCookieClearingSummary()
 
             cookieStore.getAllCookies { cookies in
                 let group = DispatchGroup()
                 let cookiesToRemove = cookies.filter {
-                    !logins.isAllowed(cookieDomain: $0.domain) &&
-                    !Constants.cookieDomainsToPreserve.contains($0.domain)
+                    !keep($0)
                 }
+
+                let cookiesToKeep = cookies.filter {
+                    keep($0)
+                }
+
                 let protectedCookiesCount = cookies.count - cookiesToRemove.count
-                
+
                 cookieClearingSummary.storeInitialCount = cookies.count
                 cookieClearingSummary.storeProtectedCount = protectedCookiesCount
-                
+
                 for cookie in cookiesToRemove {
                     group.enter()
                     cookieStore.delete(cookie) {
@@ -179,35 +269,37 @@ public class WebCacheManager {
                             PixelParameters.clearWebDataTimedOut: "1"
                         ])
                     }
-                    
+
                     // Remove legacy HTTPCookieStorage cookies
                     let storageCookies = HTTPCookieStorage.shared.cookies ?? []
                     let storageCookiesToRemove = storageCookies.filter {
                         !logins.isAllowed(cookieDomain: $0.domain) && !Constants.cookieDomainsToPreserve.contains($0.domain)
                     }
-                    
+
                     let protectedStorageCookiesCount = storageCookies.count - storageCookiesToRemove.count
-                    
+
                     cookieClearingSummary.storageInitialCount = storageCookies.count
                     cookieClearingSummary.storageProtectedCount = protectedStorageCookiesCount
-                    
+
                     for storageCookie in storageCookiesToRemove {
                         HTTPCookieStorage.shared.deleteCookie(storageCookie)
                     }
 
                     self.removeObservationsData()
 
-                    self.performSanityCheck(for: cookieStore, summary: cookieClearingSummary, tabCountInfo: tabCountInfo)
-                    
+                    self.validateLegacyClearing(for: cookieStore, summary: cookieClearingSummary, tabCountInfo: tabCountInfo)
+
                     DispatchQueue.main.async {
-                        completion()
+                        completion(cookiesToKeep)
                     }
                 }
             }
         }
+
     }
-    
-    private func performSanityCheck(for cookieStore: WebCacheManagerCookieStore, summary: WebStoreCookieClearingSummary, tabCountInfo: TabCountInfo?) {
+    // swiftlint:enable function_body_length
+
+    private func validateLegacyClearing(for cookieStore: WebCacheManagerCookieStore, summary: WebStoreCookieClearingSummary, tabCountInfo: TabCountInfo?) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             cookieStore.getAllCookies { cookiesAfterCleaning in
                 let storageCookiesAfterCleaning = HTTPCookieStorage.shared.cookies ?? []
@@ -296,11 +388,19 @@ extension WKHTTPCookieStore: WebCacheManagerCookieStore {
 
 extension WKWebsiteDataStore: WebCacheManagerDataStore {
 
+    @MainActor
+    public func preservedCookies(_ preservedLogins: PreserveLogins) async -> [HTTPCookie] {
+        let allCookies = await self.httpCookieStore.allCookies()
+        return allCookies.filter {
+            preservedLogins.isAllowed(cookieDomain: $0.domain)
+        }
+    }
+
     public var cookieStore: WebCacheManagerCookieStore? {
         return self.httpCookieStore
     }
 
-    public func removeAllDataExceptCookies(completion: @escaping () -> Void) {
+    public func legacyClearingRemovingAllDataExceptCookies(completion: @escaping () -> Void) {
         var types = WKWebsiteDataStore.allWebsiteDataTypes()
 
         // Force the HSTS, Media and Alt services cache to clear when using the Fire button.
@@ -364,3 +464,5 @@ public final class TabCountInfo {
          PixelParameters.tabControllerCacheCount: "\(tabControllerCacheCount)"]
     }
 }
+
+// swiftlint:enable file_length

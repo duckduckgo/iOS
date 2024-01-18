@@ -20,12 +20,18 @@
 import UIKit
 import Lottie
 
-enum FireButtonAnimationType: String, CaseIterable {
+enum FireButtonAnimationType: String, CaseIterable, Identifiable, CustomStringConvertible {
+    
+    var description: String {
+        return descriptionText
+    }
 
     case fireRising
     case waterSwirl
     case airstream
     case none
+    
+    var id: String { self.rawValue }
     
     var descriptionText: String {
         switch self {

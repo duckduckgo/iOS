@@ -34,12 +34,13 @@ public enum FeatureFlag: String {
     case networkProtection
     case networkProtectionWaitlistAccess
     case networkProtectionWaitlistActive
+    case subscription
 }
 
 extension FeatureFlag: FeatureFlagSourceProviding {
     public var source: FeatureFlagSource {
         switch self {
-        case .debugMenu, .appTrackingProtection:
+        case .debugMenu, .appTrackingProtection, .subscription:
             return .internalOnly
         case .sync:
             return .remoteReleasable(.subfeature(SyncSubfeature.level0ShowSync))

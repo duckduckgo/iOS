@@ -29,6 +29,9 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     let purchaseManager: PurchaseManager
+    let accountManager: AccountManager
+    let isAddingDevice: Bool
+    var viewTitle: String
     
     enum SubscriptionActivationResult {
         case unknown, activated, notFound, error
@@ -36,13 +39,24 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     @Published var transactionStatus: SubscriptionPagesUseSubscriptionFeature.TransactionStatus = .idle
     @Published var activationResult: SubscriptionActivationResult = .unknown
+    @Published var subscriptionEmail: String?
         
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
-         purchaseManager: PurchaseManager = PurchaseManager.shared) {
+         purchaseManager: PurchaseManager = PurchaseManager.shared,
+         accountManager: AccountManager = AccountManager(),
+         isAddingDevice: Bool = false) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.purchaseManager = purchaseManager
+        self.accountManager = accountManager
+        self.isAddingDevice = isAddingDevice
+        self.viewTitle = !isAddingDevice ? UserText.subscriptionActivate : UserText.subscriptionAddDeviceButton
+        initializeView()
+    }
+    
+    func initializeView() {
+        subscriptionEmail = accountManager.email
     }
     
     @MainActor

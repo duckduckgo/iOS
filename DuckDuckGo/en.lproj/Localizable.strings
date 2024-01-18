@@ -1915,13 +1915,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 "siteFeedback.urlPlaceholder" = "Which website is broken?";
 
 /* Subscription Activation Window Title */
-"subscription.activate" = "Activate Subscription.";
+"subscription.activate" = "Activate Subscription";
 
 /* Apple ID option for activation */
 "subscription.activate.appleid" = "Apple ID";
 
-/* Description for Apple ID activation
-   Description for Email activation */
+/* Description for Apple ID activation */
 "subscription.activate.appleid.description" = "Restore your purchase to activate your subscription on this device.";
 
 /* Subscription Activation Info */
@@ -1929,6 +1928,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Email option for activation */
 "subscription.activate.email" = "Email";
+
+/* Description for Email activation */
+"subscription.activate.email.description" = "Use your email to activate your subscription on this device.";
+
+/* Restore button title for Managing Email */
+"subscription.activate.manage.email.button" = "Manage";
 
 /* Restore button title for AppleID */
 "subscription.activate.restore.apple" = "Restore";
@@ -1940,7 +1945,28 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.activate.title" = "Activate your subscription on this device";
 
 /* Add to another device button */
-"subscription.add.device" = "Add to Another Device";
+"subscription.add.device.button" = "Add to Another Device";
+
+/* Subscription Add device Info */
+"subscription.add.device.description" = "Access your Privacy Pro subscription on any of your devices via Apple ID or by adding an email address.";
+
+/* Add subscription to other device title  */
+"subscription.add.device.header.title" = "Use your subscription on all your devices";
+
+/* Add to another device view title */
+"subscription.add.device.title" = "Add Device";
+
+/* Add email to an existing subscription */
+"subscription.add.email" = "Add an email address to activate your subscription on your other devices. We’ll only use this address to verify your subscription.";
+
+/* Button title for adding email to subscription */
+"subscription.add.email.button" = "Add Email";
+
+/* View itle for adding email to subscription */
+"subscription.add.email.title" = "Add Email";
+
+/* Subscription availability message on Apple devices */
+"subscription.available.apple" = "Privacy Pro is available on any device signed in to the same Apple ID.";
 
 /* Change plan or billing title */
 "subscription.change.plan" = "Change Plan Or Billing";
@@ -1961,13 +1987,16 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.found.text" = "We found a subscription associated with this Apple ID.";
 
 /* Title for the existing subscription dialog */
-"subscription.found.tite" = "Subscription Found";
+"subscription.found.title" = "Subscription Found";
 
 /* Help and support Section header */
 "subscription.help" = "Help and support";
 
 /* Header for the device management section */
-"subscription.manage.device" = "Manage Devices";
+"subscription.manage.devices" = "Manage Devices";
+
+/* Description for Email Management options */
+"subscription.manage.email.description" = "You can use this email to activate your subscription on your other devices.";
 
 /* Manage Plan header */
 "subscription.manage.plan" = "Manage Plan";
@@ -1991,7 +2020,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.progress.view.restoring.subscription" = "Restoring subscription...";
 
 /* Remove from this device button */
-"subscription.remove.from.device" = "Remove From This Device";
+"subscription.remove.from.device.button" = "Remove From This Device";
 
 /* Remove from device confirmation dialog text */
 "subscription.remove.from.device.text" = "You will no longer be able to access your Privacy Pro subscription on this device. This will not cancel your subscription, and it will remain active on your other devices.";

@@ -51,7 +51,7 @@ struct SubscriptionRestoreView: View {
                 listView
             }
             .background(Color(designSystemColor: .container))
-            .navigationTitle(UserText.subscriptionActivate)
+            .navigationTitle(viewModel.viewTitle)
             .navigationBarBackButtonHidden(viewModel.transactionStatus != .idle)
             .applyInsetGroupedListStyle()
             .alert(isPresented: $isAlertVisible) { getAlert() }
@@ -74,15 +74,13 @@ struct SubscriptionRestoreView: View {
             .init(id: 0,
                   content: getCellTitle(icon: Constants.appleIDIcon,
                                         text: UserText.subscriptionActivateAppleID),
-                  expandedContent: getCellContent(description: UserText.subscriptionActivateAppleIDDescription,
+                  expandedContent: getAppleIDCellContent(description: UserText.subscriptionActivateAppleIDDescription,
                                                   buttonText: UserText.subscriptionRestoreAppleID,
                                                   buttonAction: viewModel.restoreAppstoreTransaction)),
             .init(id: 1,
                   content: getCellTitle(icon: Constants.emailIcon,
                                         text: UserText.subscriptionActivateEmail),
-                  expandedContent: getCellContent(description: UserText.subscriptionActivateEmailDescription,
-                                                  buttonText: UserText.subscriptionRestoreEmail,
-                                                  buttonAction: {}))
+                  expandedContent: getEmailCellContent(buttonAction: {}))
         ]
     }
     
@@ -97,7 +95,7 @@ struct SubscriptionRestoreView: View {
         )
     }
     
-    private func getCellContent(description: String, buttonText: String, buttonAction: @escaping () -> Void) -> AnyView {
+    private func getAppleIDCellContent(description: String, buttonText: String, buttonAction: @escaping () -> Void) -> AnyView {
         AnyView(
             VStack(alignment: .leading) {
                 Text(description)
@@ -106,6 +104,27 @@ struct SubscriptionRestoreView: View {
                 getCellButton(buttonText: buttonText, action: buttonAction)
             }
         )
+    }
+    
+    private func getEmailCellContent(buttonAction: @escaping () -> Void) -> AnyView {
+        AnyView(
+                VStack(alignment: .leading) {
+                    if viewModel.subscriptionEmail == nil {
+                        Text(UserText.subscriptionActivateEmailDescription)
+                            .daxSubheadRegular()
+                            .foregroundColor(Color(designSystemColor: .textSecondary))
+                        getCellButton(buttonText: UserText.subscriptionRestoreEmail,
+                                                    action: buttonAction)
+                    } else {
+                        Text(viewModel.subscriptionEmail ?? "").daxSubheadSemibold()
+                        Text(UserText.subscriptionActivateEmailDescription)
+                            .daxSubheadRegular()
+                            .foregroundColor(Color(designSystemColor: .textSecondary))
+                        getCellButton(buttonText: UserText.subscriptionManageEmail,
+                                                    action: buttonAction)
+                    }
+                }
+            )
     }
     
     private func getCellButton(buttonText: String, action: @escaping () -> Void) -> AnyView {

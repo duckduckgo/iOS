@@ -45,7 +45,7 @@ struct SubscriptionFlowView: View {
             AsyncHeadlessWebView(url: $viewModel.purchaseURL,
                                  userScript: viewModel.userScript,
                                  subFeature: viewModel.subFeature,
-                                 shouldReload: $viewModel.shouldReloadWebview).background()
+                                 shouldReload: $viewModel.shouldReloadWebView).background()
 
             // Overlay that appears when transaction is in progress
             if viewModel.transactionStatus != .idle {
@@ -58,9 +58,9 @@ struct SubscriptionFlowView: View {
                 EmptyView()
             }
         }
-        .onChange(of: viewModel.shouldReloadWebview) { shouldReload in
+        .onChange(of: viewModel.shouldReloadWebView) { shouldReload in
             if shouldReload {
-                viewModel.shouldReloadWebview = false
+                viewModel.shouldReloadWebView = false
             }
         }
         .onChange(of: viewModel.hasActiveSubscription) { result in

@@ -39,6 +39,7 @@ struct SmallOmniBarState {
         let showSettings = false
         let showCancel: Bool = true
         let showVoiceSearch = AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled
+        let isTextVerticallyCentered = false
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return HomeNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
@@ -68,6 +69,7 @@ struct SmallOmniBarState {
         let showSettings = false
         let showCancel: Bool = true
         let showVoiceSearch = false
+        let isTextVerticallyCentered = false
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return HomeNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
@@ -97,6 +99,7 @@ struct SmallOmniBarState {
         let showSettings = true
         let showCancel: Bool = false
         let showVoiceSearch = AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled
+        let isTextVerticallyCentered = false
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return self }
         var onEditingStartedState: OmniBarState { return HomeEmptyEditingState() }
@@ -126,6 +129,7 @@ struct SmallOmniBarState {
         let showSettings = false
         let showCancel: Bool = true
         let showVoiceSearch = AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled
+        let isTextVerticallyCentered = false
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
@@ -155,6 +159,7 @@ struct SmallOmniBarState {
         let showSettings = false
         let showCancel: Bool = true
         let showVoiceSearch = false
+        let isTextVerticallyCentered = false
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
@@ -184,6 +189,7 @@ struct SmallOmniBarState {
         let showSettings = false
         let showCancel: Bool = false
         let showVoiceSearch = false
+        let isTextVerticallyCentered = true
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return self }
         var onEditingStartedState: OmniBarState { return BrowsingTextEditingStartedState() }
@@ -213,6 +219,7 @@ struct SmallOmniBarState {
         let showSettings = false
         let showCancel: Bool = true
         let showVoiceSearch = AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled
+        let isTextVerticallyCentered = false
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }

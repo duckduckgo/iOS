@@ -343,6 +343,8 @@ class OmniBar: UIView {
         leftButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 0
         rightButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 14
 
+        textField.textAlignment = state.isTextVerticallyCentered ? .center : .natural
+
         if state.showVoiceSearch && state.showClear {
             searchStackContainer.setCustomSpacing(13, after: voiceSearchButton)
         }

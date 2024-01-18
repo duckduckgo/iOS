@@ -1,5 +1,5 @@
 //
-//  SettingsPrivacyProView.swift
+//  SettingsSubscriptionView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -22,11 +22,11 @@ import UIKit
 
 #if SUBSCRIPTION
 @available(iOS 15.0, *)
-struct SettingsPrivacyProView: View {
+struct SettingsSubscriptionView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
     
-    private var privacyProDescriptionView: some View {
+    private var subscriptionDescriptionView: some View {
         VStack(alignment: .leading) {
             Text(UserText.settingsPProSubscribe).daxBodyRegular()
             Group {
@@ -51,7 +51,7 @@ struct SettingsPrivacyProView: View {
     
     private var purchaseSubscriptionView: some View {
         return Group {
-            SettingsCustomCell(content: { privacyProDescriptionView })
+            SettingsCustomCell(content: { subscriptionDescriptionView })
             NavigationLink(destination: SubscriptionFlowView(viewModel: SubscriptionFlowViewModel())) {
                 SettingsCustomCell(content: { learnMoreView })
             }
@@ -63,13 +63,18 @@ struct SettingsPrivacyProView: View {
             SettingsCellView(label: UserText.settingsPProVPNTitle,
                              subtitle: viewModel.state.networkProtection.status != "" ? viewModel.state.networkProtection.status : nil,
                              action: { viewModel.presentLegacyView(.netP) },
-                             asLink: true,
-                             disclosureIndicator: true)
+                             disclosureIndicator: true,
+                             isButton: true)
             
-            SettingsCellView(label: UserText.settingsPProDBPTitle, subtitle: UserText.settingsPProDBPSubTitle)
-            SettingsCellView(label: UserText.settingsPProITRTitle, subtitle: UserText.settingsPProITRSubTitle)
+            NavigationLink(destination: Text("Data Broker Protection")) {
+                SettingsCellView(label: UserText.settingsPProDBPTitle, subtitle: UserText.settingsPProDBPSubTitle)
+            }
             
-            NavigationLink(destination: SubscriptionFlowView(viewModel: SubscriptionFlowViewModel())) {
+            NavigationLink(destination: Text("Identity Theft Restoration")) {
+                SettingsCellView(label: UserText.settingsPProITRTitle, subtitle: UserText.settingsPProITRSubTitle)
+            }
+            
+            NavigationLink(destination: SubscriptionSettingsView(viewModel: SubscriptionSettingsViewModel())) {
                 SettingsCustomCell(content: { manageSubscriptionView })
             }
         }
@@ -77,9 +82,9 @@ struct SettingsPrivacyProView: View {
     
     var body: some View {
         
-        if viewModel.state.privacyPro.enabled {
+        if viewModel.state.subscription.enabled {
             Section(header: Text(UserText.settingsPProSection)) {
-                if viewModel.state.privacyPro.hasActiveSubscription {
+                if viewModel.state.subscription.hasActiveSubscription {
                     subscriptionDetailsView
                 } else {
                     purchaseSubscriptionView

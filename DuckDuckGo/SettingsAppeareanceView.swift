@@ -35,8 +35,8 @@ struct SettingsAppeareanceView: View {
             SettingsCellView(label: UserText.settingsIcon,
                              action: { viewModel.presentLegacyView(.appIcon ) },
                              accesory: .image(image),
-                             asLink: true,
-                             disclosureIndicator: true)
+                             disclosureIndicator: true,
+                             isButton: true)
             
             SettingsPickerCellView(label: UserText.settingsFirebutton,
                                    options: FireButtonAnimationType.allCases,
@@ -46,8 +46,8 @@ struct SettingsAppeareanceView: View {
                 SettingsCellView(label: UserText.settingsText,
                                  action: { viewModel.presentLegacyView(.textSize) },
                                  accesory: .rightDetail("\(viewModel.state.textSize.size)%"),
-                                 asLink: true,
-                                 disclosureIndicator: true)
+                                 disclosureIndicator: true,
+                                 isButton: true)
             }
             
             if viewModel.state.addressbar.enabled {

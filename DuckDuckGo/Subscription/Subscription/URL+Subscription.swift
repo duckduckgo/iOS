@@ -47,4 +47,8 @@ public extension URL {
     static var manageSubscriptionsInAppStoreAppURL: URL {
         URL(string: "macappstores://apps.apple.com/account/subscriptions")!
     }
+    
+    static var manageSubscriptionsIniOSAppStoreAppURL: URL {
+        URL(string: "https://apps.apple.com/account/subscriptions")!
+    }
 }

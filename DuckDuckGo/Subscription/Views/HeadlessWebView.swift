@@ -55,7 +55,14 @@ struct HeadlessWebview: UIViewRepresentable {
     
     func updateUIView(_ uiView: WKWebView, context: Context) {
         if shouldReload {
-            uiView.reload()
+            reloadView(uiView: uiView)
+        }
+    }
+    
+    @MainActor
+    func reloadView(uiView: WKWebView) {
+        uiView.reload()
+        DispatchQueue.main.async {
             shouldReload = false
         }
     }

@@ -386,10 +386,6 @@ class OmniBar: UIView {
 
     func refreshText(forUrl url: URL?) {
 
-        if textField.isEditing {
-            return
-        }
-
         guard let url = url else {
             textField.text = nil
             return
@@ -398,37 +394,10 @@ class OmniBar: UIView {
         if let query = url.searchQuery {
             textField.text = query
         } else {
-            textField.attributedText = OmniBar.demphasisePath(forUrl: url)
+            textField.attributedText = AddressDisplayHelper.addressForDisplay(url: url, isEditing: textField.isEditing)
         }
     }
 
-    public class func demphasisePath(forUrl url: URL) -> NSAttributedString? {
-        
-        let s = url.absoluteString
-        let attributedString = NSMutableAttributedString(string: s)
-        guard let c = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
-            return attributedString
-        }
-        
-        let theme = ThemeManager.shared.currentTheme
-        
-        if let pathStart = c.rangeOfPath?.lowerBound {
-            let urlEnd = s.endIndex
-            
-            let pathRange = NSRange(pathStart ..< urlEnd, in: s)
-            attributedString.addAttribute(.foregroundColor, value: theme.searchBarTextDeemphasisColor, range: pathRange)
-            
-            let domainRange = NSRange(s.startIndex ..< pathStart, in: s)
-            attributedString.addAttribute(.foregroundColor, value: theme.searchBarTextColor, range: domainRange)
-            
-        } else {
-            let range = NSRange(s.startIndex ..< s.endIndex, in: s)
-            attributedString.addAttribute(.foregroundColor, value: theme.searchBarTextColor, range: range)
-        }
-        
-        return attributedString
-    }
-    
     @IBAction func onTextEntered(_ sender: Any) {
         onQuerySubmitted()
     }
@@ -517,7 +486,7 @@ class OmniBar: UIView {
         super.layoutSubviews()
         NotificationCenter.default.post(name: OmniBar.didLayoutNotification, object: self)
     }
-    
+
 }
 // swiftlint:enable type_body_length
 
@@ -571,7 +540,7 @@ extension OmniBar: Themable {
         searchStackContainer?.tintColor = theme.barTintColor
         
         if let url = textField.text.flatMap({ URL(trimmedAddressBarString: $0.trimmingWhitespace()) }) {
-            textField.attributedText = OmniBar.demphasisePath(forUrl: url)
+            textField.attributedText = AddressDisplayHelper.deemphasisePath(forUrl: url)
         }
         textField.textColor = theme.searchBarTextColor
         textField.tintColor = UIColor(designSystemColor: .accent)

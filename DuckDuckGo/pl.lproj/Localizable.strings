@@ -1843,8 +1843,14 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Klawiatura";
 
+/* Settings screen cell text for passwords */
+"settings.logins" = "Hasła";
+
 /* Settings title for the 'More' section */
 "settings.more" = "Więcej możliwości DuckDuckGo";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Podglądy po dłuższym przyciśnięciu";
@@ -1891,8 +1897,35 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Która witryna nie działa poprawnie?";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Kod odzyskiwania skopiowany do schowka";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Usuń dane serwera";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "Wszystkie urządzenia zostaną odłączone, a zsynchronizowane dane usunięte z serwera.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Usunąć dane serwera?";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Usuń";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "„%@” nie będzie już mieć dostępu do zsynchronizowanych danych.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Usunąć urządzenie?";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Usuń";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "To urządzenie nie będzie już mieć dostępu do zsynchronizowanych danych.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Wyłączyć synchronizację?";
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "Niestety synchronizacja i kopia zapasowa jest obecnie niedostępna. Spróbuj ponownie później.";

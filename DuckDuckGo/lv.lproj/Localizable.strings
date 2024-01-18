@@ -1843,8 +1843,14 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Tastatūra";
 
+/* Settings screen cell text for passwords */
+"settings.logins" = "Paroles";
+
 /* Settings title for the 'More' section */
 "settings.more" = "Vairāk no DuckDuckGo";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Ilgas nospiešanas rezultātu priekšskatījumi";
@@ -1891,8 +1897,35 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Kura vietne ir bojāta?";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Atgūšanas kods ir nokopēts starpliktuvē";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Dzēst servera datus";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "Visas ierīces tiks atvienotas un tavi sinhronizētie dati tiks dzēsti no servera.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Dzēst servera datus?";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Noņemt";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "\"%@\" vairs nevarēs piekļūt taviem sinhronizētajiem datiem.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Noņemt ierīci?";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Noņemt";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "Šī ierīce vairs nevarēs piekļūt taviem sinhronizētajiem datiem.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Izslēgt sinhronizāciju?";
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "Diemžēl sinhronizācija un dublēšana pašlaik nav pieejama. Lūdzu, mēģini vēlreiz vēlāk.";

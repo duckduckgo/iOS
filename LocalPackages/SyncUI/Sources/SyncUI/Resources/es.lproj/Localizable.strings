@@ -28,6 +28,9 @@
 /* Standard Buttons - Cancel Button */
 "cancel.button" = "Cancelar";
 
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "Activar sincronización y copia de seguridad";
+
 /* Connect With Server Sheet - Description Part 1 */
 "connect.with.server.sheet.description.part1" = "Esto crea una copia de seguridad encriptada de tus marcadores y contraseñas en el servidor seguro de DuckDuckGo que se puede sincronizar con tus otros dispositivos.";
 
@@ -51,6 +54,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Entorno de desarrollo";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "¡Tus datos están sincronizados!";
 
 /* Standard Buttons - Done Button */
 "done.button" = "Hecho";
@@ -226,6 +232,9 @@
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "La sincronización y copia de seguridad no está disponible";
 
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Sincronizar con otro dispositivo";
+
 /* Footer message for syncing with another device */
 "sync.with.another.device.footer" = "Tus datos están encriptados de extremo a extremo y DuckDuckGo no tiene acceso a la clave de encriptación.";
 
@@ -252,6 +261,9 @@
 
 /* Options - Unify Favorites Instruction */
 "unified.favorites.instruction" = "Usa los mismos marcadores favoritos en todos tus dispositivos. Deja de tener diferentes favoritos en tus dispositivos móviles y de escritorio.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Unifica tus favoritos en todos los dispositivos";
 
 /* View Text Code menu item */
 "view.text.code.menu.item" = "Ver código de texto";

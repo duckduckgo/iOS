@@ -432,7 +432,6 @@ class MainViewController: UIViewController {
     @objc func onAddressBarPositionChanged() {
         viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
         refreshViewsBasedOnAddressBarPosition(appSettings.currentAddressBarPosition)
-        refreshWebViewContentInsets()
     }
 
     func refreshViewsBasedOnAddressBarPosition(_ position: AddressBarPosition) {
@@ -479,7 +478,6 @@ class MainViewController: UIViewController {
 
         findInPageBottomLayoutConstraint.constant = height
         keyboardHeight = height
-        refreshWebViewContentInsets()
 
         if let suggestionsTray = suggestionTrayController {
             let suggestionsFrameInView = suggestionsTray.view.convert(suggestionsTray.contentFrame, to: view)
@@ -1332,35 +1330,10 @@ extension MainViewController: BrowserChromeDelegate {
         }
            
         if animated {
-            UIView.animate(withDuration: ChromeAnimationConstants.duration, animations: updateBlock) { _ in
-                self.refreshWebViewContentInsets()
-            }
+            UIView.animate(withDuration: ChromeAnimationConstants.duration, animations: updateBlock)
         } else {
             updateBlock()
-            self.refreshWebViewContentInsets()
         }
-    }
-
-    func refreshWebViewContentInsets() {
-        guard let webView = currentTab?.webView else { return }
-
-        let top = viewCoordinator.statusBackground.frame.height
-        let bottom: CGFloat
-        if isToolbarHidden {
-            bottom = 0
-        } else if appSettings.currentAddressBarPosition.isBottom {
-            bottom = viewCoordinator.toolbar.frame.height
-                + viewCoordinator.navigationBarContainer.frame.height
-                + view.safeAreaInsets.bottom + additionalSafeAreaInsets.bottom
-                + keyboardHeight
-        } else {
-            bottom = viewCoordinator.toolbar.frame.height
-                + view.safeAreaInsets.bottom + additionalSafeAreaInsets.bottom
-                + keyboardHeight
-        }
-        
-        // webView.scrollView.contentInset = .init(top: top, left: 0, bottom: bottom, right: 0)
-        // webView.invalidateIntrinsicContentSize()
     }
     
     func setNavigationBarHidden(_ hidden: Bool) {
@@ -1832,7 +1805,6 @@ extension MainViewController: TabDelegate {
 
     func showBars() {
         chromeManager.reset()
-        refreshWebViewContentInsets()
     }
     
     func tabDidRequestFindInPage(tab: TabViewController) {

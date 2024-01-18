@@ -317,7 +317,7 @@ extension SyncSettingsView {
         .padding()
         .background(RoundedRectangle(cornerRadius: 8).foregroundColor(Color("RolloutBannerBackground")))
         .padding(.bottom, 10)
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 14)
     }
 
     enum LimitedItemType {

@@ -39,6 +39,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     @Published var hasActiveSubscription = false
     @Published var transactionStatus: SubscriptionPagesUseSubscriptionFeature.TransactionStatus = .idle
     @Published var shouldReloadWebview = false
+    @Published var activatingSubscription = false
         
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
@@ -66,10 +67,13 @@ final class SubscriptionFlowViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        subFeature.$hasActiveSubscription
+        subFeature.$activateSubscription
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
-                self?.hasActiveSubscription = value
+                if value {
+                    self?.subFeature.activateSubscription = false
+                    self?.activatingSubscription = true
+                }
             }
             .store(in: &cancellables)
     }
@@ -81,6 +85,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     func initializeViewData() async {
         await self.setupTransactionObserver()
+        await MainActor.run { shouldReloadWebview = true }
     }
     
     func restoreAppstoreTransaction() {

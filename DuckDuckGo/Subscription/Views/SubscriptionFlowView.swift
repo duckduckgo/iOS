@@ -25,6 +25,7 @@ import Foundation
 struct SubscriptionFlowView: View {
         
     @ObservedObject var viewModel: SubscriptionFlowViewModel
+    @State private var isAlertVisible = false
     
     private func getTransactionStatus() -> String {
         switch viewModel.transactionStatus {
@@ -50,15 +51,21 @@ struct SubscriptionFlowView: View {
             if viewModel.transactionStatus != .idle {
                 PurchaseInProgressView(status: getTransactionStatus())
             }
+         
+            // Activation View
+            NavigationLink(destination: SubscriptionRestoreView(viewModel: SubscriptionRestoreViewModel()),
+                           isActive: $viewModel.activatingSubscription) {
+                EmptyView()
+            }
         }
         .onChange(of: viewModel.shouldReloadWebview) { shouldReload in
             if shouldReload {
                 viewModel.shouldReloadWebview = false
             }
         }
-        .onChange(of: viewModel.shouldReloadWebview) { shouldReload in
-            if shouldReload {
-                viewModel.shouldReloadWebview = false
+        .onChange(of: viewModel.hasActiveSubscription) { result in
+            if result {
+                isAlertVisible = true
             }
         }
         .onAppear(perform: {
@@ -68,7 +75,7 @@ struct SubscriptionFlowView: View {
         .navigationBarBackButtonHidden(viewModel.transactionStatus != .idle)
         
         // Active subscription found Alert
-        .alert(isPresented: $viewModel.hasActiveSubscription) {
+        .alert(isPresented: $isAlertVisible) {
             Alert(
                 title: Text(UserText.subscriptionFoundTitle),
                 message: Text(UserText.subscriptionFoundText),

@@ -66,6 +66,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     @Published var transactionStatus: TransactionStatus = .idle
     @Published var hasActiveSubscription = false
     @Published var purchaseError: AppStorePurchaseFlow.Error?
+    @Published var activateSubscription: Bool = false
     
     var broker: UserScriptMessageBroker?
 
@@ -221,6 +222,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func activateSubscription(params: Any, original: WKScriptMessage) async throws -> Encodable? {
+        activateSubscription = true
         return nil
     }
 

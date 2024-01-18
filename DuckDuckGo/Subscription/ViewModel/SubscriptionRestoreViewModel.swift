@@ -18,11 +18,51 @@
 //
 
 import Foundation
+import UserScript
+import Combine
+import Core
 
 #if SUBSCRIPTION
 @available(iOS 15.0, *)
 final class SubscriptionRestoreViewModel: ObservableObject {
     
+    let userScript: SubscriptionPagesUserScript
+    let subFeature: SubscriptionPagesUseSubscriptionFeature
+    let purchaseManager: PurchaseManager
+    
+    enum SubscriptionActivationResult {
+        case unknown, activated, notFound, error
+    }
+    
+    @Published var transactionStatus: SubscriptionPagesUseSubscriptionFeature.TransactionStatus = .idle
+    @Published var activationResult: SubscriptionActivationResult = .unknown
+        
+    init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
+         subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
+         purchaseManager: PurchaseManager = PurchaseManager.shared) {
+        self.userScript = userScript
+        self.subFeature = subFeature
+        self.purchaseManager = purchaseManager
+    }
+    
+    @MainActor
+    private func setTransactionStatus(_ status: SubscriptionPagesUseSubscriptionFeature.TransactionStatus) {
+        self.transactionStatus = status
+    }
+    
+    @MainActor
+    func restoreAppstoreTransaction() {
+        Task {
+            transactionStatus = .restoring
+            activationResult = .unknown
+            if await subFeature.restoreAccountFromAppStorePurchase() {
+                activationResult = .activated
+            } else {
+                activationResult = .notFound
+            }
+            transactionStatus = .idle
+        }
+    }
     
 }
 #endif

@@ -28,6 +28,9 @@
 /* Standard Buttons - Cancel Button */
 "cancel.button" = "Zrušiť";
 
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "Zapnite synchronizáciu a zálohovanie";
+
 /* Connect With Server Sheet - Description Part 1 */
 "connect.with.server.sheet.description.part1" = "Vytvorí sa tak šifrovaná záloha vašich záložiek a hesiel na zabezpečenom serveri DuckDuckGo, ktorú môžete synchronizovať s ostatnými zariadeniami.";
 
@@ -51,6 +54,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Vývojárske prostredie";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "Vaše údaje sú synchronizované!";
 
 /* Standard Buttons - Done Button */
 "done.button" = "Hotovo";
@@ -226,6 +232,9 @@
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Synchronizácia a zálohovanie nie je k dispozícii";
 
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Synchronizácia s iným zariadením";
+
 /* Footer message for syncing with another device */
 "sync.with.another.device.footer" = "Vaše údaje sú šifrované na oboch koncoch (end-to-end) a DuckDuckGo nemá prístup k šifrovaciemu kľúču.";
 
@@ -252,6 +261,9 @@
 
 /* Options - Unify Favorites Instruction */
 "unified.favorites.instruction" = "Používajte rovnaké obľúbené záložky vo všetkých svojich zariadeniach. Vypnite, aby obľúbené položky z mobilných zariadení a počítačov zostali oddelené.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Zjednotenie obľúbených položiek medzi zariadeniami";
 
 /* View Text Code menu item */
 "view.text.code.menu.item" = "Zobraziť textový kód";

@@ -1843,8 +1843,14 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Tipkovnica";
 
+/* Settings screen cell text for passwords */
+"settings.logins" = "Lozinke";
+
 /* Settings title for the 'More' section */
 "settings.more" = "Više od DuckDuckGoa";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Pretpregledi na dugi pritisak";
@@ -1891,8 +1897,35 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Koje je web-mjesto neispravno?";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Šifra za oporavak kopirana je u međuspremnik";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Brisanje podataka poslužitelja";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "Svi uređaji bit će isključeni i tvoji sinkronizirani podaci bit će izbrisani s poslužitelja.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Izbrisati podatke poslužitelja?";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Ukloni";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "\"%@\" više neće moći pristupiti tvojim sinkroniziranim podacima.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Želiš li ukloniti uređaj?";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Ukloni";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "Ovaj uređaj više neće moći pristupiti tvojim sinkroniziranim podacima.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Želiš li isključiti sinkronizaciju?";
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "Nažalost, Sync & Backup (sinkronizacija i sigurnosno kopiranje) trenutno nisu dostupni. Pokušaj ponovno nešto kasnije.";

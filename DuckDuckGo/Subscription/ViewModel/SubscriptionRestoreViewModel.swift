@@ -1,8 +1,8 @@
 //
-//  SubscriptionFlowViewModel.swift
+//  SubscriptionRestoreViewModel.swift
 //  DuckDuckGo
 //
-//  Copyright © 2023 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -24,22 +24,18 @@ import Core
 
 #if SUBSCRIPTION
 @available(iOS 15.0, *)
-final class SubscriptionFlowViewModel: ObservableObject {
+final class SubscriptionRestoreViewModel: ObservableObject {
     
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     let purchaseManager: PurchaseManager
     
-    let viewTitle = UserText.settingsPProSection
+    enum SubscriptionActivationResult {
+        case unknown, activated, notFound, error
+    }
     
-    private var cancellables = Set<AnyCancellable>()
-    
-    // State variables
-    var purchaseURL = URL.purchaseSubscription
-    @Published var hasActiveSubscription = false
     @Published var transactionStatus: SubscriptionPagesUseSubscriptionFeature.TransactionStatus = .idle
-    @Published var shouldReloadWebview = false
-    @Published var activatingSubscription = false
+    @Published var activationResult: SubscriptionActivationResult = .unknown
         
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
@@ -49,53 +45,22 @@ final class SubscriptionFlowViewModel: ObservableObject {
         self.purchaseManager = purchaseManager
     }
     
-    // Observe transaction status
-    private func setupTransactionObserver() async {
-        
-        subFeature.$transactionStatus
-            .sink { [weak self] status in
-                guard let self = self else { return }
-                Task { await self.setTransactionStatus(status) }
-
-            }
-            .store(in: &cancellables)
-        
-        subFeature.$hasActiveSubscription
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] value in
-                self?.hasActiveSubscription = value
-            }
-            .store(in: &cancellables)
-        
-        subFeature.$activateSubscription
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] value in
-                if value {
-                    self?.subFeature.activateSubscription = false
-                    self?.activatingSubscription = true
-                }
-            }
-            .store(in: &cancellables)
-    }
-    
     @MainActor
     private func setTransactionStatus(_ status: SubscriptionPagesUseSubscriptionFeature.TransactionStatus) {
         self.transactionStatus = status
     }
     
-    func initializeViewData() async {
-        await self.setupTransactionObserver()
-        await MainActor.run { shouldReloadWebview = true }
-    }
-    
+    @MainActor
     func restoreAppstoreTransaction() {
         Task {
+            transactionStatus = .restoring
+            activationResult = .unknown
             if await subFeature.restoreAccountFromAppStorePurchase() {
-                await MainActor.run { shouldReloadWebview = true }
+                activationResult = .activated
             } else {
-                await MainActor.run {
-                }
+                activationResult = .notFound
             }
+            transactionStatus = .idle
         }
     }
     

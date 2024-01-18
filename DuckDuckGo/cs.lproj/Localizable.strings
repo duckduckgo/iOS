@@ -1843,8 +1843,14 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Klávesnice";
 
+/* Settings screen cell text for passwords */
+"settings.logins" = "Hesla";
+
 /* Settings title for the 'More' section */
 "settings.more" = "Další od DuckDuckGo";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Náhledy dlouhého stisknutí";
@@ -1891,8 +1897,35 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Které webové stránky jsou poškozené?";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Kód pro obnovení je zkopírovaný do schránky";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Smazat data ze serveru";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "Dojde k odpojení všech zařízení a smazání synchronizovaných dat ze serveru.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Smazat data ze serveru?";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Odstranit";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "„%@“ už nebude mít přístup k synchronizovaným datům.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Smazat zařízení?";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Odstranit";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "Tohle zařízení už nebude mít přístup ke tvým synchronizovaným datům.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Vypnout synchronizaci?";
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "Omlouváme se, ale funkce synchronizace a zálohování teď není dostupná. Zkus to znovu později.";

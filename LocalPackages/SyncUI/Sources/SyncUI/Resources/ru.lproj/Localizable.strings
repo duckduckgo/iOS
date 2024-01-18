@@ -28,6 +28,9 @@
 /* Standard Buttons - Cancel Button */
 "cancel.button" = "Отменить";
 
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "Включить синхронизацию и копирование";
+
 /* Connect With Server Sheet - Description Part 1 */
 "connect.with.server.sheet.description.part1" = "DuckDuckGo создаст зашифрованную резервную копию ваших закладок и паролей на защищенном сервере. Копию можно синхронизировать с другими устройствами.";
 
@@ -51,6 +54,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Среда разработки";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "Данные синхронизированы!";
 
 /* Standard Buttons - Done Button */
 "done.button" = "Готово";
@@ -226,6 +232,9 @@
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Функция «Синхронизация и резервное копирование» недоступна";
 
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Синхронизировать с другим устройством";
+
 /* Footer message for syncing with another device */
 "sync.with.another.device.footer" = "Ваши данные защищены сквозным шифрованием. У DuckDuckGo нет доступа к ключу шифрования.";
 
@@ -252,6 +261,9 @@
 
 /* Options - Unify Favorites Instruction */
 "unified.favorites.instruction" = "Использовать одинаковые закладки на всех устройствах. Не включайте, чтобы использовать разное избранное в мобильной и настольной версиях браузера.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Одно и то же избранное на разных устройствах";
 
 /* View Text Code menu item */
 "view.text.code.menu.item" = "Показать текстовый код";

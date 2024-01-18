@@ -1843,8 +1843,14 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Tastatur";
 
+/* Settings screen cell text for passwords */
+"settings.logins" = "Passord";
+
 /* Settings title for the 'More' section */
 "settings.more" = "Mer fra DuckDuckGo";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Forhåndsvisning ved å trykke og holde";
@@ -1891,8 +1897,35 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Hvilket nettsted fungerer ikke?";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Gjenopprettingskoden er kopiert til utklippstavlen";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Slett serverdata";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "Alle enheter blir frakoblet og dine synkroniserte data blir slettet fra serveren.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Vil du slette serverdata?";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Fjern";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "\"%@\" vil ikke lenger ha tilgang til dine synkroniserte data.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Vil du fjerne enheten?";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Fjern";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "Denne enheten får ikke lenger tilgang til de synkroniserte dataene dine.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Vil du slå av synkronisering?\n";
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "Beklager, men synkronisering og sikkerhetskopiering er ikke tilgjengelig for øyeblikket. Prøv igjen senere.";

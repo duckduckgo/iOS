@@ -1843,8 +1843,14 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Klaviatūra";
 
+/* Settings screen cell text for passwords */
+"settings.logins" = "Slaptažodžiai";
+
 /* Settings title for the 'More' section */
 "settings.more" = "Daugiau iš „DuckDuckGo“";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Peržiūros ilgai spaudžiant";
@@ -1891,8 +1897,35 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Kuri svetainė neveikia?";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Atkūrimo kodas nukopijuotas į mainų sritį";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Ištrinti serverio duomenis";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "Visi įrenginiai bus atjungti, o sinchronizuoti duomenys bus ištrinti iš serverio.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Ištrinti serverio duomenis?";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Pašalinti";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "„%@“ nebegalės pasiekti jūsų sinchronizuotų duomenų.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Pašalinti įrenginį?";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Pašalinti";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "Šis įrenginys nebegalės pasiekti jūsų sinchronizuotų duomenų.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Išjungti sinchronizavimą?";
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "Atsiprašome, bet sinchronizavimas ir atsarginės kopijos kūrimas šiuo metu nepasiekiami. Pabandykite dar kartą vėliau.";

@@ -1843,8 +1843,14 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Clavier";
 
+/* Settings screen cell text for passwords */
+"settings.logins" = "Mots de passe";
+
 /* Settings title for the 'More' section */
 "settings.more" = "Plus de la part de DuckDuckGo";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Aperçus obtenus en appuyant longuement";
@@ -1891,8 +1897,35 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Quel site Web pose problème ?";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Code de récupération copié dans le presse-papiers";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Supprimer les données du serveur";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "Tous les appareils seront déconnectés et vos données synchronisées seront supprimées du serveur.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Supprimer les données du serveur ?";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Supprimer";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "« %@ » ne pourra plus accéder à vos données synchronisées.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Supprimer l'appareil ?";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Supprimer";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "Cet appareil ne pourra plus accéder à vos données synchronisées.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Désactiver la synchronisation ?";
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "Désolés, mais la synchronisation et la sauvegarde sont actuellement indisponibles. Veuillez réessayer ultérieurement.";

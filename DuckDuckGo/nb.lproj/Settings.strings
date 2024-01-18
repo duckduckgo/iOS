@@ -22,21 +22,6 @@
 /* Class = "UILabel"; text = "App Launch"; ObjectID = "13n-KI-KLq"; */
 "13n-KI-KLq.text" = "Appoversikt";
 
-/* Class = "UILabel"; text = "Open Links in Associated Apps"; ObjectID = "a1T-ui-4Nw"; */
-"a1T-ui-4Nw.text" = "Åpne lenker i tilknyttede apper";
-
-/* Class = "UILabel"; text = "Debug Menu"; ObjectID = "A9G-5I-RSn"; */
-"A9G-5I-RSn.text" = "Feilsøkingsmeny";
-
-/* Class = "UILabel"; text = "Passwords"; ObjectID = "And-cQ-SEu"; */
-"And-cQ-SEu.text" = "Passord";
-
-/* Class = "UILabel"; text = "Animation"; ObjectID = "AtR-nS-Gun"; */
-"AtR-nS-Gun.text" = "Animasjon";
-
-/* Class = "UILabel"; text = "Email Protection"; ObjectID = "azf-Nc-kvW"; */
-"azf-Nc-kvW.text" = "E-postbeskyttelse";
-
 /* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
 "BGs-JL-4ib.footerTitle" = "Data og/eller faner slettes/lukkes ved omstart av appen.";
 
@@ -90,30 +75,6 @@
 
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
 "OHV-qC-tL9.title" = "Ubeskyttede nettsteder";
-
-/* Class = "UILabel"; text = "About DuckDuckGo"; ObjectID = "oM7-1o-9oY"; */
-"oM7-1o-9oY.text" = "Om DuckDuckGo";
-
-/* Class = "UILabel"; text = "Top"; ObjectID = "opn-JO-idF"; */
-"opn-JO-idF.text" = "Topp";
-
-/* Class = "UITableViewSection"; headerTitle = "More From DuckDuckGo"; ObjectID = "OxE-MQ-uJk"; */
-"OxE-MQ-uJk.headerTitle" = "Mer fra DuckDuckGo";
-
-/* Class = "UILabel"; text = "Sync & Backup"; ObjectID = "oXN-ez-gct"; */
-"oXN-ez-gct.text" = "Synkronisering og sikkerhetskopiering";
-
-/* Class = "UILabel"; text = "Browse privately with our app for Mac "; ObjectID = "P0F-ts-ekd"; */
-"P0F-ts-ekd.text" = "Surf privat med vår app for Mac ";
-
-/* Class = "UILabel"; text = "Network Protection"; ObjectID = "qah-gb-udB"; */
-"qah-gb-udB.text" = "Network Protection";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
-"qeN-SV-zy7.text" = "Etikett";
-
-/* Class = "UILabel"; text = "DuckDuckGo Windows App"; ObjectID = "RQ8-H1-Ez1"; */
-"RQ8-H1-Ez1.text" = "DuckDuckGo Windows-app";
 
 /* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
 "ssa-zd-L3T.title" = "Tekststørrelse";

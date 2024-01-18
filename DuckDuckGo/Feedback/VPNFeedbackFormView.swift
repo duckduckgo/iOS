@@ -156,8 +156,11 @@ struct VPNFeedbackFormView: View {
                 .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
 
-            TextEditor(text: $viewModel.feedbackFormText)
+            Spacer()
+                .frame(height: 1)
                 .id(1)
+
+            TextEditor(text: $viewModel.feedbackFormText)
                 .font(.body)
                 .foregroundColor(.primary)
                 .frame(height: 100)

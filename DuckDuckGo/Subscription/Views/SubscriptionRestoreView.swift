@@ -133,7 +133,7 @@ struct SubscriptionRestoreView: View {
         case .purchasing:
             return UserText.subscriptionPurchasingTitle
         case .restoring:
-            return UserText.subscriptionPestoringTitle
+            return UserText.subscriptionRestoringTitle
         case .idle:
             return ""
         }

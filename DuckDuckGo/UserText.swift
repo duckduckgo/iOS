@@ -1004,7 +1004,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     // Subscriptions
     
     static let subscriptionPurchasingTitle = NSLocalizedString("subscription.progress.view.purchasing.subscription", value: "Purchase in progress...", comment: "Progress view title when starting the purchase")
-    static let subscriptionPestoringTitle = NSLocalizedString("subscription.progress.view.restoring.subscription", value: "Restoring subscription...", comment: "Progress view title when restoring past subscription purchase")
+    static let subscriptionRestoringTitle = NSLocalizedString("subscription.progress.view.restoring.subscription", value: "Restoring subscription...", comment: "Progress view title when restoring past subscription purchase")
     static let subscriptionCompletingPurchaseTitle = NSLocalizedString("subscription.progress.view.completing.purchase", value: "Completing purchase...", comment: "Progress view title when completing the purchase")
     static func subscriptionInfo(expiration: String) -> String {
         let localized = NSLocalizedString("subscription.subscription.active.caption", value: "Your Privacy Pro subscription renews on %@", comment: "Subscription Expiration Data")

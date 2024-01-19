@@ -1972,7 +1972,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.subscription.found.text" = "We found a subscription associated with this Apple ID.";
 
 /* Title for the existing subscription dialog */
-"subscription.subscription.found.tite" = "Subscription Found";
+"subscription.subscription.found.title" = "Subscription Found";
 
 /* Message confirming that recovery code was copied to clipboard */
 "sync.code.copied" = "Recovery code copied to clipboard";

@@ -215,6 +215,47 @@ class MainViewController: UIViewController {
         findInPageBottomLayoutConstraint = bottom
         findInPageHeightLayoutConstraint = height
     }
+    
+    class OmniBarCell: UICollectionViewCell {
+     
+        weak var omniBar: OmniBar? {
+            didSet {
+                subviews.forEach { $0.removeFromSuperview() }
+                if let omniBar {
+                    addSubview(omniBar)
+                    NSLayoutConstraint.activate([
+                        constrainView(omniBar, by: .leading),
+                        constrainView(omniBar, by: .trailing),
+                        constrainView(omniBar, by: .top),
+                        constrainView(omniBar, by: .bottom),
+                    ])
+                }
+            }
+        }
+        
+    }
+    
+    var swipeTabsDataSource: SwipeTabsDataSource!
+    class SwipeTabsDataSource: NSObject, UICollectionViewDataSource {
+        
+        weak var coordinator: MainViewCoordinator!
+        
+        init(coordinator: MainViewCoordinator) {
+            self.coordinator = coordinator
+            coordinator.navigationBarContainer.register(OmniBarCell.self, forCellWithReuseIdentifier: "omnibar")
+        }
+        
+        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+            1
+        }
+        
+        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "omnibar", for: indexPath) as! OmniBarCell
+            cell.omniBar = coordinator.omniBar
+            return cell
+        }
+            
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -226,6 +267,9 @@ class MainViewController: UIViewController {
         viewCoordinator.toolbarForwardButton.action = #selector(onForwardPressed)
         viewCoordinator.toolbarFireButton.action = #selector(onFirePressed)
 
+        swipeTabsDataSource = SwipeTabsDataSource(coordinator: viewCoordinator)
+        viewCoordinator.navigationBarContainer.dataSource = swipeTabsDataSource
+        
         loadSuggestionTray()
         loadTabsBarIfNeeded()
         loadFindInPage()

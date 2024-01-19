@@ -60,6 +60,7 @@ extension MainViewFactory {
         createNotificationBarContainer()
         createStatusBackground()
         createTabBarContainer()
+        createOmniBar()
         createNavigationBarContainer()
         createProgressView()
         createToolbar()
@@ -70,12 +71,17 @@ extension MainViewFactory {
         superview.addSubview(coordinator.progress)
     }
 
-    final class NavigationBarContainer: UIView { }
-    private func createNavigationBarContainer() {
+    private func createOmniBar() {
         coordinator.omniBar = OmniBar.loadFromXib()
         coordinator.omniBar.translatesAutoresizingMaskIntoConstraints = false
-        coordinator.navigationBarContainer = NavigationBarContainer()
-        coordinator.navigationBarContainer.addSubview(coordinator.omniBar)
+    }
+    
+    final class NavigationBarContainer: UICollectionView { }
+    private func createNavigationBarContainer() {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: superview.frame.size.width, height: 52)
+        coordinator.navigationBarContainer = NavigationBarContainer(frame: .zero, collectionViewLayout: layout)
         superview.addSubview(coordinator.navigationBarContainer)
     }
 
@@ -189,18 +195,18 @@ extension MainViewFactory {
 
         coordinator.constraints.navigationBarContainerTop = navigationBarContainer.constrainView(superview.safeAreaLayoutGuide, by: .top)
         coordinator.constraints.navigationBarContainerBottom = navigationBarContainer.constrainView(toolbar, by: .bottom, to: .top)
-        coordinator.constraints.omniBarBottom = omniBar.constrainView(navigationBarContainer, by: .bottom, relatedBy: .greaterThanOrEqual)
+//        coordinator.constraints.omniBarBottom = omniBar.constrainView(navigationBarContainer, by: .bottom, relatedBy: .greaterThanOrEqual)
 
         NSLayoutConstraint.activate([
             coordinator.constraints.navigationBarContainerTop,
             navigationBarContainer.constrainView(superview, by: .centerX),
             navigationBarContainer.constrainView(superview, by: .width),
-            navigationBarContainer.constrainAttribute(.height, to: 52, relatedBy: .greaterThanOrEqual),
-            omniBar.constrainAttribute(.height, to: 52),
-            omniBar.constrainView(navigationBarContainer, by: .top),
-            omniBar.constrainView(navigationBarContainer, by: .leading),
-            omniBar.constrainView(navigationBarContainer, by: .trailing),
-            coordinator.constraints.omniBarBottom,
+            navigationBarContainer.constrainAttribute(.height, to: 52), // , relatedBy: .greaterThanOrEqual),
+//            omniBar.constrainAttribute(.height, to: 52),
+//            omniBar.constrainView(navigationBarContainer, by: .top),
+//            omniBar.constrainView(navigationBarContainer, by: .leading),
+//            omniBar.constrainView(navigationBarContainer, by: .trailing),
+//            coordinator.constraints.omniBarBottom,
         ])
     }
 
@@ -321,7 +327,7 @@ class MainViewCoordinator {
     var logo: UIImageView!
     var logoContainer: UIView!
     var logoText: UIImageView!
-    var navigationBarContainer: UIView!
+    var navigationBarContainer: UICollectionView!
     var notificationBarContainer: UIView!
     var omniBar: OmniBar!
     var progress: ProgressView!

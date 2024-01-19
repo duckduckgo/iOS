@@ -38,13 +38,14 @@ final class SubscriptionEmailViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
             
-    init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
-         subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
-         accountManager: AccountManager = AccountManager()) {
+    init(userScript: SubscriptionPagesUserScript,
+         subFeature: SubscriptionPagesUseSubscriptionFeature,
+         accountManager: AccountManager) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.accountManager = accountManager
         initializeView()
+        setupTransactionObservers()
     }
     
     func initializeView() {

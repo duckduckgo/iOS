@@ -108,7 +108,8 @@ public struct AuthService: APIService {
         public let status: String
 
         enum CodingKeys: String, CodingKey {
-            case authToken = "authToken", email, externalID = "externalId", id, status // no underscores due to keyDecodingStrategy = .convertFromSnakeCase
+            // no underscores due to keyDecodingStrategy = .convertFromSnakeCase
+            case authToken = "authToken", email, externalID = "externalId", id, status
         }
     }
 }

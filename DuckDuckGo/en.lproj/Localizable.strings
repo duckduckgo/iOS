@@ -1920,6 +1920,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Apple ID option for activation */
 "subscription.activate.appleid" = "Apple ID";
 
+/* Button text for restoring purchase via Apple ID */
+"subscription.activate.appleid.button" = "Restore Purchase";
+
 /* Description for Apple ID activation */
 "subscription.activate.appleid.description" = "Restore your purchase to activate your subscription on this device.";
 
@@ -1962,7 +1965,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Button title for adding email to subscription */
 "subscription.add.email.button" = "Add Email";
 
-/* View itle for adding email to subscription */
+/* View title for adding email to subscription */
 "subscription.add.email.title" = "Add Email";
 
 /* Subscription availability message on Apple devices */

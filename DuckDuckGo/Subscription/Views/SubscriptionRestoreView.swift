@@ -66,6 +66,14 @@ struct SubscriptionRestoreView: View {
             }
         }
         
+        // Activation View
+        NavigationLink(destination: SubscriptionEmailView(viewModel: SubscriptionEmailViewModel(userScript: viewModel.userScript,
+                                                                                                subFeature: viewModel.subFeature,
+                                                                                                accountManager: viewModel.accountManager)),
+                       isActive: $viewModel.isRestoringEmailSubscription) {
+            EmptyView()
+        }
+        
         
     }
     
@@ -74,13 +82,11 @@ struct SubscriptionRestoreView: View {
             .init(id: 0,
                   content: getCellTitle(icon: Constants.appleIDIcon,
                                         text: UserText.subscriptionActivateAppleID),
-                  expandedContent: getAppleIDCellContent(description: UserText.subscriptionActivateAppleIDDescription,
-                                                  buttonText: UserText.subscriptionRestoreAppleID,
-                                                  buttonAction: viewModel.restoreAppstoreTransaction)),
+                  expandedContent: getAppleIDCellContent(buttonAction: viewModel.restoreAppstoreTransaction)),
             .init(id: 1,
                   content: getCellTitle(icon: Constants.emailIcon,
                                         text: UserText.subscriptionActivateEmail),
-                  expandedContent: getEmailCellContent(buttonAction: {}))
+                  expandedContent: getEmailCellContent(buttonAction: viewModel.restoreEmailSubscription ))
         ]
     }
     
@@ -95,13 +101,13 @@ struct SubscriptionRestoreView: View {
         )
     }
     
-    private func getAppleIDCellContent(description: String, buttonText: String, buttonAction: @escaping () -> Void) -> AnyView {
+    private func getAppleIDCellContent(buttonAction: @escaping () -> Void) -> AnyView {
         AnyView(
             VStack(alignment: .leading) {
-                Text(description)
+                Text(UserText.subscriptionActivateAppleIDDescription)
                     .daxSubheadRegular()
                     .foregroundColor(Color(designSystemColor: .textSecondary))
-                getCellButton(buttonText: buttonText, action: buttonAction)
+                getCellButton(buttonText: UserText.subscriptionActivateAppleIDButton, action: buttonAction)
             }
         )
     }
@@ -161,11 +167,11 @@ struct SubscriptionRestoreView: View {
     private var headerView: some View {
         VStack(spacing: Constants.headerLineSpacing) {
             Image(Constants.heroImage)
-            Text(UserText.subscriptionActivateTitle)
+            Text(viewModel.headerTitle)
                 .daxHeadline()
                 .multilineTextAlignment(.center)
                 .foregroundColor(Color(designSystemColor: .textPrimary))
-            Text(UserText.subscriptionActivateDescription)
+            Text(viewModel.headerDescription)
                 .daxFootnoteRegular()
                 .foregroundColor(Color(designSystemColor: .textSecondary))
                 .multilineTextAlignment(.center)

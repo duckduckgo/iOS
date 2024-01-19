@@ -25,8 +25,7 @@ import StoreKit
 @available(iOS 15.0, *)
 final class SubscriptionSettingsViewModel: ObservableObject {
     
-    private let accountManager: AccountManager
-    
+    let accountManager: AccountManager
     var subscriptionDetails: String = ""
     @Published var shouldDisplayRemovalNotice: Bool = false
     

@@ -797,6 +797,7 @@
 		D6D12CAB2B291CAA0054390C /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C9C2B291CA90054390C /* APIService.swift */; };
 		D6D12CAC2B291CAA0054390C /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C9D2B291CA90054390C /* AuthService.swift */; };
 		D6D12CAD2B291CAA0054390C /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C9E2B291CA90054390C /* PurchaseManager.swift */; };
+		D6D4B77C2B5AE99500996546 /* SubscriptionFlowNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D4B77B2B5AE99500996546 /* SubscriptionFlowNavController.swift */; };
 		D6E83C122B1E6AB3006C8AFB /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C112B1E6AB3006C8AFB /* SettingsView.swift */; };
 		D6E83C2E2B1EA06E006C8AFB /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C2D2B1EA06E006C8AFB /* SettingsViewModel.swift */; };
 		D6E83C312B1EA309006C8AFB /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C302B1EA309006C8AFB /* SettingsCell.swift */; };
@@ -2442,6 +2443,7 @@
 		D6D12C9C2B291CA90054390C /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		D6D12C9D2B291CA90054390C /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		D6D12C9E2B291CA90054390C /* PurchaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
+		D6D4B77B2B5AE99500996546 /* SubscriptionFlowNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionFlowNavController.swift; sourceTree = "<group>"; };
 		D6E83C112B1E6AB3006C8AFB /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D6E83C2D2B1EA06E006C8AFB /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		D6E83C302B1EA309006C8AFB /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
@@ -4531,10 +4533,11 @@
 		D664C7932B289AA000CBFA76 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				D6D4B77B2B5AE99500996546 /* SubscriptionFlowNavController.swift */,
 				D664C7942B289AA000CBFA76 /* SubscriptionFlowViewModel.swift */,
-				D652498D2B515A6A0056B0DE /* SubscriptionSettingsViewModel.swift */,
-				D64648AE2B5993890033090B /* SubscriptionEmailViewModel.swift */,
 				D68DF81D2B5830380023DBEA /* SubscriptionRestoreViewModel.swift */,
+				D64648AE2B5993890033090B /* SubscriptionEmailViewModel.swift */,
+				D652498D2B515A6A0056B0DE /* SubscriptionSettingsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -6498,6 +6501,7 @@
 				1E162610296C5C630004127F /* CustomDaxDialogViewModel.swift in Sources */,
 				8590CB69268A4E190089F6BF /* DebugEtagStorage.swift in Sources */,
 				D6D12CA62B291CAA0054390C /* AppStoreRestoreFlow.swift in Sources */,
+				D6D4B77C2B5AE99500996546 /* SubscriptionFlowNavController.swift in Sources */,
 				C1CDA3162AFB9C7F006D1476 /* AutofillNeverPromptWebsitesManager.swift in Sources */,
 				F1CA3C371F045878005FADB3 /* PrivacyStore.swift in Sources */,
 				37FCAAC029930E26000E420A /* FailedAssertionView.swift in Sources */,

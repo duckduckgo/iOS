@@ -34,8 +34,8 @@ import Networking
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
 class MainViewController: UIViewController {
-// swiftlint:enable type_body_length
-
+    // swiftlint:enable type_body_length
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ThemeManager.shared.currentTheme.statusBarStyle
     }
@@ -45,15 +45,15 @@ class MainViewController: UIViewController {
         
         return isIPad ? [.left, .right] : []
     }
-
+    
     weak var findInPageView: FindInPageView!
     weak var findInPageHeightLayoutConstraint: NSLayoutConstraint!
     weak var findInPageBottomLayoutConstraint: NSLayoutConstraint!
-
+    
     weak var notificationView: NotificationView?
-
+    
     var chromeManager: BrowserChromeManager!
-
+    
     var allowContentUnderflow = false {
         didSet {
             viewCoordinator.constraints.contentContainerTop.constant = allowContentUnderflow ? contentUnderflow : 0
@@ -63,50 +63,50 @@ class MainViewController: UIViewController {
     var contentUnderflow: CGFloat {
         return 3 + (allowContentUnderflow ? -viewCoordinator.navigationBarContainer.frame.size.height : 0)
     }
-
+    
     lazy var emailManager: EmailManager = {
         let emailManager = EmailManager()
         emailManager.aliasPermissionDelegate = self
         emailManager.requestDelegate = self
         return emailManager
     }()
-
+    
     var homeController: HomeViewController?
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
-
+    
     var tabManager: TabManager!
     let previewsSource = TabPreviewsSource()
     let appSettings: AppSettings
     private var launchTabObserver: LaunchTabNotification.Observer?
-
+    
 #if APP_TRACKING_PROTECTION
     private let appTrackingProtectionDatabase: CoreDataDatabase
 #endif
-
+    
     let bookmarksDatabase: CoreDataDatabase
     private weak var bookmarksDatabaseCleaner: BookmarkDatabaseCleaner?
     private var favoritesViewModel: FavoritesListInteracting
     let syncService: DDGSyncing
     let syncDataProviders: SyncDataProviders
-
+    
     @UserDefaultsWrapper(key: .syncDidShowSyncPausedByFeatureFlagAlert, defaultValue: false)
     private var syncDidShowSyncPausedByFeatureFlagAlert: Bool
-
+    
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
     private var syncFeatureFlagsCancellable: AnyCancellable?
     private var favoritesDisplayModeCancellable: AnyCancellable?
     private var emailCancellables = Set<AnyCancellable>()
-
+    
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
-
+    
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = {
         let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
         viewModel.favoritesDisplayMode = appSettings.favoritesDisplayMode
         return viewModel
     }()
-
+    
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
     
@@ -121,31 +121,31 @@ class MainViewController: UIViewController {
     private lazy var fireButtonAnimator: FireButtonAnimator = FireButtonAnimator(appSettings: appSettings)
     
     let bookmarksCachingSearch: BookmarksCachingSearch
-
+    
     lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
         return tabManager?.current(createIfNeeded: false)
     }
-
+    
     var searchBarRect: CGRect {
         let view = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first?.rootViewController?.view
         return viewCoordinator.omniBar.searchContainer.convert(viewCoordinator.omniBar.searchContainer.bounds, to: view)
     }
-
+    
     var keyModifierFlags: UIKeyModifierFlags?
     var showKeyboardAfterFireButton: DispatchWorkItem?
     
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
-        
+    
     private var keyboardHeight: CGFloat = 0.0
-
+    
     required init?(coder: NSCoder) {
         fatalError("Use init?(code:")
     }
-
+    
     var viewCoordinator: MainViewCoordinator!
-
+    
 #if APP_TRACKING_PROTECTION
     init(
         bookmarksDatabase: CoreDataDatabase,
@@ -163,9 +163,9 @@ class MainViewController: UIViewController {
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         self.appSettings = appSettings
-
+        
         super.init(nibName: nil, bundle: nil)
-
+        
         bindFavoritesDisplayMode()
         bindSyncService()
     }
@@ -186,38 +186,38 @@ class MainViewController: UIViewController {
         self.appSettings = appSettings
         
         super.init(nibName: nil, bundle: nil)
-
+        
         bindSyncService()
     }
 #endif
-
+    
     fileprivate var tabCountInfo: TabCountInfo?
-
+    
     func loadFindInPage() {
-
+        
         let view = FindInPageView.loadFromXib()
         self.view.addSubview(view)
-
+        
         // Avoids coercion swiftlint warnings
         let superview = self.view!
-
+        
         let height = view.constrainAttribute(.height, to: view.frame.height)
         let bottom = superview.constrainView(view, by: .bottom, to: .bottom)
-
+        
         NSLayoutConstraint.activate([
             bottom,
             superview.constrainView(view, by: .width, to: .width),
             height,
             superview.constrainView(view, by: .centerX, to: .centerX)
         ])
-
+        
         findInPageView = view
         findInPageBottomLayoutConstraint = bottom
         findInPageHeightLayoutConstraint = height
     }
     
     class OmniBarCell: UICollectionViewCell {
-     
+        
         weak var omniBar: OmniBar? {
             didSet {
                 subviews.forEach { $0.removeFromSuperview() }
@@ -235,26 +235,102 @@ class MainViewController: UIViewController {
         
     }
     
-    var swipeTabsDataSource: SwipeTabsDataSource!
-    class SwipeTabsDataSource: NSObject, UICollectionViewDataSource {
+    class NewTabCell: UICollectionViewCell {
+        static let identifier = "AddCell"
+
+        private let addButton: UIButton = {
+            let button = UIButton()
+            button.setTitle("+ Add", for: .normal)
+            button.backgroundColor = .systemBlue
+            button.layer.cornerRadius = 5
+            button.translatesAutoresizingMaskIntoConstraints = false
+            return button
+        }()
+
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            setupButton()
+        }
+
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+
+        private func setupButton() {
+            contentView.addSubview(addButton)
+            addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
+
+            // Auto Layout Constraints
+            let padding: CGFloat = 10
+            NSLayoutConstraint.activate([
+                addButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: padding),
+                addButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -padding),
+                addButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
+                addButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding)
+            ])
+        }
+
+        @objc private func addButtonTapped() {
+            // Handle the add button tap event
+            print("Add button tapped")
+        }
+    }
+
+    var swipeTabsCoordinator: SwipeTabsCoordinator!
+    class SwipeTabsCoordinator: NSObject, UICollectionViewDataSource, UICollectionViewDelegate {
         
         weak var coordinator: MainViewCoordinator!
         
         init(coordinator: MainViewCoordinator) {
             self.coordinator = coordinator
             coordinator.navigationBarContainer.register(OmniBarCell.self, forCellWithReuseIdentifier: "omnibar")
+            coordinator.navigationBarContainer.register(NewTabCell.self, forCellWithReuseIdentifier: "newtab")
         }
         
         func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            1
+            2
         }
         
         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "omnibar", for: indexPath) as! OmniBarCell
-            cell.omniBar = coordinator.omniBar
-            return cell
+            if indexPath.row > 0 {
+                return collectionView.dequeueReusableCell(withReuseIdentifier: "newtab", for: indexPath)
+            } else {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "omnibar", for: indexPath) as! OmniBarCell
+                cell.omniBar = coordinator.omniBar
+                return cell
+            }
         }
-            
+        
+        var startOffsetX: CGFloat = 0.0
+        var startingIndexPath: IndexPath?
+        func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+            startOffsetX = scrollView.contentOffset.x
+            startingIndexPath = coordinator.navigationBarContainer.indexPathsForVisibleItems[0]
+        }
+        
+        var targetIndexPath: IndexPath?
+        func scrollViewDidScroll(_ scrollView: UIScrollView) {
+            guard let startingIndexPath else { return }
+            let distance = scrollView.contentOffset.x - startOffsetX
+            print("***", #function, startingIndexPath, distance)
+            if abs(distance) > coordinator.superview.frame.width * 0.3 {
+                var targetIndexPath = startingIndexPath
+                if distance < 0 {
+                    targetIndexPath.row -= 1
+                } else {
+                    targetIndexPath.row += 1
+                }
+                self.targetIndexPath = targetIndexPath
+            } else {
+                targetIndexPath = nil
+            }
+        }
+
+        func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+            guard let targetIndexPath else { return }
+            print("***", #function, targetIndexPath)
+            coordinator.navigationBarContainer.scrollToItem(at: targetIndexPath, at: .centeredHorizontally, animated: true)
+        }
     }
 
     override func viewDidLoad() {
@@ -267,8 +343,9 @@ class MainViewController: UIViewController {
         viewCoordinator.toolbarForwardButton.action = #selector(onForwardPressed)
         viewCoordinator.toolbarFireButton.action = #selector(onFirePressed)
 
-        swipeTabsDataSource = SwipeTabsDataSource(coordinator: viewCoordinator)
-        viewCoordinator.navigationBarContainer.dataSource = swipeTabsDataSource
+        swipeTabsCoordinator = SwipeTabsCoordinator(coordinator: viewCoordinator)
+        viewCoordinator.navigationBarContainer.delegate = swipeTabsCoordinator
+        viewCoordinator.navigationBarContainer.dataSource = swipeTabsCoordinator
         
         loadSuggestionTray()
         loadTabsBarIfNeeded()

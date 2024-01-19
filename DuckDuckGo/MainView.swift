@@ -76,12 +76,39 @@ extension MainViewFactory {
         coordinator.omniBar.translatesAutoresizingMaskIntoConstraints = false
     }
     
+    final class NavigationBarLayout: UICollectionViewFlowLayout {
+        override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+            guard let collectionView = self.collectionView else {
+                return super.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity: velocity)
+            }
+
+            let pageWidth = itemSize.width + minimumLineSpacing
+            let currentPage = collectionView.contentOffset.x / pageWidth
+            let nextPage = velocity.x.sign == .minus ? floor(currentPage) : ceil(currentPage)
+            let point = CGPoint(x: nextPage * pageWidth, y: proposedContentOffset.y)
+            
+            print("***", #function, currentPage, nextPage, point)
+            return point
+        }
+        
+        override func prepare() {
+            super.prepare()
+            guard let collectionView = self.collectionView else { return }
+            
+            itemSize = CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
+            minimumLineSpacing = 0
+            minimumInteritemSpacing = 0
+            scrollDirection = .horizontal
+        }
+    }
+    
     final class NavigationBarContainer: UICollectionView { }
     private func createNavigationBarContainer() {
-        let layout = UICollectionViewFlowLayout()
+        let layout = NavigationBarLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: superview.frame.size.width, height: 52)
         coordinator.navigationBarContainer = NavigationBarContainer(frame: .zero, collectionViewLayout: layout)
+        coordinator.navigationBarContainer.decelerationRate = .fast
         superview.addSubview(coordinator.navigationBarContainer)
     }
 

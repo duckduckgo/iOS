@@ -25,7 +25,6 @@ import Foundation
 struct SubscriptionEmailView: View {
         
     @ObservedObject var viewModel: SubscriptionEmailViewModel
-    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         ZStack {

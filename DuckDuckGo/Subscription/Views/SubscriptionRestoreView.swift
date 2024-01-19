@@ -61,7 +61,6 @@ struct SubscriptionRestoreView: View {
                 }
             }
             .onChange(of: viewModel.subscriptionActivatedViaEmail) { activated in
-                print("onChange triggered with activated: \(activated)")
                 if activated {
                     dismiss()
                 }
@@ -73,18 +72,16 @@ struct SubscriptionRestoreView: View {
         }
         
         // Activation View
-        NavigationLink(destination: SubscriptionEmailView(viewModel: SubscriptionEmailViewModel(userScript: viewModel.userScript,
-                                                                                                subFeature: viewModel.subFeature,
-                                                                                                accountManager: viewModel.accountManager,
-                                                                                                onSubscriptionActivation: {
-                                                                                                    viewModel.handleEmailSubscriptionActivation()
-                                                                                                })
-                                    ),
-                                                            isActive: $viewModel.isRestoringEmailSubscription) {
+        NavigationLink(destination: SubscriptionEmailView(
+            viewModel: SubscriptionEmailViewModel(
+                userScript: viewModel.userScript,
+                subFeature: viewModel.subFeature,
+                accountManager: viewModel.accountManager,
+                parentViewModel: viewModel
+            )),
+                       isActive: $viewModel.isRestoringEmailSubscription) {
             EmptyView()
         }
-        
-
     }
     
     private var listItems: [ListItem] {

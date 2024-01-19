@@ -96,12 +96,9 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     }
     
     func handleEmailSubscriptionActivation() {
-        DispatchQueue.main.async {
-            print("handleEmailSubscriptionActivation called")
-            self.isRestoringEmailSubscription = false
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.subscriptionActivatedViaEmail = true
-            print("isRestoringEmailSubscription set to false")
-            print("subscriptionActivatedViaEmail set to true")
+            self.isRestoringEmailSubscription = false
         }
     }
     

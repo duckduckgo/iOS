@@ -365,6 +365,7 @@
 		85058370219F424500ED4EDB /* SearchBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F143C3451E4AA32D00CFDE3A /* SearchBarExtension.swift */; };
 		850ABD012AC3961100A733DF /* MainViewController+Segues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850ABD002AC3961100A733DF /* MainViewController+Segues.swift */; };
 		850ABD032AC4D46C00A733DF /* SuggestionTray.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 850ABD022AC4D46C00A733DF /* SuggestionTray.storyboard */; };
+		850F93DB2B594AB800823EEA /* ZippedPassKitPreviewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F93DA2B594AB800823EEA /* ZippedPassKitPreviewHelper.swift */; };
 		8512EA4F24ED30D20073EE19 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8512EA4E24ED30D20073EE19 /* WidgetKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8512EA5124ED30D20073EE19 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8512EA5024ED30D20073EE19 /* SwiftUI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8512EA5424ED30D20073EE19 /* Widgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512EA5324ED30D20073EE19 /* Widgets.swift */; };
@@ -406,6 +407,7 @@
 		853A717820F645FB00FE60BC /* PixelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853A717720F645FB00FE60BC /* PixelTests.swift */; };
 		853C5F5B21BFF0AE001F7A05 /* HomeCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853C5F5A21BFF0AE001F7A05 /* HomeCollectionView.swift */; };
 		853C5F6121C277C7001F7A05 /* global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853C5F6021C277C7001F7A05 /* global.swift */; };
+		854007E72B57FC000001BD98 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 854007E62B57FC000001BD98 /* ZIPFoundation */; };
 		8540BBA22440857A00017FE4 /* PreserveLoginsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8540BBA12440857A00017FE4 /* PreserveLoginsWorker.swift */; };
 		8540BD5223D8C2220057FDD2 /* PreserveLoginsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8540BD5123D8C2220057FDD2 /* PreserveLoginsTests.swift */; };
 		8540BD5423D8D5080057FDD2 /* PreserveLoginsAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8540BD5323D8D5080057FDD2 /* PreserveLoginsAlert.swift */; };
@@ -1447,6 +1449,7 @@
 		85058367219C49E000ED4EDB /* HomeViewSectionRenderers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewSectionRenderers.swift; sourceTree = "<group>"; };
 		850ABD002AC3961100A733DF /* MainViewController+Segues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+Segues.swift"; sourceTree = "<group>"; };
 		850ABD022AC4D46C00A733DF /* SuggestionTray.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SuggestionTray.storyboard; sourceTree = "<group>"; };
+		850F93DA2B594AB800823EEA /* ZippedPassKitPreviewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZippedPassKitPreviewHelper.swift; sourceTree = "<group>"; };
 		8512BCBF2061B6110085E862 /* global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = global.swift; sourceTree = "<group>"; };
 		8512EA4D24ED30D20073EE19 /* WidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8512EA4E24ED30D20073EE19 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -2680,6 +2683,7 @@
 				F4D7F634298C00C3006C3AE9 /* FindInPageIOSJSSupport in Frameworks */,
 				85D598872927F84C00FA3B1B /* Crashes in Frameworks */,
 				D664C7DD2B28A02800CBFA76 /* StoreKit.framework in Frameworks */,
+				854007E72B57FC000001BD98 /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3313,6 +3317,7 @@
 				3132FA2527A0784600DD7A12 /* FilePreviewHelper.swift */,
 				3132FA2927A0788F00DD7A12 /* QuickLookPreviewHelper.swift */,
 				3132FA2727A0788400DD7A12 /* PassKitPreviewHelper.swift */,
+				850F93DA2B594AB800823EEA /* ZippedPassKitPreviewHelper.swift */,
 			);
 			name = FilePreview;
 			sourceTree = "<group>";
@@ -5689,6 +5694,7 @@
 				F42D541C29DCA40B004C4FF1 /* DesignResourcesKit */,
 				0238E44E29C0FAA100615E30 /* FindInPageIOSJSSupport */,
 				4B2754EB29E8C7DF00394032 /* Lottie */,
+				854007E62B57FC000001BD98 /* ZIPFoundation */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -5991,6 +5997,7 @@
 				0202568C29881E4300E694E7 /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */,
 				0238E44D29C0FAA100615E30 /* XCRemoteSwiftPackageReference "ios-js-support" */,
 				4B2754EA29E8C7DF00394032 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				854007E52B57FB020001BD98 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 			);
 			productRefGroup = 84E341931E2F7EFB00BDBA6F /* Products */;
 			projectDirPath = "";
@@ -6772,6 +6779,7 @@
 				85EE7F572246685B000FE757 /* WebContainerViewController.swift in Sources */,
 				1EC458462948932500CB2B13 /* UIHostingControllerExtension.swift in Sources */,
 				1E4DCF4E27B6A69600961E25 /* DownloadsListHostingController.swift in Sources */,
+				850F93DB2B594AB800823EEA /* ZippedPassKitPreviewHelper.swift in Sources */,
 				4BCD14672B05B682000B1E4C /* NetworkProtectionTermsAndConditionsStore.swift in Sources */,
 				020108A129A5610C00644F9D /* AppTPActivityHostingViewController.swift in Sources */,
 				C1F341C92A6926920032057B /* EmailAddressPromptViewController.swift in Sources */,
@@ -9913,6 +9921,14 @@
 				version = 3.3.0;
 			};
 		};
+		854007E52B57FB020001BD98 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
+			requirement = {
+				kind = exactVersion;
+				version = 0.9.17;
+			};
+		};
 		98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
@@ -10044,6 +10060,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = RemoteMessaging;
+		};
+		854007E62B57FC000001BD98 /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 854007E52B57FB020001BD98 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
 		};
 		85875B6029912A9900115F05 /* SyncUI */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -31,6 +31,10 @@ import Persistence
 import PrivacyDashboard
 import Networking
 
+#if NETWORK_PROTECTION
+import NetworkProtection
+#endif
+
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
 class MainViewController: UIViewController {
@@ -98,6 +102,10 @@ class MainViewController: UIViewController {
     private var syncFeatureFlagsCancellable: AnyCancellable?
     private var favoritesDisplayModeCancellable: AnyCancellable?
     private var emailCancellables = Set<AnyCancellable>()
+    
+#if NETWORK_PROTECTION
+    private var netpCancellables = Set<AnyCancellable>()
+#endif
 
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
 
@@ -243,6 +251,10 @@ class MainViewController: UIViewController {
         previewsSource.prepare()
         addLaunchTabNotificationObserver()
         subscribeToEmailProtectionStatusNotifications()
+
+#if NETWORK_PROTECTION
+        subscribeToNetworkProtectionSubscriptionEvents()
+#endif
 
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
@@ -1228,6 +1240,50 @@ class MainViewController: UIViewController {
             }
             .store(in: &emailCancellables)
     }
+
+#if NETWORK_PROTECTION
+    private func subscribeToNetworkProtectionSubscriptionEvents() {
+        NotificationCenter.default.publisher(for: .accountDidSignIn)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                self?.onNetworkProtectionAccountSignIn(notification)
+            }
+            .store(in: &netpCancellables)
+        NotificationCenter.default.publisher(for: .accountDidSignOut)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                self?.onNetworkProtectionAccountSignOut(notification)
+            }
+            .store(in: &netpCancellables)
+    }
+    
+    @objc
+    private func onNetworkProtectionAccountSignIn(_ notification: Notification) {
+        guard let token = AccountManager().accessToken else {
+            assertionFailure("[NetP Subscription] AccountManager signed in but token could not be retrieved")
+            return
+        }
+
+        Task {
+            do {
+                try await NetworkProtectionCodeRedemptionCoordinator().exchange(accessToken: token)
+                print("[NetP Subscription] Exchanged access token for auth token successfully")
+            } catch {
+                print("[NetP Subscription] Failed to exchange access token for auth token: \(error)")
+            }
+        }
+    }
+
+    @objc
+    private func onNetworkProtectionAccountSignOut(_ notification: Notification) {
+        do {
+            try NetworkProtectionKeychainTokenStore().deleteToken()
+            print("[NetP Subscription] Deleted NetP auth token after signing out from Privacy Pro")
+        } catch {
+            print("[NetP Subscription] Failed to delete NetP auth token after signing out from Privacy Pro: \(error)")
+        }
+    }
+#endif
 
     @objc
     private func onDuckDuckGoEmailSignIn(_ notification: Notification) {

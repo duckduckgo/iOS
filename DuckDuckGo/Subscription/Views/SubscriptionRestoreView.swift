@@ -26,7 +26,7 @@ import DesignResourcesKit
 struct SubscriptionRestoreView: View {
     
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var viewModel: SubscriptionRestoreViewModel
+    @StateObject var viewModel: SubscriptionRestoreViewModel
     @State private var expandedItemId: Int = 0
     @State private var isAlertVisible = false
     
@@ -60,6 +60,12 @@ struct SubscriptionRestoreView: View {
                     isAlertVisible = true
                 }
             }
+            .onChange(of: viewModel.subscriptionActivatedViaEmail) { activated in
+                print("onChange triggered with activated: \(activated)")
+                if activated {
+                    dismiss()
+                }
+            }
             
             if viewModel.transactionStatus != .idle {
                 PurchaseInProgressView(status: getTransactionStatus())
@@ -69,12 +75,16 @@ struct SubscriptionRestoreView: View {
         // Activation View
         NavigationLink(destination: SubscriptionEmailView(viewModel: SubscriptionEmailViewModel(userScript: viewModel.userScript,
                                                                                                 subFeature: viewModel.subFeature,
-                                                                                                accountManager: viewModel.accountManager)),
-                       isActive: $viewModel.isRestoringEmailSubscription) {
+                                                                                                accountManager: viewModel.accountManager,
+                                                                                                onSubscriptionActivation: {
+                                                                                                    viewModel.handleEmailSubscriptionActivation()
+                                                                                                })
+                                    ),
+                                                            isActive: $viewModel.isRestoringEmailSubscription) {
             EmptyView()
         }
         
-        
+
     }
     
     private var listItems: [ListItem] {

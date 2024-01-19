@@ -53,6 +53,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     @Published var activationResult: SubscriptionActivationResult = .unknown
     @Published var subscriptionEmail: String?
     @Published var isRestoringEmailSubscription: Bool = false
+    @Published var subscriptionActivatedViaEmail: Bool = false
         
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
@@ -92,6 +93,16 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     func restoreEmailSubscription() {
         isRestoringEmailSubscription = true
+    }
+    
+    func handleEmailSubscriptionActivation() {
+        DispatchQueue.main.async {
+            print("handleEmailSubscriptionActivation called")
+            self.isRestoringEmailSubscription = false
+            self.subscriptionActivatedViaEmail = true
+            print("isRestoringEmailSubscription set to false")
+            print("subscriptionActivatedViaEmail set to true")
+        }
     }
     
 }

@@ -36,10 +36,6 @@ struct SubscriptionEmailView: View {
 
         }
         .navigationTitle(viewModel.viewTitle)
-        
-        .onChange(of: viewModel.subscriptionActive) { _ in
-            dismiss()
-        }
     }
 }
 #endif

@@ -28,6 +28,9 @@
 /* Standard Buttons - Cancel Button */
 "cancel.button" = "Abbrechen";
 
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "„Synchronisieren und sichern“ aktivieren";
+
 /* Connect With Server Sheet - Description Part 1 */
 "connect.with.server.sheet.description.part1" = "Dadurch wird ein verschlüsseltes Backup deiner Lesezeichen und Passwörter auf dem sicheren Server von DuckDuckGo erstellt, der mit deinen anderen Geräten synchronisiert werden kann.";
 
@@ -51,6 +54,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Entwicklungsumgebung";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "Deine Daten sind synchronisiert!";
 
 /* Standard Buttons - Done Button */
 "done.button" = "Fertig";
@@ -226,6 +232,9 @@
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Synchronisieren und sichern ist nicht verfügbar";
 
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Mit anderem Gerät synchronisieren";
+
 /* Footer message for syncing with another device */
 "sync.with.another.device.footer" = "Deine Daten sind Ende-zu-Ende-verschlüsselt. DuckDuckGo hat keinen Zugriff auf den Verschlüsselungsschlüssel.";
 
@@ -252,6 +261,9 @@
 
 /* Options - Unify Favorites Instruction */
 "unified.favorites.instruction" = "Verwende auf allen deinen Geräten dieselben Lesezeichenfavoriten. Lass diese Option deaktiviert, um deine Favoriten auf deinem Handy und deinem Desktop getrennt zu halten.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Favoriten geräteübergreifend vereinheitlichen";
 
 /* View Text Code menu item */
 "view.text.code.menu.item" = "Textcode anzeigen";

@@ -1843,8 +1843,14 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Клавиатура";
 
+/* Settings screen cell text for passwords */
+"settings.logins" = "Пароли";
+
 /* Settings title for the 'More' section */
 "settings.more" = "Още от DuckDuckGo";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Прегледи с продължително натискане";
@@ -1891,8 +1897,35 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Кой уебсайт е повреден?";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Кодът за възстановяване и копиран в клипборда";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Изтриване на данните от сървъра";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "Връзката на всички устройства ще бъде премахната, а синхронизираните данни ще бъдат изтрити от сървъра.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Изтриване на данните от сървъра?";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Премахване";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "„%@“ вече няма да има достъп до синхронизираните Ви данни.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Премахване на устройство?";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Премахване";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "Това устройство вече няма да има достъп до синхронизираните Ви данни.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Изключване на синхронизирането?";
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "Съжаляваме, но функцията за синхронизиране и архивиране в момента не е достъпна. Моля, опитайте отново по-късно.";

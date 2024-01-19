@@ -444,7 +444,6 @@ class MainViewController: UIViewController {
     @objc func onAddressBarPositionChanged() {
         viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
         refreshViewsBasedOnAddressBarPosition(appSettings.currentAddressBarPosition)
-        refreshWebViewContentInsets()
     }
 
     func refreshViewsBasedOnAddressBarPosition(_ position: AddressBarPosition) {
@@ -491,7 +490,6 @@ class MainViewController: UIViewController {
 
         findInPageBottomLayoutConstraint.constant = height
         keyboardHeight = height
-        refreshWebViewContentInsets()
 
         if let suggestionsTray = suggestionTrayController {
             let suggestionsFrameInView = suggestionsTray.view.convert(suggestionsTray.contentFrame, to: view)
@@ -656,7 +654,7 @@ class MainViewController: UIViewController {
             guard let tab = tabManager.current(createIfNeeded: true) else {
                 fatalError("Unable to create tab")
             }
-            addToWebViewContainer(tab: tab)
+            attachTab(tab: tab)
             refreshControls()
         } else {
             attachHomeScreen()
@@ -865,7 +863,7 @@ class MainViewController: UIViewController {
     private func addTab(url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) {
         let tab = tabManager.add(url: url, inheritedAttribution: inheritedAttribution)
         dismissOmniBar()
-        addToWebViewContainer(tab: tab)
+        attachTab(tab: tab)
     }
 
     func select(tabAt index: Int) {
@@ -879,7 +877,7 @@ class MainViewController: UIViewController {
         if tab.link == nil {
             attachHomeScreen()
         } else {
-            addToWebViewContainer(tab: tab)
+            attachTab(tab: tab)
             refreshControls()
         }
         tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
@@ -888,21 +886,15 @@ class MainViewController: UIViewController {
         }
     }
 
-    private func addToWebViewContainer(tab: TabViewController) {
+    private func attachTab(tab: TabViewController) {
         removeHomeScreen()
         updateFindInPage()
         currentTab?.progressWorker.progressBar = nil
         currentTab?.chromeDelegate = nil
-        currentTab?.webView.scrollView.contentInsetAdjustmentBehavior = .never
-        
-        addChild(tab)
-        viewCoordinator.webViewContainer.subviews.forEach { $0.removeFromSuperview() }
-        viewCoordinator.webViewContainer.addSubview(tab.view)
-        tab.view.frame = self.viewCoordinator.webViewContainer.bounds
-        tab.didMove(toParent: self)
-        
+            
+        addToContentContainer(controller: tab)
+
         viewCoordinator.logoContainer.isHidden = true
-        viewCoordinator.contentContainer.isHidden = true
         
         tab.progressWorker.progressBar = viewCoordinator.progress
         chromeManager.attach(to: tab.webView.scrollView)
@@ -1394,34 +1386,10 @@ extension MainViewController: BrowserChromeDelegate {
         }
            
         if animated {
-            UIView.animate(withDuration: ChromeAnimationConstants.duration, animations: updateBlock) { _ in
-                self.refreshWebViewContentInsets()
-            }
+            UIView.animate(withDuration: ChromeAnimationConstants.duration, animations: updateBlock)
         } else {
             updateBlock()
-            self.refreshWebViewContentInsets()
         }
-    }
-
-    func refreshWebViewContentInsets() {
-        guard let webView = currentTab?.webView else { return }
-
-        let top = viewCoordinator.statusBackground.frame.height
-        let bottom: CGFloat
-        if isToolbarHidden {
-            bottom = 0
-        } else if appSettings.currentAddressBarPosition.isBottom {
-            bottom = viewCoordinator.toolbar.frame.height
-                + viewCoordinator.navigationBarContainer.frame.height
-                + view.safeAreaInsets.bottom + additionalSafeAreaInsets.bottom
-                + keyboardHeight
-        } else {
-            bottom = viewCoordinator.toolbar.frame.height
-                + view.safeAreaInsets.bottom + additionalSafeAreaInsets.bottom
-                + keyboardHeight
-        }
-        
-        webView.scrollView.contentInset = .init(top: top, left: 0, bottom: bottom, right: 0)
     }
     
     func setNavigationBarHidden(_ hidden: Bool) {
@@ -1789,7 +1757,7 @@ extension MainViewController: TabDelegate {
             guard self.tabManager.model.tabs.contains(newTab.tabModel) else { return }
 
             self.dismissOmniBar()
-            self.addToWebViewContainer(tab: newTab)
+            self.attachTab(tab: newTab)
             self.refreshOmniBar()
         }
 
@@ -1893,7 +1861,6 @@ extension MainViewController: TabDelegate {
 
     func showBars() {
         chromeManager.reset()
-        refreshWebViewContentInsets()
     }
     
     func tabDidRequestFindInPage(tab: TabViewController) {
@@ -2008,6 +1975,7 @@ extension MainViewController: TabSwitcherDelegate {
         hideSuggestionTray()
         tabManager.remove(at: index)
         updateCurrentTab()
+        tabsBarController?.refresh(tabsModel: tabManager.model)
     }
 
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController) {

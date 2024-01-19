@@ -28,6 +28,9 @@
 /* Standard Buttons - Cancel Button */
 "cancel.button" = "Renunță";
 
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "Activează Sincronizare și backup";
+
 /* Connect With Server Sheet - Description Part 1 */
 "connect.with.server.sheet.description.part1" = "Aceasta creează o copie de rezervă criptată a marcajelor și parolelor tale pe serverul securizat DuckDuckGo, care poate fi sincronizată cu celelalte dispozitive ale tale.";
 
@@ -51,6 +54,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Mediu de dezvoltare";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "Datele tale sunt sincronizate!";
 
 /* Standard Buttons - Done Button */
 "done.button" = "Terminat";
@@ -226,6 +232,9 @@
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Sincronizare și backup nu este disponibil";
 
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Sincronizează cu un alt dispozitiv";
+
 /* Footer message for syncing with another device */
 "sync.with.another.device.footer" = "Datele tale sunt criptate integral, iar DuckDuckGo nu are acces la cheia de criptare.";
 
@@ -252,6 +261,9 @@
 
 /* Options - Unify Favorites Instruction */
 "unified.favorites.instruction" = "Utilizează aceleași marcaje favorite pe toate dispozitivele tale. Lasă dezactivat pentru a păstra favoritele pentru mobil și desktop separate.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Unifică favoritele pe toate dispozitivele";
 
 /* View Text Code menu item */
 "view.text.code.menu.item" = "Vezi codul text";

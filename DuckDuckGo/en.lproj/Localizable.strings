@@ -170,7 +170,7 @@
 "alert.unable-to-delete-data-description" = "Unable to delete data on the server.";
 
 /* Description for unable to merge two accounts error */
-"alert.unable-to-merge-two-accounts-description" = "To pair these devices, turn off Sync & Backup on one device then tap \"Sync with Another Device\" on the other device.";
+"alert.unable-to-merge-two-accounts-description" = "To pair these devices, turn off Sync & Backup on one device then tap \"Sync With Another Device\" on the other device.";
 
 /* Description for unable to remove device error */
 "alert.unable-to-remove-device-description" = "Unable to remove this device from Sync & Backup.";
@@ -1914,6 +1914,31 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Which website is broken?";
 
+/* Subscription Activation Window Title */
+"subscription.activate" = "Activate Subscription.";
+
+/* Apple ID option for activation */
+"subscription.activate.appleid" = "Apple ID";
+
+/* Description for Apple ID activation
+   Description for Email activation */
+"subscription.activate.appleid.description" = "Restore your purchase to activate your subscription on this device.";
+
+/* Subscription Activation Info */
+"subscription.activate.description" = "Access your Privacy Pro subscription on this device via Apple ID or an email address.";
+
+/* Email option for activation */
+"subscription.activate.email" = "Email";
+
+/* Restore button title for AppleID */
+"subscription.activate.restore.apple" = "Restore";
+
+/* Restore button title for Email */
+"subscription.activate.restore.email" = "Enter Email";
+
+/* Subscription Activation Title */
+"subscription.activate.title" = "Activate your subscription on this device";
+
 /* Add to another device button */
 "subscription.add.device" = "Add to Another Device";
 
@@ -1926,6 +1951,18 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* FAQ Description */
 "subscription.faq.description" = "Visit our Privacy Pro help pages for answers to frequently asked questions";
 
+/* Cancel action for the existing subscription dialog */
+"subscription.found.cancel" = "Cancel";
+
+/* Restore action for the existing subscription dialog */
+"subscription.found.restore" = "Restore";
+
+/* Message for the existing subscription dialog */
+"subscription.found.text" = "We found a subscription associated with this Apple ID.";
+
+/* Title for the existing subscription dialog */
+"subscription.found.tite" = "Subscription Found";
+
 /* Help and support Section header */
 "subscription.help" = "Help and support";
 
@@ -1934,6 +1971,15 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Manage Plan header */
 "subscription.manage.plan" = "Manage Plan";
+
+/* Alert content for not found subscription */
+"subscription.notFound.alert.message" = "The subscription associated with this Apple ID is no longer active.";
+
+/* Alert title for not found subscription */
+"subscription.notFound.alert.title" = "Subscription Not Found";
+
+/* View plans button text */
+"subscription.notFound.view.plans" = "View Plans";
 
 /* Progress view title when completing the purchase */
 "subscription.progress.view.completing.purchase" = "Completing purchase...";
@@ -1958,6 +2004,15 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Remove subscription cancel button text */
 "subscription.remove.subscription.cancel" = "Cancel";
+
+/* Alert button text for restored purchase alert */
+"subscription.restore.success.alert.button" = "OK";
+
+/* Alert message for restored purchase */
+"subscription.restore.success.alert.message" = "Your purchases have been restored.";
+
+/* Alert title for restored purchase */
+"subscription.restore.success.alert.title" = "You’re all set.";
 
 /* Subscription Expiration Data */
 "subscription.subscription.active.caption" = "Your Privacy Pro subscription renews on %@";

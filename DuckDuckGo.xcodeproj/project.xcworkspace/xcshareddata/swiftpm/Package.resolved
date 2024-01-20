@@ -15,7 +15,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "sam/fix-tunnel-monitor-handshake-check",
-        "revision" : "49ce44cbac2d3d435cd268aeb64356bdba2f2de1"
+        "revision" : "3bc87da66725f179b8e626e07c2400a7fcec00ec"
       }
     },
     {

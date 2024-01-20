@@ -26,6 +26,7 @@ struct SubscriptionFlowView: View {
         
     @ObservedObject var viewModel: SubscriptionFlowViewModel
     @State private var isAlertVisible = false
+    @State private var isRestoringSubscription = false
     
     private func getTransactionStatus() -> String {
         switch viewModel.transactionStatus {
@@ -53,7 +54,7 @@ struct SubscriptionFlowView: View {
             }
          
             // Activation View
-            NavigationLink(destination: SubscriptionRestoreView(viewModel: SubscriptionRestoreViewModel()),
+            NavigationLink(destination: SubscriptionRestoreView(viewModel: SubscriptionRestoreViewModel(), isActivatingSubscription: $viewModel.activatingSubscription),
                            isActive: $viewModel.activatingSubscription) {
                 EmptyView()
             }
@@ -68,6 +69,7 @@ struct SubscriptionFlowView: View {
                 isAlertVisible = true
             }
         }
+        
         .onAppear(perform: {
             Task { await viewModel.initializeViewData() }
         })

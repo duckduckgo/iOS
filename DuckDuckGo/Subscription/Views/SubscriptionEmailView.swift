@@ -25,16 +25,25 @@ import Foundation
 struct SubscriptionEmailView: View {
         
     @ObservedObject var viewModel: SubscriptionEmailViewModel
+    @Binding var isActivatingSubscription: Bool
     
     var body: some View {
         ZStack {
-            AsyncHeadlessWebView(url: $viewModel.emailURL,
-                                 userScript: viewModel.userScript,
-                                 subFeature: viewModel.subFeature,
-                                 shouldReload: $viewModel.shouldReloadWebView).background()
-
+            VStack {
+                AsyncHeadlessWebView(url: $viewModel.emailURL,
+                                     userScript: viewModel.userScript,
+                                     subFeature: viewModel.subFeature,
+                                     shouldReload: $viewModel.shouldReloadWebView).background()
+            }
+        }
+        .onChange(of: viewModel.subscriptionActive) { active in
+            if active {
+                isActivatingSubscription = false
+            }
         }
         .navigationTitle(viewModel.viewTitle)
     }
+    
+    
 }
 #endif

@@ -29,7 +29,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
     let accountManager: AccountManager
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
-    var parentViewModel: SubscriptionRestoreViewModel
     
     var emailURL = URL.addEmailToSubscription
     var viewTitle = UserText.subscriptionRestoreAddEmailTitle
@@ -46,7 +45,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
         self.userScript = userScript
         self.subFeature = subFeature
         self.accountManager = accountManager
-        self.parentViewModel = parentViewModel
         initializeView()
         setupTransactionObservers()
     }
@@ -72,7 +70,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
     private func activateSubscription() {
         subFeature.emailActivationComplete = false
         subscriptionActive = true
-        parentViewModel.handleEmailSubscriptionActivation()
     }
     
 }

@@ -32,7 +32,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     let accountManager: AccountManager
     let isAddingDevice: Bool
     
-    
     var viewTitle: String {
         UserText.subscriptionActivate
     }
@@ -93,13 +92,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     func restoreEmailSubscription() {
         isRestoringEmailSubscription = true
-    }
-    
-    func handleEmailSubscriptionActivation() {
-        DispatchQueue.main.asyncAfter(deadline: .now()) {
-            self.subscriptionActivatedViaEmail = true
-            self.isRestoringEmailSubscription = false
-        }
     }
     
 }

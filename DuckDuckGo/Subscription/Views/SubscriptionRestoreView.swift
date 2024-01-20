@@ -29,6 +29,7 @@ struct SubscriptionRestoreView: View {
     @StateObject var viewModel: SubscriptionRestoreViewModel
     @State private var expandedItemId: Int = 0
     @State private var isAlertVisible = false
+    @Binding var isActivatingSubscription: Bool
     
     private enum Constants {
         static let heroImage = "SyncTurnOnSyncHero"
@@ -60,11 +61,6 @@ struct SubscriptionRestoreView: View {
                     isAlertVisible = true
                 }
             }
-            .onChange(of: viewModel.subscriptionActivatedViaEmail) { activated in
-                if activated {
-                    dismiss()
-                }
-            }
             
             if viewModel.transactionStatus != .idle {
                 PurchaseInProgressView(status: getTransactionStatus())
@@ -78,7 +74,7 @@ struct SubscriptionRestoreView: View {
                 subFeature: viewModel.subFeature,
                 accountManager: viewModel.accountManager,
                 parentViewModel: viewModel
-            )),
+            ), isActivatingSubscription: $isActivatingSubscription),
                        isActive: $viewModel.isRestoringEmailSubscription) {
             EmptyView()
         }
@@ -237,13 +233,6 @@ struct SubscriptionRestoreView: View {
         let id: Int
         let content: AnyView
         let expandedContent: AnyView
-    }
-}
-
-@available(iOS 15.0, *)
-struct SubscriptionRestoreView_Previews: PreviewProvider {
-    static var previews: some View {
-        SubscriptionRestoreView(viewModel: SubscriptionRestoreViewModel())
     }
 }
 #endif

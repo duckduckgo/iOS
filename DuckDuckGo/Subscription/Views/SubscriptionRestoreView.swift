@@ -29,7 +29,7 @@ struct SubscriptionRestoreView: View {
     @StateObject var viewModel: SubscriptionRestoreViewModel
     @State private var expandedItemId: Int = 0
     @State private var isAlertVisible = false
-    @Binding var isActivatingSubscription: Bool
+    @Binding var isConfiguringSubscription: Bool
     
     private enum Constants {
         static let heroImage = "SyncTurnOnSyncHero"
@@ -52,7 +52,7 @@ struct SubscriptionRestoreView: View {
                 listView
             }
             .background(Color(designSystemColor: .container))
-            .navigationTitle(viewModel.viewTitle)
+            .navigationTitle(viewModel.isAddingDevice ? UserText.subscriptionAddDeviceTitle : UserText.subscriptionActivate)
             .navigationBarBackButtonHidden(viewModel.transactionStatus != .idle)
             .applyInsetGroupedListStyle()
             .alert(isPresented: $isAlertVisible) { getAlert() }
@@ -69,13 +69,12 @@ struct SubscriptionRestoreView: View {
         
         // Activation View
         NavigationLink(destination: SubscriptionEmailView(
-            viewModel: SubscriptionEmailViewModel(
-                userScript: viewModel.userScript,
-                subFeature: viewModel.subFeature,
-                accountManager: viewModel.accountManager,
-                parentViewModel: viewModel
-            ), isActivatingSubscription: $isActivatingSubscription),
-                       isActive: $viewModel.isRestoringEmailSubscription) {
+                    viewModel: SubscriptionEmailViewModel(
+                    userScript: viewModel.userScript,
+                    subFeature: viewModel.subFeature,
+                    accountManager: viewModel.accountManager),
+                isConfiguringSubscription: $isConfiguringSubscription),
+                isActive: $viewModel.isRestoringEmailSubscription) {
             EmptyView()
         }
     }
@@ -107,10 +106,12 @@ struct SubscriptionRestoreView: View {
     private func getAppleIDCellContent(buttonAction: @escaping () -> Void) -> AnyView {
         AnyView(
             VStack(alignment: .leading) {
-                Text(UserText.subscriptionActivateAppleIDDescription)
+                Text(viewModel.isAddingDevice ? UserText.subscriptionAvailableInApple : UserText.subscriptionActivateAppleIDDescription)
                     .daxSubheadRegular()
                     .foregroundColor(Color(designSystemColor: .textSecondary))
-                getCellButton(buttonText: UserText.subscriptionActivateAppleIDButton, action: buttonAction)
+                if !viewModel.isAddingDevice {
+                    getCellButton(buttonText: UserText.subscriptionActivateAppleIDButton, action: buttonAction)
+                }
             }
         )
     }
@@ -129,8 +130,15 @@ struct SubscriptionRestoreView: View {
                         Text(UserText.subscriptionActivateEmailDescription)
                             .daxSubheadRegular()
                             .foregroundColor(Color(designSystemColor: .textSecondary))
-                        getCellButton(buttonText: UserText.subscriptionManageEmail,
-                                                    action: buttonAction)
+                        HStack {
+                            getCellButton(buttonText: UserText.subscriptionManageEmail,
+                                                        action: buttonAction)
+                            Spacer()
+                            Button(action: {}, label: {
+                                Text(UserText.subscriptionManageEmailResendInstructions).daxButton().daxBodyBold()
+                            })
+                        }
+                        
                     }
                 }
             )
@@ -170,11 +178,11 @@ struct SubscriptionRestoreView: View {
     private var headerView: some View {
         VStack(spacing: Constants.headerLineSpacing) {
             Image(Constants.heroImage)
-            Text(viewModel.headerTitle)
+            Text(viewModel.isAddingDevice ? UserText.subscriptionAddDeviceHeaderTitle : UserText.subscriptionActivateTitle)
                 .daxHeadline()
                 .multilineTextAlignment(.center)
                 .foregroundColor(Color(designSystemColor: .textPrimary))
-            Text(viewModel.headerDescription)
+            Text(viewModel.isAddingDevice ? UserText.subscriptionAddDeviceDescription : UserText.subscriptionActivateDescription)
                 .daxFootnoteRegular()
                 .foregroundColor(Color(designSystemColor: .textSecondary))
                 .multilineTextAlignment(.center)

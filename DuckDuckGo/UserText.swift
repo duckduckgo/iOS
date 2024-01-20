@@ -1041,9 +1041,11 @@ But if you *do* want a peek under the hood, you can find more information about 
             
     // Add to other devices (AppleID / Email)
     public static let subscriptionAddDeviceTitle = NSLocalizedString("subscription.add.device.title", value: "Add Device", comment: "Add to another device view title")
-    public static let subscriptionUseOnOtherDevices = NSLocalizedString("subscription.add.device.header.title", value: "Use your subscription on all your devices", comment: "Add subscription to other device title ")
+    public static let subscriptionAddDeviceHeaderTitle = NSLocalizedString("subscription.add.device.header.title", value: "Use your subscription on all your devices", comment: "Add subscription to other device title ")
     public static let subscriptionAddDeviceDescription = NSLocalizedString("subscription.add.device.description", value: "Access your Privacy Pro subscription on any of your devices via Apple ID or by adding an email address.", comment: "Subscription Add device Info")
     public static let subscriptionAvailableInApple = NSLocalizedString("subscription.available.apple", value: "Privacy Pro is available on any device signed in to the same Apple ID.", comment: "Subscription availability message on Apple devices")
+    public static let subscriptionManageEmailResendInstructions = NSLocalizedString("subscription.add.device.resend.instructions", value: "Resend Instructions.", comment: "Resend activation instructions button")
+    
     
     // Add Email To subscription
     public static let subscriptionAddEmail = NSLocalizedString("subscription.add.email", value: "Add an email address to activate your subscription on your other devices. We’ll only use this address to verify your subscription.", comment: "Add email to an existing subscription")

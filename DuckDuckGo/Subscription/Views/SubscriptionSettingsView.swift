@@ -32,6 +32,7 @@ struct SubscriptionSettingsView: View {
     @ObservedObject var viewModel: SubscriptionSettingsViewModel
     @Environment(\.presentationMode) var presentationMode
     @StateObject var sceneEnvironment = SceneEnvironment()
+    @State private var isConfiguringSubscription = false
     
     var body: some View {
             List {
@@ -44,15 +45,15 @@ struct SubscriptionSettingsView: View {
                     .hidden()
                 }.textCase(nil)
                 Section(header: Text(UserText.subscriptionManageDevices)) {
-                    /*
-                    NavigationLink(destination: SubscriptionRestoreView(viewModel: SubscriptionRestoreViewModel(isAddingDevice: true))) {
+                    
+                    NavigationLink(destination: SubscriptionRestoreView(viewModel: SubscriptionRestoreViewModel(isAddingDevice: true), isConfiguringSubscription: $isConfiguringSubscription)) {
                         SettingsCustomCell(content: {
                             Text(UserText.subscriptionAddDeviceButton)
                                 .daxBodyRegular()
                                 .foregroundColor(Color.init(designSystemColor: .accent))
                         })
                     }
-                     */
+                    
                     SettingsCustomCell(content: {
                         Text(UserText.subscriptionRemoveFromDevice)
                                 .daxBodyRegular()
@@ -75,9 +76,7 @@ struct SubscriptionSettingsView: View {
                         SettingsCustomCell(content: {
                             Text(UserText.subscriptionFAQ)
                                 .daxBodyRegular()
-                        },
-                                           action: {},
-                                           disclosureIndicator: true)
+                        })
                     }
                 }
             }

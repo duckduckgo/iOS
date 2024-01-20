@@ -1956,6 +1956,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Add subscription to other device title  */
 "subscription.add.device.header.title" = "Use your subscription on all your devices";
 
+/* Resend activation instructions button */
+"subscription.add.device.resend.instructions" = "Resend Instructions.";
+
 /* Add to another device view title */
 "subscription.add.device.title" = "Add Device";
 

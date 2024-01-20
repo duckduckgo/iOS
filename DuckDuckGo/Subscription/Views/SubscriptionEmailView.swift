@@ -25,7 +25,7 @@ import Foundation
 struct SubscriptionEmailView: View {
         
     @ObservedObject var viewModel: SubscriptionEmailViewModel
-    @Binding var isActivatingSubscription: Bool
+    @Binding var isConfiguringSubscription: Bool
     
     var body: some View {
         ZStack {
@@ -38,7 +38,7 @@ struct SubscriptionEmailView: View {
         }
         .onChange(of: viewModel.subscriptionActive) { active in
             if active {
-                isActivatingSubscription = false
+                isConfiguringSubscription = false
             }
         }
         .navigationTitle(viewModel.viewTitle)

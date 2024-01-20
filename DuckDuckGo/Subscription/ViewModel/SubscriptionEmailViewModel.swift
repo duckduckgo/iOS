@@ -40,8 +40,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
             
     init(userScript: SubscriptionPagesUserScript,
          subFeature: SubscriptionPagesUseSubscriptionFeature,
-         accountManager: AccountManager,
-         parentViewModel: SubscriptionRestoreViewModel) {
+         accountManager: AccountManager) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.accountManager = accountManager

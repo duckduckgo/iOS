@@ -32,18 +32,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     let accountManager: AccountManager
     let isAddingDevice: Bool
     
-    var viewTitle: String {
-        UserText.subscriptionActivate
-    }
-    
-    var headerTitle: String {
-        UserText.subscriptionActivateTitle
-    }
-    
-    var headerDescription: String {
-        UserText.subscriptionActivateDescription
-    }
-    
     enum SubscriptionActivationResult {
         case unknown, activated, notFound, error
     }

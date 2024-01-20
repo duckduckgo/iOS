@@ -31,7 +31,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     
     var emailURL = URL.addEmailToSubscription
-    var viewTitle = UserText.subscriptionRestoreAddEmailTitle
+    var viewTitle = UserText.subscriptionRestoreEmail
     @Published var subscriptionEmail: String?
     @Published var shouldReloadWebView = false
     @Published var subscriptionActive = false

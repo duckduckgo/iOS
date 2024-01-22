@@ -218,7 +218,7 @@ extension MainViewFactory {
     private func constrainNavigationBarContainer() {
         let navigationBarContainer = coordinator.navigationBarContainer!
         let toolbar = coordinator.toolbar!
-        let omniBar = coordinator.omniBar!
+//        let omniBar = coordinator.omniBar!
 
         coordinator.constraints.navigationBarContainerTop = navigationBarContainer.constrainView(superview.safeAreaLayoutGuide, by: .top)
         coordinator.constraints.navigationBarContainerBottom = navigationBarContainer.constrainView(toolbar, by: .bottom, to: .top)
@@ -400,7 +400,7 @@ class MainViewCoordinator {
         var notificationContainerTopToNavigationBar: NSLayoutConstraint!
         var notificationContainerTopToStatusBackground: NSLayoutConstraint!
         var notificationContainerHeight: NSLayoutConstraint!
-        var omniBarBottom: NSLayoutConstraint!
+        // var omniBarBottom: NSLayoutConstraint!
         var progressBarTop: NSLayoutConstraint!
         var progressBarBottom: NSLayoutConstraint!
         var statusBackgroundToNavigationBarContainerBottom: NSLayoutConstraint!

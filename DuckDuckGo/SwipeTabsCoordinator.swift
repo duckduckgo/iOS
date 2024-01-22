@@ -48,15 +48,23 @@ class SwipeTabsCoordinator: NSObject, UICollectionViewDataSource, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row > 0 {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "newtab", for: indexPath)
-        } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "omnibar", for: indexPath) as? OmniBarCell else {
-                fatalError("Not \(OmniBarCell.self)")
-            }
-            cell.omniBar = coordinator.omniBar
-            return cell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "omnibar", for: indexPath) as? OmniBarCell else {
+            fatalError("Not \(OmniBarCell.self)")
         }
+        
+        if tabsModel.currentIndex == indexPath.row {
+            print("***", #function, "using real omnibar")
+            cell.omniBar = coordinator.omniBar
+        } else {
+            let tab = tabsModel.get(tabAt: indexPath.row)
+            cell.omniBar = OmniBar.loadFromXib()
+            cell.omniBar?.startBrowsing()
+            cell.omniBar?.refreshText(forUrl: tab.link?.url)
+            cell.omniBar?.decorate(with: ThemeManager.shared.currentTheme)
+            cell.omniBar?.frame = coordinator.omniBar.frame
+        }
+        
+        return cell
     }
     
     var startOffsetX: CGFloat = 0.0

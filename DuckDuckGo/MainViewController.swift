@@ -507,7 +507,7 @@ class MainViewController: UIViewController {
 
         if self.appSettings.currentAddressBarPosition.isBottom {
             let navBarOffset = min(0, self.toolbarHeight - intersection.height)
-            self.viewCoordinator.constraints.omniBarBottom.constant = navBarOffset
+            self.viewCoordinator.constraints.navigationBarContainerBottom.constant = navBarOffset
             UIView.animate(withDuration: duration, delay: 0, options: animationCurve) {
                 self.viewCoordinator.navigationBarContainer.superview?.layoutIfNeeded()
             }

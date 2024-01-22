@@ -40,7 +40,6 @@ protocol OmniBarState {
     var showSettings: Bool { get }
     var showVoiceSearch: Bool { get }
     var name: String { get }
-    var isTextVerticallyCentered: Bool { get }
     var onEditingStoppedState: OmniBarState { get }
     var onEditingStartedState: OmniBarState { get }
     var onTextClearedState: OmniBarState { get }

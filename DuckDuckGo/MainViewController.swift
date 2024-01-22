@@ -280,6 +280,7 @@ class MainViewController: UIViewController {
     class SwipeTabsCoordinator: NSObject, UICollectionViewDataSource, UICollectionViewDelegate {
         
         weak var coordinator: MainViewCoordinator!
+        weak var tabsModel: TabsModel!
         
         init(coordinator: MainViewCoordinator) {
             self.coordinator = coordinator
@@ -287,8 +288,14 @@ class MainViewController: UIViewController {
             coordinator.navigationBarContainer.register(NewTabCell.self, forCellWithReuseIdentifier: "newtab")
         }
         
+        func refresh(tabsModel: TabsModel, scrollToSelected: Bool = false) {
+            print("***", #function)
+            self.tabsModel = tabsModel
+            coordinator.navigationBarContainer.reloadData()
+        }
+        
         func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            2
+            tabsModel.count
         }
         
         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -373,6 +380,7 @@ class MainViewController: UIViewController {
         applyTheme(ThemeManager.shared.currentTheme)
 
         tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
+        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
 
         _ = AppWidthObserver.shared.willResize(toWidth: view.frame.width)
         applyWidth()
@@ -391,6 +399,7 @@ class MainViewController: UIViewController {
         
         startOnboardingFlowIfNotSeenBefore()
         tabsBarController?.refresh(tabsModel: tabManager.model)
+        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
         
         _ = AppWidthObserver.shared.willResize(toWidth: view.frame.width)
         applyWidth()
@@ -910,6 +919,7 @@ class MainViewController: UIViewController {
         refreshTabIcon()
         refreshControls()
         tabsBarController?.refresh(tabsModel: tabManager.model)
+        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
     }
     
     func enterSearch() {
@@ -989,6 +999,7 @@ class MainViewController: UIViewController {
             attachTab(tab: tab)
             refreshControls()
         }
+        tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
         tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             showFireButtonPulse()
@@ -1107,6 +1118,7 @@ class MainViewController: UIViewController {
             }
             // If tabs have been udpated, do this async to make sure size calcs are current
             self.tabsBarController?.refresh(tabsModel: self.tabManager.model)
+            self.swipeTabsCoordinator?.refresh(tabsModel: self.tabManager.model)
             
             // Do this on the next UI thread pass so we definitely have the right width
             self.applyWidthToTrayController()
@@ -1288,6 +1300,7 @@ class MainViewController: UIViewController {
         attachHomeScreen()
         homeController?.openedAsNewTab(allowingKeyboard: allowingKeyboard)
         tabsBarController?.refresh(tabsModel: tabManager.model)
+        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
     }
     
     func animateLogoAppearance() {
@@ -1839,6 +1852,7 @@ extension MainViewController: TabDelegate {
         }
         tabManager?.save()
         tabsBarController?.refresh(tabsModel: tabManager.model)
+        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
     }
     
     func tab(_ tab: TabViewController, didUpdatePreview preview: UIImage) {
@@ -2137,6 +2151,7 @@ extension MainViewController: AutoClearWorker {
         showBars()
         attachHomeScreen()
         tabsBarController?.refresh(tabsModel: tabManager.model)
+        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
         Favicons.shared.clearCache(.tabs)
     }
     

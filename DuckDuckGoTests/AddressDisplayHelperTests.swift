@@ -23,44 +23,6 @@ class AddressDisplayHelperTests: XCTestCase {
 
     private typealias AddressHelper = OmniBar.AddressDisplayHelper
 
-    func testDeemphasisePathDoesNotCrash() {
-        
-        _ = AddressHelper.deemphasisePath(forUrl: URL(string: "example.com")!)
-        _ = AddressHelper.deemphasisePath(forUrl: URL(string: "example.com")!)
-        _ = AddressHelper.deemphasisePath(forUrl: URL(string: "a/b")!)
-
-        testWith(prefix: "http:///") // crashes but we don't allow it anyway
-        testWith(prefix: "http://localhost")
-        testWith(prefix: "http://localhost/")
-        testWith(prefix: "http://example.com")
-        testWith(prefix: "http://example.com/")
-        testWith(prefix: "http://example.com/path")
-        testWith(prefix: "http://example.com/path/")
-        testWith(prefix: "http://user:password@example.com/path/")
-        
-        testWith(prefix: "http://localhost:8080")
-        testWith(prefix: "http://localhost:8080/")
-        testWith(prefix: "http://example.com:8080")
-        testWith(prefix: "http://example.com:8080/")
-        testWith(prefix: "http://example.com:8080/path")
-        testWith(prefix: "http://example.com:8080/path/")
-        testWith(prefix: "http://user:password@example.com:8080/path/")
-
-    }
-
-    private func testWith(prefix: String) {
-        
-        _ = AddressHelper.deemphasisePath(forUrl: URL(string: prefix)!)
-        _ = AddressHelper.deemphasisePath(forUrl: URL(string: "\(prefix)#")!)
-        _ = AddressHelper.deemphasisePath(forUrl: URL(string: "\(prefix)#/fragment")!)
-        _ = AddressHelper.deemphasisePath(forUrl: URL(string: "\(prefix)?")!)
-        _ = AddressHelper.deemphasisePath(forUrl: URL(string: "\(prefix)?x=1")!)
-        _ = AddressHelper.deemphasisePath(forUrl: URL(string: "\(prefix)?x=1&")!)
-        _ = AddressHelper.deemphasisePath(forUrl: URL(string: "\(prefix)?x=1&y=1")!)
-        _ = AddressHelper.deemphasisePath(forUrl: URL(string: "\(prefix)?x=1&y=1,2")!)
-
-    }
-
     func testShortURL() {
 
         XCTAssertEqual(AddressHelper.shortURLString(URL(string: "https://www.duckduckgo.com")!), "duckduckgo.com")
@@ -82,18 +44,18 @@ class AddressDisplayHelperTests: XCTestCase {
     func testShortensURLWhenShortVersionExpected() {
         let addressForDisplay = AddressHelper.addressForDisplay(url: URL(string: "http://some.domain.eu/with/path")!, showsFullURL: false)
 
-        XCTAssertEqual(addressForDisplay.string, "some.domain.eu")
+        XCTAssertEqual(addressForDisplay, "some.domain.eu")
     }
 
     func testDoesNotShortenURLWhenFullVersionExpected() {
         let addressForDisplay = AddressHelper.addressForDisplay(url: URL(string: "http://some.domain.eu/with/path")!, showsFullURL: true)
 
-        XCTAssertEqual(addressForDisplay.string, "http://some.domain.eu/with/path")
+        XCTAssertEqual(addressForDisplay, "http://some.domain.eu/with/path")
     }
 
     func testFallsBackToLongURLWhenCannotProduceShortURL() {
         let addressForDisplay = AddressHelper.addressForDisplay(url: URL(string: "file:///some/path")!, showsFullURL: false)
 
-        XCTAssertEqual(addressForDisplay.string, "file:///some/path")
+        XCTAssertEqual(addressForDisplay, "file:///some/path")
     }
 }

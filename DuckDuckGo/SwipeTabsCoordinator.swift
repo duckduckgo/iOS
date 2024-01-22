@@ -19,6 +19,10 @@
 
 import UIKit
 
+// TODO handle new tab
+
+// TODO current tab being not first index
+
 class SwipeTabsCoordinator: NSObject, UICollectionViewDataSource, UICollectionViewDelegate {
     
     // Set by refresh function

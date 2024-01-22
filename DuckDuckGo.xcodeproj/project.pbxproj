@@ -460,6 +460,7 @@
 		85AE668E2097206E0014CF04 /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85AE668D2097206E0014CF04 /* NotificationView.xib */; };
 		85AE6690209724120014CF04 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AE668F209724120014CF04 /* NotificationView.swift */; };
 		85AFA1212B45D14F0028A504 /* BookmarksMigrationAssertionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AFA1202B45D14F0028A504 /* BookmarksMigrationAssertionTests.swift */; };
+		85B9814E2B5EB618009AC9A6 /* SwipeTabsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B9814D2B5EB618009AC9A6 /* SwipeTabsCoordinator.swift */; };
 		85B9CB8921AEBDD5009001F1 /* FavoriteHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B9CB8821AEBDD5009001F1 /* FavoriteHomeCell.swift */; };
 		85BA58551F34F49E00C6E8CA /* AppUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */; };
 		85BA58581F34F72F00C6E8CA /* AppUserDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BA58561F34F61C00C6E8CA /* AppUserDefaultsTests.swift */; };
@@ -1541,6 +1542,7 @@
 		85AE668D2097206E0014CF04 /* NotificationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationView.xib; sourceTree = "<group>"; };
 		85AE668F209724120014CF04 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		85AFA1202B45D14F0028A504 /* BookmarksMigrationAssertionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksMigrationAssertionTests.swift; sourceTree = "<group>"; };
+		85B9814D2B5EB618009AC9A6 /* SwipeTabsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeTabsCoordinator.swift; sourceTree = "<group>"; };
 		85B9CB8821AEBDD5009001F1 /* FavoriteHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteHomeCell.swift; sourceTree = "<group>"; };
 		85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUserDefaults.swift; sourceTree = "<group>"; };
 		85BA58561F34F61C00C6E8CA /* AppUserDefaultsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUserDefaultsTests.swift; sourceTree = "<group>"; };
@@ -5389,6 +5391,7 @@
 				85864FBB24D31EF300E756FF /* SuggestionTrayViewController.swift */,
 				851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */,
 				CBEFB9102ADFFE7900DEDE7B /* CriticalAlerts.swift */,
+				85B9814D2B5EB618009AC9A6 /* SwipeTabsCoordinator.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -6879,6 +6882,7 @@
 				3151F0EA27357FBA00226F58 /* SpeechRecognizer.swift in Sources */,
 				F17922E21E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift in Sources */,
 				0290472229E723260008FE3C /* AppTPManageTrackerCell.swift in Sources */,
+				85B9814E2B5EB618009AC9A6 /* SwipeTabsCoordinator.swift in Sources */,
 				985AAE4524899369007A43EC /* HomeScreenTransition.swift in Sources */,
 				85E58C2C28FDA94F006A801A /* FavoritesViewController.swift in Sources */,
 				1E8AD1CF27C000A000ABA377 /* CompleteDownloadRow.swift in Sources */,

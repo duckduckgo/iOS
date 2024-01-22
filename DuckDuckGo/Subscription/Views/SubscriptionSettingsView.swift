@@ -46,7 +46,9 @@ struct SubscriptionSettingsView: View {
                 }.textCase(nil)
                 Section(header: Text(UserText.subscriptionManageDevices)) {
                     
-                    NavigationLink(destination: SubscriptionRestoreView(viewModel: SubscriptionRestoreViewModel(isAddingDevice: true), isActivatingSubscription: $isActivatingSubscription)) {
+                    NavigationLink(destination: SubscriptionRestoreView(
+                        viewModel: SubscriptionRestoreViewModel(isAddingDevice: true),
+                        isActivatingSubscription: $isActivatingSubscription)) {
                         SettingsCustomCell(content: {
                             Text(UserText.subscriptionAddDeviceButton)
                                 .daxBodyRegular()

@@ -106,10 +106,12 @@ public struct AuthService: APIService {
         public let externalID: String
         public let id: Int
         public let status: String
-
+        
+        // swiftlint:disable nesting
         enum CodingKeys: String, CodingKey {
             // no underscores due to keyDecodingStrategy = .convertFromSnakeCase
             case authToken = "authToken", email, externalID = "externalId", id, status
         }
+        // swiftlint:enable nesting
     }
 }

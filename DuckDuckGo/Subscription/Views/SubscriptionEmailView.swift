@@ -43,7 +43,8 @@ struct SubscriptionEmailView: View {
                 if viewModel.managingSubscriptionEmail {
                     dismiss()
                 } else {
-                    // Update the binding to tear down the entire view stack (Go back to initial webview)
+                    // Update the binding to tear down the entire view stack
+                    // This dismisses all views in between and takes you back to the welcome page
                     isActivatingSubscription = false
                 }
             }

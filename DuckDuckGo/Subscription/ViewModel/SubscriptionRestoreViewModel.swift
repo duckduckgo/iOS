@@ -40,7 +40,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     @Published var activationResult: SubscriptionActivationResult = .unknown
     @Published var subscriptionEmail: String?
     @Published var isManagingEmailSubscription: Bool = false
-    @Published var subscriptionActivatedViaEmail: Bool = false
         
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),

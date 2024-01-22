@@ -95,6 +95,9 @@ struct HeadlessWebview: UIViewRepresentable {
             return topController
         }
 
+        // MARK: WKUIDelegate
+        
+        // Enables presenting Javascript alerts via the native layer (window.confirm())
         func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String,
                      initiatedByFrame frame: WKFrameInfo,
                      completionHandler: @escaping (Bool) -> Void) {

@@ -50,10 +50,12 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
     
     private func initializeView() {
-        // If use is authenticated, we want to "Add or manage email" instead of activating
         if accountManager.isUserAuthenticated {
+            // If user is authenticated, we want to "Add or manage email" instead of activating
             emailURL = accountManager.email == nil ? URL.addEmailToSubscription : URL.manageSubscriptionEmail
             viewTitle = accountManager.email == nil ?  UserText.subscriptionRestoreAddEmailTitle : UserText.subscriptionManageEmailTitle
+            
+            // Also we assume subscription requires managing, and not activation
             managingSubscriptionEmail = true
         }
     }

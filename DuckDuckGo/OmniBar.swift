@@ -540,7 +540,7 @@ extension OmniBar: Themable {
         searchStackContainer?.tintColor = theme.barTintColor
         
         if let url = textField.text.flatMap({ URL(trimmedAddressBarString: $0.trimmingWhitespace()) }) {
-            textField.attributedText = AddressDisplayHelper.deemphasisePath(forUrl: url)
+            textField.attributedText = AddressDisplayHelper.addressForDisplay(url: url, isEditing: textField.isEditing)
         }
         textField.textColor = theme.searchBarTextColor
         textField.tintColor = UIColor(designSystemColor: .accent)

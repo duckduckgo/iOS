@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "4b9b5339f21647efca6aef66b8ed400a7cfa804f",
-        "version" : "101.2.0"
+        "branch" : "sam/avoid-sending-first-latency-measurement-as-pixel",
+        "revision" : "68594665177debffe4a2c0037d119810f276ca2c"
       }
     },
     {

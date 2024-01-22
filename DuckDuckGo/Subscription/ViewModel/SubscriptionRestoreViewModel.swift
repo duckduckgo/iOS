@@ -30,7 +30,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     let purchaseManager: PurchaseManager
     let accountManager: AccountManager
-    let isAddingDevice: Bool
+    var isAddingDevice: Bool
     
     enum SubscriptionActivationResult {
         case unknown, activated, notFound, error
@@ -56,6 +56,9 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     func initializeView() {
         subscriptionEmail = accountManager.email
+        if accountManager.isUserAuthenticated {
+            isAddingDevice = true
+        }
     }
     
     @MainActor

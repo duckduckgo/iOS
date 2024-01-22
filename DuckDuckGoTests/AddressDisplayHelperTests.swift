@@ -79,20 +79,20 @@ class AddressDisplayHelperTests: XCTestCase {
         XCTAssertNil(AddressHelper.shortURLString(URL(string: "data:text/plain;charset=UTF-8;page=21,the%20data:12345")!))
     }
 
-    func testShortensURLWhenNotEditing() {
-        let addressForDisplay = AddressHelper.addressForDisplay(url: URL(string: "http://some.domain.eu/with/path")!, isEditing: false)
+    func testShortensURLWhenShortVersionExpected() {
+        let addressForDisplay = AddressHelper.addressForDisplay(url: URL(string: "http://some.domain.eu/with/path")!, showsFullURL: false)
 
         XCTAssertEqual(addressForDisplay.string, "some.domain.eu")
     }
 
-    func testDoesNotShortenURLWhenEditing() {
-        let addressForDisplay = AddressHelper.addressForDisplay(url: URL(string: "http://some.domain.eu/with/path")!, isEditing: true)
+    func testDoesNotShortenURLWhenFullVersionExpected() {
+        let addressForDisplay = AddressHelper.addressForDisplay(url: URL(string: "http://some.domain.eu/with/path")!, showsFullURL: true)
 
         XCTAssertEqual(addressForDisplay.string, "http://some.domain.eu/with/path")
     }
 
     func testFallsBackToLongURLWhenCannotProduceShortURL() {
-        let addressForDisplay = AddressHelper.addressForDisplay(url: URL(string: "file:///some/path")!, isEditing: false)
+        let addressForDisplay = AddressHelper.addressForDisplay(url: URL(string: "file:///some/path")!, showsFullURL: false)
 
         XCTAssertEqual(addressForDisplay.string, "file:///some/path")
     }

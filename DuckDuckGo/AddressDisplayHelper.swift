@@ -23,9 +23,9 @@ extension OmniBar {
 
     struct AddressDisplayHelper {
 
-        static func addressForDisplay(url: URL, isEditing: Bool) -> NSAttributedString {
+        static func addressForDisplay(url: URL, showsFullURL: Bool) -> NSAttributedString {
 
-            if !isEditing, let shortAddress = shortURLString(url) {
+            if !showsFullURL, let shortAddress = shortURLString(url) {
                 return NSAttributedString(
                     string: shortAddress,
                     attributes: [.foregroundColor: ThemeManager.shared.currentTheme.searchBarTextColor])

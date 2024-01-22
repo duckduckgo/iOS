@@ -34,7 +34,8 @@ final class SubscriptionEmailViewModel: ObservableObject {
     var viewTitle = UserText.subscriptionRestoreEmail
     @Published var subscriptionEmail: String?
     @Published var shouldReloadWebView = false
-    @Published var subscriptionActive = false
+    @Published var activateSubscription = false
+    @Published var managingSubscriptionEmail = false
     
     private var cancellables = Set<AnyCancellable>()
             
@@ -52,7 +53,8 @@ final class SubscriptionEmailViewModel: ObservableObject {
         // If use is authenticated, we want to "Add or manage email" instead of activating
         if accountManager.isUserAuthenticated {
             emailURL = accountManager.email == nil ? URL.addEmailToSubscription : URL.manageSubscriptionEmail
-            viewTitle = accountManager.email == nil ?  UserText.subscriptionAddEmail : UserText.subscriptionManageEmailTitle
+            viewTitle = accountManager.email == nil ?  UserText.subscriptionRestoreAddEmailTitle : UserText.subscriptionManageEmailTitle
+            managingSubscriptionEmail = true
         }
     }
     
@@ -61,15 +63,15 @@ final class SubscriptionEmailViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 if value {
-                    self?.activateSubscription()
+                    self?.completeActivation()
                 }
             }
             .store(in: &cancellables)
     }
     
-    private func activateSubscription() {
+    private func completeActivation() {
         subFeature.emailActivationComplete = false
-        subscriptionActive = true
+        activateSubscription = true
     }
     
 }

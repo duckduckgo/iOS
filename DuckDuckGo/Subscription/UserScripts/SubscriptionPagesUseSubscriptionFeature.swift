@@ -45,7 +45,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         static let backToSettings = "backToSettings"
         static let getSubscriptionOptions = "getSubscriptionOptions"
         static let subscriptionSelected = "subscriptionSelected"
-        static let subscriptionActive = "activateSubscription"
+        static let activateSubscription = "activateSubscription"
         static let featureSelected = "featureSelected"
     }
     
@@ -66,7 +66,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     @Published var transactionStatus: TransactionStatus = .idle
     @Published var hasActiveSubscription = false
     @Published var purchaseError: AppStorePurchaseFlow.Error?
-    @Published var subscriptionActive: Bool = false
+    @Published var activateSubscription: Bool = false
     @Published var emailActivationComplete: Bool = false
     
     var broker: UserScriptMessageBroker?
@@ -91,7 +91,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         case Handlers.backToSettings: return backToSettings
         case Handlers.getSubscriptionOptions: return getSubscriptionOptions
         case Handlers.subscriptionSelected: return subscriptionSelected
-        case Handlers.subscriptionActive: return subscriptionActive
+        case Handlers.activateSubscription: return activateSubscription
         case Handlers.featureSelected: return featureSelected
         default:
             return nil
@@ -226,8 +226,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         return nil
     }
 
-    func subscriptionActive(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        subscriptionActive = true
+    func activateSubscription(params: Any, original: WKScriptMessage) async throws -> Encodable? {
+        activateSubscription = true
         return nil
     }
 

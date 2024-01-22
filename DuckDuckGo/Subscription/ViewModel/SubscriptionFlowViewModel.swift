@@ -67,11 +67,11 @@ final class SubscriptionFlowViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        subFeature.$subscriptionActive
+        subFeature.$activateSubscription
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 if value {
-                    self?.subFeature.subscriptionActive = false
+                    self?.subFeature.activateSubscription = false
                     self?.activatingSubscription = true
                 }
             }

@@ -54,7 +54,7 @@ struct SubscriptionFlowView: View {
          
             // Activation View
             NavigationLink(destination: SubscriptionRestoreView(viewModel: SubscriptionRestoreViewModel(),
-                                                                isConfiguringSubscription: $viewModel.activatingSubscription),
+                                                                isActivatingSubscription: $viewModel.activatingSubscription),
                            isActive: $viewModel.activatingSubscription) {
                 EmptyView()
             }

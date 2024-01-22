@@ -29,7 +29,9 @@ struct SubscriptionRestoreView: View {
     @StateObject var viewModel: SubscriptionRestoreViewModel
     @State private var expandedItemId: Int = 0
     @State private var isAlertVisible = false
-    @Binding var isConfiguringSubscription: Bool
+    
+    // Binding used to dismiss the entire stack (Go back to settings from several levels down)
+    @Binding var isActivatingSubscription: Bool
     
     private enum Constants {
         static let heroImage = "SyncTurnOnSyncHero"
@@ -61,6 +63,9 @@ struct SubscriptionRestoreView: View {
                     isAlertVisible = true
                 }
             }
+            .onAppear {
+                viewModel.initializeView()
+            }
             
             if viewModel.transactionStatus != .idle {
                 PurchaseInProgressView(status: getTransactionStatus())
@@ -73,7 +78,7 @@ struct SubscriptionRestoreView: View {
                     userScript: viewModel.userScript,
                     subFeature: viewModel.subFeature,
                     accountManager: viewModel.accountManager),
-                isConfiguringSubscription: $isConfiguringSubscription),
+                isActivatingSubscription: $isActivatingSubscription),
                 isActive: $viewModel.isManagingEmailSubscription) {
             EmptyView()
         }

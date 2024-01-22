@@ -25,7 +25,8 @@ import Foundation
 struct SubscriptionEmailView: View {
         
     @ObservedObject var viewModel: SubscriptionEmailViewModel
-    @Binding var isConfiguringSubscription: Bool
+    @Binding var isActivatingSubscription: Bool
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         ZStack {
@@ -36,9 +37,15 @@ struct SubscriptionEmailView: View {
                                      shouldReload: $viewModel.shouldReloadWebView).background()
             }
         }
-        .onChange(of: viewModel.subscriptionActive) { active in
+        .onChange(of: viewModel.activateSubscription) { active in
             if active {
-                isConfiguringSubscription = false
+                // We just need to dismiss the current view
+                if viewModel.managingSubscriptionEmail {
+                    dismiss()
+                } else {
+                    // Update the binding to tear down the entire view stack (Go back to initial webview)
+                    isActivatingSubscription = false
+                }
             }
         }
         .navigationTitle(viewModel.viewTitle)

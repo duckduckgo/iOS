@@ -32,7 +32,7 @@ struct SubscriptionSettingsView: View {
     @ObservedObject var viewModel: SubscriptionSettingsViewModel
     @Environment(\.presentationMode) var presentationMode
     @StateObject var sceneEnvironment = SceneEnvironment()
-    @State private var isConfiguringSubscription = false
+    @State private var isActivatingSubscription = false
     
     var body: some View {
             List {
@@ -46,7 +46,7 @@ struct SubscriptionSettingsView: View {
                 }.textCase(nil)
                 Section(header: Text(UserText.subscriptionManageDevices)) {
                     
-                    NavigationLink(destination: SubscriptionRestoreView(viewModel: SubscriptionRestoreViewModel(isAddingDevice: true), isConfiguringSubscription: $isConfiguringSubscription)) {
+                    NavigationLink(destination: SubscriptionRestoreView(viewModel: SubscriptionRestoreViewModel(isAddingDevice: true), isActivatingSubscription: $isActivatingSubscription)) {
                         SettingsCustomCell(content: {
                             Text(UserText.subscriptionAddDeviceButton)
                                 .daxBodyRegular()

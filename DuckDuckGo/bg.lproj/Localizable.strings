@@ -145,6 +145,9 @@
 /* Title for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-title" = "Синхронизирането на паролите е на пауза";
 
+/* Title for sync error alert */
+"alert.sync-error" = "Грешка при синхронизиране и архивиране";
+
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Научете повече";
 
@@ -165,6 +168,30 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Запазване в любими";
+
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "Не може да бъде създаден PDF файл за възстановяване.";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "Данните на сървъра не могат да бъдат изтрити.";
+
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "За да сдвоите тези устройства, изключете функцията „Синхронизиране и архивиране“ на едното устройство, а след това на другото устройство изберете „Синхронизиране с друго устройство“.";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "Това устройство не може да бъде премахнато от Синхронизиране и архивиране.";
+
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Не може да се осъществи връзка със сървъра.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Не може да се синхронизира с друго устройство.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "Синхронизиране и архивиране не може да бъде изключено.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "Името на устройството не може да бъде актуализирано.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Отключване на DuckDuckGo.";
@@ -1418,55 +1445,55 @@
 "network-protection.privacy-policy.title" = "Политика за поверителност";
 
 /* Title text for the Network Protection terms and conditions accept button */
-"network-protection.waitlist.agree-and-continue" = "Agree and Continue";
+"network-protection.waitlist.agree-and-continue" = "Приемам и продължавам";
 
 /* Availability disclaimer for Network Protection join waitlist screen */
-"network-protection.waitlist.availability-disclaimer" = "Network Protection is free to use during early access.";
+"network-protection.waitlist.availability-disclaimer" = "Мрежовата защита е безплатна в периода за ранен достъп.";
 
 /* Agree and Continue button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.agree-and-continue" = "Agree and Continue";
+"network-protection.waitlist.button.agree-and-continue" = "Приемам и продължавам";
 
 /* Enable Notifications button for Network Protection joined waitlist screen */
-"network-protection.waitlist.button.enable-notifications" = "Enable Notifications";
+"network-protection.waitlist.button.enable-notifications" = "Активиране на известия";
 
 /* Button title for users who already have an invite code */
 "network-protection.waitlist.button.existing-invite-code" = "Имам код за покана";
 
 /* Join Waitlist button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.join-waitlist" = "Join the Waitlist";
+"network-protection.waitlist.button.join-waitlist" = "Включване в списъка с чакащи";
 
 /* Button title text for the Network Protection waitlist confirmation prompt */
 "network-protection.waitlist.get-started" = "Първи стъпки";
 
 /* Subtitle for section 1 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-1.subtitle" = "Encrypt online traffic across your browsers and apps.";
+"network-protection.waitlist.invited.section-1.subtitle" = "Криптирайте онлайн трафика във всички браузъри и приложения, които използвате.";
 
 /* Title for section 1 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-1.title" = "Full-device coverage";
+"network-protection.waitlist.invited.section-1.title" = "Покритие за цялото устройство";
 
 /* Subtitle for section 2 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-2.subtitle" = "No need for a separate app. Connect in one click and see your connection status at a glance.";
+"network-protection.waitlist.invited.section-2.subtitle" = "Няма нужда от отделно приложение. Можете да се свържете с едно кликване и да следите състоянието на връзката с един поглед.";
 
 /* Title for section 2 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-2.title" = "Fast, reliable, and easy to use";
+"network-protection.waitlist.invited.section-2.title" = "Бърза, надеждна и лесна функция";
 
 /* Subtitle for section 3 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-3.subtitle" = "We do not log or save any data that can connect you to your online activity.";
+"network-protection.waitlist.invited.section-3.subtitle" = "Ние не регистрираме и не запазваме никакви данни, които могат да Ви свържат с Вашата онлайн дейност.";
 
 /* Title for section 3 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-3.title" = "Strict no-logging policy";
+"network-protection.waitlist.invited.section-3.title" = "Строга политика без регистрация на данни";
 
 /* Subtitle for Network Protection invited screen */
-"network-protection.waitlist.invited.subtitle" = "Get an extra layer of protection online with the VPN built for speed and simplicity. Encrypt your internet connection across your entire device and hide your location and IP address from sites you visit.";
+"network-protection.waitlist.invited.subtitle" = "Възползвайте се от допълнителен слой защита онлайн с бърза и опростена VPN функция. Криптирайте интернет връзката за всички приложения в устройството и скрийте местоположението и IP адреса си от сайтовете, които посещавате.";
 
 /* Title for Network Protection invited screen */
-"network-protection.waitlist.invited.title" = "You’re invited to try\nNetwork Protection early access!";
+"network-protection.waitlist.invited.title" = "Каним Ви да изпробвате \n мрежовата защита чрез ранен достъп!";
 
 /* First subtitle for Network Protection join waitlist screen */
-"network-protection.waitlist.join.subtitle.1" = "Secure your connection anytime, anywhere with Network Protection, the VPN from DuckDuckGo.";
+"network-protection.waitlist.join.subtitle.1" = "Сигурна връзка навсякъде и по всяко време с мрежова защита - VPN функцията на DuckDuckGo.";
 
 /* Second subtitle for Network Protection join waitlist screen */
-"network-protection.waitlist.join.subtitle.2" = "Join the waitlist, and we’ll notify you when it’s your turn.";
+"network-protection.waitlist.join.subtitle.2" = "Включете се в списъка с чакащи и ще Ви уведомим, когато дойде Вашият ред.";
 
 /* Title for Network Protection join waitlist screen */
 "network-protection.waitlist.join.title" = "Network Protection Early Access";
@@ -1475,28 +1502,28 @@
 "network-protection.waitlist.joined.title" = "Включени сте в списъка с чакащи!";
 
 /* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
-"network-protection.waitlist.joined.with-notifications.subtitle.1" = "New invites are sent every few days, on a first come, first served basis.";
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Нови покани се изпращат на всеки няколко дни по реда на постъпването им.";
 
 /* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
-"network-protection.waitlist.joined.with-notifications.subtitle.2" = "We’ll notify you when your invite is ready.";
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "Ще Ви уведомим, когато поканата Ви стане готова.";
 
 /* Body text for the alert to enable notifications */
-"network-protection.waitlist.notification-alert.description" = "We’ll send you a notification when your invite to test Network Protection is ready.";
+"network-protection.waitlist.notification-alert.description" = "Ще Ви изпратим известие, когато поканата Ви за изпробване на мрежовата защита стане готова.";
 
 /* Subtitle for the alert to confirm enabling notifications */
-"network-protection.waitlist.notification-prompt-description" = "Get a notification when your copy of Network Protection early access is ready.";
+"network-protection.waitlist.notification-prompt-description" = "Ще получите известие, когато Вашето копие за ранен достъп до мрежовата защита стане готово.";
 
 /* Title for the alert to confirm enabling notifications */
-"network-protection.waitlist.notification-prompt-title" = "Know the instant you're invited";
+"network-protection.waitlist.notification-prompt-title" = "Разберете веднага, когато получите покана";
 
 /* Title for Network Protection waitlist notification */
 "network-protection.waitlist.notification.text" = "Отворете поканата";
 
 /* Title for Network Protection waitlist notification */
-"network-protection.waitlist.notification.title" = "Network Protection is ready!";
+"network-protection.waitlist.notification.title" = "Мрежовата защита е готова!";
 
 /* Subtitle text for the Network Protection settings row */
-"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Your invite is ready!";
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Вашата покана е готова!";
 
 /* Subtitle text for the Network Protection settings row */
 "network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Включени сте в списъка с чакащи!";
@@ -1508,7 +1535,7 @@
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You’re invited to try Network Protection";
+"network.protection.invite.dialog.title" = "Каним Ви да изпробвате мрежовата защита";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
@@ -1580,22 +1607,22 @@
 "network.protection.vpn.alerts.toggle.title" = "Известия за VPN";
 
 /* Footer text for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.footer" = "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.";
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Можете да разрешите локалният трафик да заобикаля VPN услугата при свързване с устройства в локалната мрежа, като принтер например.";
 
 /* Title for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.title" = "Exclude Local Networks";
+"network.protection.vpn.exclude.local.networks.setting.title" = "Изключване на локални мрежи";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
 
 /* Subtitle of countries item when there are multiple cities, example : */
-"network.protection.vpn.location.country.item.formatted.cities.count" = "%d cities";
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d града";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find.";
+"network.protection.vpn.location.recommended.section.footer" = "Автоматично се свързваме с най-близкия сървър, който можем да намерим.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
@@ -1604,7 +1631,7 @@
 "network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
 
 /* Title for the VPN Location screen. */
-"network.protection.vpn.location.title" = "VPN Location";
+"network.protection.vpn.location.title" = "Местоположение на VPN";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "Известия за VPN";
@@ -1616,7 +1643,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.";
+"network.protection.vpn.secure.dns.setting.footer" = "Нашата VPN функция използва Secure DNS, за да запази поверителността на Вашата онлайн дейност, така че вашият интернет доставчик да не може да види какви уебсайтове посещавате.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Настройки на VPN";
@@ -1816,11 +1843,14 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Клавиатура";
 
-/* Settings screen cell text for logins */
-"settings.logins" = "Данни за вход";
+/* Settings screen cell text for passwords */
+"settings.logins" = "Пароли";
 
 /* Settings title for the 'More' section */
 "settings.more" = "Още от DuckDuckGo";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Прегледи с продължително натискане";
@@ -1867,8 +1897,44 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Кой уебсайт е повреден?";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Кодът за възстановяване и копиран в клипборда";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Изтриване на данните от сървъра";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "Връзката на всички устройства ще бъде премахната, а синхронизираните данни ще бъдат изтрити от сървъра.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Изтриване на данните от сървъра?";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Премахване";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "„%@“ вече няма да има достъп до синхронизираните Ви данни.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Премахване на устройство?";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Премахване";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "Това устройство вече няма да има достъп до синхронизираните Ви данни.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Изключване на синхронизирането?";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Съжаляваме, но функцията за синхронизиране и архивиране в момента не е достъпна. Моля, опитайте отново по-късно.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Съжаляваме, но функцията за синхронизиране и архивиране вече не се предлага в тази версия на приложението. Моля, актуализирайте DuckDuckGo до най-новата версия, за да продължите.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "Функцията за синхронизиране и архивиране е на пауза";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Затваряне на началния раздел";

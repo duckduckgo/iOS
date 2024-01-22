@@ -32,8 +32,8 @@ struct SettingsLoginsView: View {
             Section {
                 SettingsCellView(label: UserText.settingsLogins,
                                  action: { viewModel.presentLegacyView(.logins) },
-                                 asLink: true,
-                                 disclosureIndicator: true)
+                                 disclosureIndicator: true,
+                                 isButton: true)
             }
         }
             

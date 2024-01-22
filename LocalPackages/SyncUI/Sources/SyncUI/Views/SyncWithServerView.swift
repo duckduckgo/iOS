@@ -69,6 +69,7 @@ public struct SyncWithServerView: View {
                 .buttonStyle(PrimaryButtonStyle())
                 .frame(maxWidth: 360)
                 .padding(.horizontal, 30)
+                .padding(.bottom, 8)
                 Text(UserText.connectWithServerSheetFooter)
                     .daxFootnoteRegular()
                     .foregroundColor(Color(designSystemColor: .textSecondary))

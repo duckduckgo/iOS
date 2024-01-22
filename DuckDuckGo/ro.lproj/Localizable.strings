@@ -145,6 +145,9 @@
 /* Title for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-title" = "Sincronizarea parolelor este întreruptă";
 
+/* Title for sync error alert */
+"alert.sync-error" = "Eroare de sincronizare și backup";
+
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Află mai multe";
 
@@ -165,6 +168,30 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Salvează preferința";
+
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "Nu se poate crea fișierul PDF de recuperare.";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "Nu se pot șterge datele de pe server.";
+
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "Pentru a asocia aceste dispozitive, dezactivează Sincronizare și backup pe un dispozitiv, apoi atinge „Sincronizează cu un alt dispozitiv” pe celălalt dispozitiv.";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "Nu se poate elimina acest dispozitiv din Sincronizare și backup.";
+
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Nu se poate conecta la server.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Nu se poate sincroniza cu un alt dispozitiv.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "Nu se pot opri Sincronizare și backup.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "Nu se poate actualiza numele dispozitivului.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Deblochează DuckDuckGo.";
@@ -1418,55 +1445,55 @@
 "network-protection.privacy-policy.title" = "Politica de confidențialitate";
 
 /* Title text for the Network Protection terms and conditions accept button */
-"network-protection.waitlist.agree-and-continue" = "Agree and Continue";
+"network-protection.waitlist.agree-and-continue" = "De acord și continuă";
 
 /* Availability disclaimer for Network Protection join waitlist screen */
-"network-protection.waitlist.availability-disclaimer" = "Network Protection is free to use during early access.";
+"network-protection.waitlist.availability-disclaimer" = "Protecția rețelei poate fi utilizată gratuit în timpul accesului timpuriu.";
 
 /* Agree and Continue button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.agree-and-continue" = "Agree and Continue";
+"network-protection.waitlist.button.agree-and-continue" = "De acord și continuă";
 
 /* Enable Notifications button for Network Protection joined waitlist screen */
-"network-protection.waitlist.button.enable-notifications" = "Enable Notifications";
+"network-protection.waitlist.button.enable-notifications" = "Activează notificările";
 
 /* Button title for users who already have an invite code */
 "network-protection.waitlist.button.existing-invite-code" = "Am un cod de invitație";
 
 /* Join Waitlist button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.join-waitlist" = "Join the Waitlist";
+"network-protection.waitlist.button.join-waitlist" = "Înscrie-te pe lista de așteptare";
 
 /* Button title text for the Network Protection waitlist confirmation prompt */
 "network-protection.waitlist.get-started" = "Să începem";
 
 /* Subtitle for section 1 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-1.subtitle" = "Encrypt online traffic across your browsers and apps.";
+"network-protection.waitlist.invited.section-1.subtitle" = "Criptează traficul online în browserele și aplicațiile utilizate.";
 
 /* Title for section 1 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-1.title" = "Full-device coverage";
+"network-protection.waitlist.invited.section-1.title" = "Acoperire totală a dispozitivului";
 
 /* Subtitle for section 2 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-2.subtitle" = "No need for a separate app. Connect in one click and see your connection status at a glance.";
+"network-protection.waitlist.invited.section-2.subtitle" = "Nu este nevoie de o aplicație separată. Conectează-te cu un singur clic și vezi starea conexiunii dintr-o singură privire.";
 
 /* Title for section 2 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-2.title" = "Fast, reliable, and easy to use";
+"network-protection.waitlist.invited.section-2.title" = "Rapid, sigur și ușor de utilizat";
 
 /* Subtitle for section 3 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-3.subtitle" = "We do not log or save any data that can connect you to your online activity.";
+"network-protection.waitlist.invited.section-3.subtitle" = "Nu înregistrăm și nu salvăm date care pot face legătura cu activitatea ta online.";
 
 /* Title for section 3 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-3.title" = "Strict no-logging policy";
+"network-protection.waitlist.invited.section-3.title" = "Politică strictă de interzicere a jurnalelor";
 
 /* Subtitle for Network Protection invited screen */
-"network-protection.waitlist.invited.subtitle" = "Get an extra layer of protection online with the VPN built for speed and simplicity. Encrypt your internet connection across your entire device and hide your location and IP address from sites you visit.";
+"network-protection.waitlist.invited.subtitle" = "Obține un nivel suplimentar de protecție online cu VPN-ul creat pentru viteză și simplitate. Criptează conexiunea la internet pe întregul dispozitiv și ascunde-ți locația și adresa IP de pe site-urile pe care le accesezi.";
 
 /* Title for Network Protection invited screen */
-"network-protection.waitlist.invited.title" = "You’re invited to try\nNetwork Protection early access!";
+"network-protection.waitlist.invited.title" = "Ești invitat să încerci\naccesul timpuriu la Network Protection!";
 
 /* First subtitle for Network Protection join waitlist screen */
-"network-protection.waitlist.join.subtitle.1" = "Secure your connection anytime, anywhere with Network Protection, the VPN from DuckDuckGo.";
+"network-protection.waitlist.join.subtitle.1" = "Obține o conexiune sigură oricând și oriunde cu Network Protection, VPN-ul de la DuckDuckGo.";
 
 /* Second subtitle for Network Protection join waitlist screen */
-"network-protection.waitlist.join.subtitle.2" = "Join the waitlist, and we’ll notify you when it’s your turn.";
+"network-protection.waitlist.join.subtitle.2" = "Alătură-te listei de așteptare și te vom anunța când îți vine rândul.";
 
 /* Title for Network Protection join waitlist screen */
 "network-protection.waitlist.join.title" = "Network Protection Early Access";
@@ -1475,28 +1502,28 @@
 "network-protection.waitlist.joined.title" = "Ești pe listă!";
 
 /* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
-"network-protection.waitlist.joined.with-notifications.subtitle.1" = "New invites are sent every few days, on a first come, first served basis.";
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Noile invitații sunt trimise la fiecare câteva zile pe baza principiului „primul venit, primul servit”.";
 
 /* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
-"network-protection.waitlist.joined.with-notifications.subtitle.2" = "We’ll notify you when your invite is ready.";
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "Te vom anunța când invitația ta este gata.";
 
 /* Body text for the alert to enable notifications */
-"network-protection.waitlist.notification-alert.description" = "We’ll send you a notification when your invite to test Network Protection is ready.";
+"network-protection.waitlist.notification-alert.description" = "Îți vom trimite o notificare atunci când invitația de a testa Network Protection este gata.";
 
 /* Subtitle for the alert to confirm enabling notifications */
-"network-protection.waitlist.notification-prompt-description" = "Get a notification when your copy of Network Protection early access is ready.";
+"network-protection.waitlist.notification-prompt-description" = "Primești o notificare atunci când copia ta pentru acces timpuriu la Network Protection este gata.";
 
 /* Title for the alert to confirm enabling notifications */
-"network-protection.waitlist.notification-prompt-title" = "Know the instant you're invited";
+"network-protection.waitlist.notification-prompt-title" = "Află momentul exact în care ești invitat(ă)";
 
 /* Title for Network Protection waitlist notification */
 "network-protection.waitlist.notification.text" = "Deschide invitația ta";
 
 /* Title for Network Protection waitlist notification */
-"network-protection.waitlist.notification.title" = "Network Protection is ready!";
+"network-protection.waitlist.notification.title" = "Network Protection este gata!";
 
 /* Subtitle text for the Network Protection settings row */
-"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Your invite is ready!";
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Invitația ta este gata!";
 
 /* Subtitle text for the Network Protection settings row */
 "network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Ești pe listă!";
@@ -1508,7 +1535,7 @@
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You’re invited to try Network Protection";
+"network.protection.invite.dialog.title" = "Ești invitat(ă) să încerci Network Protection";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
@@ -1580,22 +1607,22 @@
 "network.protection.vpn.alerts.toggle.title" = "Alerte VPN";
 
 /* Footer text for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.footer" = "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.";
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Lasă traficul local să ocolească VPN-ul și să se conecteze la dispozitivele din rețeaua locală, cum ar fi o imprimantă.";
 
 /* Title for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.title" = "Exclude Local Networks";
+"network.protection.vpn.exclude.local.networks.setting.title" = "Exclude rețelele locale";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
 
 /* Subtitle of countries item when there are multiple cities, example : */
-"network.protection.vpn.location.country.item.formatted.cities.count" = "%d cities";
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d orașe";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find.";
+"network.protection.vpn.location.recommended.section.footer" = "Conectează-te automat la cel mai apropiat server pe care îl putem găsi.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
@@ -1604,7 +1631,7 @@
 "network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
 
 /* Title for the VPN Location screen. */
-"network.protection.vpn.location.title" = "VPN Location";
+"network.protection.vpn.location.title" = "Locația VPN";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "Notificări VPN";
@@ -1616,7 +1643,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.";
+"network.protection.vpn.secure.dns.setting.footer" = "VPN-ul nostru utilizează DNS securizat pentru a-ți păstra activitatea online privată, astfel încât furnizorul tău de internet să nu poată vedea ce site-uri web accesezi.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Setări VPN";
@@ -1816,11 +1843,14 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Tastatură";
 
-/* Settings screen cell text for logins */
-"settings.logins" = "Conectări";
+/* Settings screen cell text for passwords */
+"settings.logins" = "Parole";
 
 /* Settings title for the 'More' section */
 "settings.more" = "Mai multe de la DuckDuckGo";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Previzualizări prin apăsare lungă";
@@ -1867,8 +1897,44 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Ce site este defect?";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Codul de recuperare a fost copiat în clipboard";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Șterge datele serverului";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "Toate dispozitivele vor fi deconectate, iar datele tale sincronizate vor fi șterse de pe server.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Ștergi datele serverului?";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Elimină";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "„%@” nu va mai putea accesa datele tale sincronizate.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Elimini dispozitivul?";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Elimină";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "Acest dispozitiv nu va mai putea accesa datele tale sincronizate.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Oprești sincronizarea?";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Ne pare rău, dar Sincronizarea și copierea de rezervă nu este disponibilă momentan. Încearcă din nou mai târziu.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Ne pare rău, dar Sincronizarea și copierea de rezervă nu mai este disponibilă în această versiune de aplicație. Te rugăm să actualizezi DuckDuckGo la cea mai recentă versiune pentru a continua.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "Sincronizarea și copierea de rezervă este întreruptă";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Închide fila de pornire";

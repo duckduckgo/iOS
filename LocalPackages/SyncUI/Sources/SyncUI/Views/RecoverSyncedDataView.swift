@@ -63,6 +63,7 @@ public struct RecoverSyncedDataView: View {
             .buttonStyle(PrimaryButtonStyle())
             .frame(maxWidth: 360)
             .padding(.horizontal, 30)
+            .padding(.bottom, 8)
         }
     }
 }

@@ -415,7 +415,16 @@ class TabViewController: UIViewController {
         webView.navigationDelegate = self
         webView.uiDelegate = self
         webViewContainer.addSubview(webView)
+        webView.scrollView.refreshControl = UIRefreshControl()
+        webView.scrollView.refreshControl?.addAction(UIAction { [weak self] _ in
+            guard let self else { return }
+            self.reload()
+            Pixel.fire(pixel: .pullToRefresh)
+        }, for: .valueChanged)
 
+        webView.scrollView.refreshControl?.backgroundColor = .systemBackground
+        webView.scrollView.refreshControl?.tintColor = .label
+                
         updateContentMode()
 
         if #available(iOS 16.4, *) {
@@ -467,18 +476,27 @@ class TabViewController: UIViewController {
     }
 
     private func consumeCookiesThenLoadRequest(_ request: URLRequest?) {
+
+        func doLoad() {
+            if let request = request {
+                load(urlRequest: request)
+            }
+
+            if request != nil {
+                delegate?.tabLoadingStateDidChange(tab: self)
+                onWebpageDidStartLoading(httpsForced: false)
+            }
+        }
+
         webView.configuration.websiteDataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { _ in
-            WebCacheManager.shared.consumeCookies { [weak self] in
+            guard let cookieStore = self.webView.configuration.websiteDataStore.cookieStore else {
+                doLoad()
+                return
+            }
+
+            WebCacheManager.shared.consumeCookies(httpCookieStore: cookieStore) { [weak self] in
                 guard let strongSelf = self else { return }
-                
-                if let request = request {
-                    strongSelf.load(urlRequest: request)
-                }
-                
-                if request != nil {
-                    strongSelf.delegate?.tabLoadingStateDidChange(tab: strongSelf)
-                    strongSelf.onWebpageDidStartLoading(httpsForced: false)
-                }
+                doLoad()
             }
         }
     }
@@ -529,7 +547,7 @@ class TabViewController: UIViewController {
             self?.load(urlRequest: .userInitiated(url))
         })
     }
-    
+
     func prepareForDataClearing() {
         webView.navigationDelegate = nil
         webView.uiDelegate = nil
@@ -562,8 +580,9 @@ class TabViewController: UIViewController {
                                     context: UnsafeMutableRawPointer?) {
         // swiftlint:enable block_based_kvo
 
-        guard let keyPath = keyPath else { return }
-        
+        guard let keyPath = keyPath,
+              let webView = webView else { return }
+
         switch keyPath {
             
         case #keyPath(WKWebView.estimatedProgress):
@@ -636,6 +655,7 @@ class TabViewController: UIViewController {
     
     private func hideProgressIndicator() {
         progressWorker.didFinishLoading()
+        webView.scrollView.refreshControl?.endRefreshing()
     }
 
     public func reload() {
@@ -1137,7 +1157,12 @@ extension TabViewController: WKNavigationDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let webView = self?.webView,
                   webView.bounds.height > 0 && webView.bounds.width > 0 else { completion(nil); return }
-            UIGraphicsBeginImageContextWithOptions(webView.bounds.size, false, UIScreen.main.scale)
+            
+            let size = CGSize(width: webView.frame.size.width,
+                              height: webView.frame.size.height - webView.scrollView.contentInset.top - webView.scrollView.contentInset.bottom)
+            
+            UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
+            UIGraphicsGetCurrentContext()?.translateBy(x: 0, y: -webView.scrollView.contentInset.top)
             webView.drawHierarchy(in: webView.bounds, afterScreenUpdates: true)
             if let jsAlertController = self?.jsAlertController {
                 jsAlertController.view.drawHierarchy(in: jsAlertController.view.bounds,
@@ -1159,7 +1184,7 @@ extension TabViewController: WKNavigationDelegate {
     
     private func onWebpageDidFinishLoading() {
         os_log("webpageLoading finished", log: .generalLog, type: .debug)
-                
+        
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
 
@@ -2274,6 +2299,11 @@ extension TabViewController: Themable {
         error?.backgroundColor = theme.backgroundColor
         errorHeader.textColor = theme.barTintColor
         errorMessage.textColor = theme.barTintColor
+        
+        if let webView {
+            webView.scrollView.refreshControl?.backgroundColor = theme.mainViewBackgroundColor
+            webView.scrollView.refreshControl?.tintColor = .secondaryLabel
+        }
         
         switch theme.currentImageSet {
         case .light:

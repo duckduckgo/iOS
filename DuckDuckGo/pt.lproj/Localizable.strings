@@ -145,6 +145,9 @@
 /* Title for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-title" = "A sincronização de palavras-passe está em pausa";
 
+/* Title for sync error alert */
+"alert.sync-error" = "Erro de sincronização e cópia de segurança";
+
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Saiba mais";
 
@@ -165,6 +168,30 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Guardar favorito";
+
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "Não foi possível criar o PDF de recuperação.";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "Não foi possível eliminar os dados no servidor.";
+
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "Para emparelhar estes dispositivos, desative a Sincronização e cópia de segurança num dispositivo e, em seguida, toque em \"Sincronizar com outro dispositivo\" no outro dispositivo.";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "Não foi possível remover este dispositivo da sincronização e cópia de segurança.";
+
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Não foi possível ligar ao servidor.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Não foi possível sincronizar com outro dispositivo.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "Não foi possível desativar a Sincronização e cópia de segurança.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "Não foi possível atualizar o nome do dispositivo.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Desbloqueie o DuckDuckGo.";
@@ -1418,55 +1445,55 @@
 "network-protection.privacy-policy.title" = "Política de Privacidade";
 
 /* Title text for the Network Protection terms and conditions accept button */
-"network-protection.waitlist.agree-and-continue" = "Agree and Continue";
+"network-protection.waitlist.agree-and-continue" = "Concordar e continuar";
 
 /* Availability disclaimer for Network Protection join waitlist screen */
-"network-protection.waitlist.availability-disclaimer" = "Network Protection is free to use during early access.";
+"network-protection.waitlist.availability-disclaimer" = "A utilização da Network Protection é gratuita durante o período de acesso antecipado.";
 
 /* Agree and Continue button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.agree-and-continue" = "Agree and Continue";
+"network-protection.waitlist.button.agree-and-continue" = "Concordar e continuar";
 
 /* Enable Notifications button for Network Protection joined waitlist screen */
-"network-protection.waitlist.button.enable-notifications" = "Enable Notifications";
+"network-protection.waitlist.button.enable-notifications" = "Ativar notificações";
 
 /* Button title for users who already have an invite code */
 "network-protection.waitlist.button.existing-invite-code" = "Tenho um Código de Convite";
 
 /* Join Waitlist button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.join-waitlist" = "Join the Waitlist";
+"network-protection.waitlist.button.join-waitlist" = "Entrar na lista de espera";
 
 /* Button title text for the Network Protection waitlist confirmation prompt */
 "network-protection.waitlist.get-started" = "Comece";
 
 /* Subtitle for section 1 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-1.subtitle" = "Encrypt online traffic across your browsers and apps.";
+"network-protection.waitlist.invited.section-1.subtitle" = "Encripta o tráfego online nos teus navegadores e aplicações.";
 
 /* Title for section 1 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-1.title" = "Full-device coverage";
+"network-protection.waitlist.invited.section-1.title" = "Cobertura completa do dispositivo";
 
 /* Subtitle for section 2 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-2.subtitle" = "No need for a separate app. Connect in one click and see your connection status at a glance.";
+"network-protection.waitlist.invited.section-2.subtitle" = "Não precisas de uma aplicação separada. Liga-te com um clique e vê rapidamente o estado da ligação.";
 
 /* Title for section 2 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-2.title" = "Fast, reliable, and easy to use";
+"network-protection.waitlist.invited.section-2.title" = "Rápida, fiável e simples";
 
 /* Subtitle for section 3 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-3.subtitle" = "We do not log or save any data that can connect you to your online activity.";
+"network-protection.waitlist.invited.section-3.subtitle" = "Não registamos nem guardamos dados que possam ser associados à tua atividade online.";
 
 /* Title for section 3 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-3.title" = "Strict no-logging policy";
+"network-protection.waitlist.invited.section-3.title" = "Política sem registos rigorosa";
 
 /* Subtitle for Network Protection invited screen */
-"network-protection.waitlist.invited.subtitle" = "Get an extra layer of protection online with the VPN built for speed and simplicity. Encrypt your internet connection across your entire device and hide your location and IP address from sites you visit.";
+"network-protection.waitlist.invited.subtitle" = "Obtém uma camada extra de proteção online com a VPN criada para velocidade e simplicidade. Encripta a tua ligação à internet em todo o teu dispositivo e oculta a tua localização e endereço de IP dos sites que visitas.";
 
 /* Title for Network Protection invited screen */
-"network-protection.waitlist.invited.title" = "You’re invited to try\nNetwork Protection early access!";
+"network-protection.waitlist.invited.title" = "Convidamos-te a experimentares\na versão de acesso antecipado da Network Protection!";
 
 /* First subtitle for Network Protection join waitlist screen */
-"network-protection.waitlist.join.subtitle.1" = "Secure your connection anytime, anywhere with Network Protection, the VPN from DuckDuckGo.";
+"network-protection.waitlist.join.subtitle.1" = "Protege a tua ligação em qualquer altura e em qualquer lugar com a Network Protection, a VPN do DuckDuckGo.";
 
 /* Second subtitle for Network Protection join waitlist screen */
-"network-protection.waitlist.join.subtitle.2" = "Join the waitlist, and we’ll notify you when it’s your turn.";
+"network-protection.waitlist.join.subtitle.2" = "Entra na lista de espera. Avisamos-te quando for a tua vez.";
 
 /* Title for Network Protection join waitlist screen */
 "network-protection.waitlist.join.title" = "Network Protection Early Access";
@@ -1475,28 +1502,28 @@
 "network-protection.waitlist.joined.title" = "Está na lista!";
 
 /* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
-"network-protection.waitlist.joined.with-notifications.subtitle.1" = "New invites are sent every few days, on a first come, first served basis.";
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Enviamos novos convites regularmente por ordem de entrada na lista.";
 
 /* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
-"network-protection.waitlist.joined.with-notifications.subtitle.2" = "We’ll notify you when your invite is ready.";
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "Notificamos-te quando o teu convite estiver pronto.";
 
 /* Body text for the alert to enable notifications */
-"network-protection.waitlist.notification-alert.description" = "We’ll send you a notification when your invite to test Network Protection is ready.";
+"network-protection.waitlist.notification-alert.description" = "Notificamos-te quando o teu convite para testar a Network Protection estiver pronto.";
 
 /* Subtitle for the alert to confirm enabling notifications */
-"network-protection.waitlist.notification-prompt-description" = "Get a notification when your copy of Network Protection early access is ready.";
+"network-protection.waitlist.notification-prompt-description" = "Recebe uma notificação quando a tua cópia da versão de acesso antecipado da Network Protection estiver pronta.";
 
 /* Title for the alert to confirm enabling notifications */
-"network-protection.waitlist.notification-prompt-title" = "Know the instant you're invited";
+"network-protection.waitlist.notification-prompt-title" = "Sabe assim que receberes o convite";
 
 /* Title for Network Protection waitlist notification */
 "network-protection.waitlist.notification.text" = "Abra o seu convite";
 
 /* Title for Network Protection waitlist notification */
-"network-protection.waitlist.notification.title" = "Network Protection is ready!";
+"network-protection.waitlist.notification.title" = "A Network Protection está pronta!";
 
 /* Subtitle text for the Network Protection settings row */
-"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Your invite is ready!";
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "O teu convite está pronto!";
 
 /* Subtitle text for the Network Protection settings row */
 "network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Está na lista!";
@@ -1508,7 +1535,7 @@
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You’re invited to try Network Protection";
+"network.protection.invite.dialog.title" = "Convidamos-te a experimentar a Network Protection";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
@@ -1580,22 +1607,22 @@
 "network.protection.vpn.alerts.toggle.title" = "Alertas de VPN";
 
 /* Footer text for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.footer" = "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.";
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Permitir que o tráfego local ignore a VPN e ligue a dispositivos na tua rede local, como uma impressora.";
 
 /* Title for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.title" = "Exclude Local Networks";
+"network.protection.vpn.exclude.local.networks.setting.title" = "Excluir redes locais";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
 
 /* Subtitle of countries item when there are multiple cities, example : */
-"network.protection.vpn.location.country.item.formatted.cities.count" = "%d cities";
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d cidades";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find.";
+"network.protection.vpn.location.recommended.section.footer" = "Ligar automaticamente ao servidor mais próximo que encontrarmos.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
@@ -1604,7 +1631,7 @@
 "network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
 
 /* Title for the VPN Location screen. */
-"network.protection.vpn.location.title" = "VPN Location";
+"network.protection.vpn.location.title" = "Localização da VPN";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "Notificações da VPN";
@@ -1616,7 +1643,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.";
+"network.protection.vpn.secure.dns.setting.footer" = "A nossa VPN utiliza DNS seguro para manter a tua atividade online privada e impedir que o teu fornecedor de internet saiba os sites que visitas.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Definições da VPN";
@@ -1816,11 +1843,14 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Teclado";
 
-/* Settings screen cell text for logins */
-"settings.logins" = "Inícios de sessão";
+/* Settings screen cell text for passwords */
+"settings.logins" = "Palavras-passe";
 
 /* Settings title for the 'More' section */
 "settings.more" = "Mais de DuckDuckGo";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Pré-visualizações ao premir prolongadamente";
@@ -1867,8 +1897,44 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Que site está com falhas?";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Código de recuperação copiado para a área de transferência";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Eliminar dados do servidor";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "Todos os dispositivos serão desconectados e os dados sincronizados serão eliminados do servidor.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Eliminar dados do servidor?";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Remover";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "\"%@\" deixará de poder aceder aos teus dados sincronizados.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Remover dispositivo?";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Remover";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "Este dispositivo deixará de poder aceder aos teus dados sincronizados.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Desativar a sincronização?";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Lamentamos, mas a sincronização e cópia de segurança não estão disponíveis de momento. Tenta novamente mais tarde.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Lamentamos, mas a sincronização e cópia de segurança já não estão disponíveis nesta versão da aplicação. Atualiza o DuckDuckGo para a versão mais recente para continuar.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "A sincronização e a cópia de segurança estão em pausa";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Fechar o separador inicial";

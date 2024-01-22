@@ -31,28 +31,28 @@ struct SettingsMoreView: View {
             SettingsCellView(label: UserText.settingsEmailProtection,
                              subtitle: UserText.settingsEmailProtectionDescription,
                              action: { viewModel.openEmailProtection() },
-                             asLink: true,
-                             disclosureIndicator: true)
+                             disclosureIndicator: true,
+                             isButton: true)
             
             SettingsCellView(label: UserText.macBrowserTitle,
                              subtitle: UserText.macWaitlistBrowsePrivately,
                              action: { viewModel.presentLegacyView(.macApp) },
-                             asLink: true,
-                             disclosureIndicator: true)
+                             disclosureIndicator: true,
+                             isButton: true)
             
             SettingsCellView(label: UserText.windowsWaitlistTitle,
                              subtitle: UserText.windowsWaitlistBrowsePrivately,
                              action: { viewModel.presentLegacyView(.windowsApp) },
-                             asLink: true,
-                             disclosureIndicator: true)
+                             disclosureIndicator: true,
+                             isButton: true)
 
 #if NETWORK_PROTECTION
             if viewModel.state.networkProtection.enabled {
                 SettingsCellView(label: UserText.netPNavTitle,
                                  subtitle: viewModel.state.networkProtection.status != "" ? viewModel.state.networkProtection.status : nil,
                                  action: { viewModel.presentLegacyView(.netP) },
-                                 asLink: true,
-                                 disclosureIndicator: true)
+                                 disclosureIndicator: true,
+                                 isButton: true)
             }
 #endif
         }

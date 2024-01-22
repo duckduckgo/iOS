@@ -28,11 +28,11 @@ struct SettingsGeneralView: View {
         Section {
             SettingsCellView(label: UserText.settingsSetDefault,
                              action: { viewModel.setAsDefaultBrowser() },
-                             asLink: true)
+                             isButton: true)
             
             SettingsCellView(label: UserText.settingsAddToDock,
                              action: { viewModel.presentLegacyView(.addToDock) },
-                             asLink: true)
+                             isButton: true)
             
             NavigationLink(destination: WidgetEducationView()) {
                 SettingsCellView(label: UserText.settingsAddWidget)

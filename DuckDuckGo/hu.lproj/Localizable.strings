@@ -1843,8 +1843,14 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Billentyűzet";
 
+/* Settings screen cell text for passwords */
+"settings.logins" = "Jelszavak";
+
 /* Settings title for the 'More' section */
 "settings.more" = "Továbbiak a DuckDuckGo-tól";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Hosszú lenyomásos előnézetek";
@@ -1891,8 +1897,35 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Melyik weboldal nem működik?”";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Helyreállítási kód a vágólapra másolva";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Szerveradatok törlése";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "A rendszer minden eszközt lecsatlakoztat, és a szinkronizált adatokat törli a szerverről.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Szerveradatok törlése?";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Eltávolítás";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "A(z) „%@” többé nem férhet hozzá a szinkronizált adatokhoz.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Eszköz eltávolítása?";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Eltávolítás";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "Az eszköz többé nem férhet hozzá a szinkronizált adatokhoz.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Szinkronizálás kikapcsolása?";
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "A szinkronizálás és biztonsági mentés jelenleg sajnos nem érhető el. Próbálkozz újra később.";

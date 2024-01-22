@@ -28,6 +28,9 @@
 /* Standard Buttons - Cancel Button */
 "cancel.button" = "Atšaukti";
 
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "Įjunkite sinchronizavimą ir atsarginės kopijos kūrimą";
+
 /* Connect With Server Sheet - Description Part 1 */
 "connect.with.server.sheet.description.part1" = "Taip „DuckDuckGo“ saugiame serveryje sukuriama užšifruota atsarginė žymių ir slaptažodžių kopija, kurią galima sinchronizuoti su kitais įrenginiais.";
 
@@ -51,6 +54,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Kūrėjo aplinka";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "Jūsų duomenys sinchronizuoti!";
 
 /* Standard Buttons - Done Button */
 "done.button" = "Atlikta";
@@ -226,6 +232,9 @@
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Sinchronizavimas ir atsarginės kopijos kūrimas nepasiekiami";
 
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Sinchronizuoti su kitu įrenginiu";
+
 /* Footer message for syncing with another device */
 "sync.with.another.device.footer" = "Jūsų duomenys šifruojami ištisiniu būdu, o „DuckDuckGo“ neturi prieigos prie šifravimo rakto.";
 
@@ -252,6 +261,9 @@
 
 /* Options - Unify Favorites Instruction */
 "unified.favorites.instruction" = "Visuose įrenginiuose naudokite tas pačias mėgstamiausias žymes. Palikite išjungtą, kad mobiliojo ir stacionaraus įrenginių parankiniai būtų atskirti.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Suvienodinti adresynus visuose įrenginiuose";
 
 /* View Text Code menu item */
 "view.text.code.menu.item" = "Peržiūrėti teksto kodą";

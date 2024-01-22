@@ -1843,8 +1843,14 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Πληκτρολόγιο";
 
+/* Settings screen cell text for passwords */
+"settings.logins" = "Κωδικός πρόσβασης";
+
 /* Settings title for the 'More' section */
 "settings.more" = "Περισσότερα από το DuckDuckGo";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Προεπισκοπήσεις με παρατεταμένο πάτημα";
@@ -1891,8 +1897,35 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Ποιος ιστότοπος είναι κατεστραμμένος;";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Ο κωδικός ανάκτησης αντιγράφηκε στο πρόχειρο";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Διαγραφή δεδομένων διακομιστή";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "Όλες οι συσκευές θα αποσυνδεθούν και τα συγχρονισμένα δεδομένα σας θα διαγραφούν από τον διακομιστή.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Διαγραφή δεδομένων διακομιστή;";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Αφαίρεση";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "Το «%@» δεν θα μπορεί πλέον να έχει πρόσβαση στα συγχρονισμένα δεδομένα σας.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Αφαίρεση συσκευής;";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Αφαίρεση";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "Αυτή η Συσκευή δεν θα μπορεί πλέον να έχει πρόσβαση στα συγχρονισμένα δεδομένα σας.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Απενεργοποίηση συγχρονισμού;";
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "Δυστυχώς, η λειτουργία Συγχρονισμός και δημιουργία αντιγράφων ασφαλείας δεν είναι διαθέσιμη προς το παρόν. Ξαναδοκιμάστε αργότερα.";

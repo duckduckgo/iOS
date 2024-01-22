@@ -1843,8 +1843,14 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Klaviatuur";
 
+/* Settings screen cell text for passwords */
+"settings.logins" = "Paroolid";
+
 /* Settings title for the 'More' section */
 "settings.more" = "Veel DuckDuckGo'lt";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Pika vajutusega eelvaated";
@@ -1891,8 +1897,35 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Milline veebisait on katki?";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Taastamiskood kopeeriti lõikelauale";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Kustuta serveri andmed";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "Kõigi seadmete ühendus katkestatakse ja sinu sünkroonitud andmed kustutatakse serverist.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Kas kustutada serveri andmed?";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Eemaldage";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "%@ ei pääse enam sinu sünkroonitud andmetele juurde.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Kas seade eemaldada?";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Eemaldage";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "See seade ei pääse enam sinu sünkroonitud andmetele ligi.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Kas lülitada sünkroonimine välja?";
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "Kahjuks pole sünkroonimine ja varundamine praegu saadaval. Proovi hiljem uuesti.";

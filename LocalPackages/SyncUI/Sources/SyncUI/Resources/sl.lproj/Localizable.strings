@@ -28,6 +28,9 @@
 /* Standard Buttons - Cancel Button */
 "cancel.button" = "Prekliči";
 
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "Vklopite sinhronizacijo in varnostno kopiranje";
+
 /* Connect With Server Sheet - Description Part 1 */
 "connect.with.server.sheet.description.part1" = "S tem ustvarite šifrirano varnostno kopijo zaznamkov in gesel v varnem strežniku DuckDuckGo, ki jo lahko sinhronizirate z drugimi napravami.";
 
@@ -51,6 +54,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Razvojno okolje";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "Vaši podatki so sinhronizirani!";
 
 /* Standard Buttons - Done Button */
 "done.button" = "Končano";
@@ -226,6 +232,9 @@
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Sinhronizacija in varnostno kopiranje nista na voljo";
 
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Sinhronizacija z drugo napravo";
+
 /* Footer message for syncing with another device */
 "sync.with.another.device.footer" = "Vaši podatki so celovito šifrirani in DuckDuckGo nima dostopa do šifrirnega ključa.";
 
@@ -252,6 +261,9 @@
 
 /* Options - Unify Favorites Instruction */
 "unified.favorites.instruction" = "Uporabljajte iste priljubljene zaznamke v vseh svojih napravah. Če želite ločiti priljubljene zaznamke za mobilne naprave in namizne računalnike, pustite izklopljeno.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Poenotite priljubljene v vseh napravah";
 
 /* View Text Code menu item */
 "view.text.code.menu.item" = "Prikaži besedilno kodo";

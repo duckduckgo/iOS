@@ -365,6 +365,7 @@
 		85058370219F424500ED4EDB /* SearchBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F143C3451E4AA32D00CFDE3A /* SearchBarExtension.swift */; };
 		850ABD012AC3961100A733DF /* MainViewController+Segues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850ABD002AC3961100A733DF /* MainViewController+Segues.swift */; };
 		850ABD032AC4D46C00A733DF /* SuggestionTray.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 850ABD022AC4D46C00A733DF /* SuggestionTray.storyboard */; };
+		850F93DB2B594AB800823EEA /* ZippedPassKitPreviewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F93DA2B594AB800823EEA /* ZippedPassKitPreviewHelper.swift */; };
 		8512EA4F24ED30D20073EE19 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8512EA4E24ED30D20073EE19 /* WidgetKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8512EA5124ED30D20073EE19 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8512EA5024ED30D20073EE19 /* SwiftUI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8512EA5424ED30D20073EE19 /* Widgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512EA5324ED30D20073EE19 /* Widgets.swift */; };
@@ -406,6 +407,7 @@
 		853A717820F645FB00FE60BC /* PixelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853A717720F645FB00FE60BC /* PixelTests.swift */; };
 		853C5F5B21BFF0AE001F7A05 /* HomeCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853C5F5A21BFF0AE001F7A05 /* HomeCollectionView.swift */; };
 		853C5F6121C277C7001F7A05 /* global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853C5F6021C277C7001F7A05 /* global.swift */; };
+		854007E72B57FC000001BD98 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 854007E62B57FC000001BD98 /* ZIPFoundation */; };
 		8540BBA22440857A00017FE4 /* PreserveLoginsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8540BBA12440857A00017FE4 /* PreserveLoginsWorker.swift */; };
 		8540BD5223D8C2220057FDD2 /* PreserveLoginsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8540BD5123D8C2220057FDD2 /* PreserveLoginsTests.swift */; };
 		8540BD5423D8D5080057FDD2 /* PreserveLoginsAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8540BD5323D8D5080057FDD2 /* PreserveLoginsAlert.swift */; };
@@ -773,8 +775,9 @@
 		CBEFB9142AE0844700DEDE7B /* CriticalAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEFB9102ADFFE7900DEDE7B /* CriticalAlerts.swift */; };
 		CBFCB30E2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFCB30D2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift */; };
 		D63657192A7BAE7C001AF19D /* EmailManagerRequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63657182A7BAE7C001AF19D /* EmailManagerRequestDelegate.swift */; };
+		D652498E2B515A6A0056B0DE /* SubscriptionSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D652498D2B515A6A0056B0DE /* SubscriptionSettingsViewModel.swift */; };
 		D664C7B62B289AA200CBFA76 /* SubscriptionFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7942B289AA000CBFA76 /* SubscriptionFlowViewModel.swift */; };
-		D664C7B72B289AA200CBFA76 /* PrivacyPro.storekit in Resources */ = {isa = PBXBuildFile; fileRef = D664C7952B289AA000CBFA76 /* PrivacyPro.storekit */; };
+		D664C7B72B289AA200CBFA76 /* Subscription.storekit in Resources */ = {isa = PBXBuildFile; fileRef = D664C7952B289AA000CBFA76 /* Subscription.storekit */; };
 		D664C7B92B289AA200CBFA76 /* WKUserContentController+Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7982B289AA000CBFA76 /* WKUserContentController+Handler.swift */; };
 		D664C7C72B289AA200CBFA76 /* PurchaseInProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7AD2B289AA000CBFA76 /* PurchaseInProgressView.swift */; };
 		D664C7C82B289AA200CBFA76 /* SubscriptionFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7AE2B289AA000CBFA76 /* SubscriptionFlowView.swift */; };
@@ -782,7 +785,9 @@
 		D664C7CC2B289AA200CBFA76 /* SubscriptionPagesUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7B32B289AA000CBFA76 /* SubscriptionPagesUserScript.swift */; };
 		D664C7CE2B289AA200CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7B52B289AA000CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift */; };
 		D664C7DD2B28A02800CBFA76 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D664C7DC2B28A02800CBFA76 /* StoreKit.framework */; };
-		D69FBF762B28BE3600B505F1 /* SettingsPrivacyProView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69FBF752B28BE3600B505F1 /* SettingsPrivacyProView.swift */; };
+		D68DF81C2B58302E0023DBEA /* SubscriptionRestoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68DF81B2B58302E0023DBEA /* SubscriptionRestoreView.swift */; };
+		D68DF81E2B5830380023DBEA /* SubscriptionRestoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68DF81D2B5830380023DBEA /* SubscriptionRestoreViewModel.swift */; };
+		D69FBF762B28BE3600B505F1 /* SettingsSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69FBF752B28BE3600B505F1 /* SettingsSubscriptionView.swift */; };
 		D6D12C9F2B291CA90054390C /* URL+Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C8B2B291CA90054390C /* URL+Subscription.swift */; };
 		D6D12CA02B291CA90054390C /* SubscriptionPurchaseEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C8C2B291CA90054390C /* SubscriptionPurchaseEnvironment.swift */; };
 		D6D12CA12B291CA90054390C /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C8D2B291CA90054390C /* Logging.swift */; };
@@ -814,6 +819,7 @@
 		D6E83C662B23936F006C8AFB /* SettingsDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C652B23936F006C8AFB /* SettingsDebugView.swift */; };
 		D6E83C682B23B6A3006C8AFB /* FontSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C672B23B6A3006C8AFB /* FontSettings.swift */; };
 		D6F93E3C2B4FFA97004C268D /* SubscriptionDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F93E3B2B4FFA97004C268D /* SubscriptionDebugViewController.swift */; };
+		D6F93E3E2B50A8A0004C268D /* SubscriptionSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F93E3D2B50A8A0004C268D /* SubscriptionSettingsView.swift */; };
 		EA39B7E2268A1A35000C62CD /* privacy-reference-tests in Resources */ = {isa = PBXBuildFile; fileRef = EA39B7E1268A1A35000C62CD /* privacy-reference-tests */; };
 		EAB19EDA268963510015D3EA /* DomainMatchingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB19ED9268963510015D3EA /* DomainMatchingTests.swift */; };
 		EE0153E12A6EABE0002A8B26 /* NetworkProtectionConvenienceInitialisers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0153E02A6EABE0002A8B26 /* NetworkProtectionConvenienceInitialisers.swift */; };
@@ -1448,6 +1454,7 @@
 		85058367219C49E000ED4EDB /* HomeViewSectionRenderers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewSectionRenderers.swift; sourceTree = "<group>"; };
 		850ABD002AC3961100A733DF /* MainViewController+Segues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+Segues.swift"; sourceTree = "<group>"; };
 		850ABD022AC4D46C00A733DF /* SuggestionTray.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SuggestionTray.storyboard; sourceTree = "<group>"; };
+		850F93DA2B594AB800823EEA /* ZippedPassKitPreviewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZippedPassKitPreviewHelper.swift; sourceTree = "<group>"; };
 		8512BCBF2061B6110085E862 /* global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = global.swift; sourceTree = "<group>"; };
 		8512EA4D24ED30D20073EE19 /* WidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8512EA4E24ED30D20073EE19 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -2417,8 +2424,9 @@
 		CBF14FC627970C8A001D94D0 /* HomeMessageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBFCB30D2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationURLDebugViewController.swift; sourceTree = "<group>"; };
 		D63657182A7BAE7C001AF19D /* EmailManagerRequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailManagerRequestDelegate.swift; sourceTree = "<group>"; };
+		D652498D2B515A6A0056B0DE /* SubscriptionSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionSettingsViewModel.swift; sourceTree = "<group>"; };
 		D664C7942B289AA000CBFA76 /* SubscriptionFlowViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionFlowViewModel.swift; sourceTree = "<group>"; };
-		D664C7952B289AA000CBFA76 /* PrivacyPro.storekit */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PrivacyPro.storekit; sourceTree = "<group>"; };
+		D664C7952B289AA000CBFA76 /* Subscription.storekit */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Subscription.storekit; sourceTree = "<group>"; };
 		D664C7982B289AA000CBFA76 /* WKUserContentController+Handler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WKUserContentController+Handler.swift"; sourceTree = "<group>"; };
 		D664C7AD2B289AA000CBFA76 /* PurchaseInProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseInProgressView.swift; sourceTree = "<group>"; };
 		D664C7AE2B289AA000CBFA76 /* SubscriptionFlowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionFlowView.swift; sourceTree = "<group>"; };
@@ -2426,7 +2434,9 @@
 		D664C7B32B289AA000CBFA76 /* SubscriptionPagesUserScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionPagesUserScript.swift; sourceTree = "<group>"; };
 		D664C7B52B289AA000CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionPagesUseSubscriptionFeature.swift; sourceTree = "<group>"; };
 		D664C7DC2B28A02800CBFA76 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		D69FBF752B28BE3600B505F1 /* SettingsPrivacyProView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPrivacyProView.swift; sourceTree = "<group>"; };
+		D68DF81B2B58302E0023DBEA /* SubscriptionRestoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionRestoreView.swift; sourceTree = "<group>"; };
+		D68DF81D2B5830380023DBEA /* SubscriptionRestoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionRestoreViewModel.swift; sourceTree = "<group>"; };
+		D69FBF752B28BE3600B505F1 /* SettingsSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSubscriptionView.swift; sourceTree = "<group>"; };
 		D6D12C8B2B291CA90054390C /* URL+Subscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Subscription.swift"; sourceTree = "<group>"; };
 		D6D12C8C2B291CA90054390C /* SubscriptionPurchaseEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseEnvironment.swift; sourceTree = "<group>"; };
 		D6D12C8D2B291CA90054390C /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
@@ -2458,6 +2468,7 @@
 		D6E83C652B23936F006C8AFB /* SettingsDebugView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsDebugView.swift; sourceTree = "<group>"; };
 		D6E83C672B23B6A3006C8AFB /* FontSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSettings.swift; sourceTree = "<group>"; };
 		D6F93E3B2B4FFA97004C268D /* SubscriptionDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionDebugViewController.swift; sourceTree = "<group>"; };
+		D6F93E3D2B50A8A0004C268D /* SubscriptionSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionSettingsView.swift; sourceTree = "<group>"; };
 		EA39B7E1268A1A35000C62CD /* privacy-reference-tests */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "privacy-reference-tests"; path = "submodules/privacy-reference-tests"; sourceTree = SOURCE_ROOT; };
 		EAB19ED9268963510015D3EA /* DomainMatchingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainMatchingTests.swift; sourceTree = "<group>"; };
 		EE0153E02A6EABE0002A8B26 /* NetworkProtectionConvenienceInitialisers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionConvenienceInitialisers.swift; sourceTree = "<group>"; };
@@ -2682,6 +2693,7 @@
 				F4D7F634298C00C3006C3AE9 /* FindInPageIOSJSSupport in Frameworks */,
 				85D598872927F84C00FA3B1B /* Crashes in Frameworks */,
 				D664C7DD2B28A02800CBFA76 /* StoreKit.framework in Frameworks */,
+				854007E72B57FC000001BD98 /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3315,6 +3327,7 @@
 				3132FA2527A0784600DD7A12 /* FilePreviewHelper.swift */,
 				3132FA2927A0788F00DD7A12 /* QuickLookPreviewHelper.swift */,
 				3132FA2727A0788400DD7A12 /* PassKitPreviewHelper.swift */,
+				850F93DA2B594AB800823EEA /* ZippedPassKitPreviewHelper.swift */,
 			);
 			name = FilePreview;
 			sourceTree = "<group>";
@@ -3776,7 +3789,7 @@
 				85AE668C20971FCA0014CF04 /* Notifications */,
 				F1C4A70C1E5771F800A6CA1B /* OmniBar */,
 				F1AE54DB1F0425BB00D9A700 /* Privacy */,
-				D664C7922B289AA000CBFA76 /* PrivacyPro */,
+				D664C7922B289AA000CBFA76 /* Subscription */,
 				F1DF09502B039E6E008CC908 /* PrivacyDashboard */,
 				02ECEC602A965074009F0654 /* PrivacyInfo.xcprivacy */,
 				C1B7B51D28941F160098FD6A /* RemoteMessaging */,
@@ -4525,23 +4538,25 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		D664C7922B289AA000CBFA76 /* PrivacyPro */ = {
+		D664C7922B289AA000CBFA76 /* Subscription */ = {
 			isa = PBXGroup;
 			children = (
-				D664C7952B289AA000CBFA76 /* PrivacyPro.storekit */,
+				D664C7952B289AA000CBFA76 /* Subscription.storekit */,
 				D664C7932B289AA000CBFA76 /* ViewModel */,
 				D664C7AC2B289AA000CBFA76 /* Views */,
 				D664C7B02B289AA000CBFA76 /* UserScripts */,
 				D664C7962B289AA000CBFA76 /* Extensions */,
 				D6D12C8A2B291CA90054390C /* Subscription */,
 			);
-			path = PrivacyPro;
+			path = Subscription;
 			sourceTree = "<group>";
 		};
 		D664C7932B289AA000CBFA76 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				D664C7942B289AA000CBFA76 /* SubscriptionFlowViewModel.swift */,
+				D652498D2B515A6A0056B0DE /* SubscriptionSettingsViewModel.swift */,
+				D68DF81D2B5830380023DBEA /* SubscriptionRestoreViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -4557,9 +4572,11 @@
 		D664C7AC2B289AA000CBFA76 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D664C7AF2B289AA000CBFA76 /* HeadlessWebView.swift */,
 				D664C7AD2B289AA000CBFA76 /* PurchaseInProgressView.swift */,
 				D664C7AE2B289AA000CBFA76 /* SubscriptionFlowView.swift */,
-				D664C7AF2B289AA000CBFA76 /* HeadlessWebView.swift */,
+				D6F93E3D2B50A8A0004C268D /* SubscriptionSettingsView.swift */,
+				D68DF81B2B58302E0023DBEA /* SubscriptionRestoreView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4634,7 +4651,7 @@
 				D6E83C3C2B1F2C03006C8AFB /* SettingsLoginsView.swift */,
 				D6E83C402B1FC285006C8AFB /* SettingsAppeareanceView.swift */,
 				D6E83C592B2213ED006C8AFB /* SettingsPrivacyView.swift */,
-				D69FBF752B28BE3600B505F1 /* SettingsPrivacyProView.swift */,
+				D69FBF752B28BE3600B505F1 /* SettingsSubscriptionView.swift */,
 				D6E83C5D2B224676006C8AFB /* SettingsCustomizeView.swift */,
 				D6E83C612B23298B006C8AFB /* SettingsMoreView.swift */,
 				D6E83C632B238432006C8AFB /* SettingsAboutView.swift */,
@@ -5700,6 +5717,7 @@
 				F42D541C29DCA40B004C4FF1 /* DesignResourcesKit */,
 				0238E44E29C0FAA100615E30 /* FindInPageIOSJSSupport */,
 				4B2754EB29E8C7DF00394032 /* Lottie */,
+				854007E62B57FC000001BD98 /* ZIPFoundation */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -6002,6 +6020,7 @@
 				0202568C29881E4300E694E7 /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */,
 				0238E44D29C0FAA100615E30 /* XCRemoteSwiftPackageReference "ios-js-support" */,
 				4B2754EA29E8C7DF00394032 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				854007E52B57FB020001BD98 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 			);
 			productRefGroup = 84E341931E2F7EFB00BDBA6F /* Products */;
 			projectDirPath = "";
@@ -6104,7 +6123,7 @@
 				1EE411FD2858B9300003FE64 /* dark-trackers-2.json in Resources */,
 				AA4D6ABC23DE4D15007E8790 /* AppIconYellow60x60@3x.png in Resources */,
 				98D98A9B25ED954100D8E3DF /* BrowsingMenuButton.xib in Resources */,
-				D664C7B72B289AA200CBFA76 /* PrivacyPro.storekit in Resources */,
+				D664C7B72B289AA200CBFA76 /* Subscription.storekit in Resources */,
 				AA4D6AA823DE4CC4007E8790 /* AppIconBlue40x40@2x.png in Resources */,
 				AA4D6AE723DE4D33007E8790 /* AppIconGreen29x29@2x.png in Resources */,
 				1EE412002858B9300003FE64 /* dark-shield-dot.json in Resources */,
@@ -6519,6 +6538,7 @@
 				F1DE78581E5CAE350058895A /* TabViewGridCell.swift in Sources */,
 				984D035824ACCC6F0066CFB8 /* TabViewListCell.swift in Sources */,
 				B6BA95C328891E33004ABA20 /* BrowsingMenuAnimator.swift in Sources */,
+				D68DF81C2B58302E0023DBEA /* SubscriptionRestoreView.swift in Sources */,
 				D664C7CE2B289AA200CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift in Sources */,
 				EE9D68DC2AE16AE100B55EF4 /* NotificationsAuthorizationController.swift in Sources */,
 				AA3D854923DA1DFB00788410 /* AppIcon.swift in Sources */,
@@ -6586,7 +6606,7 @@
 				1E908BF329827C480008C8F3 /* AutoconsentManagement.swift in Sources */,
 				CB9B8739278C8E72001F4906 /* WidgetEducationViewController.swift in Sources */,
 				F4D9C4FA25117A0F00814B71 /* HomeMessageStorage.swift in Sources */,
-				D69FBF762B28BE3600B505F1 /* SettingsPrivacyProView.swift in Sources */,
+				D69FBF762B28BE3600B505F1 /* SettingsSubscriptionView.swift in Sources */,
 				D664C7CC2B289AA200CBFA76 /* SubscriptionPagesUserScript.swift in Sources */,
 				AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */,
 				85C297042476C1FD0063A335 /* DaxDialogsSettings.swift in Sources */,
@@ -6630,6 +6650,7 @@
 				98AA92B32456FBE100ED4B9E /* SearchFieldContainerView.swift in Sources */,
 				3157B43827F4C8490042D3D7 /* FaviconsHelper.swift in Sources */,
 				85F200042216F5D8006BB258 /* FindInPageView.swift in Sources */,
+				D652498E2B515A6A0056B0DE /* SubscriptionSettingsViewModel.swift in Sources */,
 				8548D95E25262B1B005AAE49 /* ViewHighlighter.swift in Sources */,
 				F4D7221026F29A70007D6193 /* BookmarkDetailsCell.swift in Sources */,
 				D6D12CA22B291CA90054390C /* AccountManager.swift in Sources */,
@@ -6641,7 +6662,9 @@
 				98999D5922FDA41500CBBE1B /* BasicAuthenticationAlert.swift in Sources */,
 				C13B32D22A0E750700A59236 /* AutofillSettingStatus.swift in Sources */,
 				D6D12CA52B291CAA0054390C /* AppStorePurchaseFlow.swift in Sources */,
+				D68DF81E2B5830380023DBEA /* SubscriptionRestoreViewModel.swift in Sources */,
 				F4F6DFB426E6B63700ED7E12 /* BookmarkFolderCell.swift in Sources */,
+				D6F93E3E2B50A8A0004C268D /* SubscriptionSettingsView.swift in Sources */,
 				851B12CC22369931004781BC /* AtbAndVariantCleanup.swift in Sources */,
 				85F2FFCF2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift in Sources */,
 				3157B43327F497E90042D3D7 /* SaveLoginView.swift in Sources */,
@@ -6782,6 +6805,7 @@
 				85EE7F572246685B000FE757 /* WebContainerViewController.swift in Sources */,
 				1EC458462948932500CB2B13 /* UIHostingControllerExtension.swift in Sources */,
 				1E4DCF4E27B6A69600961E25 /* DownloadsListHostingController.swift in Sources */,
+				850F93DB2B594AB800823EEA /* ZippedPassKitPreviewHelper.swift in Sources */,
 				4BCD14672B05B682000B1E4C /* NetworkProtectionTermsAndConditionsStore.swift in Sources */,
 				020108A129A5610C00644F9D /* AppTPActivityHostingViewController.swift in Sources */,
 				C1F341C92A6926920032057B /* EmailAddressPromptViewController.swift in Sources */,
@@ -8163,7 +8187,7 @@
 				CODE_SIGN_ENTITLEMENTS = PacketTunnelProvider/PacketTunnelProvider.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -8200,7 +8224,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -8292,7 +8316,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -8320,7 +8344,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -8470,7 +8494,7 @@
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
@@ -8496,7 +8520,7 @@
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				INFOPLIST_FILE = DuckDuckGo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -8561,7 +8585,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Widgets/Info.plist;
@@ -8596,7 +8620,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
@@ -8630,7 +8654,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = OpenAction/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -8661,7 +8685,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -8948,7 +8972,7 @@
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
@@ -8979,7 +9003,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -9008,7 +9032,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = OpenAction/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -9042,7 +9066,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Widgets/Info.plist;
@@ -9073,7 +9097,7 @@
 				CODE_SIGN_ENTITLEMENTS = PacketTunnelProvider/PacketTunnelProvider.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -9106,11 +9130,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 0;
+				DYLIB_CURRENT_VERSION = 2;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -9348,7 +9372,7 @@
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGoAlpha.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
@@ -9375,7 +9399,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -9408,7 +9432,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -9446,7 +9470,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
@@ -9482,7 +9506,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -9517,11 +9541,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 0;
+				DYLIB_CURRENT_VERSION = 2;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -9695,11 +9719,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 0;
+				DYLIB_CURRENT_VERSION = 2;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -9728,10 +9752,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 0;
+				DYLIB_CURRENT_VERSION = 2;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -9925,6 +9949,14 @@
 				version = 3.3.0;
 			};
 		};
+		854007E52B57FB020001BD98 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
+			requirement = {
+				kind = exactVersion;
+				version = 0.9.17;
+			};
+		};
 		98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
@@ -10056,6 +10088,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = RemoteMessaging;
+		};
+		854007E62B57FC000001BD98 /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 854007E52B57FB020001BD98 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
 		};
 		85875B6029912A9900115F05 /* SyncUI */ = {
 			isa = XCSwiftPackageProductDependency;

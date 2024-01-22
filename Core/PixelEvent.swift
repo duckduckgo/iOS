@@ -32,6 +32,7 @@ extension Pixel {
         
         case appLaunch
         case refreshPressed
+        case pullToRefresh
         
         case forgetAllPressedBrowsing
         case forgetAllPressedTabSwitching
@@ -491,6 +492,13 @@ extension Pixel {
         case syncCredentialsFailed
         case syncSettingsFailed
         case syncSettingsMetadataUpdateFailed
+        case syncSignupError
+        case syncLoginError
+        case syncLogoutError
+        case syncUpdateDeviceError
+        case syncRemoveDeviceError
+        case syncDeleteAccountError
+        case syncLoginExistingAccountError
 
         case bookmarksCleanupFailed
         case bookmarksCleanupAttemptedWhileSyncWasEnabled
@@ -525,7 +533,8 @@ extension Pixel.Event {
         switch self {
         case .appLaunch: return "ml"
         case .refreshPressed: return "m_r"
-            
+        case .pullToRefresh: return "m_pull-to-reload"
+
         case .forgetAllPressedBrowsing: return "mf_bp"
         case .forgetAllPressedTabSwitching: return "mf_tp"
         case .forgetAllExecuted: return "mf"
@@ -972,6 +981,13 @@ extension Pixel.Event {
         case .syncCredentialsFailed: return "m_d_sync_credentials_failed"
         case .syncSettingsFailed: return "m_d_sync_settings_failed"
         case .syncSettingsMetadataUpdateFailed: return "m_d_sync_settings_metadata_update_failed"
+        case .syncSignupError: return "m_d_sync_signup_error"
+        case .syncLoginError: return "m_d_sync_login_error"
+        case .syncLogoutError: return "m_d_sync_logout_error"
+        case .syncUpdateDeviceError: return "m_d_sync_update_device_error"
+        case .syncRemoveDeviceError: return "m_d_sync_remove_device_error"
+        case .syncDeleteAccountError: return "m_d_sync_delete_account_error"
+        case .syncLoginExistingAccountError: return "m_d_sync_login_existing_account_error"
 
 
         case .bookmarksCleanupFailed: return "m_d_bookmarks_cleanup_failed"

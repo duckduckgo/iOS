@@ -25,6 +25,20 @@ import Foundation
 struct SubscriptionFlowView: View {
         
     @ObservedObject var viewModel: SubscriptionFlowViewModel
+    @State private var isAlertVisible = false
+    
+    private func getTransactionStatus() -> String {
+        switch viewModel.transactionStatus {
+        case .polling:
+            return UserText.subscriptionCompletingPurchaseTitle
+        case .purchasing:
+            return UserText.subscriptionPurchasingTitle
+        case .restoring:
+            return UserText.subscriptionRestoringTitle
+        case .idle:
+            return ""
+        }
+    }
     
     var body: some View {
         ZStack {
@@ -34,35 +48,45 @@ struct SubscriptionFlowView: View {
                                  shouldReload: $viewModel.shouldReloadWebview).background()
 
             // Overlay that appears when transaction is in progress
-            if viewModel.transactionInProgress {
-                PurchaseInProgressView()
+            if viewModel.transactionStatus != .idle {
+                PurchaseInProgressView(status: getTransactionStatus())
+            }
+         
+            // Activation View
+            NavigationLink(destination: SubscriptionRestoreView(viewModel: SubscriptionRestoreViewModel()),
+                           isActive: $viewModel.activatingSubscription) {
+                EmptyView()
             }
         }
         .onChange(of: viewModel.shouldReloadWebview) { shouldReload in
             if shouldReload {
-                print("WebView reload triggered")
                 viewModel.shouldReloadWebview = false
+            }
+        }
+        .onChange(of: viewModel.hasActiveSubscription) { result in
+            if result {
+                isAlertVisible = true
             }
         }
         .onAppear(perform: {
             Task { await viewModel.initializeViewData() }
         })
         .navigationTitle(viewModel.viewTitle)
-        .navigationBarBackButtonHidden(viewModel.transactionInProgress)
+        .navigationBarBackButtonHidden(viewModel.transactionStatus != .idle)
         
         // Active subscription found Alert
-        .alert(isPresented: $viewModel.hasActiveSubscription) {
+        .alert(isPresented: $isAlertVisible) {
             Alert(
-                title: Text("Subscription Found"),
-                message: Text("We found a subscription associated with this Apple ID."),
-                primaryButton: .cancel(Text("Cancel")) {
-                    // TODO: Handle subscription Restore cancellation
+                title: Text(UserText.subscriptionFoundTitle),
+                message: Text(UserText.subscriptionFoundText),
+                primaryButton: .cancel(Text(UserText.subscriptionFoundCancel)) {
                 },
-                secondaryButton: .default(Text("Restore")) {
+                secondaryButton: .default(Text(UserText.subscriptionFoundRestore)) {
                     viewModel.restoreAppstoreTransaction()
                 }
             )
         }
+        .navigationBarBackButtonHidden(viewModel.transactionStatus != .idle)
     }
 }
 #endif

@@ -59,9 +59,14 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         static let year = "yearly"
     }
     
-    @Published var transactionInProgress = false
+    enum TransactionStatus {
+        case idle, purchasing, restoring, polling
+    }
+    
+    @Published var transactionStatus: TransactionStatus = .idle
     @Published var hasActiveSubscription = false
     @Published var purchaseError: AppStorePurchaseFlow.Error?
+    @Published var activateSubscription: Bool = false
     
     var broker: UserScriptMessageBroker?
 
@@ -108,9 +113,9 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     // Manage transation in progress flag
     private func withTransactionInProgress<T>(_ work: () async throws -> T) async rethrows -> T {
-        transactionInProgress = true
+        transactionStatus = transactionStatus
         defer {
-            transactionInProgress = false
+            transactionStatus = .idle
         }
         return try await work()
     }
@@ -129,13 +134,14 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         
         await withTransactionInProgress {
             
+            transactionStatus = .purchasing
             resetSubscriptionFlow()
                         
             switch await AppStorePurchaseFlow.subscriptionOptions() {
             case .success(let subscriptionOptions):
                 return subscriptionOptions
             case .failure:
-                // TODO: handle errors - no products found
+                
                 return nil
             }
                         
@@ -146,6 +152,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         
         await withTransactionInProgress {
             
+            transactionStatus = .purchasing
             resetSubscriptionFlow()
             
             struct SubscriptionSelection: Decodable {
@@ -153,42 +160,36 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             }
             
             let message = original
-            
-            if #available(iOS 15, *) {
-                guard let subscriptionSelection: SubscriptionSelection = DecodableHelper.decode(from: params) else {
-                    assertionFailure("SubscriptionPagesUserScript: expected JSON representation of SubscriptionSelection")
-                    return nil
-                }
-                
-                print("Selected: \(subscriptionSelection.id)")
-                
-                // Check for active subscriptions
-                if await PurchaseManager.hasActiveSubscription() {
-                    hasActiveSubscription = true
-                    return nil
-                }
-                
-                let emailAccessToken = try? EmailManager().getToken()
-
-                switch await AppStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id, emailAccessToken: emailAccessToken) {
-                case .success:
-                    break
-                case .failure:
-                    purchaseError = .purchaseFailed
-                    originalMessage = original
-                    return nil
-                }
-                
-                switch await AppStorePurchaseFlow.completeSubscriptionPurchase() {
-                case .success(let purchaseUpdate):
-                    await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
-                case .failure:
-                    // TODO: handle errors - missing entitlements on post purchase check
-                    purchaseError = .missingEntitlements
-                    await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate(type: "completed"))
-                }
+            guard let subscriptionSelection: SubscriptionSelection = DecodableHelper.decode(from: params) else {
+                assertionFailure("SubscriptionPagesUserScript: expected JSON representation of SubscriptionSelection")
+                return nil
             }
             
+            // Check for active subscriptions
+            if await PurchaseManager.hasActiveSubscription() {
+                hasActiveSubscription = true
+                return nil
+            }
+            
+            let emailAccessToken = try? EmailManager().getToken()
+
+            switch await AppStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id, emailAccessToken: emailAccessToken) {
+            case .success:
+                break
+            case .failure:
+                purchaseError = .purchaseFailed
+                originalMessage = original
+                return nil
+            }
+            
+            transactionStatus = .polling
+            switch await AppStorePurchaseFlow.completeSubscriptionPurchase() {
+            case .success(let purchaseUpdate):
+                await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
+            case .failure:
+                purchaseError = .missingEntitlements
+                await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate(type: "completed"))
+            }
             return nil
         }
     }
@@ -217,13 +218,11 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             accountManager.storeAccount(token: accessToken, email: accountDetails.email, externalID: accountDetails.externalID)
         }
 
-        // TODO: Navigate back to settings
-
         return nil
     }
 
     func activateSubscription(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        print(">>> Selected to activate a subscription -- show the activation settings screen")
+        activateSubscription = true
         return nil
     }
 
@@ -236,8 +235,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             assertionFailure("SubscriptionPagesUserScript: expected JSON representation of FeatureSelection")
             return nil
         }
-
-        print(">>> Selected a feature -- show the corresponding UI", featureSelection)
+        
         return nil
     }
 
@@ -254,14 +252,14 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
 
     func pushAction(method: SubscribeActionName, webView: WKWebView, params: Encodable) {
         let broker = UserScriptMessageBroker(context: SubscriptionPagesUserScript.context, requiresRunInPageContentWorld: true )
-
-        print(">>> Pushing into WebView:", method.rawValue, String(describing: params))
+        
         broker.push(method: method.rawValue, params: params, for: self, into: webView)
     }
     
     func restoreAccountFromAppStorePurchase() async -> Bool {
         
         await withTransactionInProgress {
+            transactionStatus = .restoring
             switch await AppStoreRestoreFlow.restoreAccountFromPastPurchase() {
             case .success(let update):
                 return true

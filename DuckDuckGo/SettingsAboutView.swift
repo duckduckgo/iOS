@@ -29,16 +29,15 @@ struct SettingsAboutView: View {
             
             SettingsCellView(label: UserText.settingsAboutDDG,
                              action: { viewModel.presentLegacyView(.about) },
-                             asLink: true,
-                             disclosureIndicator: true)
+                             disclosureIndicator: true,
+                             isButton: true)
             
             SettingsCellView(label: UserText.settingsVersion,
-                             accesory: .rightDetail(viewModel.state.version),
-                             asLink: true)
+                             accesory: .rightDetail(viewModel.state.version))
             
             SettingsCellView(label: UserText.settingsFeedback,
                              action: { viewModel.presentLegacyView(.feedback) },
-                             asLink: true)
+                             isButton: true)
                         
         }
 

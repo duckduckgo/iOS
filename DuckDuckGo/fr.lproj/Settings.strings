@@ -1,15 +1,3 @@
-/* Class = "UILabel"; text = "Fireproof Sites"; ObjectID = "0DQ-yq-UuT"; */
-"0DQ-yq-UuT.text" = "Sites coupe-feu";
-
-/* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
-"0gU-rZ-pRc.footerTitle" = "Désactiver pour empêcher l'ouverture automatique des liens dans d'autres applications installées.";
-
-/* Class = "UITableViewSection"; headerTitle = "Customize"; ObjectID = "0gU-rZ-pRc"; */
-"0gU-rZ-pRc.headerTitle" = "Personnaliser";
-
-/* Class = "UILabel"; text = "Version"; ObjectID = "2ky-s9-1aZ"; */
-"2ky-s9-1aZ.text" = "Version";
-
 /* Class = "UINavigationItem"; title = "Keyboard"; ObjectID = "2pp-PM-6rW"; */
 "2pp-PM-6rW.title" = "Clavier";
 
@@ -31,29 +19,8 @@
 /* Class = "UILabel"; text = "Clear Tabs and Data"; ObjectID = "9fc-9r-4aA"; */
 "9fc-9r-4aA.text" = "Effacer les onglets et données";
 
-/* Class = "UILabel"; text = "Text Size"; ObjectID = "9Ko-0g-T3h"; */
-"9Ko-0g-T3h.text" = "Taille du texte";
-
-/* Class = "UILabel"; text = "Title"; ObjectID = "9kt-6R-XiZ"; */
-"9kt-6R-XiZ.text" = "Titre";
-
 /* Class = "UILabel"; text = "App Launch"; ObjectID = "13n-KI-KLq"; */
 "13n-KI-KLq.text" = "Au lancement de l'application";
-
-/* Class = "UILabel"; text = "Open Links in Associated Apps"; ObjectID = "a1T-ui-4Nw"; */
-"a1T-ui-4Nw.text" = "Ouvrir les liens dans les applications associées";
-
-/* Class = "UILabel"; text = "Debug Menu"; ObjectID = "A9G-5I-RSn"; */
-"A9G-5I-RSn.text" = "Menu de débogage";
-
-/* Class = "UILabel"; text = "Passwords"; ObjectID = "And-cQ-SEu"; */
-"And-cQ-SEu.text" = "Mots de passe";
-
-/* Class = "UILabel"; text = "Animation"; ObjectID = "AtR-nS-Gun"; */
-"AtR-nS-Gun.text" = "Animation";
-
-/* Class = "UILabel"; text = "Email Protection"; ObjectID = "azf-Nc-kvW"; */
-"azf-Nc-kvW.text" = "Protection des e-mails";
 
 /* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
 "BGs-JL-4ib.footerTitle" = "Les données et/ou les onglets seront effacés lorsque l'application redémarrera.";
@@ -64,53 +31,20 @@
 /* Class = "UINavigationItem"; title = "Manage Cookie Pop-ups"; ObjectID = "btj-ri-kRr"; */
 "btj-ri-kRr.title" = "Gérer les fenêtres contextuelles (cookies)";
 
-/* Class = "UILabel"; text = "App Icon"; ObjectID = "cKo-er-HNj"; */
-"cKo-er-HNj.text" = "Icône de l'appli";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "CR5-Al-WIW"; */
-"CR5-Al-WIW.text" = "Label";
-
 /* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "cW7-OM-2oW"; */
 "cW7-OM-2oW.text" = "Global Privacy Control (GPC)";
 
 /* Class = "UIBarButtonItem"; title = "Add"; ObjectID = "CxT-QK-iVn"; */
 "CxT-QK-iVn.title" = "Ajouter";
 
-/* Class = "UILabel"; text = "Hide your location and conceal your online activity"; ObjectID = "Cyw-ir-cSK"; */
-"Cyw-ir-cSK.text" = "Hide your location and conceal your online activity";
-
 /* Class = "UILabel"; text = "App Exit, Inactive for 15 Minutes"; ObjectID = "D0R-jp-UY8"; */
 "D0R-jp-UY8.text" = "Quitter l'application, inactivité pendant 15 minutes";
-
-/* Class = "UILabel"; text = "10.0.1 (Build 10005)"; ObjectID = "d5n-vG-8kF"; */
-"d5n-vG-8kF.text" = "10.0.1 (Version 10005)";
-
-/* Class = "UILabel"; text = "Application Lock"; ObjectID = "dBZ-yq-FYj"; */
-"dBZ-yq-FYj.text" = "Verrouillage de l'application";
-
-/* Class = "UITableViewSection"; headerTitle = "Appearance"; ObjectID = "dj9-vh-Rig"; */
-"dj9-vh-Rig.headerTitle" = "Apparence";
-
-/* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.footerTitle" = "Si Touch ID, Face ID ou un code d'accès au système est mis en place, il vous sera demandé de déverrouiller l'application lors de l'ouverture.";
-
-/* Class = "UITableViewSection"; headerTitle = "Privacy"; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.headerTitle" = "Confidentialité";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "dud-qo-Ces"; */
 "dud-qo-Ces.text" = "Label";
 
-/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Dyd-bm-goj"; */
-"Dyd-bm-goj.title" = "Paramètres";
-
-/* Class = "UILabel"; text = "100%"; ObjectID = "EB8-09-gt2"; */
-"EB8-09-gt2.text" = "100 %";
-
 /* Class = "UILabel"; text = "Label"; ObjectID = "EIq-Ev-nfj"; */
 "EIq-Ev-nfj.text" = "Label";
-
-/* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "ekF-SJ-PAQ"; */
-"ekF-SJ-PAQ.text" = "Effacer automatiquement les données";
 
 /* Class = "UILabel"; text = "App Exit, Inactive for 5 Minutes"; ObjectID = "ElX-yE-4PX"; */
 "ElX-yE-4PX.text" = "Quitter l'application, inactivité pendant 5 minutes";
@@ -118,59 +52,20 @@
 /* Class = "UINavigationItem"; title = "App Icon"; ObjectID = "eMH-uv-Kms"; */
 "eMH-uv-Kms.title" = "Icône de l'appli";
 
-/* Class = "UILabel"; text = "Theme"; ObjectID = "f1O-6u-LFY"; */
-"f1O-6u-LFY.text" = "Thème";
-
 /* Class = "UILabel"; text = "App Exit Only"; ObjectID = "Fal-1Y-o2S"; */
 "Fal-1Y-o2S.text" = "Quitter l'application uniquement";
 
 /* Class = "UITableViewController"; title = "Automatically Clear Data"; ObjectID = "fdJ-b1-Des"; */
 "fdJ-b1-Des.title" = "Effacer automatiquement les données";
 
-/* Class = "UILabel"; text = "Unprotected Sites"; ObjectID = "FHC-1z-Z3v"; */
-"FHC-1z-Z3v.text" = "Sites non protégés";
-
-/* Class = "UITableViewSection"; headerTitle = "About"; ObjectID = "FpT-1C-xtx"; */
-"FpT-1C-xtx.headerTitle" = "À propos";
-
 /* Class = "UITableViewController"; title = "Global Privacy Control (GPC)"; ObjectID = "fV3-86-QQj"; */
 "fV3-86-QQj.title" = "Global Privacy Control (GPC)";
-
-/* Class = "UILabel"; text = "Add Widget to Home Screen"; ObjectID = "Fxu-zn-51Z"; */
-"Fxu-zn-51Z.text" = "Ajouter le widget à l'écran d'accueil";
-
-/* Class = "UILabel"; text = "Fire Button Animation"; ObjectID = "gBo-Cu-e2k"; Note = "Fire button animation settings item"; */
-"gBo-Cu-e2k.text" = "Animation du bouton en forme de flamme";
-
-/* Class = "UILabel"; text = "Default"; ObjectID = "Gbx-kl-uOO"; */
-"Gbx-kl-uOO.text" = "Défaut";
-
-/* Class = "UILabel"; text = "Manage Cookie Pop-ups"; ObjectID = "GRv-M2-Kx1"; */
-"GRv-M2-Kx1.text" = "Gérer les fenêtres contextuelles (cookies)";
-
-/* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
-"gS2-mg-l7R.title" = "Thème";
-
-/* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
-"HLr-R8-xxF.text" = "Aperçus obtenus en appuyant longuement";
-
-/* Class = "UILabel"; text = "Browse privately with our app for Windows"; ObjectID = "hoT-Nu-KXP"; */
-"hoT-Nu-KXP.text" = "Naviguez incognito avec notre application pour Windows";
 
 /* Class = "UILabel"; text = "Privacy Protection enabled for all sites"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "La protection de la confidentialité est activée pour tous les sites";
 
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Icône";
-
-/* Class = "UILabel"; text = "Share Feedback"; ObjectID = "m23-t6-9cb"; */
-"m23-t6-9cb.text" = "Partagez vos commentaires";
-
-/* Class = "UINavigationItem"; title = "Address Bar Position"; ObjectID = "mLn-1x-Fl5"; Note = "Fire button animation setting page title"; */
-"mLn-1x-Fl5.title" = "Position de la barre d'adresse";
-
-/* Class = "UILabel"; text = "Address Bar Position"; ObjectID = "mqV-pf-NZ1"; Note = "Fire button animation settings item"; */
-"mqV-pf-NZ1.text" = "Position de la barre d'adresse";
 
 /* Class = "UILabel"; text = "Let DuckDuckGo manage cookie consent pop-ups"; ObjectID = "nX1-F1-Frd"; */
 "nX1-F1-Frd.text" = "Autoriser DuckDuckGo à gérer les fenêtres contextuelles de consentement aux cookies";
@@ -181,35 +76,8 @@
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
 "OHV-qC-tL9.title" = "Sites non protégés";
 
-/* Class = "UILabel"; text = "About DuckDuckGo"; ObjectID = "oM7-1o-9oY"; */
-"oM7-1o-9oY.text" = "À propos de DuckDuckGo";
-
-/* Class = "UILabel"; text = "Top"; ObjectID = "opn-JO-idF"; */
-"opn-JO-idF.text" = "Haut de page";
-
-/* Class = "UITableViewSection"; headerTitle = "More From DuckDuckGo"; ObjectID = "OxE-MQ-uJk"; */
-"OxE-MQ-uJk.headerTitle" = "Plus de la part de DuckDuckGo";
-
-/* Class = "UILabel"; text = "Sync & Backup"; ObjectID = "oXN-ez-gct"; */
-"oXN-ez-gct.text" = "Synchronisation et sauvegarde";
-
-/* Class = "UILabel"; text = "Browse privately with our app for Mac "; ObjectID = "P0F-ts-ekd"; */
-"P0F-ts-ekd.text" = "Naviguez incognito avec notre application pour Mac ";
-
-/* Class = "UILabel"; text = "Network Protection"; ObjectID = "qah-gb-udB"; */
-"qah-gb-udB.text" = "Network Protection";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
-"qeN-SV-zy7.text" = "Label";
-
-/* Class = "UILabel"; text = "DuckDuckGo Windows App"; ObjectID = "RQ8-H1-Ez1"; */
-"RQ8-H1-Ez1.text" = "Application DuckDuckGo pour Windows";
-
 /* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
 "ssa-zd-L3T.title" = "Taille du texte";
-
-/* Class = "UILabel"; text = "Private Voice Search"; ObjectID = "Swa-O7-n8W"; */
-"Swa-O7-n8W.text" = "Recherche vocale privée";
 
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Afficher le clavier";
@@ -220,17 +88,8 @@
 /* Class = "UITableViewSection"; headerTitle = "Action"; ObjectID = "U2M-6p-6nl"; */
 "U2M-6p-6nl.headerTitle" = "Action";
 
-/* Class = "UILabel"; text = "Autocomplete Suggestions"; ObjectID = "U8i-cQ-5WW"; */
-"U8i-cQ-5WW.text" = "Afficher les suggestions de saisie semi-automatique";
-
-/* Class = "UINavigationItem"; title = "Fire Button Animation"; ObjectID = "uns-8w-IwL"; Note = "Fire button animation setting page title"; */
-"uns-8w-IwL.title" = "Animation du bouton en forme de flamme";
-
 /* Class = "UILabel"; text = "Remove All Fireproof Sites"; ObjectID = "UZx-52-aer"; */
 "UZx-52-aer.text" = "Supprimer tous les sites coupe-feu";
-
-/* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "vPz-uO-6gB"; */
-"vPz-uO-6gB.text" = "Global Privacy Control (GPC)";
 
 /* Class = "UITableViewSection"; footerTitle = "App exit is defined by swiping the app to close it while inactivity is when the app is in the background."; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
 "vSJ-YJ-bBs.footerTitle" = "L'application est fermée lorsque vous la faites glisser vers le haut. En cas d'inactivité, l'application reste ouverte en arrière-plan.";
@@ -238,23 +97,8 @@
 /* Class = "UITableViewSection"; headerTitle = "Desired timing"; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
 "vSJ-YJ-bBs.headerTitle" = "Délai souhaité";
 
-/* Class = "UILabel"; text = "Set as Default Browser"; ObjectID = "xof-5k-PkI"; */
-"xof-5k-PkI.text" = "Définir comme navigateur par défaut";
-
 /* Class = "UINavigationItem"; title = "Fireproof Sites"; ObjectID = "xUX-nF-HOl"; */
 "xUX-nF-HOl.title" = "Sites coupe-feu";
-
-/* Class = "UILabel"; text = "Block email trackers and hide your address"; ObjectID = "Y6Y-wA-n6Z"; */
-"Y6Y-wA-n6Z.text" = "Bloquez les traqueurs d'e-mails et masquez votre adresse";
-
-/* Class = "UILabel"; text = "Keyboard"; ObjectID = "yoZ-jw-Cu3"; */
-"yoZ-jw-Cu3.text" = "Clavier";
-
-/* Class = "UILabel"; text = "Add App to Your Dock"; ObjectID = "yvj-LL-MiR"; */
-"yvj-LL-MiR.text" = "Ajouter l'application à votre Dock";
-
-/* Class = "UILabel"; text = "DuckDuckGo Mac App"; ObjectID = "Yz9-17-qnn"; */
-"Yz9-17-qnn.text" = "Application DuckDuckGo pour Mac";
 
 /* Class = "UILabel"; text = "New Tab"; ObjectID = "Zpg-h0-rYv"; */
 "Zpg-h0-rYv.text" = "Nouvel onglet";

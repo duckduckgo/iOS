@@ -9933,8 +9933,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "sam/fix-tunnel-monitor-handshake-check";
-				kind = branch;
+				kind = exactVersion;
+				version = 101.1.5;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

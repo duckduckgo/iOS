@@ -1933,6 +1933,7 @@ extension MainViewController: TabSwitcherDelegate {
         hideSuggestionTray()
         tabManager.remove(at: index)
         updateCurrentTab()
+        tabsBarController?.refresh(tabsModel: tabManager.model)
     }
 
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController) {

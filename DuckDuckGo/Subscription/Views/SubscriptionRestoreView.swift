@@ -74,7 +74,7 @@ struct SubscriptionRestoreView: View {
                     subFeature: viewModel.subFeature,
                     accountManager: viewModel.accountManager),
                 isConfiguringSubscription: $isConfiguringSubscription),
-                isActive: $viewModel.isRestoringEmailSubscription) {
+                isActive: $viewModel.isManagingEmailSubscription) {
             EmptyView()
         }
     }
@@ -88,7 +88,7 @@ struct SubscriptionRestoreView: View {
             .init(id: 1,
                   content: getCellTitle(icon: Constants.emailIcon,
                                         text: UserText.subscriptionActivateEmail),
-                  expandedContent: getEmailCellContent(buttonAction: viewModel.restoreEmailSubscription ))
+                  expandedContent: getEmailCellContent(buttonAction: viewModel.manageEmailSubscription ))
         ]
     }
     
@@ -131,14 +131,15 @@ struct SubscriptionRestoreView: View {
                             .daxSubheadRegular()
                             .foregroundColor(Color(designSystemColor: .textSecondary))
                         HStack {
-                            getCellButton(buttonText: UserText.subscriptionManageEmail,
+                            getCellButton(buttonText: UserText.subscriptionManageEmailButton,
                                                         action: buttonAction)
+                            /* TO BE IMPLEMENTED ??
                             Spacer()
                             Button(action: {}, label: {
                                 Text(UserText.subscriptionManageEmailResendInstructions).daxButton().daxBodyBold()
                             })
+                            */
                         }
-                        
                     }
                 }
             )

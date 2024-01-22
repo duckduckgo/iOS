@@ -30,7 +30,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     
-    var emailURL = URL.addEmailToSubscription
+    var emailURL = URL.activateSubscriptionViaEmail
     var viewTitle = UserText.subscriptionRestoreEmail
     @Published var subscriptionEmail: String?
     @Published var shouldReloadWebView = false
@@ -49,9 +49,10 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
     
     private func initializeView() {
-        subscriptionEmail = accountManager.email
-        if subscriptionEmail != nil {
-            emailURL = URL.activateSubscriptionViaEmail
+        // If use is authenticated, we want to "Add or manage email" instead of activating
+        if accountManager.isUserAuthenticated {
+            emailURL = accountManager.email == nil ? URL.addEmailToSubscription : URL.manageSubscriptionEmail
+            viewTitle = accountManager.email == nil ?  UserText.subscriptionAddEmail : UserText.subscriptionManageEmailTitle
         }
     }
     

@@ -39,7 +39,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     @Published var transactionStatus: SubscriptionPagesUseSubscriptionFeature.TransactionStatus = .idle
     @Published var activationResult: SubscriptionActivationResult = .unknown
     @Published var subscriptionEmail: String?
-    @Published var isRestoringEmailSubscription: Bool = false
+    @Published var isManagingEmailSubscription: Bool = false
     @Published var subscriptionActivatedViaEmail: Bool = false
         
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
@@ -78,8 +78,8 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         }
     }
     
-    func restoreEmailSubscription() {
-        isRestoringEmailSubscription = true
+    func manageEmailSubscription() {
+        isManagingEmailSubscription = true
     }
     
 }

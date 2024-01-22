@@ -1044,7 +1044,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionAddDeviceHeaderTitle = NSLocalizedString("subscription.add.device.header.title", value: "Use your subscription on all your devices", comment: "Add subscription to other device title ")
     public static let subscriptionAddDeviceDescription = NSLocalizedString("subscription.add.device.description", value: "Access your Privacy Pro subscription on any of your devices via Apple ID or by adding an email address.", comment: "Subscription Add device Info")
     public static let subscriptionAvailableInApple = NSLocalizedString("subscription.available.apple", value: "Privacy Pro is available on any device signed in to the same Apple ID.", comment: "Subscription availability message on Apple devices")
-    public static let subscriptionManageEmailResendInstructions = NSLocalizedString("subscription.add.device.resend.instructions", value: "Resend Instructions.", comment: "Resend activation instructions button")
+    public static let subscriptionManageEmailResendInstructions = NSLocalizedString("subscription.add.device.resend.instructions", value: "Resend Instructions", comment: "Resend activation instructions button")
     
     
     // Add Email To subscription
@@ -1054,7 +1054,8 @@ But if you *do* want a peek under the hood, you can find more information about 
     
     // Manage Subscription Email
     public static let subscriptionManageEmailDescription = NSLocalizedString("subscription.manage.email.description", value: "You can use this email to activate your subscription on your other devices.", comment: "Description for Email Management options")
-    public static let subscriptionManageEmail = NSLocalizedString("subscription.activate.manage.email.button", value: "Manage", comment: "Restore button title for Managing Email")
+    public static let subscriptionManageEmailButton = NSLocalizedString("subscription.activate.manage.email.button", value: "Manage", comment: "Restore button title for Managing Email")
+    public static let subscriptionManageEmailTitle = NSLocalizedString("subscription.activate.manage.email.title", value: "Manage Email", comment: "View Title for managing your email account")
     
     // Subscribe & Restore Flow
     public static let subscriptionFoundTitle = NSLocalizedString("subscription.found.title", value: "Subscription Found", comment: "Title for the existing subscription dialog")

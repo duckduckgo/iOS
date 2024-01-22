@@ -1938,6 +1938,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Restore button title for Managing Email */
 "subscription.activate.manage.email.button" = "Manage";
 
+/* View Title for managing your email account */
+"subscription.activate.manage.email.title" = "Manage Email";
+
 /* Restore button title for AppleID */
 "subscription.activate.restore.apple" = "Restore";
 
@@ -1957,7 +1960,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.add.device.header.title" = "Use your subscription on all your devices";
 
 /* Resend activation instructions button */
-"subscription.add.device.resend.instructions" = "Resend Instructions.";
+"subscription.add.device.resend.instructions" = "Resend Instructions";
 
 /* Add to another device view title */
 "subscription.add.device.title" = "Add Device";

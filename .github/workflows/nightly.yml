@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '0 2 * * *' # Run at 2 AM UTC
     push:
-      branches: [ "sam/**" ]
+      branches: [ "sam/fix-nightly-jobs" ]
 
 jobs:
   atb-ui-tests:

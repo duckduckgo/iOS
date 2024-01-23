@@ -11,7 +11,7 @@ CC:
 **Description**:
 
 <!--
-If at any point it isn't actively being worked on/ready for review/otherwise moving forward strongly consider closing it (or not opening it in the first place). If you decide not to close it, make sure it's labelled to make it clear the PRs state and comment with more information. You can use `DO NOT MERGE` label and/or convert the PR into Draft.
+If at any point it isn't actively being worked on/ready for review/otherwise moving forward strongly consider closing it (or not opening it in the first place). If you decide not to close it, use Draft PR while work is still in progress or use `DO NOT MERGE` label to clarify the PRs state and comment with more information.
 -->
 
 **Steps to test this PR**:

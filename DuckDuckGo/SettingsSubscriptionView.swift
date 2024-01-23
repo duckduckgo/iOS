@@ -52,7 +52,9 @@ struct SettingsSubscriptionView: View {
     private var purchaseSubscriptionView: some View {
         return Group {
             SettingsCustomCell(content: { subscriptionDescriptionView })
-            NavigationLink(destination: SubscriptionFlowView(viewModel: SubscriptionFlowViewModel())) {
+            NavigationLink(destination: SubscriptionFlowView(viewModel: SubscriptionFlowViewModel(), onFeatureSelected: { _ in
+                viewModel.onAppearNavigationTarget = .netP
+            })) {
                 SettingsCustomCell(content: { learnMoreView })
             }
         }

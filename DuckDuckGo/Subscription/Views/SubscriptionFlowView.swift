@@ -24,8 +24,10 @@ import Foundation
 @available(iOS 15.0, *)
 struct SubscriptionFlowView: View {
         
+    @Environment(\.dismiss) var dismiss
     @ObservedObject var viewModel: SubscriptionFlowViewModel
     @State private var isAlertVisible = false
+    var onFeatureSelected: ((String) -> Void)
     
     private func getTransactionStatus() -> String {
         switch viewModel.transactionStatus {
@@ -42,10 +44,16 @@ struct SubscriptionFlowView: View {
     
     var body: some View {
         ZStack {
-            AsyncHeadlessWebView(url: $viewModel.purchaseURL,
-                                 userScript: viewModel.userScript,
-                                 subFeature: viewModel.subFeature,
-                                 shouldReload: $viewModel.shouldReloadWebView).background()
+            VStack {
+                Button(action: {
+                    onFeatureSelected("vpn")
+                }, label: { Text("tap me!!!!") })
+                AsyncHeadlessWebView(url: $viewModel.purchaseURL,
+                                     userScript: viewModel.userScript,
+                                     subFeature: viewModel.subFeature,
+                                     shouldReload: $viewModel.shouldReloadWebView).background()
+            }
+            
 
             // Overlay that appears when transaction is in progress
             if viewModel.transactionStatus != .idle {
@@ -67,6 +75,11 @@ struct SubscriptionFlowView: View {
         .onChange(of: viewModel.hasActiveSubscription) { result in
             if result {
                 isAlertVisible = true
+            }
+        }
+        .onChange(of: viewModel.showDismissView) { result in
+            if result {
+                dismiss()
             }
         }
         

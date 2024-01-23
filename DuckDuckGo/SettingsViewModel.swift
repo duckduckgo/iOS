@@ -56,12 +56,13 @@ final class SettingsViewModel: ObservableObject {
     @UserDefaultsWrapper(key: .subscriptionIsActive, defaultValue: false)
     static private var cachedHasActiveSubscription: Bool
 
-    // Closures to interact with legacy view controllers throught the container
+    // Closures to interact with legacy view controllers through the container
     var onRequestPushLegacyView: ((UIViewController) -> Void)?
     var onRequestPresentLegacyView: ((UIViewController, _ modal: Bool) -> Void)?
     var onRequestPopLegacyView: (() -> Void)?
     var onRequestDismissSettings: (() -> Void)?
     
+    // Subscription Entitlement names: TBD
     static let entitlementNames = ["dummy1", "dummy2", "dummy3"]
     
     // Our View State
@@ -81,6 +82,13 @@ final class SettingsViewModel: ObservableObject {
     }
                 
     var shouldShowNoMicrophonePermissionAlert: Bool = false
+    
+    // Used to automatically navigate on Appear to a specific section
+    // Add more cases as needed
+    enum SettingsSection: String {
+        case none, netP, dbp, itp
+    }
+    var onAppearNavigationTarget: SettingsSection
     
     // MARK: Bindings
     var themeBinding: Binding<ThemeName> {
@@ -183,10 +191,14 @@ final class SettingsViewModel: ObservableObject {
     }
 
     // MARK: Default Init
-    init(state: SettingsState? = nil, legacyViewProvider: SettingsLegacyViewProvider, accountManager: AccountManager) {
+    init(state: SettingsState? = nil,
+         legacyViewProvider: SettingsLegacyViewProvider,
+         accountManager: AccountManager,
+         navigateOnAppearDestination: SettingsSection = .none) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
         self.accountManager = accountManager
+        self.onAppearNavigationTarget = navigateOnAppearDestination
     }
 }
  
@@ -287,7 +299,6 @@ extension SettingsViewModel {
             completion(true)
         }
     }
-    
 
     #if SUBSCRIPTION
     @available(iOS 15.0, *)
@@ -348,7 +359,7 @@ extension SettingsViewModel {
         }
     }
     #endif
-    
+        
 }
 
 // MARK: Subscribers
@@ -365,7 +376,7 @@ extension SettingsViewModel {
             }
             .store(in: &cancellables)
     #endif
-        
+
     }
 }
 
@@ -374,6 +385,7 @@ extension SettingsViewModel {
     
     func onAppear() {
         initState()
+        Task { await MainActor.run { navigateOnAppear() } }
     }
     
     func setAsDefaultBrowser() {
@@ -401,6 +413,20 @@ extension SettingsViewModel {
         onRequestDismissSettings?()
     }
 
+    @MainActor
+    private func navigateOnAppear() {
+        switch onAppearNavigationTarget {
+        case .netP:
+                self.presentLegacyView(.netP)
+        case .dbp:
+            break
+        case .itp:
+            break
+        default:
+            break
+        }
+    }
+
 }
 
 // MARK: Legacy View Presentation
@@ -408,6 +434,7 @@ extension SettingsViewModel {
 // for all existing subviews, default to UIKit based presentation until we
 // can review and migrate
 extension SettingsViewModel {
+    
     
     // swiftlint:disable:next cyclomatic_complexity
     @MainActor func presentLegacyView(_ view: SettingsLegacyViewProvider.LegacyView) {

@@ -40,6 +40,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     @Published var transactionStatus: SubscriptionPagesUseSubscriptionFeature.TransactionStatus = .idle
     @Published var shouldReloadWebView = false
     @Published var activatingSubscription = false
+    @Published var showDismissView = false
         
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
@@ -76,6 +77,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 }
             }
             .store(in: &cancellables)
+        
     }
     
     @MainActor

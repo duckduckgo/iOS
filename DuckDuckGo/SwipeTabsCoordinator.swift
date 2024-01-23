@@ -25,42 +25,129 @@ import UIKit
 
 // TODO slide the logo when in homescreen view?
 
-class SwipeTabsCoordinator: NSObject, UICollectionViewDataSource, UICollectionViewDelegate {
+class SwipeTabsCoordinator: NSObject {
     
     // Set by refresh function
     weak var tabsModel: TabsModel!
-
+    
     weak var coordinator: MainViewCoordinator!
     weak var tabPreviewsSource: TabPreviewsSource!
     
     let selectTab: (Int) -> Void
     
+    var startOffsetX: CGFloat = 0.0
+    var startingIndexPath: IndexPath?
+    weak var nextTabPreview: UIView?
+
+    var targetIndexPath: IndexPath?
+    var isDragging = false
+
     init(coordinator: MainViewCoordinator, tabPreviewsSource: TabPreviewsSource, selectTab: @escaping (Int) -> Void) {
         self.coordinator = coordinator
         self.tabPreviewsSource = tabPreviewsSource
         self.selectTab = selectTab
-        coordinator.navigationBarContainer.register(OmniBarCell.self, forCellWithReuseIdentifier: "omnibar")
         
-        let layout = NavigationBarLayout()
-        layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: coordinator.superview.frame.size.width, height: coordinator.omniBar.frame.height)
-        coordinator.navigationBarContainer.setCollectionViewLayout(layout, animated: false)
+        coordinator.navigationBarContainer.register(OmniBarCell.self, forCellWithReuseIdentifier: "omnibar")
+        coordinator.navigationBarContainer.isPagingEnabled = true
+        
+        let layout = coordinator.navigationBarContainer.collectionViewLayout as? UICollectionViewFlowLayout
+        layout?.scrollDirection = .horizontal
+        layout?.itemSize = CGSize(width: coordinator.superview.frame.size.width, height: coordinator.omniBar.frame.height)
+        layout?.minimumLineSpacing = 0
+        layout?.minimumInteritemSpacing = 0
+        layout?.scrollDirection = .horizontal
     }
+    
+}
+
+// MARK: UICollectionViewDelegate
+extension SwipeTabsCoordinator: UICollectionViewDelegate {
+   
+   func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+       startOffsetX = scrollView.contentOffset.x
+       startingIndexPath = coordinator.navigationBarContainer.indexPathsForVisibleItems[0]
+       isDragging = true
+   }
+   
+   func scrollViewDidScroll(_ scrollView: UIScrollView) {
+       guard let startingIndexPath else { return }
+       print("***", #function, startingIndexPath)
+
+       let distance = scrollView.contentOffset.x - startOffsetX
+       
+       if abs(distance) > coordinator.superview.frame.width * 0.3 {
+           var targetIndexPath = startingIndexPath
+           if distance < 0 {
+               targetIndexPath.row -= 1
+           } else {
+               targetIndexPath.row += 1
+           }
+           self.targetIndexPath = targetIndexPath
+       } else {
+           targetIndexPath = nil
+       }
+       
+       if nextTabPreview == nil {
+           let index = startingIndexPath.row + (distance < 0 ? -1 : 1)
+           if tabsModel.tabs.indices.contains(index) {
+               let tab = tabsModel.get(tabAt: index)
+
+               let view = UIView(frame: CGRect(origin: .zero, size: coordinator.contentContainer.frame.size))
+               view.backgroundColor = .clear
+               coordinator.contentContainer.addSubview(view)
+               nextTabPreview = view
+
+               let imageView = UIImageView(image: tabPreviewsSource.preview(for: tab))
+               imageView.frame = view.frame
+               view.addSubview(imageView)
+           }
+       }
+       
+       // Could add some 'curve' or 'parallex' to this.
+       coordinator.contentContainer.subviews[0].frame.origin.x = -distance
+       if distance > 0 {
+           nextTabPreview?.frame.origin.x = coordinator.contentContainer.frame.size.width - abs(distance)
+       } else {
+           nextTabPreview?.frame.origin.x = -coordinator.contentContainer.frame.size.width + abs(distance)
+       }
+   }
+
+   func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+       isDragging = false
+       
+       guard let targetIndexPath else { return }
+       print("***", #function, targetIndexPath)
+       coordinator.navigationBarContainer.scrollToItem(at: targetIndexPath, at: .centeredHorizontally, animated: true)
+       coordinator.contentContainer.subviews[0].frame.origin.x = 0
+       selectTab(targetIndexPath.row)
+       self.nextTabPreview?.removeFromSuperview()
+       self.startingIndexPath = nil
+       self.targetIndexPath = nil
+   }
+}
+
+// MARK: Public Interface
+extension SwipeTabsCoordinator {
     
     func refresh(tabsModel: TabsModel, scrollToSelected: Bool = false) {
         let scrollToItem = self.tabsModel == nil
         print("***", #function, scrollToItem)
-                
+        
         self.tabsModel = tabsModel
         coordinator.navigationBarContainer.reloadData()
         
         if scrollToItem {
             DispatchQueue.main.async {
                 self.coordinator.navigationBarContainer.scrollToItem(at: .init(row: tabsModel.currentIndex, section: 0),
-                                                                at: .centeredHorizontally, animated: false)
+                                                                     at: .centeredHorizontally, animated: false)
             }
         }
     }
+    
+}
+
+// MARK: UICollectionViewDataSource
+extension SwipeTabsCoordinator: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         tabsModel.count
@@ -86,68 +173,6 @@ class SwipeTabsCoordinator: NSObject, UICollectionViewDataSource, UICollectionVi
         return cell
     }
     
-    var startOffsetX: CGFloat = 0.0
-    var startingIndexPath: IndexPath?
-    weak var nextTabPreview: UIView?
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        startOffsetX = scrollView.contentOffset.x
-        startingIndexPath = coordinator.navigationBarContainer.indexPathsForVisibleItems[0]
-    }
-    
-    var targetIndexPath: IndexPath?
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard let startingIndexPath else { return }
-        
-        let distance = scrollView.contentOffset.x - startOffsetX
-        
-        if abs(distance) > coordinator.superview.frame.width * 0.3 {
-            var targetIndexPath = startingIndexPath
-            if distance < 0 {
-                targetIndexPath.row -= 1
-            } else {
-                targetIndexPath.row += 1
-            }
-            self.targetIndexPath = targetIndexPath
-        } else {
-            targetIndexPath = nil
-        }
-        
-        if nextTabPreview == nil {
-            let index = startingIndexPath.row + (distance < 0 ? -1 : 1)
-            if tabsModel.tabs.indices.contains(index) {
-                let tab = tabsModel.get(tabAt: index)
-
-                let view = UIView(frame: CGRect(origin: .zero, size: coordinator.contentContainer.frame.size))
-                view.backgroundColor = .clear
-                coordinator.contentContainer.addSubview(view)
-                nextTabPreview = view
-
-                let imageView = UIImageView(image: tabPreviewsSource.preview(for: tab))
-                imageView.frame = view.frame
-                view.addSubview(imageView)
-            }
-        }
-        
-        // Could add some 'curve' or 'parallex' to this.
-        coordinator.contentContainer.subviews[0].frame.origin.x = -distance
-        if distance > 0 {
-            nextTabPreview?.frame.origin.x = coordinator.contentContainer.frame.size.width - abs(distance)
-        } else {
-            nextTabPreview?.frame.origin.x = -coordinator.contentContainer.frame.size.width + abs(distance)
-        }
-    }
-
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        guard let targetIndexPath else { return }
-        print("***", #function, targetIndexPath)
-        coordinator.navigationBarContainer.scrollToItem(at: targetIndexPath, at: .centeredHorizontally, animated: true)
-        coordinator.contentContainer.subviews[0].frame.origin.x = 0
-        selectTab(targetIndexPath.row)
-        self.nextTabPreview?.removeFromSuperview()
-        self.startingIndexPath = nil
-        self.targetIndexPath = nil
-    }
 }
 
 class OmniBarCell: UICollectionViewCell {
@@ -167,30 +192,4 @@ class OmniBarCell: UICollectionViewCell {
         }
     }
     
-}
-
-final class NavigationBarLayout: UICollectionViewFlowLayout {
-    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
-        guard let collectionView = self.collectionView else {
-            return super.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity: velocity)
-        }
-
-        let pageWidth = itemSize.width + minimumLineSpacing
-        let currentPage = collectionView.contentOffset.x / pageWidth
-        let nextPage = velocity.x.sign == .minus ? floor(currentPage) : ceil(currentPage)
-        let point = CGPoint(x: nextPage * pageWidth, y: proposedContentOffset.y)
-        
-        print("***", #function, currentPage, nextPage, point)
-        return point
-    }
-    
-    override func prepare() {
-        super.prepare()
-        guard let collectionView = self.collectionView else { return }
-        
-        itemSize = CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
-        minimumLineSpacing = 0
-        minimumInteritemSpacing = 0
-        scrollDirection = .horizontal
-    }
 }

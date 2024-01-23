@@ -52,8 +52,10 @@ struct SettingsSubscriptionView: View {
     private var purchaseSubscriptionView: some View {
         return Group {
             SettingsCustomCell(content: { subscriptionDescriptionView })
-            NavigationLink(destination: SubscriptionFlowView(viewModel: SubscriptionFlowViewModel(), onFeatureSelected: { _ in
-                viewModel.onAppearNavigationTarget = .netP
+            NavigationLink(destination: SubscriptionFlowView(viewModel: SubscriptionFlowViewModel(), onFeatureSelected: { value in
+                if let section = SettingsViewModel.SettingsSection(rawValue: value) {
+                       viewModel.onAppearNavigationTarget = section
+                   }
             })) {
                 SettingsCustomCell(content: { learnMoreView })
             }
@@ -68,11 +70,11 @@ struct SettingsSubscriptionView: View {
                              disclosureIndicator: true,
                              isButton: true)
             
-            NavigationLink(destination: Text("Data Broker Protection")) {
+            NavigationLink(destination: Text("Data Broker Protection"), isActive: $viewModel.shouldNavigateToDBP) {
                 SettingsCellView(label: UserText.settingsPProDBPTitle, subtitle: UserText.settingsPProDBPSubTitle)
             }
             
-            NavigationLink(destination: Text("Identity Theft Restoration")) {
+            NavigationLink(destination: Text("Identity Theft Restoration"), isActive: $viewModel.shouldNavigateToITP) {
                 SettingsCellView(label: UserText.settingsPProITRTitle, subtitle: UserText.settingsPProITRSubTitle)
             }
             

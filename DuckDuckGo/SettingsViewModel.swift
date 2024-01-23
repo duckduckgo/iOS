@@ -62,6 +62,10 @@ final class SettingsViewModel: ObservableObject {
     var onRequestPopLegacyView: (() -> Void)?
     var onRequestDismissSettings: (() -> Void)?
     
+    // SwiftUI Navigation
+    @Published var shouldNavigateToDBP = false
+    @Published var shouldNavigateToITP = false
+    
     // Subscription Entitlement names: TBD
     static let entitlementNames = ["dummy1", "dummy2", "dummy3"]
     
@@ -88,7 +92,8 @@ final class SettingsViewModel: ObservableObject {
     enum SettingsSection: String {
         case none, netP, dbp, itp
     }
-    var onAppearNavigationTarget: SettingsSection
+    @Published var onAppearNavigationTarget: SettingsSection
+    @Published var currentNavigationTarget: SettingsSection?
     
     // MARK: Bindings
     var themeBinding: Binding<ThemeName> {
@@ -415,16 +420,25 @@ extension SettingsViewModel {
 
     @MainActor
     private func navigateOnAppear() {
-        switch onAppearNavigationTarget {
-        case .netP:
+        // We need a short delay to let the SwifttUI view lifecycle complete
+        // Otherwise the transition can be inconsistent
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            switch self.onAppearNavigationTarget {
+            case .netP:
                 self.presentLegacyView(.netP)
-        case .dbp:
-            break
-        case .itp:
-            break
-        default:
-            break
+            case .dbp:
+                self.shouldNavigateToDBP = true
+            case .itp:
+                self.shouldNavigateToITP = true
+            default:
+                break
+            }
+            self.onAppearNavigationTarget = .none
         }
+    }
+    
+    func resetNavigationTarget() {
+        currentNavigationTarget = nil
     }
 
 }

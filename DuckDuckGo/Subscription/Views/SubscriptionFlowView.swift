@@ -46,7 +46,8 @@ struct SubscriptionFlowView: View {
         ZStack {
             VStack {
                 Button(action: {
-                    onFeatureSelected("vpn")
+                    dismiss()
+                    onFeatureSelected("itp")
                 }, label: { Text("tap me!!!!") })
                 AsyncHeadlessWebView(url: $viewModel.purchaseURL,
                                      userScript: viewModel.userScript,

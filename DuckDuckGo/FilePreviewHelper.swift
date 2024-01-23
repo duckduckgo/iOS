@@ -26,6 +26,8 @@ struct FilePreviewHelper {
         switch download.mimeType {
         case .passbook:
             return PassKitPreviewHelper(filePath, viewController: viewController)
+        case .multipass:
+            return ZippedPassKitPreviewHelper(filePath, viewController: viewController)
         default:
             return QuickLookPreviewHelper(filePath, viewController: viewController)
         }
@@ -33,7 +35,7 @@ struct FilePreviewHelper {
     
     static func canAutoPreviewMIMEType(_ mimeType: MIMEType) -> Bool {
         switch mimeType {
-        case .passbook:
+        case .passbook, .multipass:
             return UIDevice.current.userInterfaceIdiom == .phone
 
         case .reality, .usdz, .calendar:

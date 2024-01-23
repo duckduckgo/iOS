@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1705334213687,
+    "version": 1705931475791,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -264,6 +264,9 @@
                     "domain": "tuc.org.uk"
                 },
                 {
+                    "domain": "newsmax.com"
+                },
+                {
                     "domain": "earth.google.com"
                 },
                 {
@@ -283,7 +286,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "0e798c688c53c17c989fa3a41b8c9f65"
+            "hash": "b082ab4a63d22eb4eafee199c52b1c61"
         },
         "autofill": {
             "exceptions": [
@@ -1091,9 +1094,13 @@
         },
         "customUserAgent": {
             "settings": {
-                "defaultPolicy": "closest",
+                "defaultPolicy": "brand",
                 "ddgFixedSites": [],
                 "ddgDefaultSites": [
+                    {
+                        "domain": "chase.com",
+                        "reason": "Login issues"
+                    },
                     {
                         "domain": "duckduckgo.com",
                         "reason": "Internal exclusion to roll out experiment"
@@ -1102,12 +1109,16 @@
                 "closestUserAgent": {
                     "versions": []
                 },
-                "omitApplicationSites": [],
+                "omitApplicationSites": [
+                    {
+                        "domain": "chase.com"
+                    }
+                ],
                 "omitVersionSites": []
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "0f937241a1692188edfa86eb1d098d06"
+            "hash": "9461d22c4f0a25b30a46cc53c0718a32"
         },
         "dbp": {
             "state": "disabled",
@@ -4839,6 +4850,7 @@
                                 "rule": "c.amazon-adsystem.com/aax2/apstag.js",
                                 "domains": [
                                     "applesfera.com",
+                                    "inquirer.com",
                                     "thesurfersview.com",
                                     "wildrivers.lostcoastoutpost.com"
                                 ]
@@ -4867,6 +4879,17 @@
                                 "rule": "elb.amazonaws.com/public/digital-experience/js/common.js",
                                 "domains": [
                                     "cigna.com"
+                                ]
+                            }
+                        ]
+                    },
+                    "anyclip.com": {
+                        "rules": [
+                            {
+                                "rule": "player.anyclip.com/anyclip-widget/lre-widget",
+                                "domains": [
+                                    "dictionary.com",
+                                    "thesaurus.com"
                                 ]
                             }
                         ]
@@ -5339,6 +5362,7 @@
                             {
                                 "rule": "doubleclick.net/ondemand/hls/content/",
                                 "domains": [
+                                    "10play.com.au",
                                     "history.com"
                                 ]
                             },
@@ -5377,12 +5401,20 @@
                                 "domains": [
                                     "ah.nl",
                                     "applesfera.com",
+                                    "goplay.be",
                                     "nytimes.com",
                                     "realmadrid.com",
                                     "rocketnews24.com",
+                                    "stuff.co.nz",
                                     "uwbadgers.com",
                                     "wunderground.com",
                                     "youmath.it"
+                                ]
+                            },
+                            {
+                                "rule": "securepubads.g.doubleclick.net/pagead/managed/js/gpt/.*/pubads_impl.js",
+                                "domains": [
+                                    "stuff.co.nz"
                                 ]
                             },
                             {
@@ -6275,6 +6307,8 @@
                                 "domains": [
                                     "essentialpraxis.com",
                                     "kidsguide.com",
+                                    "muc-off.com",
+                                    "paria.cc",
                                     "urbanebikes.com"
                                 ]
                             },
@@ -7496,7 +7530,7 @@
                     "domain": "sundancecatalog.com"
                 }
             ],
-            "hash": "3e64e53a87c3c5a3deb156f036be273e"
+            "hash": "f918a51b5651f2e3a99945ba530f3264"
         },
         "trackingCookies1p": {
             "settings": {

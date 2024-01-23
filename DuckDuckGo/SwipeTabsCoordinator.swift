@@ -25,6 +25,8 @@ import UIKit
 
 // TODO slide the logo when in homescreen view?
 
+// TOD save preview when start dragging
+
 class SwipeTabsCoordinator: NSObject {
     
     // Set by refresh function
@@ -56,6 +58,10 @@ class SwipeTabsCoordinator: NSObject {
 // MARK: UICollectionViewDelegate
 extension SwipeTabsCoordinator: UICollectionViewDelegate {
     
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print("***", #function, indexPath)
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         print("***", #function)
     }
@@ -65,9 +71,13 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
     }
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let index = coordinator.navigationBarContainer.indexPathsForVisibleItems[0].row
-        print("***", #function, index)
-        selectTab(index)
+        print("***", #function, coordinator.navigationBarContainer.indexPathsForVisibleItems)
+        
+        let index = coordinator.navigationBarContainer.indexPathForItem(at: .init(x: coordinator.navigationBarContainer.bounds.midX,
+                                                                                  y: coordinator.navigationBarContainer.bounds.midY))?.row
+        assert(index != nil)
+        selectTab(index ?? coordinator.navigationBarContainer.indexPathsForVisibleItems[0].row)
+        
     }
 
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {

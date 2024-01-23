@@ -9961,8 +9961,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "sam/avoid-sending-first-latency-measurement-as-pixel";
-				kind = branch;
+				kind = exactVersion;
+				version = 101.2.1;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

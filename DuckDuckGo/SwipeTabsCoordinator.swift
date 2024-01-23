@@ -21,7 +21,9 @@ import UIKit
 
 // TODO handle new tab
 
-// TODO current tab being not first index
+// TODO handle iPad
+
+// TODO slide the logo when in homescreen view?
 
 class SwipeTabsCoordinator: NSObject, UICollectionViewDataSource, UICollectionViewDelegate {
     
@@ -38,13 +40,26 @@ class SwipeTabsCoordinator: NSObject, UICollectionViewDataSource, UICollectionVi
         self.tabPreviewsSource = tabPreviewsSource
         self.selectTab = selectTab
         coordinator.navigationBarContainer.register(OmniBarCell.self, forCellWithReuseIdentifier: "omnibar")
-        coordinator.navigationBarContainer.register(NewTabCell.self, forCellWithReuseIdentifier: "newtab")
+        
+        let layout = NavigationBarLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: coordinator.superview.frame.size.width, height: coordinator.omniBar.frame.height)
+        coordinator.navigationBarContainer.setCollectionViewLayout(layout, animated: false)
     }
     
     func refresh(tabsModel: TabsModel, scrollToSelected: Bool = false) {
-        print("***", #function)
+        let scrollToItem = self.tabsModel == nil
+        print("***", #function, scrollToItem)
+                
         self.tabsModel = tabsModel
         coordinator.navigationBarContainer.reloadData()
+        
+        if scrollToItem {
+            DispatchQueue.main.async {
+                self.coordinator.navigationBarContainer.scrollToItem(at: .init(row: tabsModel.currentIndex, section: 0),
+                                                                at: .centeredHorizontally, animated: false)
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -62,10 +77,10 @@ class SwipeTabsCoordinator: NSObject, UICollectionViewDataSource, UICollectionVi
         } else {
             let tab = tabsModel.get(tabAt: indexPath.row)
             cell.omniBar = OmniBar.loadFromXib()
+            cell.omniBar?.translatesAutoresizingMaskIntoConstraints = false
             cell.omniBar?.startBrowsing()
             cell.omniBar?.refreshText(forUrl: tab.link?.url)
             cell.omniBar?.decorate(with: ThemeManager.shared.currentTheme)
-            cell.omniBar?.frame = coordinator.omniBar.frame
         }
         
         return cell
@@ -154,43 +169,28 @@ class OmniBarCell: UICollectionViewCell {
     
 }
 
-class NewTabCell: UICollectionViewCell {
-    static let identifier = "AddCell"
+final class NavigationBarLayout: UICollectionViewFlowLayout {
+    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+        guard let collectionView = self.collectionView else {
+            return super.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity: velocity)
+        }
 
-    private let addButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("+ Add", for: .normal)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 5
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupButton()
+        let pageWidth = itemSize.width + minimumLineSpacing
+        let currentPage = collectionView.contentOffset.x / pageWidth
+        let nextPage = velocity.x.sign == .minus ? floor(currentPage) : ceil(currentPage)
+        let point = CGPoint(x: nextPage * pageWidth, y: proposedContentOffset.y)
+        
+        print("***", #function, currentPage, nextPage, point)
+        return point
     }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func setupButton() {
-        contentView.addSubview(addButton)
-        addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
-
-        // Auto Layout Constraints
-        let padding: CGFloat = 10
-        NSLayoutConstraint.activate([
-            addButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: padding),
-            addButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -padding),
-            addButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
-            addButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding)
-        ])
-    }
-
-    @objc private func addButtonTapped() {
-        // Handle the add button tap event
-        print("Add button tapped")
+    
+    override func prepare() {
+        super.prepare()
+        guard let collectionView = self.collectionView else { return }
+        
+        itemSize = CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
+        minimumLineSpacing = 0
+        minimumInteritemSpacing = 0
+        scrollDirection = .horizontal
     }
 }

@@ -158,6 +158,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 params[PixelParameters.wireguardErrorCode] = String(code)
             case .noAuthTokenFound:
                 pixelEvent = .networkProtectionNoAuthTokenFoundError
+            case .vpnAccessRevoked:
+                return
             case .unhandledError(function: let function, line: let line, error: let error):
                 pixelEvent = .networkProtectionUnhandledError
                 params[PixelParameters.function] = function
@@ -214,7 +216,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    tokenStore: tokenStore,
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
-                   settings: settings)
+                   settings: settings,
+                   isEntitlementValid: { await AccountManager().hasEntitlement(for: "dummy1") })
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
         observeStatusChanges()

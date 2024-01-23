@@ -3,6 +3,8 @@ name: Nightly Test and Deploy
 on:
   schedule:
     - cron: '0 2 * * *' # Run at 2 AM UTC
+    push:
+      branches: [ "sam/**" ]
 
 jobs:
   atb-ui-tests:

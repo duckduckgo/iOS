@@ -43,13 +43,10 @@ struct SubscriptionFlowView: View {
     
     var body: some View {
         ZStack {
-            VStack {
-                AsyncHeadlessWebView(url: $viewModel.purchaseURL,
-                                     userScript: viewModel.userScript,
-                                     subFeature: viewModel.subFeature,
-                                     shouldReload: $viewModel.shouldReloadWebView).background()
-            }
-            
+            AsyncHeadlessWebView(url: $viewModel.purchaseURL,
+                                 userScript: viewModel.userScript,
+                                 subFeature: viewModel.subFeature,
+                                 shouldReload: $viewModel.shouldReloadWebView).background()
 
             // Overlay that appears when transaction is in progress
             if viewModel.transactionStatus != .idle {

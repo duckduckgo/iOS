@@ -36,18 +36,33 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     // State variables
     var purchaseURL = URL.purchaseSubscription
+    
+    // Closure passed to navigate to a specific section
+    // after returning to settings
+    var onFeatureSelected: ((SettingsViewModel.SettingsSection) -> Void)
+    
+    enum FeatureName {
+        static let netP = "vpn"
+        static let itp = "identity-theft-restoration"
+        static let dbp = "personal-information-removal"
+    }
+    
+    
+    // Published properties
     @Published var hasActiveSubscription = false
     @Published var transactionStatus: SubscriptionPagesUseSubscriptionFeature.TransactionStatus = .idle
     @Published var shouldReloadWebView = false
     @Published var activatingSubscription = false
-    @Published var showDismissView = false
+    @Published var shouldDismissView = false
         
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
-         purchaseManager: PurchaseManager = PurchaseManager.shared) {
+         purchaseManager: PurchaseManager = PurchaseManager.shared,
+         onFeatureSelected: @escaping ((SettingsViewModel.SettingsSection) -> Void)) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.purchaseManager = purchaseManager
+        self.onFeatureSelected = onFeatureSelected
     }
     
     // Observe transaction status
@@ -78,11 +93,45 @@ final class SubscriptionFlowViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
+        subFeature.$selectedFeature
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                if value != nil {
+                    self?.shouldDismissView = true
+                    switch value?.feature {
+                    case FeatureName.netP:
+                        self?.onFeatureSelected(.netP)
+                    case FeatureName.itp:
+                        self?.onFeatureSelected(.itp)
+                    case FeatureName.dbp:
+                        self?.onFeatureSelected(.dbp)
+                    default:
+                        return
+                    }
+                    
+                    
+                }
+            }
+            .store(in: &cancellables)
+  
     }
     
     @MainActor
     private func setTransactionStatus(_ status: SubscriptionPagesUseSubscriptionFeature.TransactionStatus) {
         self.transactionStatus = status
+    }
+    
+    private func getFeatureName(feature: String) -> SettingsViewModel.SettingsSection {
+        switch feature {
+        case "vpn":
+            return .netP
+        case "identity-theft-protection":
+            return .itp
+        case "data-broker-protection":
+            return .dbp
+        default:
+            return .none
+        }
     }
     
     func initializeViewData() async {

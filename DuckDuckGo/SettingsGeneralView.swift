@@ -34,7 +34,7 @@ struct SettingsGeneralView: View {
                              action: { viewModel.presentLegacyView(.addToDock) },
                              isButton: true)
             
-            NavigationLink(destination: WidgetEducationView()) {
+            NavigationLink(destination: WidgetEducationView(), isActive: $viewModel.shouldNavigateAddWidget) {
                 SettingsCellView(label: UserText.settingsAddWidget)
             }
         }

@@ -62,7 +62,8 @@ final class SettingsViewModel: ObservableObject {
     var onRequestPopLegacyView: (() -> Void)?
     var onRequestDismissSettings: (() -> Void)?
     
-    // SwiftUI Navigation
+    // SwiftUI Navigation Variables
+    @Published var shouldNavigateAddWidget = false
     @Published var shouldNavigateToDBP = false
     @Published var shouldNavigateToITP = false
     
@@ -88,12 +89,10 @@ final class SettingsViewModel: ObservableObject {
     var shouldShowNoMicrophonePermissionAlert: Bool = false
     
     // Used to automatically navigate on Appear to a specific section
-    // Add more cases as needed
     enum SettingsSection: String {
         case none, netP, dbp, itp
     }
     @Published var onAppearNavigationTarget: SettingsSection
-    @Published var currentNavigationTarget: SettingsSection?
     
     // MARK: Bindings
     var themeBinding: Binding<ThemeName> {
@@ -435,10 +434,6 @@ extension SettingsViewModel {
             }
             self.onAppearNavigationTarget = .none
         }
-    }
-    
-    func resetNavigationTarget() {
-        currentNavigationTarget = nil
     }
 
 }

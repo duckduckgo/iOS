@@ -47,16 +47,14 @@ struct SettingsSubscriptionView: View {
             .daxBodyRegular()
             .foregroundColor(Color.init(designSystemColor: .accent))
     }
-    
-    
+     
     private var purchaseSubscriptionView: some View {
         return Group {
             SettingsCustomCell(content: { subscriptionDescriptionView })
-            NavigationLink(destination: SubscriptionFlowView(viewModel: SubscriptionFlowViewModel(), onFeatureSelected: { value in
-                if let section = SettingsViewModel.SettingsSection(rawValue: value) {
-                       viewModel.onAppearNavigationTarget = section
-                   }
-            })) {
+            let viewModel = SubscriptionFlowViewModel(onFeatureSelected: { value in
+                self.viewModel.onAppearNavigationTarget = value
+            })
+            NavigationLink(destination: SubscriptionFlowView(viewModel: viewModel)) {
                 SettingsCustomCell(content: { learnMoreView })
             }
         }

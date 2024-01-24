@@ -27,7 +27,6 @@ struct SubscriptionFlowView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var viewModel: SubscriptionFlowViewModel
     @State private var isAlertVisible = false
-    var onFeatureSelected: ((String) -> Void)
     
     private func getTransactionStatus() -> String {
         switch viewModel.transactionStatus {
@@ -45,10 +44,6 @@ struct SubscriptionFlowView: View {
     var body: some View {
         ZStack {
             VStack {
-                Button(action: {
-                    dismiss()
-                    onFeatureSelected("itp")
-                }, label: { Text("tap me!!!!") })
                 AsyncHeadlessWebView(url: $viewModel.purchaseURL,
                                      userScript: viewModel.userScript,
                                      subFeature: viewModel.subFeature,
@@ -78,7 +73,7 @@ struct SubscriptionFlowView: View {
                 isAlertVisible = true
             }
         }
-        .onChange(of: viewModel.showDismissView) { result in
+        .onChange(of: viewModel.shouldDismissView) { result in
             if result {
                 dismiss()
             }

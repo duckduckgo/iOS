@@ -25,7 +25,6 @@ final class AutoconsentManagement {
     private init() {}
     
     var sitesNotifiedCache = Set<String>()
-    var promptLastShown: Date?
     
     func clearCache() {
         dispatchPrecondition(condition: .onQueue(.main))

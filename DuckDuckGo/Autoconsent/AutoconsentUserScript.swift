@@ -24,10 +24,7 @@ import BrowserServicesKit
 import UserScript
 import PrivacyDashboard
 
-// swiftlint:disable file_length
-
 protocol AutoconsentPreferences {
-    var autoconsentPromptSeen: Bool { get set }
     var autoconsentEnabled: Bool { get set }
 }
 
@@ -35,7 +32,6 @@ extension AppUserDefaults: AutoconsentPreferences { }
 
 protocol AutoconsentUserScriptDelegate: AnyObject {
     func autoconsentUserScript(_ script: AutoconsentUserScript, didUpdateCookieConsentStatus cookieConsentStatus: CookieConsentInfo)
-    func autoconsentUserScript(_ script: AutoconsentUserScript, didRequestAskingUserForConsent completion: @escaping (Bool) -> Void)
 }
 
 protocol UserScriptWithAutoconsent: UserScript {
@@ -103,7 +99,6 @@ extension AutoconsentUserScript {
         case `init`
         case cmpDetected
         case eval
-        case popupFound
         case optOutResult
         case optInResult
         case selfTestResult
@@ -190,8 +185,6 @@ extension AutoconsentUserScript {
             handleInit(message: message, replyHandler: replyHandler)
         case MessageName.eval:
             handleEval(message: message, replyHandler: replyHandler)
-        case MessageName.popupFound:
-            handlePopupFound(message: message, replyHandler: replyHandler)
         case MessageName.optOutResult:
             handleOptOutResult(message: message, replyHandler: replyHandler)
         case MessageName.optInResult:
@@ -229,7 +222,7 @@ extension AutoconsentUserScript {
             return
         }
 
-        if preferences.autoconsentPromptSeen == true && preferences.autoconsentEnabled == false {
+        if preferences.autoconsentEnabled == false {
             // this will only happen if the user has just declined a prompt in this tab
             replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection
             return
@@ -261,10 +254,10 @@ extension AutoconsentUserScript {
             "config": [
                 "enabled": true,
                 // if it's the first time, disable autoAction
-                "autoAction": preferences.autoconsentPromptSeen ? "optOut" : nil,
+                "autoAction": "optOut",
                 "disabledCmps": disabledCMPs,
                 // the very first time (autoconsentEnabled = nil), make sure the popup is visible
-                "enablePrehide": preferences.autoconsentPromptSeen,
+                "enablePrehide": true,
                 "enableCosmeticRules": true,
                 "detectRetries": 20,
                 "isMainWorld": false
@@ -309,31 +302,7 @@ extension AutoconsentUserScript {
             replyHandler(nil, "missing frame target")
         }
     }
-    
-    @MainActor
-    func handlePopupFound(message: WKScriptMessage, replyHandler: @escaping (Any?, String?) -> Void) {
-        guard preferences.autoconsentPromptSeen == false else {
-            // if feature is already enabled, opt-out will happen automatically
-            replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection
-            return
-        }
-        
-        os_log("Prompting user about autoconsent", log: .autoconsentLog, type: .debug)
 
-        // if it's the first time, prompt the user and trigger opt-out
-        if message.webView?.window != nil {
-            ensurePrompt(callback: { shouldProceed in
-                if shouldProceed {
-                    Task {
-                        replyHandler([ "type": "optOut" ], nil)
-                    }
-                }
-            })
-        } else {
-            replyHandler(nil, "missing frame target")
-        }
-    }
-    
     @MainActor
     func handleOptOutResult(message: WKScriptMessage, replyHandler: @escaping (Any?, String?) -> Void) {
         guard let messageData: OptOutResultMessage = decodeMessageBody(from: message.body) else {
@@ -418,24 +387,6 @@ extension AutoconsentUserScript {
         os_log("self-test result: %s", log: .autoconsentLog, type: .debug, String(describing: messageData))
         refreshDashboardState(consentManaged: true, cosmetic: nil, optoutFailed: false, selftestFailed: messageData.result)
         replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection
-    }
-
-    @MainActor
-    func ensurePrompt(callback: @escaping (Bool) -> Void) {
-        let now = Date.init()
-        guard management.promptLastShown == nil || now > management.promptLastShown!.addingTimeInterval(1) else {
-            // user said "not now" recently, don't bother asking
-            os_log("Have a recent user response, canceling prompt", log: .autoconsentLog, type: .debug)
-            callback(preferences.autoconsentEnabled) // if two prompts were scheduled from the same tab, result could be true
-            return
-        }
-
-        management.promptLastShown = now
-        self.delegate?.autoconsentUserScript(self, didRequestAskingUserForConsent: { result in
-            self.preferences.autoconsentEnabled = result
-            self.preferences.autoconsentPromptSeen = true
-            callback(result)
-        })
     }
 }
 

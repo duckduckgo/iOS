@@ -2219,38 +2219,6 @@ extension TabViewController: AutoconsentUserScriptDelegate {
     func autoconsentUserScript(_ script: AutoconsentUserScript, didUpdateCookieConsentStatus cookieConsentStatus: PrivacyDashboard.CookieConsentInfo) {
         privacyInfo?.cookieConsentManaged = cookieConsentStatus
     }
-    
-    // Disabled temporarily as a result of https://app.asana.com/0/1203936086921904/1204496002772588/f
-    private var cookieConsentDaxDialogPresentationAllowed: Bool { false }
-
-    func autoconsentUserScript(_ script: AutoconsentUserScript, didRequestAskingUserForConsent completion: @escaping (Bool) -> Void) {
-        guard cookieConsentDaxDialogPresentationAllowed,
-              Locale.current.isRegionInEurope,
-              !isShowingFullScreenDaxDialog else { return }
-        
-        let viewModel = CookieConsentDaxDialogViewModel(okAction: {
-            completion(true)
-            Pixel.fire(pixel: .daxDialogsAutoconsentConfirmed)
-            self.dismiss(animated: true)
-        }, noAction: {
-            completion(false)
-            Pixel.fire(pixel: .daxDialogsAutoconsentCancelled)
-            self.dismiss(animated: true)
-        })
-        
-        Pixel.fire(pixel: .daxDialogsAutoconsentShown)
-        
-        showCustomDaxDialog(viewModel: viewModel)
-    }
-    
-    private func showCustomDaxDialog(viewModel: CustomDaxDialogViewModel) {
-        let daxDialog = UIHostingController(rootView: CustomDaxDialog(viewModel: viewModel), ignoreSafeArea: true)
-        daxDialog.modalPresentationStyle = .overFullScreen
-        daxDialog.modalTransitionStyle = .crossDissolve
-        daxDialog.view.backgroundColor = .clear
-
-        present(daxDialog, animated: true)
-    }
 }
 
 // MARK: - AdClickAttributionLogicDelegate

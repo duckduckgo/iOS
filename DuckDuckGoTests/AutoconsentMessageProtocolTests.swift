@@ -135,26 +135,6 @@ final class AutoconsentMessageProtocolTests: XCTestCase {
         )
         waitForExpectations(timeout: 15.0)
     }
-
-    @MainActor
-    func testPopupFoundNoPromptIfEnabled() {
-        let expect = expectation(description: "tt")
-        let message = MockWKScriptMessage(name: "popupFound", body: [
-            "type": "popupFound",
-            "cmp": "some cmp",
-            "url": "some url"
-        ])
-        userScript.handleMessage(
-            replyHandler: {(msg: Any?, _: String?) in
-                expect.fulfill()
-                XCTAssertEqual(self.replyToJson(msg: msg!), """
-                {"type":"ok"}
-                """)
-            },
-            message: message
-        )
-        waitForExpectations(timeout: 1.0)
-    }
 }
 
 class MockWKScriptMessage: WKScriptMessage {

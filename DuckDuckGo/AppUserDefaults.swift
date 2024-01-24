@@ -291,7 +291,7 @@ public class AppUserDefaults: AppSettings {
     @UserDefaultsWrapper(key: .autoconsentPromptSeen, defaultValue: false)
     var autoconsentPromptSeen: Bool
     
-    @UserDefaultsWrapper(key: .autoconsentEnabled, defaultValue: false)
+    @UserDefaultsWrapper(key: .autoconsentEnabled, defaultValue: true)
     var autoconsentEnabled: Bool
 
     var inspectableWebViewEnabled: Bool {

@@ -157,6 +157,11 @@ class AppUserDefaultsTests: XCTestCase {
         XCTAssertEqual(appUserDefaults.autofillCredentialsEnabled, false)
     }
 
+    func testDefaultAutoconsentStateIsTrue() {
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        XCTAssertTrue(appUserDefaults.autoconsentEnabled)
+    }
+
 
     // MARK: - Mock Creation
 

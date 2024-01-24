@@ -29,7 +29,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     let purchaseManager: PurchaseManager
-    
     let viewTitle = UserText.settingsPProSection
     
     private var cancellables = Set<AnyCancellable>()
@@ -46,8 +45,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
         static let itp = "identity-theft-restoration"
         static let dbp = "personal-information-removal"
     }
-    
-    
+
     // Published properties
     @Published var hasActiveSubscription = false
     @Published var transactionStatus: SubscriptionPagesUseSubscriptionFeature.TransactionStatus = .idle
@@ -117,19 +115,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     @MainActor
     private func setTransactionStatus(_ status: SubscriptionPagesUseSubscriptionFeature.TransactionStatus) {
         self.transactionStatus = status
-    }
-    
-    private func getFeatureName(feature: String) -> SettingsViewModel.SettingsSection {
-        switch feature {
-        case "vpn":
-            return .netP
-        case "identity-theft-protection":
-            return .itp
-        case "data-broker-protection":
-            return .dbp
-        default:
-            return .none
-        }
     }
     
     func initializeViewData() async {

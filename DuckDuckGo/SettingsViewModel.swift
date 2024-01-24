@@ -62,8 +62,8 @@ final class SettingsViewModel: ObservableObject {
     var onRequestPopLegacyView: (() -> Void)?
     var onRequestDismissSettings: (() -> Void)?
     
-    // SwiftUI Navigation Variables
-    @Published var shouldNavigateAddWidget = false
+    // SwiftUI Programatic Navigation Variables
+    // Add more views as needed here...    
     @Published var shouldNavigateToDBP = false
     @Published var shouldNavigateToITP = false
     
@@ -363,7 +363,6 @@ extension SettingsViewModel {
         }
     }
     #endif
-        
 }
 
 // MARK: Subscribers
@@ -443,7 +442,6 @@ extension SettingsViewModel {
 // for all existing subviews, default to UIKit based presentation until we
 // can review and migrate
 extension SettingsViewModel {
-    
     
     // swiftlint:disable:next cyclomatic_complexity
     @MainActor func presentLegacyView(_ view: SettingsLegacyViewProvider.LegacyView) {

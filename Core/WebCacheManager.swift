@@ -74,7 +74,7 @@ public class WebCacheManager {
         
         let cookies = cookieStorage.cookies
         
-        guard !cookies.isEmpty else {
+        guard !cookies.isEmpty, !cookieStorage.isConsumed else {
             completion()
             return
         }
@@ -93,9 +93,9 @@ public class WebCacheManager {
 
         DispatchQueue.global(qos: .userInitiated).async {
             group.wait()
+            cookieStorage.isConsumed = true
             
             DispatchQueue.main.async {
-                cookieStorage.clear()
                 completion()
                 
                 if cookieStorage.cookies.count > 0 {
@@ -162,7 +162,7 @@ public class WebCacheManager {
                                 logins: PreserveLogins,
                                 storeIdManager: DataStoreIdManager,
                                 completion: @escaping () -> Void) {
-
+        
         guard let containerId = storeIdManager.id else {
             completion()
             return
@@ -181,11 +181,8 @@ public class WebCacheManager {
             await checkForLeftBehindDataStores()
 
             storeIdManager.allocateNewContainerId()
-            // If cookies is empty it's likely that the webview was not used since the last fire button so
-            //  don't overwrite previously saved cookies
-            if let cookies, !cookies.isEmpty {
-                cookieStorage.cookies = cookies
-            }
+            
+            cookieStorage.updateCookies(cookies ?? [], keepingPreservedLogins: logins)
 
             completion()
         }
@@ -208,7 +205,7 @@ public class WebCacheManager {
                     // From this point onwards... use containers
                     dataStoreIdManager.allocateNewContainerId()
                     Task { @MainActor in
-                        cookieStorage.cookies = cookies
+                        cookieStorage.updateCookies(cookies, keepingPreservedLogins: logins)
                         completion()
                     }
                 } else {

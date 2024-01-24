@@ -21,6 +21,7 @@ import Foundation
 
 enum MIMEType: String {
     case passbook = "application/vnd.apple.pkpass"
+    case multipass = "application/vnd.apple.pkpasses"
     case usdz = "model/vnd.usdz+zip"
     case reality = "model/vnd.reality"
     case octetStream = "application/octet-stream"

@@ -80,7 +80,9 @@ public final class AppStorePurchaseFlow {
                     if case let .success(accessToken) = await accountManager.exchangeAuthTokenToAccessToken(response.authToken),
                        case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
                         accountManager.storeAuthToken(token: response.authToken)
-                        accountManager.storeAccount(token: accessToken, email: accountDetails.email, externalID: accountDetails.externalID)
+                        accountManager.storeAccount(token: accessToken,
+                                                    email: accountDetails.email,
+                                                    externalID: accountDetails.externalID)
                     }
                 case .failure:
                     return .failure(.accountCreationFailed)
@@ -104,7 +106,7 @@ public final class AppStorePurchaseFlow {
     @discardableResult
     public static func completeSubscriptionPurchase() async -> Result<PurchaseUpdate, AppStorePurchaseFlow.Error> {
 
-        let result = await checkForEntitlements(wait: 2.0, retry: 30)
+        let result = await checkForEntitlements(wait: 2.0, retry: 10)
 
         return result ? .success(PurchaseUpdate(type: "completed")) : .failure(.missingEntitlements)
     }

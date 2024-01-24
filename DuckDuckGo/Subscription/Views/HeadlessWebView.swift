@@ -44,6 +44,8 @@ struct HeadlessWebview: UIViewRepresentable {
             webView.load(URLRequest(url: url))
         }
         
+        webView.uiDelegate = context.coordinator
+        
         
 #if DEBUG
         if #available(iOS 16.4, *) {
@@ -80,8 +82,35 @@ struct HeadlessWebview: UIViewRepresentable {
         return userContentController
     }
     
-    class Coordinator: NSObject {
+    class Coordinator: NSObject, WKUIDelegate {
         var webView: WKWebView?
+        
+        private func topMostViewController() -> UIViewController? {
+            var topController: UIViewController? = UIApplication.shared.windows.filter { $0.isKeyWindow }
+                .first?
+                .rootViewController
+            while let presentedViewController = topController?.presentedViewController {
+                topController = presentedViewController
+            }
+            return topController
+        }
+
+        // MARK: WKUIDelegate
+        
+        // Enables presenting Javascript alerts via the native layer (window.confirm())
+        func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String,
+                     initiatedByFrame frame: WKFrameInfo,
+                     completionHandler: @escaping (Bool) -> Void) {
+            let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel, handler: { _ in completionHandler(false) }))
+            alertController.addAction(UIAlertAction(title: UserText.actionOK, style: .default, handler: { _ in completionHandler(true) }))
+
+            if let topController = topMostViewController() {
+                topController.present(alertController, animated: true, completion: nil)
+            } else {
+                completionHandler(false)
+            }
+        }
     }
 }
 

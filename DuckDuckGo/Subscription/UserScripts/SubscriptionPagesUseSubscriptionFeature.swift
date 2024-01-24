@@ -67,6 +67,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     @Published var hasActiveSubscription = false
     @Published var purchaseError: AppStorePurchaseFlow.Error?
     @Published var activateSubscription: Bool = false
+    @Published var emailActivationComplete: Bool = false
     
     var broker: UserScriptMessageBroker?
 
@@ -141,7 +142,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             case .success(let subscriptionOptions):
                 return subscriptionOptions
             case .failure:
-                
+                os_log(.info, log: .subscription, "Failed to obtain subscription options")
                 return nil
             }
                         
@@ -206,6 +207,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
             accountManager.storeAuthToken(token: authToken)
             accountManager.storeAccount(token: accessToken, email: accountDetails.email, externalID: accountDetails.externalID)
+        } else {
+            os_log(.info, log: .subscription, "Failed to obtain subscription options")
         }
 
         return nil
@@ -216,8 +219,10 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         if let accessToken = accountManager.accessToken,
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
             accountManager.storeAccount(token: accessToken, email: accountDetails.email, externalID: accountDetails.externalID)
+            emailActivationComplete = true
+        } else {
+            os_log(.info, log: .subscription, "Failed to restore subscription from Email")
         }
-
         return nil
     }
 

@@ -217,12 +217,6 @@ struct UserAgent {
             return ddgFixedLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
         }
 
-        if DefaultVariantManager().isSupported(feature: .fixedUserAgent) {
-            return ddgFixedLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
-        } else if DefaultVariantManager().isSupported(feature: .closestUserAgent) {
-            return closestLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
-        }
-
         switch defaultPolicy(forConfig: privacyConfig) {
         case .ddg: return oldLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
         case .ddgFixed: return ddgFixedLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)

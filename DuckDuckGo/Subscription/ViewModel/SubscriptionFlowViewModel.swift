@@ -29,24 +29,38 @@ final class SubscriptionFlowViewModel: ObservableObject {
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     let purchaseManager: PurchaseManager
-    
     let viewTitle = UserText.settingsPProSection
     
     private var cancellables = Set<AnyCancellable>()
     
     // State variables
     var purchaseURL = URL.purchaseSubscription
+    
+    // Closure passed to navigate to a specific section
+    // after returning to settings
+    var onFeatureSelected: ((SettingsViewModel.SettingsSection) -> Void)
+    
+    enum FeatureName {
+        static let netP = "vpn"
+        static let itp = "identity-theft-restoration"
+        static let dbp = "personal-information-removal"
+    }
+
+    // Published properties
     @Published var hasActiveSubscription = false
     @Published var transactionStatus: SubscriptionPagesUseSubscriptionFeature.TransactionStatus = .idle
-    @Published var shouldReloadWebview = false
+    @Published var shouldReloadWebView = false
     @Published var activatingSubscription = false
+    @Published var shouldDismissView = false
         
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
-         purchaseManager: PurchaseManager = PurchaseManager.shared) {
+         purchaseManager: PurchaseManager = PurchaseManager.shared,
+         onFeatureSelected: @escaping ((SettingsViewModel.SettingsSection) -> Void)) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.purchaseManager = purchaseManager
+        self.onFeatureSelected = onFeatureSelected
     }
     
     // Observe transaction status
@@ -76,6 +90,26 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 }
             }
             .store(in: &cancellables)
+        
+        subFeature.$selectedFeature
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                if value != nil {
+                    self?.shouldDismissView = true
+                    switch value?.feature {
+                    case FeatureName.netP:
+                        self?.onFeatureSelected(.netP)
+                    case FeatureName.itp:
+                        self?.onFeatureSelected(.itp)
+                    case FeatureName.dbp:
+                        self?.onFeatureSelected(.dbp)
+                    default:
+                        return
+                    }
+                }
+            }
+            .store(in: &cancellables)
+  
     }
     
     @MainActor
@@ -85,13 +119,13 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     func initializeViewData() async {
         await self.setupTransactionObserver()
-        await MainActor.run { shouldReloadWebview = true }
+        await MainActor.run { shouldReloadWebView = true }
     }
     
     func restoreAppstoreTransaction() {
         Task {
             if await subFeature.restoreAccountFromAppStorePurchase() {
-                await MainActor.run { shouldReloadWebview = true }
+                await MainActor.run { shouldReloadWebView = true }
             } else {
                 await MainActor.run {
                 }

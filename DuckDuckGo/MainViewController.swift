@@ -1567,6 +1567,10 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
+        if let currentTab {
+            viewCoordinator.omniBar.refreshText(forUrl: currentTab.url, forceFullURL: true)
+        }
+
         guard homeController == nil else { return }
         
         if !skipSERPFlow, isSERPPresented, let query = omniBar.textField.text {
@@ -1577,6 +1581,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onTextFieldDidBeginEditing(_ omniBar: OmniBar) -> Bool {
+
         let selectQueryText = !(isSERPPresented && !skipSERPFlow)
         skipSERPFlow = false
         

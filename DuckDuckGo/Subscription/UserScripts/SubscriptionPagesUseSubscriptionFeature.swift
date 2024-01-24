@@ -63,10 +63,16 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         case idle, purchasing, restoring, polling
     }
     
+    struct FeatureSelection: Codable {
+        let feature: String
+    }
+        
     @Published var transactionStatus: TransactionStatus = .idle
     @Published var hasActiveSubscription = false
     @Published var purchaseError: AppStorePurchaseFlow.Error?
     @Published var activateSubscription: Bool = false
+    @Published var emailActivationComplete: Bool = false
+    @Published var selectedFeature: FeatureSelection?
     
     var broker: UserScriptMessageBroker?
 
@@ -141,7 +147,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             case .success(let subscriptionOptions):
                 return subscriptionOptions
             case .failure:
-                
+                os_log(.info, log: .subscription, "Failed to obtain subscription options")
                 return nil
             }
                         
@@ -206,6 +212,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
             accountManager.storeAuthToken(token: authToken)
             accountManager.storeAccount(token: accessToken, email: accountDetails.email, externalID: accountDetails.externalID)
+        } else {
+            os_log(.info, log: .subscription, "Failed to obtain subscription options")
         }
 
         return nil
@@ -216,8 +224,10 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         if let accessToken = accountManager.accessToken,
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
             accountManager.storeAccount(token: accessToken, email: accountDetails.email, externalID: accountDetails.externalID)
+            emailActivationComplete = true
+        } else {
+            os_log(.info, log: .subscription, "Failed to restore subscription from Email")
         }
-
         return nil
     }
 
@@ -227,14 +237,11 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func featureSelected(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        struct FeatureSelection: Codable {
-            let feature: String
-        }
-
         guard let featureSelection: FeatureSelection = DecodableHelper.decode(from: params) else {
             assertionFailure("SubscriptionPagesUserScript: expected JSON representation of FeatureSelection")
             return nil
         }
+        selectedFeature = featureSelection
         
         return nil
     }

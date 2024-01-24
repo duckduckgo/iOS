@@ -23,9 +23,6 @@ import WebKit
 @testable import Core
 
 final class FireButtonReferenceTests: XCTestCase {
-    private var referenceTests = [Test]()
-    private let preservedLogins = PreserveLogins.shared
-    private let dataStore = WKWebsiteDataStore.default()
 
     private enum Resource {
         static let tests = "privacy-reference-tests/storage-clearing/tests.json"
@@ -36,19 +33,6 @@ final class FireButtonReferenceTests: XCTestCase {
         // swiftlint:disable:next force_try
         return try! JSONDecoder().decode(TestData.self, from: testJSON)
     }()
-
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
-        
-        // Remove fireproofed sites
-        for site in testData.fireButtonFireproofing.fireproofedSites {
-            let sanitizedSite = sanitizedSite(site)
-            os_log("Removing %s from fireproofed sites", sanitizedSite)
-            PreserveLogins.shared.remove(domain: sanitizedSite)
-        }
-        
-        referenceTests.removeAll()
-    }
     
     private func sanitizedSite(_ site: String) -> String {
         let url: URL
@@ -60,67 +44,42 @@ final class FireButtonReferenceTests: XCTestCase {
         return url.host!
     }
 
-    func testFireproofing() throws {
-        // Setup fireproofed sites
+    func testCookieStorage() {
+        let preservedLogins = PreserveLogins.shared
+        preservedLogins.clearAll()
+        
         for site in testData.fireButtonFireproofing.fireproofedSites {
             let sanitizedSite = sanitizedSite(site)
             os_log("Adding %s to fireproofed sites", sanitizedSite)
             preservedLogins.addToAllowed(domain: sanitizedSite)
-
         }
-       
-        referenceTests = testData.fireButtonFireproofing.tests.filter {
+        
+        let referenceTests = testData.fireButtonFireproofing.tests.filter {
             $0.exceptPlatforms.contains("ios-browser") == false
         }
-        
-        let testsExecuted = expectation(description: "tests executed")
-        testsExecuted.expectedFulfillmentCount = referenceTests.count
-
-        runReferenceTests(onTestExecuted: testsExecuted)
-        waitForExpectations(timeout: 30, handler: nil)
-    }
-    
-    private func runReferenceTests(onTestExecuted: XCTestExpectation) {
-        guard let test = referenceTests.popLast() else {
-            return
-        }
-        
-        guard let cookie = cookie(for: test) else {
-            XCTFail("Cookie should exist for test \(test.name)")
-            return
-        }
-        
-        dataStore.cookieStore?.setCookie(cookie, completionHandler: {
             
-            let dataStoreIdManager = DataStoreIdManager()
-            WebCacheManager.shared.clear(logins: self.preservedLogins, dataStoreIdManager: dataStoreIdManager) {
-
-                self.dataStore.cookieStore?.getAllCookies { hotCookies in
-                    let testCookie = hotCookies.filter { $0.name == test.cookieName }.first
-                    
-                    if test.expectCookieRemoved {
-                        XCTAssertNil(testCookie, "Cookie should not exist for test: \(test.name)")
-                    } else {
-                        XCTAssertNotNil(testCookie, "Cookie should exist for test: \(test.name)")
-                    }
-                    
-                    
-                    // Remove all cookies from this test
-                    let group = DispatchGroup()
-                    for cookie in hotCookies {
-                        group.enter()
-                        self.dataStore.cookieStore?.delete(cookie, completionHandler: {
-                            group.leave()
-                        })
-                    }
-                    
-                    group.notify(queue: .main) {
-                        onTestExecuted.fulfill()
-                        self.runReferenceTests(onTestExecuted: onTestExecuted)
-                    }
-                }
+        let cookieStorage = CookieStorage()
+        for test in referenceTests {
+            guard let cookie = cookie(for: test) else {
+                XCTFail("Cookie should exist for test \(test.name)")
+                return
             }
-        })
+            
+            cookieStorage.updateCookies([
+                cookie
+            ], keepingPreservedLogins: preservedLogins)
+            
+            let testCookie = cookieStorage.cookies.filter { $0.name == test.cookieName }.first
+
+            if test.expectCookieRemoved {
+                XCTAssertNil(testCookie, "Cookie should not exist for test: \(test.name)")
+            } else {
+                XCTAssertNotNil(testCookie, "Cookie should exist for test: \(test.name)")
+            }
+            
+            // Reset cache
+            cookieStorage.cookies = []
+        }
     }
     
     private func cookie(for test: Test) -> HTTPCookie? {

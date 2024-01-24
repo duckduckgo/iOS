@@ -114,6 +114,8 @@ public class CookieStorage {
         }
         
         persistedCookiesByDomain.keys.forEach {
+            guard $0 != "duckduckgo.com" else { return } // DDG cookies are for SERP settings only
+            
             if !preservedLogins.isAllowed(cookieDomain: $0) {
                 persistedCookiesByDomain.removeValue(forKey: $0)
             }

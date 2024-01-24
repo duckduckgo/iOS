@@ -23,7 +23,6 @@ import UserScript
 import SwiftUI
 import DesignResourcesKit
 import Core
-// Noop
 
 struct HeadlessWebview: UIViewRepresentable {
     let userScript: UserScriptMessaging

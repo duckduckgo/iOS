@@ -108,8 +108,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
                     default:
                         return
                     }
-                    
-                    
                 }
             }
             .store(in: &cancellables)

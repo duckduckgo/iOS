@@ -38,6 +38,47 @@ public class CookieStorageTests: XCTestCase {
         logins.clearAll()
     }
     
+    func testWhenUpdatedThenCookiesWithFutureExpirationAreNotRemoved() {
+        storage.updateCookies([
+            make("test.com", name: "x", value: "1", expires: .distantFuture),
+        ], keepingPreservedLogins: logins)
+
+        storage.updateCookies([
+            make("example.com", name: "x", value: "1"),
+        ], keepingPreservedLogins: logins)
+
+        XCTAssertEqual(2, storage.cookies.count)
+        XCTAssertTrue(storage.cookies.contains(where: { $0.domain == "test.com" }))
+        XCTAssertTrue(storage.cookies.contains(where: { $0.domain == "example.com" }))
+
+    }
+    
+    func testWhenUpdatingThenExistingExpiredCookiesAreRemoved() {
+        storage.cookies = [
+            make("test.com", name: "x", value: "1", expires: Date(timeIntervalSinceNow: -100)),
+        ]
+        XCTAssertEqual(1, storage.cookies.count)
+
+        storage.updateCookies([
+            make("example.com", name: "x", value: "1"),
+        ], keepingPreservedLogins: logins)
+
+        XCTAssertEqual(1, storage.cookies.count)
+        XCTAssertFalse(storage.cookies.contains(where: { $0.domain == "test.com" }))
+        XCTAssertTrue(storage.cookies.contains(where: { $0.domain == "example.com" }))
+
+    }
+    
+    func testWhenExpiredCookieIsAddedThenItIsNotPersisted() {
+
+        storage.updateCookies([
+            make("example.com", name: "x", value: "1", expires: Date(timeIntervalSinceNow: -100)),
+        ], keepingPreservedLogins: logins)
+
+        XCTAssertEqual(0, storage.cookies.count)
+
+    }
+    
     func testWhenUpdatedThenNoLongerPreservedDomainsAreCleared() {
         storage.updateCookies([
             make("test.com", name: "x", value: "1"),
@@ -118,13 +159,14 @@ public class CookieStorageTests: XCTestCase {
         XCTAssertTrue(storage.cookies.contains(where: { $0.domain == "test.com" && $0.name == "y" && $0.value == "3" }))
     }
     
-    func make(_ domain: String, name: String, value: String) -> HTTPCookie {
+    func make(_ domain: String, name: String, value: String, expires: Date? = nil) -> HTTPCookie {
         logins.addToAllowed(domain: domain)
         return HTTPCookie(properties: [
             .domain: domain,
             .name: name,
             .value: value,
-            .path: "/"
+            .path: "/",
+            .expires: expires as Any
         ])!
     }
     

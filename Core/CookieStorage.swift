@@ -38,7 +38,8 @@ public class CookieStorage {
         }
     }
     
-    private(set) var cookies: [HTTPCookie] {
+    /// Use the `updateCookies` function rather than the setter which is only visible for testing.
+    var cookies: [HTTPCookie] {
         get {
             var storedCookies = [HTTPCookie]()
             if let cookies = userDefaults.object(forKey: Keys.allowedCookies) as? [[String: Any?]] {
@@ -118,7 +119,9 @@ public class CookieStorage {
             }
         }
 
+        let now = Date()
         self.cookies = persistedCookiesByDomain.map { $0.value }.joined().compactMap { $0 }
+            .filter { $0.expiresDate == nil || $0.expiresDate! > now }
         
         return diagnosticResult
     }

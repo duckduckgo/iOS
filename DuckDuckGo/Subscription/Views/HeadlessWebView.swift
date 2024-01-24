@@ -37,7 +37,7 @@ struct HeadlessWebview: UIViewRepresentable {
         let webView = WKWebView(frame: .zero, configuration: configuration)
         DefaultUserAgentManager.shared.update(webView: webView, isDesktop: false, url: url)
         
-        // Just add time if you need to hook the webview debugger
+        // Just add time if you need to hook the WebView debugger
         DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
             webView.load(URLRequest(url: url))
         }

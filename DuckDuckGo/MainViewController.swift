@@ -857,8 +857,13 @@ class MainViewController: UIViewController {
     func select(tabAt index: Int) {
         viewCoordinator.navigationBarContainer.alpha = 1
         allowContentUnderflow = false
-        let tab = tabManager.select(tabAt: index)
-        select(tab: tab)
+        
+        if tabManager.model.tabs.indices.contains(index) {
+            let tab = tabManager.select(tabAt: index)
+            select(tab: tab)
+        } else {
+            assertionFailure("Invalid index selected")
+        }
     }
 
     fileprivate func select(tab: TabViewController) {

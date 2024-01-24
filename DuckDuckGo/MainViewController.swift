@@ -137,6 +137,8 @@ class MainViewController: UIViewController {
     
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
+        
+    private var keyboardHeight: CGFloat = 0.0
 
     required init?(coder: NSCoder) {
         fatalError("Use init?(code:")
@@ -475,7 +477,7 @@ class MainViewController: UIViewController {
         height = intersection.height
 
         findInPageBottomLayoutConstraint.constant = height
-        currentTab?.webView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+        keyboardHeight = height
 
         if let suggestionsTray = suggestionTrayController {
             let suggestionsFrameInView = suggestionsTray.view.convert(suggestionsTray.contentFrame, to: view)
@@ -640,7 +642,7 @@ class MainViewController: UIViewController {
             guard let tab = tabManager.current(createIfNeeded: true) else {
                 fatalError("Unable to create tab")
             }
-            addToView(tab: tab)
+            attachTab(tab: tab)
             refreshControls()
         } else {
             attachHomeScreen()
@@ -700,7 +702,7 @@ class MainViewController: UIViewController {
         controller.chromeDelegate = self
         controller.delegate = self
 
-        addToView(controller: controller)
+        addToContentContainer(controller: controller)
 
         refreshControls()
         syncService.scheduler.requestSyncImmediately()
@@ -849,7 +851,7 @@ class MainViewController: UIViewController {
     private func addTab(url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) {
         let tab = tabManager.add(url: url, inheritedAttribution: inheritedAttribution)
         dismissOmniBar()
-        addToView(tab: tab)
+        attachTab(tab: tab)
     }
 
     func select(tabAt index: Int) {
@@ -863,7 +865,7 @@ class MainViewController: UIViewController {
         if tab.link == nil {
             attachHomeScreen()
         } else {
-            addToView(tab: tab)
+            attachTab(tab: tab)
             refreshControls()
         }
         tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
@@ -872,18 +874,23 @@ class MainViewController: UIViewController {
         }
     }
 
-    private func addToView(tab: TabViewController) {
+    private func attachTab(tab: TabViewController) {
         removeHomeScreen()
         updateFindInPage()
         currentTab?.progressWorker.progressBar = nil
         currentTab?.chromeDelegate = nil
-        addToView(controller: tab)
+            
+        addToContentContainer(controller: tab)
+
+        viewCoordinator.logoContainer.isHidden = true
+        
         tab.progressWorker.progressBar = viewCoordinator.progress
         chromeManager.attach(to: tab.webView.scrollView)
         tab.chromeDelegate = self
     }
 
-    private func addToView(controller: UIViewController) {
+    private func addToContentContainer(controller: UIViewController) {
+        viewCoordinator.contentContainer.isHidden = false
         addChild(controller)
         viewCoordinator.contentContainer.subviews.forEach { $0.removeFromSuperview() }
         viewCoordinator.contentContainer.addSubview(controller.view)
@@ -1273,8 +1280,9 @@ extension MainViewController: FindInPageViewDelegate {
     func done(findInPageView: FindInPageView) {
         currentTab?.findInPage = nil
         viewCoordinator.toolbar.accessibilityElementsHidden = false
+
+        viewCoordinator.showNavigationBarWithBottomPosition()
     }
-    
 }
 
 extension MainViewController: BrowserChromeDelegate {
@@ -1313,21 +1321,21 @@ extension MainViewController: BrowserChromeDelegate {
         let updateBlock = {
             self.updateToolbarConstant(percent)
             self.updateNavBarConstant(percent)
-            
+          
             self.view.layoutIfNeeded()
             
-            self.viewCoordinator.omniBar.alpha = percent
+            self.viewCoordinator.navigationBarContainer.alpha = percent
             self.viewCoordinator.tabBarContainer.alpha = percent
             self.viewCoordinator.toolbar.alpha = percent
         }
-        
+           
         if animated {
             UIView.animate(withDuration: ChromeAnimationConstants.duration, animations: updateBlock)
         } else {
             updateBlock()
         }
     }
-
+    
     func setNavigationBarHidden(_ hidden: Bool) {
         if hidden { hideKeyboard() }
         
@@ -1335,6 +1343,7 @@ extension MainViewController: BrowserChromeDelegate {
         viewCoordinator.omniBar.alpha = hidden ? 0 : 1
         viewCoordinator.tabBarContainer.alpha = hidden ? 0 : 1
         viewCoordinator.statusBackground.alpha = hidden ? 0 : 1
+        
     }
     
     var canHideBars: Bool {
@@ -1502,6 +1511,10 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
+        if let currentTab {
+            viewCoordinator.omniBar.refreshText(forUrl: currentTab.url, forceFullURL: true)
+        }
+
         guard homeController == nil else { return }
         
         if !skipSERPFlow, isSERPPresented, let query = omniBar.textField.text {
@@ -1512,6 +1525,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onTextFieldDidBeginEditing(_ omniBar: OmniBar) -> Bool {
+
         let selectQueryText = !(isSERPPresented && !skipSERPFlow)
         skipSERPFlow = false
         
@@ -1692,7 +1706,7 @@ extension MainViewController: TabDelegate {
             guard self.tabManager.model.tabs.contains(newTab.tabModel) else { return }
 
             self.dismissOmniBar()
-            self.addToView(tab: newTab)
+            self.attachTab(tab: newTab)
             self.refreshOmniBar()
         }
 
@@ -1801,6 +1815,8 @@ extension MainViewController: TabDelegate {
     func tabDidRequestFindInPage(tab: TabViewController) {
         updateFindInPage()
         _ = findInPageView?.becomeFirstResponder()
+
+        viewCoordinator.hideNavigationBarWithBottomPosition()
     }
 
     func closeFindInPage(tab: TabViewController) {
@@ -1908,6 +1924,7 @@ extension MainViewController: TabSwitcherDelegate {
         hideSuggestionTray()
         tabManager.remove(at: index)
         updateCurrentTab()
+        tabsBarController?.refresh(tabsModel: tabManager.model)
     }
 
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController) {

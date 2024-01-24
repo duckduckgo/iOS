@@ -236,7 +236,7 @@ extension MainViewController {
                                                             appSettings: appSettings,
                                                             bookmarksDatabase: bookmarksDatabase)
                         
-        let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider)
+        let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider, accountManager: AccountManager())
         let settingsController = SettingsHostingController(viewModel: settingsViewModel, viewProvider: legacyViewProvider)
         settingsController.applyTheme(ThemeManager.shared.currentTheme)
         
@@ -245,6 +245,8 @@ extension MainViewController {
         navController.applyTheme(ThemeManager.shared.currentTheme)
         settingsController.modalPresentationStyle = .automatic
 
+        settingsController.isModalInPresentation = true
+        
         present(navController, animated: true) {
             completion?(settingsViewModel)
         }

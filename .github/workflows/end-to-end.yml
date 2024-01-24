@@ -7,7 +7,7 @@ on:
 jobs:
   end-to-end-tests:
     name: End to end Tests
-    runs-on: macos-13
+    runs-on: macos-13-xlarge
 
     steps:
     - name: Check out the code
@@ -40,34 +40,38 @@ jobs:
       run: |
         set -o pipefail && xcodebuild \
           -scheme "DuckDuckGo" \
-          -destination "platform=iOS Simulator,name=iPhone 14,OS=16.4" \
+          -destination "platform=iOS Simulator,name=iPhone 15,OS=17.2" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
+          ONLY_ACTIVE_ARCH=NO \
         | tee xcodebuild.log
 
     - name: Release tests
-      uses: mobile-dev-inc/action-maestro-cloud@v1.4.1
+      uses: mobile-dev-inc/action-maestro-cloud@v1.8.0
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
         app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
         workspace: .maestro
         include-tags: release
+        ios-version: 17
 
     - name: Privacy tests
-      uses: mobile-dev-inc/action-maestro-cloud@v1.4.1
+      uses: mobile-dev-inc/action-maestro-cloud@v1.8.0
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
         app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
         workspace: .maestro
         include-tags: privacy
+        ios-version: 17
     
     - name: Ad Click Detection Flow tests
-      uses: mobile-dev-inc/action-maestro-cloud@v1.4.1
+      uses: mobile-dev-inc/action-maestro-cloud@v1.8.0
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
         app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
         workspace: .maestro
         include-tags: adClick
+        ios-version: 17
 
     - name: Create Asana task when workflow failed
       if: ${{ failure() }}
@@ -76,7 +80,7 @@ jobs:
           --header "Accept: application/json" \
           --header "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
           --header "Content-Type: application/json" \
-          --data ' { "data": { "name": "GH Workflow Failure - End to end tests", "workspace": "${{ vars.GH_ASANA_WORKSPACE_ID }}", "projects": [ "${{ vars.GH_ASANA_IOS_APP_PROJECT_ID }}" ], "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}" } }'
+          --data ' { "data": { "name": "GH Workflow Failure - End to end tests", "workspace": "${{ vars.GH_ASANA_WORKSPACE_ID }}", "projects": [ "${{ vars.GH_ASANA_IOS_APP_PROJECT_ID }}" ], "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}. For instructions on how to handle the failure(s), check https://app.asana.com/0/0/1206423571874502/f" } }'
 
     - name: Upload logs when workflow failed
       uses: actions/upload-artifact@v4

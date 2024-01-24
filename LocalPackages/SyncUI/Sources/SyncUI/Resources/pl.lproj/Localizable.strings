@@ -1,264 +1,273 @@
 /* Standard Buttons - Back Button */
-"back.button" = "Back";
+"back.button" = "Wstecz";
 
 /* Sync Paused Errors - Bookmarks Limit Exceeded Action */
-"bookmarks.limit.exceeded.action" = "Manage Bookmarks";
+"bookmarks.limit.exceeded.action" = "Zarządzaj zakładkami";
 
 /* Sync Paused Errors - Bookmarks Limit Exceeded Description */
-"bookmarks.limit.exceeded.description" = "Bookmark limit exceeded. Delete some to resume syncing.";
+"bookmarks.limit.exceeded.description" = "Przekroczono limit zakładek. Usuń niektóre, aby wznowić synchronizację.";
 
 /* Camera View - Go to Settings Button */
-"camera.go.to.settings.button" = "Go to Settings";
+"camera.go.to.settings.button" = "Przejdź do ustawień";
 
 /* Camera View - Unavailable Title */
-"camera.is.unavailable.title" = "Camera is Unavailable";
+"camera.is.unavailable.title" = "Aparat jest niedostępny";
 
 /* Camera View - Permission Instructions */
-"camera.permission.instructions" = "Please go to your device's settings and grant permission for this app to access your camera.";
+"camera.permission.instructions" = "Przejdź do ustawień urządzenia i zezwól tej aplikacji na dostęp do aparatu.";
 
 /* Camera View - Permission Required */
-"camera.permission.required" = "Camera Permission is Required";
+"camera.permission.required" = "Wymagane jest uprawnienie do aparatu";
 
 /* Camera View - Point Camera Indication */
-"camera.point.camera.indication" = "Point camera at QR code to sync";
+"camera.point.camera.indication" = "Skieruj aparat na kod QR, aby zsynchronizować";
+
+/* No comment provided by engineer. */
+"Cancel" = "Anuluj";
 
 /* Standard Buttons - Cancel Button */
-"cancel.button" = "Cancel";
+"cancel.button" = "Anuluj";
 
 /* Connect With Server Sheet - Button */
-"connect.with.server.sheet.button" = "Turn on Sync & Backup";
+"connect.with.server.sheet.button" = "Włącz synchronizację i kopię zapasową";
 
 /* Connect With Server Sheet - Description Part 1 */
-"connect.with.server.sheet.description.part1" = "This creates an encrypted backup of your bookmarks and passwords on DuckDuckGo’s secure server, which can be synced with your other devices.";
+"connect.with.server.sheet.description.part1" = "Tworzy na bezpiecznym serwerze DuckDuckGo zaszyfrowaną kopię zapasową zakładek i haseł, którą można zsynchronizować z innymi urządzeniami.";
 
 /* Connect With Server Sheet - Description Part 2 */
-"connect.with.server.sheet.description.part2" = "The encryption key is only stored on your device, DuckDuckGo cannot access it.";
+"connect.with.server.sheet.description.part2" = "Klucz szyfrowania jest przechowywany tylko na urządzeniu użytkownika, DuckDuckGo nie może uzyskać do niego dostępu.";
 
 /* Connect With Server Sheet - Footer */
-"connect.with.server.sheet.footer" = "You can sync with your other devices later.";
+"connect.with.server.sheet.footer" = "Możesz później przeprowadzić synchronizację z innymi urządzeniami.";
 
 /* Connect With Server Sheet - Title */
-"connect.with.server.sheet.title" = "PLPL Sync and Back Up This Device";
+"connect.with.server.sheet.title" = "Synchronizuj i twórz kopie zapasowe tego urządzenia";
 
 /* Sync Paused Errors - Credentials Limit Exceeded Action */
-"credentials.limit.exceeded.action" = "Manage Logins";
+"credentials.limit.exceeded.action" = "Zarządzaj loginami";
 
 /* Sync Paused Errors - Credentials Limit Exceeded Description */
-"credentials.limit.exceeded.description" = "Logins limit exceeded. Delete some to resume syncing.";
+"credentials.limit.exceeded.description" = "Przekroczono limit loginów. Usuń niektóre, aby wznowić synchronizację.";
 
 /* Delete Server Data - Button */
-"delete.server.data" = "Turn Off and Delete Server Data...";
+"delete.server.data" = "Wyłącz i usuń dane serwera...";
+
+/* No comment provided by engineer. */
+"Dev environment" = "Środowisko programisty";
 
 /* Device SyncedSheet - Title */
-"device.synced.sheet.title" = "Your Data is Synced!";
+"device.synced.sheet.title" = "Twoje dane są synchronizowane!";
 
 /* Standard Buttons - Done Button */
-"done.button" = "Done";
+"done.button" = "Gotowe";
 
 /* Edit Device View - Header */
-"edit.device.header" = "Device Name";
+"edit.device.header" = "Nazwa urządzenia";
 
 /* Edit Device View - Title */
-"edit.device.title" = "Edit \(name)";
+"edit.device.title" = "Edytuj %@";
 
 /* Fetch Favicons Onboarding - Button Title */
-"fetch.favicons.onboarding.button.title" = "Keep Bookmarks Icons Updated";
+"fetch.favicons.onboarding.button.title" = "Aktualizuj ikony zakładek";
 
 /* Fetch Favicons Onboarding - Message */
-"fetch.favicons.onboarding.message" = "Do you want this device to automatically download icons for any new bookmarks synced from your other devices? This will expose the download to your network any time a bookmark is synced.";
+"fetch.favicons.onboarding.message" = "Czy chcesz, aby urządzenie automatycznie pobierało ikony nowych zakładek zsynchronizowanych z innymi urządzeniami? Spowoduje to ujawnienie pobierania w Twojej sieci za każdym razem, gdy zakładka zostanie zsynchronizowana.";
 
 /* Fetch Favicons Onboarding - Title */
-"fetch.favicons.onboarding.title" = "Download Missing Icons?";
+"fetch.favicons.onboarding.title" = "Pobrać brakujące ikony?";
 
 /* Options - Fetch Favicons Description */
-"fetch.favicons.option.caption" = "Automatically download icons for your synced bookmarks. Icon downloads are exposed to your network.";
+"fetch.favicons.option.caption" = "Automatycznie pobieraj ikony dla zsynchronizowanych zakładek. Pobieranie ikon jest widoczne w Twojej sieci.";
 
 /* Options - Fetch Favicons Title */
-"fetch.favicons.option.title" = "Auto-Download Icons";
+"fetch.favicons.option.title" = "Automatyczne pobieranie ikon";
+
+/* No comment provided by engineer. */
+"Keep Development" = "Zachowaj środowisko programisty";
 
 /* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
-"manually.enter.code.instruction" = "Go to Settings > Sync & Backup > Sync With Another Device and select Sync Menu Path in the DuckDuckGo App on another synced device and paste the code here to sync this device.";
-
-/* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
-"manually.enter.code.instruction.attributed" = "Go to %1$@ and select %2$@ in the DuckDuckGo App on another synced device and paste the code here to sync this device.";
+"manually.enter.code.instruction.attributed" = "Przejdź do %1$@ i wybierz %2$@ w aplikacji DuckDuckGo na innym zsynchronizowanym urządzeniu, a następnie wklej tutaj kod, aby zsynchronizować to urządzenie.";
 
 /* Manually Enter Code View - Title */
-"manually.enter.code.title" = "Manually Enter Code";
+"manually.enter.code.title" = "Wprowadź kod ręcznie";
 
 /* Manually Enter Code View - Validating Code Action */
-"manually.enter.code.validating.code.action" = "Validating code";
+"manually.enter.code.validating.code.action" = "Sprawdzanie poprawności kodu";
 
 /* Manually Enter Code View - Validating Code Failed Action */
-"manually.enter.code.validating.code.failed.action" = "Invalid code.";
+"manually.enter.code.validating.code.failed.action" = "Nieprawidłowy kod.";
 
 /* Standard Buttons - Next Button */
-"next.button" = "Next";
+"next.button" = "Dalej";
 
 /* Standard Buttons - Not Now Button */
-"not.now.button" = "Not Now";
+"not.now.button" = "Nie teraz";
 
 /* Options - Section Header */
-"options.section.header" = "Options";
+"options.section.header" = "Opcje";
 
 /* Section header for other syncing options */
-"other.options.section.header" = "Other Options";
+"other.options.section.header" = "Inne opcje";
 
 /* Standard Buttons - Paste Button */
-"paste.button" = "Paste";
+"paste.button" = "Wklej";
 
 /* Description of rollout banner */
-"preferences.sync.rollout-banner.description" = "Sync & Backup is rolling out gradually and may not be available yet within DuckDuckGo on your other devices.";
+"preferences.sync.rollout-banner.description" = "Funkcja Synchronizacja i kopia zapasowa jest wprowadzana stopniowo i może nie być jeszcze dostępna w DuckDuckGo na innych Twoich urządzeniach.";
 
 /* Preparing To Sync Sheet - Description */
-"preparing.to.sync.sheet.description" = "Your bookmarks and passwords are being prepared to sync. This should only take a moment.";
+"preparing.to.sync.sheet.description" = "Twoje zakładki i hasła są przygotowywane do synchronizacji. To powinno zająć tylko chwilę.";
 
 /* Preparing To Sync Sheet - Footer */
-"preparing.to.sync.sheet.footer" = "Connecting…";
+"preparing.to.sync.sheet.footer" = "Łączenie...";
 
 /* Preparing To Sync Sheet - Title */
-"preparing.to.sync.sheet.title" = "Setting Up Sync and Backup";
+"preparing.to.sync.sheet.title" = "Konfigurowanie synchronizacji i kopii zapasowych";
 
 /* Link label for recovering synced data */
-"recover.synced.data.link" = "Recover Synced Data";
+"recover.synced.data.link" = "Odzyskaj zsynchronizowane dane";
 
 /* Recover Synced Data Sheet - Button */
-"recover.synced.data.sheet.button" = "Get Started";
+"recover.synced.data.sheet.button" = "Rozpocznij";
 
 /* Recover Synced Data Sheet - Description */
-"recover.synced.data.sheet.description" = "To restore your synced data, you'll need the Recovery Code you saved when you first set up Sync. This code may have been saved as a PDF on the device you originally used to set up Sync.";
+"recover.synced.data.sheet.description" = "Aby przywrócić zsynchronizowane dane, będziesz potrzebować kodu odzyskiwania zapisanego podczas pierwszej konfiguracji synchronizacji. Ten kod mógł zostać zapisany jako plik PDF na urządzeniu wykorzystanym do skonfigurowania synchronizacji.";
 
 /* Recover Synced Data Sheet - Title */
-"recover.synced.data.sheet.title" = "Recover Synced Data";
+"recover.synced.data.sheet.title" = "Odzyskaj zsynchronizowane dane";
 
 /* Remove Device View - Button */
-"remove.device.button" = "Remove Device";
+"remove.device.button" = "Usuń urządzenie";
 
 /* Remove Device View - Message */
-"remove.device.message" = "\"\(name)\" will no longer be able to access your synced data.";
+"remove.device.message" = "„%@” nie będzie już mieć dostępu do zsynchronizowanych danych.";
 
 /* Remove Device View - Title */
-"remove.device.title" = "Remove Device?";
+"remove.device.title" = "Usunąć urządzenie?";
 
 /* Save Recovery Code Sheet - Copy Code Toast */
-"save.recovery.code.code.copied.button" = "Recovery code copied to clipboard";
+"save.recovery.code.code.copied.button" = "Kod odzyskiwania skopiowany do schowka";
 
 /* Save Recovery Code Sheet - Copy Code Button */
-"save.recovery.code.copy.code.button" = "Copy Code";
+"save.recovery.code.copy.code.button" = "Skopiuj kod";
 
 /* Save Recovery Code Sheet - Save as PDF Button */
-"save.recovery.code.save.as.pdf.button" = "Save as PDF";
+"save.recovery.code.save.as.pdf.button" = "Zapisz jako PDF";
 
 /* Save Recovery Code Sheet - Description */
-"save.recovery.code.sheet.description" = "If you lose access to your devices, you will need this code to recover your synced data.";
+"save.recovery.code.sheet.description" = "Jeśli utracisz dostęp do swoich urządzeń, będziesz potrzebować tego kodu, aby odzyskać zsynchronizowane dane.";
 
 /* Save Recovery Code Sheet - Footer */
-"save.recovery.code.sheet.footer" = "Anyone with access to this code can access your synced data, so please keep it in a safe place.";
+"save.recovery.code.sheet.footer" = "Każdy, kto ma dostęp do tego kodu, może uzyskać dostęp do zsynchronizowanych danych, więc przechowuj go w bezpiecznym miejscu.";
 
 /* Save Recovery Code Sheet - Title */
-"save.recovery.code.sheet.title" = "Save Recovery Code";
+"save.recovery.code.sheet.title" = "Zapisz kod odzyskiwania";
 
 /* Save RecoveryPDF - Button */
-"save.recovery.pdf.button" = "Save Recovery PDF";
+"save.recovery.pdf.button" = "Zapisz PDF odzyskiwania";
 
 /* Save RecoveryPDF - Footer */
-"save.recovery.pdf.footer" = "If you lose your device, you will need this recovery code to restore your synced data.";
+"save.recovery.pdf.footer" = "Jeśli zgubisz swoje urządzenie, będziesz potrzebować tego kodu odzyskiwania, aby przywrócić zsynchronizowane dane.";
 
 /* Scan Or Enter Code To Recover Synced Data View - Enter Code Link */
-"scan.code.to.recover.synced.data.enter.code.link" = "Enter Text Code Manually";
+"scan.code.to.recover.synced.data.enter.code.link" = "Ręczne wprowadzanie kodu tekstowego";
 
 /* Scan Or Enter Code To Recover Synced Data View - Explanation */
-"scan.code.to.recover.synced.data.explanation" = "Scan the QR code on your Recovery PDF, or another synced device, to recover your data.";
+"scan.code.to.recover.synced.data.explanation" = "Zeskanuj kod QR na PDF odzyskiwania lub innym zsynchronizowanym urządzeniu, aby odzyskać dane.";
 
 /* Scan Or Enter Code To Recover Synced Data View - Footer */
-"scan.code.to.recover.synced.data.footer" = "Can’t Scan?";
+"scan.code.to.recover.synced.data.footer" = "Nie możesz skanować?";
 
 /* Scan Or Enter Code To Recover Synced Data View - Title */
-"scan.code.to.recover.synced.data.title" = "Recover Synced Data";
+"scan.code.to.recover.synced.data.title" = "Odzyskaj zsynchronizowane dane";
 
 /* Scan or See Code View - Footer */
-"scan.or.see.code.footer" = "Can’t Scan?";
+"scan.or.see.code.footer" = "Nie możesz skanować?";
 
 /* Scan or See Code View - Instruction */
-"scan.or.see.code.instruction" = "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync with Another Device.”";
+"scan.or.see.code.instruction" = "Wybierz kolejno Ustawienia › Synchronizacja i kopia zapasowa w przeglądarce DuckDuckGo na innym urządzeniu i wybierz opcję „Synchronizuj z innym urządzeniem”.";
 
 /* Scan or See Code View - Instruction with syncMenuPath */
-"scan.or.see.code.instruction.attributed" = "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync with Another Device.”.";
-
-/* Scan or See Code View - Instruction Part 3 */
-"scan.or.see.code.instruction.part3" = "in the DuckDuckGo Browser on another device and select ”Sync with Another Device.”";
+"scan.or.see.code.instruction.attributed" = "Przejdź do %@ w przeglądarce DuckDuckGo na innym urządzeniu i wybierz opcję „Synchronizuj z innym urządzeniem”.";
 
 /* Scan or See Code View - Manually Enter Code Link */
-"scan.or.see.code.manually.enter.code.link" = "Manually Enter Code";
+"scan.or.see.code.manually.enter.code.link" = "Wprowadź kod ręcznie";
 
 /* Scan or See Code View - Scan Code Instructions Body */
-"scan.or.see.code.scan.code.instructions.body" = "Scan this code with another device to sync.";
+"scan.or.see.code.scan.code.instructions.body" = "Zeskanuj ten kod za pomocą innego urządzenia, aby zsynchronizować.";
 
 /* Scan or See Code View - Scan Code Instructions Title */
-"scan.or.see.code.scan.code.instructions.title" = "Mobile-to-Mobile?";
+"scan.or.see.code.scan.code.instructions.title" = "Z telefonu komórkowego na telefon komórkowy?";
 
 /* Scan or See Code View - Share Code Link */
-"scan.or.see.code.share.code.link" = "Share Text Code?";
+"scan.or.see.code.share.code.link" = "Udostępnić kod tekstowy?";
 
 /* Scan or See Code View - Title */
-"scan.or.see.code.title" = "Scan QR Code";
+"scan.or.see.code.title" = "Zeskanuj kod QR";
+
+/* No comment provided by engineer. */
+"Switch to Production" = "Przełącz na produkcję";
 
 /* Link label for syncing and backing up the device */
-"sync.and.backup.this.device.link" = "PL PL Sync and Back Up This Device";
+"sync.and.backup.this.device.link" = "Synchronizuj i twórz kopie zapasowe tego urządzenia";
 
 /* Sync Paused Errors - Title */
-"sync.limit.exceeded.title" = "Sync Paused";
+"sync.limit.exceeded.title" = "Synchronizacja wstrzymana";
 
 /* Sync Menu Path */
-"sync.menu.path" = "Settings > Sync & Backup > Sync With Another Device";
+"sync.menu.path" = "Ustawienia > Synchronizacja i kopia zapasowa > Synchronizuj z innym urządzeniem";
 
 /* Sync & Backup Title */
-"sync.title" = "Sync & Backup PLPL";
+"sync.title" = "Synchronizacja i kopia zapasowa";
 
 /* Data syncing unavailable warning message */
-"sync.warning.data.syncing.disabled" = "Sorry, but Sync & Backup is currently unavailable. Please try again later.";
+"sync.warning.data.syncing.disabled" = "Niestety synchronizacja i kopia zapasowa jest obecnie niedostępna. Spróbuj ponownie później.";
 
 /* Data syncing unavailable warning message */
-"sync.warning.data.syncing.disabled.upgrade.required" = "Sorry, but Sync & Backup is no longer available in this app version. Please update DuckDuckGo to the latest version to continue.";
+"sync.warning.data.syncing.disabled.upgrade.required" = "Niestety synchronizacja i kopia zapasowa nie są już dostępne w tej wersji aplikacji. Aby kontynuować, zaktualizuj DuckDuckGo do najnowszej wersji.";
 
 /* Title of the warning message */
-"sync.warning.sync.paused" = "Sync & Backup is Paused";
+"sync.warning.sync.paused" = "Synchronizacja i kopia zapasowa jest wstrzymana";
 
 /* Title of the warning message */
-"sync.warning.sync.unavailable" = "Sync & Backup is Unavailable";
+"sync.warning.sync.unavailable" = "Synchronizacja i kopia zapasowa jest niedostępna";
 
 /* Button label for syncing with another device */
-"sync.with.another.device.button" = "Sync with Another Device";
+"sync.with.another.device.button" = "Synchronizuj z innym urządzeniem";
 
 /* Footer message for syncing with another device */
-"sync.with.another.device.footer" = "Your data is end-to-end encrypted, and DuckDuckGo does not have access to the encryption key.";
+"sync.with.another.device.footer" = "Twoje dane są kompleksowo szyfrowane, a DuckDuckGo nie ma dostępu do klucza szyfrowania.";
 
 /* Message for syncing with another device */
-"sync.with.another.device.message" = "Securely sync bookmarks and passwords between your devices.";
+"sync.with.another.device.message" = "Bezpiecznie synchronizuj zakładki i hasła między swoimi urządzeniami.";
 
 /* Title for syncing with another device */
-"sync.with.another.device.title" = "Begin Syncing";
+"sync.with.another.device.title" = "Rozpocznij synchronizację";
 
 /* Synced Devices - Section Header */
-"synced.devices.section.header" = "Synced Devices";
+"synced.devices.section.header" = "Zsynchronizowane urządzenia";
 
 /* Synced Devices - Sync with Another Device Label */
-"synced.devices.sync.with.another.device.label" = "Sync with Another Device";
+"synced.devices.sync.with.another.device.label" = "Synchronizuj z innym urządzeniem";
 
 /* Synced Devices - This Device Label */
-"synced.devices.this.device.label" = "This Device";
+"synced.devices.this.device.label" = "To urządzenie";
 
 /* Turn Sync Off - Button */
-"turn.sync.off" = "Turn Off Sync & Backup...";
+"turn.sync.off" = "Wyłącz synchronizację i kopię zapasową...";
 
 /* Turn Sync Off - Section Header */
-"turn.sync.off.section.header" = "Sync Enabled";
+"turn.sync.off.section.header" = "Synchronizacja włączona";
 
 /* Options - Unify Favorites Instruction */
-"unified.favorites.instruction" = "Use the same favorite bookmarks on all your devices. Leave off to keep mobile and desktop favorites separate.";
+"unified.favorites.instruction" = "Korzystaj z tych samych ulubionych zakładek na wszystkich swoich urządzeniach. Wyłącz, aby oddzielić ulubione elementy na urządzenia mobilne i stacjonarne.";
 
 /* Options - Unify Favorites Title */
-"unified.favorites.title" = "Unify Favorites";
+"unified.favorites.title" = "Połącz ulubione elementy na urządzeniach";
 
 /* View Text Code menu item */
-"view.text.code.menu.item" = "View Text Code";
+"view.text.code.menu.item" = "Wyświetl kod tekstowy";
+
+/* No comment provided by engineer. */
+"You're using Sync Development environment" = "Używasz środowiska synchronizacji programisty";
 

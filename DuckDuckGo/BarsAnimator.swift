@@ -84,10 +84,6 @@ class BarsAnimator {
         let ratio = calculateTransitionRatio(for: scrollView.contentOffset.y)
         delegate?.setBarsVisibility(1.0 - ratio, animated: false)
         transitionProgress = ratio
-
-        var offset = scrollView.contentOffset
-        offset.y = transitionStartPosY
-        scrollView.contentOffset = offset
     }
 
     private func transitioningAndScrolling(in scrollView: UIScrollView) {
@@ -103,10 +99,6 @@ class BarsAnimator {
 
         delegate?.setBarsVisibility(1.0 - ratio, animated: false)
         transitionProgress = ratio
-
-        var offset = scrollView.contentOffset
-        offset.y = transitionStartPosY
-        scrollView.contentOffset = offset
     }
 
     private func hiddenAndScrolling(in scrollView: UIScrollView) {
@@ -139,7 +131,12 @@ class BarsAnimator {
         let cumulativeDistance = (barsHeight * transitionProgress) + distance
         let normalizedDistance = max(cumulativeDistance, 0)
 
-        return min(normalizedDistance / barsHeight, 1.0)
+        // We used to fix the scroll position in place as the transition happened
+        //  but now the bars disappear too. This adjusts for that.
+        let transitionSpeed = 0.5
+        
+        let ratio = min(normalizedDistance / barsHeight * transitionSpeed, 1.0)
+        return ratio
     }
 
     func didFinishScrolling(in scrollView: UIScrollView, velocity: CGFloat) {

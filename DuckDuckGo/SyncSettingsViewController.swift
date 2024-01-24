@@ -81,7 +81,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
             .store(in: &cancellables)
 
         rootView.model.delegate = self
-        navigationItem.title = UserText.syncTitle
+        navigationItem.title = SyncUI.UserText.syncTitle
     }
     
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
@@ -135,7 +135,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     private func setUpFavoritesDisplayModeSwitch(_ viewModel: SyncSettingsViewModel, _ appSettings: AppSettings) {
         viewModel.isUnifiedFavoritesEnabled = appSettings.favoritesDisplayMode.isDisplayUnified
 
-        viewModel.$isUnifiedFavoritesEnabled.dropFirst()
+        viewModel.$isUnifiedFavoritesEnabled.dropFirst().removeDuplicates()
             .sink { [weak self] isEnabled in
                 appSettings.favoritesDisplayMode = isEnabled ? .displayUnified(native: .mobile) : .displayNative(.mobile)
                 NotificationCenter.default.post(name: AppUserDefaults.Notifications.favoritesDisplayModeChange, object: self)
@@ -248,7 +248,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
             self.startPolling()
             return self.connector?.code
         } catch {
-            self.handleError(SyncError.unableToSyncToServer, error: error)
+            self.handleError(SyncErrorMessage.unableToSyncToServer, error: error, event: .syncLoginError)
             return nil
         }
     }
@@ -274,7 +274,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                     return
                 }
             } catch {
-                handleError(SyncError.unableToSyncWithDevice, error: error)
+                handleError(SyncErrorMessage.unableToSyncWithDevice, error: error, event: .syncLoginError)
             }
         }
     }
@@ -292,9 +292,9 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                 return true
             } catch {
                 if self.rootView.model.isSyncEnabled {
-                    handleError(.unableToMergeTwoAccounts, error: nil)
+                    handleError(.unableToMergeTwoAccounts, error: error, event: .syncLoginExistingAccountError)
                 } else {
-                    handleError(.unableToSyncToServer, error: error)
+                    handleError(.unableToSyncToServer, error: error, event: .syncLoginError)
                 }
             }
         } else if let connectKey = syncCode.connect {
@@ -308,7 +308,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                     shouldShowSyncEnabled = false
                     rootView.model.syncEnabled(recoveryCode: recoveryCode)
                 } catch {
-                    handleError(.unableToSyncToServer, error: error)
+                    handleError(.unableToSyncToServer, error: error, event: .syncSignupError)
                 }
             }
             do {
@@ -324,7 +324,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                         }
                     }.store(in: &cancellables)
             } catch {
-                handleError(.unableToSyncWithDevice, error: error)
+                handleError(.unableToSyncWithDevice, error: error, event: .syncLoginError)
             }
 
             return true

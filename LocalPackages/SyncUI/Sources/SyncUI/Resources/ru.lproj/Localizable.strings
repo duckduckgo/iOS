@@ -1,264 +1,273 @@
 /* Standard Buttons - Back Button */
-"back.button" = "Back";
+"back.button" = "Назад";
 
 /* Sync Paused Errors - Bookmarks Limit Exceeded Action */
-"bookmarks.limit.exceeded.action" = "Manage Bookmarks";
+"bookmarks.limit.exceeded.action" = "Управление закладками";
 
 /* Sync Paused Errors - Bookmarks Limit Exceeded Description */
-"bookmarks.limit.exceeded.description" = "Bookmark limit exceeded. Delete some to resume syncing.";
+"bookmarks.limit.exceeded.description" = "Превышен лимит по количеству закладок. Удалите некоторые из них, чтобы возобновить синхронизацию.";
 
 /* Camera View - Go to Settings Button */
-"camera.go.to.settings.button" = "Go to Settings";
+"camera.go.to.settings.button" = "Открыть «Настройки»";
 
 /* Camera View - Unavailable Title */
-"camera.is.unavailable.title" = "Camera is Unavailable";
+"camera.is.unavailable.title" = "Нет доступа к камере";
 
 /* Camera View - Permission Instructions */
-"camera.permission.instructions" = "Please go to your device's settings and grant permission for this app to access your camera.";
+"camera.permission.instructions" = "Перейдите в настройки устройства и откройте приложению доступ к камере.";
 
 /* Camera View - Permission Required */
-"camera.permission.required" = "Camera Permission is Required";
+"camera.permission.required" = "Требуется доступ к камере";
 
 /* Camera View - Point Camera Indication */
-"camera.point.camera.indication" = "Point camera at QR code to sync";
+"camera.point.camera.indication" = "Чтобы выполнить синхронизацию, наведите камеру на QR-код";
+
+/* No comment provided by engineer. */
+"Cancel" = "Отменить";
 
 /* Standard Buttons - Cancel Button */
-"cancel.button" = "Cancel";
+"cancel.button" = "Отменить";
 
 /* Connect With Server Sheet - Button */
-"connect.with.server.sheet.button" = "Turn on Sync & Backup";
+"connect.with.server.sheet.button" = "Включить синхронизацию и копирование";
 
 /* Connect With Server Sheet - Description Part 1 */
-"connect.with.server.sheet.description.part1" = "This creates an encrypted backup of your bookmarks and passwords on DuckDuckGo’s secure server, which can be synced with your other devices.";
+"connect.with.server.sheet.description.part1" = "DuckDuckGo создаст зашифрованную резервную копию ваших закладок и паролей на защищенном сервере. Копию можно синхронизировать с другими устройствами.";
 
 /* Connect With Server Sheet - Description Part 2 */
-"connect.with.server.sheet.description.part2" = "The encryption key is only stored on your device, DuckDuckGo cannot access it.";
+"connect.with.server.sheet.description.part2" = "Ключ шифрования хранится только на вашем устройстве. У DuckDuckGo нет к нему доступа.";
 
 /* Connect With Server Sheet - Footer */
-"connect.with.server.sheet.footer" = "You can sync with your other devices later.";
+"connect.with.server.sheet.footer" = "Синхронизацию с другими устройствами можно выполнить позже.";
 
 /* Connect With Server Sheet - Title */
-"connect.with.server.sheet.title" = "Sync and Back Up This Device";
+"connect.with.server.sheet.title" = "Синхронизация и резервное копирование устройства";
 
 /* Sync Paused Errors - Credentials Limit Exceeded Action */
-"credentials.limit.exceeded.action" = "Manage Logins";
+"credentials.limit.exceeded.action" = "Управление логинами";
 
 /* Sync Paused Errors - Credentials Limit Exceeded Description */
-"credentials.limit.exceeded.description" = "Logins limit exceeded. Delete some to resume syncing.";
+"credentials.limit.exceeded.description" = "Превышен лимит по количеству логинов. Удалите некоторые из них, чтобы возобновить синхронизацию.";
 
 /* Delete Server Data - Button */
-"delete.server.data" = "Turn Off and Delete Server Data...";
+"delete.server.data" = "Отключить и удалить данные с сервера...";
+
+/* No comment provided by engineer. */
+"Dev environment" = "Среда разработки";
 
 /* Device SyncedSheet - Title */
-"device.synced.sheet.title" = "Your Data is Synced!";
+"device.synced.sheet.title" = "Данные синхронизированы!";
 
 /* Standard Buttons - Done Button */
-"done.button" = "Done";
+"done.button" = "Готово";
 
 /* Edit Device View - Header */
-"edit.device.header" = "Device Name";
+"edit.device.header" = "Имя устройства";
 
 /* Edit Device View - Title */
-"edit.device.title" = "Edit \(name)";
+"edit.device.title" = "Изменить устройство (%@)";
 
 /* Fetch Favicons Onboarding - Button Title */
-"fetch.favicons.onboarding.button.title" = "Keep Bookmarks Icons Updated";
+"fetch.favicons.onboarding.button.title" = "Обновлять значки закладок";
 
 /* Fetch Favicons Onboarding - Message */
-"fetch.favicons.onboarding.message" = "Do you want this device to automatically download icons for any new bookmarks synced from your other devices? This will expose the download to your network any time a bookmark is synced.";
+"fetch.favicons.onboarding.message" = "Загружать на этом устройстве значки новых закладок при синхронизации с другими устройствами? В таком случае загрузка будет видна в вашей сети при каждой синхронизации.";
 
 /* Fetch Favicons Onboarding - Title */
-"fetch.favicons.onboarding.title" = "Download Missing Icons?";
+"fetch.favicons.onboarding.title" = "Загрузить недостающие значки?";
 
 /* Options - Fetch Favicons Description */
-"fetch.favicons.option.caption" = "Automatically download icons for your synced bookmarks. Icon downloads are exposed to your network.";
+"fetch.favicons.option.caption" = "Позволяет автоматически загружать значки для синхронизированных закладок. Значки будут передаваться по вашей сети со всеми вытекающими рисками.";
 
 /* Options - Fetch Favicons Title */
-"fetch.favicons.option.title" = "Auto-Download Icons";
+"fetch.favicons.option.title" = "Автоматическая загрузка значков";
+
+/* No comment provided by engineer. */
+"Keep Development" = "Остаться на стадии разработки";
 
 /* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
-"manually.enter.code.instruction" = "Go to Settings > Sync & Backup > Sync With Another Device and select Sync Menu Path in the DuckDuckGo App on another synced device and paste the code here to sync this device.";
-
-/* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
-"manually.enter.code.instruction.attributed" = "Go to %1$@ and select %2$@ in the DuckDuckGo App on another synced device and paste the code here to sync this device.";
+"manually.enter.code.instruction.attributed" = "Откройте раздел «%1$@». Откройте путь к меню синхронизации (%2$@) в приложении DuckDuckGo на другом устройстве и вставьте код тут.";
 
 /* Manually Enter Code View - Title */
-"manually.enter.code.title" = "Manually Enter Code";
+"manually.enter.code.title" = "Ручной ввод кода";
 
 /* Manually Enter Code View - Validating Code Action */
-"manually.enter.code.validating.code.action" = "Validating code";
+"manually.enter.code.validating.code.action" = "Идет проверка кода";
 
 /* Manually Enter Code View - Validating Code Failed Action */
-"manually.enter.code.validating.code.failed.action" = "Invalid code.";
+"manually.enter.code.validating.code.failed.action" = "Введен недопустимый код.";
 
 /* Standard Buttons - Next Button */
-"next.button" = "Next";
+"next.button" = "Далее";
 
 /* Standard Buttons - Not Now Button */
-"not.now.button" = "Not Now";
+"not.now.button" = "Не сейчас";
 
 /* Options - Section Header */
-"options.section.header" = "Options";
+"options.section.header" = "Параметры";
 
 /* Section header for other syncing options */
-"other.options.section.header" = "Other Options";
+"other.options.section.header" = "Другие варианты";
 
 /* Standard Buttons - Paste Button */
-"paste.button" = "Paste";
+"paste.button" = "Вставить";
 
 /* Description of rollout banner */
-"preferences.sync.rollout-banner.description" = "Sync & Backup is rolling out gradually and may not be available yet within DuckDuckGo on your other devices.";
+"preferences.sync.rollout-banner.description" = "Внедрение функции «Синхронизация и резервное копирование» в DuckDuckGo выполняется постепенно, поэтому она доступна не на всех устройствах.";
 
 /* Preparing To Sync Sheet - Description */
-"preparing.to.sync.sheet.description" = "Your bookmarks and passwords are being prepared to sync. This should only take a moment.";
+"preparing.to.sync.sheet.description" = "Закладки и пароли готовятся к синхронизации. Это не займет много времени.";
 
 /* Preparing To Sync Sheet - Footer */
-"preparing.to.sync.sheet.footer" = "Connecting…";
+"preparing.to.sync.sheet.footer" = "Выполняется подключение...";
 
 /* Preparing To Sync Sheet - Title */
-"preparing.to.sync.sheet.title" = "Setting Up Sync and Backup";
+"preparing.to.sync.sheet.title" = "Настройка синхронизации и резервного копирования";
 
 /* Link label for recovering synced data */
-"recover.synced.data.link" = "Recover Synced Data";
+"recover.synced.data.link" = "Восстановить синхронизированные данные";
 
 /* Recover Synced Data Sheet - Button */
-"recover.synced.data.sheet.button" = "Get Started";
+"recover.synced.data.sheet.button" = "Приступим!";
 
 /* Recover Synced Data Sheet - Description */
-"recover.synced.data.sheet.description" = "To restore your synced data, you'll need the Recovery Code you saved when you first set up Sync. This code may have been saved as a PDF on the device you originally used to set up Sync.";
+"recover.synced.data.sheet.description" = "Чтобы восстановить синхронизированные данные, потребуется код восстановления, который вы сохранили при первой настройке синхронизации. Возможно, он сохранен в файле PDF на устройстве, где изначально настраивалась синхронизация.";
 
 /* Recover Synced Data Sheet - Title */
-"recover.synced.data.sheet.title" = "Recover Synced Data";
+"recover.synced.data.sheet.title" = "Восстановление синхронизованных данных";
 
 /* Remove Device View - Button */
-"remove.device.button" = "Remove Device";
+"remove.device.button" = "Удалить устройство";
 
 /* Remove Device View - Message */
-"remove.device.message" = "\"\(name)\" will no longer be able to access your synced data.";
+"remove.device.message" = "«%@» утратит доступ к синхронизированным данным.";
 
 /* Remove Device View - Title */
-"remove.device.title" = "Remove Device?";
+"remove.device.title" = "Удалить устройство?";
 
 /* Save Recovery Code Sheet - Copy Code Toast */
-"save.recovery.code.code.copied.button" = "Recovery code copied to clipboard";
+"save.recovery.code.code.copied.button" = "Код восстановления скопирован в буфер обмена";
 
 /* Save Recovery Code Sheet - Copy Code Button */
-"save.recovery.code.copy.code.button" = "Copy Code";
+"save.recovery.code.copy.code.button" = "Копировать код";
 
 /* Save Recovery Code Sheet - Save as PDF Button */
-"save.recovery.code.save.as.pdf.button" = "Save as PDF";
+"save.recovery.code.save.as.pdf.button" = "Сохранить в PDF";
 
 /* Save Recovery Code Sheet - Description */
-"save.recovery.code.sheet.description" = "If you lose access to your devices, you will need this code to recover your synced data.";
+"save.recovery.code.sheet.description" = "Если вы утратите доступ к своим устройствам, этот код позволит вам восстановить синхронизированные данные.";
 
 /* Save Recovery Code Sheet - Footer */
-"save.recovery.code.sheet.footer" = "Anyone with access to this code can access your synced data, so please keep it in a safe place.";
+"save.recovery.code.sheet.footer" = "Этот код позволяет получить доступ к вашим синхронизированным данным, поэтому храните его в надежном месте.";
 
 /* Save Recovery Code Sheet - Title */
-"save.recovery.code.sheet.title" = "Save Recovery Code";
+"save.recovery.code.sheet.title" = "Сохранение кода восстановления";
 
 /* Save RecoveryPDF - Button */
-"save.recovery.pdf.button" = "Save Recovery PDF";
+"save.recovery.pdf.button" = "Сохранить код в PDF";
 
 /* Save RecoveryPDF - Footer */
-"save.recovery.pdf.footer" = "If you lose your device, you will need this recovery code to restore your synced data.";
+"save.recovery.pdf.footer" = "Если вы потеряете свое устройство, этот код позволит вам восстановить синхронизированные данные.";
 
 /* Scan Or Enter Code To Recover Synced Data View - Enter Code Link */
-"scan.code.to.recover.synced.data.enter.code.link" = "Enter Text Code Manually";
+"scan.code.to.recover.synced.data.enter.code.link" = "Ввести текстовый код вручную";
 
 /* Scan Or Enter Code To Recover Synced Data View - Explanation */
-"scan.code.to.recover.synced.data.explanation" = "Scan the QR code on your Recovery PDF, or another synced device, to recover your data.";
+"scan.code.to.recover.synced.data.explanation" = "Чтобы восстановить данные, отсканируйте QR-код в PDF-файле для восстановления или на другом синхронизированном устройстве.";
 
 /* Scan Or Enter Code To Recover Synced Data View - Footer */
-"scan.code.to.recover.synced.data.footer" = "Can’t Scan?";
+"scan.code.to.recover.synced.data.footer" = "Нет возможности отсканировать код?";
 
 /* Scan Or Enter Code To Recover Synced Data View - Title */
-"scan.code.to.recover.synced.data.title" = "Recover Synced Data";
+"scan.code.to.recover.synced.data.title" = "Восстановление синхронизованных данных";
 
 /* Scan or See Code View - Footer */
-"scan.or.see.code.footer" = "Can’t Scan?";
+"scan.or.see.code.footer" = "Нет возможности отсканировать код?";
 
 /* Scan or See Code View - Instruction */
-"scan.or.see.code.instruction" = "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync with Another Device.”";
+"scan.or.see.code.instruction" = "Откройте раздел «Настройки» > Синхронизация и резервное копирование» в браузере DuckDuckGo на другом устройстве и выберите опцию «Синхронизировать с другим устройством».";
 
 /* Scan or See Code View - Instruction with syncMenuPath */
-"scan.or.see.code.instruction.attributed" = "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync with Another Device.”.";
-
-/* Scan or See Code View - Instruction Part 3 */
-"scan.or.see.code.instruction.part3" = "in the DuckDuckGo Browser on another device and select ”Sync with Another Device.”";
+"scan.or.see.code.instruction.attributed" = "Откройте раздел «%@» в браузере DuckDuckGo на другом устройстве и выберите вариант «Синхронизировать с другим устройством».";
 
 /* Scan or See Code View - Manually Enter Code Link */
-"scan.or.see.code.manually.enter.code.link" = "Manually Enter Code";
+"scan.or.see.code.manually.enter.code.link" = "Ввести код вручную";
 
 /* Scan or See Code View - Scan Code Instructions Body */
-"scan.or.see.code.scan.code.instructions.body" = "Scan this code with another device to sync.";
+"scan.or.see.code.scan.code.instructions.body" = "Чтобы выполнить синхронизацию, отсканируйте этот код на другом устройстве.";
 
 /* Scan or See Code View - Scan Code Instructions Title */
-"scan.or.see.code.scan.code.instructions.title" = "Mobile-to-Mobile?";
+"scan.or.see.code.scan.code.instructions.title" = "Мобильный с мобильным?";
 
 /* Scan or See Code View - Share Code Link */
-"scan.or.see.code.share.code.link" = "Share Text Code?";
+"scan.or.see.code.share.code.link" = "Поделиться текстовым кодом?";
 
 /* Scan or See Code View - Title */
-"scan.or.see.code.title" = "Scan QR Code";
+"scan.or.see.code.title" = "Сканирование QR-кода";
+
+/* No comment provided by engineer. */
+"Switch to Production" = "Переключиться на производство";
 
 /* Link label for syncing and backing up the device */
-"sync.and.backup.this.device.link" = "Sync and Back Up This Device";
+"sync.and.backup.this.device.link" = "Синхронизация и резервное копирование устройства";
 
 /* Sync Paused Errors - Title */
-"sync.limit.exceeded.title" = "Sync Paused";
+"sync.limit.exceeded.title" = "Синхронизация на паузе";
 
 /* Sync Menu Path */
-"sync.menu.path" = "Settings > Sync & Backup > Sync With Another Device";
+"sync.menu.path" = "Настройки > Синхронизация и резервное копирование > Синхронизировать с другим устройством";
 
 /* Sync & Backup Title */
-"sync.title" = "Sync & Backup";
+"sync.title" = "Синхронизация и резервное копирование";
 
 /* Data syncing unavailable warning message */
-"sync.warning.data.syncing.disabled" = "Sorry, but Sync & Backup is currently unavailable. Please try again later.";
+"sync.warning.data.syncing.disabled" = "Синхронизация и резервное копирование сейчас недоступны. Повторите попытку позже.";
 
 /* Data syncing unavailable warning message */
-"sync.warning.data.syncing.disabled.upgrade.required" = "Sorry, but Sync & Backup is no longer available in this app version. Please update DuckDuckGo to the latest version to continue.";
+"sync.warning.data.syncing.disabled.upgrade.required" = "К сожалению, функция «Синхронизация и резервное копирование» больше не работает в этой версии приложения. Чтобы продолжить, обновите DuckDuckGo до последней версии.";
 
 /* Title of the warning message */
-"sync.warning.sync.paused" = "Sync & Backup is Paused";
+"sync.warning.sync.paused" = "Синхронизация и резервное копирование на паузе";
 
 /* Title of the warning message */
-"sync.warning.sync.unavailable" = "Sync & Backup is Unavailable";
+"sync.warning.sync.unavailable" = "Функция «Синхронизация и резервное копирование» недоступна";
 
 /* Button label for syncing with another device */
-"sync.with.another.device.button" = "Sync with Another Device";
+"sync.with.another.device.button" = "Синхронизировать с другим устройством";
 
 /* Footer message for syncing with another device */
-"sync.with.another.device.footer" = "Your data is end-to-end encrypted, and DuckDuckGo does not have access to the encryption key.";
+"sync.with.another.device.footer" = "Ваши данные защищены сквозным шифрованием. У DuckDuckGo нет доступа к ключу шифрования.";
 
 /* Message for syncing with another device */
-"sync.with.another.device.message" = "Securely sync bookmarks and passwords between your devices.";
+"sync.with.another.device.message" = "Безопасная синхронизация закладок и паролей на ваших устройствах.";
 
 /* Title for syncing with another device */
-"sync.with.another.device.title" = "Begin Syncing";
+"sync.with.another.device.title" = "Начало синхронизации";
 
 /* Synced Devices - Section Header */
-"synced.devices.section.header" = "Synced Devices";
+"synced.devices.section.header" = "Синхронизированные устройства";
 
 /* Synced Devices - Sync with Another Device Label */
-"synced.devices.sync.with.another.device.label" = "Sync with Another Device";
+"synced.devices.sync.with.another.device.label" = "Синхронизировать с другим устройством";
 
 /* Synced Devices - This Device Label */
-"synced.devices.this.device.label" = "This Device";
+"synced.devices.this.device.label" = "Это устройство";
 
 /* Turn Sync Off - Button */
-"turn.sync.off" = "Turn Off Sync & Backup...";
+"turn.sync.off" = "Отключить синхронизацию и копирование...";
 
 /* Turn Sync Off - Section Header */
-"turn.sync.off.section.header" = "Sync Enabled";
+"turn.sync.off.section.header" = "Синхронизация включена";
 
 /* Options - Unify Favorites Instruction */
-"unified.favorites.instruction" = "Use the same favorite bookmarks on all your devices. Leave off to keep mobile and desktop favorites separate.";
+"unified.favorites.instruction" = "Использовать одинаковые закладки на всех устройствах. Не включайте, чтобы использовать разное избранное в мобильной и настольной версиях браузера.";
 
 /* Options - Unify Favorites Title */
-"unified.favorites.title" = "Unify Favorites";
+"unified.favorites.title" = "Одно и то же избранное на разных устройствах";
 
 /* View Text Code menu item */
-"view.text.code.menu.item" = "View Text Code";
+"view.text.code.menu.item" = "Показать текстовый код";
+
+/* No comment provided by engineer. */
+"You're using Sync Development environment" = "Вы используете среду разработки синхронизации";
 

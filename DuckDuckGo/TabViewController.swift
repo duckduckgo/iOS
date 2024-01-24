@@ -415,7 +415,16 @@ class TabViewController: UIViewController {
         webView.navigationDelegate = self
         webView.uiDelegate = self
         webViewContainer.addSubview(webView)
+        webView.scrollView.refreshControl = UIRefreshControl()
+        webView.scrollView.refreshControl?.addAction(UIAction { [weak self] _ in
+            guard let self else { return }
+            self.reload()
+            Pixel.fire(pixel: .pullToRefresh)
+        }, for: .valueChanged)
 
+        webView.scrollView.refreshControl?.backgroundColor = .systemBackground
+        webView.scrollView.refreshControl?.tintColor = .label
+                
         updateContentMode()
 
         if #available(iOS 16.4, *) {
@@ -646,6 +655,7 @@ class TabViewController: UIViewController {
     
     private func hideProgressIndicator() {
         progressWorker.didFinishLoading()
+        webView.scrollView.refreshControl?.endRefreshing()
     }
 
     public func reload() {
@@ -1142,7 +1152,12 @@ extension TabViewController: WKNavigationDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let webView = self?.webView,
                   webView.bounds.height > 0 && webView.bounds.width > 0 else { completion(nil); return }
-            UIGraphicsBeginImageContextWithOptions(webView.bounds.size, false, UIScreen.main.scale)
+            
+            let size = CGSize(width: webView.frame.size.width,
+                              height: webView.frame.size.height - webView.scrollView.contentInset.top - webView.scrollView.contentInset.bottom)
+            
+            UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
+            UIGraphicsGetCurrentContext()?.translateBy(x: 0, y: -webView.scrollView.contentInset.top)
             webView.drawHierarchy(in: webView.bounds, afterScreenUpdates: true)
             if let jsAlertController = self?.jsAlertController {
                 jsAlertController.view.drawHierarchy(in: jsAlertController.view.bounds,
@@ -1164,7 +1179,7 @@ extension TabViewController: WKNavigationDelegate {
     
     private func onWebpageDidFinishLoading() {
         os_log("webpageLoading finished", log: .generalLog, type: .debug)
-                
+        
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
 
@@ -2279,6 +2294,11 @@ extension TabViewController: Themable {
         error?.backgroundColor = theme.backgroundColor
         errorHeader.textColor = theme.barTintColor
         errorMessage.textColor = theme.barTintColor
+        
+        if let webView {
+            webView.scrollView.refreshControl?.backgroundColor = theme.mainViewBackgroundColor
+            webView.scrollView.refreshControl?.tintColor = .secondaryLabel
+        }
         
         switch theme.currentImageSet {
         case .light:

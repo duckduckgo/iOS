@@ -21,10 +21,10 @@ import Foundation
 
 // swiftlint:disable line_length
 // Localise these later, when feature is closer to exernal release
-struct UserText {
+public struct UserText {
 
     // Sync Title
-    static let syncTitle = NSLocalizedString("sync.title", bundle: Bundle.module, value: "Sync & Backup", comment: "Sync & Backup Title")
+    public static let syncTitle = NSLocalizedString("sync.title", bundle: Bundle.module, value: "Sync & Backup", comment: "Sync & Backup Title")
     static let syncRollOutBannerDescription = NSLocalizedString("preferences.sync.rollout-banner.description", bundle: Bundle.module, value: "Sync & Backup is rolling out gradually and may not be available yet within DuckDuckGo on your other devices.", comment: "Description of rollout banner")
 
     // Sync Set Up
@@ -51,7 +51,7 @@ struct UserText {
     // Synced Devices
     static let syncedDevicesSectionHeader = NSLocalizedString("synced.devices.section.header", bundle: Bundle.module, value: "Synced Devices", comment: "Synced Devices - Section Header")
     static let syncedDevicesThisDeviceLabel = NSLocalizedString("synced.devices.this.device.label", bundle: Bundle.module, value: "This Device", comment: "Synced Devices - This Device Label")
-    static let syncedDevicesSyncWithAnotherDeviceLabel = NSLocalizedString("synced.devices.sync.with.another.device.label", bundle: Bundle.module, value: "Sync with Another Device", comment: "Synced Devices - Sync with Another Device Label")
+    static let syncedDevicesSyncWithAnotherDeviceLabel = NSLocalizedString("synced.devices.sync.with.another.device.label", bundle: Bundle.module, value: "Sync With Another Device", comment: "Synced Devices - Sync with Another Device Label")
     // Options
     static let optionsSectionHeader = NSLocalizedString("options.section.header", bundle: Bundle.module, value: "Options", comment: "Options - Section Header")
     static let unifiedFavoritesTitle = NSLocalizedString("unified.favorites.title", bundle: Bundle.module, value: "Unify Favorites Across Devices", comment: "Options - Unify Favorites Title")
@@ -114,15 +114,14 @@ struct UserText {
         let localized = NSLocalizedString("manually.enter.code.instruction.attributed", bundle: Bundle.module, value: "Go to %@ and select %@ in the DuckDuckGo App on another synced device and paste the code here to sync this device.", comment: "Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted")
         return String(format: localized, syncMenuPath, menuItem)
     }
-    static let manuallyEnterCodeInstruction = NSLocalizedString("manually.enter.code.instruction", bundle: Bundle.module, value: "Go to Settings > Sync & Backup > Sync With Another Device and select Sync Menu Path in the DuckDuckGo App on another synced device and paste the code here to sync this device.", comment: "Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted")
     static let syncMenuPath = NSLocalizedString("sync.menu.path", bundle: Bundle.module, value: "Settings > Sync & Backup > Sync With Another Device", comment: "Sync Menu Path")
     static let viewTextCodeMenuItem = NSLocalizedString("view.text.code.menu.item", bundle: Bundle.module, value: "View Text Code", comment: "View Text Code menu item")
 
     // Scan or See Code View
     static let scanOrSeeCodeTitle = NSLocalizedString("scan.or.see.code.title", bundle: Bundle.module, value: "Scan QR Code", comment: "Scan or See Code View - Title")
-    static let scanOrSeeCodeInstruction = NSLocalizedString("scan.or.see.code.instruction", bundle: Bundle.module, value: "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync with Another Device.”", comment: "Scan or See Code View - Instruction")
+    static let scanOrSeeCodeInstruction = NSLocalizedString("scan.or.see.code.instruction", bundle: Bundle.module, value: "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”", comment: "Scan or See Code View - Instruction")
     static func scanOrSeeCodeInstructionAttributed(syncMenuPath: String) -> String {
-        let localized = NSLocalizedString("scan.or.see.code.instruction.attributed", bundle: Bundle.module, value: "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync with Another Device.”.", comment: "Scan or See Code View - Instruction with syncMenuPath")
+        let localized = NSLocalizedString("scan.or.see.code.instruction.attributed", bundle: Bundle.module, value: "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”.", comment: "Scan or See Code View - Instruction with syncMenuPath")
         return String(format: localized, syncMenuPath)
     }
 
@@ -130,7 +129,7 @@ struct UserText {
     static let scanOrSeeCodeScanCodeInstructionsTitle = NSLocalizedString("scan.or.see.code.scan.code.instructions.title", bundle: Bundle.module, value: "Mobile-to-Mobile?", comment: "Scan or See Code View - Scan Code Instructions Title")
     static let scanOrSeeCodeScanCodeInstructionsBody = NSLocalizedString("scan.or.see.code.scan.code.instructions.body", bundle: Bundle.module, value: "Scan this code with another device to sync.", comment: "Scan or See Code View - Scan Code Instructions Body")
     static let scanOrSeeCodeFooter = NSLocalizedString("scan.or.see.code.footer", bundle: Bundle.module, value: "Can’t Scan?", comment: "Scan or See Code View - Footer")
-    static let scanOrSeeCodeShareCodeLink = NSLocalizedString("scan.or.see.code.share.code.link", bundle: Bundle.module, value: "Share Text Code?", comment: "Scan or See Code View - Share Code Link")
+    static let scanOrSeeCodeShareCodeLink = NSLocalizedString("scan.or.see.code.share.code.link", bundle: Bundle.module, value: "Share Text Code", comment: "Scan or See Code View - Share Code Link")
 
     // Edit Device View
     static let editDeviceHeader = NSLocalizedString("edit.device.header", bundle: Bundle.module, value: "Device Name", comment: "Edit Device View - Header")

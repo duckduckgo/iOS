@@ -21,6 +21,10 @@ import BrowserServicesKit
 
 struct SettingsState {
     
+    enum SubscriptionStatus {
+        case active, inactive, unknown
+    }
+    
     struct AddressBar {
         var enabled: Bool
         var position: AddressBarPosition
@@ -36,10 +40,15 @@ struct SettingsState {
         var status: String
     }
     
-    struct PrivacyPro {
+    struct Subscription {
         var enabled: Bool
-        var canPurchaseSubscription: Bool
+        var canPurchase: Bool
         var hasActiveSubscription: Bool
+    }
+    
+    struct SyncSettings {
+        var enabled: Bool
+        var title: String
     }
     
     // Appearance properties
@@ -68,7 +77,6 @@ struct SettingsState {
         
     // Features
     var debugModeEnabled: Bool
-    var syncEnabled: Bool
     var voiceSearchEnabled: Bool
     var speechRecognitionEnabled: Bool
     var loginsEnabled: Bool
@@ -77,7 +85,10 @@ struct SettingsState {
     var networkProtection: NetworkProtection
     
     // Subscriptions Properties
-    var privacyPro: PrivacyPro
+    var subscription: Subscription
+    
+    // Sync Propertiers
+    var sync: SyncSettings
 
     static var defaults: SettingsState {
         return SettingsState(
@@ -96,12 +107,13 @@ struct SettingsState {
             activeWebsiteAccount: nil,
             version: "0.0.0.0",
             debugModeEnabled: false,
-            syncEnabled: false,
             voiceSearchEnabled: false,
             speechRecognitionEnabled: false,
             loginsEnabled: false,
             networkProtection: NetworkProtection(enabled: false, status: ""),
-            privacyPro: PrivacyPro(enabled: false, canPurchaseSubscription: false, hasActiveSubscription: false)
+            subscription: Subscription(enabled: false, canPurchase: false,
+                                   hasActiveSubscription: false),
+            sync: SyncSettings(enabled: false, title: "")
         )
     }
 }

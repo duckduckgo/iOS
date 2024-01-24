@@ -145,6 +145,9 @@
 /* Title for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-title" = "Ο συγχρονισμός κωδικών πρόσβασης έχει τεθεί σε παύση";
 
+/* Title for sync error alert */
+"alert.sync-error" = "Σφάλμα συγχρονισμού και δημιουργίας αντιγράφων ασφαλείας";
+
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Μάθετε περισσότερα";
 
@@ -165,6 +168,30 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Αποθήκευση αγαπημένου";
+
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "Αδυναμία δημιουργίας του PDF ανάκτησης.";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "Δεν είναι δυνατή η διαγραφή δεδομένων στον διακομιστή.";
+
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "Για να αντιστοιχίσετε τις συσκευές αυτές, απενεργοποιήστε τη λειτουργία Συγχρονισμός και δημιουργία αντιγράφων ασφαλείας στη μία συσκευή και έπειτα πατήστε «Συγχρονισμός με άλλη συσκευή» στην άλλη συσκευή.";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "Δεν είναι δυνατή η κατάργηση αυτής της συσκευής από τη λειτουργία Συγχρονισμός και δημιουργία αντιγράφων ασφαλείας.";
+
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Δεν είναι δυνατή η σύνδεση με τον διακομιστή.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Δεν είναι δυνατός ο συγχρονισμός με άλλη συσκευή.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "Δεν είναι δυνατή η απενεργοποίηση της λειτουργίας Συγχρονισμός και δημιουργία αντιγράφων ασφαλείας.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "Δεν είναι δυνατή η ενημέρωση του ονόματος της συσκευής.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Ξεκλείδωμα DuckDuckGo.";
@@ -1418,55 +1445,55 @@
 "network-protection.privacy-policy.title" = "Πολιτική ιδιωτικού απορρήτου";
 
 /* Title text for the Network Protection terms and conditions accept button */
-"network-protection.waitlist.agree-and-continue" = "Agree and Continue";
+"network-protection.waitlist.agree-and-continue" = "Συμφωνώ και συνεχίζω";
 
 /* Availability disclaimer for Network Protection join waitlist screen */
-"network-protection.waitlist.availability-disclaimer" = "Network Protection is free to use during early access.";
+"network-protection.waitlist.availability-disclaimer" = "Η Προστασία δικτύου παρέχεται δωρεάν για χρήση κατά την πρώιμη πρόσβαση.";
 
 /* Agree and Continue button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.agree-and-continue" = "Agree and Continue";
+"network-protection.waitlist.button.agree-and-continue" = "Συμφωνώ και συνεχίζω";
 
 /* Enable Notifications button for Network Protection joined waitlist screen */
-"network-protection.waitlist.button.enable-notifications" = "Enable Notifications";
+"network-protection.waitlist.button.enable-notifications" = "Ενεργοποίηση ειδοποιήσεων";
 
 /* Button title for users who already have an invite code */
 "network-protection.waitlist.button.existing-invite-code" = "Διαθέτω Κωδικό πρόσκλησης";
 
 /* Join Waitlist button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.join-waitlist" = "Join the Waitlist";
+"network-protection.waitlist.button.join-waitlist" = "Εγγραφείτε στη λίστα αναμονής";
 
 /* Button title text for the Network Protection waitlist confirmation prompt */
 "network-protection.waitlist.get-started" = "Ξεκινήστε";
 
 /* Subtitle for section 1 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-1.subtitle" = "Encrypt online traffic across your browsers and apps.";
+"network-protection.waitlist.invited.section-1.subtitle" = "Κρυπτογράφηση της διαδικτυακής κίνησης στα προγράμματα περιήγησης και στις εφαρμογές σας.";
 
 /* Title for section 1 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-1.title" = "Full-device coverage";
+"network-protection.waitlist.invited.section-1.title" = "Πλήρης κάλυψη συσκευών";
 
 /* Subtitle for section 2 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-2.subtitle" = "No need for a separate app. Connect in one click and see your connection status at a glance.";
+"network-protection.waitlist.invited.section-2.subtitle" = "Δεν χρειάζεται ξεχωριστή εφαρμογή. Συνδεθείτε με ένα κλικ και δείτε την κατάσταση της σύνδεσής σας με μια ματιά.";
 
 /* Title for section 2 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-2.title" = "Fast, reliable, and easy to use";
+"network-protection.waitlist.invited.section-2.title" = "Γρήγορη, αξιόπιστη και εύκολη χρήση";
 
 /* Subtitle for section 3 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-3.subtitle" = "We do not log or save any data that can connect you to your online activity.";
+"network-protection.waitlist.invited.section-3.subtitle" = "Δεν καταγράφουμε ούτε αποθηκεύουμε δεδομένα τα οποία μπορούν να σας συσχετίσουν με τη διαδικτυακή δραστηριότητά σας.";
 
 /* Title for section 3 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-3.title" = "Strict no-logging policy";
+"network-protection.waitlist.invited.section-3.title" = "Αυστηρή πολιτική μη καταγραφής";
 
 /* Subtitle for Network Protection invited screen */
-"network-protection.waitlist.invited.subtitle" = "Get an extra layer of protection online with the VPN built for speed and simplicity. Encrypt your internet connection across your entire device and hide your location and IP address from sites you visit.";
+"network-protection.waitlist.invited.subtitle" = "Αποκτήστε ένα επιπλέον επίπεδο προστασίας στο διαδίκτυο με το VPN που δημιουργήθηκε για ταχύτητα και απλότητα. Κρυπτογραφήστε τη σύνδεσή σας στο διαδίκτυο στο σύνολο της συσκευής σας και αποκρύψτε την τοποθεσία και τη διεύθυνση IP σας από τους ιστότοπους που επισκέπτεστε.";
 
 /* Title for Network Protection invited screen */
-"network-protection.waitlist.invited.title" = "You’re invited to try\nNetwork Protection early access!";
+"network-protection.waitlist.invited.title" = "Έχετε προσκληθεί να δοκιμάσετε\nπρώιμη πρόσβαση στην Προστασία δικτύου!";
 
 /* First subtitle for Network Protection join waitlist screen */
-"network-protection.waitlist.join.subtitle.1" = "Secure your connection anytime, anywhere with Network Protection, the VPN from DuckDuckGo.";
+"network-protection.waitlist.join.subtitle.1" = "Ασφαλίστε τη σύνδεσή σας οποτεδήποτε και οπουδήποτε με την Προστασία δικτύου, το VPN της DuckDuckGo.";
 
 /* Second subtitle for Network Protection join waitlist screen */
-"network-protection.waitlist.join.subtitle.2" = "Join the waitlist, and we’ll notify you when it’s your turn.";
+"network-protection.waitlist.join.subtitle.2" = "Εγγραφείτε στη λίστα αναμονής και θα σας ειδοποιήσουμε όταν έρθει η σειρά σας.";
 
 /* Title for Network Protection join waitlist screen */
 "network-protection.waitlist.join.title" = "Network Protection Early Access";
@@ -1475,28 +1502,28 @@
 "network-protection.waitlist.joined.title" = "Βρίσκεστε στη λίστα!";
 
 /* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
-"network-protection.waitlist.joined.with-notifications.subtitle.1" = "New invites are sent every few days, on a first come, first served basis.";
+"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Αποστέλλονται νέες προσκλήσεις κάθε λίγες ημέρες, με σειρά προτεραιότητας.";
 
 /* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
-"network-protection.waitlist.joined.with-notifications.subtitle.2" = "We’ll notify you when your invite is ready.";
+"network-protection.waitlist.joined.with-notifications.subtitle.2" = "Θα σας ειδοποιήσουμε όταν είναι έτοιμη η πρόσκλησή σας.";
 
 /* Body text for the alert to enable notifications */
-"network-protection.waitlist.notification-alert.description" = "We’ll send you a notification when your invite to test Network Protection is ready.";
+"network-protection.waitlist.notification-alert.description" = "Θα σας στείλουμε ειδοποίηση όταν είναι έτοιμη η πρόσκλησή σας για δοκιμή της Προστασίας δικτύου.";
 
 /* Subtitle for the alert to confirm enabling notifications */
-"network-protection.waitlist.notification-prompt-description" = "Get a notification when your copy of Network Protection early access is ready.";
+"network-protection.waitlist.notification-prompt-description" = "Λάβετε ειδοποίηση όταν το αντίγραφο της πρώιμης πρόσβασης της Προστασίας δικτύου είναι έτοιμο.";
 
 /* Title for the alert to confirm enabling notifications */
-"network-protection.waitlist.notification-prompt-title" = "Know the instant you're invited";
+"network-protection.waitlist.notification-prompt-title" = "Μάθετε ακριβώς πότε θα προσκληθείτε";
 
 /* Title for Network Protection waitlist notification */
 "network-protection.waitlist.notification.text" = "Ανοίξτε την πρόσκλησή σας";
 
 /* Title for Network Protection waitlist notification */
-"network-protection.waitlist.notification.title" = "Network Protection is ready!";
+"network-protection.waitlist.notification.title" = "Η Προστασία δικτύου είναι έτοιμη!";
 
 /* Subtitle text for the Network Protection settings row */
-"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Your invite is ready!";
+"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Η πρόσκλησή σας είναι έτοιμη!";
 
 /* Subtitle text for the Network Protection settings row */
 "network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Βρίσκεστε στη λίστα!";
@@ -1508,7 +1535,7 @@
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "You’re invited to try Network Protection";
+"network.protection.invite.dialog.title" = "Έχετε προσκληθεί να δοκιμάσετε την Προστασία δικτύου";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
@@ -1580,22 +1607,22 @@
 "network.protection.vpn.alerts.toggle.title" = "Ειδοποιήσεις VPN";
 
 /* Footer text for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.footer" = "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.";
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Επιτρέψτε στην τοπική κυκλοφορία να παρακάμψει το VPN και να συνδεθεί σε συσκευές του τοπικού δικτύου σας, όπως ένας εκτυπωτής.";
 
 /* Title for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.title" = "Exclude Local Networks";
+"network.protection.vpn.exclude.local.networks.setting.title" = "Εξαίρεση τοπικών δικτύων";
 
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
 
 /* Subtitle of countries item when there are multiple cities, example : */
-"network.protection.vpn.location.country.item.formatted.cities.count" = "%d cities";
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d πόλεις";
 
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
-"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find.";
+"network.protection.vpn.location.recommended.section.footer" = "Αυτόματη σύνδεση στον εγγύτερο διακομιστή που μπορούμε να βρούμε.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
@@ -1604,7 +1631,7 @@
 "network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
 
 /* Title for the VPN Location screen. */
-"network.protection.vpn.location.title" = "VPN Location";
+"network.protection.vpn.location.title" = "Τοποθεσία VPN";
 
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "Ειδοποιήσεις VPN";
@@ -1616,7 +1643,7 @@
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.";
+"network.protection.vpn.secure.dns.setting.footer" = "Το VPN μας χρησιμοποιεί Ασφαλές DNS για να κρατήσει τη διαδικτυακή δραστηριότητά σας ιδιωτική, ώστε ο πάροχος υπηρεσιών Διαδικτύου που χρησιμοποιείτε να μην μπορεί να δει ποιους ιστότοπους επισκέπτεστε.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Ρυθμίσεις VPN";
@@ -1816,11 +1843,14 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Πληκτρολόγιο";
 
-/* Settings screen cell text for logins */
-"settings.logins" = "Συνδέσεις";
+/* Settings screen cell text for passwords */
+"settings.logins" = "Κωδικός πρόσβασης";
 
 /* Settings title for the 'More' section */
 "settings.more" = "Περισσότερα από το DuckDuckGo";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Προεπισκοπήσεις με παρατεταμένο πάτημα";
@@ -1867,8 +1897,44 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Ποιος ιστότοπος είναι κατεστραμμένος;";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Ο κωδικός ανάκτησης αντιγράφηκε στο πρόχειρο";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Διαγραφή δεδομένων διακομιστή";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "Όλες οι συσκευές θα αποσυνδεθούν και τα συγχρονισμένα δεδομένα σας θα διαγραφούν από τον διακομιστή.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Διαγραφή δεδομένων διακομιστή;";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Αφαίρεση";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "Το «%@» δεν θα μπορεί πλέον να έχει πρόσβαση στα συγχρονισμένα δεδομένα σας.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Αφαίρεση συσκευής;";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Αφαίρεση";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "Αυτή η Συσκευή δεν θα μπορεί πλέον να έχει πρόσβαση στα συγχρονισμένα δεδομένα σας.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Απενεργοποίηση συγχρονισμού;";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Δυστυχώς, η λειτουργία Συγχρονισμός και δημιουργία αντιγράφων ασφαλείας δεν είναι διαθέσιμη προς το παρόν. Ξαναδοκιμάστε αργότερα.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Δυστυχώς, η λειτουργία Συγχρονισμός και δημιουργία αντιγράφων ασφαλείας δεν είναι διαθέσιμη πλέον σε αυτήν την έκδοση της εφαρμογής. Ενημερώστε το DuckDuckGo στην πιο πρόσφατη έκδοση για να συνεχίσετε.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "Η λειτουργία Συγχρονισμός και δημιουργία αντιγράφων ασφαλείας είναι σε παύση";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Κλείσιμο αρχικής καρτέλας";

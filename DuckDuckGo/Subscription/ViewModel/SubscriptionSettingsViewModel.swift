@@ -63,6 +63,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     func removeSubscription() {
         AccountManager().signOut()
+        ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation)
     }
     
     func manageSubscription() {

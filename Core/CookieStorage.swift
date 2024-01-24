@@ -22,16 +22,26 @@ import Foundation
 
 public class CookieStorage {
 
-    struct Constants {
-        static let key = "com.duckduckgo.allowedCookies"
+    struct Keys {
+        static let allowedCookies = "com.duckduckgo.allowedCookies"
+        static let consumed = "com.duckduckgo.consumedCookies"
     }
 
     private var userDefaults: UserDefaults
-
-    var cookies: [HTTPCookie] {
+    
+    var isConsumed: Bool {
+        get {
+            userDefaults.bool(forKey: Keys.consumed, defaultValue: false)
+        }
+        set {
+            userDefaults.set(newValue, forKey: Keys.consumed)
+        }
+    }
+    
+    private(set) var cookies: [HTTPCookie] {
         get {
             var storedCookies = [HTTPCookie]()
-            if let cookies = userDefaults.object(forKey: Constants.key) as? [[String: Any?]] {
+            if let cookies = userDefaults.object(forKey: Keys.allowedCookies) as? [[String: Any?]] {
                 for cookieData in cookies {
                     var properties = [HTTPCookiePropertyKey: Any]()
                     cookieData.forEach({
@@ -57,17 +67,59 @@ public class CookieStorage {
                 }
                 cookies.append(mappedCookie)
             }
-            userDefaults.setValue(cookies, forKey: Constants.key)
+            userDefaults.setValue(cookies, forKey: Keys.allowedCookies)
         }
+
     }
 
     public init(userDefaults: UserDefaults = UserDefaults.app) {
         self.userDefaults = userDefaults
     }
 
-    func clear() {
-        userDefaults.removeObject(forKey: Constants.key)
-        os_log("cleared cookies", log: .generalLog, type: .debug)
+    enum CookieDomainsOnUpdate {
+        case match
+        case missing
+        case different
     }
+    
+    @discardableResult
+    func updateCookies(_ cookies: [HTTPCookie]) -> CookieDomainsOnUpdate {
+        isConsumed = false
+        
+        let persisted = self.cookies
+        
+        func cookiesByDomain(_ cookies: [HTTPCookie]) -> [String: [HTTPCookie]] {
+            var byDomain = [String: [HTTPCookie]]()
+            cookies.forEach { cookie in
+                var cookies = byDomain[cookie.domain, default: []]
+                cookies.append(cookie)
+                byDomain[cookie.domain] = cookies
+            }
+            return byDomain
+        }
+        
+        let updatedCookiesByDomain = cookiesByDomain(cookies)
+        var persistedCookiesByDomain = cookiesByDomain(persisted)
+        
+        // Diagnostics
+        let updatedDomains = updatedCookiesByDomain.keys.sorted()
+        let persistedDomains = persistedCookiesByDomain.keys.sorted()
+        let result: CookieDomainsOnUpdate
+        if updatedDomains.count < persistedDomains.count {
+            result = .missing
+        } else if updatedDomains == persistedDomains {
+            result = .match
+        } else {
+            result = .different
+        }
 
+        updatedCookiesByDomain.keys.forEach {
+            persistedCookiesByDomain[$0] = updatedCookiesByDomain[$0]
+        }
+
+        self.cookies = persistedCookiesByDomain.map { $0.value }.joined().compactMap { $0 }
+        
+        return result
+    }
+     
 }

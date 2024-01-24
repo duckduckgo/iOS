@@ -87,7 +87,7 @@ struct SettingsState {
     // Subscriptions Properties
     var subscription: Subscription
     
-    // Sync Propertiers
+    // Sync Properties
     var sync: SyncSettings
 
     static var defaults: SettingsState {

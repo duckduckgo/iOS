@@ -182,9 +182,7 @@ public class WebCacheManager {
 
             storeIdManager.allocateNewContainerId()
             
-            if let cookies {
-                cookieStorage.updateCookies(cookies)
-            }
+            cookieStorage.updateCookies(cookies ?? [], keepingPreservedLogins: logins)
 
             completion()
         }
@@ -207,7 +205,7 @@ public class WebCacheManager {
                     // From this point onwards... use containers
                     dataStoreIdManager.allocateNewContainerId()
                     Task { @MainActor in
-                        cookieStorage.updateCookies(cookies)
+                        cookieStorage.updateCookies(cookies, keepingPreservedLogins: logins)
                         completion()
                     }
                 } else {

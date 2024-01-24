@@ -77,13 +77,14 @@ public class CookieStorage {
     }
 
     enum CookieDomainsOnUpdate {
+        case empty
         case match
         case missing
         case different
     }
     
     @discardableResult
-    func updateCookies(_ cookies: [HTTPCookie]) -> CookieDomainsOnUpdate {
+    func updateCookies(_ cookies: [HTTPCookie], keepingPreservedLogins preservedLogins: PreserveLogins) -> CookieDomainsOnUpdate {
         isConsumed = false
         
         let persisted = self.cookies
@@ -100,26 +101,38 @@ public class CookieStorage {
         
         let updatedCookiesByDomain = cookiesByDomain(cookies)
         var persistedCookiesByDomain = cookiesByDomain(persisted)
-        
-        // Diagnostics
-        let updatedDomains = updatedCookiesByDomain.keys.sorted()
-        let persistedDomains = persistedCookiesByDomain.keys.sorted()
-        let result: CookieDomainsOnUpdate
-        if updatedDomains.count < persistedDomains.count {
-            result = .missing
-        } else if updatedDomains == persistedDomains {
-            result = .match
-        } else {
-            result = .different
-        }
 
+        // Do the diagnostics before the dicts get changed.
+        let diagnosticResult = evaluateDomains(
+            updatedDomains: updatedCookiesByDomain.keys.sorted(),
+            persistedDomains: persistedCookiesByDomain.keys.sorted()
+        )
+        
         updatedCookiesByDomain.keys.forEach {
             persistedCookiesByDomain[$0] = updatedCookiesByDomain[$0]
+        }
+        
+        persistedCookiesByDomain.keys.forEach {
+            if !preservedLogins.isAllowed(cookieDomain: $0) {
+                persistedCookiesByDomain.removeValue(forKey: $0)
+            }
         }
 
         self.cookies = persistedCookiesByDomain.map { $0.value }.joined().compactMap { $0 }
         
-        return result
+        return diagnosticResult
+    }
+    
+    private func evaluateDomains(updatedDomains: [String], persistedDomains: [String]) -> CookieDomainsOnUpdate {
+        if persistedDomains.isEmpty {
+            return .empty
+        } else if updatedDomains.count < persistedDomains.count {
+            return .missing
+        } else if updatedDomains == persistedDomains {
+            return .match
+        } else {
+            return .different
+        }
     }
      
 }

@@ -25,6 +25,9 @@ public class CookieStorageTests: XCTestCase {
     
     var storage: CookieStorage!
     
+    // This is updated by the `make` function which preserves any cookies added as part of this test
+    let logins = PreserveLogins.shared
+    
     static let userDefaultsSuiteName = "test"
     
     public override func setUp() {
@@ -32,6 +35,24 @@ public class CookieStorageTests: XCTestCase {
         let defaults = UserDefaults(suiteName: Self.userDefaultsSuiteName)!
         defaults.removePersistentDomain(forName: Self.userDefaultsSuiteName)
         storage = CookieStorage(userDefaults: defaults)
+        logins.clearAll()
+    }
+    
+    func testWhenUpdatedThenNoLongerPreservedDomainsAreCleared() {
+        storage.updateCookies([
+            make("test.com", name: "x", value: "1"),
+            make("example.com", name: "x", value: "1"),
+        ], keepingPreservedLogins: logins)
+
+        logins.remove(domain: "test.com")
+        
+        storage.updateCookies([
+            make("example.com", name: "x", value: "1"),
+        ], keepingPreservedLogins: logins)
+        
+        XCTAssertEqual(1, storage.cookies.count)
+        XCTAssertFalse(storage.cookies.contains(where: { $0.domain == "test.com" }))
+        XCTAssertTrue(storage.cookies.contains(where: { $0.domain == "example.com" }))
     }
     
     func testWhenStorageInitialiedThenItIsEmptyAndConsumedIsFalse() {
@@ -44,14 +65,14 @@ public class CookieStorageTests: XCTestCase {
         XCTAssertTrue(storage.isConsumed)
         storage.updateCookies([
             make("test.com", name: "x", value: "1")
-        ])
+        ], keepingPreservedLogins: logins)
         XCTAssertFalse(storage.isConsumed)
     }
     
     func testWhenStorageIsReinstanciatedThenUsesStoredData() {
         storage.updateCookies([
             make("test.com", name: "x", value: "1")
-        ])
+        ], keepingPreservedLogins: logins)
         storage.isConsumed = true
 
         let otherStorage = CookieStorage(userDefaults: UserDefaults(suiteName: Self.userDefaultsSuiteName)!)
@@ -62,7 +83,7 @@ public class CookieStorageTests: XCTestCase {
     func testWhenStorageIsUpdatedThenUpdatingAddsNewCookies() {
         storage.updateCookies([
             make("test.com", name: "x", value: "1")
-        ])
+        ], keepingPreservedLogins: logins)
         XCTAssertEqual(1, storage.cookies.count)
     }
 
@@ -70,11 +91,11 @@ public class CookieStorageTests: XCTestCase {
         storage.updateCookies([
             make("test.com", name: "x", value: "1"),
             make("example.com", name: "x", value: "1"),
-        ])
+        ], keepingPreservedLogins: logins)
         
         storage.updateCookies([
             make("example.com", name: "x", value: "2"),
-        ])
+        ], keepingPreservedLogins: logins)
 
         XCTAssertEqual(2, storage.cookies.count)
         XCTAssertTrue(storage.cookies.contains(where: { $0.domain == "test.com" && $0.name == "x" && $0.value == "1" }))
@@ -84,12 +105,12 @@ public class CookieStorageTests: XCTestCase {
     func testWhenStorageHasMatchingDOmainThenUpdatingReplacesCookies() {
         storage.updateCookies([
             make("test.com", name: "x", value: "1")
-        ])
+        ], keepingPreservedLogins: logins)
 
         storage.updateCookies([
             make("test.com", name: "x", value: "2"),
             make("test.com", name: "y", value: "3"),
-        ])
+        ], keepingPreservedLogins: logins)
 
         XCTAssertEqual(2, storage.cookies.count)
         XCTAssertFalse(storage.cookies.contains(where: { $0.domain == "test.com" && $0.name == "x" && $0.value == "1" }))
@@ -98,6 +119,7 @@ public class CookieStorageTests: XCTestCase {
     }
     
     func make(_ domain: String, name: String, value: String) -> HTTPCookie {
+        logins.addToAllowed(domain: domain)
         return HTTPCookie(properties: [
             .domain: domain,
             .name: name,

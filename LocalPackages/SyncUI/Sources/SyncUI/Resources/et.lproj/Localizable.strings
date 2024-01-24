@@ -28,6 +28,9 @@
 /* Standard Buttons - Cancel Button */
 "cancel.button" = "Tühista";
 
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "Lülita sünkroonimine ja varundamine sisse";
+
 /* Connect With Server Sheet - Description Part 1 */
 "connect.with.server.sheet.description.part1" = "See loob DuckDuckGo turvalises serveris krüptitud varukoopia sinu järjehoidjatest ja paroolidest, mida saab sünkroonida sinu teiste seadmetega.";
 
@@ -51,6 +54,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Arenduskeskkond";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "Sinu andmed on sünkroonitud!";
 
 /* Standard Buttons - Done Button */
 "done.button" = "Valmis";
@@ -226,6 +232,9 @@
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Sünkroonimine ja varundamine pole saadaval";
 
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Sünkrooni teise seadmega";
+
 /* Footer message for syncing with another device */
 "sync.with.another.device.footer" = "Sinu andmed on otsast lõpuni krüptitud ja DuckDuckGo ei pääse krüpteerimisvõtmele ligi.";
 
@@ -252,6 +261,9 @@
 
 /* Options - Unify Favorites Instruction */
 "unified.favorites.instruction" = "Kasuta kõigis oma seadmetes samu lemmikjärjehoidjaid. Kui soovid mobiili ja arvuti lemmikud lahus hoida, siis ära seda sisse lülita.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Lemmikute sünkroonimine kõigis seadmetes";
 
 /* View Text Code menu item */
 "view.text.code.menu.item" = "Kuva tekstikood";

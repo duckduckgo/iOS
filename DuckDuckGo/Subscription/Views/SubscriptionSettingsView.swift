@@ -80,6 +80,7 @@ struct SubscriptionSettingsView: View {
                 }
             }
             .navigationTitle(UserText.settingsPProManageSubscription)
+            .applyInsetGroupedListStyle()
             
             // Remove subscription
             .alert(isPresented: $viewModel.shouldDisplayRemovalNotice) {

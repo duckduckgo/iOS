@@ -155,7 +155,7 @@
     {
       "identity" : "trackerradarkit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/duckduckgo/TrackerRadarKit",
+      "location" : "https://github.com/duckduckgo/TrackerRadarKit.git",
       "state" : {
         "revision" : "a6b7ba151d9dc6684484f3785293875ec01cc1ff",
         "version" : "1.2.2"
@@ -168,6 +168,15 @@
       "state" : {
         "revision" : "2d8172c11478ab11b0f5ad49bdb4f93f4b3d5e0d",
         "version" : "1.1.1"
+      }
+    },
+    {
+      "identity" : "zipfoundation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/weichsel/ZIPFoundation.git",
+      "state" : {
+        "revision" : "a3f5c2bae0f04b0bce9ef3c4ba6bd1031a0564c4",
+        "version" : "0.9.17"
       }
     }
   ],

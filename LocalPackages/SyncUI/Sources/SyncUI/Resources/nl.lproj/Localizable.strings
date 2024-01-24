@@ -28,6 +28,9 @@
 /* Standard Buttons - Cancel Button */
 "cancel.button" = "Annuleren";
 
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "'Synchronisatie en back-up' inschakelen";
+
 /* Connect With Server Sheet - Description Part 1 */
 "connect.with.server.sheet.description.part1" = "Hiermee maak je een versleutelde back-up van je bladwijzers en wachtwoorden op de beveiligde server van DuckDuckGo. Deze back-up kan met je andere apparaten worden gesynchroniseerd.";
 
@@ -51,6 +54,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Ontwikkelomgeving";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "Je gegevens zijn gesynchroniseerd!";
 
 /* Standard Buttons - Done Button */
 "done.button" = "Klaar";
@@ -226,6 +232,9 @@
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "'Synchronisatie en back-up' is niet beschikbaar";
 
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Synchroniseren met een ander apparaat";
+
 /* Footer message for syncing with another device */
 "sync.with.another.device.footer" = "Je gegevens zijn volledig versleuteld en DuckDuckGo heeft geen toegang tot de versleutelingscode.";
 
@@ -252,6 +261,9 @@
 
 /* Options - Unify Favorites Instruction */
 "unified.favorites.instruction" = "Gebruik dezelfde favoriete bladwijzers op al je apparaten. Schakel deze optie uit als je je favoriete bladwijzers niet wilt synchroniseren tussen je mobiele apparaat en pc.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Beschik over dezelfde favorieten op verschillende apparaten";
 
 /* View Text Code menu item */
 "view.text.code.menu.item" = "Tekstcode weergeven";

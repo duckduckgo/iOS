@@ -28,6 +28,9 @@
 /* Standard Buttons - Cancel Button */
 "cancel.button" = "Anuluj";
 
+/* Connect With Server Sheet - Button */
+"connect.with.server.sheet.button" = "Włącz synchronizację i kopię zapasową";
+
 /* Connect With Server Sheet - Description Part 1 */
 "connect.with.server.sheet.description.part1" = "Tworzy na bezpiecznym serwerze DuckDuckGo zaszyfrowaną kopię zapasową zakładek i haseł, którą można zsynchronizować z innymi urządzeniami.";
 
@@ -51,6 +54,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Środowisko programisty";
+
+/* Device SyncedSheet - Title */
+"device.synced.sheet.title" = "Twoje dane są synchronizowane!";
 
 /* Standard Buttons - Done Button */
 "done.button" = "Gotowe";
@@ -226,6 +232,9 @@
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Synchronizacja i kopia zapasowa jest niedostępna";
 
+/* Button label for syncing with another device */
+"sync.with.another.device.button" = "Synchronizuj z innym urządzeniem";
+
 /* Footer message for syncing with another device */
 "sync.with.another.device.footer" = "Twoje dane są kompleksowo szyfrowane, a DuckDuckGo nie ma dostępu do klucza szyfrowania.";
 
@@ -252,6 +261,9 @@
 
 /* Options - Unify Favorites Instruction */
 "unified.favorites.instruction" = "Korzystaj z tych samych ulubionych zakładek na wszystkich swoich urządzeniach. Wyłącz, aby oddzielić ulubione elementy na urządzenia mobilne i stacjonarne.";
+
+/* Options - Unify Favorites Title */
+"unified.favorites.title" = "Połącz ulubione elementy na urządzeniach";
 
 /* View Text Code menu item */
 "view.text.code.menu.item" = "Wyświetl kod tekstowy";

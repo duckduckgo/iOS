@@ -1843,8 +1843,14 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Tipkovnica";
 
+/* Settings screen cell text for passwords */
+"settings.logins" = "Gesla";
+
 /* Settings title for the 'More' section */
 "settings.more" = "Več od iskalnika DuckDuckGo";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Pregledi z dolgim pritiskom";
@@ -1891,8 +1897,35 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Katera spletna stran je poškodovana?";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Obnovitvena koda je bila kopirana v odložišče";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Izbriši podatke strežnika";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "Prekinjena bo povezava z vsemi napravami, sinhronizirani podatki pa bodo izbrisani iz strežnika.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Želite izbrisati podatke strežnika?";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Odstrani";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "Aplikacija »%@« ne bo več mogla dostopati do sinhroniziranih podatkov.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Želite odstraniti napravo?";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Odstrani";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "Ta naprava ne bo več mogla dostopati do vaših sinhroniziranih podatkov.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Želite izklopiti sinhronizacijo?";
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "Sinhronizacija in varnostno kopiranje žal trenutno nista na voljo. Poskusite znova pozneje.";

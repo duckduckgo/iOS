@@ -1843,8 +1843,14 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Klávesnica";
 
+/* Settings screen cell text for passwords */
+"settings.logins" = "Heslo";
+
 /* Settings title for the 'More' section */
 "settings.more" = "Viac od DuckDuckGo";
+
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Náhľady po dlhodobom stlačení";
@@ -1891,8 +1897,35 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Ktorá webová stránka je nefunkčná?";
 
+/* Message confirming that recovery code was copied to clipboard */
+"sync.code.copied" = "Kód obnovenia bol skopírovaný do schránky";
+
+/* Caption for a button to delete Sync server data */
+"sync.delete.all.confirm.action" = "Zmazanie údajov servera";
+
+/* Message for the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.message" = "Všetky zariadenia budú odpojené a vaše synchronizované údaje budú zmazané zo servera.";
+
+/* Title of the dialog to confirm deleting Sync server data */
+"sync.delete.all.confirm.title" = "Zmazať údaje servera?";
+
+/* Caption for a button to remove device from Sync */
+"sync.remove-device.action" = "Odstrániť";
+
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "\"%@\" už nebude mať prístup k synchronizovaným údajom.";
+
+/* Title of the dialog to remove device from Sync */
+"sync.remove-device.title" = "Odstrániť zariadenie?";
+
+/* Caption for a button to remove current device from Sync */
+"sync.turn.off.confirm.action" = "Odstrániť";
+
+/* Message for the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.message" = "Toto zariadenie už nebude mať prístup k synchronizovaným údajom.";
+
+/* Title of the dialog to confirm turning off Sync */
+"sync.turn.off.confirm.title" = "Chcete vypnúť synchronizáciu?";
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "Ľutujeme, ale synchronizácia a zálohovanie momentálne nie sú k dispozícii. Prosím, skúste to neskôr znova.";

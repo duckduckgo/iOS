@@ -1914,6 +1914,31 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Which website is broken?";
 
+/* Subscription Activation Window Title */
+"subscription.activate" = "Activate Subscription.";
+
+/* Apple ID option for activation */
+"subscription.activate.appleid" = "Apple ID";
+
+/* Description for Apple ID activation
+   Description for Email activation */
+"subscription.activate.appleid.description" = "Restore your purchase to activate your subscription on this device.";
+
+/* Subscription Activation Info */
+"subscription.activate.description" = "Access your Privacy Pro subscription on this device via Apple ID or an email address.";
+
+/* Email option for activation */
+"subscription.activate.email" = "Email";
+
+/* Restore button title for AppleID */
+"subscription.activate.restore.apple" = "Restore";
+
+/* Restore button title for Email */
+"subscription.activate.restore.email" = "Enter Email";
+
+/* Subscription Activation Title */
+"subscription.activate.title" = "Activate your subscription on this device";
+
 /* Add to another device button */
 "subscription.add.device" = "Add to Another Device";
 
@@ -1926,6 +1951,18 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* FAQ Description */
 "subscription.faq.description" = "Visit our Privacy Pro help pages for answers to frequently asked questions";
 
+/* Cancel action for the existing subscription dialog */
+"subscription.found.cancel" = "Cancel";
+
+/* Restore action for the existing subscription dialog */
+"subscription.found.restore" = "Restore";
+
+/* Message for the existing subscription dialog */
+"subscription.found.text" = "We found a subscription associated with this Apple ID.";
+
+/* Title for the existing subscription dialog */
+"subscription.found.tite" = "Subscription Found";
+
 /* Help and support Section header */
 "subscription.help" = "Help and support";
 
@@ -1934,6 +1971,15 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Manage Plan header */
 "subscription.manage.plan" = "Manage Plan";
+
+/* Alert content for not found subscription */
+"subscription.notFound.alert.message" = "The subscription associated with this Apple ID is no longer active.";
+
+/* Alert title for not found subscription */
+"subscription.notFound.alert.title" = "Subscription Not Found";
+
+/* View plans button text */
+"subscription.notFound.view.plans" = "View Plans";
 
 /* Progress view title when completing the purchase */
 "subscription.progress.view.completing.purchase" = "Completing purchase...";
@@ -1959,20 +2005,17 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Remove subscription cancel button text */
 "subscription.remove.subscription.cancel" = "Cancel";
 
+/* Alert button text for restored purchase alert */
+"subscription.restore.success.alert.button" = "OK";
+
+/* Alert message for restored purchase */
+"subscription.restore.success.alert.message" = "Your purchases have been restored.";
+
+/* Alert title for restored purchase */
+"subscription.restore.success.alert.title" = "You’re all set.";
+
 /* Subscription Expiration Data */
 "subscription.subscription.active.caption" = "Your Privacy Pro subscription renews on %@";
-
-/* Cancel action for the existing subscription dialog */
-"subscription.subscription.found.cancel" = "Cancel";
-
-/* Restore action for the existing subscription dialog */
-"subscription.subscription.found.restore" = "Restore";
-
-/* Message for the existing subscription dialog */
-"subscription.subscription.found.text" = "We found a subscription associated with this Apple ID.";
-
-/* Title for the existing subscription dialog */
-"subscription.subscription.found.tite" = "Subscription Found";
 
 /* Message confirming that recovery code was copied to clipboard */
 "sync.code.copied" = "Recovery code copied to clipboard";
@@ -2087,6 +2130,84 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Voice-search footer note with on-device privacy warning */
 "voiceSearch.footer.note" = "Audio is processed on-device. It's not stored or shared with anyone, including DuckDuckGo.";
+
+/* Title for the Cancel button of the VPN feedback form */
+"vpn.feedback-form.button.cancel" = "Cancel";
+
+/* Title for the Done button of the VPN feedback form */
+"vpn.feedback-form.button.done" = "Done";
+
+/* Title for the Submit button of the VPN feedback form */
+"vpn.feedback-form.button.submit" = "Submit";
+
+/* Title for the Submitting state of the VPN feedback form */
+"vpn.feedback-form.button.submitting" = "Submitting…";
+
+/* Title for the browser crash/freeze category of the VPN feedback form */
+"vpn.feedback-form.category.browser-crash-or-freeze" = "VPN causes browser to crash or freeze";
+
+/* Title for the 'VPN fails to connect' category of the VPN feedback form */
+"vpn.feedback-form.category.fails-to-connect" = "VPN fails to connect";
+
+/* Title for the 'VPN feature request' category of the VPN feedback form */
+"vpn.feedback-form.category.feature-request" = "VPN feature request";
+
+/* Title for the category 'VPN causes issues with other apps or websites' category of the VPN feedback form */
+"vpn.feedback-form.category.issues-with-apps" = "VPN causes issues with other apps or websites";
+
+/* Title for the local device connectivity category of the VPN feedback form */
+"vpn.feedback-form.category.local-device-connectivity" = "VPN won't let me connect to local device";
+
+/* Title for the 'other VPN feedback' category of the VPN feedback form */
+"vpn.feedback-form.category.other" = "Other VPN feedback";
+
+/* Title for the category selection state of the VPN feedback form */
+"vpn.feedback-form.category.select-category" = "Select a category";
+
+/* Title for the 'VPN is too slow' category of the VPN feedback form */
+"vpn.feedback-form.category.too-slow" = "VPN connection is too slow";
+
+/* Title for the 'unable to install' category of the VPN feedback form */
+"vpn.feedback-form.category.unable-to-install" = "Unable to install VPN";
+
+/* Action title for the alert when the VPN feedback form can't be submitted */
+"vpn.feedback-form.error.action" = "OK";
+
+/* Message for the alert when the VPN feedback form can't be submitted */
+"vpn.feedback-form.error.message" = "Failed to share your feedback. Please try again.";
+
+/* Title for the alert when the VPN feedback form can't be submitted */
+"vpn.feedback-form.error.title" = "Error";
+
+/* Title for the feedback sent view description of the VPN feedback form */
+"vpn.feedback-form.sending-confirmation.description" = "Your feedback will help us improve the\nDuckDuckGo VPN.";
+
+/* Title for the feedback sending error text of the VPN feedback form */
+"vpn.feedback-form.sending-confirmation.error" = "We couldn't send your feedback right now, please try again.";
+
+/* Title for the feedback sent view title of the VPN feedback form */
+"vpn.feedback-form.sending-confirmation.title" = "Thank you!";
+
+/* Toast message when the VPN feedback form is submitted successfully */
+"vpn.feedback-form.submitted.message" = "Thank You! Feedback submitted.";
+
+/* Text for the body of the VPN feedback form */
+"vpn.feedback-form.text-1" = "Please describe what's happening, what you expected to happen, and the steps that led to the issue:";
+
+/* Text for the body of the VPN feedback form */
+"vpn.feedback-form.text-2" = "In addition to the details entered into this form, your app issue report will contain:";
+
+/* Bullet text for the body of the VPN feedback form */
+"vpn.feedback-form.text-3" = "• Whether specific DuckDuckGo features are enabled";
+
+/* Bullet text for the body of the VPN feedback form */
+"vpn.feedback-form.text-4" = "• Aggregate DuckDuckGo app diagnostics";
+
+/* Text for the body of the VPN feedback form */
+"vpn.feedback-form.text-5" = "By tapping \"Submit\" I agree that DuckDuckGo may use the information in this report for purposes of improving the app's features.";
+
+/* Title for each screen of the VPN feedback form */
+"vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
 
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Allow Notifications";

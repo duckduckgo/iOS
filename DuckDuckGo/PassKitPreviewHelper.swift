@@ -38,7 +38,7 @@ class PassKitPreviewHelper: FilePreview {
                 viewController?.present(controller, animated: true)
             }
         } catch {
-            os_log("Can't present passkit: %s", type: .debug, error.localizedDescription)
+            os_log("Can't present passkit: %{public}s", type: .error, error.localizedDescription)
         }
     }
 }

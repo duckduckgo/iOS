@@ -219,6 +219,8 @@ extension PrivacyDashboardViewController {
         let ampURLString: String
         let urlParametersRemoved: Bool
         let isDesktop: Bool
+        let error: Error?
+        let httpStatusCode: Int?
     }
     
     enum WebsiteBreakageError: Error {
@@ -252,7 +254,9 @@ extension PrivacyDashboardViewController {
                                reportFlow: source,
                                siteType: breakageAdditionalInfo.isDesktop ? .desktop : .mobile,
                                atb: StatisticsUserDefaults().atb ?? "",
-                               model: UIDevice.current.model)
-                        
+                               model: UIDevice.current.model,
+                               error: breakageAdditionalInfo.error,
+                               httpStatusCode: breakageAdditionalInfo.httpStatusCode)
+
     }
 }

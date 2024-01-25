@@ -99,11 +99,9 @@ class AppRatingPromptCoreDataStorage: AppRatingPromptStorage {
 
         let fetchRequest: NSFetchRequest<AppRatingPromptEntity> = AppRatingPromptEntity.fetchRequest()
         
-        guard let results = try? context.fetch(fetchRequest) else {
-            fatalError("Error fetching AppRatingPromptEntity")
-        }
+        let results = try? context.fetch(fetchRequest)
 
-        if let result = results.first {
+        if let result = results?.first {
             return result
         } else {
             let entityDescription = NSEntityDescription.entity(forEntityName: "AppRatingPromptEntity",

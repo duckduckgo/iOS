@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "826d7d95529d9feac4b25f7f1f236a7e4ac1d9a9",
-        "version" : "101.2.3"
+        "branch" : "dominik/favicons-fetcher-cancellation-error",
+        "revision" : "268880a4383a9b461fdf257a1ec6b4deb822f6d2"
       }
     },
     {

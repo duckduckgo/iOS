@@ -88,6 +88,7 @@ public class SyncSettingsViewModel: ObservableObject {
     @Published public var isConnectingDevicesAvailable: Bool = true
     @Published public var isAccountCreationAvailable: Bool = true
     @Published public var isAccountRecoveryAvailable: Bool = true
+    @Published public var isAppVersionNotSupported: Bool = false
 
     public weak var delegate: SyncManagementViewModelDelegate?
     private(set) var isOnDevEnvironment: Bool

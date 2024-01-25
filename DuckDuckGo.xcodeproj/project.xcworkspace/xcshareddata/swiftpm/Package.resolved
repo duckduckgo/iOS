@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sabrina/sync-flag-min-version",
-        "revision" : "95e2fd6b0af56574f6c3f13c9e5dccee7a428e5a"
+        "revision" : "826d7d95529d9feac4b25f7f1f236a7e4ac1d9a9",
+        "version" : "101.2.3"
       }
     },
     {

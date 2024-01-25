@@ -195,7 +195,7 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
                      connectedServerIP: connectedServerIP)
     }
 
-    private func lastDisconnectError() async -> String {
+    public func lastDisconnectError() async -> String {
         if #available(iOS 16, *) {
             guard let tunnelManager = try? await NETunnelProviderManager.loadAllFromPreferences().first else {
                 return "none"

@@ -110,7 +110,7 @@ final class NetworkProtectionVPNLocationViewModel: ObservableObject {
                 isSelected: isCountrySelected,
                 cityPickerItems: cityPickerItems
             )
-        }
+        }.sorted()
         self.isNearestSelected = isNearestSelected
         state = .loaded(countryItems: countryItems)
     }
@@ -119,7 +119,15 @@ final class NetworkProtectionVPNLocationViewModel: ObservableObject {
 private typealias CountryItem = NetworkProtectionVPNCountryItemModel
 private typealias CityItem = NetworkProtectionVPNCityItemModel
 
-struct NetworkProtectionVPNCountryItemModel: Identifiable {
+struct NetworkProtectionVPNCountryItemModel: Identifiable, Comparable {
+    static func < (lhs: NetworkProtectionVPNCountryItemModel, rhs: NetworkProtectionVPNCountryItemModel) -> Bool {
+        lhs.title < rhs.title
+    }
+    
+    static func == (lhs: NetworkProtectionVPNCountryItemModel, rhs: NetworkProtectionVPNCountryItemModel) -> Bool {
+        lhs.id == rhs.id
+    }
+    
     private let labelsModel: NetworkProtectionVPNCountryLabelsModel
 
     var emoji: String {

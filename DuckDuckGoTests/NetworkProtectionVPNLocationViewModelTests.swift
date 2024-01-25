@@ -30,12 +30,13 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
     private var listRepository: MockNetworkProtectionLocationListRepository!
     private var settings: VPNSettings!
     private var viewModel: NetworkProtectionVPNLocationViewModel!
+    private var testDefaults: UserDefaults!
 
     @MainActor
     override func setUp() {
         super.setUp()
         listRepository = MockNetworkProtectionLocationListRepository()
-        let testDefaults = UserDefaults(suiteName: #file + Thread.current.debugDescription)!
+        testDefaults = UserDefaults()
         settings = VPNSettings(defaults: testDefaults)
         viewModel = NetworkProtectionVPNLocationViewModel(locationListRepository: listRepository, settings: settings)
     }
@@ -45,6 +46,7 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
         settings = nil
         listRepository = nil
         viewModel = nil
+        testDefaults.removeSuite(named: #file + Thread.current.debugDescription)
         super.tearDown()
     }
 
@@ -153,6 +155,12 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
         }
     }
 
+    func test_onViewAppeared_loadedListIsSorted() async throws {
+        try await assertOnListLoadSortsByCountryTitle { [weak self] in
+            await self?.viewModel.onViewAppeared()
+        }
+    }
+
     // MARK: onNearestItemSelection
 
     func test_onNearestItemSelection_setsCorrectCountryTitle() async throws {
@@ -205,6 +213,12 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
 
     func test_onNearestItemSelection_showsCityTitles() async throws {
         try await assertOnListLoad_showsCityTitles { [weak self] in
+            await self?.viewModel.onNearestItemSelection()
+        }
+    }
+
+    func test_onNearestItemSelection_loadedListIsSorted() async throws {
+        try await assertOnListLoadSortsByCountryTitle { [weak self] in
             await self?.viewModel.onNearestItemSelection()
         }
     }
@@ -289,17 +303,52 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
         }
     }
 
+    func test_onCountryItemSelection_loadedListIsSorted() async throws {
+        try await assertOnListLoadSortsByCountryTitle { [weak self] in
+            await self?.viewModel.onCountryItemSelection(id: "CA")
+        }
+    }
+
     // MARK: Assertions
+
+    func assertOnListLoadSortsByCountryTitle(when functionUnderTest: () async -> Void,
+                                             file: StaticString = #file,
+                                             line: UInt = #line) async throws {
+        let countryIDs = [
+            "NL",
+            "ES",
+            "CA",
+            "UK",
+            "DE",
+            "SE"
+        ]
+        try stubLocationList(with: countryIDs)
+
+        await functionUnderTest()
+
+        let items = try loadedItems()
+
+        let loaded = items.map(\.title)
+        let sortedCountryTitles = [
+            "Canada",
+            "Germany",
+            "Netherlands",
+            "Spain",
+            "Sweden",
+            "United Kingdom"
+        ]
+        XCTAssertEqual(loaded, sortedCountryTitles, file: file, line: line)
+    }
 
     func assertOnListLoadSetsCorrectCountryTitle(when functionUnderTest: () async -> Void,
                                                  file: StaticString = #file,
                                                  line: UInt = #line) async throws {
         let titlesForLocationsIDs = [
-            "NL": "Netherlands",
             "DE": "Germany",
+            "NL": "Netherlands",
             "SE": "Sweden"
         ]
-        let countryIds = Array(titlesForLocationsIDs.keys)
+        let countryIds = Array(titlesForLocationsIDs.keys.sorted())
         try stubLocationList(with: countryIds)
 
         await functionUnderTest()
@@ -307,7 +356,9 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
         let items = try loadedItems()
 
         for i in 0..<countryIds.count {
-            XCTAssertEqual(items[i].title, titlesForLocationsIDs[countryIds[i]], file: file, line: line)
+            let loaded = items[i].title
+            let title = titlesForLocationsIDs[countryIds[i]]
+            XCTAssertEqual(loaded, title, file: file, line: line)
         }
     }
 
@@ -315,11 +366,11 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
                                               file: StaticString = #file,
                                               line: UInt = #line) async throws {
         let iDsForLocationsIDs = [
-            "NL": "NL",
             "DE": "DE",
+            "NL": "NL",
             "SE": "SE"
         ]
-        let countryIds = Array(iDsForLocationsIDs.keys)
+        let countryIds = Array(iDsForLocationsIDs.keys.sorted())
         try stubLocationList(with: countryIds)
 
         await functionUnderTest()
@@ -327,7 +378,9 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
         let items = try loadedItems()
 
         for i in 0..<countryIds.count {
-            XCTAssertEqual(items[i].id, iDsForLocationsIDs[countryIds[i]], file: file, line: line)
+            let loaded = items[i].id
+            let title = iDsForLocationsIDs[countryIds[i]]
+            XCTAssertEqual(loaded, title, file: file, line: line)
         }
     }
 
@@ -335,11 +388,11 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
                                           file: StaticString = #file,
                                           line: UInt = #line) async throws {
         let emojisForLocationsIDs = [
-            "NL": "🇳🇱",
             "DE": "🇩🇪",
+            "NL": "🇳🇱",
             "SE": "🇸🇪"
         ]
-        let countryIds = Array(emojisForLocationsIDs.keys)
+        let countryIds = Array(emojisForLocationsIDs.keys.sorted())
         try stubLocationList(with: countryIds)
 
         await functionUnderTest()
@@ -347,14 +400,16 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
         let items = try loadedItems()
 
         for i in 0..<countryIds.count {
-            XCTAssertEqual(items[i].emoji, emojisForLocationsIDs[countryIds[i]], file: file, line: line)
+            let loaded = items[i].emoji
+            let title = emojisForLocationsIDs[countryIds[i]]
+            XCTAssertEqual(loaded, title, file: file, line: line)
         }
     }
 
     func assertOnListLoad_countryIsSelected(when functionUnderTestWithTestCaseID: (String) async -> Void,
                                             file: StaticString = #file,
                                             line: UInt = #line) async throws {
-        let countryIds = ["NL", "DE", "SE"]
+        let countryIds = ["DE", "NL", "SE"]
         try stubLocationList(with: countryIds)
 
         for i in 0..<countryIds.count {
@@ -369,7 +424,7 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
     func assertNearestSelectedSetToTrue(when functionUnderTest: () async -> Void,
                                         file: StaticString = #file,
                                         line: UInt = #line) async throws {
-        try stubLocationList(with: ["NL", "DE", "SE"])
+        try stubLocationList(with: ["DE", "NL", "SE"])
 
         await functionUnderTest()
 
@@ -379,7 +434,7 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
     func assertNearestSelectedSetToFalse(when functionUnderTestWithTestCaseID: (String) async -> Void,
                                          file: StaticString = #file,
                                          line: UInt = #line) async throws {
-        let countryIds = ["NL", "DE", "SE"]
+        let countryIds = ["DE", "NL", "SE"]
         try stubLocationList(with: countryIds)
 
         for i in 0..<countryIds.count {
@@ -392,7 +447,7 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
     func assertOnListLoad_countryWith1City_hasNilSubtitle(when functionUnderTest: () async -> Void,
                                                           file: StaticString = #file,
                                                           line: UInt = #line) async throws {
-        let countryIds = ["NL", "DE", "SE"]
+        let countryIds = ["DE", "NL", "SE"]
         let countries: [NetworkProtectionLocation] = try countryIds.map { id in
             try .testData(country: id, cityNames: ["A city"])
         }
@@ -410,7 +465,7 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
     func assertOnListLoad_countryWith1City_shouldShowPickerIsFalse(when functionUnderTest: () async -> Void,
                                                                    file: StaticString = #file,
                                                                    line: UInt = #line) async throws {
-        let countryIds = ["NL", "DE", "SE"]
+        let countryIds = ["DE", "NL", "SE"]
         let countries: [NetworkProtectionLocation] = try countryIds.map { id in
             try .testData(country: id, cityNames: ["A city"])
         }
@@ -426,7 +481,7 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
     func assertOnListLoad_countryHasMoreThan1City_shouldShowPickerIsTrue(when functionUnderTest: () async -> Void,
                                                                          file: StaticString = #file,
                                                                          line: UInt = #line) async throws {
-        let countryIds = ["NL", "DE", "SE"]
+        let countryIds = ["DE", "NL", "SE"]
         var countries = [NetworkProtectionLocation]()
 
         for i in 0..<countryIds.count {
@@ -457,8 +512,8 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
             let expectedSubtitle: String
         }
         let testCases: [TestCase] = [
-            .init(countryId: "NL", citiesCount: 2, expectedSubtitle: "2 cities"),
             .init(countryId: "DE", citiesCount: 3, expectedSubtitle: "3 cities"),
+            .init(countryId: "NL", citiesCount: 2, expectedSubtitle: "2 cities"),
             .init(countryId: "SE", citiesCount: 14, expectedSubtitle: "14 cities")
         ]
         let countries: [NetworkProtectionLocation] = try testCases.map { testCase in
@@ -483,7 +538,7 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
     func assertOnListLoad_isSelectedSetToFalse(when functionUnderTest: () async -> Void,
                                                file: StaticString = #file,
                                                line: UInt = #line) async throws {
-        let countryIds = ["NL", "DE", "SE"]
+        let countryIds = ["DE", "NL", "SE"]
         let countries: [NetworkProtectionLocation] = try countryIds.map { id in
             try .testData(country: id)
         }
@@ -506,8 +561,8 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
             let cityTitles: [String]
         }
         let testCases: [TestCase] = [
-            .init(countryId: "NL", cityTitles: ["Rotterdam", "Amsterdam"]),
-            .init(countryId: "DE", cityTitles: ["Berlin", "Frankfurt", "Bremen"])
+            .init(countryId: "DE", cityTitles: ["Berlin", "Frankfurt", "Bremen"]),
+            .init(countryId: "NL", cityTitles: ["Rotterdam", "Amsterdam"])
         ]
         let countries: [NetworkProtectionLocation] = try testCases.map { testCase in
             return try .testData(country: testCase.countryId, cityNames: testCase.cityTitles)
@@ -532,13 +587,13 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
                                          file: StaticString = #file,
                                          line: UInt = #line) async throws {
         let countries: [NetworkProtectionLocation] = [
-            try .testData(country: "NL", cityNames: ["Rotterdam", "Amsterdam"]),
-            try .testData(country: "DE", cityNames: ["Berlin", "Frankfurt", "Bremen"])
+            try .testData(country: "DE", cityNames: ["Berlin", "Frankfurt", "Bremen"]),
+            try .testData(country: "NL", cityNames: ["Rotterdam", "Amsterdam"])
         ]
 
         let selectionTestCases: [NetworkProtectionSelectedLocation] = [
-            .init(country: "NL", city: "Amsterdam"),
-            .init(country: "DE", city: "Frankfurt")
+            .init(country: "DE", city: "Frankfurt"),
+            .init(country: "NL", city: "Amsterdam")
         ]
 
         listRepository.stubLocationList = countries
@@ -555,8 +610,8 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
                                                 file: StaticString = #file,
                                                 line: UInt = #line) async throws {
         let countries: [NetworkProtectionLocation] = [
-            try .testData(country: "NL", cityNames: ["Rotterdam", "Amsterdam"]),
             try .testData(country: "DE", cityNames: ["Berlin", "Frankfurt", "Bremen"]),
+            try .testData(country: "NL", cityNames: ["Rotterdam", "Amsterdam"]),
             try .testData(country: "SE", cityNames: ["Stockholm", "Malmö", "Helsingborg"])
         ]
 

@@ -22,7 +22,6 @@ import Common
 
 public struct AuthService: APIService {
 
-    public static let logger: OSLog = .authService
     public static let session = {
         let configuration = URLSessionConfiguration.ephemeral
         return URLSession(configuration: configuration)
@@ -107,13 +106,12 @@ public struct AuthService: APIService {
         public let externalID: String
         public let id: Int
         public let status: String
-
-        // swiftlint:disable:next nesting
+        
+        // swiftlint:disable nesting
         enum CodingKeys: String, CodingKey {
-            case authToken = "authToken",
-                 email, externalID = "externalId",
-                 id,
-                 status // no underscores due to keyDecodingStrategy = .convertFromSnakeCase
+            // no underscores due to keyDecodingStrategy = .convertFromSnakeCase
+            case authToken = "authToken", email, externalID = "externalId", id, status
         }
+        // swiftlint:enable nesting
     }
 }

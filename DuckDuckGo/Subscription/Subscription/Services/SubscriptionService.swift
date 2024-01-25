@@ -21,8 +21,7 @@ import Foundation
 import Common
 
 public struct SubscriptionService: APIService {
-
-    public static let logger: OSLog = .subscriptionService
+    
     public static let session = {
         let configuration = URLSessionConfiguration.ephemeral
         return URLSession(configuration: configuration)
@@ -32,9 +31,10 @@ public struct SubscriptionService: APIService {
     // MARK: -
 
     public static func getSubscriptionDetails(token: String) async -> Result<GetSubscriptionDetailsResponse, APIServiceError> {
-        let result: Result<GetSubscriptionDetailsResponse, APIServiceError> = await executeAPICall(method: "GET",
-                                                                                                   endpoint: "subscription",
-                                                                                                   headers: makeAuthorizationHeader(for: token))
+        let result: Result<GetSubscriptionDetailsResponse,
+                            APIServiceError> = await executeAPICall(method: "GET",
+                                                                    endpoint: "subscription",
+                                                                    headers: makeAuthorizationHeader(for: token))
 
         switch result {
         case .success(let response):

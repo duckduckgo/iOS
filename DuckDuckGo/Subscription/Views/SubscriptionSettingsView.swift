@@ -32,6 +32,7 @@ struct SubscriptionSettingsView: View {
     @ObservedObject var viewModel: SubscriptionSettingsViewModel
     @Environment(\.presentationMode) var presentationMode
     @StateObject var sceneEnvironment = SceneEnvironment()
+    @State private var isActivatingSubscription = false
     
     var body: some View {
             List {
@@ -44,12 +45,16 @@ struct SubscriptionSettingsView: View {
                     .hidden()
                 }.textCase(nil)
                 Section(header: Text(UserText.subscriptionManageDevices)) {
-                    SettingsCustomCell(content: {
-                        Text(UserText.subscriptionAddDevice)
-                            .daxBodyRegular()
-                            .foregroundColor(Color.init(designSystemColor: .accent))
-                    },
-                                       action: {})
+                    
+                    NavigationLink(destination: SubscriptionRestoreView(
+                        viewModel: SubscriptionRestoreViewModel(isAddingDevice: true),
+                        isActivatingSubscription: $isActivatingSubscription)) {
+                        SettingsCustomCell(content: {
+                            Text(UserText.subscriptionAddDeviceButton)
+                                .daxBodyRegular()
+                                .foregroundColor(Color.init(designSystemColor: .accent))
+                        })
+                    }
                     
                     SettingsCustomCell(content: {
                         Text(UserText.subscriptionRemoveFromDevice)
@@ -73,9 +78,7 @@ struct SubscriptionSettingsView: View {
                         SettingsCustomCell(content: {
                             Text(UserText.subscriptionFAQ)
                                 .daxBodyRegular()
-                        },
-                                           action: {},
-                                           disclosureIndicator: false)
+                        })
                     }
                 }
             }

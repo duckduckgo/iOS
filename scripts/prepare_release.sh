@@ -4,6 +4,8 @@ set -eo pipefail
 
 mute=">/dev/null 2>&1"
 version="$1"
+latest_build_number=$(agvtool what-version -terse)
+next_build_number=$((latest_build_number + 1))
 release_branch_parent="main"
 tag=${version}
 hotfix_branch_parent="tags/${tag}"
@@ -98,10 +100,11 @@ read_command_line_arguments() {
 	done
 
 	release_branch="${release_branch_prefix}/${version}"
-	changes_branch="${release_branch}-changes"
+	build_branch="${release_branch}-build-0"
 
 	if release_branch_exists; then 
 		is_subsequent_release=1
+		build_branch="${release_branch}-build-${next_build_number}"
 	fi
 
 	shift $((OPTIND-1))
@@ -136,12 +139,12 @@ assert_clean_state() {
 	if git show-ref --quiet "refs/heads/${release_branch}"; then
 		die "💥 Error: Branch ${release_branch} already exists"
 	fi
-	if git show-ref --quiet "refs/heads/${changes_branch}"; then
-		die "💥 Error: Branch ${changes_branch} already exists"
+	if git show-ref --quiet "refs/heads/${build_branch}"; then
+		die "💥 Error: Branch ${build_branch} already exists"
 	fi
 }
 
-assert_hotfix_tag_exists_if_necessary() {
+assert_hotfix_tag_exists() {
 	printf '%s' "Checking tag to hotfix ... "
 
 	# Make sure tag is available locally if it exists
@@ -154,7 +157,7 @@ assert_hotfix_tag_exists_if_necessary() {
 	fi
 }
 
-create_release_and_changes_branches() {
+create_release_and_build_branches() {
 	if [[ ${is_hotfix} ]]; then
 		printf '%s' "Creating hotfix branch ... "
 		eval git checkout "${hotfix_branch_parent}" "$mute"
@@ -163,16 +166,16 @@ create_release_and_changes_branches() {
 		eval git checkout ${release_branch_parent} "$mute"
 		eval git pull "$mute"
 	fi
-	eval git checkout -b "${release_branch}" "$mute"
-	eval git checkout -b "${changes_branch}" "$mute"
+	eval git checkout -b "${release_branch}" --track "origin/${release_branch}" "$mute"
+	eval git checkout -b "${build_branch}" --track "origin/${build_branch}" "$mute"
 	echo "✅"
 }
 
-create_changes_branch() {
-	printf '%s' "Creating changes branch ... "
+create_build_branch() {
+	printf '%s' "Creating build branch ... "
 	eval git checkout "${release_branch}" "$mute"
 	eval git pull "$mute"
-	eval git checkout -b "${changes_branch}" "$mute"
+	eval git checkout -b "${build_branch}" --track "origin/${build_branch}" "$mute"
 	echo "✅"
 }
 
@@ -237,7 +240,7 @@ merge_fix_branch_if_necessary() {
 	eval git checkout "${fix_branch}" "$mute"
 	eval git pull "$mute"
 
-	eval git checkout "${changes_branch}" "$mute"
+	eval git checkout "${build_branch}" "$mute"
 	eval git merge "${fix_branch}" "$mute"
 	echo "✅"
 }
@@ -245,10 +248,10 @@ merge_fix_branch_if_necessary() {
 create_pull_request() {
 	printf '%s' "Creating PR ... "
 	if [[ ! $is_subsequent_release ]]; then
-		eval git push origin "${release_branch}" "$mute"
+		eval git push -u origin "${release_branch}" "$mute"
 	fi
-	eval git push origin "${changes_branch}" "$mute"
-	eval gh pr create --title \"Release "${version}"\" --base "${release_branch}" --assignee @me "$mute" --body-file "${script_dir}/assets/prepare-release-description"
+	eval git push -u origin "${build_branch}" "$mute"
+	eval gh pr create --title \"Release "${version}-${next_build_number}"\" --base "${release_branch}" --assignee @me "$mute" --body-file "${script_dir}/assets/prepare-release-description"
 	eval gh pr view --web "$mute"
 	echo "✅"
 }
@@ -263,15 +266,15 @@ main() {
 	stash
 
 	if [[ $is_subsequent_release ]]; then 
-		create_changes_branch
+		create_build_branch
 	elif [[ $is_hotfix ]]; then
 		assert_clean_state
-		assert_hotfix_tag_exists_if_necessary
-		create_release_and_changes_branches
+		assert_hotfix_tag_exists
+		create_release_and_build_branches
 		update_marketing_version
-	else
+	else # regular release
 		assert_clean_state
-		create_release_and_changes_branches
+		create_release_and_build_branches
 		update_marketing_version
 		update_embedded_files
 	fi
@@ -281,7 +284,7 @@ main() {
 	update_release_notes
 	merge_fix_branch_if_necessary
 
-	#create_pull_request
+	create_pull_request
 }
 
 main "$@"

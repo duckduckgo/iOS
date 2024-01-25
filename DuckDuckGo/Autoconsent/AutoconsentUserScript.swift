@@ -99,6 +99,7 @@ extension AutoconsentUserScript {
         case `init`
         case cmpDetected
         case eval
+        case popupFound
         case optOutResult
         case optInResult
         case selfTestResult
@@ -185,6 +186,8 @@ extension AutoconsentUserScript {
             handleInit(message: message, replyHandler: replyHandler)
         case MessageName.eval:
             handleEval(message: message, replyHandler: replyHandler)
+        case MessageName.popupFound:
+            handlePopupFound(message: message, replyHandler: replyHandler)
         case MessageName.optOutResult:
             handleOptOutResult(message: message, replyHandler: replyHandler)
         case MessageName.optInResult:
@@ -202,6 +205,12 @@ extension AutoconsentUserScript {
             os_log("Autoconsent error: %s", log: .autoconsentLog, String(describing: message.body))
             replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection
         }
+    }
+
+    @MainActor
+    func handlePopupFound(message: WKScriptMessage, replyHandler: @escaping (Any?, String?) -> Void) {
+        os_log("Autoconsent popup found", log: .autoconsentLog)
+        replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection
     }
 
     @MainActor

@@ -110,7 +110,7 @@ class AppRatingPromptCoreDataStorage: AppRatingPromptStorage {
         do {
             results = try context.fetch(fetchRequest)
         } catch {
-            DailyPixel.fireDailyAndCount(pixel: .appStorePromptFetchError, error: error)
+            DailyPixel.fireDailyAndCount(pixel: .appRatingPromptFetchError, error: error)
             return nil
         }
 

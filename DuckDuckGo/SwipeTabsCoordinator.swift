@@ -36,7 +36,7 @@ class SwipeTabsCoordinator: NSObject {
     weak var tabPreviewsSource: TabPreviewsSource!
     
     let selectTab: (Int) -> Void
-
+    
     init(coordinator: MainViewCoordinator, tabPreviewsSource: TabPreviewsSource, selectTab: @escaping (Int) -> Void) {
         self.coordinator = coordinator
         self.tabPreviewsSource = tabPreviewsSource
@@ -53,6 +53,23 @@ class SwipeTabsCoordinator: NSObject {
         layout?.scrollDirection = .horizontal
     }
     
+    enum State {
+        
+        case idle
+        case starting(CGPoint)
+        case swiping(CGPoint, FloatingPointSign)
+        case finishing
+        
+    }
+    
+    var state: State = .idle {
+        didSet {
+            print("***", #function, state)
+        }
+    }
+    
+    weak var preview: UIView?
+    
 }
 
 // MARK: UICollectionViewDelegate
@@ -63,21 +80,76 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("***", #function)
+         
+        switch state {
+        case .idle: break
+            
+        case .starting(let startPosition):
+            let offset = startPosition.x - scrollView.contentOffset.x
+            // coordinator.contentContainer.transform.tx = offset
+            preview?.transform.tx = offset
+            createPreview(offset)
+            state = .swiping(startPosition, offset.sign)
+        
+        case .swiping(let startPosition, let sign):
+            let offset = startPosition.x - scrollView.contentOffset.x
+            if offset.sign == sign {
+                // coordinator.contentContainer.transform.tx = offset
+                preview?.transform.tx = offset
+            } else {
+                state = .finishing
+            }
+        
+        case .finishing: break
+        }
+    }
+    
+    private func createPreview(_ offset: CGFloat) {
+        let modifier = (offset > 0 ? -1 : 1)
+        let nextIndex = tabsModel.currentIndex + modifier
+        print("***", #function, "nextIndex", nextIndex)
+        guard tabsModel.tabs.indices.contains(nextIndex) else {
+            print("***", #function, "invalid index", nextIndex)
+            return
+        }
+        let tab = tabsModel.get(tabAt: nextIndex)
+        guard let image = tabPreviewsSource.preview(for: tab) else {
+            print("***", #function, "no preview for tab at index", nextIndex)
+            return
+        }
+        
+        let imageView = UIImageView(image: image)
+
+        imageView.layer.shadowOpacity = 0.5
+        imageView.layer.shadowRadius = 10
+        imageView.layer.shadowOffset = CGSize(width: 5, height: 5)
+        // imageView.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+
+        self.preview = imageView
+        imageView.frame = CGRect(origin: .zero, size: coordinator.contentContainer.frame.size)
+        let gap = CGFloat(10 * modifier)
+        imageView.frame.origin.x = (coordinator.contentContainer.frame.width * CGFloat(modifier))
+        print("***", #function, "offset", imageView.frame.origin.x)
+        coordinator.contentContainer.addSubview(imageView)
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         print("***", #function)
+        state = .starting(scrollView.contentOffset)
     }
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         print("***", #function, coordinator.navigationBarContainer.indexPathsForVisibleItems)
-        
-        let index = coordinator.navigationBarContainer.indexPathForItem(at: .init(x: coordinator.navigationBarContainer.bounds.midX,
-                                                                                  y: coordinator.navigationBarContainer.bounds.midY))?.row
+
+        let point = CGPoint(x: coordinator.navigationBarContainer.bounds.midX,
+                            y: coordinator.navigationBarContainer.bounds.midY)
+        let index = coordinator.navigationBarContainer.indexPathForItem(at: point)?.row
         assert(index != nil)
         selectTab(index ?? coordinator.navigationBarContainer.indexPathsForVisibleItems[0].row)
-        
+                
+        preview?.removeFromSuperview()
+
+        state = .idle
     }
 
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
@@ -113,8 +185,10 @@ extension SwipeTabsCoordinator {
         
         if scrollToItem {
             DispatchQueue.main.async {
-                self.coordinator.navigationBarContainer.scrollToItem(at: .init(row: tabsModel.currentIndex, section: 0),
-                                                                     at: .centeredHorizontally, animated: false)
+                let indexPath = IndexPath(row: tabsModel.currentIndex, section: 0)
+                self.coordinator.navigationBarContainer.scrollToItem(at: indexPath,
+                                                                     at: .centeredHorizontally,
+                                                                     animated: false)
             }
         }
     }

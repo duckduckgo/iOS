@@ -77,7 +77,7 @@ extension MainViewFactory {
     }
     
     final class NavigationBarContainer: UICollectionView { }
-    private func createNavigationBarContainer() {        
+    private func createNavigationBarContainer() {
         // Layout is replaced elsewhere, but required to construct the view.
         coordinator.navigationBarContainer = NavigationBarContainer(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         coordinator.navigationBarContainer.decelerationRate = .fast

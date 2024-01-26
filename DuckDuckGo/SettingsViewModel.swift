@@ -43,6 +43,7 @@ final class SettingsViewModel: ObservableObject {
     private var legacyViewProvider: SettingsLegacyViewProvider
     private lazy var versionProvider: AppVersion = AppVersion.shared
     private var accountManager: AccountManager
+    private let voiceSearchHelper: VoiceSearchHelperProtocol
 
 #if NETWORK_PROTECTION
     private let connectionObserver = ConnectionStatusObserverThroughSession()
@@ -160,7 +161,7 @@ final class SettingsViewModel: ObservableObject {
                     self.enableVoiceSearch { [weak self] result in
                         DispatchQueue.main.async {
                             self?.state.voiceSearchEnabled = result
-                            self?.appSettings.voiceSearchEnabled = result
+                            self?.voiceSearchHelper.enableVoiceSearch(true)
                             if !result {
                                 // Permission is denied
                                 self?.shouldShowNoMicrophonePermissionAlert = true
@@ -168,7 +169,7 @@ final class SettingsViewModel: ObservableObject {
                         }
                     }
                 } else {
-                    self.appSettings.voiceSearchEnabled = false
+                    self.voiceSearchHelper.enableVoiceSearch(false)
                     self.state.voiceSearchEnabled = false
                 }
             }
@@ -198,11 +199,13 @@ final class SettingsViewModel: ObservableObject {
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
          accountManager: AccountManager,
-         navigateOnAppearDestination: SettingsSection = .none) {
+         navigateOnAppearDestination: SettingsSection = .none,
+         voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
         self.accountManager = accountManager
         self.onAppearNavigationTarget = navigateOnAppearDestination
+        self.voiceSearchHelper = voiceSearchHelper
     }
 }
  
@@ -229,8 +232,8 @@ extension SettingsViewModel {
             activeWebsiteAccount: nil,
             version: versionProvider.versionAndBuildNumber,
             debugModeEnabled: featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild,
-            voiceSearchEnabled: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
-            speechRecognitionEnabled: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
+            voiceSearchEnabled: AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled,
+            speechRecognitionAvailable: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
             loginsEnabled: featureFlagger.isFeatureOn(.autofillAccessCredentialManagement),
             networkProtection: getNetworkProtectionState(),
             subscription: getSubscriptionState(),
@@ -299,7 +302,6 @@ extension SettingsViewModel {
                 completion(false)
                 return
             }
-            AppDependencyProvider.shared.voiceSearchHelper.enableVoiceSearch(true)
             completion(true)
         }
     }

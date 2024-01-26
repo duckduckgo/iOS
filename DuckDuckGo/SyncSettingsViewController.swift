@@ -97,6 +97,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
                 viewModel.isConnectingDevicesAvailable = featureFlags.contains(.connectFlows)
                 viewModel.isAccountCreationAvailable = featureFlags.contains(.accountCreation)
                 viewModel.isAccountRecoveryAvailable = featureFlags.contains(.accountRecovery)
+                viewModel.isAppVersionNotSupported = featureFlags.unavailableReason == .appVersionNotSupported
             }
             .store(in: &cancellables)
     }

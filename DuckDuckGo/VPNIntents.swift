@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+#if ALPHA
+
 import AppIntents
 import NetworkExtension
 import WidgetKit
@@ -100,3 +102,5 @@ struct EnableVPNIntent: AppIntent {
     }
 
 }
+
+#endif

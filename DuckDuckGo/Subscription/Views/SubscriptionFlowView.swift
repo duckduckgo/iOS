@@ -24,6 +24,7 @@ import Foundation
 @available(iOS 15.0, *)
 struct SubscriptionFlowView: View {
         
+    @Environment(\.dismiss) var dismiss
     @ObservedObject var viewModel: SubscriptionFlowViewModel
     @State private var isAlertVisible = false
     
@@ -45,7 +46,7 @@ struct SubscriptionFlowView: View {
             AsyncHeadlessWebView(url: $viewModel.purchaseURL,
                                  userScript: viewModel.userScript,
                                  subFeature: viewModel.subFeature,
-                                 shouldReload: $viewModel.shouldReloadWebview).background()
+                                 shouldReload: $viewModel.shouldReloadWebView).background()
 
             // Overlay that appears when transaction is in progress
             if viewModel.transactionStatus != .idle {
@@ -53,14 +54,15 @@ struct SubscriptionFlowView: View {
             }
          
             // Activation View
-            NavigationLink(destination: SubscriptionRestoreView(viewModel: SubscriptionRestoreViewModel()),
+            NavigationLink(destination: SubscriptionRestoreView(viewModel: SubscriptionRestoreViewModel(),
+                                                                isActivatingSubscription: $viewModel.activatingSubscription),
                            isActive: $viewModel.activatingSubscription) {
                 EmptyView()
             }
         }
-        .onChange(of: viewModel.shouldReloadWebview) { shouldReload in
+        .onChange(of: viewModel.shouldReloadWebView) { shouldReload in
             if shouldReload {
-                viewModel.shouldReloadWebview = false
+                viewModel.shouldReloadWebView = false
             }
         }
         .onChange(of: viewModel.hasActiveSubscription) { result in
@@ -68,6 +70,12 @@ struct SubscriptionFlowView: View {
                 isAlertVisible = true
             }
         }
+        .onChange(of: viewModel.shouldDismissView) { result in
+            if result {
+                dismiss()
+            }
+        }
+        
         .onAppear(perform: {
             Task { await viewModel.initializeViewData() }
         })

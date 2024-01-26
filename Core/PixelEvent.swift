@@ -521,6 +521,8 @@ extension Pixel {
         case emailIncontextModalExitEarlyContinue
 
         case compilationFailed
+
+        case appStorePromptFetchError
     }
     
 }
@@ -1015,6 +1017,7 @@ extension Pixel.Event {
         // MARK: - Return user measurement
         case .debugReturnUserAddATB: return "m_debug_return_user_add_atb"
         case .debugReturnUserUpdateATB: return "m_debug_return_user_update_atb"
+        case .appStorePromptFetchError: return "m_appstore_prompt_fetch_error"
         }
         
     }

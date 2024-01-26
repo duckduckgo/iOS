@@ -18,7 +18,9 @@ tags:
 - scroll
 - assertVisible: Email Protection
 - tapOn: Email Protection
+- assertVisible: Email privacy, simplified.
 - assertVisible:
     id: searchEntry
+- tapOn: 
+    id: "searchEntry"
 - assertVisible: https://duckduckgo.com/email/
-- assertVisible: Email privacy, simplified.

@@ -217,7 +217,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,
-                   isEntitlementValid: { await AccountManager().hasEntitlement(for: "dummy1") })
+                   isEntitlementValid: Self.isEntitlementValid)
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
         observeStatusChanges()
@@ -268,6 +268,13 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         .store(in: &cancellables)
     }
 
+    public static func isEntitlementValid() async -> Bool {
+#if ALPHA
+        await AccountManager().hasEntitlement(for: "dummy1")
+#else
+        true
+#endif
+    }
 }
 
 #endif

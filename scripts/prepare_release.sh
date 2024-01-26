@@ -251,7 +251,7 @@ create_pull_request() {
 		eval git push -u origin "${release_branch}" "$mute"
 	fi
 	eval git push -u origin "${build_branch}" "$mute"
-	eval gh pr create --title \"Release "${version}-${next_build_number}"\" --base "${release_branch}" --assignee @me "$mute" --body-file "${script_dir}/assets/prepare-release-description"
+	eval gh pr create --title \"Release "${version}-${next_build_number}"\" --base "${release_branch}" --label "merging_triggers_release" --assignee @me "$mute" --body-file "${script_dir}/assets/prepare-release-description"
 	eval gh pr view --web "$mute"
 	echo "✅"
 }

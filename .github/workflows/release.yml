@@ -20,15 +20,13 @@ on:
     branches:
     - release/**
     - hotfix/**
-    - coldfix/**
     - '!release/**-' # filter out PRs matching that pattern
     - '!hotfix/**-'
-    - '!coldfix/**-'
     types: [closed]
 
 jobs:
   make-release:
-    if: github.event.action == 0 || github.event.pull_request.merged == true # empty string returns 0; for case when workflow is triggered manually
+    if: github.event.action == 0 || (github.event.pull_request.merged == true && github.event.label.name == 'merging_triggers_release') # empty string returns 0; for case when workflow is triggered manually
     runs-on: macos-13-xlarge
     name: Make App Store Connect Release
 

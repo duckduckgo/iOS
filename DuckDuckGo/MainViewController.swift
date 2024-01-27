@@ -147,6 +147,9 @@ class MainViewController: UIViewController {
     private var skipSERPFlow = true
         
     private var keyboardHeight: CGFloat = 0.0
+    
+    var postClear: (() -> Void)?
+    var clearInProgress = false
 
     required init?(coder: NSCoder) {
         fatalError("Use init?(code:")
@@ -785,22 +788,30 @@ class MainViewController: UIViewController {
     }
 
     func loadUrlInNewTab(_ url: URL, reuseExisting: Bool = false, inheritedAttribution: AdClickAttributionLogic.State?) {
-        allowContentUnderflow = false
-        viewCoordinator.navigationBarContainer.alpha = 1
-        loadViewIfNeeded()
-        if reuseExisting, let existing = tabManager.first(withUrl: url) {
-            selectTab(existing)
-            return
-        } else if reuseExisting, let existing = tabManager.firstHomeTab() {
-            tabManager.selectTab(existing)
-            loadUrl(url)
-        } else {
-            addTab(url: url, inheritedAttribution: inheritedAttribution)
+        func worker() {
+            allowContentUnderflow = false
+            viewCoordinator.navigationBarContainer.alpha = 1
+            loadViewIfNeeded()
+            if reuseExisting, let existing = tabManager.first(withUrl: url) {
+                selectTab(existing)
+                return
+            } else if reuseExisting, let existing = tabManager.firstHomeTab() {
+                tabManager.selectTab(existing)
+                loadUrl(url)
+            } else {
+                addTab(url: url, inheritedAttribution: inheritedAttribution)
+            }
+            refreshOmniBar()
+            refreshTabIcon()
+            refreshControls()
+            tabsBarController?.refresh(tabsModel: tabManager.model)
         }
-        refreshOmniBar()
-        refreshTabIcon()
-        refreshControls()
-        tabsBarController?.refresh(tabsModel: tabManager.model)
+        
+        if clearInProgress {
+            postClear = worker
+        } else {
+            worker()
+        }
     }
     
     func enterSearch() {
@@ -2087,6 +2098,11 @@ extension MainViewController: AutoClearWorker {
     }
     
     func forgetData() {
+        guard !clearInProgress else {
+            assertionFailure("Shouldn't get called multiple times")
+            return
+        }
+        clearInProgress = true
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
         let pixel = TimedPixel(.forgetAllDataCleared)
@@ -2101,6 +2117,10 @@ extension MainViewController: AutoClearWorker {
             }
 
             self.refreshUIAfterClear()
+            self.clearInProgress = false
+            
+            self.postClear?()
+            self.postClear = nil
         }
 
     }

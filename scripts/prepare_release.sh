@@ -50,11 +50,14 @@ print_usage_and_exit() {
 
 	cat <<- EOF
 	Usage:
-	  $ $(basename "$0") <version> <hotfix-branch> [-v]
+	  $ $(basename "$0") <version | hotfix-branch> [-v]
 	  Current version: $(cut -d' ' -f3 < "${base_dir}/Configuration/Version.xcconfig")
 
 	Options:
 	  -v         Enable verbose mode
+
+	Arguments:
+      <version | hotfix-branch>   Specify either a version number or a hotfix branch name.
 
 	EOF
 
@@ -64,6 +67,10 @@ print_usage_and_exit() {
 read_command_line_arguments() {
     local input="$1"
     local version_regexp="^[0-9]+(\.[0-9]+)*$"
+
+    if [ -z "$input" ]; then
+        print_usage_and_exit "💥 Error: Missing argument"
+    fi
 
     if [[ $input =~ $version_regexp ]]; then
         process_release "$input"

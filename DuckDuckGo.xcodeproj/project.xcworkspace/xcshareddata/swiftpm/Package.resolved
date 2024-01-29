@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "mariusz/url-escaping-ios17",
-        "revision" : "0ac84b2582f96209495916c80715333387311cb0"
+        "revision" : "055cc2d86c0ac085d032fc28665c3115ea3f325a",
+        "version" : "103.0.1"
       }
     },
     {

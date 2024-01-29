@@ -3,7 +3,7 @@
 set -eo pipefail
 
 mute=">/dev/null 2>&1"
-release_branch_parent="jacek/hotfix-changes"
+release_branch_parent="main"
 build_number=0
 
 # Get the directory where the script is stored
@@ -57,7 +57,7 @@ print_usage_and_exit() {
 	  -v         Enable verbose mode
 
 	Arguments:
-      <version | hotfix-branch>   Specify either a version number or a hotfix branch name.
+	  <version | hotfix-branch>   Specify either a version number or a hotfix branch name.
 
 	EOF
 
@@ -65,18 +65,18 @@ print_usage_and_exit() {
 }
 
 read_command_line_arguments() {
-    local input="$1"
-    local version_regexp="^[0-9]+(\.[0-9]+)*$"
+	local input="$1"
+	local version_regexp="^[0-9]+(\.[0-9]+)*$"
 
-    if [ -z "$input" ]; then
-        print_usage_and_exit "💥 Error: Missing argument"
-    fi
+	if [ -z "$input" ]; then
+		print_usage_and_exit "💥 Error: Missing argument"
+	fi
 
-    if [[ $input =~ $version_regexp ]]; then
-        process_release "$input"
-    else
-        process_hotfix "$input"
-    fi
+	if [[ $input =~ $version_regexp ]]; then
+		process_release "$input"
+	else
+		process_hotfix "$input"
+	fi
 
 	shift 1
 
@@ -93,34 +93,34 @@ read_command_line_arguments() {
 }
 
 process_release() {
-    version="$1"
-    release_branch="release/${version}"
-    
-    echo "Processing version number: $version"
-    
-    if release_branch_exists; then 
-        is_subsequent_release=1
-    fi
+	version="$1"
+	release_branch="release/${version}"
+
+	echo "Processing version number: $version"
+
+	if release_branch_exists; then 
+		is_subsequent_release=1
+	fi
 }
 
 process_hotfix() {
-    local input="$1"
-    echo "Processing hotfix branch name: $input"
-    
-    is_hotfix=1
-    release_branch="$input"
-    
-    if ! release_branch_exists; then 
-        die "💥 Error: Hotfix branch ${release_branch} does not exist"
-    fi
+	local input="$1"
+	echo "Processing hotfix branch name: $input"
+
+	is_hotfix=1
+	release_branch="$input"
+
+	if ! release_branch_exists; then 
+		die "💥 Error: Hotfix branch ${release_branch} does not exist"
+	fi
 }
 
 release_branch_exists() {
-    if git show-ref --verify --quiet "refs/heads/${release_branch}"; then
-        return 0
-    else
-        return 1
-    fi
+	if git show-ref --verify --quiet "refs/heads/${release_branch}"; then
+		return 0
+	else
+		return 1
+	fi
 }
 
 stash() {
@@ -151,8 +151,8 @@ create_build_branch() {
 
 	local latest_build_number
 	latest_build_number=$(agvtool what-version -terse)
-    build_number=$((latest_build_number + 1))
-    build_branch="${release_branch}-build-${build_number}"
+	build_number=$((latest_build_number + 1))
+	build_branch="${release_branch}-build-${build_number}"
 
 	if git show-ref --quiet "refs/heads/${build_branch}"; then
 		die "💥 Error: Branch ${build_branch} already exists"
@@ -178,9 +178,9 @@ update_marketing_version() {
 }
 
 bump_patch_number() {
-    IFS='.' read -ra arrIN <<< "$1"
-    local patch_number=$((arrIN[2] + 1))
-    echo "${arrIN[0]}.${arrIN[1]}.$patch_number"
+	IFS='.' read -ra arrIN <<< "$1"
+	local patch_number=$((arrIN[2] + 1))
+	echo "${arrIN[0]}.${arrIN[1]}.$patch_number"
 }
 
 update_build_version() {

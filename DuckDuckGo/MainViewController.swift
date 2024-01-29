@@ -1238,7 +1238,7 @@ class MainViewController: UIViewController {
             .store(in: &emailCancellables)
     }
 
-#if NETWORK_PROTECTION && (DEBUG || ALPHA)
+#if NETWORK_PROTECTION && SUBSCRIPTION
     private func subscribeToNetworkProtectionSubscriptionEvents() {
         NotificationCenter.default.publisher(for: .accountDidSignIn)
             .receive(on: DispatchQueue.main)

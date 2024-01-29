@@ -167,7 +167,7 @@ update_marketing_version() {
 
 	version=$(cut -d' ' -f3 < "${base_dir}/Configuration/Version.xcconfig")
 	if [[ $is_hotfix ]]; then
-		version=$(bump_version "$version")
+		version=$(bump_patch_number "$version")
 	fi
 
 	"$script_dir/set_version.sh" "${version}"
@@ -177,7 +177,7 @@ update_marketing_version() {
 	echo "✅"
 }
 
-bump_version() {
+bump_patch_number() {
     IFS='.' read -ra arrIN <<< "$1"
     local patch_number=$((arrIN[2] + 1))
     echo "${arrIN[0]}.${arrIN[1]}.$patch_number"
@@ -187,7 +187,6 @@ update_build_version() {
 	echo "Setting build version ..."
 	local username
 	username="$(git config user.email 2>&1)"
-	echo "haha: ${version}"
 	(cd "$base_dir" && bundle exec fastlane increment_build_number_for_version version:"${version}" username:"$username")
 	git add "${base_dir}/DuckDuckGo.xcodeproj/project.pbxproj"
 	if [[ "$(git diff --cached)" ]]; then
@@ -260,7 +259,7 @@ main() {
 
 	update_build_version
 	update_release_notes
-	# create_pull_request
+	create_pull_request
 }
 
 main "$@"

@@ -99,11 +99,7 @@ process_release() {
     
     if release_branch_exists; then 
         is_subsequent_release=1
-		latest_build_number=$(agvtool what-version -terse)
-        build_number=$((latest_build_number + 1))
     fi
-    
-    build_branch="${release_branch}-build-${build_number}"
 }
 
 process_hotfix() {
@@ -132,22 +128,16 @@ stash() {
 	echo "✅"
 }
 
-assert_clean_state() {
+create_release_branch() {
+	printf '%s' "Creating release branch ... "
+	eval git checkout "${release_branch_parent}" "$mute"
+	eval git pull "$mute"
+
 	if [[ ! $is_subsequent_release && ! $is_hotfix ]]; then
 		if git show-ref --quiet "refs/heads/${release_branch}"; then
 			die "💥 Error: Branch ${release_branch} already exists"
 		fi
 	fi
-	
-	if git show-ref --quiet "refs/heads/${build_branch}"; then
-		die "💥 Error: Branch ${build_branch} already exists"
-	fi
-}
-
-create_release_branch() {
-	printf '%s' "Creating release branch ... "
-	eval git checkout "${release_branch_parent}" "$mute"
-	eval git pull "$mute"
 
 	eval git checkout -b "${release_branch}" "$mute"
 	echo "✅"
@@ -157,6 +147,16 @@ create_build_branch() {
 	printf '%s' "Creating build branch ... "
 	eval git checkout "${release_branch}" "$mute"
 	eval git pull "$mute"
+
+	local latest_build_number
+	latest_build_number=$(agvtool what-version -terse)
+    build_number=$((latest_build_number + 1))
+    build_branch="${release_branch}-build-${build_number}"
+
+	if git show-ref --quiet "refs/heads/${build_branch}"; then
+		die "💥 Error: Branch ${build_branch} already exists"
+	fi
+
 	eval git checkout -b "${build_branch}" "$mute"
 	echo "✅"
 }
@@ -243,7 +243,6 @@ main() {
 
 	read_command_line_arguments "$@"
 	stash
-	assert_clean_state
 
 	if [[ $is_subsequent_release ]]; then 
 		create_build_branch

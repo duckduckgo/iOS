@@ -63,11 +63,16 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         case idle, purchasing, restoring, polling
     }
     
+    struct FeatureSelection: Codable {
+        let feature: String
+    }
+        
     @Published var transactionStatus: TransactionStatus = .idle
     @Published var hasActiveSubscription = false
     @Published var purchaseError: AppStorePurchaseFlow.Error?
     @Published var activateSubscription: Bool = false
     @Published var emailActivationComplete: Bool = false
+    @Published var selectedFeature: FeatureSelection?
     
     var broker: UserScriptMessageBroker?
 
@@ -232,14 +237,11 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func featureSelected(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        struct FeatureSelection: Codable {
-            let feature: String
-        }
-
         guard let featureSelection: FeatureSelection = DecodableHelper.decode(from: params) else {
             assertionFailure("SubscriptionPagesUserScript: expected JSON representation of FeatureSelection")
             return nil
         }
+        selectedFeature = featureSelection
         
         return nil
     }

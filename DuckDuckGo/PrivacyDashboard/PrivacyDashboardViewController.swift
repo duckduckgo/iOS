@@ -40,7 +40,7 @@ class PrivacyDashboardViewController: UIViewController {
     private let privacyDashboardController: PrivacyDashboardController
     private let privacyConfigurationManager: PrivacyConfigurationManaging
     private let contentBlockingManager: ContentBlockerRulesManager
-    public var breakageAdditionalInfo: BreakageAdditionaInfo?
+    public var breakageAdditionalInfo: BreakageAdditionalInfo?
     
     var source: WebsiteBreakage.Source {
         initMode == .reportBrokenSite ? .appMenu : .dashboard
@@ -59,7 +59,7 @@ class PrivacyDashboardViewController: UIViewController {
           privacyConfigurationManager: PrivacyConfigurationManaging,
           contentBlockingManager: ContentBlockerRulesManager,
           initMode: Mode,
-          breakageAdditionalInfo: BreakageAdditionaInfo?) {
+          breakageAdditionalInfo: BreakageAdditionalInfo?) {
         self.privacyDashboardController = PrivacyDashboardController(privacyInfo: privacyInfo)
         self.privacyConfigurationManager = privacyConfigurationManager
         self.contentBlockingManager = contentBlockingManager
@@ -213,7 +213,7 @@ extension PrivacyDashboardViewController: UIPopoverPresentationControllerDelegat
 
 extension PrivacyDashboardViewController {
     
-    struct BreakageAdditionaInfo {
+    struct BreakageAdditionalInfo {
         let currentURL: URL
         let httpsForced: Bool
         let ampURLString: String
@@ -257,6 +257,5 @@ extension PrivacyDashboardViewController {
                                model: UIDevice.current.model,
                                error: breakageAdditionalInfo.error,
                                httpStatusCode: breakageAdditionalInfo.httpStatusCode)
-
     }
 }

@@ -750,7 +750,7 @@ class TabViewController: UIViewController {
                                        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                        contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
                                        initMode: .privacyDashboard,
-                                       breakageAdditionalInfo: makeBreakageAdditionaInfo())
+                                       breakageAdditionalInfo: makeBreakageAdditionalInfo())
     }
     
     private func addTextSizeObserver() {
@@ -914,18 +914,18 @@ class TabViewController: UIViewController {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.title))
     }
 
-    public func makeBreakageAdditionaInfo() -> PrivacyDashboardViewController.BreakageAdditionaInfo? {
+    public func makeBreakageAdditionalInfo() -> PrivacyDashboardViewController.BreakageAdditionalInfo? {
         
         guard let currentURL = url else {
             return nil
         }
-        return PrivacyDashboardViewController.BreakageAdditionaInfo(currentURL: currentURL,
-                                                                    httpsForced: httpsForced,
-                                                                    ampURLString: linkProtection.lastAMPURLString ?? "",
-                                                                    urlParametersRemoved: linkProtection.urlParametersRemoved,
-                                                                    isDesktop: tabModel.isDesktop,
-                                                                    error: lastError,
-                                                                    httpStatusCode: lastHttpStatusCode)
+        return PrivacyDashboardViewController.BreakageAdditionalInfo(currentURL: currentURL,
+                                                                     httpsForced: httpsForced,
+                                                                     ampURLString: linkProtection.lastAMPURLString ?? "",
+                                                                     urlParametersRemoved: linkProtection.urlParametersRemoved,
+                                                                     isDesktop: tabModel.isDesktop,
+                                                                     error: lastError,
+                                                                     httpStatusCode: lastHttpStatusCode)
     }
 
     public func print() {
@@ -1050,7 +1050,9 @@ extension TabViewController: WKNavigationDelegate {
         
         appRatingPrompt.registerUsage()
      
-        if let scene = self.view.window?.windowScene, appRatingPrompt.shouldPrompt() {
+        if let scene = self.view.window?.windowScene,
+           appRatingPrompt.shouldPrompt(),
+           webView.url?.isDuckDuckGoSearch == true {
             SKStoreReviewController.requestReview(in: scene)
             appRatingPrompt.shown()
         }

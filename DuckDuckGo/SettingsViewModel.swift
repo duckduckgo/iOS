@@ -56,12 +56,18 @@ final class SettingsViewModel: ObservableObject {
     @UserDefaultsWrapper(key: .subscriptionIsActive, defaultValue: false)
     static private var cachedHasActiveSubscription: Bool
 
-    // Closures to interact with legacy view controllers throught the container
+    // Closures to interact with legacy view controllers through the container
     var onRequestPushLegacyView: ((UIViewController) -> Void)?
     var onRequestPresentLegacyView: ((UIViewController, _ modal: Bool) -> Void)?
     var onRequestPopLegacyView: (() -> Void)?
     var onRequestDismissSettings: (() -> Void)?
     
+    // SwiftUI Programatic Navigation Variables
+    // Add more views as needed here...    
+    @Published var shouldNavigateToDBP = false
+    @Published var shouldNavigateToITP = false
+    
+    // Subscription Entitlement names: TBD
     static let entitlementNames = ["dummy1", "dummy2", "dummy3"]
     
     // Our View State
@@ -81,6 +87,12 @@ final class SettingsViewModel: ObservableObject {
     }
                 
     var shouldShowNoMicrophonePermissionAlert: Bool = false
+    
+    // Used to automatically navigate on Appear to a specific section
+    enum SettingsSection: String {
+        case none, netP, dbp, itp
+    }
+    @Published var onAppearNavigationTarget: SettingsSection
     
     // MARK: Bindings
     var themeBinding: Binding<ThemeName> {
@@ -183,10 +195,14 @@ final class SettingsViewModel: ObservableObject {
     }
 
     // MARK: Default Init
-    init(state: SettingsState? = nil, legacyViewProvider: SettingsLegacyViewProvider, accountManager: AccountManager) {
+    init(state: SettingsState? = nil,
+         legacyViewProvider: SettingsLegacyViewProvider,
+         accountManager: AccountManager,
+         navigateOnAppearDestination: SettingsSection = .none) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
         self.accountManager = accountManager
+        self.onAppearNavigationTarget = navigateOnAppearDestination
     }
 }
  
@@ -287,7 +303,6 @@ extension SettingsViewModel {
             completion(true)
         }
     }
-    
 
     #if SUBSCRIPTION
     @available(iOS 15.0, *)
@@ -348,7 +363,6 @@ extension SettingsViewModel {
         }
     }
     #endif
-    
 }
 
 // MARK: Subscribers
@@ -365,7 +379,7 @@ extension SettingsViewModel {
             }
             .store(in: &cancellables)
     #endif
-        
+
     }
 }
 
@@ -374,6 +388,7 @@ extension SettingsViewModel {
     
     func onAppear() {
         initState()
+        Task { await MainActor.run { navigateOnAppear() } }
     }
     
     func setAsDefaultBrowser() {
@@ -399,6 +414,25 @@ extension SettingsViewModel {
     
     @MainActor func dismissSettings() {
         onRequestDismissSettings?()
+    }
+
+    @MainActor
+    private func navigateOnAppear() {
+        // We need a short delay to let the SwifttUI view lifecycle complete
+        // Otherwise the transition can be inconsistent
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            switch self.onAppearNavigationTarget {
+            case .netP:
+                self.presentLegacyView(.netP)
+            case .dbp:
+                self.shouldNavigateToDBP = true
+            case .itp:
+                self.shouldNavigateToITP = true
+            default:
+                break
+            }
+            self.onAppearNavigationTarget = .none
+        }
     }
 
 }

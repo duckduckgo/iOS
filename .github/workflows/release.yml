@@ -20,15 +20,13 @@ on:
     branches:
     - release/**
     - hotfix/**
-    - coldfix/**
     - '!release/**-' # filter out PRs matching that pattern
     - '!hotfix/**-'
-    - '!coldfix/**-'
     types: [closed]
 
 jobs:
   make-release:
-    if: github.event.action == 0 || github.event.pull_request.merged == true # empty string returns 0; for case when workflow is triggered manually
+    if: github.event.action == 0 || (github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'Merge triggers release')) # empty string returns 0; for case when workflow is triggered manually
     runs-on: macos-13-xlarge
     name: Make App Store Connect Release
 
@@ -98,7 +96,7 @@ jobs:
 
     - name: Upload debug symbols to Asana
       if: ${{ always() && github.event.inputs.asana-task-url }}
-      env:
+      env:     
         ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
       run: |
         if [[ -f ${{ env.dsyms_path }} ]]; then

@@ -24,6 +24,7 @@ import Foundation
 @available(iOS 15.0, *)
 struct SubscriptionFlowView: View {
         
+    @Environment(\.dismiss) var dismiss
     @ObservedObject var viewModel: SubscriptionFlowViewModel
     @State private var isAlertVisible = false
     
@@ -67,6 +68,11 @@ struct SubscriptionFlowView: View {
         .onChange(of: viewModel.hasActiveSubscription) { result in
             if result {
                 isAlertVisible = true
+            }
+        }
+        .onChange(of: viewModel.shouldDismissView) { result in
+            if result {
+                dismiss()
             }
         }
         

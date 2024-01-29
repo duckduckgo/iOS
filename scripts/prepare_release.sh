@@ -3,7 +3,6 @@
 set -eo pipefail
 
 mute=">/dev/null 2>&1"
-latest_build_number=$(agvtool what-version -terse)
 release_branch_parent="jacek/hotfix-changes"
 build_number=0
 
@@ -100,6 +99,7 @@ process_release() {
     
     if release_branch_exists; then 
         is_subsequent_release=1
+		latest_build_number=$(agvtool what-version -terse)
         build_number=$((latest_build_number + 1))
     fi
     

@@ -9977,8 +9977,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = branch;
-				branch = "bhall/bump-c-s-s-version";
+				kind = exactVersion;
+				version = 102.0.3;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

@@ -185,6 +185,7 @@ update_build_version() {
 	echo "Setting build version ..."
 	local username
 	username="$(git config user.email 2>&1)"
+	echo "haha: ${version}"
 	(cd "$base_dir" && bundle exec fastlane increment_build_number_for_version version:"${version}" username:"$username")
 	git add "${base_dir}/DuckDuckGo.xcodeproj/project.pbxproj"
 	if [[ "$(git diff --cached)" ]]; then

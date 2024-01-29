@@ -93,7 +93,7 @@ read_command_line_arguments() {
 }
 
 process_release() {
-    local version="$1"
+    version="$1"
     release_branch="release/${version}"
     
     echo "Processing version number: $version"

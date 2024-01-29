@@ -14,6 +14,7 @@ base_dir="${script_dir}/.."
 # Output passed arguments to stderr and exit.
 #
 die() {
+	echo ""
 	cat >&2 <<< "$*"
 	exit 1
 }

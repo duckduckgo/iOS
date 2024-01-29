@@ -1017,7 +1017,8 @@ extension Pixel.Event {
         // MARK: - Return user measurement
         case .debugReturnUserAddATB: return "m_debug_return_user_add_atb"
         case .debugReturnUserUpdateATB: return "m_debug_return_user_update_atb"
-        case .appRatingPromptFetchError: return "m_app_rating_prompt_fetch_error"
+            
+        case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
         }
         
     }

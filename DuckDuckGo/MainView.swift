@@ -200,9 +200,9 @@ extension MainViewFactory {
 
         NSLayoutConstraint.activate([
             coordinator.constraints.navigationBarContainerTop,
-            navigationBarContainer.constrainView(superview, by: .centerX),
-            navigationBarContainer.constrainView(superview, by: .width),
-            navigationBarContainer.constrainAttribute(.height, to: 52), // , relatedBy: .greaterThanOrEqual),
+            navigationBarContainer.constrainView(superview, by: .leading),
+            navigationBarContainer.constrainView(superview, by: .trailing),
+            navigationBarContainer.constrainAttribute(.height, to: 52),
         ])
     }
 

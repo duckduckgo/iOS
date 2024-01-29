@@ -56,7 +56,7 @@ class SwipeTabsCoordinator: NSObject {
         
         coordinator.navigationBarContainer.register(OmniBarCell.self, forCellWithReuseIdentifier: "omnibar")
         coordinator.navigationBarContainer.isPagingEnabled = true
-
+        
         super.init()
         
         updateLayout()
@@ -227,11 +227,14 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "omnibar", for: indexPath) as? OmniBarCell else {
             fatalError("Not \(OmniBarCell.self)")
         }
-        
+
         if tabsModel.currentIndex == indexPath.row {
             cell.omniBar = coordinator.omniBar
         } else {
+            cell.insetsLayoutMarginsFromSafeArea = true
+            
             let tab = tabsModel.get(tabAt: indexPath.row)
+
             cell.omniBar = OmniBar.loadFromXib()
             cell.omniBar?.translatesAutoresizingMaskIntoConstraints = false
             cell.omniBar?.startBrowsing()
@@ -253,19 +256,40 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
 
 class OmniBarCell: UICollectionViewCell {
     
+    weak var leadingConstraint: NSLayoutConstraint?
+    weak var trailingConstraint: NSLayoutConstraint?
+    
     weak var omniBar: OmniBar? {
         didSet {
             subviews.forEach { $0.removeFromSuperview() }
             if let omniBar {
                 addSubview(omniBar)
+                
+                let leadingConstraint = constrainView(omniBar, by: .leadingMargin)
+                let trailingConstraint = constrainView(omniBar, by: .trailingMargin)
+                
                 NSLayoutConstraint.activate([
-                    constrainView(omniBar, by: .leading),
-                    constrainView(omniBar, by: .trailing),
+                    leadingConstraint,
+                    trailingConstraint,
                     constrainView(omniBar, by: .top),
                     constrainView(omniBar, by: .bottom),
                 ])
+                
+                self.leadingConstraint = leadingConstraint
+                self.trailingConstraint = trailingConstraint
             }
         }
+    }
+    
+    override func updateConstraints() {
+        super.updateConstraints()
+        print("***", #function)
+
+        let left = superview?.safeAreaInsets.left ?? 0
+        let right = superview?.safeAreaInsets.right ?? 0
+        
+        leadingConstraint?.constant = -left
+        trailingConstraint?.constant = right
     }
     
 }

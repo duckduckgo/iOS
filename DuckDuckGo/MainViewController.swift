@@ -311,6 +311,7 @@ class MainViewController: UIViewController {
                 self?.select(tabAt: $0)
             } onSwipeStarted: { [weak self] in
                 guard let self, let currentTab = self.tabManager.current() else { return }
+                hideKeyboard()
                 currentTab.preparePreview(completion: { image in
                     guard let image else { return }
                     self.previewsSource.update(preview: image,

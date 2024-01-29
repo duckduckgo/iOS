@@ -642,7 +642,7 @@ class MainViewController: UIViewController {
     override var shouldAutorotate: Bool {
         return true
     }
-    
+        
     @objc func dismissSuggestionTray() {
         dismissOmniBar()
     }
@@ -1020,7 +1020,9 @@ class MainViewController: UIViewController {
 
         self.showMenuHighlighterIfNeeded()
         
-        coordinator.animate(alongsideTransition: nil) { _ in
+        coordinator.animate { _ in
+            self.swipeTabsCoordinator?.refresh(tabsModel: self.tabManager.model, scrollToSelected: true)
+        } completion: { _ in
             ViewHighlighter.updatePositions()
         }
     }

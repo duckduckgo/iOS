@@ -56,13 +56,10 @@ class SwipeTabsCoordinator: NSObject {
         
         coordinator.navigationBarContainer.register(OmniBarCell.self, forCellWithReuseIdentifier: "omnibar")
         coordinator.navigationBarContainer.isPagingEnabled = true
+
+        super.init()
         
-        let layout = coordinator.navigationBarContainer.collectionViewLayout as? UICollectionViewFlowLayout
-        layout?.scrollDirection = .horizontal
-        layout?.itemSize = CGSize(width: coordinator.superview.frame.size.width, height: coordinator.omniBar.frame.height)
-        layout?.minimumLineSpacing = 0
-        layout?.minimumInteritemSpacing = 0
-        layout?.scrollDirection = .horizontal
+        updateLayout()
     }
     
     enum State {
@@ -82,13 +79,32 @@ class SwipeTabsCoordinator: NSObject {
     
     weak var preview: UIView?
     
+    private func updateLayout() {
+        let layout = coordinator.navigationBarContainer.collectionViewLayout as? UICollectionViewFlowLayout
+        layout?.scrollDirection = .horizontal
+        layout?.itemSize = CGSize(width: coordinator.superview.frame.size.width, height: coordinator.omniBar.frame.height)
+        layout?.minimumLineSpacing = 0
+        layout?.minimumInteritemSpacing = 0
+        layout?.scrollDirection = .horizontal
+    }
+    
+    private func scrollToCurrent(animated: Bool = false) {
+        print("***", #function, animated)
+        DispatchQueue.main.async {
+            let indexPath = IndexPath(row: self.tabsModel.currentIndex, section: 0)
+            self.coordinator.navigationBarContainer.scrollToItem(at: indexPath,
+                                                                 at: .centeredHorizontally,
+                                                                 animated: animated)
+        }
+    }
 }
 
 // MARK: UICollectionViewDelegate
 extension SwipeTabsCoordinator: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print("***", #function, indexPath)
+        print("***", #function, "row:", indexPath.row, "currentIndex:", self.tabsModel.currentIndex)
+        scrollToCurrent()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -191,14 +207,10 @@ extension SwipeTabsCoordinator {
         
         self.tabsModel = tabsModel
         coordinator.navigationBarContainer.reloadData()
+        updateLayout()
         
         if scrollToItem {
-            DispatchQueue.main.async {
-                let indexPath = IndexPath(row: tabsModel.currentIndex, section: 0)
-                self.coordinator.navigationBarContainer.scrollToItem(at: indexPath,
-                                                                     at: .centeredHorizontally,
-                                                                     animated: false)
-            }
+            scrollToCurrent()
         }
     }
     

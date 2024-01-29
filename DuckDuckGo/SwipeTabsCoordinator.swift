@@ -37,6 +37,12 @@ class SwipeTabsCoordinator: NSObject {
     let selectTab: (Int) -> Void
     let onSwipeStarted: () -> Void
     
+    var isEnabled = false {
+        didSet {
+            coordinator.navigationBarContainer.reloadData()
+        }
+    }
+    
     init(coordinator: MainViewCoordinator,
          tabPreviewsSource: TabPreviewsSource,
          appSettings: AppSettings,
@@ -85,6 +91,8 @@ class SwipeTabsCoordinator: NSObject {
     }
     
     private func scrollToCurrent(animated: Bool = false) {
+        guard isEnabled else { return }
+        
         print("***", #function, animated)
         DispatchQueue.main.async {
             let indexPath = IndexPath(row: self.tabsModel.currentIndex, section: 0)
@@ -216,7 +224,7 @@ extension SwipeTabsCoordinator {
 extension SwipeTabsCoordinator: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tabsModel?.count ?? 0
+        return isEnabled ? tabsModel?.count ?? 0 : 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -224,7 +232,7 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
             fatalError("Not \(OmniBarCell.self)")
         }
 
-        if tabsModel.currentIndex == indexPath.row {
+        if !isEnabled || tabsModel.currentIndex == indexPath.row {
             cell.omniBar = coordinator.omniBar
         } else {
             cell.insetsLayoutMarginsFromSafeArea = true

@@ -4,7 +4,7 @@ set -eo pipefail
 
 mute=">/dev/null 2>&1"
 latest_build_number=$(agvtool what-version -terse)
-release_branch_parent="main"
+release_branch_parent="jacek/hotfix-changes"
 build_number=0
 
 # Get the directory where the script is stored
@@ -251,7 +251,7 @@ main() {
 
 	update_build_version
 	update_release_notes
-	create_pull_request
+	# create_pull_request
 }
 
 main "$@"

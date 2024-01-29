@@ -305,6 +305,8 @@ class TabViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        _ = ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+        
         preserveLoginsWorker = PreserveLoginsWorker(controller: self)
         initAttributionLogic()
         applyTheme(ThemeManager.shared.currentTheme)

@@ -81,6 +81,10 @@ extension MainViewFactory {
         // Layout is replaced elsewhere, but required to construct the view.
         coordinator.navigationBarContainer = NavigationBarContainer(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         coordinator.navigationBarContainer.decelerationRate = .fast
+        
+        // scrollview subclasses change the default to true, but we need this for the separator on the omnibar
+        coordinator.navigationBarContainer.clipsToBounds = false
+        
         superview.addSubview(coordinator.navigationBarContainer)
     }
 
@@ -190,22 +194,15 @@ extension MainViewFactory {
     private func constrainNavigationBarContainer() {
         let navigationBarContainer = coordinator.navigationBarContainer!
         let toolbar = coordinator.toolbar!
-//        let omniBar = coordinator.omniBar!
 
         coordinator.constraints.navigationBarContainerTop = navigationBarContainer.constrainView(superview.safeAreaLayoutGuide, by: .top)
         coordinator.constraints.navigationBarContainerBottom = navigationBarContainer.constrainView(toolbar, by: .bottom, to: .top)
-//        coordinator.constraints.omniBarBottom = omniBar.constrainView(navigationBarContainer, by: .bottom, relatedBy: .greaterThanOrEqual)
 
         NSLayoutConstraint.activate([
             coordinator.constraints.navigationBarContainerTop,
             navigationBarContainer.constrainView(superview, by: .centerX),
             navigationBarContainer.constrainView(superview, by: .width),
             navigationBarContainer.constrainAttribute(.height, to: 52), // , relatedBy: .greaterThanOrEqual),
-//            omniBar.constrainAttribute(.height, to: 52),
-//            omniBar.constrainView(navigationBarContainer, by: .top),
-//            omniBar.constrainView(navigationBarContainer, by: .leading),
-//            omniBar.constrainView(navigationBarContainer, by: .trailing),
-//            coordinator.constraints.omniBarBottom,
         ])
     }
 
@@ -372,7 +369,6 @@ class MainViewCoordinator {
         var notificationContainerTopToNavigationBar: NSLayoutConstraint!
         var notificationContainerTopToStatusBackground: NSLayoutConstraint!
         var notificationContainerHeight: NSLayoutConstraint!
-        // var omniBarBottom: NSLayoutConstraint!
         var progressBarTop: NSLayoutConstraint!
         var progressBarBottom: NSLayoutConstraint!
         var statusBackgroundToNavigationBarContainerBottom: NSLayoutConstraint!

@@ -23,9 +23,11 @@ import UIKit
 
 // TODO handle iPad
 
+// TODO handle orientation change
+
 // TODO slide the logo when in homescreen view?
 
-// TOD save preview when start dragging
+// TODO fix gap behind when keyboard shown
 
 class SwipeTabsCoordinator: NSObject {
     
@@ -34,13 +36,23 @@ class SwipeTabsCoordinator: NSObject {
     
     weak var coordinator: MainViewCoordinator!
     weak var tabPreviewsSource: TabPreviewsSource!
+    weak var appSettings: AppSettings!
     
     let selectTab: (Int) -> Void
+    let onSwipeStarted: () -> Void
     
-    init(coordinator: MainViewCoordinator, tabPreviewsSource: TabPreviewsSource, selectTab: @escaping (Int) -> Void) {
+    init(coordinator: MainViewCoordinator,
+         tabPreviewsSource: TabPreviewsSource,
+         appSettings: AppSettings,
+         selectTab: @escaping (Int) -> Void,
+         onSwipeStarted: @escaping () -> Void) {
+        
         self.coordinator = coordinator
         self.tabPreviewsSource = tabPreviewsSource
+        self.appSettings = appSettings
+        
         self.selectTab = selectTab
+        self.onSwipeStarted = onSwipeStarted
         
         coordinator.navigationBarContainer.register(OmniBarCell.self, forCellWithReuseIdentifier: "omnibar")
         coordinator.navigationBarContainer.isPagingEnabled = true
@@ -86,15 +98,14 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
             
         case .starting(let startPosition):
             let offset = startPosition.x - scrollView.contentOffset.x
-            // coordinator.contentContainer.transform.tx = offset
             preview?.transform.tx = offset
             createPreview(offset)
             state = .swiping(startPosition, offset.sign)
+            onSwipeStarted()
         
         case .swiping(let startPosition, let sign):
             let offset = startPosition.x - scrollView.contentOffset.x
             if offset.sign == sign {
-                // coordinator.contentContainer.transform.tx = offset
                 preview?.transform.tx = offset
             } else {
                 state = .finishing
@@ -123,11 +134,9 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
         imageView.layer.shadowOpacity = 0.5
         imageView.layer.shadowRadius = 10
         imageView.layer.shadowOffset = CGSize(width: 5, height: 5)
-        // imageView.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
 
         self.preview = imageView
         imageView.frame = CGRect(origin: .zero, size: coordinator.contentContainer.frame.size)
-        let gap = CGFloat(10 * modifier)
         imageView.frame.origin.x = (coordinator.contentContainer.frame.width * CGFloat(modifier))
         print("***", #function, "offset", imageView.frame.origin.x)
         coordinator.contentContainer.addSubview(imageView)
@@ -216,6 +225,13 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
             cell.omniBar?.startBrowsing()
             cell.omniBar?.refreshText(forUrl: tab.link?.url)
             cell.omniBar?.decorate(with: ThemeManager.shared.currentTheme)
+            
+            cell.omniBar?.showSeparator()
+            if self.appSettings.currentAddressBarPosition.isBottom {
+                cell.omniBar?.moveSeparatorToTop()
+            } else {
+                cell.omniBar?.moveSeparatorToBottom()
+            }
         }
         
         return cell

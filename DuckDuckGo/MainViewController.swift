@@ -224,7 +224,7 @@ class MainViewController: UIViewController {
         findInPageHeightLayoutConstraint = height
     }
     
-    var swipeTabsCoordinator: SwipeTabsCoordinator!
+    var swipeTabsCoordinator: SwipeTabsCoordinator?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -236,10 +236,7 @@ class MainViewController: UIViewController {
         viewCoordinator.toolbarForwardButton.action = #selector(onForwardPressed)
         viewCoordinator.toolbarFireButton.action = #selector(onFirePressed)
 
-        swipeTabsCoordinator = SwipeTabsCoordinator(coordinator: viewCoordinator, tabPreviewsSource: previewsSource, selectTab: select)
-                                                    
-        viewCoordinator.navigationBarContainer.delegate = swipeTabsCoordinator
-        viewCoordinator.navigationBarContainer.dataSource = swipeTabsCoordinator
+        configureSwipeTabsIfEnabled()
         
         loadSuggestionTray()
         loadTabsBarIfNeeded()
@@ -303,6 +300,37 @@ class MainViewController: UIViewController {
     override func performSegue(withIdentifier identifier: String, sender: Any?) {
         assertionFailure()
         super.performSegue(withIdentifier: identifier, sender: sender)
+    }
+    
+    private func configureSwipeTabsIfEnabled() {
+        // Swipe tabs will be the default eventually, so the hierarchy is constructed that way.
+        if featureFlagger.isFeatureOn(.swipeTabs) {
+            swipeTabsCoordinator = SwipeTabsCoordinator(coordinator: viewCoordinator,
+                                                        tabPreviewsSource: previewsSource,
+                                                        appSettings: appSettings) { [weak self] in
+                self?.select(tabAt: $0)
+            } onSwipeStarted: { [weak self] in
+                guard let self, let currentTab = self.tabManager.current() else { return }
+                currentTab.preparePreview(completion: { image in
+                    guard let image else { return }
+                    self.previewsSource.update(preview: image,
+                                               forTab: currentTab.tabModel)
+                })
+            }
+            
+            viewCoordinator.navigationBarContainer.dataSource = swipeTabsCoordinator
+            viewCoordinator.navigationBarContainer.delegate = swipeTabsCoordinator
+        } else {
+            // Readjust the hierarchy.
+            viewCoordinator.omniBar.translatesAutoresizingMaskIntoConstraints = true
+            viewCoordinator.omniBar.frame = viewCoordinator.navigationBarContainer.frame
+            viewCoordinator.navigationBarContainer.addSubview(viewCoordinator.omniBar)
+            
+            if !self.appSettings.currentAddressBarPosition.isBottom {
+                viewCoordinator.omniBar.showSeparator()
+                viewCoordinator.omniBar.moveSeparatorToBottom()
+            }
+        }
     }
 
     func loadSuggestionTray() {

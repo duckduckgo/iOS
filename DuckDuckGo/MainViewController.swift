@@ -236,7 +236,8 @@ class MainViewController: UIViewController {
         viewCoordinator.toolbarForwardButton.action = #selector(onForwardPressed)
         viewCoordinator.toolbarFireButton.action = #selector(onFirePressed)
 
-        configureSwipeTabsIfEnabled()
+        // configureSwipeTabsIfEnabled()
+        disableSwipeTabs()
         
         loadSuggestionTray()
         loadTabsBarIfNeeded()
@@ -302,35 +303,47 @@ class MainViewController: UIViewController {
         super.performSegue(withIdentifier: identifier, sender: sender)
     }
     
-    private func configureSwipeTabsIfEnabled() {
-        // Swipe tabs will be the default eventually, so the hierarchy is constructed that way.
-        if featureFlagger.isFeatureOn(.swipeTabs) {
-            swipeTabsCoordinator = SwipeTabsCoordinator(coordinator: viewCoordinator,
-                                                        tabPreviewsSource: previewsSource,
-                                                        appSettings: appSettings) { [weak self] in
-                self?.select(tabAt: $0)
-            } onSwipeStarted: { [weak self] in
-                guard let self, let currentTab = self.tabManager.current() else { return }
-                hideKeyboard()
-                currentTab.preparePreview(completion: { image in
-                    guard let image else { return }
-                    self.previewsSource.update(preview: image,
-                                               forTab: currentTab.tabModel)
-                })
-            }
-            
-            viewCoordinator.navigationBarContainer.dataSource = swipeTabsCoordinator
-            viewCoordinator.navigationBarContainer.delegate = swipeTabsCoordinator
-        } else {
-            // Readjust the hierarchy.
-            viewCoordinator.omniBar.translatesAutoresizingMaskIntoConstraints = true
-            viewCoordinator.omniBar.frame = viewCoordinator.navigationBarContainer.frame
-            viewCoordinator.navigationBarContainer.addSubview(viewCoordinator.omniBar)
-            
-            if !self.appSettings.currentAddressBarPosition.isBottom {
-                viewCoordinator.omniBar.showSeparator()
-                viewCoordinator.omniBar.moveSeparatorToBottom()
-            }
+    private func enableSwipeTabs() {
+        // This guard can be removed once the feature is enabled permanently.
+        guard featureFlagger.isFeatureOn(.swipeTabs) else {
+            disableSwipeTabs()
+            return
+        }
+
+        guard swipeTabsCoordinator == nil else {
+            return
+        }
+        
+        swipeTabsCoordinator = SwipeTabsCoordinator(coordinator: viewCoordinator,
+                                                    tabPreviewsSource: previewsSource,
+                                                    appSettings: appSettings) { [weak self] in
+            self?.select(tabAt: $0)
+        } onSwipeStarted: { [weak self] in
+            guard let self, let currentTab = self.tabManager.current() else { return }
+            hideKeyboard()
+            currentTab.preparePreview(completion: { image in
+                guard let image else { return }
+                self.previewsSource.update(preview: image,
+                                           forTab: currentTab.tabModel)
+            })
+        }
+        
+        viewCoordinator.navigationBarContainer.dataSource = swipeTabsCoordinator
+        viewCoordinator.navigationBarContainer.delegate = swipeTabsCoordinator
+        swipeTabsCoordinator?.refresh(tabsModel: self.tabManager.model, scrollToSelected: true)
+    }
+    
+    private func disableSwipeTabs() {
+        swipeTabsCoordinator = nil
+        
+        viewCoordinator.omniBar.removeFromSuperview()
+        viewCoordinator.omniBar.translatesAutoresizingMaskIntoConstraints = true
+        viewCoordinator.omniBar.frame = CGRect(origin: .zero, size: viewCoordinator.navigationBarContainer.frame.size)
+        viewCoordinator.navigationBarContainer.addSubview(viewCoordinator.omniBar)
+        
+        if !self.appSettings.currentAddressBarPosition.isBottom {
+            viewCoordinator.omniBar.showSeparator()
+            viewCoordinator.omniBar.moveSeparatorToBottom()
         }
     }
 
@@ -1087,12 +1100,16 @@ class MainViewController: UIViewController {
         viewCoordinator.tabBarContainer.isHidden = false
         viewCoordinator.toolbar.isHidden = true
         viewCoordinator.omniBar.enterPadState()
+        
+        disableSwipeTabs()
     }
 
     private func applySmallWidth() {
         viewCoordinator.tabBarContainer.isHidden = true
         viewCoordinator.toolbar.isHidden = false
         viewCoordinator.omniBar.enterPhoneState()
+        
+        enableSwipeTabs()
     }
 
     @discardableResult

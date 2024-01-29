@@ -19,11 +19,7 @@
 
 import UIKit
 
-// TODO handle new tab
-
-// TODO handle iPad
-
-// TODO handle orientation change
+// TODO handle launching on home screen tab
 
 // TODO slide the logo when in homescreen view?
 
@@ -220,7 +216,7 @@ extension SwipeTabsCoordinator {
 extension SwipeTabsCoordinator: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        tabsModel.count
+        return tabsModel?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

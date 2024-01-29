@@ -252,7 +252,7 @@ class MainViewController: UIViewController {
         addLaunchTabNotificationObserver()
         subscribeToEmailProtectionStatusNotifications()
 
-#if NETWORK_PROTECTION
+#if NETWORK_PROTECTION && SUBSCRIPTION
         subscribeToNetworkProtectionSubscriptionEvents()
 #endif
 

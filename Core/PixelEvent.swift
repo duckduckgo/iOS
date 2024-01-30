@@ -312,6 +312,7 @@ extension Pixel {
         case networkProtectionKeychainErrorFailedToCastKeychainValueToData
         case networkProtectionKeychainReadError
         case networkProtectionKeychainWriteError
+        case networkProtectionKeychainUpdateError
         case networkProtectionKeychainDeleteError
 
         case networkProtectionWireguardErrorCannotLocateTunnelFileDescriptor
@@ -810,6 +811,7 @@ extension Pixel.Event {
         case .networkProtectionKeychainErrorFailedToCastKeychainValueToData: return "m_netp_keychain_error_failed_to_cast_keychain_value_to_data"
         case .networkProtectionKeychainReadError: return "m_netp_keychain_error_read_failed"
         case .networkProtectionKeychainWriteError: return "m_netp_keychain_error_write_failed"
+        case .networkProtectionKeychainUpdateError: return "m_netp_keychain_error_update_failed"
         case .networkProtectionKeychainDeleteError: return "m_netp_keychain_error_delete_failed"
         case .networkProtectionWireguardErrorCannotLocateTunnelFileDescriptor: return "m_netp_wireguard_error_cannot_locate_tunnel_file_descriptor"
         case .networkProtectionWireguardErrorInvalidState: return "m_netp_wireguard_error_invalid_state"

@@ -78,7 +78,7 @@ struct SettingsState {
     // Features
     var debugModeEnabled: Bool
     var voiceSearchEnabled: Bool
-    var speechRecognitionEnabled: Bool
+    var speechRecognitionAvailable: Bool // Returns if the device has speech recognition available
     var loginsEnabled: Bool
     
     // Network Protection properties
@@ -108,7 +108,7 @@ struct SettingsState {
             version: "0.0.0.0",
             debugModeEnabled: false,
             voiceSearchEnabled: false,
-            speechRecognitionEnabled: false,
+            speechRecognitionAvailable: false,
             loginsEnabled: false,
             networkProtection: NetworkProtection(enabled: false, status: ""),
             subscription: Subscription(enabled: false, canPurchase: false,

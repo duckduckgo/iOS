@@ -156,7 +156,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
         // Set up a delayed publisher to fire just once that reenables the toggle
         // Each event cancels the previous delayed publisher
-        isLoadingPublisher
+        $shouldDisableToggle
             .filter { $0 }
             .map {
                 Just(!$0)

@@ -51,7 +51,7 @@ extension AppDelegate {
         VPNWaitlist.shared.fetchInviteCodeIfAvailable { [weak self] error in
             guard error == nil else {
 #if !DEBUG
-                if error == .alreadyHasInviteCode {
+                if error == .alreadyHasInviteCode, UIApplication.shared.applicationState == .active {
                     // If the user already has an invite code but their auth token has gone missing, attempt to redeem it again.
                     let tokenStore = NetworkProtectionKeychainTokenStore()
                     let waitlistStorage = VPNWaitlist.shared.waitlistStorage

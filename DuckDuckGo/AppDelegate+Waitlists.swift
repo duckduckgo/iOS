@@ -96,7 +96,7 @@ extension AppDelegate {
                 try await NetworkProtectionCodeRedemptionCoordinator().redeem(inviteCode)
                 VPNWaitlist.shared.sendInviteCodeAvailableNotification()
 
-                DailyPixel.fire(pixel: .networkProtectionWaitlistNotificationShown)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionWaitlistNotificationShown)
             } catch {}
         }
     }

@@ -40,5 +40,7 @@ final class UserText {
     static let networkProtectionConnectionInterruptedNotificationBody = NSLocalizedString("network.protection.interrupted.notification.body", value: "Network Protection was interrupted. Attempting to reconnect now...", comment: "The body of the notification shown when Network Protection's connection is interrupted")
 
     static let networkProtectionConnectionFailureNotificationBody = NSLocalizedString("network.protection.failure.notification.body", value: "Network Protection failed to connect. Please try again later.", comment: "The body of the notification shown when Network Protection fails to reconnect")
+
+    static let networkProtectionEntitlementExpiredNotificationBody = NSLocalizedString("network.protection.entitlement.expired.notification.body", value: "VPN disconnected due to expired subscription. Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.", comment: "The body of the notification when Privacy Pro subscription expired")
 }
 // swiftlint:enable line_length

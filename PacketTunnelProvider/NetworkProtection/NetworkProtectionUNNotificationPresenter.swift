@@ -62,7 +62,7 @@ final class NetworkProtectionUNNotificationPresenter: NSObject, NetworkProtectio
         content.title = UserText.networkProtectionNotificationsTitle
         content.body = body
 
-        if #available(iOSApplicationExtension 15.0, *) {
+        if #available(iOS 15.0, *) {
             content.interruptionLevel = .timeSensitive
             content.relevanceScore = 0
         }
@@ -103,6 +103,11 @@ final class NetworkProtectionUNNotificationPresenter: NSObject, NetworkProtectio
     }
 
     func showSupersededNotification() {
+    }
+
+    func showExpiredEntitlementNotification() {
+        let content = notificationContent(body: UserText.networkProtectionEntitlementExpiredNotificationBody)
+        showNotification(.entitlement, content)
     }
 
     private func showNotification(_ identifier: NetworkProtectionNotificationIdentifier, _ content: UNNotificationContent) {

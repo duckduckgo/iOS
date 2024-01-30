@@ -27,6 +27,8 @@ import UIKit
 
 class SwipeTabsCoordinator: NSObject {
     
+    static let tabGap: CGFloat = 10
+    
     // Set by refresh function
     weak var tabsModel: TabsModel!
     
@@ -86,6 +88,7 @@ class SwipeTabsCoordinator: NSObject {
     }
     
     weak var preview: UIView?
+    weak var currentView: UIView?
     
     private func updateLayout() {
         let layout = coordinator.navigationBarContainer.collectionViewLayout as? UICollectionViewFlowLayout
@@ -124,8 +127,8 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
             
         case .starting(let startPosition):
             let offset = startPosition.x - scrollView.contentOffset.x
-            preview?.transform.tx = offset
-            createPreview(offset)
+            prepareCurrentView()
+            preparePreview(offset)
             state = .swiping(startPosition, offset.sign)
             onSwipeStarted()
         
@@ -133,6 +136,7 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
             let offset = startPosition.x - scrollView.contentOffset.x
             if offset.sign == sign {
                 preview?.transform.tx = offset
+                currentView?.transform.tx = offset
             } else {
                 state = .finishing
             }
@@ -141,7 +145,13 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
         }
     }
     
-    private func createPreview(_ offset: CGFloat) {
+    private func prepareCurrentView() {
+        if coordinator.contentContainer.subviews.indices.contains(0) {
+            currentView = coordinator.contentContainer.subviews[0]
+        }
+    }
+    
+    private func preparePreview(_ offset: CGFloat) {
         let modifier = (offset > 0 ? -1 : 1)
         let nextIndex = tabsModel.currentIndex + modifier
         print("***", #function, "nextIndex", nextIndex)
@@ -157,14 +167,15 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
         
         let imageView = UIImageView(image: image)
 
-        imageView.layer.shadowOpacity = 0.5
-        imageView.layer.shadowRadius = 10
-        imageView.layer.shadowOffset = CGSize(width: 5, height: 5)
+//        imageView.layer.shadowOpacity = 0.5
+//        imageView.layer.shadowRadius = 10
+//        imageView.layer.shadowOffset = CGSize(width: 5, height: 5)
 
         self.preview = imageView
         imageView.frame = CGRect(origin: .zero, size: coordinator.contentContainer.frame.size)
-        imageView.frame.origin.x = (coordinator.contentContainer.frame.width * CGFloat(modifier))
-        print("***", #function, "offset", imageView.frame.origin.x)
+        imageView.frame.origin.x = coordinator.contentContainer.frame.width * CGFloat(modifier)
+        
+        print("***", #function, "offset:", offset, "modified:", imageView.frame.origin.x)
         coordinator.contentContainer.addSubview(imageView)
     }
     
@@ -182,7 +193,8 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
         assert(index != nil)
         feedbackGenerator.selectionChanged()
         selectTab(index ?? coordinator.navigationBarContainer.indexPathsForVisibleItems[0].row)
-                
+        
+        currentView?.transform.tx = 0
         preview?.removeFromSuperview()
 
         state = .idle

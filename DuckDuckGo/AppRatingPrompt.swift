@@ -25,8 +25,8 @@ protocol AppRatingPromptStorage {
     
     var lastAccess: Date? { get set }
     
-    var uniqueAccessDays: Int { get set }
-    
+    var uniqueAccessDays: Int? { get set }
+
     var lastShown: Date? { get set }
     
 }
@@ -40,8 +40,8 @@ class AppRatingPrompt {
     }
     
     func registerUsage(onDate date: Date = Date()) {
-        if !date.isSameDay(storage.lastAccess) {
-            storage.uniqueAccessDays += 1
+        if !date.isSameDay(storage.lastAccess), let currentUniqueAccessDays = storage.uniqueAccessDays {
+            storage.uniqueAccessDays = currentUniqueAccessDays + 1
         }
         storage.lastAccess = date
     }
@@ -60,33 +60,39 @@ class AppRatingPromptCoreDataStorage: AppRatingPromptStorage {
     
     var lastAccess: Date? {
         get {
-            return ratingPromptEntity().lastAccess
+            return ratingPromptEntity()?.lastAccess
         }
         
         set {
-            ratingPromptEntity().lastAccess = newValue
+            ratingPromptEntity()?.lastAccess = newValue
             try? context.save()
         }
     }
     
-    var uniqueAccessDays: Int {
+    var uniqueAccessDays: Int? {
         get {
-            return Int(ratingPromptEntity().uniqueAccessDays)
+            guard let ratingPromptEntity = ratingPromptEntity() else {
+                return nil
+            }
+            return Int(ratingPromptEntity.uniqueAccessDays)
         }
         
         set {
-            ratingPromptEntity().uniqueAccessDays = Int64(newValue)
+            guard let newValue else {
+                return
+            }
+            ratingPromptEntity()?.uniqueAccessDays = Int64(newValue)
             try? context.save()
         }
     }
     
     var lastShown: Date? {
         get {
-            return ratingPromptEntity().lastShown
+            return ratingPromptEntity()?.lastShown
         }
         
         set {
-            ratingPromptEntity().lastShown = newValue
+            ratingPromptEntity()?.lastShown = newValue
             try? context.save()
         }
     }
@@ -95,13 +101,19 @@ class AppRatingPromptCoreDataStorage: AppRatingPromptStorage {
     
     public init() { }
     
-    func ratingPromptEntity() -> AppRatingPromptEntity {
+    func ratingPromptEntity() -> AppRatingPromptEntity? {
 
         let fetchRequest: NSFetchRequest<AppRatingPromptEntity> = AppRatingPromptEntity.fetchRequest()
-        
-        guard let results = try? context.fetch(fetchRequest) else {
-            fatalError("Error fetching AppRatingPromptEntity")
+
+        let results: [AppRatingPromptEntity]
+
+        do {
+            results = try context.fetch(fetchRequest)
+        } catch {
+            DailyPixel.fireDailyAndCount(pixel: .appRatingPromptFetchError, error: error, includedParameters: [.appVersion])
+            return nil
         }
+
 
         if let result = results.first {
             return result

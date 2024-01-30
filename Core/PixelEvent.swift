@@ -342,6 +342,7 @@ extension Pixel {
         case networkProtectionWaitlistTermsAccepted
         case networkProtectionWaitlistNotificationShown
         case networkProtectionWaitlistNotificationLaunched
+        case networkProtectionWaitlistRetriedInviteCodeRedemption
 
         case networkProtectionGeoswitchingOpened
         case networkProtectionGeoswitchingSetNearest
@@ -522,6 +523,8 @@ extension Pixel {
         case emailIncontextModalExitEarlyContinue
 
         case compilationFailed
+
+        case appRatingPromptFetchError
     }
     
 }
@@ -835,6 +838,7 @@ extension Pixel.Event {
         case .networkProtectionWaitlistTermsAccepted: return "m_netp_waitlist_terms_accepted"
         case .networkProtectionWaitlistNotificationShown: return "m_netp_waitlist_notification_shown"
         case .networkProtectionWaitlistNotificationLaunched: return "m_netp_waitlist_notification_launched"
+        case .networkProtectionWaitlistRetriedInviteCodeRedemption: return "m_netp_waitlist_retried_invite_code_redemption"
 
         case .networkProtectionGeoswitchingOpened: return "m_netp_imp_geoswitching"
         case .networkProtectionGeoswitchingSetNearest: return "m_netp_ev_geoswitching_set_nearest"
@@ -1017,6 +1021,8 @@ extension Pixel.Event {
         // MARK: - Return user measurement
         case .debugReturnUserAddATB: return "m_debug_return_user_add_atb"
         case .debugReturnUserUpdateATB: return "m_debug_return_user_update_atb"
+            
+        case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
         }
         
     }

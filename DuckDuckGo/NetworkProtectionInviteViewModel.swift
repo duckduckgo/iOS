@@ -84,19 +84,6 @@ final class NetworkProtectionInviteViewModel: ObservableObject {
         completion()
     }
 
-    // MARK: Dev only. Will be removed during https://app.asana.com/0/0/1205084446087078/f
-
-    @MainActor
-    func clear() async {
-        errorText = ""
-        do {
-            try NetworkProtectionKeychainTokenStore().deleteToken()
-            updateAuthenticatedText()
-        } catch {
-            errorText = "Could not clear token"
-        }
-    }
-
     @Published var redeemedText: String?
 
     private func updateAuthenticatedText() {

@@ -53,11 +53,12 @@ extension NetworkProtectionKeychainTokenStore {
 }
 
 extension NetworkProtectionCodeRedemptionCoordinator {
-    convenience init() {
+    convenience init(isManualCodeRedemptionFlow: Bool = false) {
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
         self.init(
             environment: settings.selectedEnvironment,
             tokenStore: NetworkProtectionKeychainTokenStore(),
+            isManualCodeRedemptionFlow: isManualCodeRedemptionFlow,
             errorEvents: .networkProtectionAppDebugEvents
         )
     }

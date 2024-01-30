@@ -56,6 +56,22 @@ extension AppDelegate {
                     let tokenStore = NetworkProtectionKeychainTokenStore()
                     let waitlistStorage = VPNWaitlist.shared.waitlistStorage
                     if let inviteCode = waitlistStorage.getWaitlistInviteCode(), !tokenStore.isFeatureActivated {
+                        do {
+                            if let token = try tokenStore.fetchToken() {
+                                Pixel.fire(pixel: .networkProtectionWaitlistRetriedInviteCodeRedemption, withAdditionalParameters: [
+                                    "tokenState": "found"
+                                ])
+                            } else {
+                                Pixel.fire(pixel: .networkProtectionWaitlistRetriedInviteCodeRedemption, withAdditionalParameters: [
+                                    "tokenState": "nil"
+                                ])
+                            }
+                        } catch {
+                            Pixel.fire(pixel: .networkProtectionWaitlistRetriedInviteCodeRedemption, error: error, withAdditionalParameters: [
+                                "tokenState": "error"
+                            ])
+                        }
+
                         self?.fetchVPNWaitlistAuthToken(inviteCode: inviteCode)
                     }
                 }

@@ -148,6 +148,9 @@ class MainViewController: UIViewController {
     
     private var keyboardHeight: CGFloat = 0.0
     
+    var postClear: (() -> Void)?
+    var clearInProgress = false
+
     required init?(coder: NSCoder) {
         fatalError("Use init?(code:")
     }
@@ -256,7 +259,7 @@ class MainViewController: UIViewController {
         addLaunchTabNotificationObserver()
         subscribeToEmailProtectionStatusNotifications()
 
-#if NETWORK_PROTECTION
+#if NETWORK_PROTECTION && SUBSCRIPTION
         subscribeToNetworkProtectionSubscriptionEvents()
 #endif
 
@@ -859,23 +862,31 @@ class MainViewController: UIViewController {
     }
 
     func loadUrlInNewTab(_ url: URL, reuseExisting: Bool = false, inheritedAttribution: AdClickAttributionLogic.State?) {
-        allowContentUnderflow = false
-        viewCoordinator.navigationBarContainer.alpha = 1
-        loadViewIfNeeded()
-        if reuseExisting, let existing = tabManager.first(withUrl: url) {
-            selectTab(existing)
-            return
-        } else if reuseExisting, let existing = tabManager.firstHomeTab() {
-            tabManager.selectTab(existing)
-            loadUrl(url)
-        } else {
-            addTab(url: url, inheritedAttribution: inheritedAttribution)
+        func worker() {
+            allowContentUnderflow = false
+            viewCoordinator.navigationBarContainer.alpha = 1
+            loadViewIfNeeded()
+            if reuseExisting, let existing = tabManager.first(withUrl: url) {
+                selectTab(existing)
+                return
+            } else if reuseExisting, let existing = tabManager.firstHomeTab() {
+                tabManager.selectTab(existing)
+                loadUrl(url)
+            } else {
+                addTab(url: url, inheritedAttribution: inheritedAttribution)
+            }
+            refreshOmniBar()
+            refreshTabIcon()
+            refreshControls()
+            tabsBarController?.refresh(tabsModel: tabManager.model)
+            swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
         }
-        refreshOmniBar()
-        refreshTabIcon()
-        refreshControls()
-        tabsBarController?.refresh(tabsModel: tabManager.model)
-        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
+        
+        if clearInProgress {
+            postClear = worker
+        } else {
+            worker()
+        }
     }
     
     func enterSearch() {
@@ -923,9 +934,6 @@ class MainViewController: UIViewController {
             if tabManager.current(createIfNeeded: true) == nil {
                 fatalError("failed to create tab")
             }
-
-            // Likely this hasn't happened yet so the publishers won't be loaded and will block the webview from loading
-            _ = ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
         }
 
         guard let tab = currentTab else { fatalError("no tab") }
@@ -1325,7 +1333,7 @@ class MainViewController: UIViewController {
             .store(in: &emailCancellables)
     }
 
-#if NETWORK_PROTECTION
+#if NETWORK_PROTECTION && SUBSCRIPTION
     private func subscribeToNetworkProtectionSubscriptionEvents() {
         NotificationCenter.default.publisher(for: .accountDidSignIn)
             .receive(on: DispatchQueue.main)
@@ -2176,6 +2184,11 @@ extension MainViewController: AutoClearWorker {
     }
     
     func forgetData() {
+        guard !clearInProgress else {
+            assertionFailure("Shouldn't get called multiple times")
+            return
+        }
+        clearInProgress = true
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
         let pixel = TimedPixel(.forgetAllDataCleared)
@@ -2190,6 +2203,10 @@ extension MainViewController: AutoClearWorker {
             }
 
             self.refreshUIAfterClear()
+            self.clearInProgress = false
+            
+            self.postClear?()
+            self.postClear = nil
         }
 
     }

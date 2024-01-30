@@ -37,7 +37,7 @@ extension ContentBlockerRulesIdentifier.Difference {
 }
 
 public final class ContentBlockingUpdating {
-    fileprivate static let shared = ContentBlockingUpdating()
+    static let shared = ContentBlockingUpdating()
 
     private typealias Update = ContentBlockerRulesManager.UpdateEvent
     struct NewContent: UserContentControllerNewContent {
@@ -55,7 +55,7 @@ public final class ContentBlockingUpdating {
 
     private(set) var userContentBlockingAssets: AnyPublisher<NewContent, Never>!
 
-    init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
+    init(appSettings: AppSettings = AppUserDefaults(),
          contentBlockerRulesManager: ContentBlockerRulesManagerProtocol = ContentBlocking.shared.contentBlockingManager,
          privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
 

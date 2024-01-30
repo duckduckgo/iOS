@@ -108,6 +108,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         ContentBlocking.shared.onCriticalError = presentPreemptiveCrashAlert
+        // Explicitly prepare ContentBlockingUpdating instance before Tabs are created
+        _ = ContentBlockingUpdating.shared
 
         // Can be removed after a couple of versions
         cleanUpMacPromoExperiment2()

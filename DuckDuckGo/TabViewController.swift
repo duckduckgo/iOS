@@ -722,7 +722,6 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
             privacyDashboard = controller
-            privacyDashboard?.brokenSiteInfo = getCurrentWebsiteInfo()
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
@@ -749,7 +748,8 @@ class TabViewController: UIViewController {
                                        privacyInfo: privacyInfo,
                                        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                        contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
-                                       initMode: .privacyDashboard)
+                                       initMode: .privacyDashboard,
+                                       breakageAdditionalInfo: makeBreakageAdditionalInfo())
     }
     
     private func addTextSizeObserver() {
@@ -912,22 +912,17 @@ class TabViewController: UIViewController {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.title))
     }
+
+    public func makeBreakageAdditionalInfo() -> PrivacyDashboardViewController.BreakageAdditionalInfo? {
         
-    public func getCurrentWebsiteInfo() -> BrokenSiteInfo {
-        let blockedTrackerDomains = privacyInfo?.trackerInfo.trackersBlocked.compactMap { $0.domain } ?? []
-
-        let configuration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
-        let protectionsState = configuration.isFeature(.contentBlocking, enabledForDomain: url?.host)
-
-        return BrokenSiteInfo(url: url,
-                              httpsUpgrade: httpsForced,
-                              blockedTrackerDomains: blockedTrackerDomains,
-                              installedSurrogates: privacyInfo?.trackerInfo.installedSurrogates.map { $0 } ?? [],
-                              isDesktop: tabModel.isDesktop,
-                              tdsETag: ContentBlocking.shared.contentBlockingManager.currentMainRules?.etag ?? "",
-                              ampUrl: linkProtection.lastAMPURLString,
-                              urlParametersRemoved: linkProtection.urlParametersRemoved,
-                              protectionsState: protectionsState)
+        guard let currentURL = url else {
+            return nil
+        }
+        return PrivacyDashboardViewController.BreakageAdditionalInfo(currentURL: currentURL,
+                                                                    httpsForced: httpsForced,
+                                                                    ampURLString: linkProtection.lastAMPURLString ?? "",
+                                                                    urlParametersRemoved: linkProtection.urlParametersRemoved,
+                                                                    isDesktop: tabModel.isDesktop)
     }
     
     public func print() {

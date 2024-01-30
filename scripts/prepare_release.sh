@@ -232,6 +232,7 @@ update_release_notes() {
 
 create_pull_request() {
 	printf '%s' "Creating PR ... "
+	eval git push origin "${build_branch}" "$mute"
 	eval gh pr create --title \"Release "${version}-${build_number}"\" --base "${release_branch}" --label \"Merge triggers release\" --assignee @me "$mute" --body-file "${script_dir}/assets/prepare-release-description"
 	eval gh pr view --web "$mute"
 	echo "✅"

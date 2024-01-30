@@ -148,7 +148,7 @@ lane :latest_build_number_for_version do |options|
   build_number = latest_testflight_build_number(
     api_key: get_api_key,
     version: options[:version],
-    initial_build_number: 0,
+    initial_build_number: -1,
     username: get_username(options))
   if options[:file_name]
     File.write(options[:file_name], build_number)

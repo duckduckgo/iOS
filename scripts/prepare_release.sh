@@ -171,8 +171,8 @@ create_build_branch() {
 update_marketing_version() {
 	printf '%s' "Setting app version ... "
 
-	version=$(cut -d' ' -f3 < "${base_dir}/Configuration/Version.xcconfig")
 	if [[ $is_hotfix ]]; then
+		version=$(cut -d' ' -f3 < "${base_dir}/Configuration/Version.xcconfig")
 		version=$(bump_patch_number "$version")
 	fi
 

@@ -90,8 +90,10 @@ final class BrokenSiteReportingTests: XCTestCase {
                                               reportFlow: .dashboard,
                                               siteType: .mobile,
                                               atb: "",
-                                              model: test.model ?? "")
-        
+                                              model: test.model ?? "",
+                                              error: nil,
+                                              httpStatusCode: nil)
+
         let reporter = WebsiteBreakageReporter(pixelHandler: { params in
             
             for expectedParam in test.expectReportURLParams {

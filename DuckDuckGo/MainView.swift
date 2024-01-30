@@ -61,9 +61,9 @@ extension MainViewFactory {
         createStatusBackground()
         createTabBarContainer()
         createOmniBar()
+        createToolbar()
         createNavigationBarContainer()
         createProgressView()
-        createToolbar()
     }
     
     private func createProgressView() {
@@ -76,7 +76,16 @@ extension MainViewFactory {
         coordinator.omniBar.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    final class NavigationBarContainer: UICollectionView { }
+    final class NavigationBarContainer: UICollectionView {
+        
+        var hitTestInsets = UIEdgeInsets.zero
+        
+        override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+            var extendedBounds = bounds.inset(by: hitTestInsets)
+            return extendedBounds.contains(point)
+        }
+    }
+    
     private func createNavigationBarContainer() {
         // Layout is replaced elsewhere, but required to construct the view.
         coordinator.navigationBarContainer = NavigationBarContainer(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -323,7 +332,7 @@ class MainViewCoordinator {
     var logo: UIImageView!
     var logoContainer: UIView!
     var logoText: UIImageView!
-    var navigationBarContainer: UICollectionView!
+    var navigationBarContainer: MainViewFactory.NavigationBarContainer!
     var notificationBarContainer: UIView!
     var omniBar: OmniBar!
     var progress: ProgressView!

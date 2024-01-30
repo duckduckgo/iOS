@@ -266,6 +266,7 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
 extension SwipeTabsCoordinator {
     
     func refresh(tabsModel: TabsModel, scrollToSelected: Bool = false) {
+        print("***", #function)
         let scrollToItem = self.tabsModel == nil
         
         self.tabsModel = tabsModel
@@ -274,6 +275,18 @@ extension SwipeTabsCoordinator {
         
         if scrollToItem {
             scrollToCurrent()
+        }
+    }
+    
+    func addressBarPositionChanged(isTop: Bool) {
+        if isTop {
+            coordinator.navigationBarContainer.horizontalScrollIndicatorInsets.bottom = 50
+            coordinator.navigationBarContainer.hitTestInsets.top = -12
+            coordinator.navigationBarContainer.hitTestInsets.bottom = 0
+        } else {
+            coordinator.navigationBarContainer.horizontalScrollIndicatorInsets.bottom = -8
+            coordinator.navigationBarContainer.hitTestInsets.top = 0
+            coordinator.navigationBarContainer.hitTestInsets.bottom = -12
         }
     }
     

@@ -77,6 +77,14 @@ Makes App Store release build and uploads it to TestFlight
 
 Makes Alpha release build and uploads it to TestFlight
 
+### latest_build_number_for_version
+
+```sh
+[bundle exec] fastlane latest_build_number_for_version
+```
+
+Latest build number for version
+
 ### increment_build_number_for_version
 
 ```sh

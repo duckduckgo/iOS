@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sam/suppress-noisy-vpn-pixels",
-        "revision" : "0851a57999c94f2900adaec2cb2d367d1a7a89f2"
+        "revision" : "872090e651ad8e26ca9903a95f3d094b21d48e23",
+        "version" : "104.0.0"
       }
     },
     {

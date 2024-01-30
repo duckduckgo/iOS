@@ -101,11 +101,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 #endif
 
-        if isDebugBuild {
-            Pixel.isDryRun = true
-        } else {
-            Pixel.isDryRun = false
-        }
+#if DEBUG && !ALPHA
+        Pixel.isDryRun = true
+#else
+        Pixel.isDryRun = false
+#endif
 
         ContentBlocking.shared.onCriticalError = presentPreemptiveCrashAlert
 

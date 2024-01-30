@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "jacek/error-codes",
-        "revision" : "3d10d5c020ca02e4eeeac6ff8e5183642aa2dae6"
+        "revision" : "381cd794bd00b388e8db4722af0a78cb8c729ef9",
+        "version" : "104.0.2"
       }
     },
     {

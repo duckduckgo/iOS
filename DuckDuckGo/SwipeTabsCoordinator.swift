@@ -37,6 +37,12 @@ class SwipeTabsCoordinator: NSObject {
     let selectTab: (Int) -> Void
     let onSwipeStarted: () -> Void
     
+    let feedbackGenerator: UISelectionFeedbackGenerator = {
+        let generator = UISelectionFeedbackGenerator()
+        generator.prepare()
+        return generator
+    }()
+    
     var isEnabled = false {
         didSet {
             coordinator.navigationBarContainer.reloadData()
@@ -174,6 +180,7 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
                             y: coordinator.navigationBarContainer.bounds.midY)
         let index = coordinator.navigationBarContainer.indexPathForItem(at: point)?.row
         assert(index != nil)
+        feedbackGenerator.selectionChanged()
         selectTab(index ?? coordinator.navigationBarContainer.indexPathsForVisibleItems[0].row)
                 
         preview?.removeFromSuperview()

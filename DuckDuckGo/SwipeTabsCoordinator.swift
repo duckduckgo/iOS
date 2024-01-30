@@ -162,8 +162,11 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
     }
     
     private func prepareCurrentView() {
-        if coordinator.contentContainer.subviews.indices.contains(0) {
-            currentView = coordinator.contentContainer.subviews[0]
+        
+        if tabsModel.currentTab?.link == nil {
+            currentView = coordinator.logoContainer
+        } else {
+            currentView = coordinator.contentContainer.subviews.last
         }
     }
     
@@ -175,20 +178,44 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
             print("***", #function, "invalid index", nextIndex)
             return
         }
+        
+        let targetFrame = CGRect(origin: .zero, size: coordinator.contentContainer.frame.size)
+        
         let tab = tabsModel.get(tabAt: nextIndex)
-        guard let image = tabPreviewsSource.preview(for: tab) else {
-            print("***", #function, "no preview for tab at index", nextIndex)
-            return
+        if let image = tabPreviewsSource.preview(for: tab) {
+            print("***", #function, "image preview")
+            createPreviewFromImage(image)
+        } else if tab.link == nil {
+            print("***", #function, "home screen preview")
+            createPreviewFromLogoContainerWithSize(targetFrame.size)
+        } else {
+            print("***", #function, "no preview found")
         }
         
-        let imageView = UIImageView(image: image)
-
-        self.preview = imageView
-        imageView.frame = CGRect(origin: .zero, size: coordinator.contentContainer.frame.size)
-        imageView.frame.origin.x = coordinator.contentContainer.frame.width * CGFloat(modifier)
+        preview?.frame = targetFrame
+        preview?.frame.origin.x = coordinator.contentContainer.frame.width * CGFloat(modifier)
         
-        print("***", #function, "offset:", offset, "modified:", imageView.frame.origin.x)
+        print("***", #function, "offset:", offset, "modified:", preview?.frame.origin.x ?? .nan)
+    }
+    
+    private func createPreviewFromImage(_ image: UIImage) {
+        let imageView = UIImageView(image: image)
         coordinator.contentContainer.addSubview(imageView)
+        preview = imageView
+    }
+    
+    private func createPreviewFromLogoContainerWithSize(_ size: CGSize) {
+        let origin = coordinator.contentContainer.convert(CGPoint.zero, to: coordinator.logoContainer)
+        let snapshotFrame = CGRect(origin: origin, size: size)
+        let isHidden = coordinator.logoContainer.isHidden
+        coordinator.logoContainer.isHidden = false
+        if let snapshotView = coordinator.logoContainer.resizableSnapshotView(from: snapshotFrame,
+                                                                              afterScreenUpdates: true,
+                                                                              withCapInsets: .zero) {
+            coordinator.contentContainer.addSubview(snapshotView)
+            preview = snapshotView
+        }
+        coordinator.logoContainer.isHidden = isHidden
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {

@@ -135,7 +135,9 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
         case .swiping(let startPosition, let sign):
             let offset = startPosition.x - scrollView.contentOffset.x
             if offset.sign == sign {
-                preview?.transform.tx = offset
+                let modifier = sign == .plus ? -1.0 : 1.0
+                swipePreviewProportionally(offset: offset, modifier: modifier)
+                swipeCurrentViewProportionally(offset: offset)
                 currentView?.transform.tx = offset
             } else {
                 state = .finishing
@@ -143,6 +145,20 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
         
         case .finishing: break
         }
+    }
+    
+    private func swipeCurrentViewProportionally(offset: CGFloat) {
+        currentView?.transform.tx = offset
+    }
+    
+    private func swipePreviewProportionally(offset: CGFloat, modifier: CGFloat) {
+        let width = coordinator.contentContainer.frame.width
+        let percent = offset / width
+        let swipeWidth = width + Self.tabGap
+        let x = (swipeWidth * percent) + (Self.tabGap * modifier)
+        
+        print("***", #function, width, percent, swipeWidth, x, offset)
+        preview?.transform.tx = x
     }
     
     private func prepareCurrentView() {
@@ -167,10 +183,6 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
         
         let imageView = UIImageView(image: image)
 
-//        imageView.layer.shadowOpacity = 0.5
-//        imageView.layer.shadowRadius = 10
-//        imageView.layer.shadowOffset = CGSize(width: 5, height: 5)
-
         self.preview = imageView
         imageView.frame = CGRect(origin: .zero, size: coordinator.contentContainer.frame.size)
         imageView.frame.origin.x = coordinator.contentContainer.frame.width * CGFloat(modifier)
@@ -194,7 +206,8 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
         feedbackGenerator.selectionChanged()
         selectTab(index ?? coordinator.navigationBarContainer.indexPathsForVisibleItems[0].row)
         
-        currentView?.transform.tx = 0
+        currentView?.transform = .identity
+        currentView = nil
         preview?.removeFromSuperview()
 
         state = .idle

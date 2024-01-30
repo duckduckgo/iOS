@@ -26,7 +26,11 @@ extension SyncSettingsView {
     @ViewBuilder
     func syncUnavailableViewWhileLoggedOut() -> some View {
         if !model.isDataSyncingAvailable || !model.isConnectingDevicesAvailable || !model.isAccountCreationAvailable {
-            SyncWarningMessageView(title: UserText.syncUnavailableTitle, message: UserText.syncUnavailableMessage)
+            if model.isAppVersionNotSupported {
+                SyncWarningMessageView(title: UserText.syncUnavailableTitle, message: UserText.syncUnavailableMessageUpgradeRequired)
+            } else {
+                SyncWarningMessageView(title: UserText.syncUnavailableTitle, message: UserText.syncUnavailableMessage)
+            }
         } else {
             EmptyView()
         }
@@ -105,7 +109,11 @@ extension SyncSettingsView {
         if model.isDataSyncingAvailable {
             EmptyView()
         } else {
-            SyncWarningMessageView(title: UserText.syncPausedTitle, message: UserText.syncUnavailableMessage)
+            if model.isAppVersionNotSupported {
+                SyncWarningMessageView(title: UserText.syncUnavailableTitle, message: UserText.syncUnavailableMessageUpgradeRequired)
+            } else {
+                SyncWarningMessageView(title: UserText.syncUnavailableTitle, message: UserText.syncUnavailableMessage)
+            }
         }
     }
 
@@ -306,13 +314,15 @@ extension SyncSettingsView {
 
     @ViewBuilder
     func rolloutBanner() -> some View {
-        HStack(alignment: .top, spacing: 16) {
-            Image("Info-Color-16")
-            Text(UserText.syncRollOutBannerDescription)
-                .font(.system(size: 12))
-                .foregroundColor(.primary)
-                .multilineTextAlignment(.leading)
-                .fixedSize(horizontal: false, vertical: true)
+        Section {
+            HStack(alignment: .top, spacing: 16) {
+                Image("Info-Color-16")
+                Text(UserText.syncRollOutBannerDescription)
+                    .font(.system(size: 12))
+                    .foregroundColor(.primary)
+                    .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
         .padding()
         .background(RoundedRectangle(cornerRadius: 8).foregroundColor(Color("RolloutBannerBackground")))

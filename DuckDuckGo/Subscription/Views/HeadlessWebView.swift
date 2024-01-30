@@ -35,11 +35,9 @@ struct HeadlessWebview: UIViewRepresentable {
         configuration.userContentController = makeUserContentController()
 
         let webView = WKWebView(frame: .zero, configuration: configuration)
+        DefaultUserAgentManager.shared.update(webView: webView, isDesktop: false, url: url)
         
-        // We're using the macOS agent as the config for iOS has not been deployed in test env
-        webView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)"
-        // DefaultUserAgentManager.shared.update(webView: webView, isDesktop: false, url: url)
-        
+        // Just add time if you need to hook the WebView inspector
         DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
             webView.load(URLRequest(url: url))
         }

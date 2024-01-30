@@ -80,7 +80,7 @@ jobs:
           --header "Accept: application/json" \
           --header "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
           --header "Content-Type: application/json" \
-          --data ' { "data": { "name": "GH Workflow Failure - End to end tests", "workspace": "${{ vars.GH_ASANA_WORKSPACE_ID }}", "projects": [ "${{ vars.GH_ASANA_IOS_APP_PROJECT_ID }}" ], "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}" } }'
+          --data ' { "data": { "name": "GH Workflow Failure - End to end tests", "workspace": "${{ vars.GH_ASANA_WORKSPACE_ID }}", "projects": [ "${{ vars.GH_ASANA_IOS_APP_PROJECT_ID }}" ], "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}. For instructions on how to handle the failure(s), check https://app.asana.com/0/0/1206423571874502/f" } }'
 
     - name: Upload logs when workflow failed
       uses: actions/upload-artifact@v4

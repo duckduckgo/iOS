@@ -1050,6 +1050,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionRemoveFromDeviceConfirmText = NSLocalizedString("subscription.remove.from.device.text", value: "You will no longer be able to access your Privacy Pro subscription on this device. This will not cancel your subscription, and it will remain active on your other devices.", comment: "Remove from device confirmation dialog text")
     public static let subscriptionRemove = NSLocalizedString("subscription.remove.subscription", value: "Remove Subscription", comment: "Remove subscription button text")
     public static let subscriptionRemoveCancel = NSLocalizedString("subscription.remove.subscription.cancel", value: "Cancel", comment: "Remove subscription cancel button text")
+    public static let subscriptionRemovalConfirmation = NSLocalizedString("subscription.cancel.message", value: "Your subscription has been removed from this device.", comment: "Subscription Removal confirmation message")
     
     // Subscription Restore
     public static let subscriptionActivate = NSLocalizedString("subscription.activate", value: "Activate Subscription", comment: "Subscription Activation Window Title")
@@ -1083,8 +1084,6 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionManageEmailCancelButton = NSLocalizedString("subscription.activate.manage.email.cancel", value: "Cancel", comment: "Button title for cancelling email deletion")
     public static let subscriptionManageEmailOKButton = NSLocalizedString("subscription.activate.manage.email.OK", value: "OK", comment: "Button title for confirming email deletion")
     
-    
-    
     // Subscribe & Restore Flow
     public static let subscriptionFoundTitle = NSLocalizedString("subscription.found.title", value: "Subscription Found", comment: "Title for the existing subscription dialog")
     public static let subscriptionFoundText = NSLocalizedString("subscription.found.text", value: "We found a subscription associated with this Apple ID.", comment: "Message for the existing subscription dialog")
@@ -1096,6 +1095,5 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionRestoreSuccessfulTitle = NSLocalizedString("subscription.restore.success.alert.title", value: "You’re all set.", comment: "Alert title for restored purchase")
     public static let subscriptionRestoreSuccessfulMessage = NSLocalizedString("subscription.restore.success.alert.message", value: "Your purchases have been restored.", comment: "Alert message for restored purchase")
     public static let subscriptionRestoreSuccessfulButton = NSLocalizedString("subscription.restore.success.alert.button", value: "OK", comment: "Alert button text for restored purchase alert")
-    
-    
+
 }

@@ -74,3 +74,5 @@ fastlane/test_output
 
 Configuration/ExternalDeveloper.xcconfig
 scripts/assets
+
+DuckDuckGoTests/NetworkProtectionVPNLocationViewModelTests.swift*.plist

@@ -56,7 +56,6 @@ print_usage_and_exit() {
 
 	Options:
 	  -h         Make hotfix release. Requires the version to be the one to hotfix, and a branch with the fix as the second parameter
-	  -c         Make coldfix release (i.e. a new build number on an existing release). Requires the version to be the one to coldfix, and a branch with the fix as the second parameter
 	  -v         Enable verbose mode
 
 	EOF
@@ -81,22 +80,15 @@ read_command_line_arguments() {
 		fi
 	fi
 
-	branch_name="release"
+	release_branch_prefix="release"
 
-	while getopts 'hcv' option; do
+	while getopts 'hv' option; do
 		case "${option}" in
-			h)
+			h) # hotfix
 				is_hotfix=1
-				branch_name="hotfix"
-				fix_type_name="hotfix"
+				release_branch_prefix="hotfix"
 				;;
-			c)
-				is_hotfix=1
-				is_coldfix=1
-				branch_name="coldfix"
-				fix_type_name="coldfix"
-				;;
-			v)
+			v) # verbose
 				mute=
 				;;
 			*)
@@ -104,6 +96,13 @@ read_command_line_arguments() {
 				;;
 		esac
 	done
+
+	release_branch="${release_branch_prefix}/${version}"
+	changes_branch="${release_branch}-changes"
+
+	if release_branch_exists; then 
+		is_subsequent_release=1
+	fi
 
 	shift $((OPTIND-1))
 
@@ -113,15 +112,18 @@ read_command_line_arguments() {
 		fi
 
 		version_to_hotfix=${version}
-		if ! [[ $is_coldfix ]]; then
-			IFS='.' read -ra arrIN <<< "$version"
-			patch_number=$((arrIN[2] + 1))
-			version="${arrIN[0]}.${arrIN[1]}.$patch_number"
-		fi
+		IFS='.' read -ra arrIN <<< "$version"
+		patch_number=$((arrIN[2] + 1))
+		version="${arrIN[0]}.${arrIN[1]}.$patch_number"
 	fi
+}
 
-	release_branch="${branch_name}/${version}"
-	changes_branch="${release_branch}-changes"
+release_branch_exists() {
+    if git show-ref --verify --quiet "refs/heads/$release_branch"; then
+        return 0
+    else
+        return 1
+    fi
 }
 
 stash() {
@@ -140,10 +142,7 @@ assert_clean_state() {
 }
 
 assert_hotfix_tag_exists_if_necessary() {
-	if [[ ! $is_hotfix ]]; then
-		return
-	fi
-	printf '%s' "Checking tag to ${fix_type_name} ... "
+	printf '%s' "Checking tag to hotfix ... "
 
 	# Make sure tag is available locally if it exists
 	eval git fetch origin "+refs/tags/${tag}:refs/tags/${tag}" "$mute"
@@ -155,10 +154,9 @@ assert_hotfix_tag_exists_if_necessary() {
 	fi
 }
 
-create_release_branch() {
+create_release_and_changes_branches() {
 	if [[ ${is_hotfix} ]]; then
-		printf '%s' "Creating ${fix_type_name} branch ... "
-
+		printf '%s' "Creating hotfix branch ... "
 		eval git checkout "${hotfix_branch_parent}" "$mute"
 	else
 		printf '%s' "Creating release branch ... "
@@ -170,10 +168,15 @@ create_release_branch() {
 	echo "✅"
 }
 
+create_changes_branch() {
+	printf '%s' "Creating changes branch ... "
+	eval git checkout "${release_branch}" "$mute"
+	eval git pull "$mute"
+	eval git checkout -b "${changes_branch}" "$mute"
+	echo "✅"
+}
+
 update_marketing_version() {
-	if [[ $is_coldfix ]]; then
-		return
-	fi
 	printf '%s' "Setting app version ... "
 	"$script_dir/set_version.sh" "${version}"
 	git add "${base_dir}/Configuration/Version.xcconfig" \
@@ -241,7 +244,9 @@ merge_fix_branch_if_necessary() {
 
 create_pull_request() {
 	printf '%s' "Creating PR ... "
-	eval git push origin "${release_branch}" "$mute"
+	if [[ ! $is_subsequent_release ]]; then
+		eval git push origin "${release_branch}" "$mute"
+	fi
 	eval git push origin "${changes_branch}" "$mute"
 	eval gh pr create --title \"Release "${version}"\" --base "${release_branch}" --assignee @me "$mute" --body-file "${script_dir}/assets/prepare-release-description"
 	eval gh pr view --web "$mute"
@@ -256,20 +261,27 @@ main() {
 	read_command_line_arguments "$@"
 
 	stash
-	assert_clean_state
-	assert_hotfix_tag_exists_if_necessary
 
-	create_release_branch
-
-	update_marketing_version
-	update_build_version
-	if ! [[ $is_hotfix ]]; then
+	if [[ $is_subsequent_release ]]; then 
+		create_changes_branch
+	elif [[ $is_hotfix ]]; then
+		assert_clean_state
+		assert_hotfix_tag_exists_if_necessary
+		create_release_and_changes_branches
+		update_marketing_version
+	else
+		assert_clean_state
+		create_release_and_changes_branches
+		update_marketing_version
 		update_embedded_files
 	fi
+
+	update_build_version
+
 	update_release_notes
 	merge_fix_branch_if_necessary
 
-	create_pull_request
+	#create_pull_request
 }
 
 main "$@"

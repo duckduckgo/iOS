@@ -1974,6 +1974,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Subscription availability message on Apple devices */
 "subscription.available.apple" = "Privacy Pro is available on any device signed in to the same Apple ID.";
 
+/* Subscription Removal confirmation message */
+"subscription.cancel.message" = "Your subscription has been removed from this device.";
+
 /* Change plan or billing title */
 "subscription.change.plan" = "Change Plan Or Billing";
 

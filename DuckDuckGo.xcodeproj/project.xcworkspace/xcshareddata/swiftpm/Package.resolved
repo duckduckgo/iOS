@@ -15,7 +15,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "jacek/error-codes",
-        "revision" : "0d5a890c0543fbb8ee9fe05fef9dc0e8629df9c2"
+        "revision" : "742fa13699ef669ebb3567b9fcd7331761d3bc93"
       }
     },
     {
@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "bb027f14bec7fbb1a85d308139e7a66686da160e",
-        "version" : "4.59.0"
+        "revision" : "38ee7284bac7fa12d822fcaf0677ea3969d15fb1",
+        "version" : "4.59.2"
       }
     },
     {
@@ -104,8 +104,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "branch" : "12-14-feat_macos_allow_direct_navigation_to_breakage_form",
-        "revision" : "97bcd73095bb9c306c638c0d5ff1299160b1256f"
+        "revision" : "c67d268bf234760f49034a0fe7a6137a1b216b05",
+        "version" : "3.2.0"
       }
     },
     {

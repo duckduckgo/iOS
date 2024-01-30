@@ -847,9 +847,6 @@ class MainViewController: UIViewController {
             if tabManager.current(createIfNeeded: true) == nil {
                 fatalError("failed to create tab")
             }
-
-            // Likely this hasn't happened yet so the publishers won't be loaded and will block the webview from loading
-            _ = ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
         }
 
         guard let tab = currentTab else { fatalError("no tab") }

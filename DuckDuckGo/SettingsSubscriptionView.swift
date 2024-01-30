@@ -72,7 +72,7 @@ struct SettingsSubscriptionView: View {
                 SettingsCellView(label: UserText.settingsPProDBPTitle, subtitle: UserText.settingsPProDBPSubTitle)
             }
             
-            NavigationLink(destination: Text("Identity Theft Restoration"), isActive: $viewModel.shouldNavigateToITP) {
+            NavigationLink(destination: SubscriptionITPView(viewModel: SubscriptionITPViewModel()), isActive: $viewModel.shouldNavigateToITP) {
                 SettingsCellView(label: UserText.settingsPProITRTitle, subtitle: UserText.settingsPProITRSubTitle)
             }
             

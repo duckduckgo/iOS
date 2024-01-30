@@ -59,15 +59,7 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
     private let internalUserDecider: InternalUserDecider
 
     private var isUserLocaleAllowed: Bool {
-        var regionCode: String?
-
-        if #available(iOS 16.0, *) {
-            regionCode = Locale.current.region?.identifier
-        } else {
-            regionCode = Locale.current.regionCode
-        }
-
-        return (regionCode ?? "US") == "US"
+        return true
     }
 
     var isPotentialOrCurrentWaitlistUser: Bool {

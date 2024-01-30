@@ -86,7 +86,6 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
     }
 
     func networkProtectionAccessType() -> NetworkProtectionAccessType {
-        // Only show NetP to US or internal users:
         guard isUserLocaleAllowed || internalUserDecider.isInternalUser else {
             return .none
         }

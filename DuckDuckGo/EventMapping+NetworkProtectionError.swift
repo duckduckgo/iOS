@@ -61,6 +61,10 @@ extension EventMapping where Event == NetworkProtectionError {
             pixelEvent = .networkProtectionKeychainWriteError
             params[PixelParameters.keychainFieldName] = field
             params[PixelParameters.keychainErrorCode] = String(status)
+        case .keychainUpdateError(field: let field, status: let status):
+            pixelEvent = .networkProtectionKeychainUpdateError
+            params[PixelParameters.keychainFieldName] = field
+            params[PixelParameters.keychainErrorCode] = String(status)
         case .keychainDeleteError(status: let status):
             pixelEvent = .networkProtectionKeychainDeleteError
             params[PixelParameters.keychainErrorCode] = String(status)

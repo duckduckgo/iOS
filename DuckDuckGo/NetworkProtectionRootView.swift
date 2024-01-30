@@ -29,7 +29,7 @@ struct NetworkProtectionRootView: View {
 
     var body: some View {
         let inviteViewModel = NetworkProtectionInviteViewModel(
-            redemptionCoordinator: NetworkProtectionCodeRedemptionCoordinator(),
+            redemptionCoordinator: NetworkProtectionCodeRedemptionCoordinator(isManualCodeRedemptionFlow: true),
             completion: inviteCompletion
         )
         switch model.initialViewKind {

@@ -140,9 +140,23 @@ lane :release_alpha do |options|
   )
 end
 
+desc 'Latest build number for version'
+lane :latest_build_number_for_version do |options|
+  if options[:app_identifier]
+    app_identifier = options[:app_identifier]
+  end
+  build_number = latest_testflight_build_number(
+    api_key: get_api_key,
+    version: options[:version],
+    initial_build_number: 0,
+    username: get_username(options))
+  if options[:file_name]
+    File.write(options[:file_name], build_number)
+  end
+end
+
 desc 'Increment build number based on version in App Store Connect'
 lane :increment_build_number_for_version do |options|
-  app_identifier = "com.duckduckgo.mobile.ios" 
   if options[:app_identifier]
     app_identifier = options[:app_identifier]
   end

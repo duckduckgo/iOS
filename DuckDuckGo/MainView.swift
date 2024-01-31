@@ -219,7 +219,8 @@ extension MainViewFactory {
 
         coordinator.constraints.navigationBarContainerTop = navigationBarContainer.constrainView(superview.safeAreaLayoutGuide, by: .top)
         coordinator.constraints.navigationBarContainerBottom = navigationBarContainer.constrainView(toolbar, by: .bottom, to: .top)
-        coordinator.constraints.navigationBarCollectionViewBottom = navigationBarCollectionView.constrainView(navigationBarContainer, by: .bottom, relatedBy: .greaterThanOrEqual)
+        coordinator.constraints.navigationBarCollectionViewBottom
+            = navigationBarCollectionView.constrainView(navigationBarContainer, by: .bottom, relatedBy: .greaterThanOrEqual)
         
         NSLayoutConstraint.activate([
             coordinator.constraints.navigationBarContainerTop,
@@ -251,9 +252,11 @@ extension MainViewFactory {
         let statusBackground = coordinator.statusBackground!
         let navigationBarContainer = coordinator.navigationBarContainer!
 
-        coordinator.constraints.statusBackgroundToNavigationBarContainerBottom = statusBackground.constrainView(navigationBarContainer, by: .bottom)
+        coordinator.constraints.statusBackgroundToNavigationBarContainerBottom
+            = statusBackground.constrainView(navigationBarContainer, by: .bottom)
 
-        coordinator.constraints.statusBackgroundBottomToSafeAreaTop = statusBackground.constrainView(coordinator.superview.safeAreaLayoutGuide, by: .bottom, to: .top)
+        coordinator.constraints.statusBackgroundBottomToSafeAreaTop
+            = statusBackground.constrainView(coordinator.superview.safeAreaLayoutGuide, by: .bottom, to: .top)
 
         NSLayoutConstraint.activate([
             statusBackground.constrainView(superview, by: .width),
@@ -269,8 +272,10 @@ extension MainViewFactory {
         let navigationBarContainer = coordinator.navigationBarContainer!
         let statusBackground = coordinator.statusBackground!
 
-        coordinator.constraints.notificationContainerTopToNavigationBar = notificationBarContainer.constrainView(navigationBarContainer, by: .top, to: .bottom)
-        coordinator.constraints.notificationContainerTopToStatusBackground = notificationBarContainer.constrainView(statusBackground, by: .top, to: .bottom)
+        coordinator.constraints.notificationContainerTopToNavigationBar
+            = notificationBarContainer.constrainView(navigationBarContainer, by: .top, to: .bottom)
+        coordinator.constraints.notificationContainerTopToStatusBackground
+            = notificationBarContainer.constrainView(statusBackground, by: .top, to: .bottom)
         coordinator.constraints.notificationContainerHeight = notificationBarContainer.constrainAttribute(.height, to: 0)
 
         NSLayoutConstraint.activate([
@@ -290,7 +295,8 @@ extension MainViewFactory {
 
         coordinator.constraints.contentContainerTop = contentContainer.constrainView(notificationBarContainer, by: .top, to: .bottom)
         coordinator.constraints.contentContainerBottomToToolbarTop = contentContainer.constrainView(toolbar, by: .bottom, to: .top)
-        coordinator.constraints.contentContainerBottomToNavigationBarContainerTop = contentContainer.constrainView(navigationBarContainer, by: .bottom, to: .top)
+        coordinator.constraints.contentContainerBottomToNavigationBarContainerTop
+            = contentContainer.constrainView(navigationBarContainer, by: .bottom, to: .top)
 
         NSLayoutConstraint.activate([
             contentContainer.constrainView(superview, by: .leading),

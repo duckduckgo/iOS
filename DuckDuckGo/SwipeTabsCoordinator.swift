@@ -77,7 +77,6 @@ class SwipeTabsCoordinator: NSObject {
         case idle
         case starting(CGPoint)
         case swiping(CGPoint, FloatingPointSign)
-        case finishing
         
     }
     
@@ -140,10 +139,9 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
                 swipeCurrentViewProportionally(offset: offset)
                 currentView?.transform.tx = offset
             } else {
-                state = .finishing
+                cleanUpViews()
+                state = .starting(startPosition)
             }
-        
-        case .finishing: break
         }
     }
     
@@ -156,8 +154,6 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
         let percent = offset / width
         let swipeWidth = width + Self.tabGap
         let x = (swipeWidth * percent) + (Self.tabGap * modifier)
-        
-        print("***", #function, width, percent, swipeWidth, x, offset)
         preview?.transform.tx = x
     }
     
@@ -232,14 +228,18 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
         assert(index != nil)
         feedbackGenerator.selectionChanged()
         selectTab(index ?? coordinator.navigationBarContainer.indexPathsForVisibleItems[0].row)
-        
-        currentView?.transform = .identity
-        currentView = nil
-        preview?.removeFromSuperview()
+
+        cleanUpViews()
 
         state = .idle
     }
 
+    private func cleanUpViews() {
+        currentView?.transform = .identity
+        currentView = nil
+        preview?.removeFromSuperview()
+    }
+    
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
         print("***", #function)
     }

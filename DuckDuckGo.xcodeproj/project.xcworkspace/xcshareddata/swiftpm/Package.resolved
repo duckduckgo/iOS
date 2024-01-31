@@ -15,7 +15,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "mariusz/rollout-cpm-by-default",
-        "revision" : "dedc3c2dd91fc3aa357ab24a050b316cb9c53b43"
+        "revision" : "bcdda78cf3e4f8bb7e6926cca77fafa4a681dd1e"
       }
     },
     {

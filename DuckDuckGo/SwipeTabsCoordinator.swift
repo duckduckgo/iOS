@@ -174,19 +174,17 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
         let modifier = (offset > 0 ? -1 : 1)
         let nextIndex = tabsModel.currentIndex + modifier
         print("***", #function, "nextIndex", nextIndex)
-        guard tabsModel.tabs.indices.contains(nextIndex) else {
-            print("***", #function, "invalid index", nextIndex)
-            return
-        }
         
         let targetFrame = CGRect(origin: .zero, size: coordinator.contentContainer.frame.size)
         
-        let tab = tabsModel.get(tabAt: nextIndex)
-        if let image = tabPreviewsSource.preview(for: tab) {
+        let tab = tabsModel.safeGetTabAt(nextIndex)
+        if let tab, let image = tabPreviewsSource.preview(for: tab) {
             print("***", #function, "image preview")
             createPreviewFromImage(image)
-        } else if tab.link == nil {
-            print("***", #function, "home screen preview")
+        } else if tab?.link == nil {
+            // either the tab or link is nil - either way transition to the home screen
+            // TODO handle favorites
+            print("***", #function, "new tab home screen preview")
             createPreviewFromLogoContainerWithSize(targetFrame.size)
         } else {
             print("***", #function, "no preview found")
@@ -386,6 +384,15 @@ class OmniBarCell: UICollectionViewCell {
         
         leadingConstraint?.constant = -left
         trailingConstraint?.constant = right
+    }
+    
+}
+
+extension TabsModel {
+    
+    func safeGetTabAt(_ index: Int) -> Tab? {
+        guard tabs.indices.contains(index) else { return nil }
+        return tabs[index]
     }
     
 }

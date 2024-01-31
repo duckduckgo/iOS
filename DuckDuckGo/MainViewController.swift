@@ -483,6 +483,7 @@ class MainViewController: UIViewController {
             swipeTabsCoordinator?.addressBarPositionChanged(isTop: true)
             viewCoordinator.omniBar.moveSeparatorToBottom()
             viewCoordinator.showToolbarSeparator()
+            viewCoordinator.constraints.navigationBarContainerBottom.isActive = false
 
         case .bottom:
             swipeTabsCoordinator?.addressBarPositionChanged(isTop: false)
@@ -543,7 +544,7 @@ class MainViewController: UIViewController {
 
         if self.appSettings.currentAddressBarPosition.isBottom {
             let navBarOffset = min(0, self.toolbarHeight - intersection.height)
-            self.viewCoordinator.constraints.navigationBarContainerBottom.constant = navBarOffset
+            self.viewCoordinator.constraints.navigationBarCollectionViewBottom.constant = navBarOffset
             UIView.animate(withDuration: duration, delay: 0, options: animationCurve) {
                 self.viewCoordinator.navigationBarContainer.superview?.layoutIfNeeded()
             }
@@ -1089,7 +1090,6 @@ class MainViewController: UIViewController {
         viewCoordinator.omniBar.enterPadState()
         
         swipeTabsCoordinator?.isEnabled = false
-        // disableSwipeTabs()
     }
 
     private func applySmallWidth() {
@@ -1098,8 +1098,6 @@ class MainViewController: UIViewController {
         viewCoordinator.omniBar.enterPhoneState()
         
         swipeTabsCoordinator?.isEnabled = featureFlagger.isFeatureOn(.swipeTabs)
-        
-        // enableSwipeTabs()
     }
 
     @discardableResult

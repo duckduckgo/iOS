@@ -19,12 +19,6 @@
 
 import UIKit
 
-// TODO handle launching on home screen tab
-
-// TODO slide the logo when in homescreen view?
-
-// TODO fix gap behind when keyboard shown
-
 class SwipeTabsCoordinator: NSObject {
     
     static let tabGap: CGFloat = 10
@@ -47,8 +41,12 @@ class SwipeTabsCoordinator: NSObject {
     
     var isEnabled = false {
         didSet {
-            coordinator.navigationBarContainer.reloadData()
+            collectionView.reloadData()
         }
+    }
+    
+    var collectionView: MainViewFactory.NavigationBarCollectionView {
+        coordinator.navigationBarCollectionView
     }
     
     init(coordinator: MainViewCoordinator,
@@ -63,12 +61,15 @@ class SwipeTabsCoordinator: NSObject {
         
         self.selectTab = selectTab
         self.onSwipeStarted = onSwipeStarted
-        
-        coordinator.navigationBarContainer.register(OmniBarCell.self, forCellWithReuseIdentifier: "omnibar")
-        coordinator.navigationBarContainer.isPagingEnabled = true
-        
+                
         super.init()
         
+        collectionView.register(OmniBarCell.self, forCellWithReuseIdentifier: "omnibar")
+        collectionView.isPagingEnabled = true
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.decelerationRate = .fast
+
         updateLayout()
     }
     
@@ -90,7 +91,7 @@ class SwipeTabsCoordinator: NSObject {
     weak var currentView: UIView?
     
     private func updateLayout() {
-        let layout = coordinator.navigationBarContainer.collectionViewLayout as? UICollectionViewFlowLayout
+        let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
         layout?.scrollDirection = .horizontal
         layout?.itemSize = CGSize(width: coordinator.superview.frame.size.width, height: coordinator.omniBar.frame.height)
         layout?.minimumLineSpacing = 0
@@ -104,9 +105,9 @@ class SwipeTabsCoordinator: NSObject {
         print("***", #function, animated)
         DispatchQueue.main.async {
             let indexPath = IndexPath(row: self.tabsModel.currentIndex, section: 0)
-            self.coordinator.navigationBarContainer.scrollToItem(at: indexPath,
-                                                                 at: .centeredHorizontally,
-                                                                 animated: animated)
+            self.collectionView.scrollToItem(at: indexPath,
+                                             at: .centeredHorizontally,
+                                             animated: animated)
         }
     }
 }
@@ -220,14 +221,14 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
     }
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        print("***", #function, coordinator.navigationBarContainer.indexPathsForVisibleItems)
+        print("***", #function, coordinator.navigationBarCollectionView.indexPathsForVisibleItems)
 
-        let point = CGPoint(x: coordinator.navigationBarContainer.bounds.midX,
-                            y: coordinator.navigationBarContainer.bounds.midY)
-        let index = coordinator.navigationBarContainer.indexPathForItem(at: point)?.row
+        let point = CGPoint(x: coordinator.navigationBarCollectionView.bounds.midX,
+                            y: coordinator.navigationBarCollectionView.bounds.midY)
+        let index = coordinator.navigationBarCollectionView.indexPathForItem(at: point)?.row
         assert(index != nil)
         feedbackGenerator.selectionChanged()
-        selectTab(index ?? coordinator.navigationBarContainer.indexPathsForVisibleItems[0].row)
+        selectTab(index ?? coordinator.navigationBarCollectionView.indexPathsForVisibleItems[0].row)
 
         cleanUpViews()
 
@@ -270,7 +271,7 @@ extension SwipeTabsCoordinator {
         let scrollToItem = self.tabsModel == nil
         
         self.tabsModel = tabsModel
-        coordinator.navigationBarContainer.reloadData()
+        coordinator.navigationBarCollectionView.reloadData()
         updateLayout()
         
         if scrollToItem {

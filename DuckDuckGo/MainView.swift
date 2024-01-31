@@ -19,9 +19,6 @@
 
 import UIKit
 
-// swiftlint:disable file_length
-// swiftlint:disable line_length
-
 class MainViewFactory {
 
     private let coordinator: MainViewCoordinator
@@ -63,6 +60,7 @@ extension MainViewFactory {
         createOmniBar()
         createToolbar()
         createNavigationBarContainer()
+        createNavigationBarCollectionView()
         createProgressView()
     }
     
@@ -76,24 +74,38 @@ extension MainViewFactory {
         coordinator.omniBar.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    final class NavigationBarContainer: UICollectionView {
+    final class NavigationBarCollectionView: UICollectionView {
         
         var hitTestInsets = UIEdgeInsets.zero
         
         override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-            var extendedBounds = bounds.inset(by: hitTestInsets)
-            return extendedBounds.contains(point)
+            return bounds.inset(by: hitTestInsets).contains(point)
+        }
+        
+        // Don't allow the use to drag the scrollbar or the UI will glitch.
+        override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+            let view = super.hitTest(point, with: event)
+            if view == self.subviews.first(where: { $0 is UIImageView }) {
+                return nil
+            }
+            return view
         }
     }
     
-    private func createNavigationBarContainer() {
+    private func createNavigationBarCollectionView() {
         // Layout is replaced elsewhere, but required to construct the view.
-        coordinator.navigationBarContainer = NavigationBarContainer(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        coordinator.navigationBarContainer.decelerationRate = .fast
+        coordinator.navigationBarCollectionView = NavigationBarCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         
         // scrollview subclasses change the default to true, but we need this for the separator on the omnibar
-        coordinator.navigationBarContainer.clipsToBounds = false
+        coordinator.navigationBarCollectionView.clipsToBounds = false
         
+        coordinator.navigationBarCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        coordinator.navigationBarContainer.addSubview(coordinator.navigationBarCollectionView)
+    }
+    
+    final class NavigationBarContainer: UIView { }
+    private func createNavigationBarContainer() {
+        coordinator.navigationBarContainer = NavigationBarContainer()
         superview.addSubview(coordinator.navigationBarContainer)
     }
 
@@ -199,19 +211,26 @@ extension MainViewFactory {
             coordinator.constraints.progressBarTop,
         ])
     }
-
+    
     private func constrainNavigationBarContainer() {
         let navigationBarContainer = coordinator.navigationBarContainer!
         let toolbar = coordinator.toolbar!
+        let navigationBarCollectionView = coordinator.navigationBarCollectionView!
 
         coordinator.constraints.navigationBarContainerTop = navigationBarContainer.constrainView(superview.safeAreaLayoutGuide, by: .top)
         coordinator.constraints.navigationBarContainerBottom = navigationBarContainer.constrainView(toolbar, by: .bottom, to: .top)
-
+        coordinator.constraints.navigationBarCollectionViewBottom = navigationBarCollectionView.constrainView(navigationBarContainer, by: .bottom, relatedBy: .greaterThanOrEqual)
+        
         NSLayoutConstraint.activate([
             coordinator.constraints.navigationBarContainerTop,
             navigationBarContainer.constrainView(superview, by: .leading),
             navigationBarContainer.constrainView(superview, by: .trailing),
-            navigationBarContainer.constrainAttribute(.height, to: 52),
+            navigationBarContainer.constrainAttribute(.height, to: 52, relatedBy: .greaterThanOrEqual),
+            navigationBarCollectionView.constrainAttribute(.height, to: 52),
+            navigationBarCollectionView.constrainView(navigationBarContainer, by: .top),
+            navigationBarCollectionView.constrainView(navigationBarContainer, by: .leading),
+            navigationBarCollectionView.constrainView(navigationBarContainer, by: .trailing),
+            coordinator.constraints.navigationBarCollectionViewBottom
         ])
     }
 
@@ -322,126 +341,3 @@ extension MainViewFactory {
     }
 
 }
-
-class MainViewCoordinator {
-
-    let superview: UIView
-
-    var contentContainer: UIView!
-    var lastToolbarButton: UIBarButtonItem!
-    var logo: UIImageView!
-    var logoContainer: UIView!
-    var logoText: UIImageView!
-    var navigationBarContainer: MainViewFactory.NavigationBarContainer!
-    var notificationBarContainer: UIView!
-    var omniBar: OmniBar!
-    var progress: ProgressView!
-    var statusBackground: UIView!
-    var suggestionTrayContainer: UIView!
-    var tabBarContainer: UIView!
-    var toolbar: UIToolbar!
-    var toolbarBackButton: UIBarButtonItem!
-    var toolbarFireButton: UIBarButtonItem!
-    var toolbarForwardButton: UIBarButtonItem!
-    var toolbarTabSwitcherButton: UIBarButtonItem!
-
-    let constraints = Constraints()
-
-    // The default after creating the hiearchy is top
-    var addressBarPosition: AddressBarPosition = .top
-
-    fileprivate init(superview: UIView) {
-        self.superview = superview
-    }
-
-    func decorateWithTheme(_ theme: Theme) {
-        superview.backgroundColor = theme.mainViewBackgroundColor
-        logoText.tintColor = theme.ddgTextTintColor
-        omniBar.decorate(with: theme)
-    }
-
-    func showToolbarSeparator() {
-        toolbar.setShadowImage(nil, forToolbarPosition: .any)
-    }
-
-    func hideToolbarSeparator() {
-        self.toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
-    }
-
-    class Constraints {
-
-        var navigationBarContainerTop: NSLayoutConstraint!
-        var navigationBarContainerBottom: NSLayoutConstraint!
-        var toolbarBottom: NSLayoutConstraint!
-        var contentContainerTop: NSLayoutConstraint!
-        var tabBarContainerTop: NSLayoutConstraint!
-        var notificationContainerTopToNavigationBar: NSLayoutConstraint!
-        var notificationContainerTopToStatusBackground: NSLayoutConstraint!
-        var notificationContainerHeight: NSLayoutConstraint!
-        var progressBarTop: NSLayoutConstraint!
-        var progressBarBottom: NSLayoutConstraint!
-        var statusBackgroundToNavigationBarContainerBottom: NSLayoutConstraint!
-        var statusBackgroundBottomToSafeAreaTop: NSLayoutConstraint!
-        var contentContainerBottomToToolbarTop: NSLayoutConstraint!
-        var contentContainerBottomToNavigationBarContainerTop: NSLayoutConstraint!
-
-    }
-
-    func moveAddressBarToPosition(_ position: AddressBarPosition) {
-        guard position != addressBarPosition else { return }
-        switch position {
-        case .top:
-            setAddressBarBottomActive(false)
-            setAddressBarTopActive(true)
-
-        case .bottom:
-            setAddressBarTopActive(false)
-            setAddressBarBottomActive(true)
-        }
-
-        addressBarPosition = position
-    }
-
-    func hideNavigationBarWithBottomPosition() {
-        guard addressBarPosition.isBottom else {
-            return
-        }
-
-        // Hiding the container won't suffice as it still defines the contentContainer.bottomY through constraints
-        navigationBarContainer.isHidden = true
-
-        constraints.contentContainerBottomToNavigationBarContainerTop.isActive = false
-        constraints.contentContainerBottomToToolbarTop.isActive = true
-    }
-
-    func showNavigationBarWithBottomPosition() {
-        guard addressBarPosition.isBottom else {
-            return
-        }
-
-        constraints.contentContainerBottomToToolbarTop.isActive = false
-        constraints.contentContainerBottomToNavigationBarContainerTop.isActive = true
-
-        navigationBarContainer.isHidden = false
-    }
-
-    func setAddressBarTopActive(_ active: Bool) {
-        constraints.contentContainerBottomToToolbarTop.isActive = active
-        constraints.navigationBarContainerTop.isActive = active
-        constraints.progressBarTop.isActive = active
-        constraints.notificationContainerTopToNavigationBar.isActive = active
-        constraints.statusBackgroundToNavigationBarContainerBottom.isActive = active
-    }
-
-    func setAddressBarBottomActive(_ active: Bool) {
-        constraints.contentContainerBottomToNavigationBarContainerTop.isActive = active
-        constraints.progressBarBottom.isActive = active
-        constraints.navigationBarContainerBottom.isActive = active
-        constraints.notificationContainerTopToStatusBackground.isActive = active
-        constraints.statusBackgroundBottomToSafeAreaTop.isActive = active
-    }
-
-}
-
-// swiftlint:enable line_length
-// swiftlint:enable file_length

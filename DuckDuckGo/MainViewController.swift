@@ -312,6 +312,8 @@ class MainViewController: UIViewController {
                                                     tabPreviewsSource: previewsSource,
                                                     appSettings: appSettings) { [weak self] in
             self?.select(tabAt: $0)
+        } newTab: { [weak self] in
+            self?.newTab()
         } onSwipeStarted: { [weak self] in
             self?.hideKeyboard()
             

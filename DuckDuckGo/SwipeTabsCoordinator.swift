@@ -31,6 +31,7 @@ class SwipeTabsCoordinator: NSObject {
     weak var appSettings: AppSettings!
     
     let selectTab: (Int) -> Void
+    let newTab: () -> Void
     let onSwipeStarted: () -> Void
     
     let feedbackGenerator: UISelectionFeedbackGenerator = {
@@ -53,6 +54,7 @@ class SwipeTabsCoordinator: NSObject {
          tabPreviewsSource: TabPreviewsSource,
          appSettings: AppSettings,
          selectTab: @escaping (Int) -> Void,
+         newTab: @escaping () -> Void,
          onSwipeStarted: @escaping () -> Void) {
         
         self.coordinator = coordinator
@@ -60,6 +62,7 @@ class SwipeTabsCoordinator: NSObject {
         self.appSettings = appSettings
         
         self.selectTab = selectTab
+        self.newTab = newTab
         self.onSwipeStarted = onSwipeStarted
                 
         super.init()
@@ -223,16 +226,25 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         print("***", #function, coordinator.navigationBarCollectionView.indexPathsForVisibleItems)
 
+        defer {
+            cleanUpViews()
+            state = .idle
+        }
+        
         let point = CGPoint(x: coordinator.navigationBarCollectionView.bounds.midX,
                             y: coordinator.navigationBarCollectionView.bounds.midY)
-        let index = coordinator.navigationBarCollectionView.indexPathForItem(at: point)?.row
-        assert(index != nil)
+        
+        guard let index = coordinator.navigationBarCollectionView.indexPathForItem(at: point)?.row else {
+            assertionFailure("invalid index")
+            return
+        }
         feedbackGenerator.selectionChanged()
-        selectTab(index ?? coordinator.navigationBarCollectionView.indexPathsForVisibleItems[0].row)
-
-        cleanUpViews()
-
-        state = .idle
+        if index >= tabsModel.count {
+            print("***", #function, "add tab!")
+            newTab()
+        } else {
+            selectTab(index)
+        }
     }
 
     private func cleanUpViews() {
@@ -297,7 +309,9 @@ extension SwipeTabsCoordinator {
 extension SwipeTabsCoordinator: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return isEnabled ? tabsModel?.count ?? 0 : 1
+        guard isEnabled else { return 1 }
+        let extras = tabsModel.tabs.last?.link != nil ? 1 : 0 // last tab is not a home page, so let's add one
+        return tabsModel.count + extras
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -309,13 +323,9 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
             cell.omniBar = coordinator.omniBar
         } else {
             cell.insetsLayoutMarginsFromSafeArea = true
-            
-            let tab = tabsModel.get(tabAt: indexPath.row)
 
             cell.omniBar = OmniBar.loadFromXib()
             cell.omniBar?.translatesAutoresizingMaskIntoConstraints = false
-            cell.omniBar?.startBrowsing()
-            cell.omniBar?.refreshText(forUrl: tab.link?.url)
             cell.omniBar?.decorate(with: ThemeManager.shared.currentTheme)
             
             cell.omniBar?.showSeparator()
@@ -324,6 +334,15 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
             } else {
                 cell.omniBar?.moveSeparatorToBottom()
             }
+
+            if tabsModel.tabs.indices.contains(indexPath.row) {
+                let tab = tabsModel.get(tabAt: indexPath.row)
+                cell.omniBar?.startBrowsing()
+                cell.omniBar?.refreshText(forUrl: tab.link?.url)
+            } else {
+                cell.omniBar?.stopBrowsing()
+            }
+
         }
         
         return cell

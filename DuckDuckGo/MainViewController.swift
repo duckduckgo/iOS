@@ -315,7 +315,7 @@ class MainViewController: UIViewController {
         } onSwipeStarted: { [weak self] in
             self?.hideKeyboard()
             
-            guard let self, 
+            guard let self,
                     let currentTab = self.tabManager.current(),
                     currentTab.link != nil else { return }
             
@@ -325,57 +325,7 @@ class MainViewController: UIViewController {
                                            forTab: currentTab.tabModel)
             })
         }
-        
-        viewCoordinator.navigationBarContainer.dataSource = swipeTabsCoordinator
-        viewCoordinator.navigationBarContainer.delegate = swipeTabsCoordinator
     }
-    
-    private func enableSwipeTabs() {
-        // This guard can be removed once the feature is enabled permanently.
-        guard featureFlagger.isFeatureOn(.swipeTabs) else {
-            // disableSwipeTabs()
-            return
-        }
-
-        guard swipeTabsCoordinator == nil else {
-            return
-        }
-        
-        swipeTabsCoordinator = SwipeTabsCoordinator(coordinator: viewCoordinator,
-                                                    tabPreviewsSource: previewsSource,
-                                                    appSettings: appSettings) { [weak self] in
-            self?.select(tabAt: $0)
-        } onSwipeStarted: { [weak self] in
-            guard let self, let currentTab = self.tabManager.current() else { return }
-            hideKeyboard()
-            currentTab.preparePreview(completion: { image in
-                guard let image else { return }
-                self.previewsSource.update(preview: image,
-                                           forTab: currentTab.tabModel)
-            })
-        }
-        
-        viewCoordinator.navigationBarContainer.dataSource = swipeTabsCoordinator
-        viewCoordinator.navigationBarContainer.delegate = swipeTabsCoordinator
-        
-        if let model = self.tabManager?.model {
-            swipeTabsCoordinator?.refresh(tabsModel: model, scrollToSelected: true)
-        }
-    }
-    
-//    private func disableSwipeTabs() {
-//        swipeTabsCoordinator = nil
-//        
-//        viewCoordinator.omniBar.removeFromSuperview()
-//        viewCoordinator.omniBar.translatesAutoresizingMaskIntoConstraints = true
-//        viewCoordinator.omniBar.frame = CGRect(origin: .zero, size: viewCoordinator.navigationBarContainer.frame.size)
-//        viewCoordinator.navigationBarContainer.addSubview(viewCoordinator.omniBar)
-//        
-//        if !self.appSettings.currentAddressBarPosition.isBottom {
-//            viewCoordinator.omniBar.showSeparator()
-//            viewCoordinator.omniBar.moveSeparatorToBottom()
-//        }
-//    }
 
     func loadSuggestionTray() {
         let storyboard = UIStoryboard(name: "SuggestionTray", bundle: nil)

@@ -110,6 +110,7 @@ class TabViewController: UIViewController {
     private var httpsForced: Bool = false
     private var lastUpgradedURL: URL?
     private var lastError: Error?
+    private var lastHttpStatusCode: Int?
     private var shouldReloadOnError = false
     private var failingUrls = Set<String>()
     private var urlProvidedBasicAuthCredential: (credential: URLCredential, url: URL)?
@@ -919,15 +920,17 @@ class TabViewController: UIViewController {
             return nil
         }
         return PrivacyDashboardViewController.BreakageAdditionalInfo(currentURL: currentURL,
-                                                                    httpsForced: httpsForced,
-                                                                    ampURLString: linkProtection.lastAMPURLString ?? "",
-                                                                    urlParametersRemoved: linkProtection.urlParametersRemoved,
-                                                                    isDesktop: tabModel.isDesktop)
+                                                                     httpsForced: httpsForced,
+                                                                     ampURLString: linkProtection.lastAMPURLString ?? "",
+                                                                     urlParametersRemoved: linkProtection.urlParametersRemoved,
+                                                                     isDesktop: tabModel.isDesktop,
+                                                                     error: lastError,
+                                                                     httpStatusCode: lastHttpStatusCode)
     }
-    
+
     public func print() {
         let printFormatter = webView.viewPrintFormatter()
-        
+
         let printInfo = UIPrintInfo(dictionary: nil)
         printInfo.jobName = Bundle.main.infoDictionary!["CFBundleName"] as? String ?? "DuckDuckGo"
         printInfo.outputType = .general
@@ -1062,6 +1065,7 @@ extension TabViewController: WKNavigationDelegate {
 
         let httpResponse = navigationResponse.response as? HTTPURLResponse
         let isSuccessfulResponse = httpResponse?.isSuccessfulResponse ?? false
+        lastHttpStatusCode = httpResponse?.statusCode
 
         let didMarkAsInternal = internalUserDecider.markUserAsInternalIfNeeded(forUrl: webView.url, response: httpResponse)
         if didMarkAsInternal {

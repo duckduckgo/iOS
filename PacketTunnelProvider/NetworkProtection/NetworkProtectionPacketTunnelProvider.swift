@@ -140,6 +140,10 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 pixelEvent = .networkProtectionKeychainWriteError
                 params[PixelParameters.keychainFieldName] = field
                 params[PixelParameters.keychainErrorCode] = String(status)
+            case .keychainUpdateError(let field, let status):
+                pixelEvent = .networkProtectionKeychainUpdateError
+                params[PixelParameters.keychainFieldName] = field
+                params[PixelParameters.keychainErrorCode] = String(status)
             case .keychainDeleteError(let status): // TODO: Check whether field needed here
                 pixelEvent = .networkProtectionKeychainDeleteError
                 params[PixelParameters.keychainErrorCode] = String(status)

@@ -26,6 +26,7 @@ private struct KeychainItem {
     let secClass: SecClass
     let service: String?
     let account: String?
+    let accessGroup: String?
     let valueData: Data?
     let creationDate: Any?
     let modificationDate: Any?
@@ -39,6 +40,7 @@ private struct KeychainItem {
         return """
         Service: \(service ?? "nil")
         Account: \(account ?? "nil")
+        Access Group: \(accessGroup ?? "nil")
         Value as String: \(value ?? "nil")
         Value data: \(String(describing: valueData))
         Creation date: \(String(describing: creationDate))
@@ -54,7 +56,8 @@ private enum SecClass: CaseIterable {
     case classCertificate
     case classKey
     case classIdentity
-    
+    case accessGroup
+
     var secClassCFString: CFString {
         switch self {
         case .internetPassword:
@@ -67,6 +70,8 @@ private enum SecClass: CaseIterable {
             return kSecClassKey
         case .classIdentity:
             return kSecClassIdentity
+        case .accessGroup:
+            return kSecAttrAccessGroup
         }
     }
     
@@ -82,6 +87,8 @@ private enum SecClass: CaseIterable {
             return "kSecClassKey"
         case .classIdentity:
             return "kSecClassIdentity"
+        case .accessGroup:
+            return "kSecAttrAccessGroup"
         }
     }
     
@@ -106,6 +113,7 @@ private enum SecClass: CaseIterable {
             KeychainItem(secClass: self,
                          service: $0[kSecAttrService as String] as? String,
                          account: $0[kSecAttrAccount as String] as? String,
+                         accessGroup: $0[kSecAttrAccessGroup as String] as? String,
                          valueData: $0[kSecValueData as String] as? Data,
                          creationDate: $0[kSecAttrCreationDate as String, default: "no creation"],
                          modificationDate: $0[kSecAttrModificationDate as String, default: "no modification"])

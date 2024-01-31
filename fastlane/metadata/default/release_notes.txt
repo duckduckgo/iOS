@@ -1,5 +1,2 @@
-- You can now pull the page down to reload it.
-- Fixed settings not being saved in rare cases.
-- Fixed a bug that sometimes prevented tabs from loading websites.
 - Bug fixes and other improvements.
 Join our fully distributed team and help raise the standard of trust online! https://duckduckgo.com/hiring

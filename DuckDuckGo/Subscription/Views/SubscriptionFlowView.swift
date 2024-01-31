@@ -34,6 +34,7 @@ struct SubscriptionFlowView: View {
         static let daxLogo = "Home"
         static let daxLogoSize: CGFloat = 24.0
         static let empty = ""
+        static let closeButtonPadding: CGFloat = 16.0
     }
     
     private func getTransactionStatus() -> String {
@@ -63,7 +64,7 @@ struct SubscriptionFlowView: View {
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
-                                        Text(viewModel.viewTitle).daxBodyRegular()
+                                            Text(viewModel.viewTitle).daxBodyRegular()
                                     }
                                 } else {
                                     Text(Constants.empty)
@@ -72,7 +73,6 @@ struct SubscriptionFlowView: View {
                         }
                     }
                     .toolbar(shouldShowNavigationBar ? .visible : .hidden, for: .navigationBar)
-                    .animation(.bouncy)
             }
         } else {
             NavigationView {
@@ -89,14 +89,18 @@ struct SubscriptionFlowView: View {
             webView
             
             // Show a dismiss button while the bar is not visible
-            if !shouldShowNavigationBar {
+            // But it should be hidden while performing a transaction
+            if !shouldShowNavigationBar && viewModel.transactionStatus == .idle {
                 HStack {
                     Spacer()
-                    Button(action: { dismiss() }) {
-                        Text(UserText.subscriptionCloseButton).daxBodyRegular()
-                    }.transition(.opacity)
-                }.animation(.easeInOut, value: shouldShowNavigationBar)
-                .padding()
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Text(UserText.subscriptionCloseButton)
+                    }
+                    .padding(Constants.closeButtonPadding)
+                    .contentShape(Rectangle())
+                }
             }
         }
         
@@ -134,10 +138,10 @@ struct SubscriptionFlowView: View {
                 }
             )
         }
-        .navigationBarBackButtonHidden(viewModel.transactionStatus != .idle)
-        .navigationBarItems(trailing: Button(UserText.subscriptionCloseButton) {
-            dismiss()
-        })
+        // The trailing close button should be hidden when a transaction is in progress
+        .navigationBarItems(trailing: viewModel.transactionStatus == .idle
+                            ? Button(UserText.subscriptionCloseButton) { self.dismiss() }
+                            : nil)
     }
     
     @ViewBuilder
@@ -179,7 +183,7 @@ struct SubscriptionFlowView: View {
                 withAnimation {
                     shouldShowNavigationBar = true
                 }
-            } else if position.y <= Constants.navigationTranslucentThreshold && shouldShowNavigationBar {
+            } else if position.y <= Constants.navigationTranslucentThreshold && position.y > 0 && shouldShowNavigationBar {
                 withAnimation {
                     shouldShowNavigationBar = false
                 }

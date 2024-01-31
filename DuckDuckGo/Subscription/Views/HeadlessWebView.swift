@@ -24,11 +24,14 @@ import SwiftUI
 import DesignResourcesKit
 import Core
 
-struct HeadlessWebview: UIViewRepresentable {
+struct HeadlessWebView: UIViewRepresentable {
     let userScript: UserScriptMessaging
     let subFeature: Subfeature
     @Binding var url: URL
     @Binding var shouldReload: Bool
+    let ignoreTopSafeAreaInsets: Bool
+    let onScroll: ((CGPoint) -> Void)?
+    let bounces: Bool
 
     func makeUIView(context: Context) -> WKWebView {
         let configuration = WKWebViewConfiguration()
@@ -43,6 +46,8 @@ struct HeadlessWebview: UIViewRepresentable {
         }
         
         webView.uiDelegate = context.coordinator
+        webView.scrollView.delegate = context.coordinator
+        webView.scrollView.bounces = bounces
         
         
 #if DEBUG
@@ -54,6 +59,13 @@ struct HeadlessWebview: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: WKWebView, context: Context) {
+        // Adjust content insets
+        if ignoreTopSafeAreaInsets {
+            let insets = UIEdgeInsets(top: -uiView.safeAreaInsets.top, left: 0, bottom: 0, right: 0)
+            uiView.scrollView.contentInset = insets
+            uiView.scrollView.scrollIndicatorInsets = insets
+        }
+        
         if shouldReload {
             reloadView(uiView: uiView)
         }
@@ -68,7 +80,7 @@ struct HeadlessWebview: UIViewRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator()
+          Coordinator(self)
     }
     
     @MainActor
@@ -80,8 +92,13 @@ struct HeadlessWebview: UIViewRepresentable {
         return userContentController
     }
     
-    class Coordinator: NSObject, WKUIDelegate {
+    class Coordinator: NSObject, WKUIDelegate, UIScrollViewDelegate {
+        var parent: HeadlessWebView
         var webView: WKWebView?
+        
+        init(_ parent: HeadlessWebView) {
+            self.parent = parent
+        }
         
         private func topMostViewController() -> UIViewController? {
             var topController: UIViewController? = UIApplication.shared.windows.filter { $0.isKeyWindow }
@@ -109,6 +126,14 @@ struct HeadlessWebview: UIViewRepresentable {
                 completionHandler(false)
             }
         }
+        
+        // MARK: UIScrollViewDelegate
+                
+        // Detect scroll events and call onScroll function with the current scroll position
+        func scrollViewDidScroll(_ scrollView: UIScrollView) {
+            guard let onScroll = parent.onScroll else { return }
+            onScroll(scrollView.contentOffset)
+        }
     }
 }
 
@@ -117,15 +142,37 @@ struct AsyncHeadlessWebView: View {
     let userScript: UserScriptMessaging
     let subFeature: Subfeature
     @Binding var shouldReload: Bool
-
+    var ignoreTopSafeAreaInsets: Bool
+    let onScroll: ((CGPoint) -> Void)?
+    let bounces: Bool
+    
+    init(url: Binding<URL>,
+         userScript: UserScriptMessaging,
+         subFeature: Subfeature,
+         shouldReload: Binding<Bool>,
+         ignoreTopSafeAreaInsets: Bool = false,
+         onScroll: ((CGPoint) -> Void)? = nil,
+         bounces: Bool = false) {
+           self._url = url
+           self.userScript = userScript
+           self.subFeature = subFeature
+           self._shouldReload = shouldReload
+           self.ignoreTopSafeAreaInsets = ignoreTopSafeAreaInsets
+           self.onScroll = onScroll
+            self.bounces = bounces
+       }
+    
     var body: some View {
         GeometryReader { geometry in
-            HeadlessWebview(userScript: userScript,
+            HeadlessWebView(userScript: userScript,
                             subFeature: subFeature,
                             url: $url,
-                            shouldReload: $shouldReload)
+                            shouldReload: $shouldReload,
+                            ignoreTopSafeAreaInsets: ignoreTopSafeAreaInsets,
+                            onScroll: onScroll,
+                            bounces: bounces)
                 .frame(width: geometry.size.width, height: geometry.size.height)
-        }
+                .edgesIgnoringSafeArea(.all)
+        }.edgesIgnoringSafeArea(.all)
     }
-
 }

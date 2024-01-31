@@ -1992,6 +1992,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Change plan or billing title */
 "subscription.change.plan" = "Change Plan Or Billing";
 
+/* Navigation Button for closing subscription view */
+"subscription.close" = "Close";
+
 /* FAQ Button */
 "subscription.faq" = "Privacy Pro FAQ";
 
@@ -2066,6 +2069,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Subscription Expiration Data */
 "subscription.subscription.active.caption" = "Your Privacy Pro subscription renews on %@";
+
+/* Navigation bar Title for subscriptions */
+"subscription.title" = "Privacy Pro";
 
 /* Message confirming that recovery code was copied to clipboard */
 "sync.code.copied" = "Recovery code copied to clipboard";

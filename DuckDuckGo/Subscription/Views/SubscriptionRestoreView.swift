@@ -34,7 +34,7 @@ struct SubscriptionRestoreView: View {
     @Binding var isActivatingSubscription: Bool
     
     private enum Constants {
-        static let heroImage = "SyncTurnOnSyncHero"
+        static let heroImage = "ManageSubscriptionHero"
         static let appleIDIcon = "Platform-Apple-16"
         static let emailIcon = "Email-16"
         static let headerLineSpacing = 10.0

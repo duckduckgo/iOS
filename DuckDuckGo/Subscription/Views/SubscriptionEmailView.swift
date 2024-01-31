@@ -34,7 +34,10 @@ struct SubscriptionEmailView: View {
                 AsyncHeadlessWebView(url: $viewModel.emailURL,
                                      userScript: viewModel.userScript,
                                      subFeature: viewModel.subFeature,
-                                     shouldReload: $viewModel.shouldReloadWebView).background()
+                                     shouldReload: $viewModel.shouldReloadWebView,
+                                     onScroll: { position in
+                                        print(position)}
+                                    ).background()
             }
         }
         .onChange(of: viewModel.activateSubscription) { active in

@@ -23,10 +23,18 @@ import Foundation
 
 @available(iOS 15.0, *)
 struct SubscriptionFlowView: View {
-        
+    
     @Environment(\.dismiss) var dismiss
     @ObservedObject var viewModel: SubscriptionFlowViewModel
     @State private var isAlertVisible = false
+    @State private var shouldShowNavigationBar = false
+    
+    enum Constants {
+        static let navigationTranslucentThreshold = 40.0
+        static let daxLogo = "Home"
+        static let daxLogoSize: CGFloat = 24.0
+        static let empty = ""
+    }
     
     private func getTransactionStatus() -> String {
         switch viewModel.transactionStatus {
@@ -40,26 +48,58 @@ struct SubscriptionFlowView: View {
             return ""
         }
     }
-    
+        
     var body: some View {
-        ZStack {
-            AsyncHeadlessWebView(url: $viewModel.purchaseURL,
-                                 userScript: viewModel.userScript,
-                                 subFeature: viewModel.subFeature,
-                                 shouldReload: $viewModel.shouldReloadWebView).background()
-
-            // Overlay that appears when transaction is in progress
-            if viewModel.transactionStatus != .idle {
-                PurchaseInProgressView(status: getTransactionStatus())
+        if #available(iOS 16.0, *) {
+            NavigationStack {
+                baseView
+                    .applyNavigationStyle()
+                    .toolbar {
+                        ToolbarItem(placement: .principal) {
+                            Group {
+                                if shouldShowNavigationBar {
+                                    HStack {
+                                        Image(Constants.daxLogo)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
+                                        Text(viewModel.viewTitle).daxBodyRegular()
+                                    }
+                                } else {
+                                    Text(Constants.empty)
+                                }
+                            }
+                        }
+                    }
+                    .toolbar(shouldShowNavigationBar ? .visible : .hidden, for: .navigationBar)
+                    .animation(.bouncy)
             }
-         
-            // Activation View
-            NavigationLink(destination: SubscriptionRestoreView(viewModel: SubscriptionRestoreViewModel(),
-                                                                isActivatingSubscription: $viewModel.activatingSubscription),
-                           isActive: $viewModel.activatingSubscription) {
-                EmptyView()
+        } else {
+            NavigationView {
+                baseView
+                    .navigationTitle(viewModel.viewTitle)
             }
         }
+    }
+
+    
+    @ViewBuilder
+    private var baseView: some View {
+        ZStack(alignment: .top) {
+            webView
+            
+            // Show a dismiss button while the bar is not visible
+            if !shouldShowNavigationBar {
+                HStack {
+                    Spacer()
+                    Button(action: { dismiss() }) {
+                        Text(UserText.subscriptionCloseButton).daxBodyRegular()
+                    }.transition(.opacity)
+                }.animation(.easeInOut, value: shouldShowNavigationBar)
+                .padding()
+            }
+        }
+        
         .onChange(of: viewModel.shouldReloadWebView) { shouldReload in
             if shouldReload {
                 viewModel.shouldReloadWebView = false
@@ -75,14 +115,14 @@ struct SubscriptionFlowView: View {
                 dismiss()
             }
         }
-        
         .onAppear(perform: {
             Task { await viewModel.initializeViewData() }
+            
+            // Fall back to old customization
+            if #unavailable(iOS 16.0) {
+                setUpAppearances()
+            }
         })
-        .navigationTitle(viewModel.viewTitle)
-        .navigationBarBackButtonHidden(viewModel.transactionStatus != .idle)
-        
-        // Active subscription found Alert
         .alert(isPresented: $isAlertVisible) {
             Alert(
                 title: Text(UserText.subscriptionFoundTitle),
@@ -95,6 +135,64 @@ struct SubscriptionFlowView: View {
             )
         }
         .navigationBarBackButtonHidden(viewModel.transactionStatus != .idle)
+        .navigationBarItems(trailing: Button(UserText.subscriptionCloseButton) {
+            dismiss()
+        })
     }
+    
+    @ViewBuilder
+    private var webView: some View {
+                
+        var ignoreTopSafeAreaInsets = true
+        
+        // No transparent navbar pre iOS 16
+        if #unavailable(iOS 16.0) {
+            var ignoreTopSafeAreaInsets = false
+        }
+        
+        ZStack(alignment: .top) {
+            AsyncHeadlessWebView(url: $viewModel.purchaseURL,
+                                 userScript: viewModel.userScript,
+                                 subFeature: viewModel.subFeature,
+                                 shouldReload: $viewModel.shouldReloadWebView,
+                                 ignoreTopSafeAreaInsets: false,
+                                 onScroll: { position in
+                                    updateNavigationBarWithScrollPosition(position)
+                                },
+                                 bounces: false)
+            
+            if viewModel.transactionStatus != .idle {
+                PurchaseInProgressView(status: getTransactionStatus())
+            }
+            
+            NavigationLink(destination: SubscriptionRestoreView(viewModel: SubscriptionRestoreViewModel(),
+                                                                isActivatingSubscription: $viewModel.activatingSubscription),
+                           isActive: $viewModel.activatingSubscription) {
+                EmptyView()
+            }
+        }
+    }
+    
+    private func updateNavigationBarWithScrollPosition(_ position: CGPoint) {
+        DispatchQueue.main.async {
+            if position.y > Constants.navigationTranslucentThreshold && !shouldShowNavigationBar {
+                withAnimation {
+                    shouldShowNavigationBar = true
+                }
+            } else if position.y <= Constants.navigationTranslucentThreshold && shouldShowNavigationBar {
+                withAnimation {
+                    shouldShowNavigationBar = false
+                }
+            }
+        }
+    }
+        
+    private func setUpAppearances() {
+        let navAppearance = UINavigationBar.appearance()
+        navAppearance.backgroundColor = UIColor(designSystemColor: .background)
+        navAppearance.barTintColor = UIColor(designSystemColor: .background)
+        navAppearance.shadowImage = UIImage()
+    }
+
 }
 #endif

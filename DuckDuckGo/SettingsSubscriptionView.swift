@@ -25,6 +25,9 @@ import UIKit
 struct SettingsSubscriptionView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
+    @State var isShowingsubScriptionFlow = false
+    @State var isShowingDBP = false
+    @State var isShowingITP = false
     
     private var subscriptionDescriptionView: some View {
         VStack(alignment: .leading) {
@@ -54,8 +57,11 @@ struct SettingsSubscriptionView: View {
             let viewModel = SubscriptionFlowViewModel(onFeatureSelected: { value in
                 self.viewModel.onAppearNavigationTarget = value
             })
-            NavigationLink(destination: SubscriptionFlowView(viewModel: viewModel)) {
-                SettingsCustomCell(content: { learnMoreView })
+            SettingsCustomCell(content: { learnMoreView },
+                               action: { isShowingsubScriptionFlow = true },
+                               isButton: true )
+            .sheet(isPresented: $isShowingsubScriptionFlow) {
+                SubscriptionFlowView(viewModel: viewModel)
             }
         }
     }

@@ -138,12 +138,6 @@ struct SubscriptionRestoreView: View {
                         HStack {
                             getCellButton(buttonText: UserText.subscriptionManageEmailButton,
                                                         action: buttonAction)
-                            /* TO BE IMPLEMENTED ??
-                            Spacer()
-                            Button(action: {}, label: {
-                                Text(UserText.subscriptionManageEmailResendInstructions).daxButton().daxBodyBold()
-                            })
-                            */
                         }
                     }
                 }

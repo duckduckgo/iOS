@@ -97,7 +97,12 @@ struct SettingsSubscriptionView: View {
                 } else {
                     purchaseSubscriptionView
                 }
-            }
+            // Refresh subscription when dismissing the Subscription Flow
+            }.onChange(of: isShowingsubScriptionFlow, perform: { value in
+                if !value {
+                    Task { await viewModel.setupSubscriptionEnvironment() }
+                }
+            })
         }
     }
 }

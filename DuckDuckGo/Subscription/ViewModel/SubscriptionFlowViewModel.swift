@@ -119,7 +119,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     func initializeViewData() async {
         await self.setupTransactionObserver()
-        await MainActor.run { shouldReloadWebView = true }
+        await self.updateSubscriptionStatus()
+        
     }
     
     func restoreAppstoreTransaction() {
@@ -130,6 +131,12 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 await MainActor.run {
                 }
             }
+        }
+    }
+    
+    func updateSubscriptionStatus() async {
+        if AccountManager().isUserAuthenticated && hasActiveSubscription == false {
+            await MainActor.run { shouldReloadWebView = true }
         }
     }
     

@@ -34,7 +34,7 @@ struct SubscriptionFlowView: View {
         static let daxLogo = "Home"
         static let daxLogoSize: CGFloat = 24.0
         static let empty = ""
-        static let closeButtonPadding: CGFloat = 16.0
+        static let closeButtonPadding: CGFloat = 20.0
     }
     
     private func getTransactionStatus() -> String {
@@ -81,7 +81,6 @@ struct SubscriptionFlowView: View {
             }
         }
     }
-
     
     @ViewBuilder
     private var baseView: some View {
@@ -116,16 +115,17 @@ struct SubscriptionFlowView: View {
         }
         .onChange(of: viewModel.shouldDismissView) { result in
             if result {
-                dismiss()
+                self.dismiss()
             }
         }
         .onAppear(perform: {
-            Task { await viewModel.initializeViewData() }
-            
             // Fall back to old customization
             if #unavailable(iOS 16.0) {
-                setUpAppearances()
+                // setUpAppearances()
             }
+            
+            Task { await viewModel.initializeViewData() }
+            
         })
         .alert(isPresented: $isAlertVisible) {
             Alert(

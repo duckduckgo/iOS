@@ -293,11 +293,11 @@ extension SwipeTabsCoordinator {
     
     func addressBarPositionChanged(isTop: Bool) {
         if isTop {
-            collectionView.horizontalScrollIndicatorInsets.bottom = 50
+            collectionView.horizontalScrollIndicatorInsets.bottom = -2
             collectionView.hitTestInsets.top = -12
             collectionView.hitTestInsets.bottom = 0
         } else {
-            collectionView.horizontalScrollIndicatorInsets.bottom = -8
+            collectionView.horizontalScrollIndicatorInsets.bottom = collectionView.frame.height - 8
             collectionView.hitTestInsets.top = 0
             collectionView.hitTestInsets.bottom = -12
         }

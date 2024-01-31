@@ -282,12 +282,16 @@ class MainViewController: UIViewController {
 
         tabManager.cleanupTabsFaviconCache()
 
+        // Needs to be called here to established correct view hierarchy
         refreshViewsBasedOnAddressBarPosition(appSettings.currentAddressBarPosition)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        // Needs to be called here because sometimes the frames are not the expected size during didLoad
+        refreshViewsBasedOnAddressBarPosition(appSettings.currentAddressBarPosition)
+
         startOnboardingFlowIfNotSeenBefore()
         tabsBarController?.refresh(tabsModel: tabManager.model)
         swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)

@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "872090e651ad8e26ca9903a95f3d094b21d48e23",
-        "version" : "104.0.0"
+        "branch" : "mariusz/rollout-cpm-by-default",
+        "revision" : "dedc3c2dd91fc3aa357ab24a050b316cb9c53b43"
       }
     },
     {

@@ -184,6 +184,5 @@ class MockWKScriptMessage: WKScriptMessage {
 }
 
 class MockAutoconsentPreferences: AutoconsentPreferences {
-    var autoconsentPromptSeen: Bool = true
     var autoconsentEnabled: Bool = true
 }

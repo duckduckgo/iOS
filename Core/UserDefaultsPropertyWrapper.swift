@@ -87,7 +87,6 @@ public struct UserDefaultsWrapper<T> {
         
         case voiceSearchEnabled = "com.duckduckgo.app.voiceSearchEnabled"
         
-        case autoconsentPromptSeen = "com.duckduckgo.ios.autoconsentPromptSeen"
         case autoconsentEnabled = "com.duckduckgo.ios.autoconsentEnabled"
 
         case shouldScheduleRulesCompilationOnAppLaunch = "com.duckduckgo.ios.shouldScheduleRulesCompilationOnAppLaunch"

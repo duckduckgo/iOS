@@ -287,9 +287,6 @@ public class AppUserDefaults: AppSettings {
             }
         }
     }
-    
-    @UserDefaultsWrapper(key: .autoconsentPromptSeen, defaultValue: false)
-    var autoconsentPromptSeen: Bool
 
     var autoconsentEnabled: Bool {
         get {
@@ -305,6 +302,11 @@ public class AppUserDefaults: AppSettings {
         set {
             autoconsentEnabledSetting = newValue
         }
+    }
+
+    // Only for testing and `DebugViewController` purposes
+    func clearAutoconsentUserSetting() {
+        autoconsentEnabledSetting = nil
     }
 
     @UserDefaultsWrapper(key: .autoconsentEnabled, defaultValue: false)

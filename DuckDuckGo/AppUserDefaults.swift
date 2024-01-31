@@ -290,9 +290,25 @@ public class AppUserDefaults: AppSettings {
     
     @UserDefaultsWrapper(key: .autoconsentPromptSeen, defaultValue: false)
     var autoconsentPromptSeen: Bool
-    
-    @UserDefaultsWrapper(key: .autoconsentEnabled, defaultValue: true)
-    var autoconsentEnabled: Bool
+
+    var autoconsentEnabled: Bool {
+        get {
+            // Use settings value if present
+            if let isEnabled = autoconsentEnabledSetting {
+                return isEnabled
+            }
+
+            // Use onByDefault rollout otherwise
+            return featureFlagger.isFeatureOn(.autoconsentOnByDefault)
+        }
+
+        set {
+            autoconsentEnabledSetting = newValue
+        }
+    }
+
+    @UserDefaultsWrapper(key: .autoconsentEnabled, defaultValue: false)
+    private var autoconsentEnabledSetting: Bool?
 
     var inspectableWebViewEnabled: Bool {
         get {

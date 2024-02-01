@@ -1271,7 +1271,7 @@ class MainViewController: UIViewController {
 
         Task {
             do {
-                try NetworkProtectionKeychainTokenStore().store("ddg:\(token)")
+                try NetworkProtectionKeychainTokenStore().store(NetworkProtectionKeychainTokenStore.makeToken(from: token))
                 print("[NetP Subscription] Stored derived NetP auth token")
             } catch {
                 print("[NetP Subscription] Failed to store derived NetP auth token: \(error)")
@@ -1281,12 +1281,7 @@ class MainViewController: UIViewController {
 
     @objc
     private func onNetworkProtectionAccountSignOut(_ notification: Notification) {
-        do {
-            try NetworkProtectionKeychainTokenStore().deleteToken()
-            print("[NetP Subscription] Deleted NetP auth token after signing out from Privacy Pro")
-        } catch {
-            print("[NetP Subscription] Failed to delete NetP auth token after signing out from Privacy Pro: \(error)")
-        }
+        // no-op
     }
 #endif
 

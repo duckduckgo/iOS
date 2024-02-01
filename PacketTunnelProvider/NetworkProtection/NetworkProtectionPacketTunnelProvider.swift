@@ -162,7 +162,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 params[PixelParameters.wireguardErrorCode] = String(code)
             case .noAuthTokenFound:
                 pixelEvent = .networkProtectionNoAuthTokenFoundError
-            case .vpnAccessRevoked, .noSubscriptionAccessTokenFound:
+            case .vpnAccessRevoked:
                 return
             case .unhandledError(function: let function, line: let line, error: let error):
                 pixelEvent = .networkProtectionUnhandledError
@@ -203,8 +203,10 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
+        let subscriptionConfig = SubscriptionConfig.makeConfiguration()
         let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
-                                                             errorEvents: nil)
+                                                             errorEvents: nil,
+                                                             isSubscriptionEnabled: subscriptionConfig.isEnabled)
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
@@ -221,7 +223,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,
-                   subscriptionConfig: SubscriptionConfig.makeConfiguration())
+                   subscriptionConfig: subscriptionConfig)
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
         observeStatusChanges()
@@ -280,10 +282,7 @@ extension PacketTunnelProvider.SubscriptionConfig {
     static func makeConfiguration() -> PacketTunnelProvider.SubscriptionConfig {
         .init(
             isEnabled: true,
-            isEntitlementValid: Self.isEntitlementValid,
-            getAccessToken: {
-                AccountManager().accessToken
-            }
+            isEntitlementValid: Self.isEntitlementValid
         )
     }
 
@@ -296,8 +295,7 @@ extension PacketTunnelProvider.SubscriptionConfig {
     static func makeConfiguration() -> PacketTunnelProvider.SubscriptionConfig {
         .init(
             isEnabled: false,
-            isEntitlementValid: { true },
-            getAccessToken: { nil }
+            isEntitlementValid: { true }
         )
     }
 #endif

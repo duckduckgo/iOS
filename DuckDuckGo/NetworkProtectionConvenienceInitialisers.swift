@@ -46,9 +46,15 @@ extension ConnectionServerInfoObserverThroughSession {
 
 extension NetworkProtectionKeychainTokenStore {
     convenience init() {
+#if ALPHA
+        let isSubscriptionEnabled = true
+#else
+        let isSubscriptionEnabled = AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
+#endif
         self.init(keychainType: .dataProtection(.unspecified),
                   serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
-                  errorEvents: .networkProtectionAppDebugEvents)
+                  errorEvents: .networkProtectionAppDebugEvents,
+                  isSubscriptionEnabled: isSubscriptionEnabled)
     }
 }
 
@@ -82,11 +88,17 @@ extension NetworkProtectionVPNSettingsViewModel {
 extension NetworkProtectionLocationListCompositeRepository {
     convenience init() {
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+#if ALPHA
+        let isSubscriptionEnabled = true
+#else
+        let isSubscriptionEnabled = AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
+#endif
+
         self.init(
             environment: settings.selectedEnvironment,
             tokenStore: NetworkProtectionKeychainTokenStore(),
             errorEvents: .networkProtectionAppDebugEvents,
-            isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
+            isSubscriptionEnabled: isSubscriptionEnabled
         )
     }
 }

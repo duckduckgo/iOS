@@ -315,7 +315,13 @@ class MainViewController: UIViewController {
         swipeTabsCoordinator = SwipeTabsCoordinator(coordinator: viewCoordinator,
                                                     tabPreviewsSource: previewsSource,
                                                     appSettings: appSettings) { [weak self] in
+            
+            guard $0 != self?.tabManager.model.currentIndex else { return }
+            
+            DailyPixel.fire(pixel: .swipeTabsUsedDaily)
+            Pixel.fire(pixel: .swipeTabsUsed)
             self?.select(tabAt: $0)
+            
         } newTab: { [weak self] in
             self?.newTab()
         } onSwipeStarted: { [weak self] in

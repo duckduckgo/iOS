@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "381cd794bd00b388e8db4722af0a78cb8c729ef9",
-        "version" : "104.0.2"
+        "branch" : "mariusz/add-autoconsent-subfeature",
+        "revision" : "bcdda78cf3e4f8bb7e6926cca77fafa4a681dd1e"
       }
     },
     {

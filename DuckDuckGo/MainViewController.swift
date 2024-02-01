@@ -326,16 +326,34 @@ class MainViewController: UIViewController {
             self?.newTab()
         } onSwipeStarted: { [weak self] in
             self?.hideKeyboard()
+            self?.updatePreviewForCurrentTab()
+        }
+    }
+    
+    func updatePreviewForCurrentTab() {
+        assert(Thread.isMainThread)
+        
+        if !viewCoordinator.logoContainer.isHidden,
+           self.tabManager.current()?.link == nil,
+           let tab = self.tabManager.model.currentTab {
             
-            guard let self,
-                    let currentTab = self.tabManager.current(),
-                    currentTab.link != nil else { return }
-            
+            // Home screen with logo
+            if let image = viewCoordinator.logoContainer.createImageSnapshot(inBounds: viewCoordinator.contentContainer.frame) {
+                previewsSource.update(preview: image, forTab: tab)
+            }
+
+        } else if let currentTab = self.tabManager.current(), currentTab.link != nil {
+            // Web view
             currentTab.preparePreview(completion: { image in
                 guard let image else { return }
                 self.previewsSource.update(preview: image,
                                            forTab: currentTab.tabModel)
             })
+        } else if let tab = self.tabManager.model.currentTab {
+            // Favorites, etc
+            if let image = viewCoordinator.contentContainer.createImageSnapshot() {
+                previewsSource.update(preview: image, forTab: tab)
+            }
         }
     }
 

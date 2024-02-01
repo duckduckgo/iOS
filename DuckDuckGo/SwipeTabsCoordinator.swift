@@ -163,7 +163,7 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
     
     private func prepareCurrentView() {
         
-        if tabsModel.currentTab?.link == nil {
+        if !coordinator.logoContainer.isHidden {
             currentView = coordinator.logoContainer
         } else {
             currentView = coordinator.contentContainer.subviews.last

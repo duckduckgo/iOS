@@ -348,27 +348,19 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
 
 class OmniBarCell: UICollectionViewCell {
     
-    weak var leadingConstraint: NSLayoutConstraint?
-    weak var trailingConstraint: NSLayoutConstraint?
-    
     weak var omniBar: OmniBar? {
         didSet {
             subviews.forEach { $0.removeFromSuperview() }
             if let omniBar {
                 addSubview(omniBar)
                 
-                let leadingConstraint = constrainView(omniBar, by: .leadingMargin)
-                let trailingConstraint = constrainView(omniBar, by: .trailingMargin)
-                
                 NSLayoutConstraint.activate([
-                    leadingConstraint,
-                    trailingConstraint,
+                    constrainView(omniBar, by: .leadingMargin),
+                    constrainView(omniBar, by: .trailingMargin),
                     constrainView(omniBar, by: .top),
                     constrainView(omniBar, by: .bottom),
                 ])
                 
-                self.leadingConstraint = leadingConstraint
-                self.trailingConstraint = trailingConstraint
             }
         }
     }
@@ -376,12 +368,9 @@ class OmniBarCell: UICollectionViewCell {
     override func updateConstraints() {
         super.updateConstraints()
         print("***", #function)
-
         let left = superview?.safeAreaInsets.left ?? 0
         let right = superview?.safeAreaInsets.right ?? 0
-        
-        leadingConstraint?.constant = -left
-        trailingConstraint?.constant = right
+        omniBar?.updateOmniBarPadding(left: left, right: right)
     }
     
 }

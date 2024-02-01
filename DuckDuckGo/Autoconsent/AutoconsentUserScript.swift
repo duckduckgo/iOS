@@ -264,10 +264,8 @@ extension AutoconsentUserScript {
             "rules": nil, // rules are bundled with the content script atm
             "config": [
                 "enabled": true,
-                // if it's the first time, disable autoAction
                 "autoAction": "optOut",
                 "disabledCmps": disabledCMPs,
-                // the very first time (autoconsentEnabled = nil), make sure the popup is visible
                 "enablePrehide": true,
                 "enableCosmeticRules": true,
                 "detectRetries": 20,

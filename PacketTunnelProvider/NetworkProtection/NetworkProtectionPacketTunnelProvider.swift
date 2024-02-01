@@ -162,7 +162,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 params[PixelParameters.wireguardErrorCode] = String(code)
             case .noAuthTokenFound:
                 pixelEvent = .networkProtectionNoAuthTokenFoundError
-            case .vpnAccessRevoked:
+            case .vpnAccessRevoked, .noSubscriptionAccessTokenFound:
                 return
             case .unhandledError(function: let function, line: let line, error: let error):
                 pixelEvent = .networkProtectionUnhandledError
@@ -221,6 +221,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,
+                   isSubscriptionEnabled: Self.isSubscriptionEnabled(),
                    isEntitlementValid: Self.isEntitlementValid)
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
@@ -272,13 +273,25 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         .store(in: &cancellables)
     }
 
-    public static func isEntitlementValid() async -> Bool {
 #if ALPHA
-        await AccountManager().hasEntitlement(for: "dummy1")
-#else
+    public static func isSubscriptionEnabled() -> Bool {
         true
-#endif
     }
+
+    public static func isEntitlementValid() async -> Bool {
+        // TODO: Replace this with proper entitlement check
+        // https://app.asana.com/0/0/1206470585910128/f
+        await AccountManager().hasEntitlement(for: "dummy1")
+    }
+#else
+    public static func isSubscriptionEnabled() -> Bool {
+        false
+    }
+
+    public static func isEntitlementValid() async -> Bool {
+        true
+    }
+#endif
 }
 
 #endif

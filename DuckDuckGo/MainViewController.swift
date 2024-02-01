@@ -1271,10 +1271,10 @@ class MainViewController: UIViewController {
 
         Task {
             do {
-                try await NetworkProtectionCodeRedemptionCoordinator().exchange(accessToken: token)
-                print("[NetP Subscription] Exchanged access token for auth token successfully")
+                try NetworkProtectionKeychainTokenStore().store("ddg:\(token)")
+                print("[NetP Subscription] Stored derived NetP auth token")
             } catch {
-                print("[NetP Subscription] Failed to exchange access token for auth token: \(error)")
+                print("[NetP Subscription] Failed to store derived NetP auth token: \(error)")
             }
         }
     }

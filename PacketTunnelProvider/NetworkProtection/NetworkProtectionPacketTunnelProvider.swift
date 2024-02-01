@@ -221,8 +221,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,
-                   isSubscriptionEnabled: Self.isSubscriptionEnabled(),
-                   isEntitlementValid: Self.isEntitlementValid)
+                   subscriptionConfig: SubscriptionConfig.makeConfiguration())
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
         observeStatusChanges()
@@ -272,26 +271,34 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         }
         .store(in: &cancellables)
     }
+}
 
+#endif
+
+extension PacketTunnelProvider.SubscriptionConfig {
 #if ALPHA
-    public static func isSubscriptionEnabled() -> Bool {
-        true
+    static func makeConfiguration() -> PacketTunnelProvider.SubscriptionConfig {
+        .init(
+            isEnabled: true,
+            isEntitlementValid: Self.isEntitlementValid,
+            getAccessToken: {
+                AccountManager().accessToken
+            }
+        )
     }
 
-    public static func isEntitlementValid() async -> Bool {
+    static func isEntitlementValid() async -> Bool {
         // TODO: Replace this with proper entitlement check
         // https://app.asana.com/0/0/1206470585910128/f
         await AccountManager().hasEntitlement(for: "dummy1")
     }
 #else
-    public static func isSubscriptionEnabled() -> Bool {
-        false
-    }
-
-    public static func isEntitlementValid() async -> Bool {
-        true
+    static func makeConfiguration() -> PacketTunnelProvider.SubscriptionConfig {
+        .init(
+            isEnabled: false,
+            isEntitlementValid: { true },
+            getAccessToken: { nil }
+        )
     }
 #endif
 }
-
-#endif

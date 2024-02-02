@@ -208,6 +208,7 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
     
     private func createPreviewFromImage(_ image: UIImage) {
         let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFill
         coordinator.contentContainer.addSubview(imageView)
         preview = imageView
     }

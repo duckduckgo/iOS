@@ -1,5 +1,5 @@
 //
-//  NavigationViewStyle.swift
+//  NavigationBarModifier.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -20,19 +20,17 @@
 import SwiftUI
 import DesignResourcesKit
 
-@available(iOS 16.0, *)
+
 struct NavigationBarModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .toolbarBackground(Color(designSystemColor: .surface), for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
-            .tint(Color(designSystemColor: .textPrimary))
     }
 }
 
 // Extension to easily apply the custom modifier
-@available(iOS 16.0, *)
+
 extension View {
     func applyNavigationStyle() -> some View {
         self.modifier(NavigationBarModifier())

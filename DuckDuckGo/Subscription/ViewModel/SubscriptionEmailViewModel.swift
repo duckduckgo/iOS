@@ -39,9 +39,9 @@ final class SubscriptionEmailViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
             
-    init(userScript: SubscriptionPagesUserScript,
-         subFeature: SubscriptionPagesUseSubscriptionFeature,
-         accountManager: AccountManager) {
+    init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
+         subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
+         accountManager: AccountManager = AccountManager()) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.accountManager = accountManager
@@ -76,5 +76,8 @@ final class SubscriptionEmailViewModel: ObservableObject {
         activateSubscription = true
     }
     
+    deinit {
+        print("Subscription Email ViewModel Deallocated")
+    }
 }
 #endif

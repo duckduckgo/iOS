@@ -25,9 +25,12 @@ import Foundation
 struct SubscriptionFlowView: View {
     
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var viewModel: SubscriptionFlowViewModel
+    @StateObject var viewModel = SubscriptionFlowViewModel()
+    @State private var showNestedViews = true
     @State private var isAlertVisible = false
     @State private var shouldShowNavigationBar = false
+    
+    @State private var isActive: Bool = false
     
     enum Constants {
         static let navigationTranslucentThreshold = 40.0
@@ -49,44 +52,33 @@ struct SubscriptionFlowView: View {
             return ""
         }
     }
-        
+    
     var body: some View {
-        if #available(iOS 16.0, *) {
-            NavigationStack {
-                baseView
-                    .applyNavigationStyle()
-                    .toolbar {
-                        ToolbarItem(placement: .principal) {
-                            Group {
-                                if shouldShowNavigationBar {
-                                    HStack {
-                                        Image(Constants.daxLogo)
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
-                                            Text(viewModel.viewTitle).daxBodyRegular()
-                                    }
-                                } else {
-                                    Text(Constants.empty)
-                                }
-                            }
+        NavigationView {
+            baseView
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        HStack {
+                            Image(Constants.daxLogo)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
+                            Text(viewModel.viewTitle).daxBodyRegular()
                         }
                     }
-                    .toolbar(shouldShowNavigationBar ? .visible : .hidden, for: .navigationBar)
-            }
-        } else {
-            NavigationView {
-                baseView
-                    .navigationTitle(viewModel.viewTitle)
-            }
-        }
+                }
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarHidden(!shouldShowNavigationBar)
+        }.environment(\.rootPresentationMode, self.$isActive)
+        
     }
+        
     
     @ViewBuilder
     private var baseView: some View {
         ZStack(alignment: .top) {
             webView
-            
+                        
             // Show a dismiss button while the bar is not visible
             // But it should be hidden while performing a transaction
             if !shouldShowNavigationBar && viewModel.transactionStatus == .idle {
@@ -101,6 +93,7 @@ struct SubscriptionFlowView: View {
                     .contentShape(Rectangle())
                 }
             }
+            
         }
         
         .onChange(of: viewModel.shouldReloadWebView) { shouldReload in
@@ -108,25 +101,32 @@ struct SubscriptionFlowView: View {
                 viewModel.shouldReloadWebView = false
             }
         }
+        
         .onChange(of: viewModel.hasActiveSubscription) { result in
             if result {
                 isAlertVisible = true
             }
         }
+        
         .onChange(of: viewModel.shouldDismissView) { result in
             if result {
-                self.dismiss()
+                dismiss()
             }
         }
-        .onAppear(perform: {
-            // Fall back to old customization
-            if #unavailable(iOS 16.0) {
-                // setUpAppearances()
+        
+        .onChange(of: viewModel.activatingSubscription) { value in
+            if value {
+                isActive = true
+                viewModel.activatingSubscription = false
             }
-            
+        }
+        
+        .onAppear(perform: {
+            setUpAppearances()
             Task { await viewModel.initializeViewData() }
             
         })
+        
         .alert(isPresented: $isAlertVisible) {
             Alert(
                 title: Text(UserText.subscriptionFoundTitle),
@@ -155,25 +155,25 @@ struct SubscriptionFlowView: View {
         }
         
         ZStack(alignment: .top) {
+            // Restore View Hidden Link
+            NavigationLink(destination: SubscriptionRestoreView(), isActive: $isActive) {
+                EmptyView()
+            }.isDetailLink(false)
+            
             AsyncHeadlessWebView(url: $viewModel.purchaseURL,
                                  userScript: viewModel.userScript,
                                  subFeature: viewModel.subFeature,
                                  shouldReload: $viewModel.shouldReloadWebView,
-                                 ignoreTopSafeAreaInsets: false,
+                                 ignoreTopSafeAreaInsets: true,
                                  onScroll: { position in
-                                    updateNavigationBarWithScrollPosition(position)
-                                },
+                updateNavigationBarWithScrollPosition(position)
+            },
                                  bounces: false)
             
             if viewModel.transactionStatus != .idle {
                 PurchaseInProgressView(status: getTransactionStatus())
             }
-            
-            NavigationLink(destination: SubscriptionRestoreView(viewModel: SubscriptionRestoreViewModel(),
-                                                                isActivatingSubscription: $viewModel.activatingSubscription),
-                           isActive: $viewModel.activatingSubscription) {
-                EmptyView()
-            }
+
         }
     }
     
@@ -183,7 +183,7 @@ struct SubscriptionFlowView: View {
                 withAnimation {
                     shouldShowNavigationBar = true
                 }
-            } else if position.y <= Constants.navigationTranslucentThreshold && position.y > 0 && shouldShowNavigationBar {
+            } else if position.y <= Constants.navigationTranslucentThreshold && shouldShowNavigationBar {
                 withAnimation {
                     shouldShowNavigationBar = false
                 }

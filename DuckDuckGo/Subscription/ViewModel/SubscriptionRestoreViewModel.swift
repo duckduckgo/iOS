@@ -39,7 +39,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     @Published var transactionStatus: SubscriptionPagesUseSubscriptionFeature.TransactionStatus = .idle
     @Published var activationResult: SubscriptionActivationResult = .unknown
     @Published var subscriptionEmail: String?
-    @Published var isManagingEmailSubscription: Bool = false
         
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
@@ -80,8 +79,8 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         }
     }
     
-    func manageEmailSubscription() {
-        isManagingEmailSubscription = true
+    deinit {
+        print("Subscription Restore ViewModel Deallocated")
     }
     
 }

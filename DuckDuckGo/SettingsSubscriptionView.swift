@@ -54,14 +54,11 @@ struct SettingsSubscriptionView: View {
     private var purchaseSubscriptionView: some View {
         return Group {
             SettingsCustomCell(content: { subscriptionDescriptionView })
-            let viewModel = SubscriptionFlowViewModel(onFeatureSelected: { value in
-                self.viewModel.onAppearNavigationTarget = value
-            })
             SettingsCustomCell(content: { learnMoreView },
                                action: { isShowingsubScriptionFlow = true },
                                isButton: true )
             .sheet(isPresented: $isShowingsubScriptionFlow) {
-                SubscriptionFlowView(viewModel: viewModel)
+                SubscriptionFlowView()
             }
         }
     }
@@ -74,17 +71,21 @@ struct SettingsSubscriptionView: View {
                              disclosureIndicator: true,
                              isButton: true)
             
+            /*
             NavigationLink(destination: Text("Data Broker Protection"), isActive: $viewModel.shouldNavigateToDBP) {
                 SettingsCellView(label: UserText.settingsPProDBPTitle, subtitle: UserText.settingsPProDBPSubTitle)
             }
             
+            
             NavigationLink(destination: SubscriptionITPView(viewModel: SubscriptionITPViewModel()), isActive: $viewModel.shouldNavigateToITP) {
                 SettingsCellView(label: UserText.settingsPProITRTitle, subtitle: UserText.settingsPProITRSubTitle)
             }
+             */
             
-            NavigationLink(destination: SubscriptionSettingsView(viewModel: SubscriptionSettingsViewModel())) {
+            NavigationLink(destination: SubscriptionSettingsView()) {
                 SettingsCustomCell(content: { manageSubscriptionView })
             }
+            
         }
     }
     

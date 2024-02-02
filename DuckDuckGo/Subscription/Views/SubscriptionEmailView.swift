@@ -24,9 +24,11 @@ import Foundation
 @available(iOS 15.0, *)
 struct SubscriptionEmailView: View {
         
-    @ObservedObject var viewModel: SubscriptionEmailViewModel
-    @Binding var isActivatingSubscription: Bool
+    @StateObject var viewModel = SubscriptionEmailViewModel()
     @Environment(\.dismiss) var dismiss
+    @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
+    @State private var isActive: Bool = false
+    @State var isAddingDevice = false
     
     var body: some View {
         ZStack {
@@ -42,13 +44,12 @@ struct SubscriptionEmailView: View {
         }
         .onChange(of: viewModel.activateSubscription) { active in
             if active {
-                // We just need to dismiss the current view
-                if viewModel.managingSubscriptionEmail {
+                // If updating email, just go back
+                if isAddingDevice {
                     dismiss()
                 } else {
-                    // Update the binding to tear down the entire view stack
-                    // This dismisses all views in between and takes you back to the welcome page
-                    isActivatingSubscription = false
+                    // Dismiss the whole stack
+                    self.rootPresentationMode.wrappedValue.dismiss()
                 }
             }
         }

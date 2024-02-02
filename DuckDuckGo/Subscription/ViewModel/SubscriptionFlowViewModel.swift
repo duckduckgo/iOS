@@ -38,7 +38,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     // Closure passed to navigate to a specific section
     // after returning to settings
-    var onFeatureSelected: ((SettingsViewModel.SettingsSection) -> Void)
+    // var onFeatureSelected: ((SettingsViewModel.SettingsSection) -> Void)
     
     enum FeatureName {
         static let netP = "vpn"
@@ -55,12 +55,12 @@ final class SubscriptionFlowViewModel: ObservableObject {
         
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
-         purchaseManager: PurchaseManager = PurchaseManager.shared,
-         onFeatureSelected: @escaping ((SettingsViewModel.SettingsSection) -> Void)) {
+         purchaseManager: PurchaseManager = PurchaseManager.shared
+         /*onFeatureSelected: @escaping ((SettingsViewModel.SettingsSection) -> Void)*/) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.purchaseManager = purchaseManager
-        self.onFeatureSelected = onFeatureSelected
+        // self.onFeatureSelected = onFeatureSelected
     }
     
     // Observe transaction status
@@ -97,12 +97,12 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 if value != nil {
                     self?.shouldDismissView = true
                     switch value?.feature {
-                    case FeatureName.netP:
-                        self?.onFeatureSelected(.netP)
-                    case FeatureName.itp:
-                        self?.onFeatureSelected(.itp)
-                    case FeatureName.dbp:
-                        self?.onFeatureSelected(.dbp)
+                    case FeatureName.netP: break
+                        // self?.onFeatureSelected(.netP)
+                    case FeatureName.itp: break
+                        // self?.onFeatureSelected(.itp)
+                    case FeatureName.dbp: break
+                        // self?.onFeatureSelected(.dbp)
                     default:
                         return
                     }
@@ -120,7 +120,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     func initializeViewData() async {
         await self.setupTransactionObserver()
         await self.updateSubscriptionStatus()
-        
     }
     
     func restoreAppstoreTransaction() {
@@ -138,6 +137,10 @@ final class SubscriptionFlowViewModel: ObservableObject {
         if AccountManager().isUserAuthenticated && hasActiveSubscription == false {
             await MainActor.run { shouldReloadWebView = true }
         }
+    }
+    
+    deinit {
+        print("Subscription Flow ViewModel Deallocated")
     }
     
 }

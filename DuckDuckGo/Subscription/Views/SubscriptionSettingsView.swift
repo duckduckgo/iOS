@@ -29,10 +29,9 @@ class SceneEnvironment: ObservableObject {
 @available(iOS 15.0, *)
 struct SubscriptionSettingsView: View {
     
-    @ObservedObject var viewModel: SubscriptionSettingsViewModel
     @Environment(\.presentationMode) var presentationMode
+    @StateObject var viewModel = SubscriptionSettingsViewModel()
     @StateObject var sceneEnvironment = SceneEnvironment()
-    @State private var isActivatingSubscription = false
     
     var body: some View {
             List {
@@ -46,15 +45,15 @@ struct SubscriptionSettingsView: View {
                 }.textCase(nil)
                 Section(header: Text(UserText.subscriptionManageDevices)) {
                     
-                    NavigationLink(destination: SubscriptionRestoreView(
-                        viewModel: SubscriptionRestoreViewModel(isAddingDevice: true),
-                        isActivatingSubscription: $isActivatingSubscription)) {
+                    /*
+                    NavigationLink(destination: SubscriptionRestoreView(router: viewRouter, isAddingDevice: true)) {
                         SettingsCustomCell(content: {
                             Text(UserText.subscriptionAddDeviceButton)
                                 .daxBodyRegular()
                                 .foregroundColor(Color.init(designSystemColor: .accent))
                         })
                     }
+                    */
                     
                     SettingsCustomCell(content: {
                         Text(UserText.subscriptionRemoveFromDevice)

@@ -141,6 +141,7 @@ create_release_branch() {
 	fi
 
 	eval git checkout -b "${release_branch}" "$mute"
+	eval git push -u origin "${release_branch}" "$mute"
 	echo "✅"
 }
 
@@ -149,8 +150,12 @@ create_build_branch() {
 	eval git checkout "${release_branch}" "$mute"
 	eval git pull "$mute"
 
+	local temp_file
 	local latest_build_number
-	latest_build_number=$(agvtool what-version -terse)
+
+	temp_file=$(mktemp)
+	bundle exec fastlane latest_build_number_for_version version:"$version" file_name:"$temp_file"
+	latest_build_number="$(<"$temp_file")"
 	build_number=$((latest_build_number + 1))
 	build_branch="${release_branch}-build-${build_number}"
 
@@ -159,14 +164,15 @@ create_build_branch() {
 	fi
 
 	eval git checkout -b "${build_branch}" "$mute"
+	eval git push -u origin "${build_branch}" "$mute"
 	echo "✅"
 }
 
 update_marketing_version() {
 	printf '%s' "Setting app version ... "
 
-	version=$(cut -d' ' -f3 < "${base_dir}/Configuration/Version.xcconfig")
 	if [[ $is_hotfix ]]; then
+		version=$(cut -d' ' -f3 < "${base_dir}/Configuration/Version.xcconfig")
 		version=$(bump_patch_number "$version")
 	fi
 
@@ -185,9 +191,7 @@ bump_patch_number() {
 
 update_build_version() {
 	echo "Setting build version ..."
-	local username
-	username="$(git config user.email 2>&1)"
-	(cd "$base_dir" && bundle exec fastlane increment_build_number_for_version version:"${version}" username:"$username")
+	(cd "$base_dir" && bundle exec fastlane increment_build_number_for_version version:"${version}")
 	git add "${base_dir}/DuckDuckGo.xcodeproj/project.pbxproj"
 	if [[ "$(git diff --cached)" ]]; then
 		eval git commit -m \"Update build number\" "$mute"
@@ -228,10 +232,7 @@ update_release_notes() {
 
 create_pull_request() {
 	printf '%s' "Creating PR ... "
-	if [[ ! $is_subsequent_release && ! $is_hotfix ]]; then
-		eval git push -u origin "${release_branch}" "$mute"
-	fi
-	eval git push -u origin "${build_branch}" "$mute"
+	eval git push origin "${build_branch}" "$mute"
 	eval gh pr create --title \"Release "${version}-${build_number}"\" --base "${release_branch}" --label \"Merge triggers release\" --assignee @me "$mute" --body-file "${script_dir}/assets/prepare-release-description"
 	eval gh pr view --web "$mute"
 	echo "✅"

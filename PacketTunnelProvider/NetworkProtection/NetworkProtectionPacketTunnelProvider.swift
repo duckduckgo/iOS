@@ -278,10 +278,10 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 #endif
 
 extension PacketTunnelProvider.SubscriptionConfiguration {
-#if ALPHA
+#if ALPHA && SUBSCRIPTION
     static func makeConfiguration() -> PacketTunnelProvider.SubscriptionConfiguration {
         .init(
-            isSubscriptionEnabled: true,
+            isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription),
             isEntitlementValid: Self.isEntitlementValid
         )
     }

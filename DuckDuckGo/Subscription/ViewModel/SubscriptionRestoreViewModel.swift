@@ -79,9 +79,5 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         }
     }
     
-    deinit {
-        print("Subscription Restore ViewModel Deallocated")
-    }
-    
 }
 #endif

@@ -139,9 +139,5 @@ final class SubscriptionFlowViewModel: ObservableObject {
         }
     }
     
-    deinit {
-        print("Subscription Flow ViewModel Deallocated")
-    }
-    
 }
 #endif

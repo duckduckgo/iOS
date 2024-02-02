@@ -75,9 +75,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
         subFeature.emailActivationComplete = false
         activateSubscription = true
     }
-    
-    deinit {
-        print("Subscription Email ViewModel Deallocated")
-    }
+
 }
 #endif

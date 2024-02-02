@@ -26,6 +26,7 @@ struct NavigationBarModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .navigationBarTitleDisplayMode(.inline)
+            
     }
 }
 

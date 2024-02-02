@@ -48,14 +48,12 @@ struct SubscriptionEmailView: View {
                 if isAddingDevice {
                     dismiss()
                 } else {
-                    // Dismiss the whole stack
+                    // Pop to Root view
                     self.rootPresentationMode.wrappedValue.dismiss()
                 }
             }
         }
         .navigationTitle(viewModel.viewTitle)
     }
-    
-    
 }
 #endif

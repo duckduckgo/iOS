@@ -47,8 +47,7 @@ struct SubscriptionRestoreView: View {
     }
     
     var body: some View {
-        print("Restore View rendered")
-        return ZStack {
+        ZStack {
             VStack {
                 
                 // Email Activation View Hidden link

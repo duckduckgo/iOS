@@ -309,7 +309,7 @@ extension SettingsViewModel {
     #if SUBSCRIPTION
     @available(iOS 15.0, *)
     @MainActor
-    func setupSubscriptionEnvironment() async {
+    private func setupSubscriptionEnvironment() async {
         
         // Active subscription check
         if let token = accountManager.accessToken {

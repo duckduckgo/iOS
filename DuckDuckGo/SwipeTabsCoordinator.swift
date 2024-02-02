@@ -103,16 +103,21 @@ class SwipeTabsCoordinator: NSObject {
         layout?.scrollDirection = .horizontal
     }
     
-    private func scrollToCurrent(animated: Bool = false) {
+    private func scrollToCurrent() {
         guard isEnabled else { return }
         
-        print("***", #function, animated)
-        DispatchQueue.main.async {
-            let indexPath = IndexPath(row: self.tabsModel.currentIndex, section: 0)
-            self.collectionView.scrollToItem(at: indexPath,
-                                             at: .centeredHorizontally,
-                                             animated: animated)
+        let targetOffset = collectionView.frame.width * CGFloat(tabsModel.currentIndex)
+        print("***", #function, collectionView.contentOffset.x)
+
+        guard targetOffset != collectionView.contentOffset.x else {
+            print("***", #function, "skipping")
+            return
         }
+        
+        let indexPath = IndexPath(row: self.tabsModel.currentIndex, section: 0)
+        self.collectionView.scrollToItem(at: indexPath,
+                                         at: .centeredHorizontally,
+                                         animated: false)
     }
 }
 
@@ -120,8 +125,14 @@ class SwipeTabsCoordinator: NSObject {
 extension SwipeTabsCoordinator: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print("***", #function, "row:", indexPath.row, "currentIndex:", self.tabsModel.currentIndex)
-        scrollToCurrent()
+        print("***", #function,
+              "row:", indexPath.row,
+              "currentIndex:", self.tabsModel.currentIndex,
+              "count: ", collectionView.dataSource?.collectionView(collectionView, numberOfItemsInSection: 0) ?? -1)
+        
+        DispatchQueue.main.async {
+            self.scrollToCurrent()
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -217,7 +228,12 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         print("***", #function)
-        state = .starting(scrollView.contentOffset)
+        switch state {
+        case .idle:
+            state = .starting(scrollView.contentOffset)
+            
+        default: break
+        }
     }
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -276,14 +292,16 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
 extension SwipeTabsCoordinator {
     
     func refresh(tabsModel: TabsModel, scrollToSelected: Bool = false) {
-        print("***", #function)
-        let scrollToItem = self.tabsModel == nil
+        print("***", #function, scrollToSelected)
         
         self.tabsModel = tabsModel
         coordinator.navigationBarCollectionView.reloadData()
+        
+        print("***", #function, "count:", collectionView.dataSource?.collectionView(collectionView, numberOfItemsInSection: 0) ?? -1)
+        
         updateLayout()
         
-        if scrollToItem {
+        if scrollToSelected {
             scrollToCurrent()
         }
     }
@@ -308,7 +326,9 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard isEnabled else { return 1 }
         let extras = tabsModel.tabs.last?.link != nil ? 1 : 0 // last tab is not a home page, so let's add one
-        return tabsModel.count + extras
+        let count = tabsModel.count + extras
+        print("***", #function, count)
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -321,6 +341,7 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
         } else {
             cell.omniBar = OmniBar.loadFromXib()
             cell.omniBar?.translatesAutoresizingMaskIntoConstraints = false
+            cell.updateConstraints()
             cell.omniBar?.decorate(with: ThemeManager.shared.currentTheme)
             
             cell.omniBar?.showSeparator()
@@ -330,12 +351,9 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
                 cell.omniBar?.moveSeparatorToBottom()
             }
 
-            if tabsModel.tabs.indices.contains(indexPath.row) {
-                let tab = tabsModel.get(tabAt: indexPath.row)
+            if let url = tabsModel.safeGetTabAt(indexPath.row)?.link?.url {
                 cell.omniBar?.startBrowsing()
-                cell.omniBar?.refreshText(forUrl: tab.link?.url)
-            } else {
-                cell.omniBar?.stopBrowsing()
+                cell.omniBar?.refreshText(forUrl: url)
             }
 
         }

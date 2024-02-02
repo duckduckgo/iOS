@@ -72,6 +72,7 @@ class SwipeTabsCoordinator: NSObject {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.decelerationRate = .fast
+        collectionView.backgroundColor = .clear
 
         updateLayout()
     }
@@ -318,8 +319,6 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
         if !isEnabled || tabsModel.currentIndex == indexPath.row {
             cell.omniBar = coordinator.omniBar
         } else {
-            cell.insetsLayoutMarginsFromSafeArea = true
-
             cell.omniBar = OmniBar.loadFromXib()
             cell.omniBar?.translatesAutoresizingMaskIntoConstraints = false
             cell.omniBar?.decorate(with: ThemeManager.shared.currentTheme)

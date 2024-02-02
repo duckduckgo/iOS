@@ -1260,9 +1260,9 @@ class MainViewController: UIViewController {
             tabManager.addHomeTab()
         }
         attachHomeScreen()
-        homeController?.openedAsNewTab(allowingKeyboard: allowingKeyboard)
         tabsBarController?.refresh(tabsModel: tabManager.model)
         swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
+        homeController?.openedAsNewTab(allowingKeyboard: allowingKeyboard)
     }
     
     func animateLogoAppearance() {

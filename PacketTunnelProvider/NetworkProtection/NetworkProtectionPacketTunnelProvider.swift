@@ -203,10 +203,10 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
-        let subscriptionConfig = SubscriptionConfig.makeConfiguration()
+        let subscriptionConfiguration = SubscriptionConfiguration.makeConfiguration()
         let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
                                                              errorEvents: nil,
-                                                             isSubscriptionEnabled: subscriptionConfig.isEnabled)
+                                                             isSubscriptionEnabled: subscriptionConfiguration.isSubscriptionEnabled)
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
@@ -223,7 +223,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,
-                   subscriptionConfig: subscriptionConfig)
+                   subscriptionConfiguration: subscriptionConfiguration)
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
         observeStatusChanges()
@@ -277,24 +277,23 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
 #endif
 
-extension PacketTunnelProvider.SubscriptionConfig {
+extension PacketTunnelProvider.SubscriptionConfiguration {
 #if ALPHA
-    static func makeConfiguration() -> PacketTunnelProvider.SubscriptionConfig {
+    static func makeConfiguration() -> PacketTunnelProvider.SubscriptionConfiguration {
         .init(
-            isEnabled: true,
+            isSubscriptionEnabled: true,
             isEntitlementValid: Self.isEntitlementValid
         )
     }
 
     static func isEntitlementValid() async -> Bool {
-        // TODO: Replace this with proper entitlement check
-        // https://app.asana.com/0/0/1206470585910128/f
+        // todo - https://app.asana.com/0/0/1206470585910128/f
         await AccountManager().hasEntitlement(for: "dummy1")
     }
 #else
-    static func makeConfiguration() -> PacketTunnelProvider.SubscriptionConfig {
+    static func makeConfiguration() -> PacketTunnelProvider.SubscriptionConfiguration {
         .init(
-            isEnabled: false,
+            isSubscriptionEnabled: false,
             isEntitlementValid: { true }
         )
     }

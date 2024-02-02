@@ -562,6 +562,7 @@ class TabViewController: UIViewController {
         loadViewIfNeeded()
         
         if let url = urlRequest.url, !shouldReissueSearch(for: url) {
+            userAgentManager.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
             requeryLogic.onNewNavigation(url: url)
         }
 

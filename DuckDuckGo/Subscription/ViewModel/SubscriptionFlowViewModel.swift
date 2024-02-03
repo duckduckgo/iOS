@@ -31,6 +31,10 @@ final class SubscriptionFlowViewModel: ObservableObject {
     let purchaseManager: PurchaseManager
     let viewTitle = UserText.settingsPProSection
     
+    enum Constants {
+        static let navigationBarHideThreshold = 40.0
+    }
+    
     private var cancellables = Set<AnyCancellable>()
     
     // State variables
@@ -52,15 +56,24 @@ final class SubscriptionFlowViewModel: ObservableObject {
     @Published var shouldReloadWebView = false
     @Published var activatingSubscription = false
     @Published var shouldDismissView = false
+    @Published var webViewModel: AsyncHeadlessWebViewViewModel
+    @Published var shouldShowNavigationBar: Bool = false
+    @Published var selectedFeature: SettingsViewModel.SettingsSection?
         
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
-         purchaseManager: PurchaseManager = PurchaseManager.shared
+         purchaseManager: PurchaseManager = PurchaseManager.shared,
+         selectedFeature: SettingsViewModel.SettingsSection? = nil
          /*onFeatureSelected: @escaping ((SettingsViewModel.SettingsSection) -> Void)*/) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.purchaseManager = purchaseManager
+        self.selectedFeature = selectedFeature
         // self.onFeatureSelected = onFeatureSelected
+
+        self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,
+                                                          subFeature: subFeature,
+                                                          settings: AsyncHeadlessWebViewSettings(bounces: false))
     }
     
     // Observe transaction status
@@ -97,19 +110,25 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 if value != nil {
                     self?.shouldDismissView = true
                     switch value?.feature {
-                    case FeatureName.netP: break
-                        // self?.onFeatureSelected(.netP)
-                    case FeatureName.itp: break
-                        // self?.onFeatureSelected(.itp)
-                    case FeatureName.dbp: break
-                        // self?.onFeatureSelected(.dbp)
+                    case FeatureName.netP:
+                        self?.selectedFeature = .netP
+                    case FeatureName.itp:
+                        self?.selectedFeature = .itp
+                    case FeatureName.dbp:
+                        self?.selectedFeature = .dbp
                     default:
-                        return
+                        self?.selectedFeature = Optional.none
                     }
                 }
             }
             .store(in: &cancellables)
-  
+        
+        webViewModel.$scrollPosition
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.shouldShowNavigationBar = value.y > Constants.navigationBarHideThreshold
+            }
+            .store(in: &cancellables)
     }
     
     @MainActor
@@ -120,6 +139,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     func initializeViewData() async {
         await self.setupTransactionObserver()
         await self.updateSubscriptionStatus()
+        webViewModel.navigationCoordinator.navigateTo(url: purchaseURL )
     }
     
     func restoreAppstoreTransaction() {

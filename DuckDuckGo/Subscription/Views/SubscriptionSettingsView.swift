@@ -45,15 +45,15 @@ struct SubscriptionSettingsView: View {
                 }.textCase(nil)
                 Section(header: Text(UserText.subscriptionManageDevices)) {
                     
-                    /*
-                    NavigationLink(destination: SubscriptionRestoreView(router: viewRouter, isAddingDevice: true)) {
+                    
+                    NavigationLink(destination: SubscriptionRestoreView()) {
                         SettingsCustomCell(content: {
                             Text(UserText.subscriptionAddDeviceButton)
                                 .daxBodyRegular()
                                 .foregroundColor(Color.init(designSystemColor: .accent))
                         })
                     }
-                    */
+                    
                     
                     SettingsCustomCell(content: {
                         Text(UserText.subscriptionRemoveFromDevice)

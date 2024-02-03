@@ -29,10 +29,8 @@ struct SubscriptionITPView: View {
     
     var body: some View {
         ZStack {
-            AsyncHeadlessWebView(url: $viewModel.itpURL,
-                                 userScript: viewModel.userScript,
-                                 subFeature: viewModel.subFeature,
-                                 shouldReload: $viewModel.shouldReloadWebView).background()
+            // AsyncHeadlessWebView()
+            // .background()
         }
         .navigationTitle(viewModel.viewTitle)
     }

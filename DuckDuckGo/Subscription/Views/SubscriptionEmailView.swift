@@ -33,15 +33,14 @@ struct SubscriptionEmailView: View {
     var body: some View {
         ZStack {
             VStack {
-                AsyncHeadlessWebView(url: $viewModel.emailURL,
-                                     userScript: viewModel.userScript,
-                                     subFeature: viewModel.subFeature,
-                                     shouldReload: $viewModel.shouldReloadWebView,
-                                     onScroll: { position in
-                                        print(position)}
-                                    ).background()
+                AsyncHeadlessWebView(viewModel: viewModel.webViewModel)
+                    .background()
             }
         }
+        .onAppear {
+            viewModel.loadURL()
+        }
+        
         .onChange(of: viewModel.activateSubscription) { active in
             if active {
                 // If updating email, just go back

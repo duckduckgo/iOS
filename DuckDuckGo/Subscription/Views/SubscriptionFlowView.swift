@@ -20,6 +20,7 @@
 #if SUBSCRIPTION
 import SwiftUI
 import Foundation
+import DesignResourcesKit
 
 @available(iOS 15.0, *)
 struct SubscriptionFlowView: View {
@@ -29,11 +30,9 @@ struct SubscriptionFlowView: View {
     @State private var showNestedViews = true
     @State private var isAlertVisible = false
     @State private var shouldShowNavigationBar = false
-    
     @State private var isActive: Bool = false
     
     enum Constants {
-        static let navigationTranslucentThreshold = 40.0
         static let daxLogo = "Home"
         static let daxLogoSize: CGFloat = 24.0
         static let empty = ""
@@ -67,9 +66,12 @@ struct SubscriptionFlowView: View {
                         }
                     }
                 }
+                .edgesIgnoringSafeArea(.top)
                 .navigationBarTitleDisplayMode(.inline)
-                .navigationBarHidden(!shouldShowNavigationBar)
-        }.environment(\.rootPresentationMode, self.$isActive)
+                .navigationBarHidden(!viewModel.shouldShowNavigationBar).animation(.easeOut)
+        }
+        .tint(Color(designSystemColor: .textPrimary))
+        .environment(\.rootPresentationMode, self.$isActive)
         
     }
         
@@ -91,6 +93,7 @@ struct SubscriptionFlowView: View {
                     }
                     .padding(Constants.closeButtonPadding)
                     .contentShape(Rectangle())
+                    .tint(Color(designSystemColor: .textPrimary))
                 }
             }
             
@@ -111,6 +114,7 @@ struct SubscriptionFlowView: View {
         .onChange(of: viewModel.shouldDismissView) { result in
             if result {
                 dismiss()
+                viewModel.shouldDismissView = false
             }
         }
         
@@ -160,15 +164,8 @@ struct SubscriptionFlowView: View {
                 EmptyView()
             }.isDetailLink(false)
             
-            AsyncHeadlessWebView(url: $viewModel.purchaseURL,
-                                 userScript: viewModel.userScript,
-                                 subFeature: viewModel.subFeature,
-                                 shouldReload: $viewModel.shouldReloadWebView,
-                                 ignoreTopSafeAreaInsets: true,
-                                 onScroll: { position in
-                updateNavigationBarWithScrollPosition(position)
-            },
-                                 bounces: false)
+            AsyncHeadlessWebView(viewModel: viewModel.webViewModel)
+                .background()
             
             if viewModel.transactionStatus != .idle {
                 PurchaseInProgressView(status: getTransactionStatus())
@@ -176,26 +173,13 @@ struct SubscriptionFlowView: View {
 
         }
     }
-    
-    private func updateNavigationBarWithScrollPosition(_ position: CGPoint) {
-        DispatchQueue.main.async {
-            if position.y > Constants.navigationTranslucentThreshold && !shouldShowNavigationBar {
-                withAnimation {
-                    shouldShowNavigationBar = true
-                }
-            } else if position.y <= Constants.navigationTranslucentThreshold && shouldShowNavigationBar {
-                withAnimation {
-                    shouldShowNavigationBar = false
-                }
-            }
-        }
-    }
         
     private func setUpAppearances() {
         let navAppearance = UINavigationBar.appearance()
-        navAppearance.backgroundColor = UIColor(designSystemColor: .background)
-        navAppearance.barTintColor = UIColor(designSystemColor: .background)
+        navAppearance.backgroundColor = UIColor(designSystemColor: .surface)
+        navAppearance.barTintColor = UIColor(designSystemColor: .surface)
         navAppearance.shadowImage = UIImage()
+        navAppearance.tintColor = UIColor(designSystemColor: .textPrimary)
     }
 
 }

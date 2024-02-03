@@ -422,7 +422,7 @@ extension SettingsViewModel {
     private func navigateOnAppear() {
         // We need a short delay to let the SwifttUI view lifecycle complete
         // Otherwise the transition can be inconsistent
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
             switch self.onAppearNavigationTarget {
             case .netP:
                 self.presentLegacyView(.netP)

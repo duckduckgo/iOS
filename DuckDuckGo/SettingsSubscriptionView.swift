@@ -25,6 +25,7 @@ import UIKit
 struct SettingsSubscriptionView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
+    @StateObject var subscriptionFlowViewModel =  SubscriptionFlowViewModel()
     @State var isShowingsubScriptionFlow = false
     @State var isShowingDBP = false
     @State var isShowingITP = false
@@ -58,7 +59,7 @@ struct SettingsSubscriptionView: View {
                                action: { isShowingsubScriptionFlow = true },
                                isButton: true )
             .sheet(isPresented: $isShowingsubScriptionFlow) {
-                SubscriptionFlowView()
+                SubscriptionFlowView(viewModel: subscriptionFlowViewModel)
             }
         }
     }
@@ -98,12 +99,19 @@ struct SettingsSubscriptionView: View {
                 } else {
                     purchaseSubscriptionView
                 }
+            
+            }
             // Refresh subscription when dismissing the Subscription Flow
-            }.onChange(of: isShowingsubScriptionFlow, perform: { value in
+            .onChange(of: isShowingsubScriptionFlow, perform: { value in
                 if !value {
-                    Task { await viewModel.setupSubscriptionEnvironment() }
+                    Task { viewModel.onAppear() }
                 }
             })
+            
+            .onReceive(subscriptionFlowViewModel.$selectedFeature) { value in
+                guard let value else { return }
+                viewModel.onAppearNavigationTarget = value
+            }
         }
     }
 }

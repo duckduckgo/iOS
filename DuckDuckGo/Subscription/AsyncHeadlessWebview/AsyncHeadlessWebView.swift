@@ -40,7 +40,7 @@ class NavigationCoordinator {
     }
 
     func reload() async {
-        await MainActor.run {
+        _ = await MainActor.run {
             self.webView?.reload()
         }
     }
@@ -55,14 +55,14 @@ class NavigationCoordinator {
 
     func goBack() async {
         guard await webView?.canGoBack == true else { return }
-        await MainActor.run {
+        _ = await MainActor.run {
             self.webView?.goBack()
         }
     }
 
     func goForward() async {
         guard await webView?.canGoForward == true else { return }
-        await MainActor.run {
+        _ = await MainActor.run {
             self.webView?.goForward()
         }
     }
@@ -153,7 +153,7 @@ struct AsyncHeadlessWebView: View {
                 subFeature: viewModel.subFeature,
                 settings: viewModel.settings,
                 onScroll: { newPosition in
-                    viewModel.scrollPosition = newPosition
+                    viewModel.updateScrollPosition(newPosition)
                 },
                 onURLChange: { newURL in
                     viewModel.url = newURL

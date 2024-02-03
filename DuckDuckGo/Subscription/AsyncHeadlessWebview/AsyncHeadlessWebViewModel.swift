@@ -19,11 +19,18 @@
 
 import UserScript
 import Core
+import Combine
 
 class AsyncHeadlessWebViewViewModel: ObservableObject {
     let userScript: UserScriptMessaging?
     let subFeature: Subfeature?
     let settings: AsyncHeadlessWebViewSettings
+    
+    private var initialScrollPositionSubject = PassthroughSubject<CGPoint, Never>()
+    private var subsequentScrollPositionSubject = PassthroughSubject<CGPoint, Never>()
+    private var cancellables = Set<AnyCancellable>()
+    private var isFirstUpdate = true
+    private var initialDelay = 1
     
     @Published var scrollPosition: CGPoint = .zero
     @Published var url: URL?
@@ -35,5 +42,21 @@ class AsyncHeadlessWebViewViewModel: ObservableObject {
         self.userScript = userScript
         self.subFeature = subFeature
         self.settings = settings
+        
+        // Delayed publishing first update for scrollPosition
+        // To avoid publishing events on view updates
+        initialScrollPositionSubject
+            .delay(for: .seconds(initialDelay), scheduler: RunLoop.main)
+            .merge(with: subsequentScrollPositionSubject)
+            .assign(to: &$scrollPosition)
+    }
+        
+    func updateScrollPosition(_ newPosition: CGPoint) {
+        if isFirstUpdate {
+            initialScrollPositionSubject.send(newPosition)
+            isFirstUpdate = false
+        } else {
+            subsequentScrollPositionSubject.send(newPosition)
+        }
     }
 }

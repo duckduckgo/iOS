@@ -36,26 +36,17 @@ struct SubscriptionFlowView: View {
         static let daxLogo = "Home"
         static let daxLogoSize: CGFloat = 24.0
         static let empty = ""
-        static let closeButtonPadding: CGFloat = 20.0
-    }
-    
-    private func getTransactionStatus() -> String {
-        switch viewModel.transactionStatus {
-        case .polling:
-            return UserText.subscriptionCompletingPurchaseTitle
-        case .purchasing:
-            return UserText.subscriptionPurchasingTitle
-        case .restoring:
-            return UserText.subscriptionRestoringTitle
-        case .idle:
-            return ""
-        }
+        static let navButtonPadding: CGFloat = 20.0
+        static let backButtonImage = "chevron.left"
     }
     
     var body: some View {
         NavigationView {
             baseView
                 .toolbar {
+                    ToolbarItemGroup(placement: .navigationBarLeading) {
+                        backButton
+                    }
                     ToolbarItem(placement: .principal) {
                         HStack {
                             Image(Constants.daxLogo)
@@ -74,7 +65,43 @@ struct SubscriptionFlowView: View {
         .environment(\.rootPresentationMode, self.$isActive)
         
     }
-        
+    
+    @ViewBuilder
+    private var dismissButton: some View {
+        Button(action: { dismiss() }, label: { Text(UserText.subscriptionCloseButton) })
+        .padding(Constants.navButtonPadding)
+        .contentShape(Rectangle())
+        .tint(Color(designSystemColor: .textPrimary))
+    }
+    
+    @ViewBuilder
+    private var backButton: some View {
+        if viewModel.canNavigateBack {
+            Button(action: {
+                Task { await viewModel.navigateBack() }
+            }, label: {
+                HStack(spacing: 0) {
+                    Image(systemName: Constants.backButtonImage)
+                    Text(UserText.backButtonTitle)
+                }
+                
+            })
+        }
+    }
+    
+    private func getTransactionStatus() -> String {
+        switch viewModel.transactionStatus {
+        case .polling:
+            return UserText.subscriptionCompletingPurchaseTitle
+        case .purchasing:
+            return UserText.subscriptionPurchasingTitle
+        case .restoring:
+            return UserText.subscriptionRestoringTitle
+        case .idle:
+            return ""
+        }
+    }
+    
     
     @ViewBuilder
     private var baseView: some View {
@@ -85,18 +112,11 @@ struct SubscriptionFlowView: View {
             // But it should be hidden while performing a transaction
             if !shouldShowNavigationBar && viewModel.transactionStatus == .idle {
                 HStack {
+                    backButton.padding(.leading, Constants.navButtonPadding)
                     Spacer()
-                    Button(action: {
-                        dismiss()
-                    }) {
-                        Text(UserText.subscriptionCloseButton)
-                    }
-                    .padding(Constants.closeButtonPadding)
-                    .contentShape(Rectangle())
-                    .tint(Color(designSystemColor: .textPrimary))
+                    dismissButton
                 }
             }
-            
         }
         
         .onChange(of: viewModel.shouldReloadWebView) { shouldReload in
@@ -150,13 +170,6 @@ struct SubscriptionFlowView: View {
     
     @ViewBuilder
     private var webView: some View {
-                
-        var ignoreTopSafeAreaInsets = true
-        
-        // No transparent navbar pre iOS 16
-        if #unavailable(iOS 16.0) {
-            var ignoreTopSafeAreaInsets = false
-        }
         
         ZStack(alignment: .top) {
             // Restore View Hidden Link

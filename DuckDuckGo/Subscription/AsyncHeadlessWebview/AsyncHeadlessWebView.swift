@@ -39,10 +39,6 @@ class NavigationCoordinator {
         self.webView = webView
     }
 
-    var canGoBack: Bool {
-        return webView?.canGoBack ?? false
-    }
-
     func reload() async {
         await MainActor.run {
             self.webView?.reload()
@@ -77,6 +73,8 @@ struct HeadlessWebView: UIViewRepresentable {
     let subFeature: Subfeature?
     let settings: AsyncHeadlessWebViewSettings
     var onScroll: ((CGPoint) -> Void)?
+    var onURLChange: ((URL) -> Void)?
+    var onCanGoBack: ((Bool) -> Void)?
     var navigationCoordinator: NavigationCoordinator
     
 
@@ -89,6 +87,7 @@ struct HeadlessWebView: UIViewRepresentable {
         webView.uiDelegate = context.coordinator
         webView.scrollView.delegate = context.coordinator
         webView.scrollView.bounces = settings.bounces
+        webView.navigationDelegate = context.coordinator
         
         return webView
     }
@@ -96,7 +95,7 @@ struct HeadlessWebView: UIViewRepresentable {
     func updateUIView(_ uiView: WKWebView, context: Context) {}
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(self, onScroll: onScroll)
+        Coordinator(self, onScroll: onScroll, onURLChange: onURLChange, onCanGoBack: onCanGoBack)
     }
     
     @MainActor
@@ -110,18 +109,36 @@ struct HeadlessWebView: UIViewRepresentable {
         return userContentController
     }
 
-    class Coordinator: NSObject, WKUIDelegate, UIScrollViewDelegate {
+    class Coordinator: NSObject, WKUIDelegate, UIScrollViewDelegate, WKNavigationDelegate {
         var parent: HeadlessWebView
         var onScroll: ((CGPoint) -> Void)?
+        var onURLChange: ((URL) -> Void)?
+        var onCanGoBack: ((Bool) -> Void)?
 
-        init(_ parent: HeadlessWebView, onScroll: ((CGPoint) -> Void)?) {
+        init(_ parent: HeadlessWebView,
+             onScroll: ((CGPoint) -> Void)?,
+             onURLChange: ((URL) -> Void)?,
+             onCanGoBack: ((Bool) -> Void)?) {
             self.parent = parent
             self.onScroll = onScroll
+            self.onURLChange = onURLChange
+            self.onCanGoBack = onCanGoBack
         }
         
         func scrollViewDidScroll(_ scrollView: UIScrollView) {
             let contentOffset = scrollView.contentOffset
             onScroll?(contentOffset)
+        }
+        
+        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+            if let url = navigationAction.request.url,
+               let onURLChange {
+                onURLChange(url)
+            }
+            if let onCanGoBack {
+                onCanGoBack(webView.canGoBack)
+            }
+            decisionHandler(.allow)
         }
     }
 }
@@ -137,6 +154,12 @@ struct AsyncHeadlessWebView: View {
                 settings: viewModel.settings,
                 onScroll: { newPosition in
                     viewModel.scrollPosition = newPosition
+                },
+                onURLChange: { newURL in
+                    viewModel.url = newURL
+                },
+                onCanGoBack: { value in
+                    viewModel.canGoBack = value
                 },
                 navigationCoordinator: viewModel.navigationCoordinator
             )

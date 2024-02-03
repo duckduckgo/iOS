@@ -26,6 +26,8 @@ class AsyncHeadlessWebViewViewModel: ObservableObject {
     let settings: AsyncHeadlessWebViewSettings
     
     @Published var scrollPosition: CGPoint = .zero
+    @Published var url: URL?
+    @Published var canGoBack: Bool = false
 
     var navigationCoordinator = NavigationCoordinator(webView: nil)
 

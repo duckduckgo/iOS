@@ -59,6 +59,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     @Published var webViewModel: AsyncHeadlessWebViewViewModel
     @Published var shouldShowNavigationBar: Bool = false
     @Published var selectedFeature: SettingsViewModel.SettingsSection?
+    @Published var canNavigateBack: Bool = false
         
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
@@ -129,6 +130,13 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 self?.shouldShowNavigationBar = value.y > Constants.navigationBarHideThreshold
             }
             .store(in: &cancellables)
+        
+        webViewModel.$canGoBack
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.canNavigateBack = value
+            }
+            .store(in: &cancellables)
     }
     
     @MainActor
@@ -157,6 +165,10 @@ final class SubscriptionFlowViewModel: ObservableObject {
         if AccountManager().isUserAuthenticated && hasActiveSubscription == false {
             await MainActor.run { shouldReloadWebView = true }
         }
+    }
+    
+    func navigateBack() async {
+        await webViewModel.navigationCoordinator.goBack()
     }
     
 }

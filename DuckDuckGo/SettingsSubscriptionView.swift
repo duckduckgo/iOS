@@ -59,7 +59,7 @@ struct SettingsSubscriptionView: View {
                                action: { isShowingsubScriptionFlow = true },
                                isButton: true )
             .sheet(isPresented: $isShowingsubScriptionFlow) {
-                SubscriptionFlowView(viewModel: subscriptionFlowViewModel)
+                SubscriptionFlowView(viewModel: subscriptionFlowViewModel).interactiveDismissDisabled()
             }
         }
     }

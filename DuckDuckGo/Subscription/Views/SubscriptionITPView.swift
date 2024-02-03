@@ -25,7 +25,7 @@ import Foundation
 struct SubscriptionITPView: View {
         
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var viewModel: SubscriptionITPViewModel
+    @ObservedObject var viewModel = SubscriptionITPViewModel()
     
     var body: some View {
         ZStack {

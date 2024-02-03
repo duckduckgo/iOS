@@ -68,7 +68,7 @@ struct SubscriptionFlowView: View {
     
     @ViewBuilder
     private var dismissButton: some View {
-        Button(action: { dismiss() }, label: { Text(UserText.subscriptionCloseButton) })
+        Button(action: { viewModel.finalizeSubscriptionFlow() }, label: { Text(UserText.subscriptionCloseButton) })
         .padding(Constants.navButtonPadding)
         .contentShape(Rectangle())
         .tint(Color(designSystemColor: .textPrimary))
@@ -119,12 +119,6 @@ struct SubscriptionFlowView: View {
             }
         }
         
-        .onChange(of: viewModel.shouldReloadWebView) { shouldReload in
-            if shouldReload {
-                viewModel.shouldReloadWebView = false
-            }
-        }
-        
         .onChange(of: viewModel.hasActiveSubscription) { result in
             if result {
                 isAlertVisible = true
@@ -164,7 +158,7 @@ struct SubscriptionFlowView: View {
         }
         // The trailing close button should be hidden when a transaction is in progress
         .navigationBarItems(trailing: viewModel.transactionStatus == .idle
-                            ? Button(UserText.subscriptionCloseButton) { self.dismiss() }
+                            ? Button(UserText.subscriptionCloseButton) { viewModel.finalizeSubscriptionFlow() }
                             : nil)
     }
     

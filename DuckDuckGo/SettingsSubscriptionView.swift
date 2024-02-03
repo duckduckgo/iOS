@@ -76,12 +76,12 @@ struct SettingsSubscriptionView: View {
             NavigationLink(destination: Text("Data Broker Protection"), isActive: $viewModel.shouldNavigateToDBP) {
                 SettingsCellView(label: UserText.settingsPProDBPTitle, subtitle: UserText.settingsPProDBPSubTitle)
             }
+            */
             
-            
-            NavigationLink(destination: SubscriptionITPView(viewModel: SubscriptionITPViewModel()), isActive: $viewModel.shouldNavigateToITP) {
+            NavigationLink(destination: SubscriptionITPView(), isActive: $viewModel.shouldNavigateToITP) {
                 SettingsCellView(label: UserText.settingsPProITRTitle, subtitle: UserText.settingsPProITRSubTitle)
             }
-             */
+             
             
             NavigationLink(destination: SubscriptionSettingsView()) {
                 SettingsCustomCell(content: { manageSubscriptionView })

@@ -36,13 +36,10 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
     
     private var cancellables = Set<AnyCancellable>()
+    private var canGoBackCancellable: AnyCancellable?
     
     // State variables
     var purchaseURL = URL.purchaseSubscription
-    
-    // Closure passed to navigate to a specific section
-    // after returning to settings
-    // var onFeatureSelected: ((SettingsViewModel.SettingsSection) -> Void)
     
     enum FeatureName {
         static let netP = "vpn"
@@ -53,7 +50,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     // Published properties
     @Published var hasActiveSubscription = false
     @Published var transactionStatus: SubscriptionPagesUseSubscriptionFeature.TransactionStatus = .idle
-    @Published var shouldReloadWebView = false
     @Published var activatingSubscription = false
     @Published var shouldDismissView = false
     @Published var webViewModel: AsyncHeadlessWebViewViewModel
@@ -64,14 +60,11 @@ final class SubscriptionFlowViewModel: ObservableObject {
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
          purchaseManager: PurchaseManager = PurchaseManager.shared,
-         selectedFeature: SettingsViewModel.SettingsSection? = nil
-         /*onFeatureSelected: @escaping ((SettingsViewModel.SettingsSection) -> Void)*/) {
+         selectedFeature: SettingsViewModel.SettingsSection? = nil) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.purchaseManager = purchaseManager
         self.selectedFeature = selectedFeature
-        // self.onFeatureSelected = onFeatureSelected
-
         self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,
                                                           subFeature: subFeature,
                                                           settings: AsyncHeadlessWebViewSettings(bounces: false))
@@ -109,7 +102,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 if value != nil {
-                    self?.shouldDismissView = true
                     switch value?.feature {
                     case FeatureName.netP:
                         self?.selectedFeature = .netP
@@ -118,9 +110,11 @@ final class SubscriptionFlowViewModel: ObservableObject {
                     case FeatureName.dbp:
                         self?.selectedFeature = .dbp
                     default:
-                        self?.selectedFeature = Optional.none
+                        break
                     }
+                    self?.finalizeSubscriptionFlow()
                 }
+                
             }
             .store(in: &cancellables)
         
@@ -131,17 +125,22 @@ final class SubscriptionFlowViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        webViewModel.$canGoBack
+        canGoBackCancellable = webViewModel.$canGoBack
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 self?.canNavigateBack = value
             }
-            .store(in: &cancellables)
     }
     
     @MainActor
     private func setTransactionStatus(_ status: SubscriptionPagesUseSubscriptionFeature.TransactionStatus) {
         self.transactionStatus = status
+    }
+        
+    @MainActor
+    private func disableGoBack() {
+        canGoBackCancellable?.cancel()
+        canNavigateBack = false
     }
     
     func initializeViewData() async {
@@ -150,10 +149,24 @@ final class SubscriptionFlowViewModel: ObservableObject {
         webViewModel.navigationCoordinator.navigateTo(url: purchaseURL )
     }
     
+    func finalizeSubscriptionFlow() {
+        canGoBackCancellable?.cancel()
+        cancellables.removeAll()
+        subFeature.selectedFeature = nil
+        hasActiveSubscription = false
+        transactionStatus = .idle
+        activatingSubscription = false
+        shouldShowNavigationBar = false
+        selectedFeature = nil
+        canNavigateBack = false
+        shouldDismissView = true
+    }
+
     func restoreAppstoreTransaction() {
         Task {
             if await subFeature.restoreAccountFromAppStorePurchase() {
-                await MainActor.run { shouldReloadWebView = true }
+                await disableGoBack()
+                await webViewModel.navigationCoordinator.reload()
             } else {
                 await MainActor.run {
                 }
@@ -163,7 +176,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     func updateSubscriptionStatus() async {
         if AccountManager().isUserAuthenticated && hasActiveSubscription == false {
-            await MainActor.run { shouldReloadWebView = true }
+            await disableGoBack()
+            await webViewModel.navigationCoordinator.reload()
         }
     }
     

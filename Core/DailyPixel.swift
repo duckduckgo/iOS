@@ -71,10 +71,16 @@ public final class DailyPixel {
     public static func fireDailyAndCount(pixel: Pixel.Event,
                                          error: Swift.Error? = nil,
                                          withAdditionalParameters params: [String: String] = [:],
+                                         includedParameters: [Pixel.QueryParameters] = [.atb, .appVersion],
                                          onDailyComplete: @escaping (Swift.Error?) -> Void = { _ in },
                                          onCountComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
         if !pixel.hasBeenFiredToday(dailyPixelStorage: storage) {
-            Pixel.fire(pixelNamed: pixel.name + "_d", withAdditionalParameters: params, onComplete: onDailyComplete)
+            Pixel.fire(
+                pixelNamed: pixel.name + "_d",
+                withAdditionalParameters: params,
+                includedParameters: includedParameters,
+                onComplete: onDailyComplete
+            )
         } else {
             onDailyComplete(Error.alreadyFired)
         }
@@ -83,7 +89,12 @@ public final class DailyPixel {
         if let error {
             newParams.appendErrorPixelParams(error: error)
         }
-        Pixel.fire(pixelNamed: pixel.name + "_c", withAdditionalParameters: newParams, onComplete: onCountComplete)
+        Pixel.fire(
+            pixelNamed: pixel.name + "_c",
+            withAdditionalParameters: newParams,
+            includedParameters: includedParameters,
+            onComplete: onCountComplete
+        )
     }
     
     private static func updatePixelLastFireDate(pixel: Pixel.Event) {

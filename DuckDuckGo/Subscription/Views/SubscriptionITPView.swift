@@ -78,7 +78,8 @@ struct SubscriptionITPView: View {
                     dismissButton
                 }
             }
-        }
+         // The trailing close button should be hidden when a transaction is in progress
+        }.navigationBarItems(trailing: Button(UserText.subscriptionCloseButton) { dismiss() })
     }
 
     @ViewBuilder

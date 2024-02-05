@@ -85,11 +85,7 @@ class SwipeTabsCoordinator: NSObject {
         
     }
     
-    var state: State = .idle {
-        didSet {
-            print("***", #function, state)
-        }
-    }
+    var state: State = .idle
     
     weak var preview: UIView?
     weak var currentView: UIView?
@@ -107,10 +103,8 @@ class SwipeTabsCoordinator: NSObject {
         guard isEnabled else { return }
         
         let targetOffset = collectionView.frame.width * CGFloat(tabsModel.currentIndex)
-        print("***", #function, collectionView.contentOffset.x)
 
         guard targetOffset != collectionView.contentOffset.x else {
-            print("***", #function, "skipping")
             return
         }
         
@@ -125,11 +119,6 @@ class SwipeTabsCoordinator: NSObject {
 extension SwipeTabsCoordinator: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print("***", #function,
-              "row:", indexPath.row,
-              "currentIndex:", self.tabsModel.currentIndex,
-              "count: ", collectionView.dataSource?.collectionView(collectionView, numberOfItemsInSection: 0) ?? -1)
-        
         DispatchQueue.main.async {
             self.scrollToCurrent()
         }
@@ -185,10 +174,8 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
     private func preparePreview(_ offset: CGFloat) {
         let modifier = (offset > 0 ? -1 : 1)
         let nextIndex = tabsModel.currentIndex + modifier
-        print("***", #function, "nextIndex", nextIndex)
         
         guard tabsModel.tabs.indices.contains(nextIndex) || tabsModel.tabs.last?.link != nil else {
-            print("***", #function, "no preview required")
             return
         }
         
@@ -196,19 +183,13 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
         
         let tab = tabsModel.safeGetTabAt(nextIndex)
         if let tab, let image = tabPreviewsSource.preview(for: tab) {
-            print("***", #function, "image preview")
             createPreviewFromImage(image)
         } else if tab?.link == nil {
-            print("***", #function, "new tab home screen preview")
             createPreviewFromLogoContainerWithSize(targetFrame.size)
-        } else {
-            print("***", #function, "no preview found")
         }
         
         preview?.frame = targetFrame
         preview?.frame.origin.x = coordinator.contentContainer.frame.width * CGFloat(modifier)
-        
-        print("***", #function, "offset:", offset, "modified:", preview?.frame.origin.x ?? .nan)
     }
     
     private func createPreviewFromImage(_ image: UIImage) {
@@ -233,7 +214,6 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        print("***", #function)
         switch state {
         case .idle:
             state = .starting(scrollView.contentOffset)
@@ -243,8 +223,6 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
     }
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        print("***", #function, coordinator.navigationBarCollectionView.indexPathsForVisibleItems)
-
         defer {
             cleanUpViews()
             state = .idle
@@ -259,7 +237,6 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
         }
         feedbackGenerator.selectionChanged()
         if index >= tabsModel.count {
-            print("***", #function, "add tab!")
             newTab()
         } else {
             selectTab(index)
@@ -271,26 +248,6 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
         currentView = nil
         preview?.removeFromSuperview()
     }
-    
-    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-        print("***", #function)
-    }
-    
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        print("***", #function)
-    }
-    
-    func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
-        print("***", #function)
-    }
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        print("***", #function)
-    }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        print("***", #function)
-    }
 
 }
 
@@ -298,12 +255,8 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
 extension SwipeTabsCoordinator {
     
     func refresh(tabsModel: TabsModel, scrollToSelected: Bool = false) {
-        print("***", #function, scrollToSelected)
-        
         self.tabsModel = tabsModel
         coordinator.navigationBarCollectionView.reloadData()
-        
-        print("***", #function, "count:", collectionView.dataSource?.collectionView(collectionView, numberOfItemsInSection: 0) ?? -1)
         
         updateLayout()
         
@@ -333,7 +286,6 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
         guard isEnabled else { return 1 }
         let extras = tabsModel.tabs.last?.link != nil ? 1 : 0 // last tab is not a home page, so let's add one
         let count = tabsModel.count + extras
-        print("***", #function, count)
         return count
     }
     
@@ -390,7 +342,6 @@ class OmniBarCell: UICollectionViewCell {
     
     override func updateConstraints() {
         super.updateConstraints()
-        print("***", #function)
         let left = superview?.safeAreaInsets.left ?? 0
         let right = superview?.safeAreaInsets.right ?? 0
         omniBar?.updateOmniBarPadding(left: left, right: right)

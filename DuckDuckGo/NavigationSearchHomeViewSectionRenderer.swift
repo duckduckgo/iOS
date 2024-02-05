@@ -69,7 +69,6 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
 
     func launchNewSearch() {
-        print("***", #function)
         controller?.chromeDelegate?.omniBar.becomeFirstResponder()
     }
     

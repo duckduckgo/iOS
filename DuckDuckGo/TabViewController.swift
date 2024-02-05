@@ -1452,23 +1452,17 @@ extension TabViewController: WKNavigationDelegate {
             || !ContentBlocking.shared.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) {
 
             rulesCompilationMonitor.reportNavigationDidNotWaitForRules()
-            
-            Swift.print("***", #function, "returning false")
             return false
         }
 
         Task {
-            Swift.print("***", #function, "Task started")
             rulesCompilationMonitor.tabWillWaitForRulesCompilation(tabModel.uid)
             showProgressIndicator()
             await userContentController.awaitContentBlockingAssetsInstalled()
             rulesCompilationMonitor.reportTabFinishedWaitingForRules(tabModel.uid)
 
             await MainActor.run(body: completion)
-            Swift.print("***", #function, "Task finished")
         }
-        
-        Swift.print("***", #function, "returning true")
         return true
     }
 

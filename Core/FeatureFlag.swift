@@ -35,6 +35,7 @@ public enum FeatureFlag: String {
     case networkProtectionWaitlistAccess
     case networkProtectionWaitlistActive
     case subscription
+    case autoconsentOnByDefault
 }
 
 extension FeatureFlag: FeatureFlagSourceProviding {
@@ -64,6 +65,8 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .remoteReleasable(.subfeature(AutofillSubfeature.onByDefault))
         case .incontextSignup:
             return .remoteReleasable(.feature(.incontextSignup))
+        case .autoconsentOnByDefault:
+            return .remoteReleasable(.subfeature(AutoconsentSubfeature.onByDefault))
         }
     }
 }

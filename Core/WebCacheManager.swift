@@ -389,7 +389,7 @@ extension WKWebsiteDataStore: WebCacheManagerDataStore {
     public func preservedCookies(_ preservedLogins: PreserveLogins) async -> [HTTPCookie] {
         let allCookies = await self.httpCookieStore.allCookies()
         return allCookies.filter {
-            preservedLogins.isAllowed(cookieDomain: $0.domain)
+            "duckduckgo.com" == $0.domain || preservedLogins.isAllowed(cookieDomain: $0.domain)
         }
     }
 

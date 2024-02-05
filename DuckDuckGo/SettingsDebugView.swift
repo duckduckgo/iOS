@@ -25,13 +25,15 @@ struct SettingsDebugView: View {
     @EnvironmentObject var viewModel: SettingsViewModel
     
     var body: some View {
-        Section(header: Text("Debug")) {
-            
-            SettingsCellView(label: "All debug options",
-                             action: { viewModel.presentLegacyView(.debug) },
-                             disclosureIndicator: true,
-                             isButton: true)
-                        
+        if AppDependencyProvider.shared.internalUserDecider.isInternalUser {
+            Section(header: Text("Debug")) {
+                
+                SettingsCellView(label: "All debug options",
+                                 action: { viewModel.presentLegacyView(.debug) },
+                                 disclosureIndicator: true,
+                                 isButton: true)
+                
+            }
         }
 
     }

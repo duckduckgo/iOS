@@ -25,7 +25,7 @@ struct SettingsDebugView: View {
     @EnvironmentObject var viewModel: SettingsViewModel
     
     var body: some View {
-        if AppDependencyProvider.shared.internalUserDecider.isInternalUser {
+        if viewModel.state.debugModeEnabled {
             Section(header: Text("Debug")) {
                 
                 SettingsCellView(label: "All debug options",

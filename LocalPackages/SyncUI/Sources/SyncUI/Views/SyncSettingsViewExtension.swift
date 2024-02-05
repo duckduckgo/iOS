@@ -75,7 +75,9 @@ extension SyncSettingsView {
         Section {
 
             Button(UserText.syncAndBackUpThisDeviceLink) {
-                isSyncWithSetUpSheetVisible = true
+                Task { @MainActor in
+                    isSyncWithSetUpSheetVisible = await model.authenticateUser()
+                }
             }
             .sheet(isPresented: $isSyncWithSetUpSheetVisible, content: {
                 SyncWithServerView(model: model, onCancel: {
@@ -85,7 +87,9 @@ extension SyncSettingsView {
             .disabled(!model.isAccountCreationAvailable)
 
             Button(UserText.recoverSyncedDataLink) {
-                isRecoverSyncedDataSheetVisible = true
+                Task { @MainActor in
+                    isRecoverSyncedDataSheetVisible = await model.authenticateUser()
+                }
             }
             .sheet(isPresented: $isRecoverSyncedDataSheetVisible, content: {
                 RecoverSyncedDataView(model: model, onCancel: {

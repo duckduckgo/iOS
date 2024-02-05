@@ -56,10 +56,6 @@ extension WebCacheManagerDataStore {
 }
 
 public class WebCacheManager {
-
-    private struct Constants {
-        static let cookieDomainsToPreserve = ["duckduckgo.com", "surveys.duckduckgo.com"]
-    }
     
     public static var shared = WebCacheManager()
 
@@ -223,7 +219,7 @@ public class WebCacheManager {
 
         func keep(_ cookie: HTTPCookie) -> Bool {
             return logins.isAllowed(cookieDomain: cookie.domain) ||
-                Constants.cookieDomainsToPreserve.contains(cookie.domain)
+                URL.isDuckDuckGo(domain: cookie.domain)
         }
 
         let dataStore = WKWebsiteDataStore.default()
@@ -270,7 +266,7 @@ public class WebCacheManager {
                     // Remove legacy HTTPCookieStorage cookies
                     let storageCookies = HTTPCookieStorage.shared.cookies ?? []
                     let storageCookiesToRemove = storageCookies.filter {
-                        !logins.isAllowed(cookieDomain: $0.domain) && !Constants.cookieDomainsToPreserve.contains($0.domain)
+                        !logins.isAllowed(cookieDomain: $0.domain) && !URL.isDuckDuckGo(domain: $0.domain)
                     }
 
                     let protectedStorageCookiesCount = storageCookies.count - storageCookiesToRemove.count
@@ -389,7 +385,7 @@ extension WKWebsiteDataStore: WebCacheManagerDataStore {
     public func preservedCookies(_ preservedLogins: PreserveLogins) async -> [HTTPCookie] {
         let allCookies = await self.httpCookieStore.allCookies()
         return allCookies.filter {
-            "duckduckgo.com" == $0.domain || preservedLogins.isAllowed(cookieDomain: $0.domain)
+            URL.isDuckDuckGo(domain: $0.domain) || preservedLogins.isAllowed(cookieDomain: $0.domain)
         }
     }
 

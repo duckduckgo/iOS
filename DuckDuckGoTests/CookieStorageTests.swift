@@ -51,6 +51,12 @@ public class CookieStorageTests: XCTestCase {
 
         XCTAssertEqual(2, storage.cookies.count)
 
+        storage.updateCookies([
+            make("usedev1.duckduckgo.com", name: "x", value: "1"),
+        ], keepingPreservedLogins: logins)
+
+        XCTAssertEqual(3, storage.cookies.count)
+
     }
     
     func testWhenUpdatedThenCookiesWithFutureExpirationAreNotRemoved() {

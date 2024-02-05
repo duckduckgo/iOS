@@ -336,13 +336,14 @@ class MainViewController: UIViewController {
         if !viewCoordinator.logoContainer.isHidden,
            self.tabManager.current()?.link == nil,
            let tab = self.tabManager.model.currentTab {
-            
+            print("***", #function, "home screen with logo")
             // Home screen with logo
             if let image = viewCoordinator.logoContainer.createImageSnapshot(inBounds: viewCoordinator.contentContainer.frame) {
                 previewsSource.update(preview: image, forTab: tab)
             }
 
         } else if let currentTab = self.tabManager.current(), currentTab.link != nil {
+            print("***", #function, "web view")
             // Web view
             currentTab.preparePreview(completion: { image in
                 guard let image else { return }
@@ -350,6 +351,7 @@ class MainViewController: UIViewController {
                                            forTab: currentTab.tabModel)
             })
         } else if let tab = self.tabManager.model.currentTab {
+            print("***", #function, "favorites")
             // Favorites, etc
             if let image = viewCoordinator.contentContainer.createImageSnapshot() {
                 previewsSource.update(preview: image, forTab: tab)

@@ -187,6 +187,11 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
         let nextIndex = tabsModel.currentIndex + modifier
         print("***", #function, "nextIndex", nextIndex)
         
+        guard tabsModel.tabs.indices.contains(nextIndex) || tabsModel.tabs.last?.link != nil else {
+            print("***", #function, "no preview required")
+            return
+        }
+        
         let targetFrame = CGRect(origin: .zero, size: coordinator.contentContainer.frame.size)
         
         let tab = tabsModel.safeGetTabAt(nextIndex)

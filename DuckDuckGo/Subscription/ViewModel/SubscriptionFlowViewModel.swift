@@ -181,6 +181,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     func navigateBack() async {
         await webViewModel.navigationCoordinator.goBack()
     }

@@ -27,7 +27,6 @@ struct SubscriptionFlowView: View {
     
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = SubscriptionFlowViewModel()
-    @State private var showNestedViews = true
     @State private var isAlertVisible = false
     @State private var shouldShowNavigationBar = false
     @State private var isActive: Bool = false
@@ -63,7 +62,6 @@ struct SubscriptionFlowView: View {
         }
         .tint(Color(designSystemColor: .textPrimary))
         .environment(\.rootPresentationMode, self.$isActive)
-        
     }
     
     @ViewBuilder

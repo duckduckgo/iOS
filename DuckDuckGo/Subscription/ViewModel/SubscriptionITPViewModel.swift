@@ -28,25 +28,62 @@ final class SubscriptionITPViewModel: ObservableObject {
     
     let userScript: IdentityTheftRestorationPagesUserScript
     let subFeature: IdentityTheftRestorationPagesFeature
-    let purchaseManager: PurchaseManager
-    let viewTitle = UserText.settingsPProSection
-    private var cancellables = Set<AnyCancellable>()
+    var manageITPURL = URL.manageITP
+    var viewTitle = UserText.settingsPProITRTitle
+    
+    enum Constants {
+        static let navigationBarHideThreshold = 40.0
+    }
     
     // State variables
     var itpURL = URL.manageITP
-    @Published var shouldReloadWebView = false
+    @Published var webViewModel: AsyncHeadlessWebViewViewModel
+    @Published var shouldShowNavigationBar: Bool = false
+    @Published var canNavigateBack: Bool = false
+    
+    private var cancellables = Set<AnyCancellable>()
+    private var canGoBackCancellable: AnyCancellable?
     
     init(userScript: IdentityTheftRestorationPagesUserScript = IdentityTheftRestorationPagesUserScript(),
-         subFeature: IdentityTheftRestorationPagesFeature = IdentityTheftRestorationPagesFeature(),
-         purchaseManager: PurchaseManager = PurchaseManager.shared) {
+         subFeature: IdentityTheftRestorationPagesFeature = IdentityTheftRestorationPagesFeature()) {
         self.userScript = userScript
         self.subFeature = subFeature
-        self.purchaseManager = purchaseManager
+        self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,
+                                                          subFeature: subFeature,
+                                                          settings: AsyncHeadlessWebViewSettings(bounces: false))
     }
     
     // Observe transaction status
-    private func setupTransactionObserver() async {
+    private func setupSubscribers() async {
         
+        webViewModel.$scrollPosition
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.shouldShowNavigationBar = value.y > Constants.navigationBarHideThreshold
+            }
+            .store(in: &cancellables)
+        
+        canGoBackCancellable = webViewModel.$canGoBack
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.canNavigateBack = value
+            }
+    }
+    
+    func initializeView() {
+        webViewModel.navigationCoordinator.navigateTo(url: manageITPURL )
+        Task { await setupSubscribers() }
+    }
+    
+    @MainActor
+    private func disableGoBack() {
+        canGoBackCancellable?.cancel()
+        canNavigateBack = false
+    }
+    
+    @MainActor
+    func navigateBack() async {
+        await webViewModel.navigationCoordinator.goBack()
     }
     
 }

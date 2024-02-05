@@ -78,8 +78,11 @@ struct SettingsSubscriptionView: View {
             }
             */
             
-            NavigationLink(destination: SubscriptionITPView(), isActive: $viewModel.shouldNavigateToITP) {
-                SettingsCellView(label: UserText.settingsPProITRTitle, subtitle: UserText.settingsPProITRSubTitle)
+            SettingsCellView(label: UserText.settingsPProITRTitle,
+                             subtitle: UserText.settingsPProITRSubTitle,
+                             action: { isShowingITP.toggle() }, isButton: true)
+            .sheet(isPresented: $isShowingITP) {
+                SubscriptionITPView()
             }
              
             

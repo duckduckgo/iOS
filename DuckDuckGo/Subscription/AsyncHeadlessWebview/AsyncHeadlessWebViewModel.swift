@@ -59,4 +59,6 @@ class AsyncHeadlessWebViewViewModel: ObservableObject {
             subsequentScrollPositionSubject.send(newPosition)
         }
     }
+    
+    
 }

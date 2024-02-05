@@ -81,6 +81,7 @@ struct HeadlessWebView: UIViewRepresentable {
     func makeUIView(context: Context) -> WKWebView {
         let configuration = WKWebViewConfiguration()
         configuration.userContentController = makeUserContentController()
+        
         let webView = WKWebView(frame: .zero, configuration: configuration)
         
         navigationCoordinator.webView = webView
@@ -89,6 +90,13 @@ struct HeadlessWebView: UIViewRepresentable {
         webView.scrollView.bounces = settings.bounces
         webView.navigationDelegate = context.coordinator
         
+#if DEBUG
+        if #available(iOS 16.4, *) {
+            webView.isInspectable = true
+        }
+#endif
+        
+        context.coordinator.setupWebViewObservation(webView)
         return webView
     }
 
@@ -114,6 +122,10 @@ struct HeadlessWebView: UIViewRepresentable {
         var onScroll: ((CGPoint) -> Void)?
         var onURLChange: ((URL) -> Void)?
         var onCanGoBack: ((Bool) -> Void)?
+        var lastURL: URL?
+        
+        private var webViewURLObservation: NSKeyValueObservation?
+        private var webViewCanGoBackObservation: NSKeyValueObservation?
 
         init(_ parent: HeadlessWebView,
              onScroll: ((CGPoint) -> Void)?,
@@ -125,20 +137,34 @@ struct HeadlessWebView: UIViewRepresentable {
             self.onCanGoBack = onCanGoBack
         }
         
+        func setupWebViewObservation(_ webView: WKWebView) {
+            webViewURLObservation = webView.observe(\.url, options: [.new]) { [weak self] _, change in
+                if let newURL = change.newValue as? URL {
+                    self?.onURLChange?(newURL)
+                    self?.onCanGoBack?(webView.canGoBack)
+                }
+            }
+
+            webViewCanGoBackObservation = webView.observe(\.canGoBack, options: [.new]) { [weak self] _, change in
+                if let canGoBack = change.newValue {
+                    self?.onCanGoBack?(canGoBack)
+                }
+            }
+        }
+        
         func scrollViewDidScroll(_ scrollView: UIScrollView) {
             let contentOffset = scrollView.contentOffset
             onScroll?(contentOffset)
         }
         
-        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-            if let url = navigationAction.request.url,
-               let onURLChange {
-                onURLChange(url)
+        func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+            if let url = webView.url, url != lastURL {
+                onURLChange?(url)
+                lastURL = url
+                if let onCanGoBack {
+                    onCanGoBack(webView.canGoBack)
+                }
             }
-            if let onCanGoBack {
-                onCanGoBack(webView.canGoBack)
-            }
-            decisionHandler(.allow)
         }
     }
 }

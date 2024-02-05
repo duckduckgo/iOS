@@ -119,9 +119,6 @@ extension Pixel {
         case daxDialogsFireEducationShown
         case daxDialogsFireEducationConfirmed
         case daxDialogsFireEducationCancelled
-        case daxDialogsAutoconsentShown
-        case daxDialogsAutoconsentConfirmed
-        case daxDialogsAutoconsentCancelled
 
         case defaultBrowserButtonPressedSettings
         
@@ -627,9 +624,6 @@ extension Pixel.Event {
         case .daxDialogsFireEducationShown: return "m_dx_fe_s"
         case .daxDialogsFireEducationConfirmed: return "m_dx_fe_co"
         case .daxDialogsFireEducationCancelled: return "m_dx_fe_ca"
-        case .daxDialogsAutoconsentShown: return "m_dax_dialog_autoconsent_shown"
-        case .daxDialogsAutoconsentConfirmed: return "m_dax_dialog_autoconsent_confirmed"
-        case .daxDialogsAutoconsentCancelled: return "m_dax_dialog_autoconsent_cancelled"
             
         case .defaultBrowserButtonPressedSettings: return "m_db_s"
             

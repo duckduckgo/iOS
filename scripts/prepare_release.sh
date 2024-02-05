@@ -153,6 +153,11 @@ create_build_branch() {
 	local temp_file
 	local latest_build_number
 
+	if [[ $is_hotfix ]]; then
+		version=$(cut -d' ' -f3 < "${base_dir}/Configuration/Version.xcconfig")
+		version=$(bump_patch_number "$version")
+	fi
+
 	temp_file=$(mktemp)
 	bundle exec fastlane latest_build_number_for_version version:"$version" file_name:"$temp_file"
 	latest_build_number="$(<"$temp_file")"
@@ -170,11 +175,6 @@ create_build_branch() {
 
 update_marketing_version() {
 	printf '%s' "Setting app version ... "
-
-	if [[ $is_hotfix ]]; then
-		version=$(cut -d' ' -f3 < "${base_dir}/Configuration/Version.xcconfig")
-		version=$(bump_patch_number "$version")
-	fi
 
 	"$script_dir/set_version.sh" "${version}"
 	git add "${base_dir}/Configuration/Version.xcconfig" \

@@ -44,6 +44,54 @@ final class FireButtonReferenceTests: XCTestCase {
         return url.host!
     }
 
+    func testClearData() async {
+        let preservedLogins = PreserveLogins.shared
+        preservedLogins.clearAll()
+        
+        for site in testData.fireButtonFireproofing.fireproofedSites {
+            let sanitizedSite = sanitizedSite(site)
+            os_log("Adding %s to fireproofed sites", sanitizedSite)
+            preservedLogins.addToAllowed(domain: sanitizedSite)
+        }
+        
+        let referenceTests = testData.fireButtonFireproofing.tests.filter {
+            $0.exceptPlatforms.contains("ios-browser") == false
+        }
+            
+        let cookieStorage = CookieStorage()
+        let idManager = DataStoreIdManager()
+        for test in referenceTests {
+            guard let cookie = cookie(for: test) else {
+                XCTFail("Cookie should exist for test \(test.name)")
+                return
+            }
+            
+            // Set directly to avoid logic to remove non-preserved cookies
+            cookieStorage.cookies = [
+                cookie
+            ]
+            
+            idManager.allocateNewContainerId()
+            await withCheckedContinuation { continuation in
+                WebCacheManager.shared.clear(cookieStorage: cookieStorage, logins: preservedLogins, dataStoreIdManager: idManager) {
+                    continuation.resume()
+                }
+            }
+            
+            let testCookie = cookieStorage.cookies.filter { $0.name == test.cookieName }.first
+
+            if test.expectCookieRemoved {
+                XCTAssertNil(testCookie, "Cookie should not exist for test: \(test.name)")
+            } else {
+                XCTAssertNotNil(testCookie, "Cookie should exist for test: \(test.name)")
+            }
+            
+            // Reset cache
+            cookieStorage.cookies = []
+        }
+
+    }
+    
     func testCookieStorage() {
         let preservedLogins = PreserveLogins.shared
         preservedLogins.clearAll()

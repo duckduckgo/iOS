@@ -60,7 +60,7 @@ final class FireButtonReferenceTests: XCTestCase {
             
         let cookieStorage = CookieStorage()
         let idManager = DataStoreIdManager()
-        for test in referenceTests {            
+        for test in referenceTests {
             let cookie = try XCTUnwrap(cookie(for: test))
             
             // Set directly to avoid logic to remove non-preserved cookies

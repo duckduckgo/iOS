@@ -281,7 +281,7 @@ extension PacketTunnelProvider.SubscriptionConfiguration {
 #if ALPHA && SUBSCRIPTION
     static func makeConfiguration() -> PacketTunnelProvider.SubscriptionConfiguration {
         .init(
-            isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription),
+            isSubscriptionEnabled: true,
             isEntitlementValid: Self.isEntitlementValid
         )
     }

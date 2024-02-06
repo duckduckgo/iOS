@@ -44,7 +44,7 @@ final class FireButtonReferenceTests: XCTestCase {
         return url.host!
     }
 
-    func testClearData() async {
+    func testClearData() async throws {
         let preservedLogins = PreserveLogins.shared
         preservedLogins.clearAll()
         
@@ -60,11 +60,8 @@ final class FireButtonReferenceTests: XCTestCase {
             
         let cookieStorage = CookieStorage()
         let idManager = DataStoreIdManager()
-        for test in referenceTests {
-            guard let cookie = cookie(for: test) else {
-                XCTFail("Cookie should exist for test \(test.name)")
-                return
-            }
+        for test in referenceTests {            
+            let cookie = try XCTUnwrap(cookie(for: test))
             
             // Set directly to avoid logic to remove non-preserved cookies
             cookieStorage.cookies = [
@@ -92,7 +89,7 @@ final class FireButtonReferenceTests: XCTestCase {
 
     }
     
-    func testCookieStorage() {
+    func testCookieStorage() throws {
         let preservedLogins = PreserveLogins.shared
         preservedLogins.clearAll()
         
@@ -108,11 +105,8 @@ final class FireButtonReferenceTests: XCTestCase {
             
         let cookieStorage = CookieStorage()
         for test in referenceTests {
-            guard let cookie = cookie(for: test) else {
-                XCTFail("Cookie should exist for test \(test.name)")
-                return
-            }
-            
+            let cookie = try XCTUnwrap(cookie(for: test))
+
             cookieStorage.updateCookies([
                 cookie
             ], keepingPreservedLogins: preservedLogins)

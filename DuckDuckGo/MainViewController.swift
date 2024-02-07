@@ -1269,6 +1269,9 @@ class MainViewController: UIViewController {
             return
         }
 
+        VPNSettings(defaults: .networkProtectionGroupDefaults).apply(change: .setShouldShowExpiredEntitlementMessaging(nil))
+        print("[NetP Subscription] Reset expired entitlement messaging")
+
         Task {
             do {
                 try NetworkProtectionKeychainTokenStore().store(NetworkProtectionKeychainTokenStore.makeToken(from: token))

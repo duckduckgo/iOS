@@ -296,6 +296,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         VPNWaitlist.shared.registerBackgroundRefreshTaskHandler()
 #endif
 
+#if NETWORK_PROTECTION && SUBSCRIPTION
+        if let messaging = VPNSettings(defaults: .networkProtectionGroupDefaults).shouldShowExpiredEntitlementMessaging,
+           messaging.showsAlert {
+            presentExpiredEntitlementAlert()
+        }
+#endif
+
         RemoteMessaging.registerBackgroundRefreshTaskHandler(
             bookmarksDatabase: bookmarksDatabase,
             favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
@@ -335,6 +342,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func presentInsufficientDiskSpaceAlert() {
         let alertController = CriticalAlerts.makeInsufficientDiskSpaceAlert()
         window?.rootViewController?.present(alertController, animated: true, completion: nil)
+    }
+
+    private func presentExpiredEntitlementAlert() {
+        let alertController = CriticalAlerts.makeExpiredEntitlementAlert()
+        window?.rootViewController?.present(alertController, animated: true) {
+            if let messaging = VPNSettings(defaults: .networkProtectionGroupDefaults).shouldShowExpiredEntitlementMessaging {
+                let newMessaging = UserDefaults.ExpiredEntitlementMessaging(showsAlert: false, showsNotification: messaging.showsNotification)
+                VPNSettings(defaults: .networkProtectionGroupDefaults).apply(change: .setShouldShowExpiredEntitlementMessaging(newMessaging))
+            }
+        }
     }
 
     private func cleanUpMacPromoExperiment2() {

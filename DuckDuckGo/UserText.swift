@@ -694,6 +694,11 @@ In addition to the details entered into this form, your app issue report will co
     static let vpnFeedbackFormErrorMessage = NSLocalizedString("vpn.feedback-form.error.message", value: "Failed to share your feedback. Please try again.", comment: "Message for the alert when the VPN feedback form can't be submitted")
     static let vpnFeedbackFormErrorAction = NSLocalizedString("vpn.feedback-form.error.action", value: "OK", comment: "Action title for the alert when the VPN feedback form can't be submitted")
 
+    static let vpnAccessRevokedAlertTitle = NSLocalizedString("vpn.access-revoked.alert.title", value: "VPN disconnected due to expired subscription", comment: "Alert title for the alert when the Privacy Pro subscription expires")
+    static let vpnAccessRevokedAlertMessage = NSLocalizedString("vpn.access-revoked.alert.message", value: "Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.", comment: "Alert message for the alert when the Privacy Pro subscription expiress")
+    static let vpnAccessRevokedAlertActionSubscribe = NSLocalizedString("vpn.access-revoked.alert.action.subscribe", value: "Subscribe", comment: "Primary action for the alert when the subscription expires")
+    static let vpnAccessRevokedAlertActionCancel = NSLocalizedString("vpn.access-revoked.alert.action.cancel", value: "Dismiss", comment: "Cancel action for the alert when the subscription expires")
+
     // MARK: Notifications
     
     public static let macWaitlistAvailableNotificationTitle = NSLocalizedString("mac-waitlist.available.notification.title", value: "DuckDuckGo for Mac is ready!", comment: "Title for the macOS waitlist notification")

@@ -90,6 +90,10 @@ class WebCacheManagerTests: XCTestCase {
 
     @MainActor
     func testWhenClearedThenCookiesWithParentDomainsAreRetained() async {
+        let logins = MockPreservedLogins(domains: [
+            "www.example.com"
+        ])
+
         let defaultStore = WKWebsiteDataStore.default()
         await defaultStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast)
 
@@ -100,12 +104,16 @@ class WebCacheManagerTests: XCTestCase {
         await defaultStore.httpCookieStore.setCookie(.make(domain: "example.com"))
         await defaultStore.httpCookieStore.setCookie(.make(domain: ".example.com"))
 
-        await WebCacheManager.shared.removeCookies(forDomains: ["www.example.com"], dataStore: WKWebsiteDataStore.current())
-        print("*** removeCookies done")
+        let cookieStorage = CookieStorage()
+        
+        await WebCacheManager.shared.clear(cookieStorage: cookieStorage,
+                                           logins: logins,
+                                           dataStoreIdManager: dataStoreIdManager)
         let cookies = await defaultStore.httpCookieStore.allCookies()
 
-        XCTAssertEqual(cookies.count, 1)
-        XCTAssertEqual(cookies[0].domain, ".example.com")
+        XCTAssertEqual(cookies.count, 0)
+        XCTAssertEqual(cookieStorage.cookies.count, 1)
+        XCTAssertEqual(cookieStorage.cookies[0].domain, ".example.com")
     }
 
     func testWhenClearedThenDDGCookiesAreRetained() async {

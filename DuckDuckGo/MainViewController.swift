@@ -202,8 +202,6 @@ class MainViewController: UIViewController {
     }
 #endif
 
-    fileprivate var tabCountInfo: TabCountInfo?
-
     func loadFindInPage() {
 
         let view = FindInPageView.loadFromXib()
@@ -2103,7 +2101,7 @@ extension MainViewController: AutoClearWorker {
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
         let pixel = TimedPixel(.forgetAllDataCleared)
-        await WebCacheManager.shared.clear(tabCountInfo: tabCountInfo)
+        await WebCacheManager.shared.clear()
         pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
 
         AutoconsentManagement.shared.clearCache()
@@ -2129,8 +2127,6 @@ extension MainViewController: AutoClearWorker {
     func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
-        
-        self.tabCountInfo = tabManager.makeTabCountInfo()
         
         tabManager.prepareAllTabsExceptCurrentForDataClearing()
         

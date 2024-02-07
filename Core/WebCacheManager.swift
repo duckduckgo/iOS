@@ -17,33 +17,10 @@
 //  limitations under the License.
 //
 
-// swiftlint:disable file_length
-
 import Common
 import WebKit
 import GRDB
 
-//public protocol WebCacheManagerCookieStore {
-//    
-//    func getAllCookies(_ completionHandler: @escaping ([HTTPCookie]) -> Void)
-//
-//    func setCookie(_ cookie: HTTPCookie, completionHandler: (() -> Void)?)
-//
-//    func delete(_ cookie: HTTPCookie, completionHandler: (() -> Void)?)
-//    
-//}
-
-//public protocol WebCacheManagerDataStore {
-//    
-//    var cookieStore: WebCacheManagerCookieStore? { get }
-//    
-//    func legacyClearingRemovingAllDataExceptCookies(completion: @escaping () -> Void)
-//    
-//    func preservedCookies(_ preservedLogins: PreserveLogins) async -> [HTTPCookie]
-//
-//}
-
-// extension WebCacheManagerDataStore {
 extension WKWebsiteDataStore {
 
     public static func current(dataStoreIdManager: DataStoreIdManager = .shared) -> WKWebsiteDataStore {
@@ -79,9 +56,7 @@ public class WebCacheManager {
         
         let cookies = cookieStorage.cookies
         
-        guard !cookies.isEmpty, !cookieStorage.isConsumed else {
-            return
-        }
+        guard !cookies.isEmpty, !cookieStorage.isConsumed else { return }
         
         var consumedCookiesCount = 0
         for cookie in cookies {
@@ -105,44 +80,38 @@ public class WebCacheManager {
     @MainActor
     public func removeCookies(forDomains domains: [String],
                               dataStore: WKWebsiteDataStore) async {
-        
+                        
         let timeoutTask = Task.detached {
+            print("*** timeout task IN")
             try? await Task.sleep(interval: 5.0)
+            if !Task.isCancelled {
+                print("*** timeout!")
+                Pixel.fire(pixel: .cookieDeletionTimedOut, withAdditionalParameters: [
+                    PixelParameters.removeCookiesTimedOut: "1"
+                ])
+            }
+            print("*** timeout task OUT")
         }
         
-        _ = Task.detached { @MainActor in
+        let removingTask = Task.detached { @MainActor in
             print("*** removing cookies")
-            
             let cookieStore = dataStore.httpCookieStore
             let cookies = await cookieStore.allCookies()
-            for cookie in cookies where domains.contains(where: {
-                let result = cookie.matchesDomain($0)
-                print("***", cookie.domain, $0, result)
-                return result
-            }) {
+            for cookie in cookies where domains.contains(where: { cookie.matchesDomain($0) }) {
                 print("*** removing cookie with domain", cookie.domain)
                 await cookieStore.deleteCookie(cookie)
             }
-            
-            print("*** cancelling timeout task")
             timeoutTask.cancel()
         }
         
-        await timeoutTask.value
-        
-        if !timeoutTask.isCancelled {
-            print("*** timeout was not cancelled")
-            Pixel.fire(pixel: .cookieDeletionTimedOut, withAdditionalParameters: [
-                PixelParameters.removeCookiesTimedOut: "1"
-            ])
-        }
+        await removingTask.value
+        timeoutTask.cancel()
         
     }
 
     @MainActor
     public func clear(cookieStorage: CookieStorage = CookieStorage(),
                       logins: PreserveLogins = PreserveLogins.shared,
-                      tabCountInfo: TabCountInfo? = nil,
                       dataStoreIdManager: DataStoreIdManager = .shared) async {
 
         if #available(iOS 17, *), dataStoreIdManager.hasId {
@@ -154,40 +123,13 @@ public class WebCacheManager {
         let legacyCookies = await legacyDataClearing()
         cookieStorage.updateCookies(legacyCookies ?? [], keepingPreservedLogins: logins)
     }
-    
-//    public func clear(cookieStorage: CookieStorage = CookieStorage(),
-//                      logins: PreserveLogins = PreserveLogins.shared,
-//                      tabCountInfo: TabCountInfo? = nil,
-//                      dataStoreIdManager: DataStoreIdManager = .shared,
-//                      completion: @escaping () -> Void) {
-//
-//        if #available(iOS 17, *), dataStoreIdManager.hasId {
-//            containerBasedClearing(logins: logins, storeIdManager: dataStoreIdManager) {
-//                // Perform legacy clearing anyway, just to be sure
-//                self.legacyDataClearing(logins: logins) { _ in completion() }
-//            }
-//        } else {
-//            legacyDataClearing(logins: logins) { cookies in
-//                if #available(iOS 17, *) {
-//                    // From this point onwards... use containers
-//                    dataStoreIdManager.allocateNewContainerId()
-//                    Task { @MainActor in
-//                        cookieStorage.updateCookies(cookies, keepingPreservedLogins: logins)
-//                        completion()
-//                    }
-//                } else {
-//                    completion()
-//                }
-//            }
-//        }
-//    }
-    
+  
 }
 
 extension WebCacheManager {
     
     @available(iOS 17, *)
-    func checkForLeftBehindDataStores() async {
+    private func checkForLeftBehindDataStores() async {
         let ids = await WKWebsiteDataStore.allDataStoreIdentifiers
         if ids.count > 1 {
             Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedMultiple)
@@ -197,7 +139,7 @@ extension WebCacheManager {
     }
 
     @available(iOS 17, *)
-    func containerBasedClearing(storeIdManager: DataStoreIdManager) async -> [HTTPCookie]? {
+    private func containerBasedClearing(storeIdManager: DataStoreIdManager) async -> [HTTPCookie]? {
         guard let containerId = storeIdManager.id else { return [] }
         var dataStore: WKWebsiteDataStore? = WKWebsiteDataStore(forIdentifier: containerId)
         let cookies = await dataStore?.httpCookieStore.allCookies()
@@ -218,116 +160,8 @@ extension WebCacheManager {
         let dataStore = WKWebsiteDataStore.default()
         let cookies = await dataStore.httpCookieStore.allCookies()
         await dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast)
-        removeObservationsData()
+        self.removeObservationsData()
         return cookies
-    }
-    
-    // swiftlint:disable function_body_length
-//    private func legacyDataClearing(logins: PreserveLogins,
-//                                    tabCountInfo: TabCountInfo? = nil,
-//                                    completion: @escaping ([HTTPCookie]) -> Void) {
-//
-//        func keep(_ cookie: HTTPCookie) -> Bool {
-//            return logins.isAllowed(cookieDomain: cookie.domain) ||
-//                URL.isDuckDuckGo(domain: cookie.domain)
-//        }
-//
-//        let dataStore = WKWebsiteDataStore.default()
-//        dataStore.legacyClearingRemovingAllDataExceptCookies {
-//            let cookieStore = dataStore.httpCookieStore
-//
-//            let cookieClearingSummary = WebStoreCookieClearingSummary()
-//
-//            cookieStore.getAllCookies { cookies in
-//                let group = DispatchGroup()
-//                let cookiesToRemove = cookies.filter {
-//                    !keep($0)
-//                }
-//
-//                let cookiesToKeep = cookies.filter {
-//                    keep($0)
-//                }
-//
-//                let protectedCookiesCount = cookies.count - cookiesToRemove.count
-//
-//                cookieClearingSummary.storeInitialCount = cookies.count
-//                cookieClearingSummary.storeProtectedCount = protectedCookiesCount
-//
-//                for cookie in cookiesToRemove {
-//                    group.enter()
-//                    cookieStore.delete(cookie) {
-//                        group.leave()
-//                    }
-//                }
-//
-//                DispatchQueue.global(qos: .userInitiated).async {
-//                    let result = group.wait(timeout: .now() + 5)
-//
-//                    if result == .timedOut {
-//                        cookieClearingSummary.didStoreDeletionTimeOut = true
-//                        Pixel.fire(pixel: .cookieDeletionTimedOut, withAdditionalParameters: [
-//                            PixelParameters.clearWebDataTimedOut: "1"
-//                        ])
-//                    }
-//
-//                    // Remove legacy HTTPCookieStorage cookies
-//                    let storageCookies = HTTPCookieStorage.shared.cookies ?? []
-//                    let storageCookiesToRemove = storageCookies.filter {
-//                        !logins.isAllowed(cookieDomain: $0.domain) && !URL.isDuckDuckGo(domain: $0.domain)
-//                    }
-//
-//                    let protectedStorageCookiesCount = storageCookies.count - storageCookiesToRemove.count
-//
-//                    cookieClearingSummary.storageInitialCount = storageCookies.count
-//                    cookieClearingSummary.storageProtectedCount = protectedStorageCookiesCount
-//
-//                    for storageCookie in storageCookiesToRemove {
-//                        HTTPCookieStorage.shared.deleteCookie(storageCookie)
-//                    }
-//
-//                    self.removeObservationsData()
-//
-//                    self.validateLegacyClearing(for: cookieStore, summary: cookieClearingSummary, tabCountInfo: tabCountInfo)
-//
-//                    DispatchQueue.main.async {
-//                        completion(cookiesToKeep)
-//                    }
-//                }
-//            }
-//        }
-//
-//    }
-    // swiftlint:enable function_body_length
-
-    private func validateLegacyClearing(for cookieStore: WKHTTPCookieStore, summary: WebStoreCookieClearingSummary, tabCountInfo: TabCountInfo?) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            cookieStore.getAllCookies { cookiesAfterCleaning in
-                let storageCookiesAfterCleaning = HTTPCookieStorage.shared.cookies ?? []
-                
-                summary.storeAfterDeletionCount = cookiesAfterCleaning.count
-                summary.storageAfterDeletionCount = storageCookiesAfterCleaning.count
-                
-                let cookieStoreDiff = cookiesAfterCleaning.count - summary.storeProtectedCount
-                let cookieStorageDiff = storageCookiesAfterCleaning.count - summary.storageProtectedCount
-                
-                summary.storeAfterDeletionDiffCount = cookieStoreDiff
-                summary.storageAfterDeletionDiffCount = cookieStorageDiff
-                
-                if cookieStoreDiff + cookieStorageDiff > 0 {
-                    os_log("Error removing cookies: %d cookies left in WKHTTPCookieStore, %d cookies left in HTTPCookieStorage",
-                           log: .generalLog, type: .debug, cookieStoreDiff, cookieStorageDiff)
-                    
-                    var parameters = summary.makeDictionaryRepresentation()
-                    
-                    if let tabCountInfo = tabCountInfo {
-                        parameters.merge(tabCountInfo.makeDictionaryRepresentation(), uniquingKeysWith: { _, new in new })
-                    }
-                    
-                    Pixel.fire(pixel: .cookieDeletionLeftovers,
-                               withAdditionalParameters: parameters)
-                }
-            }
-        }
     }
 
     private func removeObservationsData() {
@@ -374,88 +208,3 @@ extension WebCacheManager {
      }
 
 }
-
-//extension WKHTTPCookieStore: WebCacheManagerCookieStore {
-//        
-//}
-
-extension WKWebsiteDataStore {
-
-    @MainActor
-    public func preservedCookies(_ preservedLogins: PreserveLogins) async -> [HTTPCookie] {
-        let allCookies = await self.httpCookieStore.allCookies()
-        return allCookies.filter {
-            URL.isDuckDuckGo(domain: $0.domain) || preservedLogins.isAllowed(cookieDomain: $0.domain)
-        }
-    }
-//
-//    public var cookieStore: WebCacheManagerCookieStore? {
-//        return self.httpCookieStore
-//    }
-
-    public func legacyClearingRemovingAllDataExceptCookies(completion: @escaping () -> Void) {
-        var types = WKWebsiteDataStore.allWebsiteDataTypes()
-
-        // Force the HSTS, Media and Alt services cache to clear when using the Fire button.
-        // https://github.com/WebKit/WebKit/blob/0f73b4d4350c707763146ff0501ab62425c902d6/Source/WebKit/UIProcess/API/Cocoa/WKWebsiteDataRecord.mm#L47
-        types.insert("_WKWebsiteDataTypeHSTSCache")
-        types.insert("_WKWebsiteDataTypeMediaKeys")
-        types.insert("_WKWebsiteDataTypeAlternativeServices")
-        types.insert("_WKWebsiteDataTypeSearchFieldRecentSearches")
-        types.insert("_WKWebsiteDataTypeResourceLoadStatistics")
-        types.insert("_WKWebsiteDataTypeCredentials")
-        types.insert("_WKWebsiteDataTypeAdClickAttributions")
-        types.insert("_WKWebsiteDataTypePrivateClickMeasurements")
-
-        types.remove(WKWebsiteDataTypeCookies)
-
-        removeData(ofTypes: types,
-                   modifiedSince: Date.distantPast,
-                   completionHandler: completion)
-    }
-    
-}
-
-final class WebStoreCookieClearingSummary {
-    var storeInitialCount: Int = 0
-    var storeProtectedCount: Int = 0
-    var didStoreDeletionTimeOut: Bool = false
-    var storageInitialCount: Int = 0
-    var storageProtectedCount: Int = 0
-    
-    var storeAfterDeletionCount: Int = 0
-    var storageAfterDeletionCount: Int = 0
-    var storeAfterDeletionDiffCount: Int = 0
-    var storageAfterDeletionDiffCount: Int = 0
-    
-    func makeDictionaryRepresentation() -> [String: String] {
-        [PixelParameters.storeInitialCount: "\(storeInitialCount)",
-         PixelParameters.storeProtectedCount: "\(storeProtectedCount)",
-         PixelParameters.didStoreDeletionTimeOut: didStoreDeletionTimeOut ? "true" : "false",
-         PixelParameters.storageInitialCount: "\(storageInitialCount)",
-         PixelParameters.storageProtectedCount: "\(storageProtectedCount)",
-         PixelParameters.storeAfterDeletionCount: "\(storeAfterDeletionCount)",
-         PixelParameters.storageAfterDeletionCount: "\(storageAfterDeletionCount)",
-         PixelParameters.storeAfterDeletionDiffCount: "\(storeAfterDeletionDiffCount)",
-         PixelParameters.storageAfterDeletionDiffCount: "\(storageAfterDeletionDiffCount)"]
-    }
-}
-
-public final class TabCountInfo {
-    var tabsModelCount: Int = 0
-    var tabControllerCacheCount: Int = 0
-    
-    public init() { }
-        
-    public init(tabsModelCount: Int, tabControllerCacheCount: Int) {
-        self.tabsModelCount = tabsModelCount
-        self.tabControllerCacheCount = tabControllerCacheCount
-    }
-    
-    func makeDictionaryRepresentation() -> [String: String] {
-        [PixelParameters.tabsModelCount: "\(tabsModelCount)",
-         PixelParameters.tabControllerCacheCount: "\(tabControllerCacheCount)"]
-    }
-}
-
-// swiftlint:enable file_length

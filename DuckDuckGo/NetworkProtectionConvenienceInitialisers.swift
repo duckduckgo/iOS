@@ -60,12 +60,19 @@ extension NetworkProtectionKeychainTokenStore {
 
 extension NetworkProtectionCodeRedemptionCoordinator {
     convenience init(isManualCodeRedemptionFlow: Bool = false) {
+#if ALPHA
+        let isSubscriptionEnabled = true
+#else
+        let isSubscriptionEnabled = AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
+#endif
+
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
         self.init(
             environment: settings.selectedEnvironment,
             tokenStore: NetworkProtectionKeychainTokenStore(),
             isManualCodeRedemptionFlow: isManualCodeRedemptionFlow,
-            errorEvents: .networkProtectionAppDebugEvents
+            errorEvents: .networkProtectionAppDebugEvents,
+            isSubscriptionEnabled: isSubscriptionEnabled
         )
     }
 }

@@ -33,19 +33,20 @@ public protocol WebCacheManagerCookieStore {
     
 }
 
-public protocol WebCacheManagerDataStore {
-    
-    var cookieStore: WebCacheManagerCookieStore? { get }
-    
-    func legacyClearingRemovingAllDataExceptCookies(completion: @escaping () -> Void)
-    
-    func preservedCookies(_ preservedLogins: PreserveLogins) async -> [HTTPCookie]
+//public protocol WebCacheManagerDataStore {
+//    
+//    var cookieStore: WebCacheManagerCookieStore? { get }
+//    
+//    func legacyClearingRemovingAllDataExceptCookies(completion: @escaping () -> Void)
+//    
+//    func preservedCookies(_ preservedLogins: PreserveLogins) async -> [HTTPCookie]
+//
+//}
 
-}
+// extension WebCacheManagerDataStore {
+extension WKWebsiteDataStore {
 
-extension WebCacheManagerDataStore {
-
-    public static func current(dataStoreIdManager: DataStoreIdManager = .shared) -> WebCacheManagerDataStore {
+    public static func current(dataStoreIdManager: DataStoreIdManager = .shared) -> WKWebsiteDataStore {
         if #available(iOS 17, *), let id = dataStoreIdManager.id {
             return WKWebsiteDataStore(forIdentifier: id)
         } else {
@@ -94,38 +95,32 @@ public class WebCacheManager {
     }
 
     public func removeCookies(forDomains domains: [String],
-                              dataStore: WebCacheManagerDataStore,
-                              completion: @escaping () -> Void) {
+                              dataStore: WKWebsiteDataStore) async {
 
-        guard let cookieStore = dataStore.cookieStore else {
-            completion()
-            return
+        let timeoutTask = Task.detached {
+            try? await Task.sleep(interval: 5.0)
         }
 
-        cookieStore.getAllCookies { cookies in
-            let group = DispatchGroup()
-            cookies.forEach { cookie in
-                if domains.contains(where: { self.isCookie(cookie, matchingDomain: $0) }) {
-                    group.enter()
-                    cookieStore.delete(cookie) {
-                        group.leave()
-                    }
-                }
+        let removeCookiesTask = Task { @MainActor in
+            print("*** removing cookies")
+            
+            let cookieStore = dataStore.httpCookieStore
+            let cookies = await cookieStore.allCookies()
+            for cookie in cookies where domains.contains(where: { self.isCookie(cookie, matchingDomain: $0) }) {
+                await cookieStore.deleteCookie(cookie)
             }
-
-            DispatchQueue.global(qos: .userInitiated).async {
-                let result = group.wait(timeout: .now() + 5)
-
-                if result == .timedOut {
-                    Pixel.fire(pixel: .cookieDeletionTimedOut, withAdditionalParameters: [
-                        PixelParameters.removeCookiesTimedOut: "1"
-                    ])
-                }
-
-                DispatchQueue.main.async {
-                    completion()
-                }
-            }
+            
+            print("*** cancelling timeout task")
+            timeoutTask.cancel()
+        }
+        
+        await timeoutTask.value
+        
+        if !timeoutTask.isCancelled {
+            print("*** timeout was not cancelled")
+            Pixel.fire(pixel: .cookieDeletionTimedOut, withAdditionalParameters: [
+                PixelParameters.removeCookiesTimedOut: "1"
+            ])
         }
 
     }
@@ -211,10 +206,7 @@ public class WebCacheManager {
 
         let dataStore = WKWebsiteDataStore.default()
         dataStore.legacyClearingRemovingAllDataExceptCookies {
-            guard let cookieStore = dataStore.cookieStore else {
-                completion([])
-                return
-            }
+            let cookieStore = dataStore.httpCookieStore
 
             let cookieClearingSummary = WebStoreCookieClearingSummary()
 
@@ -366,7 +358,7 @@ extension WKHTTPCookieStore: WebCacheManagerCookieStore {
         
 }
 
-extension WKWebsiteDataStore: WebCacheManagerDataStore {
+extension WKWebsiteDataStore {
 
     @MainActor
     public func preservedCookies(_ preservedLogins: PreserveLogins) async -> [HTTPCookie] {
@@ -375,10 +367,10 @@ extension WKWebsiteDataStore: WebCacheManagerDataStore {
             URL.isDuckDuckGo(domain: $0.domain) || preservedLogins.isAllowed(cookieDomain: $0.domain)
         }
     }
-
-    public var cookieStore: WebCacheManagerCookieStore? {
-        return self.httpCookieStore
-    }
+//
+//    public var cookieStore: WebCacheManagerCookieStore? {
+//        return self.httpCookieStore
+//    }
 
     public func legacyClearingRemovingAllDataExceptCookies(completion: @escaping () -> Void) {
         var types = WKWebsiteDataStore.allWebsiteDataTypes()

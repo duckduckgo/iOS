@@ -46,7 +46,7 @@ class CookieDebugViewController: UITableViewController {
     }
 
     private func fetchCookies() {
-        WKWebsiteDataStore.default().cookieStore?.getAllCookies(displayCookies)
+        // TODO WKWebsiteDataStore.default().cookieStore?.getAllCookies(displayCookies)
     }
 
     private func displayCookies(cookies: [HTTPCookie]) {

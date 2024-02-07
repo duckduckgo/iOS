@@ -75,16 +75,11 @@ public class WebCacheManager {
             }
         }
         
-        let removingTask = Task.detached { @MainActor in
-            let cookieStore = dataStore.httpCookieStore
-            let cookies = await cookieStore.allCookies()
-            for cookie in cookies where domains.contains(where: { cookie.matchesDomain($0) }) {
-                await cookieStore.deleteCookie(cookie)
-            }
-            timeoutTask.cancel()
+        let cookieStore = dataStore.httpCookieStore
+        let cookies = await cookieStore.allCookies()
+        for cookie in cookies where domains.contains(where: { cookie.matchesDomain($0) }) {
+            await cookieStore.deleteCookie(cookie)
         }
-        
-        await removingTask.value
         timeoutTask.cancel()
     }
     
@@ -134,10 +129,18 @@ extension WebCacheManager {
     }
     
     private func legacyDataClearing() async -> [HTTPCookie]? {
+        let timeoutTask = Task.detached {
+            if !Task.isCancelled {
+                Pixel.fire(pixel: .cookieDeletionTimedOut, withAdditionalParameters: [
+                    PixelParameters.clearWebDataTimedOut: "1"
+                ])
+            }
+        }
         let dataStore = WKWebsiteDataStore.default()
         let cookies = await dataStore.httpCookieStore.allCookies()
         await dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast)
         self.removeObservationsData()
+        timeoutTask.cancel()
         return cookies
     }
 

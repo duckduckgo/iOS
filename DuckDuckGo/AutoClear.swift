@@ -23,7 +23,7 @@ import UIKit
 protocol AutoClearWorker {
     
     func clearNavigationStack()
-    func forgetData()
+    func forgetData() async
     func forgetTabs()
 }
 
@@ -42,11 +42,11 @@ class AutoClear {
         self.worker = worker
     }
     
-    private func clearData() {
+    private func clearData() async {
         guard let settings = AutoClearSettingsModel(settings: appSettings) else { return }
         
         if settings.action.contains(.clearData) {
-            worker.forgetData()
+            await worker.forgetData()
         }
         
         if settings.action.contains(.clearTabs) {
@@ -54,12 +54,13 @@ class AutoClear {
         }
     }
     
-    func applicationDidLaunch() {
+    @MainActor
+    func applicationDidLaunch() async {
         guard let settings = AutoClearSettingsModel(settings: appSettings) else { return }
         
         // Note: for startup, we clear only Data, as TabsModel is cleared on load
         if settings.action.contains(.clearData) {
-            worker.forgetData()
+            await worker.forgetData()
         }
     }
     
@@ -85,13 +86,13 @@ class AutoClear {
         }
     }
     
-    func applicationWillMoveToForeground() {
+    func applicationWillMoveToForeground() async {
         guard isClearingEnabled,
             let timestamp = timestamp,
             shouldClearData(elapsedTime: Date().timeIntervalSince1970 - timestamp) else { return }
         
         worker.clearNavigationStack()
-        clearData()
+        await clearData()
         self.timestamp = nil
     }
 }

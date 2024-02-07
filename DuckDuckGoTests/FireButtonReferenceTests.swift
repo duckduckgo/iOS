@@ -44,6 +44,7 @@ final class FireButtonReferenceTests: XCTestCase {
         return url.host!
     }
 
+    @MainActor
     func testClearData() async throws {
         let preservedLogins = PreserveLogins.shared
         preservedLogins.clearAll()
@@ -69,11 +70,7 @@ final class FireButtonReferenceTests: XCTestCase {
             ]
             
             idManager.allocateNewContainerId()
-            await withCheckedContinuation { continuation in
-                WebCacheManager.shared.clear(cookieStorage: cookieStorage, logins: preservedLogins, dataStoreIdManager: idManager) {
-                    continuation.resume()
-                }
-            }
+            await WebCacheManager.shared.clear(cookieStorage: cookieStorage, logins: preservedLogins, dataStoreIdManager: idManager)
             
             let testCookie = cookieStorage.cookies.filter { $0.name == test.cookieName }.first
 

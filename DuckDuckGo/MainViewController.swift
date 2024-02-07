@@ -2094,7 +2094,7 @@ extension MainViewController: AutoClearWorker {
         Favicons.shared.clearCache(.tabs)
     }
     
-    func forgetData() {
+    func forgetData() async {
         guard !clearInProgress else {
             assertionFailure("Shouldn't get called multiple times")
             return
@@ -2103,22 +2103,22 @@ extension MainViewController: AutoClearWorker {
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
         let pixel = TimedPixel(.forgetAllDataCleared)
-        WebCacheManager.shared.clear(tabCountInfo: tabCountInfo) {
-            pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
+        await WebCacheManager.shared.clear(tabCountInfo: tabCountInfo)
+        pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
 
-            AutoconsentManagement.shared.clearCache()
-            DaxDialogs.shared.clearHeldURLData()
+        AutoconsentManagement.shared.clearCache()
+        DaxDialogs.shared.clearHeldURLData()
 
-            if self.syncService.authState == .inactive {
-                self.bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
-            }
-
-            self.refreshUIAfterClear()
-            self.clearInProgress = false
-            
-            self.postClear?()
-            self.postClear = nil
+        if self.syncService.authState == .inactive {
+            self.bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
         }
+
+        self.refreshUIAfterClear()
+        self.clearInProgress = false
+        
+        self.postClear?()
+        self.postClear = nil
+        
 
     }
     
@@ -2135,11 +2135,13 @@ extension MainViewController: AutoClearWorker {
         tabManager.prepareAllTabsExceptCurrentForDataClearing()
         
         fireButtonAnimator.animate {
-            self.tabManager.prepareCurrentTabForDataClearing()
-            self.stopAllOngoingDownloads()
-            self.forgetTabs()
-            self.forgetData()
-            DaxDialogs.shared.resumeRegularFlow()
+            Task { @MainActor in
+                self.tabManager.prepareCurrentTabForDataClearing()
+                self.stopAllOngoingDownloads()
+                self.forgetTabs()
+                await self.forgetData()
+                DaxDialogs.shared.resumeRegularFlow()
+            }
         } onTransitionCompleted: {
             ActionMessageView.present(message: UserText.actionForgetAllDone,
                                       presentationLocation: .withBottomBar(andAddressBarBottom: self.appSettings.currentAddressBarPosition.isBottom))

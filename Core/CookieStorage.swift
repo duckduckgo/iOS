@@ -20,6 +20,9 @@
 import Common
 import Foundation
 
+/// The Fire Button does not delete the user's DuckDuckGo search settings, which are saved as cookies. Removing these cookies would reset them and have undesired consequences, i.e. changing the theme, default language, etc.
+/// The Fire Button also does not delete temporary cookies associated with 'surveys.duckduckgo.com'. When we launch surveys to help us understand issues that impact users over time, we use this cookie to temporarily store anonymous survey answers, before deleting the cookie. Cookie storage duration is communicated to users before they opt to submit survey answers.
+/// These cookies are not stored in a personally identifiable way. For example, the large size setting is stored as 's=l.' More info in https://duckduckgo.com/privacy
 public class CookieStorage {
 
     struct Keys {

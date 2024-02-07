@@ -33,6 +33,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     }()
 
     private let tunnelController: TunnelController
+    private let settings: VPNSettings
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
     private let errorObserver: ConnectionErrorObserver
@@ -66,15 +67,18 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @Published public var shouldShowConnectionDetails: Bool = false
     @Published public var location: String?
     @Published public var ipAddress: String?
+    @Published public var customDNS: String?
 
     @Published public var animationsOn: Bool = false
 
     public init(tunnelController: TunnelController = NetworkProtectionTunnelController(),
+                settings: VPNSettings = .init(defaults: .networkProtectionGroupDefaults),
                 statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
                 serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
                 errorObserver: ConnectionErrorObserver = ConnectionErrorObserverThroughSession(),
                 locationListRepository: NetworkProtectionLocationListRepository = NetworkProtectionLocationListCompositeRepository()) {
         self.tunnelController = tunnelController
+        self.settings = settings
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
         self.errorObserver = errorObserver
@@ -87,6 +91,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         setUpStatusMessagePublishers()
         setUpDisableTogglePublisher()
         setUpServerInfoPublishers()
+        setUpSettingPublisher()
 
         // Prefetching this now for snappy load times on the locations screens
         Task {
@@ -186,6 +191,13 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             }
             .receive(on: DispatchQueue.main)
             .assign(to: \.shouldShowConnectionDetails, onWeaklyHeld: self)
+            .store(in: &cancellables)
+    }
+
+    private func setUpSettingPublisher() {
+        settings.customDNSPublisher
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.customDNS, onWeaklyHeld: self)
             .store(in: &cancellables)
     }
 

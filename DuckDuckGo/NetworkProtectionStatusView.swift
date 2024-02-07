@@ -129,6 +129,13 @@ struct NetworkProtectionStatusView: View {
                     value: ipAddress
                 )
             }
+            if let customDNS = statusModel.customDNS, !customDNS.isEmpty {
+                NetworkProtectionServerItemView(
+                    imageID: "IP-24",
+                    title: "Custom DNS",
+                    value: customDNS
+                )
+            }
         } header: {
             Text(UserText.netPStatusViewConnectionDetails).foregroundColor(.init(designSystemColor: .textSecondary))
         }

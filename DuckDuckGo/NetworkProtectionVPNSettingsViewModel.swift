@@ -29,6 +29,7 @@ final class NetworkProtectionVPNSettingsViewModel: ObservableObject {
 
     @Published public var preferredLocation: NetworkProtectionLocationSettingsItemModel
     @Published public var excludeLocalNetworks: Bool = true
+    @Published public var customDNS: String = ""
 
     init(settings: VPNSettings) {
         self.settings = settings
@@ -43,10 +44,24 @@ final class NetworkProtectionVPNSettingsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: \.excludeLocalNetworks, onWeaklyHeld: self)
             .store(in: &cancellables)
+
+        settings.customDNSPublisher
+            .map { $0 ?? "" }
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.customDNS, onWeaklyHeld: self)
+            .store(in: &cancellables)
     }
 
     func toggleExcludeLocalNetworks() {
         settings.excludeLocalNetworks.toggle()
+    }
+
+    func updateCustomDNS(_ customDNS: String) {
+        settings.customDNS = customDNS
+    }
+
+    func resetCustomDNS() {
+        settings.customDNS = nil
     }
 
     private static func localizedString(forRegionCode: String) -> String {

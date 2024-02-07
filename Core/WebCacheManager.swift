@@ -64,44 +64,31 @@ public class WebCacheManager {
     /// We save cookies from the current container rather than copying them to a new container because
     ///  the container only persists cookies to disk when the web view is used.  If the user presses the fire button
     ///  twice then the fire proofed cookies will be lost and the user will be logged out any sites they're logged in to.
+    @MainActor
     public func consumeCookies(cookieStorage: CookieStorage = CookieStorage(),
-                               httpCookieStore: WebCacheManagerCookieStore,
-                               completion: @escaping () -> Void) {
+                               httpCookieStore: WKHTTPCookieStore) async {
         
         let cookies = cookieStorage.cookies
         
         guard !cookies.isEmpty, !cookieStorage.isConsumed else {
-            completion()
             return
         }
         
-        let group = DispatchGroup()
-        
         var consumedCookiesCount = 0
-        
         for cookie in cookies {
-            group.enter()
             consumedCookiesCount += 1
-            httpCookieStore.setCookie(cookie) {
-                group.leave()
-            }
+            await httpCookieStore.setCookie(cookie)
         }
+        cookieStorage.isConsumed = true
 
-        DispatchQueue.global(qos: .userInitiated).async {
-            group.wait()
-            cookieStorage.isConsumed = true
-            
-            DispatchQueue.main.async {
-                completion()
+        if cookieStorage.cookies.count > 0 {
+            Task.detached {
+                os_log("Error removing cookies: %d cookies left in CookieStorage",
+                       log: .generalLog, type: .debug, cookieStorage.cookies.count)
                 
-                if cookieStorage.cookies.count > 0 {
-                    os_log("Error removing cookies: %d cookies left in CookieStorage",
-                           log: .generalLog, type: .debug, cookieStorage.cookies.count)
-                    
-                    Pixel.fire(pixel: .debugCookieCleanupError, withAdditionalParameters: [
-                        PixelParameters.count: "\(cookieStorage.cookies.count)"
-                    ])
-                }
+                Pixel.fire(pixel: .debugCookieCleanupError, withAdditionalParameters: [
+                    PixelParameters.count: "\(cookieStorage.cookies.count)"
+                ])
             }
         }
     }

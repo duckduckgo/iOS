@@ -250,30 +250,28 @@ class DiagnosticReportDataSource: UIActivityItemProvider {
     }
 
     func cookiesReport() -> String {
-//        var cookies = [HTTPCookie]()
-//
-//        let group = DispatchGroup()
-//        group.enter()
-//        DispatchQueue.main.async {
-//            WKWebsiteDataStore.default().cookieStore?.getAllCookies { httpCookies in
-//                cookies = httpCookies
-//                group.leave()
-//            }
-//        }
-//
-//        var timeout = [String]()
-//        if group.wait(timeout: .now() + 10) == .timedOut {
-//            timeout = ["Failed to retrieve cookies in 10 seconds"]
-//        }
-//
-//        let processedCookies = cookies
-//            .sorted(by: { $0.domain < $1.domain })
-//            .sorted(by: { $0.name < $1.name })
-//            .map { $0.debugString }
-//
-//        return (["## Cookie Report"] + timeout + processedCookies).joined(separator: "\n")
-        
-        return "### Disabled for now" // TODO
+        var cookies = [HTTPCookie]()
+
+        let group = DispatchGroup()
+        group.enter()
+        DispatchQueue.main.async {
+            WKWebsiteDataStore.current().httpCookieStore.getAllCookies { httpCookies in
+                cookies = httpCookies
+                group.leave()
+            }
+        }
+
+        var timeout = [String]()
+        if group.wait(timeout: .now() + 10) == .timedOut {
+            timeout = ["Failed to retrieve cookies in 10 seconds"]
+        }
+
+        let processedCookies = cookies
+            .sorted(by: { $0.domain < $1.domain })
+            .sorted(by: { $0.name < $1.name })
+            .map { $0.debugString }
+
+        return (["## Cookie Report"] + timeout + processedCookies).joined(separator: "\n")
     }
 
     func tabsReport() -> String {

@@ -46,7 +46,6 @@ public class PreserveLogins {
         return allowedDomains.contains(where: { $0 == cookieDomain
             || ".\($0)" == cookieDomain
             || (cookieDomain.hasPrefix(".") && $0.hasSuffix(cookieDomain)) })
-        // return allowedDomains.contains(where: { $0.isMatchingCookieDomain(cookieDomain) })        
     }
 
     public func remove(domain: String) {

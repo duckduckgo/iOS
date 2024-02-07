@@ -67,31 +67,25 @@ public class WebCacheManager {
                               dataStore: WKWebsiteDataStore) async {
                         
         let timeoutTask = Task.detached {
-            print("*** timeout task IN")
             try? await Task.sleep(interval: 5.0)
             if !Task.isCancelled {
-                print("*** timeout!")
                 Pixel.fire(pixel: .cookieDeletionTimedOut, withAdditionalParameters: [
                     PixelParameters.removeCookiesTimedOut: "1"
                 ])
             }
-            print("*** timeout task OUT")
         }
         
         let removingTask = Task.detached { @MainActor in
-            print("*** removing cookies")
             let cookieStore = dataStore.httpCookieStore
             let cookies = await cookieStore.allCookies()
             for cookie in cookies where domains.contains(where: { cookie.matchesDomain($0) }) {
-                print("*** removing cookie with domain", cookie.domain)
                 await cookieStore.deleteCookie(cookie)
             }
             timeoutTask.cancel()
         }
         
         await removingTask.value
-        timeoutTask.cancel()
-        
+        timeoutTask.cancel()        
     }
 
     public func clear(cookieStorage: CookieStorage = CookieStorage(),

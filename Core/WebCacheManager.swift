@@ -85,9 +85,9 @@ public class WebCacheManager {
         }
         
         await removingTask.value
-        timeoutTask.cancel()        
+        timeoutTask.cancel()
     }
-
+    
     public func clear(cookieStorage: CookieStorage = CookieStorage(),
                       logins: PreserveLogins = PreserveLogins.shared,
                       dataStoreIdManager: DataStoreIdManager = .shared) async {
@@ -166,7 +166,6 @@ extension WebCacheManager {
 
         return pool
     }
-
 
     private func removeObservationsData(from pool: DatabasePool) {
          do {

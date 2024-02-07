@@ -23,15 +23,15 @@ import Common
 import WebKit
 import GRDB
 
-public protocol WebCacheManagerCookieStore {
-    
-    func getAllCookies(_ completionHandler: @escaping ([HTTPCookie]) -> Void)
-
-    func setCookie(_ cookie: HTTPCookie, completionHandler: (() -> Void)?)
-
-    func delete(_ cookie: HTTPCookie, completionHandler: (() -> Void)?)
-    
-}
+//public protocol WebCacheManagerCookieStore {
+//    
+//    func getAllCookies(_ completionHandler: @escaping ([HTTPCookie]) -> Void)
+//
+//    func setCookie(_ cookie: HTTPCookie, completionHandler: (() -> Void)?)
+//
+//    func delete(_ cookie: HTTPCookie, completionHandler: (() -> Void)?)
+//    
+//}
 
 //public protocol WebCacheManagerDataStore {
 //    
@@ -94,6 +94,7 @@ public class WebCacheManager {
         }
     }
 
+    @MainActor
     public func removeCookies(forDomains domains: [String],
                               dataStore: WKWebsiteDataStore) async {
 
@@ -271,7 +272,7 @@ public class WebCacheManager {
     }
     // swiftlint:enable function_body_length
 
-    private func validateLegacyClearing(for cookieStore: WebCacheManagerCookieStore, summary: WebStoreCookieClearingSummary, tabCountInfo: TabCountInfo?) {
+    private func validateLegacyClearing(for cookieStore: WKHTTPCookieStore, summary: WebStoreCookieClearingSummary, tabCountInfo: TabCountInfo?) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             cookieStore.getAllCookies { cookiesAfterCleaning in
                 let storageCookiesAfterCleaning = HTTPCookieStorage.shared.cookies ?? []
@@ -354,9 +355,9 @@ public class WebCacheManager {
 
 }
 
-extension WKHTTPCookieStore: WebCacheManagerCookieStore {
-        
-}
+//extension WKHTTPCookieStore: WebCacheManagerCookieStore {
+//        
+//}
 
 extension WKWebsiteDataStore {
 

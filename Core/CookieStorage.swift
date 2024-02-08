@@ -80,15 +80,18 @@ public class CookieStorage {
         self.userDefaults = userDefaults
     }
 
-    enum CookieDomainsOnUpdate {
+    enum CookieDomainsOnUpdateDiagnostic {
         case empty
         case match
         case missing
         case different
+        case notConsumed
     }
     
     @discardableResult
-    func updateCookies(_ cookies: [HTTPCookie], keepingPreservedLogins preservedLogins: PreserveLogins) -> CookieDomainsOnUpdate {
+    func updateCookies(_ cookies: [HTTPCookie], keepingPreservedLogins preservedLogins: PreserveLogins) -> CookieDomainsOnUpdateDiagnostic {
+        guard isConsumed else { return .notConsumed }
+        
         isConsumed = false
         
         let persisted = self.cookies
@@ -112,7 +115,9 @@ public class CookieStorage {
             persistedDomains: persistedCookiesByDomain.keys.sorted()
         )
         
-        updatedCookiesByDomain.keys.forEach {
+        let cookieDomains = Set(updatedCookiesByDomain.keys.map { $0 } + persistedCookiesByDomain.keys.map { $0 })
+        
+        cookieDomains.forEach {
             persistedCookiesByDomain[$0] = updatedCookiesByDomain[$0]
         }
         
@@ -131,7 +136,7 @@ public class CookieStorage {
         return diagnosticResult
     }
     
-    private func evaluateDomains(updatedDomains: [String], persistedDomains: [String]) -> CookieDomainsOnUpdate {
+    private func evaluateDomains(updatedDomains: [String], persistedDomains: [String]) -> CookieDomainsOnUpdateDiagnostic {
         if persistedDomains.isEmpty {
             return .empty
         } else if updatedDomains.count < persistedDomains.count {

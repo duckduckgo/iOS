@@ -2111,13 +2111,10 @@ extension MainViewController: AutoClearWorker {
             self.bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
         }
 
-        self.refreshUIAfterClear()
         self.clearInProgress = false
         
         self.postClear?()
         self.postClear = nil
-        
-
     }
     
     func stopAllOngoingDownloads() {
@@ -2136,6 +2133,7 @@ extension MainViewController: AutoClearWorker {
                 self.stopAllOngoingDownloads()
                 self.forgetTabs()
                 await self.forgetData()
+                Instruments.shared.endTimedEvent(for: spid)
                 DaxDialogs.shared.resumeRegularFlow()
             }
         } onTransitionCompleted: {
@@ -2143,7 +2141,8 @@ extension MainViewController: AutoClearWorker {
                                       presentationLocation: .withBottomBar(andAddressBarBottom: self.appSettings.currentAddressBarPosition.isBottom))
             transitionCompletion?()
         } completion: {
-            Instruments.shared.endTimedEvent(for: spid)
+            // Ideally this should happen once data clearing has finished AND the animation is finished
+            self.refreshUIAfterClear()
             if showNextDaxDialog {
                 self.homeController?.showNextDaxDialog()
             } else if KeyboardSettings().onNewTab {

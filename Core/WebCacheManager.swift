@@ -53,8 +53,9 @@ public class WebCacheManager {
     ///  twice then the fire proofed cookies will be lost and the user will be logged out any sites they're logged in to.
     public func consumeCookies(cookieStorage: CookieStorage = CookieStorage(),
                                httpCookieStore: WKHTTPCookieStore) async {
+        guard !cookieStorage.isConsumed else { return }
+        
         let cookies = cookieStorage.cookies
-        guard !cookies.isEmpty, !cookieStorage.isConsumed else { return }
         var consumedCookiesCount = 0
         for cookie in cookies {
             consumedCookiesCount += 1

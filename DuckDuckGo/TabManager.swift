@@ -225,7 +225,6 @@ class TabManager {
         model.clearAll()
         for controller in tabControllerCache {
             removeFromCache(controller)
-            // controller.prepareForDataClearing()
         }
         save()
     }

@@ -22,7 +22,7 @@ import XCTest
 
 /// To be fleshed out when UI is settled
 class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate {
-
+    
     fileprivate var monitor = Monitor<SyncManagementViewModelDelegate>()
 
     lazy var model: SyncSettingsViewModel = {
@@ -32,14 +32,14 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
     }()
 
     var createAccountAndStartSyncingCalled = false
-    var caprturedOptionModel: SyncSettingsViewModel?
+    var capturedOptionModel: SyncSettingsViewModel?
 
     func testWhenSingleDeviceSetUpPressed_ThenManagerBecomesBusy_AndAccounCreationRequested() {
         model.startSyncPressed()
         XCTAssertTrue(model.isBusy)
 
         XCTAssertTrue(createAccountAndStartSyncingCalled)
-        XCTAssertNotNil(caprturedOptionModel)
+        XCTAssertNotNil(capturedOptionModel)
     }
 
     func testWhenShowRecoveryPDFPressed_ShowRecoveryPDFIsShown() {
@@ -135,13 +135,17 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
     }
     // MARK: Delegate functions
 
+    func authenticateUser() async -> Bool {
+        return true
+    }
+
     func showSyncWithAnotherDeviceEnterText() {
         monitor.incrementCalls(function: #function.cleaningFunctionName())
     }
 
    func createAccountAndStartSyncing(optionsViewModel: SyncSettingsViewModel) {
         createAccountAndStartSyncingCalled = true
-        caprturedOptionModel = optionsViewModel
+        capturedOptionModel = optionsViewModel
     }
 
     func showRecoverData() {

@@ -93,9 +93,18 @@ class AppRatingPromptTests: XCTestCase {
         appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 1))
         appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 2))
         XCTAssertTrue(appRatingPrompt.shouldPrompt(onDate: Date().inDays(fromNow: 2)))
-        
     }
-    
+
+    func testWhenUniqueAccessDaysIsNilDueToFetchErrorThenShouldNotPrompt() {
+        let storage = AppRatingPromptStorageStub()
+        storage.uniqueAccessDays = nil
+        let appRatingPrompt = AppRatingPrompt(storage: storage)
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 0))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 1))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 2))
+        XCTAssertFalse(appRatingPrompt.shouldPrompt(onDate: Date().inDays(fromNow: 2)))
+    }
+
     func testWhenUserAccessSecondUniqueDayThenShouldNotPrompt() {
         
         let stub = AppRatingPromptStorageStub()
@@ -117,15 +126,14 @@ class AppRatingPromptTests: XCTestCase {
     func testWhenUserAccessFirstDayThenShouldNotPrompt() {
         XCTAssertFalse(AppRatingPrompt(storage: AppRatingPromptStorageStub()).shouldPrompt(onDate: Date().inDays(fromNow: 0)))
     }
-    
 }
 
 private class AppRatingPromptStorageStub: AppRatingPromptStorage {
     
     var lastAccess: Date?
     
-    var uniqueAccessDays: Int = 0
-    
+    var uniqueAccessDays: Int? = 0
+
     var lastShown: Date?
     
 }

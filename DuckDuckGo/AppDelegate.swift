@@ -101,13 +101,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 #endif
 
-        if isDebugBuild {
-            Pixel.isDryRun = true
-        } else {
-            Pixel.isDryRun = false
-        }
+#if DEBUG && !ALPHA
+        Pixel.isDryRun = true
+#else
+        Pixel.isDryRun = false
+#endif
 
         ContentBlocking.shared.onCriticalError = presentPreemptiveCrashAlert
+        // Explicitly prepare ContentBlockingUpdating instance before Tabs are created
+        _ = ContentBlockingUpdating.shared
 
         // Can be removed after a couple of versions
         cleanUpMacPromoExperiment2()
@@ -319,6 +321,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if SUBSCRIPTION
         setupSubscriptionsEnvironment()
 #endif
+
+        clearDebugWaitlistState()
 
         return true
     }

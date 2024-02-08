@@ -23,6 +23,7 @@ import Combine
 import Core
 import BrowserServicesKit
 import PrivacyDashboard
+import Common
 
 /// View controller used for `Privacy Dasboard` or `Report broken site`, the web content is chosen at init time setting the correct `initMode`
 class PrivacyDashboardViewController: UIViewController {
@@ -39,22 +40,31 @@ class PrivacyDashboardViewController: UIViewController {
     private let privacyDashboardController: PrivacyDashboardController
     private let privacyConfigurationManager: PrivacyConfigurationManaging
     private let contentBlockingManager: ContentBlockerRulesManager
-    public var brokenSiteInfo: BrokenSiteInfo?
+    public var breakageAdditionalInfo: BreakageAdditionalInfo?
     
-    var source: BrokenSiteInfo.Source {
+    var source: WebsiteBreakage.Source {
         initMode == .reportBrokenSite ? .appMenu : .dashboard
     }
 
+    private let websiteBreakageReporter: WebsiteBreakageReporter = {
+        WebsiteBreakageReporter(pixelHandler: { parameters in
+            Pixel.fire(pixel: .brokenSiteReport,
+                       withAdditionalParameters: parameters,
+                       allowedQueryReservedCharacters: WebsiteBreakage.allowedQueryReservedCharacters)
+        }, keyValueStoring: UserDefaults.standard)
+    }()
+    
     init?(coder: NSCoder,
           privacyInfo: PrivacyInfo?,
           privacyConfigurationManager: PrivacyConfigurationManaging,
           contentBlockingManager: ContentBlockerRulesManager,
-          initMode: Mode) {
+          initMode: Mode,
+          breakageAdditionalInfo: BreakageAdditionalInfo?) {
         self.privacyDashboardController = PrivacyDashboardController(privacyInfo: privacyInfo)
         self.privacyConfigurationManager = privacyConfigurationManager
         self.contentBlockingManager = contentBlockingManager
         self.initMode = initMode
-        
+        self.breakageAdditionalInfo = breakageAdditionalInfo
         super.init(coder: coder)
         
         self.privacyDashboardController.privacyDashboardDelegate = self
@@ -126,6 +136,8 @@ extension PrivacyDashboardViewController: Themable {
     }
 }
 
+// MARK: - PrivacyDashboardControllerDelegate
+
 extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
 
     func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController, didChangeProtectionSwitch protectionState: ProtectionState) {
@@ -159,6 +171,8 @@ extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
     }
 }
 
+// MARK: - PrivacyDashboardNavigationDelegate
+
 extension PrivacyDashboardViewController: PrivacyDashboardNavigationDelegate {
     
     func privacyDashboardController(_ privacyDashboardController: PrivacyDashboard.PrivacyDashboardController, didSetHeight height: Int) {
@@ -171,23 +185,77 @@ extension PrivacyDashboardViewController: PrivacyDashboardNavigationDelegate {
     }
 }
 
+// MARK: - PrivacyDashboardReportBrokenSiteDelegate
+
 extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelegate {
-        
-    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController, reportBrokenSiteDidChangeProtectionSwitch protectionState: ProtectionState) {
+    
+    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController,
+                                    reportBrokenSiteDidChangeProtectionSwitch protectionState: ProtectionState) {
         privacyDashboardProtectionSwitchChangeHandler(state: protectionState)
     }
     
-    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboard.PrivacyDashboardController, didRequestSubmitBrokenSiteReportWithCategory category: String, description: String) {
-        
-        guard let brokenSiteInfo = brokenSiteInfo else {
-            assertionFailure("brokenSiteInfo not initialised")
-            return
+    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboard.PrivacyDashboardController,
+                                    didRequestSubmitBrokenSiteReportWithCategory category: String, description: String) {
+                
+        do {
+            let breakageReport = try makeWebsiteBreakage(category: category, description: description)
+            try websiteBreakageReporter.report(breakage: breakageReport)
+        } catch {
+            os_log("Failed to generate or send the website breakage report: %@", type: .error, error.localizedDescription)
         }
         
-        brokenSiteInfo.send(with: category, description: description, source: source)
         ActionMessageView.present(message: UserText.feedbackSumbittedConfirmation)
         privacyDashboardCloseHandler()
     }
 }
 
 extension PrivacyDashboardViewController: UIPopoverPresentationControllerDelegate {}
+
+extension PrivacyDashboardViewController {
+    
+    struct BreakageAdditionalInfo {
+        let currentURL: URL
+        let httpsForced: Bool
+        let ampURLString: String
+        let urlParametersRemoved: Bool
+        let isDesktop: Bool
+        let error: Error?
+        let httpStatusCode: Int?
+    }
+    
+    enum WebsiteBreakageError: Error {
+        case failedToFetchTheCurrentWebsiteInfo
+    }
+
+    private func makeWebsiteBreakage(category: String, description: String) throws -> WebsiteBreakage {
+        
+        guard let privacyInfo = privacyDashboardController.privacyInfo,
+              let breakageAdditionalInfo = breakageAdditionalInfo  else {
+            throw WebsiteBreakageError.failedToFetchTheCurrentWebsiteInfo
+        }
+        
+        let blockedTrackerDomains = privacyInfo.trackerInfo.trackersBlocked.compactMap { $0.domain }
+        let configuration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
+        let protectionsState = configuration.isFeature(.contentBlocking, enabledForDomain: breakageAdditionalInfo.currentURL.host)
+        
+        return WebsiteBreakage(siteUrl: breakageAdditionalInfo.currentURL,
+                               category: category,
+                               description: description,
+                               osVersion: "\(ProcessInfo().operatingSystemVersion.majorVersion)",
+                               manufacturer: "Apple",
+                               upgradedHttps: breakageAdditionalInfo.httpsForced,
+                               tdsETag: ContentBlocking.shared.contentBlockingManager.currentMainRules?.etag ?? "",
+                               blockedTrackerDomains: blockedTrackerDomains,
+                               installedSurrogates: privacyInfo.trackerInfo.installedSurrogates.map { $0 },
+                               isGPCEnabled: AppDependencyProvider.shared.appSettings.sendDoNotSell,
+                               ampURL: breakageAdditionalInfo.ampURLString,
+                               urlParametersRemoved: breakageAdditionalInfo.urlParametersRemoved,
+                               protectionsState: protectionsState,
+                               reportFlow: source,
+                               siteType: breakageAdditionalInfo.isDesktop ? .desktop : .mobile,
+                               atb: StatisticsUserDefaults().atb ?? "",
+                               model: UIDevice.current.model,
+                               error: breakageAdditionalInfo.error,
+                               httpStatusCode: breakageAdditionalInfo.httpStatusCode)
+    }
+}

@@ -124,7 +124,6 @@ extension MainViewController {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
 
-        let brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
         guard let currentURL = currentTab?.url,
               let privacyInfo = currentTab?.makePrivacyInfo(url: currentURL) else {
             assertionFailure("Missing fundamental data")
@@ -133,11 +132,12 @@ extension MainViewController {
         
         let storyboard = UIStoryboard(name: "PrivacyDashboard", bundle: nil)
         let controller = storyboard.instantiateInitialViewController { coder in
-             PrivacyDashboardViewController(coder: coder,
+            PrivacyDashboardViewController(coder: coder,
                                            privacyInfo: privacyInfo,
                                            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                            contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
-                                           initMode: .reportBrokenSite)
+                                           initMode: .reportBrokenSite,
+                                           breakageAdditionalInfo: self.currentTab?.makeBreakageAdditionalInfo())
         }
         
         guard let controller = controller else {
@@ -147,7 +147,6 @@ extension MainViewController {
         
         currentTab?.privacyDashboard = controller
         controller.popoverPresentationController?.delegate = controller
-        controller.brokenSiteInfo = brokenSiteInfo
 
         if UIDevice.current.userInterfaceIdiom == .pad {
             controller.modalPresentationStyle = .formSheet

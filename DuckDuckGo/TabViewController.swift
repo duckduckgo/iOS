@@ -110,6 +110,7 @@ class TabViewController: UIViewController {
     private var httpsForced: Bool = false
     private var lastUpgradedURL: URL?
     private var lastError: Error?
+    private var lastHttpStatusCode: Int?
     private var shouldReloadOnError = false
     private var failingUrls = Set<String>()
     private var urlProvidedBasicAuthCredential: (credential: URLCredential, url: URL)?
@@ -722,7 +723,6 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
             privacyDashboard = controller
-            privacyDashboard?.brokenSiteInfo = getCurrentWebsiteInfo()
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
@@ -749,7 +749,8 @@ class TabViewController: UIViewController {
                                        privacyInfo: privacyInfo,
                                        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                        contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
-                                       initMode: .privacyDashboard)
+                                       initMode: .privacyDashboard,
+                                       breakageAdditionalInfo: makeBreakageAdditionalInfo())
     }
     
     private func addTextSizeObserver() {
@@ -912,27 +913,24 @@ class TabViewController: UIViewController {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.title))
     }
+
+    public func makeBreakageAdditionalInfo() -> PrivacyDashboardViewController.BreakageAdditionalInfo? {
         
-    public func getCurrentWebsiteInfo() -> BrokenSiteInfo {
-        let blockedTrackerDomains = privacyInfo?.trackerInfo.trackersBlocked.compactMap { $0.domain } ?? []
-
-        let configuration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
-        let protectionsState = configuration.isFeature(.contentBlocking, enabledForDomain: url?.host)
-
-        return BrokenSiteInfo(url: url,
-                              httpsUpgrade: httpsForced,
-                              blockedTrackerDomains: blockedTrackerDomains,
-                              installedSurrogates: privacyInfo?.trackerInfo.installedSurrogates.map { $0 } ?? [],
-                              isDesktop: tabModel.isDesktop,
-                              tdsETag: ContentBlocking.shared.contentBlockingManager.currentMainRules?.etag ?? "",
-                              ampUrl: linkProtection.lastAMPURLString,
-                              urlParametersRemoved: linkProtection.urlParametersRemoved,
-                              protectionsState: protectionsState)
+        guard let currentURL = url else {
+            return nil
+        }
+        return PrivacyDashboardViewController.BreakageAdditionalInfo(currentURL: currentURL,
+                                                                     httpsForced: httpsForced,
+                                                                     ampURLString: linkProtection.lastAMPURLString ?? "",
+                                                                     urlParametersRemoved: linkProtection.urlParametersRemoved,
+                                                                     isDesktop: tabModel.isDesktop,
+                                                                     error: lastError,
+                                                                     httpStatusCode: lastHttpStatusCode)
     }
-    
+
     public func print() {
         let printFormatter = webView.viewPrintFormatter()
-        
+
         let printInfo = UIPrintInfo(dictionary: nil)
         printInfo.jobName = Bundle.main.infoDictionary!["CFBundleName"] as? String ?? "DuckDuckGo"
         printInfo.outputType = .general
@@ -1067,6 +1065,7 @@ extension TabViewController: WKNavigationDelegate {
 
         let httpResponse = navigationResponse.response as? HTTPURLResponse
         let isSuccessfulResponse = httpResponse?.isSuccessfulResponse ?? false
+        lastHttpStatusCode = httpResponse?.statusCode
 
         let didMarkAsInternal = internalUserDecider.markUserAsInternalIfNeeded(forUrl: webView.url, response: httpResponse)
         if didMarkAsInternal {
@@ -2220,38 +2219,6 @@ extension TabViewController: AutoconsentUserScriptDelegate {
     
     func autoconsentUserScript(_ script: AutoconsentUserScript, didUpdateCookieConsentStatus cookieConsentStatus: PrivacyDashboard.CookieConsentInfo) {
         privacyInfo?.cookieConsentManaged = cookieConsentStatus
-    }
-    
-    // Disabled temporarily as a result of https://app.asana.com/0/1203936086921904/1204496002772588/f
-    private var cookieConsentDaxDialogPresentationAllowed: Bool { false }
-
-    func autoconsentUserScript(_ script: AutoconsentUserScript, didRequestAskingUserForConsent completion: @escaping (Bool) -> Void) {
-        guard cookieConsentDaxDialogPresentationAllowed,
-              Locale.current.isRegionInEurope,
-              !isShowingFullScreenDaxDialog else { return }
-        
-        let viewModel = CookieConsentDaxDialogViewModel(okAction: {
-            completion(true)
-            Pixel.fire(pixel: .daxDialogsAutoconsentConfirmed)
-            self.dismiss(animated: true)
-        }, noAction: {
-            completion(false)
-            Pixel.fire(pixel: .daxDialogsAutoconsentCancelled)
-            self.dismiss(animated: true)
-        })
-        
-        Pixel.fire(pixel: .daxDialogsAutoconsentShown)
-        
-        showCustomDaxDialog(viewModel: viewModel)
-    }
-    
-    private func showCustomDaxDialog(viewModel: CustomDaxDialogViewModel) {
-        let daxDialog = UIHostingController(rootView: CustomDaxDialog(viewModel: viewModel), ignoreSafeArea: true)
-        daxDialog.modalPresentationStyle = .overFullScreen
-        daxDialog.modalTransitionStyle = .crossDissolve
-        daxDialog.view.backgroundColor = .clear
-
-        present(daxDialog, animated: true)
     }
 }
 

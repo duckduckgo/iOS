@@ -23,8 +23,9 @@ import BrowserServicesKit
 import OHHTTPStubs
 import OHHTTPStubsSwift
 @testable import Core
-
+import PrivacyDashboard
 @testable import DuckDuckGo
+import TestUtils
 
 final class BrokenSiteReportingTests: XCTestCase {
     private let data = JsonTestDataLoader()
@@ -52,7 +53,6 @@ final class BrokenSiteReportingTests: XCTestCase {
 
     func testBrokenSiteReporting() throws {
         let testJSON = data.fromJsonFile(Resource.tests)
-        let testString = String(data: testJSON, encoding: .utf8)
         let testData = try JSONDecoder().decode(BrokenSiteReportingTestData.self, from: testJSON)
 
         referenceTests = testData.reportURL.tests.filter {
@@ -61,13 +61,12 @@ final class BrokenSiteReportingTests: XCTestCase {
         
         let testsExecuted = expectation(description: "tests executed")
         testsExecuted.expectedFulfillmentCount = referenceTests.count
-
-        runReferenceTests(onTestExecuted: testsExecuted)
-        waitForExpectations(timeout: 30, handler: nil)
-
+        
+        try runReferenceTests(onTestExecuted: testsExecuted)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
-    private func runReferenceTests(onTestExecuted: XCTestExpectation) {
+    private func runReferenceTests(onTestExecuted: XCTestExpectation) throws {
         
         guard let test = referenceTests.popLast() else {
             return
@@ -75,56 +74,43 @@ final class BrokenSiteReportingTests: XCTestCase {
         
         os_log("Testing [%s]", type: .info, test.name)
         
-        let brokenSiteInfo = BrokenSiteInfo(url: URL(string: test.siteURL),
-                                            httpsUpgrade: test.wasUpgraded,
-                                            blockedTrackerDomains: test.blockedTrackers,
-                                            installedSurrogates: test.surrogates,
-                                            isDesktop: true,
-                                            tdsETag: test.blocklistVersion,
-                                            ampUrl: nil,
-                                            urlParametersRemoved: false,
-                                            protectionsState: test.protectionsEnabled,
-                                            model: test.model ?? "",
-                                            manufacturer: test.manufacturer ?? "",
-                                            systemVersion: test.os ?? "",
-                                            gpc: test.gpcEnabled)
-        
-        stub(condition: isHost(host)) { request -> HTTPStubsResponse in
+        let websiteBreakage = WebsiteBreakage(siteUrl: URL(string: test.siteURL)!,
+                                              category: test.category,
+                                              description: "",
+                                              osVersion: test.os ?? "",
+                                              manufacturer: test.manufacturer ?? "",
+                                              upgradedHttps: test.wasUpgraded,
+                                              tdsETag: test.blocklistVersion,
+                                              blockedTrackerDomains: test.blockedTrackers,
+                                              installedSurrogates: test.surrogates,
+                                              isGPCEnabled: test.gpcEnabled ?? false,
+                                              ampURL: "",
+                                              urlParametersRemoved: false,
+                                              protectionsState: test.protectionsEnabled,
+                                              reportFlow: .dashboard,
+                                              siteType: .mobile,
+                                              atb: "",
+                                              model: test.model ?? "",
+                                              error: nil,
+                                              httpStatusCode: nil)
+
+        let reporter = WebsiteBreakageReporter(pixelHandler: { params in
             
-            guard let requestURL = request.url else {
-                XCTFail("Couldn't create request URL")
-                return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
-            }
-
-            let absoluteURL = requestURL.absoluteString
-                .replacingOccurrences(of: "%20", with: " ")
-
-            if test.expectReportURLPrefix.count > 0 {
-                XCTAssertTrue(requestURL.absoluteString.contains(test.expectReportURLPrefix), "Prefix [\(test.expectReportURLPrefix)] not found")
-            }
-
-            for param in test.expectReportURLParams {
-                let pattern = "[?&]\(param.name)=\(param.value)[&$]?"
-
-                guard let regex = try? NSRegularExpression(pattern: pattern,
-                                                           options: []) else {
-                    XCTFail("Couldn't create regex")
-                    return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+            for expectedParam in test.expectReportURLParams {
+                
+                if let actualValue = params[expectedParam.name],
+                   let expectedCleanValue = expectedParam.value.removingPercentEncoding {
+                    if actualValue != expectedCleanValue {
+                        XCTFail("Mismatching param: \(expectedParam.name) => \(expectedCleanValue) != \(actualValue)")
+                    }
+                } else {
+                    XCTFail("Missing param: \(expectedParam.name)")
                 }
-
-                let match = regex.matches(in: absoluteURL, range: NSRange(location: 0, length: absoluteURL.count))
-                XCTAssertEqual(match.count, 1, "Param [\(param.name)] with value [\(param.value)] not found in [\(absoluteURL)]")
             }
-
-            DispatchQueue.main.async {
-                onTestExecuted.fulfill()
-                self.runReferenceTests(onTestExecuted: onTestExecuted)
-            }
-            
-            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
-        }
-        
-        brokenSiteInfo.send(with: test.category, description: "", source: .dashboard)
+            onTestExecuted.fulfill()
+            try? self.runReferenceTests(onTestExecuted: onTestExecuted)
+        }, keyValueStoring: MockKeyValueStore())
+        try reporter.report(breakage: websiteBreakage)
     }
 }
 

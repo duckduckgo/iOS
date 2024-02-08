@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1705931475791,
+    "version": 1706872224316,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -4229,6 +4229,9 @@
                     "domain": "tirerack.com"
                 },
                 {
+                    "domain": "sephora.com"
+                },
+                {
                     "domain": "earth.google.com"
                 },
                 {
@@ -4253,7 +4256,7 @@
                     "privacy-test-pages.site"
                 ]
             },
-            "hash": "549a6e76edaf16c1fffced31b97e9553"
+            "hash": "c34f2a525dac6f93a6d87bad377dbe9d"
         },
         "harmfulApis": {
             "settings": {
@@ -4487,6 +4490,11 @@
             ],
             "state": "disabled",
             "hash": "841fa92b9728c9754f050662678f82c7"
+        },
+        "notificationPermissions": {
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
         "privacyDashboard": {
             "exceptions": [],
@@ -5441,6 +5449,12 @@
                                 ]
                             },
                             {
+                                "rule": "doubleclick.net/pixel",
+                                "domains": [
+                                    "sbs.com.au"
+                                ]
+                            },
+                            {
                                 "rule": "doubleclick.net",
                                 "domains": [
                                     "rocketnews24.com"
@@ -5542,6 +5556,12 @@
                                 "rule": "ezodn.com/cmp",
                                 "domains": [
                                     "<all>"
+                                ]
+                            },
+                            {
+                                "rule": "ezodn.com",
+                                "domains": [
+                                    "reisezoom.com"
                                 ]
                             }
                         ]
@@ -5847,7 +5867,8 @@
                                     "pandora.com",
                                     "paper-io.com",
                                     "rawstory.com",
-                                    "usatoday.com"
+                                    "usatoday.com",
+                                    "washingtonpost.com"
                                 ]
                             }
                         ]
@@ -6371,6 +6392,16 @@
                                 "domains": [
                                     "shein.co.uk",
                                     "shein.com"
+                                ]
+                            }
+                        ]
+                    },
+                    "mailerlite.com": {
+                        "rules": [
+                            {
+                                "rule": "mailerlite.com",
+                                "domains": [
+                                    "<all>"
                                 ]
                             }
                         ]
@@ -7216,6 +7247,16 @@
                             }
                         ]
                     },
+                    "tremorhub.com": {
+                        "rules": [
+                            {
+                                "rule": "tremorhub.com/getTVID",
+                                "domains": [
+                                    "sbs.com.au"
+                                ]
+                            }
+                        ]
+                    },
                     "trustpilot.com": {
                         "rules": [
                             {
@@ -7530,7 +7571,7 @@
                     "domain": "sundancecatalog.com"
                 }
             ],
-            "hash": "f918a51b5651f2e3a99945ba530f3264"
+            "hash": "374040a08f2e59051d7618509b9f65d4"
         },
         "trackingCookies1p": {
             "settings": {

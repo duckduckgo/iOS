@@ -128,7 +128,8 @@ class WebCacheManagerTests: XCTestCase {
 
         let dataStore = MockDataStore()
         let cookieStore = MockHTTPCookieStore(cookies: [
-            .make(domain: "duckduckgo.com")
+            .make(domain: "duckduckgo.com"),
+            .make(domain: "subdomain.duckduckgo.com")
         ])
 
         dataStore.cookieStore = cookieStore
@@ -139,8 +140,9 @@ class WebCacheManagerTests: XCTestCase {
         }
         wait(for: [expect], timeout: 5.0)
         
-        XCTAssertEqual(cookieStore.cookies.count, 1)
-        XCTAssertEqual(cookieStore.cookies[0].domain, "duckduckgo.com")
+        XCTAssertEqual(cookieStore.cookies.count, 2)
+        XCTAssertTrue(cookieStore.cookies.contains(where: { $0.domain == "duckduckgo.com" }))
+        XCTAssertTrue(cookieStore.cookies.contains(where: { $0.domain == "subdomain.duckduckgo.com" }))
     }
     
     @MainActor

@@ -43,6 +43,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         Sections.simulateFailure: "Simulate Failure",
         Sections.registrationKey: "Registration Key",
         Sections.networkPath: "Network Path",
+        Sections.lastDisconnectError: "Last Disconnect Error",
         Sections.connectionTest: "Connection Test",
         Sections.vpnConfiguration: "VPN Configuration"
 
@@ -56,6 +57,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case registrationKey
         case connectionTest
         case networkPath
+        case lastDisconnectError
         case vpnConfiguration
     }
 
@@ -91,6 +93,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case networkPath
     }
 
+    enum LastDisconnectErrorRows: Int, CaseIterable {
+        case lastDisconnectError
+    }
+
     enum ConnectionTestRows: Int, CaseIterable {
         case runConnectionTest
     }
@@ -107,6 +113,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     private let pathMonitor = NWPathMonitor()
 
     private var currentNetworkPath: String?
+    private var lastDisconnectError: String?
     private var baseConfigurationData: String?
     private var fullProtocolConfigurationData: String?
 
@@ -139,6 +146,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        loadLastDisconnectError()
         loadConfigurationData()
         startPathMonitor()
     }
@@ -189,6 +197,9 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .networkPath:
             configure(cell, forNetworkPathRow: indexPath.row)
 
+        case .lastDisconnectError:
+            configure(cell, forLastDisconnectErrorRow: indexPath.row)
+
         case .connectionTest:
             configure(cell, forConnectionTestRow: indexPath.row)
 
@@ -210,6 +221,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .simulateFailure: return SimulateFailureRows.allCases.count
         case .registrationKey: return RegistrationKeyRows.allCases.count
         case .networkPath: return NetworkPathRows.allCases.count
+        case .lastDisconnectError: return LastDisconnectErrorRows.allCases.count
         case .connectionTest: return ConnectionTestRows.allCases.count + connectionTestResults.count
         case .vpnConfiguration: return ConfigurationRows.allCases.count
         case .none: return 0
@@ -235,6 +247,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .registrationKey:
             didSelectRegistrationKeyAction(at: indexPath)
         case .networkPath:
+            break
+        case .lastDisconnectError:
             break
         case .connectionTest:
             if indexPath.row == connectionTestResults.count {
@@ -399,6 +413,20 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         }
 
         pathMonitor.start(queue: .main)
+    }
+
+    // MARK: Last disconnect error
+
+    private func configure(_ cell: UITableViewCell, forLastDisconnectErrorRow row: Int) {
+        cell.textLabel?.font = .monospacedSystemFont(ofSize: 13.0, weight: .regular)
+        cell.textLabel?.text = lastDisconnectError ?? "Loading Last Disconnect Error..."
+    }
+
+    private func loadLastDisconnectError() {
+        Task { @MainActor in
+            lastDisconnectError = await DefaultVPNMetadataCollector().lastDisconnectError()
+            tableView.reloadData()
+        }
     }
 
     // MARK: Connection Test

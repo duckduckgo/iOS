@@ -54,10 +54,14 @@ class AutofillSettingsEnableFooterView: UIView {
 
     private func installConstraints() {
         title.translatesAutoresizingMaskIntoConstraints = false
+        
+        let bottomConstraint = title.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Constants.defaultPadding)
+        // setting priority to ensure multiline text is displayed correctly
+        bottomConstraint.priority = .defaultHigh
 
         NSLayoutConstraint.activate([
             title.topAnchor.constraint(equalTo: self.topAnchor, constant: Constants.topPadding),
-            title.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Constants.defaultPadding),
+            bottomConstraint,
             title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constants.defaultPadding),
             title.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -Constants.defaultPadding)
         ])

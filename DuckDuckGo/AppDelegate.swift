@@ -322,6 +322,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupSubscriptionsEnvironment()
 #endif
 
+        clearDebugWaitlistState()
+
         return true
     }
 

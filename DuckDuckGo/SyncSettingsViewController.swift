@@ -33,6 +33,9 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     let syncBookmarksAdapter: SyncBookmarksAdapter
     var connector: RemoteConnecting?
 
+    let userAuthenticator = UserAuthenticator(reason: UserText.syncUserUserAuthenticationReason)
+    let userSession = UserSession()
+
     var recoveryCode: String {
         guard let code = syncService.account?.recoveryCode else {
             return ""
@@ -86,6 +89,19 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func authenticateUser(completion: @escaping (UserAuthenticator.AuthError?) -> Void) {
+        if !userSession.isSessionValid {
+            userAuthenticator.logOut()
+        }
+
+        userAuthenticator.authenticate { [weak self] error in
+            if error == nil {
+                self?.userSession.startSession()
+            }
+            completion(error)
+        }
     }
 
     private func setUpSyncFeatureFlags(_ viewModel: SyncSettingsViewModel) {

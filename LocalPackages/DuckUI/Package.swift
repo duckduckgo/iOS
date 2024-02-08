@@ -31,7 +31,7 @@ let package = Package(
             targets: ["DuckUI"])
     ],
     dependencies: [
-        .package(url: "https://github.com/duckduckgo/BrowserServicesKit", revision: "6350e8708e643088a3dc55bf9001fe706e60ccb5"),
+        .package(url: "https://github.com/duckduckgo/BrowserServicesKit", exact: "105.0.0"),
     ],
     targets: [
         .target(

@@ -88,14 +88,14 @@ public class WebCacheManager {
                       logins: PreserveLogins = PreserveLogins.shared,
                       dataStoreIdManager: DataStoreIdManager = .shared) async {
 
+        var cookiesToUpdate = [HTTPCookie]()
         if #available(iOS 17, *), dataStoreIdManager.hasId {
-            let containerCookies = await containerBasedClearing(storeIdManager: dataStoreIdManager)
-            cookieStorage.updateCookies(containerCookies ?? [], keepingPreservedLogins: logins)
+            cookiesToUpdate += await containerBasedClearing(storeIdManager: dataStoreIdManager) ?? []
         }
         
         // Perform legacy clearing to migrate to new container
-        let legacyCookies = await legacyDataClearing()
-        cookieStorage.updateCookies(legacyCookies ?? [], keepingPreservedLogins: logins)
+        cookiesToUpdate += await legacyDataClearing() ?? []
+        cookieStorage.updateCookies(cookiesToUpdate, keepingPreservedLogins: logins)
     }
   
 }

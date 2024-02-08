@@ -28,6 +28,7 @@ class WebCacheManagerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         CookieStorage().cookies = []
+        CookieStorage().isConsumed = true
         UserDefaults.standard.removeObject(forKey: UserDefaultsWrapper<Any>.Key.webContainerId.rawValue)
         if #available(iOS 17, *) {
             WKWebsiteDataStore.fetchAllDataStoreIdentifiers { uuids in
@@ -116,22 +117,35 @@ class WebCacheManagerTests: XCTestCase {
         XCTAssertEqual(cookieStorage.cookies[0].domain, ".example.com")
     }
 
-    func testWhenClearedThenDDGCookiesAreRetained() async {
+    @MainActor
+    @available(iOS 17, *)
+    func testWhenClearedWithDataStoreContainerThenDDGCookiesAreRetained() async throws {
+        throw XCTSkip("WKWebsiteDataStore(forIdentifier:) does not persist cookies properly until attached to a running webview")
+        
+        // This test should look like `testWhenClearedWithLegacyContainerThenDDGCookiesAreRetained` but
+        //  with a container ID set on the `dataStoreIdManager`.
+    }
+
+    @MainActor
+    func testWhenClearedWithLegacyContainerThenDDGCookiesAreRetained() async {
         let logins = MockPreservedLogins(domains: [
             "www.example.com"
         ])
         
-        let cookieStore = CookieStorage()
-        cookieStore.cookies = [
-            .make(domain: "duckduckgo.com"),
-            .make(domain: "subdomain.duckduckgo.com"),
-        ]
+        XCTAssertFalse(dataStoreIdManager.hasId)
         
-        await WebCacheManager.shared.clear(cookieStorage: cookieStore, logins: logins, dataStoreIdManager: dataStoreIdManager)
+        let cookieStore = WKWebsiteDataStore.default().httpCookieStore
+        await cookieStore.setCookie(.make(name: "name", value: "value", domain: "duckduckgo.com"))
+        await cookieStore.setCookie(.make(name: "name", value: "value", domain: "subdomain.duckduckgo.com"))
+
+        let storage = CookieStorage()
+        storage.isConsumed = true
         
-        XCTAssertEqual(cookieStore.cookies.count, 2)
-        XCTAssertTrue(cookieStore.cookies.contains(where: { $0.domain == "duckduckgo.com" }))
-        XCTAssertTrue(cookieStore.cookies.contains(where: { $0.domain == "subdomain.duckduckgo.com" }))
+        await WebCacheManager.shared.clear(cookieStorage: storage, logins: logins, dataStoreIdManager: dataStoreIdManager)
+        
+        XCTAssertEqual(storage.cookies.count, 2)
+        XCTAssertTrue(storage.cookies.contains(where: { $0.domain == "duckduckgo.com" }))
+        XCTAssertTrue(storage.cookies.contains(where: { $0.domain == "subdomain.duckduckgo.com" }))
     }
     
     @MainActor

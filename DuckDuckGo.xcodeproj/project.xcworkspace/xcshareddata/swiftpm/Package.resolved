@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "2555be729ff019465b4b263d9d68c2d10a88470a",
-        "version" : "104.2.1"
+        "branch" : "anh/custom-dns",
+        "revision" : "d697cefa9e7c7359c535bc29f120709cc51457f5"
       }
     },
     {

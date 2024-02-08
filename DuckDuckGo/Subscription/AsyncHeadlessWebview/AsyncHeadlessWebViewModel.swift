@@ -38,7 +38,7 @@ class AsyncHeadlessWebViewViewModel: ObservableObject {
     @Published var canGoForward: Bool = false
     @Published var contentType: String = ""
 
-    var navigationCoordinator = NavigationCoordinator(webView: nil)
+    var navigationCoordinator = HeadlessWebViewNavCoordinator(webView: nil)
 
     init(userScript: UserScriptMessaging?, subFeature: Subfeature?, settings: AsyncHeadlessWebViewSettings) {
         self.userScript = userScript

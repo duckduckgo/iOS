@@ -22,12 +22,24 @@ import SwiftUI
 import Foundation
 import DesignResourcesKit
 
+struct SubscriptionActivityViewController: UIViewControllerRepresentable {
+    var activityItems: [Any]
+    var applicationActivities: [UIActivity]?
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        return UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
+}
+
 @available(iOS 15.0, *)
 struct SubscriptionITPView: View {
         
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = SubscriptionITPViewModel()
     @State private var shouldShowNavigationBar = false
+    @State private var isShowingActivityView = false
     
     enum Constants {
         static let daxLogo = "Home"
@@ -35,6 +47,7 @@ struct SubscriptionITPView: View {
         static let empty = ""
         static let navButtonPadding: CGFloat = 20.0
         static let backButtonImage = "chevron.left"
+        static let shareImage = "SubscriptionShareIcon"
     }
     
     var body: some View {
@@ -53,10 +66,16 @@ struct SubscriptionITPView: View {
                         Text(viewModel.viewTitle).daxBodyRegular()
                     }
                 }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    shareButton
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(UserText.subscriptionCloseButton) { dismiss() }
+                }
             }
             .edgesIgnoringSafeArea(.top)
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarHidden(!viewModel.shouldShowNavigationBar).animation(.easeOut)
+            .navigationBarHidden(!viewModel.shouldShowNavigationBar && !viewModel.isDownloadableContent).animation(.easeOut)
             
             .onAppear(perform: {
                 setUpAppearances()
@@ -78,8 +97,8 @@ struct SubscriptionITPView: View {
                     dismissButton
                 }
             }
-         // The trailing close button should be hidden when a transaction is in progress
-        }.navigationBarItems(trailing: Button(UserText.subscriptionCloseButton) { dismiss() })
+        
+        }
     }
 
     @ViewBuilder
@@ -103,6 +122,16 @@ struct SubscriptionITPView: View {
                 }
                 
             })
+        }
+    }
+    
+    @ViewBuilder
+    private var shareButton: some View {
+        if viewModel.isDownloadableContent {
+            Button(action: { isShowingActivityView = true }, label: { Image(Constants.shareImage) })
+                .popover(isPresented: $isShowingActivityView, arrowEdge: .bottom) {
+                    SubscriptionActivityViewController(activityItems: [viewModel.attachmentURL], applicationActivities: nil)
+                }
         }
     }
     

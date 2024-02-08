@@ -33,6 +33,7 @@ final class SubscriptionITPViewModel: ObservableObject {
     
     enum Constants {
         static let navigationBarHideThreshold = 40.0
+        static let downloadableContent = ["application/pdf"]
     }
     
     // State variables
@@ -40,6 +41,10 @@ final class SubscriptionITPViewModel: ObservableObject {
     @Published var webViewModel: AsyncHeadlessWebViewViewModel
     @Published var shouldShowNavigationBar: Bool = false
     @Published var canNavigateBack: Bool = false
+    @Published var isDownloadableContent: Bool = false
+    @Published var activityItems: [Any] = []
+    @Published var attachmentURL: URL?
+    private var currentURL: URL?
     
     private var cancellables = Set<AnyCancellable>()
     private var canGoBackCancellable: AnyCancellable?
@@ -63,6 +68,35 @@ final class SubscriptionITPViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
+        webViewModel.$contentType
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                guard let strongSelf = self else { return }
+
+                if Constants.downloadableContent.contains(value) {
+                    strongSelf.isDownloadableContent = true
+                    guard let url = strongSelf.currentURL else { return }
+                    Task {
+                        // We are using a dummy PDF for testing, as the real PDF's are behind the internal user login
+                        if let downloadURL = URL(string: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf") {
+                            await strongSelf.downloadAttachment(from: downloadURL)
+                        }
+                        // if let downloadURL = url {
+                        // await strongSelf.downloadAttachment(from: downloadURL)
+                    }
+                }
+            }
+            .store(in: &cancellables)
+        
+        webViewModel.$url
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.isDownloadableContent = false
+                self?.currentURL = value
+            }
+            .store(in: &cancellables)
+        
+        
         canGoBackCancellable = webViewModel.$canGoBack
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
@@ -74,6 +108,26 @@ final class SubscriptionITPViewModel: ObservableObject {
         webViewModel.navigationCoordinator.navigateTo(url: manageITPURL )
         Task { await setupSubscribers() }
     }
+    
+    private func downloadAttachment(from url: URL) async {
+        if let (temporaryURL, _) = try? await URLSession.shared.download(from: url) {
+            let fileManager = FileManager.default
+            
+            let fileName = url.lastPathComponent
+            
+            let tempDirectory = fileManager.temporaryDirectory
+            let tempFileURL = tempDirectory.appendingPathComponent(fileName)
+            
+            if fileManager.fileExists(atPath: tempFileURL.path) {
+                try? fileManager.removeItem(at: tempFileURL)
+            }
+            try? fileManager.moveItem(at: temporaryURL, to: tempFileURL)
+            DispatchQueue.main.async {
+                self.attachmentURL = tempFileURL
+            }
+        }
+    }
+
     
     @MainActor
     private func disableGoBack() {

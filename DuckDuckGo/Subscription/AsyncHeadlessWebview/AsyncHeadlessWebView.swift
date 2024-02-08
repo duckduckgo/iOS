@@ -75,6 +75,8 @@ struct HeadlessWebView: UIViewRepresentable {
     var onScroll: ((CGPoint) -> Void)?
     var onURLChange: ((URL) -> Void)?
     var onCanGoBack: ((Bool) -> Void)?
+    var onCanGoForward: ((Bool) -> Void)?
+    var onContentType: ((String) -> Void)?
     var navigationCoordinator: NavigationCoordinator
     
 
@@ -103,7 +105,12 @@ struct HeadlessWebView: UIViewRepresentable {
     func updateUIView(_ uiView: WKWebView, context: Context) {}
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(self, onScroll: onScroll, onURLChange: onURLChange, onCanGoBack: onCanGoBack)
+        Coordinator(self,
+                    onScroll: onScroll,
+                    onURLChange: onURLChange,
+                    onCanGoBack: onCanGoBack,
+                    onCanGoForward: onCanGoForward,
+                    onContentType: onContentType)
     }
     
     @MainActor
@@ -122,19 +129,32 @@ struct HeadlessWebView: UIViewRepresentable {
         var onScroll: ((CGPoint) -> Void)?
         var onURLChange: ((URL) -> Void)?
         var onCanGoBack: ((Bool) -> Void)?
-        var lastURL: URL?
+        var onCanGoForward: ((Bool) -> Void)?
+        var onContentType: ((String) -> Void)?
+        
+        private var lastURL: URL?
+        
+        enum Constants {
+            static let contentTypeJS = "document.contentType"
+            static let externalSchemes =  ["tel", "sms", "facetime"]
+        }
         
         private var webViewURLObservation: NSKeyValueObservation?
         private var webViewCanGoBackObservation: NSKeyValueObservation?
+        private var webViewCanGoForwardObservation: NSKeyValueObservation?
 
         init(_ parent: HeadlessWebView,
              onScroll: ((CGPoint) -> Void)?,
              onURLChange: ((URL) -> Void)?,
-             onCanGoBack: ((Bool) -> Void)?) {
+             onCanGoBack: ((Bool) -> Void)?,
+             onCanGoForward: ((Bool) -> Void)?,
+             onContentType: ((String) -> Void)?) {
             self.parent = parent
             self.onScroll = onScroll
             self.onURLChange = onURLChange
             self.onCanGoBack = onCanGoBack
+            self.onCanGoForward = onCanGoForward
+            self.onContentType = onContentType
         }
         
         func setupWebViewObservation(_ webView: WKWebView) {
@@ -148,6 +168,12 @@ struct HeadlessWebView: UIViewRepresentable {
             webViewCanGoBackObservation = webView.observe(\.canGoBack, options: [.new]) { [weak self] _, change in
                 if let canGoBack = change.newValue {
                     self?.onCanGoBack?(canGoBack)
+                }
+            }
+            
+            webViewCanGoForwardObservation = webView.observe(\.canGoForward, options: [.new]) { [weak self] _, change in
+                if let onCanGoForward = change.newValue {
+                    self?.onCanGoForward?(onCanGoForward)
                 }
             }
         }
@@ -164,6 +190,38 @@ struct HeadlessWebView: UIViewRepresentable {
                 if let onCanGoBack {
                     onCanGoBack(webView.canGoBack)
                 }
+                if let onCanGoForward {
+                    onCanGoForward(webView.canGoForward)
+                }
+            }
+        }
+        
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+            webView.evaluateJavaScript(Constants.contentTypeJS) { result, error in
+                guard error == nil, let contentType = result as? String else {
+                    return
+                }
+                self.onContentType?(contentType)
+            }
+        }
+        
+        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+            guard let url = navigationAction.request.url else {
+              
+                decisionHandler(.allow)
+              return
+            }
+
+            guard let scheme = url.scheme else {
+                decisionHandler(.cancel)
+                return
+            }
+            
+            if Constants.externalSchemes.contains(scheme) && UIApplication.shared.canOpenURL(url) {
+              UIApplication.shared.open(url, options: [:], completionHandler: nil)
+              decisionHandler(.cancel)
+            } else {
+              decisionHandler(.allow)
             }
         }
     }
@@ -186,6 +244,12 @@ struct AsyncHeadlessWebView: View {
                 },
                 onCanGoBack: { value in
                     viewModel.canGoBack = value
+                },
+                onCanGoForward: { value in
+                    viewModel.canGoForward = value
+                },
+                onContentType: { value in
+                    viewModel.contentType = value
                 },
                 navigationCoordinator: viewModel.navigationCoordinator
             )

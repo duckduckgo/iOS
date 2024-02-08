@@ -83,11 +83,11 @@ public struct UserDefaultsWrapper<T> {
         case autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary =
                 "com.duckduckgo.ios.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary"
 
-        case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser"
+        // .v2 suffix added to fix https://app.asana.com/0/547792610048271/1206524375402369/f
+        case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser.v2"
         
         case voiceSearchEnabled = "com.duckduckgo.app.voiceSearchEnabled"
         
-        case autoconsentPromptSeen = "com.duckduckgo.ios.autoconsentPromptSeen"
         case autoconsentEnabled = "com.duckduckgo.ios.autoconsentEnabled"
 
         case shouldScheduleRulesCompilationOnAppLaunch = "com.duckduckgo.ios.shouldScheduleRulesCompilationOnAppLaunch"

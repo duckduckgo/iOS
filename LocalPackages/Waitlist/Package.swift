@@ -15,7 +15,7 @@ let package = Package(
             targets: ["Waitlist", "WaitlistMocks"])
     ],
     dependencies: [
-        .package(url: "https://github.com/duckduckgo/BrowserServicesKit", exact: "104.0.2"),
+        .package(url: "https://github.com/duckduckgo/BrowserServicesKit", exact: "104.2.1"),
         .package(url: "https://github.com/duckduckgo/DesignResourcesKit", exact: "2.0.0")
     ],
     targets: [

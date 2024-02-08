@@ -69,6 +69,5 @@ class AppSettingsMock: AppSettings {
         widgetInstalled
     }
     
-    var autoconsentPromptSeen = true
     var autoconsentEnabled = true
 }

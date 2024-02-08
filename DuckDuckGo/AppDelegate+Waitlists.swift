@@ -21,8 +21,17 @@ import Foundation
 import Core
 import BackgroundTasks
 import NetworkProtection
+import Waitlist
 
 extension AppDelegate {
+
+    func clearDebugWaitlistState() {
+        if let inviteCode = VPNWaitlist.shared.waitlistStorage.getWaitlistInviteCode(),
+           inviteCode == VPNWaitlistDebugViewController.Constants.mockInviteCode {
+            let store = WaitlistKeychainStore(waitlistIdentifier: VPNWaitlist.identifier)
+            store.delete(field: .inviteCode)
+        }
+    }
 
     func checkWaitlists() {
         checkWindowsWaitlist()

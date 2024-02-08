@@ -26,12 +26,16 @@ extension SyncSettingsViewController {
 
     func shareRecoveryPDF() {
 
-        let data = RecoveryPDFGenerator()
-            .generate(recoveryCode)
+        authenticateUser { [weak self] error in
+            guard error == nil, let self else { return }
 
-        let pdf = RecoveryCodeItem(data: data)
-        navigationController?.visibleViewController?.presentShareSheet(withItems: [pdf],
-                                                                       fromView: view)
+            let data = RecoveryPDFGenerator()
+                .generate(recoveryCode)
+
+            let pdf = RecoveryCodeItem(data: data)
+            navigationController?.visibleViewController?.presentShareSheet(withItems: [pdf],
+                                                                           fromView: view)
+        }
     }
 
     func shareCode(_ code: String) {

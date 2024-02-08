@@ -20,42 +20,21 @@
 import Foundation
 import BrowserServicesKit
 
-class AutofillLoginSession {
+final class AutofillLoginSession: UserSession {
 
-    private enum Constants {
-        static let timeout: TimeInterval = 15
-    }
-
-    private var sessionCreationDate: Date?
     private var sessionAccount: SecureVaultModels.WebsiteAccount?
-    private let sessionTimeout: TimeInterval
-
-    init(sessionTimeout: TimeInterval = Constants.timeout) {
-        self.sessionTimeout = sessionTimeout
-    }
-
-    var isValidSession: Bool {
-        guard let sessionCreationDate = sessionCreationDate else { return false }
-        let timeInterval = Date().timeIntervalSince(sessionCreationDate)
-        // Check that timeInterval is > 0 to prevent a user circumventing by changing their device clock time
-        return timeInterval > 0 && timeInterval < sessionTimeout
-    }
 
     var lastAccessedAccount: SecureVaultModels.WebsiteAccount? {
         get {
-            return isValidSession ? sessionAccount : nil
+            return isSessionValid ? sessionAccount : nil
         }
         set {
             sessionAccount = newValue
         }
     }
 
-    func startSession() {
-        sessionCreationDate = Date()
-    }
-
-    func endSession() {
-        sessionCreationDate = nil
+    override func endSession() {
+        super.endSession()
         lastAccessedAccount = nil
     }
 }

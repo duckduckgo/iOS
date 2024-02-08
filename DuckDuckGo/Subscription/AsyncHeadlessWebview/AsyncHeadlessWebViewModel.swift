@@ -21,7 +21,7 @@ import UserScript
 import Core
 import Combine
 
-class AsyncHeadlessWebViewViewModel: ObservableObject {
+final class AsyncHeadlessWebViewViewModel: ObservableObject {
     let userScript: UserScriptMessaging?
     let subFeature: Subfeature?
     let settings: AsyncHeadlessWebViewSettings

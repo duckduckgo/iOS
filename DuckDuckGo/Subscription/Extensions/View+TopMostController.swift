@@ -20,6 +20,8 @@
 import SwiftUI
 
 extension View {
+    
+    // Grabs the topMost controller so we can properly present sheets anywhere
     func topMostViewController() -> UIViewController? {
         guard let keyWindow = UIApplication.shared.connectedScenes
                 .filter({ $0.activationState == .foregroundActive })

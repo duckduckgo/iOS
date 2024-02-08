@@ -61,7 +61,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         case searchingNoResults
     }
     
-    let authenticator = AutofillLoginListAuthenticator()
+    let authenticator = AutofillLoginListAuthenticator(reason: UserText.autofillLoginListAuthenticationReason)
     var isSearching: Bool = false
     var authenticationNotRequired = false
     private var accounts = [SecureVaultModels.WebsiteAccount]()
@@ -104,7 +104,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         self.autofillNeverPromptWebsitesManager = autofillNeverPromptWebsitesManager
 
         updateData()
-        authenticationNotRequired = !hasAccountsSaved || AppDependencyProvider.shared.autofillLoginSession.isValidSession
+        authenticationNotRequired = !hasAccountsSaved || AppDependencyProvider.shared.autofillLoginSession.isSessionValid
         setupCancellables()
     }
     

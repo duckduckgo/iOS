@@ -861,6 +861,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     
     // MARK: Sync
 
+    public static let syncUserUserAuthenticationReason = NSLocalizedString("sync.user.auth.reason", value:"Unlock device to set up Sync & Backup", comment: "Reason for auth when setting up Sync")
     public static let syncTurnOffConfirmTitle = NSLocalizedString("sync.turn.off.confirm.title", value:"Turn Off Sync?", comment: "Title of the dialog to confirm turning off Sync")
     public static let syncTurnOffConfirmMessage = NSLocalizedString("sync.turn.off.confirm.message", value:"This Device will no longer be able to access your synced data.", comment: "Message for the dialog to confirm turning off Sync")
     public static let syncTurnOffConfirmAction = NSLocalizedString("sync.turn.off.confirm.action", value:"Remove", comment: "Caption for a button to remove current device from Sync")

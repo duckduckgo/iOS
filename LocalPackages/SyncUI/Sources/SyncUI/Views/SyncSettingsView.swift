@@ -43,7 +43,6 @@ public struct SyncSettingsView: View {
                     }
                 }
         } else {
-            rolloutBanner()
             List {
                 if model.isSyncEnabled {
                     

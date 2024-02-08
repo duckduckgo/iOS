@@ -108,7 +108,8 @@ jobs:
             --form "file=@${asana_dsyms_path};type=application/zip"
         fi
 
-    - name: Send Mattermost message
+      - name: Send Mattermost message
+      if: ${{ success() || failure() }} # Don't execute when cancelled
       env:
         WORKFLOW_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
         DESTINATION: ${{ steps.destination.outputs.destination }}
@@ -117,9 +118,8 @@ jobs:
 
         if [[ -z "${MM_USER_HANDLE}" ]]; then
             echo "Mattermost user handle not known for ${{ github.actor }}, skipping sending message"
-        else
-
+        else            
             curl -s -H 'Content-type: application/json' \
-                -d "$(envsubst < ./scripts/assets/appstore-release-mm-template.json)" \
+                -d "$(envsubst < ./scripts/assets/appstore-release-mm-template.json | jq ".${{ job.status }}")" \
                 ${{ secrets.MM_WEBHOOK_URL }}
         fi  

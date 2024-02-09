@@ -31,7 +31,6 @@ struct NavigationBarModifier: ViewModifier {
 }
 
 // Extension to easily apply the custom modifier
-
 extension View {
     func applyNavigationStyle() -> some View {
         self.modifier(NavigationBarModifier())

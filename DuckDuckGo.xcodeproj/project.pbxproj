@@ -794,6 +794,10 @@
 		D68DF81E2B5830380023DBEA /* SubscriptionRestoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68DF81D2B5830380023DBEA /* SubscriptionRestoreViewModel.swift */; };
 		D69DBB502B72B1D300156310 /* View+TopMostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69DBB4F2B72B1D200156310 /* View+TopMostController.swift */; };
 		D69FBF762B28BE3600B505F1 /* SettingsSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69FBF752B28BE3600B505F1 /* SettingsSubscriptionView.swift */; };
+		D6BFCB5F2B7524AA0051FF81 /* SubscriptionPIRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BFCB5E2B7524AA0051FF81 /* SubscriptionPIRView.swift */; };
+		D6BFCB612B7525160051FF81 /* SubscriptionPIRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BFCB602B7525160051FF81 /* SubscriptionPIRViewModel.swift */; };
+		D6BFCB632B7525B30051FF81 /* PersonalInformationRemovalPagesUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BFCB622B7525B30051FF81 /* PersonalInformationRemovalPagesUserScript.swift */; };
+		D6BFCB652B7525CE0051FF81 /* PersonalnformationRemovalPagesFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BFCB642B7525CE0051FF81 /* PersonalnformationRemovalPagesFeature.swift */; };
 		D6D12C9F2B291CA90054390C /* URL+Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C8B2B291CA90054390C /* URL+Subscription.swift */; };
 		D6D12CA02B291CA90054390C /* SubscriptionPurchaseEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C8C2B291CA90054390C /* SubscriptionPurchaseEnvironment.swift */; };
 		D6D12CA12B291CA90054390C /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C8D2B291CA90054390C /* Logging.swift */; };
@@ -2455,6 +2459,10 @@
 		D68DF81D2B5830380023DBEA /* SubscriptionRestoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionRestoreViewModel.swift; sourceTree = "<group>"; };
 		D69DBB4F2B72B1D200156310 /* View+TopMostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+TopMostController.swift"; sourceTree = "<group>"; };
 		D69FBF752B28BE3600B505F1 /* SettingsSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSubscriptionView.swift; sourceTree = "<group>"; };
+		D6BFCB5E2B7524AA0051FF81 /* SubscriptionPIRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPIRView.swift; sourceTree = "<group>"; };
+		D6BFCB602B7525160051FF81 /* SubscriptionPIRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPIRViewModel.swift; sourceTree = "<group>"; };
+		D6BFCB622B7525B30051FF81 /* PersonalInformationRemovalPagesUserScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalInformationRemovalPagesUserScript.swift; sourceTree = "<group>"; };
+		D6BFCB642B7525CE0051FF81 /* PersonalnformationRemovalPagesFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalnformationRemovalPagesFeature.swift; sourceTree = "<group>"; };
 		D6D12C8B2B291CA90054390C /* URL+Subscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Subscription.swift"; sourceTree = "<group>"; };
 		D6D12C8C2B291CA90054390C /* SubscriptionPurchaseEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseEnvironment.swift; sourceTree = "<group>"; };
 		D6D12C8D2B291CA90054390C /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
@@ -4557,6 +4565,7 @@
 				D668D9262B6937D2008E2FF2 /* SubscriptionITPViewModel.swift */,
 				D64648AE2B5993890033090B /* SubscriptionEmailViewModel.swift */,
 				D652498D2B515A6A0056B0DE /* SubscriptionSettingsViewModel.swift */,
+				D6BFCB602B7525160051FF81 /* SubscriptionPIRViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -4578,6 +4587,7 @@
 				D68DF81B2B58302E0023DBEA /* SubscriptionRestoreView.swift */,
 				D64648AC2B59936B0033090B /* SubscriptionEmailView.swift */,
 				D668D9242B693778008E2FF2 /* SubscriptionITPView.swift */,
+				D6BFCB5E2B7524AA0051FF81 /* SubscriptionPIRView.swift */,
 				D6F93E3D2B50A8A0004C268D /* SubscriptionSettingsView.swift */,
 				D65CEA6D2B6ABA29008A759B /* NavigationBarModifier.swift */,
 				D6D95CE02B6D52DA00960317 /* RootPresentationMode.swift */,
@@ -4589,9 +4599,11 @@
 			isa = PBXGroup;
 			children = (
 				D668D92C2B696945008E2FF2 /* Subscription.swift */,
-				D668D9282B69681C008E2FF2 /* IdentityTheftRestorationPagesUserScript.swift */,
 				D664C7B32B289AA000CBFA76 /* SubscriptionPagesUserScript.swift */,
+				D668D9282B69681C008E2FF2 /* IdentityTheftRestorationPagesUserScript.swift */,
 				D668D92A2B696840008E2FF2 /* identityTheftRestorationPagesFeature.swift */,
+				D6BFCB622B7525B30051FF81 /* PersonalInformationRemovalPagesUserScript.swift */,
+				D6BFCB642B7525CE0051FF81 /* PersonalnformationRemovalPagesFeature.swift */,
 				D664C7B52B289AA000CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift */,
 			);
 			path = UserScripts;
@@ -6650,6 +6662,7 @@
 				31B524572715BB23002225AB /* WebJSAlert.swift in Sources */,
 				8536A1FD2ACF114B003AC5BA /* Theme+DesignSystem.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,
+				D6BFCB612B7525160051FF81 /* SubscriptionPIRViewModel.swift in Sources */,
 				D668D9252B693778008E2FF2 /* SubscriptionITPView.swift in Sources */,
 				C10CB5F32A1A5BDF0048E503 /* AutofillViews.swift in Sources */,
 				982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */,
@@ -6750,6 +6763,7 @@
 				CBFCB30E2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift in Sources */,
 				982686AD2600C0850011A8D6 /* ActionMessageView.swift in Sources */,
 				F446B9B5251150AC00324016 /* HomeMessageViewSectionRenderer.swift in Sources */,
+				D6BFCB5F2B7524AA0051FF81 /* SubscriptionPIRView.swift in Sources */,
 				98D98A8225ED88E300D8E3DF /* BrowsingMenuSeparatorViewCell.swift in Sources */,
 				D63657192A7BAE7C001AF19D /* EmailManagerRequestDelegate.swift in Sources */,
 				1E4FAA6427D8DFB900ADC5B3 /* OngoingDownloadRowViewModel.swift in Sources */,
@@ -6772,6 +6786,7 @@
 				980891A92238504B00313A70 /* UILabelExtension.swift in Sources */,
 				4BCD146B2B05C4B5000B1E4C /* VPNWaitlistTermsAndConditionsViewController.swift in Sources */,
 				984D035A24ACCC7D0066CFB8 /* TabViewCell.swift in Sources */,
+				D6BFCB632B7525B30051FF81 /* PersonalInformationRemovalPagesUserScript.swift in Sources */,
 				31951E8E2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift in Sources */,
 				F194FAED1F14E2B3009B4DF8 /* UIFontExtension.swift in Sources */,
 				F1CDD3F21F16911700BE0581 /* AboutViewController.swift in Sources */,
@@ -6787,6 +6802,7 @@
 				F1CA3C3B1F045B65005FADB3 /* Authenticator.swift in Sources */,
 				CBD4F13D279EBFA000B20FD7 /* HomeMessageCollectionViewCell.swift in Sources */,
 				8505836D219F424500ED4EDB /* Point.swift in Sources */,
+				D6BFCB652B7525CE0051FF81 /* PersonalnformationRemovalPagesFeature.swift in Sources */,
 				3158461A281B08F5004ADB8B /* AutofillLoginListViewModel.swift in Sources */,
 				37FCAAB429914C77000E420A /* WindowsWaitlistViewController.swift in Sources */,
 				31C138A827A3E9C900FFD4B2 /* URLDownloadSession.swift in Sources */,

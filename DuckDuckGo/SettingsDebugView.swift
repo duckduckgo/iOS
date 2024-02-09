@@ -22,6 +22,7 @@ import UIKit
 
 struct SettingsDebugView: View {
     
+    // XAI: Migrate all strings to constants
     @EnvironmentObject var viewModel: SettingsViewModel
     
     var body: some View {

@@ -56,6 +56,9 @@ extension AppDelegate {
             presentNetworkProtectionStatusSettingsModal()
 #endif
 
+        case .openPasswords:
+            mainViewController.launchAutofillLogins(openSearch: true)
+
         default:
             guard app.applicationState == .active,
                   let currentTab = mainViewController.currentTab else {

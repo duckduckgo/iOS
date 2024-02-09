@@ -104,8 +104,14 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }()
     
     var selectedAccount: SecureVaultModels.WebsiteAccount?
+    var openSearch: Bool
 
-    init(appSettings: AppSettings, currentTabUrl: URL? = nil, syncService: DDGSyncing, syncDataProviders: SyncDataProviders, selectedAccount: SecureVaultModels.WebsiteAccount?) {
+    init(appSettings: AppSettings,
+         currentTabUrl: URL? = nil,
+         syncService: DDGSyncing,
+         syncDataProviders: SyncDataProviders,
+         selectedAccount: SecureVaultModels.WebsiteAccount?,
+         openSearch: Bool = false) {
         let secureVault = try? AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared)
         if secureVault == nil {
             os_log("Failed to make vault")
@@ -113,6 +119,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         self.viewModel = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: secureVault, currentTabUrl: currentTabUrl)
         self.syncService = syncService
         self.selectedAccount = selectedAccount
+        self.openSearch = openSearch
         super.init(nibName: nil, bundle: nil)
 
         syncUpdatesCancellable = syncDataProviders.credentialsAdapter.syncDidCompletePublisher
@@ -295,6 +302,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                 }
             } else {
                 showSelectedAccountIfRequired()
+                openSearchIfRequired()
                 self.syncService.scheduler.requestSyncImmediately()
             }
         }
@@ -304,6 +312,20 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         if let account = selectedAccount {
             showAccountDetails(account)
             selectedAccount = nil
+        }
+    }
+
+    private func openSearchIfRequired() {
+        // Don't auto open search if user has selected an account
+        if selectedAccount != nil {
+            return
+        }
+
+        if openSearch {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.searchController.searchBar.searchTextField.becomeFirstResponder()
+            }
+            openSearch = false
         }
     }
 

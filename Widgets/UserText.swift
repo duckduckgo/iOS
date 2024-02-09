@@ -98,4 +98,15 @@ struct UserText {
         "lock.screen.widget.fire.description",
         value: "Instantly delete your browsing history and start a new private search in DuckDuckGo.",
         comment: "Description shown to the user when adding the Fire Button lock screen widget")
+
+    static let lockScreenPasswordsTitle = NSLocalizedString(
+        "lock.screen.widget.passwords.title",
+        value: "Search Passwords",
+        comment: "Title shown to the user when adding the Search Passwords lock screen widget")
+
+    static let lockScreenPasswordsDescription = NSLocalizedString(
+        "lock.screen.widget.passwords.description",
+        value: "Instantly access your passwords with a tap.",
+        comment: "Description shown to the user when adding the Search Passwords lock screen widget")
+
 }

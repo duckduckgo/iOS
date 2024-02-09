@@ -15,7 +15,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "sam/netp-debug-command-disable-vpn",
-        "revision" : "7a3af2c53c1693abdef327eeaed78236d3ddfc69"
+        "revision" : "e1f12eb421671632a4c171f35ba483b01b5d297d"
       }
     },
     {

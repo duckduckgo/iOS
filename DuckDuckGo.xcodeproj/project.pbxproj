@@ -9970,7 +9970,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "anh/netp-check-entitlement-while-rekeying";
+				branch = "anh/netp-check-entitlement-periodically";
 				kind = branch;
 			};
 		};

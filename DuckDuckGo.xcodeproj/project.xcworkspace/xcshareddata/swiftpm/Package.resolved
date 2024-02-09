@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "anh/netp-check-entitlement-while-rekeying",
-        "revision" : "c0eb8700eea4180b12c3a968411a6d292f1bc992"
+        "branch" : "anh/netp-check-entitlement-periodically",
+        "revision" : "2cbe2db956c99e768affae0c6f5e44a659d10abc"
       }
     },
     {

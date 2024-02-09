@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "c14f36805fc5c4c8ec68198fc1ce7e0e0a97e233",
-        "version" : "105.0.0"
+        "branch" : "sam/increase-tunnel-monitor-check-interval",
+        "revision" : "4908e8482b501bca21849073ce40d8deee2d579f"
       }
     },
     {

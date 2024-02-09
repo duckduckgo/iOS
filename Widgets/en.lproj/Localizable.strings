@@ -34,6 +34,12 @@
 /* Title shown to the user when adding the Voice Search lock screen widget */
 "lock.screen.widget.voice.title" = "Voice Search";
 
+/* Description of search passwords widget in widget gallery */
+"widget.gallery.passwords.description" = "Quickly search your saved DuckDuckGo passwords.";
+
+/* Display name for search passwords widget in widget gallery */
+"widget.gallery.passwords.display.name" = "Search Passwords";
+
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Search or visit your favorite sites privately with just one tap.";
 
@@ -51,6 +57,9 @@
 
 /* Message shown in the favorites widget empty state. */
 "widget.no.favorites.message" = "Quickly visit your favorite sites.";
+
+/* Text in search passwords widget */
+"widget.passwords.search" = "Search Passwords";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Search DuckDuckGo";

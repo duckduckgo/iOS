@@ -19,7 +19,9 @@
 
 import WidgetKit
 import SwiftUI
+import DesignResourcesKit
 
+// swiftlint:disable file_length
 struct FavoriteView: View {
 
     var favorite: Favorite?
@@ -244,6 +246,48 @@ struct SearchWidgetView: View {
     }
 }
 
+struct PasswordsWidgetView: View {
+    var entry: Provider.Entry
+
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .fill(Color.widgetBackground)
+                .accessibilityLabel(Text(UserText.passwordsSearch))
+
+            VStack(alignment: .center) {
+                ZStack(alignment: Alignment(horizontal: .leading, vertical: .center)) {
+
+                    Capsule(style: .circular)
+                        .fill(Color.widgetSearchFieldBackground)
+                        .frame(width: 126, height: 56)
+
+                    Image("WidgetKeyColor")
+                        .padding(.leading)
+                        .isHidden(false)
+                }
+
+                Spacer()
+
+                HStack(alignment: .bottom) {
+                    Text(UserText.passwordsSearch)
+                        .daxSubheadSemibold()
+                        .foregroundColor(Color(designSystemColor: .textSecondary))
+                    Spacer()
+                    Image("WidgetDaxLogo")
+                        .resizable()
+                        .frame(width: 24, height: 24, alignment: .bottomTrailing)
+                        .isHidden(false)
+                        .accessibilityHidden(true)
+                }
+                .frame(width: 126)
+
+            }.accessibilityHidden(true)
+        }
+        .widgetContainerBackground(color: .widgetBackground)
+    }
+}
+
 // See https://stackoverflow.com/a/59228385/73479
 extension View {
 
@@ -330,6 +374,14 @@ struct WidgetViews_Previews: PreviewProvider {
             .previewContext(WidgetPreviewContext(family: .systemSmall))
             .environment(\.colorScheme, .dark)
 
+        PasswordsWidgetView(entry: emptyState)
+            .previewContext(WidgetPreviewContext(family: .systemSmall))
+            .environment(\.colorScheme, .light)
+
+        PasswordsWidgetView(entry: emptyState)
+            .previewContext(WidgetPreviewContext(family: .systemSmall))
+            .environment(\.colorScheme, .dark)
+
         // Medium size:
 
         FavoritesWidgetView(entry: previewWithFavorites)
@@ -367,3 +419,4 @@ struct WidgetViews_Previews: PreviewProvider {
             .environment(\.colorScheme, .dark)
     }
 }
+// swiftlint:enable file_length

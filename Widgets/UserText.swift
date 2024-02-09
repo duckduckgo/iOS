@@ -49,6 +49,18 @@ struct UserText {
                                                   value: "Add Favorites",
                                                   comment: "CTA shown in the favorites widget empty state.")
 
+    static let passwordsWidgetGalleryDisplayName = NSLocalizedString("widget.gallery.passwords.display.name",
+                                                                  value: "Search Passwords",
+                                                                  comment: "Display name for search passwords widget in widget gallery")
+
+    static let passwordsWidgetGalleryDescription = NSLocalizedString("widget.gallery.passwords.description",
+                                                                  value: "Quickly search your saved DuckDuckGo passwords.",
+                                                                  comment: "Description of search passwords widget in widget gallery")
+
+    static let passwordsSearch = NSLocalizedString("widget.passwords.search",
+                                                    value: "Search Passwords",
+                                                    comment: "Text in search passwords widget")
+
     static let lockScreenSearchTitle = NSLocalizedString(
         "lock.screen.widget.search.title",
         value: "Private Search",

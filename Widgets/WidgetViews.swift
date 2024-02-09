@@ -31,7 +31,7 @@ struct FavoriteView: View {
 
         ZStack {
             RoundedRectangle(cornerRadius: 10)
-                .fill(Color.widgetFavoritesBackground)
+                .fill(Color.widgetSearchFieldBackground)
 
             if let favorite = favorite {
 
@@ -40,7 +40,7 @@ struct FavoriteView: View {
                     ZStack {
                         
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(favorite.needsColorBackground ? Color.forDomain(favorite.domain) : Color.widgetFavoritesBackground)
+                            .fill(favorite.needsColorBackground ? Color.forDomain(favorite.domain) : Color.widgetSearchFieldBackground)
                             .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 2)
                         
                         if let image = favorite.favicon {
@@ -83,10 +83,10 @@ struct LargeSearchFieldView: View {
         Link(destination: DeepLinks.newSearch) {
             ZStack {
 
-                Capsule(style: .circular)
+                RoundedRectangle(cornerSize: CGSize(width: 8, height: 8))
                     .fill(Color.widgetSearchFieldBackground)
                     .frame(minHeight: 46, maxHeight: 46)
-                    .padding(16)
+                    .padding(.vertical, 16)
 
                 HStack {
 
@@ -95,13 +95,15 @@ struct LargeSearchFieldView: View {
                         .frame(width: 24, height: 24, alignment: .leading)
 
                     Text(UserText.searchDuckDuckGo)
-                        .foregroundColor(Color.widgetSearchFieldText)
+                        .daxBodyRegular()
+                        .foregroundColor(Color(designSystemColor: .textSecondary))
 
                     Spacer()
 
-                    Image("WidgetSearchLoupe")
+                    Image("Find-Search-20")
+                        .opacity(0.5)
 
-                }.padding(EdgeInsets(top: 0, leading: 27, bottom: 0, trailing: 27))
+                }.padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
 
             }.unredacted()
         }
@@ -126,7 +128,6 @@ struct FavoritesRowView: View {
 
             }
         }
-        .padding(.horizontal, 16)
 
     }
 
@@ -168,7 +169,7 @@ struct FavoritesWidgetView: View {
 
     var body: some View {
         ZStack {
-            Rectangle().fill(Color.widgetBackground)
+            Rectangle().fill(Color(designSystemColor: .surface))
 
             VStack(alignment: .center, spacing: 0) {
 
@@ -208,7 +209,7 @@ struct FavoritesWidgetView: View {
             .padding(EdgeInsets(top: widgetFamily == .systemLarge ? 48 : 60, leading: 0, bottom: 0, trailing: 0))
 
         }
-        .widgetContainerBackground(color: .widgetBackground)
+        .widgetContainerBackground(color: Color(designSystemColor: .surface))
     }
 }
 
@@ -218,7 +219,7 @@ struct SearchWidgetView: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .fill(Color.widgetBackground)
+                .fill(Color(designSystemColor: .surface))
                 .accessibilityLabel(Text(UserText.searchDuckDuckGo))
 
             VStack(alignment: .center, spacing: 15) {
@@ -231,18 +232,21 @@ struct SearchWidgetView: View {
 
                 ZStack(alignment: Alignment(horizontal: .trailing, vertical: .center)) {
 
-                    Capsule(style: .circular)
+                    RoundedRectangle(cornerSize: CGSize(width: 8, height: 8))
                         .fill(Color.widgetSearchFieldBackground)
-                        .frame(width: 123, height: 46)
+                        .frame(width: 126, height: 46)
 
-                    Image("WidgetSearchLoupe")
-                        .padding(.trailing)
+                    Image("Find-Search-20")
+                        .frame(width: 20, height: 20)
+                        .padding(.leading)
+                        .padding(.trailing, 13)
                         .isHidden(false)
-
+                        .accessibilityHidden(true)
+                        .opacity(0.5)
                 }
             }.accessibilityHidden(true)
         }
-        .widgetContainerBackground(color: .widgetBackground)
+        .widgetContainerBackground(color: Color(designSystemColor: .surface))
     }
 }
 

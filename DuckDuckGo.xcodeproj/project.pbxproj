@@ -787,7 +787,7 @@
 		D668D9252B693778008E2FF2 /* SubscriptionITPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D668D9242B693778008E2FF2 /* SubscriptionITPView.swift */; };
 		D668D9272B6937D2008E2FF2 /* SubscriptionITPViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D668D9262B6937D2008E2FF2 /* SubscriptionITPViewModel.swift */; };
 		D668D9292B69681C008E2FF2 /* IdentityTheftRestorationPagesUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = D668D9282B69681C008E2FF2 /* IdentityTheftRestorationPagesUserScript.swift */; };
-		D668D92B2B696840008E2FF2 /* identityTheftRestorationPagesFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D668D92A2B696840008E2FF2 /* identityTheftRestorationPagesFeature.swift */; };
+		D668D92B2B696840008E2FF2 /* IdentityTheftRestorationPagesFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D668D92A2B696840008E2FF2 /* IdentityTheftRestorationPagesFeature.swift */; };
 		D668D92D2B696945008E2FF2 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = D668D92C2B696945008E2FF2 /* Subscription.swift */; };
 		D68DF81C2B58302E0023DBEA /* SubscriptionRestoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68DF81B2B58302E0023DBEA /* SubscriptionRestoreView.swift */; };
 		D68DF81E2B5830380023DBEA /* SubscriptionRestoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68DF81D2B5830380023DBEA /* SubscriptionRestoreViewModel.swift */; };
@@ -2447,7 +2447,7 @@
 		D668D9242B693778008E2FF2 /* SubscriptionITPView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionITPView.swift; sourceTree = "<group>"; };
 		D668D9262B6937D2008E2FF2 /* SubscriptionITPViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionITPViewModel.swift; sourceTree = "<group>"; };
 		D668D9282B69681C008E2FF2 /* IdentityTheftRestorationPagesUserScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentityTheftRestorationPagesUserScript.swift; sourceTree = "<group>"; };
-		D668D92A2B696840008E2FF2 /* identityTheftRestorationPagesFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = identityTheftRestorationPagesFeature.swift; sourceTree = "<group>"; };
+		D668D92A2B696840008E2FF2 /* IdentityTheftRestorationPagesFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentityTheftRestorationPagesFeature.swift; sourceTree = "<group>"; };
 		D668D92C2B696945008E2FF2 /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
 		D68DF81B2B58302E0023DBEA /* SubscriptionRestoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionRestoreView.swift; sourceTree = "<group>"; };
 		D68DF81D2B5830380023DBEA /* SubscriptionRestoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionRestoreViewModel.swift; sourceTree = "<group>"; };
@@ -4588,7 +4588,7 @@
 				D668D92C2B696945008E2FF2 /* Subscription.swift */,
 				D668D9282B69681C008E2FF2 /* IdentityTheftRestorationPagesUserScript.swift */,
 				D664C7B32B289AA000CBFA76 /* SubscriptionPagesUserScript.swift */,
-				D668D92A2B696840008E2FF2 /* identityTheftRestorationPagesFeature.swift */,
+				D668D92A2B696840008E2FF2 /* IdentityTheftRestorationPagesFeature.swift */,
 				D664C7B52B289AA000CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift */,
 			);
 			path = UserScripts;
@@ -6688,7 +6688,7 @@
 				F4F6DFB426E6B63700ED7E12 /* BookmarkFolderCell.swift in Sources */,
 				D6F93E3E2B50A8A0004C268D /* SubscriptionSettingsView.swift in Sources */,
 				851B12CC22369931004781BC /* AtbAndVariantCleanup.swift in Sources */,
-				D668D92B2B696840008E2FF2 /* identityTheftRestorationPagesFeature.swift in Sources */,
+				D668D92B2B696840008E2FF2 /* IdentityTheftRestorationPagesFeature.swift in Sources */,
 				85F2FFCF2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift in Sources */,
 				3157B43327F497E90042D3D7 /* SaveLoginView.swift in Sources */,
 				F17922E01E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift in Sources */,

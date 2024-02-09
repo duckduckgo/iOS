@@ -36,15 +36,19 @@ final class SubscriptionEmailViewModel: ObservableObject {
     @Published var shouldReloadWebView = false
     @Published var activateSubscription = false
     @Published var managingSubscriptionEmail = false
+    @Published var webViewModel: AsyncHeadlessWebViewViewModel
     
     private var cancellables = Set<AnyCancellable>()
             
-    init(userScript: SubscriptionPagesUserScript,
-         subFeature: SubscriptionPagesUseSubscriptionFeature,
-         accountManager: AccountManager) {
+    init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
+         subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
+         accountManager: AccountManager = AccountManager()) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.accountManager = accountManager
+        self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,
+                                                          subFeature: subFeature,
+                                                          settings: AsyncHeadlessWebViewSettings(bounces: false))
         initializeView()
         setupTransactionObservers()
     }
@@ -76,5 +80,9 @@ final class SubscriptionEmailViewModel: ObservableObject {
         activateSubscription = true
     }
     
+    func loadURL() {
+        webViewModel.navigationCoordinator.navigateTo(url: emailURL )
+    }
+
 }
 #endif

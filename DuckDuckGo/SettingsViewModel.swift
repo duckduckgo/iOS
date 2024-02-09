@@ -91,7 +91,7 @@ final class SettingsViewModel: ObservableObject {
     
     // Used to automatically navigate on Appear to a specific section
     enum SettingsSection: String {
-        case none, netP, dbp, itp
+        case none, netP, dbp, itr
     }
     @Published var onAppearNavigationTarget: SettingsSection
     
@@ -428,7 +428,7 @@ extension SettingsViewModel {
                 self.presentLegacyView(.netP)
             case .dbp:
                 self.shouldNavigateToDBP = true
-            case .itp:
+            case .itr:
                 self.shouldNavigateToITP = true
             default:
                 break

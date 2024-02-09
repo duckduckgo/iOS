@@ -1,5 +1,5 @@
 //
-//  identityTheftRestorationPagesFeature.swift
+//  IdentityTheftRestorationPagesFeature.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -31,7 +31,6 @@ final class IdentityTheftRestorationPagesFeature: Subfeature, ObservableObject {
     struct Constants {
         static let featureName = "useIdentityTheftRestoration"
         static let os = "ios"
-        static let empty = ""
     }
     
     struct OriginDomains {
@@ -67,7 +66,7 @@ final class IdentityTheftRestorationPagesFeature: Subfeature, ObservableObject {
     }
 
     func getAccessToken(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        let authToken = AccountManager().authToken ?? Constants.empty
+        let authToken = AccountManager().authToken ?? ""
         return Subscription(token: authToken)
     }
 

@@ -43,7 +43,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     enum FeatureName {
         static let netP = "vpn"
-        static let itp = "identity-theft-restoration"
+        static let itr = "identity-theft-restoration"
         static let dbp = "personal-information-removal"
     }
 
@@ -105,8 +105,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
                     switch value?.feature {
                     case FeatureName.netP:
                         self?.selectedFeature = .netP
-                    case FeatureName.itp:
-                        self?.selectedFeature = .itp
+                    case FeatureName.itr:
+                        self?.selectedFeature = .itr
                     case FeatureName.dbp:
                         self?.selectedFeature = .dbp
                     default:

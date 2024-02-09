@@ -252,39 +252,40 @@ struct PasswordsWidgetView: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .fill(Color.widgetBackground)
+                .fill(Color(designSystemColor: .surface))
                 .accessibilityLabel(Text(UserText.passwordsSearch))
 
-            VStack(alignment: .center) {
+            VStack(alignment: .center, spacing: 11) {
+
+                Image("WidgetPasswordIllustration")
+                    .frame(width: 96, height: 64)
+                    .isHidden(false)
+                    .accessibilityHidden(true)
+
                 ZStack(alignment: Alignment(horizontal: .leading, vertical: .center)) {
 
-                    Capsule(style: .circular)
+                    RoundedRectangle(cornerSize: CGSize(width: 8, height: 8))
                         .fill(Color.widgetSearchFieldBackground)
-                        .frame(width: 126, height: 56)
+                        .frame(width: 126, height: 44)
 
-                    Image("WidgetKeyColor")
-                        .padding(.leading)
-                        .isHidden(false)
+                    HStack {
+                        Text("Passwords")
+                            .daxFootnoteRegular()
+                            .foregroundColor(Color(designSystemColor: .textSecondary))
+
+                        Image("Find-Search-20")
+                            .padding(.leading)
+                            .isHidden(false)
+                            .accessibilityHidden(true)
+                            .opacity(0.5)
+                            .frame(width: 20, height: 20)
+                    }
+                    .padding(.horizontal, 13)
                 }
-
-                Spacer()
-
-                HStack(alignment: .bottom) {
-                    Text(UserText.passwordsSearch)
-                        .daxSubheadSemibold()
-                        .foregroundColor(Color(designSystemColor: .textSecondary))
-                    Spacer()
-                    Image("WidgetDaxLogo")
-                        .resizable()
-                        .frame(width: 24, height: 24, alignment: .bottomTrailing)
-                        .isHidden(false)
-                        .accessibilityHidden(true)
-                }
-                .frame(width: 126)
 
             }.accessibilityHidden(true)
         }
-        .widgetContainerBackground(color: .widgetBackground)
+        .widgetContainerBackground(color: Color(designSystemColor: .surface))
     }
 }
 

@@ -50,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private struct ShortcutKey {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
+        static let passwords = "com.duckduckgo.mobile.ios.passwords"
 
 #if NETWORK_PROTECTION
         static let openVPNSettings = "com.duckduckgo.mobile.ios.vpn.open-settings"
@@ -697,6 +698,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if shortcutItem.type == ShortcutKey.clipboard, let query = UIPasteboard.general.string {
             mainViewController?.clearNavigationStack()
             mainViewController?.loadQueryInNewTab(query)
+            return
+        }
+        if shortcutItem.type == ShortcutKey.passwords {
+            mainViewController?.clearNavigationStack()
+            mainViewController?.launchAutofillLogins(openSearch: true)
             return
         }
 

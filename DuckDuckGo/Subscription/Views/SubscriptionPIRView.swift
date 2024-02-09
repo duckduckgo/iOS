@@ -26,98 +26,159 @@ import DesignResourcesKit
 struct SubscriptionPIRView: View {
         
     @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) var colorScheme
     @StateObject var viewModel = SubscriptionPIRViewModel()
-    @State private var shouldShowNavigationBar = false
+    @State private var isShowingWindowsView = false
+    @State private var isShowingMacView = false
     
     enum Constants {
         static let daxLogo = "Home"
         static let daxLogoSize: CGFloat = 24.0
         static let empty = ""
         static let navButtonPadding: CGFloat = 20.0
+        static let lightMask: [Color] = [Color.init(0xFFFFFF, alpha: 0), Color.init(0xFFFFFF, alpha: 0)]
+        static let lightColors = [Color.init(0xF9F1F4), Color.init(0xF1F0FF)]
+        static let darkMask = [Color.init(0x2F2F2F, alpha: 0), Color.init(0x2F2F2F, alpha: 1)]
+        static let darkColors = [Color.init(0x3C184E), Color.init(0x3F1844), Color.init(0x3B1A36)]
+        static let titleMaxWidth = 200.0
+        static let headerPadding = 5.0
+        static let generalSpacing = 20.0
+        static let cornerRadius = 10.0
+        static let windowsIcon = "Platform-Windows-16"
+        static let macOSIcon = "Platform-Apple-16"
     }
     
     var body: some View {
-        NavigationView {
-            baseView
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    dismissButton
-                }
-                ToolbarItem(placement: .principal) {
-                    HStack {
-                        Image(Constants.daxLogo)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
-                        Text(viewModel.viewTitle).daxBodyRegular()
-                    }
+        ZStack {
+            gradientBackground
+            ScrollView {
+                VStack {
+                    header
+                        .padding(.top, Constants.headerPadding)
+                    baseView
+                        .frame(maxWidth: 600)
                 }
             }
-            .edgesIgnoringSafeArea(.top)
-            .navigationBarTitleDisplayMode(.inline)
             
-            .onAppear(perform: {
-                setUpAppearances()
-                viewModel.initializeView()
-            })
-        }.tint(Color(designSystemColor: .textPrimary))
+        }
+        .edgesIgnoringSafeArea(.all)
     }
     
+    private var header: some View {
+        HStack {
+            Spacer().frame(width: .infinity)
+            HStack(alignment: .center) {
+                Image(Constants.daxLogo)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
+                Text(viewModel.viewTitle).daxBodyRegular()
+            }.frame(maxWidth: Constants.titleMaxWidth)
+            dismissButton
+                .frame(maxWidth: .infinity, alignment: .trailing)
+        }
+    }
+    
+    private var gradientBackground: some View {
+        ZStack {
+            LinearGradient(colors: colorScheme == . dark ? Constants.darkColors : Constants.lightColors,
+                           startPoint: .top,
+                           endPoint: .bottom)
+            LinearGradient(colors: colorScheme == . dark ? Constants.darkMask : Constants.lightMask,
+                           startPoint: .top,
+                           endPoint: .bottom)
+        }
+    }
+        
     private var baseView: some View {
-        VStack(alignment: .center) {
-          Spacer()
-          Spacer()
+        VStack(alignment: .center, spacing: Constants.generalSpacing) {
             Image("PersonalInformationHero")
                 .aspectRatio(contentMode: .fill)
+                .padding(.top, Constants.generalSpacing)
             VStack {
-                Text("Activate Privacy Pro on desktop to set up Personal Information Removal")
+                Text(UserText.subscriptionPIRHeroText)
                    .daxTitle2()
                    .multilineTextAlignment(.center)
-                   .padding(.horizontal, 40)
+                   .padding(.horizontal, Constants.generalSpacing*2)
                    .foregroundColor(Color(designSystemColor: .textPrimary))
-                   .padding(.bottom, 20)
-                Text("In the DuckDuckGo browser for desktop, go to Settings > Privacy Pro and click I Have a Subscription to get started.")
-                    .daxBodyRegular()
-                    .padding(.horizontal, 20)
+                   .padding(.bottom, Constants.generalSpacing)
+                attributedDescription
+                    .padding(.horizontal, Constants.generalSpacing)
                    .multilineTextAlignment(.center)
-                   .padding(.horizontal, 20)
+                   .padding(.horizontal, Constants.generalSpacing)
             }
+            Spacer()
             Spacer()
             VStack {
                 macOSButton
                 windowsButton
-            }.padding(.bottom, 30)
-        }.background(Image("SubscriptionBackground").resizable())
+            }
+            .padding(.bottom, Constants.generalSpacing*2)
+            
+        }
+    }
+        
+    private var attributedDescription: some View {
+        let baseStringFormat = UserText.subscriptionPIRHeroDetail
+        let insertString1 = UserText.subscriptionPIRHeroDesktopMenuLocation
+        let insertString2 = UserText.subscriptionPIRHeroDesktopMenuItem
+
+        let highlightFont = Font(uiFont: .daxBodyBold())
+        
+        let fullString = String(format: baseStringFormat, insertString1, insertString2)
+        var attributedString = AttributedString(fullString)
+        attributedString.font = .daxBodyRegular()
+                
+        if let range1 = attributedString.range(of: insertString1) {
+            attributedString[range1].font = highlightFont
+        }
+
+        if let range2 = attributedString.range(of: insertString2) {
+            attributedString[range2].font = highlightFont}
+
+        return Text(attributedString)
     }
     
     @ViewBuilder
     private var windowsButton: some View {
-        Button(action: {}, label: {
-            Text("Windows")
-                .padding()
-                .foregroundColor(Color(designSystemColor: .textPrimary))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color(designSystemColor: .textPrimary), lineWidth: 1)
-                        
-                )
-        })
+        NavigationLink(destination: WaitlistDownloadBrowserContentView(platform: .windows) { _ in },
+        isActive: $isShowingWindowsView) {
+            HStack {
+                Image(Constants.windowsIcon)
+                Text(UserText.subscriptionPIRWindows)
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
+            .foregroundColor(Color(designSystemColor: .accent))
+            .daxButton()
+            .overlay(
+                RoundedRectangle(cornerRadius: Constants.cornerRadius)
+                    .stroke(Color(designSystemColor: .accent), lineWidth: 1)
+                
+            )
+            .padding(.horizontal, Constants.generalSpacing)
+        }
     }
     
     @ViewBuilder
     private var macOSButton: some View {
-        Button(action: {}, label: {
+        NavigationLink(destination: WaitlistDownloadBrowserContentView(platform: .mac) { _ in },
+                       isActive: $isShowingMacView) {
             HStack {
-                Image(systemName: "applelogo")
-                Text("macOS")
+                Image(Constants.macOSIcon)
+                Text(UserText.subscriptionPIRMacOS)
             }
+            .frame(maxWidth: .infinity)
             .padding()
-            .foregroundColor(Color(designSystemColor: .textPrimary))
+            .foregroundColor(Color(designSystemColor: .accent))
+            .daxButton()
             .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color(designSystemColor: .textPrimary), lineWidth: 1)
+                RoundedRectangle(cornerRadius: Constants.cornerRadius)
+                    .stroke(Color(designSystemColor: .accent), lineWidth: 1)
+                
             )
-        })
+            .padding(.horizontal, Constants.generalSpacing)
+        }
     }
     
     @ViewBuilder
@@ -125,17 +186,10 @@ struct SubscriptionPIRView: View {
         Button(action: { dismiss() }, label: { Text(UserText.subscriptionCloseButton) })
         .padding(Constants.navButtonPadding)
         .contentShape(Rectangle())
+        .daxBodyRegular()
         .tint(Color(designSystemColor: .textPrimary))
     }
     
-    
-    private func setUpAppearances() {
-        let navAppearance = UINavigationBar.appearance()
-        navAppearance.backgroundColor = UIColor(designSystemColor: .surface)
-        navAppearance.barTintColor = UIColor(designSystemColor: .surface)
-        navAppearance.shadowImage = UIImage()
-        navAppearance.tintColor = UIColor(designSystemColor: .textPrimary)
-    }
 }
 #endif
 
@@ -145,5 +199,17 @@ struct SubscriptionPIRView_Previews: PreviewProvider {
         if #available(iOS 15.0, *) {
             SubscriptionPIRView()
         }
+    }
+}
+
+private extension Color {
+    init(_ hex: UInt, alpha: Double = 1) {
+        self.init(
+            .sRGB,
+            red: Double((hex >> 16) & 0xFF) / 255,
+            green: Double((hex >> 8) & 0xFF) / 255,
+            blue: Double(hex & 0xFF) / 255,
+            opacity: alpha
+        )
     }
 }

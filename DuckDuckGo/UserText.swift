@@ -1098,5 +1098,13 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionRestoreSuccessfulTitle = NSLocalizedString("subscription.restore.success.alert.title", value: "You’re all set.", comment: "Alert title for restored purchase")
     public static let subscriptionRestoreSuccessfulMessage = NSLocalizedString("subscription.restore.success.alert.message", value: "Your purchases have been restored.", comment: "Alert message for restored purchase")
     public static let subscriptionRestoreSuccessfulButton = NSLocalizedString("subscription.restore.success.alert.button", value: "OK", comment: "Alert button text for restored purchase alert")
-
+    
+    // PIR:
+    public static let subscriptionPIRHeroText = NSLocalizedString("subscription.pir.hero", value: "Activate Privacy Pro on desktop to set up Personal Information Removal", comment: "Hero Text for Personal information removal")
+    public static let subscriptionPIRHeroDetail = NSLocalizedString("subscription.pir.heroText", value: "In the DuckDuckGo browser for desktop, go to %@ and click %@ to get started.", comment: "Description on how to use Personal information removal in desktop. The first placeholder references a location in the Desktop application. <i.e: Settings > Privacy Pro>, and the second, the menu entry. i.e. <I have a Subscription>")
+    public static let subscriptionPIRHeroDesktopMenuLocation = NSLocalizedString("subscription.pir.heroTextLocation", value: "Settings > Privacy Pro", comment: "Settings references a menu in the Desktop app, Privacy Pro, references our product name")
+    public static let subscriptionPIRHeroDesktopMenuItem = NSLocalizedString("subscription.pir.heroTextMenyEntry", value: "I have a subscription", comment: "Menu item for enabling Personal Information Removal on Desktop")
+    public static let subscriptionPIRWindows = NSLocalizedString("subscription.pir.windows", value: "Windows", comment: "Text for the 'Windows' button")
+    public static let subscriptionPIRMacOS = NSLocalizedString("subscription.pir.macos", value: "macOS", comment: "Text for the 'macOS' button")
+    
 }

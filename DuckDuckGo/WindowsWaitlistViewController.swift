@@ -194,3 +194,17 @@ private final class WindowsWaitlistLinkMetadata: NSObject, UIActivityItemSource 
     }
 
 }
+
+extension WindowsWaitlistViewController: UIViewControllerRepresentable {
+    
+    func makeUIViewController(context: Context) -> WindowsWaitlistViewController {
+        let waitlistViewController = WindowsWaitlistViewController(nibName: nil, bundle: nil)
+        return waitlistViewController
+    }
+    
+    func updateUIViewController(_ uiViewController: WindowsWaitlistViewController, context: Context) {
+    }
+    
+    typealias UIViewControllerType = WindowsWaitlistViewController
+    
+}

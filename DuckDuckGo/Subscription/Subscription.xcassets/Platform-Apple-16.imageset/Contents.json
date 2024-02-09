@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Information-Remover-320.pdf",
+      "filename" : "Platform-Apple-16.svg",
       "idiom" : "universal"
     }
   ],
@@ -10,6 +10,6 @@
     "version" : 1
   },
   "properties" : {
-    "template-rendering-intent" : "original"
+    "template-rendering-intent" : "template"
   }
 }

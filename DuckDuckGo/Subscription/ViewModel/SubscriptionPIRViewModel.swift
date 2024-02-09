@@ -18,73 +18,13 @@
 //
 
 import Foundation
-import UserScript
-import Combine
 import Core
 
 #if SUBSCRIPTION
 @available(iOS 15.0, *)
 final class SubscriptionPIRViewModel: ObservableObject {
     
-    let userScript: PersonalInformationRemovalPagesUserScript
-    let subFeature: PersonalInformationRemovalPagesFeature
     var viewTitle = UserText.subscriptionTitle
-    
-    enum Constants {
-        static let navigationBarHideThreshold = 40.0
-        static let downloadableContent = ["application/pdf"]
-    }
-    
-    // State variables
-    var itpURL = URL.manageITP
-    @Published var webViewModel: AsyncHeadlessWebViewViewModel
-    @Published var shouldShowNavigationBar: Bool = false
-    @Published var canNavigateBack: Bool = false
-    
-    private var cancellables = Set<AnyCancellable>()
-    private var canGoBackCancellable: AnyCancellable?
-    
-    init(userScript: PersonalInformationRemovalPagesUserScript = PersonalInformationRemovalPagesUserScript(),
-         subFeature: PersonalInformationRemovalPagesFeature = PersonalInformationRemovalPagesFeature()) {
-        self.userScript = userScript
-        self.subFeature = subFeature
-        self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,
-                                                          subFeature: subFeature,
-                                                          settings: AsyncHeadlessWebViewSettings(bounces: false))
-    }
-    
-    // Observe transaction status
-    private func setupSubscribers() async {
-        
-        webViewModel.$scrollPosition
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] value in
-                self?.shouldShowNavigationBar = value.y > Constants.navigationBarHideThreshold
-            }
-            .store(in: &cancellables)
-        
-        canGoBackCancellable = webViewModel.$canGoBack
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] value in
-                self?.canNavigateBack = value
-            }
-    }
-    
-    func initializeView() {
-        webViewModel.navigationCoordinator.navigateTo(url: itpURL )
-        Task { await setupSubscribers() }
-    }
-    
-    @MainActor
-    private func disableGoBack() {
-        canGoBackCancellable?.cancel()
-        canNavigateBack = false
-    }
-    
-    @MainActor
-    func navigateBack() async {
-        await webViewModel.navigationCoordinator.goBack()
-    }
-    
+            
 }
 #endif

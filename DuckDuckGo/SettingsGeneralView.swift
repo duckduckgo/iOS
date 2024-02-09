@@ -37,6 +37,14 @@ struct SettingsGeneralView: View {
             NavigationLink(destination: WidgetEducationView()) {
                 SettingsCellView(label: UserText.settingsAddWidget)
             }
+            
+            if #available(iOS 15.0, *) {
+                NavigationLink(destination: SubscriptionPIRView()) {
+                    SettingsCellView(label: UserText.settingsAddWidget)
+                }
+            } else {
+                // Fallback on earlier versions
+            }
 
         }
 

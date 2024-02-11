@@ -91,7 +91,7 @@ final class SettingsViewModel: ObservableObject {
     
     // Used to automatically navigate on Appear to a specific section
     enum SettingsSection: String {
-        case none, netP, dbp, itp
+        case none, netP, dbp, itr
     }
     @Published var onAppearNavigationTarget: SettingsSection
     
@@ -422,13 +422,13 @@ extension SettingsViewModel {
     private func navigateOnAppear() {
         // We need a short delay to let the SwifttUI view lifecycle complete
         // Otherwise the transition can be inconsistent
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
             switch self.onAppearNavigationTarget {
             case .netP:
                 self.presentLegacyView(.netP)
             case .dbp:
                 self.shouldNavigateToDBP = true
-            case .itp:
+            case .itr:
                 self.shouldNavigateToITP = true
             default:
                 break

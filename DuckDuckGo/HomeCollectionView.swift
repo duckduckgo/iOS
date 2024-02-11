@@ -85,8 +85,12 @@ class HomeCollectionView: UICollectionView {
                 
             case .favorites:
                 let renderer = FavoritesHomeViewSectionRenderer(viewModel: favoritesViewModel)
-                renderer.onFaviconMissing = { _ in
-                    controller.faviconsFetcherOnboarding.presentOnboardingIfNeeded(from: controller)
+                renderer.onFaviconMissing = { [weak self] _ in
+                    guard let self else {
+                        return
+                    }
+
+                    self.controller.faviconsFetcherOnboarding.presentOnboardingIfNeeded(from: self.controller)
                 }
                 renderers.install(renderer: renderer)
 

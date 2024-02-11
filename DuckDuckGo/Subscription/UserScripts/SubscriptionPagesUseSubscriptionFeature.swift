@@ -103,10 +103,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
     }
     
-    struct Subscription: Encodable {
-        let token: String
-    }
-    
+
     /// Values that the Frontend can use to determine the current state.
     // swiftlint:disable nesting
     struct SubscriptionValues: Codable {

@@ -2106,6 +2106,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Title of the dialog to confirm turning off Sync */
 "sync.turn.off.confirm.title" = "Turn Off Sync?";
 
+/* Reason for auth when setting up Sync */
+"sync.user.auth.reason" = "Unlock device to set up Sync & Backup";
+
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "Sorry, but Sync & Backup is currently unavailable. Please try again later.";
 

@@ -27,18 +27,18 @@ final class AutofillLoginSessionTests: XCTestCase {
     private var autofillSession = AutofillLoginSession(sessionTimeout: 2)
 
     func testWhenThereIsNoSessionCreationDateThenAutofillSessionIsFalse() {
-        XCTAssertFalse(autofillSession.isValidSession)
+        XCTAssertFalse(autofillSession.isSessionValid)
     }
 
     func testWhenSessionStartedThenAutofillSessionIsValid() {
         autofillSession.startSession()
-        XCTAssertTrue(autofillSession.isValidSession)
+        XCTAssertTrue(autofillSession.isSessionValid)
     }
 
     func testWhenSessionEndedThenAutofillSessionIsInvalid() {
         autofillSession.startSession()
         autofillSession.endSession()
-        XCTAssertFalse(autofillSession.isValidSession)
+        XCTAssertFalse(autofillSession.isSessionValid)
     }
 
     func testWhenSessionExpiredThenAutofillSessionIsInvalid() {
@@ -46,7 +46,7 @@ final class AutofillLoginSessionTests: XCTestCase {
 
         let sessionExpired = expectation(description: "testWhenSessionExpiredThenAutofillSessionIsInvalid")
         _ = XCTWaiter.wait(for: [sessionExpired], timeout: 2.2)
-        XCTAssertFalse(autofillSession.isValidSession)
+        XCTAssertFalse(autofillSession.isSessionValid)
     }
 
     func testWhenSessionIsValidAndAccountIsSetThenAccountIsReturned() {

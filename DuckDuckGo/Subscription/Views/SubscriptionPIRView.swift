@@ -67,17 +67,20 @@ struct SubscriptionPIRView: View {
     }
     
     private var header: some View {
-        HStack {
-            Spacer().frame(width: .infinity)
-            HStack(alignment: .center) {
-                Image(Constants.daxLogo)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
-                Text(viewModel.viewTitle).daxBodyRegular()
-            }.frame(maxWidth: Constants.titleMaxWidth)
-            dismissButton
-                .frame(maxWidth: .infinity, alignment: .trailing)
+        GeometryReader { geometry in
+            HStack {
+                Spacer().frame(width: geometry.size.width / 3)
+                HStack(alignment: .center) {
+                    Image(Constants.daxLogo)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
+                    Text(viewModel.viewTitle).daxBodyRegular()
+                }
+                .frame(width: geometry.size.width / 3, alignment: .center)
+                dismissButton
+                    .frame(width: geometry.size.width / 3, alignment: .trailing)
+            }
         }
     }
     

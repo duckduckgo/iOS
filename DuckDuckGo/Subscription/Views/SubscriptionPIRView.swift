@@ -49,19 +49,21 @@ struct SubscriptionPIRView: View {
     }
     
     var body: some View {
-        ZStack {
-            gradientBackground
-            ScrollView {
-                VStack {
-                    header
-                        .padding(.top, Constants.headerPadding)
-                    baseView
-                        .frame(maxWidth: 600)
+        NavigationView {
+            ZStack {
+                gradientBackground
+                ScrollView {
+                    VStack {
+                        header
+                            .padding(.top, Constants.headerPadding)
+                        baseView
+                            .frame(maxWidth: 600)
+                    }
                 }
+                
             }
-            
+            .edgesIgnoringSafeArea(.all)
         }
-        .edgesIgnoringSafeArea(.all)
     }
     
     private var header: some View {

@@ -42,8 +42,6 @@ struct SettingsGeneralView: View {
                 NavigationLink(destination: SubscriptionPIRView()) {
                     SettingsCellView(label: UserText.settingsAddWidget)
                 }
-            } else {
-                // Fallback on earlier versions
             }
 
         }

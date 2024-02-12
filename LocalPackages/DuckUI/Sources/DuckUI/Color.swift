@@ -120,5 +120,4 @@ private extension Color {
     }
 }
 
-
 #endif

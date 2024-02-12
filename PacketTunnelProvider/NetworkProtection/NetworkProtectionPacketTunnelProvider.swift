@@ -189,22 +189,15 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
     public override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         switch reason {
-        case .appUpdate:
+        case .appUpdate, .userInitiated:
             break
-        case .userInitiated:
-            if #available(iOS 17.0, *) {
-                handleShutDown { _ in
-                    completionHandler()
-                }
-            }
         default:
             DailyPixel.fireDailyAndCount(
                 pixel: .networkProtectionDisconnected,
                 withAdditionalParameters: [PixelParameters.reason: String(reason.rawValue)]
             )
-
-            super.stopTunnel(with: reason, completionHandler: completionHandler)
         }
+        super.stopTunnel(with: reason, completionHandler: completionHandler)
     }
 
     @objc init() {

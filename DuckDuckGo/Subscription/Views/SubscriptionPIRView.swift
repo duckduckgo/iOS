@@ -198,15 +198,6 @@ struct SubscriptionPIRView: View {
 }
 #endif
 
-
-struct SubscriptionPIRView_Previews: PreviewProvider {
-    static var previews: some View {
-        if #available(iOS 15.0, *) {
-            SubscriptionPIRView()
-        }
-    }
-}
-
 private extension Color {
     init(_ hex: UInt, alpha: Double = 1) {
         self.init(

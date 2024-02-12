@@ -141,8 +141,8 @@ struct SubscriptionPIRView: View {
     
     @ViewBuilder
     private var windowsButton: some View {
-        NavigationLink(destination: WaitlistDownloadBrowserContentView(platform: .windows) { _ in },
-        isActive: $isShowingWindowsView) {
+        // NavigationLink(destination: WaitlistDownloadBrowserContentView(platform: .windows) { _ in },
+        // isActive: $isShowingWindowsView) {
             HStack {
                 Image(Constants.windowsIcon)
                 Text(UserText.subscriptionPIRWindows)
@@ -157,13 +157,13 @@ struct SubscriptionPIRView: View {
                 
             )
             .padding(.horizontal, Constants.generalSpacing)
-        }
+        // }
     }
     
     @ViewBuilder
     private var macOSButton: some View {
-        NavigationLink(destination: WaitlistDownloadBrowserContentView(platform: .mac) { _ in },
-                       isActive: $isShowingMacView) {
+        // NavigationLink(destination: WaitlistDownloadBrowserContentView(platform: .mac) { _ in },
+        //               isActive: $isShowingMacView) {
             HStack {
                 Image(Constants.macOSIcon)
                 Text(UserText.subscriptionPIRMacOS)
@@ -178,7 +178,7 @@ struct SubscriptionPIRView: View {
                 
             )
             .padding(.horizontal, Constants.generalSpacing)
-        }
+        // }
     }
     
     @ViewBuilder

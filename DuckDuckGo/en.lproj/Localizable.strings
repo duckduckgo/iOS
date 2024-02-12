@@ -1372,9 +1372,6 @@
 /* Title for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Get DuckDuckGo for Mac!";
 
-/* Disclaimer for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.windows" = "Windows coming soon!";
-
 /* Title for the macOS waitlist button redirecting to Windows waitlist */
 "mac-waitlist.join-waitlist-screen.windows-waitlist" = "Looking for the Windows version?";
 
@@ -2346,49 +2343,11 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "A message from %@:";
 
-/* Title for the Windows waitlist notification */
-"windows-waitlist.available.notification.title" = "Try DuckDuckGo for Windows!";
-
-/* Description on the invite screen */
-"windows-waitlist.invite-screen.step-1.description" = "Visit this URL on your Windows device to download:";
-
-/* Description on the invite screen */
-"windows-waitlist.invite-screen.step-2.description" = "Open DuckDuckGo Installer in Downloads, select Install, then enter your invite code.";
-
-/* Subtitle for the Windows Waitlist Invite screen */
-"windows-waitlist.invite-screen.subtitle" = "Ready to use DuckDuckGo on Windows?";
-
 /* Title for the Windows waitlist button redirecting to Mac waitlist */
 "windows-waitlist.join-waitlist-screen.mac-waitlist" = "Looking for the Mac version?";
 
-/* Title for the Join Windows Waitlist screen */
-"windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Get early access to try DuckDuckGo for Windows!";
-
-/* Message for the alert to confirm enabling notifications */
-"windows-waitlist.joined.no-notification.get-notification-confirmation-message" = "We’ll send you a notification when your copy of DuckDuckGo for Windows is ready for download. ";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"windows-waitlist.joined.notifications-declined" = "Your invite to try DuckDuckGo for Windows will arrive here. Check back soon, or we can send you a notification when it’s your turn.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"windows-waitlist.joined.notifications-enabled" = "We’ll send you a notification when your copy of DuckDuckGo for Windows is ready for download.";
-
 /* Title for the settings subtitle */
 "windows-waitlist.settings.browse-privately" = "Browse privately with our app for Windows";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"windows-waitlist.share-sheet.invite-code-message" = "You’re invited!
-
-Ready to use DuckDuckGo on Windows?
-
-Step 1
-Visit this URL on your Windows device to download:
-https://duckduckgo.com/windows
-
-Step 2
-Open DuckDuckGo Installer in Downloads, select Install, then enter your invite code.
-
-Invite code: %@";
 
 /* Message used when sharing to iMessage */
 "windows-waitlist.share-sheet.message" = "Ready to start browsing privately on Windows?

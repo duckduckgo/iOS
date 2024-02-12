@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Subscription
 
 #if !SUBSCRIPTION
 

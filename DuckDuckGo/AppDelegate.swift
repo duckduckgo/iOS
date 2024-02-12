@@ -33,6 +33,7 @@ import Configuration
 import Networking
 import DDGSync
 import SyncDataProviders
+import Subscription
 
 #if NETWORK_PROTECTION
 import NetworkProtection

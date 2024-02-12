@@ -19,6 +19,7 @@
 
 import UIKit
 import SwiftUI
+import Subscription
 
 class SettingsHostingController: UIHostingController<AnyView> {
     var viewModel: SettingsViewModel

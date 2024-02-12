@@ -24,6 +24,7 @@ import Bookmarks
 import BrowserServicesKit
 import SwiftUI
 import PrivacyDashboard
+import Subscription
 
 extension MainViewController {
 
@@ -243,7 +244,7 @@ extension MainViewController {
         // We are still presenting legacy views, so use a Navcontroller
         let navController = UINavigationController(rootViewController: settingsController)
         navController.applyTheme(ThemeManager.shared.currentTheme)
-        settingsController.modalPresentationStyle = .automatic
+        settingsController.modalPresentationStyle = UIModalPresentationStyle.automatic
         
         present(navController, animated: true) {
             completion?(settingsViewModel)

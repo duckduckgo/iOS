@@ -30,6 +30,7 @@ import Bookmarks
 import Persistence
 import PrivacyDashboard
 import Networking
+import Subscription
 
 #if NETWORK_PROTECTION
 import NetworkProtection

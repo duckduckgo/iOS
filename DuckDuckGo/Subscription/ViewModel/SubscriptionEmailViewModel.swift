@@ -21,6 +21,7 @@ import Foundation
 import UserScript
 import Combine
 import Core
+import Subscription
 
 #if SUBSCRIPTION
 @available(iOS 15.0, *)

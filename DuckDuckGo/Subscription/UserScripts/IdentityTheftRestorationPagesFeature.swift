@@ -24,6 +24,7 @@ import Foundation
 import WebKit
 import UserScript
 import Combine
+import Subscription
 
 @available(iOS 15.0, *)
 final class IdentityTheftRestorationPagesFeature: Subfeature, ObservableObject {

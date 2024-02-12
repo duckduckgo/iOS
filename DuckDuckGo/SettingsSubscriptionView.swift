@@ -19,6 +19,7 @@
 
 import SwiftUI
 import UIKit
+import Subscription
 
 #if SUBSCRIPTION
 @available(iOS 15.0, *)

@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sam/netp-debug-command-disable-vpn",
-        "revision" : "f464df6f47b98e98a4cef522d0f801c1a759890c"
+        "revision" : "f9cf9ae340e918042d59c128bf83d0924e5d4e85",
+        "version" : "106.0.0"
       }
     },
     {

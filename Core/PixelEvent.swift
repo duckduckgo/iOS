@@ -119,9 +119,6 @@ extension Pixel {
         case daxDialogsFireEducationShown
         case daxDialogsFireEducationConfirmed
         case daxDialogsFireEducationCancelled
-        case daxDialogsAutoconsentShown
-        case daxDialogsAutoconsentConfirmed
-        case daxDialogsAutoconsentCancelled
 
         case defaultBrowserButtonPressedSettings
         
@@ -502,6 +499,9 @@ extension Pixel {
         case syncDeleteAccountError
         case syncLoginExistingAccountError
 
+        case swipeTabsUsed
+        case swipeTabsUsedDaily
+
         case bookmarksCleanupFailed
         case bookmarksCleanupAttemptedWhileSyncWasEnabled
         case favoritesCleanupFailed
@@ -624,9 +624,6 @@ extension Pixel.Event {
         case .daxDialogsFireEducationShown: return "m_dx_fe_s"
         case .daxDialogsFireEducationConfirmed: return "m_dx_fe_co"
         case .daxDialogsFireEducationCancelled: return "m_dx_fe_ca"
-        case .daxDialogsAutoconsentShown: return "m_dax_dialog_autoconsent_shown"
-        case .daxDialogsAutoconsentConfirmed: return "m_dax_dialog_autoconsent_confirmed"
-        case .daxDialogsAutoconsentCancelled: return "m_dax_dialog_autoconsent_cancelled"
             
         case .defaultBrowserButtonPressedSettings: return "m_db_s"
             
@@ -995,6 +992,8 @@ extension Pixel.Event {
         case .syncDeleteAccountError: return "m_d_sync_delete_account_error"
         case .syncLoginExistingAccountError: return "m_d_sync_login_existing_account_error"
 
+        case .swipeTabsUsed: return "m_swipe-tabs-used"
+        case .swipeTabsUsedDaily: return "m_swipe-tabs-used-daily"
 
         case .bookmarksCleanupFailed: return "m_d_bookmarks_cleanup_failed"
         case .bookmarksCleanupAttemptedWhileSyncWasEnabled: return "m_d_bookmarks_cleanup_attempted_while_sync_was_enabled"

@@ -73,4 +73,17 @@ extension UIView {
             view.removeFromSuperview()
         }
     }
+    
+    @MainActor
+    public func createImageSnapshot(inBounds bounds: CGRect? = nil) -> UIImage? {
+        let bounds = bounds ?? self.frame
+        let size = bounds.size
+        UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
+        UIGraphicsGetCurrentContext()?.translateBy(x: -bounds.origin.x, y: -bounds.origin.y)
+        drawHierarchy(in: frame, afterScreenUpdates: true)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+    
 }

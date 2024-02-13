@@ -26,6 +26,10 @@ import Waitlist
 
 final class VPNWaitlistDebugViewController: UITableViewController {
 
+    enum Constants {
+        static let mockInviteCode = "ABCD1234"
+    }
+
     enum Sections: Int, CaseIterable {
 
         case waitlistInformation
@@ -167,11 +171,11 @@ final class VPNWaitlistDebugViewController: UITableViewController {
                 termsAndConditionsStore.networkProtectionWaitlistTermsAndConditionsAccepted = false
             case .scheduleWaitlistNotification:
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
-                    self.storage.store(inviteCode: "ABCD1234")
+                    self.storage.store(inviteCode: Constants.mockInviteCode)
                     VPNWaitlist.shared.sendInviteCodeAvailableNotification()
                 }
             case .setMockInviteCode:
-                storage.store(inviteCode: "ABCD1234")
+                storage.store(inviteCode: Constants.mockInviteCode)
             case .deleteInviteCode:
                 storage.delete(field: .inviteCode)
                 tableView.reloadData()

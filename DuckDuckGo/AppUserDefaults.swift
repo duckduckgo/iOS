@@ -289,12 +289,30 @@ public class AppUserDefaults: AppSettings {
             }
         }
     }
-    
-    @UserDefaultsWrapper(key: .autoconsentPromptSeen, defaultValue: false)
-    var autoconsentPromptSeen: Bool
-    
+
+    var autoconsentEnabled: Bool {
+        get {
+            // Use settings value if present
+            if let isEnabled = autoconsentEnabledSetting {
+                return isEnabled
+            }
+
+            // Use onByDefault rollout otherwise
+            return featureFlagger.isFeatureOn(.autoconsentOnByDefault)
+        }
+
+        set {
+            autoconsentEnabledSetting = newValue
+        }
+    }
+
+    // Only for testing and `DebugViewController` purposes
+    func clearAutoconsentUserSetting() {
+        autoconsentEnabledSetting = nil
+    }
+
     @UserDefaultsWrapper(key: .autoconsentEnabled, defaultValue: false)
-    var autoconsentEnabled: Bool
+    private var autoconsentEnabledSetting: Bool?
 
     var inspectableWebViewEnabled: Bool {
         get {

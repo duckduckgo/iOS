@@ -51,4 +51,9 @@ public extension URL {
     static var manageSubscriptionsIniOSAppStoreAppURL: URL {
         URL(string: "https://apps.apple.com/account/subscriptions")!
     }
+    
+    // MARK: - Identity Theft Protection
+    static var manageITP: URL {
+        URL(string: "https://abrown.duckduckgo.com/identity-theft-restoration")!
+    }
 }

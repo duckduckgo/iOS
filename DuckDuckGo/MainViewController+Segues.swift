@@ -244,8 +244,6 @@ extension MainViewController {
         let navController = UINavigationController(rootViewController: settingsController)
         navController.applyTheme(ThemeManager.shared.currentTheme)
         settingsController.modalPresentationStyle = .automatic
-
-        settingsController.isModalInPresentation = true
         
         present(navController, animated: true) {
             completion?(settingsViewModel)

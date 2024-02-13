@@ -37,6 +37,7 @@ struct SettingsGeneralView: View {
             NavigationLink(destination: WidgetEducationView()) {
                 SettingsCellView(label: UserText.settingsAddWidget)
             }
+
         }
 
     }

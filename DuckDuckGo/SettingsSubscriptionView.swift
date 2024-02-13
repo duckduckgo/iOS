@@ -72,11 +72,13 @@ struct SettingsSubscriptionView: View {
                              disclosureIndicator: true,
                              isButton: true)
             
-            /*
-            NavigationLink(destination: Text("Data Broker Protection"), isActive: $viewModel.shouldNavigateToDBP) {
-                SettingsCellView(label: UserText.settingsPProDBPTitle, subtitle: UserText.settingsPProDBPSubTitle)
+            
+            SettingsCellView(label: UserText.settingsPProDBPTitle,
+                             subtitle: UserText.settingsPProDBPSubTitle,
+                             action: { isShowingDBP.toggle() }, isButton: true)
+            .sheet(isPresented: $isShowingDBP) {
+                SubscriptionPIRView()
             }
-            */
             
             SettingsCellView(label: UserText.settingsPProITRTitle,
                              subtitle: UserText.settingsPProITRSubTitle,
@@ -94,7 +96,6 @@ struct SettingsSubscriptionView: View {
     }
     
     var body: some View {
-        
         if viewModel.state.subscription.enabled {
             Section(header: Text(UserText.settingsPProSection)) {
                 if viewModel.state.subscription.hasActiveSubscription {

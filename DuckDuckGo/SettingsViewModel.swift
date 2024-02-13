@@ -457,8 +457,6 @@ extension SettingsViewModel {
         case .fireproofSites: pushViewController(legacyViewProvider.fireproofSites)
         case .autoclearData: pushViewController(legacyViewProvider.autoclearData)
         case .keyboard: pushViewController(legacyViewProvider.keyboard)
-        case .windowsApp: pushViewController(legacyViewProvider.windows)
-        case .macApp: pushViewController(legacyViewProvider.mac)
         case .about: pushViewController(legacyViewProvider.about)
         case .debug: pushViewController(legacyViewProvider.debug)
             

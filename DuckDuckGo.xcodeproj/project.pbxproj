@@ -718,6 +718,7 @@
 		C14882E827F20DAB00D59F0C /* TestDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14882E627F20DAB00D59F0C /* TestDataLoader.swift */; };
 		C14882EA27F20DD000D59F0C /* MockBookmarksCoreDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14882E927F20DD000D59F0C /* MockBookmarksCoreDataStorage.swift */; };
 		C14882ED27F211A000D59F0C /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = C14882EC27F211A000D59F0C /* SwiftSoup */; };
+		C14D43012B45D6CD00ACA4DC /* AutofillDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14D43002B45D6CD00ACA4DC /* AutofillDebugViewController.swift */; };
 		C14E2F7729DE14EA002AC515 /* AutofillInterfaceUsernameTruncatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14E2F7629DE14EA002AC515 /* AutofillInterfaceUsernameTruncatorTests.swift */; };
 		C158AC7B297AB5DC0008723A /* MockSecureVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = C158AC7A297AB5DC0008723A /* MockSecureVault.swift */; };
 		C159DF072A430B60007834BB /* EmailSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C159DF062A430B60007834BB /* EmailSignupViewController.swift */; };
@@ -2353,6 +2354,7 @@
 		C14882E527F20DAA00D59F0C /* HtmlTestDataLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HtmlTestDataLoader.swift; sourceTree = "<group>"; };
 		C14882E627F20DAB00D59F0C /* TestDataLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDataLoader.swift; sourceTree = "<group>"; };
 		C14882E927F20DD000D59F0C /* MockBookmarksCoreDataStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockBookmarksCoreDataStorage.swift; sourceTree = "<group>"; };
+		C14D43002B45D6CD00ACA4DC /* AutofillDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutofillDebugViewController.swift; sourceTree = "<group>"; };
 		C14E2F7629DE14EA002AC515 /* AutofillInterfaceUsernameTruncatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillInterfaceUsernameTruncatorTests.swift; sourceTree = "<group>"; };
 		C158AC7A297AB5DC0008723A /* MockSecureVault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSecureVault.swift; sourceTree = "<group>"; };
 		C159DF062A430B60007834BB /* EmailSignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignupViewController.swift; sourceTree = "<group>"; };
@@ -3929,6 +3931,7 @@
 		858566F1252E55AE007501B8 /* Debug */ = {
 			isa = PBXGroup;
 			children = (
+				C14D43002B45D6CD00ACA4DC /* AutofillDebugViewController.swift */,
 				858566E7252E4F56007501B8 /* Debug.storyboard */,
 				D6F93E3B2B4FFA97004C268D /* SubscriptionDebugViewController.swift */,
 				8590CB602684D0600089F6BF /* CookieDebugViewController.swift */,
@@ -6580,6 +6583,7 @@
 				D6E83C5E2B224676006C8AFB /* SettingsCustomizeView.swift in Sources */,
 				1E8AD1C727BE9B2900ABA377 /* DownloadsListDataSource.swift in Sources */,
 				3157B43527F497F50042D3D7 /* SaveLoginViewController.swift in Sources */,
+				C14D43012B45D6CD00ACA4DC /* AutofillDebugViewController.swift in Sources */,
 				853C5F6121C277C7001F7A05 /* global.swift in Sources */,
 				EE9D68D82AE15AD600B55EF4 /* UIApplicationExtension.swift in Sources */,
 				F13B4BD31F1822C700814661 /* Tab.swift in Sources */,

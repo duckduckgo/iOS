@@ -35,6 +35,7 @@ public class AppUserDefaults: AppSettings {
         public static let didVerifyInternalUser = Notification.Name("com.duckduckgo.app.DidVerifyInternalUser")
         public static let inspectableWebViewsToggled = Notification.Name("com.duckduckgo.app.DidToggleInspectableWebViews")
         public static let addressBarPositionChanged = Notification.Name("com.duckduckgo.app.AddressBarPositionChanged")
+        public static let autofillDebugScriptToggled = Notification.Name("com.duckduckgo.app.DidToggleAutofillDebugScript")
     }
 
     private let groupName: String
@@ -72,6 +73,7 @@ public class AppUserDefaults: AppSettings {
 
     private struct DebugKeys {
         static let inspectableWebViewsEnabledKey = "com.duckduckgo.ios.debug.inspectableWebViewsEnabled"
+        static let autofillDebugScriptEnabledKey = "com.duckduckgo.ios.debug.autofillDebugScriptEnabled"
     }
 
     private var userDefaults: UserDefaults? {
@@ -303,6 +305,17 @@ public class AppUserDefaults: AppSettings {
             userDefaults?.set(newValue, forKey: DebugKeys.inspectableWebViewsEnabledKey)
         }
     }
+
+    var autofillDebugScriptEnabled: Bool {
+        get {
+            return userDefaults?.object(forKey: DebugKeys.autofillDebugScriptEnabledKey) as? Bool ?? false
+        }
+
+        set {
+            userDefaults?.set(newValue, forKey: DebugKeys.autofillDebugScriptEnabledKey)
+        }
+    }
+
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

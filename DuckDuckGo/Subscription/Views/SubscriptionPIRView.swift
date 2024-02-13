@@ -198,6 +198,7 @@ struct SubscriptionPIRView: View {
 }
 #endif
 
+#if !os(macOS)
 private extension Color {
     init(_ hex: UInt, alpha: Double = 1) {
         self.init(
@@ -209,3 +210,4 @@ private extension Color {
         )
     }
 }
+#endif

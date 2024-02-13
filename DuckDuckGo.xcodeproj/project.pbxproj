@@ -3733,7 +3733,6 @@
 		84E341941E2F7EFB00BDBA6F /* DuckDuckGo */ = {
 			isa = PBXGroup;
 			children = (
-				D6E0C1812B7A2B0700D5E1E9 /* DesktopDownloads */,
 				EE3B98EA2A9634CC002F63A0 /* DuckDuckGoAlpha.entitlements */,
 				CB258D1129A4F1BB00DEBA24 /* Configuration */,
 				1E908BED29827C480008C8F3 /* Autoconsent */,
@@ -3747,6 +3746,7 @@
 				F1668BCC1E798025008CBA04 /* Bookmarks */,
 				9830A05725ED0C5D00DB64DE /* BrowsingMenu */,
 				B652DF02287C01EE00C12A9C /* ContentBlocking */,
+				D6E0C1812B7A2B0700D5E1E9 /* DesktopDownloads */,
 				310D09192799EF5C00DC0060 /* Downloads */,
 				F143C2C51E4A08F300CFDE3A /* DuckDuckGo.entitlements */,
 				C159DF052A430B36007834BB /* EmailProtection */,

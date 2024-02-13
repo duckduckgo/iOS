@@ -47,22 +47,19 @@ struct DesktopDownloadView: View {
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
                         .padding(.top, 18)
-
-                    Text(viewModel.browserDetails.downloadURL)
+                    
+                    menuView
                         .daxHeadline()
                         .foregroundColor(.waitlistBlue)
-                        .menuController(UserText.macWaitlistCopy) {
-                            viewModel.copyLink()
-                        }
                         .fixedSize()
-
+                    
                     Button(
                         action: {
                             self.isShareSheetVisible = true
                         }, label: {
                             HStack {
                                 Image("Share-16")
-                                Text(UserText.macWaitlistShareLink)
+                                Text(viewModel.browserDetails.downloadURL)
                             }
                         }
                     )
@@ -123,6 +120,25 @@ struct DesktopDownloadView: View {
             }
             .padding(.top, 24)
             .padding(.bottom, 12)
+    }
+    
+    @ViewBuilder
+    private var menuView: some View {
+        
+        // The .menuController modifier prevents the Text view from
+        // updating when viewModel.browserDetails.downloadURL changes
+        // so this is a hack to render another view
+        if viewModel.browserDetails.platform == .mac {
+            Text(viewModel.browserDetails.downloadURL)
+                .menuController(UserText.macWaitlistCopy) {
+                    viewModel.copyLink()
+                }
+        } else {
+            Text(viewModel.browserDetails.downloadURL)
+                .menuController(UserText.macWaitlistCopy) {
+                    viewModel.copyLink()
+                }
+        }
     }
 }
 

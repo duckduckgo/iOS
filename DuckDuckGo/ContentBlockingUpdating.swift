@@ -91,6 +91,7 @@ public final class ContentBlockingUpdating {
             .combineLatest(onNotificationWithInitial(AppUserDefaults.Notifications.didVerifyInternalUser), combine)
             .combineLatest(onNotificationWithInitial(ConfigurationManager.didUpdateTrackerDependencies)
                 .receive(on: DispatchQueue.main), combine)
+            .combineLatest(onNotificationWithInitial(AppUserDefaults.Notifications.autofillDebugScriptToggled), combine)
             // DefaultScriptSourceProvider instance should be created once per rules/config change and fed into UserScripts initialization
             .map(makeValue)
             .assign(to: \.bufferedValue, onWeaklyHeld: self) // buffer latest update value

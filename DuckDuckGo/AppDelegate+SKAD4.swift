@@ -23,7 +23,7 @@ import Common
 
 extension AppDelegate {
     
-    func update(conversionValue: Int) {
+    func updateSKAd(conversionValue: Int) {
         
         if #available(iOS 16.1, *) {
             SKAdNetwork.updatePostbackConversionValue(conversionValue, coarseValue: .high, lockWindow: true, completionHandler: { error in

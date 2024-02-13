@@ -197,6 +197,7 @@ struct SubscriptionPIRView: View {
     
 }
 
+
 private extension Color {
     init(_ hex: UInt, alpha: Double = 1) {
         self.init(
@@ -208,5 +209,6 @@ private extension Color {
         )
     }
 }
+
 
 #endif

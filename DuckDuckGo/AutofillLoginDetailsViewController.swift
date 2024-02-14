@@ -37,7 +37,7 @@ class AutofillLoginDetailsViewController: UIViewController {
     weak var delegate: AutofillLoginDetailsViewControllerDelegate?
     private let viewModel: AutofillLoginDetailsViewModel
     private var cancellables: Set<AnyCancellable> = []
-    private var authenticator = AutofillLoginListAuthenticator()
+    private var authenticator = AutofillLoginListAuthenticator(reason: UserText.autofillLoginListAuthenticationReason)
     private let lockedView = AutofillItemsLockedView()
     private let noAuthAvailableView = AutofillNoAuthAvailableView()
     private var contentView: UIView?

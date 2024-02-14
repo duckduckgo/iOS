@@ -26,6 +26,18 @@ import AVFoundation
 
 extension SyncSettingsViewController: SyncManagementViewModelDelegate {
 
+    func authenticateUser() async -> Bool {
+        return await withCheckedContinuation { continuation in
+            authenticateUser { error in
+                if error == nil {
+                    continuation.resume(returning: true)
+                } else {
+                    continuation.resume(returning: false)
+                }
+            }
+        }
+    }
+
     func launchAutofillViewController() {
         guard let mainVC = view.window?.rootViewController as? MainViewController else { return }
         dismiss(animated: true)
@@ -53,17 +65,20 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     func createAccountAndStartSyncing(optionsViewModel: SyncSettingsViewModel) {
-        Task { @MainActor in
-            do {
-                self.dismissPresentedViewController()
-                self.showPreparingSync()
-                try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
-                Pixel.fire(pixel: .syncSignupDirect, includedParameters: [.appVersion])
-                self.rootView.model.syncEnabled(recoveryCode: recoveryCode)
-                self.refreshDevices()
-                navigationController?.topViewController?.dismiss(animated: true, completion: showRecoveryPDF)
-            } catch {
-                handleError(SyncErrorMessage.unableToSyncToServer, error: error, event: .syncSignupError)
+        authenticateUser { [weak self] error in
+            guard error == nil, let self else { return }
+            Task { @MainActor in
+                do {
+                    self.dismissPresentedViewController()
+                    self.showPreparingSync()
+                    try await self.syncService.createAccount(deviceName: self.deviceName, deviceType: self.deviceType)
+                    Pixel.fire(pixel: .syncSignupDirect, includedParameters: [.appVersion])
+                    self.rootView.model.syncEnabled(recoveryCode: self.recoveryCode)
+                    self.refreshDevices()
+                    self.navigationController?.topViewController?.dismiss(animated: true, completion: self.showRecoveryPDF)
+                } catch {
+                    self.handleError(SyncErrorMessage.unableToSyncToServer, error: error, event: .syncSignupError)
+                }
             }
         }
     }
@@ -103,12 +118,20 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     func showSyncWithAnotherDevice() {
-        collectCode(showConnectMode: true)
+        authenticateUser { [weak self] error in
+            guard error == nil, let self else { return }
+
+            self.collectCode(showConnectMode: true)
+        }
     }
 
     func showRecoverData() {
-        dismissPresentedViewController()
-        collectCode(showConnectMode: false)
+        authenticateUser { [weak self] error in
+            guard error == nil, let self else { return }
+
+            self.dismissPresentedViewController()
+            self.collectCode(showConnectMode: false)
+        }
     }
 
     func showDeviceConnected() {

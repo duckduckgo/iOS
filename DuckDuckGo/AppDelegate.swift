@@ -34,6 +34,10 @@ import Networking
 import DDGSync
 import SyncDataProviders
 
+#if SUBSCRIPTION
+import Subscription
+#endif
+
 #if NETWORK_PROTECTION
 import NetworkProtection
 import WebKit
@@ -290,7 +294,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
-        WindowsBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
 
 #if NETWORK_PROTECTION
         VPNWaitlist.shared.registerBackgroundRefreshTaskHandler()
@@ -321,6 +324,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if SUBSCRIPTION
         setupSubscriptionsEnvironment()
 #endif
+
+        clearDebugWaitlistState()
 
         return true
     }
@@ -803,9 +808,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
             let identifier = response.notification.request.identifier
-            if identifier == WindowsBrowserWaitlist.notificationIdentifier {
-                presentWindowsBrowserWaitlistSettingsModal()
-            }
 
 #if NETWORK_PROTECTION
             if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
@@ -820,11 +822,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         }
 
         completionHandler()
-    }
-    
-    private func presentWindowsBrowserWaitlistSettingsModal() {
-        let waitlistViewController = WindowsWaitlistViewController(nibName: nil, bundle: nil)
-        presentSettings(with: waitlistViewController)
     }
 
 #if NETWORK_PROTECTION

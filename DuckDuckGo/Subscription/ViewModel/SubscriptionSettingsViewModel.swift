@@ -22,6 +22,7 @@ import SwiftUI
 import StoreKit
 
 #if SUBSCRIPTION
+import Subscription
 @available(iOS 15.0, *)
 final class SubscriptionSettingsViewModel: ObservableObject {
     
@@ -81,7 +82,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         }
 
     private func openSubscriptionManagementURL() {
-        let url = URL.manageSubscriptionsIniOSAppStoreAppURL
+        let url = URL.manageSubscriptionsInAppStoreAppURL
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }

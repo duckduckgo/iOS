@@ -206,7 +206,7 @@ struct FavoritesWidgetView: View {
             .padding(EdgeInsets(top: widgetFamily == .systemLarge ? 48 : 60, leading: 0, bottom: 0, trailing: 0))
 
         }
-        .widgetContainerBackground()
+        .widgetContainerBackground(color: .widgetBackground)
     }
 }
 
@@ -240,17 +240,17 @@ struct SearchWidgetView: View {
                 }
             }.accessibilityHidden(true)
         }
-        .widgetContainerBackground()
+        .widgetContainerBackground(color: .widgetBackground)
     }
 }
 
 // See https://stackoverflow.com/a/59228385/73479
 extension View {
 
-    @ViewBuilder func widgetContainerBackground() -> some View {
+    @ViewBuilder func widgetContainerBackground(color: Color = .clear) -> some View {
         if #available(iOSApplicationExtension 17.0, *) {
             containerBackground(for: .widget) {
-                Color.clear
+                color
             }
         }
     }

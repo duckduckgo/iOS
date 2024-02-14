@@ -48,6 +48,16 @@ final class NetworkProtectionDebugUtilities {
         try? await activeSession.sendProviderMessage(.triggerTestNotification)
     }
 
+    // MARK: - Disable VPN
+
+    func disableConnectOnDemandAndShutDown() async {
+        guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+            return
+        }
+
+        try? await activeSession.sendProviderMessage(.request(.debugCommand(.disableConnectOnDemandAndShutDown)))
+    }
+
     // MARK: - Failure Simulation
 
     func triggerSimulation(_ option: NetworkProtectionSimulationOption) async {

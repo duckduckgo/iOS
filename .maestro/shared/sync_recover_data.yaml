@@ -6,6 +6,8 @@ appId: com.duckduckgo.mobile.ios
 - assertVisible: Begin Syncing
 - tapOn: Recover Synced Data
 - assertVisible: Recover Synced Data
+- inputText: "0000"
+- pressKey: Enter
 - assertVisible: Get Started
 - tapOn: Get Started
 - tapOn: Enter Text Code Manually

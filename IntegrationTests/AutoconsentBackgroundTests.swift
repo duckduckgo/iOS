@@ -158,6 +158,5 @@ class MockEmbeddedDataProvider: EmbeddedDataProvider {
 }
 
 class MockAutoconsentPreferences: AutoconsentPreferences {
-    var autoconsentPromptSeen: Bool = true
     var autoconsentEnabled: Bool = true
 }

@@ -112,7 +112,7 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
             Pixel.fire(pixel: .autofillLoginsFillLoginInlineManualConfirmed)
         }
 
-        if AppDependencyProvider.shared.autofillLoginSession.isValidSession {
+        if AppDependencyProvider.shared.autofillLoginSession.isSessionValid {
             dismiss(animated: true, completion: nil)
             completion?(account, false)
             return

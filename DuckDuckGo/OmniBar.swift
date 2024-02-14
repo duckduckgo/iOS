@@ -66,7 +66,6 @@ class OmniBar: UIView {
 
     weak var omniDelegate: OmniBarDelegate?
     fileprivate var state: OmniBarState = SmallOmniBarState.HomeNonEditingState()
-    private var safeAreaInsetsObservation: NSKeyValueObservation?
     
     private var privacyIconAndTrackersAnimator = PrivacyIconAndTrackersAnimator()
     private var notificationAnimator = OmniBarNotificationAnimator()
@@ -100,7 +99,6 @@ class OmniBar: UIView {
         configureEditingMenu()
         refreshState(state)
         enableInteractionsWithPointer()
-        observeSafeAreaInsets()
         
         privacyInfoContainer.isHidden = true
     }
@@ -140,13 +138,7 @@ class OmniBar: UIView {
                                                name: .speechRecognizerDidChangeAvailability,
                                                object: nil)
     }
-    
-    private func observeSafeAreaInsets() {
-        safeAreaInsetsObservation = self.observe(\.safeAreaInsets, options: .new) { [weak self] (_, _) in
-            self?.updateOmniBarPadding()
-        }
-    }
-    
+        
     private func enableInteractionsWithPointer() {
         backButton.isPointerInteractionEnabled = true
         forwardButton.isPointerInteractionEnabled = true
@@ -346,8 +338,6 @@ class OmniBar: UIView {
         if state.showVoiceSearch && state.showClear {
             searchStackContainer.setCustomSpacing(13, after: voiceSearchButton)
         }
-        
-        updateOmniBarPadding()
 
         UIView.animate(withDuration: 0.0) {
             self.layoutIfNeeded()
@@ -355,9 +345,9 @@ class OmniBar: UIView {
         
     }
 
-    private func updateOmniBarPadding() {
-        omniBarLeadingConstraint.constant = (state.hasLargeWidth ? 24 : 8) + safeAreaInsets.left
-        omniBarTrailingConstraint.constant = (state.hasLargeWidth ? 24 : 14) + safeAreaInsets.right
+    func updateOmniBarPadding(left: CGFloat, right: CGFloat) {
+        omniBarLeadingConstraint.constant = (state.hasLargeWidth ? 24 : 8) + left
+        omniBarTrailingConstraint.constant = (state.hasLargeWidth ? 24 : 14) + right
     }
 
     /*

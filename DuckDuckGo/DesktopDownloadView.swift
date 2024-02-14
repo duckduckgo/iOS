@@ -63,6 +63,7 @@ struct DesktopDownloadView: View {
                             }
                         }
                     )
+                    // XAI: Move all strings to a Constants enum at the top
                     .buttonStyle(DesktopDownloadViewButtonStyle(enabled: true))
                     .padding(.horizontal, padding)
                     .padding(.top, 24)

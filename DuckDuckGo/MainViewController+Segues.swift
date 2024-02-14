@@ -238,8 +238,12 @@ extension MainViewController {
                                                             syncDataProviders: syncDataProviders,
                                                             appSettings: appSettings,
                                                             bookmarksDatabase: bookmarksDatabase)
-                        
+#if SUBSCRIPTION
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider, accountManager: AccountManager())
+#else
+        let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider)
+#endif
+
         let settingsController = SettingsHostingController(viewModel: settingsViewModel, viewProvider: legacyViewProvider)
         settingsController.applyTheme(ThemeManager.shared.currentTheme)
         

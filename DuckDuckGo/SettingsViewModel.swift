@@ -46,9 +46,12 @@ final class SettingsViewModel: ObservableObject {
     private lazy var animator: FireButtonAnimator = FireButtonAnimator(appSettings: AppUserDefaults())
     private var legacyViewProvider: SettingsLegacyViewProvider
     private lazy var versionProvider: AppVersion = AppVersion.shared
-    private var accountManager: AccountManager
     private let voiceSearchHelper: VoiceSearchHelperProtocol
-
+#if SUBSCRIPTION
+    private var accountManager: AccountManager
+#endif
+    
+    
 #if NETWORK_PROTECTION
     private let connectionObserver = ConnectionStatusObserverThroughSession()
 #endif
@@ -60,7 +63,7 @@ final class SettingsViewModel: ObservableObject {
     // Defaults
     @UserDefaultsWrapper(key: .subscriptionIsActive, defaultValue: false)
     static private var cachedHasActiveSubscription: Bool
-
+    
     // Closures to interact with legacy view controllers through the container
     var onRequestPushLegacyView: ((UIViewController) -> Void)?
     var onRequestPresentLegacyView: ((UIViewController, _ modal: Bool) -> Void)?
@@ -68,7 +71,7 @@ final class SettingsViewModel: ObservableObject {
     var onRequestDismissSettings: (() -> Void)?
     
     // SwiftUI Programatic Navigation Variables
-    // Add more views as needed here...    
+    // Add more views as needed here...
     @Published var shouldNavigateToDBP = false
     @Published var shouldNavigateToITP = false
     
@@ -90,7 +93,7 @@ final class SettingsViewModel: ObservableObject {
         case networkProtection
 #endif
     }
-                
+    
     var shouldShowNoMicrophonePermissionAlert: Bool = false
     
     // Used to automatically navigate on Appear to a specific section
@@ -198,7 +201,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-
+#if SUBSCRIPTION
     // MARK: Default Init
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
@@ -211,8 +214,20 @@ final class SettingsViewModel: ObservableObject {
         self.voiceSearchHelper = voiceSearchHelper
         self.onAppearNavigationTarget = navigateOnAppearDestination
     }
+#else
+    // MARK: Default Init
+    init(state: SettingsState? = nil,
+         legacyViewProvider: SettingsLegacyViewProvider,
+         voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
+         navigateOnAppearDestination: SettingsSection = .none) {
+        self.state = SettingsState.defaults
+        self.legacyViewProvider = legacyViewProvider
+        self.voiceSearchHelper = voiceSearchHelper
+        self.onAppearNavigationTarget = navigateOnAppearDestination
+    }
+#endif
+    
 }
- 
 // MARK: Private methods
 extension SettingsViewModel {
     

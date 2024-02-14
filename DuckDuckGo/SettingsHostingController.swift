@@ -19,7 +19,9 @@
 
 import UIKit
 import SwiftUI
+#if SUBSCRIPTION
 import Subscription
+#endif
 
 class SettingsHostingController: UIHostingController<AnyView> {
     var viewModel: SettingsViewModel

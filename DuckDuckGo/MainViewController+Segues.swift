@@ -23,8 +23,10 @@ import Core
 import Bookmarks
 import BrowserServicesKit
 import SwiftUI
-import PrivacyDashboard
+
+#if SUBSCRIPTION
 import Subscription
+#endif
 
 extension MainViewController {
 

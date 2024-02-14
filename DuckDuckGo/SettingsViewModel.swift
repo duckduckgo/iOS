@@ -24,7 +24,10 @@ import SwiftUI
 import Common
 import Combine
 import SyncUI
+
+#if SUBSCRIPTION
 import Subscription
+#endif
 
 #if APP_TRACKING_PROTECTION
 import NetworkExtension

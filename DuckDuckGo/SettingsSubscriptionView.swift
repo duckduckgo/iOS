@@ -19,9 +19,9 @@
 
 import SwiftUI
 import UIKit
-import Subscription
 
 #if SUBSCRIPTION
+import Subscription
 @available(iOS 15.0, *)
 struct SettingsSubscriptionView: View {
     

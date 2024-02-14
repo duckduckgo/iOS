@@ -34,6 +34,10 @@ import Networking
 import DDGSync
 import SyncDataProviders
 
+#if SUBSCRIPTION
+import Subscription
+#endif
+
 #if NETWORK_PROTECTION
 import NetworkProtection
 import WebKit

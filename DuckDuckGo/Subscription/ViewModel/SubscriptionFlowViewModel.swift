@@ -41,7 +41,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     private var canGoBackCancellable: AnyCancellable?
     
     // State variables
-    var purchaseURL = URL.purchaseSubscription
+    var purchaseURL = URL.subscriptionPurchase
     
     enum FeatureName {
         static let netP = "vpn"

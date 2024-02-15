@@ -34,20 +34,12 @@ extension AppDelegate {
     }
 
     func checkWaitlists() {
-        checkWindowsWaitlist()
 
 #if NETWORK_PROTECTION
         checkNetworkProtectionWaitlist()
 #endif
         checkWaitlistBackgroundTasks()
 
-    }
-
-    private func checkWindowsWaitlist() {
-        WindowsBrowserWaitlist.shared.fetchInviteCodeIfAvailable { error in
-            guard error == nil else { return }
-            WindowsBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
-        }
     }
 
 #if NETWORK_PROTECTION
@@ -96,10 +88,6 @@ extension AppDelegate {
 
     private func checkWaitlistBackgroundTasks() {
         BGTaskScheduler.shared.getPendingTaskRequests { tasks in
-            let hasWindowsBrowserWaitlistTask = tasks.contains { $0.identifier == WindowsBrowserWaitlist.backgroundRefreshTaskIdentifier }
-            if !hasWindowsBrowserWaitlistTask {
-                WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
-            }
 
 #if NETWORK_PROTECTION
             let hasVPNWaitlistTask = tasks.contains { $0.identifier == VPNWaitlist.backgroundRefreshTaskIdentifier }

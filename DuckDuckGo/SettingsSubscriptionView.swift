@@ -21,10 +21,15 @@ import SwiftUI
 import UIKit
 
 #if SUBSCRIPTION
+import Subscription
 @available(iOS 15.0, *)
 struct SettingsSubscriptionView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
+    @StateObject var subscriptionFlowViewModel =  SubscriptionFlowViewModel()
+    @State var isShowingsubScriptionFlow = false
+    @State var isShowingDBP = false
+    @State var isShowingITP = false
     
     private var subscriptionDescriptionView: some View {
         VStack(alignment: .leading) {
@@ -51,11 +56,11 @@ struct SettingsSubscriptionView: View {
     private var purchaseSubscriptionView: some View {
         return Group {
             SettingsCustomCell(content: { subscriptionDescriptionView })
-            let viewModel = SubscriptionFlowViewModel(onFeatureSelected: { value in
-                self.viewModel.onAppearNavigationTarget = value
-            })
-            NavigationLink(destination: SubscriptionFlowView(viewModel: viewModel)) {
-                SettingsCustomCell(content: { learnMoreView })
+            SettingsCustomCell(content: { learnMoreView },
+                               action: { isShowingsubScriptionFlow = true },
+                               isButton: true )
+            .sheet(isPresented: $isShowingsubScriptionFlow) {
+                SubscriptionFlowView(viewModel: subscriptionFlowViewModel).interactiveDismissDisabled()
             }
         }
     }
@@ -68,22 +73,30 @@ struct SettingsSubscriptionView: View {
                              disclosureIndicator: true,
                              isButton: true)
             
-            NavigationLink(destination: Text("Data Broker Protection"), isActive: $viewModel.shouldNavigateToDBP) {
-                SettingsCellView(label: UserText.settingsPProDBPTitle, subtitle: UserText.settingsPProDBPSubTitle)
+            
+            SettingsCellView(label: UserText.settingsPProDBPTitle,
+                             subtitle: UserText.settingsPProDBPSubTitle,
+                             action: { isShowingDBP.toggle() }, isButton: true)
+            .sheet(isPresented: $isShowingDBP) {
+                SubscriptionPIRView()
             }
             
-            NavigationLink(destination: Text("Identity Theft Restoration"), isActive: $viewModel.shouldNavigateToITP) {
-                SettingsCellView(label: UserText.settingsPProITRTitle, subtitle: UserText.settingsPProITRSubTitle)
+            SettingsCellView(label: UserText.settingsPProITRTitle,
+                             subtitle: UserText.settingsPProITRSubTitle,
+                             action: { isShowingITP.toggle() }, isButton: true)
+            .sheet(isPresented: $isShowingITP) {
+                SubscriptionITPView()
             }
+             
             
-            NavigationLink(destination: SubscriptionSettingsView(viewModel: SubscriptionSettingsViewModel())) {
+            NavigationLink(destination: SubscriptionSettingsView()) {
                 SettingsCustomCell(content: { manageSubscriptionView })
             }
+            
         }
     }
     
     var body: some View {
-        
         if viewModel.state.subscription.enabled {
             Section(header: Text(UserText.settingsPProSection)) {
                 if viewModel.state.subscription.hasActiveSubscription {
@@ -91,6 +104,18 @@ struct SettingsSubscriptionView: View {
                 } else {
                     purchaseSubscriptionView
                 }
+            
+            }
+            // Refresh subscription when dismissing the Subscription Flow
+            .onChange(of: isShowingsubScriptionFlow, perform: { value in
+                if !value {
+                    Task { viewModel.onAppear() }
+                }
+            })
+            
+            .onReceive(subscriptionFlowViewModel.$selectedFeature) { value in
+                guard let value else { return }
+                viewModel.onAppearNavigationTarget = value
             }
         }
     }

@@ -1,0 +1,136 @@
+name: Asana PR Task URL
+
+on: 
+  pull_request:
+    types: [opened, edited, closed, unlabeled, synchronize]
+
+jobs:
+
+  # This job is used to assert that the task linked in the PR description belongs to the specified project (App Board).
+  assert-project-membership:
+
+    name: Check App Board Project Membership
+
+    runs-on: ubuntu-latest
+
+    outputs:
+      task_id: ${{ steps.get-task-id.outputs.task_id }}
+      failure: ${{ steps.check-task-url.outputs.failure }}
+
+    steps:
+    - name: Get Task ID
+      id: get-task-id
+      env:
+        BODY: ${{ github.event.pull_request.body }}
+      run: |
+        task_id=$(grep -i "task/issue url.*https://app.asana.com/" <<< "$BODY" \
+          | sed -E 's|.*https://(.*)|\1|' \
+          | cut -d '/' -f 4)
+        echo "task_id=$task_id" >> $GITHUB_OUTPUT
+
+    - name: Check Task URL
+      id: check-task-url
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+        ASANA_PROJECT_ID: ${{ vars.IOS_APP_BOARD_ASANA_PROJECT_ID }}
+      run: |
+        project_ids="$(curl -fLSs "https://app.asana.com/api/1.0/tasks/${{ steps.get-task-id.outputs.task_id }}?opt_fields=projects" \
+          -H "Authorization: Bearer ${{ env.ASANA_ACCESS_TOKEN }}" \
+          | jq -r .data.projects[].gid)"
+
+        if grep -q "\b${{ env.ASANA_PROJECT_ID }}\b" <<< $project_ids; then
+          echo "failure=0" >> $GITHUB_OUTPUT
+        else
+          echo "failure=1" >> $GITHUB_OUTPUT
+        fi
+
+  # If a task URL is present, but task is missing from the App Board project, add a comment to the PR and fail the check.
+  # Otherwise, delete the comment and pass the check.
+  update-project-membership-report:
+
+    name: App Board Project Membership Report
+
+    runs-on: ubuntu-latest
+    if: github.event.action != 'closed'
+
+    needs: [assert-project-membership]
+
+    steps:
+    - name: Comment on the PR
+      if: ${{ needs.assert-project-membership.outputs.task_id && needs.assert-project-membership.outputs.failure == '1' }}
+      env:
+        ASANA_PROJECT_NAME: ${{ vars.IOS_APP_BOARD_ASANA_PROJECT_NAME }}
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: asana-task-check-status
+        message: |
+          :no_entry_sign: The Asana task linked in the PR description is not added to ${{ env.ASANA_PROJECT_NAME }} project.
+          1. Verify that the correct task is linked in the PR.
+              * :warning: Please use the actual implementation task, rather than the Code Review subtask.
+          2. Verify that the task is added to ${{ env.ASANA_PROJECT_NAME }} project.
+          3. When ready, remove the `bot: not in app board` label to retrigger the check.
+
+    - name: Add a label to the PR
+      if: ${{ needs.assert-project-membership.outputs.task_id && needs.assert-project-membership.outputs.failure == '1' }}
+      uses: actions/github-script@v7
+      with:
+        script: |
+          github.rest.issues.addLabels({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            labels: ['bot: not in app board']
+          })
+
+    - name: Delete comment on the PR
+      if: ${{ needs.assert-project-membership.outputs.task_id == '' || needs.assert-project-membership.outputs.failure == '0' }}
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: asana-task-check-status
+        delete: true
+
+    - name: Remove the label from the PR
+      if: ${{ needs.assert-project-membership.outputs.task_id == '' || needs.assert-project-membership.outputs.failure == '0' }}
+      uses: actions/github-script@v7
+      with:
+        script: |
+          try {
+            await github.rest.issues.removeLabel({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: 'bot: not in app board'
+            });
+          } catch (error) {
+            if (error.status !== 404) {
+              throw error;
+            }
+          }
+
+    - name: Report status
+      if: ${{ needs.assert-project-membership.outputs.task_id }}
+      run: exit ${{ needs.assert-project-membership.outputs.failure }}
+
+  # When a PR is merged, move the task to the Waiting for Release section of the App Board.
+  mark-waiting-for-release:
+
+    name: Move to Waiting for Release on Merge
+
+    runs-on: ubuntu-latest
+    if: github.event.action == 'closed' && github.event.pull_request.merged == true
+
+    needs: [assert-project-membership]
+
+    steps:
+    - name: Move to Waiting for Release
+      if: ${{ needs.assert-project-membership.result.failure == '0' }}
+      env:
+        ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+        ASANA_PROJECT_ID: ${{ vars.IOS_APP_BOARD_ASANA_PROJECT_ID }}
+      run: |
+        curl -fLSs -X POST "https://app.asana.com/api/1.0/sections/${{ vars.IOS_APP_BOARD_WAITING_FOR_RELEASE_SECTION_ID }}/addTask" \
+          -H "Authorization: Bearer ${{ env.ASANA_ACCESS_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          --output /dev/null \
+          -d "{\"data\": {\"task\": \"${{ needs.assert-project-membership.outputs.task_id }}\"}}"

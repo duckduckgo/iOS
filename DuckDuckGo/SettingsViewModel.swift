@@ -25,6 +25,10 @@ import Common
 import Combine
 import SyncUI
 
+#if SUBSCRIPTION
+import Subscription
+#endif
+
 #if APP_TRACKING_PROTECTION
 import NetworkExtension
 #endif
@@ -42,9 +46,12 @@ final class SettingsViewModel: ObservableObject {
     private lazy var animator: FireButtonAnimator = FireButtonAnimator(appSettings: AppUserDefaults())
     private var legacyViewProvider: SettingsLegacyViewProvider
     private lazy var versionProvider: AppVersion = AppVersion.shared
-    private var accountManager: AccountManager
     private let voiceSearchHelper: VoiceSearchHelperProtocol
-
+#if SUBSCRIPTION
+    private var accountManager: AccountManager
+#endif
+    
+    
 #if NETWORK_PROTECTION
     private let connectionObserver = ConnectionStatusObserverThroughSession()
 #endif
@@ -56,7 +63,7 @@ final class SettingsViewModel: ObservableObject {
     // Defaults
     @UserDefaultsWrapper(key: .subscriptionIsActive, defaultValue: false)
     static private var cachedHasActiveSubscription: Bool
-
+    
     // Closures to interact with legacy view controllers through the container
     var onRequestPushLegacyView: ((UIViewController) -> Void)?
     var onRequestPresentLegacyView: ((UIViewController, _ modal: Bool) -> Void)?
@@ -64,7 +71,7 @@ final class SettingsViewModel: ObservableObject {
     var onRequestDismissSettings: (() -> Void)?
     
     // SwiftUI Programatic Navigation Variables
-    // Add more views as needed here...    
+    // Add more views as needed here...
     @Published var shouldNavigateToDBP = false
     @Published var shouldNavigateToITP = false
     
@@ -86,12 +93,12 @@ final class SettingsViewModel: ObservableObject {
         case networkProtection
 #endif
     }
-                
+    
     var shouldShowNoMicrophonePermissionAlert: Bool = false
     
     // Used to automatically navigate on Appear to a specific section
     enum SettingsSection: String {
-        case none, netP, dbp, itp
+        case none, netP, dbp, itr
     }
     @Published var onAppearNavigationTarget: SettingsSection
     
@@ -194,7 +201,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-
+#if SUBSCRIPTION
     // MARK: Default Init
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
@@ -207,8 +214,20 @@ final class SettingsViewModel: ObservableObject {
         self.voiceSearchHelper = voiceSearchHelper
         self.onAppearNavigationTarget = navigateOnAppearDestination
     }
+#else
+    // MARK: Default Init
+    init(state: SettingsState? = nil,
+         legacyViewProvider: SettingsLegacyViewProvider,
+         voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
+         navigateOnAppearDestination: SettingsSection = .none) {
+        self.state = SettingsState.defaults
+        self.legacyViewProvider = legacyViewProvider
+        self.voiceSearchHelper = voiceSearchHelper
+        self.onAppearNavigationTarget = navigateOnAppearDestination
+    }
+#endif
+    
 }
- 
 // MARK: Private methods
 extension SettingsViewModel {
     
@@ -422,13 +441,13 @@ extension SettingsViewModel {
     private func navigateOnAppear() {
         // We need a short delay to let the SwifttUI view lifecycle complete
         // Otherwise the transition can be inconsistent
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
             switch self.onAppearNavigationTarget {
             case .netP:
                 self.presentLegacyView(.netP)
             case .dbp:
                 self.shouldNavigateToDBP = true
-            case .itp:
+            case .itr:
                 self.shouldNavigateToITP = true
             default:
                 break
@@ -457,8 +476,6 @@ extension SettingsViewModel {
         case .fireproofSites: pushViewController(legacyViewProvider.fireproofSites)
         case .autoclearData: pushViewController(legacyViewProvider.autoclearData)
         case .keyboard: pushViewController(legacyViewProvider.keyboard)
-        case .windowsApp: pushViewController(legacyViewProvider.windows)
-        case .macApp: pushViewController(legacyViewProvider.mac)
         case .about: pushViewController(legacyViewProvider.about)
         case .debug: pushViewController(legacyViewProvider.debug)
             

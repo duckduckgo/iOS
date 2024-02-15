@@ -23,6 +23,7 @@ import Combine
 import Core
 
 #if SUBSCRIPTION
+import Subscription
 @available(iOS 15.0, *)
 final class SubscriptionRestoreViewModel: ObservableObject {
     
@@ -39,7 +40,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     @Published var transactionStatus: SubscriptionPagesUseSubscriptionFeature.TransactionStatus = .idle
     @Published var activationResult: SubscriptionActivationResult = .unknown
     @Published var subscriptionEmail: String?
-    @Published var isManagingEmailSubscription: Bool = false
         
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
@@ -78,10 +78,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
             }
             transactionStatus = .idle
         }
-    }
-    
-    func manageEmailSubscription() {
-        isManagingEmailSubscription = true
     }
     
 }

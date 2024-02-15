@@ -3,7 +3,7 @@
 set -eo pipefail
 
 mute=">/dev/null 2>&1"
-release_branch_parent="main"
+base_branch="main"
 build_number=0
 
 # Get the directory where the script is stored
@@ -64,6 +64,12 @@ print_usage_and_exit() {
 	die "${reason}"
 }
 
+stash() {
+	printf '%s' "Stashing your changes ... "
+	eval git stash "$mute"
+	echo "✅"
+}
+
 read_command_line_arguments() {
 	local input="$1"
 	local version_regexp="^[0-9]+(\.[0-9]+)*$"
@@ -92,27 +98,34 @@ read_command_line_arguments() {
 	done
 }
 
-process_release() {
+process_release() { # expected input e.g. "1.72.0"
 	version="$1"
 	release_branch="release/${version}"
 
 	echo "Processing version number: $version"
 
 	if release_branch_exists; then 
-		is_subsequent_release=1
+		is_subsequent_release=1		
+		base_branch="$release_branch"
 	fi
 }
 
-process_hotfix() {
-	local input="$1"
-	echo "Processing hotfix branch name: $input"
-
+process_hotfix() { # expected input e.g. "hotfix/1.72.1"
+	version=$(echo "$1" | cut -d '/' -f 2)
+	release_branch="$1"
+	base_branch="$1"
 	is_hotfix=1
-	release_branch="$input"
+	
+	echo "Processing hotfix branch name: $release_branch"
 
 	if ! release_branch_exists; then 
-		die "💥 Error: Hotfix branch ${release_branch} does not exist"
+		die "💥 Error: Hotfix branch ${release_branch} does not exist. It should be created before you run this script."
 	fi
+}
+
+checkout_base_branch() {
+	eval git checkout "${base_branch}" "$mute"
+	eval git pull "$mute"
 }
 
 release_branch_exists() {
@@ -123,21 +136,11 @@ release_branch_exists() {
 	fi
 }
 
-stash() {
-	printf '%s' "Stashing your changes ... "
-	eval git stash "$mute"
-	echo "✅"
-}
-
 create_release_branch() {
 	printf '%s' "Creating release branch ... "
-	eval git checkout "${release_branch_parent}" "$mute"
-	eval git pull "$mute"
 
-	if [[ ! $is_subsequent_release && ! $is_hotfix ]]; then
-		if git show-ref --quiet "refs/heads/${release_branch}"; then
-			die "💥 Error: Branch ${release_branch} already exists"
-		fi
+	if git show-ref --quiet "refs/heads/${release_branch}"; then
+		die "💥 Error: Branch ${release_branch} already exists"
 	fi
 
 	eval git checkout -b "${release_branch}" "$mute"
@@ -147,16 +150,9 @@ create_release_branch() {
 
 create_build_branch() {
 	printf '%s' "Creating build branch ... "
-	eval git checkout "${release_branch}" "$mute"
-	eval git pull "$mute"
 
 	local temp_file
 	local latest_build_number
-
-	if [[ $is_hotfix ]]; then
-		version=$(cut -d' ' -f3 < "${base_dir}/Configuration/Version.xcconfig")
-		version=$(bump_patch_number "$version")
-	fi
 
 	temp_file=$(mktemp)
 	bundle exec fastlane latest_build_number_for_version version:"$version" file_name:"$temp_file"
@@ -181,12 +177,6 @@ update_marketing_version() {
 		"${base_dir}/DuckDuckGo/Settings.bundle/Root.plist"
 	eval git commit -m \"Update version number\" "$mute"
 	echo "✅"
-}
-
-bump_patch_number() {
-	IFS='.' read -ra arrIN <<< "$1"
-	local patch_number=$((arrIN[2] + 1))
-	echo "${arrIN[0]}.${arrIN[1]}.$patch_number"
 }
 
 update_build_version() {
@@ -243,8 +233,9 @@ main() {
 	assert_fastlane_installed
 	assert_gh_installed_and_authenticated
 
-	read_command_line_arguments "$@"
 	stash
+	read_command_line_arguments "$@"
+	checkout_base_branch
 
 	if [[ $is_subsequent_release ]]; then 
 		create_build_branch

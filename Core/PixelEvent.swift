@@ -499,6 +499,9 @@ extension Pixel {
         case syncDeleteAccountError
         case syncLoginExistingAccountError
 
+        case swipeTabsUsed
+        case swipeTabsUsedDaily
+
         case bookmarksCleanupFailed
         case bookmarksCleanupAttemptedWhileSyncWasEnabled
         case favoritesCleanupFailed
@@ -989,6 +992,8 @@ extension Pixel.Event {
         case .syncDeleteAccountError: return "m_d_sync_delete_account_error"
         case .syncLoginExistingAccountError: return "m_d_sync_login_existing_account_error"
 
+        case .swipeTabsUsed: return "m_swipe-tabs-used"
+        case .swipeTabsUsedDaily: return "m_swipe-tabs-used-daily"
 
         case .bookmarksCleanupFailed: return "m_d_bookmarks_cleanup_failed"
         case .bookmarksCleanupAttemptedWhileSyncWasEnabled: return "m_d_bookmarks_cleanup_attempted_while_sync_was_enabled"

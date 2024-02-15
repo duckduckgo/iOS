@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "browserserviceskit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
+      "state" : {
+        "revision" : "93a9a4153429de38c8b9f186617ff34db84f9250",
+        "version" : "107.0.1"
+      }
+    },
+    {
       "identity" : "cocoaasyncsocket",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/robbiehanson/CocoaAsyncSocket",

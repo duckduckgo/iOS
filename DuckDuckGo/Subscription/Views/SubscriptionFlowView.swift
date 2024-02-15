@@ -20,13 +20,72 @@
 #if SUBSCRIPTION
 import SwiftUI
 import Foundation
+import DesignResourcesKit
 
 @available(iOS 15.0, *)
 struct SubscriptionFlowView: View {
-        
+    
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var viewModel: SubscriptionFlowViewModel
+    @StateObject var viewModel = SubscriptionFlowViewModel()
     @State private var isAlertVisible = false
+    @State private var shouldShowNavigationBar = false
+    @State private var isActive: Bool = false
+    
+    enum Constants {
+        static let daxLogo = "Home"
+        static let daxLogoSize: CGFloat = 24.0
+        static let empty = ""
+        static let navButtonPadding: CGFloat = 20.0
+        static let backButtonImage = "chevron.left"
+    }
+    
+    var body: some View {
+        NavigationView {
+            baseView
+                .toolbar {
+                    ToolbarItemGroup(placement: .navigationBarLeading) {
+                        backButton
+                    }
+                    ToolbarItem(placement: .principal) {
+                        HStack {
+                            Image(Constants.daxLogo)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
+                            Text(viewModel.viewTitle).daxBodyRegular()
+                        }
+                    }
+                }
+                .edgesIgnoringSafeArea(.top)
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarHidden(!viewModel.shouldShowNavigationBar).animation(.easeOut)
+        }
+        .tint(Color(designSystemColor: .textPrimary))
+        .environment(\.rootPresentationMode, self.$isActive)
+    }
+    
+    @ViewBuilder
+    private var dismissButton: some View {
+        Button(action: { viewModel.finalizeSubscriptionFlow() }, label: { Text(UserText.subscriptionCloseButton) })
+        .padding(Constants.navButtonPadding)
+        .contentShape(Rectangle())
+        .tint(Color(designSystemColor: .textPrimary))
+    }
+    
+    @ViewBuilder
+    private var backButton: some View {
+        if viewModel.canNavigateBack {
+            Button(action: {
+                Task { await viewModel.navigateBack() }
+            }, label: {
+                HStack(spacing: 0) {
+                    Image(systemName: Constants.backButtonImage)
+                    Text(UserText.backButtonTitle)
+                }
+                
+            })
+        }
+    }
     
     private func getTransactionStatus() -> String {
         switch viewModel.transactionStatus {
@@ -41,48 +100,49 @@ struct SubscriptionFlowView: View {
         }
     }
     
-    var body: some View {
-        ZStack {
-            AsyncHeadlessWebView(url: $viewModel.purchaseURL,
-                                 userScript: viewModel.userScript,
-                                 subFeature: viewModel.subFeature,
-                                 shouldReload: $viewModel.shouldReloadWebView).background()
-
-            // Overlay that appears when transaction is in progress
-            if viewModel.transactionStatus != .idle {
-                PurchaseInProgressView(status: getTransactionStatus())
-            }
-         
-            // Activation View
-            NavigationLink(destination: SubscriptionRestoreView(viewModel: SubscriptionRestoreViewModel(),
-                                                                isActivatingSubscription: $viewModel.activatingSubscription),
-                           isActive: $viewModel.activatingSubscription) {
-                EmptyView()
+    
+    @ViewBuilder
+    private var baseView: some View {
+        ZStack(alignment: .top) {
+            webView
+                        
+            // Show a dismiss button while the bar is not visible
+            // But it should be hidden while performing a transaction
+            if !shouldShowNavigationBar && viewModel.transactionStatus == .idle {
+                HStack {
+                    backButton.padding(.leading, Constants.navButtonPadding)
+                    Spacer()
+                    dismissButton
+                }
             }
         }
-        .onChange(of: viewModel.shouldReloadWebView) { shouldReload in
-            if shouldReload {
-                viewModel.shouldReloadWebView = false
-            }
-        }
+        
         .onChange(of: viewModel.hasActiveSubscription) { result in
             if result {
                 isAlertVisible = true
             }
         }
+        
         .onChange(of: viewModel.shouldDismissView) { result in
             if result {
                 dismiss()
+                viewModel.shouldDismissView = false
+            }
+        }
+        
+        .onChange(of: viewModel.activatingSubscription) { value in
+            if value {
+                isActive = true
+                viewModel.activatingSubscription = false
             }
         }
         
         .onAppear(perform: {
+            setUpAppearances()
             Task { await viewModel.initializeViewData() }
+            
         })
-        .navigationTitle(viewModel.viewTitle)
-        .navigationBarBackButtonHidden(viewModel.transactionStatus != .idle)
         
-        // Active subscription found Alert
         .alert(isPresented: $isAlertVisible) {
             Alert(
                 title: Text(UserText.subscriptionFoundTitle),
@@ -94,7 +154,38 @@ struct SubscriptionFlowView: View {
                 }
             )
         }
-        .navigationBarBackButtonHidden(viewModel.transactionStatus != .idle)
+        // The trailing close button should be hidden when a transaction is in progress
+        .navigationBarItems(trailing: viewModel.transactionStatus == .idle
+                            ? Button(UserText.subscriptionCloseButton) { viewModel.finalizeSubscriptionFlow() }
+                            : nil)
     }
+    
+    @ViewBuilder
+    private var webView: some View {
+        
+        ZStack(alignment: .top) {
+            // Restore View Hidden Link
+            NavigationLink(destination: SubscriptionRestoreView(), isActive: $isActive) {
+                EmptyView()
+            }.isDetailLink(false)
+            
+            AsyncHeadlessWebView(viewModel: viewModel.webViewModel)
+                .background()
+            
+            if viewModel.transactionStatus != .idle {
+                PurchaseInProgressView(status: getTransactionStatus())
+            }
+
+        }
+    }
+        
+    private func setUpAppearances() {
+        let navAppearance = UINavigationBar.appearance()
+        navAppearance.backgroundColor = UIColor(designSystemColor: .surface)
+        navAppearance.barTintColor = UIColor(designSystemColor: .surface)
+        navAppearance.shadowImage = UIImage()
+        navAppearance.tintColor = UIColor(designSystemColor: .textPrimary)
+    }
+
 }
 #endif

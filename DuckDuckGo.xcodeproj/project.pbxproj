@@ -4540,9 +4540,9 @@
 			children = (
 				D668D92C2B696945008E2FF2 /* Subscription.swift */,
 				D664C7B32B289AA000CBFA76 /* SubscriptionPagesUserScript.swift */,
+				D664C7B52B289AA000CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift */,
 				D668D9282B69681C008E2FF2 /* IdentityTheftRestorationPagesUserScript.swift */,
 				D668D92A2B696840008E2FF2 /* IdentityTheftRestorationPagesFeature.swift */,
-				D664C7B52B289AA000CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift */,
 			);
 			path = UserScripts;
 			sourceTree = "<group>";

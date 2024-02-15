@@ -26,9 +26,15 @@ import Core
 
 struct AsyncHeadlessWebViewSettings {
     let bounces: Bool
+    let javascriptEnabled: Bool
+    let allowedDomains: [String]?
     
-    init(bounces: Bool = false) {
+    init(bounces: Bool = true,
+         javascriptEnabled: Bool = true,
+         allowedDomains: [String]? = nil) {
         self.bounces = bounces
+        self.javascriptEnabled = javascriptEnabled
+        self.allowedDomains = allowedDomains
     }
 }
 

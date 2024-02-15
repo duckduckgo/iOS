@@ -33,7 +33,6 @@ struct HeadlessWebView: UIViewRepresentable {
     var onContentType: ((String) -> Void)?
     var navigationCoordinator: HeadlessWebViewNavCoordinator
     
-
     func makeUIView(context: Context) -> WKWebView {
         let configuration = WKWebViewConfiguration()
         configuration.userContentController = makeUserContentController()
@@ -44,7 +43,9 @@ struct HeadlessWebView: UIViewRepresentable {
         webView.uiDelegate = context.coordinator
         webView.scrollView.delegate = context.coordinator
         webView.scrollView.bounces = settings.bounces
+        webView.configuration.defaultWebpagePreferences.allowsContentJavaScript = settings.javascriptEnabled
         webView.navigationDelegate = context.coordinator
+        webView.scrollView.contentInsetAdjustmentBehavior = .never
         
 #if DEBUG
         if #available(iOS 16.4, *) {
@@ -64,7 +65,9 @@ struct HeadlessWebView: UIViewRepresentable {
                     onURLChange: onURLChange,
                     onCanGoBack: onCanGoBack,
                     onCanGoForward: onCanGoForward,
-                    onContentType: onContentType)
+                    onContentType: onContentType,
+                    allowedDomains: settings.allowedDomains
+        )
     }
     
     @MainActor

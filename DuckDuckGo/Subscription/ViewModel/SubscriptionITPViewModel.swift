@@ -33,7 +33,7 @@ final class SubscriptionITPViewModel: ObservableObject {
     var viewTitle = UserText.settingsPProITRTitle
     
     enum Constants {
-        static let navigationBarHideThreshold = 40.0
+        static let navigationBarHideThreshold = 60.0
         static let downloadableContent = ["application/pdf"]
     }
     
@@ -64,8 +64,9 @@ final class SubscriptionITPViewModel: ObservableObject {
         
         webViewModel.$scrollPosition
             .receive(on: DispatchQueue.main)
+            .throttle(for: .milliseconds(100), scheduler: DispatchQueue.main, latest: true)
             .sink { [weak self] value in
-                self?.shouldShowNavigationBar = value.y > Constants.navigationBarHideThreshold
+                self?.shouldShowNavigationBar = (value.y > Constants.navigationBarHideThreshold)
             }
             .store(in: &cancellables)
         

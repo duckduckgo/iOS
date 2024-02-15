@@ -27,6 +27,7 @@ final class HeadlessWebViewCoordinator: NSObject {
     var onCanGoBack: ((Bool) -> Void)?
     var onCanGoForward: ((Bool) -> Void)?
     var onContentType: ((String) -> Void)?
+    var allowedDomains: [String]?
     
     private var lastURL: URL?
     
@@ -44,13 +45,15 @@ final class HeadlessWebViewCoordinator: NSObject {
          onURLChange: ((URL) -> Void)?,
          onCanGoBack: ((Bool) -> Void)?,
          onCanGoForward: ((Bool) -> Void)?,
-         onContentType: ((String) -> Void)?) {
+         onContentType: ((String) -> Void)?,
+         allowedDomains: [String]? = nil) {
         self.parent = parent
         self.onScroll = onScroll
         self.onURLChange = onURLChange
         self.onCanGoBack = onCanGoBack
         self.onCanGoForward = onCanGoForward
         self.onContentType = onContentType
+        self.allowedDomains = allowedDomains
     }
     
     func setupWebViewObservation(_ webView: WKWebView) {
@@ -117,7 +120,6 @@ extension HeadlessWebViewCoordinator: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard let url = navigationAction.request.url else {
-          
             decisionHandler(.allow)
           return
         }
@@ -127,12 +129,35 @@ extension HeadlessWebViewCoordinator: WKNavigationDelegate {
             return
         }
         
+        // Custom Schemes (tel: facetime: etc)
         if Constants.externalSchemes.contains(scheme) && UIApplication.shared.canOpenURL(url) {
-          UIApplication.shared.open(url, options: [:], completionHandler: nil)
-          decisionHandler(.cancel)
+            
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            decisionHandler(.cancel)
+            return
+            
         } else {
-          decisionHandler(.allow)
+            
+            // Validate the URL is in the allowed domains list (if present)
+            if let allowedDomains,
+                allowedDomains.count > 0,
+                let url = navigationAction.request.url {
+                
+                for domain in allowedDomains {
+                    if url.isPart(ofDomain: domain) {
+                        decisionHandler(.allow)
+                        return
+                    }
+                }
+                decisionHandler(.cancel)
+                return
+            }
+            
+            // Allow by default
+            decisionHandler(.allow)
+            
         }
+                
     }
     
 }

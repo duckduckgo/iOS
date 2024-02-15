@@ -73,9 +73,9 @@ struct SubscriptionITPView: View {
                     Button(UserText.subscriptionCloseButton) { dismiss() }
                 }
             }
-            .edgesIgnoringSafeArea(.top)
+            .edgesIgnoringSafeArea(.all)
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarHidden(!viewModel.shouldShowNavigationBar && !viewModel.isDownloadableContent).animation(.easeOut)
+            .navigationBarHidden(!viewModel.shouldShowNavigationBar && !viewModel.isDownloadableContent).animation(.snappy)
             
             .onAppear(perform: {
                 setUpAppearances()

@@ -492,6 +492,7 @@ class TabViewController: UIViewController {
         Task { @MainActor in
             await webView.configuration.websiteDataStore.dataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes())
             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
+            await DataStoreReadiness.shared.ensureReady()
             await WebCacheManager.shared.consumeCookies(httpCookieStore: cookieStore)
             doLoad()
         }

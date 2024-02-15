@@ -25,6 +25,7 @@ protocol AutoClearWorker {
     func clearNavigationStack()
     func forgetData() async
     func forgetTabs()
+    func clearDataFinished(_: AutoClear)
 }
 
 class AutoClear {
@@ -42,16 +43,19 @@ class AutoClear {
         self.worker = worker
     }
     
+    @MainActor
     private func clearData() async {
         guard let settings = AutoClearSettingsModel(settings: appSettings) else { return }
-        
-        if settings.action.contains(.clearData) {
-            await worker.forgetData()
-        }
         
         if settings.action.contains(.clearTabs) {
             worker.forgetTabs()
         }
+
+        if settings.action.contains(.clearData) {
+            await worker.forgetData()
+        }
+
+        worker.clearDataFinished(self)
     }
     
     @MainActor
@@ -86,6 +90,7 @@ class AutoClear {
         }
     }
     
+    @MainActor
     func applicationWillMoveToForeground() async {
         guard isClearingEnabled,
             let timestamp = timestamp,

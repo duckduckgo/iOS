@@ -611,72 +611,22 @@ class MainViewController: UIViewController {
         dismissOmniBar()
     }
 
-    class BlockingNavigationDelegate: NSObject, WKNavigationDelegate {
-
-        let finished = PassthroughSubject<Void, Never>()
-
-        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
-            print("***", #function, navigationAction.request.url?.absoluteString ?? "nil url")
-            return .allow
-        }
-
-        func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-            print("***", #function, error)
-        }
-
-        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-            print("***", #function)
-            finished.send()
-        }
-
-        var cancellable: AnyCancellable?
-        func waitForLoad() async {
-            print("***", #function, "waiting")
-            await withCheckedContinuation { continuation in
-                cancellable = finished.sink { _ in
-                    print("***", #function, "resuming")
-                    continuation.resume()
-                }
-            }
-        }
-
-        deinit {
-            print("***", #function)
-        }
-
-    }
-
-    let blockingDelegate = BlockingNavigationDelegate()
-
-    private func loadInBackgroundWebView(url: URL) async {
-        let config = WKWebViewConfiguration.persistent()
-        let webView = WKWebView(frame: .zero, configuration: config)
-        webView.navigationDelegate = blockingDelegate
-        let request = URLRequest(url: url)
-        webView.load(request)
-        await blockingDelegate.waitForLoad()
-        print("***", #function)
-    }
-
     private func configureTabManager() {
 
         let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
 
         let tabsModel: TabsModel
-        let shouldClearTabsModelOnStartup = AutoClearSettingsModel(settings: appSettings) != nil
-        if shouldClearTabsModelOnStartup {
-            _ = DataStoreIdManager.shared
-
-            Task { @MainActor in
-                if let model = TabsModel.get() {
-                    await loadInBackgroundWebView(url: URL(string: "about:blank")!)
-                    await self.forgetData()
-                }
-            }
-
+        if let settings = AutoClearSettingsModel(settings: appSettings) {
             tabsModel = TabsModel(desktop: isPadDevice)
             tabsModel.save()
             previewsSource.removeAllPreviews()
+
+            if TabsModel.get() != nil && settings.action.contains(.clearData) {
+                Task { @MainActor in
+                    await DataStoreReadiness.shared.ensureReady()
+                    await self.forgetData()
+                }
+            }
         } else {
             if let storedModel = TabsModel.get() {
                 // Save new model in case of migration
@@ -2147,7 +2097,12 @@ extension MainViewController: AutoClearWorker {
         tabsBarController?.refresh(tabsModel: tabManager.model)
         Favicons.shared.clearCache(.tabs)
     }
-    
+
+    @MainActor
+    func clearDataFinished(_: AutoClear) {
+        refreshUIAfterClear()
+    }
+
     func forgetData() async {
         guard !clearInProgress else {
             assertionFailure("Shouldn't get called multiple times")
@@ -2167,6 +2122,7 @@ extension MainViewController: AutoClearWorker {
             self.bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
         }
 
+        DataStoreReadiness.shared.onClearData()
         self.clearInProgress = false
         
         self.postClear?()

@@ -19,6 +19,7 @@
 
 import UIKit
 
+
 #if !SUBSCRIPTION
 
 final class SubscriptionDebugViewController: UITableViewController {
@@ -26,6 +27,7 @@ final class SubscriptionDebugViewController: UITableViewController {
 }
 
 #else
+import Subscription
 
 @available(iOS 15.0, *)
 final class SubscriptionDebugViewController: UITableViewController {

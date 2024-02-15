@@ -31,6 +31,10 @@ import Persistence
 import PrivacyDashboard
 import Networking
 
+#if SUBSCRIPTION
+import Subscription
+#endif
+
 #if NETWORK_PROTECTION
 import NetworkProtection
 #endif

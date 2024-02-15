@@ -22,7 +22,9 @@ import UserScript
 import Combine
 import Core
 
+
 #if SUBSCRIPTION
+import Subscription
 @available(iOS 15.0, *)
 final class SubscriptionFlowViewModel: ObservableObject {
     
@@ -39,7 +41,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     private var canGoBackCancellable: AnyCancellable?
     
     // State variables
-    var purchaseURL = URL.purchaseSubscription
+    var purchaseURL = URL.subscriptionPurchase
     
     enum FeatureName {
         static let netP = "vpn"

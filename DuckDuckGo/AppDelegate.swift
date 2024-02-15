@@ -283,11 +283,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         autoClear = AutoClear(worker: main)
-        Task { @MainActor in
+//        Task { @MainActor in
             // Internally this thing has always called 'async' functions but just never waited for them
             //  so this is no different really.
-            await autoClear?.applicationDidLaunch()
-        }
+            // await autoClear?.applicationDidLaunch()
+//        }
         
         AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
 
@@ -538,6 +538,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDependencyProvider.shared.autofillLoginSession.endSession()
         suspendSync()
         syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
+    }
+
+    func applicationWillTerminate(_ application: UIApplication) {
+        print("***", #function)
     }
 
     private func suspendSync() {

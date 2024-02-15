@@ -15,7 +15,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "sam/improve-rekeying-reliability",
-        "revision" : "02a67174a2d3663098dfeeff7b4c85447a1a2643"
+        "revision" : "4717e42eadd8dce76dbb761dc0c502560e122e45"
       }
     },
     {

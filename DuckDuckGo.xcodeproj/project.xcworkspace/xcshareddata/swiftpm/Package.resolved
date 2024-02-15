@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "328ce451fd1593809d1470ab5a0b5242a595f88c",
-        "version" : "107.0.0"
+        "branch" : "sam/improve-rekeying-reliability",
+        "revision" : "02a67174a2d3663098dfeeff7b4c85447a1a2643"
       }
     },
     {

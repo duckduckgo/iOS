@@ -22,6 +22,7 @@ import Bookmarks
 import Core
 import WidgetKit
 
+// swiftlint:disable file_length
 public class AppUserDefaults: AppSettings {
     
     public struct Notifications {

@@ -38,6 +38,22 @@ final class BrokenSiteReportingTests: XCTestCase {
         static let tests = "privacy-reference-tests/broken-site-reporting/tests.json"
     }
 
+    struct MockError: LocalizedError {
+        let description: String
+
+        init(_ description: String) {
+            self.description = description
+        }
+
+        var errorDescription: String? {
+            description
+        }
+
+        var localizedDescription: String? {
+            description
+        }
+    }
+
     override func setUp() {
         super.setUp()
 
@@ -73,10 +89,19 @@ final class BrokenSiteReportingTests: XCTestCase {
         }
         
         os_log("Testing [%s]", type: .info, test.name)
-        
+
+        var errors: [Error]?
+        var statusCodes: [Int]?
+        if let error = test.errorDescription {
+            errors = [MockError(error)]
+        }
+        if let httpStatusCode = test.httpStatusCode {
+            statusCodes = [httpStatusCode]
+        }
+
         let websiteBreakage = WebsiteBreakage(siteUrl: URL(string: test.siteURL)!,
                                               category: test.category,
-                                              description: "",
+                                              description: test.providedDescription,
                                               osVersion: test.os ?? "",
                                               manufacturer: test.manufacturer ?? "",
                                               upgradedHttps: test.wasUpgraded,
@@ -91,8 +116,8 @@ final class BrokenSiteReportingTests: XCTestCase {
                                               siteType: .mobile,
                                               atb: "",
                                               model: test.model ?? "",
-                                              errors: nil,
-                                              httpStatusCodes: nil)
+                                              errors: errors,
+                                              httpStatusCodes: statusCodes)
 
         let reporter = WebsiteBreakageReporter(pixelHandler: { params in
             
@@ -100,7 +125,13 @@ final class BrokenSiteReportingTests: XCTestCase {
                 
                 if let actualValue = params[expectedParam.name],
                    let expectedCleanValue = expectedParam.value.removingPercentEncoding {
-                    if actualValue != expectedCleanValue {
+                    if expectedParam.name == "errorDescriptions" {
+                        // `localizedDescription` includes class information. This format is likely to differ per platform
+                        // anyway. So we'll just check if the value contains the expected data instead
+                        if !actualValue.contains(expectedCleanValue) {
+                            XCTFail("Mismatching param: \(expectedParam.name) => \(expectedCleanValue) does not contain \(actualValue)")
+                        }
+                    } else if actualValue != expectedCleanValue {
                         XCTFail("Mismatching param: \(expectedParam.name) => \(expectedCleanValue) != \(actualValue)")
                     }
                 } else {
@@ -133,6 +164,7 @@ private struct Test: Codable {
     let siteURL: String
     let wasUpgraded: Bool
     let category: String
+    let providedDescription: String?
     let blockedTrackers, surrogates: [String]
     let atb, blocklistVersion: String
     let expectReportURLPrefix: String
@@ -141,6 +173,8 @@ private struct Test: Codable {
     let manufacturer, model, os: String?
     let gpcEnabled: Bool?
     let protectionsEnabled: Bool
+    let errorDescription: String?
+    let httpStatusCode: Int?
 }
 
 // MARK: - ExpectReportURLParam

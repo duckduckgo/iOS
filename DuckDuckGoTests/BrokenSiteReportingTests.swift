@@ -91,8 +91,8 @@ final class BrokenSiteReportingTests: XCTestCase {
                                               siteType: .mobile,
                                               atb: "",
                                               model: test.model ?? "",
-                                              error: nil,
-                                              httpStatusCode: nil)
+                                              errors: nil,
+                                              httpStatusCodes: nil)
 
         let reporter = WebsiteBreakageReporter(pixelHandler: { params in
             

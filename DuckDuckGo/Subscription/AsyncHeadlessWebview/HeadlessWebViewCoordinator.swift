@@ -27,7 +27,9 @@ final class HeadlessWebViewCoordinator: NSObject {
     var onCanGoBack: ((Bool) -> Void)?
     var onCanGoForward: ((Bool) -> Void)?
     var onContentType: ((String) -> Void)?
-    var allowedDomains: [String]?
+    var settings: AsyncHeadlessWebViewSettings
+    
+    var size: CGSize = .zero
     
     private var lastURL: URL?
     
@@ -46,14 +48,15 @@ final class HeadlessWebViewCoordinator: NSObject {
          onCanGoBack: ((Bool) -> Void)?,
          onCanGoForward: ((Bool) -> Void)?,
          onContentType: ((String) -> Void)?,
-         allowedDomains: [String]? = nil) {
+         allowedDomains: [String]? = nil,
+         settings: AsyncHeadlessWebViewSettings = AsyncHeadlessWebViewSettings()) {
         self.parent = parent
         self.onScroll = onScroll
         self.onURLChange = onURLChange
         self.onCanGoBack = onCanGoBack
         self.onCanGoForward = onCanGoForward
         self.onContentType = onContentType
-        self.allowedDomains = allowedDomains
+        self.settings = settings
     }
     
     func setupWebViewObservation(_ webView: WKWebView) {
@@ -110,54 +113,53 @@ extension HeadlessWebViewCoordinator: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        webView.evaluateJavaScript(Constants.contentTypeJS) { result, error in
-            guard error == nil, let contentType = result as? String else {
-                return
+        if settings.javascriptEnabled {
+            webView.evaluateJavaScript(Constants.contentTypeJS) { result, error in
+                guard error == nil, let contentType = result as? String else {
+                    return
+                }
+                self.onContentType?(contentType)
             }
-            self.onContentType?(contentType)
         }
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        guard let url = navigationAction.request.url else {
-            decisionHandler(.allow)
-          return
-        }
-
-        guard let scheme = url.scheme else {
+        guard let url = navigationAction.request.url, let scheme = url.scheme else {
             decisionHandler(.cancel)
             return
         }
         
-        // Custom Schemes (tel: facetime: etc)
-        if Constants.externalSchemes.contains(scheme) && UIApplication.shared.canOpenURL(url) {
-            
+        // Handle custom schemes (e.g., tel:, facetime:, etc.)
+        if Constants.externalSchemes.contains(scheme), UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
             decisionHandler(.cancel)
             return
-            
-        } else {
-            
-            // Validate the URL is in the allowed domains list (if present)
-            if let allowedDomains,
-                allowedDomains.count > 0,
-                let url = navigationAction.request.url {
-                
-                for domain in allowedDomains {
-                    if url.isPart(ofDomain: domain) {
-                        decisionHandler(.allow)
-                        return
-                    }
-                }
-                decisionHandler(.cancel)
-                return
-            }
-            
-            // Allow by default
-            decisionHandler(.allow)
-            
         }
-                
+
+        // Publish the URL change
+        self.onURLChange?(url)
+        lastURL = url
+        
+        // Validate the URL against allowed domains list, if present
+        if let allowedDomains = settings.allowedDomains, !allowedDomains.isEmpty {
+            let isURLAllowed = allowedDomains.contains { domain in
+                url.isPart(ofDomain: domain)
+            }
+
+            decisionHandler(isURLAllowed ? .allow : .cancel)
+            return
+        }
+        
+        // Default policy: allow navigation
+        decisionHandler(.allow)
+    }
+    
+    func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+        print("Terminated niggasss  ")
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        print("Failed to load: \(error.localizedDescription)")
     }
     
 }

@@ -26,10 +26,11 @@ import DesignResourcesKit
 struct SubscriptionExternalLinkView: View {
         
     @Environment(\.dismiss) var dismiss
-    @StateObject var viewModel = SubscriptionExternalLinkViewModel()
+    @ObservedObject var viewModel: SubscriptionExternalLinkViewModel
         
     enum Constants {
         static let navButtonPadding: CGFloat = 20.0
+        static let backButtonImage = "chevron.left"
     }
     
     
@@ -37,11 +38,13 @@ struct SubscriptionExternalLinkView: View {
         NavigationView {
             baseView
             .toolbar {
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    backButton
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(UserText.subscriptionCloseButton) { dismiss() }
                 }
             }
-            .edgesIgnoringSafeArea(.all)
             .navigationBarTitleDisplayMode(.inline)
             
             .onAppear(perform: {
@@ -63,6 +66,20 @@ struct SubscriptionExternalLinkView: View {
         ZStack(alignment: .top) {
             AsyncHeadlessWebView(viewModel: viewModel.webViewModel)
                 .background()
+        }
+    }
+    
+    @ViewBuilder
+    private var backButton: some View {
+        if viewModel.canNavigateBack {
+            Button(action: {
+                Task { await viewModel.navigateBack() }
+            }, label: {
+                HStack(spacing: 0) {
+                    Image(systemName: Constants.backButtonImage)
+                    Text(UserText.backButtonTitle)
+                }
+            })
         }
     }
     

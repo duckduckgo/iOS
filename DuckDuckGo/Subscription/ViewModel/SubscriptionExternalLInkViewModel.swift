@@ -26,28 +26,40 @@ import Combine
 final class SubscriptionExternalLinkViewModel: ObservableObject {
             
     @Published var webViewModel: AsyncHeadlessWebViewViewModel
-    private var webViewSettings = AsyncHeadlessWebViewSettings(bounces: false,
-                                                               javascriptEnabled: false,
-                                                               allowedDomains: ["whatismybrowser.com"])
+    var url: URL
+    var allowedDomains: [String]? = ["irisidentityprotection.com"]
+    private var canGoBackCancellable: AnyCancellable?
+    
+    @Published var canNavigateBack: Bool = false
+    
     private var cancellables = Set<AnyCancellable>()
     
-    init() {
+    init(url: URL, allowedDomains: [String]? = nil) {
+        let webViewSettings = AsyncHeadlessWebViewSettings(bounces: false,
+                                                           allowedDomains: allowedDomains,
+                                                           contentBlocking: true)
+                
+        self.url = url
         self.webViewModel = AsyncHeadlessWebViewViewModel(settings: webViewSettings)
     }
     
-    func initializeView() {
-        webViewModel.navigationCoordinator.navigateTo(url: URL(string: "https://www.whatismybrowser.com/detect/is-javascript-enabled")!)
-        setupSubscribers()
-    }
-    
-    private func setupSubscribers() {
+    // Observe transaction status
+    private func setupSubscribers() async {
         
-        webViewModel.$url
+        canGoBackCancellable = webViewModel.$canGoBack
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
-                print(value)
+                self?.canNavigateBack = value
             }
-            .store(in: &cancellables)
+    }
+    
+    func initializeView() {
+        webViewModel.navigationCoordinator.navigateTo(url: url)
+    }
+    
+    @MainActor
+    func navigateBack() async {
+        await webViewModel.navigationCoordinator.goBack()
     }
     
 }

@@ -39,11 +39,9 @@ struct SettingsGeneralView: View {
             }
             
             if #available(iOS 15.0, *) {
-                NavigationLink(destination: SubscriptionExternalLinkView()) {
+                NavigationLink(destination: SubscriptionExternalLinkView(viewModel: SubscriptionExternalLinkViewModel(url: URL(string: "https://www.irisidentityprotection.com/terms-conditions")!))) {
                     SettingsCellView(label: UserText.settingsAddWidget)
                 }
-            } else {
-                // Fallback on earlier versions
             }
 
         }

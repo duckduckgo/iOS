@@ -36,7 +36,7 @@ final class HeadlessWebViewNavCoordinator {
     
     func navigateTo(url: URL) {
         guard let webView else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             DefaultUserAgentManager.shared.update(webView: webView, isDesktop: false, url: url)
             webView.load(URLRequest(url: url))
         }

@@ -81,6 +81,16 @@ struct SubscriptionITPView: View {
                 setUpAppearances()
                 viewModel.initializeView()
             })
+                        
+            .sheet(isPresented: Binding(
+                get: { viewModel.shouldShowExternalURLSheet },
+                set: { if !$0 { viewModel.shouldNavigateToExternalURL = nil } }
+            )) {
+                if let url = viewModel.shouldNavigateToExternalURL {
+                    SubscriptionExternalLinkView(viewModel: SubscriptionExternalLinkViewModel(url: url))
+                }
+            }
+            
         }.tint(Color(designSystemColor: .textPrimary))
     }
     

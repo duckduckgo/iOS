@@ -39,6 +39,12 @@ final class SubscriptionEmailViewModel: ObservableObject {
     @Published var managingSubscriptionEmail = false
     @Published var webViewModel: AsyncHeadlessWebViewViewModel
     
+    private var allowedDomains = [
+        "duckduckgo.com",
+        "microsoftonline.com",
+        "duosecurity.com",
+    ]
+    
     private var cancellables = Set<AnyCancellable>()
             
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
@@ -49,7 +55,9 @@ final class SubscriptionEmailViewModel: ObservableObject {
         self.accountManager = accountManager
         self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,
                                                           subFeature: subFeature,
-                                                          settings: AsyncHeadlessWebViewSettings(bounces: false))
+                                                          settings: AsyncHeadlessWebViewSettings(bounces: false,
+                                                                                                 allowedDomains: allowedDomains,
+                                                                                                 contentBlocking: false))
         initializeView()
         setupTransactionObservers()
     }

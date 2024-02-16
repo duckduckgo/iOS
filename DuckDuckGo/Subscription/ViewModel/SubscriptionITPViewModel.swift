@@ -117,8 +117,8 @@ final class SubscriptionITPViewModel: ObservableObject {
                 guard let self = self, let url = url else { return }
                 
                 // Check if allowedDomains is empty or if the URL is valid or part of the allowed domains
-                if self.allowedDomains.isEmpty ||
-                    self.allowedDomains.contains(where: { url.isPart(ofDomain: $0) }),
+                if Self.allowedDomains.isEmpty ||
+                    Self.allowedDomains.contains(where: { url.isPart(ofDomain: $0) }),
                     self.shouldNavigateToExternalURL == nil {
                     self.isDownloadableContent = false
                     self.currentURL = url

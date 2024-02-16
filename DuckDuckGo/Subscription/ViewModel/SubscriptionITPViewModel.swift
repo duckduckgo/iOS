@@ -36,6 +36,7 @@ final class SubscriptionITPViewModel: ObservableObject {
         static let navigationBarHideThreshold = 60.0
         static let downloadableContent = ["application/pdf"]
         static let blankURL = "about:blank"
+        static let externalSchemes =  ["tel", "sms", "facetime"]
     }
     
     // State variables
@@ -123,8 +124,9 @@ final class SubscriptionITPViewModel: ObservableObject {
                     self.isDownloadableContent = false
                     self.currentURL = url
                 } else {
-                    // Fire up navigation in a separate View
-                    if url.absoluteString != Constants.blankURL {
+                    // Fire up navigation in a separate View (if a valid link)
+                    if url.absoluteString != Constants.blankURL &&
+                       !Constants.externalSchemes.contains(url.scheme ?? "") {
                         self.shouldNavigateToExternalURL = url
                     }
                 }

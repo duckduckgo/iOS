@@ -12,10 +12,10 @@
     {
       "identity" : "browserserviceskit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
+      "location" : "https://github.com/duckduckgo/BrowserServicesKit",
       "state" : {
-        "revision" : "328ce451fd1593809d1470ab5a0b5242a595f88c",
-        "version" : "107.0.0"
+        "revision" : "93a9a4153429de38c8b9f186617ff34db84f9250",
+        "version" : "107.0.1"
       }
     },
     {

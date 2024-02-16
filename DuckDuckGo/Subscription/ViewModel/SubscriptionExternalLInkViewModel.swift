@@ -49,7 +49,6 @@ final class SubscriptionExternalLinkViewModel: ObservableObject {
         canGoBackCancellable = webViewModel.$canGoBack
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
-                print(value)
                 self?.canNavigateBack = value
             }
     }

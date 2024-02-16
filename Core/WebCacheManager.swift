@@ -96,7 +96,6 @@ public class WebCacheManager {
         // Perform legacy clearing to migrate to new container
         cookiesToUpdate += await legacyDataClearing() ?? []
 
-        print("***", #function, cookiesToUpdate.map { $0.domain + "/" + $0.name + "=" + $0.value })
         cookieStorage.updateCookies(cookiesToUpdate, keepingPreservedLogins: logins)
     }
   
@@ -119,7 +118,6 @@ extension WebCacheManager {
         guard let containerId = storeIdManager.id else { return [] }
         var dataStore: WKWebsiteDataStore? = WKWebsiteDataStore(forIdentifier: containerId)
         let cookies = await dataStore?.httpCookieStore.allCookies()
-        print("***", #function, cookies?.map { $0.domain + "/" + $0.name + "=" + $0.value })
         dataStore = nil
         
         let uuids = await WKWebsiteDataStore.allDataStoreIdentifiers

@@ -58,18 +58,12 @@ extension WKWebViewConfiguration {
 
 public class DataStoreIdManager {
 
-    private static let _shared = DataStoreIdManager()
-
-    public static var shared: DataStoreIdManager {
-        print("***", #function, _shared.containerId ?? "nil")
-        return _shared
-    }
+    public static let shared = DataStoreIdManager()
 
     @UserDefaultsWrapper(key: .webContainerId, defaultValue: nil)
     private var containerId: String?
 
     var id: UUID? {
-        print("***", #function, containerId ?? "nil")
         if let containerId {
             return UUID(uuidString: containerId)
         }
@@ -77,14 +71,11 @@ public class DataStoreIdManager {
     }
 
     var hasId: Bool {
-        print("***", #function, containerId ?? "nil")
         return containerId != nil
     }
 
     public func allocateNewContainerId() {
-        print("***", #function, "IN", containerId ?? "nil")
         self.containerId = UUID().uuidString
-        print("***", #function, "OUT", containerId ?? "nil")
     }
 
 }

@@ -540,10 +540,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
     }
 
-    func applicationWillTerminate(_ application: UIApplication) {
-        print("***", #function)
-    }
-
     private func suspendSync() {
         if syncService.isSyncInProgress {
             os_log(.debug, log: .syncLog, "Sync is in progress. Starting background task to allow it to gracefully complete.")

@@ -27,9 +27,7 @@ public class DataStoreWarmup {
 
     @MainActor
     public func ensureReady() async {
-        print("***", #function, "IN")
         await BlockingNavigationDelegate().loadInBackgroundWebView(url: URL(string: "about:blank")!)
-        print("***", #function, "OUT")
     }
 
 }
@@ -39,12 +37,10 @@ private class BlockingNavigationDelegate: NSObject, WKNavigationDelegate {
     let finished = PassthroughSubject<Void, Never>()
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
-        print("***", #function, navigationAction.request.url?.absoluteString ?? "nil url")
         return .allow
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        print("***", #function)
         finished.send()
     }
 
@@ -56,10 +52,8 @@ private class BlockingNavigationDelegate: NSObject, WKNavigationDelegate {
 
     var cancellable: AnyCancellable?
     func waitForLoad() async {
-        print("***", #function, "waiting")
         await withCheckedContinuation { continuation in
             cancellable = finished.sink { _ in
-                print("***", #function, "resuming")
                 continuation.resume()
             }
         }
@@ -72,13 +66,7 @@ private class BlockingNavigationDelegate: NSObject, WKNavigationDelegate {
         webView.navigationDelegate = self
         let request = URLRequest(url: url)
         webView.load(request)
-        print("***", #function, "waiting")
         await waitForLoad()
-        print("***", #function, "resuming")
-    }
-
-    deinit {
-        print("***", #function)
     }
 
 }

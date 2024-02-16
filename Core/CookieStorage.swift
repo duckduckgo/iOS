@@ -37,12 +37,9 @@ public class CookieStorage {
     
     var isConsumed: Bool {
         get {
-            let value = userDefaults.bool(forKey: Keys.consumed, defaultValue: false)
-            print("***", #function, value)
-            return value
+            return userDefaults.bool(forKey: Keys.consumed, defaultValue: false)
         }
         set {
-            print("***", #function, newValue)
             userDefaults.set(newValue, forKey: Keys.consumed)
         }
     }

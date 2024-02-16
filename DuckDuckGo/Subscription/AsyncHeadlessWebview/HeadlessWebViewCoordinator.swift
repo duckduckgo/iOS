@@ -154,10 +154,6 @@ extension HeadlessWebViewCoordinator: WKNavigationDelegate {
         decisionHandler(.allow)
     }
     
-    func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
-        print("Terminated niggasss  ")
-    }
-    
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         print("Failed to load: \(error.localizedDescription)")
     }

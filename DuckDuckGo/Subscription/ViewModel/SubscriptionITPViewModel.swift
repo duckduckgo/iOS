@@ -58,6 +58,10 @@ final class SubscriptionITPViewModel: ObservableObject {
         "microsoftonline.com",
         "duosecurity.com",
     ]
+    
+    private var externalLinksViewModel: SubscriptionExternalLinkViewModel?
+    // Limit navigation to these external domains
+    private var externalAllowedDomains = ["irisidentityprotection.com"]
 
     private var cancellables = Set<AnyCancellable>()
     private var canGoBackCancellable: AnyCancellable?
@@ -155,6 +159,16 @@ final class SubscriptionITPViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.attachmentURL = tempFileURL
             }
+        }
+    }
+    
+    func getExternalLinksViewModel(url: URL) -> SubscriptionExternalLinkViewModel {
+        if let existingModel = externalLinksViewModel {
+            return existingModel
+        } else {
+            let model = SubscriptionExternalLinkViewModel(url: url, allowedDomains: externalAllowedDomains)
+            externalLinksViewModel = model
+            return model
         }
     }
 

@@ -87,7 +87,7 @@ struct SubscriptionITPView: View {
                 set: { if !$0 { viewModel.shouldNavigateToExternalURL = nil } }
             )) {
                 if let url = viewModel.shouldNavigateToExternalURL {
-                    SubscriptionExternalLinkView(viewModel: SubscriptionExternalLinkViewModel(url: url))
+                    SubscriptionExternalLinkView(viewModel: viewModel.getExternalLinksViewModel(url: url))
                 }
             }
             

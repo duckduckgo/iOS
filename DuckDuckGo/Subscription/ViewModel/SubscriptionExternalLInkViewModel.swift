@@ -24,12 +24,12 @@ import Combine
 #if SUBSCRIPTION
 @available(iOS 15.0, *)
 final class SubscriptionExternalLinkViewModel: ObservableObject {
-            
-    @Published var webViewModel: AsyncHeadlessWebViewViewModel
+                
     var url: URL
-    var allowedDomains: [String]? = ["irisidentityprotection.com"]
+    var allowedDomains: [String]?
     private var canGoBackCancellable: AnyCancellable?
     
+    @Published var webViewModel: AsyncHeadlessWebViewViewModel
     @Published var canNavigateBack: Bool = false
     
     private var cancellables = Set<AnyCancellable>()
@@ -49,12 +49,15 @@ final class SubscriptionExternalLinkViewModel: ObservableObject {
         canGoBackCancellable = webViewModel.$canGoBack
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
+                print(value)
                 self?.canNavigateBack = value
             }
     }
     
     func initializeView() {
+        Task { await setupSubscribers() }
         webViewModel.navigationCoordinator.navigateTo(url: url)
+        
     }
     
     @MainActor

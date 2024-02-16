@@ -786,7 +786,7 @@
 		D668D92B2B696840008E2FF2 /* IdentityTheftRestorationPagesFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D668D92A2B696840008E2FF2 /* IdentityTheftRestorationPagesFeature.swift */; };
 		D668D92D2B696945008E2FF2 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = D668D92C2B696945008E2FF2 /* Subscription.swift */; };
 		D68A21442B7EC08500BB372E /* SubscriptionExternalLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68A21432B7EC08500BB372E /* SubscriptionExternalLinkView.swift */; };
-		D68A21462B7EC16200BB372E /* SubscriptionExternaLInkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68A21452B7EC16200BB372E /* SubscriptionExternaLInkViewModel.swift */; };
+		D68A21462B7EC16200BB372E /* SubscriptionExternalLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68A21452B7EC16200BB372E /* SubscriptionExternalLinkViewModel.swift */; };
 		D68DF81C2B58302E0023DBEA /* SubscriptionRestoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68DF81B2B58302E0023DBEA /* SubscriptionRestoreView.swift */; };
 		D68DF81E2B5830380023DBEA /* SubscriptionRestoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68DF81D2B5830380023DBEA /* SubscriptionRestoreViewModel.swift */; };
 		D69DBB502B72B1D300156310 /* View+TopMostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69DBB4F2B72B1D200156310 /* View+TopMostController.swift */; };
@@ -2435,7 +2435,7 @@
 		D668D92A2B696840008E2FF2 /* IdentityTheftRestorationPagesFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentityTheftRestorationPagesFeature.swift; sourceTree = "<group>"; };
 		D668D92C2B696945008E2FF2 /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
 		D68A21432B7EC08500BB372E /* SubscriptionExternalLinkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionExternalLinkView.swift; sourceTree = "<group>"; };
-		D68A21452B7EC16200BB372E /* SubscriptionExternaLInkViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionExternaLInkViewModel.swift; sourceTree = "<group>"; };
+		D68A21452B7EC16200BB372E /* SubscriptionExternalLinkViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionExternalLinkViewModel.swift; sourceTree = "<group>"; };
 		D68DF81B2B58302E0023DBEA /* SubscriptionRestoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionRestoreView.swift; sourceTree = "<group>"; };
 		D68DF81D2B5830380023DBEA /* SubscriptionRestoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionRestoreViewModel.swift; sourceTree = "<group>"; };
 		D69DBB4F2B72B1D200156310 /* View+TopMostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+TopMostController.swift"; sourceTree = "<group>"; };
@@ -4511,7 +4511,7 @@
 				D64648AE2B5993890033090B /* SubscriptionEmailViewModel.swift */,
 				D652498D2B515A6A0056B0DE /* SubscriptionSettingsViewModel.swift */,
 				D6BFCB602B7525160051FF81 /* SubscriptionPIRViewModel.swift */,
-				D68A21452B7EC16200BB372E /* SubscriptionExternaLInkViewModel.swift */,
+				D68A21452B7EC16200BB372E /* SubscriptionExternalLinkViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -6617,7 +6617,7 @@
 				31CB4251273AF50700FA0F3F /* SpeechRecognizerProtocol.swift in Sources */,
 				319A37172829C8AD0079FBCE /* UITableViewExtension.swift in Sources */,
 				85EE7F59224673C5000FE757 /* WebContainerNavigationController.swift in Sources */,
-				D68A21462B7EC16200BB372E /* SubscriptionExternaLInkViewModel.swift in Sources */,
+				D68A21462B7EC16200BB372E /* SubscriptionExternalLinkViewModel.swift in Sources */,
 				F4C9FBF528340DDA002281CC /* AutofillInterfaceEmailTruncator.swift in Sources */,
 				1E016AB42949FEB500F21625 /* OmniBarNotificationViewModel.swift in Sources */,
 				6AC6DAB328804F97002723C0 /* BarsAnimator.swift in Sources */,

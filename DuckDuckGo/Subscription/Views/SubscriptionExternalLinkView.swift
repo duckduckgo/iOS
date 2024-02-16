@@ -46,6 +46,7 @@ struct SubscriptionExternalLinkView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
+            .navigationViewStyle(.stack)
             
             .onAppear(perform: {
                 setUpAppearances()

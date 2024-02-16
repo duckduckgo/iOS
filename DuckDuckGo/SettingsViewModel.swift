@@ -100,7 +100,13 @@ final class SettingsViewModel: ObservableObject {
     enum SettingsSection: String {
         case none, netP, dbp, itr
     }
+    
+    enum NavigationStyle {
+        case push, sheet
+    }
+    
     @Published var onAppearNavigationTarget: SettingsSection
+    @Published var onAppearNavigationStyle: NavigationStyle = .push
     
     // MARK: Bindings
     var themeBinding: Binding<ThemeName> {

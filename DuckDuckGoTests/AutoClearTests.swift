@@ -28,7 +28,8 @@ class AutoClearTests: XCTestCase {
         var clearNavigationStackInvocationCount = 0
         var forgetDataInvocationCount = 0
         var forgetTabsInvocationCount = 0
-        
+        var clearDataFinishedInvocationCount = 0
+
         func clearNavigationStack() {
             clearNavigationStackInvocationCount += 1
         }
@@ -39,6 +40,10 @@ class AutoClearTests: XCTestCase {
         
         func forgetTabs() {
             forgetTabsInvocationCount += 1
+        }
+
+        func clearDataFinished(_: AutoClear) {
+            clearDataFinishedInvocationCount += 1
         }
     }
     
@@ -61,6 +66,7 @@ class AutoClearTests: XCTestCase {
         
         XCTAssertEqual(worker.forgetDataInvocationCount, 1)
         XCTAssertEqual(worker.forgetTabsInvocationCount, 0)
+        XCTAssertEqual(worker.clearDataFinishedInvocationCount, 0)
     }
     
     func testWhenModeIsSetToCleanTabsAndDataThenDataIsCleared() async {
@@ -71,7 +77,8 @@ class AutoClearTests: XCTestCase {
         await logic.applicationDidLaunch()
         
         XCTAssertEqual(worker.forgetDataInvocationCount, 1)
-        
+        XCTAssertEqual(worker.clearDataFinishedInvocationCount, 0)
+
         // Tabs are cleared when loading TabsModel for the first time
         XCTAssertEqual(worker.forgetTabsInvocationCount, 0)
     }
@@ -85,6 +92,7 @@ class AutoClearTests: XCTestCase {
         
         XCTAssertEqual(worker.forgetDataInvocationCount, 0)
         XCTAssertEqual(worker.forgetTabsInvocationCount, 0)
+        XCTAssertEqual(worker.clearDataFinishedInvocationCount, 0)
     }
     
     func testWhenTimingIsSetToTerminationThenOnlyRestartClearsData() async {

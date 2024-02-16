@@ -34,17 +34,15 @@ struct SettingsMoreView: View {
                              disclosureIndicator: true,
                              isButton: true)
             
-            SettingsCellView(label: UserText.macBrowserTitle,
-                             subtitle: UserText.macWaitlistBrowsePrivately,
-                             action: { viewModel.presentLegacyView(.macApp) },
-                             disclosureIndicator: true,
-                             isButton: true)
+            NavigationLink(destination: DesktopDownloadView(viewModel: .init(platform: .mac))) {
+                SettingsCellView(label: UserText.macBrowserTitle,
+                                 subtitle: UserText.macWaitlistBrowsePrivately)
+            }
             
-            SettingsCellView(label: UserText.windowsWaitlistTitle,
-                             subtitle: UserText.windowsWaitlistBrowsePrivately,
-                             action: { viewModel.presentLegacyView(.windowsApp) },
-                             disclosureIndicator: true,
-                             isButton: true)
+            NavigationLink(destination: DesktopDownloadView(viewModel: .init(platform: .windows))) {
+                SettingsCellView(label: UserText.windowsWaitlistTitle,
+                                 subtitle: UserText.windowsWaitlistBrowsePrivately)
+            }
 
 #if NETWORK_PROTECTION
             if viewModel.state.networkProtection.enabled {

@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "93a9a4153429de38c8b9f186617ff34db84f9250",
-        "version" : "107.0.1"
+        "branch" : "bhall/bump-css",
+        "revision" : "6b82ebab038310cd02dd5c92a876d1fdc4cef751"
       }
     },
     {
@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "063b560e59a50e03d9b00b88a7fcb2ed2b562395",
-        "version" : "4.61.0"
+        "revision" : "36ddba2cbac52a41b9a9275af06d32fa8a56d2d7",
+        "version" : "4.64.0"
       }
     },
     {

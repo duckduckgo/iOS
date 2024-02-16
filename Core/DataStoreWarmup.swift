@@ -1,5 +1,5 @@
 //
-//  DataStoreReadiness.swift
+//  DataStoreWarmup.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -20,21 +20,15 @@
 import Combine
 import WebKit
 
-public class DataStoreReadiness {
+/// WKWebsiteDataStore is basically non-functional until a web view has been instanciated and a page is successfully loaded.
+public class DataStoreWarmup {
 
-    public static let shared = DataStoreReadiness()
-
-    private var blockingDelegate: BlockingNavigationDelegate? = BlockingNavigationDelegate()
-
-    public func onClearData() {
-        blockingDelegate = BlockingNavigationDelegate()
-    }
+    public init() { }
 
     @MainActor
     public func ensureReady() async {
         print("***", #function, "IN")
-        await blockingDelegate?.loadInBackgroundWebView(url: URL(string: "about:blank")!)
-        blockingDelegate = nil
+        await BlockingNavigationDelegate().loadInBackgroundWebView(url: URL(string: "about:blank")!)
         print("***", #function, "OUT")
     }
 
@@ -51,6 +45,12 @@ private class BlockingNavigationDelegate: NSObject, WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         print("***", #function)
+        finished.send()
+    }
+
+    func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+        Pixel.fire(pixel: .webKitDidTerminateDuringWarmup)
+        // We won't get a `didFinish` if the webview crashes
         finished.send()
     }
 

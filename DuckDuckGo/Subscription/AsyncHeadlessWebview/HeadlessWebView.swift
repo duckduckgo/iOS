@@ -41,7 +41,7 @@ struct HeadlessWebView: UIViewRepresentable {
         let preferences = WKWebpagePreferences()
         preferences.allowsContentJavaScript = settings.javascriptEnabled
         preferences.preferredContentMode = .mobile
-        // configuration.defaultWebpagePreferences = preferences
+         configuration.defaultWebpagePreferences = preferences
         
         let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.uiDelegate = context.coordinator
@@ -84,7 +84,8 @@ struct HeadlessWebView: UIViewRepresentable {
         if settings.contentBlocking {
             let sourceProvider = DefaultScriptSourceProvider()
             let contentBlockerUserScript = ContentBlockerRulesUserScript(configuration: sourceProvider.contentBlockerRulesConfig)
-            let contentScopeUserScript = ContentScopeUserScript(sourceProvider.privacyConfigurationManager, properties: sourceProvider.contentScopeProperties)
+            let contentScopeUserScript = ContentScopeUserScript(sourceProvider.privacyConfigurationManager,
+                                                                properties: sourceProvider.contentScopeProperties)
             userContentController.addUserScript(contentBlockerUserScript.makeWKUserScriptSync())
             userContentController.addUserScript(contentScopeUserScript.makeWKUserScriptSync())
         }

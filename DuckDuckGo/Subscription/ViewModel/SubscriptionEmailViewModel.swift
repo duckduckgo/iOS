@@ -39,7 +39,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     @Published var managingSubscriptionEmail = false
     @Published var webViewModel: AsyncHeadlessWebViewViewModel
     
-    private var allowedDomains = [
+    private static let allowedDomains = [
         "duckduckgo.com",
         "microsoftonline.com",
         "duosecurity.com",
@@ -56,7 +56,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
         self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,
                                                           subFeature: subFeature,
                                                           settings: AsyncHeadlessWebViewSettings(bounces: false,
-                                                                                                 allowedDomains: allowedDomains,
+                                                                                                 allowedDomains: Self.allowedDomains,
                                                                                                  contentBlocking: false))
         initializeView()
         setupTransactionObservers()

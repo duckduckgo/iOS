@@ -53,7 +53,7 @@ final class SubscriptionITPViewModel: ObservableObject {
     }
     
     private var currentURL: URL?
-    private var allowedDomains = [
+    private static let allowedDomains = [
         "duckduckgo.com",
         "microsoftonline.com",
         "duosecurity.com",
@@ -72,7 +72,7 @@ final class SubscriptionITPViewModel: ObservableObject {
         self.subFeature = subFeature
         
         let webViewSettings = AsyncHeadlessWebViewSettings(bounces: false,
-                                                           allowedDomains: allowedDomains,
+                                                           allowedDomains: Self.allowedDomains,
                                                            contentBlocking: false)
         
         self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,

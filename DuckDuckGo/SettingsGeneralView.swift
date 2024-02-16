@@ -37,12 +37,6 @@ struct SettingsGeneralView: View {
             NavigationLink(destination: WidgetEducationView()) {
                 SettingsCellView(label: UserText.settingsAddWidget)
             }
-            
-            if #available(iOS 15.0, *) {
-                NavigationLink(destination: SubscriptionExternalLinkView(viewModel: SubscriptionExternalLinkViewModel(url: URL(string: "https://www.irisidentityprotection.com/terms-conditions")!))) {
-                    SettingsCellView(label: UserText.settingsAddWidget)
-                }
-            }
 
         }
 

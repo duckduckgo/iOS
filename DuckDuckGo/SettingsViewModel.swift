@@ -97,6 +97,7 @@ final class SettingsViewModel: ObservableObject {
     enum SettingsSection: String {
         case none, netP, dbp, itr
     }
+    
     @Published var onAppearNavigationTarget: SettingsSection
     
     // MARK: Bindings

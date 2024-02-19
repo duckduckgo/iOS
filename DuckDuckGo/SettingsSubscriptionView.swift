@@ -113,6 +113,24 @@ struct SettingsSubscriptionView: View {
                 }
             })
             
+            .onChange(of: viewModel.shouldNavigateToDBP, perform: { value in
+                if value {
+                    // Allow the sheet to dismiss before presenting a new one
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
+                        isShowingDBP = true
+                    }
+                }
+            })
+            
+            .onChange(of: viewModel.shouldNavigateToITP, perform: { value in
+                if value {
+                    // Allow the sheet to dismiss before presenting a new one
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
+                        isShowingITP = true
+                    }
+                }
+            })
+            
             .onReceive(subscriptionFlowViewModel.$selectedFeature) { value in
                 guard let value else { return }
                 viewModel.onAppearNavigationTarget = value

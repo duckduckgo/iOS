@@ -58,6 +58,16 @@ final class SubscriptionFlowViewModel: ObservableObject {
     @Published var shouldShowNavigationBar: Bool = false
     @Published var selectedFeature: SettingsViewModel.SettingsSection?
     @Published var canNavigateBack: Bool = false
+    
+    private static let allowedDomains = [
+        "duckduckgo.com",
+        "microsoftonline.com",
+        "duosecurity.com",
+    ]
+    
+    private var webViewSettings =  AsyncHeadlessWebViewSettings(bounces: false,
+                                                                allowedDomains: allowedDomains,
+                                                                contentBlocking: false)
         
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
@@ -69,7 +79,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
         self.selectedFeature = selectedFeature
         self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,
                                                           subFeature: subFeature,
-                                                          settings: AsyncHeadlessWebViewSettings(bounces: false))
+                                                          settings: webViewSettings)
     }
     
     // Observe transaction status

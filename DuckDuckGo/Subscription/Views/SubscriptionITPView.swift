@@ -73,15 +73,26 @@ struct SubscriptionITPView: View {
                     Button(UserText.subscriptionCloseButton) { dismiss() }
                 }
             }
-            .edgesIgnoringSafeArea(.top)
+            .edgesIgnoringSafeArea(.all)
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarHidden(!viewModel.shouldShowNavigationBar && !viewModel.isDownloadableContent).animation(.easeOut)
+            .navigationBarHidden(!viewModel.shouldShowNavigationBar && !viewModel.isDownloadableContent).animation(.snappy)
             
             .onAppear(perform: {
                 setUpAppearances()
                 viewModel.initializeView()
             })
-        }.tint(Color(designSystemColor: .textPrimary))
+            
+        }
+        .tint(Color(designSystemColor: .textPrimary))
+        
+        .sheet(isPresented: Binding(
+            get: { viewModel.shouldShowExternalURLSheet },
+            set: { if !$0 { viewModel.shouldNavigateToExternalURL = nil } }
+        )) {
+            if let url = viewModel.shouldNavigateToExternalURL {
+                SubscriptionExternalLinkView(viewModel: viewModel.getExternalLinksViewModel(url: url))
+            }
+        }
     }
     
     private var baseView: some View {

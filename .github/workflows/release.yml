@@ -93,7 +93,7 @@ jobs:
         else
           echo "::error::Asana Task URL has incorrect format (attempted to match ${task_url_regex})."
         fi
-
+        
     - name: Upload debug symbols to Asana
       if: ${{ always() && github.event.inputs.asana-task-url }}
       env:     
@@ -108,7 +108,7 @@ jobs:
             --form "file=@${asana_dsyms_path};type=application/zip"
         fi
 
-      - name: Send Mattermost message
+    - name: Send Mattermost message
       if: ${{ success() || failure() }} # Don't execute when cancelled
       env:
         WORKFLOW_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

@@ -252,6 +252,8 @@ extension View {
             containerBackground(for: .widget) {
                 color
             }
+        } else {
+            self
         }
     }
 

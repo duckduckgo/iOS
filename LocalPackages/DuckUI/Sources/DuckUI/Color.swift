@@ -108,7 +108,7 @@ public extension UIColor {
     
 }
 
-private extension Color {
+public extension Color {
     init(_ hex: UInt, alpha: Double = 1) {
         self.init(
             .sRGB,

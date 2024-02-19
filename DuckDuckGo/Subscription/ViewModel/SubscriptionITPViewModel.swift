@@ -23,12 +23,13 @@ import Combine
 import Core
 
 #if SUBSCRIPTION
+import Subscription
 @available(iOS 15.0, *)
 final class SubscriptionITPViewModel: ObservableObject {
     
     let userScript: IdentityTheftRestorationPagesUserScript
     let subFeature: IdentityTheftRestorationPagesFeature
-    var manageITPURL = URL.manageITP
+    var manageITPURL = URL.identityTheftRestoration
     var viewTitle = UserText.settingsPProITRTitle
     
     enum Constants {
@@ -37,7 +38,7 @@ final class SubscriptionITPViewModel: ObservableObject {
     }
     
     // State variables
-    var itpURL = URL.manageITP
+    var itpURL = URL.identityTheftRestoration
     @Published var webViewModel: AsyncHeadlessWebViewViewModel
     @Published var shouldShowNavigationBar: Bool = false
     @Published var canNavigateBack: Bool = false

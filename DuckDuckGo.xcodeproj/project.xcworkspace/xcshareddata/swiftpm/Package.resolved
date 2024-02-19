@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "328ce451fd1593809d1470ab5a0b5242a595f88c",
-        "version" : "107.0.0"
+        "branch" : "tespach/sync/crypto-error-handling",
+        "revision" : "5536681e0f862d97eace055fc6bb297792034e1a"
       }
     },
     {

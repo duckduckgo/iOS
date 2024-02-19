@@ -58,16 +58,6 @@ class AutoClear {
         worker.clearDataFinished(self)
     }
     
-    @MainActor
-    func applicationDidLaunch() async {
-        guard let settings = AutoClearSettingsModel(settings: appSettings) else { return }
-        
-        // Note: for startup, we clear only Data, as TabsModel is cleared on load
-        if settings.action.contains(.clearData) {
-            await worker.forgetData()
-        }
-    }
-    
     /// Note: function is parametrised because of tests.
     func applicationDidEnterBackground(_ time: TimeInterval = Date().timeIntervalSince1970) {
         timestamp = time

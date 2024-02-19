@@ -686,8 +686,10 @@ class MainViewController: UIViewController {
             tabsModel.save()
             previewsSource.removeAllPreviews()
 
-            Task { @MainActor in
-                await forgetData()
+            if settings.action.contains(.clearData) {
+                Task { @MainActor in
+                    await forgetData()
+                }
             }
         } else {
             if let storedModel = TabsModel.get() {

@@ -155,7 +155,7 @@ extension HeadlessWebViewCoordinator: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        print("Failed to load: \(error.localizedDescription)")
+        // NOOP
     }
     
 }

@@ -287,11 +287,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         autoClear = AutoClear(worker: main)
-//        Task { @MainActor in
-            // Internally this thing has always called 'async' functions but just never waited for them
-            //  so this is no different really.
-            // await autoClear?.applicationDidLaunch()
-//        }
         
         AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
 

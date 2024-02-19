@@ -154,7 +154,7 @@ class MainViewController: UIViewController {
     
     var postClear: (() -> Void)?
     var clearInProgress = false
-    var dataStoreReadiness: DataStoreWarmup? = DataStoreWarmup()
+    var dataStoreWarmup: DataStoreWarmup? = DataStoreWarmup()
 
     required init?(coder: NSCoder) {
         fatalError("Use init?(code:")
@@ -685,6 +685,10 @@ class MainViewController: UIViewController {
             tabsModel = TabsModel(desktop: isPadDevice)
             tabsModel.save()
             previewsSource.removeAllPreviews()
+
+            Task { @MainActor in
+                await forgetData()
+            }
         } else {
             if let storedModel = TabsModel.get() {
                 // Save new model in case of migration
@@ -2182,9 +2186,9 @@ extension MainViewController: AutoClearWorker {
         clearInProgress = true
 
         // This needs to happen only once per app launch
-        if let dataStoreReadiness {
-            await dataStoreReadiness.ensureReady()
-            self.dataStoreReadiness = nil
+        if let dataStoreWarmup {
+            await dataStoreWarmup.ensureReady()
+            self.dataStoreWarmup = nil
         }
 
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()

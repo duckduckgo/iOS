@@ -682,6 +682,8 @@ class MainViewController: UIViewController {
 
         let tabsModel: TabsModel
         if let settings = AutoClearSettingsModel(settings: appSettings) {
+            // This needs to be refactored so that tabs model is injected and cleared before view did load,
+            //  but for now, ensure this happens in the right order by clearing data here too, if needed.
             tabsModel = TabsModel(desktop: isPadDevice)
             tabsModel.save()
             previewsSource.removeAllPreviews()

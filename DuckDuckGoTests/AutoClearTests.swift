@@ -56,45 +56,10 @@ class AutoClearTests: XCTestCase {
         worker = MockWorker()
         logic = AutoClear(worker: worker)
     }
-    
-    func testWhenModeIsSetToCleanDataThenDataIsCleared() async {
-        let appSettings = AppUserDefaults()
-        appSettings.autoClearAction = .clearData
-        appSettings.autoClearTiming = .termination
-        
-        await logic.applicationDidLaunch()
-        
-        XCTAssertEqual(worker.forgetDataInvocationCount, 1)
-        XCTAssertEqual(worker.forgetTabsInvocationCount, 0)
-        XCTAssertEqual(worker.clearDataFinishedInvocationCount, 0)
-    }
-    
-    func testWhenModeIsSetToCleanTabsAndDataThenDataIsCleared() async {
-        let appSettings = AppUserDefaults()
-        appSettings.autoClearAction = [.clearData, .clearTabs]
-        appSettings.autoClearTiming = .termination
-        
-        await logic.applicationDidLaunch()
-        
-        XCTAssertEqual(worker.forgetDataInvocationCount, 1)
-        XCTAssertEqual(worker.clearDataFinishedInvocationCount, 0)
 
-        // Tabs are cleared when loading TabsModel for the first time
-        XCTAssertEqual(worker.forgetTabsInvocationCount, 0)
-    }
-    
-    func testWhenModeIsNotSetThenNothingIsCleared() async {
-        let appSettings = AppUserDefaults()
-        appSettings.autoClearAction = []
-        appSettings.autoClearTiming = .termination
-        
-        await logic.applicationDidLaunch()
-        
-        XCTAssertEqual(worker.forgetDataInvocationCount, 0)
-        XCTAssertEqual(worker.forgetTabsInvocationCount, 0)
-        XCTAssertEqual(worker.clearDataFinishedInvocationCount, 0)
-    }
-    
+    // Note: applicationDidLaunch based clearing has moved to "configureTabManager" function of
+    //  MainViewController to ensure that tabs are removed before the data is cleared.
+
     func testWhenTimingIsSetToTerminationThenOnlyRestartClearsData() async {
         let appSettings = AppUserDefaults()
         appSettings.autoClearAction = .clearData
@@ -105,10 +70,6 @@ class AutoClearTests: XCTestCase {
         
         XCTAssertEqual(worker.clearNavigationStackInvocationCount, 0)
         XCTAssertEqual(worker.forgetDataInvocationCount, 0)
-        
-        await logic.applicationDidLaunch()
-        
-        XCTAssertEqual(worker.forgetDataInvocationCount, 1)
     }
     
     func testWhenDesiredTimingIsSetThenDataIsClearedOnceTimeHasElapsed() async {

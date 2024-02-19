@@ -33,7 +33,21 @@ class DownloadManagerTests: XCTestCase {
         downloadManagerTestsHelper.deleteAllFiles()
     }
     
-    func testNotificationTemporaryPKPassDownload() {
+    func testWhenIPadThenPKPassThenDownloadIsNotTemporary() {
+        guard UIDevice.current.userInterfaceIdiom == .pad else { return }
+        
+        let notificationCenter = NotificationCenter()
+        let downloadManager = DownloadManager(notificationCenter)
+        
+        let sessionSetup = MockSessionSetup(mimeType: "application/vnd.apple.pkpass", downloadManager: downloadManager)
+        
+        let download = downloadManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
+        XCTAssertFalse(download.temporary, "Download should be not temporary")
+    }
+    
+    func testNotificationTemporaryPKPassDownloadOnPhone() {
+        guard UIDevice.current.userInterfaceIdiom == .phone else { return }
+        
         let notificationCenter = NotificationCenter()
         let downloadManager = DownloadManager(notificationCenter)
         

@@ -249,7 +249,7 @@ class DiagnosticReportDataSource: UIActivityItemProvider {
         let group = DispatchGroup()
         group.enter()
         DispatchQueue.main.async {
-            WKWebsiteDataStore.default().cookieStore?.getAllCookies { httpCookies in
+            WKWebsiteDataStore.current().httpCookieStore.getAllCookies { httpCookies in
                 cookies = httpCookies
                 group.leave()
             }

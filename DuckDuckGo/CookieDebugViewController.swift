@@ -46,9 +46,13 @@ class CookieDebugViewController: UITableViewController {
     }
 
     private func fetchCookies() {
-        WKWebsiteDataStore.default().cookieStore?.getAllCookies(displayCookies)
+        Task { @MainActor in
+            let dataStore = WKWebsiteDataStore.current()
+            displayCookies(cookies: await dataStore.httpCookieStore.allCookies())
+        }
     }
 
+    @MainActor
     private func displayCookies(cookies: [HTTPCookie]) {
         self.loaded = true
 

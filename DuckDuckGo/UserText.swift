@@ -957,7 +957,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsPProDescription = NSLocalizedString("settings.subscription.description", value:"More seamless privacy with three new protections, including:", comment: "Privacy pro description subtext")
     public static let settingsPProFeatures = NSLocalizedString("settings.subscription.features", value:
                                                                 """
-                                                                 • VPN (Virtual Private Network)
+                                                                 • VPN
                                                                  • Personal Information Removal
                                                                  • Identity Theft Restoration
                                                                 """, comment: "Privacy pro features list")

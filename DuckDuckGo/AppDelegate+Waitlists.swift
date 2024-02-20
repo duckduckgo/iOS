@@ -21,24 +21,25 @@ import Foundation
 import Core
 import BackgroundTasks
 import NetworkProtection
+import Waitlist
 
 extension AppDelegate {
 
+    func clearDebugWaitlistState() {
+        if let inviteCode = VPNWaitlist.shared.waitlistStorage.getWaitlistInviteCode(),
+           inviteCode == VPNWaitlistDebugViewController.Constants.mockInviteCode {
+            let store = WaitlistKeychainStore(waitlistIdentifier: VPNWaitlist.identifier)
+            store.delete(field: .inviteCode)
+        }
+    }
+
     func checkWaitlists() {
-        checkWindowsWaitlist()
 
 #if NETWORK_PROTECTION
         checkNetworkProtectionWaitlist()
 #endif
         checkWaitlistBackgroundTasks()
 
-    }
-
-    private func checkWindowsWaitlist() {
-        WindowsBrowserWaitlist.shared.fetchInviteCodeIfAvailable { error in
-            guard error == nil else { return }
-            WindowsBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
-        }
     }
 
 #if NETWORK_PROTECTION
@@ -87,10 +88,6 @@ extension AppDelegate {
 
     private func checkWaitlistBackgroundTasks() {
         BGTaskScheduler.shared.getPendingTaskRequests { tasks in
-            let hasWindowsBrowserWaitlistTask = tasks.contains { $0.identifier == WindowsBrowserWaitlist.backgroundRefreshTaskIdentifier }
-            if !hasWindowsBrowserWaitlistTask {
-                WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
-            }
 
 #if NETWORK_PROTECTION
             let hasVPNWaitlistTask = tasks.contains { $0.identifier == VPNWaitlist.backgroundRefreshTaskIdentifier }

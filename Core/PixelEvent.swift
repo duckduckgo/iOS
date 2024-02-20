@@ -394,7 +394,8 @@ extension Pixel {
 
         case webKitDidTerminate
         case webKitTerminationDidReloadCurrentTab
-        
+        case webKitDidTerminateDuringWarmup
+
         case backgroundTaskSubmissionFailed
         
         case blankOverlayNotDismissed
@@ -498,6 +499,9 @@ extension Pixel {
         case syncRemoveDeviceError
         case syncDeleteAccountError
         case syncLoginExistingAccountError
+
+        case swipeTabsUsed
+        case swipeTabsUsedDaily
 
         case bookmarksCleanupFailed
         case bookmarksCleanupAttemptedWhileSyncWasEnabled
@@ -888,6 +892,7 @@ extension Pixel.Event {
         case .ampBlockingRulesCompilationFailed: return "m_debug_amp_rules_compilation_failed"
 
         case .webKitDidTerminate: return "m_d_wkt"
+        case .webKitDidTerminateDuringWarmup: return "m_d_webkit-terminated-during-warmup"
         case .webKitTerminationDidReloadCurrentTab: return "m_d_wktct"
             
         case .backgroundTaskSubmissionFailed: return "m_bt_rf"
@@ -923,7 +928,7 @@ extension Pixel.Event {
         case .debugCannotClearObservationsDatabase: return "m_d_cannot_clear_observations_database"
         case .debugWebsiteDataStoresNotClearedMultiple: return "m_d_wkwebsitedatastoresnotcleared_multiple"
         case .debugWebsiteDataStoresNotClearedOne: return "m_d_wkwebsitedatastoresnotcleared_one"
-        case .debugCookieCleanupError: return "m_cookie_cleanup_error"
+        case .debugCookieCleanupError: return "m_d_cookie-cleanup-error"
 
         // MARK: Ad Attribution
             
@@ -989,6 +994,8 @@ extension Pixel.Event {
         case .syncDeleteAccountError: return "m_d_sync_delete_account_error"
         case .syncLoginExistingAccountError: return "m_d_sync_login_existing_account_error"
 
+        case .swipeTabsUsed: return "m_swipe-tabs-used"
+        case .swipeTabsUsedDaily: return "m_swipe-tabs-used-daily"
 
         case .bookmarksCleanupFailed: return "m_d_bookmarks_cleanup_failed"
         case .bookmarksCleanupAttemptedWhileSyncWasEnabled: return "m_d_bookmarks_cleanup_attempted_while_sync_was_enabled"

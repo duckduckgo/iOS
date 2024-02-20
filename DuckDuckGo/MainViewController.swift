@@ -31,6 +31,10 @@ import Persistence
 import PrivacyDashboard
 import Networking
 
+#if SUBSCRIPTION
+import Subscription
+#endif
+
 #if NETWORK_PROTECTION
 import NetworkProtection
 #endif
@@ -38,8 +42,8 @@ import NetworkProtection
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
 class MainViewController: UIViewController {
-// swiftlint:enable type_body_length
-
+    // swiftlint:enable type_body_length
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ThemeManager.shared.currentTheme.statusBarStyle
     }
@@ -49,15 +53,15 @@ class MainViewController: UIViewController {
         
         return isIPad ? [.left, .right] : []
     }
-
+    
     weak var findInPageView: FindInPageView!
     weak var findInPageHeightLayoutConstraint: NSLayoutConstraint!
     weak var findInPageBottomLayoutConstraint: NSLayoutConstraint!
-
+    
     weak var notificationView: NotificationView?
-
+    
     var chromeManager: BrowserChromeManager!
-
+    
     var allowContentUnderflow = false {
         didSet {
             viewCoordinator.constraints.contentContainerTop.constant = allowContentUnderflow ? contentUnderflow : 0
@@ -67,36 +71,36 @@ class MainViewController: UIViewController {
     var contentUnderflow: CGFloat {
         return 3 + (allowContentUnderflow ? -viewCoordinator.navigationBarContainer.frame.size.height : 0)
     }
-
+    
     lazy var emailManager: EmailManager = {
         let emailManager = EmailManager()
         emailManager.aliasPermissionDelegate = self
         emailManager.requestDelegate = self
         return emailManager
     }()
-
+    
     var homeController: HomeViewController?
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
-
+    
     var tabManager: TabManager!
     let previewsSource = TabPreviewsSource()
     let appSettings: AppSettings
     private var launchTabObserver: LaunchTabNotification.Observer?
-
+    
 #if APP_TRACKING_PROTECTION
     private let appTrackingProtectionDatabase: CoreDataDatabase
 #endif
-
+    
     let bookmarksDatabase: CoreDataDatabase
     private weak var bookmarksDatabaseCleaner: BookmarkDatabaseCleaner?
     private var favoritesViewModel: FavoritesListInteracting
     let syncService: DDGSyncing
     let syncDataProviders: SyncDataProviders
-
+    
     @UserDefaultsWrapper(key: .syncDidShowSyncPausedByFeatureFlagAlert, defaultValue: false)
     private var syncDidShowSyncPausedByFeatureFlagAlert: Bool
-
+    
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
     private var syncFeatureFlagsCancellable: AnyCancellable?
@@ -108,13 +112,13 @@ class MainViewController: UIViewController {
 #endif
 
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
-
+    
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = {
         let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
         viewModel.favoritesDisplayMode = appSettings.favoritesDisplayMode
         return viewModel
     }()
-
+    
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
     
@@ -129,34 +133,35 @@ class MainViewController: UIViewController {
     private lazy var fireButtonAnimator: FireButtonAnimator = FireButtonAnimator(appSettings: appSettings)
     
     let bookmarksCachingSearch: BookmarksCachingSearch
-
+    
     lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
         return tabManager?.current(createIfNeeded: false)
     }
-
+    
     var searchBarRect: CGRect {
         let view = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first?.rootViewController?.view
         return viewCoordinator.omniBar.searchContainer.convert(viewCoordinator.omniBar.searchContainer.bounds, to: view)
     }
-
+    
     var keyModifierFlags: UIKeyModifierFlags?
     var showKeyboardAfterFireButton: DispatchWorkItem?
     
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
-        
+    
     private var keyboardHeight: CGFloat = 0.0
     
     var postClear: (() -> Void)?
     var clearInProgress = false
+    var dataStoreWarmup: DataStoreWarmup? = DataStoreWarmup()
 
     required init?(coder: NSCoder) {
         fatalError("Use init?(code:")
     }
-
+    
     var viewCoordinator: MainViewCoordinator!
-
+    
 #if APP_TRACKING_PROTECTION
     init(
         bookmarksDatabase: CoreDataDatabase,
@@ -174,9 +179,9 @@ class MainViewController: UIViewController {
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         self.appSettings = appSettings
-
+        
         super.init(nibName: nil, bundle: nil)
-
+        
         bindFavoritesDisplayMode()
         bindSyncService()
     }
@@ -197,35 +202,35 @@ class MainViewController: UIViewController {
         self.appSettings = appSettings
         
         super.init(nibName: nil, bundle: nil)
-
+        
         bindSyncService()
     }
 #endif
-
-    fileprivate var tabCountInfo: TabCountInfo?
 
     func loadFindInPage() {
 
         let view = FindInPageView.loadFromXib()
         self.view.addSubview(view)
-
+        
         // Avoids coercion swiftlint warnings
         let superview = self.view!
-
+        
         let height = view.constrainAttribute(.height, to: view.frame.height)
         let bottom = superview.constrainView(view, by: .bottom, to: .bottom)
-
+        
         NSLayoutConstraint.activate([
             bottom,
             superview.constrainView(view, by: .width, to: .width),
             height,
             superview.constrainView(view, by: .centerX, to: .centerX)
         ])
-
+        
         findInPageView = view
         findInPageBottomLayoutConstraint = bottom
         findInPageHeightLayoutConstraint = height
     }
+    
+    var swipeTabsCoordinator: SwipeTabsCoordinator?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -237,6 +242,8 @@ class MainViewController: UIViewController {
         viewCoordinator.toolbarForwardButton.action = #selector(onForwardPressed)
         viewCoordinator.toolbarFireButton.action = #selector(onFirePressed)
 
+        installSwipeTabs()
+            
         loadSuggestionTray()
         loadTabsBarIfNeeded()
         loadFindInPage()
@@ -267,6 +274,7 @@ class MainViewController: UIViewController {
         applyTheme(ThemeManager.shared.currentTheme)
 
         tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
+        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
 
         _ = AppWidthObserver.shared.willResize(toWidth: view.frame.width)
         applyWidth()
@@ -277,14 +285,19 @@ class MainViewController: UIViewController {
 
         tabManager.cleanupTabsFaviconCache()
 
+        // Needs to be called here to established correct view hierarchy
         refreshViewsBasedOnAddressBarPosition(appSettings.currentAddressBarPosition)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        // Needs to be called here because sometimes the frames are not the expected size during didLoad
+        refreshViewsBasedOnAddressBarPosition(appSettings.currentAddressBarPosition)
+
         startOnboardingFlowIfNotSeenBefore()
         tabsBarController?.refresh(tabsModel: tabManager.model)
+        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
         
         _ = AppWidthObserver.shared.willResize(toWidth: view.frame.width)
         applyWidth()
@@ -297,6 +310,53 @@ class MainViewController: UIViewController {
     override func performSegue(withIdentifier identifier: String, sender: Any?) {
         assertionFailure()
         super.performSegue(withIdentifier: identifier, sender: sender)
+    }
+    
+    private func installSwipeTabs() {
+        guard swipeTabsCoordinator == nil else { return }
+        
+        swipeTabsCoordinator = SwipeTabsCoordinator(coordinator: viewCoordinator,
+                                                    tabPreviewsSource: previewsSource,
+                                                    appSettings: appSettings) { [weak self] in
+            
+            guard $0 != self?.tabManager.model.currentIndex else { return }
+            
+            DailyPixel.fire(pixel: .swipeTabsUsedDaily)
+            Pixel.fire(pixel: .swipeTabsUsed)
+            self?.select(tabAt: $0)
+            
+        } newTab: { [weak self] in
+            self?.newTab()
+        } onSwipeStarted: { [weak self] in
+            self?.hideKeyboard()
+            self?.updatePreviewForCurrentTab()
+        }
+    }
+    
+    func updatePreviewForCurrentTab() {
+        assert(Thread.isMainThread)
+        
+        if !viewCoordinator.logoContainer.isHidden,
+           self.tabManager.current()?.link == nil,
+           let tab = self.tabManager.model.currentTab {
+            // Home screen with logo
+            if let image = viewCoordinator.logoContainer.createImageSnapshot(inBounds: viewCoordinator.contentContainer.frame) {
+                previewsSource.update(preview: image, forTab: tab)
+            }
+
+        } else if let currentTab = self.tabManager.current(), currentTab.link != nil {
+            // Web view
+            currentTab.preparePreview(completion: { image in
+                guard let image else { return }
+                self.previewsSource.update(preview: image,
+                                           forTab: currentTab.tabModel)
+            })
+        } else if let tab = self.tabManager.model.currentTab {
+            // Favorites, etc
+            if let image = viewCoordinator.contentContainer.createImageSnapshot() {
+                previewsSource.update(preview: image, forTab: tab)
+            }
+        }
     }
 
     func loadSuggestionTray() {
@@ -452,10 +512,13 @@ class MainViewController: UIViewController {
     func refreshViewsBasedOnAddressBarPosition(_ position: AddressBarPosition) {
         switch position {
         case .top:
+            swipeTabsCoordinator?.addressBarPositionChanged(isTop: true)
             viewCoordinator.omniBar.moveSeparatorToBottom()
             viewCoordinator.showToolbarSeparator()
+            viewCoordinator.constraints.navigationBarContainerBottom.isActive = false
 
         case .bottom:
+            swipeTabsCoordinator?.addressBarPositionChanged(isTop: false)
             viewCoordinator.omniBar.moveSeparatorToTop()
             // If this is called before the toolbar has shown it will not re-add the separator when moving to the top position
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -513,7 +576,7 @@ class MainViewController: UIViewController {
 
         if self.appSettings.currentAddressBarPosition.isBottom {
             let navBarOffset = min(0, self.toolbarHeight - intersection.height)
-            self.viewCoordinator.constraints.omniBarBottom.constant = navBarOffset
+            self.viewCoordinator.constraints.navigationBarCollectionViewBottom.constant = navBarOffset
             UIView.animate(withDuration: duration, delay: 0, options: animationCurve) {
                 self.viewCoordinator.navigationBarContainer.superview?.layoutIfNeeded()
             }
@@ -608,7 +671,7 @@ class MainViewController: UIViewController {
     override var shouldAutorotate: Bool {
         return true
     }
-    
+        
     @objc func dismissSuggestionTray() {
         dismissOmniBar()
     }
@@ -618,11 +681,18 @@ class MainViewController: UIViewController {
         let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
 
         let tabsModel: TabsModel
-        let shouldClearTabsModelOnStartup = AutoClearSettingsModel(settings: appSettings) != nil
-        if shouldClearTabsModelOnStartup {
+        if let settings = AutoClearSettingsModel(settings: appSettings) {
+            // This needs to be refactored so that tabs model is injected and cleared before view did load,
+            //  but for now, ensure this happens in the right order by clearing data here too, if needed.
             tabsModel = TabsModel(desktop: isPadDevice)
             tabsModel.save()
             previewsSource.removeAllPreviews()
+
+            if settings.action.contains(.clearData) {
+                Task { @MainActor in
+                    await forgetData()
+                }
+            }
         } else {
             if let storedModel = TabsModel.get() {
                 // Save new model in case of migration
@@ -805,6 +875,7 @@ class MainViewController: UIViewController {
             refreshTabIcon()
             refreshControls()
             tabsBarController?.refresh(tabsModel: tabManager.model)
+            swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
         }
         
         if clearInProgress {
@@ -894,6 +965,7 @@ class MainViewController: UIViewController {
             refreshControls()
         }
         tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
+        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             showFireButtonPulse()
         }
@@ -989,7 +1061,9 @@ class MainViewController: UIViewController {
 
         self.showMenuHighlighterIfNeeded()
         
-        coordinator.animate(alongsideTransition: nil) { _ in
+        coordinator.animate { _ in
+            self.swipeTabsCoordinator?.refresh(tabsModel: self.tabManager.model, scrollToSelected: true)
+        } completion: { _ in
             ViewHighlighter.updatePositions()
         }
     }
@@ -1011,6 +1085,7 @@ class MainViewController: UIViewController {
             }
             // If tabs have been udpated, do this async to make sure size calcs are current
             self.tabsBarController?.refresh(tabsModel: self.tabManager.model)
+            self.swipeTabsCoordinator?.refresh(tabsModel: self.tabManager.model)
             
             // Do this on the next UI thread pass so we definitely have the right width
             self.applyWidthToTrayController()
@@ -1052,12 +1127,16 @@ class MainViewController: UIViewController {
         viewCoordinator.tabBarContainer.isHidden = false
         viewCoordinator.toolbar.isHidden = true
         viewCoordinator.omniBar.enterPadState()
+        
+        swipeTabsCoordinator?.isEnabled = false
     }
 
     private func applySmallWidth() {
         viewCoordinator.tabBarContainer.isHidden = true
         viewCoordinator.toolbar.isHidden = false
         viewCoordinator.omniBar.enterPhoneState()
+        
+        swipeTabsCoordinator?.isEnabled = featureFlagger.isFeatureOn(.swipeTabs)
     }
 
     @discardableResult
@@ -1190,8 +1269,9 @@ class MainViewController: UIViewController {
             tabManager.addHomeTab()
         }
         attachHomeScreen()
-        homeController?.openedAsNewTab(allowingKeyboard: allowingKeyboard)
         tabsBarController?.refresh(tabsModel: tabManager.model)
+        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
+        homeController?.openedAsNewTab(allowingKeyboard: allowingKeyboard)
     }
     
     func animateLogoAppearance() {
@@ -1787,6 +1867,7 @@ extension MainViewController: TabDelegate {
         }
         tabManager?.save()
         tabsBarController?.refresh(tabsModel: tabManager.model)
+        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
     }
     
     func tab(_ tab: TabViewController, didUpdatePreview preview: UIImage) {
@@ -2078,6 +2159,7 @@ extension MainViewController: AutoClearWorker {
     }
 
     func forgetTabs() {
+        omniBar.resignFirstResponder()
         findInPageView?.done()
         tabManager.removeAll()
     }
@@ -2086,35 +2168,45 @@ extension MainViewController: AutoClearWorker {
         showBars()
         attachHomeScreen()
         tabsBarController?.refresh(tabsModel: tabManager.model)
+        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
         Favicons.shared.clearCache(.tabs)
     }
-    
-    func forgetData() {
+
+    @MainActor
+    func clearDataFinished(_: AutoClear) {
+        refreshUIAfterClear()
+    }
+
+    func forgetData() async {
         guard !clearInProgress else {
             assertionFailure("Shouldn't get called multiple times")
             return
         }
         clearInProgress = true
+
+        // This needs to happen only once per app launch
+        if let dataStoreWarmup {
+            await dataStoreWarmup.ensureReady()
+            self.dataStoreWarmup = nil
+        }
+
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
         let pixel = TimedPixel(.forgetAllDataCleared)
-        WebCacheManager.shared.clear(tabCountInfo: tabCountInfo) {
-            pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
+        await WebCacheManager.shared.clear()
+        pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
 
-            AutoconsentManagement.shared.clearCache()
-            DaxDialogs.shared.clearHeldURLData()
+        AutoconsentManagement.shared.clearCache()
+        DaxDialogs.shared.clearHeldURLData()
 
-            if self.syncService.authState == .inactive {
-                self.bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
-            }
-
-            self.refreshUIAfterClear()
-            self.clearInProgress = false
-            
-            self.postClear?()
-            self.postClear = nil
+        if self.syncService.authState == .inactive {
+            self.bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
         }
 
+        self.clearInProgress = false
+        
+        self.postClear?()
+        self.postClear = nil
     }
     
     func stopAllOngoingDownloads() {
@@ -2125,22 +2217,22 @@ extension MainViewController: AutoClearWorker {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
         
-        self.tabCountInfo = tabManager.makeTabCountInfo()
-        
         tabManager.prepareAllTabsExceptCurrentForDataClearing()
         
         fireButtonAnimator.animate {
             self.tabManager.prepareCurrentTabForDataClearing()
             self.stopAllOngoingDownloads()
             self.forgetTabs()
-            self.forgetData()
+            await self.forgetData()
+            Instruments.shared.endTimedEvent(for: spid)
             DaxDialogs.shared.resumeRegularFlow()
         } onTransitionCompleted: {
             ActionMessageView.present(message: UserText.actionForgetAllDone,
                                       presentationLocation: .withBottomBar(andAddressBarBottom: self.appSettings.currentAddressBarPosition.isBottom))
             transitionCompletion?()
+            self.refreshUIAfterClear()
         } completion: {
-            Instruments.shared.endTimedEvent(for: spid)
+            // Ideally this should happen once data clearing has finished AND the animation is finished
             if showNextDaxDialog {
                 self.homeController?.showNextDaxDialog()
             } else if KeyboardSettings().onNewTab {

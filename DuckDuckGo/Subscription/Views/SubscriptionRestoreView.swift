@@ -26,15 +26,14 @@ import DesignResourcesKit
 struct SubscriptionRestoreView: View {
     
     @Environment(\.dismiss) var dismiss
-    @StateObject var viewModel: SubscriptionRestoreViewModel
+    @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
+    @StateObject var viewModel = SubscriptionRestoreViewModel()
     @State private var expandedItemId: Int = 0
     @State private var isAlertVisible = false
-    
-    // Binding used to dismiss the entire stack (Go back to settings from several levels down)
-    @Binding var isActivatingSubscription: Bool
+    @State private var isActive: Bool = false
     
     private enum Constants {
-        static let heroImage = "SyncTurnOnSyncHero"
+        static let heroImage = "ManageSubscriptionHero"
         static let appleIDIcon = "Platform-Apple-16"
         static let emailIcon = "Email-16"
         static let headerLineSpacing = 10.0
@@ -50,6 +49,12 @@ struct SubscriptionRestoreView: View {
     var body: some View {
         ZStack {
             VStack {
+                
+                // Email Activation View Hidden link
+                NavigationLink(destination: SubscriptionEmailView(isAddingDevice: viewModel.isAddingDevice), isActive: $isActive) {
+                    EmptyView()
+                }.isDetailLink(false)
+                                                
                 headerView
                 listView
             }
@@ -58,6 +63,7 @@ struct SubscriptionRestoreView: View {
             .navigationBarBackButtonHidden(viewModel.transactionStatus != .idle)
             .applyInsetGroupedListStyle()
             .alert(isPresented: $isAlertVisible) { getAlert() }
+            
             .onChange(of: viewModel.activationResult) { result in
                 if result != .unknown {
                     isAlertVisible = true
@@ -72,16 +78,6 @@ struct SubscriptionRestoreView: View {
             }
         }
         
-        // Activation View
-        NavigationLink(destination: SubscriptionEmailView(
-                    viewModel: SubscriptionEmailViewModel(
-                    userScript: viewModel.userScript,
-                    subFeature: viewModel.subFeature,
-                    accountManager: viewModel.accountManager),
-                isActivatingSubscription: $isActivatingSubscription),
-                isActive: $viewModel.isManagingEmailSubscription) {
-            EmptyView()
-        }
     }
     
     private var listItems: [ListItem] {
@@ -93,7 +89,7 @@ struct SubscriptionRestoreView: View {
             .init(id: 1,
                   content: getCellTitle(icon: Constants.emailIcon,
                                         text: UserText.subscriptionActivateEmail),
-                  expandedContent: getEmailCellContent(buttonAction: viewModel.manageEmailSubscription ))
+                  expandedContent: getEmailCellContent(buttonAction: { isActive = true }))
         ]
     }
     
@@ -138,12 +134,6 @@ struct SubscriptionRestoreView: View {
                         HStack {
                             getCellButton(buttonText: UserText.subscriptionManageEmailButton,
                                                         action: buttonAction)
-                            /* TO BE IMPLEMENTED ??
-                            Spacer()
-                            Button(action: {}, label: {
-                                Text(UserText.subscriptionManageEmailResendInstructions).daxButton().daxBodyBold()
-                            })
-                            */
                         }
                     }
                 }

@@ -24,6 +24,7 @@ import Foundation
 import WebKit
 import UserScript
 import Combine
+import Subscription
 
 @available(iOS 15.0, *)
 final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObject {
@@ -103,10 +104,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
     }
     
-    struct Subscription: Encodable {
-        let token: String
-    }
-    
+
     /// Values that the Frontend can use to determine the current state.
     // swiftlint:disable nesting
     struct SubscriptionValues: Codable {
@@ -268,7 +266,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         await withTransactionInProgress {
             transactionStatus = .restoring
             switch await AppStoreRestoreFlow.restoreAccountFromPastPurchase() {
-            case .success(let update):
+            case .success:
                 return true
             case .failure:
                 return false

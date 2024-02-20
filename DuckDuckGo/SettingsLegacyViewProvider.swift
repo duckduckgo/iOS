@@ -55,8 +55,6 @@ class SettingsLegacyViewProvider: ObservableObject {
              fireproofSites,
              autoclearData,
              keyboard,
-             macApp,
-             windowsApp,
              netP,
              about,
              feedback, debug
@@ -78,8 +76,6 @@ class SettingsLegacyViewProvider: ObservableObject {
     var autoclearData: UIViewController { instantiate("AutoClearSettingsViewController", fromStoryboard: "Settings") }
     var keyboard: UIViewController { instantiate("Keyboard", fromStoryboard: "Settings") }
     var feedback: UIViewController { instantiate("Feedback", fromStoryboard: "Feedback") }
-    var mac: UIViewController { MacWaitlistViewController(nibName: nil, bundle: nil) }
-    var windows: UIViewController { WindowsWaitlistViewController(nibName: nil, bundle: nil) }
     var about: UIViewController { AboutViewController() }
     
     @available(iOS 15.0, *)

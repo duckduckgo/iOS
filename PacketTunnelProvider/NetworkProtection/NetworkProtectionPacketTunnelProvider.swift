@@ -203,19 +203,23 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
-        let subscriptionConfiguration = SubscriptionConfiguration.makeConfiguration()
+#if ALPHA
+        let isSubscriptionEnabled = true
+#else
+        let isSubscriptionEnabled = false
+#endif
         let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
                                                              errorEvents: nil,
-                                                             isSubscriptionEnabled: subscriptionConfiguration.isSubscriptionEnabled)
+                                                             isSubscriptionEnabled: isSubscriptionEnabled)
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
-        let nofificationsPresenterDecorator = NetworkProtectionNotificationsPresenterTogglableDecorator(
+        let notificationsPresenterDecorator = NetworkProtectionNotificationsPresenterTogglableDecorator(
             settings: settings,
             wrappee: notificationsPresenter
         )
         notificationsPresenter.requestAuthorization()
-        super.init(notificationsPresenter: nofificationsPresenterDecorator,
+        super.init(notificationsPresenter: notificationsPresenterDecorator,
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
                    controllerErrorStore: errorStore,
                    keychainType: .dataProtection(.unspecified),
@@ -223,7 +227,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,
-                   subscriptionConfiguration: subscriptionConfiguration)
+                   isSubscriptionEnabled: isSubscriptionEnabled)
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
         observeStatusChanges()
@@ -276,26 +280,3 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 }
 
 #endif
-
-extension PacketTunnelProvider.SubscriptionConfiguration {
-#if ALPHA && SUBSCRIPTION
-    static func makeConfiguration() -> PacketTunnelProvider.SubscriptionConfiguration {
-        .init(
-            isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription),
-            isEntitlementValid: Self.isEntitlementValid
-        )
-    }
-
-    static func isEntitlementValid() async -> Bool {
-        // todo - https://app.asana.com/0/0/1206470585910128/f
-        await AccountManager().hasEntitlement(for: "dummy1")
-    }
-#else
-    static func makeConfiguration() -> PacketTunnelProvider.SubscriptionConfiguration {
-        .init(
-            isSubscriptionEnabled: false,
-            isEntitlementValid: { true }
-        )
-    }
-#endif
-}

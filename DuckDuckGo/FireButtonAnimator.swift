@@ -110,20 +110,24 @@ class FireButtonAnimator {
                                                object: nil)
     }
         
-    func animate(onAnimationStart: @escaping () -> Void, onTransitionCompleted: @escaping () -> Void, completion: @escaping () -> Void) {
-        
+    func animate(onAnimationStart: @escaping () async -> Void, onTransitionCompleted: @escaping () async -> Void, completion: @escaping () async -> Void) {
+
         guard let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first,
               let snapshot = window.snapshotView(afterScreenUpdates: false) else {
-            onAnimationStart()
-            onTransitionCompleted()
-            completion()
+            Task { @MainActor in
+                await onAnimationStart()
+                await onTransitionCompleted()
+                await completion()
+            }
             return
         }
         
         guard let composition = preLoadedComposition else {
-            onAnimationStart()
-            onTransitionCompleted()
-            completion()
+            Task { @MainActor in
+                await onAnimationStart()
+                await onTransitionCompleted()
+                await completion()
+            }
             return
         }
         
@@ -141,16 +145,22 @@ class FireButtonAnimator {
         let delay = duration * currentAnimation.transition
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             snapshot.removeFromSuperview()
-            onTransitionCompleted()
+            Task { @MainActor in
+                await onTransitionCompleted()
+            }
         }
         
         animationView.play(fromProgress: 0, toProgress: 1) { [weak animationView] _ in
             animationView?.removeFromSuperview()
-            completion()
+            Task { @MainActor in
+                await completion()
+            }
         }
 
         DispatchQueue.main.async {
-            onAnimationStart()
+            Task { @MainActor in
+                await onAnimationStart()
+            }
         }
     }
     

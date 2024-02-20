@@ -75,13 +75,6 @@ final class SettingsViewModel: ObservableObject {
     @Published var shouldNavigateToDBP = false
     @Published var shouldNavigateToITP = false
     
-    #if SUBSCRIPTION
-    // Subscription Cell Flags
-    @Published var shouldShowNetP = false
-    @Published var shouldShowITP = false
-    @Published var shouldShowDBP = false
-    #endif
-    
     // Our View State
     @Published private(set) var state: SettingsState
     

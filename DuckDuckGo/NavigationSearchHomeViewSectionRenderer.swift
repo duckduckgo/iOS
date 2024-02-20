@@ -46,8 +46,11 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func openedAsNewTab(allowingKeyboard: Bool) {
-        if allowingKeyboard && KeyboardSettings().onNewTab {
-            launchNewSearch()
+        guard allowingKeyboard && KeyboardSettings().onNewTab else { return }
+        // The omnibar is inside a collection view so this needs to chance to do its thing
+        //  which might also be async.  Not great.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.launchNewSearch()
         }
     }
     

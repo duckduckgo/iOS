@@ -225,7 +225,6 @@ class TabManager {
         model.clearAll()
         for controller in tabControllerCache {
             removeFromCache(controller)
-            // controller.prepareForDataClearing()
         }
         save()
     }
@@ -324,13 +323,5 @@ extension TabManager {
             ])
             TabPreviewsCleanup.shared.startCleanup(with: model, source: previewsSource)
         }
-    }
-}
-
-extension TabManager {
- 
-    func makeTabCountInfo() -> TabCountInfo {
-        TabCountInfo(tabsModelCount: model.count,
-                     tabControllerCacheCount: tabControllerCache.count)
     }
 }

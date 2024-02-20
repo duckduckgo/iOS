@@ -39,9 +39,9 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     private let titles = [
         Sections.clearData: "Clear Data",
         Sections.debugFeature: "Debug Features",
+        Sections.debugCommand: "Debug Commands",
         Sections.simulateFailure: "Simulate Failure",
         Sections.registrationKey: "Registration Key",
-        Sections.notifications: "Notifications",
         Sections.networkPath: "Network Path",
         Sections.lastDisconnectError: "Last Disconnect Error",
         Sections.connectionTest: "Connection Test",
@@ -52,9 +52,9 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     enum Sections: Int, CaseIterable {
         case clearData
         case debugFeature
+        case debugCommand
         case simulateFailure
         case registrationKey
-        case notifications
         case connectionTest
         case networkPath
         case lastDisconnectError
@@ -84,8 +84,9 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case expireNow
     }
 
-    enum NotificationsRows: Int, CaseIterable {
+    enum ExtensionDebugCommandRows: Int, CaseIterable {
         case triggerTestNotification
+        case shutDown
     }
 
     enum NetworkPathRows: Int, CaseIterable {
@@ -184,14 +185,14 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .debugFeature:
             configure(cell, forDebugFeatureAtRow: indexPath.row)
 
+        case .debugCommand:
+            configure(cell, forNotificationRow: indexPath.row)
+
         case .simulateFailure:
             configure(cell, forSimulateFailureAtRow: indexPath.row)
 
         case .registrationKey:
             configure(cell, forRegistrationKeyRow: indexPath.row)
-
-        case .notifications:
-            configure(cell, forNotificationRow: indexPath.row)
 
         case .networkPath:
             configure(cell, forNetworkPathRow: indexPath.row)
@@ -216,9 +217,9 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         switch Sections(rawValue: section) {
         case .clearData: return ClearDataRows.allCases.count
         case .debugFeature: return DebugFeatureRows.allCases.count
+        case .debugCommand: return ExtensionDebugCommandRows.allCases.count
         case .simulateFailure: return SimulateFailureRows.allCases.count
         case .registrationKey: return RegistrationKeyRows.allCases.count
-        case .notifications: return NotificationsRows.allCases.count
         case .networkPath: return NetworkPathRows.allCases.count
         case .lastDisconnectError: return LastDisconnectErrorRows.allCases.count
         case .connectionTest: return ConnectionTestRows.allCases.count + connectionTestResults.count
@@ -239,12 +240,12 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             }
         case .debugFeature:
             didSelectDebugFeature(at: indexPath)
+        case .debugCommand:
+            didSelectDebugCommand(at: indexPath)
         case .simulateFailure:
             didSelectSimulateFailure(at: indexPath)
         case .registrationKey:
             didSelectRegistrationKeyAction(at: indexPath)
-        case .notifications:
-            didSelectTestNotificationAction(at: indexPath)
         case .networkPath:
             break
         case .lastDisconnectError:
@@ -355,22 +356,28 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         }
     }
 
-    // MARK: Notifications
+    // MARK: VPN Extension Debug Commands
 
     private func configure(_ cell: UITableViewCell, forNotificationRow row: Int) {
-        switch NotificationsRows(rawValue: row) {
+        switch ExtensionDebugCommandRows(rawValue: row) {
         case .triggerTestNotification:
             cell.textLabel?.text = "Test Notification"
+        case .shutDown:
+            cell.textLabel?.text = "Disable VPN From Extension"
         case .none:
             break
         }
     }
 
-    private func didSelectTestNotificationAction(at indexPath: IndexPath) {
-        switch NotificationsRows(rawValue: indexPath.row) {
+    private func didSelectDebugCommand(at indexPath: IndexPath) {
+        switch ExtensionDebugCommandRows(rawValue: indexPath.row) {
         case .triggerTestNotification:
             Task {
                 try await NetworkProtectionDebugUtilities().sendTestNotificationRequest()
+            }
+        case .shutDown:
+            Task {
+                await NetworkProtectionDebugUtilities().disableConnectOnDemandAndShutDown()
             }
         case .none:
             break

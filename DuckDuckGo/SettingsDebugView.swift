@@ -21,7 +21,7 @@ import SwiftUI
 import UIKit
 
 struct SettingsDebugView: View {
-    
+        
     @EnvironmentObject var viewModel: SettingsViewModel
     
     var body: some View {

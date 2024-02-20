@@ -22,7 +22,9 @@ import UserScript
 import Combine
 import Core
 
+
 #if SUBSCRIPTION
+import Subscription
 @available(iOS 15.0, *)
 final class SubscriptionFlowViewModel: ObservableObject {
     
@@ -31,36 +33,53 @@ final class SubscriptionFlowViewModel: ObservableObject {
     let purchaseManager: PurchaseManager
     let viewTitle = UserText.settingsPProSection
     
+    enum Constants {
+        static let navigationBarHideThreshold = 40.0
+    }
+    
     private var cancellables = Set<AnyCancellable>()
+    private var canGoBackCancellable: AnyCancellable?
     
     // State variables
-    var purchaseURL = URL.purchaseSubscription
-    
-    // Closure passed to navigate to a specific section
-    // after returning to settings
-    var onFeatureSelected: ((SettingsViewModel.SettingsSection) -> Void)
+    var purchaseURL = URL.subscriptionPurchase
     
     enum FeatureName {
         static let netP = "vpn"
-        static let itp = "identity-theft-restoration"
+        static let itr = "identity-theft-restoration"
         static let dbp = "personal-information-removal"
     }
 
     // Published properties
     @Published var hasActiveSubscription = false
     @Published var transactionStatus: SubscriptionPagesUseSubscriptionFeature.TransactionStatus = .idle
-    @Published var shouldReloadWebView = false
     @Published var activatingSubscription = false
     @Published var shouldDismissView = false
+    @Published var webViewModel: AsyncHeadlessWebViewViewModel
+    @Published var shouldShowNavigationBar: Bool = false
+    @Published var selectedFeature: SettingsViewModel.SettingsSection?
+    @Published var canNavigateBack: Bool = false
+    
+    private static let allowedDomains = [
+        "duckduckgo.com",
+        "microsoftonline.com",
+        "duosecurity.com",
+    ]
+    
+    private var webViewSettings =  AsyncHeadlessWebViewSettings(bounces: false,
+                                                                allowedDomains: allowedDomains,
+                                                                contentBlocking: false)
         
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
          purchaseManager: PurchaseManager = PurchaseManager.shared,
-         onFeatureSelected: @escaping ((SettingsViewModel.SettingsSection) -> Void)) {
+         selectedFeature: SettingsViewModel.SettingsSection? = nil) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.purchaseManager = purchaseManager
-        self.onFeatureSelected = onFeatureSelected
+        self.selectedFeature = selectedFeature
+        self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,
+                                                          subFeature: subFeature,
+                                                          settings: webViewSettings)
     }
     
     // Observe transaction status
@@ -95,42 +114,88 @@ final class SubscriptionFlowViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 if value != nil {
-                    self?.shouldDismissView = true
                     switch value?.feature {
                     case FeatureName.netP:
-                        self?.onFeatureSelected(.netP)
-                    case FeatureName.itp:
-                        self?.onFeatureSelected(.itp)
+                        self?.selectedFeature = .netP
+                    case FeatureName.itr:
+                        self?.selectedFeature = .itr
                     case FeatureName.dbp:
-                        self?.onFeatureSelected(.dbp)
+                        self?.selectedFeature = .dbp
                     default:
-                        return
+                        break
                     }
+                    self?.finalizeSubscriptionFlow()
                 }
+                
             }
             .store(in: &cancellables)
-  
+        
+        webViewModel.$scrollPosition
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.shouldShowNavigationBar = value.y > Constants.navigationBarHideThreshold
+            }
+            .store(in: &cancellables)
+        
+        canGoBackCancellable = webViewModel.$canGoBack
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.canNavigateBack = value
+            }
     }
     
     @MainActor
     private func setTransactionStatus(_ status: SubscriptionPagesUseSubscriptionFeature.TransactionStatus) {
         self.transactionStatus = status
     }
+        
+    @MainActor
+    private func disableGoBack() {
+        canGoBackCancellable?.cancel()
+        canNavigateBack = false
+    }
     
     func initializeViewData() async {
         await self.setupTransactionObserver()
-        await MainActor.run { shouldReloadWebView = true }
+        await self.updateSubscriptionStatus()
+        webViewModel.navigationCoordinator.navigateTo(url: purchaseURL )
     }
     
+    func finalizeSubscriptionFlow() {
+        canGoBackCancellable?.cancel()
+        cancellables.removeAll()
+        subFeature.selectedFeature = nil
+        hasActiveSubscription = false
+        transactionStatus = .idle
+        activatingSubscription = false
+        shouldShowNavigationBar = false
+        selectedFeature = nil
+        canNavigateBack = false
+        shouldDismissView = true
+    }
+
     func restoreAppstoreTransaction() {
         Task {
             if await subFeature.restoreAccountFromAppStorePurchase() {
-                await MainActor.run { shouldReloadWebView = true }
+                await disableGoBack()
+                await webViewModel.navigationCoordinator.reload()
             } else {
                 await MainActor.run {
                 }
             }
         }
+    }
+    
+    func updateSubscriptionStatus() async {
+        if AccountManager().isUserAuthenticated && hasActiveSubscription == false {
+            await disableGoBack()
+            await webViewModel.navigationCoordinator.reload()
+        }
+    }
+    
+    @MainActor
+    func navigateBack() async {
+        await webViewModel.navigationCoordinator.goBack()
     }
     
 }

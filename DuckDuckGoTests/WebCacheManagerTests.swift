@@ -27,6 +27,8 @@ class WebCacheManagerTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+        CookieStorage().cookies = []
+        CookieStorage().isConsumed = true
         UserDefaults.standard.removeObject(forKey: UserDefaultsWrapper<Any>.Key.webContainerId.rawValue)
         if #available(iOS 17, *) {
             WKWebsiteDataStore.fetchAllDataStoreIdentifiers { uuids in
@@ -59,16 +61,15 @@ class WebCacheManagerTests: XCTestCase {
         let loadedCount = await defaultStore.httpCookieStore.allCookies().count
         XCTAssertEqual(5, loadedCount)
 
-        await withCheckedContinuation { continuation in
-            WebCacheManager.shared.clear(logins: logins, dataStoreIdManager: dataStoreIdManager) {
-                continuation.resume()
-            }
-        }
+        let cookieStore = CookieStorage()
+        await WebCacheManager.shared.clear(cookieStorage: cookieStore, logins: logins, dataStoreIdManager: dataStoreIdManager)
 
         let cookies = await defaultStore.httpCookieStore.allCookies()
-        XCTAssertEqual(cookies.count, 2)
-        XCTAssertTrue(cookies.contains(where: { $0.domain == ".twitter.com" }))
-        XCTAssertTrue(cookies.contains(where: { $0.domain == "mobile.twitter.com" }))
+        XCTAssertEqual(cookies.count, 0)
+
+        XCTAssertEqual(2, cookieStore.cookies.count)
+        XCTAssertTrue(cookieStore.cookies.contains(where: { $0.domain == ".twitter.com" }))
+        XCTAssertTrue(cookieStore.cookies.contains(where: { $0.domain == "mobile.twitter.com" }))
     }
     
     @MainActor
@@ -83,18 +84,13 @@ class WebCacheManagerTests: XCTestCase {
         await defaultStore.httpCookieStore.setCookie(.make(domain: "www.example.com"))
         await defaultStore.httpCookieStore.setCookie(.make(domain: ".example.com"))
 
-        await withCheckedContinuation { continuation in
-            WebCacheManager.shared.removeCookies(forDomains: ["www.example.com"], dataStore: WKWebsiteDataStore.current()) {
-                continuation.resume()
-            }
-        }
+        await WebCacheManager.shared.removeCookies(forDomains: ["www.example.com"], dataStore: WKWebsiteDataStore.current())
         let cookies = await defaultStore.httpCookieStore.allCookies()
         XCTAssertEqual(cookies.count, 0)
     }
 
     @MainActor
     func testWhenClearedThenCookiesWithParentDomainsAreRetained() async {
-
         let logins = MockPreservedLogins(domains: [
             "www.example.com"
         ])
@@ -109,38 +105,47 @@ class WebCacheManagerTests: XCTestCase {
         await defaultStore.httpCookieStore.setCookie(.make(domain: "example.com"))
         await defaultStore.httpCookieStore.setCookie(.make(domain: ".example.com"))
 
-        await withCheckedContinuation { continuation in
-            WebCacheManager.shared.clear(logins: logins, dataStoreIdManager: dataStoreIdManager) {
-                continuation.resume()
-            }
-        }
-
+        let cookieStorage = CookieStorage()
+        
+        await WebCacheManager.shared.clear(cookieStorage: cookieStorage,
+                                           logins: logins,
+                                           dataStoreIdManager: dataStoreIdManager)
         let cookies = await defaultStore.httpCookieStore.allCookies()
 
-        XCTAssertEqual(cookies.count, 1)
-        XCTAssertEqual(cookies[0].domain, ".example.com")
+        XCTAssertEqual(cookies.count, 0)
+        XCTAssertEqual(cookieStorage.cookies.count, 1)
+        XCTAssertEqual(cookieStorage.cookies[0].domain, ".example.com")
     }
 
-    func testWhenClearedThenDDGCookiesAreRetained() {
+    @MainActor
+    @available(iOS 17, *)
+    func testWhenClearedWithDataStoreContainerThenDDGCookiesAreRetained() async throws {
+        throw XCTSkip("WKWebsiteDataStore(forIdentifier:) does not persist cookies properly until attached to a running webview")
+        
+        // This test should look like `testWhenClearedWithLegacyContainerThenDDGCookiesAreRetained` but
+        //  with a container ID set on the `dataStoreIdManager`.
+    }
+
+    @MainActor
+    func testWhenClearedWithLegacyContainerThenDDGCookiesAreRetained() async {
         let logins = MockPreservedLogins(domains: [
             "www.example.com"
         ])
-
-        let dataStore = MockDataStore()
-        let cookieStore = MockHTTPCookieStore(cookies: [
-            .make(domain: "duckduckgo.com")
-        ])
-
-        dataStore.cookieStore = cookieStore
         
-        let expect = expectation(description: #function)
-        WebCacheManager.shared.clear(logins: logins, dataStoreIdManager: dataStoreIdManager) {
-            expect.fulfill()
-        }
-        wait(for: [expect], timeout: 5.0)
+        XCTAssertFalse(dataStoreIdManager.hasId)
         
-        XCTAssertEqual(cookieStore.cookies.count, 1)
-        XCTAssertEqual(cookieStore.cookies[0].domain, "duckduckgo.com")
+        let cookieStore = WKWebsiteDataStore.default().httpCookieStore
+        await cookieStore.setCookie(.make(name: "name", value: "value", domain: "duckduckgo.com"))
+        await cookieStore.setCookie(.make(name: "name", value: "value", domain: "subdomain.duckduckgo.com"))
+
+        let storage = CookieStorage()
+        storage.isConsumed = true
+        
+        await WebCacheManager.shared.clear(cookieStorage: storage, logins: logins, dataStoreIdManager: dataStoreIdManager)
+        
+        XCTAssertEqual(storage.cookies.count, 2)
+        XCTAssertTrue(storage.cookies.contains(where: { $0.domain == "duckduckgo.com" }))
+        XCTAssertTrue(storage.cookies.contains(where: { $0.domain == "subdomain.duckduckgo.com" }))
     }
     
     @MainActor
@@ -161,40 +166,24 @@ class WebCacheManagerTests: XCTestCase {
         let loadedCount = await defaultStore.httpCookieStore.allCookies().count
         XCTAssertEqual(2, loadedCount)
 
-        await withCheckedContinuation { continuation in
-            WebCacheManager.shared.clear(logins: logins, dataStoreIdManager: dataStoreIdManager) {
-                continuation.resume()
-            }
-        }
+        let cookieStore = CookieStorage()
+        
+        await WebCacheManager.shared.clear(cookieStorage: cookieStore, logins: logins, dataStoreIdManager: dataStoreIdManager)
 
         let cookies = await defaultStore.httpCookieStore.allCookies()
-        XCTAssertEqual(cookies.count, 1)
-        XCTAssertEqual(cookies[0].domain, "www.example.com")
+        XCTAssertEqual(cookies.count, 0)
+        
+        XCTAssertEqual(1, cookieStore.cookies.count)
+        XCTAssertEqual(cookieStore.cookies[0].domain, "www.example.com")
     }
  
+    @MainActor
     func testWhenAccessingObservationsDbThenValidDatabasePoolIsReturned() {
         let pool = WebCacheManager.shared.getValidDatabasePool()
         XCTAssertNotNil(pool, "DatabasePool should not be nil")
     }
             
     // MARK: Mocks
-    
-    class MockDataStore: WebCacheManagerDataStore {
-
-        func preservedCookies(_ preservedLogins: Core.PreserveLogins) async -> [HTTPCookie] {
-            []
-        }
-
-        var removeAllDataCalledCount = 0
-        
-        var cookieStore: WebCacheManagerCookieStore?
-        
-        func legacyClearingRemovingAllDataExceptCookies(completion: @escaping () -> Void) {
-            removeAllDataCalledCount += 1
-            completion()
-        }
-        
-    }
     
     class MockPreservedLogins: PreserveLogins {
         
@@ -210,28 +199,4 @@ class WebCacheManagerTests: XCTestCase {
         
     }
     
-    class MockHTTPCookieStore: WebCacheManagerCookieStore {
-
-        var cookies: [HTTPCookie]
-        
-        init(cookies: [HTTPCookie] = []) {
-            self.cookies = cookies
-        }
-        
-        func getAllCookies(_ completionHandler: @escaping ([HTTPCookie]) -> Void) {
-            completionHandler(cookies)
-        }
-        
-        func setCookie(_ cookie: HTTPCookie, completionHandler: (() -> Void)?) {
-            cookies.append(cookie)
-            completionHandler?()
-        }
-        
-        func delete(_ cookie: HTTPCookie, completionHandler: (() -> Void)?) {
-            cookies.removeAll { $0 == cookie }
-            completionHandler?()
-        }
-                
-    }
-
 }

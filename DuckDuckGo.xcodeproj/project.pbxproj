@@ -688,13 +688,6 @@
 		B6BA95C528894A28004ABA20 /* BrowsingMenuViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6BA95C428894A28004ABA20 /* BrowsingMenuViewController.storyboard */; };
 		B6BA95E828924730004ABA20 /* JSAlertController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6BA95E728924730004ABA20 /* JSAlertController.storyboard */; };
 		B6CB93E5286445AB0090FEB4 /* Base64DownloadSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CB93E4286445AB0090FEB4 /* Base64DownloadSession.swift */; };
-		BD7B379F2B5F6A3F0040F991 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C8E2B291CA90054390C /* AccountManager.swift */; };
-		BD7B37A02B5F6A4D0040F991 /* AccountKeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C902B291CA90054390C /* AccountKeychainStorage.swift */; };
-		BD7B37A12B5F6A6A0040F991 /* AccountStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C912B291CA90054390C /* AccountStorage.swift */; };
-		BD7B37A22B5F6A770040F991 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C9D2B291CA90054390C /* AuthService.swift */; };
-		BD7B37A32B5F6A830040F991 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C9C2B291CA90054390C /* APIService.swift */; };
-		BD7B37A42B5F6A9C0040F991 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C8D2B291CA90054390C /* Logging.swift */; };
-		BD7B37A52B5F6AAA0040F991 /* SubscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D12C9B2B291CA90054390C /* SubscriptionService.swift */; };
 		BD862E032B30DA170073E2EE /* VPNFeedbackFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD862E022B30DA170073E2EE /* VPNFeedbackFormViewModel.swift */; };
 		BD862E052B30DB250073E2EE /* VPNFeedbackCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD862E042B30DB250073E2EE /* VPNFeedbackCategory.swift */; };
 		BD862E072B30F5E30073E2EE /* VPNFeedbackSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD862E062B30F5E30073E2EE /* VPNFeedbackSender.swift */; };
@@ -6384,7 +6377,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				02025B0D29884D2C00E694E7 /* AppTrackerData.swift in Sources */,
-				BD7B37A42B5F6A9C0040F991 /* Logging.swift in Sources */,
 				4BEF656C2989C2FC00B650CB /* TunnelEvent.swift in Sources */,
 				02025A9A2988229800E694E7 /* TUNInterface.swift in Sources */,
 				02025A9B2988229800E694E7 /* IPStackProtocol.swift in Sources */,
@@ -6397,7 +6389,6 @@
 				4BEF656D2989C2FC00B650CB /* EventType.swift in Sources */,
 				02025AAC2988229800E694E7 /* GCDHTTPProxyServer.swift in Sources */,
 				02025AAD2988229800E694E7 /* NWUDPSocket.swift in Sources */,
-				BD7B37A52B5F6AAA0040F991 /* SubscriptionService.swift in Sources */,
 				EE3766DE2AC5945500AAB575 /* NetworkProtectionUNNotificationPresenter.swift in Sources */,
 				02025AAE2988229800E694E7 /* RawTCPSocketProtocol.swift in Sources */,
 				02025AAF2988229800E694E7 /* NWTCPSocket.swift in Sources */,
@@ -6407,7 +6398,6 @@
 				02025AB72988229800E694E7 /* AllRule.swift in Sources */,
 				02025AB82988229800E694E7 /* DNSSessionMatchResult.swift in Sources */,
 				02025AB92988229800E694E7 /* Rule.swift in Sources */,
-				BD7B37A32B5F6A830040F991 /* APIService.swift in Sources */,
 				02025ABA2988229800E694E7 /* DirectRule.swift in Sources */,
 				02025ABB2988229800E694E7 /* RuleManager.swift in Sources */,
 				02025ABC2988229800E694E7 /* IPRangeListRule.swift in Sources */,
@@ -6421,20 +6411,16 @@
 				02025AD82988229800E694E7 /* Tunnel.swift in Sources */,
 				02025ADA2988229800E694E7 /* Port.swift in Sources */,
 				02025ADB2988229800E694E7 /* HTTPStreamScanner.swift in Sources */,
-				BD7B37A02B5F6A4D0040F991 /* AccountKeychainStorage.swift in Sources */,
-				BD7B379F2B5F6A3F0040F991 /* AccountManager.swift in Sources */,
 				02025ADC2988229800E694E7 /* UInt128.swift in Sources */,
 				02025ADD2988229800E694E7 /* IPInterval.swift in Sources */,
 				02025ADE2988229800E694E7 /* IPPool.swift in Sources */,
 				4BEF65692989C2FC00B650CB /* AdapterSocketEvent.swift in Sources */,
 				02025ADF2988229800E694E7 /* IPMask.swift in Sources */,
 				4BEF656A2989C2FC00B650CB /* ProxyServerEvent.swift in Sources */,
-				BD7B37A12B5F6A6A0040F991 /* AccountStorage.swift in Sources */,
 				4BEF656B2989C2FC00B650CB /* RuleMatchEvent.swift in Sources */,
 				02025AE02988229800E694E7 /* IPRange.swift in Sources */,
 				02025AE12988229800E694E7 /* IPAddress.swift in Sources */,
 				02025B1529884EA500E694E7 /* DDGObserverFactory.swift in Sources */,
-				BD7B37A22B5F6A770040F991 /* AuthService.swift in Sources */,
 				02025AE32988229800E694E7 /* BinaryDataScanner.swift in Sources */,
 				021D30752989C04200918636 /* Observer.swift in Sources */,
 				02025AE42988229800E694E7 /* Checksum.swift in Sources */,

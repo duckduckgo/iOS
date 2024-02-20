@@ -12,10 +12,10 @@
     {
       "identity" : "browserserviceskit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/duckduckgo/BrowserServicesKit",
+      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "anh/netp-check-entitlement-while-rekeying",
-        "revision" : "c0eb8700eea4180b12c3a968411a6d292f1bc992"
+        "revision" : "cf48f671035c16d672bfb0c09a7c0a8aa8c66c3a"
       }
     },
     {

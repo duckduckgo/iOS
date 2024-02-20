@@ -238,7 +238,6 @@ final class SubscriptionDebugViewController: UITableViewController {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
                 return
             }
-
             let entitlements: [AccountManager.Entitlement] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
             for entitlement in entitlements {
                 if case let .success(result) = await AccountManager().hasEntitlement(for: entitlement) {
@@ -247,7 +246,7 @@ final class SubscriptionDebugViewController: UITableViewController {
                     print(resultSummary)
                 }
             }
-            showAlert(title: "Check Entitlements", message: results.joined(separator: "\n"))
+            showAlert(title: "Available Entitlements", message: results.joined(separator: "\n"))
         }
     }
 }

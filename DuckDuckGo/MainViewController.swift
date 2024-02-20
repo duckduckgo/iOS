@@ -1334,12 +1334,6 @@ class MainViewController: UIViewController {
                 self?.onNetworkProtectionAccountSignIn(notification)
             }
             .store(in: &netpCancellables)
-        NotificationCenter.default.publisher(for: .accountDidSignOut)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] notification in
-                self?.onNetworkProtectionAccountSignOut(notification)
-            }
-            .store(in: &netpCancellables)
     }
     
     @objc
@@ -1351,17 +1345,13 @@ class MainViewController: UIViewController {
 
         Task {
             do {
+                // todo - https://app.asana.com/0/0/1206541966681608/f
                 try NetworkProtectionKeychainTokenStore().store(NetworkProtectionKeychainTokenStore.makeToken(from: token))
                 print("[NetP Subscription] Stored derived NetP auth token")
             } catch {
                 print("[NetP Subscription] Failed to store derived NetP auth token: \(error)")
             }
         }
-    }
-
-    @objc
-    private func onNetworkProtectionAccountSignOut(_ notification: Notification) {
-        // no-op
     }
 #endif
 

@@ -3093,15 +3093,6 @@
 			name = AppTPBreakageForm;
 			sourceTree = "<group>";
 		};
-		1E16260029683B4D0004127F /* CustomDaxDialog */ = {
-			isa = PBXGroup;
-			children = (
-				1E1626082968418F0004127F /* Animations */,
-				1E162611296C62350004127F /* Model */,
-			);
-			name = CustomDaxDialog;
-			sourceTree = "<group>";
-		};
 		1E162603296840790004127F /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -3111,20 +3102,6 @@
 				EE4BE0082A740BED00CD6AA8 /* ClearTextField.swift */,
 			);
 			name = SwiftUI;
-			sourceTree = "<group>";
-		};
-		1E1626082968418F0004127F /* Animations */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Animations;
-			sourceTree = "<group>";
-		};
-		1E162611296C62350004127F /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Model;
 			sourceTree = "<group>";
 		};
 		1E162616296D962A0004127F /* Model */ = {
@@ -4892,7 +4869,6 @@
 		F11CEF581EBB66C80088E4D7 /* Tutorials */ = {
 			isa = PBXGroup;
 			children = (
-				1E16260029683B4D0004127F /* CustomDaxDialog */,
 				858650CF2469BCC100C36F8A /* DaxOnboarding */,
 				85EE7F53224667C3000FE757 /* WebContainer */,
 				85C11E4A209084DE00BFFEB4 /* HomeRow */,

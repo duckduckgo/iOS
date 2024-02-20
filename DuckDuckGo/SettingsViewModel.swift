@@ -72,8 +72,16 @@ final class SettingsViewModel: ObservableObject {
     
     // SwiftUI Programatic Navigation Variables
     // Add more views as needed here...
+    #if SUBSCRIPTION
     @Published var shouldNavigateToDBP = false
     @Published var shouldNavigateToITP = false
+    #endif
+    
+    #if SUBSCRIPTION
+    @Published var shouldShowNetP = false
+    @Published var shouldShowDBP = false
+    @Published var shouldShowITP = false
+    #endif
     
     // Our View State
     @Published private(set) var state: SettingsState

@@ -233,11 +233,11 @@ final class SubscriptionDebugViewController: UITableViewController {
     
     private func getEntitlements() {
         Task {
+            var results: [String] = []
             guard let token = accountManager.accessToken else {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
                 return
             }
-            var results: [String] = []
 
             let entitlements: [AccountManager.Entitlement] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
             for entitlement in entitlements {
@@ -247,7 +247,6 @@ final class SubscriptionDebugViewController: UITableViewController {
                     print(resultSummary)
                 }
             }
-
             showAlert(title: "Check Entitlements", message: results.joined(separator: "\n"))
         }
     }

@@ -75,8 +75,8 @@ final class SettingsViewModel: ObservableObject {
     @Published var shouldNavigateToDBP = false
     @Published var shouldNavigateToITP = false
     
-    // Subscription Entitlement names: TBD
-    static let entitlementNames = ["dummy1", "dummy2", "dummy3"]
+    // Subscription Entitlement names
+    static let subscriberEntitlement = "subscriber"
     
     // Our View State
     @Published private(set) var state: SettingsState
@@ -343,7 +343,7 @@ extension SettingsViewModel {
                 }
                 
                 // Check for valid entitlements
-                let hasEntitlements = await AccountManager().hasEntitlement(for: Self.entitlementNames.first!)
+                let hasEntitlements = await AccountManager().hasEntitlement(for: Self.subscriberEntitlement)
                 self.state.subscription.hasActiveSubscription = hasEntitlements ? true : false
                 
                 // Cache Subscription state

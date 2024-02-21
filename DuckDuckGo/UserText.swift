@@ -1004,10 +1004,18 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionTitle = NSLocalizedString("subscription.title", value: "Privacy Pro", comment: "Navigation bar Title for subscriptions")
     public static let subscriptionCloseButton = NSLocalizedString("subscription.close", value: "Close", comment: "Navigation Button for closing subscription view")
     
-    static func subscriptionInfo(expiration: String) -> String {
-        let localized = NSLocalizedString("subscription.subscription.active.caption", value: "Your Privacy Pro subscription renews on %@", comment: "Subscription Expiration Data")
-        return String(format: localized, expiration)
+    static func subscriptionInfo(status: String, expiration: String) -> String {
+        let localized = NSLocalizedString("subscription.subscription.active.caption",
+                                          value: "Your subscription %@ on %@",
+                                          comment: "Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)'")
+        return String(format: localized, status, expiration)
     }
+    
+    public static let subscriptionRenews = NSLocalizedString("subscription.renews", value: "renews", comment: "text for renewal string")
+    public static let subscriptionExpires = NSLocalizedString("subscription.expires", value: "expires", comment: "text for expiration string")
+    public static let subscriptionMonthly = NSLocalizedString("subscription.monthly", value: "Monthly Subscription", comment: "Subscription type")
+    public static let subscriptionAnnual = NSLocalizedString("subscription.annual", value: "Annual Subscription", comment: "Subscription type")
+    
     public static let subscriptionManageDevices = NSLocalizedString("subscription.manage.devices", value: "Manage Devices", comment: "Header for the device management section")
     public static let subscriptionAddDeviceButton = NSLocalizedString("subscription.add.device.button", value: "Add to Another Device", comment: "Add to another device button")
     public static let subscriptionRemoveFromDevice = NSLocalizedString("subscription.remove.from.device.button", value: "Remove From This Device", comment: "Remove from this device button")

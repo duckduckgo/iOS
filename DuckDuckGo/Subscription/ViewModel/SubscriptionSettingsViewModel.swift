@@ -26,40 +26,55 @@ import Subscription
 @available(iOS 15.0, *)
 final class SubscriptionSettingsViewModel: ObservableObject {
     
+    enum Constants {
+        static let autoRenewable = "Auto-Renewable"
+        static let notAutoRenewable = "Not Auto-Renewable"
+        static let monthlyProductID = "ios.subscription.1month"
+        static let yearlyProductID = "ios.subscription.1year"
+    }
+    
     let accountManager: AccountManager
-    var subscriptionDetails: String = ""
+    @Published var subscriptionDetails: String = ""
+    @Published var subscriptionType: String = ""
     @Published var shouldDisplayRemovalNotice: Bool = false
     
     init(accountManager: AccountManager = AccountManager()) {
         self.accountManager = accountManager
-        fetchAndUpdateSubscriptionDetails()
+        Task { await fetchAndUpdateSubscriptionDetails() }
     }
     
     private var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMM dd, yyyy" // Jan 12, 2024"
+        formatter.dateFormat = "MMM dd, yyyy"
         return formatter
     }()
     
-    private func fetchAndUpdateSubscriptionDetails() {
+    @MainActor
+    func fetchAndUpdateSubscriptionDetails() {
         Task {
             guard let token = accountManager.accessToken else { return }
 
-            if let cachedDate = SubscriptionService.cachedSubscriptionDetailsResponse?.expiresOrRenewsAt {
-                updateSubscriptionDetails(date: cachedDate)
+            if let cachedDate = SubscriptionService.cachedSubscriptionDetailsResponse?.expiresOrRenewsAt,
+               let cachedStatus =  SubscriptionService.cachedSubscriptionDetailsResponse?.status,
+               let productID =  SubscriptionService.cachedSubscriptionDetailsResponse?.productId {
+                updateSubscriptionDetails(status: cachedStatus, date: cachedDate, product: productID)
             }
 
             if case .success(let response) = await SubscriptionService.getSubscriptionDetails(token: token) {
                 if !response.isSubscriptionActive {
                     AccountManager().signOut()
                     return
+                } else {
+                    updateSubscriptionDetails(status: response.status, date: response.expiresOrRenewsAt, product: response.productId)
                 }
             }
         }
     }
     
-    private func updateSubscriptionDetails(date: Date) {
-        self.subscriptionDetails = UserText.subscriptionInfo(expiration: dateFormatter.string(from: date))
+    private func updateSubscriptionDetails(status: String, date: Date, product: String) {
+        let statusString = (status == Self.Constants.autoRenewable) ? UserText.subscriptionRenews : UserText.subscriptionExpires
+        self.subscriptionDetails = UserText.subscriptionInfo(status: statusString, expiration: dateFormatter.string(from: date))
+        self.subscriptionType = product == Constants.monthlyProductID ? UserText.subscriptionMonthly : UserText.subscriptionAnnual
     }
     
     func removeSubscription() {

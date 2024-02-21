@@ -1971,6 +1971,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Add Email";
 
+/* Subscription type */
+"subscription.annual" = "Annual Subscription";
+
 /* Subscription availability message on Apple devices */
 "subscription.available.apple" = "Privacy Pro is available on any device signed in to the same Apple ID.";
 
@@ -1982,6 +1985,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Navigation Button for closing subscription view */
 "subscription.close" = "Close";
+
+/* text for expiration string */
+"subscription.expires" = "expires";
 
 /* FAQ Button */
 "subscription.faq" = "Privacy Pro FAQ";
@@ -2012,6 +2018,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Manage Plan header */
 "subscription.manage.plan" = "Manage Plan";
+
+/* Subscription type */
+"subscription.monthly" = "Monthly Subscription";
 
 /* Alert content for not found subscription */
 "subscription.notFound.alert.message" = "The subscription associated with this Apple ID is no longer active.";
@@ -2064,6 +2073,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Remove subscription cancel button text */
 "subscription.remove.subscription.cancel" = "Cancel";
 
+/* text for renewal string */
+"subscription.renews" = "renews";
+
 /* Alert button text for restored purchase alert */
 "subscription.restore.success.alert.button" = "OK";
 
@@ -2073,8 +2085,8 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Alert title for restored purchase */
 "subscription.restore.success.alert.title" = "You’re all set.";
 
-/* Subscription Expiration Data */
-"subscription.subscription.active.caption" = "Your Privacy Pro subscription renews on %@";
+/* Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)' */
+"subscription.subscription.active.caption" = "Your subscription %1$@ on %2$@";
 
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";

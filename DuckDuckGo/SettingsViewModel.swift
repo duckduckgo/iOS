@@ -344,9 +344,13 @@ extension SettingsViewModel {
         case .success(let response) where !response.isSubscriptionActive:
             AccountManager().signOut()
             setupSubscriptionPurchaseOptions()
+        
         case .success(let response):
+            
             // Cache Subscription state
+            self.state.subscription.hasActiveSubscription = true
             Self.cachedHasActiveSubscription = self.state.subscription.hasActiveSubscription
+            
             
             // Check entitlements and update UI accordingly
             let entitlements: [AccountManager.Entitlement] = [.identityTheftRestoration, .dataBrokerProtection, .networkProtection]

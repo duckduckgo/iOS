@@ -36,7 +36,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     var webViewModel: AsyncHeadlessWebViewViewModel
     
     enum Constants {
-        static let navigationBarHideThreshold = 40.0
+        static let navigationBarHideThreshold = 80.0
     }
     
     private var cancellables = Set<AnyCancellable>()

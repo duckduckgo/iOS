@@ -33,7 +33,7 @@ final class SubscriptionITPViewModel: ObservableObject {
     var viewTitle = UserText.subscriptionTitle
     
     enum Constants {
-        static let navigationBarHideThreshold = 60.0
+        static let navigationBarHideThreshold = 15.0
         static let downloadableContent = ["application/pdf"]
         static let blankURL = "about:blank"
         static let externalSchemes =  ["tel", "sms", "facetime"]

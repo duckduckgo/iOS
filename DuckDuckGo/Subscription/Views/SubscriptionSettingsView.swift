@@ -34,69 +34,94 @@ struct SubscriptionSettingsView: View {
     @StateObject var sceneEnvironment = SceneEnvironment()
     
     var body: some View {
-            List {
-                Section(header: Text(viewModel.subscriptionDetails)
-                                    .lineLimit(nil)
-                                    .daxBodyRegular()
-                                    .fixedSize(horizontal: false, vertical: true)) {
-                    EmptyView()
-                    .frame(height: 0)
-                    .hidden()
-                }.textCase(nil)
-                Section(header: Text(UserText.subscriptionManageDevices)) {
-                    
-                    
-                    NavigationLink(destination: SubscriptionRestoreView()) {
-                        SettingsCustomCell(content: {
-                            Text(UserText.subscriptionAddDeviceButton)
-                                .daxBodyRegular()
-                                .foregroundColor(Color.init(designSystemColor: .accent))
-                        })
-                    }
-                    
-                    
-                    SettingsCustomCell(content: {
-                        Text(UserText.subscriptionRemoveFromDevice)
-                                .daxBodyRegular()
-                                .foregroundColor(Color.init(designSystemColor: .accent))},
-                                       action: { viewModel.shouldDisplayRemovalNotice.toggle() },
-                                       isButton: true)
-                    
-                }
-                Section(header: Text(UserText.subscriptionManagePlan)) {
-                    SettingsCustomCell(content: {
-                        Text(UserText.subscriptionChangePlan)
-                            .daxBodyRegular()
-                    },
-                                       action: { Task { viewModel.manageSubscription() } },
-                                       isButton: true)
-                }
-                Section(header: Text(UserText.subscriptionHelpAndSupport),
-                        footer: Text(UserText.subscriptionFAQFooter)) {
-                    NavigationLink(destination: Text(UserText.subscriptionFAQ)) {
-                        SettingsCustomCell(content: {
-                            Text(UserText.subscriptionFAQ)
-                                .daxBodyRegular()
-                        })
-                    }
+        List {
+            
+            Section {
+                VStack(alignment: .center, spacing: 7) {
+                    Image("Privacy-Pro-96x96")
+                    Text(UserText.subscriptionTitle).daxTitle2()
+                    Text(viewModel.subscriptionType).daxHeadline()
+                    Text(viewModel.subscriptionDetails)
+                        .daxSubheadRegular()
+                        .foregroundColor(Color(designSystemColor: .textSecondary))
                 }
             }
-            .navigationTitle(UserText.settingsPProManageSubscription)
-            .applyInsetGroupedListStyle()
-            
-            // Remove subscription
-            .alert(isPresented: $viewModel.shouldDisplayRemovalNotice) {
-                Alert(
-                    title: Text(UserText.subscriptionRemoveFromDeviceConfirmTitle),
-                    message: Text(UserText.subscriptionRemoveFromDeviceConfirmText),
-                    primaryButton: .cancel(Text(UserText.subscriptionRemoveCancel)) {
-                    },
-                    secondaryButton: .destructive(Text(UserText.subscriptionRemove)) {
-                        viewModel.removeSubscription()
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                )
+            .listRowBackground(Color.clear)
+            .frame(maxWidth: .infinity, alignment: .center)
+        
+            Section(header: Text(UserText.subscriptionManageDevices)) {
+                
+                NavigationLink(destination: SubscriptionRestoreView()) {
+                    SettingsCustomCell(content: {
+                        Text(UserText.subscriptionAddDeviceButton)
+                            .daxBodyRegular()
+                            .foregroundColor(Color.init(designSystemColor: .accent))
+                    })
+                }
+                
+                SettingsCustomCell(content: {
+                    Text(UserText.subscriptionRemoveFromDevice)
+                            .daxBodyRegular()
+                            .foregroundColor(Color.init(designSystemColor: .accent))},
+                                   action: { viewModel.shouldDisplayRemovalNotice.toggle() },
+                                   isButton: true)
+                
+            }
+            Section(header: Text(UserText.subscriptionManagePlan)) {
+                SettingsCustomCell(content: {
+                    Text(UserText.subscriptionChangePlan)
+                        .daxBodyRegular()
+                },
+                                   action: { Task { viewModel.manageSubscription() } },
+                                   isButton: true)
+            }
+            Section(header: Text(UserText.subscriptionHelpAndSupport),
+                    footer: Text(UserText.subscriptionFAQFooter)) {
+                NavigationLink(destination: Text(UserText.subscriptionFAQ)) {
+                    SettingsCustomCell(content: {
+                        Text(UserText.subscriptionFAQ)
+                            .daxBodyRegular()
+                    })
+                }
             }
         }
+        .navigationTitle(UserText.settingsPProManageSubscription)
+        .applyInsetGroupedListStyle()
+        
+        // Remove subscription
+        .alert(isPresented: $viewModel.shouldDisplayRemovalNotice) {
+            Alert(
+                title: Text(UserText.subscriptionRemoveFromDeviceConfirmTitle),
+                message: Text(UserText.subscriptionRemoveFromDeviceConfirmText),
+                primaryButton: .cancel(Text(UserText.subscriptionRemoveCancel)) {
+                },
+                secondaryButton: .destructive(Text(UserText.subscriptionRemove)) {
+                    viewModel.removeSubscription()
+                    presentationMode.wrappedValue.dismiss()
+                }
+            )
+        }
+        
+        .onAppear {
+            viewModel.fetchAndUpdateSubscriptionDetails()
+        }
+    }
+}
+#endif
+
+
+#if SUBSCRIPTION && DEBUG
+@available(iOS 15.0, *)
+
+struct SubscriptionSettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            SubscriptionSettingsView().navigationBarTitleDisplayMode(.inline)
+        }
+        // You can customize the preview environment here if needed.
+        // For example, you can set a specific device, size, or dark mode/light mode.
+        // .previewDevice(PreviewDevice(rawValue: "iPhone 12"))
+        // .preferredColorScheme(.dark)
+    }
 }
 #endif

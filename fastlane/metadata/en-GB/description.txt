@@ -1,6 +1,4 @@
-The DuckDuckGo app provides the most comprehensive online privacy protection with the push of a button. With one download, you get a new everyday browser that offers seamless protection while you search and browse, and even access to tracking protection for emails you receive.
-
-Protecting your privacy online is like protecting your home. Locking the front door won’t stop the most determined folks from getting inside, especially if you’ve left the back door and windows unlocked and an extra key under the doormat. That’s why we offer multiple types of privacy protection, most of which aren’t offered in most popular browsers by default.
+The DuckDuckGo browser provides the most comprehensive online privacy protection in one app. Unlike most popular browsers, it has powerful privacy protections by default, including our search engine that doesn’t track your history and over a dozen other built-in protections. Millions of people use DuckDuckGo as their go-to browser to protect their everyday online activities, from searching to browsing, emailing, and more.
 
 FEATURE HIGHLIGHTS
 • Search Privately by Default — DuckDuckGo Private Search comes built-in, so you can easily search the web without being tracked.

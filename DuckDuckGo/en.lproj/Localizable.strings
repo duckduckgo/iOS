@@ -1993,7 +1993,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.faq" = "Privacy Pro FAQ";
 
 /* FAQ Description */
-"subscription.faq.description" = "Visit our Privacy Pro help pages for answers to frequently asked questions";
+"subscription.faq.description" = "Get answers to frequently asked questions about Privacy Pro in our help pages.";
 
 /* Cancel action for the existing subscription dialog */
 "subscription.found.cancel" = "Cancel";
@@ -2018,6 +2018,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Manage Plan header */
 "subscription.manage.plan" = "Manage Plan";
+
+/* Header for the subscription section */
+"subscription.manage.title" = "Subscription";
 
 /* Subscription type */
 "subscription.monthly" = "Monthly Subscription";

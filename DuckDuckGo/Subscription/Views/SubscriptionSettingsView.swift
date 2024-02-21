@@ -48,7 +48,16 @@ struct SubscriptionSettingsView: View {
             }
             .listRowBackground(Color.clear)
             .frame(maxWidth: .infinity, alignment: .center)
-        
+            
+            Section(header: Text(UserText.subscriptionManageTitle)) {
+                SettingsCustomCell(content: {
+                    Text(UserText.subscriptionChangePlan)
+                        .daxBodyRegular()
+                },
+                                   action: { Task { viewModel.manageSubscription() } },
+                                   isButton: true)
+            }
+            
             Section(header: Text(UserText.subscriptionManageDevices)) {
                 
                 NavigationLink(destination: SubscriptionRestoreView()) {
@@ -67,14 +76,7 @@ struct SubscriptionSettingsView: View {
                                    isButton: true)
                 
             }
-            Section(header: Text(UserText.subscriptionManagePlan)) {
-                SettingsCustomCell(content: {
-                    Text(UserText.subscriptionChangePlan)
-                        .daxBodyRegular()
-                },
-                                   action: { Task { viewModel.manageSubscription() } },
-                                   isButton: true)
-            }
+
             Section(header: Text(UserText.subscriptionHelpAndSupport),
                     footer: Text(UserText.subscriptionFAQFooter)) {
                 NavigationLink(destination: Text(UserText.subscriptionFAQ)) {

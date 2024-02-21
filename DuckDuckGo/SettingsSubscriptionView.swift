@@ -67,30 +67,36 @@ struct SettingsSubscriptionView: View {
     
     private var subscriptionDetailsView: some View {
         return Group {
-            SettingsCellView(label: UserText.settingsPProVPNTitle,
-                             subtitle: viewModel.state.networkProtection.status != "" ? viewModel.state.networkProtection.status : nil,
-                             action: { viewModel.presentLegacyView(.netP) },
-                             disclosureIndicator: true,
-                             isButton: true)
-            
-            
-            SettingsCellView(label: UserText.settingsPProDBPTitle,
-                             subtitle: UserText.settingsPProDBPSubTitle,
-                             action: { isShowingDBP.toggle() }, isButton: true)
-            .sheet(isPresented: $isShowingDBP) {
-                SubscriptionPIRView()
+            if viewModel.shouldShowNetP {
+                SettingsCellView(label: UserText.settingsPProVPNTitle,
+                                 subtitle: viewModel.state.networkProtection.status != "" ? viewModel.state.networkProtection.status : nil,
+                                 action: { viewModel.presentLegacyView(.netP) },
+                                 disclosureIndicator: true,
+                                 isButton: true)
             }
             
-            SettingsCellView(label: UserText.settingsPProITRTitle,
-                             subtitle: UserText.settingsPProITRSubTitle,
-                             action: { isShowingITP.toggle() }, isButton: true)
-            .sheet(isPresented: $isShowingITP) {
-                SubscriptionITPView()
+            if viewModel.shouldShowDBP {
+                SettingsCellView(label: UserText.settingsPProDBPTitle,
+                                 subtitle: UserText.settingsPProDBPSubTitle,
+                                 action: { isShowingDBP.toggle() }, isButton: true)
+                .sheet(isPresented: $isShowingDBP) {
+                    SubscriptionPIRView()
+                }
+            }
+            
+            if viewModel.shouldShowITP {
+                SettingsCellView(label: UserText.settingsPProITRTitle,
+                                 subtitle: UserText.settingsPProITRSubTitle,
+                                 action: { isShowingITP.toggle() }, isButton: true)
+                .sheet(isPresented: $isShowingITP) {
+                    SubscriptionITPView()
+                }
             }
              
-            
-            NavigationLink(destination: SubscriptionSettingsView()) {
-                SettingsCustomCell(content: { manageSubscriptionView })
+            if viewModel.shouldShowDBP || viewModel.shouldShowITP || viewModel.shouldShowNetP {
+                NavigationLink(destination: SubscriptionSettingsView()) {
+                    SettingsCustomCell(content: { manageSubscriptionView })
+                }
             }
             
         }

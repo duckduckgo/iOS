@@ -74,6 +74,10 @@ final class SettingsViewModel: ObservableObject {
     // Add more views as needed here...
     @Published var shouldNavigateToDBP = false
     @Published var shouldNavigateToITP = false
+        
+    @Published var shouldShowNetP = false
+    @Published var shouldShowDBP = false
+    @Published var shouldShowITP = false
     
     // Our View State
     @Published private(set) var state: SettingsState
@@ -327,32 +331,41 @@ extension SettingsViewModel {
     @available(iOS 15.0, *)
     @MainActor
     private func setupSubscriptionEnvironment() async {
-        
         // Active subscription check
-        if let token = accountManager.accessToken {
+        guard let token = accountManager.accessToken else {
+            setupSubscriptionPurchaseOptions()
+            return
+        }
+        
+        // Fetch available subscriptions from the backend (or sign out)
+        switch await SubscriptionService.getSubscriptionDetails(token: token) {
+        case .success(let response) where !response.isSubscriptionActive:
+            AccountManager().signOut()
+            setupSubscriptionPurchaseOptions()
+        case .success(let response):
+            // Cache Subscription state
+            Self.cachedHasActiveSubscription = self.state.subscription.hasActiveSubscription
             
-            // Fetch available subscriptions from the backend (or sign out)
-            if case .success(let response) = await SubscriptionService.getSubscriptionDetails(token: token) {
-                if !response.isSubscriptionActive {
-                    AccountManager().signOut()
-                    setupSubscriptionPurchaseOptions()
-                    return
-                }
-                
-                // Check for valid entitlements
-                if case let .success(entitlements) = await AccountManager().fetchEntitlements() {
-                    self.state.subscription.hasActiveSubscription = !entitlements.isEmpty
-                }
-                
-                // Cache Subscription state
-                Self.cachedHasActiveSubscription = self.state.subscription.hasActiveSubscription
-                
-                // Enable Subscription purchase if there's no active subscription
-                if self.state.subscription.hasActiveSubscription == false {
-                    setupSubscriptionPurchaseOptions()
+            // Check entitlements and update UI accordingly
+            let entitlements: [AccountManager.Entitlement] = [.identityTheftRestoration, .dataBrokerProtection, .networkProtection]
+            for entitlement in entitlements {
+                if case .success = await AccountManager().hasEntitlement(for: entitlement) {
+                    switch entitlement {
+                    case .identityTheftRestoration:
+                        self.shouldShowITP = true
+                    case .dataBrokerProtection:
+                        self.shouldShowDBP = true
+                    case .networkProtection:
+                        self.shouldShowNetP = true
+                    }
                 }
             }
-        } else {
+            
+            // Enable Subscription purchase if there's no active subscription
+            if !self.state.subscription.hasActiveSubscription {
+                setupSubscriptionPurchaseOptions()
+            }
+        default:
             setupSubscriptionPurchaseOptions()
         }
     }

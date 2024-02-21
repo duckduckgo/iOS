@@ -26,6 +26,7 @@ import Core
 import Networking
 import NetworkExtension
 import NetworkProtection
+import Subscription
 
 // Initial implementation for initial Network Protection tests. Will be fleshed out with https://app.asana.com/0/1203137811378537/1204630829332227/f
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
@@ -227,7 +228,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,
-                   isSubscriptionEnabled: isSubscriptionEnabled)
+                   isSubscriptionEnabled: isSubscriptionEnabled,
+                   entitlementCheck: Self.entitlementCheck)
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
         observeStatusChanges()
@@ -276,6 +278,16 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             }
         }
         .store(in: &cancellables)
+    }
+
+    private static func entitlementCheck() async -> Result<Bool, Error> {
+        let result = await AccountManager().hasEntitlement(for: .networkProtection)
+        switch result {
+        case .success(let hasEntitlement):
+            return .success(hasEntitlement)
+        case .failure(let error):
+            return .failure(error)
+        }
     }
 }
 

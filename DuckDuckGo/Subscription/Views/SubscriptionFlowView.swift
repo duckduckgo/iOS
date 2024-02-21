@@ -164,10 +164,12 @@ struct SubscriptionFlowView: View {
     private var webView: some View {
         
         ZStack(alignment: .top) {
+            
             // Restore View Hidden Link
             NavigationLink(destination: SubscriptionRestoreView(), isActive: $isActive) {
                 EmptyView()
             }.isDetailLink(false)
+             
             
             AsyncHeadlessWebView(viewModel: viewModel.webViewModel)
                 .background()

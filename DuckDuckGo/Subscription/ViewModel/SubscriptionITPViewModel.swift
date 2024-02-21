@@ -27,8 +27,8 @@ import Subscription
 @available(iOS 15.0, *)
 final class SubscriptionITPViewModel: ObservableObject {
     
-    let userScript: IdentityTheftRestorationPagesUserScript
-    let subFeature: IdentityTheftRestorationPagesFeature
+    var userScript: IdentityTheftRestorationPagesUserScript?
+    var subFeature: IdentityTheftRestorationPagesFeature?
     var manageITPURL = URL.identityTheftRestoration
     var viewTitle = UserText.subscriptionTitle
     
@@ -41,12 +41,12 @@ final class SubscriptionITPViewModel: ObservableObject {
     
     // State variables
     var itpURL = URL.identityTheftRestoration
-    @Published var webViewModel: AsyncHeadlessWebViewViewModel
     @Published var shouldShowNavigationBar: Bool = false
     @Published var canNavigateBack: Bool = false
     @Published var isDownloadableContent: Bool = false
     @Published var activityItems: [Any] = []
     @Published var attachmentURL: URL?
+    var webViewModel: AsyncHeadlessWebViewViewModel
     
     @Published var shouldNavigateToExternalURL: URL?
     var shouldShowExternalURLSheet: Bool {
@@ -184,6 +184,12 @@ final class SubscriptionITPViewModel: ObservableObject {
     @MainActor
     func navigateBack() async {
         await webViewModel.navigationCoordinator.goBack()
+    }
+    
+    deinit {
+        cancellables.removeAll()
+        self.userScript = nil
+        self.subFeature = nil
     }
     
 }

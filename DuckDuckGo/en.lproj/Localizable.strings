@@ -1840,8 +1840,11 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Privacy pro description subtext */
 "settings.subscription.description" = "More seamless privacy with three new protections, including:";
 
+/* I have a Subscription button text for privacy pro */
+"settings.subscription.existing.subscription" = "I Have a Subscription";
+
 /* Privacy pro features list */
-"settings.subscription.features" = " • VPN (Virtual Private Network)
+"settings.subscription.features" = " • VPN
  • Personal Information Removal
  • Identity Theft Restoration";
 
@@ -1851,8 +1854,8 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Identity theft restoration cell title for privacy pro */
 "settings.subscription.ITR.title" = "Identity Theft Restoration";
 
-/* Learn more button text for privacy pro */
-"settings.subscription.learn.more" = "Learn More";
+/* Get Privacy Pro button text for privacy pro */
+"settings.subscription.learn.more" = "Get Privacy Pro";
 
 /* Subscription Settings button text for privacy pro */
 "settings.subscription.manage" = "Subscription Settings";

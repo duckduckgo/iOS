@@ -24,7 +24,7 @@ import UserScript
 import BrowserServicesKit
 
 struct HeadlessWebView: UIViewRepresentable {
-    let userScript: UserScriptMessaging?
+    weak var userScript: UserScriptMessaging?
     let subFeature: Subfeature?
     let settings: AsyncHeadlessWebViewSettings
     var onScroll: ((CGPoint) -> Void)?
@@ -97,6 +97,19 @@ struct HeadlessWebView: UIViewRepresentable {
             
         }
         return userContentController
+    }
+    
+    static func dismantleUIView(_ uiView: WKWebView, coordinator: HeadlessWebViewCoordinator) {
+        uiView.stopLoading()
+        uiView.uiDelegate = nil
+        uiView.navigationDelegate = nil
+        uiView.scrollView.delegate = nil
+        uiView.configuration.userContentController = WKUserContentController()
+        uiView.configuration.userContentController.removeAllScriptMessageHandlers()
+        uiView.configuration.userContentController.removeAllContentRuleLists()
+        uiView.configuration.userContentController.removeAllUserScripts()
+        coordinator.cleanUp()
+        
     }
 
 }

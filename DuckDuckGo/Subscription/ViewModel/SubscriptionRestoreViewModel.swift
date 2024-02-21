@@ -37,7 +37,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         case unknown, activated, notFound, error
     }
     
-    @Published var transactionStatus: SubscriptionPagesUseSubscriptionFeature.TransactionStatus = .idle
+    @Published var transactionStatus: SubscriptionTransactionStatus = .idle
     @Published var activationResult: SubscriptionActivationResult = .unknown
     @Published var subscriptionEmail: String?
         
@@ -62,7 +62,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     }
     
     @MainActor
-    private func setTransactionStatus(_ status: SubscriptionPagesUseSubscriptionFeature.TransactionStatus) {
+    private func setTransactionStatus(_ status: SubscriptionTransactionStatus) {
         self.transactionStatus = status
     }
     
@@ -79,6 +79,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
             transactionStatus = .idle
         }
     }
+    
     
 }
 #endif

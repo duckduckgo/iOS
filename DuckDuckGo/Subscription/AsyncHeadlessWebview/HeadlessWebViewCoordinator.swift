@@ -62,22 +62,45 @@ final class HeadlessWebViewCoordinator: NSObject {
     func setupWebViewObservation(_ webView: WKWebView) {
         webViewURLObservation = webView.observe(\.url, options: [.new]) { [weak self] _, change in
             if let newURL = change.newValue as? URL {
-                self?.onURLChange?(newURL)
-                self?.onCanGoBack?(webView.canGoBack)
+                DispatchQueue.main.async {
+                    self?.onURLChange?(newURL)
+                    self?.onCanGoBack?(webView.canGoBack)
+                }
             }
         }
 
         webViewCanGoBackObservation = webView.observe(\.canGoBack, options: [.new]) { [weak self] _, change in
             if let canGoBack = change.newValue {
-                self?.onCanGoBack?(canGoBack)
+                DispatchQueue.main.async {
+                    self?.onCanGoBack?(canGoBack)
+                }
             }
         }
         
         webViewCanGoForwardObservation = webView.observe(\.canGoForward, options: [.new]) { [weak self] _, change in
             if let onCanGoForward = change.newValue {
-                self?.onCanGoForward?(onCanGoForward)
+                DispatchQueue.main.async {
+                    self?.onCanGoForward?(onCanGoForward)
+                }
             }
         }
+    }
+    
+    // Called from the webView dismantle
+    func cleanUp() {
+        webViewURLObservation?.invalidate()
+        webViewCanGoBackObservation?.invalidate()
+        webViewCanGoForwardObservation?.invalidate()
+        
+        webViewURLObservation = nil
+        webViewCanGoBackObservation = nil
+        webViewCanGoForwardObservation = nil
+                
+        onScroll = nil
+        onURLChange = nil
+        onCanGoBack = nil
+        onCanGoForward = nil
+        onContentType = nil
     }
   
 }

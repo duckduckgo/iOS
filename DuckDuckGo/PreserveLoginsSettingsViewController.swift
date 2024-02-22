@@ -142,17 +142,20 @@ class PreserveLoginsSettingsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
-
+        
         let domain = model.remove(at: indexPath.row)
         PreserveLogins.shared.remove(domain: domain)
         Favicons.shared.removeFireproofFavicon(forDomain: domain)
-        WebCacheManager.shared.removeCookies(forDomains: [domain], dataStore: WKWebsiteDataStore.current()) { }
 
         if self.model.isEmpty {
             self.endEditing()
             tableView.reloadData()
         } else {
             tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+
+        Task { @MainActor in
+            await WebCacheManager.shared.removeCookies(forDomains: [domain], dataStore: WKWebsiteDataStore.current())
         }
     }
     
@@ -209,10 +212,12 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         PreserveLoginsAlert.showClearAllAlert(usingController: self, cancelled: { [weak self] in
             self?.refreshModel()
         }, confirmed: { [weak self] in
-            WebCacheManager.shared.removeCookies(forDomains: self?.model ?? [], dataStore: WKWebsiteDataStore.current()) { }
-            PreserveLogins.shared.clearAll()
-            self?.refreshModel()
-            self?.endEditing()
+            Task { @MainActor in
+                await WebCacheManager.shared.removeCookies(forDomains: self?.model ?? [], dataStore: WKWebsiteDataStore.current())
+                PreserveLogins.shared.clearAll()
+                self?.refreshModel()
+                self?.endEditing()
+            }
         })
     }
     

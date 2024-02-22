@@ -394,7 +394,8 @@ extension Pixel {
 
         case webKitDidTerminate
         case webKitTerminationDidReloadCurrentTab
-        
+        case webKitDidTerminateDuringWarmup
+
         case backgroundTaskSubmissionFailed
         
         case blankOverlayNotDismissed
@@ -891,6 +892,7 @@ extension Pixel.Event {
         case .ampBlockingRulesCompilationFailed: return "m_debug_amp_rules_compilation_failed"
 
         case .webKitDidTerminate: return "m_d_wkt"
+        case .webKitDidTerminateDuringWarmup: return "m_d_webkit-terminated-during-warmup"
         case .webKitTerminationDidReloadCurrentTab: return "m_d_wktct"
             
         case .backgroundTaskSubmissionFailed: return "m_bt_rf"
@@ -926,7 +928,7 @@ extension Pixel.Event {
         case .debugCannotClearObservationsDatabase: return "m_d_cannot_clear_observations_database"
         case .debugWebsiteDataStoresNotClearedMultiple: return "m_d_wkwebsitedatastoresnotcleared_multiple"
         case .debugWebsiteDataStoresNotClearedOne: return "m_d_wkwebsitedatastoresnotcleared_one"
-        case .debugCookieCleanupError: return "m_cookie_cleanup_error"
+        case .debugCookieCleanupError: return "m_d_cookie-cleanup-error"
 
         // MARK: Ad Attribution
             

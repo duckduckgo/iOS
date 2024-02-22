@@ -15,7 +15,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "anh/netp-check-entitlement-periodically",
-        "revision" : "fd34480b8f6ce4ff60a1d07b222335a55296dc88"
+        "revision" : "3b85d36a1b15041f742f529939997bd3e9c43321"
       }
     },
     {

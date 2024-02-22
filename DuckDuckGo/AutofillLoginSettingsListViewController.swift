@@ -105,8 +105,6 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         tableView.registerCell(ofType: AutofillListItemTableViewCell.self)
         tableView.registerCell(ofType: EnableAutofillSettingsTableViewCell.self)
         tableView.registerCell(ofType: AutofillNeverSavedTableViewCell.self)
-        // Have to set tableHeaderView height otherwise tableView content will jump when adding / removing searchController due to tableView insetGrouped style
-        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 24))
         return tableView
     }()
 

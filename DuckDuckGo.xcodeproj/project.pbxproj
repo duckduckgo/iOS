@@ -423,6 +423,8 @@
 		8565A34D1FC8DFE400239327 /* LaunchTabNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A34C1FC8DFE400239327 /* LaunchTabNotificationTests.swift */; };
 		8577A1C5255D2C0D00D43FCD /* HitTestingToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8577A1C4255D2C0D00D43FCD /* HitTestingToolbar.swift */; };
 		857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */; };
+		858479C92B8792D800D156C1 /* HistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858479C82B8792D800D156C1 /* HistoryManager.swift */; };
+		858479CD2B87964500D156C1 /* HistoryManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858479CB2B8795C900D156C1 /* HistoryManagerTests.swift */; };
 		858566E8252E4F56007501B8 /* Debug.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 858566E7252E4F56007501B8 /* Debug.storyboard */; };
 		858566FB252E55D6007501B8 /* ImageCacheDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858566FA252E55D6007501B8 /* ImageCacheDebugViewController.swift */; };
 		85864FBC24D31EF300E756FF /* SuggestionTrayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85864FBB24D31EF300E756FF /* SuggestionTrayViewController.swift */; };
@@ -1515,6 +1517,8 @@
 		8565A34C1FC8DFE400239327 /* LaunchTabNotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTabNotificationTests.swift; sourceTree = "<group>"; };
 		8577A1C4255D2C0D00D43FCD /* HitTestingToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitTestingToolbar.swift; sourceTree = "<group>"; };
 		857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowInstructionsViewController.swift; sourceTree = "<group>"; };
+		858479C82B8792D800D156C1 /* HistoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryManager.swift; sourceTree = "<group>"; };
+		858479CB2B8795C900D156C1 /* HistoryManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryManagerTests.swift; sourceTree = "<group>"; };
 		858566E7252E4F56007501B8 /* Debug.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Debug.storyboard; sourceTree = "<group>"; };
 		858566FA252E55D6007501B8 /* ImageCacheDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheDebugViewController.swift; sourceTree = "<group>"; };
 		85864FBB24D31EF300E756FF /* SuggestionTrayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionTrayViewController.swift; sourceTree = "<group>"; };
@@ -1572,6 +1576,7 @@
 		85D2187A24BF9F85004373D2 /* FaviconUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviconUserScript.swift; sourceTree = "<group>"; };
 		85D33FCB25C97B6E002B91A6 /* IntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		85D33FCF25C97B6E002B91A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		85D6FE962B876BE4002A59B2 /* BrowserServicesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BrowserServicesKit; path = ../BrowserServicesKit; sourceTree = "<group>"; };
 		85DB12EA2A1FE2A4000A4A72 /* LockScreenWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenWidgets.swift; sourceTree = "<group>"; };
 		85DB12EC2A1FED0C000A4A72 /* AppDelegate+AppDeepLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+AppDeepLinks.swift"; sourceTree = "<group>"; };
 		85DDE03F2AC6FF65006ABCA2 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -3669,6 +3674,7 @@
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
+				85D6FE962B876BE4002A59B2 /* BrowserServicesKit */,
 				EE3B98EB2A963515002F63A0 /* WidgetsExtensionAlpha.entitlements */,
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				EEB8FDB92A990AEE00EBEDCF /* Configuration-Alpha.xcconfig */,
@@ -3870,6 +3876,22 @@
 				85482D982462F1C600EDEDD1 /* ActionIcons.xcassets */,
 			);
 			path = OpenAction;
+			sourceTree = "<group>";
+		};
+		858479C72B8792C900D156C1 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				858479C82B8792D800D156C1 /* HistoryManager.swift */,
+			);
+			name = History;
+			sourceTree = "<group>";
+		};
+		858479CA2B8795BF00D156C1 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				858479CB2B8795C900D156C1 /* HistoryManagerTests.swift */,
+			);
+			name = History;
 			sourceTree = "<group>";
 		};
 		858566F1252E55AE007501B8 /* Debug */ = {
@@ -5013,6 +5035,7 @@
 		F143C2E51E4A4CD400CFDE3A /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				858479C72B8792C900D156C1 /* History */,
 				EE7A92852AC6DE2500832A36 /* NetworkProtection */,
 				4B470ED4299C484B0086EBDC /* AppTrackingProtection */,
 				F1CE42A71ECA0A520074A8DF /* Bookmarks */,
@@ -5454,6 +5477,7 @@
 		F1E092B31E92A6B900732CCC /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				858479CA2B8795BF00D156C1 /* History */,
 				4B83396D29AC0F22003F7EA9 /* AppTrackingProtection */,
 				EA7EFE662677F5BD0075464E /* PrivacyReferenceTests */,
 				83EDCC3E1F86B363005CDFCD /* API */,
@@ -6989,6 +7013,7 @@
 				F14E491F1E391CE900DC037C /* URLExtensionTests.swift in Sources */,
 				85D2187424BF25CD004373D2 /* FaviconsTests.swift in Sources */,
 				85AD49EE2B6149110085D2D1 /* CookieStorageTests.swift in Sources */,
+				858479CD2B87964500D156C1 /* HistoryManagerTests.swift in Sources */,
 				CBCCF96828885DEE006F4A71 /* AppPrivacyConfigurationTests.swift in Sources */,
 				310742AB2848E6FD0012660B /* BackForwardMenuHistoryItemURLSanitizerTests.swift in Sources */,
 				22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */,
@@ -7101,6 +7126,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B470ED6299C49800086EBDC /* AppTrackingProtectionDatabase.swift in Sources */,
+				858479C92B8792D800D156C1 /* HistoryManager.swift in Sources */,
 				0253A43129E5DCD7003697C1 /* AppTrackingProtectionAllowlistModel.swift in Sources */,
 				F16393FF1ECCB9CC00DDD653 /* FileLoader.swift in Sources */,
 				F1134EAB1F3E2C6A00B73467 /* StatisticsUserDefaults.swift in Sources */,

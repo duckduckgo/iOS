@@ -21,6 +21,7 @@ import Foundation
 import SwiftUI
 import WebKit
 import UserScript
+import BrowserServicesKit
 
 struct HeadlessWebView: UIViewRepresentable {
     let userScript: UserScriptMessaging?
@@ -33,18 +34,24 @@ struct HeadlessWebView: UIViewRepresentable {
     var onContentType: ((String) -> Void)?
     var navigationCoordinator: HeadlessWebViewNavCoordinator
     
-
     func makeUIView(context: Context) -> WKWebView {
         let configuration = WKWebViewConfiguration()
         configuration.userContentController = makeUserContentController()
         
-        let webView = WKWebView(frame: .zero, configuration: configuration)
+        let preferences = WKWebpagePreferences()
+        preferences.allowsContentJavaScript = settings.javascriptEnabled
+        preferences.preferredContentMode = .mobile
+         configuration.defaultWebpagePreferences = preferences
         
-        navigationCoordinator.webView = webView
+        let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.uiDelegate = context.coordinator
         webView.scrollView.delegate = context.coordinator
         webView.scrollView.bounces = settings.bounces
+        webView.scrollView.contentInsetAdjustmentBehavior = .never
         webView.navigationDelegate = context.coordinator
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        navigationCoordinator.webView = webView
+        
         
 #if DEBUG
         if #available(iOS 16.4, *) {
@@ -64,16 +71,30 @@ struct HeadlessWebView: UIViewRepresentable {
                     onURLChange: onURLChange,
                     onCanGoBack: onCanGoBack,
                     onCanGoForward: onCanGoForward,
-                    onContentType: onContentType)
+                    onContentType: onContentType,
+                    settings: settings
+        )
     }
     
     @MainActor
     private func makeUserContentController() -> WKUserContentController {
         let userContentController = WKUserContentController()
+        
+        // Enable content blocking rules
+        if settings.contentBlocking {
+            let sourceProvider = DefaultScriptSourceProvider()
+            let contentBlockerUserScript = ContentBlockerRulesUserScript(configuration: sourceProvider.contentBlockerRulesConfig)
+            let contentScopeUserScript = ContentScopeUserScript(sourceProvider.privacyConfigurationManager,
+                                                                properties: sourceProvider.contentScopeProperties)
+            userContentController.addUserScript(contentBlockerUserScript.makeWKUserScriptSync())
+            userContentController.addUserScript(contentScopeUserScript.makeWKUserScriptSync())
+        }
+        
         if let userScript, let subFeature {
             userContentController.addUserScript(userScript.makeWKUserScriptSync())
             userContentController.addHandler(userScript)
             userScript.registerSubfeature(delegate: subFeature)
+            
         }
         return userContentController
     }

@@ -266,7 +266,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         await withTransactionInProgress {
             transactionStatus = .restoring
             switch await AppStoreRestoreFlow.restoreAccountFromPastPurchase() {
-            case .success(let update):
+            case .success:
                 return true
             case .failure:
                 return false

@@ -37,10 +37,13 @@ final class AsyncHeadlessWebViewViewModel: ObservableObject {
     @Published var canGoBack: Bool = false
     @Published var canGoForward: Bool = false
     @Published var contentType: String = ""
+    @Published var allowedDomains: [String]?
 
     var navigationCoordinator = HeadlessWebViewNavCoordinator(webView: nil)
 
-    init(userScript: UserScriptMessaging?, subFeature: Subfeature?, settings: AsyncHeadlessWebViewSettings) {
+    init(userScript: UserScriptMessaging? = nil,
+         subFeature: Subfeature? = nil,
+         settings: AsyncHeadlessWebViewSettings) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.settings = settings

@@ -75,7 +75,8 @@ struct DefaultScriptSourceProvider: ScriptSourceProviding {
     private static func makeAutofillSource(privacyConfigurationManager: PrivacyConfigurationManaging,
                                            properties: ContentScopeProperties) -> AutofillUserScriptSourceProvider {
         return DefaultAutofillSourceProvider.Builder(privacyConfigurationManager: privacyConfigurationManager,
-                                                     properties: properties)
+                                                     properties: properties,
+                                                     isDebug: AppUserDefaults().autofillDebugScriptEnabled)
         .withJSLoading()
         .build()
     }

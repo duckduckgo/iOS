@@ -28,7 +28,8 @@ class AutoClearTests: XCTestCase {
         var clearNavigationStackInvocationCount = 0
         var forgetDataInvocationCount = 0
         var forgetTabsInvocationCount = 0
-        
+        var clearDataFinishedInvocationCount = 0
+
         func clearNavigationStack() {
             clearNavigationStackInvocationCount += 1
         }
@@ -39,6 +40,10 @@ class AutoClearTests: XCTestCase {
         
         func forgetTabs() {
             forgetTabsInvocationCount += 1
+        }
+
+        func clearDataFinished(_: AutoClear) {
+            clearDataFinishedInvocationCount += 1
         }
     }
     
@@ -51,59 +56,23 @@ class AutoClearTests: XCTestCase {
         worker = MockWorker()
         logic = AutoClear(worker: worker)
     }
-    
-    func testWhenModeIsSetToCleanDataThenDataIsCleared() {
+
+    // Note: applicationDidLaunch based clearing has moved to "configureTabManager" function of
+    //  MainViewController to ensure that tabs are removed before the data is cleared.
+
+    func testWhenTimingIsSetToTerminationThenOnlyRestartClearsData() async {
         let appSettings = AppUserDefaults()
         appSettings.autoClearAction = .clearData
         appSettings.autoClearTiming = .termination
         
-        logic.applicationDidLaunch()
-        
-        XCTAssertEqual(worker.forgetDataInvocationCount, 1)
-        XCTAssertEqual(worker.forgetTabsInvocationCount, 0)
-    }
-    
-    func testWhenModeIsSetToCleanTabsAndDataThenDataIsCleared() {
-        let appSettings = AppUserDefaults()
-        appSettings.autoClearAction = [.clearData, .clearTabs]
-        appSettings.autoClearTiming = .termination
-        
-        logic.applicationDidLaunch()
-        
-        XCTAssertEqual(worker.forgetDataInvocationCount, 1)
-        
-        // Tabs are cleared when loading TabsModel for the first time
-        XCTAssertEqual(worker.forgetTabsInvocationCount, 0)
-    }
-    
-    func testWhenModeIsNotSetThenNothingIsCleared() {
-        let appSettings = AppUserDefaults()
-        appSettings.autoClearAction = []
-        appSettings.autoClearTiming = .termination
-        
-        logic.applicationDidLaunch()
-        
-        XCTAssertEqual(worker.forgetDataInvocationCount, 0)
-        XCTAssertEqual(worker.forgetTabsInvocationCount, 0)
-    }
-    
-    func testWhenTimingIsSetToTerminationThenOnlyRestartClearsData() {
-        let appSettings = AppUserDefaults()
-        appSettings.autoClearAction = .clearData
-        appSettings.autoClearTiming = .termination
-        
-        logic.applicationWillMoveToForeground()
+        await logic.applicationWillMoveToForeground()
         logic.applicationDidEnterBackground()
         
         XCTAssertEqual(worker.clearNavigationStackInvocationCount, 0)
         XCTAssertEqual(worker.forgetDataInvocationCount, 0)
-        
-        logic.applicationDidLaunch()
-        
-        XCTAssertEqual(worker.forgetDataInvocationCount, 1)
     }
     
-    func testWhenDesiredTimingIsSetThenDataIsClearedOnceTimeHasElapsed() {
+    func testWhenDesiredTimingIsSetThenDataIsClearedOnceTimeHasElapsed() async {
         let appSettings = AppUserDefaults()
         appSettings.autoClearAction = .clearData
         
@@ -117,13 +86,13 @@ class AutoClearTests: XCTestCase {
             appSettings.autoClearTiming = timing
             
             logic.applicationDidEnterBackground(Date().timeIntervalSince1970 - delay + 1)
-            logic.applicationWillMoveToForeground()
+            await logic.applicationWillMoveToForeground()
             
             XCTAssertEqual(worker.clearNavigationStackInvocationCount, iterationCount)
             XCTAssertEqual(worker.forgetDataInvocationCount, iterationCount)
             
             logic.applicationDidEnterBackground(Date().timeIntervalSince1970 - delay - 1)
-            logic.applicationWillMoveToForeground()
+            await logic.applicationWillMoveToForeground()
             
             iterationCount += 1
             XCTAssertEqual(worker.clearNavigationStackInvocationCount, iterationCount)

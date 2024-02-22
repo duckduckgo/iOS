@@ -369,16 +369,17 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
     private func presentAuthConfirmationPrompt() {
         let authConfirmationPromptViewController = AuthConfirmationPromptViewController(
-                didBeginAuthenticating: { [weak self] in
-                    NotificationCenter.default.removeObserver(UIApplication.willResignActiveNotification)
-                }, authConfirmationCompletion: { [weak self] authenticated in
+            didBeginAuthenticating: { [weak self] in
+                self?.configureObserversBasedOnAuthConfirmationPrompt(isAuthenticating: true)
+            }, authConfirmationCompletion: { [weak self] authenticated in
+                self?.configureObserversBasedOnAuthConfirmationPrompt(isAuthenticating: false)
 
-            if authenticated {
-                let accountsCount = self?.viewModel.accountsCount ?? 0
-                self?.viewModel.clearAllAccounts()
-                self?.presentDeleteAllConfirmation(accountsCount)
+                if authenticated {
+                    let accountsCount = self?.viewModel.accountsCount ?? 0
+                    self?.viewModel.clearAllAccounts()
+                    self?.presentDeleteAllConfirmation(accountsCount)
+                }
             }
-        }
         )
 
         if #available(iOS 15.0, *) {
@@ -394,6 +395,16 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         }
 
         present(authConfirmationPromptViewController, animated: true)
+    }
+
+    private func configureObserversBasedOnAuthConfirmationPrompt(isAuthenticating: Bool) {
+        if isAuthenticating {
+            addObserver(for: UIApplication.didEnterBackgroundNotification, selector: #selector(appWillResignActiveCallback))
+            removeObserver(for: UIApplication.willResignActiveNotification)
+        } else {
+            addObserver(for: UIApplication.willResignActiveNotification, selector: #selector(appWillResignActiveCallback))
+            removeObserver(for: UIApplication.didEnterBackgroundNotification)
+        }
     }
 
     private func presentDeleteAllConfirmation(_ numberOfAccounts: Int) {

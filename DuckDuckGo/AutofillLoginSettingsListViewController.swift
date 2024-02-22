@@ -283,6 +283,14 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                 self?.tableView.reloadData()
             }
             .store(in: &cancellables)
+
+        viewModel.accountsCountPublisher
+             .receive(on: DispatchQueue.main)
+             .sink { [weak self] _ in
+                 self?.updateToolbarLabel()
+             }
+             .store(in: &cancellables)
+
     }
     
     private func configureNotification() {

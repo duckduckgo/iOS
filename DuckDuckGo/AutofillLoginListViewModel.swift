@@ -69,7 +69,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
     }
     var authenticationNotRequired = false
-    private var accounts = [SecureVaultModels.WebsiteAccount]()
+    @Published private var accounts = [SecureVaultModels.WebsiteAccount]()
     private var accountsToSuggest = [SecureVaultModels.WebsiteAccount]()
     private var cancellables: Set<AnyCancellable> = []
     private var appSettings: AppSettings
@@ -95,6 +95,12 @@ final class AutofillLoginListViewModel: ObservableObject {
 
     var accountsCount: Int {
         accounts.count
+    }
+
+    var accountsCountPublisher: AnyPublisher<Int, Never> {
+        $accounts
+            .map { $0.count }
+            .eraseToAnyPublisher()
     }
     
     var isAutofillEnabledInSettings: Bool {

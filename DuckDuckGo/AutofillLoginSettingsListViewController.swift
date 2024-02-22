@@ -363,11 +363,61 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         let deleteAllAction = UIAlertAction(title: UserText.actionDelete, style: .destructive) {[weak self] _ in
-
+            self?.presentAuthConfirmationPrompt()
         }
         alert.addAction(deleteAllAction)
         alert.preferredAction = deleteAllAction
         present(controller: alert, fromView: tableView)
+    }
+
+    private func presentAuthConfirmationPrompt() {
+        let authConfirmationPromptViewController = AuthConfirmationPromptViewController(
+                didBeginAuthenticating: { [weak self] in
+                    NotificationCenter.default.removeObserver(UIApplication.willResignActiveNotification)
+                }, authConfirmationCompletion: { [weak self] authenticated in
+
+            if authenticated {
+                let accountsCount = self?.viewModel.accountsCount ?? 0
+                self?.viewModel.clearAllAccounts()
+                self?.presentDeleteAllConfirmation(accountsCount)
+            }
+        }
+        )
+
+        if #available(iOS 15.0, *) {
+            if let presentationController = authConfirmationPromptViewController.presentationController as? UISheetPresentationController {
+                if #available(iOS 16.0, *) {
+                    presentationController.detents = [.custom(resolver: { _ in
+                        AutofillViews.deleteAllPromptMinHeight
+                    })]
+                } else {
+                    presentationController.detents = [.medium()]
+                }
+            }
+        }
+
+        present(authConfirmationPromptViewController, animated: true)
+    }
+
+    private func presentDeleteAllConfirmation(_ numberOfAccounts: Int) {
+        var shouldDeleteAccounts = true
+
+        ActionMessageView.present(message: UserText.autofillAllPasswordsDeletedToastMessage(for: numberOfAccounts),
+                                  actionTitle: UserText.actionGenericUndo,
+                                  presentationLocation: .withoutBottomBar,
+                                  onAction: {
+                                      shouldDeleteAccounts = false
+                                  }, onDidDismiss: {
+            if shouldDeleteAccounts {
+                if self.viewModel.deleteAllCredentials() {
+                    self.syncService.scheduler.notifyDataChanged()
+                    self.viewModel.resetNeverPromptWebsites()
+                    self.viewModel.updateData()
+                }
+            } else {
+                self.viewModel.undoClearAllAccounts()
+            }
+        })
     }
 
     // MARK: Subviews Setup

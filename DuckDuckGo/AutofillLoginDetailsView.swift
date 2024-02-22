@@ -291,8 +291,8 @@ struct AutofillLoginDetailsView: View {
                  let deleteAction = ActionSheet.Button.destructive(Text(UserText.autofillLoginDetailsDeleteConfirmationButtonTitle)) {
                      viewModel.delete()
                  }
-                 return ActionSheet(title: Text(UserText.autofillLoginDetailsDeleteConfirmationTitle),
-                                    message: nil,
+                 return ActionSheet(title: Text(UserText.autofillDeleteAllPasswordsActionTitle(for: 1)),
+                                    message: Text(UserText.autofillDeleteAllPasswordsActionMessage(for: 1)),
                                     buttons: [deleteAction, ActionSheet.Button.cancel()])
              })
              .foregroundColor(Color.red)

@@ -286,21 +286,20 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }
     
     private func configureNotification() {
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self,
-                                       selector: #selector(appWillMoveToForegroundCallback),
-                                       name: UIApplication.willEnterForegroundNotification, object: nil)
-        
-        notificationCenter.addObserver(self,
-                                       selector: #selector(appWillMoveToBackgroundCallback),
-                                       name: UIApplication.willResignActiveNotification, object: nil)
-
-        notificationCenter.addObserver(self,
-                                       selector: #selector(authenticatorInvalidateContext),
-                                       name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)
+        addObserver(for: UIApplication.didBecomeActiveNotification, selector: #selector(appDidBecomeActiveCallback))
+        addObserver(for: UIApplication.willResignActiveNotification, selector: #selector(appWillResignActiveCallback))
+        addObserver(for: AutofillLoginListAuthenticator.Notifications.invalidateContext, selector: #selector(authenticatorInvalidateContext))
     }
-    
-    @objc private func appWillMoveToForegroundCallback() {
+
+    private func addObserver(for notification: Notification.Name, selector: Selector) {
+        NotificationCenter.default.addObserver(self, selector: selector, name: notification, object: nil)
+    }
+
+    private func removeObserver(for notification: Notification.Name) {
+        NotificationCenter.default.removeObserver(self, name: notification, object: nil)
+    }
+
+    @objc private func appDidBecomeActiveCallback() {
         // AutofillLoginDetailsViewController will handle calling authenticate() if it is the top view controller
         guard navigationController?.topViewController is AutofillLoginDetailsViewController else {
             authenticate()
@@ -308,7 +307,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         }
     }
     
-    @objc private func appWillMoveToBackgroundCallback() {
+    @objc private func appWillResignActiveCallback() {
         viewModel.lockUI()
     }
 

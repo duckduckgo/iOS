@@ -63,6 +63,11 @@ final class AutofillLoginListViewModel: ObservableObject {
     
     let authenticator = AutofillLoginListAuthenticator(reason: UserText.autofillLoginListAuthenticationReason)
     var isSearching: Bool = false
+    var isEditing: Bool = false {
+        didSet {
+            sections = makeSections(with: accounts)
+        }
+    }
     var authenticationNotRequired = false
     private var accounts = [SecureVaultModels.WebsiteAccount]()
     private var accountsToSuggest = [SecureVaultModels.WebsiteAccount]()
@@ -86,6 +91,10 @@ final class AutofillLoginListViewModel: ObservableObject {
 
     var hasAccountsSaved: Bool {
         return !accounts.isEmpty
+    }
+
+    var accountsCount: Int {
+        accounts.count
     }
     
     var isAutofillEnabledInSettings: Bool {

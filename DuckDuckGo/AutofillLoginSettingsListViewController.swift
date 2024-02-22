@@ -55,7 +55,34 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                         target: self,
                         action: #selector(addButtonPressed))
     }()
-    
+
+    private lazy var deleteAllButtonItem: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: UserText.autofillLoginListToolbarDeleteAllButton,
+                                     style: .plain,
+                                     target: self,
+                                     action: #selector(deleteAll))
+        button.tintColor = .red
+        return button
+    }()
+
+    private lazy var accountsCountLabel: UILabel = {
+        let label = UILabel()
+        label.font = .daxCaption()
+        label.textColor = UIColor(designSystemColor: .textSecondary)
+        label.text = UserText.autofillLoginListToolbarPasswordsCount(viewModel.accountsCount)
+        return label
+    }()
+
+    private lazy var accountsCountButtonItem: UIBarButtonItem = {
+        let item = UIBarButtonItem(customView: accountsCountLabel)
+        return item
+    }()
+
+    private lazy var flexibleSpace: UIBarButtonItem = {
+        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        return space
+    }()
+
     private var cancellables: Set<AnyCancellable> = []
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
@@ -192,8 +219,13 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
         tableView.setEditing(editing, animated: animated)
 
+        // trigger re-build of table sections
+        viewModel.isEditing = editing
+        tableView.reloadData()
+
         updateNavigationBarButtons()
         updateSearchController()
+        updateToolbar()
     }
     
     @objc
@@ -324,7 +356,20 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                                             userInfo: [FireproofFaviconUpdater.UserInfoKeys.faviconDomain: domain])
         })
     }
-    
+
+    @objc private func deleteAll() {
+        let alert = UIAlertController(title: UserText.autofillDeleteAllPasswordsActionTitle(for: viewModel.accountsCount),
+                                      message: UserText.autofillDeleteAllPasswordsActionMessage(for: viewModel.accountsCount),
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
+        let deleteAllAction = UIAlertAction(title: UserText.actionDelete, style: .destructive) {[weak self] _ in
+
+        }
+        alert.addAction(deleteAllAction)
+        alert.preferredAction = deleteAllAction
+        present(controller: alert, fromView: tableView)
+    }
+
     // MARK: Subviews Setup
 
     private func updateViewState() {
@@ -422,6 +467,23 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         case .empty, .noAuthAvailable:
             navigationItem.searchController = nil
         }
+    }
+
+    private func updateToolbar() {
+        if tableView.isEditing {
+            updateToolbarLabel()
+            navigationController?.isToolbarHidden = false
+            toolbarItems = [deleteAllButtonItem, flexibleSpace, accountsCountButtonItem, flexibleSpace]
+        } else {
+            toolbarItems?.removeAll()
+            navigationController?.isToolbarHidden = true
+        }
+    }
+
+    private func updateToolbarLabel() {
+        guard tableView.isEditing else { return }
+
+        accountsCountLabel.text = UserText.autofillLoginListToolbarPasswordsCount(viewModel.accountsCount)
     }
 
     private func installSubviews() {

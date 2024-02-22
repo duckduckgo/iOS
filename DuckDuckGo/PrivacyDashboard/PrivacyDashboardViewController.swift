@@ -237,7 +237,16 @@ extension PrivacyDashboardViewController {
         let blockedTrackerDomains = privacyInfo.trackerInfo.trackersBlocked.compactMap { $0.domain }
         let configuration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
         let protectionsState = configuration.isFeature(.contentBlocking, enabledForDomain: breakageAdditionalInfo.currentURL.host)
-        
+
+        var errors: [Error]?
+        var statusCodes: [Int]?
+        if let error = breakageAdditionalInfo.error {
+            errors = [error]
+        }
+        if let httpStatusCode = breakageAdditionalInfo.httpStatusCode {
+            statusCodes = [httpStatusCode]
+        }
+
         return WebsiteBreakage(siteUrl: breakageAdditionalInfo.currentURL,
                                category: category,
                                description: description,
@@ -255,7 +264,7 @@ extension PrivacyDashboardViewController {
                                siteType: breakageAdditionalInfo.isDesktop ? .desktop : .mobile,
                                atb: StatisticsUserDefaults().atb ?? "",
                                model: UIDevice.current.model,
-                               error: breakageAdditionalInfo.error,
-                               httpStatusCode: breakageAdditionalInfo.httpStatusCode)
+                               errors: errors,
+                               httpStatusCodes: statusCodes)
     }
 }

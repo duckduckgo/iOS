@@ -726,6 +726,27 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let autofillResetNeverSavedActionConfirmButton = NSLocalizedString("autofill.logins.list.never.saved.reset.action.confirm", value: "Reset Excluded Sites", comment: "Confirm button to reset list of never saved sites")
     public static let autofillResetNeverSavedActionCancelButton = NSLocalizedString("autofill.logins.list.never.saved.reset.action.cancel", value: "Cancel", comment: "Cancel button for resetting list of never saved sites")
     
+    public static let autofillLoginListToolbarDeleteAllButton = NSLocalizedString("autofill.logins.list.delete.all", value:"Delete All", comment: "Title for button to delete all saved autofill passwords")
+    public static func autofillLoginListToolbarPasswordsCount(_ count: Int) -> String {
+        let message = NSLocalizedString("autofill.number.of.passwords", comment: "Do not translate - stringsdict entry")
+        return message.format(arguments: count)
+    }
+    public static func autofillDeleteAllPasswordsActionTitle(for count: Int) -> String {
+        let message = NSLocalizedString("autofill.delete.all.passwords.confirmation.title", comment: "Do not translate - stringsdict entry")
+        return message.format(arguments: count)
+    }
+    public static func autofillDeleteAllPasswordsActionMessage(for count: Int) -> String {
+        let message = NSLocalizedString("autofill.delete.all.passwords.confirmation.body", comment: "Do not translate - stringsdict entry")
+        return message.format(arguments: count, count)
+    }
+    public static let autofillDeleteAllPasswordsAuthenticationPromptTitle = NSLocalizedString("autofill.logins.delete.all.authentication.prompt.title", value: "Authenticate to Delete All Passwords", comment: "Title of prompt requiring authentication before all passwords are deleted")
+    public static let autofillDeleteAllPasswordsAuthenticationPromptButton = NSLocalizedString("autofill.logins.delete.all.authentication.prompt.button", value: "Authenticate Now", comment: "Title of button in prompt requiring authentication before all passwords are deleted")
+    public static let autofillDeleteAllPasswordsAuthenticationReason = NSLocalizedString("autofill.logins.delete.all.authentication.reason", value:"Authenticate to confirm you want to delete all passwords", comment: "Reason for authentication when deleting all logins")
+    public static func autofillAllPasswordsDeletedToastMessage(for count: Int) -> String {
+        let message = NSLocalizedString("autofill.delete.all.passwords.completion", comment: "Do not translate - stringsdict entry")
+        return message.format(arguments: count)
+    }
+
     public static let autofillLoginPromptAuthenticationCancelButton = NSLocalizedString("autofill.logins.prompt.auth.cancel", value:"Cancel", comment: "Cancel button for auth during login prompt")
     public static let autofillLoginPromptAuthenticationReason = NSLocalizedString("autofill.logins.prompt.auth.reason", value:"Unlock to use saved password", comment: "Reason for auth during login prompt")
     public static let autofillLoginPromptTitle = NSLocalizedString("autofill.logins.prompt.title", value:"Use a saved password?", comment: "Title for autofill login prompt")
@@ -764,7 +785,6 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let autofillLoginDetailsEditTitle = NSLocalizedString("autofill.logins.details.edit-title", value:"Edit Password", comment: "Title when editing autofill login details")
     public static let autofillLoginDetailsNewTitle = NSLocalizedString("autofill.logins.details.new-title", value:"Add password", comment: "Title when adding new autofill login")
     public static let autofillLoginDetailsDeleteButton = NSLocalizedString("autofill.logins.details.delete", value:"Delete Password", comment: "Delete button when deleting an autofill login")
-    public static let autofillLoginDetailsDeleteConfirmationTitle = NSLocalizedString("autofill.logins.details.delete-confirmation.title", value:"Are you sure you want to delete this password?", comment: "Title of confirmation alert when deleting an autofill login")
     public static let autofillLoginDetailsDeleteConfirmationButtonTitle = NSLocalizedString("autofill.logins.details.delete-confirmation.button", value:"Delete Password", comment: "Autofill alert button confirming delete autofill login")
 
     public static func autofillLoginListLoginDeletedToastMessage(for title: String) -> String {

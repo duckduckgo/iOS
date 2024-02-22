@@ -76,6 +76,10 @@ extension AuthConfirmationPromptViewController: UISheetPresentationControllerDel
 // MARK: AuthConfirmationPromptViewModelDelegate
 
 extension AuthConfirmationPromptViewController: AuthConfirmationPromptViewModelDelegate {
+
+    func authConfirmationPromptViewModelDidBeginAuthenticating(_ viewModel: AuthConfirmationPromptViewModel) {
+        didBeginAuthenticating()
+    }
     
     func authConfirmationPromptViewModelDidAuthenticate(_ viewModel: AuthConfirmationPromptViewModel, success: Bool) {
         dismiss(animated: true) {

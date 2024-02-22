@@ -20,6 +20,7 @@
 import Foundation
 
 protocol AuthConfirmationPromptViewModelDelegate: AnyObject {
+    func authConfirmationPromptViewModelDidBeginAuthenticating(_ viewModel: AuthConfirmationPromptViewModel)
     func authConfirmationPromptViewModelDidAuthenticate(_ viewModel: AuthConfirmationPromptViewModel, success: Bool)
     func authConfirmationPromptViewModelDidCancel(_ viewModel: AuthConfirmationPromptViewModel)
     func authConfirmationPromptViewModelDidResizeContent(_ viewModel: AuthConfirmationPromptViewModel, contentHeight: CGFloat)
@@ -41,6 +42,8 @@ class AuthConfirmationPromptViewModel: ObservableObject {
     }
 
     func authenticatePressed() {
+        delegate?.authConfirmationPromptViewModelDidBeginAuthenticating(self)
+
         authenticator.authenticate { [weak self] error in
             self?.authCompleted(with: error == nil)
         }

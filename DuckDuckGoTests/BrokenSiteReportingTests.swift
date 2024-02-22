@@ -91,12 +91,8 @@ final class BrokenSiteReportingTests: XCTestCase {
         os_log("Testing [%s]", type: .info, test.name)
 
         var errors: [Error]?
-        var statusCodes: [Int]?
-        if let error = test.errorDescription {
-            errors = [MockError(error)]
-        }
-        if let httpStatusCode = test.httpStatusCode {
-            statusCodes = [httpStatusCode]
+        if let errs = test.errorDescriptions {
+            errors = errs.map { MockError($0) }
         }
 
         let websiteBreakage = WebsiteBreakage(siteUrl: URL(string: test.siteURL)!,
@@ -117,7 +113,7 @@ final class BrokenSiteReportingTests: XCTestCase {
                                               atb: "",
                                               model: test.model ?? "",
                                               errors: errors,
-                                              httpStatusCodes: statusCodes)
+                                              httpStatusCodes: test.httpErrorCodes ?? [])
 
         let reporter = WebsiteBreakageReporter(pixelHandler: { params in
             
@@ -127,10 +123,9 @@ final class BrokenSiteReportingTests: XCTestCase {
                    let expectedCleanValue = expectedParam.value.removingPercentEncoding {
                     if expectedParam.name == "errorDescriptions" {
                         // `localizedDescription` includes class information. This format is likely to differ per platform
-                        // anyway. So we'll just check if the value contains the expected data instead
-                        if !actualValue.contains(expectedCleanValue) {
-                            XCTFail("Mismatching param: \(expectedParam.name) => \(expectedCleanValue) does not contain \(actualValue)")
-                        }
+                        // anyway. So we'll just check if the value contains an array of strings
+                        XCTAssert(actualValue.split(separator: ",").count > 1,
+                                  "Param \(expectedParam.name) expected to be an array of strings. Received: \(actualValue)")
                     } else if actualValue != expectedCleanValue {
                         XCTFail("Mismatching param: \(expectedParam.name) => \(expectedCleanValue) != \(actualValue)")
                     }
@@ -173,8 +168,8 @@ private struct Test: Codable {
     let manufacturer, model, os: String?
     let gpcEnabled: Bool?
     let protectionsEnabled: Bool
-    let errorDescription: String?
-    let httpStatusCode: Int?
+    let errorDescriptions: [String]?
+    let httpErrorCodes: [Int]?
 }
 
 // MARK: - ExpectReportURLParam

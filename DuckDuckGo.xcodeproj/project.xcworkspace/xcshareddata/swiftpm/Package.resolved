@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "bhall/bump-css",
-        "revision" : "6b82ebab038310cd02dd5c92a876d1fdc4cef751"
+        "revision" : "da5f8ae73e7ad7fc47931f82f5ac6c4fafa6ac94",
+        "version" : "109.0.2"
       }
     },
     {

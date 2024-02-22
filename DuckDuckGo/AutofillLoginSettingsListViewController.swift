@@ -127,7 +127,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                            multiplier: 1,
                            constant: (tableView.frame.height / 2))
     }()
-    
+
     var selectedAccount: SecureVaultModels.WebsiteAccount?
 
     init(appSettings: AppSettings, currentTabUrl: URL? = nil, syncService: DDGSyncing, syncDataProviders: SyncDataProviders, selectedAccount: SecureVaultModels.WebsiteAccount?) {
@@ -225,7 +225,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         updateSearchController()
         updateToolbar()
     }
-    
+
     @objc
     func addButtonPressed() {
         let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator,

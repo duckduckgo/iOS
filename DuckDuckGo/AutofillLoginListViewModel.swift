@@ -124,6 +124,10 @@ final class AutofillLoginListViewModel: ObservableObject {
         return false
     }
     
+    func deleteAllCredentials() -> Bool {
+        return deleteAll()
+    }
+
     func undoLastDelete() {
         guard let cachedDeletedCredentials = cachedDeletedCredentials else {
             return
@@ -134,7 +138,17 @@ final class AutofillLoginListViewModel: ObservableObject {
     func clearUndoCache() {
         cachedDeletedCredentials = nil
     }
-    
+
+    func clearAllAccounts() {
+        accounts = []
+        accountsToSuggest = []
+        sections = makeSections(with: accounts)
+    }
+
+    func undoClearAllAccounts() {
+        updateData()
+    }
+
     func lockUI() {
         authenticationNotRequired = !hasAccountsSaved
         authenticator.logOut()
@@ -336,6 +350,19 @@ final class AutofillLoginListViewModel: ObservableObject {
             updateData()
         } catch {
             Pixel.fire(pixel: .secureVaultError, error: error)
+        }
+    }
+    
+    @discardableResult
+    private func deleteAll() -> Bool {
+        guard let secureVault = secureVault else { return false }
+
+        do {
+            try secureVault.deleteAllWebsiteCredentials()
+            return true
+        } catch {
+            Pixel.fire(pixel: .secureVaultError, error: error)
+            return false
         }
     }
 }

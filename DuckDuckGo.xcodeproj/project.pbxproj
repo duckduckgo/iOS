@@ -1576,7 +1576,6 @@
 		85D2187A24BF9F85004373D2 /* FaviconUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviconUserScript.swift; sourceTree = "<group>"; };
 		85D33FCB25C97B6E002B91A6 /* IntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		85D33FCF25C97B6E002B91A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		85D6FE962B876BE4002A59B2 /* BrowserServicesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BrowserServicesKit; path = ../BrowserServicesKit; sourceTree = "<group>"; };
 		85DB12EA2A1FE2A4000A4A72 /* LockScreenWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenWidgets.swift; sourceTree = "<group>"; };
 		85DB12EC2A1FED0C000A4A72 /* AppDelegate+AppDeepLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+AppDeepLinks.swift"; sourceTree = "<group>"; };
 		85DDE03F2AC6FF65006ABCA2 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -3674,7 +3673,6 @@
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
-				85D6FE962B876BE4002A59B2 /* BrowserServicesKit */,
 				EE3B98EB2A963515002F63A0 /* WidgetsExtensionAlpha.entitlements */,
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				EEB8FDB92A990AEE00EBEDCF /* Configuration-Alpha.xcconfig */,
@@ -9933,8 +9931,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = exactVersion;
-				version = 109.0.1;
+				kind = revision;
+				revision = 536ede286da56e666d7f624a9c2eeba5c0d5cf8d;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

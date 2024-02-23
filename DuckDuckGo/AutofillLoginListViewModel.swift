@@ -262,8 +262,10 @@ final class AutofillLoginListViewModel: ObservableObject {
     private func makeSections(with accounts: [SecureVaultModels.WebsiteAccount]) -> [AutofillLoginListSectionType] {
         var newSections = [AutofillLoginListSectionType]()
 
-        if !isSearching && !isEditing {
-            newSections.append(.enableAutofill)
+        if !isSearching {
+            if !isEditing {
+                newSections.append(.enableAutofill)
+            }
 
             if !accountsToSuggest.isEmpty {
                 let accountItems = accountsToSuggest.map { AutofillLoginListItemViewModel(account: $0,

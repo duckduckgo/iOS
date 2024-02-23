@@ -484,6 +484,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         }
         updateNavigationBarButtons()
         updateSearchController()
+        updateToolbar()
         tableView.reloadData()
     }
 
@@ -539,7 +540,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }
 
     private func updateToolbar() {
-        if tableView.isEditing {
+        if tableView.isEditing && viewModel.viewState == .showItems {
             updateToolbarLabel()
             navigationController?.isToolbarHidden = false
             toolbarItems = [deleteAllButtonItem, flexibleSpace, accountsCountButtonItem, flexibleSpace]

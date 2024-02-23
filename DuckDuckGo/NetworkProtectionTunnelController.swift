@@ -32,6 +32,7 @@ final class NetworkProtectionTunnelController: TunnelController {
     private let tokenStore = NetworkProtectionKeychainTokenStore()
     private let errorStore = NetworkProtectionTunnelErrorStore()
     private let notificationCenter: NotificationCenter = .default
+    private var previousStatus: NEVPNStatus = .invalid
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Starting & Stopping the VPN
@@ -39,6 +40,10 @@ final class NetworkProtectionTunnelController: TunnelController {
     enum StartError: LocalizedError {
         case connectionStatusInvalid
         case simulateControllerFailureError
+    }
+
+    init() {
+        subscribeToStatusChanges()
     }
 
     /// Starts the VPN connection used for Network Protection
@@ -238,11 +243,14 @@ final class NetworkProtectionTunnelController: TunnelController {
     private func handleStatusChange(_ notification: Notification) {
         guard !debugFeatures.alwaysOnDisabled,
               let session = (notification.object as? NETunnelProviderSession),
+              session.status != previousStatus,
               let manager = session.manager as? NETunnelProviderManager else {
             return
         }
 
         Task { @MainActor in
+            previousStatus = session.status
+
             switch session.status {
             case .connected:
                 try await enableOnDemand(tunnelManager: manager)

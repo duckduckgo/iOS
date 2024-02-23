@@ -60,6 +60,7 @@ struct SubscriptionFlowView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarHidden(!viewModel.shouldShowNavigationBar).animation(.easeOut)
         }
+        .applyInsetGroupedListStyle()
         .tint(Color(designSystemColor: .textPrimary))
         .environment(\.rootPresentationMode, self.$isActive)
     }
@@ -183,8 +184,8 @@ struct SubscriptionFlowView: View {
         
     private func setUpAppearances() {
         let navAppearance = UINavigationBar.appearance()
-        navAppearance.backgroundColor = UIColor(designSystemColor: .surface)
-        navAppearance.barTintColor = UIColor(designSystemColor: .surface)
+        navAppearance.backgroundColor = UIColor(designSystemColor: .background)
+        navAppearance.barTintColor = UIColor(designSystemColor: .container)
         navAppearance.shadowImage = UIImage()
         navAppearance.tintColor = UIColor(designSystemColor: .textPrimary)
     }

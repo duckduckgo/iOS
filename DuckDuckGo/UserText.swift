@@ -1027,7 +1027,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionFAQFooter = NSLocalizedString("subscription.faq.description", value: "Get answers to frequently asked questions about Privacy Pro in our help pages.", comment: "FAQ Description")
     
     // Remove subscription confirmation
-    public static let subscriptionRemoveFromDeviceConfirmTitle = NSLocalizedString("subscription.remove.from.device.title", value: "Remove From This Device?", comment: "Remove from device confirmation dialog title")
+    public static let subscriptionRemoveFromDeviceConfirmTitle = NSLocalizedString("subscription.remove.from.device.title", value: "Remove from this device?", comment: "Remove from device confirmation dialog title")
     public static let subscriptionRemoveFromDeviceConfirmText = NSLocalizedString("subscription.remove.from.device.text", value: "You will no longer be able to access your Privacy Pro subscription on this device. This will not cancel your subscription, and it will remain active on your other devices.", comment: "Remove from device confirmation dialog text")
     public static let subscriptionRemove = NSLocalizedString("subscription.remove.subscription", value: "Remove Subscription", comment: "Remove subscription button text")
     public static let subscriptionRemoveCancel = NSLocalizedString("subscription.remove.subscription.cancel", value: "Cancel", comment: "Remove subscription cancel button text")
@@ -1043,12 +1043,14 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionRestoreAppleID = NSLocalizedString("subscription.activate.restore.apple", value: "Restore", comment: "Restore button title for AppleID")
     public static let subscriptionActivateEmail = NSLocalizedString("subscription.activate.email", value: "Email", comment: "Email option for activation")
     public static let subscriptionActivateEmailDescription = NSLocalizedString("subscription.activate.email.description", value: "Use your email to activate your subscription on this device.", comment: "Description for Email activation")
-    public static let subscriptionRestoreEmail = NSLocalizedString("subscription.activate.restore.email", value: "Enter Email", comment: "Restore button title for Email")
+    public static let subscriptionAddDeviceEmailDescription = NSLocalizedString("subscription.addDevice.email.description", value: "Add an email address to access your subscription in DuckDuckGo on other devices. We’ll only use this address to verify your subscription.", comment: "Description for Email adding")
+    public static let subscriptionAddEmailButton = NSLocalizedString("subscription.activate.add.email.button", value: "Add Email", comment: "Restore button title for Email")
+    public static let subscriptionActivateEmailButton = NSLocalizedString("subscription.activate.email.button", value: "Enter Email", comment: "Restore button title for Email")
             
     // Add to other devices (AppleID / Email)
     public static let subscriptionAddDeviceTitle = NSLocalizedString("subscription.add.device.title", value: "Add Device", comment: "Add to another device view title")
     public static let subscriptionAddDeviceHeaderTitle = NSLocalizedString("subscription.add.device.header.title", value: "Use your subscription on all your devices", comment: "Add subscription to other device title ")
-    public static let subscriptionAddDeviceDescription = NSLocalizedString("subscription.add.device.description", value: "Access your Privacy Pro subscription on any of your devices via Apple ID or by adding an email address.", comment: "Subscription Add device Info")
+    public static let subscriptionAddDeviceDescription = NSLocalizedString("subscription.add.device.description", value: "Access your Privacy Pro subscription on other devices via an email address.", comment: "Subscription Add device Info")
     public static let subscriptionAvailableInApple = NSLocalizedString("subscription.available.apple", value: "Privacy Pro is available on any device signed in to the same Apple ID.", comment: "Subscription availability message on Apple devices")
     public static let subscriptionManageEmailResendInstructions = NSLocalizedString("subscription.add.device.resend.instructions", value: "Resend Instructions", comment: "Resend activation instructions button")
     

@@ -32,7 +32,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     
     var emailURL = URL.activateSubscriptionViaEmail
-    var viewTitle = UserText.subscriptionRestoreEmail
+    var viewTitle = UserText.subscriptionActivateEmail
     @Published var subscriptionEmail: String?
     @Published var shouldReloadWebView = false
     @Published var activateSubscription = false

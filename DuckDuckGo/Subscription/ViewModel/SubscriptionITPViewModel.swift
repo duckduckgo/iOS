@@ -101,12 +101,7 @@ final class SubscriptionITPViewModel: ObservableObject {
                     strongSelf.isDownloadableContent = true
                     guard let url = strongSelf.currentURL else { return }
                     Task {
-                        // We are using a dummy PDF for testing, as the real PDF's are behind the internal user login
-                        if let downloadURL = URL(string: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf") {
-                            await strongSelf.downloadAttachment(from: downloadURL)
-                        }
-                        // if let downloadURL = url {
-                        // await strongSelf.downloadAttachment(from: downloadURL)
+                        await strongSelf.downloadAttachment(from: url)
                     }
                 }
             }

@@ -2452,6 +2452,7 @@
 		D6E0C1842B7A2B9400D5E1E9 /* DesktopDownloadPlatformConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesktopDownloadPlatformConstants.swift; sourceTree = "<group>"; };
 		D6E0C1862B7A2D0700D5E1E9 /* DesktopDownloadViewButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesktopDownloadViewButtonStyle.swift; sourceTree = "<group>"; };
 		D6E0C1882B7A2E0D00D5E1E9 /* DesktopDownloadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesktopDownloadViewModel.swift; sourceTree = "<group>"; };
+		D6E7BE0F2B88BF3000074732 /* BrowserServicesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BrowserServicesKit; path = ../BrowserServicesKit; sourceTree = "<group>"; };
 		D6E83C112B1E6AB3006C8AFB /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D6E83C2D2B1EA06E006C8AFB /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		D6E83C302B1EA309006C8AFB /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
@@ -3669,6 +3670,7 @@
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
+				D6E7BE0F2B88BF3000074732 /* BrowserServicesKit */,
 				EE3B98EB2A963515002F63A0 /* WidgetsExtensionAlpha.entitlements */,
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				EEB8FDB92A990AEE00EBEDCF /* Configuration-Alpha.xcconfig */,

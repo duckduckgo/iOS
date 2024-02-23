@@ -1908,6 +1908,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Subscription Activation Window Title */
 "subscription.activate" = "Activate Subscription";
 
+/* Restore button title for Email */
+"subscription.activate.add.email.button" = "Add Email";
+
 /* Apple ID option for activation */
 "subscription.activate.appleid" = "Apple ID";
 
@@ -1922,6 +1925,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Email option for activation */
 "subscription.activate.email" = "Email";
+
+/* Restore button title for Email */
+"subscription.activate.email.button" = "Enter Email";
 
 /* Description for Email activation */
 "subscription.activate.email.description" = "Use your email to activate your subscription on this device.";
@@ -1941,9 +1947,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Restore button title for AppleID */
 "subscription.activate.restore.apple" = "Restore";
 
-/* Restore button title for Email */
-"subscription.activate.restore.email" = "Enter Email";
-
 /* Subscription Activation Title */
 "subscription.activate.title" = "Activate your subscription on this device";
 
@@ -1951,7 +1954,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.add.device.button" = "Add to Another Device";
 
 /* Subscription Add device Info */
-"subscription.add.device.description" = "Access your Privacy Pro subscription on any of your devices via Apple ID or by adding an email address.";
+"subscription.add.device.description" = "Access your Privacy Pro subscription on other devices via an email address.";
 
 /* Add subscription to other device title  */
 "subscription.add.device.header.title" = "Use your subscription on all your devices";
@@ -1970,6 +1973,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Add Email";
+
+/* Description for Email adding */
+"subscription.addDevice.email.description" = "Add an email address to access your subscription in DuckDuckGo on other devices. We’ll only use this address to verify your subscription.";
 
 /* Subscription type */
 "subscription.annual" = "Annual Subscription";
@@ -2068,7 +2074,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.remove.from.device.text" = "You will no longer be able to access your Privacy Pro subscription on this device. This will not cancel your subscription, and it will remain active on your other devices.";
 
 /* Remove from device confirmation dialog title */
-"subscription.remove.from.device.title" = "Remove From This Device?";
+"subscription.remove.from.device.title" = "Remove from this device?";
 
 /* Remove subscription button text */
 "subscription.remove.subscription" = "Remove Subscription";

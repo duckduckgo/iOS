@@ -28,8 +28,8 @@ tags:
 - inputText: "TestName"
 - tapOn: "Cookie value"
 - inputText: "TestValue"
-- scrollUntilVisible: 
-    centerElement: true
+- tapOn: "Done"
+- scrollUntilVisible:
     element:
       text: "Submit"
 - tapOn: "Submit"

@@ -61,7 +61,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                                      style: .plain,
                                      target: self,
                                      action: #selector(deleteAll))
-        button.tintColor = .red
+        button.tintColor = .systemRed
         return button
     }()
 

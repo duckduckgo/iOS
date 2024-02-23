@@ -23,13 +23,15 @@ import BrowserServicesKit
 class HistoryManager {
 
     let privacyConfig: PrivacyConfiguration
+    let variantManager: VariantManager
 
-    init(privacyConfig: PrivacyConfiguration) {
+    init(privacyConfig: PrivacyConfiguration, variantManager: VariantManager) {
         self.privacyConfig = privacyConfig
+        self.variantManager = variantManager
     }
 
     func isHistoryFeatureEnabled() -> Bool {
-        return privacyConfig.isEnabled(featureKey: .history)
+        return privacyConfig.isEnabled(featureKey: .history) && variantManager.isSupported(feature: .history)
     }
     
 }

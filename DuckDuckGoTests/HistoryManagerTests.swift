@@ -24,24 +24,43 @@ import BrowserServicesKit
 
 final class HistoryManagerTests: XCTestCase {
 
-    func testWhenFeatureIsEnabledInPrivacyConfigThenHistoryIsEnabled() {
-        let config = MockPrivacyConfiguration()
-        config.isFeatureKeyEnabled = { feature, _ in
-            XCTAssertEqual(feature, .history)
-            return true
-        }
-        let historyManager = HistoryManager(privacyConfig: config)
-        XCTAssertTrue(historyManager.isHistoryFeatureEnabled())
-    }
+    let privacyConfig = MockPrivacyConfiguration()
+    var variantManager = MockVariantManager()
 
-    func testWhenFeatureIsNotEnabledInPrivacyConfigThenHistoryIsNotEnabled() {
-        let config = MockPrivacyConfiguration()
-        config.isFeatureKeyEnabled = { feature, _ in
-            XCTAssertEqual(feature, .history)
-            return false
-        }
-        let historyManager = HistoryManager(privacyConfig: config)
-        XCTAssertFalse(historyManager.isHistoryFeatureEnabled())
-    }
+    lazy var historyManager: HistoryManager = {
+        HistoryManager(privacyConfig: privacyConfig, variantManager: variantManager)
+    }()
 
+    func test() {
+
+        struct Condition {
+
+            let variant: Bool
+            let privacy: Bool
+            let expected: Bool
+
+        }
+
+        let conditions = [
+            Condition(variant: true, privacy: true, expected: true),
+            Condition(variant: false, privacy: true, expected: false),
+            Condition(variant: true, privacy: false, expected: false),
+        ]
+
+        let privacyConfig = MockPrivacyConfiguration()
+        var variantManager = MockVariantManager()
+
+        for condition in conditions {
+            privacyConfig.isFeatureKeyEnabled = { feature, _ in
+                XCTAssertEqual(feature, .history)
+                return condition.privacy
+            }
+
+            variantManager.isSupportedReturns = condition.variant
+
+            let historyManager = HistoryManager(privacyConfig: privacyConfig, variantManager: variantManager)
+            XCTAssertEqual(condition.expected, historyManager.isHistoryFeatureEnabled(), String(describing: condition))
+        }
+
+    }
 }

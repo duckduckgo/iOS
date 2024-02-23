@@ -26,8 +26,8 @@ extension FeatureName {
     // Define your feature e.g.:
     // public static let experimentalFeature = FeatureName(rawValue: "experimentalFeature")
 
-    public static let fixedUserAgent = FeatureName(rawValue: "fixedUserAgent")
-    public static let closestUserAgent = FeatureName(rawValue: "closestUserAgent")
+    // Experiment coming soon
+    public static let history = FeatureName(rawValue: "history")
 }
 
 public struct VariantIOS: Variant {

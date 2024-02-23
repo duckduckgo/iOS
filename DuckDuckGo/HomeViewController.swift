@@ -267,15 +267,11 @@ class HomeViewController: UIViewController {
 
         // If there's no tab switcher then this will be true, if there is a tabswitcher then only allow the
         //  stuff below to happen if it's being dismissed
-        guard (parent as? MainViewController)?.tabSwitcherController?.isBeingDismissed ?? true  else { return }
+        guard presentedViewController?.isBeingDismissed ?? true else { return }
 
         Pixel.fire(pixel: .homeScreenShown)
-
-        // But settings etc might cause the home view controller to be re-attached so don't show the next dialog until we're properly in the clear
-        if presentedViewController == nil {
-            showNextDaxDialog()
-        }
-
+        showNextDaxDialog()
+        
         collectionView.didAppear()
 
         viewHasAppeared = true

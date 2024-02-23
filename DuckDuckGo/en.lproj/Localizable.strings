@@ -457,6 +457,9 @@
 /* Do not translate - stringsdict entry */
 "autofill.delete.all.passwords.confirmation.title" = "autofill.delete.all.passwords.confirmation.title";
 
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
+
 /* Text link to email protection website */
 "autofill.enable.email.protection" = "Enable Email Protection";
 

@@ -737,8 +737,13 @@ But if you *do* want a peek under the hood, you can find more information about 
     }
     public static func autofillDeleteAllPasswordsActionMessage(for count: Int) -> String {
         let message = NSLocalizedString("autofill.delete.all.passwords.confirmation.body", comment: "Do not translate - stringsdict entry")
+        return message.format(arguments: count)
+    }
+    public static func autofillDeleteAllPasswordsSyncActionMessage(for count: Int) -> String {
+        let message = NSLocalizedString("autofill.delete.all.passwords.sync.confirmation.body", comment: "Do not translate - stringsdict entry")
         return message.format(arguments: count, count)
     }
+
     public static let autofillDeleteAllPasswordsAuthenticationPromptTitle = NSLocalizedString("autofill.logins.delete.all.authentication.prompt.title", value: "Authenticate to Delete All Passwords", comment: "Title of prompt requiring authentication before all passwords are deleted")
     public static let autofillDeleteAllPasswordsAuthenticationPromptButton = NSLocalizedString("autofill.logins.delete.all.authentication.prompt.button", value: "Authenticate Now", comment: "Title of button in prompt requiring authentication before all passwords are deleted")
     public static let autofillDeleteAllPasswordsAuthenticationReason = NSLocalizedString("autofill.logins.delete.all.authentication.reason", value:"Authenticate to confirm you want to delete all passwords", comment: "Reason for authentication when deleting all logins")

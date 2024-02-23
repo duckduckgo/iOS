@@ -232,6 +232,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     @objc
     func addButtonPressed() {
         let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator,
+                                                                   syncService: syncService,
                                                                    tld: tld,
                                                                    authenticationNotRequired: viewModel.authenticationNotRequired)
         detailsController.delegate = self
@@ -242,6 +243,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
     func makeAccountDetailsScreen(_ account: SecureVaultModels.WebsiteAccount) -> AutofillLoginDetailsViewController {
         let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator,
+                                                                   syncService: syncService,
                                                                    account: account,
                                                                    tld: tld,
                                                                    authenticationNotRequired: viewModel.authenticationNotRequired)
@@ -366,8 +368,10 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }
 
     @objc private func deleteAll() {
+        let message = self.syncService.authState == .inactive ? UserText.autofillDeleteAllPasswordsActionMessage(for: viewModel.accountsCount)
+                                                              : UserText.autofillDeleteAllPasswordsSyncActionMessage(for: viewModel.accountsCount)
         let alert = UIAlertController(title: UserText.autofillDeleteAllPasswordsActionTitle(for: viewModel.accountsCount),
-                                      message: UserText.autofillDeleteAllPasswordsActionMessage(for: viewModel.accountsCount),
+                                      message: message,
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         let deleteAllAction = UIAlertAction(title: UserText.actionDelete, style: .destructive) {[weak self] _ in
@@ -554,6 +558,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         guard tableView.isEditing else { return }
 
         accountsCountLabel.text = UserText.autofillLoginListToolbarPasswordsCount(viewModel.accountsCount)
+        accountsCountLabel.sizeToFit()
     }
 
     private func installSubviews() {

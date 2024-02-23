@@ -292,7 +292,7 @@ struct AutofillLoginDetailsView: View {
                      viewModel.delete()
                  }
                  return ActionSheet(title: Text(UserText.autofillDeleteAllPasswordsActionTitle(for: 1)),
-                                    message: Text(UserText.autofillDeleteAllPasswordsActionMessage(for: 1)),
+                                    message: Text(viewModel.deleteMessage()),
                                     buttons: [deleteAction, ActionSheet.Button.cancel()])
              })
              .foregroundColor(Color.red)

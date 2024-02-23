@@ -22,6 +22,7 @@ import SwiftUI
 import BrowserServicesKit
 import Common
 import Combine
+import DDGSync
 
 protocol AutofillLoginDetailsViewControllerDelegate: AnyObject {
     func autofillLoginDetailsViewControllerDidSave(_ controller: AutofillLoginDetailsViewController, account: SecureVaultModels.WebsiteAccount?)
@@ -38,6 +39,7 @@ class AutofillLoginDetailsViewController: UIViewController {
     private let viewModel: AutofillLoginDetailsViewModel
     private var cancellables: Set<AnyCancellable> = []
     private var authenticator = AutofillLoginListAuthenticator(reason: UserText.autofillLoginListAuthenticationReason)
+    private let syncService: DDGSyncing
     private let lockedView = AutofillItemsLockedView()
     private let noAuthAvailableView = AutofillNoAuthAvailableView()
     private var contentView: UIView?
@@ -69,9 +71,10 @@ class AutofillLoginDetailsViewController: UIViewController {
                                   constant: 144)
     }()
 
-    init(authenticator: AutofillLoginListAuthenticator, account: SecureVaultModels.WebsiteAccount? = nil, tld: TLD, authenticationNotRequired: Bool = false) {
-        self.viewModel = AutofillLoginDetailsViewModel(account: account, tld: tld)
+    init(authenticator: AutofillLoginListAuthenticator, syncService: DDGSyncing, account: SecureVaultModels.WebsiteAccount? = nil, tld: TLD, authenticationNotRequired: Bool = false) {
+        self.viewModel = AutofillLoginDetailsViewModel(account: account, syncService: syncService, tld: tld)
         self.authenticator = authenticator
+        self.syncService = syncService
         self.authenticationNotRequired = authenticationNotRequired
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self

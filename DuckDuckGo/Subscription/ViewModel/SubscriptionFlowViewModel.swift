@@ -131,7 +131,10 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 
             }
             .store(in: &cancellables)
-        
+       
+    }
+    
+    private func setupWebViewObservers() async {
         webViewModel.$scrollPosition
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
@@ -159,6 +162,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     func initializeViewData() async {
         await self.setupTransactionObserver()
+        await self .setupWebViewObservers()
         await self.updateSubscriptionStatus()
         webViewModel.navigationCoordinator.navigateTo(url: purchaseURL )
         

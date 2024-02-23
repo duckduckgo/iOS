@@ -58,6 +58,16 @@ final class NetworkProtectionDebugUtilities {
         try? await activeSession.sendProviderMessage(.request(.debugCommand(.disableConnectOnDemandAndShutDown)))
     }
 
+    // MARK: - Use placeholder configuration to block all traffic
+
+    func blockAllTraffic() async {
+        guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+            return
+        }
+
+        try? await activeSession.sendProviderMessage(.request(.debugCommand(.blockAllTraffic)))
+    }
+
     // MARK: - Failure Simulation
 
     func triggerSimulation(_ option: NetworkProtectionSimulationOption) async {

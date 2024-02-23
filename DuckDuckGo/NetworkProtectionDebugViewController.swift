@@ -87,6 +87,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     enum ExtensionDebugCommandRows: Int, CaseIterable {
         case triggerTestNotification
         case shutDown
+        case blockTraffic
     }
 
     enum NetworkPathRows: Int, CaseIterable {
@@ -364,6 +365,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             cell.textLabel?.text = "Test Notification"
         case .shutDown:
             cell.textLabel?.text = "Disable VPN From Extension"
+        case .blockTraffic:
+            cell.textLabel?.text = "Block All Traffic"
         case .none:
             break
         }
@@ -378,6 +381,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .shutDown:
             Task {
                 await NetworkProtectionDebugUtilities().disableConnectOnDemandAndShutDown()
+            }
+        case .blockTraffic:
+            Task {
+                await NetworkProtectionDebugUtilities().blockAllTraffic()
             }
         case .none:
             break

@@ -594,11 +594,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     // MARK: - VPN Metadata
 
     private func configure(_ cell: UITableViewCell, forMetadataRow row: Int) {
-        // cell.textLabel?.font = .monospacedSystemFont(ofSize: 13.0, weight: .regular)
+        cell.textLabel?.font = .systemFont(ofSize: 17)
 
         switch MetadataRows(rawValue: row) {
         case .refreshMetadata:
-            cell.textLabel?.font = .systemFont(ofSize: 17)
             cell.textLabel?.text = "Refresh Metadata"
         case .metadataContents:
             cell.textLabel?.font = .monospacedSystemFont(ofSize: 13.0, weight: .regular)

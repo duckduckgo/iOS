@@ -30,6 +30,7 @@ class SceneEnvironment: ObservableObject {
 struct SubscriptionSettingsView: View {
     
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = SubscriptionSettingsViewModel()
     @StateObject var sceneEnvironment = SceneEnvironment()
     
@@ -89,6 +90,12 @@ struct SubscriptionSettingsView: View {
         }
         .navigationTitle(UserText.settingsPProManageSubscription)
         .applyInsetGroupedListStyle()
+        
+        .onChange(of: viewModel.shouldDismissView) { value in
+            if value {
+                dismiss()
+            }
+        }
         
         // Remove subscription
         .alert(isPresented: $viewModel.shouldDisplayRemovalNotice) {

@@ -31,16 +31,20 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         static let notAutoRenewable = "Not Auto-Renewable"
         static let monthlyProductID = "ios.subscription.1month"
         static let yearlyProductID = "ios.subscription.1year"
+        static let updateFrequency: Float = 10
     }
     
     let accountManager: AccountManager
+    private var subscriptionUpdateTimer: Timer?
     @Published var subscriptionDetails: String = ""
     @Published var subscriptionType: String = ""
     @Published var shouldDisplayRemovalNotice: Bool = false
+    @Published var shouldDismissView: Bool = false
     
     init(accountManager: AccountManager = AccountManager()) {
         self.accountManager = accountManager
         Task { await fetchAndUpdateSubscriptionDetails() }
+        setupSubscriptionUpdater()
     }
     
     private var dateFormatter: DateFormatter = {
@@ -63,6 +67,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
             if case .success(let response) = await SubscriptionService.getSubscriptionDetails(token: token) {
                 if !response.isSubscriptionActive {
                     AccountManager().signOut()
+                    shouldDismissView = true
                     return
                 } else {
                     updateSubscriptionDetails(status: response.status, date: response.expiresOrRenewsAt, product: response.productId)
@@ -70,6 +75,16 @@ final class SubscriptionSettingsViewModel: ObservableObject {
             }
         }
     }
+    
+    private func setupSubscriptionUpdater() {
+        subscriptionUpdateTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            Task {
+                await strongSelf.fetchAndUpdateSubscriptionDetails()
+            }
+        }
+    }
+
     
     private func updateSubscriptionDetails(status: String, date: Date, product: String) {
         let statusString = (status == Self.Constants.autoRenewable) ? UserText.subscriptionRenews : UserText.subscriptionExpires
@@ -101,6 +116,10 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
+    }
+    
+    deinit {
+        subscriptionUpdateTimer?.invalidate()
     }
     
     

@@ -102,6 +102,7 @@ final class MockSecureVault<T: AutofillDatabaseProvider>: AutofillSecureVault {
 
     func deleteAllWebsiteCredentials() throws {
         storedCredentials = [:]
+        storedAccounts = []
     }
 
     func neverPromptWebsites() throws -> [SecureVaultModels.NeverPromptWebsites] {

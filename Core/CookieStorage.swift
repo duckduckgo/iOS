@@ -20,6 +20,12 @@
 import Common
 import Foundation
 
+/// Class for persisting cookies for fire proofed sites to work around a WKWebView / DataStore bug which does not let data get persisted until the webview has loaded.
+///
+/// Privacy information:
+/// * The Fire Button does not delete the user's DuckDuckGo search settings, which are saved as cookies. Removing these cookies would reset them and have undesired consequences, i.e. changing the theme, default language, etc.
+/// * The Fire Button also does not delete temporary cookies associated with 'surveys.duckduckgo.com'. When we launch surveys to help us understand issues that impact users over time, we use this cookie to temporarily store anonymous survey answers, before deleting the cookie. Cookie storage duration is communicated to users before they opt to submit survey answers.
+/// * These cookies are not stored in a personally identifiable way. For example, the large size setting is stored as 's=l.' More info in https://duckduckgo.com/privacy
 public class CookieStorage {
 
     struct Keys {
@@ -31,7 +37,7 @@ public class CookieStorage {
     
     var isConsumed: Bool {
         get {
-            userDefaults.bool(forKey: Keys.consumed, defaultValue: false)
+            return userDefaults.bool(forKey: Keys.consumed, defaultValue: false)
         }
         set {
             userDefaults.set(newValue, forKey: Keys.consumed)
@@ -77,15 +83,20 @@ public class CookieStorage {
         self.userDefaults = userDefaults
     }
 
-    enum CookieDomainsOnUpdate {
+    /// Used when debugging (e.g. on the simulator).
+    enum CookieDomainsOnUpdateDiagnostic {
         case empty
         case match
         case missing
         case different
+        case notConsumed
     }
     
+    /// Update ALL cookies. The absence of cookie domains here indicateds they have been removed by the website, so be sure to call this with all cookies that might need to be persisted even if those websites have not been visited yet.
     @discardableResult
-    func updateCookies(_ cookies: [HTTPCookie], keepingPreservedLogins preservedLogins: PreserveLogins) -> CookieDomainsOnUpdate {
+    func updateCookies(_ cookies: [HTTPCookie], keepingPreservedLogins preservedLogins: PreserveLogins) -> CookieDomainsOnUpdateDiagnostic {
+        guard isConsumed else { return .notConsumed }
+        
         isConsumed = false
         
         let persisted = self.cookies
@@ -109,7 +120,9 @@ public class CookieStorage {
             persistedDomains: persistedCookiesByDomain.keys.sorted()
         )
         
-        updatedCookiesByDomain.keys.forEach {
+        let cookieDomains = Set(updatedCookiesByDomain.keys.map { $0 } + persistedCookiesByDomain.keys.map { $0 })
+        
+        cookieDomains.forEach {
             persistedCookiesByDomain[$0] = updatedCookiesByDomain[$0]
         }
         
@@ -128,7 +141,7 @@ public class CookieStorage {
         return diagnosticResult
     }
     
-    private func evaluateDomains(updatedDomains: [String], persistedDomains: [String]) -> CookieDomainsOnUpdate {
+    private func evaluateDomains(updatedDomains: [String], persistedDomains: [String]) -> CookieDomainsOnUpdateDiagnostic {
         if persistedDomains.isEmpty {
             return .empty
         } else if updatedDomains.count < persistedDomains.count {

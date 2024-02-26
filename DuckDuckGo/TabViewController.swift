@@ -489,16 +489,11 @@ class TabViewController: UIViewController {
             }
         }
 
-        webView.configuration.websiteDataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { _ in
-            guard let cookieStore = self.webView.configuration.websiteDataStore.cookieStore else {
-                doLoad()
-                return
-            }
-
-            WebCacheManager.shared.consumeCookies(httpCookieStore: cookieStore) { [weak self] in
-                guard let strongSelf = self else { return }
-                doLoad()
-            }
+        Task { @MainActor in
+            await webView.configuration.websiteDataStore.dataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes())
+            let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
+            await WebCacheManager.shared.consumeCookies(httpCookieStore: cookieStore)
+            doLoad()
         }
     }
     

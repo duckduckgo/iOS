@@ -94,6 +94,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
+        // SKAD4 support
+        updateSKAd(conversionValue: 1)
+
 #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
             // Disable hardware keyboards.
@@ -287,7 +290,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         autoClear = AutoClear(worker: main)
-        autoClear?.applicationDidLaunch()
         
         AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
 
@@ -524,7 +526,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Task { @MainActor in
             await beginAuthentication()
-            autoClear?.applicationWillMoveToForeground()
+            await autoClear?.applicationWillMoveToForeground()
             showKeyboardIfSettingOn = true
             syncService.scheduler.resumeSyncQueue()
         }
@@ -581,11 +583,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainViewController?.clearNavigationStack()
         }
 
-        autoClear?.applicationWillMoveToForeground()
-        showKeyboardIfSettingOn = false
+        Task { @MainActor in
+            await autoClear?.applicationWillMoveToForeground()
+            showKeyboardIfSettingOn = false
 
-        if !handleAppDeepLink(app, mainViewController, url) {
-            mainViewController?.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil)
+            if !handleAppDeepLink(app, mainViewController, url) {
+                mainViewController?.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil)
+            }
         }
 
         return true
@@ -695,19 +699,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
         os_log("Handling shortcut item: %s", log: .generalLog, type: .debug, shortcutItem.type)
 
-        autoClear?.applicationWillMoveToForeground()
+        Task { @MainActor in
+            
+            await autoClear?.applicationWillMoveToForeground()
 
-        if shortcutItem.type == ShortcutKey.clipboard, let query = UIPasteboard.general.string {
-            mainViewController?.clearNavigationStack()
-            mainViewController?.loadQueryInNewTab(query)
-            return
-        }
+            if shortcutItem.type == ShortcutKey.clipboard, let query = UIPasteboard.general.string {
+                mainViewController?.clearNavigationStack()
+                mainViewController?.loadQueryInNewTab(query)
+                return
+            }
 
 #if NETWORK_PROTECTION
-        if shortcutItem.type == ShortcutKey.openVPNSettings {
-            presentNetworkProtectionStatusSettingsModal()
-        }
+            if shortcutItem.type == ShortcutKey.openVPNSettings {
+                presentNetworkProtectionStatusSettingsModal()
+            }
 #endif
+
+        }
     }
 
     private func removeEmailWaitlistState() {

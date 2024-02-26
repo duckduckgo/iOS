@@ -154,6 +154,7 @@ class MainViewController: UIViewController {
     
     var postClear: (() -> Void)?
     var clearInProgress = false
+    var dataStoreWarmup: DataStoreWarmup? = DataStoreWarmup()
 
     required init?(coder: NSCoder) {
         fatalError("Use init?(code:")
@@ -205,11 +206,9 @@ class MainViewController: UIViewController {
         bindSyncService()
     }
 #endif
-    
-    fileprivate var tabCountInfo: TabCountInfo?
-    
+
     func loadFindInPage() {
-        
+
         let view = FindInPageView.loadFromXib()
         self.view.addSubview(view)
         
@@ -682,11 +681,18 @@ class MainViewController: UIViewController {
         let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
 
         let tabsModel: TabsModel
-        let shouldClearTabsModelOnStartup = AutoClearSettingsModel(settings: appSettings) != nil
-        if shouldClearTabsModelOnStartup {
+        if let settings = AutoClearSettingsModel(settings: appSettings) {
+            // This needs to be refactored so that tabs model is injected and cleared before view did load,
+            //  but for now, ensure this happens in the right order by clearing data here too, if needed.
             tabsModel = TabsModel(desktop: isPadDevice)
             tabsModel.save()
             previewsSource.removeAllPreviews()
+
+            if settings.action.contains(.clearData) {
+                Task { @MainActor in
+                    await forgetData()
+                }
+            }
         } else {
             if let storedModel = TabsModel.get() {
                 // Save new model in case of migration
@@ -2158,6 +2164,7 @@ extension MainViewController: AutoClearWorker {
     }
 
     func forgetTabs() {
+        omniBar.resignFirstResponder()
         findInPageView?.done()
         tabManager.removeAll()
     }
@@ -2169,33 +2176,42 @@ extension MainViewController: AutoClearWorker {
         swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
         Favicons.shared.clearCache(.tabs)
     }
-    
-    func forgetData() {
+
+    @MainActor
+    func clearDataFinished(_: AutoClear) {
+        refreshUIAfterClear()
+    }
+
+    func forgetData() async {
         guard !clearInProgress else {
             assertionFailure("Shouldn't get called multiple times")
             return
         }
         clearInProgress = true
+
+        // This needs to happen only once per app launch
+        if let dataStoreWarmup {
+            await dataStoreWarmup.ensureReady()
+            self.dataStoreWarmup = nil
+        }
+
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
         let pixel = TimedPixel(.forgetAllDataCleared)
-        WebCacheManager.shared.clear(tabCountInfo: tabCountInfo) {
-            pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
+        await WebCacheManager.shared.clear()
+        pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
 
-            AutoconsentManagement.shared.clearCache()
-            DaxDialogs.shared.clearHeldURLData()
+        AutoconsentManagement.shared.clearCache()
+        DaxDialogs.shared.clearHeldURLData()
 
-            if self.syncService.authState == .inactive {
-                self.bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
-            }
-
-            self.refreshUIAfterClear()
-            self.clearInProgress = false
-            
-            self.postClear?()
-            self.postClear = nil
+        if self.syncService.authState == .inactive {
+            self.bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
         }
 
+        self.clearInProgress = false
+        
+        self.postClear?()
+        self.postClear = nil
     }
     
     func stopAllOngoingDownloads() {
@@ -2206,22 +2222,22 @@ extension MainViewController: AutoClearWorker {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
         
-        self.tabCountInfo = tabManager.makeTabCountInfo()
-        
         tabManager.prepareAllTabsExceptCurrentForDataClearing()
         
         fireButtonAnimator.animate {
             self.tabManager.prepareCurrentTabForDataClearing()
             self.stopAllOngoingDownloads()
             self.forgetTabs()
-            self.forgetData()
+            await self.forgetData()
+            Instruments.shared.endTimedEvent(for: spid)
             DaxDialogs.shared.resumeRegularFlow()
         } onTransitionCompleted: {
             ActionMessageView.present(message: UserText.actionForgetAllDone,
                                       presentationLocation: .withBottomBar(andAddressBarBottom: self.appSettings.currentAddressBarPosition.isBottom))
             transitionCompletion?()
+            self.refreshUIAfterClear()
         } completion: {
-            Instruments.shared.endTimedEvent(for: spid)
+            // Ideally this should happen once data clearing has finished AND the animation is finished
             if showNextDaxDialog {
                 self.homeController?.showNextDaxDialog()
             } else if KeyboardSettings().onNewTab {

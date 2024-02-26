@@ -30,11 +30,13 @@ final class SubscriptionITPViewModel: ObservableObject {
     let userScript: IdentityTheftRestorationPagesUserScript
     let subFeature: IdentityTheftRestorationPagesFeature
     var manageITPURL = URL.identityTheftRestoration
-    var viewTitle = UserText.settingsPProITRTitle
+    var viewTitle = UserText.subscriptionTitle
     
     enum Constants {
-        static let navigationBarHideThreshold = 40.0
+        static let navigationBarHideThreshold = 60.0
         static let downloadableContent = ["application/pdf"]
+        static let blankURL = "about:blank"
+        static let externalSchemes =  ["tel", "sms", "facetime"]
     }
     
     // State variables
@@ -45,8 +47,23 @@ final class SubscriptionITPViewModel: ObservableObject {
     @Published var isDownloadableContent: Bool = false
     @Published var activityItems: [Any] = []
     @Published var attachmentURL: URL?
-    private var currentURL: URL?
     
+    @Published var shouldNavigateToExternalURL: URL?
+    var shouldShowExternalURLSheet: Bool {
+        shouldNavigateToExternalURL != nil
+    }
+    
+    private var currentURL: URL?
+    private static let allowedDomains = [
+        "duckduckgo.com",
+        "microsoftonline.com",
+        "duosecurity.com",
+    ]
+    
+    private var externalLinksViewModel: SubscriptionExternalLinkViewModel?
+    // Limit navigation to these external domains
+    private var externalAllowedDomains = ["irisidentityprotection.com"]
+
     private var cancellables = Set<AnyCancellable>()
     private var canGoBackCancellable: AnyCancellable?
     
@@ -54,9 +71,14 @@ final class SubscriptionITPViewModel: ObservableObject {
          subFeature: IdentityTheftRestorationPagesFeature = IdentityTheftRestorationPagesFeature()) {
         self.userScript = userScript
         self.subFeature = subFeature
+        
+        let webViewSettings = AsyncHeadlessWebViewSettings(bounces: false,
+                                                           allowedDomains: Self.allowedDomains,
+                                                           contentBlocking: false)
+        
         self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,
                                                           subFeature: subFeature,
-                                                          settings: AsyncHeadlessWebViewSettings(bounces: false))
+                                                          settings: webViewSettings)
     }
     
     // Observe transaction status
@@ -64,8 +86,9 @@ final class SubscriptionITPViewModel: ObservableObject {
         
         webViewModel.$scrollPosition
             .receive(on: DispatchQueue.main)
+            .throttle(for: .milliseconds(100), scheduler: DispatchQueue.main, latest: true)
             .sink { [weak self] value in
-                self?.shouldShowNavigationBar = value.y > Constants.navigationBarHideThreshold
+                self?.shouldShowNavigationBar = (value.y > Constants.navigationBarHideThreshold)
             }
             .store(in: &cancellables)
         
@@ -91,12 +114,24 @@ final class SubscriptionITPViewModel: ObservableObject {
         
         webViewModel.$url
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] value in
-                self?.isDownloadableContent = false
-                self?.currentURL = value
+            .sink { [weak self] url in
+                guard let self = self, let url = url else { return }
+                
+                // Check if allowedDomains is empty or if the URL is valid or part of the allowed domains
+                if Self.allowedDomains.isEmpty ||
+                    Self.allowedDomains.contains(where: { url.isPart(ofDomain: $0) }),
+                    self.shouldNavigateToExternalURL == nil {
+                    self.isDownloadableContent = false
+                    self.currentURL = url
+                } else {
+                    // Fire up navigation in a separate View (if a valid link)
+                    if url.absoluteString != Constants.blankURL &&
+                       !Constants.externalSchemes.contains(url.scheme ?? "") {
+                        self.shouldNavigateToExternalURL = url
+                    }
+                }
             }
             .store(in: &cancellables)
-        
         
         canGoBackCancellable = webViewModel.$canGoBack
             .receive(on: DispatchQueue.main)
@@ -126,6 +161,16 @@ final class SubscriptionITPViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.attachmentURL = tempFileURL
             }
+        }
+    }
+    
+    func getExternalLinksViewModel(url: URL) -> SubscriptionExternalLinkViewModel {
+        if let existingModel = externalLinksViewModel {
+            return existingModel
+        } else {
+            let model = SubscriptionExternalLinkViewModel(url: url, allowedDomains: externalAllowedDomains)
+            externalLinksViewModel = model
+            return model
         }
     }
 

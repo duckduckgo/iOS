@@ -1977,6 +1977,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Description for Email adding */
 "subscription.addDevice.email.description" = "Add an email address to access your subscription in DuckDuckGo on other devices. We’ll only use this address to verify your subscription.";
 
+/* Title for Alert messages */
+"subscription.alert.title" = "subscription.alert.title";
+
 /* Subscription type */
 "subscription.annual" = "Annual Subscription";
 
@@ -1991,6 +1994,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Navigation Button for closing subscription view */
 "subscription.close" = "Close";
+
+/* Title for Confirm messages */
+"subscription.confirm.title" = "Are you sure?";
 
 /* text for expiration string */
 "subscription.expires" = "expires";

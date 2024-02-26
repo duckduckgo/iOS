@@ -66,7 +66,8 @@ struct HeadlessWebView: UIViewRepresentable {
     func updateUIView(_ uiView: WKWebView, context: Context) {}
 
     func makeCoordinator() -> HeadlessWebViewCoordinator {
-        HeadlessWebViewCoordinator(self,
+        let currentViewController = UIViewController.getCurrentViewController()
+        return HeadlessWebViewCoordinator(self, presenter: currentViewController,
                     onScroll: onScroll,
                     onURLChange: onURLChange,
                     onCanGoBack: onCanGoBack,
@@ -112,4 +113,17 @@ struct HeadlessWebView: UIViewRepresentable {
         
     }
 
+}
+
+extension UIViewController {
+    static func getCurrentViewController(base: UIViewController? = UIApplication.shared.windows.first { $0.isKeyWindow }?.rootViewController) -> UIViewController? {
+        if let nav = base as? UINavigationController {
+            return getCurrentViewController(base: nav.visibleViewController)
+        } else if let tab = base as? UITabBarController, let selected = tab.selectedViewController {
+            return getCurrentViewController(base: selected)
+        } else if let presented = base?.presentedViewController {
+            return getCurrentViewController(base: presented)
+        }
+        return base
+    }
 }

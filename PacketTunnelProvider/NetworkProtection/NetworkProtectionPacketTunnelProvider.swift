@@ -232,7 +232,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    entitlementCheck: Self.entitlementCheck)
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
-        observeStatusChanges()
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
     }
 
@@ -270,14 +269,11 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
     private let activationDateStore = DefaultVPNWaitlistActivationDateStore()
 
-    private func observeStatusChanges() {
-        connectionStatusPublisher.sink { [weak self] status in
-            if case .connected = status {
-                self?.activationDateStore.setActivationDateIfNecessary()
-                self?.activationDateStore.updateLastActiveDate()
-            }
-        }
-        .store(in: &cancellables)
+    public override func handleConnectionStatusChange(old: ConnectionStatus, new: ConnectionStatus) {
+        super.handleConnectionStatusChange(old: old, new: new)
+
+        activationDateStore.setActivationDateIfNecessary()
+        activationDateStore.updateLastActiveDate()
     }
 
     private static func entitlementCheck() async -> Result<Bool, Error> {

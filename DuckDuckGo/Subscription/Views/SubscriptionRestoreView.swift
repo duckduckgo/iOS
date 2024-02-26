@@ -118,7 +118,7 @@ struct SubscriptionRestoreView: View {
                                     action: buttonAction)
                 } else {
                     Text(viewModel.subscriptionEmail ?? "").daxSubheadSemibold()
-                    Text(UserText.subscriptionAddDeviceEmailDescription)
+                    Text(UserText.subscriptionManageEmailDescription)
                         .daxSubheadRegular()
                         .foregroundColor(Color(designSystemColor: .textSecondary))
                     HStack {

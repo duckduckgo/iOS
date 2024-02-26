@@ -1921,7 +1921,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.activate.appleid.description" = "Restore your purchase to activate your subscription on this device.";
 
 /* Subscription Activation Info */
-"subscription.activate.description" = "Access your Privacy Pro subscription on this device via Apple ID or an email address.";
+"subscription.activate.description" = "Your subscription is automatically available in DuckDuckGo on any device signed in to your Apple ID.";
 
 /* Email option for activation */
 "subscription.activate.email" = "Email";
@@ -1945,7 +1945,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.activate.manage.email.title" = "Manage Email";
 
 /* Restore button title for AppleID */
-"subscription.activate.restore.apple" = "Restore";
+"subscription.activate.restore.apple" = "Restore Purchase";
 
 /* Subscription Activation Title */
 "subscription.activate.title" = "Activate your subscription on this device";

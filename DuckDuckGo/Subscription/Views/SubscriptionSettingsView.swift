@@ -34,9 +34,9 @@ struct SubscriptionSettingsView: View {
     @StateObject var viewModel = SubscriptionSettingsViewModel()
     @StateObject var sceneEnvironment = SceneEnvironment()
     
-    var body: some View {
+    @ViewBuilder
+    private var listView: some View {
         List {
-            
             Section {
                 VStack(alignment: .center, spacing: 7) {
                     Image("Privacy-Pro-96x96")
@@ -115,6 +115,21 @@ struct SubscriptionSettingsView: View {
             viewModel.fetchAndUpdateSubscriptionDetails()
         }
     }
+    
+    var body: some View {
+        Group {
+            if #available(iOS 16.0, *) {
+                listView
+                    .scrollDisabled(true)
+            } else {
+                listView
+            }
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        
+        
+    }
+        
 }
 #endif
 

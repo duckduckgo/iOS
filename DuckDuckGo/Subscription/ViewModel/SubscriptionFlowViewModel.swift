@@ -32,7 +32,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     let purchaseManager: PurchaseManager
     let viewTitle = UserText.settingsPProSection
-    var activateSubscriptionOnLoad: Bool = false
     var webViewModel: AsyncHeadlessWebViewViewModel
     
     enum Constants {
@@ -54,7 +53,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
     // Published properties
     @Published var hasActiveSubscription = false
     @Published var transactionStatus: SubscriptionTransactionStatus = .idle
-    @Published var activatingSubscription = false
+    @Published var userTappedRestoreButton = false
+    @Published var activateSubscriptionOnLoad: Bool = false
     @Published var shouldDismissView = false
     @Published var shouldShowNavigationBar: Bool = false
     @Published var selectedFeature: SettingsViewModel.SettingsSection?
@@ -107,7 +107,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 if value {
-                    self?.activatingSubscription = true
+                    self?.userTappedRestoreButton = true
                 }
             }
             .store(in: &cancellables)
@@ -138,7 +138,9 @@ final class SubscriptionFlowViewModel: ObservableObject {
         webViewModel.$scrollPosition
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
-                self?.shouldShowNavigationBar = value.y > Constants.navigationBarHideThreshold
+                DispatchQueue.main.async {
+                    self?.shouldShowNavigationBar = value.y > Constants.navigationBarHideThreshold
+                }
             }
             .store(in: &cancellables)
         
@@ -165,15 +167,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
         await self .setupWebViewObservers()
         await self.updateSubscriptionStatus()
         webViewModel.navigationCoordinator.navigateTo(url: purchaseURL )
-        
-        // Display the subscription activation page after page loads
-        // We need a little delay to allow SwiftUI finish the render cycle
-        if activateSubscriptionOnLoad {
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-                self.activatingSubscription = true
-                self.activateSubscriptionOnLoad = false
-            }
-        }
     }
     
     func finalizeSubscriptionFlow() {
@@ -181,7 +174,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
         subFeature.selectedFeature = nil
         hasActiveSubscription = false
         transactionStatus = .idle
-        activatingSubscription = false
+        userTappedRestoreButton = false
         shouldShowNavigationBar = false
         selectedFeature = nil
         canNavigateBack = false

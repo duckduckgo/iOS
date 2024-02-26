@@ -174,19 +174,22 @@ struct SubscriptionRestoreView: View {
         }.padding(Constants.headerPadding)
     }
     
+    @ViewBuilder
     private var footerView: some View {
-        VStack(alignment: .leading) {
-            Text("Your subscription is automatically available in DuckDuckGo on any device signed in to your Apple ID.")
-                .daxFootnoteRegular()
-                .foregroundColor(Color(designSystemColor: .textSecondary))
-            Button(action: {
-                viewModel.restoreAppstoreTransaction()
-            }, label: {
-                Text("Restore Purchase")
-                    .daxFootnoteSemibold()
-                    .foregroundColor(Color(designSystemColor: .accent))
-            })
-        }.padding(.top, Constants.headerLineSpacing)
+        if !viewModel.isAddingDevice {
+            VStack(alignment: .leading) {
+                Text(UserText.subscriptionActivateDescription)
+                    .daxFootnoteRegular()
+                    .foregroundColor(Color(designSystemColor: .textSecondary))
+                Button(action: {
+                    viewModel.restoreAppstoreTransaction()
+                }, label: {
+                    Text(UserText.subscriptionRestoreAppleID)
+                        .daxFootnoteSemibold()
+                        .foregroundColor(Color(designSystemColor: .accent))
+                })
+            }.padding(.top, Constants.headerLineSpacing)
+        }
     }
     
     private var listView: some View {

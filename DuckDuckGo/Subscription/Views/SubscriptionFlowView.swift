@@ -131,17 +131,27 @@ struct SubscriptionFlowView: View {
             }
         }
         
-        .onChange(of: viewModel.activatingSubscription) { value in
-            if value {
+        .onChange(of: viewModel.userTappedRestoreButton) { _ in
                 isActive = true
-                viewModel.activatingSubscription = false
-            }
+                viewModel.userTappedRestoreButton = false
         }
         
         .onAppear(perform: {
             setUpAppearances()
             Task { await viewModel.initializeViewData() }
             
+            // Display the Restore page on load if required (With no animation)
+            if viewModel.activateSubscriptionOnLoad {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2) {
+                    var transaction = Transaction()
+                        transaction.disablesAnimations = true
+                    withTransaction(transaction) {
+                        isActive = true
+                        viewModel.activateSubscriptionOnLoad = false
+                    }
+                    
+                }
+            }
         })
         
         .alert(isPresented: $isAlertVisible) {
@@ -166,7 +176,7 @@ struct SubscriptionFlowView: View {
         
         ZStack(alignment: .top) {
             
-            // Restore View Hidden Link
+            // Restore View Hidden Link            
             NavigationLink(destination: SubscriptionRestoreView(), isActive: $isActive) {
                 EmptyView()
             }.isDetailLink(false)

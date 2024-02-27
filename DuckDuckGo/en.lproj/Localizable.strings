@@ -2026,7 +2026,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.manage.devices" = "Manage Devices";
 
 /* Description for Email Management options */
-"subscription.manage.email.description" = "You can use this email to activate your subscription on your other devices.";
+"subscription.manage.email.description" = "You can use this email to activate your subscription from browser settings in the DuckDuckGo app on your other devices.";
 
 /* Manage Plan header */
 "subscription.manage.plan" = "Manage Plan";
@@ -2090,6 +2090,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* text for renewal string */
 "subscription.renews" = "renews";
+
+/* Alert for general error message */
+"subscription.restore.general.error.message" = "The App Store was unable to process your purchase. Please try again later.";
+
+/* Alert for general error title */
+"subscription.restore.general.error.title" = "Something Went Wrong";
 
 /* Alert button text for restored purchase alert */
 "subscription.restore.success.alert.button" = "OK";

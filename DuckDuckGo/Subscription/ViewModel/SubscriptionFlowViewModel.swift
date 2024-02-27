@@ -49,6 +49,18 @@ final class SubscriptionFlowViewModel: ObservableObject {
         static let itr = "identity-theft-restoration"
         static let dbp = "personal-information-removal"
     }
+    
+    enum SubscriptionPurchaseError: Error {
+        case purchaseFailed,
+             missingEntitlements,
+             failedToGetSubscriptionOptions,
+             failedToSetSubscription,
+             failedToRestoreFromEmail,
+             failedToRestorePastPurchase,
+             subscriptionExpired,
+             hasActiveSubscription,
+             generalError
+    }
 
     // Published properties
     @Published var hasActiveSubscription = false
@@ -59,6 +71,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
     @Published var shouldShowNavigationBar: Bool = false
     @Published var selectedFeature: SettingsViewModel.SettingsSection?
     @Published var canNavigateBack: Bool = false
+    @Published var transactionError: SubscriptionPurchaseError?
+    @Published var shouldShowAlert: Bool = false
 
     private static let allowedDomains = [
         "duckduckgo.com",
@@ -95,14 +109,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 }
             }
             .store(in: &cancellables)
-        
-        subFeature.$hasActiveSubscription
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] value in
-                self?.hasActiveSubscription = value
-            }
-            .store(in: &cancellables)
-        
+                
         subFeature.$activateSubscription
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
@@ -131,15 +138,51 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 
             }
             .store(in: &cancellables)
+        
+        subFeature.$transactionError
+            .receive(on: DispatchQueue.main)
+            .removeDuplicates()
+            .sink { [weak self] value in
+                guard let strongSelf = self else { return }
+                if let value {
+                    strongSelf.handleTransactionError(error: value)
+                }
+            }
+        .store(in: &cancellables)
        
+    }
+    
+    private func handleTransactionError(error: SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError) {
+        switch error {
+        case .purchaseFailed:
+            transactionError = .purchaseFailed
+        case .missingEntitlements:
+            transactionError = .missingEntitlements
+        case .failedToGetSubscriptionOptions:
+            transactionError = .failedToGetSubscriptionOptions
+        case .failedToSetSubscription:
+            transactionError = .failedToSetSubscription
+        case .failedToRestoreFromEmail:
+            transactionError = .failedToRestoreFromEmail
+        case .failedToRestorePastPurchase:
+            transactionError = .failedToRestorePastPurchase
+        case .subscriptionExpired:
+            transactionError = .subscriptionExpired
+        case .generalError:
+            transactionError = .generalError
+        case .hasActiveSubscription:
+            transactionError = .hasActiveSubscription
+        }
+        shouldShowAlert = true
     }
     
     private func setupWebViewObservers() async {
         webViewModel.$scrollPosition
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
+                guard let strongSelf = self else { return }
                 DispatchQueue.main.async {
-                    self?.shouldShowNavigationBar = value.y > Constants.navigationBarHideThreshold
+                    strongSelf.shouldShowNavigationBar = value.y > Constants.navigationBarHideThreshold
                 }
             }
             .store(in: &cancellables)
@@ -188,12 +231,10 @@ final class SubscriptionFlowViewModel: ObservableObject {
 
     func restoreAppstoreTransaction() {
         Task {
-            if await subFeature.restoreAccountFromAppStorePurchase() {
+            do {
+                try await subFeature.restoreAccountFromAppStorePurchase()
                 await disableGoBack()
                 await webViewModel.navigationCoordinator.reload()
-            } else {
-                await MainActor.run {
-                }
             }
         }
     }

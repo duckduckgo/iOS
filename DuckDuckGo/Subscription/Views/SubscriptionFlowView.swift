@@ -30,6 +30,7 @@ struct SubscriptionFlowView: View {
     @State private var isAlertVisible = false
     @State private var shouldShowNavigationBar = false
     @State private var isActive: Bool = false
+    @State private var shouldDisplayRestoreError: Bool = false
     
     enum Constants {
         static let daxLogo = "Home"
@@ -118,7 +119,7 @@ struct SubscriptionFlowView: View {
             }
         }
         
-        .onChange(of: viewModel.hasActiveSubscription) { result in
+        .onChange(of: viewModel.shouldShowAlert) { result in
             if result {
                 isAlertVisible = true
             }
@@ -134,6 +135,10 @@ struct SubscriptionFlowView: View {
         .onChange(of: viewModel.userTappedRestoreButton) { _ in
                 isActive = true
                 viewModel.userTappedRestoreButton = false
+        }
+        
+        .onChange(of: viewModel.transactionError) { _ in
+                shouldDisplayRestoreError = true
         }
         
         .onAppear(perform: {
@@ -154,7 +159,19 @@ struct SubscriptionFlowView: View {
             }
         })
         
-        .alert(isPresented: $isAlertVisible) {
+        .alert(isPresented: $isAlertVisible) { getAlert() }
+        
+        // The trailing close button should be hidden when a transaction is in progress
+        .navigationBarItems(trailing: viewModel.transactionStatus == .idle
+                            ? Button(UserText.subscriptionCloseButton) { viewModel.finalizeSubscriptionFlow() }
+                            : nil)
+    }
+    
+    private func getAlert() -> Alert {
+        
+        switch viewModel.transactionError {
+        
+        case .hasActiveSubscription:
             Alert(
                 title: Text(UserText.subscriptionFoundTitle),
                 message: Text(UserText.subscriptionFoundText),
@@ -164,12 +181,18 @@ struct SubscriptionFlowView: View {
                     viewModel.restoreAppstoreTransaction()
                 }
             )
+        default:
+            Alert(
+                title: Text(UserText.subscriptionAppStoreErrorTitle),
+                message: Text(UserText.subscriptionAppStoreErrorMessage),
+                dismissButton: .cancel(Text(UserText.actionOK)) {
+                    Task { await viewModel.initializeViewData() }
+                }
+            )
         }
-        // The trailing close button should be hidden when a transaction is in progress
-        .navigationBarItems(trailing: viewModel.transactionStatus == .idle
-                            ? Button(UserText.subscriptionCloseButton) { viewModel.finalizeSubscriptionFlow() }
-                            : nil)
+        
     }
+    
     
     @ViewBuilder
     private var webView: some View {
@@ -191,6 +214,7 @@ struct SubscriptionFlowView: View {
 
         }
     }
+    
         
     private func setUpAppearances() {
         let navAppearance = UINavigationBar.appearance()

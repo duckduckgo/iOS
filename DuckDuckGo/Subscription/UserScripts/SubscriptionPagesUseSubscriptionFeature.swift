@@ -67,10 +67,21 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     struct FeatureSelection: Codable {
         let feature: String
     }
+    
+    enum UseSubscriptionError: Error {
+        case purchaseFailed,
+             missingEntitlements,
+             failedToGetSubscriptionOptions,
+             failedToSetSubscription,
+             failedToRestoreFromEmail,
+             failedToRestorePastPurchase,
+             subscriptionExpired,
+             hasActiveSubscription,
+             generalError
+    }
         
     @Published var transactionStatus: SubscriptionTransactionStatus = .idle
-    @Published var hasActiveSubscription = false
-    @Published var purchaseError: AppStorePurchaseFlow.Error?
+    @Published var transactionError: UseSubscriptionError?
     @Published var activateSubscription: Bool = false
     @Published var emailActivationComplete: Bool = false
     @Published var selectedFeature: FeatureSelection?
@@ -125,8 +136,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
     
     private func resetSubscriptionFlow() {
-        hasActiveSubscription = false
-        purchaseError = nil
+        transactionError = nil
     }
 
     func getSubscription(params: Any, original: WKScriptMessage) async throws -> Encodable? {
@@ -146,6 +156,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
                 return subscriptionOptions
             case .failure:
                 os_log(.info, log: .subscription, "Failed to obtain subscription options")
+                transactionError = .failedToGetSubscriptionOptions
                 return nil
             }
                         
@@ -201,6 +212,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func setSubscription(params: Any, original: WKScriptMessage) async throws -> Encodable? {
         guard let subscriptionValues: SubscriptionValues = DecodableHelper.decode(from: params) else {
             assertionFailure("SubscriptionPagesUserScript: expected JSON representation of SubscriptionValues")
+            transactionError = .generalError
             return nil
         }
 
@@ -212,6 +224,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             accountManager.storeAccount(token: accessToken, email: accountDetails.email, externalID: accountDetails.externalID)
         } else {
             os_log(.info, log: .subscription, "Failed to obtain subscription options")
+            transactionError = .failedToSetSubscription
         }
 
         return nil
@@ -225,6 +238,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             emailActivationComplete = true
         } else {
             os_log(.info, log: .subscription, "Failed to restore subscription from Email")
+            transactionError = .failedToRestoreFromEmail
         }
         return nil
     }
@@ -237,6 +251,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func featureSelected(params: Any, original: WKScriptMessage) async throws -> Encodable? {
         guard let featureSelection: FeatureSelection = DecodableHelper.decode(from: params) else {
             assertionFailure("SubscriptionPagesUserScript: expected JSON representation of FeatureSelection")
+            transactionError = .generalError
             return nil
         }
         selectedFeature = featureSelection
@@ -257,28 +272,37 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
 
     func pushAction(method: SubscribeActionName, webView: WKWebView, params: Encodable) {
         let broker = UserScriptMessageBroker(context: SubscriptionPagesUserScript.context, requiresRunInPageContentWorld: true )
-        
         broker.push(method: method.rawValue, params: params, for: self, into: webView)
     }
     
-    func restoreAccountFromAppStorePurchase() async -> Bool {
+    func restoreAccountFromAppStorePurchase() async throws {
+        transactionError = nil
+        transactionStatus = .restoring
         
-        await withTransactionInProgress {
-            transactionStatus = .restoring
-            switch await AppStoreRestoreFlow.restoreAccountFromPastPurchase() {
-            case .success:
-                return true
-            case .failure:
-                return false
-            }
+        let result = await AppStoreRestoreFlow.restoreAccountFromPastPurchase()
+        switch result {
+        case .success:
+            transactionStatus = .idle
+        case .failure(let error):
+            let error = mapAppStoreRestoreErrorToTransactionError(error)
+            transactionError = error
+            transactionStatus = .idle
+            throw error
         }
-        
+    }
+    
+    func mapAppStoreRestoreErrorToTransactionError(_ error: AppStoreRestoreFlow.Error) -> UseSubscriptionError {
+        switch error {
+        case .subscriptionExpired:
+            return .subscriptionExpired
+        default:
+            return .failedToRestorePastPurchase
+        }
     }
     
     func cleanup() {
         transactionStatus = .idle
-        hasActiveSubscription = false
-        purchaseError = nil
+        transactionError = nil
         activateSubscription = false
         emailActivationComplete = false
         selectedFeature = nil

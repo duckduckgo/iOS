@@ -26,6 +26,10 @@ import UserScript
 import Combine
 import Subscription
 
+enum SubscriptionTransactionStatus {
+    case idle, purchasing, restoring, polling
+}
+
 @available(iOS 15.0, *)
 final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObject {
     
@@ -59,23 +63,19 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         static let month = "monthly"
         static let year = "yearly"
     }
-    
-    enum TransactionStatus {
-        case idle, purchasing, restoring, polling
-    }
-    
+        
     struct FeatureSelection: Codable {
         let feature: String
     }
         
-    @Published var transactionStatus: TransactionStatus = .idle
+    @Published var transactionStatus: SubscriptionTransactionStatus = .idle
     @Published var hasActiveSubscription = false
     @Published var purchaseError: AppStorePurchaseFlow.Error?
     @Published var activateSubscription: Bool = false
     @Published var emailActivationComplete: Bool = false
     @Published var selectedFeature: FeatureSelection?
     
-    var broker: UserScriptMessageBroker?
+    weak var broker: UserScriptMessageBroker?
 
     var featureName = Constants.featureName
 
@@ -274,5 +274,16 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
         
     }
+    
+    func cleanup() {
+        transactionStatus = .idle
+        hasActiveSubscription = false
+        purchaseError = nil
+        activateSubscription = false
+        emailActivationComplete = false
+        selectedFeature = nil
+        broker = nil
+    }
+    
 }
 #endif

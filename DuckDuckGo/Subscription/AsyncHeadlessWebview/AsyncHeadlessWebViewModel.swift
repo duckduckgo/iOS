@@ -22,7 +22,7 @@ import Core
 import Combine
 
 final class AsyncHeadlessWebViewViewModel: ObservableObject {
-    let userScript: UserScriptMessaging?
+    weak var userScript: UserScriptMessaging?
     let subFeature: Subfeature?
     let settings: AsyncHeadlessWebViewSettings
     

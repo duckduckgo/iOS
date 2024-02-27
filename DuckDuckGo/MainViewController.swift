@@ -2058,8 +2058,12 @@ extension MainViewController: TabSwitcherDelegate {
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTab tab: Tab) {
         if tabManager.count == 1 {
             // Make sure UI updates finish before dimissing the view.
+            // However, as a result, viewDidAppear on the home controller thinks the tab 
+            //  switcher is still presented.
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                tabSwitcher.dismiss()
+                tabSwitcher.dismiss(animated: true) {
+                    self.homeController?.viewDidAppear(true)
+                }
             }
         }
         closeTab(tab)

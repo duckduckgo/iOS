@@ -30,7 +30,7 @@ final class AuthConfirmationPromptViewController: UIViewController {
     private var viewModel: AuthConfirmationPromptViewModel?
     
     init(didBeginAuthenticating: @escaping () -> Void,
-                  authConfirmationCompletion: @escaping AuthConfirmationCompletion) {
+         authConfirmationCompletion: @escaping AuthConfirmationCompletion) {
         self.didBeginAuthenticating = didBeginAuthenticating
         self.authConfirmationCompletion = authConfirmationCompletion
         

@@ -69,7 +69,8 @@ class PrivacyDashboardViewController: UIViewController {
           contentBlockingManager: ContentBlockerRulesManager,
           initMode: Mode,
           breakageAdditionalInfo: BreakageAdditionalInfo?) {
-        self.privacyDashboardController = PrivacyDashboardController(privacyInfo: privacyInfo)
+        self.privacyDashboardController = PrivacyDashboardController(privacyInfo: privacyInfo,
+                                                                     privacyConfigurationManager: privacyConfigurationManager)
         self.privacyConfigurationManager = privacyConfigurationManager
         self.contentBlockingManager = contentBlockingManager
         self.initMode = initMode

@@ -182,7 +182,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             
             // Check for active subscriptions
             if await PurchaseManager.hasActiveSubscription() {
-                hasActiveSubscription = true
+                transactionError = .hasActiveSubscription
                 return nil
             }
             
@@ -192,7 +192,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             case .success:
                 break
             case .failure:
-                purchaseError = .purchaseFailed
+                transactionError = .purchaseFailed
                 originalMessage = original
                 return nil
             }
@@ -202,7 +202,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             case .success(let purchaseUpdate):
                 await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
             case .failure:
-                purchaseError = .missingEntitlements
+                transactionError = .missingEntitlements
                 await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate(type: "completed"))
             }
             return nil

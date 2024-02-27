@@ -263,7 +263,7 @@ class MainViewController: UIViewController {
         subscribeToEmailProtectionStatusNotifications()
 
 #if NETWORK_PROTECTION && SUBSCRIPTION
-        subscribeToNetworkProtectionSubscriptionEvents()
+        subscribeToNetworkProtectionEvents()
 #endif
 
         findInPageView.delegate = self
@@ -1327,7 +1327,7 @@ class MainViewController: UIViewController {
     }
 
 #if NETWORK_PROTECTION && SUBSCRIPTION
-    private func subscribeToNetworkProtectionSubscriptionEvents() {
+    private func subscribeToNetworkProtectionEvents() {
         NotificationCenter.default.publisher(for: .accountDidSignIn)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] notification in
@@ -1343,7 +1343,7 @@ class MainViewController: UIViewController {
             return
         }
 
-        VPNSettings(defaults: .networkProtectionGroupDefaults).apply(change: .setShouldShowExpiredEntitlementMessaging(nil))
+        VPNSettings(defaults: .networkProtectionGroupDefaults).resetEntitlementMessaging()
         print("[NetP Subscription] Reset expired entitlement messaging")
 
         Task {

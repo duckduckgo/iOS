@@ -299,8 +299,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #endif
 
 #if NETWORK_PROTECTION && SUBSCRIPTION
-        if let messaging = VPNSettings(defaults: .networkProtectionGroupDefaults).shouldShowExpiredEntitlementMessaging,
-           messaging.showsAlert {
+        if VPNSettings(defaults: .networkProtectionGroupDefaults).showEntitlementAlert {
             presentExpiredEntitlementAlert()
         }
 #endif
@@ -351,10 +350,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func presentExpiredEntitlementAlert() {
         let alertController = CriticalAlerts.makeExpiredEntitlementAlert()
         window?.rootViewController?.present(alertController, animated: true) {
-            if let messaging = VPNSettings(defaults: .networkProtectionGroupDefaults).shouldShowExpiredEntitlementMessaging {
-                let newMessaging = UserDefaults.ExpiredEntitlementMessaging(showsAlert: false, showsNotification: messaging.showsNotification)
-                VPNSettings(defaults: .networkProtectionGroupDefaults).apply(change: .setShouldShowExpiredEntitlementMessaging(newMessaging))
-            }
+            VPNSettings(defaults: .networkProtectionGroupDefaults).apply(change: .setShowEntitlementAlert(false))
         }
     }
 

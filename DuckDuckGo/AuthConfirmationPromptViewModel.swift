@@ -26,7 +26,7 @@ protocol AuthConfirmationPromptViewModelDelegate: AnyObject {
     func authConfirmationPromptViewModelDidResizeContent(_ viewModel: AuthConfirmationPromptViewModel, contentHeight: CGFloat)
 }
 
-class AuthConfirmationPromptViewModel: ObservableObject {
+final class AuthConfirmationPromptViewModel: ObservableObject {
     
     weak var delegate: AuthConfirmationPromptViewModelDelegate?
     private let authenticator = AutofillLoginListAuthenticator(reason: UserText.autofillDeleteAllPasswordsAuthenticationReason)

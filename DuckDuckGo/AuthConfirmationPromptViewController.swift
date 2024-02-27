@@ -20,7 +20,7 @@
 import UIKit
 import SwiftUI
 
-class AuthConfirmationPromptViewController: UIViewController {
+final class AuthConfirmationPromptViewController: UIViewController {
     
     typealias AuthConfirmationCompletion = (_ authenticated: Bool) -> Void
     
@@ -29,7 +29,7 @@ class AuthConfirmationPromptViewController: UIViewController {
     
     private var viewModel: AuthConfirmationPromptViewModel?
     
-    internal init(didBeginAuthenticating: @escaping () -> Void,
+    init(didBeginAuthenticating: @escaping () -> Void,
                   authConfirmationCompletion: @escaping AuthConfirmationCompletion) {
         self.didBeginAuthenticating = didBeginAuthenticating
         self.authConfirmationCompletion = authConfirmationCompletion

@@ -957,12 +957,13 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsPProDescription = NSLocalizedString("settings.subscription.description", value:"More seamless privacy with three new protections, including:", comment: "Privacy pro description subtext")
     public static let settingsPProFeatures = NSLocalizedString("settings.subscription.features", value:
                                                                 """
-                                                                 • VPN (Virtual Private Network)
+                                                                 • VPN
                                                                  • Personal Information Removal
                                                                  • Identity Theft Restoration
                                                                 """, comment: "Privacy pro features list")
 
-    public static let settingsPProLearnMore = NSLocalizedString("settings.subscription.learn.more", value: "Learn More", comment: "Learn more button text for privacy pro")
+    public static let settingsPProLearnMore = NSLocalizedString("settings.subscription.learn.more", value: "Get Privacy Pro", comment: "Get Privacy Pro button text for privacy pro")
+    public static let settingsPProIHaveASubscription = NSLocalizedString("settings.subscription.existing.subscription", value: "I Have a Subscription", comment: "I have a Subscription button text for privacy pro")
     
     public static let settingsPProManageSubscription = NSLocalizedString("settings.subscription.manage", value: "Subscription Settings", comment: "Subscription Settings button text for privacy pro")
     
@@ -1003,21 +1004,30 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionTitle = NSLocalizedString("subscription.title", value: "Privacy Pro", comment: "Navigation bar Title for subscriptions")
     public static let subscriptionCloseButton = NSLocalizedString("subscription.close", value: "Close", comment: "Navigation Button for closing subscription view")
     
-    static func subscriptionInfo(expiration: String) -> String {
-        let localized = NSLocalizedString("subscription.subscription.active.caption", value: "Your Privacy Pro subscription renews on %@", comment: "Subscription Expiration Data")
-        return String(format: localized, expiration)
+    static func subscriptionInfo(status: String, expiration: String) -> String {
+        let localized = NSLocalizedString("subscription.subscription.active.caption",
+                                          value: "Your subscription %@ on %@",
+                                          comment: "Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)'")
+        return String(format: localized, status, expiration)
     }
+    
+    public static let subscriptionRenews = NSLocalizedString("subscription.renews", value: "renews", comment: "text for renewal string")
+    public static let subscriptionExpires = NSLocalizedString("subscription.expires", value: "expires", comment: "text for expiration string")
+    public static let subscriptionMonthly = NSLocalizedString("subscription.monthly", value: "Monthly Subscription", comment: "Subscription type")
+    public static let subscriptionAnnual = NSLocalizedString("subscription.annual", value: "Annual Subscription", comment: "Subscription type")
+    
     public static let subscriptionManageDevices = NSLocalizedString("subscription.manage.devices", value: "Manage Devices", comment: "Header for the device management section")
     public static let subscriptionAddDeviceButton = NSLocalizedString("subscription.add.device.button", value: "Add to Another Device", comment: "Add to another device button")
     public static let subscriptionRemoveFromDevice = NSLocalizedString("subscription.remove.from.device.button", value: "Remove From This Device", comment: "Remove from this device button")
+    public static let subscriptionManageTitle = NSLocalizedString("subscription.manage.title", value: "Subscription", comment: "Header for the subscription section")
     public static let subscriptionManagePlan = NSLocalizedString("subscription.manage.plan", value: "Manage Plan", comment: "Manage Plan header")
     public static let subscriptionChangePlan = NSLocalizedString("subscription.change.plan", value: "Change Plan Or Billing", comment: "Change plan or billing title")
     public static let subscriptionHelpAndSupport = NSLocalizedString("subscription.help", value: "Help and support", comment: "Help and support Section header")
     public static let subscriptionFAQ = NSLocalizedString("subscription.faq", value: "Privacy Pro FAQ", comment: "FAQ Button")
-    public static let subscriptionFAQFooter = NSLocalizedString("subscription.faq.description", value: "Visit our Privacy Pro help pages for answers to frequently asked questions", comment: "FAQ Description")
+    public static let subscriptionFAQFooter = NSLocalizedString("subscription.faq.description", value: "Get answers to frequently asked questions about Privacy Pro in our help pages.", comment: "FAQ Description")
     
     // Remove subscription confirmation
-    public static let subscriptionRemoveFromDeviceConfirmTitle = NSLocalizedString("subscription.remove.from.device.title", value: "Remove From This Device?", comment: "Remove from device confirmation dialog title")
+    public static let subscriptionRemoveFromDeviceConfirmTitle = NSLocalizedString("subscription.remove.from.device.title", value: "Remove from this device?", comment: "Remove from device confirmation dialog title")
     public static let subscriptionRemoveFromDeviceConfirmText = NSLocalizedString("subscription.remove.from.device.text", value: "You will no longer be able to access your Privacy Pro subscription on this device. This will not cancel your subscription, and it will remain active on your other devices.", comment: "Remove from device confirmation dialog text")
     public static let subscriptionRemove = NSLocalizedString("subscription.remove.subscription", value: "Remove Subscription", comment: "Remove subscription button text")
     public static let subscriptionRemoveCancel = NSLocalizedString("subscription.remove.subscription.cancel", value: "Cancel", comment: "Remove subscription cancel button text")
@@ -1026,22 +1036,26 @@ But if you *do* want a peek under the hood, you can find more information about 
     // Subscription Restore
     public static let subscriptionActivate = NSLocalizedString("subscription.activate", value: "Activate Subscription", comment: "Subscription Activation Window Title")
     public static let subscriptionActivateTitle = NSLocalizedString("subscription.activate.title", value: "Activate your subscription on this device", comment: "Subscription Activation Title")
-    public static let subscriptionActivateDescription = NSLocalizedString("subscription.activate.description", value: "Access your Privacy Pro subscription on this device via Apple ID or an email address.", comment: "Subscription Activation Info")
+    public static let subscriptionActivateDescription = NSLocalizedString("subscription.activate.description", value: "Your subscription is automatically available in DuckDuckGo on any device signed in to your Apple ID.", comment: "Subscription Activation Info")
     public static let subscriptionActivateAppleID = NSLocalizedString("subscription.activate.appleid", value: "Apple ID", comment: "Apple ID option for activation")
     public static let subscriptionActivateAppleIDButton = NSLocalizedString("subscription.activate.appleid.button", value: "Restore Purchase", comment: "Button text for restoring purchase via Apple ID")
     public static let subscriptionActivateAppleIDDescription = NSLocalizedString("subscription.activate.appleid.description", value: "Restore your purchase to activate your subscription on this device.", comment: "Description for Apple ID activation")
-    public static let subscriptionRestoreAppleID = NSLocalizedString("subscription.activate.restore.apple", value: "Restore", comment: "Restore button title for AppleID")
+    public static let subscriptionRestoreAppleID = NSLocalizedString("subscription.activate.restore.apple", value: "Restore Purchase", comment: "Restore button title for AppleID")
     public static let subscriptionActivateEmail = NSLocalizedString("subscription.activate.email", value: "Email", comment: "Email option for activation")
     public static let subscriptionActivateEmailDescription = NSLocalizedString("subscription.activate.email.description", value: "Use your email to activate your subscription on this device.", comment: "Description for Email activation")
-    public static let subscriptionRestoreEmail = NSLocalizedString("subscription.activate.restore.email", value: "Enter Email", comment: "Restore button title for Email")
+    public static let subscriptionAddDeviceEmailDescription = NSLocalizedString("subscription.addDevice.email.description", value: "Add an email address to access your subscription in DuckDuckGo on other devices. We’ll only use this address to verify your subscription.", comment: "Description for Email adding")
+    public static let subscriptionAddEmailButton = NSLocalizedString("subscription.activate.add.email.button", value: "Add Email", comment: "Restore button title for Email")
+    public static let subscriptionActivateEmailButton = NSLocalizedString("subscription.activate.email.button", value: "Enter Email", comment: "Restore button title for Email")
             
     // Add to other devices (AppleID / Email)
     public static let subscriptionAddDeviceTitle = NSLocalizedString("subscription.add.device.title", value: "Add Device", comment: "Add to another device view title")
     public static let subscriptionAddDeviceHeaderTitle = NSLocalizedString("subscription.add.device.header.title", value: "Use your subscription on all your devices", comment: "Add subscription to other device title ")
-    public static let subscriptionAddDeviceDescription = NSLocalizedString("subscription.add.device.description", value: "Access your Privacy Pro subscription on any of your devices via Apple ID or by adding an email address.", comment: "Subscription Add device Info")
+    public static let subscriptionAddDeviceDescription = NSLocalizedString("subscription.add.device.description", value: "Access your Privacy Pro subscription on other devices via an email address.", comment: "Subscription Add device Info")
     public static let subscriptionAvailableInApple = NSLocalizedString("subscription.available.apple", value: "Privacy Pro is available on any device signed in to the same Apple ID.", comment: "Subscription availability message on Apple devices")
     public static let subscriptionManageEmailResendInstructions = NSLocalizedString("subscription.add.device.resend.instructions", value: "Resend Instructions", comment: "Resend activation instructions button")
     
+    public static let subscriptionConfirmTitle = NSLocalizedString("subscription.confirm.title", value: "Are you sure?", comment: "Title for Confirm messages")
+    public static let subscriptionAlertTitle = NSLocalizedString("subscription.alert.title", value: "", comment: "Title for Alert messages")
     
     // Add Email To subscription
     public static let subscriptionAddEmail = NSLocalizedString("subscription.add.email", value: "Add an email address to activate your subscription on your other devices. We’ll only use this address to verify your subscription.", comment: "Add email to an existing subscription")
@@ -1049,7 +1063,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionRestoreAddEmailTitle = NSLocalizedString("subscription.add.email.title", value: "Add Email", comment: "View title for adding email to subscription")
     
     // Manage Subscription Email
-    public static let subscriptionManageEmailDescription = NSLocalizedString("subscription.manage.email.description", value: "You can use this email to activate your subscription on your other devices.", comment: "Description for Email Management options")
+    public static let subscriptionManageEmailDescription = NSLocalizedString("subscription.manage.email.description", value: "You can use this email to activate your subscription from browser settings in the DuckDuckGo app on your other devices.", comment: "Description for Email Management options")
     public static let subscriptionManageEmailButton = NSLocalizedString("subscription.activate.manage.email.button", value: "Manage", comment: "Restore button title for Managing Email")
     public static let subscriptionManageEmailTitle = NSLocalizedString("subscription.activate.manage.email.title", value: "Manage Email", comment: "View Title for managing your email account")
     public static let subscriptionManageEmailCancelButton = NSLocalizedString("subscription.activate.manage.email.cancel", value: "Cancel", comment: "Button title for cancelling email deletion")

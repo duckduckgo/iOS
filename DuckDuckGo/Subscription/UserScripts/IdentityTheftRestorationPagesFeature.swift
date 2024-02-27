@@ -44,7 +44,7 @@ final class IdentityTheftRestorationPagesFeature: Subfeature, ObservableObject {
     }
         
     
-    var broker: UserScriptMessageBroker?
+    weak var broker: UserScriptMessageBroker?
     var featureName: String = Constants.featureName
 
     var messageOriginPolicy: MessageOriginPolicy = .only(rules: [
@@ -69,6 +69,10 @@ final class IdentityTheftRestorationPagesFeature: Subfeature, ObservableObject {
     func getAccessToken(params: Any, original: WKScriptMessage) async throws -> Encodable? {
         let authToken = AccountManager().authToken ?? ""
         return Subscription(token: authToken)
+    }
+    
+    deinit {
+        broker = nil
     }
 
 }

@@ -27,13 +27,13 @@ import Subscription
 @available(iOS 15.0, *)
 final class SubscriptionITPViewModel: ObservableObject {
     
-    let userScript: IdentityTheftRestorationPagesUserScript
-    let subFeature: IdentityTheftRestorationPagesFeature
+    var userScript: IdentityTheftRestorationPagesUserScript?
+    var subFeature: IdentityTheftRestorationPagesFeature?
     var manageITPURL = URL.identityTheftRestoration
     var viewTitle = UserText.subscriptionTitle
     
     enum Constants {
-        static let navigationBarHideThreshold = 60.0
+        static let navigationBarHideThreshold = 15.0
         static let downloadableContent = ["application/pdf"]
         static let blankURL = "about:blank"
         static let externalSchemes =  ["tel", "sms", "facetime"]
@@ -41,12 +41,12 @@ final class SubscriptionITPViewModel: ObservableObject {
     
     // State variables
     var itpURL = URL.identityTheftRestoration
-    @Published var webViewModel: AsyncHeadlessWebViewViewModel
     @Published var shouldShowNavigationBar: Bool = false
     @Published var canNavigateBack: Bool = false
     @Published var isDownloadableContent: Bool = false
     @Published var activityItems: [Any] = []
     @Published var attachmentURL: URL?
+    var webViewModel: AsyncHeadlessWebViewViewModel
     
     @Published var shouldNavigateToExternalURL: URL?
     var shouldShowExternalURLSheet: Bool {
@@ -101,12 +101,7 @@ final class SubscriptionITPViewModel: ObservableObject {
                     strongSelf.isDownloadableContent = true
                     guard let url = strongSelf.currentURL else { return }
                     Task {
-                        // We are using a dummy PDF for testing, as the real PDF's are behind the internal user login
-                        if let downloadURL = URL(string: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf") {
-                            await strongSelf.downloadAttachment(from: downloadURL)
-                        }
-                        // if let downloadURL = url {
-                        // await strongSelf.downloadAttachment(from: downloadURL)
+                        await strongSelf.downloadAttachment(from: url)
                     }
                 }
             }
@@ -184,6 +179,12 @@ final class SubscriptionITPViewModel: ObservableObject {
     @MainActor
     func navigateBack() async {
         await webViewModel.navigationCoordinator.goBack()
+    }
+    
+    deinit {
+        cancellables.removeAll()
+        self.userScript = nil
+        self.subFeature = nil
     }
     
 }

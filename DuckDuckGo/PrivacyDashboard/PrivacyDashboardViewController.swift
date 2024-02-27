@@ -25,13 +25,22 @@ import BrowserServicesKit
 import PrivacyDashboard
 import Common
 
-/// View controller used for `Privacy Dasboard` or `Report broken site`, the web content is chosen at init time setting the correct `initMode`
+/// View controller used for `Privacy Dashboard` or `Report broken site`, the web content is chosen at init time setting the correct `initMode`
 class PrivacyDashboardViewController: UIViewController {
     
     /// Type of web page displayed
     enum Mode {
-        case privacyDashboard
-        case reportBrokenSite
+
+        case dashboard
+        case report
+
+        var screen: PrivacyDashboard.Screen {
+            switch self {
+            case .dashboard: return .primaryScreen
+            case .report: return .breakageForm
+            }
+        }
+
     }
 
     @IBOutlet private(set) weak var webView: WKWebView!
@@ -43,7 +52,7 @@ class PrivacyDashboardViewController: UIViewController {
     public var breakageAdditionalInfo: BreakageAdditionalInfo?
     
     var source: WebsiteBreakage.Source {
-        initMode == .reportBrokenSite ? .appMenu : .dashboard
+        initMode == .report ? .appMenu : .dashboard
     }
 
     private let websiteBreakageReporter: WebsiteBreakageReporter = {
@@ -78,7 +87,7 @@ class PrivacyDashboardViewController: UIViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        privacyDashboardController.setup(for: webView, reportBrokenSiteOnly: initMode == Mode.reportBrokenSite ? true : false)
+        privacyDashboardController.setup(for: webView, screen: initMode.screen)
         privacyDashboardController.preferredLocale = Bundle.main.preferredLocalizations.first
         applyTheme(ThemeManager.shared.currentTheme)
     }

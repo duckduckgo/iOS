@@ -139,7 +139,7 @@ extension MainViewController {
                                            privacyInfo: privacyInfo,
                                            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                            contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
-                                           initMode: .reportBrokenSite,
+                                           initMode: .report,
                                            breakageAdditionalInfo: self.currentTab?.makeBreakageAdditionalInfo())
         }
         

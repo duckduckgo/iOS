@@ -744,7 +744,7 @@ class TabViewController: UIViewController {
                                        privacyInfo: privacyInfo,
                                        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                        contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
-                                       initMode: .privacyDashboard,
+                                       initMode: .dashboard,
                                        breakageAdditionalInfo: makeBreakageAdditionalInfo())
     }
     

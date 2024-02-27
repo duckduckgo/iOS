@@ -54,5 +54,5 @@ public final class PrivacyFeatures {
     }
 
     public static let httpsUpgrade = HTTPSUpgrade(store: httpsUpgradeStore, privacyManager: ContentBlocking.shared.privacyConfigurationManager)
-    
+
 }

@@ -99,4 +99,12 @@ struct SubscriptionSettingsView: View {
             }
         }
 }
+
+// @available(iOS 15.0, *)
+// struct SubscriptionSettingsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SubscriptionSettingsView()
+//    }
+// }
+
 #endif

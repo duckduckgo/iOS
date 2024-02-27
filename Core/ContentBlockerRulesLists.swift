@@ -20,17 +20,17 @@
 import BrowserServicesKit
 
 public final class ContentBlockerRulesLists: DefaultContentBlockerRulesListsSource {
-    
+
     private let adClickAttribution: AdClickAttributionFeature
-    
+
     init(trackerDataManager: TrackerDataManager, adClickAttribution: AdClickAttributionFeature) {
         self.adClickAttribution = adClickAttribution
         super.init(trackerDataManager: trackerDataManager)
     }
-    
+
     public override var contentBlockerRulesLists: [ContentBlockerRulesList] {
         var result = super.contentBlockerRulesLists
-        
+
         if adClickAttribution.isEnabled,
            let tdsRulesIndex = result.firstIndex(where: { $0.name == Constants.trackerDataSetRulesListName }) {
             let tdsRules = result[tdsRulesIndex]
@@ -42,8 +42,8 @@ public final class ContentBlockerRulesLists: DefaultContentBlockerRulesListsSour
                 result.append(splitRules.1)
             }
         }
-        
+
         return result
     }
-    
+
 }

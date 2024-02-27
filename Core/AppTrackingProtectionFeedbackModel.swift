@@ -41,19 +41,19 @@ public class AppTrackingProtectionFeedbackModel: ObservableObject {
             return []
         }
     }
-    
+
     public func sendReport(appName: String, category: String, description: String) {
         let date = Calendar.current.date(byAdding: .minute, value: -10, to: Date())!
         let trackers = trackers(moreRecentThan: date)
         let trackersString = trackers.map { $0.domain }.joined(separator: ",")
-        
+
         let parameters = [
             "appName": appName,
             "category": category,
             "description": description,
             "blockedTrackers": trackersString
         ]
-        
+
         Pixel.fire(pixel: .appTPBreakageReport, withAdditionalParameters: parameters)
     }
 

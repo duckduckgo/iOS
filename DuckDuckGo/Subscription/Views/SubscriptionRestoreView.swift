@@ -239,4 +239,12 @@ struct SubscriptionRestoreView: View {
         let expandedContent: AnyView
     }
 }
+
+// @available(iOS 15.0, *)
+// struct SubscriptionRestoreView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SubscriptionRestoreView()
+//    }
+// }
+
 #endif

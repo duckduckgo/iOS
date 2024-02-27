@@ -55,4 +55,12 @@ struct SubscriptionEmailView: View {
         .navigationTitle(viewModel.viewTitle)
     }
 }
+
+// @available(iOS 15.0, *)
+// struct SubscriptionEmailView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SubscriptionEmailView()
+//    }
+// }
+
 #endif

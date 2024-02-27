@@ -21,6 +21,7 @@
 import SwiftUI
 import Foundation
 import DesignResourcesKit
+import Core
 
 @available(iOS 15.0, *)
 struct SubscriptionFlowView: View {
@@ -62,8 +63,11 @@ struct SubscriptionFlowView: View {
         }
         .tint(Color(designSystemColor: .textPrimary))
         .environment(\.rootPresentationMode, self.$isActive)
+        .onAppear(perform: {
+            Pixel.fire(pixel: .privacyProOfferScreenImpression)
+        })
     }
-    
+
     @ViewBuilder
     private var dismissButton: some View {
         Button(action: { viewModel.finalizeSubscriptionFlow() }, label: { Text(UserText.subscriptionCloseButton) })
@@ -140,7 +144,6 @@ struct SubscriptionFlowView: View {
         .onAppear(perform: {
             setUpAppearances()
             Task { await viewModel.initializeViewData() }
-            
         })
         
         .alert(isPresented: $isAlertVisible) {
@@ -175,7 +178,6 @@ struct SubscriptionFlowView: View {
             if viewModel.transactionStatus != .idle {
                 PurchaseInProgressView(status: getTransactionStatus())
             }
-
         }
     }
         
@@ -188,4 +190,13 @@ struct SubscriptionFlowView: View {
     }
 
 }
+
+// @available(iOS 15.0, *)
+// struct SubscriptionFlowView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SubscriptionFlowView()
+//    }
+// }
+
+
 #endif

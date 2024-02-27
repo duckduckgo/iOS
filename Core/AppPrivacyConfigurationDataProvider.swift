@@ -39,7 +39,7 @@ final public class AppPrivacyConfigurationDataProvider: EmbeddedDataProvider {
         if let url = Bundle.main.url(forResource: "ios-config", withExtension: "json") {
             return url
         }
-        
+
         return Bundle(for: self).url(forResource: "ios-config", withExtension: "json")!
     }
 

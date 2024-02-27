@@ -163,4 +163,12 @@ struct SubscriptionITPView: View {
         navAppearance.tintColor = UIColor(designSystemColor: .textPrimary)
     }
 }
+
+// @available(iOS 15.0, *)
+// struct SubscriptionITPView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SubscriptionITPView()
+//    }
+// }
+
 #endif

@@ -144,4 +144,12 @@ struct SettingsSubscriptionView: View {
         }
     }
 }
+
+// @available(iOS 15.0, *)
+// struct SettingsSubscriptionView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SettingsSubscriptionView(viewModel: SettingsViewModel(legacyViewProvider: <#T##SettingsLegacyViewProvider#>, 
+//                                                              accountManager: <#T##AccountManager#>))
+//    }
+// }
 #endif

@@ -244,8 +244,8 @@ extension PrivacyDashboardViewController {
         }
         
         let blockedTrackerDomains = privacyInfo.trackerInfo.trackersBlocked.compactMap { $0.domain }
-        let configuration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
-        let protectionsState = configuration.isFeature(.contentBlocking, enabledForDomain: breakageAdditionalInfo.currentURL.host)
+        let protectionsState = privacyConfigurationManager.privacyConfig.isFeature(.contentBlocking,
+                                                                                   enabledForDomain: breakageAdditionalInfo.currentURL.host)
 
         var errors: [Error]?
         var statusCodes: [Int]?

@@ -52,7 +52,7 @@ struct DefaultAdAttributionFetcher: AdAttributionFetcher {
 
         var lastToken: String?
 
-        for _ in 0..<3 {
+        for _ in 0..<Constant.maxRetries {
             do {
                 try Task.checkCancellation()
 
@@ -116,7 +116,8 @@ struct DefaultAdAttributionFetcher: AdAttributionFetcher {
     }
 
     private struct Constant {
-        static var attributionServiceURL = URL(string: "https://api-adservices.apple.com/api/v1/")!
+        static let attributionServiceURL = URL(string: "https://api-adservices.apple.com/api/v1/")!
+        static let maxRetries = 3
     }
 }
 

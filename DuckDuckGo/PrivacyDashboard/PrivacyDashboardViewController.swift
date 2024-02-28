@@ -28,32 +28,14 @@ import Common
 /// View controller used for `Privacy Dashboard` or `Report broken site`, the web content is chosen at init time setting the correct `initMode`
 class PrivacyDashboardViewController: UIViewController {
     
-    /// Type of web page displayed
-    enum Mode {
-
-        case dashboard
-        case report
-
-        var screen: PrivacyDashboard.Screen {
-            switch self {
-            case .dashboard: return .primaryScreen
-            case .report: return .breakageForm
-            }
-        }
-
-    }
-
     @IBOutlet private(set) weak var webView: WKWebView!
     
-    private let initMode: Mode
     private let privacyDashboardController: PrivacyDashboardController
     private let privacyConfigurationManager: PrivacyConfigurationManaging
     private let contentBlockingManager: ContentBlockerRulesManager
     public var breakageAdditionalInfo: BreakageAdditionalInfo?
     
-    var source: WebsiteBreakage.Source {
-        initMode == .report ? .appMenu : .dashboard
-    }
+    var source: WebsiteBreakage.Source { privacyDashboardController.dashboardMode == .report ? .appMenu : .dashboard }
 
     private let websiteBreakageReporter: WebsiteBreakageReporter = {
         WebsiteBreakageReporter(pixelHandler: { parameters in
@@ -65,15 +47,15 @@ class PrivacyDashboardViewController: UIViewController {
     
     init?(coder: NSCoder,
           privacyInfo: PrivacyInfo?,
+          dashboardMode: PrivacyDashboardMode,
           privacyConfigurationManager: PrivacyConfigurationManaging,
           contentBlockingManager: ContentBlockerRulesManager,
-          initMode: Mode,
           breakageAdditionalInfo: BreakageAdditionalInfo?) {
         self.privacyDashboardController = PrivacyDashboardController(privacyInfo: privacyInfo,
+                                                                     dashboardMode: dashboardMode,
                                                                      privacyConfigurationManager: privacyConfigurationManager)
         self.privacyConfigurationManager = privacyConfigurationManager
         self.contentBlockingManager = contentBlockingManager
-        self.initMode = initMode
         self.breakageAdditionalInfo = breakageAdditionalInfo
         super.init(coder: coder)
         
@@ -88,7 +70,7 @@ class PrivacyDashboardViewController: UIViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        privacyDashboardController.setup(for: webView, screen: initMode.screen)
+        privacyDashboardController.setup(for: webView)
         privacyDashboardController.preferredLocale = Bundle.main.preferredLocalizations.first
         applyTheme(ThemeManager.shared.currentTheme)
     }

@@ -50,7 +50,9 @@ protocol TabDelegate: AnyObject {
     func tab(_ tab: TabViewController, didChangePrivacyInfo privacyInfo: PrivacyInfo?)
 
     func tabDidRequestReportBrokenSite(tab: TabViewController)
-    
+
+    func tab(_ tab: TabViewController, didRequestToggleReportWithOnAnyActionHandler onAnyAction: @escaping () -> Void)
+
     func tabDidRequestBookmarks(tab: TabViewController)
     
     func tabDidRequestEditBookmark(tab: TabViewController)

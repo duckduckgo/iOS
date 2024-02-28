@@ -742,9 +742,9 @@ class TabViewController: UIViewController {
     private func makePrivacyDashboardViewController(coder: NSCoder) -> PrivacyDashboardViewController? {
         PrivacyDashboardViewController(coder: coder,
                                        privacyInfo: privacyInfo,
+                                       dashboardMode: .dashboard,
                                        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                        contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
-                                       initMode: .dashboard,
                                        breakageAdditionalInfo: makeBreakageAdditionalInfo())
     }
     

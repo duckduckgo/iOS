@@ -27,10 +27,10 @@ struct SubscriptionFlowView: View {
     
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = SubscriptionFlowViewModel()
-    @State private var isAlertVisible = false
     @State private var shouldShowNavigationBar = false
     @State private var isActive: Bool = false
-    @State private var shouldDisplayRestoreError: Bool = false
+    @State private var transactionError: SubscriptionFlowViewModel.SubscriptionPurchaseError?
+    @State private var shouldPresentError: Bool = false
     
     enum Constants {
         static let daxLogo = "Home"
@@ -119,12 +119,6 @@ struct SubscriptionFlowView: View {
             }
         }
         
-        .onChange(of: viewModel.shouldShowAlert) { result in
-            if result {
-                isAlertVisible = true
-            }
-        }
-        
         .onChange(of: viewModel.shouldDismissView) { result in
             if result {
                 dismiss()
@@ -137,8 +131,11 @@ struct SubscriptionFlowView: View {
                 viewModel.userTappedRestoreButton = false
         }
         
-        .onChange(of: viewModel.transactionError) { _ in
-                shouldDisplayRestoreError = true
+        .onChange(of: viewModel.transactionError) { value in
+            if value != nil {
+                shouldPresentError = true
+            }
+            transactionError = value
         }
         
         .onAppear(perform: {
@@ -158,8 +155,10 @@ struct SubscriptionFlowView: View {
                 }
             }
         })
-        
-        .alert(isPresented: $isAlertVisible) { getAlert() }
+                
+        .alert(isPresented: $shouldPresentError) {
+            getAlert()
+        }
         
         // The trailing close button should be hidden when a transaction is in progress
         .navigationBarItems(trailing: viewModel.transactionStatus == .idle
@@ -169,13 +168,14 @@ struct SubscriptionFlowView: View {
     
     private func getAlert() -> Alert {
         
-        switch viewModel.transactionError {
+        switch transactionError {
         
         case .hasActiveSubscription:
             Alert(
                 title: Text(UserText.subscriptionFoundTitle),
                 message: Text(UserText.subscriptionFoundText),
                 primaryButton: .cancel(Text(UserText.subscriptionFoundCancel)) {
+                    viewModel.transactionError = nil
                 },
                 secondaryButton: .default(Text(UserText.subscriptionFoundRestore)) {
                     viewModel.restoreAppstoreTransaction()

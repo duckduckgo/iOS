@@ -71,7 +71,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     @Published var selectedFeature: SettingsViewModel.SettingsSection?
     @Published var canNavigateBack: Bool = false
     @Published var transactionError: SubscriptionPurchaseError?
-    @Published var shouldShowAlert: Bool = false
 
     private static let allowedDomains = [
         "duckduckgo.com",
@@ -171,7 +170,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
         default:
             transactionError = .generalError
         }
-        shouldShowAlert = true
     }
     
     private func setupWebViewObservers() async {
@@ -228,6 +226,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
 
     func restoreAppstoreTransaction() {
+        transactionError = nil
         Task {
             do {
                 try await subFeature.restoreAccountFromAppStorePurchase()

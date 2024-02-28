@@ -506,7 +506,7 @@
 "autofill.logins.delete.all.authentication.prompt.button" = "Authenticate Now";
 
 /* Title of prompt requiring authentication before all passwords are deleted */
-"autofill.logins.delete.all.authentication.prompt.title" = "Authenticate to Delete All Passwords";
+"autofill.logins.delete.all.authentication.prompt.title" = "Authenticate To Delete All Passwords";
 
 /* Reason for authentication when deleting all logins */
 "autofill.logins.delete.all.authentication.reason" = "Authenticate to confirm you want to delete all passwords";

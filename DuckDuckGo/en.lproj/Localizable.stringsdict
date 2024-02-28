@@ -229,15 +229,26 @@ I blocked them!
     <key>autofill.delete.all.passwords.confirmation.body</key>
     <dict>
         <key>NSStringLocalizedFormatKey</key>
-        <string>%#@passwords@</string>
+        <string>%1$#@passwords@</string>
         <key>passwords</key>
         <dict>
             <key>NSStringFormatSpecTypeKey</key>
             <string>NSStringPluralRuleType</string>
             <key>other</key>
-            <string>Your passwords will be deleted from this device.</string>
+            <string>Your passwords will be deleted from this device. Make sure you still have a way to access your %2$#@accounts@.</string>
             <key>one</key>
-            <string>Your password will be deleted from this device.</string>
+            <string>Your password will be deleted from this device. Make sure you still have a way to access your %2$#@accounts@.</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+        </dict>
+        <key>accounts</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>other</key>
+            <string>accounts</string>
+            <key>one</key>
+            <string>account</string>
             <key>NSStringFormatValueTypeKey</key>
             <string>d</string>
         </dict>

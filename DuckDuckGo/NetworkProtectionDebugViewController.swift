@@ -386,9 +386,9 @@ final class NetworkProtectionDebugViewController: UITableViewController {
                 await NetworkProtectionDebugUtilities().disableConnectOnDemandAndShutDown()
             }
         case .showEntitlementMessaging:
-            VPNSettings(defaults: .networkProtectionGroupDefaults).enableEntitlementMessaging()
+            UserDefaults.networkProtectionGroupDefaults.enableEntitlementMessaging()
         case .resetEntitlementMessaging:
-            VPNSettings(defaults: .networkProtectionGroupDefaults).resetEntitlementMessaging()
+            UserDefaults.networkProtectionGroupDefaults.resetEntitlementMessaging()
         case .none:
             break
         }

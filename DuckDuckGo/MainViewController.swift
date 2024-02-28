@@ -108,7 +108,7 @@ class MainViewController: UIViewController {
     private var emailCancellables = Set<AnyCancellable>()
     
 #if NETWORK_PROTECTION
-    private let tunnelSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+    private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
     private var vpnCancellables = Set<AnyCancellable>()
 #endif
 
@@ -1346,27 +1346,27 @@ class MainViewController: UIViewController {
 
     private func onNetworkProtectionEntitlementMessagingChange() {
         print("🔵 onNetworkProtectionEntitlementMessagingChange")
-        if tunnelSettings.showEntitlementAlert {
-            presentEntitlementAlert()
+        if tunnelDefaults.showEntitlementAlert {
+            presentExpiredEntitlementAlert()
         }
 
-        if tunnelSettings.showEntitlementNotification {
-            presentEntitlementNotification()
+        if tunnelDefaults.showEntitlementNotification {
+            presentExpiredEntitlementNotification()
         }
     }
 
-    private func presentEntitlementAlert() {
+    private func presentExpiredEntitlementAlert() {
         let alertController = CriticalAlerts.makeExpiredEntitlementAlert()
         dismiss(animated: true) {
             self.present(alertController, animated: true, completion: nil)
-            self.tunnelSettings.apply(change: .setShowEntitlementAlert(false))
+            self.tunnelDefaults.showEntitlementAlert = false
         }
     }
 
-    private func presentEntitlementNotification() {
+    private func presentExpiredEntitlementNotification() {
         NetworkProtectionUNNotificationPresenter().showEntitlementNotification { [weak self] error in
             guard error == nil else { return }
-            self?.tunnelSettings.apply(change: .setShowEntitlementNotification(false))
+            self?.tunnelDefaults.showEntitlementNotification = false
         }
     }
 
@@ -1377,7 +1377,7 @@ class MainViewController: UIViewController {
             return
         }
 
-        VPNSettings(defaults: .networkProtectionGroupDefaults).resetEntitlementMessaging()
+        tunnelDefaults.resetEntitlementMessaging()
         print("[NetP Subscription] Reset expired entitlement messaging")
 
         Task {

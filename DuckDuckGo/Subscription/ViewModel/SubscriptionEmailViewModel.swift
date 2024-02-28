@@ -37,6 +37,8 @@ final class SubscriptionEmailViewModel: ObservableObject {
     @Published var shouldReloadWebView = false
     @Published var activateSubscription = false
     @Published var managingSubscriptionEmail = false
+    @Published var transactionError: SubscriptionRestoreError?
+    @Published var shouldDisplayInactiveError: Bool = false
     var webViewModel: AsyncHeadlessWebViewViewModel
     
     private static let allowedDomains = [

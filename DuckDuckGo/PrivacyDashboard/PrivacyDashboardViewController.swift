@@ -35,13 +35,14 @@ class PrivacyDashboardViewController: UIViewController {
     private let contentBlockingManager: ContentBlockerRulesManager
     public var breakageAdditionalInfo: BreakageAdditionalInfo?
     
-    var source: WebsiteBreakage.Source { privacyDashboardController.dashboardMode == .report ? .appMenu : .dashboard }
+    // TODO!
+    var source: BrokenSiteReport.Source { privacyDashboardController.dashboardMode == .report ? .appMenu : .dashboard }
 
-    private let websiteBreakageReporter: WebsiteBreakageReporter = {
-        WebsiteBreakageReporter(pixelHandler: { parameters in
+    private let brokenSiteReporter: BrokenSiteReporter = {
+        BrokenSiteReporter(pixelHandler: { parameters in
             Pixel.fire(pixel: .brokenSiteReport,
                        withAdditionalParameters: parameters,
-                       allowedQueryReservedCharacters: WebsiteBreakage.allowedQueryReservedCharacters)
+                       allowedQueryReservedCharacters: BrokenSiteReport.allowedQueryReservedCharacters)
         }, keyValueStoring: UserDefaults.standard)
     }()
     
@@ -190,10 +191,10 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
                                     didRequestSubmitBrokenSiteReportWithCategory category: String, description: String) {
                 
         do {
-            let breakageReport = try makeWebsiteBreakage(category: category, description: description)
-            try websiteBreakageReporter.report(breakage: breakageReport)
+            let report = try makeBrokenSiteReport(category: category, description: description)
+            try brokenSiteReporter.report(report)
         } catch {
-            os_log("Failed to generate or send the website breakage report: %@", type: .error, error.localizedDescription)
+            os_log("Failed to generate or send the broken site report: %@", type: .error, error.localizedDescription)
         }
         
         ActionMessageView.present(message: UserText.feedbackSumbittedConfirmation)
@@ -215,15 +216,15 @@ extension PrivacyDashboardViewController {
         let httpStatusCode: Int?
     }
     
-    enum WebsiteBreakageError: Error {
+    enum BrokenSiteReportError: Error {
         case failedToFetchTheCurrentWebsiteInfo
     }
 
-    private func makeWebsiteBreakage(category: String, description: String) throws -> WebsiteBreakage {
+    private func makeBrokenSiteReport(category: String, description: String) throws -> BrokenSiteReport {
         
         guard let privacyInfo = privacyDashboardController.privacyInfo,
               let breakageAdditionalInfo = breakageAdditionalInfo  else {
-            throw WebsiteBreakageError.failedToFetchTheCurrentWebsiteInfo
+            throw BrokenSiteReportError.failedToFetchTheCurrentWebsiteInfo
         }
         
         let blockedTrackerDomains = privacyInfo.trackerInfo.trackersBlocked.compactMap { $0.domain }
@@ -239,7 +240,7 @@ extension PrivacyDashboardViewController {
             statusCodes = [httpStatusCode]
         }
 
-        return WebsiteBreakage(siteUrl: breakageAdditionalInfo.currentURL,
+        return BrokenSiteReport(siteUrl: breakageAdditionalInfo.currentURL,
                                category: category,
                                description: description,
                                osVersion: "\(ProcessInfo().operatingSystemVersion.majorVersion)",

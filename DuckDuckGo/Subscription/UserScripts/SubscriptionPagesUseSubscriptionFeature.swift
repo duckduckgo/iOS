@@ -79,6 +79,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
              subscriptionNotFound,
              subscriptionExpired,
              hasActiveSubscription,
+             cancelledByUser,
              generalError
     }
         
@@ -195,8 +196,15 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             case .success:
                 break
             case .failure(let error):
-                transactionError = .purchaseFailed
+                
+                switch error {
+                case .cancelledByUser:
+                    transactionError = .cancelledByUser
+                default:
+                    transactionError = .purchaseFailed
+                }
                 originalMessage = original
+                transactionStatus = .idle
                 return nil
             }
             

@@ -58,6 +58,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
              failedToRestorePastPurchase,
              subscriptionExpired,
              hasActiveSubscription,
+             cancelledByUser,
              generalError
     }
 
@@ -167,6 +168,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
             transactionError = .subscriptionExpired
         case .hasActiveSubscription:
             transactionError = .hasActiveSubscription
+        case .cancelledByUser:
+            transactionError = nil
         default:
             transactionError = .generalError
         }

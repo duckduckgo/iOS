@@ -24,6 +24,11 @@ protocol AdAttributionFetcher {
     func fetch() async -> AdServicesAttributionResponse?
 }
 
+/// Fetches ad attribution data for from Apple.
+///
+/// DuckDuckGo uses the AdServices framework to fetch and monitor anonymous install attribution data from Apple. No personally identifiable data is involved.
+/// DuckDuckGo does not use the App Tracking Transparency framework at any point, and only uses the “standard” attribution payload.
+/// See https://developer.apple.com/documentation/adservices/aaattribution/attributiontoken()#Attribution-payload-descriptions for details.
 struct DefaultAdAttributionFetcher: AdAttributionFetcher {
 
     typealias TokenGetter = () throws -> String

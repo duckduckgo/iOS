@@ -167,8 +167,9 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     func subscriptionSelected(params: Any, original: WKScriptMessage) async throws -> Encodable? {
         
+        
         await withTransactionInProgress {
-            
+            transactionError = nil
             transactionStatus = .purchasing
             resetSubscriptionFlow()
             
@@ -193,7 +194,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             switch await AppStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id, emailAccessToken: emailAccessToken) {
             case .success:
                 break
-            case .failure:
+            case .failure(let error):
                 transactionError = .purchaseFailed
                 originalMessage = original
                 return nil

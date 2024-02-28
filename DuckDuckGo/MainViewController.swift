@@ -108,7 +108,8 @@ class MainViewController: UIViewController {
     private var emailCancellables = Set<AnyCancellable>()
     
 #if NETWORK_PROTECTION
-    private var netpCancellables = Set<AnyCancellable>()
+    private let tunnelSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+    private var vpnCancellables = Set<AnyCancellable>()
 #endif
 
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
@@ -1333,9 +1334,42 @@ class MainViewController: UIViewController {
             .sink { [weak self] notification in
                 self?.onNetworkProtectionAccountSignIn(notification)
             }
-            .store(in: &netpCancellables)
+            .store(in: &vpnCancellables)
+
+        NotificationCenter.default.publisher(for: .vpnEntitlementMessagingDidChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.onNetworkProtectionEntitlementMessagingChange()
+            }
+            .store(in: &vpnCancellables)
     }
-    
+
+    private func onNetworkProtectionEntitlementMessagingChange() {
+        print("🔵 onNetworkProtectionEntitlementMessagingChange")
+        if tunnelSettings.showEntitlementAlert {
+            presentEntitlementAlert()
+        }
+
+        if tunnelSettings.showEntitlementNotification {
+            presentEntitlementNotification()
+        }
+    }
+
+    private func presentEntitlementAlert() {
+        let alertController = CriticalAlerts.makeExpiredEntitlementAlert()
+        dismiss(animated: true) {
+            self.present(alertController, animated: true, completion: nil)
+            self.tunnelSettings.apply(change: .setShowEntitlementAlert(false))
+        }
+    }
+
+    private func presentEntitlementNotification() {
+        NetworkProtectionUNNotificationPresenter().showEntitlementNotification { [weak self] error in
+            guard error == nil else { return }
+            self?.tunnelSettings.apply(change: .setShowEntitlementNotification(false))
+        }
+    }
+
     @objc
     private func onNetworkProtectionAccountSignIn(_ notification: Notification) {
         guard let token = AccountManager().accessToken else {

@@ -87,6 +87,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     enum ExtensionDebugCommandRows: Int, CaseIterable {
         case triggerTestNotification
         case shutDown
+        case showEntitlementMessaging
+        case resetEntitlementMessaging
     }
 
     enum NetworkPathRows: Int, CaseIterable {
@@ -364,6 +366,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             cell.textLabel?.text = "Test Notification"
         case .shutDown:
             cell.textLabel?.text = "Disable VPN From Extension"
+        case .showEntitlementMessaging:
+            cell.textLabel?.text = "Show Entitlement Messaging"
+        case .resetEntitlementMessaging:
+            cell.textLabel?.text = "Reset Entitlement Messaging"
         case .none:
             break
         }
@@ -379,6 +385,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             Task {
                 await NetworkProtectionDebugUtilities().disableConnectOnDemandAndShutDown()
             }
+        case .showEntitlementMessaging:
+            VPNSettings(defaults: .networkProtectionGroupDefaults).enableEntitlementMessaging()
+        case .resetEntitlementMessaging:
+            VPNSettings(defaults: .networkProtectionGroupDefaults).resetEntitlementMessaging()
         case .none:
             break
         }

@@ -74,6 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if NETWORK_PROTECTION
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
+    private let tunnelSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
 #endif
 
     private var autoClear: AutoClear?
@@ -301,12 +302,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         VPNWaitlist.shared.registerBackgroundRefreshTaskHandler()
 #endif
 
-#if NETWORK_PROTECTION && SUBSCRIPTION
-        if VPNSettings(defaults: .networkProtectionGroupDefaults).showEntitlementAlert {
-            presentExpiredEntitlementAlert()
-        }
-#endif
-
         RemoteMessaging.registerBackgroundRefreshTaskHandler(
             bookmarksDatabase: bookmarksDatabase,
             favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
@@ -352,12 +347,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController?.present(alertController, animated: true, completion: nil)
     }
 
+#if NETWORK_PROTECTION
     private func presentExpiredEntitlementAlert() {
         let alertController = CriticalAlerts.makeExpiredEntitlementAlert()
-        window?.rootViewController?.present(alertController, animated: true) {
-            VPNSettings(defaults: .networkProtectionGroupDefaults).apply(change: .setShowEntitlementAlert(false))
+        window?.rootViewController?.present(alertController, animated: true) { [weak self] in
+            self?.tunnelSettings.apply(change: .setShowEntitlementAlert(false))
         }
     }
+
+    private func presentExpiredEntitlementNotification() {
+        NetworkProtectionUNNotificationPresenter().showEntitlementNotification { [weak self] error in
+            guard error == nil else { return }
+            self?.tunnelSettings.apply(change: .setShowEntitlementNotification(false))
+        }
+    }
+#endif
 
     private func cleanUpMacPromoExperiment2() {
         UserDefaults.standard.removeObject(forKey: "com.duckduckgo.ios.macPromoMay23.exp2.cohort")
@@ -433,6 +437,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if NETWORK_PROTECTION
         widgetRefreshModel.refreshVPNWidget()
+
+        if tunnelSettings.showEntitlementAlert {
+            presentExpiredEntitlementAlert()
+        }
+
+        if tunnelSettings.showEntitlementNotification {
+            presentExpiredEntitlementNotification()
+        }
 #endif
     }
 

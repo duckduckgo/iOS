@@ -1998,6 +1998,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Title for Confirm messages */
 "subscription.confirm.title" = "Are you sure?";
 
+/* Alert content for not found subscription */
+"subscription.email.inactive.alert.message" = "The subscription associated with this email is no longer active.";
+
+/* Alert title for not found subscription */
+"subscription.email.inactive.alert.title" = "Subscription Not Found";
+
 /* text for expiration string */
 "subscription.expires" = "expires";
 

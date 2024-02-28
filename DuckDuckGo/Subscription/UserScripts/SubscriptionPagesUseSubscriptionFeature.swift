@@ -74,6 +74,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
              failedToGetSubscriptionOptions,
              failedToSetSubscription,
              failedToRestoreFromEmail,
+             failedToRestoreFromEmailSubscriptionInactive,
              failedToRestorePastPurchase,
              subscriptionExpired,
              hasActiveSubscription,
@@ -234,11 +235,29 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         let accountManager = AccountManager()
         if let accessToken = accountManager.accessToken,
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
-            accountManager.storeAccount(token: accessToken, email: accountDetails.email, externalID: accountDetails.externalID)
-            emailActivationComplete = true
+            switch await SubscriptionService.getSubscriptionDetails(token: accessToken) {
+            
+            // If the account is not active, display an error and logout
+            case .success(let response) where !response.isSubscriptionActive:
+                transactionError = .failedToRestoreFromEmailSubscriptionInactive
+                accountManager.signOut()
+                return nil
+            
+            case .success:
+
+                // Store the account data and mark as active
+                accountManager.storeAccount(token: accessToken,
+                                            email: accountDetails.email,
+                                            externalID: accountDetails.externalID)
+                emailActivationComplete = true
+                
+            case .failure(let error):
+                os_log(.info, log: .subscription, "Failed to restore subscription from Email")
+                transactionError = .failedToRestoreFromEmail
+            }
         } else {
-            os_log(.info, log: .subscription, "Failed to restore subscription from Email")
-            transactionError = .failedToRestoreFromEmail
+            os_log(.info, log: .subscription, "General error. Could not get account Details")
+            transactionError = .generalError
         }
         return nil
     }

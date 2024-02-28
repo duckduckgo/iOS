@@ -55,7 +55,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
              missingEntitlements,
              failedToGetSubscriptionOptions,
              failedToSetSubscription,
-             failedToRestoreFromEmail,
              failedToRestorePastPurchase,
              subscriptionExpired,
              hasActiveSubscription,
@@ -154,6 +153,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     private func handleTransactionError(error: SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError) {
         switch error {
+        
         case .purchaseFailed:
             transactionError = .purchaseFailed
         case .missingEntitlements:
@@ -162,16 +162,14 @@ final class SubscriptionFlowViewModel: ObservableObject {
             transactionError = .failedToGetSubscriptionOptions
         case .failedToSetSubscription:
             transactionError = .failedToSetSubscription
-        case .failedToRestoreFromEmail:
-            transactionError = .failedToRestoreFromEmail
         case .failedToRestorePastPurchase:
             transactionError = .failedToRestorePastPurchase
         case .subscriptionExpired:
             transactionError = .subscriptionExpired
-        case .generalError:
-            transactionError = .generalError
         case .hasActiveSubscription:
             transactionError = .hasActiveSubscription
+        default:
+            transactionError = .generalError
         }
         shouldShowAlert = true
     }

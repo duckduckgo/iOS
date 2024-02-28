@@ -1081,6 +1081,11 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionRestoreSuccessfulMessage = NSLocalizedString("subscription.restore.success.alert.message", value: "Your purchases have been restored.", comment: "Alert message for restored purchase")
     public static let subscriptionRestoreSuccessfulButton = NSLocalizedString("subscription.restore.success.alert.button", value: "OK", comment: "Alert button text for restored purchase alert")
     
+    public static let subscriptionRestoreEmailInactiveTitle = NSLocalizedString("subscription.email.inactive.alert.title", value: "Subscription Not Found", comment: "Alert title for not found subscription")
+    public static let subscriptionRestoreEmailInactiveMessage = NSLocalizedString("subscription.email.inactive.alert.message", value: "The subscription associated with this email is no longer active.", comment: "Alert content for not found subscription")
+    
+    
+    
     public static let subscriptionAppStoreErrorTitle = NSLocalizedString("subscription.restore.general.error.title", value: "Something Went Wrong", comment: "Alert for general error title")
     public static let subscriptionAppStoreErrorMessage = NSLocalizedString("subscription.restore.general.error.message", value: "The App Store was unable to process your purchase. Please try again later.", comment: "Alert for general error message")
     

@@ -349,7 +349,6 @@ extension SettingsViewModel {
             self.state.subscription.hasActiveSubscription = true
             Self.cachedHasActiveSubscription = self.state.subscription.hasActiveSubscription
             
-            
             // Check entitlements and update UI accordingly
             let entitlements: [AccountManager.Entitlement] = [.identityTheftRestoration, .dataBrokerProtection, .networkProtection]
             for entitlement in entitlements {

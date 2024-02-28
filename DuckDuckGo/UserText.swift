@@ -657,9 +657,6 @@ In addition to the details entered into this form, your app issue report will co
     static let vpnFeedbackFormButtonSubmitting = NSLocalizedString("vpn.feedback-form.button.submitting", value: "Submitting…", comment: "Title for the Submitting state of the VPN feedback form")
 
     static let vpnFeedbackFormSubmittedMessage = NSLocalizedString("vpn.feedback-form.submitted.message", value: "Thank You! Feedback submitted.", comment: "Toast message when the VPN feedback form is submitted successfully")
-    static let vpnFeedbackFormErrorTitle = NSLocalizedString("vpn.feedback-form.error.title", value: "Error", comment: "Title for the alert when the VPN feedback form can't be submitted")
-    static let vpnFeedbackFormErrorMessage = NSLocalizedString("vpn.feedback-form.error.message", value: "Failed to share your feedback. Please try again.", comment: "Message for the alert when the VPN feedback form can't be submitted")
-    static let vpnFeedbackFormErrorAction = NSLocalizedString("vpn.feedback-form.error.action", value: "OK", comment: "Action title for the alert when the VPN feedback form can't be submitted")
 
     // MARK: Notifications
     

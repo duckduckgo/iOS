@@ -228,6 +228,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,
+                   defaults: .networkProtectionGroupDefaults,
                    isSubscriptionEnabled: isSubscriptionEnabled,
                    entitlementCheck: Self.entitlementCheck)
         startMonitoringMemoryPressureEvents()

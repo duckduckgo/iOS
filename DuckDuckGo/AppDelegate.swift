@@ -74,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if NETWORK_PROTECTION
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
-    private let tunnelSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+    private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
 #endif
 
     private var autoClear: AutoClear?
@@ -353,14 +353,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func presentExpiredEntitlementAlert() {
         let alertController = CriticalAlerts.makeExpiredEntitlementAlert()
         window?.rootViewController?.present(alertController, animated: true) { [weak self] in
-            self?.tunnelSettings.apply(change: .setShowEntitlementAlert(false))
+            self?.tunnelDefaults.showEntitlementAlert = false
         }
     }
 
     private func presentExpiredEntitlementNotification() {
         NetworkProtectionUNNotificationPresenter().showEntitlementNotification { [weak self] error in
             guard error == nil else { return }
-            self?.tunnelSettings.apply(change: .setShowEntitlementNotification(false))
+            self?.tunnelDefaults.showEntitlementNotification = false
         }
     }
 #endif
@@ -446,11 +446,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if NETWORK_PROTECTION
         widgetRefreshModel.refreshVPNWidget()
 
-        if tunnelSettings.showEntitlementAlert {
+        if tunnelDefaults.showEntitlementAlert {
             presentExpiredEntitlementAlert()
         }
 
-        if tunnelSettings.showEntitlementNotification {
+        if tunnelDefaults.showEntitlementNotification {
             presentExpiredEntitlementNotification()
         }
 #endif

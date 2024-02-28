@@ -228,13 +228,18 @@ final class SubscriptionFlowViewModel: ObservableObject {
         cancellables.removeAll()
     }
 
+    @MainActor
     func restoreAppstoreTransaction() {
         transactionError = nil
         Task {
             do {
                 try await subFeature.restoreAccountFromAppStorePurchase()
-                await disableGoBack()
+                disableGoBack()
                 await webViewModel.navigationCoordinator.reload()
+            } catch let error {
+                if let specificError = error as? SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError {
+                    handleTransactionError(error: specificError)
+                }
             }
         }
     }

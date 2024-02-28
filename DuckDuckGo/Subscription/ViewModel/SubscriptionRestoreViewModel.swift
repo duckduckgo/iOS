@@ -75,17 +75,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        subFeature.$transactionError
-            .receive(on: DispatchQueue.main)
-            .removeDuplicates()
-            .sink { [weak self] value in
-                guard let strongSelf = self, let error = value else { return }
-                
-                Task { @MainActor in
-                    strongSelf.handleRestoreError(error: error)
-                }
-            }
-            .store(in: &cancellables)
     }
     
     @MainActor
@@ -114,6 +103,10 @@ final class SubscriptionRestoreViewModel: ObservableObject {
             do {
                 try await subFeature.restoreAccountFromAppStorePurchase()
                 activationResult = .activated
+            } catch let error {
+                if let specificError = error as? SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError {
+                    handleRestoreError(error: specificError)
+                }
             }
         }
     }

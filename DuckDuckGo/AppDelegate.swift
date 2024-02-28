@@ -94,6 +94,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
+        // SKAD4 support
+        updateSKAd(conversionValue: 1)
+
 #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
             // Disable hardware keyboards.

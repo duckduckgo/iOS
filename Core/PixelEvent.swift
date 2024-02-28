@@ -899,7 +899,7 @@ extension Pixel.Event {
             
         case .blankOverlayNotDismissed: return "m_d_ovs"
             
-        case .cookieDeletionTimedOut: return "m_d_csto"
+        case .cookieDeletionTimedOut: return "m_debug_cookie-clearing-timeout"
         case .cookieDeletionLeftovers: return "m_cookie_deletion_leftovers"
             
         case .cachedTabPreviewsExceedsTabCount: return "m_d_tpetc"

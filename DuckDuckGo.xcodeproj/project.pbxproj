@@ -9920,16 +9920,16 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = revision;
-				revision = 947d1d498a4accf60e6131cf8b028acd935dfc4b;
+				kind = exactVersion;
+				version = 112.0.0;
 			};
 		};
 		B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckduckgo/apple-toolbox.git";
 			requirement = {
-				kind = revision;
-				revision = 449a81d5f31af91033c0a7c47f8ca2b0c9362aea;
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

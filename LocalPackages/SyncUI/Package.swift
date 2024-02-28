@@ -33,8 +33,8 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../DuckUI"),
-        .package(url: "https://github.com/duckduckgo/BrowserServicesKit", exact: "111.0.2"),
-        .package(url: "https://github.com/duckduckgo/DesignResourcesKit", exact: "2.0.0")
+        .package(url: "https://github.com/duckduckgo/DesignResourcesKit", exact: "2.0.0"),
+        .package(url: "https://github.com/duckduckgo/apple-toolbox.git", revision: "449a81d5f31af91033c0a7c47f8ca2b0c9362aea"),
     ],
     targets: [
         .target(
@@ -46,7 +46,7 @@ let package = Package(
             swiftSettings: [
                 .define("DEBUG", .when(configuration: .debug))
             ],
-            plugins: [.plugin(name: "SwiftLintPlugin", package: "BrowserServicesKit")]
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "apple-toolbox")]
         )
     ]
 )

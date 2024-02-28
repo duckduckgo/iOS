@@ -2004,6 +2004,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Alert title for not found subscription */
 "subscription.email.inactive.alert.title" = "Subscription Not Found";
 
+/* Alert content for not found subscription */
+"subscription.expired.alert.message" = "The subscription associated with this Apple ID is no longer active.";
+
 /* text for expiration string */
 "subscription.expires" = "expires";
 
@@ -2044,7 +2047,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.monthly" = "Monthly Subscription";
 
 /* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "The subscription associated with this Apple ID is no longer active.";
+"subscription.notFound.alert.message" = "There is no subscription associated with this Apple ID.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Subscription Not Found";

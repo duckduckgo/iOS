@@ -35,7 +35,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     enum SubscriptionActivationResult {
-        case unknown, activated, notFound, error
+        case unknown, activated, expired, notFound, error
     }
     
     @Published var transactionStatus: SubscriptionTransactionStatus = .idle
@@ -92,8 +92,10 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     private func handleRestoreError(error: SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError) {
         switch error {
         case .failedToRestorePastPurchase:
-            activationResult = .error
+            activationResult = .notFound
         case .subscriptionExpired:
+            activationResult = .expired
+        case .subscriptionNotFound:
             activationResult = .notFound
         default:
             activationResult = .error

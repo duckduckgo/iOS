@@ -1075,7 +1075,8 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionFoundCancel = NSLocalizedString("subscription.found.cancel", value: "Cancel", comment: "Cancel action for the existing subscription dialog")
     public static let subscriptionFoundRestore = NSLocalizedString("subscription.found.restore", value: "Restore", comment: "Restore action for the existing subscription dialog")
     public static let subscriptionRestoreNotFoundTitle = NSLocalizedString("subscription.notFound.alert.title", value: "Subscription Not Found", comment: "Alert title for not found subscription")
-    public static let subscriptionRestoreNotFoundMessage = NSLocalizedString("subscription.notFound.alert.message", value: "The subscription associated with this Apple ID is no longer active.", comment: "Alert content for not found subscription")
+    public static let subscriptionRestoreNotFoundMessage = NSLocalizedString("subscription.notFound.alert.message", value: "There is no subscription associated with this Apple ID.", comment: "Alert content for not found subscription")
+    public static let subscriptionRestoreExpiredFoundMessage = NSLocalizedString("subscription.expired.alert.message", value: "The subscription associated with this Apple ID is no longer active.", comment: "Alert content for not found subscription")
     public static let subscriptionRestoreNotFoundPlans = NSLocalizedString("subscription.notFound.view.plans", value: "View Plans", comment: "View plans button text")
     public static let subscriptionRestoreSuccessfulTitle = NSLocalizedString("subscription.restore.success.alert.title", value: "You’re all set.", comment: "Alert title for restored purchase")
     public static let subscriptionRestoreSuccessfulMessage = NSLocalizedString("subscription.restore.success.alert.message", value: "Your purchases have been restored.", comment: "Alert message for restored purchase")
@@ -1083,8 +1084,6 @@ But if you *do* want a peek under the hood, you can find more information about 
     
     public static let subscriptionRestoreEmailInactiveTitle = NSLocalizedString("subscription.email.inactive.alert.title", value: "Subscription Not Found", comment: "Alert title for not found subscription")
     public static let subscriptionRestoreEmailInactiveMessage = NSLocalizedString("subscription.email.inactive.alert.message", value: "The subscription associated with this email is no longer active.", comment: "Alert content for not found subscription")
-    
-    
     
     public static let subscriptionAppStoreErrorTitle = NSLocalizedString("subscription.restore.general.error.title", value: "Something Went Wrong", comment: "Alert for general error title")
     public static let subscriptionAppStoreErrorMessage = NSLocalizedString("subscription.restore.general.error.message", value: "The App Store was unable to process your purchase. Please try again later.", comment: "Alert for general error message")

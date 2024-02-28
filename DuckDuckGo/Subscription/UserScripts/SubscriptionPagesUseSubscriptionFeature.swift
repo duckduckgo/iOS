@@ -76,6 +76,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
              failedToRestoreFromEmail,
              failedToRestoreFromEmailSubscriptionInactive,
              failedToRestorePastPurchase,
+             subscriptionNotFound,
              subscriptionExpired,
              hasActiveSubscription,
              generalError
@@ -314,6 +315,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         switch error {
         case .subscriptionExpired:
             return .subscriptionExpired
+        case .missingAccountOrTransactions:
+            return .subscriptionNotFound
         default:
             return .failedToRestorePastPurchase
         }

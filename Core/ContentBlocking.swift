@@ -51,6 +51,7 @@ public final class ContentBlocking {
                                            embeddedDataProvider: AppPrivacyConfigurationDataProvider(),
                                            localProtection: DomainsProtectionUserDefaultsStore(),
                                            errorReporting: Self.debugEvents,
+                                           toggleProtectionsCounterEventReporting: toggleProtectionsEvents,
                                            internalUserDecider: internalUserDecider,
                                            installDate: statisticsStore.installDate)
         self.privacyConfigurationManager = privacyConfigurationManager
@@ -120,8 +121,6 @@ public final class ContentBlocking {
             
         case .contentBlockingCompilationTime:
             domainEvent = .contentBlockingCompilationTime
-        case .toggleProtectionsDailyCount:
-            domainEvent = .toggleProtectionsDailyCount
         }
         
         if let error = error {
@@ -198,7 +197,17 @@ public final class ContentBlocking {
         
         Pixel.fire(pixel: domainEvent, includedParameters: [])
     }
-            
+
+    private let toggleProtectionsEvents = EventMapping<ToggleProtectionsCounterEvent> { event, _, parameters, _ in
+        let domainEvent: Pixel.Event
+        switch event {
+        case .toggleProtectionsCounterDaily:
+            domainEvent = .toggleProtectionsDailyCount
+        }
+
+        Pixel.fire(pixel: domainEvent, withAdditionalParameters: parameters ?? [:])
+    }
+
 }
 
 public class DomainsProtectionUserDefaultsStore: DomainsProtectionStore {

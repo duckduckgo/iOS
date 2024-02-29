@@ -217,6 +217,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
         let notificationsPresenterDecorator = NetworkProtectionNotificationsPresenterTogglableDecorator(
             settings: settings,
+            defaults: .networkProtectionGroupDefaults,
             wrappee: notificationsPresenter
         )
         notificationsPresenter.requestAuthorization()

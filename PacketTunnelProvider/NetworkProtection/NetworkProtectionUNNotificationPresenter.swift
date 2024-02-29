@@ -105,7 +105,7 @@ final class NetworkProtectionUNNotificationPresenter: NSObject, NetworkProtectio
     func showSupersededNotification() {
     }
 
-    func showEntitlementNotification(completion: @escaping (Error?) -> Void) {
+    func showEntitlementNotification() {
         let identifier = NetworkProtectionNotificationIdentifier.entitlement.rawValue
         let content = notificationContent(body: UserText.networkProtectionEntitlementExpiredNotificationBody)
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: .none)
@@ -113,9 +113,7 @@ final class NetworkProtectionUNNotificationPresenter: NSObject, NetworkProtectio
         requestAlertAuthorization { authorized in
             guard authorized else { return }
             self.userNotificationCenter.removeDeliveredNotifications(withIdentifiers: [identifier])
-            self.userNotificationCenter.add(request) { error in
-                completion(error)
-            }
+            self.userNotificationCenter.add(request)
         }
     }
 

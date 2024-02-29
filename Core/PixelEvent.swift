@@ -526,6 +526,14 @@ extension Pixel {
         case compilationFailed
 
         case appRatingPromptFetchError
+
+        case userBehaviorReloadTwice
+        case userBehaviorReloadAndRestart
+        case userBehaviorReloadAndFireButton
+        case userBehaviorReloadAndOpenSettings
+        case userBehaviorReloadAndTogglePrivacyControls
+        case userBehaviorFireButtonAndRestart
+        case userBehaviorFireButtonAndTogglePrivacyControls
     }
     
 }
@@ -1024,6 +1032,15 @@ extension Pixel.Event {
         case .debugReturnUserUpdateATB: return "m_debug_return_user_update_atb"
             
         case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
+
+        // MARK: - User behavior
+        case .userBehaviorReloadTwice: return "m_reload-twice"
+        case .userBehaviorReloadAndRestart: return "m_reload-and-restart"
+        case .userBehaviorReloadAndFireButton: return "m_reload-and-fire-button"
+        case .userBehaviorReloadAndOpenSettings: return "m_reload-and-open-settings"
+        case .userBehaviorReloadAndTogglePrivacyControls: return "m_reload-and-toggle-privacy-controls"
+        case .userBehaviorFireButtonAndRestart: return "m_fire-button-and-restart"
+        case .userBehaviorFireButtonAndTogglePrivacyControls: return "m_fire-button-and-toggle-privacy-controls"
         }
         
     }

@@ -136,6 +136,7 @@ struct SubscriptionFlowView: View {
         
         .onChange(of: viewModel.activatingSubscription) { value in
             if value {
+                Pixel.fire(pixel: .privacyProRestorePurchaseOfferPageEntry)
                 isActive = true
                 viewModel.activatingSubscription = false
             }
@@ -171,7 +172,7 @@ struct SubscriptionFlowView: View {
             NavigationLink(destination: SubscriptionRestoreView(), isActive: $isActive) {
                 EmptyView()
             }.isDetailLink(false)
-            
+
             AsyncHeadlessWebView(viewModel: viewModel.webViewModel)
                 .background()
             
@@ -197,6 +198,5 @@ struct SubscriptionFlowView: View {
 //        SubscriptionFlowView()
 //    }
 // }
-
 
 #endif

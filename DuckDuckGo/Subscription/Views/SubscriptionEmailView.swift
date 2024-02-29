@@ -20,6 +20,7 @@
 #if SUBSCRIPTION
 import SwiftUI
 import Foundation
+import Core
 
 @available(iOS 15.0, *)
 struct SubscriptionEmailView: View {

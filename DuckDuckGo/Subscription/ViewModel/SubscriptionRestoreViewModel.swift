@@ -68,12 +68,15 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     @MainActor
     func restoreAppstoreTransaction() {
+        DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreStart)
         Task {
             transactionStatus = .restoring
             activationResult = .unknown
             if await subFeature.restoreAccountFromAppStorePurchase() {
+                DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreSuccess)
                 activationResult = .activated
             } else {
+                DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreFailureNotFound) // Other DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreFailureOther)
                 activationResult = .notFound
             }
             transactionStatus = .idle

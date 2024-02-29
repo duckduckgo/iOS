@@ -24,7 +24,7 @@ import Configuration
 import DDGSync
 import NetworkProtection
 
-// swiftlint:disable file_length
+// swiftlint:disable file_length line_length
 extension Pixel {
     
     // swiftlint:disable:next type_body_length
@@ -530,6 +530,32 @@ extension Pixel {
         // MARK: Privacy pro
         case privacyProSubscriptionActive
         case privacyProOfferScreenImpression
+        case privacyProPurchaseAttempt
+        case privacyProPurchaseFailure
+        case privacyProPurchaseSuccess
+        case privacyProRestorePurchaseOfferPageEntry
+        case privacyProRestorePurchaseEmailStart
+        case privacyProRestorePurchaseStoreStart
+        case privacyProRestorePurchaseEmailSuccess
+        case privacyProRestorePurchaseStoreSuccess
+        case privacyProRestorePurchaseStoreFailureNotFound
+        // TODO: to place
+        case privacyProRestorePurchaseStoreFailureOther
+        case privacyProRestoreAfterPurchaseAttempt
+        case privacyProSubscriptionActivated
+        case privacyProWelcomeAddDevice
+        case privacyProSettingsAddDevice
+        case privacyProAddDeviceEnterEmail
+        case privacyProWelcomeVPN
+        case privacyProWelcomePersonalInformationRemoval
+        case privacyProWelcomeIdentityRestoration
+        case privacyProSubscriptionSettings
+        case privacyProVPNSettings
+        case privacyProPersonalInformationRemovalSettings
+        case privacyProIdentityRestorationSettings
+        case privacyProSubscriptionManagementEmail
+        case privacyProSubscriptionManagementPlanBilling
+        case privacyProSubscriptionManagementRemoval
     }
     
 }
@@ -1030,8 +1056,34 @@ extension Pixel.Event {
         case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
             
             // MARK: Privacy pro
-        case .privacyProSubscriptionActive: return "m_privacy-pro_app_subscription_active"
+        case .privacyProSubscriptionActive: return "m_privacy-pro_app_subscription_active" // TODO: we will be adding a method to refresh the entitlements automatically to the app, we will use that for this
         case .privacyProOfferScreenImpression: return "m_privacy-pro_offer_screen_impression"
+        case .privacyProPurchaseAttempt: return "m_privacy-pro_terms-conditions_subscribe_click"
+        case .privacyProPurchaseFailure: return "m_privacy-pro_app_subscription-purchase_failure_other" // TODO:  - Error handling not implemented yet in  - func subscriptionSelected(params: Any, original: WKScriptMessage) async throws -> Encodable? { waiting for @Daniel
+        // TODO: more errors here
+        case .privacyProPurchaseSuccess: return "m_privacy-pro_app_subscription-purchase_success"
+        case .privacyProRestorePurchaseOfferPageEntry: return "m_privacy-pro_offer_restore-purchase_click"
+        case .privacyProRestorePurchaseEmailStart: return "m_privacy-pro_activate-subscription_enter-email_click"
+        case .privacyProRestorePurchaseStoreStart: return "m_privacy-pro_activate-subscription_restore-purchase_click"
+        case .privacyProRestorePurchaseEmailSuccess: return "m_privacy-pro_app_subscription-restore-using-email_success"
+        case .privacyProRestorePurchaseStoreSuccess: return "m_privacy-pro_app_subscription-restore-using-store_success"
+        case .privacyProRestorePurchaseStoreFailureNotFound: return "m_privacy-pro_app_subscription-restore-using-store_failure_not-found"
+        case .privacyProRestorePurchaseStoreFailureOther: return "m_privacy-pro_app_subscription-restore-using-store_failure_other"
+        case .privacyProRestoreAfterPurchaseAttempt: return "m_privacy-pro_app_subscription-restore-after-purchase-attempt_success"
+        case .privacyProSubscriptionActivated: return "m_privacy-pro_app_subscription_activated"
+        case .privacyProWelcomeAddDevice: return "m_privacy-pro_welcome_add-device_click"
+        case .privacyProSettingsAddDevice: return "m_privacy-pro_settings_add-device_click"
+        case .privacyProAddDeviceEnterEmail: return "m_privacy-pro_add-device_enter-email_click"
+        case .privacyProWelcomeVPN: return "m_privacy-pro_welcome_vpn_click"
+        case .privacyProWelcomePersonalInformationRemoval: return "m_privacy-pro_welcome_personal-information-removal_click"
+        case .privacyProWelcomeIdentityRestoration: return "m_privacy-pro_welcome_identity-theft-restoration_click"
+        case .privacyProSubscriptionSettings: return "m_privacy-pro_settings_screen_impression"
+        case .privacyProVPNSettings: return "m_privacy-pro_app-settings_vpn_click"
+        case .privacyProPersonalInformationRemovalSettings: return "m_privacy-pro_app-settings_personal-information-removal_click"
+        case .privacyProIdentityRestorationSettings: return "m_privacy-pro_app-settings_identity-theft-restoration_click"
+        case .privacyProSubscriptionManagementEmail: return "m_privacy-pro_manage-email_edit_click"
+        case .privacyProSubscriptionManagementPlanBilling: return "m_privacy-pro_settings_change-plan-or-billing_click"
+        case .privacyProSubscriptionManagementRemoval: return "m_privacy-pro_settings_remove-from-device_click"
         }
         
     }

@@ -20,6 +20,7 @@
 import Foundation
 import SwiftUI
 import DesignResourcesKit
+import Core
 
 #if SUBSCRIPTION
 @available(iOS 15.0, *)
@@ -116,30 +117,33 @@ struct SubscriptionRestoreView: View {
             }
         )
     }
-    
+
     private func getEmailCellContent(buttonAction: @escaping () -> Void) -> AnyView {
         AnyView(
-                VStack(alignment: .leading) {
-                    if viewModel.subscriptionEmail == nil {
-                        Text(UserText.subscriptionActivateEmailDescription)
-                            .daxSubheadRegular()
-                            .foregroundColor(Color(designSystemColor: .textSecondary))
-                        getCellButton(buttonText: UserText.subscriptionRestoreEmail,
-                                                    action: buttonAction)
-                    } else {
-                        Text(viewModel.subscriptionEmail ?? "").daxSubheadSemibold()
-                        Text(UserText.subscriptionActivateEmailDescription)
-                            .daxSubheadRegular()
-                            .foregroundColor(Color(designSystemColor: .textSecondary))
-                        HStack {
-                            getCellButton(buttonText: UserText.subscriptionManageEmailButton,
-                                                        action: buttonAction)
-                        }
+            VStack(alignment: .leading) {
+                if viewModel.subscriptionEmail == nil {
+                    Text(UserText.subscriptionActivateEmailDescription)
+                        .daxSubheadRegular()
+                        .foregroundColor(Color(designSystemColor: .textSecondary))
+                    getCellButton(buttonText: UserText.subscriptionRestoreEmail,
+                                  action: {
+                        DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailStart)
+                        buttonAction()
+                    })
+                } else {
+                    Text(viewModel.subscriptionEmail ?? "").daxSubheadSemibold()
+                    Text(UserText.subscriptionActivateEmailDescription)
+                        .daxSubheadRegular()
+                        .foregroundColor(Color(designSystemColor: .textSecondary))
+                    HStack {
+                        getCellButton(buttonText: UserText.subscriptionManageEmailButton,
+                                      action: buttonAction)
                     }
                 }
-            )
+            }
+        )
     }
-    
+
     private func getCellButton(buttonText: String, action: @escaping () -> Void) -> AnyView {
         AnyView(
             Button(action: action, label: {
@@ -240,11 +244,11 @@ struct SubscriptionRestoreView: View {
     }
 }
 
-// @available(iOS 15.0, *)
-// struct SubscriptionRestoreView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SubscriptionRestoreView()
-//    }
-// }
+ @available(iOS 15.0, *)
+ struct SubscriptionRestoreView_Previews: PreviewProvider {
+    static var previews: some View {
+        SubscriptionRestoreView()
+    }
+ }
 
 #endif

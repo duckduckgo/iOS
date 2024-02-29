@@ -85,6 +85,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
     
     private func completeActivation() {
+        DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailSuccess)
         subFeature.emailActivationComplete = false
         activateSubscription = true
     }

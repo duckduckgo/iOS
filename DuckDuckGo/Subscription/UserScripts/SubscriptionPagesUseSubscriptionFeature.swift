@@ -25,6 +25,7 @@ import WebKit
 import UserScript
 import Combine
 import Subscription
+import Core
 
 @available(iOS 15.0, *)
 final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObject {
@@ -156,6 +157,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         
         await withTransactionInProgress {
             
+            DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseAttempt)
+
             transactionStatus = .purchasing
             resetSubscriptionFlow()
             
@@ -189,6 +192,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             transactionStatus = .polling
             switch await AppStorePurchaseFlow.completeSubscriptionPurchase() {
             case .success(let purchaseUpdate):
+                DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess)
                 await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
             case .failure:
                 purchaseError = .missingEntitlements

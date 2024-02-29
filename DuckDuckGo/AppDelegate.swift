@@ -329,6 +329,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         clearDebugWaitlistState()
 
+        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
+
         return true
     }
 

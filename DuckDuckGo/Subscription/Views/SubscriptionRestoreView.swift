@@ -235,10 +235,19 @@ struct SubscriptionRestoreView: View {
                                                     dismiss()
                                                  }),
                          secondaryButton: .cancel())
+            
+        case .expired:
+            return Alert(title: Text(UserText.subscriptionRestoreNotFoundTitle),
+                         message: Text(UserText.subscriptionRestoreNotFoundMessage),
+                         primaryButton: .default(Text(UserText.subscriptionRestoreNotFoundPlans),
+                                                 action: {
+                                                    dismiss()
+                                                 }),
+                         secondaryButton: .cancel())
         case .error:
-            return Alert(title: Text("Error"), message: Text("An error occurred during activation."))
+            return Alert(title: Text(UserText.subscriptionAppStoreErrorTitle), message: Text(UserText.subscriptionAppStoreErrorMessage))
         default:
-            return Alert(title: Text("Unknown"), message: Text("An unknown error occurred."))
+            return Alert(title: Text(UserText.subscriptionAppStoreErrorTitle), message: Text(UserText.subscriptionAppStoreErrorMessage))
         }
     }
     

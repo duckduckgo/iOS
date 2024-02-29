@@ -307,11 +307,6 @@ public class AppUserDefaults: AppSettings {
         }
     }
 
-    // Only for testing and `DebugViewController` purposes
-    func clearAutoconsentUserSetting() {
-        autoconsentEnabledSetting = nil
-    }
-
     @UserDefaultsWrapper(key: .autoconsentEnabled, defaultValue: false)
     private var autoconsentEnabledSetting: Bool?
 

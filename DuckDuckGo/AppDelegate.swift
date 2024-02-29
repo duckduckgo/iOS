@@ -349,7 +349,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if NETWORK_PROTECTION
     private func presentExpiredEntitlementAlert() {
-        let alertController = CriticalAlerts.makeExpiredEntitlementAlert()
+        let alertController = CriticalAlerts.makeExpiredEntitlementAlert { [weak self] in
+            self?.mainViewController?.segueToPrivacyPro()
+        }
         window?.rootViewController?.present(alertController, animated: true) { [weak self] in
             self?.tunnelDefaults.showEntitlementAlert = false
         }

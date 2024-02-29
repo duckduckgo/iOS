@@ -47,6 +47,12 @@ struct SettingsSubscriptionView: View {
             .foregroundColor(Color.init(designSystemColor: .accent))
     }
     
+    private var iHaveASubscriptionView: some View {
+        Text(UserText.settingsPProIHaveASubscription)
+            .daxBodyRegular()
+            .foregroundColor(Color.init(designSystemColor: .accent))
+    }
+    
     private var manageSubscriptionView: some View {
         Text(UserText.settingsPProManageSubscription)
             .daxBodyRegular()
@@ -62,6 +68,14 @@ struct SettingsSubscriptionView: View {
             .sheet(isPresented: $isShowingsubScriptionFlow) {
                 SubscriptionFlowView(viewModel: subscriptionFlowViewModel).interactiveDismissDisabled()
             }
+            
+            SettingsCustomCell(content: { iHaveASubscriptionView },
+                               action: {
+                                    isShowingsubScriptionFlow = true
+                                    subscriptionFlowViewModel.activateSubscriptionOnLoad = true
+                                },
+                               isButton: true )
+            
         }
     }
     

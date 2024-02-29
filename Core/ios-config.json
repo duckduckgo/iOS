@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1707768517000,
+    "version": 1708953918019,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -258,9 +258,6 @@
                     "domain": "youtube.com"
                 },
                 {
-                    "domain": "tuc.org.uk"
-                },
-                {
                     "domain": "newsmax.com"
                 },
                 {
@@ -279,7 +276,7 @@
             "settings": {
                 "disabledCMPs": [
                     "generic-cosmetic",
-                    "EZoic"
+                    "termsfeed3"
                 ]
             },
             "state": "enabled",
@@ -290,12 +287,18 @@
                         "steps": [
                             {
                                 "percent": 25
+                            },
+                            {
+                                "percent": 50
+                            },
+                            {
+                                "percent": 100
                             }
                         ]
                     }
                 }
             },
-            "hash": "d01ba9e47542c11b7dd4bf9d5f25d16b"
+            "hash": "7b3ce9784ee7348bb7a07d1868c0f3ae"
         },
         "autofill": {
             "exceptions": [
@@ -1114,6 +1117,10 @@
                         "reason": "Login issues"
                     },
                     {
+                        "domain": "www.canva.com",
+                        "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1818"
+                    },
+                    {
                         "domain": "duckduckgo.com",
                         "reason": "Internal exclusion to roll out experiment"
                     }
@@ -1124,13 +1131,16 @@
                 "omitApplicationSites": [
                     {
                         "domain": "chase.com"
+                    },
+                    {
+                        "domain": "www.canva.com"
                     }
                 ],
                 "omitVersionSites": []
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "9461d22c4f0a25b30a46cc53c0718a32"
+            "hash": "a0c51971630002ca1fe1b7825fba560d"
         },
         "dbp": {
             "state": "disabled",
@@ -4466,6 +4476,11 @@
             "state": "disabled",
             "hash": "44d3e707cba3ee0a3578f52dc2ce2aa4"
         },
+        "history": {
+            "state": "enabled",
+            "exceptions": [],
+            "hash": "697382e31649d84b01166f1dc6f790d6"
+        },
         "https": {
             "state": "enabled",
             "exceptions": [
@@ -4828,6 +4843,16 @@
                             }
                         ]
                     },
+                    "adlightning.com": {
+                        "rules": [
+                            {
+                                "rule": "publisher.adlightning.com/user-api/session/",
+                                "domains": [
+                                    "boltive.com"
+                                ]
+                            }
+                        ]
+                    },
                     "ads-twitter.com": {
                         "rules": [
                             {
@@ -5174,7 +5199,19 @@
                     "cloudflare.com": {
                         "rules": [
                             {
-                                "rule": "cdnjs.cloudflare.com/cdn-cgi/scripts/.*/cloudflare-static/rocket-loader.min.js",
+                                "rule": "cloudflare.com/cdn-cgi/scripts/7089c43e/cloudflare-static/rocket-loader.min.js",
+                                "domains": [
+                                    "<all>"
+                                ]
+                            },
+                            {
+                                "rule": "cloudflare.com/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js",
+                                "domains": [
+                                    "<all>"
+                                ]
+                            },
+                            {
+                                "rule": "cloudflare.com/cdn-cgi/scripts/1680307200/cloudflare-static/rocket-loader.min.js",
                                 "domains": [
                                     "<all>"
                                 ]
@@ -5859,6 +5896,7 @@
                                     "doterra.com",
                                     "easyjet.com",
                                     "edx.org",
+                                    "saplinglearning.com",
                                     "worlddutyfree.com"
                                 ]
                             },
@@ -6031,7 +6069,9 @@
                                 "rule": "googletagmanager.com/gtag/js",
                                 "domains": [
                                     "abril.com.br",
+                                    "algomalegalclinic.com",
                                     "cosmicbook.news",
+                                    "eatroyo.com",
                                     "thesimsresource.com",
                                     "tradersync.com"
                                 ]
@@ -6983,6 +7023,16 @@
                             }
                         ]
                     },
+                    "pubnation.com": {
+                        "rules": [
+                            {
+                                "rule": "scripts.pubnation.com/tags/",
+                                "domains": [
+                                    "n4g.com"
+                                ]
+                            }
+                        ]
+                    },
                     "qualtrics.com": {
                         "rules": [
                             {
@@ -7238,6 +7288,16 @@
                                 "rule": "succeedscene.com",
                                 "domains": [
                                     "<all>"
+                                ]
+                            }
+                        ]
+                    },
+                    "sumo.com": {
+                        "rules": [
+                            {
+                                "rule": "load.sumo.com",
+                                "domains": [
+                                    "glennbeck.com"
                                 ]
                             }
                         ]
@@ -7668,7 +7728,7 @@
                     "domain": "sundancecatalog.com"
                 }
             ],
-            "hash": "174d90955e35a7140bcbe16d8764b52c"
+            "hash": "86a7c891d57513e67356a82da2a2aa1d"
         },
         "trackingCookies1p": {
             "settings": {
@@ -7836,10 +7896,20 @@
                                 "value": "enabled"
                             }
                         ]
+                    },
+                    {
+                        "domain": "myhome.experian.co.uk",
+                        "patchSettings": [
+                            {
+                                "op": "replace",
+                                "path": "/messageHandlers/state",
+                                "value": "enabled"
+                            }
+                        ]
                     }
                 ]
             },
-            "hash": "4e94cff79e689ff320de22a57e242bdd"
+            "hash": "592a1fb6314f04875fc44a66ef7c2433"
         },
         "windowsPermissionUsage": {
             "exceptions": [],

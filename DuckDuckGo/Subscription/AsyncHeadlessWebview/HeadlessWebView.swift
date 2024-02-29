@@ -24,7 +24,7 @@ import UserScript
 import BrowserServicesKit
 
 struct HeadlessWebView: UIViewRepresentable {
-    let userScript: UserScriptMessaging?
+    weak var userScript: UserScriptMessaging?
     let subFeature: Subfeature?
     let settings: AsyncHeadlessWebViewSettings
     var onScroll: ((CGPoint) -> Void)?
@@ -66,7 +66,8 @@ struct HeadlessWebView: UIViewRepresentable {
     func updateUIView(_ uiView: WKWebView, context: Context) {}
 
     func makeCoordinator() -> HeadlessWebViewCoordinator {
-        HeadlessWebViewCoordinator(self,
+        let currentViewController = UIViewController.getCurrentViewController()
+        return HeadlessWebViewCoordinator(self, presenter: currentViewController,
                     onScroll: onScroll,
                     onURLChange: onURLChange,
                     onCanGoBack: onCanGoBack,
@@ -98,5 +99,31 @@ struct HeadlessWebView: UIViewRepresentable {
         }
         return userContentController
     }
+    
+    static func dismantleUIView(_ uiView: WKWebView, coordinator: HeadlessWebViewCoordinator) {
+        uiView.stopLoading()
+        uiView.uiDelegate = nil
+        uiView.navigationDelegate = nil
+        uiView.scrollView.delegate = nil
+        uiView.configuration.userContentController = WKUserContentController()
+        uiView.configuration.userContentController.removeAllScriptMessageHandlers()
+        uiView.configuration.userContentController.removeAllContentRuleLists()
+        uiView.configuration.userContentController.removeAllUserScripts()
+        coordinator.cleanUp()
+        
+    }
 
+}
+
+extension UIViewController {
+    static func getCurrentViewController(base: UIViewController? = UIApplication.shared.windows.first { $0.isKeyWindow }?.rootViewController) -> UIViewController? {
+        if let nav = base as? UINavigationController {
+            return getCurrentViewController(base: nav.visibleViewController)
+        } else if let tab = base as? UITabBarController, let selected = tab.selectedViewController {
+            return getCurrentViewController(base: selected)
+        } else if let presented = base?.presentedViewController {
+            return getCurrentViewController(base: presented)
+        }
+        return base
+    }
 }

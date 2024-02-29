@@ -72,7 +72,7 @@ final class UserBehaviorMonitor {
 
 final class AppUserBehaviorMonitor {
 
-    static let eventMapping = EventMapping<UserBehaviorEvent> { event, error, parameters, onComplete in
+    static let eventMapping = EventMapping<UserBehaviorEvent> { event, _, _, _ in
         let domainEvent: Pixel.Event
         switch event {
         case .reloadTwice: domainEvent = .userBehaviorReloadTwice
@@ -83,7 +83,7 @@ final class AppUserBehaviorMonitor {
         case .fireButtonAndRestart: domainEvent = .userBehaviorFireButtonAndRestart
         case .fireButtonAndTogglePrivacyControls: domainEvent = .userBehaviorFireButtonAndTogglePrivacyControls
         }
-        Pixel.fire(pixel: domainEvent, onComplete: onComplete)
+        Pixel.fire(pixel: domainEvent)
     }
 
 }

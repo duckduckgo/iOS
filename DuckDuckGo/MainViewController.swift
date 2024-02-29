@@ -1363,9 +1363,7 @@ class MainViewController: UIViewController {
             presentExpiredEntitlementAlert()
         }
 
-        if tunnelDefaults.showEntitlementNotification {
-            presentExpiredEntitlementNotification()
-        }
+        presentExpiredEntitlementNotification()
     }
 
     private func presentExpiredEntitlementAlert() {
@@ -1377,10 +1375,12 @@ class MainViewController: UIViewController {
     }
 
     private func presentExpiredEntitlementNotification() {
-        NetworkProtectionUNNotificationPresenter().showEntitlementNotification { [weak self] error in
-            guard error == nil else { return }
-            self?.tunnelDefaults.showEntitlementNotification = false
-        }
+        let presenter = NetworkProtectionNotificationsPresenterTogglableDecorator(
+            settings: VPNSettings(defaults: .networkProtectionGroupDefaults),
+            defaults: .networkProtectionGroupDefaults,
+            wrappee: NetworkProtectionUNNotificationPresenter()
+        )
+        presenter.showEntitlementNotification()
     }
 
     @objc

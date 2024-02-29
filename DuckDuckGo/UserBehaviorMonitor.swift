@@ -21,6 +21,23 @@ import Foundation
 import Common
 import Core
 
+protocol UserBehaviorStoring {
+
+    var didRefreshTimestamp: Date? { get set }
+    var didBurnTimestamp: Date? { get set }
+
+}
+
+final class UserBehaviorStore: UserBehaviorStoring {
+
+    @UserDefaultsWrapper(key: .didRefreshTimestamp, defaultValue: .distantPast)
+    var didRefreshTimestamp: Date?
+    
+    @UserDefaultsWrapper(key: .didBurnTimestamp, defaultValue: .distantPast)
+    var didBurnTimestamp: Date?
+
+}
+
 final class UserBehaviorMonitor {
 
     enum Action: Equatable {
@@ -34,14 +51,23 @@ final class UserBehaviorMonitor {
     }
 
     private let eventMapping: EventMapping<UserBehaviorEvent>
-    init(eventMapping: EventMapping<UserBehaviorEvent> = AppUserBehaviorMonitor.eventMapping) {
+    private var store: UserBehaviorStoring
+
+    init(eventMapping: EventMapping<UserBehaviorEvent> = AppUserBehaviorMonitor.eventMapping,
+         store: UserBehaviorStoring = UserBehaviorStore()) {
         self.eventMapping = eventMapping
+        self.store = store
     }
 
-    @UserDefaultsWrapper(key: .didRefreshTimestamp, defaultValue: .distantPast)
-    private var didRefreshTimestamp: Date?
-    @UserDefaultsWrapper(key: .didBurnTimestamp, defaultValue: .distantPast)
-    private var didBurnTimestamp: Date?
+    var didRefreshTimestamp: Date? {
+        get { store.didRefreshTimestamp }
+        set { store.didRefreshTimestamp = newValue }
+    }
+
+    var didBurnTimestamp: Date? {
+        get { store.didBurnTimestamp }
+        set { store.didBurnTimestamp = newValue }
+    }
 
     func handleAction(_ action: Action, date: Date = Date()) {
         switch action {

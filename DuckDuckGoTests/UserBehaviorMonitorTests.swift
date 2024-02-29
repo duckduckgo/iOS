@@ -22,11 +22,10 @@ import Common
 @testable import DuckDuckGo
 
 final class MockUserBehaviorEventsMapping: EventMapping<UserBehaviorEvent> {
-    static var events: [UserBehaviorEvent] = []
 
-    init() {
+    init(captureEvent: @escaping (UserBehaviorEvent) -> Void) {
         super.init { event, _, _, _ in
-            Self.events.append(event)
+            captureEvent(event)
         }
     }
 
@@ -35,19 +34,28 @@ final class MockUserBehaviorEventsMapping: EventMapping<UserBehaviorEvent> {
     }
 }
 
+final class MockUserBehaviorStore: UserBehaviorStoring {
+
+    var didRefreshTimestamp: Date?
+    var didBurnTimestamp: Date?
+
+}
+
 final class UserBehaviorMonitorTests: XCTestCase {
 
     var eventMapping: MockUserBehaviorEventsMapping!
     var monitor: UserBehaviorMonitor!
+    var events: [UserBehaviorEvent] = []
 
     override func setUp() {
         super.setUp()
-        eventMapping = MockUserBehaviorEventsMapping()
-        MockUserBehaviorEventsMapping.events.removeAll()
-        monitor = UserBehaviorMonitor(eventMapping: eventMapping)
+        events.removeAll()
+        eventMapping = MockUserBehaviorEventsMapping(captureEvent: { event in
+            self.events.append(event)
+        })
+        monitor = UserBehaviorMonitor(eventMapping: eventMapping,
+                                      store: MockUserBehaviorStore())
     }
-
-    private var events: [UserBehaviorEvent] { MockUserBehaviorEventsMapping.events }
 
     // - MARK: Behavior testing
     // Expecting events

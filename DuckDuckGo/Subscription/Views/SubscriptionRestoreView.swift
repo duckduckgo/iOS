@@ -42,7 +42,7 @@ struct SubscriptionRestoreView: View {
         static let buttonCornerRadius = 8.0
         static let buttonInsets = EdgeInsets(top: 10.0, leading: 16.0, bottom: 10.0, trailing: 16.0)
         static let cellLineSpacing = 12.0
-        static let cellPadding = 4.0
+        static let cellPadding = 8.0
         static let headerPadding = EdgeInsets(top: 16.0, leading: 16.0, bottom: 0, trailing: 16.0)
     }
     
@@ -58,10 +58,10 @@ struct SubscriptionRestoreView: View {
                 headerView
                 listView
             }
-            .background(Color(designSystemColor: .container))
             .navigationTitle(viewModel.isAddingDevice ? UserText.subscriptionAddDeviceTitle : UserText.subscriptionActivate)
             .navigationBarBackButtonHidden(viewModel.transactionStatus != .idle)
             .applyInsetGroupedListStyle()
+            
             .alert(isPresented: $isAlertVisible) { getAlert() }
             
             .onChange(of: viewModel.activationResult) { result in
@@ -71,6 +71,7 @@ struct SubscriptionRestoreView: View {
             }
             .onAppear {
                 viewModel.initializeView()
+                setUpAppearances()
             }
             
             if viewModel.transactionStatus != .idle {
@@ -83,10 +84,6 @@ struct SubscriptionRestoreView: View {
     private var listItems: [ListItem] {
         [
             .init(id: 0,
-                  content: getCellTitle(icon: Constants.appleIDIcon,
-                                        text: UserText.subscriptionActivateAppleID),
-                  expandedContent: getAppleIDCellContent(buttonAction: viewModel.restoreAppstoreTransaction)),
-            .init(id: 1,
                   content: getCellTitle(icon: Constants.emailIcon,
                                         text: UserText.subscriptionActivateEmail),
                   expandedContent: getEmailCellContent(buttonAction: { isActive = true }))
@@ -104,40 +101,32 @@ struct SubscriptionRestoreView: View {
         )
     }
     
-    private func getAppleIDCellContent(buttonAction: @escaping () -> Void) -> AnyView {
-        AnyView(
-            VStack(alignment: .leading) {
-                Text(viewModel.isAddingDevice ? UserText.subscriptionAvailableInApple : UserText.subscriptionActivateAppleIDDescription)
-                    .daxSubheadRegular()
-                    .foregroundColor(Color(designSystemColor: .textSecondary))
-                if !viewModel.isAddingDevice {
-                    getCellButton(buttonText: UserText.subscriptionActivateAppleIDButton, action: buttonAction)
-                }
-            }
-        )
-    }
-    
     private func getEmailCellContent(buttonAction: @escaping () -> Void) -> AnyView {
         AnyView(
-                VStack(alignment: .leading) {
-                    if viewModel.subscriptionEmail == nil {
-                        Text(UserText.subscriptionActivateEmailDescription)
-                            .daxSubheadRegular()
-                            .foregroundColor(Color(designSystemColor: .textSecondary))
-                        getCellButton(buttonText: UserText.subscriptionRestoreEmail,
-                                                    action: buttonAction)
-                    } else {
-                        Text(viewModel.subscriptionEmail ?? "").daxSubheadSemibold()
-                        Text(UserText.subscriptionActivateEmailDescription)
-                            .daxSubheadRegular()
-                            .foregroundColor(Color(designSystemColor: .textSecondary))
-                        HStack {
-                            getCellButton(buttonText: UserText.subscriptionManageEmailButton,
-                                                        action: buttonAction)
-                        }
+            VStack(alignment: .leading) {
+                if !viewModel.isAddingDevice {
+                    Text(UserText.subscriptionActivateEmailDescription)
+                        .daxSubheadRegular()
+                        .foregroundColor(Color(designSystemColor: .textSecondary))
+                    getCellButton(buttonText: UserText.subscriptionActivateEmailButton,
+                                    action: buttonAction)
+                } else if viewModel.subscriptionEmail == nil {
+                    Text(UserText.subscriptionAddDeviceEmailDescription)
+                        .daxSubheadRegular()
+                        .foregroundColor(Color(designSystemColor: .textSecondary))
+                    getCellButton(buttonText: UserText.subscriptionRestoreAddEmailButton,
+                                    action: buttonAction)
+                } else {
+                    Text(viewModel.subscriptionEmail ?? "").daxSubheadSemibold()
+                    Text(UserText.subscriptionManageEmailDescription)
+                        .daxSubheadRegular()
+                        .foregroundColor(Color(designSystemColor: .textSecondary))
+                    HStack {
+                        getCellButton(buttonText: UserText.subscriptionManageEmailButton,
+                                        action: buttonAction)
                     }
                 }
-            )
+            })
     }
     
     private func getCellButton(buttonText: String, action: @escaping () -> Void) -> AnyView {
@@ -185,16 +174,36 @@ struct SubscriptionRestoreView: View {
         }.padding(Constants.headerPadding)
     }
     
+    @ViewBuilder
+    private var footerView: some View {
+        if !viewModel.isAddingDevice {
+            VStack(alignment: .leading) {
+                Text(UserText.subscriptionActivateDescription)
+                    .daxFootnoteRegular()
+                    .foregroundColor(Color(designSystemColor: .textSecondary))
+                Button(action: {
+                    viewModel.restoreAppstoreTransaction()
+                }, label: {
+                    Text(UserText.subscriptionRestoreAppleID)
+                        .daxFootnoteSemibold()
+                        .foregroundColor(Color(designSystemColor: .accent))
+                })
+            }.padding(.top, Constants.headerLineSpacing)
+        }
+    }
+    
     private var listView: some View {
         List {
-            Section {
+            Section(footer: footerView) {
                 ForEach(Array(zip(listItems.indices, listItems)), id: \.1.id) { _, item in
                     VStack(alignment: .leading, spacing: Constants.cellLineSpacing) {
                         HStack {
                             item.content
                             Spacer()
-                            Image(systemName: expandedItemId == item.id ? Constants.openIndicator : Constants.closedIndicator)
-                                .foregroundColor(Color(designSystemColor: .textPrimary))
+                            if listItems.count > 1 {
+                                Image(systemName: expandedItemId == item.id ? Constants.openIndicator : Constants.closedIndicator)
+                                    .foregroundColor(Color(designSystemColor: .textPrimary))
+                            }
                         }
                         .contentShape(Rectangle())
                         .onTapGesture {
@@ -231,6 +240,14 @@ struct SubscriptionRestoreView: View {
         default:
             return Alert(title: Text("Unknown"), message: Text("An unknown error occurred."))
         }
+    }
+    
+    private func setUpAppearances() {
+        let navAppearance = UINavigationBar.appearance()
+        navAppearance.backgroundColor = UIColor(designSystemColor: .background)
+        navAppearance.barTintColor = UIColor(designSystemColor: .surface)
+        navAppearance.shadowImage = UIImage()
+        navAppearance.tintColor = UIColor(designSystemColor: .textPrimary)
     }
     
     struct ListItem {

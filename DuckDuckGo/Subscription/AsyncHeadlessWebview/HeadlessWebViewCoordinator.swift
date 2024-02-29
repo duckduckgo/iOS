@@ -21,7 +21,10 @@ import Foundation
 import WebKit
 
 final class HeadlessWebViewCoordinator: NSObject {
+    
     var parent: HeadlessWebView
+    weak var presenter: UIViewController?
+    
     var onScroll: ((CGPoint) -> Void)?
     var onURLChange: ((URL) -> Void)?
     var onCanGoBack: ((Bool) -> Void)?
@@ -43,6 +46,7 @@ final class HeadlessWebViewCoordinator: NSObject {
     private var webViewCanGoForwardObservation: NSKeyValueObservation?
 
     init(_ parent: HeadlessWebView,
+         presenter: UIViewController?,
          onScroll: ((CGPoint) -> Void)?,
          onURLChange: ((URL) -> Void)?,
          onCanGoBack: ((Bool) -> Void)?,
@@ -51,6 +55,7 @@ final class HeadlessWebViewCoordinator: NSObject {
          allowedDomains: [String]? = nil,
          settings: AsyncHeadlessWebViewSettings = AsyncHeadlessWebViewSettings()) {
         self.parent = parent
+        self.presenter = presenter
         self.onScroll = onScroll
         self.onURLChange = onURLChange
         self.onCanGoBack = onCanGoBack
@@ -62,22 +67,45 @@ final class HeadlessWebViewCoordinator: NSObject {
     func setupWebViewObservation(_ webView: WKWebView) {
         webViewURLObservation = webView.observe(\.url, options: [.new]) { [weak self] _, change in
             if let newURL = change.newValue as? URL {
-                self?.onURLChange?(newURL)
-                self?.onCanGoBack?(webView.canGoBack)
+                DispatchQueue.main.async {
+                    self?.onURLChange?(newURL)
+                    self?.onCanGoBack?(webView.canGoBack)
+                }
             }
         }
 
         webViewCanGoBackObservation = webView.observe(\.canGoBack, options: [.new]) { [weak self] _, change in
             if let canGoBack = change.newValue {
-                self?.onCanGoBack?(canGoBack)
+                DispatchQueue.main.async {
+                    self?.onCanGoBack?(canGoBack)
+                }
             }
         }
         
         webViewCanGoForwardObservation = webView.observe(\.canGoForward, options: [.new]) { [weak self] _, change in
             if let onCanGoForward = change.newValue {
-                self?.onCanGoForward?(onCanGoForward)
+                DispatchQueue.main.async {
+                    self?.onCanGoForward?(onCanGoForward)
+                }
             }
         }
+    }
+    
+    // Called from the webView dismantle
+    func cleanUp() {
+        webViewURLObservation?.invalidate()
+        webViewCanGoBackObservation?.invalidate()
+        webViewCanGoForwardObservation?.invalidate()
+        
+        webViewURLObservation = nil
+        webViewCanGoBackObservation = nil
+        webViewCanGoForwardObservation = nil
+                
+        onScroll = nil
+        onURLChange = nil
+        onCanGoBack = nil
+        onCanGoForward = nil
+        onContentType = nil
     }
   
 }
@@ -157,5 +185,30 @@ extension HeadlessWebViewCoordinator: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         // NOOP
     }
+    
+    // Javascript Confirm dialogs Delegate
+    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
+        guard let presenter = presenter else {
+            completionHandler(false)
+            return
+        }
+
+        let alertController = UIAlertController(title: UserText.subscriptionConfirmTitle, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: UserText.actionOK, style: .default, handler: { _ in completionHandler(true) }))
+        alertController.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel, handler: { _ in completionHandler(false) }))
+        presenter.present(alertController, animated: true, completion: nil)
+    }
+    
+    // Javascript Confirm alert dialogs
+    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+            guard let presenter = presenter else {
+                completionHandler()
+                return
+            }
+
+        let alertController = UIAlertController(title: UserText.subscriptionAlertTitle, message: message, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: UserText.actionOK, style: .default, handler: { _ in completionHandler() }))
+            presenter.present(alertController, animated: true, completion: nil)
+        }
     
 }

@@ -32,12 +32,12 @@ final class SubscriptionEmailViewModel: ObservableObject {
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     
     var emailURL = URL.activateSubscriptionViaEmail
-    var viewTitle = UserText.subscriptionRestoreEmail
+    var viewTitle = UserText.subscriptionActivateEmail
     @Published var subscriptionEmail: String?
     @Published var shouldReloadWebView = false
     @Published var activateSubscription = false
     @Published var managingSubscriptionEmail = false
-    @Published var webViewModel: AsyncHeadlessWebViewViewModel
+    var webViewModel: AsyncHeadlessWebViewViewModel
     
     private static let allowedDomains = [
         "duckduckgo.com",
@@ -91,6 +91,11 @@ final class SubscriptionEmailViewModel: ObservableObject {
     
     func loadURL() {
         webViewModel.navigationCoordinator.navigateTo(url: emailURL )
+    }
+    
+    deinit {
+        cancellables.removeAll()
+       
     }
 
 }

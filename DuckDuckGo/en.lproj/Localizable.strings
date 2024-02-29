@@ -1998,6 +1998,15 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Title for Confirm messages */
 "subscription.confirm.title" = "Are you sure?";
 
+/* Alert content for not found subscription */
+"subscription.email.inactive.alert.message" = "The subscription associated with this email is no longer active.";
+
+/* Alert title for not found subscription */
+"subscription.email.inactive.alert.title" = "Subscription Not Found";
+
+/* Alert content for not found subscription */
+"subscription.expired.alert.message" = "The subscription associated with this Apple ID is no longer active.";
+
 /* text for expiration string */
 "subscription.expires" = "expires";
 
@@ -2026,7 +2035,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.manage.devices" = "Manage Devices";
 
 /* Description for Email Management options */
-"subscription.manage.email.description" = "You can use this email to activate your subscription on your other devices.";
+"subscription.manage.email.description" = "You can use this email to activate your subscription from browser settings in the DuckDuckGo app on your other devices.";
 
 /* Manage Plan header */
 "subscription.manage.plan" = "Manage Plan";
@@ -2038,7 +2047,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.monthly" = "Monthly Subscription";
 
 /* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "The subscription associated with this Apple ID is no longer active.";
+"subscription.notFound.alert.message" = "There is no subscription associated with this Apple ID.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Subscription Not Found";
@@ -2090,6 +2099,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* text for renewal string */
 "subscription.renews" = "renews";
+
+/* Alert for general error message */
+"subscription.restore.general.error.message" = "The App Store was unable to process your purchase. Please try again later.";
+
+/* Alert for general error title */
+"subscription.restore.general.error.title" = "Something Went Wrong";
 
 /* Alert button text for restored purchase alert */
 "subscription.restore.success.alert.button" = "OK";
@@ -2261,15 +2276,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Title for the 'unable to install' category of the VPN feedback form */
 "vpn.feedback-form.category.unable-to-install" = "Unable to install VPN";
-
-/* Action title for the alert when the VPN feedback form can't be submitted */
-"vpn.feedback-form.error.action" = "OK";
-
-/* Message for the alert when the VPN feedback form can't be submitted */
-"vpn.feedback-form.error.message" = "Failed to share your feedback. Please try again.";
-
-/* Title for the alert when the VPN feedback form can't be submitted */
-"vpn.feedback-form.error.title" = "Error";
 
 /* Title for the feedback sent view description of the VPN feedback form */
 "vpn.feedback-form.sending-confirmation.description" = "Your feedback will help us improve the\nDuckDuckGo VPN.";

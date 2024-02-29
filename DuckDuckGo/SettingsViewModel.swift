@@ -77,7 +77,8 @@ final class SettingsViewModel: ObservableObject {
     // Add more views as needed here...
     @Published var shouldNavigateToDBP = false
     @Published var shouldNavigateToITP = false
-        
+    @Published var shouldNavigateToSubscriptionFlow = false
+
     @Published var shouldShowNetP = false
     @Published var shouldShowDBP = false
     @Published var shouldShowITP = false
@@ -102,7 +103,7 @@ final class SettingsViewModel: ObservableObject {
     
     // Used to automatically navigate on Appear to a specific section
     enum SettingsSection: String {
-        case none, netP, dbp, itr
+        case none, netP, dbp, itr, subscriptionFlow
     }
     
     @Published var onAppearNavigationTarget: SettingsSection
@@ -508,6 +509,8 @@ extension SettingsViewModel {
                 self.shouldNavigateToDBP = true
             case .itr:
                 self.shouldNavigateToITP = true
+            case .subscriptionFlow:
+                self.shouldNavigateToSubscriptionFlow = true
             default:
                 break
             }

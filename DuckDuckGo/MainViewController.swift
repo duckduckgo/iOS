@@ -1367,7 +1367,9 @@ class MainViewController: UIViewController {
     }
 
     private func presentExpiredEntitlementAlert() {
-        let alertController = CriticalAlerts.makeExpiredEntitlementAlert()
+        let alertController = CriticalAlerts.makeExpiredEntitlementAlert { [weak self] in
+            self?.segueToPrivacyPro()
+        }
         dismiss(animated: true) {
             self.present(alertController, animated: true, completion: nil)
             self.tunnelDefaults.showEntitlementAlert = false

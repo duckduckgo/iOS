@@ -25,9 +25,8 @@ import BrowserServicesKit
 import PrivacyDashboard
 import Common
 
-/// View controller used for `Privacy Dashboard` or `Report broken site`, the web content is chosen at init time setting the correct `initMode`
-class PrivacyDashboardViewController: UIViewController {
-    
+final class PrivacyDashboardViewController: UIViewController {
+
     @IBOutlet private(set) weak var webView: WKWebView!
     
     private let privacyDashboardController: PrivacyDashboardController
@@ -111,6 +110,7 @@ class PrivacyDashboardViewController: UIViewController {
     private func privacyDashboardCloseHandler() {
         dismiss(animated: true)
     }
+
 }
 
 extension PrivacyDashboardViewController: Themable {
@@ -127,6 +127,7 @@ extension PrivacyDashboardViewController: Themable {
         default: return .light
         }
     }
+
 }
 
 // MARK: - PrivacyDashboardControllerDelegate
@@ -139,7 +140,6 @@ extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
     
     func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController, didRequestOpenUrlInNewTab url: URL) {
         guard let mainViewController = presentingViewController as? MainViewController else { return }
-        
         dismiss(animated: true) {
             mainViewController.loadUrlInNewTab(url, inheritedAttribution: nil)
         }
@@ -162,6 +162,7 @@ extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
             }
         }
     }
+
 }
 
 // MARK: - PrivacyDashboardNavigationDelegate
@@ -176,6 +177,7 @@ extension PrivacyDashboardViewController: PrivacyDashboardNavigationDelegate {
     func privacyDashboardControllerDidTapClose(_ privacyDashboardController: PrivacyDashboardController) {
         privacyDashboardCloseHandler()
     }
+
 }
 
 // MARK: - PrivacyDashboardReportBrokenSiteDelegate
@@ -200,6 +202,7 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
         ActionMessageView.present(message: UserText.feedbackSumbittedConfirmation)
         privacyDashboardCloseHandler()
     }
+
 }
 
 extension PrivacyDashboardViewController: UIPopoverPresentationControllerDelegate {}
@@ -260,4 +263,5 @@ extension PrivacyDashboardViewController {
                                errors: errors,
                                httpStatusCodes: statusCodes)
     }
+
 }

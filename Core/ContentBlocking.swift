@@ -24,6 +24,7 @@ import Common
 
 
 public final class ContentBlocking {
+    
     public static let shared = ContentBlocking()
 
     public let privacyConfigurationManager: PrivacyConfigurationManaging
@@ -119,6 +120,8 @@ public final class ContentBlocking {
             
         case .contentBlockingCompilationTime:
             domainEvent = .contentBlockingCompilationTime
+        case .toggleProtectionsDailyCount:
+            domainEvent = .toggleProtectionsDailyCount
         }
         
         if let error = error {

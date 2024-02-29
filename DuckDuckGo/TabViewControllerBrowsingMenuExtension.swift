@@ -406,6 +406,17 @@ extension TabViewController {
         delegate?.tabDidRequestSettings(tab: self)
     }
 
+    private func buildToggleProtectionEntry(forDomain domain: String) -> BrowsingMenuEntry {
+        let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
+        let isProtected = !config.isUserUnprotected(domain: domain)
+        let title = isProtected ? UserText.actionDisableProtection : UserText.actionEnableProtection
+        let image = isProtected ? UIImage(named: "Protections-Blocked-16")! : UIImage(named: "Protections-16")!
+    
+        return BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
+            self?.onToggleProtectionAction(forDomain: domain, isProtected: isProtected)
+        })
+    }
+
     private func onToggleProtectionAction(forDomain domain: String, isProtected: Bool) {
         // config check
         if isProtected {
@@ -418,17 +429,6 @@ extension TabViewController {
         Pixel.fire(pixel: isProtected ? .browsingMenuDisableProtection : .browsingMenuEnableProtection)
     }
 
-    private func buildToggleProtectionEntry(forDomain domain: String) -> BrowsingMenuEntry {
-        let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
-        let isProtected = !config.isUserUnprotected(domain: domain)
-        let title = isProtected ? UserText.actionDisableProtection : UserText.actionEnableProtection
-        let image = isProtected ? UIImage(named: "Protections-Blocked-16")! : UIImage(named: "Protections-16")!
-    
-        return BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
-            self?.onToggleProtectionAction(forDomain: domain, isProtected: isProtected)
-        })
-    }
-    
     private func togglePrivacyProtection(domain: String) {
         let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
         let isProtected = !config.isUserUnprotected(domain: domain)

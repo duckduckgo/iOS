@@ -326,6 +326,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         clearDebugWaitlistState()
 
+        AppDependencyProvider.shared.toggleProtectionsCounter.sendEventsIfNeeded()
+
         return true
     }
 

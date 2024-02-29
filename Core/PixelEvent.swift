@@ -526,6 +526,8 @@ extension Pixel {
         case compilationFailed
 
         case appRatingPromptFetchError
+
+        case toggleProtectionsDailyCount
     }
     
 }
@@ -1024,6 +1026,8 @@ extension Pixel.Event {
         case .debugReturnUserUpdateATB: return "m_debug_return_user_update_atb"
             
         case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
+
+        case .toggleProtectionsDailyCount: return "m_toggle_protections_daily_count"
         }
         
     }

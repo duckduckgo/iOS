@@ -77,12 +77,13 @@ struct CriticalAlerts {
         alertController.overrideUserInterfaceStyle()
 
         let closeButton = UIAlertAction(title: UserText.vpnAccessRevokedAlertActionCancel, style: .cancel)
-        let signInButton = UIAlertAction(title: UserText.vpnAccessRevokedAlertActionSubscribe, style: .default) { _ in
+        let subscribeButton = UIAlertAction(title: UserText.vpnAccessRevokedAlertActionSubscribe, style: .default) { _ in
             UIApplication.shared.open(URL.emailProtectionQuickLink, options: [:], completionHandler: nil)
         }
 
         alertController.addAction(closeButton)
-        alertController.addAction(signInButton)
+        alertController.addAction(subscribeButton)
+        alertController.preferredAction = subscribeButton
         return alertController
     }
 

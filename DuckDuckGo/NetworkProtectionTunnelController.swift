@@ -40,6 +40,7 @@ final class NetworkProtectionTunnelController: TunnelController {
     enum StartError: LocalizedError {
         case connectionStatusInvalid
         case simulateControllerFailureError
+        case noAuthToken
     }
 
     init() {
@@ -134,8 +135,12 @@ final class NetworkProtectionTunnelController: TunnelController {
             throw StartError.simulateControllerFailureError
         }
 
+        guard let authToken = try tokenStore.fetchToken() as? NSString else {
+            throw StartError.noAuthToken
+        }
+
         options["activationAttemptId"] = UUID().uuidString as NSString
-        options["authToken"] = try tokenStore.fetchToken() as NSString?
+        options["authToken"] = authToken
 
         do {
             try tunnelManager.connection.startVPNTunnel(options: options)

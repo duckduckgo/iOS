@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "bunn/dbp/css-release",
-        "revision" : "8aed98eaaf5912b01cbd38d77332570d07df5aa7"
+        "revision" : "f903ffcbc51e85ac262c355b56726e3387957a80",
+        "version" : "113.0.0"
       }
     },
     {

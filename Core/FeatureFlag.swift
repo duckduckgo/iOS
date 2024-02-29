@@ -36,7 +36,6 @@ public enum FeatureFlag: String {
     case networkProtectionWaitlistActive
     case subscription
     case swipeTabs
-    case autoconsentOnByDefault
     case history
 }
 

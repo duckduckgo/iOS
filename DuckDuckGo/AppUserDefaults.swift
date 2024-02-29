@@ -22,7 +22,6 @@ import Bookmarks
 import Core
 import WidgetKit
 
-// swiftlint:disable file_length
 public class AppUserDefaults: AppSettings {
     
     public struct Notifications {
@@ -291,24 +290,8 @@ public class AppUserDefaults: AppSettings {
         }
     }
 
-    var autoconsentEnabled: Bool {
-        get {
-            // Use settings value if present
-            if let isEnabled = autoconsentEnabledSetting {
-                return isEnabled
-            }
-
-            // Use onByDefault rollout otherwise
-            return featureFlagger.isFeatureOn(.autoconsentOnByDefault)
-        }
-
-        set {
-            autoconsentEnabledSetting = newValue
-        }
-    }
-
-    @UserDefaultsWrapper(key: .autoconsentEnabled, defaultValue: false)
-    private var autoconsentEnabledSetting: Bool?
+    @UserDefaultsWrapper(key: .autoconsentEnabled, defaultValue: true)
+    var autoconsentEnabled: Bool
 
     var inspectableWebViewEnabled: Bool {
         get {

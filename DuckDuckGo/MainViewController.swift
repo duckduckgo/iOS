@@ -1342,6 +1342,19 @@ class MainViewController: UIViewController {
                 self?.onNetworkProtectionEntitlementMessagingChange()
             }
             .store(in: &vpnCancellables)
+
+        let notificationCallback: CFNotificationCallback = { _, _, name, _, _ in
+            if let name {
+                NotificationCenter.default.post(name: Notification.Name(name.rawValue as String),
+                                                object: nil)
+            }
+        }
+
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(),
+                                        UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque()),
+                                        notificationCallback,
+                                        Notification.Name.vpnEntitlementMessagingDidChange.rawValue as CFString,
+                                        nil, .deliverImmediately)
     }
 
     private func onNetworkProtectionEntitlementMessagingChange() {

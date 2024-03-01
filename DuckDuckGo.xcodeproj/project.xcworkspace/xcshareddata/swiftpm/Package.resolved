@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "c9eae1b4a4ce5b6854d6934e57f900f62d2f3917",
-        "version" : "114.0.0"
+        "branch" : "sam/remove-cgnat",
+        "revision" : "1255da6c78acb32acd12eb8f8229a9af8ab57f3e"
       }
     },
     {

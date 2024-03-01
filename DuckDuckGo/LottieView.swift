@@ -62,6 +62,11 @@ struct LottieView: UIViewRepresentable {
     }
  
     func updateUIView(_ uiView: UIViewType, context: Context) {
+        if uiView.isAnimationPlaying, !isAnimating.wrappedValue {
+            uiView.stop()
+            return
+        }
+
         guard isAnimating.wrappedValue, !uiView.isAnimationPlaying else { return }
         
         if uiView.loopMode == .playOnce && uiView.currentProgress == 1 { return }

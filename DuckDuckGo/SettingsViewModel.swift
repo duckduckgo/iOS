@@ -519,6 +519,7 @@ extension SettingsViewModel {
             if #available(iOS 15, *) {
                 switch NetworkProtectionAccessController().networkProtectionAccessType() {
                 case .inviteCodeInvited, .waitlistInvited:
+                    Pixel.fire(pixel: .privacyProVPNSettings)
                     pushViewController(legacyViewProvider.netP)
                 default:
                     pushViewController(legacyViewProvider.netPWaitlist)

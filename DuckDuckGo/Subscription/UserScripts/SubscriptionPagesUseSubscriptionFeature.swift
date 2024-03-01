@@ -81,6 +81,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
              subscriptionExpired,
              hasActiveSubscription,
              cancelledByUser,
+             accountCreationFailed,
              generalError
     }
         
@@ -108,19 +109,23 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func handler(forMethodNamed methodName: String) -> Subfeature.Handler? {
+
+        os_log("WebView handler: %s", log: .subscription, type: .debug, methodName)
+
         switch methodName {
         case Handlers.getSubscription: return getSubscription
         case Handlers.setSubscription: return setSubscription
         case Handlers.backToSettings: return backToSettings
         case Handlers.getSubscriptionOptions: return getSubscriptionOptions
         case Handlers.subscriptionSelected: return subscriptionSelected
-        case Handlers.activateSubscription: return activateSubscription
+        case Handlers.activateSubscription:
+            Pixel.fire(pixel: .privacyProRestorePurchaseOfferPageEntry)
+            return activateSubscription
         case Handlers.featureSelected: return featureSelected
         default:
             return nil
         }
     }
-    
 
     /// Values that the Frontend can use to determine the current state.
     // swiftlint:disable nesting
@@ -171,7 +176,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             case .success(let subscriptionOptions):
                 return subscriptionOptions
             case .failure:
-                os_log(.error, log: .subscription, "Failed to obtain subscription options")
+                os_log("Failed to obtain subscription options", log: .subscription, type: .error)
                 setTransactionError(.failedToGetSubscriptionOptions)
                 return nil
             }
@@ -200,6 +205,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             // Check for active subscriptions
             if await PurchaseManager.hasActiveSubscription() {
                 setTransactionError(.hasActiveSubscription)
+                Pixel.fire(pixel: .privacyProRestoreAfterPurchaseAttempt)
                 return nil
             }
             
@@ -213,6 +219,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
                 switch error {
                 case .cancelledByUser:
                     setTransactionError(.cancelledByUser)
+                case .accountCreationFailed:
+                    setTransactionError(.accountCreationFailed)
                 default:
                     setTransactionError(.purchaseFailed)
                 }
@@ -225,6 +233,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             switch await AppStorePurchaseFlow.completeSubscriptionPurchase() {
             case .success(let purchaseUpdate):
                 DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess)
+                UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
                 await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
             case .failure:
                 setTransactionError(.missingEntitlements)
@@ -248,7 +257,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             accountManager.storeAuthToken(token: authToken)
             accountManager.storeAccount(token: accessToken, email: accountDetails.email, externalID: accountDetails.externalID)
         } else {
-            os_log(.error, log: .subscription, "Failed to obtain subscription options")
+            os_log("Failed to obtain subscription options", log: .subscription, type: .error)
             setTransactionError(.failedToSetSubscription)
         }
 
@@ -276,11 +285,11 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
                 emailActivationComplete = true
                 
             case .failure:
-                os_log(.error, log: .subscription, "Failed to restore subscription from Email")
+                os_log("Failed to restore subscription from Email", log: .subscription, type: .error)
                 setTransactionError(.failedToRestoreFromEmail)
             }
         } else {
-            os_log(.error, log: .subscription, "General error. Could not get account Details")
+            os_log("General error. Could not get account Details", log: .subscription, type: .error)
             setTransactionError(.generalError)
         }
         return nil

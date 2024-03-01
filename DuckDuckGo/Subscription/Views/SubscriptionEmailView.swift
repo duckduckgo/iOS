@@ -76,11 +76,11 @@ struct SubscriptionEmailView: View {
     
 }
 
-// @available(iOS 15.0, *)
-// struct SubscriptionEmailView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SubscriptionEmailView()
-//    }
-// }
+ @available(iOS 15.0, *)
+ struct SubscriptionEmailView_Previews: PreviewProvider {
+    static var previews: some View {
+        SubscriptionEmailView()
+    }
+ }
 
 #endif

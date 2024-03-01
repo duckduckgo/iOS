@@ -20,6 +20,7 @@
 import Foundation
 import SwiftUI
 import DesignResourcesKit
+import Core
 
 class SceneEnvironment: ObservableObject {
     weak var windowScene: UIWindowScene?
@@ -55,20 +56,25 @@ struct SubscriptionSettingsView: View {
                     Text(UserText.subscriptionChangePlan)
                         .daxBodyRegular()
                 },
-                                   action: { Task { viewModel.manageSubscription() } },
+                                   action: {
+                    Pixel.fire(pixel: .privacyProSubscriptionManagementPlanBilling)
+                    Task { viewModel.manageSubscription() }
+                },
                                    isButton: true)
             }
             
             Section(header: Text(UserText.subscriptionManageDevices)) {
                 
-                NavigationLink(destination: SubscriptionRestoreView()) {
+                NavigationLink(destination: SubscriptionRestoreView().onAppear(perform: {
+                    Pixel.fire(pixel: .privacyProSettingsAddDevice)
+                })) {
                     SettingsCustomCell(content: {
                         Text(UserText.subscriptionAddDeviceButton)
                             .daxBodyRegular()
                             .foregroundColor(Color.init(designSystemColor: .accent))
                     })
                 }
-                
+
                 SettingsCustomCell(content: {
                     Text(UserText.subscriptionRemoveFromDevice)
                             .daxBodyRegular()
@@ -105,6 +111,7 @@ struct SubscriptionSettingsView: View {
                 primaryButton: .cancel(Text(UserText.subscriptionRemoveCancel)) {
                 },
                 secondaryButton: .destructive(Text(UserText.subscriptionRemove)) {
+                    Pixel.fire(pixel: .privacyProSubscriptionManagementRemoval)
                     viewModel.removeSubscription()
                     presentationMode.wrappedValue.dismiss()
                 }

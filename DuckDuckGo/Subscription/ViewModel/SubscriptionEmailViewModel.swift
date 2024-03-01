@@ -52,9 +52,9 @@ final class SubscriptionEmailViewModel: ObservableObject {
              subscriptionExpired,
              generalError
     }
-    
+
     private var cancellables = Set<AnyCancellable>()
-            
+
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
          accountManager: AccountManager = AccountManager()) {

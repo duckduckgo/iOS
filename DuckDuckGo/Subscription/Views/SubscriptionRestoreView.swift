@@ -20,6 +20,7 @@
 import Foundation
 import SwiftUI
 import DesignResourcesKit
+import Core
 
 #if SUBSCRIPTION
 @available(iOS 15.0, *)
@@ -109,8 +110,9 @@ struct SubscriptionRestoreView: View {
                         .daxSubheadRegular()
                         .foregroundColor(Color(designSystemColor: .textSecondary))
                     getCellButton(buttonText: UserText.subscriptionActivateEmailButton,
-                                    action: {
+                                  action: {
                         DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailStart)
+                        DailyPixel.fire(pixel: .privacyProWelcomeAddDevice)
                         buttonAction()
                     })
                 } else if viewModel.subscriptionEmail == nil {
@@ -118,7 +120,10 @@ struct SubscriptionRestoreView: View {
                         .daxSubheadRegular()
                         .foregroundColor(Color(designSystemColor: .textSecondary))
                     getCellButton(buttonText: UserText.subscriptionRestoreAddEmailButton,
-                                    action: buttonAction)
+                                  action: {
+                        Pixel.fire(pixel: .privacyProAddDeviceEnterEmail)
+                        buttonAction()
+                    })
                 } else {
                     Text(viewModel.subscriptionEmail ?? "").daxSubheadSemibold()
                     Text(UserText.subscriptionManageEmailDescription)
@@ -126,7 +131,10 @@ struct SubscriptionRestoreView: View {
                         .foregroundColor(Color(designSystemColor: .textSecondary))
                     HStack {
                         getCellButton(buttonText: UserText.subscriptionManageEmailButton,
-                                        action: buttonAction)
+                                      action: {
+                            Pixel.fire(pixel: .privacyProSubscriptionManagementEmail)
+                            buttonAction()
+                        })
                     }
                 }
             })
@@ -268,4 +276,12 @@ struct SubscriptionRestoreView: View {
         let expandedContent: AnyView
     }
 }
+
+ @available(iOS 15.0, *)
+ struct SubscriptionRestoreView_Previews: PreviewProvider {
+    static var previews: some View {
+        SubscriptionRestoreView()
+    }
+ }
+
 #endif

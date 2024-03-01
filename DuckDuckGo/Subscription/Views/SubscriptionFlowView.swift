@@ -131,9 +131,8 @@ struct SubscriptionFlowView: View {
         }
 
         .onChange(of: viewModel.userTappedRestoreButton) { _ in
-                Pixel.fire(pixel: .privacyProRestorePurchaseOfferPageEntry)
-                isActive = true
-                viewModel.userTappedRestoreButton = false
+            isActive = true
+            viewModel.userTappedRestoreButton = false
         }
         
         .onChange(of: viewModel.transactionError) { value in
@@ -174,7 +173,6 @@ struct SubscriptionFlowView: View {
     private func getAlert() -> Alert {
         
         switch transactionError {
-        
         case .hasActiveSubscription:
             Alert(
                 title: Text(UserText.subscriptionFoundTitle),
@@ -195,15 +193,12 @@ struct SubscriptionFlowView: View {
                 }
             )
         }
-        
     }
-    
-    
+
     @ViewBuilder
     private var webView: some View {
         
         ZStack(alignment: .top) {
-            
             // Restore View Hidden Link            
             NavigationLink(destination: SubscriptionRestoreView(), isActive: $isActive) {
                 EmptyView()
@@ -217,8 +212,7 @@ struct SubscriptionFlowView: View {
             }
         }
     }
-    
-        
+
     private func setUpAppearances() {
         let navAppearance = UINavigationBar.appearance()
         navAppearance.backgroundColor = UIColor(designSystemColor: .background)
@@ -229,11 +223,11 @@ struct SubscriptionFlowView: View {
 
 }
 
-// @available(iOS 15.0, *)
-// struct SubscriptionFlowView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SubscriptionFlowView()
-//    }
-// }
+ @available(iOS 15.0, *)
+ struct SubscriptionFlowView_Previews: PreviewProvider {
+    static var previews: some View {
+        SubscriptionFlowView()
+    }
+ }
 
 #endif

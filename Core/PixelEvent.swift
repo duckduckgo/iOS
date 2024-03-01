@@ -531,7 +531,12 @@ extension Pixel {
         case privacyProSubscriptionActive
         case privacyProOfferScreenImpression
         case privacyProPurchaseAttempt
+
         case privacyProPurchaseFailure
+        case privacyProPurchaseFailureStoreError
+        case privacyProPurchaseFailureBackendError
+        case privacyProPurchaseFailureAccountNotCreated
+
         case privacyProPurchaseSuccess
         case privacyProRestorePurchaseOfferPageEntry
         case privacyProRestorePurchaseEmailStart
@@ -1056,11 +1061,13 @@ extension Pixel.Event {
         case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
             
             // MARK: Privacy pro
-        case .privacyProSubscriptionActive: return "m_privacy-pro_app_subscription_active" // TODO: we will be adding a method to refresh the entitlements automatically to the app, we will use that for this
+        case .privacyProSubscriptionActive: return "m_privacy-pro_app_subscription_active"
         case .privacyProOfferScreenImpression: return "m_privacy-pro_offer_screen_impression"
         case .privacyProPurchaseAttempt: return "m_privacy-pro_terms-conditions_subscribe_click"
-        case .privacyProPurchaseFailure: return "m_privacy-pro_app_subscription-purchase_failure_other" // TODO:  - Error handling not implemented yet in  - func subscriptionSelected(params: Any, original: WKScriptMessage) async throws -> Encodable? { waiting for @Daniel
-        // TODO: more errors here
+        case .privacyProPurchaseFailure: return "m_privacy-pro_app_subscription-purchase_failure_other"
+        case .privacyProPurchaseFailureStoreError: return "m_privacy-pro_app_subscription-purchase_failure_store"
+        case .privacyProPurchaseFailureAccountNotCreated: return "m_privacy-pro_app_subscription-purchase_failure_backend"
+        case .privacyProPurchaseFailureBackendError: return "m_privacy-pro_app_subscription-purchase_failure_account-creation"
         case .privacyProPurchaseSuccess: return "m_privacy-pro_app_subscription-purchase_success"
         case .privacyProRestorePurchaseOfferPageEntry: return "m_privacy-pro_offer_restore-purchase_click"
         case .privacyProRestorePurchaseEmailStart: return "m_privacy-pro_activate-subscription_enter-email_click"
@@ -1070,13 +1077,13 @@ extension Pixel.Event {
         case .privacyProRestorePurchaseStoreFailureNotFound: return "m_privacy-pro_app_subscription-restore-using-store_failure_not-found"
         case .privacyProRestorePurchaseStoreFailureOther: return "m_privacy-pro_app_subscription-restore-using-store_failure_other"
         case .privacyProRestoreAfterPurchaseAttempt: return "m_privacy-pro_app_subscription-restore-after-purchase-attempt_success"
-        case .privacyProSubscriptionActivated: return "m_privacy-pro_app_subscription_activated"
-        case .privacyProWelcomeAddDevice: return "m_privacy-pro_welcome_add-device_click"
+        case .privacyProSubscriptionActivated: return "m_privacy-pro_app_subscription_activated_u"
+        case .privacyProWelcomeAddDevice: return "m_privacy-pro_welcome_add-device_click_u"
         case .privacyProSettingsAddDevice: return "m_privacy-pro_settings_add-device_click"
         case .privacyProAddDeviceEnterEmail: return "m_privacy-pro_add-device_enter-email_click"
-        case .privacyProWelcomeVPN: return "m_privacy-pro_welcome_vpn_click"
-        case .privacyProWelcomePersonalInformationRemoval: return "m_privacy-pro_welcome_personal-information-removal_click"
-        case .privacyProWelcomeIdentityRestoration: return "m_privacy-pro_welcome_identity-theft-restoration_click"
+        case .privacyProWelcomeVPN: return "m_privacy-pro_welcome_vpn_click_u"
+        case .privacyProWelcomePersonalInformationRemoval: return "m_privacy-pro_welcome_personal-information-removal_click_u"
+        case .privacyProWelcomeIdentityRestoration: return "m_privacy-pro_welcome_identity-theft-restoration_click_u"
         case .privacyProSubscriptionSettings: return "m_privacy-pro_settings_screen_impression"
         case .privacyProVPNSettings: return "m_privacy-pro_app-settings_vpn_click"
         case .privacyProPersonalInformationRemovalSettings: return "m_privacy-pro_app-settings_personal-information-removal_click"

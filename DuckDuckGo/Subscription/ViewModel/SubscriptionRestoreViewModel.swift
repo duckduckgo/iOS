@@ -89,6 +89,12 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         default:
             activationResult = .error
         }
+
+        if activationResult == .notFound {
+            DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreFailureNotFound)
+        } else {
+            DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreFailureOther)
+        }
     }
     
     @MainActor
@@ -106,7 +112,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
                 DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreSuccess)
                 activationResult = .activated
             } catch let error {
-                // TODO: DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreFailureNotFound) // Other DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreFailureOther)
                 if let specificError = error as? SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError {
                     handleRestoreError(error: specificError)
                 }

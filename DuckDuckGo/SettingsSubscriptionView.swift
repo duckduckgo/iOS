@@ -19,6 +19,7 @@
 
 import SwiftUI
 import UIKit
+import Core
 
 #if SUBSCRIPTION
 import Subscription
@@ -81,6 +82,7 @@ struct SettingsSubscriptionView: View {
     
     private var subscriptionDetailsView: some View {
         return Group {
+            
             if viewModel.shouldShowNetP {
                 SettingsCellView(label: UserText.settingsPProVPNTitle,
                                  subtitle: viewModel.state.networkProtection.status != "" ? viewModel.state.networkProtection.status : nil,
@@ -94,7 +96,9 @@ struct SettingsSubscriptionView: View {
                                  subtitle: UserText.settingsPProDBPSubTitle,
                                  action: { isShowingDBP.toggle() }, isButton: true)
                 .sheet(isPresented: $isShowingDBP) {
-                    SubscriptionPIRView()
+                    SubscriptionPIRView().onAppear(perform: {
+                        Pixel.fire(pixel: .privacyProPersonalInformationRemovalSettings)
+                    })
                 }
             }
             
@@ -103,12 +107,17 @@ struct SettingsSubscriptionView: View {
                                  subtitle: UserText.settingsPProITRSubTitle,
                                  action: { isShowingITP.toggle() }, isButton: true)
                 .sheet(isPresented: $isShowingITP) {
-                    SubscriptionITPView()
+                    SubscriptionITPView().onAppear(perform: {
+                        Pixel.fire(pixel: .privacyProIdentityRestorationSettings)
+                    })
                 }
             }
              
             if viewModel.shouldShowDBP || viewModel.shouldShowITP || viewModel.shouldShowNetP {
-                NavigationLink(destination: SubscriptionSettingsView()) {
+                NavigationLink(destination: SubscriptionSettingsView().onAppear(perform: {
+                    Pixel.fire(pixel: .privacyProSubscriptionSettings)
+                })
+                ) {
                     SettingsCustomCell(content: { manageSubscriptionView })
                 }
             }
@@ -159,11 +168,4 @@ struct SettingsSubscriptionView: View {
     }
 }
 
-// @available(iOS 15.0, *)
-// struct SettingsSubscriptionView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SettingsSubscriptionView(viewModel: SettingsViewModel(legacyViewProvider: <#T##SettingsLegacyViewProvider#>, 
-//                                                              accountManager: <#T##AccountManager#>))
-//    }
-// }
 #endif

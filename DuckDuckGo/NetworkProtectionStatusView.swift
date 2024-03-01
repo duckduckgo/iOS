@@ -128,19 +128,11 @@ struct NetworkProtectionStatusView: View {
         Section {
             if let location = statusModel.location {
                 NavigationLink(destination: NetworkProtectionVPNLocationView()) {
-                    NetworkProtectionServerItemView(
-                        imageID: "Server-Location-24",
-                        title: UserText.netPStatusViewLocation,
-                        value: location
-                    )
+                    NetworkProtectionServerItemView(title: UserText.netPStatusViewLocation, value: location)
                 }
             }
             if let ipAddress = statusModel.ipAddress {
-                NetworkProtectionServerItemView(
-                    imageID: "IP-24",
-                    title: UserText.netPStatusViewIPAddress,
-                    value: ipAddress
-                )
+                NetworkProtectionServerItemView(title: UserText.netPStatusViewIPAddress, value: ipAddress)
             }
         } header: {
             Text(UserText.netPStatusViewConnectionDetails).foregroundColor(.init(designSystemColor: .textSecondary))
@@ -210,13 +202,11 @@ private struct NetworkProtectionErrorView: View {
 }
 
 private struct NetworkProtectionServerItemView: View {
-    let imageID: String
     let title: String
     let value: String
 
     var body: some View {
         HStack(spacing: 16) {
-            Image(imageID)
             Text(title)
                 .daxBodyRegular()
                 .foregroundColor(.init(designSystemColor: .textPrimary))

@@ -59,9 +59,14 @@ struct NetworkProtectionStatusView: View {
                     Text(UserText.netPStatusViewTitle)
                         .daxBodyRegular()
                         .foregroundColor(.init(designSystemColor: .textPrimary))
-                    Text(statusModel.statusMessage)
-                        .daxFootnoteRegular()
-                        .foregroundColor(.init(designSystemColor: .textSecondary))
+
+                    HStack {
+                        statusBadge(isConnected: statusModel.isNetPEnabled)
+
+                        Text(statusModel.statusMessage)
+                            .daxFootnoteRegular()
+                            .foregroundColor(.init(designSystemColor: .textSecondary))
+                    }
                 }
 
                 Toggle("", isOn: Binding(
@@ -84,6 +89,13 @@ struct NetworkProtectionStatusView: View {
     }
 
     @ViewBuilder
+    private func statusBadge(isConnected: Bool) -> some View {
+        Circle()
+            .foregroundStyle(isConnected ? .green : .yellow)
+            .frame(width: 8, height: 8)
+    }
+
+    @ViewBuilder
     private func header() -> some View {
         HStack {
             Spacer(minLength: 0)
@@ -97,19 +109,11 @@ struct NetworkProtectionStatusView: View {
                     .daxHeadline()
                     .multilineTextAlignment(.center)
                     .foregroundColor(.init(designSystemColor: .textPrimary))
-                if statusModel.isNetPEnabled {
-                    Text(UserText.netPStatusHeaderMessageOn)
-                        .daxFootnoteRegular()
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(.init(designSystemColor: .textSecondary))
-                        .padding(.bottom, 8)
-                } else {
-                    Text(UserText.netPStatusHeaderMessageOff)
-                        .daxFootnoteRegular()
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(.init(designSystemColor: .textSecondary))
-                        .padding(.bottom, 8)
-                }
+                Text(statusModel.isNetPEnabled ? UserText.netPStatusHeaderMessageOn : UserText.netPStatusHeaderMessageOff)
+                    .daxFootnoteRegular()
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.init(designSystemColor: .textSecondary))
+                    .padding(.bottom, 8)
             }
             .padding(.bottom, 4)
             // Pads beyond the default header inset

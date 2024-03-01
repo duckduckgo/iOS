@@ -347,12 +347,8 @@ extension SettingsViewModel {
         
         // Fetch available subscriptions from the backend (or sign out)
         switch await SubscriptionService.getSubscriptionDetails(token: token) {
-        case .success(let response) where !response.isSubscriptionActive:
-            
-            // Account is active but there's not a valid subscription
-            signOutUser()
         
-        case .success(let response):
+        case .success(let response) where response.isSubscriptionActive:
             
             // Cache Subscription state
             cacheSubscriptionState(active: true)
@@ -373,6 +369,7 @@ extension SettingsViewModel {
             }
                         
         default:
+            // Account is active but there's not a valid subscription / entitlements
             signOutUser()
         }
     }

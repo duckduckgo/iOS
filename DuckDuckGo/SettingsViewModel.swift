@@ -373,7 +373,7 @@ extension SettingsViewModel {
             }
                         
         default:
-            signOutUser()
+            return
         }
     }
     

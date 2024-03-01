@@ -96,11 +96,19 @@ struct NetworkProtectionStatusView: View {
                     .daxHeadline()
                     .multilineTextAlignment(.center)
                     .foregroundColor(.init(designSystemColor: .textPrimary))
-                Text(UserText.netPStatusHeaderMessage)
-                    .daxFootnoteRegular()
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.init(designSystemColor: .textSecondary))
-                    .padding(.bottom, 8)
+                if statusModel.isNetPEnabled {
+                    Text(UserText.netPStatusHeaderMessageOn)
+                        .daxFootnoteRegular()
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.init(designSystemColor: .textSecondary))
+                        .padding(.bottom, 8)
+                } else {
+                    Text(UserText.netPStatusHeaderMessageOff)
+                        .daxFootnoteRegular()
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.init(designSystemColor: .textSecondary))
+                        .padding(.bottom, 8)
+                }
             }
             .padding(.bottom, 4)
             // Pads beyond the default header inset

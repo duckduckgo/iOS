@@ -70,6 +70,8 @@ extension EventMapping where Event == NetworkProtectionError {
             params[PixelParameters.keychainErrorCode] = String(status)
         case .noAuthTokenFound:
             pixelEvent = .networkProtectionNoAuthTokenFoundError
+        case .vpnAccessRevoked:
+            return
         case
                 .noServerRegistrationInfo,
                 .couldNotSelectClosestServer,

@@ -36,6 +36,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     let accountManager: AccountManager
     private var subscriptionUpdateTimer: Timer?
+    private var signOutObserver: Any?
+    
     @Published var subscriptionDetails: String = ""
     @Published var subscriptionType: String = ""
     @Published var shouldDisplayRemovalNotice: Bool = false
@@ -45,6 +47,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         self.accountManager = accountManager
         Task { await fetchAndUpdateSubscriptionDetails() }
         setupSubscriptionUpdater()
+        setupNotificationObservers()
     }
     
     private var dateFormatter: DateFormatter = {
@@ -72,6 +75,14 @@ final class SubscriptionSettingsViewModel: ObservableObject {
                 } else {
                     updateSubscriptionDetails(status: response.status, date: response.expiresOrRenewsAt, product: response.productId)
                 }
+            }
+        }
+    }
+    
+    private func setupNotificationObservers() {
+        signOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut, object: nil, queue: .main) { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.shouldDismissView = true
             }
         }
     }

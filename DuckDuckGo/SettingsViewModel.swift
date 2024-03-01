@@ -49,6 +49,7 @@ final class SettingsViewModel: ObservableObject {
     private let voiceSearchHelper: VoiceSearchHelperProtocol
 #if SUBSCRIPTION
     private var accountManager: AccountManager
+    private var signOutObserver: Any?
 #endif
     
     
@@ -215,6 +216,8 @@ final class SettingsViewModel: ObservableObject {
         self.accountManager = accountManager
         self.voiceSearchHelper = voiceSearchHelper
         self.onAppearNavigationTarget = navigateOnAppearDestination
+        
+        setupNotificationObservers()
     }
 #else
     // MARK: Default Init
@@ -233,7 +236,7 @@ final class SettingsViewModel: ObservableObject {
 // MARK: Private methods
 extension SettingsViewModel {
     
-    // This manual (re)initialzation will go away once appSettings and
+    // This manual (re)initialization will go away once appSettings and
     // other dependencies are observable (Such as AppIcon and netP)
     // and we can use subscribers (Currently called from the view onAppear)
     private func initState() {
@@ -390,6 +393,15 @@ extension SettingsViewModel {
                 self?.state.subscription.canPurchase = !products.isEmpty
             }.store(in: &cancellables)
     }
+        
+    private func setupNotificationObservers() {
+        signOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut, object: nil, queue: .main) { [weak self] _ in
+            if #available(iOS 15.0, *) {
+                self?.signOutUser()
+            }
+        }
+    }
+    
     #endif
     
     #if NETWORK_PROTECTION

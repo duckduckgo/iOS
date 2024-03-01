@@ -2451,6 +2451,7 @@
 		D69FBF752B28BE3600B505F1 /* SettingsSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSubscriptionView.swift; sourceTree = "<group>"; };
 		D6BFCB5E2B7524AA0051FF81 /* SubscriptionPIRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPIRView.swift; sourceTree = "<group>"; };
 		D6BFCB602B7525160051FF81 /* SubscriptionPIRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPIRViewModel.swift; sourceTree = "<group>"; };
+		D6CF463B2B921398000782AD /* BrowserServicesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BrowserServicesKit; path = ../BrowserServicesKit; sourceTree = "<group>"; };
 		D6D95CE02B6D52DA00960317 /* RootPresentationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootPresentationMode.swift; sourceTree = "<group>"; };
 		D6D95CE22B6D9F8800960317 /* AsyncHeadlessWebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncHeadlessWebViewModel.swift; sourceTree = "<group>"; };
 		D6E0C1822B7A2B1E00D5E1E9 /* DesktopDownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesktopDownloadView.swift; sourceTree = "<group>"; };
@@ -3675,6 +3676,7 @@
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
+				D6CF463B2B921398000782AD /* BrowserServicesKit */,
 				EE3B98EB2A963515002F63A0 /* WidgetsExtensionAlpha.entitlements */,
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				EEB8FDB92A990AEE00EBEDCF /* Configuration-Alpha.xcconfig */,

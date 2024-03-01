@@ -329,6 +329,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         clearDebugWaitlistState()
 
+        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
+
         return true
     }
 
@@ -364,7 +366,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if SUBSCRIPTION
     private func setupSubscriptionsEnvironment() {
-        Task {  SubscriptionPurchaseEnvironment.current = .appStore
+        Task {
+            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+            SubscriptionPurchaseEnvironment.current = .appStore
             await AccountManager().checkSubscriptionState()
         }
     }

@@ -132,6 +132,7 @@ extension WebCacheManager {
     
     private func legacyDataClearing() async -> [HTTPCookie]? {
         let timeoutTask = Task.detached {
+            try? await Task.sleep(interval: 5.0)
             if !Task.isCancelled {
                 Pixel.fire(pixel: .cookieDeletionTimedOut, withAdditionalParameters: [
                     PixelParameters.clearWebDataTimedOut: "1"

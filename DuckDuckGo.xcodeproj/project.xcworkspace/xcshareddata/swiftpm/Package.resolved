@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "apple-toolbox",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/apple-toolbox.git",
+      "state" : {
+        "revision" : "e3dc4faf70ca09718a2d20d5c47b449389e8c153",
+        "version" : "1.0.0"
+      }
+    },
+    {
       "identity" : "bloom_cpp",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/bloom_cpp.git",
@@ -12,7 +21,7 @@
     {
       "identity" : "browserserviceskit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/duckduckgo/BrowserServicesKit",
+      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "autofill/anya-delete-all-ios",
         "revision" : "f087cf8389926b58692870bd5a459bad492ce66d"

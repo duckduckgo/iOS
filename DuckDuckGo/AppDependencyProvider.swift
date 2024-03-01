@@ -24,6 +24,7 @@ import DDGSync
 import Bookmarks
 
 protocol DependencyProvider {
+
     var appSettings: AppSettings { get }
     var variantManager: VariantManager { get }
     var internalUserDecider: InternalUserDecider { get }
@@ -36,11 +37,14 @@ protocol DependencyProvider {
     var autofillLoginSession: AutofillLoginSession { get }
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager { get }
     var configurationManager: ConfigurationManager { get }
+    var userBehaviorMonitor: UserBehaviorMonitor { get }
+
 }
 
 /// Provides dependencies for objects that are not directly instantiated
 /// through `init` call (e.g. ViewControllers created from Storyboards).
 class AppDependencyProvider: DependencyProvider {
+
     static var shared: DependencyProvider = AppDependencyProvider()
     
     let appSettings: AppSettings = AppUserDefaults()
@@ -60,4 +64,7 @@ class AppDependencyProvider: DependencyProvider {
     lazy var autofillNeverPromptWebsitesManager = AutofillNeverPromptWebsitesManager()
 
     let configurationManager = ConfigurationManager()
+
+    let userBehaviorMonitor = UserBehaviorMonitor()
+
 }

@@ -32,12 +32,13 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     let purchaseManager: PurchaseManager
     let accountManager: AccountManager
     var isAddingDevice: Bool
+    private var cancellables = Set<AnyCancellable>()
     
     enum SubscriptionActivationResult {
-        case unknown, activated, notFound, error
+        case unknown, activated, expired, notFound, error
     }
     
-    @Published var transactionStatus: SubscriptionPagesUseSubscriptionFeature.TransactionStatus = .idle
+    @Published var transactionStatus: SubscriptionTransactionStatus = .idle
     @Published var activationResult: SubscriptionActivationResult = .unknown
     @Published var subscriptionEmail: String?
         
@@ -59,26 +60,57 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         if accountManager.isUserAuthenticated {
             isAddingDevice = true
         }
+        Task { await setupTransactionObserver() }
+    }
+    
+    private func setupTransactionObserver() async {
+        
+        subFeature.$transactionStatus
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] status in
+                guard let strongSelf = self else { return }
+                Task {
+                    await strongSelf.setTransactionStatus(status)
+                }
+            }
+            .store(in: &cancellables)
+        
     }
     
     @MainActor
-    private func setTransactionStatus(_ status: SubscriptionPagesUseSubscriptionFeature.TransactionStatus) {
+    private func handleRestoreError(error: SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError) {
+        switch error {
+        case .failedToRestorePastPurchase:
+            activationResult = .notFound
+        case .subscriptionExpired:
+            activationResult = .expired
+        case .subscriptionNotFound:
+            activationResult = .notFound
+        default:
+            activationResult = .error
+        }
+    }
+    
+    @MainActor
+    private func setTransactionStatus(_ status: SubscriptionTransactionStatus) {
         self.transactionStatus = status
     }
     
     @MainActor
     func restoreAppstoreTransaction() {
         Task {
-            transactionStatus = .restoring
             activationResult = .unknown
-            if await subFeature.restoreAccountFromAppStorePurchase() {
+            do {
+                try await subFeature.restoreAccountFromAppStorePurchase()
                 activationResult = .activated
-            } else {
-                activationResult = .notFound
+            } catch let error {
+                if let specificError = error as? SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError {
+                    handleRestoreError(error: specificError)
+                }
             }
-            transactionStatus = .idle
         }
     }
+    
     
 }
 #endif

@@ -100,11 +100,18 @@ struct NetworkProtectionStatusView: View {
         HStack {
             Spacer(minLength: 0)
             VStack(alignment: .center, spacing: 8) {
-                Image(statusModel.statusImageID)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 96)
-                    .padding(8)
+                LottieView(
+                    lottieFile: "vpn-light-mode",
+                    loopMode: .withIntro(
+                        .init(
+                            introStartFrame: 0,
+                            introEndFrame: 100,
+                            loopStartFrame: 130,
+                            loopEndFrame: 370
+                        )
+                    ),
+                    isAnimating: $statusModel.isNetPEnabled
+                )
                 Text(statusModel.headerTitle)
                     .daxHeadline()
                     .multilineTextAlignment(.center)

@@ -263,6 +263,7 @@
 		4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */; };
 		4B274F602AFEAECC003F0745 /* NetworkProtectionWidgetRefreshModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B274F5F2AFEAECC003F0745 /* NetworkProtectionWidgetRefreshModel.swift */; };
 		4B2754EC29E8C7DF00394032 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 4B2754EB29E8C7DF00394032 /* Lottie */; };
+		4B37E0502B928CA6009E81CA /* vpn-light-mode.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B37E04F2B928CA6009E81CA /* vpn-light-mode.json */; };
 		4B470ED6299C49800086EBDC /* AppTrackingProtectionDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B470ED5299C49800086EBDC /* AppTrackingProtectionDatabase.swift */; };
 		4B470ED9299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4B470ED7299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodeld */; };
 		4B470EDB299C4FB20086EBDC /* AppTrackingProtectionListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B470EDA299C4FB20086EBDC /* AppTrackingProtectionListViewModel.swift */; };
@@ -1368,6 +1369,7 @@
 		37FD780E2A29E28B00B36DB1 /* SyncErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncErrorHandler.swift; sourceTree = "<group>"; };
 		4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationDebugViewController.swift; sourceTree = "<group>"; };
 		4B274F5F2AFEAECC003F0745 /* NetworkProtectionWidgetRefreshModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionWidgetRefreshModel.swift; sourceTree = "<group>"; };
+		4B37E04F2B928CA6009E81CA /* vpn-light-mode.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "vpn-light-mode.json"; sourceTree = "<group>"; };
 		4B470ED5299C49800086EBDC /* AppTrackingProtectionDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionDatabase.swift; sourceTree = "<group>"; };
 		4B470ED8299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AppTrackingProtectionModel.xcdatamodel; sourceTree = "<group>"; };
 		4B470EDA299C4FB20086EBDC /* AppTrackingProtectionListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionListViewModel.swift; sourceTree = "<group>"; };
@@ -3489,6 +3491,14 @@
 			name = Widget;
 			sourceTree = "<group>";
 		};
+		4B37E04E2B928C91009E81CA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4B37E04F2B928CA6009E81CA /* vpn-light-mode.json */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		4B470ED4299C484B0086EBDC /* AppTrackingProtection */ = {
 			isa = PBXGroup;
 			children = (
@@ -4819,6 +4829,7 @@
 		EECD94B22A28B8580085C66E /* NetworkProtection */ = {
 			isa = PBXGroup;
 			children = (
+				4B37E04E2B928C91009E81CA /* Resources */,
 				EE01EB412AFC1DE10096AAC9 /* PreferredLocation */,
 				EE9D68D62AE1527F00B55EF4 /* VPNNotifications */,
 				EE9D68CF2AE00CE000B55EF4 /* VPNSettings */,
@@ -6212,6 +6223,7 @@
 				AA4D6AA523DE4CC4007E8790 /* AppIconBlue29x29@3x.png in Resources */,
 				1EEF124C2850A93F003DDE57 /* Trackers.xcassets in Resources */,
 				AA4D6ACF23DE4D27007E8790 /* AppIconPurple76x76@2x.png in Resources */,
+				4B37E0502B928CA6009E81CA /* vpn-light-mode.json in Resources */,
 				9830A06325ED0DB900DB64DE /* BrowsingMenu.xcassets in Resources */,
 				98EF177D21837E35006750C1 /* new_tab_dark.json in Resources */,
 				85C2970A247EB7AA0063A335 /* Text.xcassets in Resources */,

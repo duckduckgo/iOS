@@ -133,6 +133,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     deinit {
         subscriptionUpdateTimer?.invalidate()
+        signOutObserver = nil
     }
     
     

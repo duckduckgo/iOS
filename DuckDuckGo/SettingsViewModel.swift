@@ -219,6 +219,11 @@ final class SettingsViewModel: ObservableObject {
         
         setupNotificationObservers()
     }
+    
+    deinit {
+        signOutObserver = nil
+    }
+    
 #else
     // MARK: Default Init
     init(state: SettingsState? = nil,
@@ -397,7 +402,8 @@ extension SettingsViewModel {
     private func setupNotificationObservers() {
         signOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut, object: nil, queue: .main) { [weak self] _ in
             if #available(iOS 15.0, *) {
-                self?.signOutUser()
+                guard let strongSelf = self else { return }
+                Task { await strongSelf.setupSubscriptionEnvironment() }
             }
         }
     }

@@ -82,14 +82,10 @@ final class AdAttributionPixelReporter {
 
 extension Pixel: PixelFiring {
     static func fire(pixel: Event, withAdditionalParameters params: [String: String]) async throws {
+
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-
-            Pixel.fire(
-                pixel: pixel,
-                error: nil,
-                withAdditionalParameters: params) { error in
-
-                    if let error {
+            Pixel.fire(pixel: pixel, withAdditionalParameters: params) { error in
+                if let error {
                     continuation.resume(throwing: error)
                 } else {
                     continuation.resume()

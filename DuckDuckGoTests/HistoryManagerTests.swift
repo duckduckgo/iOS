@@ -20,16 +20,14 @@
 import Foundation
 import XCTest
 import BrowserServicesKit
+import Persistence
+import History
 @testable import Core
 
 final class HistoryManagerTests: XCTestCase {
 
-    let privacyConfig = MockPrivacyConfiguration()
+    let privacyConfigManager = MockPrivacyConfigurationManager()
     var variantManager = MockVariantManager()
-
-    lazy var historyManager: HistoryManager = {
-        HistoryManager(privacyConfig: privacyConfig, variantManager: variantManager)
-    }()
 
     func test() {
 
@@ -48,6 +46,7 @@ final class HistoryManagerTests: XCTestCase {
         ]
 
         let privacyConfig = MockPrivacyConfiguration()
+        let privacyConfigManager = MockPrivacyConfigurationManager()
         var variantManager = MockVariantManager()
 
         for condition in conditions {
@@ -56,9 +55,13 @@ final class HistoryManagerTests: XCTestCase {
                 return condition.privacy
             }
 
+            privacyConfigManager.privacyConfig = privacyConfig
             variantManager.isSupportedReturns = condition.variant
 
-            let historyManager = HistoryManager(privacyConfig: privacyConfig, variantManager: variantManager)
+            let model = CoreDataDatabase.loadModel(from: History.bundle, named: "BrowsingHistory")!
+            let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
+
+            let historyManager = HistoryManager(privacyConfigManager: privacyConfigManager, variantManager: variantManager, database: db)
             XCTAssertEqual(condition.expected, historyManager.isHistoryFeatureEnabled(), String(describing: condition))
         }
 

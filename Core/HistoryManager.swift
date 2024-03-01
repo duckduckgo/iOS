@@ -133,7 +133,7 @@ public class HistoryDatabase {
     public static func make(location: URL = defaultDBLocation, readOnly: Bool = false) -> CoreDataDatabase {
         os_log("HistoryDatabase.make - IN - %s", location.absoluteString)
         let bundle = History.bundle
-        guard let model = CoreDataDatabase.loadModel(from: bundle, named: "HistoryModel") else {
+        guard let model = CoreDataDatabase.loadModel(from: bundle, named: "BrowsingHistory") else {
             os_log("HistoryDatabase.make - OUT, failed to loadModel")
             fatalError("Failed to load model")
         }

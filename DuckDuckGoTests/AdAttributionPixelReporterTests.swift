@@ -134,6 +134,17 @@ final class AdAttributionPixelReporterTests: XCTestCase {
         XCTAssertFalse(result)
     }
 
+    func testDoesNotMarkSuccessful_WhenPixelFiringFailed() async {
+        let sut = createSUT()
+        attributionFetcher.fetchResponse = AdServicesAttributionResponse(attribution: true)
+        PixelFiringMock.expectedFireError = NSError(domain: "PixelFailure", code: 1)
+
+        let result = await sut.reportAttributionIfNeeded()
+
+        XCTAssertFalse(fetcherStorage.wasAttributionReportSuccessful)
+        XCTAssertFalse(result)
+    }
+
     private func createSUT() -> AdAttributionPixelReporter {
         AdAttributionPixelReporter(fetcherStorage: fetcherStorage,
                                    attributionFetcher: attributionFetcher,
@@ -156,17 +167,24 @@ class AdAttributionFetcherMock: AdAttributionFetcher {
     }
 }
 
-final class PixelFiringMock: PixelFiring {
+final actor PixelFiringMock: PixelFiring {
+    static var expectedFireError: Error?
+
     static var lastParams: [String: String]?
     static var lastPixel: Pixel.Event?
-    static func fire(pixel: Pixel.Event, withAdditionalParameters params: [String: String]) {
+    static func fire(pixel: Pixel.Event, withAdditionalParameters params: [String: String]) async throws {
         lastParams = params
         lastPixel = pixel
+
+        if let expectedFireError {
+            throw expectedFireError
+        }
     }
 
     static func tearDown() {
         lastParams = nil
         lastPixel = nil
+        expectedFireError = nil
     }
 
     private init() {}

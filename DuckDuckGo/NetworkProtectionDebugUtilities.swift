@@ -48,6 +48,16 @@ final class NetworkProtectionDebugUtilities {
         try? await activeSession.sendProviderMessage(.triggerTestNotification)
     }
 
+    // MARK: - Block all traffic
+
+    func blockAllTraffic() async throws {
+        guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+            return
+        }
+
+        try? await activeSession.sendProviderMessage(.request(.debugCommand(.blockAllTraffic)))
+    }
+
     // MARK: - Disable VPN
 
     func disableConnectOnDemandAndShutDown() async {

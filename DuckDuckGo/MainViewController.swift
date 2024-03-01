@@ -1358,7 +1358,6 @@ class MainViewController: UIViewController {
     }
 
     private func onNetworkProtectionEntitlementMessagingChange() {
-        print("🔵 onNetworkProtectionEntitlementMessagingChange")
         if tunnelDefaults.showEntitlementAlert {
             presentExpiredEntitlementAlert()
         }

@@ -59,7 +59,7 @@ struct DefaultAdAttributionFetcher: AdAttributionFetcher {
                 let token = try (lastToken ?? tokenGetter())
                 lastToken = token
                 return try await fetchAttributionData(using: token)
-            } catch let error as AdAttribtionFetcherError {
+            } catch let error as AdAttributionFetcherError {
                 os_log("AdAttributionFetcher failed to fetch attribution data: %@. Retrying.", log: .adAttributionLog, error.localizedDescription)
 
                 if error == .invalidToken {
@@ -88,7 +88,7 @@ struct DefaultAdAttributionFetcher: AdAttributionFetcher {
         let (data, response) = try await urlSession.data(for: request)
 
         guard let response = response as? HTTPURLResponse else {
-            throw AdAttribtionFetcherError.invalidResponse
+            throw AdAttributionFetcherError.invalidResponse
         }
 
         switch response.statusCode {
@@ -98,11 +98,11 @@ struct DefaultAdAttributionFetcher: AdAttributionFetcher {
 
             return decoded
         case 400:
-            throw AdAttribtionFetcherError.invalidToken
+            throw AdAttributionFetcherError.invalidToken
         case 404:
-            throw AdAttribtionFetcherError.invalidResponse
+            throw AdAttributionFetcherError.invalidResponse
         default:
-            throw AdAttribtionFetcherError.unknown
+            throw AdAttributionFetcherError.unknown
         }
     }
 
@@ -126,7 +126,7 @@ extension AdAttributionFetcher {
         if #available(iOS 14.3, *) {
             return try AAAttribution.attributionToken()
         } else {
-            throw AdAttribtionFetcherError.attributionUnsupported
+            throw AdAttributionFetcherError.attributionUnsupported
         }
     }
 }
@@ -142,7 +142,7 @@ struct AdServicesAttributionResponse: Decodable {
     let adId: Int?
 }
 
-enum AdAttribtionFetcherError: Error {
+enum AdAttributionFetcherError: Error {
     case attributionUnsupported
     case invalidResponse
     case invalidToken

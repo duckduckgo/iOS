@@ -41,7 +41,8 @@ struct SubscriptionRestoreView: View {
         static let footerLineSpacing = 7.0
         static let openIndicator = "chevron.up"
         static let closedIndicator = "chevron.down"
-        static let cornerRadius = 8.0
+        static let cornerRadius = 12.0
+        static let buttonCornerRadius = 8.0
         static let buttonInsets = EdgeInsets(top: 10.0, leading: 16.0, bottom: 10.0, trailing: 16.0)
         static let cellLineSpacing = 12.0
         static let cellPadding = 20.0
@@ -53,8 +54,7 @@ struct SubscriptionRestoreView: View {
     
     var body: some View {
         ZStack {
-            VStack(alignment: .leading,
-                   spacing: Constants.viewStackSpacing) {
+            VStack(spacing: Constants.viewStackSpacing) {
                 
                 // Email Activation View Hidden link
                 NavigationLink(destination: SubscriptionEmailView(isAddingDevice: viewModel.isAddingDevice), isActive: $isActive) {
@@ -148,12 +148,12 @@ struct SubscriptionRestoreView: View {
                     .padding(Constants.buttonInsets)
                     .foregroundColor(.white)
                     .overlay(
-                        RoundedRectangle(cornerRadius: Constants.cornerRadius)
+                        RoundedRectangle(cornerRadius: Constants.buttonCornerRadius)
                             .stroke(Color.clear, lineWidth: 1)
                     )
             })
             .background(Color(designSystemColor: .accent))
-            .cornerRadius(Constants.cornerRadius)
+            .cornerRadius(Constants.buttonCornerRadius)
             .padding(.top, Constants.cellLineSpacing)
         )
     }
@@ -178,7 +178,7 @@ struct SubscriptionRestoreView: View {
                 .daxHeadline()
                 .multilineTextAlignment(.center)
                 .foregroundColor(Color(designSystemColor: .textPrimary))
-            Text(viewModel.isAddingDevice ? UserText.subscriptionAddDeviceDescription : UserText.subscriptionActivateDescription)
+            Text(viewModel.isAddingDevice ? UserText.subscriptionAddDeviceDescription : UserText.subscriptionActivateHeaderDescription)
                 .daxFootnoteRegular()
                 .foregroundColor(Color(designSystemColor: .textSecondary))
                 .multilineTextAlignment(.center)

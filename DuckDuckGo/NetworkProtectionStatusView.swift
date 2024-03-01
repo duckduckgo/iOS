@@ -75,6 +75,7 @@ struct NetworkProtectionStatusView: View {
                 .disabled(statusModel.shouldDisableToggle)
                 .toggleStyle(SwitchToggleStyle(tint: .init(designSystemColor: .accent)))
             }
+            .padding([.top, .bottom], 2)
         } header: {
             header()
         }

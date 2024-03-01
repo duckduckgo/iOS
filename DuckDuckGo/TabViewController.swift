@@ -18,8 +18,8 @@
 //
 
 import WebKit
-import Combine
 import Core
+import Combine
 import StoreKit
 import LocalAuthentication
 import BrowserServicesKit
@@ -34,6 +34,7 @@ import ContentBlocking
 import TrackerRadarKit
 import Networking
 import SecureStorage
+import History
 
 #if NETWORK_PROTECTION
 import NetworkProtection
@@ -271,6 +272,7 @@ class TabViewController: UIViewController {
     static func loadFromStoryboard(model: Tab,
                                    appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
                                    bookmarksDatabase: CoreDataDatabase,
+                                   historyManager: HistoryManager,
                                    syncService: DDGSyncing) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
@@ -278,6 +280,7 @@ class TabViewController: UIViewController {
                               tabModel: model,
                               appSettings: appSettings,
                               bookmarksDatabase: bookmarksDatabase,
+                              historyManager: historyManager,
                               syncService: syncService)
         })
         return controller
@@ -286,15 +289,19 @@ class TabViewController: UIViewController {
     private var userContentController: UserContentController {
         (webView.configuration.userContentController as? UserContentController)!
     }
-    
+
+    let historyManager: HistoryManager
+
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
                    appSettings: AppSettings,
                    bookmarksDatabase: CoreDataDatabase,
+                   historyManager: HistoryManager,
                    syncService: DDGSyncing) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
+        self.historyManager = historyManager
         self.syncService = syncService
         super.init(coder: aDecoder)
     }

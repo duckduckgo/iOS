@@ -160,6 +160,7 @@ class MainViewController: UIViewController {
         fatalError("Use init?(code:")
     }
     
+    var historyManager: HistoryManager
     var viewCoordinator: MainViewCoordinator!
     
 #if APP_TRACKING_PROTECTION
@@ -167,6 +168,7 @@ class MainViewController: UIViewController {
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
         appTrackingProtectionDatabase: CoreDataDatabase,
+        historyManager: HistoryManager,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
         appSettings: AppSettings = AppUserDefaults()
@@ -174,6 +176,7 @@ class MainViewController: UIViewController {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
+        self.historyManager = historyManager
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
@@ -189,12 +192,14 @@ class MainViewController: UIViewController {
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
+        historyManager: HistoryManager,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
         appSettings: AppSettings
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
+        self.historyManager = historyManager
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
@@ -705,6 +710,7 @@ class MainViewController: UIViewController {
         tabManager = TabManager(model: tabsModel,
                                 previewsSource: previewsSource,
                                 bookmarksDatabase: bookmarksDatabase,
+                                historyManager: historyManager,
                                 syncService: syncService,
                                 delegate: self)
     }

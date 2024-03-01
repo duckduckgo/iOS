@@ -264,16 +264,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 })
             }
 
+        let historyManager = makeHistoryManager()
+
 #if APP_TRACKING_PROTECTION
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       appTrackingProtectionDatabase: appTrackingProtectionDatabase,
+                                      historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
                                       appSettings: AppDependencyProvider.shared.appSettings)
 #else
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
+                                      historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
                                       appSettings: AppDependencyProvider.shared.appSettings)
@@ -332,6 +336,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
         return true
+    }
+
+    private func makeHistoryManager() -> HistoryManager {
+        return HistoryManager(privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
+                              variantManager: DefaultVariantManager(),
+                              database: HistoryDatabase.make())
     }
 
     private func presentPreemptiveCrashAlert() {

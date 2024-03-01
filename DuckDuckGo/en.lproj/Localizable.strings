@@ -1908,6 +1908,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Subscription Activation Window Title */
 "subscription.activate" = "Activate Subscription";
 
+/* Subscription Activation Info */
+"subscription.activate..header.description" = "Access your Privacy Pro subscription on this device via Apple ID or an email address.";
+
 /* Restore button title for Email */
 "subscription.activate.add.email.button" = "Add Email";
 
@@ -1990,7 +1993,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.cancel.message" = "Your subscription has been removed from this device.";
 
 /* Change plan or billing title */
-"subscription.change.plan" = "Change Plan Or Billing";
+"subscription.change.plan" = "Change Plan or Billing";
 
 /* Navigation Button for closing subscription view */
 "subscription.close" = "Close";

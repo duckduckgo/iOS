@@ -1,8 +1,8 @@
 //
-//  NetworkProtectionNotificationIdentifier.swift
+//  UserBehaviorEvent.swift
 //  DuckDuckGo
 //
-//  Copyright © 2023 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -19,9 +19,14 @@
 
 import Foundation
 
-public enum NetworkProtectionNotificationIdentifier: String {
-    case connection = "network-protection.notification.connection"
-    case superseded = "network-protection.notification.superseded"
-    case test = "network-protection.notification.test"
-    case entitlement = "network-protection.notification.entitlement"
+public enum UserBehaviorEvent {
+
+    case reloadTwice
+    case reloadAndRestart
+    case reloadAndFireButton
+    case reloadAndOpenSettings
+    case reloadAndTogglePrivacyControls
+    case fireButtonAndRestart
+    case fireButtonAndTogglePrivacyControls
+
 }

@@ -26,6 +26,7 @@ import Core
 import Networking
 import NetworkExtension
 import NetworkProtection
+import Subscription
 
 // Initial implementation for initial Network Protection tests. Will be fleshed out with https://app.asana.com/0/1203137811378537/1204630829332227/f
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
@@ -162,6 +163,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 params[PixelParameters.wireguardErrorCode] = String(code)
             case .noAuthTokenFound:
                 pixelEvent = .networkProtectionNoAuthTokenFoundError
+            case .vpnAccessRevoked:
+                return
             case .unhandledError(function: let function, line: let line, error: let error):
                 pixelEvent = .networkProtectionUnhandledError
                 params[PixelParameters.function] = function
@@ -201,24 +204,32 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
+#if ALPHA
+        let isSubscriptionEnabled = true
+#else
+        let isSubscriptionEnabled = false
+#endif
         let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
-                                                             errorEvents: nil)
+                                                             errorEvents: nil,
+                                                             isSubscriptionEnabled: isSubscriptionEnabled)
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
-        let nofificationsPresenterDecorator = NetworkProtectionNotificationsPresenterTogglableDecorator(
+        let notificationsPresenterDecorator = NetworkProtectionNotificationsPresenterTogglableDecorator(
             settings: settings,
             wrappee: notificationsPresenter
         )
         notificationsPresenter.requestAuthorization()
-        super.init(notificationsPresenter: nofificationsPresenterDecorator,
+        super.init(notificationsPresenter: notificationsPresenterDecorator,
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
                    controllerErrorStore: errorStore,
                    keychainType: .dataProtection(.unspecified),
                    tokenStore: tokenStore,
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
-                   settings: settings)
+                   settings: settings,
+                   isSubscriptionEnabled: isSubscriptionEnabled,
+                   entitlementCheck: Self.entitlementCheck)
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
@@ -265,6 +276,15 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         activationDateStore.updateLastActiveDate()
     }
 
+    private static func entitlementCheck() async -> Result<Bool, Error> {
+        let result = await AccountManager().hasEntitlement(for: .networkProtection)
+        switch result {
+        case .success(let hasEntitlement):
+            return .success(hasEntitlement)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
 }
 
 #endif

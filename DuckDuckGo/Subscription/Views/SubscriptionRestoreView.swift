@@ -37,27 +37,36 @@ struct SubscriptionRestoreView: View {
         static let appleIDIcon = "Platform-Apple-16"
         static let emailIcon = "Email-16"
         static let headerLineSpacing = 10.0
+        static let footerLineSpacing = 5.0
         static let openIndicator = "chevron.up"
         static let closedIndicator = "chevron.down"
-        static let buttonCornerRadius = 8.0
+        static let cornerRadius = 8.0
         static let buttonInsets = EdgeInsets(top: 10.0, leading: 16.0, bottom: 10.0, trailing: 16.0)
         static let cellLineSpacing = 12.0
-        static let cellPadding = 8.0
-        static let headerPadding = EdgeInsets(top: 16.0, leading: 16.0, bottom: 0, trailing: 16.0)
+        static let cellPadding = 20.0
+        static let headerPadding = EdgeInsets(top: 16.0, leading: 30.0, bottom: 10, trailing: 30.0)
+        static let viewPadding: CGFloat = 18.0
+        static let listPadding = EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30)
+        static let borderWidth: CGFloat = 1.0
     }
     
     var body: some View {
         ZStack {
-            VStack {
+            VStack(alignment: .leading) {
                 
                 // Email Activation View Hidden link
                 NavigationLink(destination: SubscriptionEmailView(isAddingDevice: viewModel.isAddingDevice), isActive: $isActive) {
                     EmptyView()
                 }.isDetailLink(false)
-                                                
+                
                 headerView
-                listView
-            }
+                optionsView
+                footerView
+                
+                Spacer()
+            }.background(Color(designSystemColor: .background))
+            
+            
             .navigationTitle(viewModel.isAddingDevice ? UserText.subscriptionAddDeviceTitle : UserText.subscriptionActivate)
             .navigationBarBackButtonHidden(viewModel.transactionStatus != .idle)
             .applyInsetGroupedListStyle()
@@ -95,7 +104,7 @@ struct SubscriptionRestoreView: View {
             HStack {
                 Image(icon)
                 Text(text)
-                    .daxBodyRegular()
+                    .daxSubheadSemibold()
                     .foregroundColor(Color(designSystemColor: .textPrimary))
             }
         )
@@ -137,13 +146,13 @@ struct SubscriptionRestoreView: View {
                     .padding(Constants.buttonInsets)
                     .foregroundColor(.white)
                     .overlay(
-                        RoundedRectangle(cornerRadius: Constants.buttonCornerRadius)
+                        RoundedRectangle(cornerRadius: Constants.cornerRadius)
                             .stroke(Color.clear, lineWidth: 1)
                     )
             })
             .background(Color(designSystemColor: .accent))
-            .cornerRadius(Constants.buttonCornerRadius)
-            .padding(.top, Constants.cellPadding)
+            .cornerRadius(Constants.cornerRadius)
+            .padding(.top, Constants.cellLineSpacing)
         )
     }
                 
@@ -161,8 +170,8 @@ struct SubscriptionRestoreView: View {
     }
     
     private var headerView: some View {
-        VStack(spacing: Constants.headerLineSpacing) {
-            Image(Constants.heroImage)
+        VStack(spacing: Constants.footerLineSpacing) {
+            Image(Constants.heroImage).padding(.bottom, Constants.cellLineSpacing)
             Text(viewModel.isAddingDevice ? UserText.subscriptionAddDeviceHeaderTitle : UserText.subscriptionActivateTitle)
                 .daxHeadline()
                 .multilineTextAlignment(.center)
@@ -171,7 +180,8 @@ struct SubscriptionRestoreView: View {
                 .daxFootnoteRegular()
                 .foregroundColor(Color(designSystemColor: .textSecondary))
                 .multilineTextAlignment(.center)
-        }.padding(Constants.headerPadding)
+        }
+        .padding(Constants.headerPadding)
     }
     
     @ViewBuilder
@@ -187,33 +197,41 @@ struct SubscriptionRestoreView: View {
                     Text(UserText.subscriptionRestoreAppleID)
                         .daxFootnoteSemibold()
                         .foregroundColor(Color(designSystemColor: .accent))
+                        .padding(.top, Constants.headerLineSpacing)
                 })
-            }.padding(.top, Constants.headerLineSpacing)
+            }
+            .padding(Constants.listPadding)
+            .padding(.top, Constants.headerLineSpacing)
         }
     }
     
-    private var listView: some View {
-        List {
-            Section(footer: footerView) {
-                ForEach(Array(zip(listItems.indices, listItems)), id: \.1.id) { _, item in
-                    VStack(alignment: .leading, spacing: Constants.cellLineSpacing) {
-                        HStack {
-                            item.content
-                            Spacer()
-                            if listItems.count > 1 {
-                                Image(systemName: expandedItemId == item.id ? Constants.openIndicator : Constants.closedIndicator)
-                                    .foregroundColor(Color(designSystemColor: .textPrimary))
-                            }
+    private var optionsView: some View {
+        VStack {
+            ForEach(Array(zip(listItems.indices, listItems)), id: \.1.id) { _, item in
+                VStack(alignment: .leading, spacing: Constants.cellLineSpacing) {
+                    HStack {
+                        item.content
+                        Spacer()
+                        if listItems.count > 1 {
+                            Image(systemName: expandedItemId == item.id ? Constants.openIndicator : Constants.closedIndicator)
+                                .foregroundColor(Color(designSystemColor: .textPrimary))
                         }
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            expandedItemId = expandedItemId == item.id ? 0 : item.id
-                        }
-                        if expandedItemId == item.id {
-                            item.expandedContent
-                        }
-                    }.padding(Constants.cellPadding)
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        expandedItemId = expandedItemId == item.id ? 0 : item.id
+                    }
+                    if expandedItemId == item.id {
+                        item.expandedContent
+                    }
                 }
+                .padding(Constants.cellPadding)
+                .background(Color(designSystemColor: .panel))
+                .overlay(
+                    RoundedRectangle(cornerRadius: Constants.cornerRadius)
+                        .stroke(Color(designSystemColor: .lines), lineWidth: Constants.borderWidth)
+                )
+                .padding(Constants.listPadding)
             }
         }
     }
@@ -263,6 +281,15 @@ struct SubscriptionRestoreView: View {
         let id: Int
         let content: AnyView
         let expandedContent: AnyView
+    }
+    
+}
+
+@available(iOS 15.0, *)
+struct SubscriptionRestoreView_Previews: PreviewProvider {
+    static var previews: some View {
+        SubscriptionRestoreView()
+            .previewDevice("iPhone 12")
     }
 }
 #endif

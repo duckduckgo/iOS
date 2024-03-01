@@ -36,6 +36,7 @@ class MockDependencyProvider: DependencyProvider {
     var autofillLoginSession: AutofillLoginSession
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager
     var configurationManager: ConfigurationManager
+    var userBehaviorMonitor: UserBehaviorMonitor
 
     init() {
         let defaultProvider = AppDependencyProvider()
@@ -51,5 +52,6 @@ class MockDependencyProvider: DependencyProvider {
         autofillLoginSession = defaultProvider.autofillLoginSession
         autofillNeverPromptWebsitesManager = defaultProvider.autofillNeverPromptWebsitesManager
         configurationManager = defaultProvider.configurationManager
+        userBehaviorMonitor = defaultProvider.userBehaviorMonitor
     }
 }

@@ -526,17 +526,24 @@ extension Pixel {
         case compilationFailed
         
         case appRatingPromptFetchError
-        
+        case appleAdAttribution
+
+        case userBehaviorReloadTwice
+        case userBehaviorReloadAndRestart
+        case userBehaviorReloadAndFireButton
+        case userBehaviorReloadAndOpenSettings
+        case userBehaviorReloadAndTogglePrivacyControls
+        case userBehaviorFireButtonAndRestart
+        case userBehaviorFireButtonAndTogglePrivacyControls
+
         // MARK: Privacy pro
         case privacyProSubscriptionActive
         case privacyProOfferScreenImpression
         case privacyProPurchaseAttempt
-
         case privacyProPurchaseFailure
         case privacyProPurchaseFailureStoreError
         case privacyProPurchaseFailureBackendError
         case privacyProPurchaseFailureAccountNotCreated
-
         case privacyProPurchaseSuccess
         case privacyProRestorePurchaseOfferPageEntry
         case privacyProRestorePurchaseEmailStart
@@ -544,7 +551,6 @@ extension Pixel {
         case privacyProRestorePurchaseEmailSuccess
         case privacyProRestorePurchaseStoreSuccess
         case privacyProRestorePurchaseStoreFailureNotFound
-        // TODO: to place
         case privacyProRestorePurchaseStoreFailureOther
         case privacyProRestoreAfterPurchaseAttempt
         case privacyProSubscriptionActivated
@@ -1059,7 +1065,19 @@ extension Pixel.Event {
         case .debugReturnUserUpdateATB: return "m_debug_return_user_update_atb"
             
         case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
-            
+
+        // MARK: - Apple Ad Attribution
+        case .appleAdAttribution: return "m_apple-ad-attribution"
+
+        // MARK: - User behavior
+        case .userBehaviorReloadTwice: return "m_reload-twice"
+        case .userBehaviorReloadAndRestart: return "m_reload-and-restart"
+        case .userBehaviorReloadAndFireButton: return "m_reload-and-fire-button"
+        case .userBehaviorReloadAndOpenSettings: return "m_reload-and-open-settings"
+        case .userBehaviorReloadAndTogglePrivacyControls: return "m_reload-and-toggle-privacy-controls"
+        case .userBehaviorFireButtonAndRestart: return "m_fire-button-and-restart"
+        case .userBehaviorFireButtonAndTogglePrivacyControls: return "m_fire-button-and-toggle-privacy-controls"
+
             // MARK: Privacy pro
         case .privacyProSubscriptionActive: return "m_privacy-pro_app_subscription_active"
         case .privacyProOfferScreenImpression: return "m_privacy-pro_offer_screen_impression"
@@ -1092,9 +1110,7 @@ extension Pixel.Event {
         case .privacyProSubscriptionManagementPlanBilling: return "m_privacy-pro_settings_change-plan-or-billing_click"
         case .privacyProSubscriptionManagementRemoval: return "m_privacy-pro_settings_remove-from-device_click"
         }
-        
     }
-    
 }
 
 extension Pixel.Event {

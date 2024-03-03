@@ -153,9 +153,6 @@ struct NetworkProtectionStatusView: View {
             NavigationLink(UserText.netPVPNSettingsTitle, destination: NetworkProtectionVPNSettingsView())
                 .daxBodyRegular()
                 .foregroundColor(.init(designSystemColor: .textPrimary))
-            NavigationLink(UserText.netPVPNNotificationsTitle, destination: NetworkProtectionVPNNotificationsView())
-                .daxBodyRegular()
-                .foregroundColor(.init(designSystemColor: .textPrimary))
         } header: {
             Text(UserText.netPStatusViewSettingsSectionTitle).foregroundColor(.init(designSystemColor: .textSecondary))
         } footer: {

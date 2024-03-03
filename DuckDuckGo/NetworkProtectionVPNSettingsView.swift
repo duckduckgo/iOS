@@ -50,6 +50,13 @@ struct NetworkProtectionVPNSettingsView: View {
                     }
                 }
                 .listRowBackground(Color(designSystemColor: .surface))
+
+                switch viewModel.viewKind {
+                case .loading: EmptyView()
+                case .unauthorized: notificationsUnauthorizedView
+                case .authorized: notificationAuthorizedView
+                }
+
                 toggleSection(
                     text: UserText.netPExcludeLocalNetworksSettingTitle,
                     footerText: UserText.netPExcludeLocalNetworksSettingFooter
@@ -59,6 +66,7 @@ struct NetworkProtectionVPNSettingsView: View {
                             viewModel.toggleExcludeLocalNetworks()
                         }
                 }
+
                 Section {
                     HStack(spacing: 16) {
                         Image("Info-Solid-24")
@@ -72,7 +80,11 @@ struct NetworkProtectionVPNSettingsView: View {
             }
         }
         .applyInsetGroupedListStyle()
-        .navigationTitle(UserText.netPVPNSettingsTitle)
+        .navigationTitle(UserText.netPVPNSettingsTitle).onAppear {
+            Task {
+                await viewModel.onViewAppeared()
+            }
+        }
     }
 
     @ViewBuilder
@@ -98,6 +110,43 @@ struct NetworkProtectionVPNSettingsView: View {
         }
         .listRowBackground(Color(designSystemColor: .surface))
     }
+
+    @ViewBuilder
+    private var notificationsUnauthorizedView: some View {
+        Section {
+            Button(UserText.netPTurnOnNotificationsButtonTitle) {
+                viewModel.turnOnNotifications()
+            }
+            .foregroundColor(.init(designSystemColor: .accent))
+        } footer: {
+            Text(UserText.netPTurnOnNotificationsSectionFooter)
+                .foregroundColor(.init(designSystemColor: .textSecondary))
+                .daxFootnoteRegular()
+                .padding(.top, 6)
+        }
+        .listRowBackground(Color(designSystemColor: .surface))
+    }
+
+    @ViewBuilder
+    private var notificationAuthorizedView: some View {
+        Section {
+            Toggle(
+                UserText.netPVPNAlertsToggleTitle,
+                isOn: Binding(
+                    get: { viewModel.alertsEnabled },
+                    set: viewModel.didToggleAlerts(to:)
+                )
+            )
+            .toggleStyle(SwitchToggleStyle(tint: .init(designSystemColor: .accent)))
+        } footer: {
+            Text(UserText.netPVPNAlertsToggleSectionFooter)
+                .foregroundColor(.init(designSystemColor: .textSecondary))
+                .daxFootnoteRegular()
+                .padding(.top, 6)
+        }
+        .listRowBackground(Color(designSystemColor: .surface))
+    }
+
 }
 
 #endif

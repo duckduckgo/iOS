@@ -45,6 +45,14 @@ final class PrivacyDashboardViewController: UIViewController {
         }, keyValueStoring: UserDefaults.standard)
     }()
 
+    private let toggleProtectionsOffReporter: BrokenSiteReporter = {
+        BrokenSiteReporter(pixelHandler: { parameters in
+            Pixel.fire(pixel: .brokenSiteReport, // todo: change
+                       withAdditionalParameters: parameters,
+                       allowedQueryReservedCharacters: BrokenSiteReport.allowedQueryReservedCharacters)
+        }, keyValueStoring: UserDefaults.standard)
+    }()
+
     private let toggleReportEvents = EventMapping<ToggleReportEvents> { event, _, _, _ in
         let domainEvent: Pixel.Event
         switch event {
@@ -73,6 +81,7 @@ final class PrivacyDashboardViewController: UIViewController {
         self.privacyDashboardController.privacyDashboardDelegate = self
         self.privacyDashboardController.privacyDashboardNavigationDelegate = self
         self.privacyDashboardController.privacyDashboardReportBrokenSiteDelegate = self
+        self.privacyDashboardController.privacyDashboardToggleReportDelegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -205,11 +214,29 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
                 
         do {
             let report = try makeBrokenSiteReport(category: category, description: description)
-            try brokenSiteReporter.report(report)
+            try brokenSiteReporter.report(report, reportMode: .regular)
         } catch {
             os_log("Failed to generate or send the broken site report: %@", type: .error, error.localizedDescription)
         }
         
+        ActionMessageView.present(message: UserText.feedbackSumbittedConfirmation)
+        privacyDashboardCloseHandler()
+    }
+
+}
+
+// MARK: - PrivacyDashboardToggleReportDelegate
+
+extension PrivacyDashboardViewController: PrivacyDashboardToggleReportDelegate {
+
+    func privacyDashboardControllerDidRequestSubmitToggleReport(_ privacyDashboardController: PrivacyDashboardController) {
+        do {
+            let report = try makeBrokenSiteReport()
+            try toggleProtectionsOffReporter.report(report, reportMode: .toggle)
+        } catch {
+            os_log("Failed to generate or send the broken site report: %@", type: .error, error.localizedDescription)
+        }
+
         ActionMessageView.present(message: UserText.feedbackSumbittedConfirmation)
         privacyDashboardCloseHandler()
     }
@@ -234,8 +261,8 @@ extension PrivacyDashboardViewController {
         case failedToFetchTheCurrentWebsiteInfo
     }
 
-    private func makeBrokenSiteReport(category: String, description: String) throws -> BrokenSiteReport {
-        
+    private func makeBrokenSiteReport(category: String = "", description: String = "") throws -> BrokenSiteReport {
+
         guard let privacyInfo = privacyDashboardController.privacyInfo,
               let breakageAdditionalInfo = breakageAdditionalInfo  else {
             throw BrokenSiteReportError.failedToFetchTheCurrentWebsiteInfo
@@ -255,24 +282,24 @@ extension PrivacyDashboardViewController {
         }
 
         return BrokenSiteReport(siteUrl: breakageAdditionalInfo.currentURL,
-                               category: category,
-                               description: description,
-                               osVersion: "\(ProcessInfo().operatingSystemVersion.majorVersion)",
-                               manufacturer: "Apple",
-                               upgradedHttps: breakageAdditionalInfo.httpsForced,
-                               tdsETag: ContentBlocking.shared.contentBlockingManager.currentMainRules?.etag ?? "",
-                               blockedTrackerDomains: blockedTrackerDomains,
-                               installedSurrogates: privacyInfo.trackerInfo.installedSurrogates.map { $0 },
-                               isGPCEnabled: AppDependencyProvider.shared.appSettings.sendDoNotSell,
-                               ampURL: breakageAdditionalInfo.ampURLString,
-                               urlParametersRemoved: breakageAdditionalInfo.urlParametersRemoved,
-                               protectionsState: protectionsState,
-                               reportFlow: source,
-                               siteType: breakageAdditionalInfo.isDesktop ? .desktop : .mobile,
-                               atb: StatisticsUserDefaults().atb ?? "",
-                               model: UIDevice.current.model,
-                               errors: errors,
-                               httpStatusCodes: statusCodes)
+                                category: category,
+                                description: description,
+                                osVersion: "\(ProcessInfo().operatingSystemVersion.majorVersion)",
+                                manufacturer: "Apple",
+                                upgradedHttps: breakageAdditionalInfo.httpsForced,
+                                tdsETag: ContentBlocking.shared.contentBlockingManager.currentMainRules?.etag ?? "",
+                                blockedTrackerDomains: blockedTrackerDomains,
+                                installedSurrogates: privacyInfo.trackerInfo.installedSurrogates.map { $0 },
+                                isGPCEnabled: AppDependencyProvider.shared.appSettings.sendDoNotSell,
+                                ampURL: breakageAdditionalInfo.ampURLString,
+                                urlParametersRemoved: breakageAdditionalInfo.urlParametersRemoved,
+                                protectionsState: protectionsState,
+                                reportFlow: source,
+                                siteType: breakageAdditionalInfo.isDesktop ? .desktop : .mobile,
+                                atb: StatisticsUserDefaults().atb ?? "",
+                                model: UIDevice.current.model,
+                                errors: errors,
+                                httpStatusCodes: statusCodes)
     }
 
 }

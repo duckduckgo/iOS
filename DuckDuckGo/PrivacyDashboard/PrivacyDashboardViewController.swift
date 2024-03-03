@@ -44,7 +44,17 @@ final class PrivacyDashboardViewController: UIViewController {
                        allowedQueryReservedCharacters: BrokenSiteReport.allowedQueryReservedCharacters)
         }, keyValueStoring: UserDefaults.standard)
     }()
-    
+
+    private let toggleReportEvents = EventMapping<ToggleReportEvents> { event, _, _, _ in
+        let domainEvent: Pixel.Event
+        switch event {
+        case .toggleReportDismiss: domainEvent = .toggleReportDismiss
+        case .toggleReportDoNotSend: domainEvent = .toggleReportDoNotSend
+        }
+
+        Pixel.fire(pixel: domainEvent)
+    }
+
     init?(coder: NSCoder,
           privacyInfo: PrivacyInfo?,
           dashboardMode: PrivacyDashboardMode,
@@ -53,7 +63,8 @@ final class PrivacyDashboardViewController: UIViewController {
           breakageAdditionalInfo: BreakageAdditionalInfo?) {
         self.privacyDashboardController = PrivacyDashboardController(privacyInfo: privacyInfo,
                                                                      dashboardMode: dashboardMode,
-                                                                     privacyConfigurationManager: privacyConfigurationManager)
+                                                                     privacyConfigurationManager: privacyConfigurationManager,
+                                                                     eventMapping: toggleReportEvents)
         self.privacyConfigurationManager = privacyConfigurationManager
         self.contentBlockingManager = contentBlockingManager
         self.breakageAdditionalInfo = breakageAdditionalInfo

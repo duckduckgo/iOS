@@ -528,6 +528,8 @@ extension Pixel {
         case appRatingPromptFetchError
 
         case toggleProtectionsDailyCount
+        case toggleReportDoNotSend
+        case toggleReportDismiss
     }
     
 }
@@ -1027,7 +1029,9 @@ extension Pixel.Event {
             
         case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
 
-        case .toggleProtectionsDailyCount: return "m_toggle_protections_daily_count"
+        case .toggleProtectionsDailyCount: return "m_toggle-protections-daily-count"
+        case .toggleReportDoNotSend: return "m_toggle-report-do-not-send"
+        case .toggleReportDismiss: return "m_toggle-report-dismiss"
         }
         
     }

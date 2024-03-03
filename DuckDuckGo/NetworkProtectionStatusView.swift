@@ -35,10 +35,14 @@ struct NetworkProtectionStatusView: View {
                     message: errorItem.message
                 )
             }
+
             toggle()
+            locationDetails()
+
             if statusModel.shouldShowConnectionDetails {
                 connectionDetails()
             }
+
             settings()
         }
         .padding(.top, statusModel.error == nil ? 0 : -20)
@@ -131,13 +135,28 @@ struct NetworkProtectionStatusView: View {
     }
 
     @ViewBuilder
-    private func connectionDetails() -> some View {
+    private func locationDetails() -> some View {
         Section {
             if let location = statusModel.location {
                 NavigationLink(destination: NetworkProtectionVPNLocationView()) {
-                    NetworkProtectionServerItemView(title: UserText.netPStatusViewLocation, value: location)
+                    NetworkProtectionLocationItemView(title: statusModel.preferredLocation.isNearest ? "\(location) (Nearest)" : location)
+                }
+            } else {
+                NavigationLink(destination: NetworkProtectionVPNLocationView()) {
+                    NetworkProtectionLocationItemView(
+                        title: statusModel.preferredLocation.title
+                    )
                 }
             }
+        } header: {
+            Text(statusModel.isNetPEnabled ? "Connected Location" : "Selected Location").foregroundColor(.init(designSystemColor: .textSecondary))
+        }
+        .listRowBackground(Color(designSystemColor: .surface))
+    }
+
+    @ViewBuilder
+    private func connectionDetails() -> some View {
+        Section {
             if let ipAddress = statusModel.ipAddress {
                 NetworkProtectionServerItemView(title: UserText.netPStatusViewIPAddress, value: ipAddress)
             }
@@ -202,6 +221,19 @@ private struct NetworkProtectionErrorView: View {
                 .foregroundColor(.primary)
         }
         .listRowBackground(Color(designSystemColor: .accent))
+    }
+}
+
+private struct NetworkProtectionLocationItemView: View {
+    let title: String
+
+    var body: some View {
+        HStack(spacing: 16) {
+            Text(title)
+                .daxBodyRegular()
+                .foregroundColor(.init(designSystemColor: .textPrimary))
+        }
+        .listRowBackground(Color(designSystemColor: .surface))
     }
 }
 

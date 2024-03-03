@@ -24,6 +24,38 @@ import Combine
 import NetworkProtection
 import WidgetKit
 
+struct NetworkProtectionLocationStatusModel {
+    enum LocationIcon {
+        case defaultIcon
+        case emoji(String)
+    }
+
+    let title: String
+    let icon: LocationIcon
+    let isNearest: Bool
+
+    init(selectedLocation: VPNSettings.SelectedLocation) {
+        switch selectedLocation {
+        case .nearest:
+            title = UserText.netPPreferredLocationNearest
+            icon = .defaultIcon
+            isNearest = true
+        case .location(let location):
+            let countryLabelsModel = NetworkProtectionVPNCountryLabelsModel(country: location.country, useFullCountryName: true)
+            if let city = location.city {
+                title = UserText.netPVPNSettingsLocationSubtitleFormattedCityAndCountry(
+                    city: city,
+                    country: countryLabelsModel.title
+                )
+            } else {
+                title = "\(countryLabelsModel.emoji) \(countryLabelsModel.title)"
+            }
+            icon = .emoji(countryLabelsModel.emoji)
+            isNearest = false
+        }
+    }
+}
+
 final class NetworkProtectionStatusViewModel: ObservableObject {
     private static var dateFormatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
@@ -62,6 +94,10 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @Published public var statusMessage: String
     @Published public var shouldDisableToggle: Bool = false
 
+    // MARK: Location
+    private let settings: VPNSettings
+    @Published public var preferredLocation: NetworkProtectionLocationStatusModel
+
     // MARK: Connection Details
     @Published public var shouldShowConnectionDetails: Bool = false
     @Published public var location: String?
@@ -70,11 +106,13 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @Published public var animationsOn: Bool = false
 
     public init(tunnelController: TunnelController = NetworkProtectionTunnelController(),
+                settings: VPNSettings = VPNSettings(defaults: .networkProtectionGroupDefaults),
                 statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
                 serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
                 errorObserver: ConnectionErrorObserver = ConnectionErrorObserverThroughSession(),
                 locationListRepository: NetworkProtectionLocationListRepository = NetworkProtectionLocationListCompositeRepository()) {
         self.tunnelController = tunnelController
+        self.settings = settings
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
         self.errorObserver = errorObserver
@@ -82,11 +120,14 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         self.headerTitle = Self.titleText(connected: statusObserver.recentValue.isConnected)
         self.statusImageID = Self.statusImageID(connected: statusObserver.recentValue.isConnected)
 
+        self.preferredLocation = NetworkProtectionLocationStatusModel(selectedLocation: settings.selectedLocation)
+
         setUpIsConnectedStatePublishers()
         setUpToggledStatePublisher()
         setUpStatusMessagePublishers()
         setUpDisableTogglePublisher()
         setUpServerInfoPublishers()
+        setUpLocationPublishers()
 
         // Prefetching this now for snappy load times on the locations screens
         Task {
@@ -186,6 +227,14 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             }
             .receive(on: DispatchQueue.main)
             .assign(to: \.shouldShowConnectionDetails, onWeaklyHeld: self)
+            .store(in: &cancellables)
+    }
+
+    private func setUpLocationPublishers() {
+        settings.selectedLocationPublisher
+            .receive(on: DispatchQueue.main)
+            .map(NetworkProtectionLocationStatusModel.init(selectedLocation:))
+            .assign(to: \.preferredLocation, onWeaklyHeld: self)
             .store(in: &cancellables)
     }
 

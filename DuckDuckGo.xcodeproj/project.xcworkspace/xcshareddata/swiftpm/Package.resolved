@@ -24,7 +24,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "autofill/anya-delete-all-ios",
-        "revision" : "3d323fb4598561489c21b02dff77588e290cb4d9"
+        "revision" : "700a37f4674d874d998f990323d956fe2867e964"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "36ddba2cbac52a41b9a9275af06d32fa8a56d2d7",
-        "version" : "4.64.0"
+        "revision" : "a3690b7666a3617693383d948cb492513f6aa569",
+        "version" : "5.0.0"
       }
     },
     {

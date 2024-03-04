@@ -24,7 +24,13 @@ import History
 import Common
 import Persistence
 
-public class HistoryManager {
+public protocol HistoryManaging {
+
+    var historyCoordinator: HistoryCoordinating { get }
+
+}
+
+public class HistoryManager: HistoryManaging {
 
     let privacyConfigManager: PrivacyConfigurationManaging
     let variantManager: VariantManager
@@ -32,7 +38,7 @@ public class HistoryManager {
 
     private var currentHistoryCoordinator: HistoryCoordinating?
 
-    var historyCoordinator: HistoryCoordinating {
+    public var historyCoordinator: HistoryCoordinating {
         if !isHistoryFeatureEnabled() {
             currentHistoryCoordinator = nil
             return NullHistoryCoordinator()

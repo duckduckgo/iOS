@@ -168,6 +168,7 @@ class TabViewController: UIViewController {
             updateTabModel()
             delegate?.tabLoadingStateDidChange(tab: self)
             checkLoginDetectionAfterNavigation()
+            historyCapture.urlDidChange(url)
         }
     }
     
@@ -291,6 +292,7 @@ class TabViewController: UIViewController {
     }
 
     let historyManager: HistoryManager
+    let historyCapture: HistoryCapture
 
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
@@ -302,6 +304,7 @@ class TabViewController: UIViewController {
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
+        self.historyCapture = HistoryCapture(historyManager: historyManager)
         self.syncService = syncService
         super.init(coder: aDecoder)
     }
@@ -1027,6 +1030,8 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        historyCapture.webViewDidCommit()
+
         if let url = webView.url {
             instrumentation.willLoad(url: url)
         }
@@ -1064,6 +1069,8 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        historyCapture.webViewRequestedPolicyDecisionForNavigationResponse()
+
         let mimeType = MIMEType(from: navigationResponse.response.mimeType)
 
         let httpResponse = navigationResponse.response as? HTTPURLResponse
@@ -1124,6 +1131,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        historyCapture.webViewDidStartProvisionalNavigation()
         lastError = nil
         cancelTrackerNetworksAnimation()
         shouldReloadOnError = false
@@ -1136,6 +1144,8 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        historyCapture.webViewDidFinishNavigation()
+
         adClickAttributionDetection.onDidFinishNavigation(url: webView.url)
         adClickAttributionLogic.onDidFinishNavigation(host: webView.url?.host)
         hideProgressIndicator()
@@ -1277,6 +1287,8 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        historyCapture.webViewDidFailNavigation()
+
         adClickAttributionDetection.onDidFailNavigation()
         hideProgressIndicator()
         webpageDidFailToLoad()
@@ -1328,6 +1340,7 @@ extension TabViewController: WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
+        historyCapture.webViewDidReceiveServerRedirect()
         guard let url = webView.url else { return }
         self.url = url
         
@@ -1358,6 +1371,7 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        historyCapture.webViewRequestedPolicyDecisionForNavigationAction()
 
         if let url = navigationAction.request.url,
            !url.isDuckDuckGoSearch,

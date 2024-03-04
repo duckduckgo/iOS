@@ -154,6 +154,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
        
     }
     
+    // swiftlint:disable:next cyclomatic_complexity
     private func handleTransactionError(error: SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError) {
 
         var isStoreError = false

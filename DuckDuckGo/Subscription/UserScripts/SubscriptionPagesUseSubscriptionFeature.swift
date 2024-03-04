@@ -32,6 +32,7 @@ enum SubscriptionTransactionStatus {
 }
 
 @available(iOS 15.0, *)
+// swiftlint:disable:next type_body_length
 final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObject {
     
     struct Constants {

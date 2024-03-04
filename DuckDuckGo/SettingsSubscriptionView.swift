@@ -162,8 +162,7 @@ struct SettingsSubscriptionView: View {
                     }
                     
                 } else {
-                    // purchaseSubscriptionView
-                    noEntitlementsAvailableView
+                    purchaseSubscriptionView
                     
                 }
             

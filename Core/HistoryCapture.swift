@@ -27,6 +27,7 @@ public class HistoryCapture {
         case navigating
         case idle
         case error
+        case subFrame
 
     }
 
@@ -61,14 +62,18 @@ public class HistoryCapture {
         print("***", #function)
     }
 
-    public func webViewRequestedPolicyDecisionForNavigationAction() {
+    public func webViewRequestedPolicyDecisionForNavigationAction(onMainFrame isMainFrame: Bool) {
         print("***", #function)
+        guard !isMainFrame else { return }
+        navigationState = .subFrame
     }
 
     public func webViewDidFinishNavigation() {
         print("***", #function)
+        if navigationState == .navigating {
+            addVisit()
+        }
         navigationState = .idle
-        addVisit()
     }
 
     public func webViewDidStartProvisionalNavigation() {

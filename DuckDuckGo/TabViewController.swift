@@ -1371,7 +1371,7 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        historyCapture.webViewRequestedPolicyDecisionForNavigationAction()
+        historyCapture.webViewRequestedPolicyDecisionForNavigationAction(onMainFrame: navigationAction.isTargetingMainFrame())
 
         if let url = navigationAction.request.url,
            !url.isDuckDuckGoSearch,

@@ -28,10 +28,50 @@ final class HistoryCaptureTests: XCTestCase {
 
     let mockHistoryCoordinator = MockHistoryCoordinator()
 
-    func test_whenURLDidChange_ThenAddToHistory() {
+    func test_whenNoNavigationOccuredYetAndURLDidChange_ThenDoNotAddToHistory() {
         let capture = makeCapture()
         capture.urlDidChange(URL.ddg)
+        XCTAssertEqual([], mockHistoryCoordinator.addVisitCalls)
+    }
+
+    func test_whenNavigatingAndURLDidChange_ThenDoNotAddToHistory() {
+        let capture = makeCapture()
+        capture.webViewDidCommit()
+        capture.urlDidChange(URL.ddg)
+        XCTAssertEqual([], mockHistoryCoordinator.addVisitCalls)
+    }
+
+    func test_whenIdleAndURLDidChange_ThenAddToHistory() {
+        let capture = makeCapture()
+        capture.webViewDidCommit()
+        capture.webViewDidFinishNavigation()
+        capture.urlDidChange(URL.ddg)
         XCTAssertEqual([URL.ddg], mockHistoryCoordinator.addVisitCalls)
+    }
+
+    func test_whenErrorAndURLDidChange_ThenDoNotAddToHistory() {
+        let capture = makeCapture()
+        capture.webViewDidCommit()
+        capture.webViewDidFailNavigation()
+        capture.urlDidChange(URL.ddg)
+        XCTAssertEqual([], mockHistoryCoordinator.addVisitCalls)
+    }
+
+    func test_whenNavigationDidFinish_ThenAddToHistory() {
+        let capture = makeCapture()
+        capture.webViewDidCommit()
+        capture.urlDidChange(URL.ddg)
+        capture.webViewDidFinishNavigation()
+        XCTAssertEqual([URL.ddg], mockHistoryCoordinator.addVisitCalls)
+    }
+
+    func test_whenNavigationDidFinishForSubFrame_ThenDoNotAddToHistory() {
+        let capture = makeCapture()
+        capture.webViewDidCommit()
+        capture.webViewRequestedPolicyDecisionForNavigationAction(onMainFrame: false)
+        capture.urlDidChange(URL.ddg)
+        capture.webViewDidFinishNavigation()
+        XCTAssertEqual([], mockHistoryCoordinator.addVisitCalls)
     }
 
     func makeCapture() -> HistoryCapture {

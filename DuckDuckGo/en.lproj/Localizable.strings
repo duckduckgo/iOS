@@ -1908,6 +1908,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Subscription Activation Window Title */
 "subscription.activate" = "Activate Subscription";
 
+/* Subscription Activation Info */
+"subscription.activate..header.description" = "Access your Privacy Pro subscription on this device via Apple ID or an email address.";
+
 /* Restore button title for Email */
 "subscription.activate.add.email.button" = "Add Email";
 
@@ -1990,13 +1993,22 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.cancel.message" = "Your subscription has been removed from this device.";
 
 /* Change plan or billing title */
-"subscription.change.plan" = "Change Plan Or Billing";
+"subscription.change.plan" = "Change Plan or Billing";
 
 /* Navigation Button for closing subscription view */
 "subscription.close" = "Close";
 
 /* Title for Confirm messages */
 "subscription.confirm.title" = "Are you sure?";
+
+/* Alert content for not found subscription */
+"subscription.email.inactive.alert.message" = "The subscription associated with this email is no longer active.";
+
+/* Alert title for not found subscription */
+"subscription.email.inactive.alert.title" = "Subscription Not Found";
+
+/* Alert content for not found subscription */
+"subscription.expired.alert.message" = "The subscription associated with this Apple ID is no longer active.";
 
 /* text for expiration string */
 "subscription.expires" = "expires";
@@ -2038,7 +2050,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.monthly" = "Monthly Subscription";
 
 /* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "The subscription associated with this Apple ID is no longer active.";
+"subscription.notFound.alert.message" = "There is no subscription associated with this Apple ID.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Subscription Not Found";
@@ -2090,6 +2102,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* text for renewal string */
 "subscription.renews" = "renews";
+
+/* Alert for general error message */
+"subscription.restore.general.error.message" = "The App Store was unable to process your purchase. Please try again later.";
+
+/* Alert for general error title */
+"subscription.restore.general.error.title" = "Something Went Wrong";
 
 /* Alert button text for restored purchase alert */
 "subscription.restore.success.alert.button" = "OK";
@@ -2222,6 +2240,18 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Voice-search footer note with on-device privacy warning */
 "voiceSearch.footer.note" = "Audio is processed on-device. It's not stored or shared with anyone, including DuckDuckGo.";
+
+/* Cancel action for the alert when the subscription expires */
+"vpn.access-revoked.alert.action.cancel" = "Dismiss";
+
+/* Primary action for the alert when the subscription expires */
+"vpn.access-revoked.alert.action.subscribe" = "Subscribe";
+
+/* Alert message for the alert when the Privacy Pro subscription expiress */
+"vpn.access-revoked.alert.message" = "Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
+
+/* Alert title for the alert when the Privacy Pro subscription expires */
+"vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";

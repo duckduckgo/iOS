@@ -58,7 +58,8 @@ extension NetworkProtectionKeychainTokenStore {
     convenience init() {
         self.init(keychainType: .dataProtection(.unspecified),
                   serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
-                  errorEvents: .networkProtectionAppDebugEvents)
+                  errorEvents: .networkProtectionAppDebugEvents,
+                  isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription))
     }
 }
 
@@ -69,7 +70,8 @@ extension NetworkProtectionCodeRedemptionCoordinator {
             environment: settings.selectedEnvironment,
             tokenStore: NetworkProtectionKeychainTokenStore(),
             isManualCodeRedemptionFlow: isManualCodeRedemptionFlow,
-            errorEvents: .networkProtectionAppDebugEvents
+            errorEvents: .networkProtectionAppDebugEvents,
+            isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
         )
     }
 }
@@ -95,7 +97,8 @@ extension NetworkProtectionLocationListCompositeRepository {
         self.init(
             environment: settings.selectedEnvironment,
             tokenStore: NetworkProtectionKeychainTokenStore(),
-            errorEvents: .networkProtectionAppDebugEvents
+            errorEvents: .networkProtectionAppDebugEvents,
+            isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
         )
     }
 }

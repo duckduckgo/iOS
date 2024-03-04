@@ -123,6 +123,11 @@ public struct UserDefaultsWrapper<T> {
         case privacyConfigCustomURL = "com.duckduckgo.ios.privacyConfigCustomURL"
         
         case subscriptionIsActive = "com.duckduckgo.ios.subscruption.isActive"
+
+        case appleAdAttributionReportCompleted = "com.duckduckgo.ios.appleAdAttributionReport.completed"
+
+        case didRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didRefreshTimestamp"
+        case didBurnTimestamp = "com.duckduckgo.ios.userBehavior.didBurnTimestamp"
     }
 
     private let key: Key

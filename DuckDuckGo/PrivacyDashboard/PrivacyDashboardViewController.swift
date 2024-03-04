@@ -261,7 +261,8 @@ extension PrivacyDashboardViewController {
         case failedToFetchTheCurrentWebsiteInfo
     }
 
-    private func makeBrokenSiteReport(category: String = "", description: String = "") throws -> BrokenSiteReport {
+    private func makeBrokenSiteReport(category: String = "", 
+                                      description: String = "") throws -> BrokenSiteReport {
 
         guard let privacyInfo = privacyDashboardController.privacyInfo,
               let breakageAdditionalInfo = breakageAdditionalInfo  else {

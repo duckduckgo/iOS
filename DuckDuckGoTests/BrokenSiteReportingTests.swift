@@ -136,7 +136,7 @@ final class BrokenSiteReportingTests: XCTestCase {
             onTestExecuted.fulfill()
             try? self.runReferenceTests(onTestExecuted: onTestExecuted)
         }, keyValueStoring: MockKeyValueStore())
-        try reporter.report(report)
+        try reporter.report(report, reportMode: .regular)
     }
 }
 

@@ -1926,8 +1926,8 @@ extension MainViewController: TabDelegate {
         segueToReportBrokenSite()
     }
 
-    func tab(_ tab: TabViewController, didRequestToggleReportWithOnAnyActionHandler onAnyAction: @escaping () -> Void) {
-        segueToReportBrokenSite(mode: .toggleReport(onAnyAction: onAnyAction))
+    func tab(_ tab: TabViewController, didRequestToggleReportWithCompletionHandler completionHandler: @escaping () -> Void) {
+        segueToReportBrokenSite(mode: .toggleReport(completionHandler: completionHandler))
     }
 
     func tabDidRequestBookmarks(tab: TabViewController) {

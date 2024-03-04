@@ -24,6 +24,7 @@ import Bookmarks
 import simd
 import WidgetKit
 import Common
+import PrivacyDashboard
 
 // swiftlint:disable file_length
 extension TabViewController {
@@ -418,9 +419,9 @@ extension TabViewController {
     }
 
     private func onToggleProtectionAction(forDomain domain: String, isProtected: Bool) {
-        // config check
-        if isProtected {
-            delegate?.tab(self, didRequestToggleReportWithOnAnyActionHandler: { [weak self] in
+        let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
+        if ToggleReportsFeature(privacyConfiguration: config).isEnabled && isProtected {
+            delegate?.tab(self, didRequestToggleReportWithCompletionHandler: { [weak self] in
                 self?.togglePrivacyProtection(domain: domain)
             })
         } else {

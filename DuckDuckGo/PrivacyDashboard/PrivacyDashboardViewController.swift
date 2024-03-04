@@ -33,6 +33,7 @@ final class PrivacyDashboardViewController: UIViewController {
     private let privacyConfigurationManager: PrivacyConfigurationManaging
     private let contentBlockingManager: ContentBlockerRulesManager
     public var breakageAdditionalInfo: BreakageAdditionalInfo?
+    private var privacyDashboardDidTriggerDismiss: Bool = false
 
     private let brokenSiteReporter: BrokenSiteReporter = {
         BrokenSiteReporter(pixelHandler: { parameters in
@@ -91,7 +92,14 @@ final class PrivacyDashboardViewController: UIViewController {
         privacyDashboardController.preferredLocale = Bundle.main.preferredLocalizations.first
         applyTheme(ThemeManager.shared.currentTheme)
     }
-    
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if !privacyDashboardDidTriggerDismiss {
+            privacyDashboardController.handleViewWillDisappear()
+        }
+    }
+
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         privacyDashboardController.cleanUp()
@@ -103,9 +111,8 @@ final class PrivacyDashboardViewController: UIViewController {
     }
 
     private func privacyDashboardProtectionSwitchChangeHandler(state: ProtectionState) {
-        
+        privacyDashboardDidTriggerDismiss = true
         dismiss(animated: true)
-        
         guard let domain = privacyDashboardController.privacyInfo?.url.host else { return }
         
         let source: BrokenSiteReport.Source = privacyDashboardController.initDashboardMode == .report ? .appMenu : .dashboard
@@ -126,6 +133,7 @@ final class PrivacyDashboardViewController: UIViewController {
     }
     
     private func privacyDashboardCloseHandler() {
+        privacyDashboardDidTriggerDismiss = true
         dismiss(animated: true)
     }
 

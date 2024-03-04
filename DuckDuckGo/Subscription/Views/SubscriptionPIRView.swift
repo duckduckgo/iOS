@@ -198,11 +198,11 @@ struct SubscriptionPIRView: View {
     
 }
 
- @available(iOS 15.0, *)
- struct SubscriptionPIRView_Previews: PreviewProvider {
-    static var previews: some View {
-        SubscriptionPIRView()
-    }
- }
+// @available(iOS 15.0, *)
+// struct SubscriptionPIRView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SubscriptionPIRView()
+//    }
+// }
 
 #endif

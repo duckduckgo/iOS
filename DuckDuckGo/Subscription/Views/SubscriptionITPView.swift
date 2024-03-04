@@ -164,11 +164,11 @@ struct SubscriptionITPView: View {
     }
 }
 
- @available(iOS 15.0, *)
- struct SubscriptionITPView_Previews: PreviewProvider {
-    static var previews: some View {
-        SubscriptionITPView()
-    }
- }
+// @available(iOS 15.0, *)
+// struct SubscriptionITPView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SubscriptionITPView()
+//    }
+// }
 
 #endif

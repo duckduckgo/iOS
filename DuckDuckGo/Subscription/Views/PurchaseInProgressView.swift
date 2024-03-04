@@ -83,10 +83,10 @@ struct ViewHeightKey: PreferenceKey {
     }
 }
 
-struct PurchaseInProgressView_Previews: PreviewProvider {
-    static var previews: some View {
-        PurchaseInProgressView(status: "Completing Purchase... ")
-            .previewLayout(.sizeThatFits)
-            .padding()
-    }
-}
+// struct PurchaseInProgressView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PurchaseInProgressView(status: "Completing Purchase... ")
+//            .previewLayout(.sizeThatFits)
+//            .padding()
+//    }
+// }

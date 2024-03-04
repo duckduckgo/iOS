@@ -223,11 +223,11 @@ struct SubscriptionFlowView: View {
 
 }
 
- @available(iOS 15.0, *)
- struct SubscriptionFlowView_Previews: PreviewProvider {
-    static var previews: some View {
-        SubscriptionFlowView()
-    }
- }
+// @available(iOS 15.0, *)
+// struct SubscriptionFlowView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SubscriptionFlowView()
+//    }
+// }
 
 #endif

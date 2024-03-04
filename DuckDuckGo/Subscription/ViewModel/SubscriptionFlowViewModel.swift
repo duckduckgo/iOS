@@ -245,7 +245,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
     
     func updateSubscriptionStatus() async {
-        if AccountManager().isUserAuthenticated && hasActiveSubscription == false {
+        if AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs)).isUserAuthenticated && hasActiveSubscription == false {
             await disableGoBack()
             await webViewModel.navigationCoordinator.reload()
         }

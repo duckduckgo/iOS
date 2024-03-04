@@ -45,7 +45,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
          purchaseManager: PurchaseManager = PurchaseManager.shared,
-         accountManager: AccountManager = AccountManager(),
+         accountManager: AccountManager = AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs)),
          isAddingDevice: Bool = false) {
         self.userScript = userScript
         self.subFeature = subFeature

@@ -1,8 +1,8 @@
 //
-//  Configuration-Alpha.xcconfig
+//  BundleExtensions.swift
 //  DuckDuckGo
 //
-//  Copyright © 2023 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,15 +17,24 @@
 //  limitations under the License.
 //
 
-#include "DuckDuckGoDeveloper.xcconfig"
-#include? "ExternalDeveloper.xcconfig"
-#include? "Version.xcconfig"
+import Foundation
 
-// The app bundle identifier
-APP_ID = com.duckduckgo.mobile.ios.alpha
+extension Bundle {
+    public func appGroup(bundle: BundleGroup) -> String {
+        var appGroupName: String
 
-// A prefix for group ids. Must start with "group.".
-GROUP_ID_PREFIX = group.com.duckduckgo.alpha
+        switch bundle {
+        case .subs:
+            appGroupName = "SUBSCRIPTION_APP_GROUP"
+        }
 
-// The keychain access group for subscriptions
-SUBSCRIPTION_APP_GROUP = com.duckduckgo.subscriptions.alpha
+        guard let appGroup = object(forInfoDictionaryKey: appGroupName) as? String else {
+            fatalError("Info.plist is missing \(appGroupName)")
+        }
+        return appGroup
+    }
+}
+
+public enum BundleGroup {
+    case subs
+}

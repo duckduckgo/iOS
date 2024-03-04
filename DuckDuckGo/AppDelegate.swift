@@ -392,7 +392,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Task {
             SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
             SubscriptionPurchaseEnvironment.current = .appStore
-            await AccountManager().checkSubscriptionState()
+            await AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs)).checkSubscriptionState()
         }
     }
 #endif

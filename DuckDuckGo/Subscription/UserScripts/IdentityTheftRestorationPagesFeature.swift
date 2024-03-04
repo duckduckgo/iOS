@@ -67,7 +67,7 @@ final class IdentityTheftRestorationPagesFeature: Subfeature, ObservableObject {
     }
 
     func getAccessToken(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        let authToken = AccountManager().authToken ?? ""
+        let authToken = AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs)).authToken ?? ""
         return Subscription(token: authToken)
     }
     

@@ -350,6 +350,9 @@ extension SettingsViewModel {
         
         // Fetch available subscriptions from the backend (or sign out)
         switch await SubscriptionService.getSubscriptionDetails(token: token) {
+        case .success(let response) where !response.isSubscriptionActive:
+            AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs)).signOut()
+            setupSubscriptionPurchaseOptions()
         
         case .success(let response) where response.isSubscriptionActive:
             
@@ -359,7 +362,7 @@ extension SettingsViewModel {
             // Check entitlements and update UI accordingly
             let entitlements: [AccountManager.Entitlement] = [.identityTheftRestoration, .dataBrokerProtection, .networkProtection]
             for entitlement in entitlements {
-                if case .success = await AccountManager().hasEntitlement(for: entitlement) {
+                if case .success = await AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs)).hasEntitlement(for: entitlement) {
                     switch entitlement {
                     case .identityTheftRestoration:
                         self.shouldShowITP = true
@@ -379,7 +382,7 @@ extension SettingsViewModel {
     
     @available(iOS 15.0, *)
     private func signOutUser() {
-        AccountManager().signOut()
+        AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs)).signOut()
         cacheSubscriptionState(active: false)
         setupSubscriptionPurchaseOptions()
     }

@@ -43,7 +43,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     @Published var shouldDisplayRemovalNotice: Bool = false
     @Published var shouldDismissView: Bool = false
     
-    init(accountManager: AccountManager = AccountManager()) {
+    init(accountManager: AccountManager = AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs))) {
         self.accountManager = accountManager
         Task { await fetchAndUpdateSubscriptionDetails() }
         setupSubscriptionUpdater()
@@ -69,7 +69,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
 
             if case .success(let response) = await SubscriptionService.getSubscriptionDetails(token: token) {
                 if !response.isSubscriptionActive {
-                    AccountManager().signOut()
+                    AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs)).signOut()
                     shouldDismissView = true
                     return
                 } else {
@@ -104,7 +104,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     func removeSubscription() {
-        AccountManager().signOut()
+        AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs)).signOut()
         let messageView = ActionMessageView()
         ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation,
                                   presentationLocation: .withoutBottomBar)

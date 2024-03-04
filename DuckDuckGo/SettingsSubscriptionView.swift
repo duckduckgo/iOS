@@ -100,7 +100,8 @@ struct SettingsSubscriptionView: View {
                         .padding(.top, Constants.topCellPadding)
                     VStack(alignment: .leading) {
                         Text(UserText.settingsPProActivationPendingTitle).daxBodyRegular()
-                        Text(UserText.settingsPProActivationPendingDescription).daxFootnoteRegular().padding(.bottom, Constants.purchaseDescriptionPadding)
+                        Text(UserText.settingsPProActivationPendingDescription).daxFootnoteRegular()
+                            .padding(.bottom, Constants.purchaseDescriptionPadding)
                     }.foregroundColor(Color(designSystemColor: .textSecondary))
                 }
             })

@@ -33,9 +33,6 @@ final class PrivacyDashboardViewController: UIViewController {
     private let privacyConfigurationManager: PrivacyConfigurationManaging
     private let contentBlockingManager: ContentBlockerRulesManager
     public var breakageAdditionalInfo: BreakageAdditionalInfo?
-    
-    // TODO!
-    var source: BrokenSiteReport.Source { privacyDashboardController.dashboardMode == .report ? .appMenu : .dashboard }
 
     private let brokenSiteReporter: BrokenSiteReporter = {
         BrokenSiteReporter(pixelHandler: { parameters in
@@ -111,6 +108,7 @@ final class PrivacyDashboardViewController: UIViewController {
         
         guard let domain = privacyDashboardController.privacyInfo?.url.host else { return }
         
+        let source: BrokenSiteReport.Source = privacyDashboardController.initDashboardMode == .report ? .appMenu : .dashboard
         let privacyConfiguration = privacyConfigurationManager.privacyConfig
         let pixelParam = ["trigger_origin": state.eventOrigin.screen.rawValue,
                           "source": source.rawValue]
@@ -210,10 +208,11 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
     }
     
     func privacyDashboardController(_ privacyDashboardController: PrivacyDashboard.PrivacyDashboardController,
-                                    didRequestSubmitBrokenSiteReportWithCategory category: String, description: String) {
-                
+                                    didRequestSubmitBrokenSiteReportWithCategory category: String,
+                                    description: String) {
+        let source: BrokenSiteReport.Source = privacyDashboardController.initDashboardMode == .report ? .appMenu : .dashboard
         do {
-            let report = try makeBrokenSiteReport(category: category, description: description)
+            let report = try makeBrokenSiteReport(category: category, description: description, source: source)
             try brokenSiteReporter.report(report, reportMode: .regular)
         } catch {
             os_log("Failed to generate or send the broken site report: %@", type: .error, error.localizedDescription)
@@ -229,9 +228,9 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
 
 extension PrivacyDashboardViewController: PrivacyDashboardToggleReportDelegate {
 
-    func privacyDashboardControllerDidRequestSubmitToggleReport(_ privacyDashboardController: PrivacyDashboardController) {
+    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController, didRequestSubmitToggleReportWithSource source: BrokenSiteReport.Source) {
         do {
-            let report = try makeBrokenSiteReport()
+            let report = try makeBrokenSiteReport(source: source)
             try toggleProtectionsOffReporter.report(report, reportMode: .toggle)
         } catch {
             os_log("Failed to generate or send the broken site report: %@", type: .error, error.localizedDescription)
@@ -262,7 +261,8 @@ extension PrivacyDashboardViewController {
     }
 
     private func makeBrokenSiteReport(category: String = "", 
-                                      description: String = "") throws -> BrokenSiteReport {
+                                      description: String = "",
+                                      source: BrokenSiteReport.Source) throws -> BrokenSiteReport {
 
         guard let privacyInfo = privacyDashboardController.privacyInfo,
               let breakageAdditionalInfo = breakageAdditionalInfo  else {

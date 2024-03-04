@@ -95,7 +95,9 @@ struct SettingsSubscriptionView: View {
         Group {
             SettingsCustomCell(content: {
                 HStack(alignment: .top) {
-                    Image(Constants.infoIcon).frame(width: Constants.noEntitlementsIconWidth).padding(.top, Constants.topCellPadding)
+                    Image(Constants.infoIcon)
+                        .frame(width: Constants.noEntitlementsIconWidth)
+                        .padding(.top, Constants.topCellPadding)
                     VStack(alignment: .leading) {
                         Text(UserText.settingsPProActivationPendingTitle).daxBodyRegular()
                         Text(UserText.settingsPProActivationPendingDescription).daxFootnoteRegular().padding(.bottom, Constants.purchaseDescriptionPadding)

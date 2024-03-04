@@ -24,7 +24,6 @@ import Configuration
 import DDGSync
 import NetworkProtection
 
-// swiftlint:disable file_length line_length
 extension Pixel {
     
     // swiftlint:disable:next type_body_length
@@ -1063,13 +1062,13 @@ extension Pixel.Event {
             // MARK: - Return user measurement
         case .debugReturnUserAddATB: return "m_debug_return_user_add_atb"
         case .debugReturnUserUpdateATB: return "m_debug_return_user_update_atb"
-            
+
         case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
 
-        // MARK: - Apple Ad Attribution
+            // MARK: - Apple Ad Attribution
         case .appleAdAttribution: return "m_apple-ad-attribution"
 
-        // MARK: - User behavior
+            // MARK: - User behavior
         case .userBehaviorReloadTwice: return "m_reload-twice"
         case .userBehaviorReloadAndRestart: return "m_reload-and-restart"
         case .userBehaviorReloadAndFireButton: return "m_reload-and-fire-button"
@@ -1113,6 +1112,7 @@ extension Pixel.Event {
     }
 }
 
+// swiftlint:disable file_length
 extension Pixel.Event {
     
     public enum CompileRulesWaitTime: String, CustomStringConvertible {

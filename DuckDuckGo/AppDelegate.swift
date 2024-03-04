@@ -442,6 +442,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if NETWORK_PROTECTION
         widgetRefreshModel.refreshVPNWidget()
 #endif
+
+#if SUBSCRIPTION
+        Task {
+            guard let token = AccountManager().accessToken else {
+                return
+            }
+            let result = await SubscriptionService.getSubscriptionDetails(token: token)
+            switch result {
+            case .success(let success):
+                DailyPixel.fire(pixel: .privacyProSubscriptionActive)
+            case .failure(let failure):
+                return
+            }
+        }
+#endif
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

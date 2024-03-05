@@ -49,6 +49,7 @@ final class SettingsViewModel: ObservableObject {
     private let voiceSearchHelper: VoiceSearchHelperProtocol
 #if SUBSCRIPTION
     private var accountManager: AccountManager
+    private var signOutObserver: Any?
 #endif
     
     
@@ -215,7 +216,14 @@ final class SettingsViewModel: ObservableObject {
         self.accountManager = accountManager
         self.voiceSearchHelper = voiceSearchHelper
         self.onAppearNavigationTarget = navigateOnAppearDestination
+        
+        setupNotificationObservers()
     }
+    
+    deinit {
+        signOutObserver = nil
+    }
+    
 #else
     // MARK: Default Init
     init(state: SettingsState? = nil,
@@ -233,7 +241,7 @@ final class SettingsViewModel: ObservableObject {
 // MARK: Private methods
 extension SettingsViewModel {
     
-    // This manual (re)initialzation will go away once appSettings and
+    // This manual (re)initialization will go away once appSettings and
     // other dependencies are observable (Such as AppIcon and netP)
     // and we can use subscribers (Currently called from the view onAppear)
     private func initState() {
@@ -339,12 +347,8 @@ extension SettingsViewModel {
         
         // Fetch available subscriptions from the backend (or sign out)
         switch await SubscriptionService.getSubscriptionDetails(token: token) {
-        case .success(let response) where !response.isSubscriptionActive:
-            
-            // Account is active but there's not a valid subscription
-            signOutUser()
         
-        case .success(let response):
+        case .success(let response) where response.isSubscriptionActive:
             
             // Cache Subscription state
             cacheSubscriptionState(active: true)
@@ -365,6 +369,7 @@ extension SettingsViewModel {
             }
                         
         default:
+            // Account is active but there's not a valid subscription / entitlements
             signOutUser()
         }
     }
@@ -390,6 +395,16 @@ extension SettingsViewModel {
                 self?.state.subscription.canPurchase = !products.isEmpty
             }.store(in: &cancellables)
     }
+        
+    private func setupNotificationObservers() {
+        signOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut, object: nil, queue: .main) { [weak self] _ in
+            if #available(iOS 15.0, *) {
+                guard let strongSelf = self else { return }
+                Task { await strongSelf.setupSubscriptionEnvironment() }
+            }
+        }
+    }
+    
     #endif
     
     #if NETWORK_PROTECTION

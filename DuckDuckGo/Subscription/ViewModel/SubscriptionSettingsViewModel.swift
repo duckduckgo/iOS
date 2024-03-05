@@ -36,6 +36,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     let accountManager: AccountManager
     private var subscriptionUpdateTimer: Timer?
+    private var signOutObserver: Any?
+    
     @Published var subscriptionDetails: String = ""
     @Published var subscriptionType: String = ""
     @Published var shouldDisplayRemovalNotice: Bool = false
@@ -45,6 +47,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         self.accountManager = accountManager
         Task { await fetchAndUpdateSubscriptionDetails() }
         setupSubscriptionUpdater()
+        setupNotificationObservers()
     }
     
     private var dateFormatter: DateFormatter = {
@@ -76,6 +79,14 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         }
     }
     
+    private func setupNotificationObservers() {
+        signOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut, object: nil, queue: .main) { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.shouldDismissView = true
+            }
+        }
+    }
+    
     private func setupSubscriptionUpdater() {
         subscriptionUpdateTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { [weak self] _ in
             guard let strongSelf = self else { return }
@@ -94,7 +105,9 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     func removeSubscription() {
         AccountManager().signOut()
-        ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation)
+        let messageView = ActionMessageView()
+        ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation,
+                                  presentationLocation: .withoutBottomBar)
     }
     
     func manageSubscription() {
@@ -120,6 +133,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     deinit {
         subscriptionUpdateTimer?.invalidate()
+        signOutObserver = nil
     }
     
     

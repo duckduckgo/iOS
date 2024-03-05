@@ -57,7 +57,6 @@ struct SettingsSubscriptionView: View {
     private var manageSubscriptionView: some View {
         Text(UserText.settingsPProManageSubscription)
             .daxBodyRegular()
-            .foregroundColor(Color.init(designSystemColor: .accent))
     }
      
     private var purchaseSubscriptionView: some View {

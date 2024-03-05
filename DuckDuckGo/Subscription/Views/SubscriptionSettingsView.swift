@@ -36,7 +36,7 @@ struct SubscriptionSettingsView: View {
     @StateObject var sceneEnvironment = SceneEnvironment()
     
     @ViewBuilder
-    private var listView: some View {
+    private var optionsView: some View {
         List {
             Section {
                 VStack(alignment: .center, spacing: 7) {
@@ -55,6 +55,7 @@ struct SubscriptionSettingsView: View {
                 SettingsCustomCell(content: {
                     Text(UserText.subscriptionChangePlan)
                         .daxBodyRegular()
+                        .foregroundColor(Color.init(designSystemColor: .accent))
                 },
                                    action: {
                     Pixel.fire(pixel: .privacyProSubscriptionManagementPlanBilling)
@@ -71,7 +72,6 @@ struct SubscriptionSettingsView: View {
                     SettingsCustomCell(content: {
                         Text(UserText.subscriptionAddDeviceButton)
                             .daxBodyRegular()
-                            .foregroundColor(Color.init(designSystemColor: .accent))
                     })
                 }
 
@@ -126,10 +126,10 @@ struct SubscriptionSettingsView: View {
     var body: some View {
         Group {
             if #available(iOS 16.0, *) {
-                listView
+                optionsView
                     .scrollDisabled(true)
             } else {
-                listView
+                optionsView
             }
         }
         .navigationBarTitleDisplayMode(.inline)

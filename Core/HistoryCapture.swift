@@ -20,11 +20,6 @@
 import Foundation
 import History
 
-// macos:
-// didCommit: add visit and remember current URL
-// on webview title updated: update title
-// when url changes "save" previous entry
-
 public class HistoryCapture {
 
     enum VisitState {

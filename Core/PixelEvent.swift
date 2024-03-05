@@ -1039,6 +1039,7 @@ extension Pixel.Event {
             
         case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
 
+        // MARK: - Toggle reports
         case .protectionToggledOffBreakageReport: return "m_protection-toggled-off-breakage-report"
         case .toggleProtectionsDailyCount: return "m_toggle-protections-daily-count"
         case .toggleReportDoNotSend: return "m_toggle-report-do-not-send"

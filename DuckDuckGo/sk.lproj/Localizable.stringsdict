@@ -190,5 +190,135 @@ Boli zablokovaní!
 			<string>d</string>
 		</dict>
 	</dict>
+	<key>autofill.number.of.passwords</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>%1$d heslo</string>
+			<key>few</key>
+			<string>%1$d heslá</string>
+			<key>many</key>
+			<string>%1$d hesla</string>
+			<key>other</key>
+			<string>%1$d hesiel</string>
+		</dict>
+	</dict>
+	<key>autofill.delete.all.passwords.confirmation.title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>Naozaj chcete odstrániť %1$d heslo?</string>
+			<key>few</key>
+			<string>Naozaj chcete odstrániť %1$d heslá?</string>
+			<key>many</key>
+			<string>Naozaj chcete odstrániť %1$d hesla?</string>
+			<key>other</key>
+			<string>Naozaj chcete odstrániť %1$d hesiel?</string>
+		</dict>
+	</dict>
+    <key>autofill.delete.all.passwords.confirmation.body</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%1$#@passwords@</string>
+        <key>passwords</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>Vaše heslo bude odstránené z tohto zariadenia. Uistite sa, že stále máte prístup k svojim %2$#@accounts@.</string>
+            <key>few</key>
+            <string>Vaše heslá budú odstránené z tohto zariadenia. Uistite sa, že stále máte prístup k svojim %2$#@accounts@.</string>
+            <key>many</key>
+            <string>Vaše heslá budú odstránené z tohto zariadenia. Uistite sa, že stále máte prístup k svojim %2$#@accounts@.</string>
+            <key>other</key>
+            <string>Vaše heslá budú z tohto zariadenia vymazané. Uistite sa, že stále máte prístup k svojim %2$#@accounts@.</string>
+        </dict>
+        <key>accounts</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>účet</string>
+            <key>few</key>
+            <string>účty</string>
+            <key>many</key>
+            <string>účtu</string>
+            <key>other</key>
+            <string>účtov</string>
+        </dict>
+    </dict>
+	<key>autofill.delete.all.passwords.sync.confirmation.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>Vaše heslo bude odstránené zo všetkých synchronizovaných zariadení. Uistite sa, že stále máte prístup k svojim%2$#@accounts@.</string>
+			<key>few</key>
+			<string>Vaše heslá budú odstránené zo všetkých synchronizovaných zariadení. Uistite sa, že stále máte prístup k svojim%2$#@accounts@.</string>
+			<key>many</key>
+			<string>Vaše heslá budú odstránené zo všetkých synchronizovaných zariadení. Uistite sa, že stále máte prístup k svojim%2$#@accounts@.</string>
+			<key>other</key>
+			<string>Vaše heslá budú odstránené zo všetkých synchronizovaných zariadení. Uistite sa, že stále máte prístup k svojim%2$#@accounts@.</string>
+		</dict>
+		<key>accounts</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>účet</string>
+			<key>few</key>
+			<string>účty</string>
+			<key>many</key>
+			<string>účtu</string>
+			<key>other</key>
+			<string>účtov</string>
+		</dict>
+	</dict>
+	<key>autofill.delete.all.passwords.completion</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>Bolo odstránené %1$d heslo</string>
+			<key>few</key>
+			<string>Boli odstránené %1$d heslá</string>
+			<key>many</key>
+			<string>Bolo odstránených %1$d hesiel</string>
+			<key>other</key>
+			<string>Bol odstránených %1$d hesiel</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

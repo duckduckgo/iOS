@@ -658,6 +658,11 @@ In addition to the details entered into this form, your app issue report will co
 
     static let vpnFeedbackFormSubmittedMessage = NSLocalizedString("vpn.feedback-form.submitted.message", value: "Thank You! Feedback submitted.", comment: "Toast message when the VPN feedback form is submitted successfully")
 
+    static let vpnAccessRevokedAlertTitle = NSLocalizedString("vpn.access-revoked.alert.title", value: "VPN disconnected due to expired subscription", comment: "Alert title for the alert when the Privacy Pro subscription expires")
+    static let vpnAccessRevokedAlertMessage = NSLocalizedString("vpn.access-revoked.alert.message", value: "Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.", comment: "Alert message for the alert when the Privacy Pro subscription expiress")
+    static let vpnAccessRevokedAlertActionSubscribe = NSLocalizedString("vpn.access-revoked.alert.action.subscribe", value: "Subscribe", comment: "Primary action for the alert when the subscription expires")
+    static let vpnAccessRevokedAlertActionCancel = NSLocalizedString("vpn.access-revoked.alert.action.cancel", value: "Dismiss", comment: "Cancel action for the alert when the subscription expires")
+
     // MARK: Notifications
     
     public static let macWaitlistAvailableNotificationTitle = NSLocalizedString("mac-waitlist.available.notification.title", value: "DuckDuckGo for Mac is ready!", comment: "Title for the macOS waitlist notification")
@@ -723,6 +728,32 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let autofillResetNeverSavedActionConfirmButton = NSLocalizedString("autofill.logins.list.never.saved.reset.action.confirm", value: "Reset Excluded Sites", comment: "Confirm button to reset list of never saved sites")
     public static let autofillResetNeverSavedActionCancelButton = NSLocalizedString("autofill.logins.list.never.saved.reset.action.cancel", value: "Cancel", comment: "Cancel button for resetting list of never saved sites")
     
+    public static let autofillLoginListToolbarDeleteAllButton = NSLocalizedString("autofill.logins.list.delete.all", value:"Delete All", comment: "Title for button to delete all saved autofill passwords")
+    public static func autofillLoginListToolbarPasswordsCount(_ count: Int) -> String {
+        let message = NSLocalizedString("autofill.number.of.passwords", comment: "Do not translate - stringsdict entry")
+        return message.format(arguments: count)
+    }
+    public static func autofillDeleteAllPasswordsActionTitle(for count: Int) -> String {
+        let message = NSLocalizedString("autofill.delete.all.passwords.confirmation.title", comment: "Do not translate - stringsdict entry")
+        return message.format(arguments: count)
+    }
+    public static func autofillDeleteAllPasswordsActionMessage(for count: Int) -> String {
+        let message = NSLocalizedString("autofill.delete.all.passwords.confirmation.body", comment: "Do not translate - stringsdict entry")
+        return message.format(arguments: count, count)
+    }
+    public static func autofillDeleteAllPasswordsSyncActionMessage(for count: Int) -> String {
+        let message = NSLocalizedString("autofill.delete.all.passwords.sync.confirmation.body", comment: "Do not translate - stringsdict entry")
+        return message.format(arguments: count, count)
+    }
+
+    public static let autofillDeleteAllPasswordsAuthenticationPromptTitle = NSLocalizedString("autofill.logins.delete.all.authentication.prompt.title", value: "Authenticate To Delete All Passwords", comment: "Title of prompt requiring authentication before all passwords are deleted")
+    public static let autofillDeleteAllPasswordsAuthenticationPromptButton = NSLocalizedString("autofill.logins.delete.all.authentication.prompt.button", value: "Authenticate Now", comment: "Title of button in prompt requiring authentication before all passwords are deleted")
+    public static let autofillDeleteAllPasswordsAuthenticationReason = NSLocalizedString("autofill.logins.delete.all.authentication.reason", value:"Authenticate to confirm you want to delete all passwords", comment: "Reason for authentication when deleting all logins")
+    public static func autofillAllPasswordsDeletedToastMessage(for count: Int) -> String {
+        let message = NSLocalizedString("autofill.delete.all.passwords.completion", comment: "Do not translate - stringsdict entry")
+        return message.format(arguments: count)
+    }
+
     public static let autofillLoginPromptAuthenticationCancelButton = NSLocalizedString("autofill.logins.prompt.auth.cancel", value:"Cancel", comment: "Cancel button for auth during login prompt")
     public static let autofillLoginPromptAuthenticationReason = NSLocalizedString("autofill.logins.prompt.auth.reason", value:"Unlock to use saved password", comment: "Reason for auth during login prompt")
     public static let autofillLoginPromptTitle = NSLocalizedString("autofill.logins.prompt.title", value:"Use a saved password?", comment: "Title for autofill login prompt")
@@ -761,7 +792,6 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let autofillLoginDetailsEditTitle = NSLocalizedString("autofill.logins.details.edit-title", value:"Edit Password", comment: "Title when editing autofill login details")
     public static let autofillLoginDetailsNewTitle = NSLocalizedString("autofill.logins.details.new-title", value:"Add password", comment: "Title when adding new autofill login")
     public static let autofillLoginDetailsDeleteButton = NSLocalizedString("autofill.logins.details.delete", value:"Delete Password", comment: "Delete button when deleting an autofill login")
-    public static let autofillLoginDetailsDeleteConfirmationTitle = NSLocalizedString("autofill.logins.details.delete-confirmation.title", value:"Are you sure you want to delete this password?", comment: "Title of confirmation alert when deleting an autofill login")
     public static let autofillLoginDetailsDeleteConfirmationButtonTitle = NSLocalizedString("autofill.logins.details.delete-confirmation.button", value:"Delete Password", comment: "Autofill alert button confirming delete autofill login")
 
     public static func autofillLoginListLoginDeletedToastMessage(for title: String) -> String {
@@ -919,10 +949,10 @@ But if you *do* want a peek under the hood, you can find more information about 
     
     static let networkProtectionNotificationPromptTitle = NSLocalizedString("network-protection.waitlist.notification-prompt-title", value: "Know the instant you're invited", comment: "Title for the alert to confirm enabling notifications")
     static let networkProtectionNotificationPromptDescription = NSLocalizedString("network-protection.waitlist.notification-prompt-description", value: "Get a notification when your copy of Network Protection early access is ready.", comment: "Subtitle for the alert to confirm enabling notifications")
-    
+
     // MARK: Settings Screeen
     public static let settingsTitle = NSLocalizedString("settings.title", value: "Settings", comment: "Title for the Settings View")
-    
+
     // General Section
     public static let settingsSetDefault = NSLocalizedString("settings.default.browser", value: "Set as Default Browser", comment: "Settings screen cell text for setting the app as default browser")
     public static let settingsAddToDock = NSLocalizedString("settings.add.to.dock", value: "Add App to Your Dock", comment: "Settings screen cell text for adding the app to the dock")
@@ -969,7 +999,11 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsPProDBPSubTitle = NSLocalizedString("settings.subscription.DBP.subtitle", value: "Remove your info from sites that sell it", comment: "Data Broker protection cell subtitle for privacy pro")
     public static let settingsPProITRTitle = NSLocalizedString("settings.subscription.ITR.title", value: "Identity Theft Restoration", comment: "Identity theft restoration cell title for privacy pro")
     public static let settingsPProITRSubTitle = NSLocalizedString("settings.subscription.ITR.subtitle", value: "If your identity is stolen, we'll help restore it", comment: "Identity theft restoration cell subtitle for privacy pro")
-      
+    
+    public static let settingsPProActivationPendingTitle = NSLocalizedString("settings.subscription.activation.pending.title", value: "Your Subscription is Being Activated", comment: "Subscription activation pending title")
+    public static let settingsPProActivationPendingDescription = NSLocalizedString("settings.subscription.activation.pending.description", value: "This is taking longer than usual, please check back later.", comment: "Subscription activation pending description")
+    
+    
     // Customize Section
     public static let settingsCustomizeSection = NSLocalizedString("settings.customize", value: "Customize", comment: "Settings title for the customize section")
     public static let settingsKeyboard = NSLocalizedString("settings.keyboard", value: "Keyboard", comment: "Settings screen cell for Keyboard")
@@ -1018,7 +1052,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionRemoveFromDevice = NSLocalizedString("subscription.remove.from.device.button", value: "Remove From This Device", comment: "Remove from this device button")
     public static let subscriptionManageTitle = NSLocalizedString("subscription.manage.title", value: "Subscription", comment: "Header for the subscription section")
     public static let subscriptionManagePlan = NSLocalizedString("subscription.manage.plan", value: "Manage Plan", comment: "Manage Plan header")
-    public static let subscriptionChangePlan = NSLocalizedString("subscription.change.plan", value: "Change Plan Or Billing", comment: "Change plan or billing title")
+    public static let subscriptionChangePlan = NSLocalizedString("subscription.change.plan", value: "Change Plan or Billing", comment: "Change plan or billing title")
     public static let subscriptionHelpAndSupport = NSLocalizedString("subscription.help", value: "Help and support", comment: "Help and support Section header")
     public static let subscriptionFAQ = NSLocalizedString("subscription.faq", value: "Privacy Pro FAQ", comment: "FAQ Button")
     public static let subscriptionFAQFooter = NSLocalizedString("subscription.faq.description", value: "Get answers to frequently asked questions about Privacy Pro in our help pages.", comment: "FAQ Description")
@@ -1034,6 +1068,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionActivate = NSLocalizedString("subscription.activate", value: "Activate Subscription", comment: "Subscription Activation Window Title")
     public static let subscriptionActivateTitle = NSLocalizedString("subscription.activate.title", value: "Activate your subscription on this device", comment: "Subscription Activation Title")
     public static let subscriptionActivateDescription = NSLocalizedString("subscription.activate.description", value: "Your subscription is automatically available in DuckDuckGo on any device signed in to your Apple ID.", comment: "Subscription Activation Info")
+    public static let subscriptionActivateHeaderDescription = NSLocalizedString("subscription.activate..header.description", value: "Access your Privacy Pro subscription on this device via Apple ID or an email address.", comment: "Subscription Activation Info")
     public static let subscriptionActivateAppleID = NSLocalizedString("subscription.activate.appleid", value: "Apple ID", comment: "Apple ID option for activation")
     public static let subscriptionActivateAppleIDButton = NSLocalizedString("subscription.activate.appleid.button", value: "Restore Purchase", comment: "Button text for restoring purchase via Apple ID")
     public static let subscriptionActivateAppleIDDescription = NSLocalizedString("subscription.activate.appleid.description", value: "Restore your purchase to activate your subscription on this device.", comment: "Description for Apple ID activation")

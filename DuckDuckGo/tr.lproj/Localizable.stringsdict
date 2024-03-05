@@ -154,5 +154,107 @@ Onları engelledim!
 			<string>d</string>
 		</dict>
 	</dict>
+    <key>autofill.number.of.passwords</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@passwords@</string>
+        <key>passwords</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>%1$d şifre</string>
+            <key>other</key>
+            <string>%1$d şifre</string>
+        </dict>
+    </dict>
+    <key>autofill.delete.all.passwords.confirmation.title</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@passwords@</string>
+        <key>passwords</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>Bu %1$d şifreyi silmek istediğinizden emin misiniz?</string>
+            <key>other</key>
+            <string>Bu %1$d şifreyi silmek istediğinizden emin misiniz?</string>
+        </dict>
+    </dict>
+    <key>autofill.delete.all.passwords.confirmation.body</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%1$#@passwords@</string>
+        <key>passwords</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>Şifreniz bu cihazdan silinecektir. %2$#@accounts@ erişimi için başka bir yol olduğundan emin olun.</string>
+            <key>other</key>
+            <string>Şifreniz bu cihazdan silinecektir. %2$#@accounts@ erişimi için başka bir yol olduğundan emin olun.</string>
+        </dict>
+        <key>accounts</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>hesap</string>
+            <key>other</key>
+            <string>hesap</string>
+        </dict>
+    </dict>
+    <key>autofill.delete.all.passwords.sync.confirmation.body</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%1$#@passwords@</string>
+        <key>passwords</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>Şifreleriniz senkronize edilen tüm cihazlardan silinecektir. %2$#@accounts@ erişimi için başka bir yol olduğundan emin olun.</string>
+            <key>other</key>
+            <string>Şifreleriniz senkronize edilen tüm cihazlardan silinecektir. %2$#@accounts@ erişimi için başka bir yol olduğundan emin olun.</string>
+        </dict>
+        <key>accounts</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>hesap</string>
+            <key>other</key>
+            <string>hesap</string>
+        </dict>
+    </dict>
+    <key>autofill.delete.all.passwords.completion</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@passwords@</string>
+        <key>passwords</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>%1$d şifre silindi</string>
+            <key>other</key>
+            <string>%1$d şifre silindi</string>
+        </dict>
+    </dict>
 </dict>
 </plist>

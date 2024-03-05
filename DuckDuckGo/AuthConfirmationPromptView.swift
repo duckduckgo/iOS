@@ -40,7 +40,7 @@ struct AuthConfirmationPromptView: View {
                 Button {
                     viewModel.cancelButtonPressed()
                 } label: {
-                    Text(UserText.autofillCancel)
+                    Text(UserText.actionCancel)
                         .foregroundColor(Color(designSystemColor: .textSecondary))
                 }
                 Spacer()

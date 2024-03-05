@@ -239,7 +239,8 @@ extension MainViewController {
                                                             appSettings: appSettings,
                                                             bookmarksDatabase: bookmarksDatabase)
 #if SUBSCRIPTION
-        let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider, accountManager: AccountManager())
+        let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider,
+                                                  accountManager: AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs)))
 #else
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider)
 #endif

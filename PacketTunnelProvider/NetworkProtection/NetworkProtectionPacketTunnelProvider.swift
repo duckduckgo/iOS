@@ -277,7 +277,11 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     private static func entitlementCheck() async -> Result<Bool, Error> {
-        let result = await AccountManager().hasEntitlement(for: .networkProtection)
+#if ALPHA
+        SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+#endif
+
+        let result = await AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs)).hasEntitlement(for: .networkProtection)
         switch result {
         case .success(let hasEntitlement):
             return .success(hasEntitlement)

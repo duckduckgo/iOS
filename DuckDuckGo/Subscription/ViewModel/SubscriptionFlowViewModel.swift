@@ -124,13 +124,13 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 if value != nil {
                     switch value?.feature {
                     case FeatureName.netP:
-                        DailyPixel.fire(pixel: .privacyProWelcomeVPN)
+                        UniquePixel.fire(pixel: .privacyProWelcomeVPN)
                         self?.selectedFeature = .netP
                     case FeatureName.itr:
-                        DailyPixel.fire(pixel: .privacyProWelcomePersonalInformationRemoval)
+                        UniquePixel.fire(pixel: .privacyProWelcomePersonalInformationRemoval)
                         self?.selectedFeature = .itr
                     case FeatureName.dbp:
-                        DailyPixel.fire(pixel: .privacyProWelcomeIdentityRestoration)
+                        UniquePixel.fire(pixel: .privacyProWelcomeIdentityRestoration)
                         self?.selectedFeature = .dbp
                     default:
                         break

@@ -449,8 +449,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return
             }
             let result = await SubscriptionService.getSubscriptionDetails(token: token)
+
             switch result {
-            case .success: DailyPixel.fire(pixel: .privacyProSubscriptionActive)
+            case .success(let success):
+                if success.isSubscriptionActive {
+                    DailyPixel.fire(pixel: .privacyProSubscriptionActive)
+                }
             case .failure: break
             }
         }

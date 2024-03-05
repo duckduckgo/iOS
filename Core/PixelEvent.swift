@@ -531,6 +531,15 @@ extension Pixel {
         case toggleProtectionsDailyCount
         case toggleReportDoNotSend
         case toggleReportDismiss
+        case appleAdAttribution
+
+        case userBehaviorReloadTwice
+        case userBehaviorReloadAndRestart
+        case userBehaviorReloadAndFireButton
+        case userBehaviorReloadAndOpenSettings
+        case userBehaviorReloadAndTogglePrivacyControls
+        case userBehaviorFireButtonAndRestart
+        case userBehaviorFireButtonAndTogglePrivacyControls
     }
     
 }
@@ -904,7 +913,7 @@ extension Pixel.Event {
             
         case .blankOverlayNotDismissed: return "m_d_ovs"
             
-        case .cookieDeletionTimedOut: return "m_d_csto"
+        case .cookieDeletionTimedOut: return "m_debug_cookie-clearing-timeout"
         case .cookieDeletionLeftovers: return "m_cookie_deletion_leftovers"
             
         case .cachedTabPreviewsExceedsTabCount: return "m_d_tpetc"
@@ -1034,6 +1043,18 @@ extension Pixel.Event {
         case .toggleProtectionsDailyCount: return "m_toggle-protections-daily-count"
         case .toggleReportDoNotSend: return "m_toggle-report-do-not-send"
         case .toggleReportDismiss: return "m_toggle-report-dismiss"
+            
+        // MARK: - Apple Ad Attribution
+        case .appleAdAttribution: return "m_apple-ad-attribution"
+
+        // MARK: - User behavior
+        case .userBehaviorReloadTwice: return "m_reload-twice"
+        case .userBehaviorReloadAndRestart: return "m_reload-and-restart"
+        case .userBehaviorReloadAndFireButton: return "m_reload-and-fire-button"
+        case .userBehaviorReloadAndOpenSettings: return "m_reload-and-open-settings"
+        case .userBehaviorReloadAndTogglePrivacyControls: return "m_reload-and-toggle-privacy-controls"
+        case .userBehaviorFireButtonAndRestart: return "m_fire-button-and-restart"
+        case .userBehaviorFireButtonAndTogglePrivacyControls: return "m_fire-button-and-toggle-privacy-controls"
         }
         
     }

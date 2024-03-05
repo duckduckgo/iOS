@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "apple-toolbox",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/apple-toolbox.git",
+      "state" : {
+        "revision" : "e3dc4faf70ca09718a2d20d5c47b449389e8c153",
+        "version" : "1.0.0"
+      }
+    },
+    {
       "identity" : "bloom_cpp",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/bloom_cpp.git",
@@ -32,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "36ddba2cbac52a41b9a9275af06d32fa8a56d2d7",
-        "version" : "4.64.0"
+        "revision" : "a3690b7666a3617693383d948cb492513f6aa569",
+        "version" : "5.0.0"
       }
     },
     {

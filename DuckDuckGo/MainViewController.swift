@@ -263,7 +263,7 @@ class MainViewController: UIViewController {
         subscribeToEmailProtectionStatusNotifications()
 
 #if NETWORK_PROTECTION && SUBSCRIPTION
-        subscribeToNetworkProtectionSubscriptionEvents()
+        subscribeToNetworkProtectionEvents()
 #endif
 
         findInPageView.delegate = self
@@ -1327,17 +1327,11 @@ class MainViewController: UIViewController {
     }
 
 #if NETWORK_PROTECTION && SUBSCRIPTION
-    private func subscribeToNetworkProtectionSubscriptionEvents() {
+    private func subscribeToNetworkProtectionEvents() {
         NotificationCenter.default.publisher(for: .accountDidSignIn)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] notification in
                 self?.onNetworkProtectionAccountSignIn(notification)
-            }
-            .store(in: &netpCancellables)
-        NotificationCenter.default.publisher(for: .accountDidSignOut)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] notification in
-                self?.onNetworkProtectionAccountSignOut(notification)
             }
             .store(in: &netpCancellables)
     }
@@ -1349,23 +1343,17 @@ class MainViewController: UIViewController {
             return
         }
 
+        VPNSettings(defaults: .networkProtectionGroupDefaults).resetEntitlementMessaging()
+        print("[NetP Subscription] Reset expired entitlement messaging")
+
         Task {
             do {
-                try await NetworkProtectionCodeRedemptionCoordinator().exchange(accessToken: token)
-                print("[NetP Subscription] Exchanged access token for auth token successfully")
+                // todo - https://app.asana.com/0/0/1206541966681608/f
+                try NetworkProtectionKeychainTokenStore().store(NetworkProtectionKeychainTokenStore.makeToken(from: token))
+                print("[NetP Subscription] Stored derived NetP auth token")
             } catch {
-                print("[NetP Subscription] Failed to exchange access token for auth token: \(error)")
+                print("[NetP Subscription] Failed to store derived NetP auth token: \(error)")
             }
-        }
-    }
-
-    @objc
-    private func onNetworkProtectionAccountSignOut(_ notification: Notification) {
-        do {
-            try NetworkProtectionKeychainTokenStore().deleteToken()
-            print("[NetP Subscription] Deleted NetP auth token after signing out from Privacy Pro")
-        } catch {
-            print("[NetP Subscription] Failed to delete NetP auth token after signing out from Privacy Pro: \(error)")
         }
     }
 #endif
@@ -2062,8 +2050,12 @@ extension MainViewController: TabSwitcherDelegate {
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTab tab: Tab) {
         if tabManager.count == 1 {
             // Make sure UI updates finish before dimissing the view.
+            // However, as a result, viewDidAppear on the home controller thinks the tab 
+            //  switcher is still presented.
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                tabSwitcher.dismiss()
+                tabSwitcher.dismiss(animated: true) {
+                    self.homeController?.viewDidAppear(true)
+                }
             }
         }
         closeTab(tab)
@@ -2225,7 +2217,8 @@ extension MainViewController: AutoClearWorker {
     func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
-        
+        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.burn)
+
         tabManager.prepareAllTabsExceptCurrentForDataClearing()
         
         fireButtonAnimator.animate {

@@ -29,6 +29,7 @@ struct SubscriptionEmailView: View {
     @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
     @State private var isActive: Bool = false
     @State var isAddingDevice = false
+    @State var shouldDisplayInactiveError = false
     
     var body: some View {
         ZStack {
@@ -37,9 +38,21 @@ struct SubscriptionEmailView: View {
                     .background()
             }
         }
+        
+        .alert(isPresented: $shouldDisplayInactiveError) {
+            Alert(
+                title: Text(UserText.subscriptionRestoreEmailInactiveTitle),
+                message: Text(UserText.subscriptionRestoreEmailInactiveMessage),
+                dismissButton: .default(Text(UserText.actionOK)) {
+                    dismiss()
+                }
+            )
+        }
+        
         .onAppear {
             viewModel.loadURL()
         }
+        
         
         .onChange(of: viewModel.activateSubscription) { active in
             if active {
@@ -52,7 +65,13 @@ struct SubscriptionEmailView: View {
                 }
             }
         }
+        
+        .onChange(of: viewModel.shouldDisplayInactiveError) { _ in
+            shouldDisplayInactiveError = true
+        }
         .navigationTitle(viewModel.viewTitle)
     }
+    
+    
 }
 #endif

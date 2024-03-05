@@ -1,5 +1,5 @@
 //
-//  NetworkProtectionNotificationIdentifier.swift
+//  AppDelegate+SKAD4.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -18,10 +18,21 @@
 //
 
 import Foundation
+import StoreKit
+import Common
 
-public enum NetworkProtectionNotificationIdentifier: String {
-    case connection = "network-protection.notification.connection"
-    case superseded = "network-protection.notification.superseded"
-    case test = "network-protection.notification.test"
-    case entitlement = "network-protection.notification.entitlement"
+extension AppDelegate {
+    
+    func updateSKAd(conversionValue: Int) {
+        
+        if #available(iOS 16.1, *) {
+            SKAdNetwork.updatePostbackConversionValue(conversionValue, coarseValue: .high, lockWindow: true, completionHandler: { error in
+                if let error = error {
+                    os_log("SKAD 4 postback failed %@", type: .error, error.localizedDescription)
+                }
+            })
+        } else {
+            os_log("SKAD 4 Not supported in this iOS version", type: .debug)
+        }
+    }
 }

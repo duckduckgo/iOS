@@ -27,9 +27,10 @@ struct SubscriptionFlowView: View {
     
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = SubscriptionFlowViewModel()
-    @State private var isAlertVisible = false
     @State private var shouldShowNavigationBar = false
     @State private var isActive: Bool = false
+    @State private var transactionError: SubscriptionFlowViewModel.SubscriptionPurchaseError?
+    @State private var shouldPresentError: Bool = false
     
     enum Constants {
         static let daxLogo = "Home"
@@ -60,6 +61,7 @@ struct SubscriptionFlowView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarHidden(!viewModel.shouldShowNavigationBar).animation(.easeOut)
         }
+        .applyInsetGroupedListStyle()
         .tint(Color(designSystemColor: .textPrimary))
         .environment(\.rootPresentationMode, self.$isActive)
     }
@@ -117,12 +119,6 @@ struct SubscriptionFlowView: View {
             }
         }
         
-        .onChange(of: viewModel.hasActiveSubscription) { result in
-            if result {
-                isAlertVisible = true
-            }
-        }
-        
         .onChange(of: viewModel.shouldDismissView) { result in
             if result {
                 dismiss()
@@ -130,44 +126,84 @@ struct SubscriptionFlowView: View {
             }
         }
         
-        .onChange(of: viewModel.activatingSubscription) { value in
-            if value {
+        .onChange(of: viewModel.userTappedRestoreButton) { _ in
                 isActive = true
-                viewModel.activatingSubscription = false
+                viewModel.userTappedRestoreButton = false
+        }
+        
+        .onChange(of: viewModel.transactionError) { value in
+            if value != nil {
+                shouldPresentError = true
             }
+            transactionError = value
         }
         
         .onAppear(perform: {
             setUpAppearances()
             Task { await viewModel.initializeViewData() }
             
-        })
-        
-        .alert(isPresented: $isAlertVisible) {
-            Alert(
-                title: Text(UserText.subscriptionFoundTitle),
-                message: Text(UserText.subscriptionFoundText),
-                primaryButton: .cancel(Text(UserText.subscriptionFoundCancel)) {
-                },
-                secondaryButton: .default(Text(UserText.subscriptionFoundRestore)) {
-                    viewModel.restoreAppstoreTransaction()
+            // Display the Restore page on load if required (With no animation)
+            if viewModel.activateSubscriptionOnLoad {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2) {
+                    var transaction = Transaction()
+                        transaction.disablesAnimations = true
+                    withTransaction(transaction) {
+                        isActive = true
+                        viewModel.activateSubscriptionOnLoad = false
+                    }
+                    
                 }
-            )
+            }
+        })
+                
+        .alert(isPresented: $shouldPresentError) {
+            getAlert()
         }
+        
         // The trailing close button should be hidden when a transaction is in progress
         .navigationBarItems(trailing: viewModel.transactionStatus == .idle
                             ? Button(UserText.subscriptionCloseButton) { viewModel.finalizeSubscriptionFlow() }
                             : nil)
     }
     
+    private func getAlert() -> Alert {
+        
+        switch transactionError {
+        
+        case .hasActiveSubscription:
+            Alert(
+                title: Text(UserText.subscriptionFoundTitle),
+                message: Text(UserText.subscriptionFoundText),
+                primaryButton: .cancel(Text(UserText.subscriptionFoundCancel)) {
+                    viewModel.transactionError = nil
+                },
+                secondaryButton: .default(Text(UserText.subscriptionFoundRestore)) {
+                    viewModel.restoreAppstoreTransaction()
+                }
+            )
+        default:
+            Alert(
+                title: Text(UserText.subscriptionAppStoreErrorTitle),
+                message: Text(UserText.subscriptionAppStoreErrorMessage),
+                dismissButton: .cancel(Text(UserText.actionOK)) {
+                    Task { await viewModel.initializeViewData() }
+                }
+            )
+        }
+        
+    }
+    
+    
     @ViewBuilder
     private var webView: some View {
         
         ZStack(alignment: .top) {
-            // Restore View Hidden Link
+            
+            // Restore View Hidden Link            
             NavigationLink(destination: SubscriptionRestoreView(), isActive: $isActive) {
                 EmptyView()
             }.isDetailLink(false)
+             
             
             AsyncHeadlessWebView(viewModel: viewModel.webViewModel)
                 .background()
@@ -178,11 +214,12 @@ struct SubscriptionFlowView: View {
 
         }
     }
+    
         
     private func setUpAppearances() {
         let navAppearance = UINavigationBar.appearance()
-        navAppearance.backgroundColor = UIColor(designSystemColor: .surface)
-        navAppearance.barTintColor = UIColor(designSystemColor: .surface)
+        navAppearance.backgroundColor = UIColor(designSystemColor: .background)
+        navAppearance.barTintColor = UIColor(designSystemColor: .container)
         navAppearance.shadowImage = UIImage()
         navAppearance.tintColor = UIColor(designSystemColor: .textPrimary)
     }

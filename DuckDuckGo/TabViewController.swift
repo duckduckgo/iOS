@@ -422,6 +422,7 @@ class TabViewController: UIViewController {
             guard let self else { return }
             self.reload()
             Pixel.fire(pixel: .pullToRefresh)
+            AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.refresh)
         }, for: .valueChanged)
 
         webView.scrollView.refreshControl?.backgroundColor = .systemBackground
@@ -2091,6 +2092,8 @@ extension TabViewController: UIGestureRecognizerDelegate {
         } else {
             reload()
         }
+
+        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.refresh)
     }
 
 }

@@ -38,6 +38,7 @@ protocol DependencyProvider {
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager { get }
     var configurationManager: ConfigurationManager { get }
     var toggleProtectionsCounter: ToggleProtectionsCounter { get }
+    var userBehaviorMonitor: UserBehaviorMonitor { get }
 
 }
 
@@ -66,5 +67,6 @@ class AppDependencyProvider: DependencyProvider {
     let configurationManager = ConfigurationManager()
 
     let toggleProtectionsCounter: ToggleProtectionsCounter = ContentBlocking.shared.privacyConfigurationManager.toggleProtectionsCounter
+    let userBehaviorMonitor = UserBehaviorMonitor()
 
 }

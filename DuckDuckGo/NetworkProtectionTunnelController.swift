@@ -31,12 +31,19 @@ final class NetworkProtectionTunnelController: TunnelController {
     private let debugFeatures = NetworkProtectionDebugFeatures()
     private let tokenStore = NetworkProtectionKeychainTokenStore()
     private let errorStore = NetworkProtectionTunnelErrorStore()
+    private let notificationCenter: NotificationCenter = .default
+    private var previousStatus: NEVPNStatus = .invalid
+    private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Starting & Stopping the VPN
 
     enum StartError: LocalizedError {
         case connectionStatusInvalid
         case simulateControllerFailureError
+    }
+
+    init() {
+        subscribeToStatusChanges()
     }
 
     /// Starts the VPN connection used for Network Protection
@@ -142,12 +149,6 @@ final class NetworkProtectionTunnelController: TunnelController {
             Pixel.fire(pixel: .networkProtectionActivationRequestFailed, error: error)
             throw error
         }
-
-        if !debugFeatures.alwaysOnDisabled {
-            Task {
-                try await enableOnDemand(tunnelManager: tunnelManager)
-            }
-        }
     }
 
     /// The actual storage for our tunnel manager.
@@ -229,6 +230,35 @@ final class NetworkProtectionTunnelController: TunnelController {
 
         // reconnect on reboot
         tunnelManager.onDemandRules = [NEOnDemandRuleConnect()]
+    }
+
+    // MARK: - Observing Status Changes
+
+    private func subscribeToStatusChanges() {
+        notificationCenter.publisher(for: .NEVPNStatusDidChange)
+            .sink(receiveValue: handleStatusChange(_:))
+            .store(in: &cancellables)
+    }
+
+    private func handleStatusChange(_ notification: Notification) {
+        guard !debugFeatures.alwaysOnDisabled,
+              let session = (notification.object as? NETunnelProviderSession),
+              session.status != previousStatus,
+              let manager = session.manager as? NETunnelProviderManager else {
+            return
+        }
+
+        Task { @MainActor in
+            previousStatus = session.status
+
+            switch session.status {
+            case .connected:
+                try await enableOnDemand(tunnelManager: manager)
+            default:
+                break
+            }
+
+        }
     }
 
     // MARK: - On Demand

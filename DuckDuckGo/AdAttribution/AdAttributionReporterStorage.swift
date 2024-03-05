@@ -1,8 +1,8 @@
 //
-//  NetworkProtectionNotificationIdentifier.swift
+//  AdAttributionReporterStorage.swift
 //  DuckDuckGo
 //
-//  Copyright © 2023 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,11 +17,22 @@
 //  limitations under the License.
 //
 
+import Core
 import Foundation
 
-public enum NetworkProtectionNotificationIdentifier: String {
-    case connection = "network-protection.notification.connection"
-    case superseded = "network-protection.notification.superseded"
-    case test = "network-protection.notification.test"
-    case entitlement = "network-protection.notification.entitlement"
+protocol AdAttributionReporterStorage {
+    var wasAttributionReportSuccessful: Bool { get async }
+
+    func markAttributionReportSuccessful() async
+}
+
+final class UserDefaultsAdAttributionReporterStorage: AdAttributionReporterStorage {
+    @MainActor
+    @UserDefaultsWrapper(key: .appleAdAttributionReportCompleted, defaultValue: false)
+    var wasAttributionReportSuccessful: Bool
+
+    @MainActor
+    func markAttributionReportSuccessful() async {
+        wasAttributionReportSuccessful = true
+    }
 }

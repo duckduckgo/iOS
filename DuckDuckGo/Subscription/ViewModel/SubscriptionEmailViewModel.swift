@@ -32,18 +32,26 @@ final class SubscriptionEmailViewModel: ObservableObject {
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     
     var emailURL = URL.activateSubscriptionViaEmail
-    var viewTitle = UserText.subscriptionRestoreEmail
+    var viewTitle = UserText.subscriptionActivateEmail
     @Published var subscriptionEmail: String?
     @Published var shouldReloadWebView = false
     @Published var activateSubscription = false
     @Published var managingSubscriptionEmail = false
-    @Published var webViewModel: AsyncHeadlessWebViewViewModel
+    @Published var transactionError: SubscriptionRestoreError?
+    @Published var shouldDisplayInactiveError: Bool = false
+    var webViewModel: AsyncHeadlessWebViewViewModel
     
     private static let allowedDomains = [
         "duckduckgo.com",
         "microsoftonline.com",
         "duosecurity.com",
     ]
+    
+    enum SubscriptionRestoreError: Error {
+        case failedToRestoreFromEmail,
+             subscriptionExpired,
+             generalError
+    }
     
     private var cancellables = Set<AnyCancellable>()
             
@@ -82,6 +90,28 @@ final class SubscriptionEmailViewModel: ObservableObject {
                 }
             }
             .store(in: &cancellables)
+        
+        subFeature.$transactionError
+            .receive(on: DispatchQueue.main)
+            .removeDuplicates()
+            .sink { [weak self] value in
+                guard let strongSelf = self else { return }
+                if let value {
+                    strongSelf.handleTransactionError(error: value)
+                }
+            }
+        .store(in: &cancellables)
+    }
+    
+    private func handleTransactionError(error: SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError) {
+        switch error {
+        
+        case .subscriptionExpired:
+            transactionError = .subscriptionExpired
+        default:
+            transactionError = .generalError
+        }
+        shouldDisplayInactiveError = true
     }
     
     private func completeActivation() {
@@ -91,6 +121,11 @@ final class SubscriptionEmailViewModel: ObservableObject {
     
     func loadURL() {
         webViewModel.navigationCoordinator.navigateTo(url: emailURL )
+    }
+    
+    deinit {
+        cancellables.removeAll()
+       
     }
 
 }

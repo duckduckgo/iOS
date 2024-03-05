@@ -1840,8 +1840,11 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Privacy pro description subtext */
 "settings.subscription.description" = "More seamless privacy with three new protections, including:";
 
+/* I have a Subscription button text for privacy pro */
+"settings.subscription.existing.subscription" = "I Have a Subscription";
+
 /* Privacy pro features list */
-"settings.subscription.features" = " • VPN (Virtual Private Network)
+"settings.subscription.features" = " • VPN
  • Personal Information Removal
  • Identity Theft Restoration";
 
@@ -1851,8 +1854,8 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Identity theft restoration cell title for privacy pro */
 "settings.subscription.ITR.title" = "Identity Theft Restoration";
 
-/* Learn more button text for privacy pro */
-"settings.subscription.learn.more" = "Learn More";
+/* Get Privacy Pro button text for privacy pro */
+"settings.subscription.learn.more" = "Get Privacy Pro";
 
 /* Subscription Settings button text for privacy pro */
 "settings.subscription.manage" = "Subscription Settings";
@@ -1905,6 +1908,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Subscription Activation Window Title */
 "subscription.activate" = "Activate Subscription";
 
+/* Subscription Activation Info */
+"subscription.activate..header.description" = "Access your Privacy Pro subscription on this device via Apple ID or an email address.";
+
+/* Restore button title for Email */
+"subscription.activate.add.email.button" = "Add Email";
+
 /* Apple ID option for activation */
 "subscription.activate.appleid" = "Apple ID";
 
@@ -1915,10 +1924,13 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.activate.appleid.description" = "Restore your purchase to activate your subscription on this device.";
 
 /* Subscription Activation Info */
-"subscription.activate.description" = "Access your Privacy Pro subscription on this device via Apple ID or an email address.";
+"subscription.activate.description" = "Your subscription is automatically available in DuckDuckGo on any device signed in to your Apple ID.";
 
 /* Email option for activation */
 "subscription.activate.email" = "Email";
+
+/* Restore button title for Email */
+"subscription.activate.email.button" = "Enter Email";
 
 /* Description for Email activation */
 "subscription.activate.email.description" = "Use your email to activate your subscription on this device.";
@@ -1936,10 +1948,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.activate.manage.email.title" = "Manage Email";
 
 /* Restore button title for AppleID */
-"subscription.activate.restore.apple" = "Restore";
-
-/* Restore button title for Email */
-"subscription.activate.restore.email" = "Enter Email";
+"subscription.activate.restore.apple" = "Restore Purchase";
 
 /* Subscription Activation Title */
 "subscription.activate.title" = "Activate your subscription on this device";
@@ -1948,7 +1957,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.add.device.button" = "Add to Another Device";
 
 /* Subscription Add device Info */
-"subscription.add.device.description" = "Access your Privacy Pro subscription on any of your devices via Apple ID or by adding an email address.";
+"subscription.add.device.description" = "Access your Privacy Pro subscription on other devices via an email address.";
 
 /* Add subscription to other device title  */
 "subscription.add.device.header.title" = "Use your subscription on all your devices";
@@ -1968,6 +1977,15 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Add Email";
 
+/* Description for Email adding */
+"subscription.addDevice.email.description" = "Add an email address to access your subscription in DuckDuckGo on other devices. We’ll only use this address to verify your subscription.";
+
+/* Title for Alert messages */
+"subscription.alert.title" = "subscription.alert.title";
+
+/* Subscription type */
+"subscription.annual" = "Annual Subscription";
+
 /* Subscription availability message on Apple devices */
 "subscription.available.apple" = "Privacy Pro is available on any device signed in to the same Apple ID.";
 
@@ -1975,16 +1993,31 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.cancel.message" = "Your subscription has been removed from this device.";
 
 /* Change plan or billing title */
-"subscription.change.plan" = "Change Plan Or Billing";
+"subscription.change.plan" = "Change Plan or Billing";
 
 /* Navigation Button for closing subscription view */
 "subscription.close" = "Close";
+
+/* Title for Confirm messages */
+"subscription.confirm.title" = "Are you sure?";
+
+/* Alert content for not found subscription */
+"subscription.email.inactive.alert.message" = "The subscription associated with this email is no longer active.";
+
+/* Alert title for not found subscription */
+"subscription.email.inactive.alert.title" = "Subscription Not Found";
+
+/* Alert content for not found subscription */
+"subscription.expired.alert.message" = "The subscription associated with this Apple ID is no longer active.";
+
+/* text for expiration string */
+"subscription.expires" = "expires";
 
 /* FAQ Button */
 "subscription.faq" = "Privacy Pro FAQ";
 
 /* FAQ Description */
-"subscription.faq.description" = "Visit our Privacy Pro help pages for answers to frequently asked questions";
+"subscription.faq.description" = "Get answers to frequently asked questions about Privacy Pro in our help pages.";
 
 /* Cancel action for the existing subscription dialog */
 "subscription.found.cancel" = "Cancel";
@@ -2005,13 +2038,19 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.manage.devices" = "Manage Devices";
 
 /* Description for Email Management options */
-"subscription.manage.email.description" = "You can use this email to activate your subscription on your other devices.";
+"subscription.manage.email.description" = "You can use this email to activate your subscription from browser settings in the DuckDuckGo app on your other devices.";
 
 /* Manage Plan header */
 "subscription.manage.plan" = "Manage Plan";
 
+/* Header for the subscription section */
+"subscription.manage.title" = "Subscription";
+
+/* Subscription type */
+"subscription.monthly" = "Monthly Subscription";
+
 /* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "The subscription associated with this Apple ID is no longer active.";
+"subscription.notFound.alert.message" = "There is no subscription associated with this Apple ID.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Subscription Not Found";
@@ -2053,13 +2092,22 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.remove.from.device.text" = "You will no longer be able to access your Privacy Pro subscription on this device. This will not cancel your subscription, and it will remain active on your other devices.";
 
 /* Remove from device confirmation dialog title */
-"subscription.remove.from.device.title" = "Remove From This Device?";
+"subscription.remove.from.device.title" = "Remove from this device?";
 
 /* Remove subscription button text */
 "subscription.remove.subscription" = "Remove Subscription";
 
 /* Remove subscription cancel button text */
 "subscription.remove.subscription.cancel" = "Cancel";
+
+/* text for renewal string */
+"subscription.renews" = "renews";
+
+/* Alert for general error message */
+"subscription.restore.general.error.message" = "The App Store was unable to process your purchase. Please try again later.";
+
+/* Alert for general error title */
+"subscription.restore.general.error.title" = "Something Went Wrong";
 
 /* Alert button text for restored purchase alert */
 "subscription.restore.success.alert.button" = "OK";
@@ -2070,8 +2118,8 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Alert title for restored purchase */
 "subscription.restore.success.alert.title" = "You’re all set.";
 
-/* Subscription Expiration Data */
-"subscription.subscription.active.caption" = "Your Privacy Pro subscription renews on %@";
+/* Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)' */
+"subscription.subscription.active.caption" = "Your subscription %1$@ on %2$@";
 
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
@@ -2193,6 +2241,18 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Voice-search footer note with on-device privacy warning */
 "voiceSearch.footer.note" = "Audio is processed on-device. It's not stored or shared with anyone, including DuckDuckGo.";
 
+/* Cancel action for the alert when the subscription expires */
+"vpn.access-revoked.alert.action.cancel" = "Dismiss";
+
+/* Primary action for the alert when the subscription expires */
+"vpn.access-revoked.alert.action.subscribe" = "Subscribe";
+
+/* Alert message for the alert when the Privacy Pro subscription expiress */
+"vpn.access-revoked.alert.message" = "Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
+
+/* Alert title for the alert when the Privacy Pro subscription expires */
+"vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
+
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";
 
@@ -2231,15 +2291,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Title for the 'unable to install' category of the VPN feedback form */
 "vpn.feedback-form.category.unable-to-install" = "Unable to install VPN";
-
-/* Action title for the alert when the VPN feedback form can't be submitted */
-"vpn.feedback-form.error.action" = "OK";
-
-/* Message for the alert when the VPN feedback form can't be submitted */
-"vpn.feedback-form.error.message" = "Failed to share your feedback. Please try again.";
-
-/* Title for the alert when the VPN feedback form can't be submitted */
-"vpn.feedback-form.error.title" = "Error";
 
 /* Title for the feedback sent view description of the VPN feedback form */
 "vpn.feedback-form.sending-confirmation.description" = "Your feedback will help us improve the\nDuckDuckGo VPN.";

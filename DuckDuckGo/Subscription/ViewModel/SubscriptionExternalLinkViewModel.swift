@@ -27,12 +27,12 @@ final class SubscriptionExternalLinkViewModel: ObservableObject {
                 
     var url: URL
     var allowedDomains: [String]?
+    var webViewModel: AsyncHeadlessWebViewViewModel
+    
     private var canGoBackCancellable: AnyCancellable?
-    
-    @Published var webViewModel: AsyncHeadlessWebViewViewModel
-    @Published var canNavigateBack: Bool = false
-    
     private var cancellables = Set<AnyCancellable>()
+    
+    @Published var canNavigateBack: Bool = false
     
     init(url: URL, allowedDomains: [String]? = nil) {
         let webViewSettings = AsyncHeadlessWebViewSettings(bounces: false,
@@ -62,6 +62,10 @@ final class SubscriptionExternalLinkViewModel: ObservableObject {
     @MainActor
     func navigateBack() async {
         await webViewModel.navigationCoordinator.goBack()
+    }
+    
+    deinit {
+        cancellables.removeAll()
     }
     
 }

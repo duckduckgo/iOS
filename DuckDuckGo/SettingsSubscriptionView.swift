@@ -61,10 +61,24 @@ struct SettingsSubscriptionView: View {
             .foregroundColor(Color.init(designSystemColor: .accent))
     }
     
+    @ViewBuilder
     private var restorePurchaseView: some View {
-        Text(UserText.subscriptionActivateAppleIDButton)
-            .daxBodyRegular()
-            .foregroundColor(Color.init(designSystemColor: .accent))
+        let text = !viewModel.isRestoringSubscription ? UserText.subscriptionActivateAppleIDButton : UserText.subscriptionRestoringTitle
+        SettingsCustomCell(content: {
+            Text(text)
+                .daxBodyRegular()
+                .foregroundColor(Color.init(designSystemColor: .accent)) },
+                           action: {
+                                Task { await viewModel.restoreAccountPurchase() }
+                            },
+                           isButton: !viewModel.isRestoringSubscription )
+        .alert(isPresented: $viewModel.shouldDisplayRestoreSubscriptionError) {
+            Alert(
+                title: Text(UserText.subscriptionAppStoreErrorTitle),
+                message: Text(UserText.subscriptionAppStoreErrorMessage),
+                dismissButton: .default(Text(UserText.actionOK)) {}
+            )
+        }
     }
     
     private var manageSubscriptionView: some View {
@@ -105,12 +119,7 @@ struct SettingsSubscriptionView: View {
                     }.foregroundColor(Color(designSystemColor: .textSecondary))
                 }
             })
-            SettingsCustomCell(content: { restorePurchaseView },
-                               action: {
-                                    isShowingsubScriptionFlow = true
-                                    subscriptionFlowViewModel.activateSubscriptionOnLoad = true
-                                },
-                               isButton: true )
+            restorePurchaseView
         }
     }
     

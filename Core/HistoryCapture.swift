@@ -44,26 +44,20 @@ public class HistoryCapture {
     }
 
     public func webViewDidCommit(url: URL) {
-        print("***", #function, "IN", url)
         self.url = url
         coordinator.addVisit(of: url.urlOrDuckDuckGoCleanQuery)
     }
 
     public func titleDidChange(_ title: String?, forURL url: URL?) {
-        print("***", #function, "IN", title ?? "nil title", url?.absoluteString ?? "nil url")
         guard self.url == url else {
-            print("***", #function, "EXIT 1")
             return
         }
 
         guard let url = url?.urlOrDuckDuckGoCleanQuery, let title, !title.isEmpty else {
-            print("***", #function, "EXIT 2")
             return
         }
-        print("***", #function, "UPDATING", title, url)
         coordinator.updateTitleIfNeeded(title: title, url: url)
         coordinator.commitChanges(url: url)
-        print("***", #function, "OUT")
     }
 
 }

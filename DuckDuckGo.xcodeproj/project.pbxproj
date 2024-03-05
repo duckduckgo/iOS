@@ -363,6 +363,7 @@
 		851624C02B92210D002D5CD7 /* History in Frameworks */ = {isa = PBXBuildFile; productRef = 851624BF2B92210D002D5CD7 /* History */; };
 		851624C22B95F8BD002D5CD7 /* HistoryCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851624C12B95F8BD002D5CD7 /* HistoryCapture.swift */; };
 		851624C52B9602A4002D5CD7 /* HistoryCaptureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851624C32B96029B002D5CD7 /* HistoryCaptureTests.swift */; };
+		851624C72B96389D002D5CD7 /* HistoryDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851624C62B96389D002D5CD7 /* HistoryDebugViewController.swift */; };
 		8517D98B221783A0006A8DD0 /* FindInPage.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8517D98A221783A0006A8DD0 /* FindInPage.xcassets */; };
 		851B1283221FE65E004781BC /* ImproveOnboardingExperiment1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B1281221FE64E004781BC /* ImproveOnboardingExperiment1Tests.swift */; };
 		851B128822200575004781BC /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B128722200575004781BC /* Onboarding.swift */; };
@@ -1463,6 +1464,7 @@
 		8512EA5824ED30D30073EE19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		851624C12B95F8BD002D5CD7 /* HistoryCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryCapture.swift; sourceTree = "<group>"; };
 		851624C32B96029B002D5CD7 /* HistoryCaptureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryCaptureTests.swift; sourceTree = "<group>"; };
+		851624C62B96389D002D5CD7 /* HistoryDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDebugViewController.swift; sourceTree = "<group>"; };
 		8517D98A221783A0006A8DD0 /* FindInPage.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FindInPage.xcassets; sourceTree = "<group>"; };
 		851B1281221FE64E004781BC /* ImproveOnboardingExperiment1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImproveOnboardingExperiment1Tests.swift; sourceTree = "<group>"; };
 		851B128722200575004781BC /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
@@ -3928,6 +3930,7 @@
 				F46FEC5627987A5F0061D9DF /* KeychainItemsDebugViewController.swift */,
 				EE72CA842A862D000043B5B3 /* NetworkProtectionDebugViewController.swift */,
 				CBFCB30D2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift */,
+				851624C62B96389D002D5CD7 /* HistoryDebugViewController.swift */,
 			);
 			name = Debug;
 			sourceTree = "<group>";
@@ -6840,6 +6843,7 @@
 				98B31292218CCB8C00E54DE1 /* AppDependencyProvider.swift in Sources */,
 				02C57C4B2514FEFB009E5129 /* DoNotSellSettingsViewController.swift in Sources */,
 				02A54A9C2A097C95000C8FED /* AppTPHomeViewSectionRenderer.swift in Sources */,
+				851624C72B96389D002D5CD7 /* HistoryDebugViewController.swift in Sources */,
 				8540BBA22440857A00017FE4 /* PreserveLoginsWorker.swift in Sources */,
 				85DFEDF924CF3D0E00973FE7 /* TabsBarCell.swift in Sources */,
 				F17922DB1E717C8D006E3D97 /* Suggestion.swift in Sources */,

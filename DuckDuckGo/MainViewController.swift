@@ -2218,6 +2218,8 @@ extension MainViewController: AutoClearWorker {
             self.bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
         }
 
+        await historyManager.removeAllHistory()
+
         self.clearInProgress = false
         
         self.postClear?()

@@ -18,77 +18,63 @@
 //
 
 import Foundation
+import History
+
+// macos:
+// didCommit: add visit and remember current URL
+// on webview title updated: update title
+// when url changes "save" previous entry
 
 public class HistoryCapture {
 
-    enum NavigationState {
-
-        case none
-        case navigating
-        case idle
-        case error
-        case subFrame
-
+    enum VisitState {
+        case added
+        case expected
     }
 
     let historyManager: HistoryManaging
+    var coordinator: HistoryCoordinating {
+        historyManager.historyCoordinator
+    }
 
-    var navigationState = NavigationState.none
     var url: URL?
 
     public init(historyManager: HistoryManaging) {
         self.historyManager = historyManager
     }
 
-    public func urlDidChange(_ url: URL?) {
-        print("***", #function, url?.absoluteString ?? "nil", navigationState)
+    public func webViewDidCommit(url: URL) {
+        print("***", #function, "IN", url)
         self.url = url
-
-        // Only add visits when the url changes if we've navigated at least once and are now idle
-        guard navigationState == .idle else { return }
-        addVisit()
+        coordinator.addVisit(of: url.urlOrDuckDuckGoCleanQuery)
     }
 
-    public func webViewDidCommit() {
-        print("***", #function)
-        navigationState = .navigating
-    }
-
-    public func webViewDidReceiveServerRedirect() {
-        print("***", #function)
-    }
-
-    public func webViewRequestedPolicyDecisionForNavigationResponse() {
-        print("***", #function)
-    }
-
-    public func webViewRequestedPolicyDecisionForNavigationAction(onMainFrame isMainFrame: Bool) {
-        print("***", #function)
-        guard !isMainFrame else { return }
-        navigationState = .subFrame
-    }
-
-    public func webViewDidFinishNavigation() {
-        print("***", #function)
-        if navigationState == .navigating {
-            addVisit()
+    public func titleDidChange(_ title: String?, forURL url: URL?) {
+        print("***", #function, "IN", title ?? "nil title", url?.absoluteString ?? "nil url")
+        guard self.url == url else {
+            print("***", #function, "EXIT 1")
+            return
         }
-        navigationState = .idle
+
+        guard let url = url?.urlOrDuckDuckGoCleanQuery, let title, !title.isEmpty else {
+            print("***", #function, "EXIT 2")
+            return
+        }
+        print("***", #function, "UPDATING", title, url)
+        coordinator.updateTitleIfNeeded(title: title, url: url)
+        coordinator.commitChanges(url: url)
+        print("***", #function, "OUT")
     }
 
-    public func webViewDidStartProvisionalNavigation() {
-        print("***", #function)
-    }
+}
 
-    public func webViewDidFailNavigation() {
-        print("***", #function)
-        navigationState = .error
-    }
+extension URL {
 
-    private func addVisit() {
-        guard let url else { return }
-        print("***", #function, url)
-        historyManager.historyCoordinator.addVisit(of: url)
+    var urlOrDuckDuckGoCleanQuery: URL {
+        guard isDuckDuckGoSearch,
+                let searchQuery,
+                let url = URL.makeSearchURL(query: searchQuery)?.removingInternalSearchParameters() else { return self }
+        return url
     }
 
 }

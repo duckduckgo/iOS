@@ -70,7 +70,8 @@ extension FeatureFlag: FeatureFlagSourceProviding {
         case .autoconsentOnByDefault:
             return .remoteReleasable(.subfeature(AutoconsentSubfeature.onByDefault))
         case .history:
-            return .remoteReleasable(.feature(.history))
+            // In a near term PR ths needs to be: `.remoteReleasable(.feature(.history))`
+            return .internalOnly
         }
     }
 }

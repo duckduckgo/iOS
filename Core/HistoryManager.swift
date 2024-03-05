@@ -39,7 +39,7 @@ public class HistoryManager: HistoryManaging {
     private var currentHistoryCoordinator: HistoryCoordinating?
 
     public var historyCoordinator: HistoryCoordinating {
-        if !isHistoryFeatureEnabled() {
+        guard isHistoryFeatureEnabled() else {
             currentHistoryCoordinator = nil
             return NullHistoryCoordinator()
         }
@@ -47,6 +47,8 @@ public class HistoryManager: HistoryManaging {
         if let currentHistoryCoordinator {
             return currentHistoryCoordinator
         }
+
+        database.loadStore()
 
         let context = database.makeContext(concurrencyType: .privateQueueConcurrencyType)
         let historyCoordinator = HistoryCoordinator(historyStoring: HistoryStore(context: context))
@@ -64,7 +66,16 @@ public class HistoryManager: HistoryManaging {
     }
 
     func isHistoryFeatureEnabled() -> Bool {
-        return privacyConfigManager.privacyConfig.isEnabled(featureKey: .history) && variantManager.isSupported(feature: .history)
+        // return privacyConfigManager.privacyConfig.isEnabled(featureKey: .history) && variantManager.isSupported(feature: .history)
+        return true
+    }
+
+    public func removeAllHistory() async {
+        await withCheckedContinuation { continuation in
+            historyCoordinator.burnAll {
+                continuation.resume()
+            }
+        }
     }
 
 }

@@ -28,50 +28,41 @@ final class HistoryCaptureTests: XCTestCase {
 
     let mockHistoryCoordinator = MockHistoryCoordinator()
 
-    func test_whenNoNavigationOccuredYetAndURLDidChange_ThenDoNotAddToHistory() {
+    func test_whenURLIsCommitted_ThenVisitIsStored() {
         let capture = makeCapture()
-        capture.urlDidChange(URL.ddg)
-        XCTAssertEqual([], mockHistoryCoordinator.addVisitCalls)
+        capture.webViewDidCommit(url: URL.example)
+        XCTAssertEqual(1, mockHistoryCoordinator.addVisitCalls.count)
+        XCTAssertEqual([URL.example], mockHistoryCoordinator.addVisitCalls)
     }
 
-    func test_whenNavigatingAndURLDidChange_ThenDoNotAddToHistory() {
+    func test_whenURLIsDDGQuery_ThenOnlyQueryIsStored() {
         let capture = makeCapture()
-        capture.webViewDidCommit()
-        capture.urlDidChange(URL.ddg)
-        XCTAssertEqual([], mockHistoryCoordinator.addVisitCalls)
+        capture.webViewDidCommit(url: URL.makeSearchURL(query: "test")!)
+        XCTAssertEqual(1, mockHistoryCoordinator.addVisitCalls.count)
+        XCTAssertEqual("https://duckduckgo.com?q=test", mockHistoryCoordinator.addVisitCalls[0].absoluteString)
     }
 
-    func test_whenIdleAndURLDidChange_ThenAddToHistory() {
+    func test_whenURLIsDDGQueryWithExtraParams_ThenOnlyQueryIsStored() {
         let capture = makeCapture()
-        capture.webViewDidCommit()
-        capture.webViewDidFinishNavigation()
-        capture.urlDidChange(URL.ddg)
-        XCTAssertEqual([URL.ddg], mockHistoryCoordinator.addVisitCalls)
+        capture.webViewDidCommit(url: URL.makeSearchURL(query: "test")!.appendingParameter(name: "ia", value: "web"))
+        XCTAssertEqual(1, mockHistoryCoordinator.addVisitCalls.count)
+        XCTAssertEqual("https://duckduckgo.com?q=test", mockHistoryCoordinator.addVisitCalls[0].absoluteString)
     }
 
-    func test_whenErrorAndURLDidChange_ThenDoNotAddToHistory() {
+    func test_whenTitleIsUpdatedForMatchingURL_ThenTitleIsSaved() {
         let capture = makeCapture()
-        capture.webViewDidCommit()
-        capture.webViewDidFailNavigation()
-        capture.urlDidChange(URL.ddg)
-        XCTAssertEqual([], mockHistoryCoordinator.addVisitCalls)
+        capture.webViewDidCommit(url: URL.example)
+        capture.titleDidChange("test", forURL: URL.example)
+        XCTAssertEqual(1, mockHistoryCoordinator.updateTitleIfNeededCalls.count)
+        XCTAssertEqual(mockHistoryCoordinator.updateTitleIfNeededCalls[0].title, "test")
+        XCTAssertEqual(mockHistoryCoordinator.updateTitleIfNeededCalls[0].url, URL.example)
     }
 
-    func test_whenNavigationDidFinish_ThenAddToHistory() {
+    func test_whenTitleIsUpdatedForDifferentURL_ThenTitleIsIgnored() {
         let capture = makeCapture()
-        capture.webViewDidCommit()
-        capture.urlDidChange(URL.ddg)
-        capture.webViewDidFinishNavigation()
-        XCTAssertEqual([URL.ddg], mockHistoryCoordinator.addVisitCalls)
-    }
-
-    func test_whenNavigationDidFinishForSubFrame_ThenDoNotAddToHistory() {
-        let capture = makeCapture()
-        capture.webViewDidCommit()
-        capture.webViewRequestedPolicyDecisionForNavigationAction(onMainFrame: false)
-        capture.urlDidChange(URL.ddg)
-        capture.webViewDidFinishNavigation()
-        XCTAssertEqual([], mockHistoryCoordinator.addVisitCalls)
+        capture.webViewDidCommit(url: URL.example)
+        capture.titleDidChange("test", forURL: URL.example.appendingPathComponent("path"))
+        XCTAssertEqual(0, mockHistoryCoordinator.updateTitleIfNeededCalls.count)
     }
 
     func makeCapture() -> HistoryCapture {
@@ -83,12 +74,21 @@ final class HistoryCaptureTests: XCTestCase {
 class MockHistoryCoordinator: NullHistoryCoordinator {
 
     var addVisitCalls = [URL]()
+    var updateTitleIfNeededCalls = [(title: String, url: URL)]()
 
     override func addVisit(of url: URL) -> Visit? {
         addVisitCalls.append(url)
         return nil
     }
 
+    override func updateTitleIfNeeded(title: String, url: URL) {
+        updateTitleIfNeededCalls.append((title: title, url: url))
+    }
+
+}
+
+private extension URL {
+    static let example = URL(string: "https://example.com")!
 }
 
 class MockHistoryManager: HistoryManaging {

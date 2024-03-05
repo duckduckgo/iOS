@@ -350,9 +350,6 @@ extension SettingsViewModel {
         
         // Fetch available subscriptions from the backend (or sign out)
         switch await SubscriptionService.getSubscriptionDetails(token: token) {
-        case .success(let response) where !response.isSubscriptionActive:
-            AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs)).signOut()
-            setupSubscriptionPurchaseOptions()
         
         case .success(let response) where response.isSubscriptionActive:
             

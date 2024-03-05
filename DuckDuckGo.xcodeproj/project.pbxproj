@@ -707,6 +707,9 @@
 		C12726F02A5FF89900215B02 /* EmailSignupPromptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12726EF2A5FF89900215B02 /* EmailSignupPromptViewModel.swift */; };
 		C12726F22A5FF8CB00215B02 /* EmailSignupPromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12726F12A5FF8CB00215B02 /* EmailSignupPromptViewController.swift */; };
 		C13B32D22A0E750700A59236 /* AutofillSettingStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13B32D12A0E750700A59236 /* AutofillSettingStatus.swift */; };
+		C13F3F682B7F88100083BE40 /* AuthConfirmationPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F3F672B7F88100083BE40 /* AuthConfirmationPromptView.swift */; };
+		C13F3F6A2B7F883A0083BE40 /* AuthConfirmationPromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F3F692B7F883A0083BE40 /* AuthConfirmationPromptViewController.swift */; };
+		C13F3F6C2B7F88470083BE40 /* AuthConfirmationPromptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F3F6B2B7F88470083BE40 /* AuthConfirmationPromptViewModel.swift */; };
 		C14882DA27F2011C00D59F0C /* BookmarksExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14882D727F2011C00D59F0C /* BookmarksExporter.swift */; };
 		C14882DC27F2011C00D59F0C /* BookmarksImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14882D927F2011C00D59F0C /* BookmarksImporter.swift */; };
 		C14882E327F20D9A00D59F0C /* BookmarksExporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14882E127F20D9A00D59F0C /* BookmarksExporterTests.swift */; };
@@ -2354,6 +2357,9 @@
 		C12726EF2A5FF89900215B02 /* EmailSignupPromptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignupPromptViewModel.swift; sourceTree = "<group>"; };
 		C12726F12A5FF8CB00215B02 /* EmailSignupPromptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignupPromptViewController.swift; sourceTree = "<group>"; };
 		C13B32D12A0E750700A59236 /* AutofillSettingStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutofillSettingStatus.swift; sourceTree = "<group>"; };
+		C13F3F672B7F88100083BE40 /* AuthConfirmationPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfirmationPromptView.swift; sourceTree = "<group>"; };
+		C13F3F692B7F883A0083BE40 /* AuthConfirmationPromptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfirmationPromptViewController.swift; sourceTree = "<group>"; };
+		C13F3F6B2B7F88470083BE40 /* AuthConfirmationPromptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfirmationPromptViewModel.swift; sourceTree = "<group>"; };
 		C14882D727F2011C00D59F0C /* BookmarksExporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksExporter.swift; sourceTree = "<group>"; };
 		C14882D927F2011C00D59F0C /* BookmarksImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksImporter.swift; sourceTree = "<group>"; };
 		C14882E127F20D9A00D59F0C /* BookmarksExporterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksExporterTests.swift; sourceTree = "<group>"; };
@@ -4457,6 +4463,16 @@
 			name = PasswordGeneration;
 			sourceTree = "<group>";
 		};
+		C1AFFC4B2B8773060060448E /* AuthConfirmation */ = {
+			isa = PBXGroup;
+			children = (
+				C13F3F672B7F88100083BE40 /* AuthConfirmationPromptView.swift */,
+				C13F3F692B7F883A0083BE40 /* AuthConfirmationPromptViewController.swift */,
+				C13F3F6B2B7F88470083BE40 /* AuthConfirmationPromptViewModel.swift */,
+			);
+			name = AuthConfirmation;
+			sourceTree = "<group>";
+		};
 		C1B7B51D28941F160098FD6A /* RemoteMessaging */ = {
 			isa = PBXGroup;
 			children = (
@@ -5593,6 +5609,7 @@
 				C13B32D12A0E750700A59236 /* AutofillSettingStatus.swift */,
 				319A370F28299A850079FBCE /* PasswordHider.swift */,
 				31C70B5428045E3500FB6AD1 /* SecureVaultErrorReporter.swift */,
+				C1AFFC4B2B8773060060448E /* AuthConfirmation */,
 				F407605328131910006B1E0B /* AutofillLoginUI */,
 				310C4B4A281B69BC00BA79A9 /* Management */,
 				C17B59552A03AAC40055F2D1 /* PasswordGeneration */,
@@ -6860,6 +6877,7 @@
 				984D035C24AE15CD0066CFB8 /* TabSwitcherSettings.swift in Sources */,
 				D6E83C562B21ECC1006C8AFB /* SettingsLegacyViewProvider.swift in Sources */,
 				98B31292218CCB8C00E54DE1 /* AppDependencyProvider.swift in Sources */,
+				C13F3F6A2B7F883A0083BE40 /* AuthConfirmationPromptViewController.swift in Sources */,
 				02C57C4B2514FEFB009E5129 /* DoNotSellSettingsViewController.swift in Sources */,
 				02A54A9C2A097C95000C8FED /* AppTPHomeViewSectionRenderer.swift in Sources */,
 				8540BBA22440857A00017FE4 /* PreserveLoginsWorker.swift in Sources */,
@@ -6867,6 +6885,7 @@
 				F17922DB1E717C8D006E3D97 /* Suggestion.swift in Sources */,
 				020108A729A6ABF600644F9D /* AppTPToggleView.swift in Sources */,
 				02A54A982A093126000C8FED /* AppTPHomeViewModel.swift in Sources */,
+				C13F3F682B7F88100083BE40 /* AuthConfirmationPromptView.swift in Sources */,
 				F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */,
 				4B5C462A2AF2A6E6002A4432 /* VPNIntents.swift in Sources */,
 				310742A62848CD780012660B /* BackForwardMenuHistoryItem.swift in Sources */,
@@ -6879,6 +6898,7 @@
 				85F98F92296F32BD00742F4A /* SyncSettingsViewController.swift in Sources */,
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
 				310D091D2799F57200DC0060 /* Download.swift in Sources */,
+				C13F3F6C2B7F88470083BE40 /* AuthConfirmationPromptViewModel.swift in Sources */,
 				1EEF124E2850EADE003DDE57 /* PrivacyIconView.swift in Sources */,
 				37FCAAAB29911BF1000E420A /* WaitlistExtensions.swift in Sources */,
 				EE4BE0092A740BED00CD6AA8 /* ClearTextField.swift in Sources */,
@@ -9981,7 +10001,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = exactVersion;
-				version = 114.2.0;
+				version = 114.3.0;
 			};
 		};
 		B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */ = {

@@ -29,28 +29,6 @@ struct NetworkProtectionVPNSettingsView: View {
     var body: some View {
         VStack {
             List {
-                Section {
-                    NavigationLink(destination: NetworkProtectionVPNLocationView()) {
-                        HStack(spacing: 16) {
-                            switch viewModel.preferredLocation.icon {
-                            case .defaultIcon:
-                                Image("Location-Solid-24")
-                            case .emoji(let string):
-                                Text(string)
-                            }
-                            VStack(alignment: .leading) {
-                                Text(UserText.netPVPNLocationTitle)
-                                    .daxBodyRegular()
-                                    .foregroundColor(.init(designSystemColor: .textPrimary))
-                                Text(viewModel.preferredLocation.title)
-                                    .daxFootnoteRegular()
-                                    .foregroundColor(.init(designSystemColor: .textSecondary))
-                            }
-                        }
-                    }
-                }
-                .listRowBackground(Color(designSystemColor: .surface))
-
                 switch viewModel.viewKind {
                 case .loading: EmptyView()
                 case .unauthorized: notificationsUnauthorizedView

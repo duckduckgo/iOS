@@ -443,6 +443,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         widgetRefreshModel.refreshVPNWidget()
 #endif
 
+        updateSubscriptionStatus()
+    }
+
+    func updateSubscriptionStatus() {
 #if SUBSCRIPTION
         Task {
             guard let token = AccountManager().accessToken else {

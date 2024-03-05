@@ -24,7 +24,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "autofill/anya-delete-all-ios",
-        "revision" : "700a37f4674d874d998f990323d956fe2867e964"
+        "revision" : "f0dd06c52fffac9d0fe0c18313367ec9000933e1"
       }
     },
     {

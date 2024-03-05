@@ -112,7 +112,6 @@ final class PrivacyDashboardViewController: UIViewController {
 
     private func privacyDashboardProtectionSwitchChangeHandler(state: ProtectionState) {
         privacyDashboardDidTriggerDismiss = true
-        dismiss(animated: true)
         guard let domain = privacyDashboardController.privacyInfo?.url.host else { return }
         
         let source: BrokenSiteReport.Source = privacyDashboardController.initDashboardMode == .report ? .appMenu : .dashboard

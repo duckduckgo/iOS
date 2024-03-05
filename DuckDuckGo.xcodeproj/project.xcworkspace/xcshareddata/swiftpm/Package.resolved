@@ -24,7 +24,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "mariusz/cleanup-cpm-default",
-        "revision" : "75bf1e8ae26d8d18d9e7ec8326808c44f2415e61"
+        "revision" : "17f57b5543250cc16a6d61985a6267589f6ef658"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "a3690b7666a3617693383d948cb492513f6aa569",
-        "version" : "5.0.0"
+        "revision" : "59752eb7973d3e3b0c23255ff51359f48b343f15",
+        "version" : "5.2.0"
       }
     },
     {

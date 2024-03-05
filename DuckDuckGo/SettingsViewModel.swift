@@ -50,6 +50,8 @@ final class SettingsViewModel: ObservableObject {
 #if SUBSCRIPTION
     private var accountManager: AccountManager
     private var signOutObserver: Any?
+    @Published var isRestoringSubscription: Bool = false
+    @Published var shouldDisplayRestoreSubscriptionError: Bool = false
 #endif
     
     
@@ -405,7 +407,26 @@ extension SettingsViewModel {
         }
     }
     
-    #endif
+    @available(iOS 15.0, *)
+    func restoreAccountPurchase() async {
+        DispatchQueue.main.async { self.isRestoringSubscription = true }
+        let result = await AppStoreRestoreFlow.restoreAccountFromPastPurchase()
+        switch result {
+        case .success:
+            DispatchQueue.main.async {
+                self.isRestoringSubscription = false
+            }
+            await self.setupSubscriptionEnvironment()
+            
+        case .failure:
+            DispatchQueue.main.async {
+                self.isRestoringSubscription = false
+                self.shouldDisplayRestoreSubscriptionError = true
+            }
+        }
+    }
+    
+#endif  // SUBSCRIPTION
     
     #if NETWORK_PROTECTION
     private func updateNetPStatus(connectionStatus: ConnectionStatus) {

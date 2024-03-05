@@ -131,10 +131,10 @@ struct SubscriptionSettingsView: View {
             } else {
                 optionsView
             }
-        }
+        }.onAppear(perform: {
+            viewModel.onApper()
+        })
         .navigationBarTitleDisplayMode(.inline)
-        
-        
     }
         
 }

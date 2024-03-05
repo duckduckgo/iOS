@@ -64,7 +64,9 @@ struct SubscriptionPIRView: View {
                 
             }
             .edgesIgnoringSafeArea(.all)
-        }
+        }.onAppear(perform: {
+            viewModel.onAppear()
+        })
     }
     
     private var header: some View {
@@ -195,7 +197,6 @@ struct SubscriptionPIRView: View {
         .daxBodyRegular()
         .tint(Color(designSystemColor: .textPrimary))
     }
-    
 }
 
 // @available(iOS 15.0, *)

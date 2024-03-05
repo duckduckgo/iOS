@@ -94,33 +94,21 @@ struct SettingsSubscriptionView: View {
                 SettingsCellView(label: UserText.settingsPProDBPTitle,
                                  subtitle: UserText.settingsPProDBPSubTitle,
                                  action: { isShowingDBP.toggle() }, isButton: true)
-                .sheet(isPresented: $isShowingDBP) {
-                    SubscriptionPIRView().onAppear(perform: {
-                        Pixel.fire(pixel: .privacyProPersonalInformationRemovalSettings)
-                    })
-                }
+                .sheet(isPresented: $isShowingDBP) { SubscriptionPIRView() }
             }
             
             if viewModel.shouldShowITP {
                 SettingsCellView(label: UserText.settingsPProITRTitle,
                                  subtitle: UserText.settingsPProITRSubTitle,
                                  action: { isShowingITP.toggle() }, isButton: true)
-                .sheet(isPresented: $isShowingITP) {
-                    SubscriptionITPView().onAppear(perform: {
-                        Pixel.fire(pixel: .privacyProIdentityRestorationSettings)
-                    })
-                }
+                .sheet(isPresented: $isShowingITP) { SubscriptionITPView() }
             }
              
             if viewModel.shouldShowDBP || viewModel.shouldShowITP || viewModel.shouldShowNetP {
-                NavigationLink(destination: SubscriptionSettingsView().onAppear(perform: {
-                    Pixel.fire(pixel: .privacyProSubscriptionSettings)
-                })
-                ) {
+                NavigationLink(destination: SubscriptionSettingsView()) {
                     SettingsCustomCell(content: { manageSubscriptionView })
                 }
             }
-            
         }
     }
     

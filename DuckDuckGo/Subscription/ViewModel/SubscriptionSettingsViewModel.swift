@@ -23,6 +23,7 @@ import StoreKit
 
 #if SUBSCRIPTION
 import Subscription
+import Core
 @available(iOS 15.0, *)
 final class SubscriptionSettingsViewModel: ObservableObject {
     
@@ -136,6 +137,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         signOutObserver = nil
     }
     
-    
+    func onApper() {
+        Pixel.fire(pixel: .privacyProSubscriptionSettings)
+    }
 }
 #endif

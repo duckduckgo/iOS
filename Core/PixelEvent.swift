@@ -534,6 +534,14 @@ extension Pixel {
         case userBehaviorReloadAndTogglePrivacyControls
         case userBehaviorFireButtonAndRestart
         case userBehaviorFireButtonAndTogglePrivacyControls
+
+        case historyRemoveFailed
+        case historyReloadFailed
+        case historyCleanEntriesFailed
+        case historyCleanVisitsFailed
+        case historySaveFailed
+        case historyInsertVisitFailed
+        case historyRemoveVisitsFailed
     }
     
 }
@@ -1041,8 +1049,17 @@ extension Pixel.Event {
         case .userBehaviorReloadAndTogglePrivacyControls: return "m_reload-and-toggle-privacy-controls"
         case .userBehaviorFireButtonAndRestart: return "m_fire-button-and-restart"
         case .userBehaviorFireButtonAndTogglePrivacyControls: return "m_fire-button-and-toggle-privacy-controls"
+
+        // MARK: - History debug
+        case .historyRemoveFailed: return "m_debug_history-remove-failed"
+        case .historyReloadFailed: return "m_debug_history-reload-failed"
+        case .historyCleanEntriesFailed: return "m_debug_history-clean-entries-failed"
+        case .historyCleanVisitsFailed: return "m_debug_history-clean-visits-failed"
+        case .historySaveFailed: return "m_debug_history-save-failed"
+        case .historyInsertVisitFailed: return "m_debug_history-insert-visit-failed"
+        case .historyRemoveVisitsFailed: return "m_debug_history-remove-visits-failed"
         }
-        
+
     }
     
 }

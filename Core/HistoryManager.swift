@@ -51,7 +51,7 @@ public class HistoryManager: HistoryManaging {
         database.loadStore()
 
         let context = database.makeContext(concurrencyType: .privateQueueConcurrencyType)
-        let historyCoordinator = HistoryCoordinator(historyStoring: HistoryStore(context: context))
+        let historyCoordinator = HistoryCoordinator(historyStoring: HistoryStore(context: context, eventMapper: HistoryStoreEventMapper()))
         currentHistoryCoordinator = historyCoordinator
         historyCoordinator.loadHistory {
             // no-op
@@ -66,8 +66,7 @@ public class HistoryManager: HistoryManaging {
     }
 
     func isHistoryFeatureEnabled() -> Bool {
-        // return privacyConfigManager.privacyConfig.isEnabled(featureKey: .history) && variantManager.isSupported(feature: .history)
-        return true
+        return privacyConfigManager.privacyConfig.isEnabled(featureKey: .history) && variantManager.isSupported(feature: .history)
     }
 
     public func removeAllHistory() async {
@@ -161,5 +160,39 @@ public class HistoryDatabase {
                                   readOnly: readOnly)
         os_log("HistoryDatabase.make - OUT")
         return db
+    }
+}
+
+class HistoryStoreEventMapper: EventMapping<HistoryStore.HistoryStoreEvents> {
+    public init() {
+        super.init { event, error, _, _ in
+            switch event {
+            case .removeFailed:
+                Pixel.fire(pixel: .historyRemoveFailed, error: error)
+
+            case .reloadFailed:
+                Pixel.fire(pixel: .historyReloadFailed, error: error)
+
+            case .cleanEntriesFailed:
+                Pixel.fire(pixel: .historyCleanEntriesFailed, error: error)
+
+            case .cleanVisitsFailed:
+                Pixel.fire(pixel: .historyCleanVisitsFailed, error: error)
+
+            case .saveFailed:
+                Pixel.fire(pixel: .historySaveFailed, error: error)
+
+            case .insertVisitFailed:
+                Pixel.fire(pixel: .historyInsertVisitFailed, error: error)
+
+            case .removeVisitsFailed:
+                Pixel.fire(pixel: .historyRemoveVisitsFailed, error: error)
+            }
+
+        }
+    }
+
+    override init(mapping: @escaping EventMapping<HistoryStore.HistoryStoreEvents>.Mapping) {
+        fatalError("Use init()")
     }
 }

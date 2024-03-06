@@ -1005,7 +1005,7 @@ extension Pixel.Event {
         case .syncDeleteAccountError: return "m_d_sync_delete_account_error"
         case .syncLoginExistingAccountError: return "m_d_sync_login_existing_account_error"
 
-        case .syncWrongEnvironment: return "m_d_sync_wrong_environment"
+        case .syncWrongEnvironment: return "m_d_sync_wrong_environment_u"
 
         case .swipeTabsUsed: return "m_swipe-tabs-used"
         case .swipeTabsUsedDaily: return "m_swipe-tabs-used-daily"

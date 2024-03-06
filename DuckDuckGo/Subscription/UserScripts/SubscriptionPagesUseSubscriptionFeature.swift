@@ -37,6 +37,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         static let featureName = "useSubscription"
         static let os = "ios"
         static let empty = ""
+        static let token = "token"
     }
     
     struct OriginDomains {
@@ -156,7 +157,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     // MARK: Broker Methods (Called from WebView via UserScripts)
     func getSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
         let authToken = AccountManager().authToken ?? Constants.empty
-        return Subscription(token: authToken)
+        return [Constants.token: authToken]
     }
     
     func getSubscriptionOptions(params: Any, original: WKScriptMessage) async -> Encodable? {
@@ -260,7 +261,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             switch await SubscriptionService.getSubscriptionDetails(token: accessToken) {
             
             // If the account is not active, display an error and logout
-            case .success(let response) where !response.isSubscriptionActive:
+            case .success(let subscription) where !subscription.isActive:
                 setTransactionError(.failedToRestoreFromEmailSubscriptionInactive)
                 accountManager.signOut()
                 return nil

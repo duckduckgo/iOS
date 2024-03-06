@@ -2464,7 +2464,6 @@
 		D668D9262B6937D2008E2FF2 /* SubscriptionITPViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionITPViewModel.swift; sourceTree = "<group>"; };
 		D668D9282B69681C008E2FF2 /* IdentityTheftRestorationPagesUserScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentityTheftRestorationPagesUserScript.swift; sourceTree = "<group>"; };
 		D668D92A2B696840008E2FF2 /* IdentityTheftRestorationPagesFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentityTheftRestorationPagesFeature.swift; sourceTree = "<group>"; };
-		D668D92C2B696945008E2FF2 /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
 		D68A21432B7EC08500BB372E /* SubscriptionExternalLinkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionExternalLinkView.swift; sourceTree = "<group>"; };
 		D68A21452B7EC16200BB372E /* SubscriptionExternalLinkViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionExternalLinkViewModel.swift; sourceTree = "<group>"; };
 		D68DF81B2B58302E0023DBEA /* SubscriptionRestoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionRestoreView.swift; sourceTree = "<group>"; };
@@ -4641,7 +4640,6 @@
 		D664C7B02B289AA000CBFA76 /* UserScripts */ = {
 			isa = PBXGroup;
 			children = (
-				D668D92C2B696945008E2FF2 /* Subscription.swift */,
 				D664C7B32B289AA000CBFA76 /* SubscriptionPagesUserScript.swift */,
 				D664C7B52B289AA000CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift */,
 				D668D9282B69681C008E2FF2 /* IdentityTheftRestorationPagesUserScript.swift */,
@@ -6939,7 +6937,6 @@
 				EE72CA852A862D000043B5B3 /* NetworkProtectionDebugViewController.swift in Sources */,
 				C18ED43A2AB6F77600BF3805 /* AutofillSettingsEnableFooterView.swift in Sources */,
 				CB84C7BD29A3EF530088A5B8 /* AppConfigurationURLProvider.swift in Sources */,
-				D668D92D2B696945008E2FF2 /* Subscription.swift in Sources */,
 				AA3D854723D9E88E00788410 /* AppIconSettingsCell.swift in Sources */,
 				316931D927BD22A80095F5ED /* DownloadActionMessageViewHelper.swift in Sources */,
 				9838059F2228208E00385F1A /* PositiveFeedbackViewController.swift in Sources */,

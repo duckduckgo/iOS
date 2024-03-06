@@ -68,8 +68,33 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 guard quality != .unknown else { return }
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionLatency(quality: quality))
             }
-        case .rekeyCompleted:
-            Pixel.fire(pixel: .networkProtectionRekeyCompleted)
+        case .rekeyAttempt(let step):
+            switch step {
+            case .begin:
+                Pixel.fire(pixel: .networkProtectionRekeyAttempt)
+            case .failure(let error):
+                Pixel.fire(pixel: .networkProtectionRekeyFailure, error: error)
+            case .success:
+                Pixel.fire(pixel: .networkProtectionRekeyCompleted)
+            }
+        case .tunnelStartAttempt(let step):
+            switch step {
+            case .begin:
+                Pixel.fire(pixel: .networkProtectionTunnelStartAttempt)
+            case .failure(let error):
+                Pixel.fire(pixel: .networkProtectionTunnelStartFailure, error: error)
+            case .success:
+                Pixel.fire(pixel: .networkProtectionTunnelStartSuccess)
+            }
+        case .tunnelUpdateAttempt(let step):
+            switch step {
+            case .begin:
+                Pixel.fire(pixel: .networkProtectionTunnelUpdateAttempt)
+            case .failure(let error):
+                Pixel.fire(pixel: .networkProtectionTunnelUpdateFailure, error: error)
+            case .success:
+                Pixel.fire(pixel: .networkProtectionTunnelUpdateSuccess)
+            }
         }
     }
 

@@ -190,5 +190,135 @@ Užblokavau juos!
 			<string>d</string>
 		</dict>
 	</dict>
+	<key>autofill.number.of.passwords</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>%1$d slaptažodžis</string>
+			<key>few</key>
+			<string>%1$d slaptažodžiai</string>
+			<key>many</key>
+			<string>%1$d slaptažodžio</string>
+			<key>other</key>
+			<string>%1$d slaptažodžių</string>
+		</dict>
+	</dict>
+	<key>autofill.delete.all.passwords.confirmation.title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>Ar tikrai norite ištrinti %1$d slaptažodį?</string>
+			<key>few</key>
+			<string>Ar tikrai norite ištrinti %1$d slaptažodžius?</string>
+			<key>many</key>
+			<string>Ar tikrai norite ištrinti %1$d slaptažodžio?</string>
+			<key>other</key>
+			<string>Ar tikrai norite ištrinti %1$d slaptažodžių?</string>
+		</dict>
+	</dict>
+    <key>autofill.delete.all.passwords.confirmation.body</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%1$#@passwords@</string>
+        <key>passwords</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>Jūsų slaptažodžiai bus ištrinti iš šio įrenginio. Įsitikinkite, kad vis dar turite galimybę pasiekti savo %2$#@accounts@.</string>
+            <key>few</key>
+            <string>Jūsų slaptažodžiai bus ištrinti iš šio įrenginio. Įsitikinkite, kad vis dar turite galimybę pasiekti savo %2$#@accounts@.</string>
+            <key>many</key>
+            <string>Jūsų slaptažodžiai bus ištrinti iš šio įrenginio. Įsitikinkite, kad vis dar turite galimybę pasiekti savo %2$#@accounts@.</string>
+            <key>other</key>
+            <string>Jūsų slaptažodžiai bus ištrinti iš šio įrenginio. Įsitikinkite, kad vis dar turite galimybę pasiekti savo %2$#@accounts@.</string>
+        </dict>
+        <key>accounts</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>sąskaita</string>
+            <key>few</key>
+            <string>sąskaitos</string>
+            <key>many</key>
+            <string>sąskaitos</string>
+            <key>other</key>
+            <string>sąskaitų</string>
+        </dict>
+    </dict>
+	<key>autofill.delete.all.passwords.sync.confirmation.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>Jūsų slaptažodžiai bus ištrinti iš visų sinchronizuojamų įrenginių. Įsitikinkite, kad vis dar turite būdą, kaip pasiekti %2$#@accounts@ paskyrą.</string>
+			<key>few</key>
+			<string>Jūsų slaptažodžiai bus ištrinti iš visų sinchronizuojamų įrenginių. Įsitikinkite, kad vis dar turite būdą, kaip pasiekti %2$#@accounts@ paskyras.</string>
+			<key>many</key>
+			<string>Jūsų slaptažodžiai bus ištrinti iš visų sinchronizuojamų įrenginių. Įsitikinkite, kad vis dar turite būdą, kaip pasiekti %2$#@accounts@ paskyros.</string>
+			<key>other</key>
+			<string>Jūsų slaptažodžiai bus ištrinti iš visų sinchronizuojamų įrenginių. Įsitikinkite, kad vis dar turite būdą, kaip pasiekti %2$#@accounts@ paskyrų.</string>
+		</dict>
+		<key>accounts</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>sąskaita</string>
+			<key>few</key>
+			<string>sąskaitos</string>
+			<key>many</key>
+			<string>sąskaitos</string>
+			<key>other</key>
+			<string>sąskaitų</string>
+		</dict>
+	</dict>
+	<key>autofill.delete.all.passwords.completion</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>%1$d slaptažodis ištrintas</string>
+			<key>few</key>
+			<string>%1$d slaptažodžiai ištrinti</string>
+			<key>many</key>
+			<string>%1$d slaptažodžio ištrinta</string>
+			<key>other</key>
+			<string>%1$d slaptažodžių ištrinti</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

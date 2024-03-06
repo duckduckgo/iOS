@@ -38,7 +38,7 @@
 "action.title.copy.message" = "URL naslov kopiran";
 
 /* Delete action - button shown in alert */
-"action.title.delete" = "Delete";
+"action.title.delete" = "Izbriši";
 
 /* Disable protection action */
 "action.title.disable.protection" = "Onemogoči zaščito zasebnosti";
@@ -448,6 +448,18 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "DuckDuckGo na spletnih mestih, ki jih obiščete, zazna pojavna okna s soglasjem za piškotke, zato lahko samodejno nastavimo vaše nastavitve piškotkov, da zmanjšamo uporabo piškotkov in povečamo zasebnost, nato pa pojavna okna zapremo. Nekatera spletna mesta pa ne omogočajo upravljanja nastavitev piškotkov, zato lahko takšna pojavna okna le skrijemo.";
 
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.completion" = "autofill.delete.all.passwords.completion";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.confirmation.body" = "autofill.delete.all.passwords.confirmation.body";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.confirmation.title" = "autofill.delete.all.passwords.confirmation.title";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
+
 /* Text link to email protection website */
 "autofill.enable.email.protection" = "Omogočite zaščito e-pošte Email Protection";
 
@@ -490,6 +502,15 @@
 /* Title for toast when copying username */
 "autofill.logins.copy-toast.username-copied" = "Uporabniško ime je bilo kopirano";
 
+/* Title of button in prompt requiring authentication before all passwords are deleted */
+"autofill.logins.delete.all.authentication.prompt.button" = "Preveri pristnost zdaj";
+
+/* Title of prompt requiring authentication before all passwords are deleted */
+"autofill.logins.delete.all.authentication.prompt.title" = "Preverite pristnost za brisanje vseh gesel";
+
+/* Reason for authentication when deleting all logins */
+"autofill.logins.delete.all.authentication.reason" = "Potrdite, da želite izbrisati vsa gesla";
+
 /* Address label for login details on autofill */
 "autofill.logins.details.address" = "URL spletnega mesta";
 
@@ -501,9 +522,6 @@
 
 /* Autofill alert button confirming delete autofill login */
 "autofill.logins.details.delete-confirmation.button" = "Izbriši geslo";
-
-/* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Ali ste prepričani, da želite izbrisati to geslo?";
 
 /* Title when editing autofill login details */
 "autofill.logins.details.edit-title" = "Uredite geslo";
@@ -564,6 +582,9 @@
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Zapri";
+
+/* Title for button to delete all saved autofill passwords */
+"autofill.logins.list.delete.all" = "Izbriši vse";
 
 /* Title for a toggle that enables autofill */
 "autofill.logins.list.enable" = "Shranite in samodejno izpolnite gesla";
@@ -627,6 +648,9 @@
 
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Ni rezultatov";
+
+/* Do not translate - stringsdict entry */
+"autofill.number.of.passwords" = "autofill.number.of.passwords";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.subtitle" = "Gesla so varno shranjena v vaši napravi.";

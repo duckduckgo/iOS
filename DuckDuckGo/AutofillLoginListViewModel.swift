@@ -50,6 +50,7 @@ internal enum EnableAutofillRows: Int, CaseIterable {
     case resetNeverPromptWebsites
 }
 
+// swiftlint:disable file_length type_body_length
 final class AutofillLoginListViewModel: ObservableObject {
     
     enum ViewState {
@@ -63,8 +64,13 @@ final class AutofillLoginListViewModel: ObservableObject {
     
     let authenticator = AutofillLoginListAuthenticator(reason: UserText.autofillLoginListAuthenticationReason)
     var isSearching: Bool = false
+    var isEditing: Bool = false {
+        didSet {
+            sections = makeSections(with: accounts)
+        }
+    }
     var authenticationNotRequired = false
-    private var accounts = [SecureVaultModels.WebsiteAccount]()
+    @Published private var accounts = [SecureVaultModels.WebsiteAccount]()
     private var accountsToSuggest = [SecureVaultModels.WebsiteAccount]()
     private var cancellables: Set<AnyCancellable> = []
     private var appSettings: AppSettings
@@ -86,6 +92,16 @@ final class AutofillLoginListViewModel: ObservableObject {
 
     var hasAccountsSaved: Bool {
         return !accounts.isEmpty
+    }
+
+    var accountsCount: Int {
+        accounts.count
+    }
+
+    var accountsCountPublisher: AnyPublisher<Int, Never> {
+        $accounts
+            .map { $0.count }
+            .eraseToAnyPublisher()
     }
     
     var isAutofillEnabledInSettings: Bool {
@@ -124,6 +140,10 @@ final class AutofillLoginListViewModel: ObservableObject {
         return false
     }
     
+    func deleteAllCredentials() -> Bool {
+        return deleteAll()
+    }
+
     func undoLastDelete() {
         guard let cachedDeletedCredentials = cachedDeletedCredentials else {
             return
@@ -134,7 +154,17 @@ final class AutofillLoginListViewModel: ObservableObject {
     func clearUndoCache() {
         cachedDeletedCredentials = nil
     }
-    
+
+    func clearAllAccounts() {
+        accounts = []
+        accountsToSuggest = []
+        sections = makeSections(with: accounts)
+    }
+
+    func undoClearAllAccounts() {
+        updateData()
+    }
+
     func lockUI() {
         authenticationNotRequired = !hasAccountsSaved
         authenticator.logOut()
@@ -233,7 +263,9 @@ final class AutofillLoginListViewModel: ObservableObject {
         var newSections = [AutofillLoginListSectionType]()
 
         if !isSearching {
-            newSections.append(.enableAutofill)
+            if !isEditing {
+                newSections.append(.enableAutofill)
+            }
 
             if !accountsToSuggest.isEmpty {
                 let accountItems = accountsToSuggest.map { AutofillLoginListItemViewModel(account: $0,
@@ -278,6 +310,8 @@ final class AutofillLoginListViewModel: ObservableObject {
             } else {
                 newViewState = .searching
             }
+        } else if isEditing {
+            newViewState = sections.count >= 1 ? .showItems : .empty
         } else {
             newViewState = sections.count > 1 ? .showItems : .empty
         }
@@ -338,7 +372,21 @@ final class AutofillLoginListViewModel: ObservableObject {
             Pixel.fire(pixel: .secureVaultError, error: error)
         }
     }
+    
+    @discardableResult
+    private func deleteAll() -> Bool {
+        guard let secureVault = secureVault else { return false }
+
+        do {
+            try secureVault.deleteAllWebsiteCredentials()
+            return true
+        } catch {
+            Pixel.fire(pixel: .secureVaultError, error: error)
+            return false
+        }
+    }
 }
+// swiftlint:enable type_body_length
 
 extension AutofillLoginListItemViewModel: Comparable {
     static func < (lhs: AutofillLoginListItemViewModel, rhs: AutofillLoginListItemViewModel) -> Bool {

@@ -448,6 +448,18 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "When DuckDuckGo detects cookie consent pop-ups on sites you visit, we can try to automatically set your cookie preferences to minimize cookies and maximize privacy, then close the pop-ups. Some sites don't provide an option to manage cookie preferences, so we can only hide pop-ups like these.";
 
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.completion" = "autofill.delete.all.passwords.completion";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.confirmation.body" = "autofill.delete.all.passwords.confirmation.body";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.confirmation.title" = "autofill.delete.all.passwords.confirmation.title";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
+
 /* Text link to email protection website */
 "autofill.enable.email.protection" = "Enable Email Protection";
 
@@ -490,6 +502,15 @@
 /* Title for toast when copying username */
 "autofill.logins.copy-toast.username-copied" = "Username copied";
 
+/* Title of button in prompt requiring authentication before all passwords are deleted */
+"autofill.logins.delete.all.authentication.prompt.button" = "Authenticate Now";
+
+/* Title of prompt requiring authentication before all passwords are deleted */
+"autofill.logins.delete.all.authentication.prompt.title" = "Authenticate To Delete All Passwords";
+
+/* Reason for authentication when deleting all logins */
+"autofill.logins.delete.all.authentication.reason" = "Authenticate to confirm you want to delete all passwords";
+
 /* Address label for login details on autofill */
 "autofill.logins.details.address" = "Website URL";
 
@@ -501,9 +522,6 @@
 
 /* Autofill alert button confirming delete autofill login */
 "autofill.logins.details.delete-confirmation.button" = "Delete Password";
-
-/* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Are you sure you want to delete this password?";
 
 /* Title when editing autofill login details */
 "autofill.logins.details.edit-title" = "Edit Password";
@@ -564,6 +582,9 @@
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Close";
+
+/* Title for button to delete all saved autofill passwords */
+"autofill.logins.list.delete.all" = "Delete All";
 
 /* Title for a toggle that enables autofill */
 "autofill.logins.list.enable" = "Save and autofill passwords";
@@ -627,6 +648,9 @@
 
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "No Results";
+
+/* Do not translate - stringsdict entry */
+"autofill.number.of.passwords" = "autofill.number.of.passwords";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.subtitle" = "Passwords are stored securely on your device.";
@@ -1830,6 +1854,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Settings title for the privacy section */
 "settings.privacy" = "Privacy";
+
+/* Subscription activation pending description */
+"settings.subscription.activation.pending.description" = "This is taking longer than usual, please check back later.";
+
+/* Subscription activation pending title */
+"settings.subscription.activation.pending.title" = "Your Subscription is Being Activated";
 
 /* Data Broker protection cell subtitle for privacy pro */
 "settings.subscription.DBP.subtitle" = "Remove your info from sites that sell it";

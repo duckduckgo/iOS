@@ -399,6 +399,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard !testing else { return }
 
         syncService.initializeIfNeeded()
+        if syncService.authState == .active &&
+            (InternalUserStore().isInternalUser == false && syncService.serverEnvironment == .development) {
+            UniquePixel.fire(pixel: .syncWrongEnvironment)
+        }
         syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: syncService)
 
         if !(overlayWindow?.rootViewController is AuthenticationViewController) {

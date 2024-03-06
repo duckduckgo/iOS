@@ -110,6 +110,18 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @Published public var location: String?
     @Published public var ipAddress: String?
 
+    @Published public var uploadSpeed: String = "0 KB/s" {
+        didSet {
+            print("UPLOAD: \(uploadSpeed)")
+        }
+    }
+    @Published public var downloadSpeed: String = "0 KB/s" {
+        didSet {
+            print("DOWNLOAD: \(uploadSpeed)")
+        }
+    }
+    private var throughputUpdateTimer: Timer?
+
     @Published public var animationsOn: Bool = false
 
     public init(tunnelController: TunnelController = NetworkProtectionTunnelController(),
@@ -135,6 +147,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         setUpDisableTogglePublisher()
         setUpServerInfoPublishers()
         setUpLocationPublishers()
+        setUpThroughputRefreshTimer()
 
         // Prefetching this now for snappy load times on the locations screens
         Task {
@@ -252,6 +265,61 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             .map(NetworkProtectionLocationStatusModel.init(selectedLocation:))
             .assign(to: \.preferredLocation, onWeaklyHeld: self)
             .store(in: &cancellables)
+    }
+
+    private func setUpThroughputRefreshTimer() {
+        throughputUpdateTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            
+            Task {
+                guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+                    return
+                }
+
+                let data: ExtensionMessageString? = try? await activeSession.sendProviderMessage(.getConnectionThroughput)
+
+                guard let data else {
+                    return
+                }
+
+                let bytes = data.value.components(separatedBy: ",")
+                guard let receivedString = bytes.first,
+                      let sentString = bytes.last,
+                      let received = Int64(receivedString),
+                      let sent = Int64(sentString) else {
+                    return
+                }
+
+                await strongSelf.updateBandwidthCounts(sent: sent, received: received)
+            }
+        }
+    }
+
+    private var previousSentCount: Int64?
+    private var previousReceivedCount: Int64?
+    private let byteCountFormatter: ByteCountFormatter = {
+        let formatter = ByteCountFormatter()
+        formatter.allowsNonnumericFormatting = false
+        formatter.allowedUnits = [.useKB, .useMB, .useKB]
+        return formatter
+    }()
+
+    @MainActor
+    private func updateBandwidthCounts(sent: Int64, received: Int64) {
+        if let previousSentCount {
+            let difference = sent - previousSentCount
+            let formatted = byteCountFormatter.string(fromByteCount: difference)
+            self.uploadSpeed = "\(formatted)/s"
+        }
+
+        if let previousReceivedCount {
+            let difference = received - previousReceivedCount
+            let formatted = byteCountFormatter.string(fromByteCount: difference)
+            self.downloadSpeed = "\(formatted)/s"
+        }
+
+        self.previousSentCount = sent
+        self.previousReceivedCount = received
     }
 
     @MainActor

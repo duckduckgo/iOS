@@ -30,6 +30,8 @@ enum SubscriptionTransactionStatus {
     case idle, purchasing, restoring, polling
 }
 
+// swiftlint:disable type_body_length
+
 @available(iOS 15.0, *)
 final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObject {
     
@@ -354,5 +356,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
     
 }
+
+// swiftlint:enable type_body_length
 
 #endif

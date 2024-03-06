@@ -86,7 +86,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
     enum ExtensionDebugCommandRows: Int, CaseIterable {
         case triggerTestNotification
-        case blockAllTraffic
         case shutDown
         case showEntitlementMessaging
         case resetEntitlementMessaging
@@ -365,8 +364,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         switch ExtensionDebugCommandRows(rawValue: row) {
         case .triggerTestNotification:
             cell.textLabel?.text = "Test Notification"
-        case .blockAllTraffic:
-            cell.textLabel?.text = "Block All Traffic"
         case .shutDown:
             cell.textLabel?.text = "Disable VPN From Extension"
         case .showEntitlementMessaging:
@@ -383,10 +380,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .triggerTestNotification:
             Task {
                 try await NetworkProtectionDebugUtilities().sendTestNotificationRequest()
-            }
-        case .blockAllTraffic:
-            Task {
-                try await NetworkProtectionDebugUtilities().blockAllTraffic()
             }
         case .shutDown:
             Task {

@@ -24,6 +24,8 @@ import NetworkProtection
 
 @available(iOS 15, *)
 struct NetworkProtectionStatusView: View {
+    @Environment(\.colorScheme) var colorScheme
+
     @StateObject public var statusModel: NetworkProtectionStatusViewModel
     @State private var isFeedbackFormActive = false
 
@@ -100,20 +102,11 @@ struct NetworkProtectionStatusView: View {
         HStack {
             Spacer(minLength: 0)
             VStack(alignment: .center, spacing: 8) {
-                LottieView(
-                    lottieFile: "vpn-light-mode",
-                    loopMode: .withIntro(
-                        .init(
-                            // Skip the intro if NetP is enabled, but the user didn't manually trigger it
-                            skipIntro: statusModel.isNetPEnabled && !statusModel.shouldDisableToggle,
-                            introStartFrame: 0,
-                            introEndFrame: 100,
-                            loopStartFrame: 130,
-                            loopEndFrame: 370
-                        )
-                    ),
-                    isAnimating: $statusModel.isNetPEnabled
-                )
+                if colorScheme == .light {
+                    headerAnimationView("vpn-light-mode")
+                } else {
+                    headerAnimationView("vpn-dark-mode")
+                }
                 Text(statusModel.headerTitle)
                     .daxHeadline()
                     .multilineTextAlignment(.center)
@@ -187,6 +180,24 @@ struct NetworkProtectionStatusView: View {
                     return .discarded
                 }
             })
+    }
+
+    @ViewBuilder
+    private func headerAnimationView(_ animationName: String) -> some View {
+        LottieView(
+            lottieFile: animationName,
+            loopMode: .withIntro(
+                .init(
+                    // Skip the intro if NetP is enabled, but the user didn't manually trigger it
+                    skipIntro: statusModel.isNetPEnabled && !statusModel.shouldDisableToggle,
+                    introStartFrame: 0,
+                    introEndFrame: 100,
+                    loopStartFrame: 130,
+                    loopEndFrame: 370
+                )
+            ),
+            isAnimating: $statusModel.isNetPEnabled
+        )
     }
 }
 

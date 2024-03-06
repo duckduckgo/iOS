@@ -799,7 +799,6 @@
 		D668D9272B6937D2008E2FF2 /* SubscriptionITPViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D668D9262B6937D2008E2FF2 /* SubscriptionITPViewModel.swift */; };
 		D668D9292B69681C008E2FF2 /* IdentityTheftRestorationPagesUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = D668D9282B69681C008E2FF2 /* IdentityTheftRestorationPagesUserScript.swift */; };
 		D668D92B2B696840008E2FF2 /* IdentityTheftRestorationPagesFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D668D92A2B696840008E2FF2 /* IdentityTheftRestorationPagesFeature.swift */; };
-		D668D92D2B696945008E2FF2 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = D668D92C2B696945008E2FF2 /* Subscription.swift */; };
 		D68A21442B7EC08500BB372E /* SubscriptionExternalLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68A21432B7EC08500BB372E /* SubscriptionExternalLinkView.swift */; };
 		D68A21462B7EC16200BB372E /* SubscriptionExternalLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68A21452B7EC16200BB372E /* SubscriptionExternalLinkViewModel.swift */; };
 		D68DF81C2B58302E0023DBEA /* SubscriptionRestoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68DF81B2B58302E0023DBEA /* SubscriptionRestoreView.swift */; };

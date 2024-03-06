@@ -1855,6 +1855,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings title for the privacy section */
 "settings.privacy" = "Privacy";
 
+/* Subscription activation pending description */
+"settings.subscription.activation.pending.description" = "This is taking longer than usual, please check back later.";
+
+/* Subscription activation pending title */
+"settings.subscription.activation.pending.title" = "Your Subscription is Being Activated";
+
 /* Data Broker protection cell subtitle for privacy pro */
 "settings.subscription.DBP.subtitle" = "Remove your info from sites that sell it";
 

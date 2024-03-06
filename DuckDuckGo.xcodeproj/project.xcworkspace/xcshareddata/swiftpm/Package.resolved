@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "michal/subs-confirm-endpoint",
-        "revision" : "d452950344d740f2e34468e4bc71d84ad6b0e56d"
+        "revision" : "06ba37e23cd4c8d848d9d153c6e5be07956d3adc",
+        "version" : "115.0.0"
       }
     },
     {

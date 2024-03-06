@@ -1833,7 +1833,8 @@ extension MainViewController: TabDelegate {
         showBars()
         currentTab?.dismiss()
 
-        let newTab = tabManager.addURLRequest(navigationAction.request,
+        // Don't use a request or else the page gets stuck on "about:blank"
+        let newTab = tabManager.addURLRequest(nil,
                                               with: configuration,
                                               inheritedAttribution: inheritingAttribution)
         newTab.openedByPage = true

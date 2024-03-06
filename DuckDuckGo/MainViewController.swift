@@ -1386,7 +1386,7 @@ class MainViewController: UIViewController {
 
     @objc
     private func onNetworkProtectionAccountSignIn(_ notification: Notification) {
-        guard let token = AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs)).accessToken else {
+        guard let token = AccountManager().accessToken else {
             assertionFailure("[NetP Subscription] AccountManager signed in but token could not be retrieved")
             return
         }

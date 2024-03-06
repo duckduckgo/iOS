@@ -247,7 +247,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
 
         let authToken = subscriptionValues.token
-        let accountManager = AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs))
+        let accountManager = AccountManager()
         if case let .success(accessToken) = await accountManager.exchangeAuthTokenToAccessToken(authToken),
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
             accountManager.storeAuthToken(token: authToken)
@@ -261,7 +261,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func backToSettings(params: Any, original: WKScriptMessage) async -> Encodable? {
-        let accountManager = AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs))
+        let accountManager = AccountManager()
         if let accessToken = accountManager.accessToken,
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
             switch await SubscriptionService.getSubscription(accessToken: accessToken) {

@@ -359,7 +359,7 @@ extension SettingsViewModel {
             // Check entitlements and update UI accordingly
             let entitlements: [AccountManager.Entitlement] = [.identityTheftRestoration, .dataBrokerProtection, .networkProtection]
             for entitlement in entitlements {
-                if case .success = await AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs)).hasEntitlement(for: entitlement) {
+                if case .success = await AccountManager().hasEntitlement(for: entitlement) {
                     switch entitlement {
                     case .identityTheftRestoration:
                         self.shouldShowITP = true
@@ -379,7 +379,7 @@ extension SettingsViewModel {
     
     @available(iOS 15.0, *)
     private func signOutUser() {
-        AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs)).signOut()
+        AccountManager().signOut()
         cacheSubscriptionState(active: false)
         setupSubscriptionPurchaseOptions()
     }

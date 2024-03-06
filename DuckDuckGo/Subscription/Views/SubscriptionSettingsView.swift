@@ -66,9 +66,7 @@ struct SubscriptionSettingsView: View {
             
             Section(header: Text(UserText.subscriptionManageDevices)) {
                 
-                NavigationLink(destination: SubscriptionRestoreView().onAppear(perform: {
-                    Pixel.fire(pixel: .privacyProSettingsAddDevice)
-                })) {
+                NavigationLink(destination: SubscriptionRestoreView()) {
                     SettingsCustomCell(content: {
                         Text(UserText.subscriptionAddDeviceButton)
                             .daxBodyRegular()
@@ -156,6 +154,7 @@ struct SubscriptionSettingsView_Previews: PreviewProvider {
     }
 }
 
+// Commented out because CI fails if a SwiftUI preview is enabled https://app.asana.com/0/414709148257752/1206774081310425/f
 // @available(iOS 15.0, *)
 // struct SubscriptionSettingsView_Previews: PreviewProvider {
 //    static var previews: some View {

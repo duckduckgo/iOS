@@ -56,6 +56,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     }
     
     func initializeView() {
+        Pixel.fire(pixel: .privacyProSettingsAddDevice)
         subscriptionEmail = accountManager.email
         if accountManager.isUserAuthenticated {
             isAddingDevice = true

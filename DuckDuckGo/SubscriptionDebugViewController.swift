@@ -32,7 +32,7 @@ import Subscription
 @available(iOS 15.0, *)
 final class SubscriptionDebugViewController: UITableViewController {
     
-    private let accountManager = AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs))
+    private let accountManager = AccountManager()
     fileprivate var purchaseManager: PurchaseManager = PurchaseManager.shared
     
     private let titles = [
@@ -240,7 +240,7 @@ final class SubscriptionDebugViewController: UITableViewController {
             }
             let entitlements: [AccountManager.Entitlement] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
             for entitlement in entitlements {
-                if case let .success(result) = await AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs)).hasEntitlement(for: entitlement) {
+                if case let .success(result) = await AccountManager().hasEntitlement(for: entitlement) {
                     let resultSummary = "Entitlement check for \(entitlement.rawValue): \(result)"
                     results.append(resultSummary)
                     print(resultSummary)

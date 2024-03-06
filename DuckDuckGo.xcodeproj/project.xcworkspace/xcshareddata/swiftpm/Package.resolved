@@ -24,7 +24,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "graeme/subscription-keychain-sharing",
-        "revision" : "1eb08507e7cab1137083c7f77c003af7d417b2a4"
+        "revision" : "2fa74adb82a6478ee9f737f54d8bed75eefa725d"
       }
     },
     {

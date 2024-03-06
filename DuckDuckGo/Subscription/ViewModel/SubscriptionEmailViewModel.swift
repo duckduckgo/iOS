@@ -57,7 +57,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
             
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
-         accountManager: AccountManager = AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs))) {
+         accountManager: AccountManager = AccountManager()) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.accountManager = accountManager

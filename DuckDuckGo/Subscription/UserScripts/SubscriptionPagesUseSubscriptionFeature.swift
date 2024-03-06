@@ -156,7 +156,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     // MARK: Broker Methods (Called from WebView via UserScripts)
     func getSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
-        let authToken = AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs)).authToken ?? Constants.empty
+        let authToken = AccountManager().authToken ?? Constants.empty
         return Subscription(token: authToken)
     }
     
@@ -242,7 +242,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
 
         let authToken = subscriptionValues.token
-        let accountManager = AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs))
+        let accountManager = AccountManager()
         if case let .success(accessToken) = await accountManager.exchangeAuthTokenToAccessToken(authToken),
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
             accountManager.storeAuthToken(token: authToken)
@@ -256,7 +256,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func backToSettings(params: Any, original: WKScriptMessage) async -> Encodable? {
-        let accountManager = AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs))
+        let accountManager = AccountManager()
         if let accessToken = accountManager.accessToken,
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
             switch await SubscriptionService.getSubscriptionDetails(token: accessToken) {

@@ -703,6 +703,7 @@
 		BD862E0B2B30F9300073E2EE /* VPNFeedbackFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD862E0A2B30F9300073E2EE /* VPNFeedbackFormView.swift */; };
 		BDA583872B98B6C700732FDC /* AccountManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA583862B98B6C700732FDC /* AccountManagerExtension.swift */; };
 		BDA583882B98B92F00732FDC /* AccountManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA583862B98B6C700732FDC /* AccountManagerExtension.swift */; };
+		BDA583892B98BA7600732FDC /* AccountManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA583862B98B6C700732FDC /* AccountManagerExtension.swift */; };
 		BDC234F72B27F51100D3C798 /* UniquePixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC234F62B27F51100D3C798 /* UniquePixel.swift */; };
 		C10CB5F32A1A5BDF0048E503 /* AutofillViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10CB5F22A1A5BDF0048E503 /* AutofillViews.swift */; };
 		C111B26927F579EF006558B1 /* BookmarkOrFolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C111B26827F579EF006558B1 /* BookmarkOrFolderTests.swift */; };
@@ -6483,6 +6484,7 @@
 				02025AD42988229800E694E7 /* ProxySocket.swift in Sources */,
 				02025AD62988229800E694E7 /* SocketProtocol.swift in Sources */,
 				02025AD82988229800E694E7 /* Tunnel.swift in Sources */,
+				BDA583892B98BA7600732FDC /* AccountManagerExtension.swift in Sources */,
 				02025ADA2988229800E694E7 /* Port.swift in Sources */,
 				02025ADB2988229800E694E7 /* HTTPStreamScanner.swift in Sources */,
 				02025ADC2988229800E694E7 /* UInt128.swift in Sources */,

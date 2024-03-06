@@ -283,7 +283,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
 #endif
 
-        let result = await AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs)).hasEntitlement(for: .networkProtection)
+        let result = await AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)).hasEntitlement(for: .networkProtection)
         switch result {
         case .success(let hasEntitlement):
             return .success(hasEntitlement)

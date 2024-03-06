@@ -32,6 +32,7 @@ final class IdentityTheftRestorationPagesFeature: Subfeature, ObservableObject {
     struct Constants {
         static let featureName = "useIdentityTheftRestoration"
         static let os = "ios"
+        static let token = "token"
     }
     
     struct OriginDomains {
@@ -67,8 +68,8 @@ final class IdentityTheftRestorationPagesFeature: Subfeature, ObservableObject {
     }
 
     func getAccessToken(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        let authToken = AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs)).authToken ?? ""
-        return Subscription(token: authToken)
+        let authToken = AccountManager().authToken ?? ""
+        return [Constants.token: authToken]
     }
     
     deinit {

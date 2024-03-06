@@ -349,9 +349,9 @@ extension SettingsViewModel {
         }
         
         // Fetch available subscriptions from the backend (or sign out)
-        switch await SubscriptionService.getSubscriptionDetails(token: token) {
+        switch await SubscriptionService.getSubscription(accessToken: token) {
         
-        case .success(let response) where response.isSubscriptionActive:
+        case .success(let subscription) where subscription.isActive:
             
             // Cache Subscription state
             cacheSubscriptionState(active: true)
@@ -411,7 +411,7 @@ extension SettingsViewModel {
     @available(iOS 15.0, *)
     func restoreAccountPurchase() async {
         DispatchQueue.main.async { self.isRestoringSubscription = true }
-        let result = await AppStoreRestoreFlow.restoreAccountFromPastPurchase(appGroup: Bundle.main.appGroup(bundle: .subs))
+        let result = await AppStoreRestoreFlow.restoreAccountFromPastPurchase(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
         switch result {
         case .success:
             DispatchQueue.main.async {

@@ -27,8 +27,6 @@ import Subscription
 final class SubscriptionSettingsViewModel: ObservableObject {
     
     enum Constants {
-        static let autoRenewable = "Auto-Renewable"
-        static let notAutoRenewable = "Not Auto-Renewable"
         static let monthlyProductID = "ios.subscription.1month"
         static let yearlyProductID = "ios.subscription.1year"
         static let updateFrequency: Float = 10
@@ -61,19 +59,19 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         Task {
             guard let token = accountManager.accessToken else { return }
 
-            if let cachedDate = SubscriptionService.cachedSubscriptionDetailsResponse?.expiresOrRenewsAt,
-               let cachedStatus =  SubscriptionService.cachedSubscriptionDetailsResponse?.status,
-               let productID =  SubscriptionService.cachedSubscriptionDetailsResponse?.productId {
+            if let cachedDate = SubscriptionService.cachedGetSubscriptionResponse?.expiresOrRenewsAt,
+               let cachedStatus =  SubscriptionService.cachedGetSubscriptionResponse?.status,
+               let productID =  SubscriptionService.cachedGetSubscriptionResponse?.productId {
                 updateSubscriptionDetails(status: cachedStatus, date: cachedDate, product: productID)
             }
 
-            if case .success(let response) = await SubscriptionService.getSubscriptionDetails(token: token) {
-                if !response.isSubscriptionActive {
-                    AccountManager(appGroup: Bundle.main.appGroup(bundle: .subs)).signOut()
+            if case .success(let subscription) = await SubscriptionService.getSubscription(accessToken: token) {
+                if !subscription.isActive {
+                    AccountManager().signOut()
                     shouldDismissView = true
                     return
                 } else {
-                    updateSubscriptionDetails(status: response.status, date: response.expiresOrRenewsAt, product: response.productId)
+                    updateSubscriptionDetails(status: subscription.status, date: subscription.expiresOrRenewsAt, product: subscription.productId)
                 }
             }
         }
@@ -97,8 +95,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
 
     
-    private func updateSubscriptionDetails(status: String, date: Date, product: String) {
-        let statusString = (status == Self.Constants.autoRenewable) ? UserText.subscriptionRenews : UserText.subscriptionExpires
+    private func updateSubscriptionDetails(status: Subscription.Status, date: Date, product: String) {
+        let statusString = (status == .autoRenewable) ? UserText.subscriptionRenews : UserText.subscriptionExpires
         self.subscriptionDetails = UserText.subscriptionInfo(status: statusString, expiration: dateFormatter.string(from: date))
         self.subscriptionType = product == Constants.monthlyProductID ? UserText.subscriptionMonthly : UserText.subscriptionAnnual
     }

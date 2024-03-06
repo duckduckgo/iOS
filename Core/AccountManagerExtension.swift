@@ -1,8 +1,8 @@
 //
-//  Configuration-Alpha.xcconfig
+//  AccountManagerExtension.swift
 //  DuckDuckGo
 //
-//  Copyright © 2023 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,15 +17,15 @@
 //  limitations under the License.
 //
 
-#include "DuckDuckGoDeveloper.xcconfig"
-#include? "ExternalDeveloper.xcconfig"
-#include? "Version.xcconfig"
+#if SUBSCRIPTION
 
-// The app bundle identifier
-APP_ID = com.duckduckgo.mobile.ios.alpha
+import Foundation
+import Subscription
 
-// A prefix for group ids. Must start with "group.".
-GROUP_ID_PREFIX = group.com.duckduckgo.alpha
+public extension AccountManager {
+    convenience init() {
+        self.init(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+    }
+}
 
-// The keychain access group for subscriptions
-SUBSCRIPTION_APP_GROUP = com.duckduckgo.subscriptions.alpha
+#endif

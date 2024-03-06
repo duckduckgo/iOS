@@ -702,6 +702,7 @@
 		BD862E092B30F63E0073E2EE /* VPNMetadataCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD862E082B30F63E0073E2EE /* VPNMetadataCollector.swift */; };
 		BD862E0B2B30F9300073E2EE /* VPNFeedbackFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD862E0A2B30F9300073E2EE /* VPNFeedbackFormView.swift */; };
 		BDA583872B98B6C700732FDC /* AccountManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA583862B98B6C700732FDC /* AccountManagerExtension.swift */; };
+		BDA583882B98B92F00732FDC /* AccountManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA583862B98B6C700732FDC /* AccountManagerExtension.swift */; };
 		BDC234F72B27F51100D3C798 /* UniquePixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC234F62B27F51100D3C798 /* UniquePixel.swift */; };
 		C10CB5F32A1A5BDF0048E503 /* AutofillViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10CB5F22A1A5BDF0048E503 /* AutofillViews.swift */; };
 		C111B26927F579EF006558B1 /* BookmarkOrFolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C111B26827F579EF006558B1 /* BookmarkOrFolderTests.swift */; };
@@ -6912,6 +6913,7 @@
 				85F98F92296F32BD00742F4A /* SyncSettingsViewController.swift in Sources */,
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
 				310D091D2799F57200DC0060 /* Download.swift in Sources */,
+				BDA583882B98B92F00732FDC /* AccountManagerExtension.swift in Sources */,
 				C13F3F6C2B7F88470083BE40 /* AuthConfirmationPromptViewModel.swift in Sources */,
 				1EEF124E2850EADE003DDE57 /* PrivacyIconView.swift in Sources */,
 				37FCAAAB29911BF1000E420A /* WaitlistExtensions.swift in Sources */,

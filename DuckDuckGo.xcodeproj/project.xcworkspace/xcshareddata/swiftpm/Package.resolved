@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "12b960a8cc18cf080c41422ac7913e1c0cd9d874",
-        "version" : "116.0.1"
+        "branch" : "anh/netp-delete-token-fix",
+        "revision" : "ba4c1200ead8d02362630d1ca965ed4f5f916d3c"
       }
     },
     {

@@ -66,7 +66,7 @@ struct SubscriptionFlowView: View {
         .tint(Color(designSystemColor: .textPrimary))
         .environment(\.rootPresentationMode, self.$isActive)
         .onAppear(perform: {
-            Pixel.fire(pixel: .privacyProOfferScreenImpression)
+            viewModel.onAppear()
         })
     }
 

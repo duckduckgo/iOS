@@ -293,6 +293,9 @@ final class SubscriptionFlowViewModel: ObservableObject {
     func navigateBack() async {
         await webViewModel.navigationCoordinator.goBack()
     }
-    
+
+    func onAppear() {
+        Pixel.fire(pixel: .privacyProOfferScreenImpression)
+    }
 }
 #endif

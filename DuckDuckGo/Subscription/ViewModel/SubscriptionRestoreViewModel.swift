@@ -56,6 +56,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     }
     
     func initializeView() {
+        Task { await updateAccountEmail() }
         subscriptionEmail = accountManager.email
         if accountManager.isUserAuthenticated {
             isAddingDevice = true
@@ -108,6 +109,15 @@ final class SubscriptionRestoreViewModel: ObservableObject {
                     handleRestoreError(error: specificError)
                 }
             }
+        }
+    }
+    
+    @MainActor
+    private func updateAccountEmail() async {
+        if let token = accountManager.authToken,
+        case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: token) {
+            accountManager.storeAccount(token: token, email: accountDetails.email, externalID: accountDetails.externalID)
+            subscriptionEmail = accountDetails.email
         }
     }
     

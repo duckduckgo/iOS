@@ -162,8 +162,9 @@ struct SettingsSubscriptionView: View {
     var body: some View {
         if viewModel.state.subscription.enabled {
             Section(header: Text(UserText.settingsPProSection)) {
+                
                 if viewModel.state.subscription.hasActiveSubscription {
-                    
+                                        
                     if !viewModel.isLoadingSubscriptionState {
                         
                         // Allow managing the subscription if we have some entitlements
@@ -175,7 +176,6 @@ struct SettingsSubscriptionView: View {
                             noEntitlementsAvailableView
                         }
                     }
-                    
                 } else {
                     purchaseSubscriptionView
                     

@@ -227,6 +227,7 @@ struct SubscriptionRestoreView: View {
                 }
                 .padding(Constants.cellPadding)
                 .background(Color(designSystemColor: .panel))
+                .cornerRadius(Constants.cornerRadius)
                 .overlay(
                     RoundedRectangle(cornerRadius: Constants.cornerRadius)
                         .stroke(Color(designSystemColor: .lines), lineWidth: Constants.borderWidth)

@@ -23,6 +23,7 @@ import Lottie
 struct LottieView: UIViewRepresentable {
     
     struct LoopWithIntroTiming {
+        let skipIntro: Bool
         let introStartFrame: AnimationFrameTime
         let introEndFrame: AnimationFrameTime
         let loopStartFrame: AnimationFrameTime
@@ -78,8 +79,12 @@ struct LottieView: UIViewRepresentable {
                     self.isAnimating.wrappedValue = false
                 })
             case .withIntro(let timing):
-                uiView.play(fromFrame: timing.introStartFrame, toFrame: timing.introEndFrame, loopMode: .playOnce) { _ in
+                if timing.skipIntro {
                     uiView.play(fromFrame: timing.loopStartFrame, toFrame: timing.loopEndFrame, loopMode: .loop)
+                } else {
+                    uiView.play(fromFrame: timing.introStartFrame, toFrame: timing.introEndFrame, loopMode: .playOnce) { _ in
+                        uiView.play(fromFrame: timing.loopStartFrame, toFrame: timing.loopEndFrame, loopMode: .loop)
+                    }
                 }
             }
         }

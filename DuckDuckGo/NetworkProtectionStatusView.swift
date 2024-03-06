@@ -104,6 +104,8 @@ struct NetworkProtectionStatusView: View {
                     lottieFile: "vpn-light-mode",
                     loopMode: .withIntro(
                         .init(
+                            // Skip the intro if NetP is enabled, but the user didn't manually trigger it
+                            skipIntro: statusModel.isNetPEnabled && !statusModel.shouldDisableToggle,
                             introStartFrame: 0,
                             introEndFrame: 100,
                             loopStartFrame: 130,

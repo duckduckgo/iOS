@@ -172,5 +172,121 @@ I-am blocat!
 			<string>d</string>
 		</dict>
 	</dict>
+	<key>autofill.number.of.passwords</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>%1$d parolă</string>
+			<key>few</key>
+			<string>%1$d parole</string>
+			<key>other</key>
+			<string>%1$d de parole</string>
+		</dict>
+	</dict>
+	<key>autofill.delete.all.passwords.confirmation.title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>Sigur dorești să ștergi %1$d parolă?</string>
+			<key>few</key>
+			<string>Sigur dorești să ștergi %1$d parole?</string>
+			<key>other</key>
+			<string>Sigur dorești să ștergi această %1$d de parole?</string>
+		</dict>
+	</dict>
+    <key>autofill.delete.all.passwords.confirmation.body</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%1$#@passwords@</string>
+        <key>passwords</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>Parola ta va fi ștearsă de pe acest dispozitiv. Asigură-te că ai în continuare o modalitate de a-ți accesa %2$#@accounts@.</string>
+            <key>few</key>
+            <string>Parolele tale vor fi șterse de pe acest dispozitiv. Asigură-te că ai în continuare o modalitate de a-ți accesa %2$#@accounts@.</string>
+            <key>other</key>
+            <string>Parolele tale vor fi șterse de pe acest dispozitiv. Asigură-te că ai în continuare o modalitate de a-ți accesa %2$#@accounts@.</string>
+        </dict>
+        <key>accounts</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>account</string>
+            <key>few</key>
+            <string>conturi</string>
+            <key>other</key>
+            <string>de conturi</string>
+        </dict>
+    </dict>
+	<key>autofill.delete.all.passwords.sync.confirmation.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>Parola ta va fi ștearsă de pe toate dispozitivele sincronizate. Asigură-te că ai în continuare o modalitate de a-ți accesa %2$#@accounts@.</string>
+			<key>few</key>
+			<string>Parolele tale vor fi șterse de pe toate dispozitivele sincronizate. Asigură-te că ai în continuare o modalitate de a-ți accesa %2$#@accounts@.</string>
+			<key>other</key>
+			<string>Parolele dvs. vor fi șterse de pe toate dispozitivele sincronizate. Asigură-te că ai în continuare o modalitate de a-ți accesa %2$#@accounts@.</string>
+		</dict>
+		<key>accounts</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>account</string>
+			<key>few</key>
+			<string>conturi</string>
+			<key>other</key>
+			<string>de conturi</string>
+		</dict>
+	</dict>
+	<key>autofill.delete.all.passwords.completion</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>%1$d parolă ștearsă</string>
+			<key>few</key>
+			<string>%1$d parole șterse</string>
+			<key>other</key>
+			<string>%1$d de parole șterse</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

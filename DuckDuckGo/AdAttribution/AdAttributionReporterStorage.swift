@@ -1,5 +1,5 @@
 //
-//  Subscription.swift
+//  AdAttributionReporterStorage.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,8 +17,22 @@
 //  limitations under the License.
 //
 
+import Core
 import Foundation
 
-struct Subscription: Encodable {
-    let token: String
+protocol AdAttributionReporterStorage {
+    var wasAttributionReportSuccessful: Bool { get async }
+
+    func markAttributionReportSuccessful() async
+}
+
+final class UserDefaultsAdAttributionReporterStorage: AdAttributionReporterStorage {
+    @MainActor
+    @UserDefaultsWrapper(key: .appleAdAttributionReportCompleted, defaultValue: false)
+    var wasAttributionReportSuccessful: Bool
+
+    @MainActor
+    func markAttributionReportSuccessful() async {
+        wasAttributionReportSuccessful = true
+    }
 }

@@ -71,29 +71,29 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         case .rekeyAttempt(let step):
             switch step {
             case .begin:
-                Pixel.fire(pixel: .networkProtectionRekeyAttempt)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionRekeyAttempt)
             case .failure(let error):
-                Pixel.fire(pixel: .networkProtectionRekeyFailure, error: error)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionRekeyFailure, error: error)
             case .success:
-                Pixel.fire(pixel: .networkProtectionRekeyCompleted)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionRekeyCompleted)
             }
         case .tunnelStartAttempt(let step):
             switch step {
             case .begin:
-                Pixel.fire(pixel: .networkProtectionTunnelStartAttempt)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartAttempt)
             case .failure(let error):
-                Pixel.fire(pixel: .networkProtectionTunnelStartFailure, error: error)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartFailure, error: error)
             case .success:
-                Pixel.fire(pixel: .networkProtectionTunnelStartSuccess)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartSuccess)
             }
         case .tunnelUpdateAttempt(let step):
             switch step {
             case .begin:
-                Pixel.fire(pixel: .networkProtectionTunnelUpdateAttempt)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelUpdateAttempt)
             case .failure(let error):
-                Pixel.fire(pixel: .networkProtectionTunnelUpdateFailure, error: error)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelUpdateFailure, error: error)
             case .success:
-                Pixel.fire(pixel: .networkProtectionTunnelUpdateSuccess)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelUpdateSuccess)
             }
         }
     }

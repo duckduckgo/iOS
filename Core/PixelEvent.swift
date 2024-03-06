@@ -795,7 +795,7 @@ extension Pixel.Event {
         case .appTPDBTrackerStoreFailure: return "m_apptp_db_tracker_store_failure"
         case .appTPCouldNotLoadDatabase: return "m_apptp_could_not_load_database"
 
-            // MARK: Network Protection pixels
+        // MARK: Network Protection pixels
 
         case .networkProtectionActiveUser: return "m_netp_daily_active_d"
         case .networkProtectionNewUser: return "m_netp_daily_active_u"

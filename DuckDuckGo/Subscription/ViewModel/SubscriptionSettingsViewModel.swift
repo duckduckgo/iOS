@@ -59,13 +59,13 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         Task {
             guard let token = accountManager.accessToken else { return }
 
-            if let cachedDate = SubscriptionService.cachedSubscriptionDetailsResponse?.expiresOrRenewsAt,
-               let cachedStatus =  SubscriptionService.cachedSubscriptionDetailsResponse?.status,
-               let productID =  SubscriptionService.cachedSubscriptionDetailsResponse?.productId {
+            if let cachedDate = SubscriptionService.cachedGetSubscriptionResponse?.expiresOrRenewsAt,
+               let cachedStatus =  SubscriptionService.cachedGetSubscriptionResponse?.status,
+               let productID =  SubscriptionService.cachedGetSubscriptionResponse?.productId {
                 updateSubscriptionDetails(status: cachedStatus, date: cachedDate, product: productID)
             }
 
-            if case .success(let subscription) = await SubscriptionService.getSubscriptionDetails(token: token) {
+            if case .success(let subscription) = await SubscriptionService.getSubscription(accessToken: token) {
                 if !subscription.isActive {
                     AccountManager().signOut()
                     shouldDismissView = true

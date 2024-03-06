@@ -260,7 +260,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         let accountManager = AccountManager()
         if let accessToken = accountManager.accessToken,
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
-            switch await SubscriptionService.getSubscriptionDetails(token: accessToken) {
+            switch await SubscriptionService.getSubscription(accessToken: accessToken) {
             
             // If the account is not active, display an error and logout
             case .success(let subscription) where !subscription.isActive:

@@ -35,6 +35,7 @@ public class HistoryManager: HistoryManaging {
     let privacyConfigManager: PrivacyConfigurationManaging
     let variantManager: VariantManager
     let database: CoreDataDatabase
+    let onStoreLoadFailed: (Error) -> Void
 
     private var currentHistoryCoordinator: HistoryCoordinating?
 
@@ -48,7 +49,15 @@ public class HistoryManager: HistoryManaging {
             return currentHistoryCoordinator
         }
 
-        database.loadStore()
+        var loadError: Error?
+        database.loadStore { _, error in
+            loadError = error
+        }
+        
+        if let loadError {
+            onStoreLoadFailed(loadError)
+            return NullHistoryCoordinator()
+        }
 
         let context = database.makeContext(concurrencyType: .privateQueueConcurrencyType)
         let historyCoordinator = HistoryCoordinator(historyStoring: HistoryStore(context: context, eventMapper: HistoryStoreEventMapper()))
@@ -59,10 +68,11 @@ public class HistoryManager: HistoryManaging {
         return historyCoordinator
     }
 
-    public init(privacyConfigManager: PrivacyConfigurationManaging, variantManager: VariantManager, database: CoreDataDatabase) {
+    public init(privacyConfigManager: PrivacyConfigurationManaging, variantManager: VariantManager, database: CoreDataDatabase, onStoreLoadFailed: @escaping (Error) -> Void) {
         self.privacyConfigManager = privacyConfigManager
         self.variantManager = variantManager
         self.database = database
+        self.onStoreLoadFailed = onStoreLoadFailed
     }
 
     func isHistoryFeatureEnabled() -> Bool {

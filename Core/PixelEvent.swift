@@ -537,6 +537,7 @@ extension Pixel {
         case userBehaviorFireButtonAndRestart
         case userBehaviorFireButtonAndTogglePrivacyControls
 
+        case historyStoreLoadFailed
         case historyRemoveFailed
         case historyReloadFailed
         case historyCleanEntriesFailed
@@ -1056,6 +1057,7 @@ extension Pixel.Event {
         case .userBehaviorFireButtonAndTogglePrivacyControls: return "m_fire-button-and-toggle-privacy-controls"
 
         // MARK: - History debug
+        case .historyStoreLoadFailed: return "m_debug_history-store-load-failed"
         case .historyRemoveFailed: return "m_debug_history-remove-failed"
         case .historyReloadFailed: return "m_debug_history-reload-failed"
         case .historyCleanEntriesFailed: return "m_debug_history-clean-entries-failed"

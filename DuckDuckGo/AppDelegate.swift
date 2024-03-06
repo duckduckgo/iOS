@@ -349,7 +349,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func makeHistoryManager() -> HistoryManager {
         return HistoryManager(privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
                               variantManager: DefaultVariantManager(),
-                              database: HistoryDatabase.make())
+                              database: HistoryDatabase.make()) { error in
+            Pixel.fire(pixel: .historyStoreLoadFailed, error: error)
+            if error.isDiskFull {
+                self.presentInsufficientDiskSpaceAlert()
+            } else {
+                self.presentPreemptiveCrashAlert()
+            }
+        }
     }
 
     private func presentPreemptiveCrashAlert() {

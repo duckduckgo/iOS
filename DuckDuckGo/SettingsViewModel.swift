@@ -52,6 +52,7 @@ final class SettingsViewModel: ObservableObject {
     private var signOutObserver: Any?
     @Published var isRestoringSubscription: Bool = false
     @Published var shouldDisplayRestoreSubscriptionError: Bool = false
+    @Published var isLoadingSubscriptionState: Bool = false
 #endif
     
     
@@ -347,6 +348,7 @@ extension SettingsViewModel {
             return
         }
         
+        isLoadingSubscriptionState = true
         // Fetch available subscriptions from the backend (or sign out)
         switch await SubscriptionService.getSubscriptionDetails(token: token) {
         
@@ -369,9 +371,11 @@ extension SettingsViewModel {
                     }
                 }
             }
+            isLoadingSubscriptionState = false
                         
         default:
             // Account is active but there's not a valid subscription / entitlements
+            isLoadingSubscriptionState = false
             signOutUser()
         }
     }

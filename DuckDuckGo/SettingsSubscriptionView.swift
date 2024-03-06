@@ -164,13 +164,16 @@ struct SettingsSubscriptionView: View {
             Section(header: Text(UserText.settingsPProSection)) {
                 if viewModel.state.subscription.hasActiveSubscription {
                     
-                    // Allow managing the subscription if we have some entitlements
-                    if viewModel.shouldShowDBP || viewModel.shouldShowITP || viewModel.shouldShowNetP {
-                        subscriptionDetailsView
+                    if !viewModel.isLoadingSubscriptionState {
                         
-                    // If no entitlements it should mean the backend is still out of sync
-                    } else {
-                        noEntitlementsAvailableView
+                        // Allow managing the subscription if we have some entitlements
+                        if viewModel.shouldShowDBP || viewModel.shouldShowITP || viewModel.shouldShowNetP {
+                            subscriptionDetailsView
+                            
+                            // If no entitlements it should mean the backend is still out of sync
+                        } else {
+                            noEntitlementsAvailableView
+                        }
                     }
                     
                 } else {

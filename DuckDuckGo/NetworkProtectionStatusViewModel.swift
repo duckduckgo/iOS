@@ -54,6 +54,13 @@ struct NetworkProtectionLocationStatusModel {
             isNearest = false
         }
     }
+
+    static func formattedLocation(city: String, country: String) -> String {
+        let countryLabelsModel = NetworkProtectionVPNCountryLabelsModel(country: country, useFullCountryName: true)
+        let city = "\(countryLabelsModel.emoji) \(city)"
+
+        return UserText.netPVPNSettingsLocationSubtitleFormattedCityAndCountry(city: city, country: countryLabelsModel.title)
+    }
 }
 
 final class NetworkProtectionStatusViewModel: ObservableObject {
@@ -210,7 +217,16 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     private func setUpServerInfoPublishers() {
         serverInfoObserver.publisher
-            .map(\.serverLocation)
+            .compactMap { serverInfo in
+                guard let attributes = serverInfo.serverLocation else {
+                    return nil
+                }
+
+                return NetworkProtectionLocationStatusModel.formattedLocation(
+                    city: attributes.city,
+                    country: attributes.country
+                )
+            }
             .receive(on: DispatchQueue.main)
             .assign(to: \.location, onWeaklyHeld: self)
             .store(in: &cancellables)

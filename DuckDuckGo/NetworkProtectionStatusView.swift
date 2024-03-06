@@ -139,7 +139,8 @@ struct NetworkProtectionStatusView: View {
         Section {
             if let location = statusModel.location {
                 NavigationLink(destination: NetworkProtectionVPNLocationView()) {
-                    NetworkProtectionLocationItemView(title: statusModel.preferredLocation.isNearest ? "\(location) (Nearest)" : location)
+                    let title = statusModel.preferredLocation.isNearest ? "\(location) (Nearest)" : location
+                    NetworkProtectionLocationItemView(title: title)
                 }
             } else {
                 NavigationLink(destination: NetworkProtectionVPNLocationView()) {

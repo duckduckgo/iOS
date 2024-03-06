@@ -202,10 +202,11 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             }
             
             let emailAccessToken = try? EmailManager().getToken()
+            let purchaseTransactionJWS: String
 
             switch await AppStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id, emailAccessToken: emailAccessToken) {
-            case .success:
-                break
+            case .success(let transactionJWS):
+                purchaseTransactionJWS = transactionJWS
             case .failure(let error):
                 
                 switch error {
@@ -220,7 +221,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             }
             
             setTransactionStatus(.polling)
-            switch await AppStorePurchaseFlow.completeSubscriptionPurchase() {
+            switch await AppStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS) {
             case .success(let purchaseUpdate):
                 await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
             case .failure:

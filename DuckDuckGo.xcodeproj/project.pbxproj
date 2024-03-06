@@ -4422,7 +4422,6 @@
 		BDA583852B98B69C00732FDC /* Subscription */ = {
 			isa = PBXGroup;
 			children = (
-				BD15DB842B959CFD00821457 /* BundleExtension.swift */,
 				BDA583862B98B6C700732FDC /* AccountManagerExtension.swift */,
 			);
 			name = Subscription;
@@ -4823,7 +4822,7 @@
 			children = (
 				EE7A92862AC6DE4700832A36 /* NetworkProtectionNotificationIdentifier.swift */,
 				EE9D68DD2AE2A65600B55EF4 /* UserDefaults+NetworkProtection.swift */,
-				BD15DB842B959CFD00821457 /* BundleExtensions.swift */,
+				BD15DB842B959CFD00821457 /* BundleExtension.swift */,
 			);
 			name = NetworkProtection;
 			sourceTree = "<group>";
@@ -10019,8 +10018,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = exactVersion;
-				version = 116.0.1;
+				branch = "anh/netp-handle-expired-entitlement";
+				kind = branch;
 			};
 		};
 		B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */ = {

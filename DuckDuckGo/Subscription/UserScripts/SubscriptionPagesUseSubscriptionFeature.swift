@@ -210,7 +210,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             switch await AppStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id,
                                                                    emailAccessToken: emailAccessToken,
                                                                    subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)) {
-			case .success(let transactionJWS):
+            case .success(let transactionJWS):
                 purchaseTransactionJWS = transactionJWS
 
             case .failure(let error):
@@ -227,7 +227,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             }
             
             setTransactionStatus(.polling)
-            switch await AppStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS, subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)) {
+            switch await AppStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS,
+                                                                           subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)) {
             case .success(let purchaseUpdate):
                 await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
             case .failure:
@@ -359,8 +360,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
     
 }
-// swiftlint:enable type_body_length
-
 // swiftlint:enable type_body_length
 
 #endif

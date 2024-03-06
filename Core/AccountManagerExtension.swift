@@ -24,7 +24,7 @@ import Subscription
 
 public extension AccountManager {
     convenience init() {
-        self.init(appGroup: Bundle.main.appGroup(bundle: .subs))
+        self.init(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
     }
 }
 

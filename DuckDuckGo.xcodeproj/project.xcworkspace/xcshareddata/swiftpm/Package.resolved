@@ -24,7 +24,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "sam/remove-cgnat",
-        "revision" : "1255da6c78acb32acd12eb8f8229a9af8ab57f3e"
+        "revision" : "413c313fae6ef35fad6f0bd20b4303ac7f1ed024"
       }
     },
     {

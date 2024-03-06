@@ -21,7 +21,10 @@ let package = Package(
     targets: [
         .target(
             name: "Waitlist",
-            dependencies: ["DesignResourcesKit"],
+            dependencies: [
+                "DesignResourcesKit",
+                .product(name: "Macros", package: "apple-toolbox"),
+            ],
             swiftSettings: [
                 .define("DEBUG", .when(configuration: .debug))
             ],

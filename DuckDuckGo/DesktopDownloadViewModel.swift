@@ -18,11 +18,12 @@
 //
 
 import Foundation
+import Macros
 import UIKit
 
 final class DesktopDownloadViewModel: ObservableObject {
     
-    static let defaultURL = URL(string: "https://duckduckgo.com/")!
+    static let defaultURL = #URL("https://duckduckgo.com/")
     static let prefix = "https://"
     
     private var platform: DesktopDownloadPlatform

@@ -19,6 +19,7 @@
 
 import AdServices
 import Common
+import Macros
 
 protocol AdAttributionFetcher {
     func fetch() async -> AdServicesAttributionResponse?
@@ -116,7 +117,7 @@ struct DefaultAdAttributionFetcher: AdAttributionFetcher {
     }
 
     private struct Constant {
-        static let attributionServiceURL = URL(string: "https://api-adservices.apple.com/api/v1/")!
+        static let attributionServiceURL = #URL("https://api-adservices.apple.com/api/v1/")
         static let maxRetries = 3
     }
 }

@@ -19,14 +19,15 @@
 
 // swiftlint:disable file_length
 
-import Foundation
 import BrowserServicesKit
 import Common
-import SwiftUI
 import Core
-import DesignResourcesKit
-import SecureStorage
 import DDGSync
+import DesignResourcesKit
+import Foundation
+import Macros
+import SecureStorage
+import SwiftUI
 
 protocol AutofillLoginDetailsViewModelDelegate: AnyObject {
     func autofillLoginDetailsViewModelDidSave()
@@ -58,7 +59,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
 
     enum Constants {
-        static let privateEmailURL = URL(string: "https://duckduckgo.com/email")!
+        static let privateEmailURL = #URL("https://duckduckgo.com/email")
     }
     
     weak var delegate: AutofillLoginDetailsViewModelDelegate?

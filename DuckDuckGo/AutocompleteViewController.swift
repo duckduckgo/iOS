@@ -21,9 +21,14 @@ import Common
 import UIKit
 import Core
 import DesignResourcesKit
+import Suggestions
+import Core
+import Networking
 
 class AutocompleteViewController: UIViewController {
     
+    private static let session = URLSession(configuration: .ephemeral)
+
     struct Constants {
         static let debounceDelay: TimeInterval = 0.1
         static let minItems = 1
@@ -33,7 +38,8 @@ class AutocompleteViewController: UIViewController {
     weak var delegate: AutocompleteViewControllerDelegate?
     weak var presentationDelegate: AutocompleteViewControllerPresentationDelegate?
 
-    private var lastRequest: AutocompleteRequest?
+    private var task: URLSessionDataTask?
+    private var loader: SuggestionLoading?
     private var receivedResponse = false
     private var pendingRequest = false
     
@@ -135,15 +141,16 @@ class AutocompleteViewController: UIViewController {
     
     func willDismiss(with query: String) {
         guard selectedItem != -1, selectedItem < suggestions.count else { return }
-        
-        let suggestion = suggestions[selectedItem]
-        if let url = suggestion.url {
-            if query == url.absoluteString {
-                firePixel(selectedSuggestion: suggestion)
-            }
-        } else if query == suggestion.suggestion {
-            firePixel(selectedSuggestion: suggestion)
-        }
+  
+        // TODO fire pixels
+//        let suggestion = suggestions[selectedItem]
+//        if let url = suggestion.url {
+//            if query == url.absoluteString {
+//                firePixel(selectedSuggestion: suggestion)
+//            }
+//        } else if query == suggestion.suggestion {
+//            firePixel(selectedSuggestion: suggestion)
+//        }
     }
 
     @IBAction func onPlusButtonPressed(_ button: UIButton) {
@@ -152,48 +159,68 @@ class AutocompleteViewController: UIViewController {
     }
 
     private func cancelInFlightRequests() {
-        if let inFlightRequest = lastRequest {
-            inFlightRequest.cancel()
-            lastRequest = nil
-        }
+//        if let inFlightRequest = lastRequest {
+//            inFlightRequest.cancel()
+//            lastRequest = nil
+//        }
+        
+        task?.cancel()
+        task = nil
+
     }
 
     private func requestSuggestions(query: String) {
         selectedItem = -1
         tableView.reloadData()
-        do {
-            lastRequest = try AutocompleteRequest(query: query)
+//        do {
+            loader = SuggestionLoader(dataSource: self, urlFactory: { phrase in
+                guard let url = URL(trimmedAddressBarString: phrase),
+                      let scheme = url.scheme,
+                      scheme.description.hasPrefix("http"),
+                      url.isValid else {
+                    print("***", #function, "no url")
+                    return nil
+                }
+
+                print("***", #function, url)
+                return url
+            })
             pendingRequest = true
-        } catch {
-            os_log("Couldn‘t form AutocompleteRequest for query “%s”: %s", log: .lifecycleLog, type: .debug, query, error.localizedDescription)
-            lastRequest = nil
-            pendingRequest = false
-            return
-        }
+//        } catch {
+//            os_log("Couldn‘t form AutocompleteRequest for query “%s”: %s", log: .lifecycleLog, type: .debug, query, error.localizedDescription)
+//            lastRequest = nil
+//            pendingRequest = false
+//            return
+//        }
 
-        lastRequest!.execute { [weak self] (suggestions, error) in
-            guard let strongSelf = self else { return }
+        loader?.getSuggestions(query: query, completion: { [weak self] result, error in
+            self?.updateSuggestions(result?.all ?? [])
+            self?.pendingRequest = false
+        })
 
-            Task { @MainActor in
-                let matches = strongSelf.bookmarksSearch.search(query: query)
-                let notQueryMatches = matches.filter { $0.url.absoluteString != query }
-                let filteredMatches = notQueryMatches.prefix(Constants.maxLocalItems)
-                let localSuggestions = filteredMatches.map { Suggestion(source: .local,
-                                                                        suggestion: $0.title,
-                                                                        url: $0.url)
-                }
-
-                guard let suggestions = suggestions, error == nil else {
-                    os_log("%s", log: .generalLog, type: .debug, error?.localizedDescription ?? "Failed to retrieve suggestions")
-                    self?.updateSuggestions(localSuggestions)
-                    return
-                }
-
-                let combinedSuggestions = localSuggestions + suggestions
-                strongSelf.updateSuggestions(Array(combinedSuggestions))
-                strongSelf.pendingRequest = false
-            }
-        }
+//        lastRequest!.execute { [weak self] (suggestions, error) in
+//            guard let strongSelf = self else { return }
+//
+//            Task { @MainActor in
+//                let matches = strongSelf.bookmarksSearch.search(query: query)
+//                let notQueryMatches = matches.filter { $0.url.absoluteString != query }
+//                let filteredMatches = notQueryMatches.prefix(Constants.maxLocalItems)
+//                let localSuggestions = filteredMatches.map { Suggestion(source: .local,
+//                                                                        suggestion: $0.title,
+//                                                                        url: $0.url)
+//                }
+//
+//                guard let suggestions = suggestions, error == nil else {
+//                    os_log("%s", log: .generalLog, type: .debug, error?.localizedDescription ?? "Failed to retrieve suggestions")
+//                    self?.updateSuggestions(localSuggestions)
+//                    return
+//                }
+//
+//                let combinedSuggestions = localSuggestions + suggestions
+//                strongSelf.updateSuggestions(Array(combinedSuggestions))
+//                strongSelf.pendingRequest = false
+//            }
+//        }
     }
 
     private func updateSuggestions(_ newSuggestions: [Suggestion]) {
@@ -268,23 +295,25 @@ extension AutocompleteViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return receivedResponse ? max(Constants.minItems, suggestions.count) : 0
     }
-    
+
+    // TODO fire pixel  
     private func firePixel(selectedSuggestion: Suggestion) {
-        let resultsIncludeBookmarks: Bool
-        if let firstSuggestion = suggestions.first {
-            resultsIncludeBookmarks = firstSuggestion.source == .local
-        } else {
-            resultsIncludeBookmarks = false
-        }
+//        let resultsIncludeBookmarks: Bool
+//        if let firstSuggestion = suggestions.first {
+       //     resultsIncludeBookmarks = firstSuggestion.source == .local
+//        } else {
+//            resultsIncludeBookmarks = false
+//        }
         
-        let params = [PixelParameters.autocompleteBookmarkCapable: bookmarksSearch.hasData ? "true" : "false",
-                      PixelParameters.autocompleteIncludedLocalResults: resultsIncludeBookmarks ? "true" : "false"]
+//        let params = [PixelParameters.autocompleteBookmarkCapable: bookmarksSearch.hasData ? "true" : "false",
+//                      PixelParameters.autocompleteIncludedLocalResults: resultsIncludeBookmarks ? "true" : "false"]
         
-        if selectedSuggestion.source == .local {
-            Pixel.fire(pixel: .autocompleteSelectedLocal, withAdditionalParameters: params)
-        } else {
-            Pixel.fire(pixel: .autocompleteSelectedRemote, withAdditionalParameters: params)
-        }
+//        if selectedSuggestion.source == .local {
+//            Pixel.fire(pixel: .autocompleteSelectedLocal, withAdditionalParameters: params)
+//        } else {
+//            Pixel.fire(pixel: .autocompleteSelectedRemote, withAdditionalParameters: params)
+//        }
+
     }
 }
 
@@ -331,6 +360,31 @@ extension AutocompleteViewController {
     
     private func itemCount() -> Int {
         return suggestions.count
+    }
+
+}
+
+extension AutocompleteViewController: SuggestionLoadingDataSource {
+    func bookmarks(for suggestionLoading: Suggestions.SuggestionLoading) -> [Suggestions.Bookmark] {
+        []
+    }
+    
+    func history(for suggestionLoading: Suggestions.SuggestionLoading) -> [Suggestions.HistorySuggestion] {
+        []
+    }
+    
+    func suggestionLoading(_ suggestionLoading: Suggestions.SuggestionLoading, suggestionDataFromUrl url: URL, withParameters parameters: [String: String], completion: @escaping (Data?, Error?) -> Void) {
+        var queryURL = url
+        parameters.forEach {
+            queryURL = queryURL.appendingParameter(name: $0.key, value: $0.value)
+        }
+
+        var request = URLRequest.developerInitiated(queryURL)
+        request.allHTTPHeaderFields = APIRequest.Headers().httpHeaders
+        task = Self.session.dataTask(with: request) { data, _, error in
+            completion(data, error)
+        }
+        task?.resume()
     }
 
 }

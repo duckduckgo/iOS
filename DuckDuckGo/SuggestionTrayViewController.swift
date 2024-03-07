@@ -20,6 +20,7 @@
 import UIKit
 import Core
 import Bookmarks
+import Suggestions
 
 class SuggestionTrayViewController: UIViewController {
     

@@ -30,6 +30,7 @@ import Bookmarks
 import Persistence
 import PrivacyDashboard
 import Networking
+import Suggestions
 
 #if SUBSCRIPTION
 import Subscription
@@ -1788,43 +1789,105 @@ extension MainViewController: AutocompleteViewControllerDelegate {
     func autocomplete(selectedSuggestion suggestion: Suggestion) {
         homeController?.chromeDelegate = nil
         dismissOmniBar()
-        if let url = suggestion.url {
+//        if let url = suggestion.url {
+//            if url.isBookmarklet() {
+//                executeBookmarklet(url)
+//            } else {
+//                loadUrl(url)
+//            }
+//        } else if let url = URL.makeSearchURL(text: suggestion.suggestion) {
+//            loadUrl(url)
+//        } else {
+//            os_log("Couldn‘t form URL for suggestion “%s”", log: .lifecycleLog, type: .error, suggestion.suggestion)
+//            return
+//        }
+
+        switch suggestion {
+        case .phrase(phrase: let phrase):
+            if let url = URL.makeSearchURL(text: phrase) {
+                loadUrl(url)
+            } else {
+                os_log("Couldn‘t form URL for suggestion “%s”", log: .lifecycleLog, type: .error, phrase)
+            }
+        case .website(url: let url):
             if url.isBookmarklet() {
                 executeBookmarklet(url)
             } else {
                 loadUrl(url)
             }
-        } else if let url = URL.makeSearchURL(text: suggestion.suggestion) {
+        case .bookmark(title: let title, url: let url, isFavorite: let isFavorite, allowedInTopHits: let allowedInTopHits):
             loadUrl(url)
-        } else {
-            os_log("Couldn‘t form URL for suggestion “%s”", log: .lifecycleLog, type: .error, suggestion.suggestion)
-            return
+        case .historyEntry(title: let title, url: let url, allowedInTopHits: let allowedInTopHits):
+            loadUrl(url)
+        case .unknown(value: let value):
+            // TODO use log if too agresssive
+            assertionFailure("Unknown suggestion: \(value)")
         }
+
         showHomeRowReminder()
     }
 
     func autocomplete(pressedPlusButtonForSuggestion suggestion: Suggestion) {
-        if let url = suggestion.url {
-            if url.isDuckDuckGoSearch {
-                viewCoordinator.omniBar.textField.text = suggestion.suggestion
+//        if let url = suggestion.url {
+//            if url.isDuckDuckGoSearch {
+//                viewCoordinator.omniBar.textField.text = suggestion.suggestion
+//            } else if !url.isBookmarklet() {
+//                viewCoordinator.omniBar.textField.text = url.absoluteString
+//            }
+//        } else {
+//            viewCoordinator.omniBar.textField.text = suggestion.suggestion
+//        }
+
+        switch suggestion {
+        case .phrase(phrase: let phrase):
+        viewCoordinator.omniBar.textField.text = phrase
+        case .website(url: let url):
+            if url.isDuckDuckGoSearch, let query = url.searchQuery {
+                viewCoordinator.omniBar.textField.text = query
             } else if !url.isBookmarklet() {
                 viewCoordinator.omniBar.textField.text = url.absoluteString
             }
-        } else {
-            viewCoordinator.omniBar.textField.text = suggestion.suggestion
+        case .bookmark(title: let title, url: let url, isFavorite: let isFavorite, allowedInTopHits: let allowedInTopHits):
+            viewCoordinator.omniBar.textField.text = title
+        case .historyEntry(title: let title, url: let url, allowedInTopHits: let allowedInTopHits):
+            viewCoordinator.omniBar.textField.text = title
+        case .unknown(value: let value):
+            // TODO use log if too agresssive
+            assertionFailure("Unknown suggestion: \(value)")
         }
+
         viewCoordinator.omniBar.textDidChange()
     }
     
     func autocomplete(highlighted suggestion: Suggestion, for query: String) {
-        if let url = suggestion.url {
+//        if let url = suggestion.url {
+//            viewCoordinator.omniBar.textField.text = url.absoluteString
+//        } else {
+//            viewCoordinator.omniBar.textField.text = suggestion.suggestion
+//            if suggestion.suggestion.hasPrefix(query) {
+//                viewCoordinator.omniBar.selectTextToEnd(query.count)
+//            }
+//        }
+
+        switch suggestion {
+        case .phrase(phrase: let phrase):
+            viewCoordinator.omniBar.textField.text = phrase
+        case .website(url: let url):
             viewCoordinator.omniBar.textField.text = url.absoluteString
-        } else {
-            viewCoordinator.omniBar.textField.text = suggestion.suggestion
-            if suggestion.suggestion.hasPrefix(query) {
+        case .bookmark(title: let title, url: let url, isFavorite: let isFavorite, allowedInTopHits: let allowedInTopHits):
+            viewCoordinator.omniBar.textField.text = title
+            if title.hasPrefix(query) {
                 viewCoordinator.omniBar.selectTextToEnd(query.count)
             }
+        case .historyEntry(title: let title, url: let url, allowedInTopHits: let allowedInTopHits):
+            if (title ?? url.absoluteString).hasPrefix(query) {
+                viewCoordinator.omniBar.selectTextToEnd(query.count)
+            }
+        case .unknown(value: let value):
+            // TODO use log if too agresssive
+            assertionFailure("Unknown suggestion: \(value)")
         }
+
     }
 
     func autocompleteWasDismissed() {

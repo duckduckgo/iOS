@@ -17,25 +17,25 @@
 //  limitations under the License.
 //
 
-import Foundation
-import Core
-
-struct Suggestion {
-
-    enum Source {
-        case remote
-        case local
-    }
-    
-    let source: Source
-    let suggestion: String
-    let url: URL?
-    
-}
-
-struct AutocompleteEntry: Decodable {
-
-    let phrase: String?
-    let isNav: Bool?
-
-}
+//import Foundation
+//import Core
+//
+//struct Suggestion {
+//
+//    enum Source {
+//        case remote
+//        case local
+//    }
+//    
+//    let source: Source
+//    let suggestion: String
+//    let url: URL?
+//    
+//}
+//
+//struct AutocompleteEntry: Decodable {
+//
+//    let phrase: String?
+//    let isNav: Bool?
+//
+//}

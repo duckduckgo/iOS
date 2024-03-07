@@ -375,6 +375,7 @@
 		851CD674244D7E6000331B98 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85449F0023FEAF3000512AAF /* UserDefaultsExtension.swift */; };
 		851DFD87212C39D300D95F20 /* TabSwitcherButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */; };
 		851DFD8A212C5EE800D95F20 /* TabSwitcherButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DFD89212C5EE800D95F20 /* TabSwitcherButtonTests.swift */; };
+		851F74262B9A1BFD00747C42 /* Suggestions in Frameworks */ = {isa = PBXBuildFile; productRef = 851F74252B9A1BFD00747C42 /* Suggestions */; };
 		85200FA11FBC5BB5001AF290 /* DDGPersistenceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA01FBC5BB5001AF290 /* DDGPersistenceContainer.swift */; };
 		8521FDE6238D414B00A44CC3 /* FileStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8521FDE4238D411400A44CC3 /* FileStoreTests.swift */; };
 		8524AAAC2A3888FE00EEC6D2 /* Waitlist.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8524AAAB2A3888FE00EEC6D2 /* Waitlist.xcassets */; };
@@ -2824,6 +2825,7 @@
 				EE8E568A2A56BCE400F11DCA /* NetworkProtection in Frameworks */,
 				CBC83E3429B631780008E19C /* Configuration in Frameworks */,
 				D61CDA182B7CF78300A0FBB9 /* ZIPFoundation in Frameworks */,
+				851F74262B9A1BFD00747C42 /* Suggestions in Frameworks */,
 				98A16C2D28A11D6200A6C003 /* BrowserServicesKit in Frameworks */,
 				8599690F29D2F1C100DBF9FA /* DDGSync in Frameworks */,
 				1E60989F290011E600A508F9 /* PrivacyDashboard in Frameworks */,
@@ -5992,6 +5994,7 @@
 				D61CDA172B7CF78300A0FBB9 /* ZIPFoundation */,
 				858D009C2B9799FC004E5B4C /* History */,
 				B6A26C072B9835A000DF9EAD /* Macros */,
+				851F74252B9A1BFD00747C42 /* Suggestions */,
 			);
 			productName = Core;
 			productReference = F143C2E41E4A4CD400CFDE3A /* Core.framework */;
@@ -10194,6 +10197,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = RemoteMessaging;
+		};
+		851F74252B9A1BFD00747C42 /* Suggestions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = Suggestions;
 		};
 		85875B6029912A9900115F05 /* SyncUI */ = {
 			isa = XCSwiftPackageProductDependency;

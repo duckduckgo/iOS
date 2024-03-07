@@ -82,6 +82,7 @@ jobs:
           -destination "platform=iOS Simulator,name=iPhone 15,OS=17.2" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
+          -skipMacroValidation \
           DDG_SLOW_COMPILE_CHECK_THRESHOLD=250 \
           | tee xcodebuild.log \
           | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
@@ -188,6 +189,7 @@ jobs:
         -derivedDataPath "DerivedData" \
         -configuration "Release" \
         -skipPackagePluginValidation \
+        -skipMacroValidation \
         | xcbeautify
 
   create-asana-task:

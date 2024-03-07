@@ -687,6 +687,14 @@
 		B652DF10287C2C1600C12A9C /* ContentBlocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9847BFFD27A2DDB400DB07AA /* ContentBlocking.swift */; };
 		B652DF12287C336E00C12A9C /* ContentBlockingUpdating.swift in Sources */ = {isa = PBXBuildFile; fileRef = B652DF11287C336E00C12A9C /* ContentBlockingUpdating.swift */; };
 		B652DF13287C373A00C12A9C /* ScriptSourceProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B652DEFE287BF1FE00C12A9C /* ScriptSourceProviding.swift */; };
+		B6A26C042B98358B00DF9EAD /* Macros in Frameworks */ = {isa = PBXBuildFile; productRef = B6A26C032B98358B00DF9EAD /* Macros */; };
+		B6A26C062B98359A00DF9EAD /* Macros in Frameworks */ = {isa = PBXBuildFile; productRef = B6A26C052B98359A00DF9EAD /* Macros */; };
+		B6A26C082B9835A000DF9EAD /* Macros in Frameworks */ = {isa = PBXBuildFile; productRef = B6A26C072B9835A000DF9EAD /* Macros */; };
+		B6A26C0A2B9835A800DF9EAD /* Macros in Frameworks */ = {isa = PBXBuildFile; productRef = B6A26C092B9835A800DF9EAD /* Macros */; };
+		B6A26C0C2B9835AD00DF9EAD /* Macros in Frameworks */ = {isa = PBXBuildFile; productRef = B6A26C0B2B9835AD00DF9EAD /* Macros */; };
+		B6A26C0E2B9835B100DF9EAD /* Macros in Frameworks */ = {isa = PBXBuildFile; productRef = B6A26C0D2B9835B100DF9EAD /* Macros */; };
+		B6A26C102B9835B400DF9EAD /* Macros in Frameworks */ = {isa = PBXBuildFile; productRef = B6A26C0F2B9835B400DF9EAD /* Macros */; };
+		B6A26C122B9835B800DF9EAD /* Macros in Frameworks */ = {isa = PBXBuildFile; productRef = B6A26C112B9835B800DF9EAD /* Macros */; };
 		B6AD9E3628D4510A0019CDE9 /* ContentBlockerRulesManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AD9E3428D4510A0019CDE9 /* ContentBlockerRulesManagerMock.swift */; };
 		B6AD9E3728D4510A0019CDE9 /* ContentBlockingUpdatingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AD9E3528D4510A0019CDE9 /* ContentBlockingUpdatingTests.swift */; };
 		B6AD9E3828D4512E0019CDE9 /* EmbeddedTrackerDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9801F08927E4B21100191874 /* EmbeddedTrackerDataTests.swift */; };
@@ -2697,6 +2705,7 @@
 				0202569029881ECA00E694E7 /* CocoaAsyncSocket in Frameworks */,
 				02025664298818B200E694E7 /* NetworkExtension.framework in Frameworks */,
 				4B470EE4299C6DFB0086EBDC /* Core.framework in Frameworks */,
+				B6A26C062B98359A00DF9EAD /* Macros in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2704,6 +2713,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6A26C0E2B9835B100DF9EAD /* Macros in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2722,6 +2732,7 @@
 				853273B624FFE0BB00E3C778 /* WidgetKit.framework in Frameworks */,
 				0238E44F29C0FAA100615E30 /* FindInPageIOSJSSupport in Frameworks */,
 				3760DFED299315EF0045A446 /* Waitlist in Frameworks */,
+				B6A26C042B98358B00DF9EAD /* Macros in Frameworks */,
 				F143C2EB1E4A4CD400CFDE3A /* Core.framework in Frameworks */,
 				4B2754EC29E8C7DF00394032 /* Lottie in Frameworks */,
 				31E69A63280F4CB600478327 /* DuckUI in Frameworks */,
@@ -2737,6 +2748,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6A26C0A2B9835A800DF9EAD /* Macros in Frameworks */,
 				F486D3362506A037002D07D7 /* OHHTTPStubs in Frameworks */,
 				F486D3382506A225002D07D7 /* OHHTTPStubsSwift in Frameworks */,
 				F115ED9C2B4EFC8E001A0453 /* TestUtils in Frameworks */,
@@ -2767,6 +2779,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6A26C102B9835B400DF9EAD /* Macros in Frameworks */,
 				1E1D8B632995143200C96994 /* OHHTTPStubs in Frameworks */,
 				1E1D8B652995143200C96994 /* OHHTTPStubsSwift in Frameworks */,
 			);
@@ -2776,6 +2789,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6A26C0C2B9835AD00DF9EAD /* Macros in Frameworks */,
 				F486D31D2506980E002D07D7 /* Swifter in Frameworks */,
 				85F21DC021123B03002631A6 /* Core.framework in Frameworks */,
 			);
@@ -2786,6 +2800,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				98D4B7DF2944DDBD0068814D /* Core.framework in Frameworks */,
+				B6A26C122B9835B800DF9EAD /* Macros in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2794,6 +2809,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B948E2629DCCDB9002531FA /* Persistence in Frameworks */,
+				B6A26C082B9835A000DF9EAD /* Macros in Frameworks */,
 				98A50962294B48A400D10880 /* Bookmarks in Frameworks */,
 				1E60989B290009C700A508F9 /* Common in Frameworks */,
 				1E60989D290011E600A508F9 /* ContentBlocking in Frameworks */,
@@ -5692,6 +5708,7 @@
 			name = PacketTunnelProvider;
 			packageProductDependencies = (
 				0202568F29881ECA00E694E7 /* CocoaAsyncSocket */,
+				B6A26C052B98359A00DF9EAD /* Macros */,
 			);
 			productName = PacketTunnelProvider;
 			productReference = 02025662298818B100E694E7 /* PacketTunnelProvider.appex */;
@@ -5712,6 +5729,9 @@
 				025CCFE82582601C001CD5BB /* PBXTargetDependency */,
 			);
 			name = FingerprintingUITests;
+			packageProductDependencies = (
+				B6A26C0D2B9835B100DF9EAD /* Macros */,
+			);
 			productName = FingerprintingUITests;
 			productReference = 025CCFE22582601C001CD5BB /* FingerprintingUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -5771,6 +5791,7 @@
 				F42D541C29DCA40B004C4FF1 /* DesignResourcesKit */,
 				0238E44E29C0FAA100615E30 /* FindInPageIOSJSSupport */,
 				4B2754EB29E8C7DF00394032 /* Lottie */,
+				B6A26C032B98358B00DF9EAD /* Macros */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -5796,6 +5817,7 @@
 				F486D3372506A225002D07D7 /* OHHTTPStubsSwift */,
 				EEFAB4662A73C230008A38E4 /* NetworkProtectionTestUtils */,
 				F115ED9B2B4EFC8E001A0453 /* TestUtils */,
+				B6A26C092B9835A800DF9EAD /* Macros */,
 			);
 			productName = DuckDuckGoTests;
 			productReference = 84E341A61E2F7EFB00BDBA6F /* UnitTests.xctest */;
@@ -5859,6 +5881,7 @@
 			packageProductDependencies = (
 				1E1D8B622995143200C96994 /* OHHTTPStubs */,
 				1E1D8B642995143200C96994 /* OHHTTPStubsSwift */,
+				B6A26C0F2B9835B400DF9EAD /* Macros */,
 			);
 			productName = IntegrationTests;
 			productReference = 85D33FCB25C97B6E002B91A6 /* IntegrationTests.xctest */;
@@ -5881,6 +5904,7 @@
 			name = AtbUITests;
 			packageProductDependencies = (
 				F486D31C2506980E002D07D7 /* Swifter */,
+				B6A26C0B2B9835AD00DF9EAD /* Macros */,
 			);
 			productName = AtbIntegrationTests;
 			productReference = 85F21DAD210F5E32002631A6 /* AtbUITests.xctest */;
@@ -5902,6 +5926,7 @@
 			);
 			name = PerformanceTests;
 			packageProductDependencies = (
+				B6A26C112B9835B800DF9EAD /* Macros */,
 			);
 			productName = IntegrationTests;
 			productReference = 9825F9D7293F2DE900F220F2 /* PerformanceTests.xctest */;
@@ -5954,6 +5979,7 @@
 				EE8E56892A56BCE400F11DCA /* NetworkProtection */,
 				D61CDA152B7CF77300A0FBB9 /* Subscription */,
 				D61CDA172B7CF78300A0FBB9 /* ZIPFoundation */,
+				B6A26C072B9835A000DF9EAD /* Macros */,
 			);
 			productName = Core;
 			productReference = F143C2E41E4A4CD400CFDE3A /* Core.framework */;
@@ -10019,7 +10045,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = exactVersion;
-				version = 116.1.0;
+				version = 117.0.0;
 			};
 		};
 		B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */ = {
@@ -10027,7 +10053,7 @@
 			repositoryURL = "https://github.com/duckduckgo/apple-toolbox.git";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.0;
+				version = 2.0.0;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
@@ -10177,6 +10203,46 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = Bookmarks;
+		};
+		B6A26C032B98358B00DF9EAD /* Macros */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */;
+			productName = Macros;
+		};
+		B6A26C052B98359A00DF9EAD /* Macros */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */;
+			productName = Macros;
+		};
+		B6A26C072B9835A000DF9EAD /* Macros */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */;
+			productName = Macros;
+		};
+		B6A26C092B9835A800DF9EAD /* Macros */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */;
+			productName = Macros;
+		};
+		B6A26C0B2B9835AD00DF9EAD /* Macros */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */;
+			productName = Macros;
+		};
+		B6A26C0D2B9835B100DF9EAD /* Macros */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */;
+			productName = Macros;
+		};
+		B6A26C0F2B9835B400DF9EAD /* Macros */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */;
+			productName = Macros;
+		};
+		B6A26C112B9835B800DF9EAD /* Macros */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */;
+			productName = Macros;
 		};
 		B6F997CB2B8F380A00476735 /* SwiftLintPlugin */ = {
 			isa = XCSwiftPackageProductDependency;

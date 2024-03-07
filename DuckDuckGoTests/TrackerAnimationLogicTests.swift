@@ -17,18 +17,20 @@
 //  limitations under the License.
 //
 
-import Foundation
-import XCTest
-import TrackerRadarKit
 import BrowserServicesKit
 import ContentBlocking
+import Foundation
+import Macros
 import PrivacyDashboard
+import TrackerRadarKit
+import XCTest
+
 @testable import Core
 @testable import DuckDuckGo
 
 class TrackerAnimationLogicTests: XCTestCase {
 
-    static let pageURL = URL(string: "https://example.com")!
+    static let pageURL = #URL("https://example.com")
     
     func testAnimationLogicToAnimateTrackersIfAnyBlocked() {
         let trackerInfo = makeBlockedTrackerInfo(pageURL: Self.pageURL)

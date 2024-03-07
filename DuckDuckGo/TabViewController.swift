@@ -2333,7 +2333,7 @@ extension TabViewController: SecureVaultManagerDelegate {
                         !isLinkPreview
         let isDataProtected = !UIApplication.shared.isProtectedDataAvailable
         if isEnabled && isDataProtected {
-            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabledAndDataProtected,
+            DailyPixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabledAndDataProtected,
                        withAdditionalParameters: [PixelParameters.isDataProtected: "true"])
         }
         return isEnabled

@@ -49,11 +49,11 @@ final class SecureVaultErrorReporter: SecureVaultErrorReporting {
                        error.localizedDescription)
                 return
             }
-            Pixel.fire(pixel: .secureVaultInitFailedError, error: error, withAdditionalParameters: pixelParams)
+            DailyPixel.fire(pixel: .secureVaultInitFailedError, error: error, withAdditionalParameters: pixelParams)
         case .failedToOpenDatabase(let error):
-            Pixel.fire(pixel: .secureVaultFailedToOpenDatabaseError, error: error, withAdditionalParameters: pixelParams)
+            DailyPixel.fire(pixel: .secureVaultFailedToOpenDatabaseError, error: error, withAdditionalParameters: pixelParams)
         default:
-            Pixel.fire(pixel: .secureVaultError, error: error)
+            DailyPixel.fire(pixel: .secureVaultError, error: error)
 
         }
     }

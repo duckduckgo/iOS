@@ -141,7 +141,7 @@ final class NetworkProtectionTunnelController: TunnelController {
             try tunnelManager.connection.startVPNTunnel(options: options)
             UniquePixel.fire(pixel: .networkProtectionNewUser) { error in
                 guard error != nil else { return }
-                VPNSettings(defaults: .networkProtectionGroupDefaults).vpnFirstEnabled = Pixel.Event.networkProtectionNewUser.lastFireDate(
+                UserDefaults.networkProtectionGroupDefaults.vpnFirstEnabled = Pixel.Event.networkProtectionNewUser.lastFireDate(
                     uniquePixelStorage: UniquePixel.storage
                 )
             }

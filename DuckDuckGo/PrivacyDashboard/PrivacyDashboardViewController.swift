@@ -222,6 +222,10 @@ extension PrivacyDashboardViewController {
         let isDesktop: Bool
         let error: Error?
         let httpStatusCode: Int?
+        let openerContext: WebsiteBreakage.OpenerContext?
+        let vpnOn: Bool
+        let jsPerformance: [Double]?
+        let userRefreshCount: Int
     }
     
     enum WebsiteBreakageError: Error {
@@ -266,6 +270,10 @@ extension PrivacyDashboardViewController {
                                atb: StatisticsUserDefaults().atb ?? "",
                                model: UIDevice.current.model,
                                errors: errors,
-                               httpStatusCodes: statusCodes)
+                               httpStatusCodes: statusCodes,
+                               openerContext: breakageAdditionalInfo.openerContext,
+                               vpnOn: breakageAdditionalInfo.vpnOn,
+                               jsPerformance: breakageAdditionalInfo.jsPerformance,
+                               userRefreshCount: breakageAdditionalInfo.userRefreshCount)
     }
 }

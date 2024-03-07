@@ -116,6 +116,9 @@ class TabViewController: UIViewController {
     private var urlProvidedBasicAuthCredential: (credential: URLCredential, url: URL)?
     private var emailProtectionSignOutCancellable: AnyCancellable?
 
+    public var inferredOpenerContext: WebsiteBreakage.OpenerContext?
+    private var refreshCountSinceLoad: Int = 0
+
     private var detectedLoginURL: URL?
     private var preserveLoginsWorker: PreserveLoginsWorker?
 
@@ -565,6 +568,8 @@ class TabViewController: UIViewController {
             assert(urlRequest.attribution == .user, "WebView requests should be user attributed")
         }
 
+        refreshCountSinceLoad = 0
+
         webView.stopLoading()
         dismissJSAlertIfNeeded()
         webView.load(urlRequest)
@@ -915,13 +920,26 @@ class TabViewController: UIViewController {
         guard let currentURL = url else {
             return nil
         }
+        var vpnOn = false
+#if NETWORK_PROTECTION
+        switch netPConnectionStatus {
+        case .connected:
+            vpnOn = true
+        default:
+            break
+        }
+#endif
         return PrivacyDashboardViewController.BreakageAdditionalInfo(currentURL: currentURL,
                                                                      httpsForced: httpsForced,
                                                                      ampURLString: linkProtection.lastAMPURLString ?? "",
                                                                      urlParametersRemoved: linkProtection.urlParametersRemoved,
                                                                      isDesktop: tabModel.isDesktop,
                                                                      error: lastError,
-                                                                     httpStatusCode: lastHttpStatusCode)
+                                                                     httpStatusCode: lastHttpStatusCode,
+                                                                     openerContext: inferredOpenerContext,
+                                                                     vpnOn: vpnOn,
+                                                                     jsPerformance: nil,
+                                                                     userRefreshCount: refreshCountSinceLoad)
     }
 
     public func print() {
@@ -1181,11 +1199,17 @@ extension TabViewController: WKNavigationDelegate {
     
     private func onWebpageDidFinishLoading() {
         os_log("webpageLoading finished", log: .generalLog, type: .debug)
-        
+
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
 
         showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
+
+        Task { @MainActor in
+            if await ReferrerInfo.isSERPReferred(from: webView) {
+                inferredOpenerContext = .serp
+            }
+        }
     }
 
     func showDaxDialogOrStartTrackerNetworksAnimationIfNeeded() {
@@ -1367,6 +1391,12 @@ extension TabViewController: WKNavigationDelegate {
 
         didGoBackForward = (navigationAction.navigationType == .backForward)
 
+        if navigationAction.navigationType != .reload && navigationAction.navigationType != .other {
+            // Ignore .other actions because refresh can cause a redirect
+            // This is also handled in loadRequest(_:)
+            refreshCountSinceLoad = 0
+        }
+
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
         // which would skip link rewrites.
         if navigationAction.navigationType != .backForward && navigationAction.isTargetingMainFrame() {
@@ -1513,6 +1543,23 @@ extension TabViewController: WKNavigationDelegate {
         }
     }
 
+    private func inferLoadContex(for navigationAction: WKNavigationAction) {
+        if navigationAction.navigationType != .reload {
+            if let currentUrl = webView.url, currentUrl.isDuckDuckGoSearch,
+               let newUrl = navigationAction.request.url, !newUrl.isDuckDuckGoSearch {
+                inferredOpenerContext = .serp
+            } else if navigationAction.navigationType == .linkActivated
+                        || navigationAction.navigationType == .other
+                        || navigationAction.navigationType == .formSubmitted {
+                inferredOpenerContext = .navigation
+            } else {
+                inferredOpenerContext = nil
+            }
+        } else {
+            inferredOpenerContext = nil
+        }
+    }
+
     private func performNavigationFor(url: URL,
                                       navigationAction: WKNavigationAction,
                                       allowPolicy: WKNavigationActionPolicy,
@@ -1533,6 +1580,8 @@ extension TabViewController: WKNavigationDelegate {
                   url != urlProvidedBasicAuthCredential.url {
             self.urlProvidedBasicAuthCredential = nil
         }
+
+        inferLoadContex(for: navigationAction)
 
         if shouldReissueSearch(for: url) {
             reissueSearchWithRequiredParams(for: url)
@@ -2092,6 +2141,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
             reload()
         }
 
+        refreshCountSinceLoad += 1
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.refresh)
     }
 

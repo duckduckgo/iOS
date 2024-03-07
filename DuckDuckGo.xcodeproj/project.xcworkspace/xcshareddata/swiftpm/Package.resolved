@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "anh/netp-handle-expired-entitlement",
-        "revision" : "e88e24f3233aedf066716d96a97932717f8b94b1"
+        "revision" : "9bafa0271688bae67ab9c1ba97d5e69f80fe71df",
+        "version" : "116.1.0"
       }
     },
     {

@@ -217,6 +217,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
         let notificationsPresenterDecorator = NetworkProtectionNotificationsPresenterTogglableDecorator(
             settings: settings,
+            defaults: .networkProtectionGroupDefaults,
             wrappee: notificationsPresenter
         )
         notificationsPresenter.requestAuthorization()
@@ -228,6 +229,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,
+                   defaults: .networkProtectionGroupDefaults,
                    isSubscriptionEnabled: isSubscriptionEnabled,
                    entitlementCheck: Self.entitlementCheck)
         startMonitoringMemoryPressureEvents()

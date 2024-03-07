@@ -705,6 +705,7 @@
 		BDA583882B98B92F00732FDC /* AccountManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA583862B98B6C700732FDC /* AccountManagerExtension.swift */; };
 		BDA583892B98BA7600732FDC /* AccountManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA583862B98B6C700732FDC /* AccountManagerExtension.swift */; };
 		BDC234F72B27F51100D3C798 /* UniquePixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC234F62B27F51100D3C798 /* UniquePixel.swift */; };
+		BDD3B3552B8EF8DB005857A8 /* NetworkProtectionUNNotificationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3766DD2AC5945500AAB575 /* NetworkProtectionUNNotificationPresenter.swift */; };
 		C10CB5F32A1A5BDF0048E503 /* AutofillViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10CB5F22A1A5BDF0048E503 /* AutofillViews.swift */; };
 		C111B26927F579EF006558B1 /* BookmarkOrFolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C111B26827F579EF006558B1 /* BookmarkOrFolderTests.swift */; };
 		C12726EE2A5FF88C00215B02 /* EmailSignupPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12726ED2A5FF88C00215B02 /* EmailSignupPromptView.swift */; };
@@ -4421,7 +4422,6 @@
 		BDA583852B98B69C00732FDC /* Subscription */ = {
 			isa = PBXGroup;
 			children = (
-				BD15DB842B959CFD00821457 /* BundleExtension.swift */,
 				BDA583862B98B6C700732FDC /* AccountManagerExtension.swift */,
 			);
 			name = Subscription;
@@ -4822,6 +4822,7 @@
 			children = (
 				EE7A92862AC6DE4700832A36 /* NetworkProtectionNotificationIdentifier.swift */,
 				EE9D68DD2AE2A65600B55EF4 /* UserDefaults+NetworkProtection.swift */,
+				BD15DB842B959CFD00821457 /* BundleExtension.swift */,
 			);
 			name = NetworkProtection;
 			sourceTree = "<group>";
@@ -6754,6 +6755,7 @@
 				D6E83C482B20C812006C8AFB /* SettingsHostingController.swift in Sources */,
 				F46FEC5727987A5F0061D9DF /* KeychainItemsDebugViewController.swift in Sources */,
 				D68A21442B7EC08500BB372E /* SubscriptionExternalLinkView.swift in Sources */,
+				BDD3B3552B8EF8DB005857A8 /* NetworkProtectionUNNotificationPresenter.swift in Sources */,
 				BD862E0B2B30F9300073E2EE /* VPNFeedbackFormView.swift in Sources */,
 				02341FA62A4379CC008A1531 /* OnboardingStepViewModel.swift in Sources */,
 				850365F323DE087800D0F787 /* UIImageViewExtension.swift in Sources */,
@@ -10017,7 +10019,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = exactVersion;
-				version = 116.0.2;
+				version = 116.1.0;
 			};
 		};
 		B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */ = {

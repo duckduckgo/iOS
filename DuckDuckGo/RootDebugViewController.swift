@@ -49,22 +49,26 @@ class RootDebugViewController: UITableViewController {
     private var bookmarksDatabase: CoreDataDatabase?
     private var sync: DDGSyncing?
     private var internalUserDecider: DefaultInternalUserDecider?
+    var tabManager: TabManager?
 
     init?(coder: NSCoder,
           sync: DDGSyncing,
           bookmarksDatabase: CoreDataDatabase,
-          internalUserDecider: InternalUserDecider) {
+          internalUserDecider: InternalUserDecider,
+          tabManager: TabManager) {
 
         self.sync = sync
         self.bookmarksDatabase = bookmarksDatabase
         self.internalUserDecider = internalUserDecider as? DefaultInternalUserDecider
+        self.tabManager = tabManager
         super.init(coder: coder)
     }
         
-    func configure(sync: DDGSyncing, bookmarksDatabase: CoreDataDatabase, internalUserDecider: InternalUserDecider) {
+    func configure(sync: DDGSyncing, bookmarksDatabase: CoreDataDatabase, internalUserDecider: InternalUserDecider, tabManager: TabManager) {
         self.sync = sync
         self.bookmarksDatabase = bookmarksDatabase
         self.internalUserDecider = internalUserDecider as? DefaultInternalUserDecider
+        self.tabManager = tabManager
     }
 
     required init?(coder: NSCoder) {

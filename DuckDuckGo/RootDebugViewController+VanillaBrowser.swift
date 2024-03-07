@@ -26,8 +26,10 @@ import Common
 
 extension RootDebugViewController {
 
+    fileprivate static let ddgURL = URL(string: "https://duckduckgo.com/")!
     @objc func openVanillaBrowser(_ sender: Any?) {
-        openVanillaBrowser(url: URL(string: "https://duckduckgo.com/")!, fromView: self.view)
+        let homeURL = tabManager?.current()?.tabModel.link?.url ?? RootDebugViewController.ddgURL
+        openVanillaBrowser(url: homeURL)
     }
 
     static var webViewConfiguration: WKWebViewConfiguration = {
@@ -37,10 +39,10 @@ extension RootDebugViewController {
         return configuration
     }()
 
-    fileprivate func openVanillaBrowser(url: URL, fromView view: UIView) {
+    fileprivate func openVanillaBrowser(url: URL) {
         os_log(.debug, "Vanilla Browser open URL %s", url.absoluteString)
         let browserView = BareBonesBrowserView(initialURL: url,
-                                               homeURL: url,
+                                               homeURL: RootDebugViewController.ddgURL,
                                                uiDelegate: nil,
                                                configuration: Self.webViewConfiguration,
                                                userAgent: DefaultUserAgentManager.duckDuckGoUserAgent)

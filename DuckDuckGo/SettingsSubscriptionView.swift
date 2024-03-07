@@ -209,7 +209,13 @@ struct SettingsSubscriptionView: View {
                     }
                 }
             })
-            
+
+            .onChange(of: viewModel.shouldNavigateToSubscriptionFlow, perform: { value in
+                if value {
+                    isShowingsubScriptionFlow = true
+                }
+            })
+
             .onReceive(subscriptionFlowViewModel.$selectedFeature) { value in
                 guard let value else { return }
                 viewModel.onAppearNavigationTarget = value

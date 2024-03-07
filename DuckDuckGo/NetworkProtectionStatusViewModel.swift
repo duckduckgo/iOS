@@ -268,6 +268,9 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     }
 
     private func setUpThroughputRefreshTimer() {
+        previousSentCount = 0
+        previousReceivedCount = 0
+
         throughputUpdateTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let strongSelf = self else { return }
             
@@ -307,13 +310,13 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @MainActor
     private func updateBandwidthCounts(sent: Int64, received: Int64) {
         if let previousSentCount {
-            let difference = sent - previousSentCount
+            let difference = max(sent - previousSentCount, 0)
             let formatted = byteCountFormatter.string(fromByteCount: difference)
             self.uploadSpeed = "\(formatted)/s"
         }
 
         if let previousReceivedCount {
-            let difference = received - previousReceivedCount
+            let difference = max(received - previousReceivedCount, 0)
             let formatted = byteCountFormatter.string(fromByteCount: difference)
             self.downloadSpeed = "\(formatted)/s"
         }

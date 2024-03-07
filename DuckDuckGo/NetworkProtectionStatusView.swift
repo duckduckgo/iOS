@@ -161,6 +161,12 @@ struct NetworkProtectionStatusView: View {
             if let ipAddress = statusModel.ipAddress {
                 NetworkProtectionServerItemView(title: UserText.netPStatusViewIPAddress, value: ipAddress)
             }
+
+            NetworkProtectionThroughputItemView(
+                title: "Data Volume",
+                downloadSpeed: statusModel.downloadSpeed,
+                uploadSpeed: statusModel.uploadSpeed
+            )
         } header: {
             Text(UserText.netPStatusViewConnectionDetails).foregroundColor(.init(designSystemColor: .textSecondary))
         }
@@ -249,6 +255,36 @@ private struct NetworkProtectionServerItemView: View {
                 .foregroundColor(.init(designSystemColor: .textPrimary))
             Spacer(minLength: 2)
             Text(value)
+                .daxBodyRegular()
+                .foregroundColor(.init(designSystemColor: .textSecondary))
+        }
+        .listRowBackground(Color(designSystemColor: .surface))
+    }
+}
+
+private struct NetworkProtectionThroughputItemView: View {
+    let title: String
+    let downloadSpeed: String
+    let uploadSpeed: String
+
+    var body: some View {
+        HStack(spacing: 4) {
+            Text(title)
+                .daxBodyRegular()
+                .foregroundColor(.init(designSystemColor: .textPrimary))
+
+            Spacer(minLength: 2)
+
+            Image("VPNUpload")
+                .foregroundColor(.init(designSystemColor: .textSecondary))
+            Text(uploadSpeed)
+                .daxBodyRegular()
+                .foregroundColor(.init(designSystemColor: .textSecondary))
+
+            Image("VPNDownload")
+                .foregroundColor(.init(designSystemColor: .textSecondary))
+                .padding(.leading, 4)
+            Text(downloadSpeed)
                 .daxBodyRegular()
                 .foregroundColor(.init(designSystemColor: .textSecondary))
         }

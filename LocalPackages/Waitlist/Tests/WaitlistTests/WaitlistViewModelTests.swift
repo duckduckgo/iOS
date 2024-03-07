@@ -17,10 +17,12 @@
 //  limitations under the License.
 //
 
-import XCTest
 import Combine
+import Macros
 import UserNotifications
 import WaitlistMocks
+import XCTest
+
 @testable import Waitlist
 
 class WaitlistViewModelTests: XCTestCase {
@@ -261,7 +263,7 @@ extension WaitlistViewModel {
             waitlistRequest: waitlistRequest,
             waitlistStorage: waitlistStorage,
             notificationService: notificationService,
-            downloadURL: URL(string: "https://duckduckgo.com")!
+            downloadURL: #URL("https://duckduckgo.com")
         )
     }
 }

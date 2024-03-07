@@ -17,11 +17,12 @@
 //  limitations under the License.
 //
 
+import Bookmarks
 import Common
 import Foundation
-import SwiftSoup
-import Bookmarks
+import Macros
 import Persistence
+import SwiftSoup
 
 public enum BookmarksImportError: Error {
     case invalidHtmlNoDLTag
@@ -217,7 +218,7 @@ final public class BookmarksImporter {
         static let FavoritesFolder = "DuckDuckGo Favorites"
         static let BookmarksFolder = "DuckDuckGo Bookmarks"
         static let bookmarkURLString = "https://duckduckgo.com"
-        static let bookmarkURL = URL(string: "https://duckduckgo.com")!
+        static let bookmarkURL = #URL("https://duckduckgo.com")
         static let favoriteAttribute = "duckduckgo:favorite"
         static let isFavorite = "true"
         static let idAttribute = "id"

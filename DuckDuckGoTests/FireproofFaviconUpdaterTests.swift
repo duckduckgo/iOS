@@ -17,12 +17,14 @@
 //  limitations under the License.
 //
 
-import Foundation
-import XCTest
-@testable import DuckDuckGo
-import Persistence
-import Core
 import Bookmarks
+import Core
+import Foundation
+import Macros
+import Persistence
+import XCTest
+
+@testable import DuckDuckGo
 
 class FireproofFaviconUpdaterTests: XCTestCase, TabNotifying, FaviconProviding {
 
@@ -85,7 +87,7 @@ class FireproofFaviconUpdaterTests: XCTestCase, TabNotifying, FaviconProviding {
         try createBookmark()
 
         image = UIImage()
-        let url = URL(string: "https://example.com/favicon.ico")!
+        let url = #URL("https://example.com/favicon.ico")
 
         let updater = FireproofFaviconUpdater(bookmarksDatabase: db, tab: self, favicons: self)
         updater.faviconUserScript(FaviconUserScript(), didRequestUpdateFaviconForHost: "example.com", withUrl: url)
@@ -102,7 +104,7 @@ class FireproofFaviconUpdaterTests: XCTestCase, TabNotifying, FaviconProviding {
         try createBookmark()
 
         image = UIImage()
-        let url = URL(string: "https://example.com/favicon.ico")!
+        let url = #URL("https://example.com/favicon.ico")
 
         let updater = FireproofFaviconUpdater(bookmarksDatabase: db, tab: self, favicons: self)
         updater.faviconUserScript(FaviconUserScript(), didRequestUpdateFaviconForHost: "www.example.com", withUrl: url)

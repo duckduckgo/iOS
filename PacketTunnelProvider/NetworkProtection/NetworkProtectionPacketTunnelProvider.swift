@@ -217,6 +217,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
         let notificationsPresenterDecorator = NetworkProtectionNotificationsPresenterTogglableDecorator(
             settings: settings,
+            defaults: .networkProtectionGroupDefaults,
             wrappee: notificationsPresenter
         )
         notificationsPresenter.requestAuthorization()
@@ -228,6 +229,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,
+                   defaults: .networkProtectionGroupDefaults,
                    isSubscriptionEnabled: isSubscriptionEnabled,
                    entitlementCheck: Self.entitlementCheck)
         startMonitoringMemoryPressureEvents()
@@ -277,7 +279,11 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     private static func entitlementCheck() async -> Result<Bool, Error> {
-        let result = await AccountManager().hasEntitlement(for: .networkProtection)
+#if ALPHA
+        SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+#endif
+
+        let result = await AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)).hasEntitlement(for: .networkProtection)
         switch result {
         case .success(let hasEntitlement):
             return .success(hasEntitlement)

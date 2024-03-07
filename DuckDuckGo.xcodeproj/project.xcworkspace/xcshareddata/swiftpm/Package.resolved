@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "mariusz/cleanup-cpm-default",
-        "revision" : "44b5c63907a98ec83d2237fbf504f50478d7ca43"
+        "revision" : "2181cdcd27be961f10d988fbb202431a6ec6d56d",
+        "version" : "118.0.0"
       }
     },
     {

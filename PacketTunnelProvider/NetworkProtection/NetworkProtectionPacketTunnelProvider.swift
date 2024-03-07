@@ -28,6 +28,8 @@ import NetworkExtension
 import NetworkProtection
 import Subscription
 
+// swiftlint:disable type_body_length
+
 // Initial implementation for initial Network Protection tests. Will be fleshed out with https://app.asana.com/0/1203137811378537/1204630829332227/f
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
@@ -311,5 +313,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         }
     }
 }
+
+// swiftlint:enable type_body_length
 
 #endif

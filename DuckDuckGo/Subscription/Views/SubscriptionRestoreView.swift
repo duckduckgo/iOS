@@ -262,10 +262,14 @@ struct SubscriptionRestoreView: View {
                                                     dismiss()
                                                  }),
                          secondaryButton: .cancel())
-        case .error:
-            return Alert(title: Text(UserText.subscriptionAppStoreErrorTitle), message: Text(UserText.subscriptionAppStoreErrorMessage))
         default:
-            return Alert(title: Text(UserText.subscriptionAppStoreErrorTitle), message: Text(UserText.subscriptionAppStoreErrorMessage))
+            return Alert(
+                title: Text(UserText.subscriptionBackendErrorTitle),
+                message: Text(UserText.subscriptionBackendErrorMessage),
+                dismissButton: .cancel(Text(UserText.subscriptionBackendErrorButton)) {
+                    dismiss()
+                }
+            )
         }
     }
     

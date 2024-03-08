@@ -189,7 +189,12 @@ final class SubscriptionFlowViewModel: ObservableObject {
         canGoBackCancellable = webViewModel.$canGoBack
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
-                self?.canNavigateBack = value
+                // Avoid showing the back button in the root view
+                if value,
+                   let currentURL = self?.webViewModel.url,
+                   currentURL.absoluteString.starts(with: URL.subscriptionBaseURL.absoluteString) {
+                    self?.canNavigateBack = value
+                }
             }
     }
     

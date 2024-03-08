@@ -25,6 +25,7 @@ import Common
 import Combine
 import SyncUI
 
+
 #if SUBSCRIPTION
 import Subscription
 #endif
@@ -47,11 +48,19 @@ final class SettingsViewModel: ObservableObject {
     private var legacyViewProvider: SettingsLegacyViewProvider
     private lazy var versionProvider: AppVersion = AppVersion.shared
     private let voiceSearchHelper: VoiceSearchHelperProtocol
+
 #if SUBSCRIPTION
     private var accountManager: AccountManager
     private var signOutObserver: Any?
+    @UserDefaultsWrapper(key: .subscriptionIsActive, defaultValue: false)
+    static private var cachedHasActiveSubscription: Bool
+        
+    // Sheet Presentation & Navigation
     @Published var isRestoringSubscription: Bool = false
     @Published var shouldDisplayRestoreSubscriptionError: Bool = false
+    @Published var shouldShowNetP = false
+    @Published var shouldShowDBP = false
+    @Published var shouldShowITP = false
 #endif
     
     
@@ -62,10 +71,6 @@ final class SettingsViewModel: ObservableObject {
     // Properties
     private lazy var isPad = UIDevice.current.userInterfaceIdiom == .pad
     private var cancellables = Set<AnyCancellable>()
-    
-    // Defaults
-    @UserDefaultsWrapper(key: .subscriptionIsActive, defaultValue: false)
-    static private var cachedHasActiveSubscription: Bool
     
     // Closures to interact with legacy view controllers through the container
     var onRequestPushLegacyView: ((UIViewController) -> Void)?
@@ -78,10 +83,6 @@ final class SettingsViewModel: ObservableObject {
     @Published var shouldNavigateToDBP = false
     @Published var shouldNavigateToITP = false
     @Published var shouldNavigateToSubscriptionFlow = false
-
-    @Published var shouldShowNetP = false
-    @Published var shouldShowDBP = false
-    @Published var shouldShowITP = false
     
     // Our View State
     @Published private(set) var state: SettingsState
@@ -372,7 +373,6 @@ extension SettingsViewModel {
                     }
                 }
             }
-                        
         default:
             // Account is active but there's not a valid subscription / entitlements
             signOutUser()

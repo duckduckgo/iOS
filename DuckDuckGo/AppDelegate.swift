@@ -470,11 +470,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             guard let token = AccountManager().accessToken else {
                 return
             }
-            let result = await SubscriptionService.getSubscriptionDetails(token: token)
+            let result = await SubscriptionService.getSubscription(accessToken: token)
 
             switch result {
             case .success(let success):
-                if success.isSubscriptionActive {
+                if success.isActive {
                     DailyPixel.fire(pixel: .privacyProSubscriptionActive)
                 }
             case .failure: break

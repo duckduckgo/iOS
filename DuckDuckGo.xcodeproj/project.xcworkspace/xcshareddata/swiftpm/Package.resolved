@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "a32ff4084e910354bdd948812793de6b04804a1b",
-        "version" : "119.0.1"
+        "branch" : "anh/netp-subscription-clean-up",
+        "revision" : "86e39cfca26d4223dbf4ace340f276f986fbdc35"
       }
     },
     {

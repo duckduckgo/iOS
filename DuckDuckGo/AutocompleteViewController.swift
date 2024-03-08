@@ -25,6 +25,7 @@ import Suggestions
 import Networking
 import CoreData
 import Persistence
+import History
 
 class AutocompleteViewController: UIViewController {
     
@@ -48,6 +49,7 @@ class AutocompleteViewController: UIViewController {
     fileprivate var suggestions = [Suggestion]()
     fileprivate var selectedItem = -1
     
+    private var historyCoordinator: HistoryCoordinating!
     private var bookmarksDatabase: CoreDataDatabase!
     private var appSettings: AppSettings!
     private lazy var cachedBookmarks: CachedBookmarks = {
@@ -79,12 +81,14 @@ class AutocompleteViewController: UIViewController {
     var shouldOffsetY = false
     
     static func loadFromStoryboard(bookmarksDatabase: CoreDataDatabase,
+                                   historyCoordinator: HistoryCoordinating,
                                    appSettings: AppSettings = AppDependencyProvider.shared.appSettings) -> AutocompleteViewController {
         let storyboard = UIStoryboard(name: "Autocomplete", bundle: nil)
         guard let controller = storyboard.instantiateInitialViewController() as? AutocompleteViewController else {
             fatalError("Failed to instatiate correct Autocomplete view controller")
         }
         controller.bookmarksDatabase = bookmarksDatabase
+        controller.historyCoordinator = historyCoordinator
         controller.appSettings = appSettings
         return controller
     }
@@ -337,14 +341,15 @@ extension AutocompleteViewController {
 }
 
 extension AutocompleteViewController: SuggestionLoadingDataSource {
+    
+    func history(for suggestionLoading: Suggestions.SuggestionLoading) -> [HistorySuggestion] {
+        return historyCoordinator.history ?? []
+    }
+
     func bookmarks(for suggestionLoading: Suggestions.SuggestionLoading) -> [Suggestions.Bookmark] {
         return cachedBookmarks.all
     }
 
-    func history(for suggestionLoading: Suggestions.SuggestionLoading) -> [Suggestions.HistorySuggestion] {
-        []
-    }
-    
     func suggestionLoading(_ suggestionLoading: Suggestions.SuggestionLoading, suggestionDataFromUrl url: URL, withParameters parameters: [String: String], completion: @escaping (Data?, Error?) -> Void) {
         var queryURL = url
         parameters.forEach {
@@ -357,6 +362,15 @@ extension AutocompleteViewController: SuggestionLoadingDataSource {
             completion(data, error)
         }
         task?.resume()
+    }
+
+}
+
+// TODO can we just make history entry match suggestion in BSK?
+extension HistoryEntry: HistorySuggestion {
+
+    public var numberOfVisits: Int {
+        return numberOfTotalVisits
     }
 
 }

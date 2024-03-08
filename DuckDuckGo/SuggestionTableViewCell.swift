@@ -35,20 +35,6 @@ class SuggestionTableViewCell: UITableViewCell {
 
     func updateFor(query: String, suggestion: Suggestion, with theme: Theme, isAddressBarAtBottom: Bool) {
 
-//        switch suggestion.source {
-//        case .local:
-//            typeImage.image = UIImage(named: "Bookmark-20")
-//            self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
-//        case .remote:
-//            if suggestion.url != nil {
-//                typeImage.image = UIImage(named: "Globe-20")
-//                self.accessibilityValue = UserText.voiceoverSuggestionTypeWebsite
-//            } else {
-//                typeImage.image = UIImage(named: "Find-Search-20")
-//                self.accessibilityValue = UserText.voiceoverSuggestionTypeSearch
-//            }
-//        }
-
         var text: String = ""
         switch suggestion {
         case .phrase(phrase: let phrase):
@@ -67,9 +53,8 @@ class SuggestionTableViewCell: UITableViewCell {
             self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
 
         case .historyEntry(title: let title, url: let url, allowedInTopHits: let allowedInTopHits):
-            // TODO use history icon instead
             text = title ?? url.absoluteString
-            typeImage.image = UIImage(named: "Bookmark-20")
+            typeImage.image = UIImage(named: "History-20")
             self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
 
         case .unknown(value: let value):

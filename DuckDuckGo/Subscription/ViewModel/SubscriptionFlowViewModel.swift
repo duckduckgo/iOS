@@ -192,7 +192,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 // Avoid showing the back button in the root view
                 if value,
                    let currentURL = self?.webViewModel.url,
-                   currentURL.absoluteString.starts(with: URL.subscriptionBaseURL.absoluteString) {
+                   currentURL.absoluteString == URL.subscriptionBaseURL.absoluteString {
                     self?.canNavigateBack = value
                 }
             }

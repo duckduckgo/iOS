@@ -226,14 +226,18 @@ struct SubscriptionFlowView: View {
         
     }
     
-    
     @ViewBuilder
     private var webView: some View {
         
         ZStack(alignment: .top) {
             
-            // Restore View Hidden Link            
-            NavigationLink(destination: SubscriptionRestoreView(), isActive: $isActive) {
+            // Restore View Hidden Link           
+            let restoreView = SubscriptionRestoreView(
+                onDismissStack: {
+                    viewModel.finalizeSubscriptionFlow()
+                    dismiss()
+                })
+            NavigationLink(destination: restoreView, isActive: $isActive) {
                 EmptyView()
             }.isDetailLink(false)
              

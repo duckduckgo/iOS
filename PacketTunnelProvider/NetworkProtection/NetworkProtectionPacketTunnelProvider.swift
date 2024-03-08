@@ -27,7 +27,7 @@ import Networking
 import NetworkExtension
 import NetworkProtection
 
-#if SUBSCRIPTION
+#if SUBSCRIPTION && ALPHA
 import Subscription
 #endif
 

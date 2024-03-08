@@ -203,6 +203,14 @@ extension MainViewController {
         launchSettings()
     }
 
+    func segueToPrivacyPro() {
+        os_log(#function, log: .generalLog, type: .debug)
+        hideAllHighlightsIfNeeded()
+        launchSettings {
+            $0.shouldNavigateToSubscriptionFlow = true
+        }
+    }
+
     func segueToDebugSettings() {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()

@@ -154,5 +154,107 @@
 			<string>d</string>
 		</dict>
 	</dict>
+	<key>autofill.number.of.passwords</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>%1$d salasana</string>
+			<key>other</key>
+			<string>%1$d salasanaa</string>
+		</dict>
+	</dict>
+	<key>autofill.delete.all.passwords.confirmation.title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>Haluatko varmasti poistaa %1$d salasanan?</string>
+			<key>other</key>
+			<string>Haluatko varmasti poistaa %1$d salasanaa?</string>
+		</dict>
+	</dict>
+    <key>autofill.delete.all.passwords.confirmation.body</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%1$#@passwords@</string>
+        <key>passwords</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>Salasanasi poistetaan tästä laitteesta. Varmista, että pääset yhä käyttämään %2$#@accounts@.</string>
+            <key>other</key>
+            <string>Salasanasi poistetaan tästä laitteesta. Varmista, että pääset yhä käyttämään %2$#@accounts@.</string>
+        </dict>
+        <key>accounts</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>tiliäsi</string>
+            <key>other</key>
+            <string>tilejäsi</string>
+        </dict>
+    </dict>
+	<key>autofill.delete.all.passwords.sync.confirmation.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>Salasanasi poistetaan kaikista synkronoiduista laitteista. Varmista, että pääset yhä käyttämään %2$#@accounts@.</string>
+			<key>other</key>
+			<string>Salasanasi poistetaan kaikista synkronoiduista laitteista. Varmista, että pääset yhä käyttämään %2$#@accounts@.</string>
+		</dict>
+		<key>accounts</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>tiliäsi</string>
+			<key>other</key>
+			<string>tilejäsi</string>
+		</dict>
+	</dict>
+	<key>autofill.delete.all.passwords.completion</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>%1$d salasana poistettu</string>
+			<key>other</key>
+			<string>%1$d salasanaa poistettu</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

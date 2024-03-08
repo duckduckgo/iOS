@@ -120,7 +120,7 @@ class TabManager {
         return current(createIfNeeded: true)!
     }
 
-    func addURLRequest(_ request: URLRequest,
+    func addURLRequest(_ request: URLRequest?,
                        with configuration: WKWebViewConfiguration,
                        inheritedAttribution: AdClickAttributionLogic.State?) -> TabViewController {
 
@@ -128,7 +128,12 @@ class TabManager {
             fatalError("Failed to copy configuration")
         }
 
-        let tab = Tab(link: request.url == nil ? nil : Link(title: nil, url: request.url!))
+        let tab: Tab
+        if let request {
+            tab = Tab(link: request.url == nil ? nil : Link(title: nil, url: request.url!))
+        } else {
+            tab = Tab()
+        }
         model.insert(tab: tab, at: model.currentIndex + 1)
         model.select(tabAt: model.currentIndex + 1)
 

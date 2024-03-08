@@ -78,7 +78,7 @@ lane :adhoc do |options|
     scheme: "DuckDuckGo",
     export_options: "adhocExportOptions.plist",
     derived_data_path: "DerivedData",
-    xcargs: "-skipPackagePluginValidation"
+    xcargs: "-skipPackagePluginValidation -skipMacroValidation"
   )
 
   if is_ci
@@ -184,7 +184,7 @@ private_lane :build_release do |options|
     scheme: "DuckDuckGo",
     export_options: "appStoreExportOptions.plist",
     derived_data_path: "DerivedData",
-    xcargs: "-skipPackagePluginValidation"
+    xcargs: "-skipPackagePluginValidation -skipMacroValidation"
   )
 end
 
@@ -197,7 +197,7 @@ private_lane :build_alpha do |options|
     scheme: "DuckDuckGo-Alpha",
     export_options: "alphaExportOptions.plist",
     derived_data_path: "DerivedData",
-    xcargs: "-skipPackagePluginValidation"
+    xcargs: "-skipPackagePluginValidation -skipMacroValidation"
   )
 end
 

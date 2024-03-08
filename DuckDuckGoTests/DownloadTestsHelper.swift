@@ -18,10 +18,12 @@
 //
 
 import Foundation
+import Macros
+
 @testable import DuckDuckGo
 
 struct DownloadTestsHelper {
-    let mockURL = URL(string: "https://duck.com")!
+    let mockURL = #URL("https://duck.com")
     let tmpDirectory = FileManager.default.temporaryDirectory
     let downloadsDirectory: URL
         

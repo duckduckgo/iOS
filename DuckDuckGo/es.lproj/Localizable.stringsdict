@@ -154,5 +154,107 @@
 			<string>d</string>
 		</dict>
 	</dict>
+	<key>autofill.number.of.passwords</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>%1$d contraseña</string>
+			<key>other</key>
+			<string>%1$d contraseñas</string>
+		</dict>
+	</dict>
+	<key>autofill.delete.all.passwords.confirmation.title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>¿Seguro de que quieres borrar %1$d contraseña?</string>
+			<key>other</key>
+			<string>¿Seguro de que quieres borrar %1$d contraseñas?</string>
+		</dict>
+	</dict>
+    <key>autofill.delete.all.passwords.confirmation.body</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%1$#@passwords@</string>
+        <key>passwords</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>Tu contraseña se eliminará de este dispositivo. Asegúrate de tener otra forma de acceder a %2$#@accounts@.</string>
+            <key>other</key>
+            <string>Tus contraseñas se eliminarán de este dispositivo. Asegúrate de tener otra forma de acceder a %2$#@accounts@.</string>
+        </dict>
+        <key>accounts</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>cuenta</string>
+            <key>other</key>
+            <string>cuentas</string>
+        </dict>
+    </dict>
+	<key>autofill.delete.all.passwords.sync.confirmation.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>Tus contraseñas se eliminarán de todos los dispositivos sincronizados. Asegúrate de tener otra forma de acceder a %2$#@accounts@.</string>
+			<key>other</key>
+			<string>Tus contraseñas se eliminarán de todos los dispositivos sincronizados. Asegúrate de tener otra forma de acceder a%2$#@accounts@.</string>
+		</dict>
+		<key>accounts</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>cuenta</string>
+			<key>other</key>
+			<string>cuentas</string>
+		</dict>
+	</dict>
+	<key>autofill.delete.all.passwords.completion</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>%1$d contraseña borrada</string>
+			<key>other</key>
+			<string>%1$d contraseñas borradas</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

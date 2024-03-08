@@ -38,7 +38,7 @@
 "action.title.copy.message" = "URL wurde kopiert";
 
 /* Delete action - button shown in alert */
-"action.title.delete" = "Delete";
+"action.title.delete" = "Löschen";
 
 /* Disable protection action */
 "action.title.disable.protection" = "Datenschutz deaktivieren";
@@ -448,6 +448,18 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "Wenn DuckDuckGo Pop-ups zur Cookie-Zustimmung auf den von dir besuchten Websites erkennt, können wir deine Cookie-Einstellungen automatisch so festlegen, dass Cookies minimiert werden und der Datenschutz maximiert wird, und dann die Pop-ups schließen. Einige Websites bieten keine Option zur Verwaltung von Cookie-Einstellungen, sodass wir Pop-ups wie diese nur ausblenden können.";
 
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.completion" = "autofill.delete.all.passwords.completion";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.confirmation.body" = "autofill.delete.all.passwords.confirmation.body";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.confirmation.title" = "autofill.delete.all.passwords.confirmation.title";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
+
 /* Text link to email protection website */
 "autofill.enable.email.protection" = "Email Protection aktivieren";
 
@@ -490,6 +502,15 @@
 /* Title for toast when copying username */
 "autofill.logins.copy-toast.username-copied" = "Benutzername kopiert";
 
+/* Title of button in prompt requiring authentication before all passwords are deleted */
+"autofill.logins.delete.all.authentication.prompt.button" = "Jetzt authentifizieren";
+
+/* Title of prompt requiring authentication before all passwords are deleted */
+"autofill.logins.delete.all.authentication.prompt.title" = "Authentifiziere dich, um alle Passwörter zu löschen";
+
+/* Reason for authentication when deleting all logins */
+"autofill.logins.delete.all.authentication.reason" = "Authentifiziere dich, um zu bestätigen, dass du alle Passwörter löschen willst";
+
 /* Address label for login details on autofill */
 "autofill.logins.details.address" = "URL der Website";
 
@@ -501,9 +522,6 @@
 
 /* Autofill alert button confirming delete autofill login */
 "autofill.logins.details.delete-confirmation.button" = "Passwort löschen";
-
-/* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Möchtest du dieses Passwort wirklich löschen?";
 
 /* Title when editing autofill login details */
 "autofill.logins.details.edit-title" = "Passwort bearbeiten";
@@ -564,6 +582,9 @@
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Schließen";
+
+/* Title for button to delete all saved autofill passwords */
+"autofill.logins.list.delete.all" = "Alle löschen";
 
 /* Title for a toggle that enables autofill */
 "autofill.logins.list.enable" = "Passwörter speichern und automatisch ausfüllen";
@@ -627,6 +648,9 @@
 
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Keine Ergebnisse";
+
+/* Do not translate - stringsdict entry */
+"autofill.number.of.passwords" = "autofill.number.of.passwords";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.subtitle" = "Passwörter werden sicher auf deinem Gerät gespeichert.";

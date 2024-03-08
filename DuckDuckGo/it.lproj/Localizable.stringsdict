@@ -154,5 +154,107 @@ Li ho bloccati!
 			<string>d</string>
 		</dict>
 	</dict>
+	<key>autofill.number.of.passwords</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>%1$d password</string>
+			<key>other</key>
+			<string>%1$d password</string>
+		</dict>
+	</dict>
+	<key>autofill.delete.all.passwords.confirmation.title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>Eliminare %1$d password?</string>
+			<key>other</key>
+			<string>Eliminare %1$d password?</string>
+		</dict>
+	</dict>
+    <key>autofill.delete.all.passwords.confirmation.body</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%1$#@passwords@</string>
+        <key>passwords</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>Le password verranno eliminate da questo dispositivo. Assicurati di avere ancora la possibilità di accedere al tuo %2$#@accounts@.</string>
+            <key>other</key>
+            <string>Le password verranno eliminate da questo dispositivo. Assicurati di avere ancora la possibilità di accedere ai tuoi %2$#@accounts@.</string>
+        </dict>
+        <key>accounts</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>account</string>
+            <key>other</key>
+            <string>account</string>
+        </dict>
+    </dict>
+	<key>autofill.delete.all.passwords.sync.confirmation.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>Le password verranno eliminate da tutti i dispositivi sincronizzati. Assicurati di avere ancora la possibilità di accedere al tuo %2$#@accounts@.</string>
+			<key>other</key>
+			<string>Le password verranno eliminate da tutti i dispositivi sincronizzati. Assicurati di avere ancora la possibilità di accedere ai tuoi %2$#@accounts@.</string>
+		</dict>
+		<key>accounts</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>account</string>
+			<key>other</key>
+			<string>account</string>
+		</dict>
+	</dict>
+	<key>autofill.delete.all.passwords.completion</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>%1$d password eliminata</string>
+			<key>other</key>
+			<string>%1$d password eliminate</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

@@ -27,3 +27,6 @@ CODE_SIGN_STYLE = Manual
 
 // The manually specified provisioning profile
 PROVISIONING_PROFILE_SPECIFIER = Development - App
+
+// The keychain access group for subscriptions
+SUBSCRIPTION_APP_GROUP = com.duckduckgo.subscriptions

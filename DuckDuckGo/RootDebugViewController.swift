@@ -31,7 +31,6 @@ import DDGSync
 class RootDebugViewController: UITableViewController {
 
     enum Row: Int {
-        case resetAutoconsentPrompt = 665
         case crashFatalError = 666
         case crashMemory = 667
         case toggleInspectableWebViews = 668
@@ -107,12 +106,6 @@ class RootDebugViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if tableView.cellForRow(at: indexPath)?.tag == Row.resetAutoconsentPrompt.rawValue {
-            AppUserDefaults().clearAutoconsentUserSetting()
-            tableView.deselectRow(at: indexPath, animated: true)
-        }
-        
         if tableView.cellForRow(at: indexPath)?.tag == Row.crashFatalError.rawValue {
             fatalError(#function)
         }

@@ -2605,6 +2605,7 @@ extension WKWebView {
 
 extension UserContentController {
 
+    @MainActor
     public convenience init(privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
         self.init(assetsPublisher: ContentBlocking.shared.contentBlockingUpdating.userContentBlockingAssets,
                   privacyConfigurationManager: privacyConfigurationManager)

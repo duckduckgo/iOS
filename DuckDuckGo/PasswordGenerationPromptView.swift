@@ -41,32 +41,32 @@ struct PasswordGenerationPromptView: View {
                 .offset(x: horizontalPadding)
                 .zIndex(1)
 
-                VStack {
-                    Spacer()
-                        .frame(height: Const.Size.topPadding)
-                    AutofillViews.AppIconHeader()
-                    Spacer()
-                        .frame(height: Const.Size.headlineTopPadding)
-                    AutofillViews.Headline(title: UserText.autofillPasswordGenerationPromptTitle)
-                    if #available(iOS 16.0, *) {
-                        passwordView
-                            .padding([.top, .bottom], passwordVerticalPadding)
-                    } else {
-                        AutofillViews.LegacySpacerView()
-                        passwordView
-                        AutofillViews.LegacySpacerView()
-                    }
-                    AutofillViews.Description(text: UserText.autofillPasswordGenerationPromptSubtitle)
-                    contentViewSpacer
-                    ctaView
-                        .padding(.bottom, AutofillViews.isIPad(verticalSizeClass, horizontalSizeClass) ? Const.Size.bottomPaddingIPad
-                                                                                                       : Const.Size.bottomPadding)
+            VStack {
+                Spacer()
+                    .frame(height: Const.Size.topPadding)
+                AutofillViews.AppIconHeader()
+                Spacer()
+                    .frame(height: Const.Size.headlineTopPadding)
+                AutofillViews.Headline(title: UserText.autofillPasswordGenerationPromptTitle)
+                if #available(iOS 16.0, *) {
+                    passwordView
+                        .padding([.top, .bottom], passwordVerticalPadding)
+                } else {
+                    AutofillViews.LegacySpacerView()
+                    passwordView
+                    AutofillViews.LegacySpacerView()
                 }
-                .background(GeometryReader { proxy -> Color in
-                    DispatchQueue.main.async { viewModel.contentHeight = proxy.size.height }
-                    return Color.clear
-                })
-                .useScrollView(shouldUseScrollView(), minHeight: frame.height)
+                AutofillViews.Description(text: UserText.autofillPasswordGenerationPromptSubtitle)
+                contentViewSpacer
+                ctaView
+                    .padding(.bottom, AutofillViews.isIPad(verticalSizeClass, horizontalSizeClass) ? Const.Size.bottomPaddingIPad
+                                                                                                   : Const.Size.bottomPadding)
+            }
+            .background(GeometryReader { proxy -> Color in
+                DispatchQueue.main.async { viewModel.contentHeight = proxy.size.height }
+                return Color.clear
+            })
+            .useScrollView(shouldUseScrollView(), minHeight: frame.height)
 
         }
         .padding(.horizontal, horizontalPadding)

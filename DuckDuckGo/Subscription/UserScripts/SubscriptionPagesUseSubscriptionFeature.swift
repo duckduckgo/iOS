@@ -31,8 +31,6 @@ enum SubscriptionTransactionStatus {
     case idle, purchasing, restoring, polling
 }
 
-// swiftlint:disable type_body_length
-
 @available(iOS 15.0, *)
 // swiftlint:disable:next type_body_length
 final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObject {
@@ -188,6 +186,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
     }
     
+    // swiftlint:disable:next function_body_length
     func subscriptionSelected(params: Any, original: WKScriptMessage) async -> Encodable? {
         
         await withTransactionInProgress {
@@ -375,6 +374,5 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
     
 }
-// swiftlint:enable type_body_length
 
 #endif

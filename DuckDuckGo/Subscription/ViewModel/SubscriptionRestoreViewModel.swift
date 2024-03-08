@@ -52,7 +52,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         self.purchaseManager = purchaseManager
         self.accountManager = accountManager
         self.isAddingDevice = isAddingDevice
-        initializeView()
     }
     
     func initializeView() {

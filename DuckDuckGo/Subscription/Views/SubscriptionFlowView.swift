@@ -29,10 +29,11 @@ struct SubscriptionFlowView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = SubscriptionFlowViewModel()
     @State private var shouldShowNavigationBar = false
-    @State private var isActive: Bool = false
+    @State private var isActive = false
     @State private var transactionError: SubscriptionFlowViewModel.SubscriptionPurchaseError?
-    @State private var shouldPresentError: Bool = false
-    
+    @State private var shouldPresentError = false
+    @State private var isFirstOnAppear = true
+
     enum Constants {
         static let daxLogo = "Home"
         static let daxLogoSize: CGFloat = 24.0
@@ -65,9 +66,6 @@ struct SubscriptionFlowView: View {
         .applyInsetGroupedListStyle()
         .tint(Color(designSystemColor: .textPrimary))
         .environment(\.rootPresentationMode, self.$isActive)
-        .onAppear(perform: {
-            viewModel.onAppear()
-        })
     }
 
     @ViewBuilder
@@ -143,6 +141,12 @@ struct SubscriptionFlowView: View {
         }
         
         .onAppear(perform: {
+
+            if isFirstOnAppear && !viewModel.activateSubscriptionOnLoad {
+                isFirstOnAppear = false
+                Pixel.fire(pixel: .privacyProOfferScreenImpression)
+            }
+
             setUpAppearances()
             Task { await viewModel.initializeViewData() }
             

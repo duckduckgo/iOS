@@ -209,7 +209,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             // Check for active subscriptions
             if await PurchaseManager.hasActiveSubscription() {
                 setTransactionError(.hasActiveSubscription)
-                Pixel.fire(pixel: .privacyProRestoreAfterPurchaseAttempt)
                 return nil
             }
             
@@ -229,6 +228,9 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
                     setTransactionError(.cancelledByUser)
                 case .accountCreationFailed:
                     setTransactionError(.accountCreationFailed)
+                case .activeSubscriptionAlreadyPresent:
+                    setTransactionError(.hasActiveSubscription)
+                    Pixel.fire(pixel: .privacyProRestoreAfterPurchaseAttempt)
                 default:
                     setTransactionError(.purchaseFailed)
                 }

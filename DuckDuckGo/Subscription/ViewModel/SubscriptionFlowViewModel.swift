@@ -190,7 +190,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
             isBackendError = true
             transactionError = .hasActiveSubscription
         case .cancelledByUser:
-            isStoreError = true
             transactionError = nil
         case .accountCreationFailed:
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailureAccountNotCreated)
@@ -207,7 +206,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailureBackendError)
         }
 
-        if transactionError != .hasActiveSubscription {
+        if let transactionError,
+           transactionError != .hasActiveSubscription && transactionError != .cancelledByUser {
             // The observer of `transactionError` does the same calculation, if the error is anything else than .hasActiveSubscription then shows a "Something went wrong" alert
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailure)
         }
@@ -292,10 +292,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     @MainActor
     func navigateBack() async {
         await webViewModel.navigationCoordinator.goBack()
-    }
-
-    func onAppear() {
-        Pixel.fire(pixel: .privacyProOfferScreenImpression)
     }
 }
 #endif

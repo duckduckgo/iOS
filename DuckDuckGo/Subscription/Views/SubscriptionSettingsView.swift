@@ -34,7 +34,8 @@ struct SubscriptionSettingsView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = SubscriptionSettingsViewModel()
     @StateObject var sceneEnvironment = SceneEnvironment()
-    
+    @State var isFirstOnAppear = true
+
     @ViewBuilder
     private var optionsView: some View {
         List {
@@ -130,7 +131,10 @@ struct SubscriptionSettingsView: View {
                 optionsView
             }
         }.onAppear(perform: {
-            viewModel.onApper()
+            if isFirstOnAppear {
+                isFirstOnAppear = false
+                Pixel.fire(pixel: .privacyProSubscriptionSettings)
+            }
         })
         .navigationBarTitleDisplayMode(.inline)
     }

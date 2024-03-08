@@ -134,9 +134,5 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         subscriptionUpdateTimer?.invalidate()
         signOutObserver = nil
     }
-    
-    func onApper() {
-        Pixel.fire(pixel: .privacyProSubscriptionSettings)
-    }
 }
 #endif

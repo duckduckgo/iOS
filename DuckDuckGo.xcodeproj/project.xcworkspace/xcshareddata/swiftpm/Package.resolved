@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "barebonesbrowser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/BareBonesBrowser.git",
+      "state" : {
+        "revision" : "31e5bfedc3c2ca005640c4bf2b6959d69b0e18b9",
+        "version" : "0.1.0"
+      }
+    },
+    {
       "identity" : "bloom_cpp",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/bloom_cpp.git",

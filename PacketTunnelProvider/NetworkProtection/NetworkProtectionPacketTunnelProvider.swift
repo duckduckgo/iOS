@@ -238,7 +238,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 #endif
         let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
                                                              errorEvents: nil,
-                                                             isSubscriptionEnabled: isSubscriptionEnabled)
+                                                             isSubscriptionEnabled: isSubscriptionEnabled,
+                                                             subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)

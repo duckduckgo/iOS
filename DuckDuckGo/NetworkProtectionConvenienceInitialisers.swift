@@ -59,7 +59,8 @@ extension NetworkProtectionKeychainTokenStore {
         self.init(keychainType: .dataProtection(.unspecified),
                   serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
                   errorEvents: .networkProtectionAppDebugEvents,
-                  isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription))
+                  isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription),
+                  subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
     }
 }
 

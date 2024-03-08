@@ -127,7 +127,7 @@ final class ConfigurationURLDebugViewController: UITableViewController {
         cell.subtitle.text = url(for: row)
         cell.subtitle.textColor = customURL(for: row) != nil ? UIColor(designSystemColor: .accent) : .black
         cell.ternary.text = lastConfigurationUpdateDate != nil ? dateFormatter.string(from: lastConfigurationUpdateDate!) : "-"
-        cell.refresh.addAction(makeAction(for: row), for: .allEvents)
+        cell.refresh.addAction(refreshAction, for: .primaryActionTriggered)
         return cell
     }
 
@@ -136,12 +136,10 @@ final class ConfigurationURLDebugViewController: UITableViewController {
         presentCustomURLAlert(for: row)
     }
 
-    private func makeAction(for row: CustomURLsRows) -> UIAction {
-        UIAction { [weak self] _ in
-            self?.lastConfigurationRefreshDate = Date.distantPast
-            self?.fetchAssets()
-            self?.tableView.reloadData()
-        }
+    private lazy var refreshAction = UIAction { [weak self] _ in
+        self?.lastConfigurationRefreshDate = Date.distantPast
+        self?.fetchAssets()
+        self?.tableView.reloadData()
     }
 
     private func presentCustomURLAlert(for row: CustomURLsRows) {

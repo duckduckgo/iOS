@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/apple-toolbox.git",
       "state" : {
-        "revision" : "e3dc4faf70ca09718a2d20d5c47b449389e8c153",
-        "version" : "1.0.0"
+        "revision" : "d51beaf1736013b530576ace13a16d6d1a63742c",
+        "version" : "2.0.0"
       }
     },
     {
@@ -23,7 +23,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "d0b2e23d6712f3a9a0c9eb4fef14eb2aed554491"
+        "revision" : "2404060d63af176050954050c403af92600fe97e"
       }
     },
     {
@@ -40,8 +40,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "59752eb7973d3e3b0c23255ff51359f48b343f15",
-        "version" : "5.2.0"
+        "revision" : "f6241631fc14cc2d0f47950bfdc4d6c30bf90130",
+        "version" : "5.4.0"
       }
     },
     {
@@ -85,8 +85,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onevcat/Kingfisher.git",
       "state" : {
-        "revision" : "af4be924ad984cf4d16f4ae4df424e79a443d435",
-        "version" : "7.6.2"
+        "revision" : "5b92f029fab2cce44386d28588098b5be0824ef5",
+        "version" : "7.11.0"
       }
     },
     {
@@ -132,6 +132,15 @@
       "state" : {
         "revision" : "c8ed701b513cf5177118a175d85fbbbcd707ab41",
         "version" : "1.3.0"
+      }
+    },
+    {
+      "identity" : "swift-syntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-syntax.git",
+      "state" : {
+        "revision" : "64889f0c732f210a935a0ad7cda38f77f876262d",
+        "version" : "509.1.1"
       }
     },
     {

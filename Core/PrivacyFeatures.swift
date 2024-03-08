@@ -33,17 +33,21 @@ public final class PrivacyFeatures {
     }
     private static let httpsUpgradeDebugEvents = EventMapping<AppHTTPSUpgradeStore.ErrorEvents> { event, error, parameters, onComplete in
         let domainEvent: Pixel.Event
+        let dailyAndCount: Bool
+
         switch event {
         case .dbSaveBloomFilterError:
             domainEvent = .dbSaveBloomFilterError
+            dailyAndCount = true
         case .dbSaveExcludedHTTPSDomainsError:
             domainEvent = .dbSaveExcludedHTTPSDomainsError
+            dailyAndCount = false
         }
 
-        if let error {
-            Pixel.fire(pixel: domainEvent, error: error, withAdditionalParameters: parameters ?? [:], onComplete: onComplete)
+        if dailyAndCount {
+            DailyPixel.fireDailyAndCount(pixel: domainEvent, error: error, withAdditionalParameters: parameters ?? [:], onCountComplete: onComplete)
         } else {
-            Pixel.fire(pixel: domainEvent, withAdditionalParameters: parameters ?? [:], onComplete: onComplete)
+            Pixel.fire(pixel: domainEvent, error: error, withAdditionalParameters: parameters ?? [:], onComplete: onComplete)
         }
     }
     private static var httpsUpgradeStore: AppHTTPSUpgradeStore {

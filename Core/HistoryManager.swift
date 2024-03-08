@@ -27,6 +27,7 @@ import Persistence
 public protocol HistoryManaging {
 
     var historyCoordinator: HistoryCoordinating { get }
+    func loadStore()
 
 }
 
@@ -62,9 +63,6 @@ public class HistoryManager: HistoryManaging {
         let context = database.makeContext(concurrencyType: .privateQueueConcurrencyType)
         let historyCoordinator = HistoryCoordinator(historyStoring: HistoryStore(context: context, eventMapper: HistoryStoreEventMapper()))
         currentHistoryCoordinator = historyCoordinator
-        historyCoordinator.loadHistory {
-            // no-op
-        }
         return historyCoordinator
     }
 
@@ -84,6 +82,12 @@ public class HistoryManager: HistoryManaging {
             historyCoordinator.burnAll {
                 continuation.resume()
             }
+        }
+    }
+
+    public func loadStore() {
+        historyCoordinator.loadHistory {
+            // Do migrations here if needed
         }
     }
 

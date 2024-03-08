@@ -347,7 +347,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func makeHistoryManager() -> HistoryManager {
-        return HistoryManager(privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
+        let historyManager = HistoryManager(privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
                               variantManager: DefaultVariantManager(),
                               database: HistoryDatabase.make()) { error in
             Pixel.fire(pixel: .historyStoreLoadFailed, error: error)
@@ -357,6 +357,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.presentPreemptiveCrashAlert()
             }
         }
+
+        // This is a compromise to support hot reloading via privacy config.
+        //  * If the history is disabled this will do nothing. If it is subsequently enabled then it won't start collecting history
+        //     until the app cold launches at least once.
+        //  * If the history is enabled this loads the store sets up the history manager
+        //     correctly. If the history manager is subsequently disabled it will stop working immediately.
+        historyManager.loadStore()
+        return historyManager
     }
 
     private func presentPreemptiveCrashAlert() {

@@ -110,16 +110,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @Published public var location: String?
     @Published public var ipAddress: String?
 
-    @Published public var uploadSpeed: String = "0 KB/s" {
-        didSet {
-            print("UPLOAD: \(uploadSpeed)")
-        }
-    }
-    @Published public var downloadSpeed: String = "0 KB/s" {
-        didSet {
-            print("DOWNLOAD: \(uploadSpeed)")
-        }
-    }
+    @Published public var uploadSpeed: String = "0 KB/s"
+    @Published public var downloadSpeed: String = "0 KB/s"
     private var throughputUpdateTimer: Timer?
 
     @Published public var animationsOn: Bool = false
@@ -219,12 +211,11 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         // Each event cancels the previous delayed publisher
         $shouldDisableToggle
             .filter { $0 }
-            .map {
-                Just(!$0)
-                    .delay(for: 2.0, scheduler: DispatchQueue.main)
-                    .assign(to: \.shouldDisableToggle, onWeaklyHeld: self)
+            .map { _ -> AnyPublisher<Bool, Never> in
+                Just(false).delay(for: 2.0, scheduler: DispatchQueue.main).eraseToAnyPublisher()
             }
-            .assign(to: \.delayedToggleReenableCancellable, onWeaklyHeld: self)
+            .switchToLatest()
+            .assign(to: \.shouldDisableToggle, onWeaklyHeld: self)
             .store(in: &cancellables)
     }
 
@@ -268,9 +259,6 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     }
 
     private func setUpThroughputRefreshTimer() {
-        previousSentCount = 0
-        previousReceivedCount = 0
-
         throughputUpdateTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let strongSelf = self else { return }
             

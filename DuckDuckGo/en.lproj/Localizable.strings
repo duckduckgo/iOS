@@ -1411,6 +1411,9 @@ https://duckduckgo.com/mac";
 /* String indicating NetP is disconnected when viewed from the settings screen */
 "netP.cell.disconnected" = "Not connected";
 
+/* Title for the DuckDuckGo VPN feature in settings */
+"netP.settings.title" = "VPN";
+
 /* Title for the DuckDuckGo VPN feature */
 "netP.title" = "DuckDuckGo VPN";
 

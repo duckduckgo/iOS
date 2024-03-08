@@ -569,6 +569,7 @@ In addition to the details entered into this form, your app issue report will co
     
     // MARK: Network Protection
     
+    public static let netPSettingsTitle = NSLocalizedString("netP.settings.title", value: "VPN", comment: "Title for the DuckDuckGo VPN feature in settings")
     public static let netPNavTitle = NSLocalizedString("netP.title", value: "DuckDuckGo VPN", comment: "Title for the DuckDuckGo VPN feature")
     public static let netPCellConnected = NSLocalizedString("netP.cell.connected", value: "Connected", comment: "String indicating NetP is connected when viewed from the settings screen")
     public static let netPCellDisconnected = NSLocalizedString("netP.cell.disconnected", value: "Not connected", comment: "String indicating NetP is disconnected when viewed from the settings screen")

@@ -26,7 +26,10 @@ import Core
 import Networking
 import NetworkExtension
 import NetworkProtection
+
+#if SUBSCRIPTION
 import Subscription
+#endif
 
 // swiftlint:disable type_body_length
 
@@ -231,7 +234,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
-#if ALPHA
+#if SUBSCRIPTION && ALPHA
         let isSubscriptionEnabled = true
 #else
         let isSubscriptionEnabled = false
@@ -307,9 +310,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     private static func entitlementCheck() async -> Result<Bool, Error> {
-#if ALPHA
+#if SUBSCRIPTION && ALPHA
         SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
-#endif
 
         let result = await AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)).hasEntitlement(for: .networkProtection)
         switch result {
@@ -318,6 +320,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         case .failure(let error):
             return .failure(error)
         }
+#else
+        return .success(true)
+#endif
     }
 }
 

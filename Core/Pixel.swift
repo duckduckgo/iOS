@@ -127,15 +127,6 @@ public struct PixelParameters {
     public static let returnUserErrorCode = "error_code"
     public static let returnUserOldATB = "old_atb"
     public static let returnUserNewATB = "new_atb"
-
-    // Ad Attribution
-    public static let adAttributionOrgID = "org_id"
-    public static let adAttributionCampaignID = "campaign_id"
-    public static let adAttributionConversionType = "conversion_type"
-    public static let adAttributionAdGroupID = "ad_group_id"
-    public static let adAttributionCountryOrRegion = "country_or_region"
-    public static let adAttributionKeywordID = "keyword_id"
-    public static let adAttributionAdID = "ad_id"
 }
 
 public struct PixelValues {
@@ -249,6 +240,16 @@ extension Pixel {
     }
 }
 
+/// NSError supports this through `NSUnderlyingError`, but there's no support for this for Swift's `Error`.  This protocol does that.
+///
+/// The reason why this protocol returns a code and a domain instead of just an `Error` or `NSError` is so that the error implementing
+/// this protocol has full control over these values, and is able to override them as it best sees fit.
+///
+protocol ErrorWithUnderlyingError: Error {
+    var underlyingErrorCode: Int { get }
+    var underlyingErrorDomain: String { get }
+}
+
 extension Dictionary where Key == String, Value == String {
     mutating func appendErrorPixelParams(error: Error) {
         let nsError = error as NSError
@@ -256,7 +257,10 @@ extension Dictionary where Key == String, Value == String {
         self[PixelParameters.errorCode] = "\(nsError.code)"
         self[PixelParameters.errorDomain] = nsError.domain
 
-        if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
+        if let underlyingError = error as? ErrorWithUnderlyingError {
+            self[PixelParameters.underlyingErrorCode] = "\(underlyingError.underlyingErrorCode)"
+            self[PixelParameters.underlyingErrorDomain] = underlyingError.underlyingErrorDomain
+        } else if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
             self[PixelParameters.underlyingErrorCode] = "\(underlyingError.code)"
             self[PixelParameters.underlyingErrorDomain] = underlyingError.domain
         } else if let sqlErrorCode = nsError.userInfo["NSSQLiteErrorDomain"] as? NSNumber {

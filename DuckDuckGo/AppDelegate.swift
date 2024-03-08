@@ -335,8 +335,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         clearDebugWaitlistState()
 
-        reportAdAttribution()
-
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
         return true
@@ -388,12 +386,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 #endif
-
-    private func reportAdAttribution() {
-        Task.detached(priority: .background) {
-            await AdAttributionPixelReporter.shared.reportAttributionIfNeeded()
-        }
-    }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }

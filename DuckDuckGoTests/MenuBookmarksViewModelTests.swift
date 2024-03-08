@@ -17,11 +17,12 @@
 //  limitations under the License.
 //
 
-import Foundation
-import XCTest
 import Bookmarks
-import Persistence
 import DuckDuckGo
+import Foundation
+import Macros
+import Persistence
+import XCTest
 
 private extension MenuBookmarksViewModel {
     
@@ -35,7 +36,7 @@ private extension MenuBookmarksViewModel {
 
 class MenuBookmarksViewModelTests: XCTestCase {
     
-    let url = URL(string: "https://test.com")!
+    let url = #URL("https://test.com")
     var db: CoreDataDatabase!
     
     override func setUpWithError() throws {

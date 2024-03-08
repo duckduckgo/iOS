@@ -17,10 +17,11 @@
 //  limitations under the License.
 //
 
-import XCTest
+import BrowserServicesKit
+import Macros
 import OHHTTPStubs
 import OHHTTPStubsSwift
-import BrowserServicesKit
+import XCTest
 
 @testable import Core
 
@@ -34,7 +35,7 @@ class HTTPSUpgradeTests: XCTestCase {
 
     func testWhenURLIsHttpsThenShouldUpgradeResultIsFalse() {
         let expect = expectation(description: "Https url should not be upgraded")
-        let url = URL(string: "https://upgradable.url")!
+        let url = #URL("https://upgradable.url")
         
         let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()))
         testee.loadData()
@@ -49,7 +50,7 @@ class HTTPSUpgradeTests: XCTestCase {
     func testWhenURLIsExcludedThenShouldUpgradeResultIsFalse() {
         
         let expect = expectation(description: "Excluded http:// urls should not be upgraded")
-        let url = URL(string: "http://excluded.url")!
+        let url = #URL("http://excluded.url")
         
         let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()))
         testee.loadData()
@@ -63,7 +64,7 @@ class HTTPSUpgradeTests: XCTestCase {
     
     func testWhenURLIsHttpAndCanBeUpgradedThenShouldUpgradeIsTrue() {
         let expect = expectation(description: "Http url in list and should be upgraded")
-        let url = URL(string: "http://upgradable.url")!
+        let url = #URL("http://upgradable.url")
 
         let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()),
                                   privacyConfig: WebKitTestHelper.preparePrivacyConfig(
@@ -84,7 +85,7 @@ class HTTPSUpgradeTests: XCTestCase {
     
     func testWhenURLIsHttpAndHttpsUpgradesDisabledThenShouldUpgradeIsFalse() {
         let expect = expectation(description: "Http url in list and should not be upgraded")
-        let url = URL(string: "http://upgradable.url")!
+        let url = #URL("http://upgradable.url")
 
         let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()),
                                   privacyConfig: WebKitTestHelper.preparePrivacyConfig(
@@ -105,7 +106,7 @@ class HTTPSUpgradeTests: XCTestCase {
     
     func testWhenURLIsHttpAndCannotBeUpgradedThenShouldUpgradeIsFalse() {
         let expect = expectation(description: "Http url not in list should not be upgraded")
-        let url = URL(string: "http://unknown.url")!
+        let url = #URL("http://unknown.url")
 
         let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()))
         testee.loadData()

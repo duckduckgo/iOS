@@ -17,13 +17,15 @@
 //  limitations under the License.
 //
 
+import Macros
 import XCTest
+
 @testable import DuckDuckGo
 @testable import Core
 
 class TabsModelTests: XCTestCase {
 
-    private let exampleLink = Link(title: nil, url: URL(string: "https://example.com")!)
+    private let exampleLink = Link(title: nil, url: #URL("https://example.com"))
 
     private var emptyModel: TabsModel {
         return TabsModel(desktop: false)
@@ -38,9 +40,9 @@ class TabsModelTests: XCTestCase {
 
     private var filledModel: TabsModel {
         let model = TabsModel(tabs: [
-            Tab(link: Link(title: "url1", url: URL(string: "https://ur1l.com")!)),
-            Tab(link: Link(title: "url2", url: URL(string: "https://ur12.com")!)),
-            Tab(link: Link(title: "url3", url: URL(string: "https://ur13.com")!))
+            Tab(link: Link(title: "url1", url: #URL("https://ur1l.com"))),
+            Tab(link: Link(title: "url2", url: #URL("https://ur12.com"))),
+            Tab(link: Link(title: "url3", url: #URL("https://ur13.com")))
         ], desktop: false)
         return model
     }
@@ -102,7 +104,7 @@ class TabsModelTests: XCTestCase {
     }
 
     func testWhenTabExistsThenIndexReturned() {
-        let tab = Tab(link: Link(title: nil, url: URL(string: "https://www.example.com")!))
+        let tab = Tab(link: Link(title: nil, url: #URL("https://www.example.com")))
         let testee = filledModel
         testee.add(tab: tab)
         XCTAssertEqual(testee.indexOf(tab: tab), 3)

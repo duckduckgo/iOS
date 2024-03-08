@@ -17,9 +17,10 @@
 //  limitations under the License.
 //
 
-import Foundation
-import WebKit
 import BrowserServicesKit
+import Foundation
+import Macros
+import WebKit
 
 class MockUserAgentManager: UserAgentManager {
 
@@ -33,7 +34,7 @@ class MockUserAgentManager: UserAgentManager {
     
     private func prepareUserAgent() {
         let webview = WKWebView()
-        webview.load(URLRequest.developerInitiated(URL(string: "about:blank")!))
+        webview.load(URLRequest.developerInitiated(#URL("about:blank")))
         
         getDefaultAgent(webView: webview) { [weak self] agent in
             // Reference webview instance to keep it in scope and allow UA to be returned

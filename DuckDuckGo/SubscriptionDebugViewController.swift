@@ -222,7 +222,7 @@ final class SubscriptionDebugViewController: UITableViewController {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
                 return
             }
-            switch await SubscriptionService.getSubscriptionDetails(token: token) {
+            switch await SubscriptionService.getSubscription(accessToken: token) {
             case .success(let response):
                 showAlert(title: "Subscription info", message: "\(response)")
             case .failure(let error):

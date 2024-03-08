@@ -30,6 +30,8 @@ enum SubscriptionTransactionStatus {
     case idle, purchasing, restoring, polling
 }
 
+// swiftlint:disable type_body_length
+
 @available(iOS 15.0, *)
 final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObject {
     
@@ -37,6 +39,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         static let featureName = "useSubscription"
         static let os = "ios"
         static let empty = ""
+        static let token = "token"
     }
     
     struct OriginDomains {
@@ -156,7 +159,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     // MARK: Broker Methods (Called from WebView via UserScripts)
     func getSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
         let authToken = AccountManager().authToken ?? Constants.empty
-        return Subscription(token: authToken)
+        return [Constants.token: authToken]
     }
     
     func getSubscriptionOptions(params: Any, original: WKScriptMessage) async -> Encodable? {
@@ -202,10 +205,14 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             }
             
             let emailAccessToken = try? EmailManager().getToken()
+            let purchaseTransactionJWS: String
 
-            switch await AppStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id, emailAccessToken: emailAccessToken) {
-            case .success:
-                break
+            switch await AppStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id,
+                                                                   emailAccessToken: emailAccessToken,
+                                                                   subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)) {
+            case .success(let transactionJWS):
+                purchaseTransactionJWS = transactionJWS
+
             case .failure(let error):
                 
                 switch error {
@@ -220,7 +227,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             }
             
             setTransactionStatus(.polling)
-            switch await AppStorePurchaseFlow.completeSubscriptionPurchase() {
+            switch await AppStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS,
+                                                                           subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)) {
             case .success(let purchaseUpdate):
                 await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
             case .failure:
@@ -256,10 +264,10 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         let accountManager = AccountManager()
         if let accessToken = accountManager.accessToken,
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
-            switch await SubscriptionService.getSubscriptionDetails(token: accessToken) {
+            switch await SubscriptionService.getSubscription(accessToken: accessToken) {
             
             // If the account is not active, display an error and logout
-            case .success(let response) where !response.isSubscriptionActive:
+            case .success(let subscription) where !subscription.isActive:
                 setTransactionError(.failedToRestoreFromEmailSubscriptionInactive)
                 accountManager.signOut()
                 return nil
@@ -319,7 +327,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func restoreAccountFromAppStorePurchase() async throws {
         setTransactionStatus(.restoring)
         
-        let result = await AppStoreRestoreFlow.restoreAccountFromPastPurchase()
+        let result = await AppStoreRestoreFlow.restoreAccountFromPastPurchase(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
         switch result {
         case .success:
             setTransactionStatus(.idle)
@@ -352,5 +360,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
     
 }
+// swiftlint:enable type_body_length
 
 #endif

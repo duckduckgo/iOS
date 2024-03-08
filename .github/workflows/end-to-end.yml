@@ -3,6 +3,7 @@ name: End-to-End tests
 on:
   schedule:
     - cron: '0 4 * * *' # run at 4 AM UTC
+  workflow_dispatch:
 
 jobs:
   end-to-end-tests:
@@ -43,6 +44,7 @@ jobs:
           -destination "platform=iOS Simulator,name=iPhone 15,OS=17.2" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
+          -skipMacroValidation \
           ONLY_ACTIVE_ARCH=NO \
         | tee xcodebuild.log
 

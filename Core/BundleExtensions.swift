@@ -1,5 +1,5 @@
 //
-//  Subscription.swift
+//  BundleExtensions.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -19,6 +19,22 @@
 
 import Foundation
 
-struct Subscription: Encodable {
-    let token: String
+extension Bundle {
+    public func appGroup(bundle: BundleGroup) -> String {
+        var appGroupName: String
+
+        switch bundle {
+        case .subs:
+            appGroupName = "SUBSCRIPTION_APP_GROUP"
+        }
+
+        guard let appGroup = object(forInfoDictionaryKey: appGroupName) as? String else {
+            fatalError("Info.plist is missing \(appGroupName)")
+        }
+        return appGroup
+    }
+}
+
+public enum BundleGroup {
+    case subs
 }

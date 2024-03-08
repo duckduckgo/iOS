@@ -27,7 +27,7 @@ import Networking
 import NetworkExtension
 import NetworkProtection
 
-#if SUBSCRIPTION && ALPHA
+#if SUBSCRIPTION
 import Subscription
 #endif
 
@@ -236,13 +236,21 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     @objc init() {
 #if SUBSCRIPTION && ALPHA
         let isSubscriptionEnabled = true
+        let tokenStore = NetworkProtectionKeychainTokenStore(
+            keychainType: .dataProtection(.unspecified),
+            errorEvents: nil,
+            isSubscriptionEnabled: isSubscriptionEnabled,
+            accessTokenProvider: { AccountManager().accessToken }
+        )
 #else
         let isSubscriptionEnabled = false
+        let tokenStore = NetworkProtectionKeychainTokenStore(
+            keychainType: .dataProtection(.unspecified),
+            errorEvents: nil,
+            isSubscriptionEnabled: isSubscriptionEnabled,
+            accessTokenProvider: { nil }
+        )
 #endif
-        let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
-                                                             errorEvents: nil,
-                                                             isSubscriptionEnabled: isSubscriptionEnabled,
-                                                             subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)

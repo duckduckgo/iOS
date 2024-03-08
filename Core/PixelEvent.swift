@@ -266,6 +266,18 @@ extension Pixel {
         case networkProtectionActiveUser
         case networkProtectionNewUser
 
+        case networkProtectionControllerStartAttempt
+        case networkProtectionControllerStartSuccess
+        case networkProtectionControllerStartFailure
+
+        case networkProtectionTunnelStartAttempt
+        case networkProtectionTunnelStartSuccess
+        case networkProtectionTunnelStartFailure
+
+        case networkProtectionTunnelUpdateAttempt
+        case networkProtectionTunnelUpdateSuccess
+        case networkProtectionTunnelUpdateFailure
+
         case networkProtectionEnableAttemptConnecting
         case networkProtectionEnableAttemptSuccess
         case networkProtectionEnableAttemptFailure
@@ -280,6 +292,8 @@ extension Pixel {
 
         case networkProtectionBreakageReport
 
+        case networkProtectionRekeyAttempt
+        case networkProtectionRekeyFailure
         case networkProtectionRekeyCompleted
 
         case networkProtectionTunnelConfigurationNoServerRegistrationInfo
@@ -527,8 +541,6 @@ extension Pixel {
         case compilationFailed
 
         case appRatingPromptFetchError
-
-        case appleAdAttribution
 
         case userBehaviorReloadTwice
         case userBehaviorReloadAndRestart
@@ -786,6 +798,15 @@ extension Pixel.Event {
 
         case .networkProtectionActiveUser: return "m_netp_daily_active_d"
         case .networkProtectionNewUser: return "m_netp_daily_active_u"
+        case .networkProtectionControllerStartAttempt: return "m_netp_controller_start_attempt"
+        case .networkProtectionControllerStartSuccess: return "m_netp_controller_start_success"
+        case .networkProtectionControllerStartFailure: return "m_netp_controller_start_failure"
+        case .networkProtectionTunnelStartAttempt: return "m_netp_tunnel_start_attempt"
+        case .networkProtectionTunnelStartSuccess: return "m_netp_tunnel_start_success"
+        case .networkProtectionTunnelStartFailure: return "m_netp_tunnel_start_failure"
+        case .networkProtectionTunnelUpdateAttempt: return "m_netp_tunnel_update_attempt"
+        case .networkProtectionTunnelUpdateSuccess: return "m_netp_tunnel_update_success"
+        case .networkProtectionTunnelUpdateFailure: return "m_netp_tunnel_update_failure"
         case .networkProtectionEnableAttemptConnecting: return "m_netp_ev_enable_attempt"
         case .networkProtectionEnableAttemptSuccess: return "m_netp_ev_enable_attempt_success"
         case .networkProtectionEnableAttemptFailure: return "m_netp_ev_enable_attempt_failure"
@@ -793,7 +814,9 @@ extension Pixel.Event {
         case .networkProtectionTunnelFailureRecovered: return "m_netp_ev_tunnel_failure_recovered"
         case .networkProtectionLatency(let quality): return "m_netp_ev_\(quality.rawValue)_latency"
         case .networkProtectionLatencyError: return "m_netp_ev_latency_error_d"
+        case .networkProtectionRekeyAttempt: return "m_mac_netp_rekey_attempt"
         case .networkProtectionRekeyCompleted: return "m_netp_rekey_completed"
+        case .networkProtectionRekeyFailure: return "m_netp_rekey_failure"
         case .networkProtectionEnabledOnSearch: return "m_netp_ev_enabled_on_search"
         case .networkProtectionBreakageReport: return "m_vpn_breakage_report"
         case .networkProtectionTunnelConfigurationNoServerRegistrationInfo: return "m_netp_tunnel_config_error_no_server_registration_info"
@@ -1037,9 +1060,6 @@ extension Pixel.Event {
         case .debugReturnUserUpdateATB: return "m_debug_return_user_update_atb"
             
         case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
-            
-        // MARK: - Apple Ad Attribution
-        case .appleAdAttribution: return "m_apple-ad-attribution"
 
         // MARK: - User behavior
         case .userBehaviorReloadTwice: return "m_reload-twice"

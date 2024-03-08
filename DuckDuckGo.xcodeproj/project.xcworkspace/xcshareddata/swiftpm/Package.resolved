@@ -28,15 +28,6 @@
       }
     },
     {
-      "identity" : "browserserviceskit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
-      "state" : {
-        "branch" : "jacek/report-on-toggle",
-        "revision" : "8803470d05d8085717628701de652f151fe4f435"
-      }
-    },
-    {
       "identity" : "cocoaasyncsocket",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/robbiehanson/CocoaAsyncSocket",

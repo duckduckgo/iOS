@@ -110,7 +110,7 @@ final class PrivacyDashboardViewController: UIViewController {
         privacyDashboardController.updatePrivacyInfo(privacyInfo)
     }
 
-    private func privacyDashboardProtectionSwitchChangeHandler(state: ProtectionState) {
+    private func privacyDashboardProtectionSwitchChangeHandler(state: ProtectionState, didSendReport: Bool = false) {
         privacyDashboardDidTriggerDismiss = true
         guard let domain = privacyDashboardController.privacyInfo?.url.host else { return }
         
@@ -124,7 +124,11 @@ final class PrivacyDashboardViewController: UIViewController {
             Pixel.fire(pixel: .dashboardProtectionAllowlistRemove, withAdditionalParameters: pixelParam)
         } else {
             privacyConfiguration.userDisabledProtection(forDomain: domain)
-            ActionMessageView.present(message: UserText.messageProtectionDisabled.format(arguments: domain))
+            if didSendReport {
+                ActionMessageView.present(message: UserText.messageProtectionDisabledAndToggleReportSent.format(arguments: domain))
+            } else {
+                ActionMessageView.present(message: UserText.messageProtectionDisabled.format(arguments: domain))
+            }
             Pixel.fire(pixel: .dashboardProtectionAllowlistAdd, withAdditionalParameters: pixelParam)
         }
         
@@ -160,8 +164,10 @@ extension PrivacyDashboardViewController: Themable {
 
 extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
 
-    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController, didChangeProtectionSwitch protectionState: ProtectionState) {
-        privacyDashboardProtectionSwitchChangeHandler(state: protectionState)
+    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController,
+                                    didChangeProtectionSwitch protectionState: ProtectionState,
+                                    didSendReport: Bool) {
+        privacyDashboardProtectionSwitchChangeHandler(state: protectionState, didSendReport: didSendReport)
     }
     
     func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController, didRequestOpenUrlInNewTab url: URL) {
@@ -236,15 +242,16 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
 
 extension PrivacyDashboardViewController: PrivacyDashboardToggleReportDelegate {
 
-    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController, didRequestSubmitToggleReportWithSource source: BrokenSiteReport.Source) {
+    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController,
+                                    didRequestSubmitToggleReportWithSource source: BrokenSiteReport.Source,
+                                    didOpenReportInfo: Bool) {
         do {
-            let report = try makeBrokenSiteReport(source: source)
+            let report = try makeBrokenSiteReport(source: source, didOpenReportInfo: didOpenReportInfo)
             try toggleProtectionsOffReporter.report(report, reportMode: .toggle)
         } catch {
             os_log("Failed to generate or send the broken site report: %@", type: .error, error.localizedDescription)
         }
 
-        ActionMessageView.present(message: UserText.feedbackSumbittedConfirmation)
         privacyDashboardCloseHandler()
     }
 
@@ -270,7 +277,8 @@ extension PrivacyDashboardViewController {
 
     private func makeBrokenSiteReport(category: String = "",
                                       description: String = "",
-                                      source: BrokenSiteReport.Source) throws -> BrokenSiteReport {
+                                      source: BrokenSiteReport.Source,
+                                      didOpenReportInfo: Bool = false) throws -> BrokenSiteReport {
 
         guard let privacyInfo = privacyDashboardController.privacyInfo,
               let breakageAdditionalInfo = breakageAdditionalInfo  else {
@@ -308,7 +316,8 @@ extension PrivacyDashboardViewController {
                                 atb: StatisticsUserDefaults().atb ?? "",
                                 model: UIDevice.current.model,
                                 errors: errors,
-                                httpStatusCodes: statusCodes)
+                                httpStatusCodes: statusCodes, 
+                                didOpenReportInfo: didOpenReportInfo)
     }
 
 }

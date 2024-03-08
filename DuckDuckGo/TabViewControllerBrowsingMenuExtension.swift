@@ -422,8 +422,8 @@ extension TabViewController {
     private func onToggleProtectionAction(forDomain domain: String, isProtected: Bool) {
         let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
         if ToggleReportsFeature(privacyConfiguration: config).isEnabled && isProtected {
-            delegate?.tab(self, didRequestToggleReportWithCompletionHandler: { [weak self] in
-                self?.togglePrivacyProtection(domain: domain)
+            delegate?.tab(self, didRequestToggleReportWithCompletionHandler: { [weak self] didSendReport in
+                self?.togglePrivacyProtection(domain: domain, didSendReport: didSendReport)
             })
         } else {
             togglePrivacyProtection(domain: domain)
@@ -431,7 +431,7 @@ extension TabViewController {
         Pixel.fire(pixel: isProtected ? .browsingMenuDisableProtection : .browsingMenuEnableProtection)
     }
 
-    private func togglePrivacyProtection(domain: String) {
+    private func togglePrivacyProtection(domain: String, didSendReport: Bool = false) {
         let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
         let isProtected = !config.isUserUnprotected(domain: domain)
         if isProtected {
@@ -442,7 +442,11 @@ extension TabViewController {
         
         let message: String
         if isProtected {
-            message = UserText.messageProtectionDisabled.format(arguments: domain)
+            if didSendReport {
+                message = UserText.messageProtectionDisabledAndToggleReportSent.format(arguments: domain)
+            } else {
+                message = UserText.messageProtectionDisabled.format(arguments: domain)
+            }
         } else {
             message = UserText.messageProtectionEnabled.format(arguments: domain)
         }

@@ -1968,7 +1968,7 @@ extension MainViewController: TabDelegate {
         segueToReportBrokenSite()
     }
 
-    func tab(_ tab: TabViewController, didRequestToggleReportWithCompletionHandler completionHandler: @escaping () -> Void) {
+    func tab(_ tab: TabViewController, didRequestToggleReportWithCompletionHandler completionHandler: @escaping (Bool) -> Void) {
         segueToReportBrokenSite(mode: .toggleReport(completionHandler: completionHandler))
     }
 

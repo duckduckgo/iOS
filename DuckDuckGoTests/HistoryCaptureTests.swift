@@ -99,4 +99,7 @@ class MockHistoryManager: HistoryManaging {
         self.historyCoordinator = historyCoordinator
     }
 
+    func loadStore() {
+    }
+
 }

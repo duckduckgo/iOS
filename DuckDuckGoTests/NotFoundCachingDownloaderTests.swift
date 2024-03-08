@@ -17,7 +17,9 @@
 //  limitations under the License.
 //
 
+import Macros
 import XCTest
+
 @testable import Core
 
 class NotFoundCachingDownloaderTests: XCTestCase {
@@ -57,7 +59,7 @@ class NotFoundCachingDownloaderTests: XCTestCase {
         downloader.noFaviconsFound(forDomain: "example.com")
         
         let moreThanAWeekFromNow = Date().addingTimeInterval(60 * 60 * 24 * 8)
-        XCTAssertTrue(downloader.shouldDownload(URL(string: "https://example.com/path/to/image.png")!, referenceDate: moreThanAWeekFromNow))
+        XCTAssertTrue(downloader.shouldDownload(#URL("https://example.com/path/to/image.png"), referenceDate: moreThanAWeekFromNow))
         
         guard let domains: [String: TimeInterval] = UserDefaults.app.object(forKey: UserDefaultsWrapper<Any>.Key.notFoundCache.rawValue)
             as? [String: TimeInterval] else {
@@ -70,11 +72,11 @@ class NotFoundCachingDownloaderTests: XCTestCase {
 
     func testWhenMarkingDomainAsNotFoundThenShouldNotDownload() {
         downloader.noFaviconsFound(forDomain: "example.com")
-        XCTAssertFalse(downloader.shouldDownload(URL(string: "https://example.com/path/to/image.png")!))
+        XCTAssertFalse(downloader.shouldDownload(#URL("https://example.com/path/to/image.png")))
     }
 
     func testWhenDomainNotMarkedAsNotFoundThenShouldNotDownload() {
-        XCTAssertTrue(downloader.shouldDownload(URL(string: "https://example.com/path/to/image.png")!))
+        XCTAssertTrue(downloader.shouldDownload(#URL("https://example.com/path/to/image.png")))
     }
 
 }

@@ -74,6 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if NETWORK_PROTECTION
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
+    private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
 #endif
 
     private var autoClear: AutoClear?
@@ -301,12 +302,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         VPNWaitlist.shared.registerBackgroundRefreshTaskHandler()
 #endif
 
-#if NETWORK_PROTECTION && SUBSCRIPTION
-        if VPNSettings(defaults: .networkProtectionGroupDefaults).showEntitlementAlert {
-            presentExpiredEntitlementAlert()
-        }
-#endif
-
         RemoteMessaging.registerBackgroundRefreshTaskHandler(
             bookmarksDatabase: bookmarksDatabase,
             favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
@@ -354,12 +349,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController?.present(alertController, animated: true, completion: nil)
     }
 
+#if NETWORK_PROTECTION
     private func presentExpiredEntitlementAlert() {
-        let alertController = CriticalAlerts.makeExpiredEntitlementAlert()
-        window?.rootViewController?.present(alertController, animated: true) {
-            VPNSettings(defaults: .networkProtectionGroupDefaults).apply(change: .setShowEntitlementAlert(false))
+        let alertController = CriticalAlerts.makeExpiredEntitlementAlert { [weak self] in
+            self?.mainViewController?.segueToPrivacyPro()
+        }
+        window?.rootViewController?.present(alertController, animated: true) { [weak self] in
+            self?.tunnelDefaults.showEntitlementAlert = false
         }
     }
+
+    private func presentExpiredEntitlementNotification() {
+        let presenter = NetworkProtectionNotificationsPresenterTogglableDecorator(
+            settings: VPNSettings(defaults: .networkProtectionGroupDefaults),
+            defaults: .networkProtectionGroupDefaults,
+            wrappee: NetworkProtectionUNNotificationPresenter()
+        )
+        presenter.showEntitlementNotification()
+    }
+#endif
 
     private func cleanUpMacPromoExperiment2() {
         UserDefaults.standard.removeObject(forKey: "com.duckduckgo.ios.macPromoMay23.exp2.cohort")
@@ -399,6 +407,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard !testing else { return }
 
         syncService.initializeIfNeeded()
+        if syncService.authState == .active &&
+            (InternalUserStore().isInternalUser == false && syncService.serverEnvironment == .development) {
+            UniquePixel.fire(pixel: .syncWrongEnvironment)
+        }
         syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: syncService)
 
         if !(overlayWindow?.rootViewController is AuthenticationViewController) {
@@ -441,6 +453,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if NETWORK_PROTECTION
         widgetRefreshModel.refreshVPNWidget()
+
+        if tunnelDefaults.showEntitlementAlert {
+            presentExpiredEntitlementAlert()
+        }
+
+        presentExpiredEntitlementNotification()
 #endif
     }
 

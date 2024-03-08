@@ -154,5 +154,107 @@ Ich habe sie blockiert!
 			<string>d</string>
 		</dict>
 	</dict>
+	<key>autofill.number.of.passwords</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>%1$d Passwort</string>
+			<key>other</key>
+			<string>%1$d Passwörter</string>
+		</dict>
+	</dict>
+	<key>autofill.delete.all.passwords.confirmation.title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>Möchtest du dieses %1$d Passwort wirklich löschen?</string>
+			<key>other</key>
+			<string>Möchtest du diese %1$d Passwörter wirklich löschen?</string>
+		</dict>
+	</dict>
+    <key>autofill.delete.all.passwords.confirmation.body</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%1$#@passwords@</string>
+        <key>passwords</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>Dein Passwort wird von diesem Gerät gelöscht. Stelle sicher, dass du immer noch eine Möglichkeit hast, auf dein %2$#@accounts@ zuzugreifen.</string>
+            <key>other</key>
+            <string>Deine Passwörter werden von diesem Gerät gelöscht. Stelle sicher, dass du immer noch eine Möglichkeit hast, auf deine %2$#@accounts@ zuzugreifen.</string>
+        </dict>
+        <key>accounts</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>Konto</string>
+            <key>other</key>
+            <string>Konten</string>
+        </dict>
+    </dict>
+	<key>autofill.delete.all.passwords.sync.confirmation.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>Dein Passwort wird von allen synchronisierten Geräten gelöscht. Vergewissere dich, dass du weiterhin eine Möglichkeit hast, auf deine %2$#@accounts@ zuzugreifen.</string>
+			<key>other</key>
+			<string>Deine Passwörter werden von allen synchronisierten Geräten gelöscht. Vergewissere dich, dass du weiterhin eine Möglichkeit hast, auf deine %2$#@accounts@ zuzugreifen.</string>
+		</dict>
+		<key>accounts</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>Konto</string>
+			<key>other</key>
+			<string>Konten</string>
+		</dict>
+	</dict>
+	<key>autofill.delete.all.passwords.completion</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>%1$d Passwort gelöscht</string>
+			<key>other</key>
+			<string>%1$d Passwörter gelöscht</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

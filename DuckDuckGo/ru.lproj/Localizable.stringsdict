@@ -190,5 +190,135 @@
 			<string>d</string>
 		</dict>
 	</dict>
+	<key>autofill.number.of.passwords</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>%1$d пароль</string>
+			<key>few</key>
+			<string>%1$d пароля</string>
+			<key>many</key>
+			<string>%1$d паролей</string>
+			<key>other</key>
+			<string>%1$d пароля</string>
+		</dict>
+	</dict>
+	<key>autofill.delete.all.passwords.confirmation.title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>Вы точно хотите удалить %1$d пароль?</string>
+			<key>few</key>
+			<string>Вы точно хотите удалить %1$d пароля?</string>
+			<key>many</key>
+			<string>Вы точно хотите удалить %1$d паролей?</string>
+			<key>other</key>
+			<string>Вы точно хотите удалить пароли (%1$d)?</string>
+		</dict>
+	</dict>
+    <key>autofill.delete.all.passwords.confirmation.body</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%1$#@passwords@</string>
+        <key>passwords</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>Ваши пароли будут удалены с этого устройства. Убедитесь, что вы по-прежнему можете войти в свою %2$#@accounts@.</string>
+            <key>few</key>
+            <string>Ваши пароли будут удалены с этого устройства. Убедитесь, что вы по-прежнему можете войти в свои %2$#@accounts@.</string>
+            <key>many</key>
+            <string>Ваши пароли будут удалены с этого устройства. Убедитесь, что вы по-прежнему можете войти в свои %2$#@accounts@.</string>
+            <key>other</key>
+            <string>Ваши пароли будут удалены с этого устройства. Убедитесь, что вы по-прежнему можете войти в свои %2$#@accounts@.</string>
+        </dict>
+        <key>accounts</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>учетную запись</string>
+            <key>few</key>
+            <string>учетные записи</string>
+            <key>many</key>
+            <string>учетные записи</string>
+            <key>other</key>
+            <string>учетные записи</string>
+        </dict>
+    </dict>
+	<key>autofill.delete.all.passwords.sync.confirmation.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>Пароли будут удалены со всех синхронизированных устройств. Убедитесь, что вы по-прежнему можете войти в свою %2$#@accounts@.</string>
+			<key>few</key>
+			<string>Пароли будут удалены со всех синхронизированных устройств. Убедитесь, что вы по-прежнему можете войти в свои %2$#@accounts@.</string>
+			<key>many</key>
+			<string>Пароли будут удалены со всех синхронизированных устройств. Убедитесь, что вы по-прежнему можете войти в свои %2$#@accounts@.</string>
+			<key>other</key>
+			<string>Пароли будут удалены со всех синхронизированных устройств. Убедитесь, что вы по-прежнему можете войти в свои %2$#@accounts@.</string>
+		</dict>
+		<key>accounts</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>учетную запись</string>
+			<key>few</key>
+			<string>учетные записи</string>
+			<key>many</key>
+			<string>учетные записи</string>
+			<key>other</key>
+			<string>учетные записи</string>
+		</dict>
+	</dict>
+	<key>autofill.delete.all.passwords.completion</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+			<key>one</key>
+			<string>Удален %1$d пароль</string>
+			<key>few</key>
+			<string>Удалено %1$d пароля</string>
+			<key>many</key>
+			<string>Удалено %1$d паролей</string>
+			<key>other</key>
+			<string>Удалено паролей: %1$d</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

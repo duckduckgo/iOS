@@ -11,5 +11,10 @@
 		<string>group.com.duckduckgo.alpha.apptp</string>
 		<string>group.com.duckduckgo.alpha.netp</string>
 	</array>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)$(APP_ID)</string>
+		<string>$(AppIdentifierPrefix)$(SUBSCRIPTION_APP_GROUP)</string>
+	</array>
 </dict>
 </plist>

@@ -108,7 +108,8 @@ class MainViewController: UIViewController {
     private var emailCancellables = Set<AnyCancellable>()
     
 #if NETWORK_PROTECTION
-    private var netpCancellables = Set<AnyCancellable>()
+    private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
+    private var vpnCancellables = Set<AnyCancellable>()
 #endif
 
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
@@ -1333,9 +1334,56 @@ class MainViewController: UIViewController {
             .sink { [weak self] notification in
                 self?.onNetworkProtectionAccountSignIn(notification)
             }
-            .store(in: &netpCancellables)
+            .store(in: &vpnCancellables)
+
+        NotificationCenter.default.publisher(for: .vpnEntitlementMessagingDidChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.onNetworkProtectionEntitlementMessagingChange()
+            }
+            .store(in: &vpnCancellables)
+
+        let notificationCallback: CFNotificationCallback = { _, _, name, _, _ in
+            if let name {
+                NotificationCenter.default.post(name: Notification.Name(name.rawValue as String),
+                                                object: nil)
+            }
+        }
+
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(),
+                                        UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque()),
+                                        notificationCallback,
+                                        Notification.Name.vpnEntitlementMessagingDidChange.rawValue as CFString,
+                                        nil, .deliverImmediately)
     }
-    
+
+    private func onNetworkProtectionEntitlementMessagingChange() {
+        if tunnelDefaults.showEntitlementAlert {
+            presentExpiredEntitlementAlert()
+        }
+
+        presentExpiredEntitlementNotification()
+    }
+
+    private func presentExpiredEntitlementAlert() {
+        let alertController = CriticalAlerts.makeExpiredEntitlementAlert { [weak self] in
+            self?.segueToPrivacyPro()
+        }
+        dismiss(animated: true) {
+            self.present(alertController, animated: true, completion: nil)
+            self.tunnelDefaults.showEntitlementAlert = false
+        }
+    }
+
+    private func presentExpiredEntitlementNotification() {
+        let presenter = NetworkProtectionNotificationsPresenterTogglableDecorator(
+            settings: VPNSettings(defaults: .networkProtectionGroupDefaults),
+            defaults: .networkProtectionGroupDefaults,
+            wrappee: NetworkProtectionUNNotificationPresenter()
+        )
+        presenter.showEntitlementNotification()
+    }
+
     @objc
     private func onNetworkProtectionAccountSignIn(_ notification: Notification) {
         guard let token = AccountManager().accessToken else {
@@ -1343,7 +1391,7 @@ class MainViewController: UIViewController {
             return
         }
 
-        VPNSettings(defaults: .networkProtectionGroupDefaults).resetEntitlementMessaging()
+        tunnelDefaults.resetEntitlementMessaging()
         print("[NetP Subscription] Reset expired entitlement messaging")
 
         Task {
@@ -1833,7 +1881,8 @@ extension MainViewController: TabDelegate {
         showBars()
         currentTab?.dismiss()
 
-        let newTab = tabManager.addURLRequest(navigationAction.request,
+        // Don't use a request or else the page gets stuck on "about:blank"
+        let newTab = tabManager.addURLRequest(nil,
                                               with: configuration,
                                               inheritedAttribution: inheritingAttribution)
         newTab.openedByPage = true

@@ -372,7 +372,7 @@ class MainViewController: UIViewController {
         guard let controller = storyboard.instantiateInitialViewController(creator: { coder in
             SuggestionTrayViewController(coder: coder,
                                          favoritesViewModel: self.favoritesViewModel,
-                                         bookmarksSearch: self.bookmarksCachingSearch)
+                                         bookmarksDatabase: self.bookmarksDatabase)
         }) else {
             assertionFailure()
             return

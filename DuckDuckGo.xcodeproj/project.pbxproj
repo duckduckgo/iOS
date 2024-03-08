@@ -427,6 +427,7 @@
 		8551912724746EDC0010FDD0 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8551912624746EDC0010FDD0 /* SnapshotHelper.swift */; };
 		85582E0029D7409700E9AE35 /* SyncSettingsViewController+PDFRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85582DFF29D7409700E9AE35 /* SyncSettingsViewController+PDFRendering.swift */; };
 		855D914D2063EF6A00C4B448 /* TabSwitcherTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855D914C2063EF6A00C4B448 /* TabSwitcherTransition.swift */; };
+		8562CE152B9B645C00E1D399 /* CachedBookmarkSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562CE142B9B645C00E1D399 /* CachedBookmarkSuggestions.swift */; };
 		8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */; };
 		8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A34A1FC8D96B00239327 /* LaunchTabNotification.swift */; };
 		8565A34D1FC8DFE400239327 /* LaunchTabNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A34C1FC8DFE400239327 /* LaunchTabNotificationTests.swift */; };
@@ -1549,6 +1550,7 @@
 		8551912624746EDC0010FDD0 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		85582DFF29D7409700E9AE35 /* SyncSettingsViewController+PDFRendering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SyncSettingsViewController+PDFRendering.swift"; sourceTree = "<group>"; };
 		855D914C2063EF6A00C4B448 /* TabSwitcherTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherTransition.swift; sourceTree = "<group>"; };
+		8562CE142B9B645C00E1D399 /* CachedBookmarkSuggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedBookmarkSuggestions.swift; sourceTree = "<group>"; };
 		8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserChromeManager.swift; sourceTree = "<group>"; };
 		8565A34A1FC8D96B00239327 /* LaunchTabNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTabNotification.swift; sourceTree = "<group>"; };
 		8565A34C1FC8DFE400239327 /* LaunchTabNotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTabNotificationTests.swift; sourceTree = "<group>"; };
@@ -5305,6 +5307,7 @@
 				F17922DF1E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift */,
 				F17922E11E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift */,
 				F17922DD1E7192E6006E3D97 /* SuggestionTableViewCell.swift */,
+				8562CE142B9B645C00E1D399 /* CachedBookmarkSuggestions.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -6942,6 +6945,7 @@
 				85DFEDF924CF3D0E00973FE7 /* TabsBarCell.swift in Sources */,
 				F17922DB1E717C8D006E3D97 /* Suggestion.swift in Sources */,
 				020108A729A6ABF600644F9D /* AppTPToggleView.swift in Sources */,
+				8562CE152B9B645C00E1D399 /* CachedBookmarkSuggestions.swift in Sources */,
 				02A54A982A093126000C8FED /* AppTPHomeViewModel.swift in Sources */,
 				C13F3F682B7F88100083BE40 /* AuthConfirmationPromptView.swift in Sources */,
 				F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */,
@@ -10063,7 +10067,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = revision;
-				revision = 0fe75350658ba12428fac4709609875845714d72;
+				revision = cc323b1a38288c6dd32593b58ab19ace033247b7;
 			};
 		};
 		B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */ = {

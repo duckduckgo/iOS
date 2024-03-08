@@ -22,8 +22,9 @@ import UIKit
 import Core
 import DesignResourcesKit
 import Suggestions
-import Core
 import Networking
+import CoreData
+import Persistence
 
 class AutocompleteViewController: UIViewController {
     
@@ -47,9 +48,11 @@ class AutocompleteViewController: UIViewController {
     fileprivate var suggestions = [Suggestion]()
     fileprivate var selectedItem = -1
     
-    private var bookmarksSearch: BookmarksStringSearch!
-
+    private var bookmarksDatabase: CoreDataDatabase!
     private var appSettings: AppSettings!
+    private lazy var cachedBookmarks: CachedBookmarks = {
+        CachedBookmarks(bookmarksDatabase)
+    }()
 
     var backgroundColor: UIColor {
         appSettings.currentAddressBarPosition.isBottom ?
@@ -75,14 +78,13 @@ class AutocompleteViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var shouldOffsetY = false
     
-    static func loadFromStoryboard(bookmarksSearch: BookmarksStringSearch,
+    static func loadFromStoryboard(bookmarksDatabase: CoreDataDatabase,
                                    appSettings: AppSettings = AppDependencyProvider.shared.appSettings) -> AutocompleteViewController {
         let storyboard = UIStoryboard(name: "Autocomplete", bundle: nil)
-
         guard let controller = storyboard.instantiateInitialViewController() as? AutocompleteViewController else {
             fatalError("Failed to instatiate correct Autocomplete view controller")
         }
-        controller.bookmarksSearch = bookmarksSearch
+        controller.bookmarksDatabase = bookmarksDatabase
         controller.appSettings = appSettings
         return controller
     }
@@ -172,55 +174,25 @@ class AutocompleteViewController: UIViewController {
     private func requestSuggestions(query: String) {
         selectedItem = -1
         tableView.reloadData()
-//        do {
-            loader = SuggestionLoader(dataSource: self, urlFactory: { phrase in
-                guard let url = URL(trimmedAddressBarString: phrase),
-                      let scheme = url.scheme,
-                      scheme.description.hasPrefix("http"),
-                      url.isValid else {
-                    print("***", #function, "no url")
-                    return nil
-                }
 
-                print("***", #function, url)
-                return url
-            })
-            pendingRequest = true
-//        } catch {
-//            os_log("Couldn‘t form AutocompleteRequest for query “%s”: %s", log: .lifecycleLog, type: .debug, query, error.localizedDescription)
-//            lastRequest = nil
-//            pendingRequest = false
-//            return
-//        }
+        loader = SuggestionLoader(dataSource: self, urlFactory: { phrase in
+            guard let url = URL(trimmedAddressBarString: phrase),
+                  let scheme = url.scheme,
+                  scheme.description.hasPrefix("http"),
+                  url.isValid else {
+                print("***", #function, "no url")
+                return nil
+            }
+
+            print("***", #function, url)
+            return url
+        })
+        pendingRequest = true
 
         loader?.getSuggestions(query: query, completion: { [weak self] result, error in
             self?.updateSuggestions(result?.all ?? [])
             self?.pendingRequest = false
         })
-
-//        lastRequest!.execute { [weak self] (suggestions, error) in
-//            guard let strongSelf = self else { return }
-//
-//            Task { @MainActor in
-//                let matches = strongSelf.bookmarksSearch.search(query: query)
-//                let notQueryMatches = matches.filter { $0.url.absoluteString != query }
-//                let filteredMatches = notQueryMatches.prefix(Constants.maxLocalItems)
-//                let localSuggestions = filteredMatches.map { Suggestion(source: .local,
-//                                                                        suggestion: $0.title,
-//                                                                        url: $0.url)
-//                }
-//
-//                guard let suggestions = suggestions, error == nil else {
-//                    os_log("%s", log: .generalLog, type: .debug, error?.localizedDescription ?? "Failed to retrieve suggestions")
-//                    self?.updateSuggestions(localSuggestions)
-//                    return
-//                }
-//
-//                let combinedSuggestions = localSuggestions + suggestions
-//                strongSelf.updateSuggestions(Array(combinedSuggestions))
-//                strongSelf.pendingRequest = false
-//            }
-//        }
     }
 
     private func updateSuggestions(_ newSuggestions: [Suggestion]) {
@@ -366,9 +338,9 @@ extension AutocompleteViewController {
 
 extension AutocompleteViewController: SuggestionLoadingDataSource {
     func bookmarks(for suggestionLoading: Suggestions.SuggestionLoading) -> [Suggestions.Bookmark] {
-        []
+        return cachedBookmarks.all
     }
-    
+
     func history(for suggestionLoading: Suggestions.SuggestionLoading) -> [Suggestions.HistorySuggestion] {
         []
     }

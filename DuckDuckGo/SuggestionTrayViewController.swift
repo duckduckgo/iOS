@@ -21,6 +21,7 @@ import UIKit
 import Core
 import Bookmarks
 import Suggestions
+import Persistence
 
 class SuggestionTrayViewController: UIViewController {
     
@@ -42,7 +43,7 @@ class SuggestionTrayViewController: UIViewController {
     private var autocompleteController: AutocompleteViewController?
     private var favoritesOverlay: FavoritesOverlay?
     private var willRemoveAutocomplete = false
-    private let bookmarksSearch: BookmarksStringSearch
+    private let bookmarksDatabase: CoreDataDatabase
     private let favoritesModel: FavoritesListInteracting
 
     var selectedSuggestion: Suggestion? {
@@ -73,9 +74,9 @@ class SuggestionTrayViewController: UIViewController {
         }
     }
     
-    required init?(coder: NSCoder, favoritesViewModel: FavoritesListInteracting, bookmarksSearch: BookmarksStringSearch) {
+    required init?(coder: NSCoder, favoritesViewModel: FavoritesListInteracting, bookmarksDatabase: CoreDataDatabase) {
         self.favoritesModel = favoritesViewModel
-        self.bookmarksSearch = bookmarksSearch
+        self.bookmarksDatabase = bookmarksDatabase
         super.init(coder: coder)
     }
     
@@ -237,7 +238,7 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     private func installAutocompleteSuggestions() {
-        let controller = AutocompleteViewController.loadFromStoryboard(bookmarksSearch: bookmarksSearch)
+        let controller = AutocompleteViewController.loadFromStoryboard(bookmarksDatabase: bookmarksDatabase)
         install(controller: controller)
         controller.delegate = autocompleteDelegate
         controller.presentationDelegate = self

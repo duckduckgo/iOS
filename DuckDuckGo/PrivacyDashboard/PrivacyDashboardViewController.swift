@@ -316,7 +316,7 @@ extension PrivacyDashboardViewController {
                                 atb: StatisticsUserDefaults().atb ?? "",
                                 model: UIDevice.current.model,
                                 errors: errors,
-                                httpStatusCodes: statusCodes, 
+                                httpStatusCodes: statusCodes,
                                 didOpenReportInfo: didOpenReportInfo)
     }
 

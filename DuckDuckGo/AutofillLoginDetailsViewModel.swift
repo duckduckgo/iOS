@@ -19,13 +19,15 @@
 
 // swiftlint:disable file_length
 
-import Foundation
 import BrowserServicesKit
 import Common
-import SwiftUI
 import Core
+import DDGSync
 import DesignResourcesKit
+import Foundation
+import Macros
 import SecureStorage
+import SwiftUI
 
 protocol AutofillLoginDetailsViewModelDelegate: AnyObject {
     func autofillLoginDetailsViewModelDidSave()
@@ -57,12 +59,13 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
 
     enum Constants {
-        static let privateEmailURL = URL(string: "https://duckduckgo.com/email")!
+        static let privateEmailURL = #URL("https://duckduckgo.com/email")
     }
     
     weak var delegate: AutofillLoginDetailsViewModelDelegate?
     var account: SecureVaultModels.WebsiteAccount?
     var emailManager: EmailManager
+    private let syncService: DDGSyncing
 
     private let tld: TLD
     private let autofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
@@ -178,9 +181,11 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
 
     internal init(account: SecureVaultModels.WebsiteAccount? = nil,
+                  syncService: DDGSyncing,
                   tld: TLD,
                   emailManager: EmailManager = EmailManager()) {
         self.account = account
+        self.syncService = syncService
         self.tld = tld
         self.headerViewModel = AutofillLoginDetailsHeaderViewModel()
         self.emailManager = emailManager
@@ -228,7 +233,15 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
             }
         }
     }
-    
+
+    func deleteMessage() -> String {
+        if syncService.authState == .inactive {
+            return UserText.autofillDeleteAllPasswordsActionMessage(for: 1)
+        } else {
+            return UserText.autofillDeleteAllPasswordsSyncActionMessage(for: 1)
+        }
+    }
+
     func copyToPasteboard(_ action: PasteboardCopyAction) {
         var message = ""
         switch action {

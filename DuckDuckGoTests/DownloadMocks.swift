@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Macros
 import WebKit
 
 @testable import DuckDuckGo
@@ -55,7 +56,7 @@ class MockNavigationResponse: WKNavigationResponse {
     var mimeType: String?
     
     override var response: URLResponse {
-        let response = MockURLResponse(url: URL(string: "https://www.duck.com")!,
+        let response = MockURLResponse(url: #URL("https://www.duck.com"),
                         mimeType: mimeType!,
                         expectedContentLength: 1234,
                         textEncodingName: "")

@@ -17,13 +17,15 @@
 //  limitations under the License.
 //
 
-import XCTest
-@testable import DuckDuckGo
-@testable import Core
 import BrowserServicesKit
-import TrackerRadarKit
 import ContentBlocking
+import Macros
 import PrivacyDashboard
+import TrackerRadarKit
+import XCTest
+
+@testable import Core
+@testable import DuckDuckGo
 
 private struct MockEntityProvider: EntityProviding {
     
@@ -46,13 +48,13 @@ final class DaxDialog: XCTestCase {
 
     struct URLs {
         
-        static let example = URL(string: "https://www.example.com")!
-        static let ddg = URL(string: "https://duckduckgo.com?q=test")!
-        static let facebook = URL(string: "https://www.facebook.com")!
-        static let google = URL(string: "https://www.google.com")!
-        static let ownedByFacebook = URL(string: "https://www.instagram.com")!
-        static let amazon = URL(string: "https://www.amazon.com")!
-        static let tracker = URL(string: "https://www.1dmp.io")!
+        static let example = #URL("https://www.example.com")
+        static let ddg = #URL("https://duckduckgo.com?q=test")
+        static let facebook = #URL("https://www.facebook.com")
+        static let google = #URL("https://www.google.com")
+        static let ownedByFacebook = #URL("https://www.instagram.com")
+        static let amazon = #URL("https://www.amazon.com")
+        static let tracker = #URL("https://www.1dmp.io")
 
     }
 

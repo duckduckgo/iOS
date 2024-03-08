@@ -50,6 +50,8 @@ final class SettingsViewModel: ObservableObject {
 #if SUBSCRIPTION
     private var accountManager: AccountManager
     private var signOutObserver: Any?
+    @Published var isRestoringSubscription: Bool = false
+    @Published var shouldDisplayRestoreSubscriptionError: Bool = false
 #endif
     
     
@@ -75,7 +77,8 @@ final class SettingsViewModel: ObservableObject {
     // Add more views as needed here...
     @Published var shouldNavigateToDBP = false
     @Published var shouldNavigateToITP = false
-        
+    @Published var shouldNavigateToSubscriptionFlow = false
+
     @Published var shouldShowNetP = false
     @Published var shouldShowDBP = false
     @Published var shouldShowITP = false
@@ -100,7 +103,7 @@ final class SettingsViewModel: ObservableObject {
     
     // Used to automatically navigate on Appear to a specific section
     enum SettingsSection: String {
-        case none, netP, dbp, itr
+        case none, netP, dbp, itr, subscriptionFlow
     }
     
     @Published var onAppearNavigationTarget: SettingsSection
@@ -346,9 +349,9 @@ extension SettingsViewModel {
         }
         
         // Fetch available subscriptions from the backend (or sign out)
-        switch await SubscriptionService.getSubscriptionDetails(token: token) {
+        switch await SubscriptionService.getSubscription(accessToken: token) {
         
-        case .success(let response) where response.isSubscriptionActive:
+        case .success(let subscription) where subscription.isActive:
             
             // Cache Subscription state
             cacheSubscriptionState(active: true)
@@ -405,7 +408,26 @@ extension SettingsViewModel {
         }
     }
     
-    #endif
+    @available(iOS 15.0, *)
+    func restoreAccountPurchase() async {
+        DispatchQueue.main.async { self.isRestoringSubscription = true }
+        let result = await AppStoreRestoreFlow.restoreAccountFromPastPurchase(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+        switch result {
+        case .success:
+            DispatchQueue.main.async {
+                self.isRestoringSubscription = false
+            }
+            await self.setupSubscriptionEnvironment()
+            
+        case .failure:
+            DispatchQueue.main.async {
+                self.isRestoringSubscription = false
+                self.shouldDisplayRestoreSubscriptionError = true
+            }
+        }
+    }
+    
+#endif  // SUBSCRIPTION
     
     #if NETWORK_PROTECTION
     private func updateNetPStatus(connectionStatus: ConnectionStatus) {
@@ -487,6 +509,8 @@ extension SettingsViewModel {
                 self.shouldNavigateToDBP = true
             case .itr:
                 self.shouldNavigateToITP = true
+            case .subscriptionFlow:
+                self.shouldNavigateToSubscriptionFlow = true
             default:
                 break
             }

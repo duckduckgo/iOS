@@ -38,7 +38,7 @@
 "action.title.copy.message" = "URL copiée";
 
 /* Delete action - button shown in alert */
-"action.title.delete" = "Delete";
+"action.title.delete" = "Supprimer";
 
 /* Disable protection action */
 "action.title.disable.protection" = "Désactiver la protection de la confidentialité";
@@ -448,6 +448,18 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "Lorsque DuckDuckGo détecte les fenêtres contextuelles de consentement aux cookies sur les sites que vous visitez, vos préférences peuvent, dans la mesure du possible, être configurées automatiquement de façon à ce que les cookies soient réduits au minimum et la confidentialité maximisée, puis les fenêtres contextuelles sont fermées. Certains sites ne proposent pas d'option pour gérer les préférences en matière de cookies. Nous ne pouvons donc masquer que des fenêtres contextuelles comme celles-ci.";
 
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.completion" = "autofill.delete.all.passwords.completion";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.confirmation.body" = "autofill.delete.all.passwords.confirmation.body";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.confirmation.title" = "autofill.delete.all.passwords.confirmation.title";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
+
 /* Text link to email protection website */
 "autofill.enable.email.protection" = "Activez Email Protection";
 
@@ -458,7 +470,7 @@
 "autofill.keep-enabled.alert.disable" = "Désactiver";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Encore des économies";
+"autofill.keep-enabled.alert.keep-using" = "Continuer à les sauvegarder";
 
 /* Message for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.message" = "Cette fonction peut être désactivée à tout moment dans Paramètres.";
@@ -490,6 +502,15 @@
 /* Title for toast when copying username */
 "autofill.logins.copy-toast.username-copied" = "Nom d'utilisateur copié";
 
+/* Title of button in prompt requiring authentication before all passwords are deleted */
+"autofill.logins.delete.all.authentication.prompt.button" = "Authentifiez-vous maintenant";
+
+/* Title of prompt requiring authentication before all passwords are deleted */
+"autofill.logins.delete.all.authentication.prompt.title" = "Authentifiez-vous pour supprimer tous les mots de passe";
+
+/* Reason for authentication when deleting all logins */
+"autofill.logins.delete.all.authentication.reason" = "Authentifiez-vous pour confirmer que vous souhaitez supprimer tous les mots de passe";
+
 /* Address label for login details on autofill */
 "autofill.logins.details.address" = "URL du site Web";
 
@@ -501,9 +522,6 @@
 
 /* Autofill alert button confirming delete autofill login */
 "autofill.logins.details.delete-confirmation.button" = "Supprimer le mot de passe";
-
-/* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Voulez-vous vraiment supprimer ce mot de passe ?";
 
 /* Title when editing autofill login details */
 "autofill.logins.details.edit-title" = "Modifier le mot de passe";
@@ -564,6 +582,9 @@
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Fermer";
+
+/* Title for button to delete all saved autofill passwords */
+"autofill.logins.list.delete.all" = "Tout supprimer";
 
 /* Title for a toggle that enables autofill */
 "autofill.logins.list.enable" = "Enregistrer et saisir automatiquement les mots de passe";
@@ -627,6 +648,9 @@
 
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Aucun résultat";
+
+/* Do not translate - stringsdict entry */
+"autofill.number.of.passwords" = "autofill.number.of.passwords";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.subtitle" = "Les mots de passe sont stockés en toute sécurité sur votre appareil.";

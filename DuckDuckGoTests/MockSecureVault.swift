@@ -17,10 +17,11 @@
 //  limitations under the License.
 //
 
-import Foundation
 import BrowserServicesKit
-import SecureStorage
+import Foundation
 import GRDB
+import Macros
+import SecureStorage
 
 // swiftlint:disable file_length
 typealias MockVaultFactory = SecureVaultFactory<MockSecureVault<MockDatabaseProvider>>
@@ -98,6 +99,11 @@ final class MockSecureVault<T: AutofillDatabaseProvider>: AutofillSecureVault {
 
     func deleteWebsiteCredentialsFor(accountId: Int64) throws {
         storedCredentials[accountId] = nil
+    }
+
+    func deleteAllWebsiteCredentials() throws {
+        storedCredentials = [:]
+        storedAccounts = []
     }
 
     func neverPromptWebsites() throws -> [SecureVaultModels.NeverPromptWebsites] {
@@ -217,6 +223,10 @@ final class MockSecureVault<T: AutofillDatabaseProvider>: AutofillSecureVault {
 
 // MARK: - Mock Providers
 
+private extension URL {
+    static let duckduckgo = #URL("https://duckduckgo.com/")
+}
+
 class MockDatabaseProvider: AutofillDatabaseProvider {
 
     // swiftlint:disable identifier_name
@@ -232,13 +242,13 @@ class MockDatabaseProvider: AutofillDatabaseProvider {
     var db: GRDB.DatabaseWriter
     // swiftlint:enable identifier_name
 
-    required init(file: URL = URL(string: "https://duckduckgo.com/")!, key: Data = Data()) throws {
+    required init(file: URL = .duckduckgo, key: Data = Data()) throws {
         db = (try? DatabaseQueue(named: "Test"))!
     }
 
     static func recreateDatabase(withKey key: Data) throws -> Self {
         // swiftlint:disable:next force_cast
-        return try MockDatabaseProvider(file: URL(string: "https://duck.com")!, key: Data()) as! Self
+        return try MockDatabaseProvider(file: #URL("https://duck.com"), key: Data()) as! Self
     }
 
     func storeWebsiteCredentials(_ credentials: SecureVaultModels.WebsiteCredentials) throws -> Int64 {
@@ -267,6 +277,11 @@ class MockDatabaseProvider: AutofillDatabaseProvider {
 
     func deleteWebsiteCredentialsForAccountId(_ accountId: Int64) throws {
         self._accounts = self._accounts.filter { $0.id != String(accountId) }
+    }
+
+    func deleteAllWebsiteCredentials() throws {
+        self._credentialsDict = [:]
+        self._accounts = []
     }
 
     func accounts() throws -> [SecureVaultModels.WebsiteAccount] {

@@ -20,18 +20,20 @@
 import Foundation
 
 import XCTest
+import Combine
 @testable import DuckDuckGo
 @testable import Core
 @testable import BrowserServicesKit
 @testable import Common
 
-// swiftlint:disable line_length
+// swiftlint:disable line_length file_length
 class AutofillLoginListViewModelTests: XCTestCase {
 
     private let tld = TLD()
     private let appSettings = AppUserDefaults()
     private let vault = (try? MockSecureVaultFactory.makeVault(errorReporter: nil))!
     private var manager: AutofillNeverPromptWebsitesManager!
+    private var cancellables: Set<AnyCancellable> = []
 
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -40,6 +42,7 @@ class AutofillLoginListViewModelTests: XCTestCase {
 
     override func tearDownWithError() throws {
         manager = nil
+        cancellables.removeAll()
 
         try super.tearDownWithError()
     }
@@ -111,6 +114,191 @@ class AutofillLoginListViewModelTests: XCTestCase {
         let tableContentsToDelete = model.tableContentsToDelete(accountId: accountIdToDelete)
         XCTAssertEqual(tableContentsToDelete.sectionsToDelete.count, 0)
         XCTAssertEqual(tableContentsToDelete.rowsToDelete.count, 2)
+    }
+
+    func testWhenMultipleAccountsSavedAndClearAllThenNoAccountsAreShown() {
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: "1", title: nil, username: "", domain: "testsite.com", created: Date(), lastUpdated: Date()),
+            SecureVaultModels.WebsiteAccount(id: "2", title: nil, username: "", domain: "testsite2.com", created: Date(), lastUpdated: Date()),
+            SecureVaultModels.WebsiteAccount(id: "3", title: nil, username: "", domain: "testsite3.com", created: Date(), lastUpdated: Date())
+        ]
+        let model
+                = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, autofillNeverPromptWebsitesManager: manager)
+        XCTAssertEqual(model.sections.count, 2)
+        XCTAssertEqual(model.rowsInSection(1), 3)
+
+        model.clearAllAccounts()
+
+        XCTAssertEqual(model.sections.count, 1)
+    }
+
+    func testWhenMultipleAccountsSavedAndClearAllThenUndoThenAccountsAreShownAgain() {
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: "1", title: nil, username: "", domain: "testsite.com", created: Date(), lastUpdated: Date()),
+            SecureVaultModels.WebsiteAccount(id: "2", title: nil, username: "", domain: "testsite2.com", created: Date(), lastUpdated: Date()),
+            SecureVaultModels.WebsiteAccount(id: "3", title: nil, username: "", domain: "testsite3.com", created: Date(), lastUpdated: Date())
+        ]
+        let model
+                = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, autofillNeverPromptWebsitesManager: manager)
+        XCTAssertEqual(model.sections.count, 2)
+        XCTAssertEqual(model.rowsInSection(1), 3)
+
+        model.clearAllAccounts()
+
+        XCTAssertEqual(model.sections.count, 1)
+
+        model.undoClearAllAccounts()
+
+        XCTAssertEqual(model.sections.count, 2)
+        XCTAssertEqual(model.rowsInSection(1), 3)
+    }
+
+    func testWhenOneAccountSavedAndClearAllThenUndoThenAccountIsShownAgain() {
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: "1", title: nil, username: "", domain: "testsite.com", created: Date(), lastUpdated: Date())
+        ]
+        let model
+                = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, autofillNeverPromptWebsitesManager: manager)
+        XCTAssertEqual(model.sections.count, 2)
+        XCTAssertEqual(model.rowsInSection(1), 1)
+
+        model.clearAllAccounts()
+
+        XCTAssertEqual(model.sections.count, 1)
+
+        model.undoClearAllAccounts()
+
+        XCTAssertEqual(model.sections.count, 2)
+        XCTAssertEqual(model.rowsInSection(1), 1)
+    }
+
+    func testWhenMultipleAccountsSavedAndOneSuggestionAndClearAllThenUndoThenAccountsAndSuggestionsAreShown() {
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: "1", title: nil, username: "", domain: "testsite.com", created: Date(), lastUpdated: Date()),
+            SecureVaultModels.WebsiteAccount(id: "2", title: nil, username: "", domain: "testsite2.com", created: Date(), lastUpdated: Date()),
+            SecureVaultModels.WebsiteAccount(id: "3", title: nil, username: "", domain: "testsite3.com", created: Date(), lastUpdated: Date())
+        ]
+        let testDomain = "testsite.com"
+        let model
+                = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, currentTabUrl: URL(string: "https://\(testDomain)"), autofillNeverPromptWebsitesManager: manager)
+        XCTAssertEqual(model.sections.count, 3)
+        XCTAssertEqual(model.rowsInSection(1), 1)
+        XCTAssertEqual(model.rowsInSection(2), 3)
+
+        model.clearAllAccounts()
+
+        XCTAssertEqual(model.sections.count, 1)
+
+        model.undoClearAllAccounts()
+
+        XCTAssertEqual(model.sections.count, 3)
+        XCTAssertEqual(model.rowsInSection(1), 1)
+        XCTAssertEqual(model.rowsInSection(2), 3)
+    }
+
+    func testWhenInEditModeThenEnableAutofillSectionIsNotDisplayed() {
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: "1", title: nil, username: "", domain: "testsite.com", created: Date(), lastUpdated: Date())
+        ]
+        let model
+                = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, autofillNeverPromptWebsitesManager: manager)
+
+        XCTAssertEqual(model.sections.count, 2)
+
+        model.isEditing = true
+        
+        XCTAssertEqual(model.sections.count, 1)
+    }
+
+    func testWhenSearchingThenEnableAutofillSectionIsNotDisplayed() {
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: "1", title: nil, username: "", domain: "testsite.com", created: Date(), lastUpdated: Date())
+        ]
+        let model
+                = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, autofillNeverPromptWebsitesManager: manager)
+        
+        XCTAssertEqual(model.sections.count, 2)
+
+        model.isSearching = true
+        model.filterData(with: "z")
+
+        XCTAssertEqual(model.sections.count, 0)
+
+        model.filterData(with: "t")
+
+        XCTAssertEqual(model.sections.count, 1)
+    }
+
+    func testWhenOneAccountDeletedInEditModeThenAccountsCountPublisherUpdatesCorrectly() {
+        let expectation = XCTestExpectation(description: "accountsCountPublisher emits an updated count")
+
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: "1", title: nil, username: "", domain: "testsite.com", created: Date(), lastUpdated: Date()),
+            SecureVaultModels.WebsiteAccount(id: "2", title: nil, username: "", domain: "testsite2.com", created: Date(), lastUpdated: Date()),
+        ]
+        let model
+                = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, autofillNeverPromptWebsitesManager: manager)
+
+        model.isEditing = true
+        model.accountsCountPublisher.sink { count in
+            XCTAssertEqual(count, model.accountsCount, "The published count should match the number accounts count")
+           expectation.fulfill()
+        }
+        .store(in: &cancellables)
+
+        _ = model.delete(at: IndexPath(row: 1, section: 0))
+        wait(for: [expectation], timeout: 1.0)
+    }
+
+    func testWhenOneAccountSavedAndDeleteAllThenNoAccountsAreShownAndVaultIsEmpty() throws {
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: "1", title: nil, username: "", domain: "testsite.com", created: Date(), lastUpdated: Date())
+        ]
+        for account in vault.storedAccounts {
+            _ = try vault.storeWebsiteCredentials(SecureVaultModels.WebsiteCredentials(account: account, password: nil))
+        }
+
+        let model
+                = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, autofillNeverPromptWebsitesManager: manager)
+        XCTAssertEqual(model.sections.count, 2)
+        XCTAssertEqual(model.rowsInSection(0), 1)
+        XCTAssertEqual(model.rowsInSection(1), 1)
+        XCTAssertEqual(vault.storedAccounts.count, 1)
+
+        model.isEditing = true
+        let result = model.deleteAllCredentials()
+        if result {
+            model.updateData()
+        }
+        
+        XCTAssertEqual(model.sections.count, 0)
+        XCTAssertEqual(vault.storedAccounts.count, 0)
+    }
+
+    func testWhenMultipleAccountsSavedAndDeleteAllThenNoAccountsAreShownAndVaultIsEmpty() throws {
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: "1", title: nil, username: "", domain: "testsite.com", created: Date(), lastUpdated: Date()),
+            SecureVaultModels.WebsiteAccount(id: "2", title: nil, username: "", domain: "testsite2.com", created: Date(), lastUpdated: Date()),
+            SecureVaultModels.WebsiteAccount(id: "3", title: nil, username: "", domain: "testsite3.com", created: Date(), lastUpdated: Date())
+        ]
+        for account in vault.storedAccounts {
+            _ = try vault.storeWebsiteCredentials(SecureVaultModels.WebsiteCredentials(account: account, password: nil))
+        }
+
+        let model
+                = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, autofillNeverPromptWebsitesManager: manager)
+        XCTAssertEqual(model.sections.count, 2)
+        XCTAssertEqual(model.rowsInSection(1), 3)
+        XCTAssertEqual(vault.storedAccounts.count, 3)
+
+        model.isEditing = true
+        let result = model.deleteAllCredentials()
+        if result {
+            model.updateData()
+        }
+
+        XCTAssertEqual(model.sections.count, 0)
+        XCTAssertEqual(vault.storedAccounts.count, 0)
     }
 
     func testWhenNoNeverPromptWebsitesSavedThenNeverPromptSectionIsNotShown() {

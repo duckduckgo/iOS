@@ -28,6 +28,8 @@ import NetworkExtension
 import NetworkProtection
 import Subscription
 
+// swiftlint:disable type_body_length
+
 // Initial implementation for initial Network Protection tests. Will be fleshed out with https://app.asana.com/0/1203137811378537/1204630829332227/f
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
@@ -68,8 +70,33 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 guard quality != .unknown else { return }
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionLatency(quality: quality))
             }
-        case .rekeyCompleted:
-            Pixel.fire(pixel: .networkProtectionRekeyCompleted)
+        case .rekeyAttempt(let step):
+            switch step {
+            case .begin:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionRekeyAttempt)
+            case .failure(let error):
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionRekeyFailure, error: error)
+            case .success:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionRekeyCompleted)
+            }
+        case .tunnelStartAttempt(let step):
+            switch step {
+            case .begin:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartAttempt)
+            case .failure(let error):
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartFailure, error: error)
+            case .success:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartSuccess)
+            }
+        case .tunnelUpdateAttempt(let step):
+            switch step {
+            case .begin:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelUpdateAttempt)
+            case .failure(let error):
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelUpdateFailure, error: error)
+            case .success:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelUpdateSuccess)
+            }
         }
     }
 
@@ -217,6 +244,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
         let notificationsPresenterDecorator = NetworkProtectionNotificationsPresenterTogglableDecorator(
             settings: settings,
+            defaults: .networkProtectionGroupDefaults,
             wrappee: notificationsPresenter
         )
         notificationsPresenter.requestAuthorization()
@@ -228,6 +256,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,
+                   defaults: .networkProtectionGroupDefaults,
                    isSubscriptionEnabled: isSubscriptionEnabled,
                    entitlementCheck: Self.entitlementCheck)
         startMonitoringMemoryPressureEvents()
@@ -277,7 +306,11 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     private static func entitlementCheck() async -> Result<Bool, Error> {
-        let result = await AccountManager().hasEntitlement(for: .networkProtection)
+#if ALPHA
+        SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+#endif
+
+        let result = await AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)).hasEntitlement(for: .networkProtection)
         switch result {
         case .success(let hasEntitlement):
             return .success(hasEntitlement)
@@ -286,5 +319,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         }
     }
 }
+
+// swiftlint:enable type_body_length
 
 #endif

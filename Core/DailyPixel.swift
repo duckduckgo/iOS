@@ -51,7 +51,7 @@ public final class DailyPixel {
     /// Does not append any suffix unlike the alternative function below
     public static func fire(pixel: Pixel.Event,
                             withAdditionalParameters params: [String: String] = [:],
-                            includedParameters: [Pixel.QueryParameters] = [.atb, .appVersion],
+                            includedParameters: [Pixel.QueryParameters] = [.appVersion],
                             onComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
                 
         if !pixel.hasBeenFiredToday(dailyPixelStorage: storage) {
@@ -71,7 +71,7 @@ public final class DailyPixel {
     public static func fireDailyAndCount(pixel: Pixel.Event,
                                          error: Swift.Error? = nil,
                                          withAdditionalParameters params: [String: String] = [:],
-                                         includedParameters: [Pixel.QueryParameters] = [.atb, .appVersion],
+                                         includedParameters: [Pixel.QueryParameters] = [.appVersion],
                                          onDailyComplete: @escaping (Swift.Error?) -> Void = { _ in },
                                          onCountComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
         if !pixel.hasBeenFiredToday(dailyPixelStorage: storage) {

@@ -46,6 +46,7 @@ struct NetworkProtectionStatusView: View {
             }
 
             settings()
+            about()
         }
         .padding(.top, statusModel.error == nil ? 0 : -20)
         .if(statusModel.animationsOn, transform: {
@@ -176,6 +177,18 @@ struct NetworkProtectionStatusView: View {
                 .foregroundColor(.init(designSystemColor: .textPrimary))
         } header: {
             Text(UserText.netPStatusViewSettingsSectionTitle).foregroundColor(.init(designSystemColor: .textSecondary))
+        }
+        .listRowBackground(Color(designSystemColor: .surface))
+    }
+
+    @ViewBuilder
+    private func about() -> some View {
+        Section {
+            NavigationLink("Frequently Asked Questions", destination: NetworkProtectionVPNSettingsView())
+                .daxBodyRegular()
+                .foregroundColor(.init(designSystemColor: .textPrimary))
+        } header: {
+            Text("About").foregroundColor(.init(designSystemColor: .textSecondary))
         } footer: {
             inviteOnlyFooter()
         }

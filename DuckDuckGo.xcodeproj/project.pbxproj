@@ -9439,7 +9439,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.mobile.ios.alpha;
 				PRODUCT_NAME = "$(TARGET_NAME)-Alpha";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Development App - Alpha";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.duckduckgo.mobile.ios.alpha";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Alpha;

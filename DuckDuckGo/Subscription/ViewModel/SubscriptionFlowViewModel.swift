@@ -186,6 +186,17 @@ final class SubscriptionFlowViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
+        webViewModel.$navigationError
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                guard let strongSelf = self else { return }
+                DispatchQueue.main.async {
+                    strongSelf.transactionError = error != nil ? .generalError : nil
+                }
+                
+            }
+            .store(in: &cancellables)
+        
         canGoBackCancellable = webViewModel.$canGoBack
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
@@ -228,6 +239,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
         userTappedRestoreButton = false
         shouldShowNavigationBar = false
         selectedFeature = nil
+        transactionError = nil
         canNavigateBack = false
         shouldDismissView = true
         subFeature.cleanup()

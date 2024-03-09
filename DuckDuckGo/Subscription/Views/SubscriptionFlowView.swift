@@ -141,24 +141,26 @@ struct SubscriptionFlowView: View {
         
         .onChange(of: viewModel.transactionError) { value in
             
-            let displayError: Bool = {
-                switch value {
-                case .hasActiveSubscription:
-                    errorMessage = .activeSubscription
-                    return true
-                case .failedToRestorePastPurchase, .purchaseFailed, .failedToGetSubscriptionOptions:
-                    errorMessage = .appStore
-                    return true
-                case .generalError:
-                    errorMessage = .backend
-                    return true
-                default:
-                    return false
-                }
-            }()
+            if !shouldPresentError {
+                let displayError: Bool = {
+                    switch value {
+                    case .hasActiveSubscription:
+                        errorMessage = .activeSubscription
+                        return true
+                    case .failedToRestorePastPurchase, .purchaseFailed:
+                        errorMessage = .appStore
+                        return true
+                    case .failedToGetSubscriptionOptions, .generalError:
+                        errorMessage = .backend
+                        return true
+                    default:
+                        return false
+                    }
+                }()
                 
-            if displayError {
-                shouldPresentError = true
+                if displayError {
+                    shouldPresentError = true
+                }
             }
         }
         

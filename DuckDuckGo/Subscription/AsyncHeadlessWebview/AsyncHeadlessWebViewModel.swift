@@ -37,6 +37,7 @@ final class AsyncHeadlessWebViewViewModel: ObservableObject {
     @Published var canGoBack: Bool = false
     @Published var canGoForward: Bool = false
     @Published var contentType: String = ""
+    @Published var navigationError: Error?
     @Published var allowedDomains: [String]?
 
     var navigationCoordinator = HeadlessWebViewNavCoordinator(webView: nil)

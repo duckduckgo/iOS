@@ -46,6 +46,7 @@ final class SubscriptionITPViewModel: ObservableObject {
     @Published var isDownloadableContent: Bool = false
     @Published var activityItems: [Any] = []
     @Published var attachmentURL: URL?
+    @Published var navigationError: Bool = false
     var webViewModel: AsyncHeadlessWebViewViewModel
     
     @Published var shouldNavigateToExternalURL: URL?
@@ -83,6 +84,17 @@ final class SubscriptionITPViewModel: ObservableObject {
     
     // Observe transaction status
     private func setupSubscribers() async {
+        
+        webViewModel.$navigationError
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                guard let strongSelf = self else { return }
+                DispatchQueue.main.async {
+                    strongSelf.navigationError = error != nil ? true : false
+                }
+                
+            }
+            .store(in: &cancellables)
         
         webViewModel.$scrollPosition
             .receive(on: DispatchQueue.main)

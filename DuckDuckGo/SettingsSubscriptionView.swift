@@ -166,8 +166,7 @@ struct SettingsSubscriptionView: View {
             }
            
         }
-       
-        
+
     }
     
     var body: some View {

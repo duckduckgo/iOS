@@ -82,7 +82,7 @@ final class SubscriptionITPViewModel: ObservableObject {
                                                           settings: webViewSettings)
     }
     
-    // Observe transaction status
+    // swiftlint:disable function_body_length
     private func setupSubscribers() async {
         
         webViewModel.$navigationError
@@ -146,6 +146,7 @@ final class SubscriptionITPViewModel: ObservableObject {
                 self?.canNavigateBack = value
             }
     }
+    // swiftlint:enable function_body_length
     
     func initializeView() {
         webViewModel.navigationCoordinator.navigateTo(url: manageITPURL )

@@ -271,15 +271,6 @@ extension SettingsViewModel {
         
         setupSubscribers()
         
-        #if SUBSCRIPTION
-        if #available(iOS 15, *) {
-            Task {
-                if state.subscription.enabled {
-                    await setupSubscriptionEnvironment()
-                }
-            }
-        }
-        #endif
     }
     
     private func getNetworkProtectionState() -> SettingsState.NetworkProtection {
@@ -299,12 +290,15 @@ extension SettingsViewModel {
         var hasActiveSubscription = false
     
 #if SUBSCRIPTION
-        enabled = featureFlagger.isFeatureOn(.subscription)
-        canPurchase = SubscriptionPurchaseEnvironment.canPurchase
-        if let token = AccountManager().accessToken {
-            let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token)
-            if case .success(let subscription) = subscriptionResult {
-                hasActiveSubscription = subscription.isActive
+        if #available(iOS 15, *) {
+            enabled = featureFlagger.isFeatureOn(.subscription)
+            canPurchase = SubscriptionPurchaseEnvironment.canPurchase
+            await setupSubscriptionEnvironment()
+            if let token = AccountManager().accessToken {
+                let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token)
+                if case .success(let subscription) = subscriptionResult {
+                    hasActiveSubscription = subscription.isActive
+                }
             }
         }
 #endif

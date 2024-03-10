@@ -71,13 +71,6 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         }
     }
     
-    func removeSubscription() {
-        AccountManager().signOut()
-        let messageView = ActionMessageView()
-        ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation,
-                                  presentationLocation: .withoutBottomBar)
-    }
-    
     func manageSubscription() {
         switch subscriptionInfo?.platform {
         case .apple:
@@ -126,19 +119,18 @@ final class SubscriptionSettingsViewModel: ObservableObject {
                                   presentationLocation: .withoutBottomBar)
     }
     
-    func manageSubscription() {
-            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                Task {
-                    do {
-                        try await AppStore.showManageSubscriptions(in: windowScene)
-                    } catch {
-                        openSubscriptionManagementURL()
-                    }
-                }
+    private func manageAppleSubscription() {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            Task {
+                   do {
+                       try await AppStore.showManageSubscriptions(in: windowScene)
+                   } catch {
+                       openSubscriptionManagementURL()
+                   }
             }
-        } else {
-            openSubscriptionManagementURL()
-        }
+           } else {
+               openSubscriptionManagementURL()
+           }
     }
     
     private func manageGoogleSubscription() {

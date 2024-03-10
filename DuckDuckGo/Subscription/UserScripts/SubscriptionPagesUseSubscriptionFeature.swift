@@ -218,6 +218,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
                 switch error {
                 case .cancelledByUser:
                     setTransactionError(.cancelledByUser)
+                    await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate(type: "canceled"))
+                    return nil
                 default:
                     setTransactionError(.purchaseFailed)
                 }

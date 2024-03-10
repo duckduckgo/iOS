@@ -186,10 +186,24 @@ final class SubscriptionFlowViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
+        webViewModel.$navigationError
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                guard let strongSelf = self else { return }
+                DispatchQueue.main.async {
+                    strongSelf.transactionError = error != nil ? .generalError : nil
+                }
+                
+            }
+            .store(in: &cancellables)
+        
         canGoBackCancellable = webViewModel.$canGoBack
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
-                self?.canNavigateBack = value
+                guard let strongSelf = self else { return }
+
+                let shouldNavigateBack = value && (strongSelf.webViewModel.url?.lastPathComponent != URL.subscriptionBaseURL.lastPathComponent)
+                strongSelf.canNavigateBack = shouldNavigateBack
             }
     }
     
@@ -202,6 +216,12 @@ final class SubscriptionFlowViewModel: ObservableObject {
     private func disableGoBack() {
         canGoBackCancellable?.cancel()
         canNavigateBack = false
+    }
+    
+    private func urlRemovingQueryParams(_ url: URL) -> URL? {
+        var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        urlComponents?.query = nil // Remove the query string
+        return urlComponents?.url
     }
     
     func initializeViewData() async {
@@ -219,6 +239,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
         userTappedRestoreButton = false
         shouldShowNavigationBar = false
         selectedFeature = nil
+        transactionError = nil
         canNavigateBack = false
         shouldDismissView = true
         subFeature.cleanup()

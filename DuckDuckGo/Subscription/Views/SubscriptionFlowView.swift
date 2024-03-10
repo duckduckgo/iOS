@@ -30,6 +30,7 @@ struct SubscriptionFlowView: View {
     @State private var shouldShowNavigationBar = false
     @State private var isActive: Bool = false
     @State private var transactionError: SubscriptionFlowViewModel.SubscriptionPurchaseError?
+    @State private var errorMessage: SubscriptionErrorMessage = .general
     @State private var shouldPresentError: Bool = false
     
     enum Constants {
@@ -38,6 +39,13 @@ struct SubscriptionFlowView: View {
         static let empty = ""
         static let navButtonPadding: CGFloat = 20.0
         static let backButtonImage = "chevron.left"
+    }
+    
+    enum SubscriptionErrorMessage {
+        case activeSubscription
+        case appStore
+        case backend
+        case general
     }
     
     var body: some View {
@@ -132,10 +140,28 @@ struct SubscriptionFlowView: View {
         }
         
         .onChange(of: viewModel.transactionError) { value in
-            if value != nil {
-                shouldPresentError = true
+            
+            if !shouldPresentError {
+                let displayError: Bool = {
+                    switch value {
+                    case .hasActiveSubscription:
+                        errorMessage = .activeSubscription
+                        return true
+                    case .failedToRestorePastPurchase, .purchaseFailed:
+                        errorMessage = .appStore
+                        return true
+                    case .failedToGetSubscriptionOptions, .generalError:
+                        errorMessage = .backend
+                        return true
+                    default:
+                        return false
+                    }
+                }()
+                
+                if displayError {
+                    shouldPresentError = true
+                }
             }
-            transactionError = value
         }
         
         .onAppear(perform: {
@@ -157,7 +183,8 @@ struct SubscriptionFlowView: View {
         })
                 
         .alert(isPresented: $shouldPresentError) {
-            getAlert()
+            getAlert(error: self.errorMessage)
+            
         }
         
         // The trailing close button should be hidden when a transaction is in progress
@@ -165,13 +192,12 @@ struct SubscriptionFlowView: View {
                             ? Button(UserText.subscriptionCloseButton) { viewModel.finalizeSubscriptionFlow() }
                             : nil)
     }
-    
-    private func getAlert() -> Alert {
         
-        switch transactionError {
+    private func getAlert(error: SubscriptionErrorMessage) -> Alert {
         
-        case .hasActiveSubscription:
-            Alert(
+        switch error {
+        case .activeSubscription:
+            return Alert(
                 title: Text(UserText.subscriptionFoundTitle),
                 message: Text(UserText.subscriptionFoundText),
                 primaryButton: .cancel(Text(UserText.subscriptionFoundCancel)) {
@@ -181,26 +207,39 @@ struct SubscriptionFlowView: View {
                     viewModel.restoreAppstoreTransaction()
                 }
             )
-        default:
-            Alert(
+        case .appStore:
+            return Alert(
                 title: Text(UserText.subscriptionAppStoreErrorTitle),
                 message: Text(UserText.subscriptionAppStoreErrorMessage),
                 dismissButton: .cancel(Text(UserText.actionOK)) {
                     Task { await viewModel.initializeViewData() }
                 }
             )
+        case .backend, .general:
+            return Alert(
+                title: Text(UserText.subscriptionBackendErrorTitle),
+                message: Text(UserText.subscriptionBackendErrorMessage),
+                dismissButton: .cancel(Text(UserText.subscriptionBackendErrorButton)) {
+                    viewModel.finalizeSubscriptionFlow()
+                    dismiss()
+                }
+            )
         }
         
     }
-    
     
     @ViewBuilder
     private var webView: some View {
         
         ZStack(alignment: .top) {
             
-            // Restore View Hidden Link            
-            NavigationLink(destination: SubscriptionRestoreView(), isActive: $isActive) {
+            // Restore View Hidden Link           
+            let restoreView = SubscriptionRestoreView(
+                onDismissStack: {
+                    viewModel.finalizeSubscriptionFlow()
+                    dismiss()
+                })
+            NavigationLink(destination: restoreView, isActive: $isActive) {
                 EmptyView()
             }.isDetailLink(false)
              

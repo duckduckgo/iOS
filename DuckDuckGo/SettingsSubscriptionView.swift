@@ -137,24 +137,26 @@ struct SettingsSubscriptionView: View {
                 SettingsCellView(label: UserText.settingsPProDBPTitle,
                                  subtitle: UserText.settingsPProDBPSubTitle,
                                  action: { isShowingDBP.toggle() }, isButton: true)
-                .sheet(isPresented: $isShowingDBP) {
-                    SubscriptionPIRView()
-                }
             }
             
             if viewModel.shouldShowITP {
                 SettingsCellView(label: UserText.settingsPProITRTitle,
                                  subtitle: UserText.settingsPProITRSubTitle,
                                  action: { isShowingITP.toggle() }, isButton: true)
-                .sheet(isPresented: $isShowingITP) {
-                    SubscriptionITPView()
-                }
             }
 
             NavigationLink(destination: SubscriptionSettingsView()) {
                 SettingsCustomCell(content: { manageSubscriptionView })
             }
            
+        }
+        
+        .sheet(isPresented: $isShowingDBP) {
+            SubscriptionPIRView()
+        }
+        
+        .sheet(isPresented: $isShowingITP) {
+            SubscriptionITPView()
         }
     }
     

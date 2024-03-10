@@ -27,6 +27,7 @@ struct SettingsSubscriptionView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
     @StateObject var subscriptionFlowViewModel =  SubscriptionFlowViewModel()
+    @State var isShowingsubScriptionFlow = false
     @State var isShowingDBP = false
     @State var isShowingITP = false
     
@@ -90,12 +91,17 @@ struct SettingsSubscriptionView: View {
         Group {
             SettingsCustomCell(content: { subscriptionDescriptionView })
             SettingsCustomCell(content: { learnMoreView },
-                               action: { viewModel.shouldNavigateToSubscriptionFlow = true },
+                               action: { isShowingsubScriptionFlow = true },
                                isButton: true )
+            
+            // Subscription Restore
+            .sheet(isPresented: $isShowingsubScriptionFlow) {
+                SubscriptionFlowView(viewModel: subscriptionFlowViewModel).interactiveDismissDisabled()
+            }
             
             SettingsCustomCell(content: { iHaveASubscriptionView },
                                action: {
-                                    viewModel.shouldNavigateToSubscriptionFlow = true
+                                    isShowingsubScriptionFlow = true
                                     subscriptionFlowViewModel.activateSubscriptionOnLoad = true
                                 },
                                isButton: true )
@@ -137,12 +143,22 @@ struct SettingsSubscriptionView: View {
                 SettingsCellView(label: UserText.settingsPProDBPTitle,
                                  subtitle: UserText.settingsPProDBPSubTitle,
                                  action: { isShowingDBP.toggle() }, isButton: true)
+                
+                .sheet(isPresented: $isShowingDBP) {
+                    SubscriptionPIRView()
+                }
+                
             }
             
             if viewModel.shouldShowITP {
                 SettingsCellView(label: UserText.settingsPProITRTitle,
                                  subtitle: UserText.settingsPProITRSubTitle,
                                  action: { isShowingITP.toggle() }, isButton: true)
+                
+                .sheet(isPresented: $isShowingITP) {
+                    SubscriptionITPView()
+                }
+                
             }
 
             NavigationLink(destination: SubscriptionSettingsView()) {
@@ -150,14 +166,8 @@ struct SettingsSubscriptionView: View {
             }
            
         }
+       
         
-        .sheet(isPresented: $isShowingDBP) {
-            SubscriptionPIRView()
-        }
-        
-        .sheet(isPresented: $isShowingITP) {
-            SubscriptionITPView()
-        }
     }
     
     var body: some View {
@@ -180,15 +190,13 @@ struct SettingsSubscriptionView: View {
                 }
             
             }
-            // Subscription Restore
-            .sheet(isPresented: $viewModel.shouldNavigateToSubscriptionFlow,
-                   onDismiss: {
-                        Task { viewModel.onAppear() }
-                    },
-                   content: {
-                        SubscriptionFlowView(viewModel: subscriptionFlowViewModel).interactiveDismissDisabled()
-                    })
-            
+                
+            // Refresh subscription when dismissing the Subscription Flow
+            .onChange(of: isShowingsubScriptionFlow, perform: { value in
+                if !value {
+                    Task { viewModel.onAppear() }
+                }
+            })
             
             .onChange(of: viewModel.shouldNavigateToDBP, perform: { value in
                 if value {
@@ -196,8 +204,6 @@ struct SettingsSubscriptionView: View {
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Constants.navigationDelay) {
                         isShowingDBP = true
                     }
-                } else {
-                    isShowingDBP = false
                 }
             })
             
@@ -207,8 +213,12 @@ struct SettingsSubscriptionView: View {
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Constants.navigationDelay) {
                         isShowingITP = true
                     }
-                } else {
-                    isShowingITP = false
+                }
+            })
+
+            .onChange(of: viewModel.shouldNavigateToSubscriptionFlow, perform: { value in
+                if value {
+                    isShowingsubScriptionFlow = true
                 }
             })
 

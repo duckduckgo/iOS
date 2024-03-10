@@ -158,12 +158,11 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         // Each event cancels the previous delayed publisher
         $shouldDisableToggle
             .filter { $0 }
-            .map {
-                Just(!$0)
-                    .delay(for: 2.0, scheduler: DispatchQueue.main)
-                    .assign(to: \.shouldDisableToggle, onWeaklyHeld: self)
+            .map { _ -> AnyPublisher<Bool, Never> in
+                Just(false).delay(for: 2.0, scheduler: DispatchQueue.main).eraseToAnyPublisher()
             }
-            .assign(to: \.delayedToggleReenableCancellable, onWeaklyHeld: self)
+            .switchToLatest()
+            .assign(to: \.shouldDisableToggle, onWeaklyHeld: self)
             .store(in: &cancellables)
     }
 

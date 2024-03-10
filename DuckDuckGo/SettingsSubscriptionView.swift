@@ -95,9 +95,9 @@ struct SettingsSubscriptionView: View {
                                isButton: true )
             
             // Subscription Restore
-            .sheet(isPresented: $isShowingsubScriptionFlow) {
-                SubscriptionFlowView(viewModel: subscriptionFlowViewModel).interactiveDismissDisabled()
-            }
+            .sheet(isPresented: $isShowingsubScriptionFlow,
+                   onDismiss: { Task { viewModel.onAppear() } },
+                   content: { SubscriptionFlowView(viewModel: subscriptionFlowViewModel).interactiveDismissDisabled() })
             
             SettingsCustomCell(content: { iHaveASubscriptionView },
                                action: {
@@ -190,13 +190,6 @@ struct SettingsSubscriptionView: View {
                 }
             
             }
-                
-            // Refresh subscription when dismissing the Subscription Flow
-            .onChange(of: isShowingsubScriptionFlow, perform: { value in
-                if !value {
-                    Task { viewModel.onAppear() }
-                }
-            })
             
             .onChange(of: viewModel.shouldNavigateToDBP, perform: { value in
                 if value {

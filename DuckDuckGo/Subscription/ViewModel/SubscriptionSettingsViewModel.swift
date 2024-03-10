@@ -35,11 +35,13 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     let accountManager: AccountManager
     private var subscriptionUpdateTimer: Timer?
     private var signOutObserver: Any?
+    private var subscriptionInfo: SubscriptionService.GetSubscriptionResponse?
     
     @Published var subscriptionDetails: String = ""
     @Published var subscriptionType: String = ""
     @Published var shouldDisplayRemovalNotice: Bool = false
     @Published var shouldDismissView: Bool = false
+    @Published var shouldDisplayGoogleView: Bool = false
     
     init(accountManager: AccountManager = AccountManager()) {
         self.accountManager = accountManager
@@ -55,27 +57,44 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }()
     
     @MainActor
-    func fetchAndUpdateSubscriptionDetails() {
+    func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad) {
         Task {
             guard let token = accountManager.accessToken else { return }
 
-            if let cachedDate = SubscriptionService.cachedGetSubscriptionResponse?.expiresOrRenewsAt,
-               let cachedStatus =  SubscriptionService.cachedGetSubscriptionResponse?.status,
-               let productID =  SubscriptionService.cachedGetSubscriptionResponse?.productId {
-                updateSubscriptionDetails(status: cachedStatus, date: cachedDate, product: productID)
-            }
-
-            if case .success(let subscription) = await SubscriptionService.getSubscription(accessToken: token) {
+            if case .success(let subscription) = await SubscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy) {
                 if !subscription.isActive {
                     AccountManager().signOut()
                     shouldDismissView = true
                     return
                 } else {
+                    subscriptionInfo = subscription
                     updateSubscriptionDetails(status: subscription.status, date: subscription.expiresOrRenewsAt, product: subscription.productId)
                 }
             }
         }
     }
+    
+    func removeSubscription() {
+        AccountManager().signOut()
+        let messageView = ActionMessageView()
+        ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation,
+                                  presentationLocation: .withoutBottomBar)
+    }
+    
+    func manageSubscription() {
+        switch subscriptionInfo?.platform {
+        case .apple:
+            manageAppleSubscription()
+        case .google:
+            manageGoogleSubscription()
+        case .stripe:
+            manageStripeSubscription()
+        default:
+            return
+        }
+    }
+    
+    // MARK: -
     
     private func setupNotificationObservers() {
         signOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut, object: nil, queue: .main) { [weak self] _ in
@@ -85,11 +104,13 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         }
     }
     
+    // Force a subscription Update to get changes from the backend every 10s
+    // This ensures that if the user changes anything in Apple's dialogs view will reflect updates
     private func setupSubscriptionUpdater() {
         subscriptionUpdateTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { [weak self] _ in
             guard let strongSelf = self else { return }
             Task {
-                await strongSelf.fetchAndUpdateSubscriptionDetails()
+                await strongSelf.fetchAndUpdateSubscriptionDetails(cachePolicy: .reloadIgnoringLocalCacheData)
             }
         }
     }
@@ -101,26 +122,27 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         self.subscriptionType = product == Constants.monthlyProductID ? UserText.subscriptionMonthly : UserText.subscriptionAnnual
     }
     
-    func removeSubscription() {
-        AccountManager().signOut()
-        let messageView = ActionMessageView()
-        ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation,
-                                  presentationLocation: .withoutBottomBar)
+    private func manageAppleSubscription() {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            Task {
+                do {
+                    try await AppStore.showManageSubscriptions(in: windowScene)
+                } catch {
+                    openSubscriptionManagementURL()
+                }
+            }
+        } else {
+            openSubscriptionManagementURL()
+        }
     }
     
-    func manageSubscription() {
-            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                Task {
-                    do {
-                        try await AppStore.showManageSubscriptions(in: windowScene)
-                    } catch {
-                        openSubscriptionManagementURL()
-                    }
-                }
-            } else {
-                openSubscriptionManagementURL()
-            }
-        }
+    private func manageGoogleSubscription() {
+        shouldDisplayGoogleView = true
+    }
+    
+    private func manageStripeSubscription() {
+        
+    }
 
     private func openSubscriptionManagementURL() {
         let url = URL.manageSubscriptionsInAppStoreAppURL

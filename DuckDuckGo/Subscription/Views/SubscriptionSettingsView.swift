@@ -87,6 +87,10 @@ struct SubscriptionSettingsView: View {
                     })
                 }
             }
+            
+            NavigationLink(destination: SubscriptionGoogleView(), isActive: $viewModel.shouldDisplayGoogleView) {
+                EmptyView()
+            }
         }
         .navigationTitle(UserText.settingsPProManageSubscription)
         .applyInsetGroupedListStyle()
@@ -142,10 +146,6 @@ struct SubscriptionSettingsView_Previews: PreviewProvider {
         NavigationView {
             SubscriptionSettingsView().navigationBarTitleDisplayMode(.inline)
         }
-        // You can customize the preview environment here if needed.
-        // For example, you can set a specific device, size, or dark mode/light mode.
-        // .previewDevice(PreviewDevice(rawValue: "iPhone 12"))
-        // .preferredColorScheme(.dark)
     }
 }
 #endif

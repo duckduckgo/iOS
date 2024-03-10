@@ -311,7 +311,6 @@ extension SettingsViewModel {
                                         canPurchase: canPurchase,
                                         hasActiveSubscription: hasActiveSubscription)
     }
-    #endif
     
     private func getSyncState() -> SettingsState.SyncSettings {
         SettingsState.SyncSettings(enabled: legacyViewProvider.syncService.featureFlags.contains(.userInterface),

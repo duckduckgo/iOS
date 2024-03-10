@@ -27,7 +27,6 @@ struct SettingsSubscriptionView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
     @StateObject var subscriptionFlowViewModel =  SubscriptionFlowViewModel()
-    @State var isShowingsubScriptionFlow = false
     @State var isShowingDBP = false
     @State var isShowingITP = false
     
@@ -91,12 +90,12 @@ struct SettingsSubscriptionView: View {
         Group {
             SettingsCustomCell(content: { subscriptionDescriptionView })
             SettingsCustomCell(content: { learnMoreView },
-                               action: { isShowingsubScriptionFlow = true },
+                               action: { viewModel.shouldNavigateToSubscriptionFlow = true },
                                isButton: true )
             
             SettingsCustomCell(content: { iHaveASubscriptionView },
                                action: {
-                                    isShowingsubScriptionFlow = true
+                                    viewModel.shouldNavigateToSubscriptionFlow = true
                                     subscriptionFlowViewModel.activateSubscriptionOnLoad = true
                                 },
                                isButton: true )
@@ -180,17 +179,14 @@ struct SettingsSubscriptionView: View {
             
             }
             // Subscription Restore
-            .sheet(isPresented: $isShowingsubScriptionFlow) {
-                SubscriptionFlowView(viewModel: subscriptionFlowViewModel).interactiveDismissDisabled()
-            }
+            .sheet(isPresented: $viewModel.shouldNavigateToSubscriptionFlow,
+                   onDismiss: {
+                        Task { viewModel.onAppear() }
+                    },
+                   content: {
+                        SubscriptionFlowView(viewModel: subscriptionFlowViewModel).interactiveDismissDisabled()
+                    })
             
-            
-            // Refresh subscription when dismissing the Subscription Flow
-            .onChange(of: isShowingsubScriptionFlow, perform: { value in
-                if !value {
-                    Task { viewModel.onAppear() }
-                }
-            })
             
             .onChange(of: viewModel.shouldNavigateToDBP, perform: { value in
                 if value {
@@ -198,6 +194,8 @@ struct SettingsSubscriptionView: View {
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Constants.navigationDelay) {
                         isShowingDBP = true
                     }
+                } else {
+                    isShowingDBP = false
                 }
             })
             
@@ -207,12 +205,8 @@ struct SettingsSubscriptionView: View {
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Constants.navigationDelay) {
                         isShowingITP = true
                     }
-                }
-            })
-
-            .onChange(of: viewModel.shouldNavigateToSubscriptionFlow, perform: { value in
-                if value {
-                    isShowingsubScriptionFlow = true
+                } else {
+                    isShowingITP = false
                 }
             })
 

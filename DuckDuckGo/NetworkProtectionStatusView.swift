@@ -184,7 +184,7 @@ struct NetworkProtectionStatusView: View {
     @ViewBuilder
     private func about() -> some View {
         Section {
-            NavigationLink("Frequently Asked Questions", destination: NetworkProtectionVPNSettingsView())
+            NavigationLink("Frequently Asked Questions", destination: NetworkProtectionFAQView())
                 .daxBodyRegular()
                 .foregroundColor(.init(designSystemColor: .textPrimary))
         } header: {

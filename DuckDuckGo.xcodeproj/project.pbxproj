@@ -261,6 +261,7 @@
 		37FCAAC029930E26000E420A /* FailedAssertionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FCAABF29930E26000E420A /* FailedAssertionView.swift */; };
 		37FD780F2A29E28B00B36DB1 /* SyncErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD780E2A29E28B00B36DB1 /* SyncErrorHandler.swift */; };
 		4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */; };
+		4B0F3F502B9BFF2100392892 /* NetworkProtectionFAQView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0F3F4F2B9BFF2100392892 /* NetworkProtectionFAQView.swift */; };
 		4B274F602AFEAECC003F0745 /* NetworkProtectionWidgetRefreshModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B274F5F2AFEAECC003F0745 /* NetworkProtectionWidgetRefreshModel.swift */; };
 		4B2754EC29E8C7DF00394032 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 4B2754EB29E8C7DF00394032 /* Lottie */; };
 		4B37E0502B928CA6009E81CA /* vpn-light-mode.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B37E04F2B928CA6009E81CA /* vpn-light-mode.json */; };
@@ -1382,6 +1383,7 @@
 		37FCAACB2993149A000E420A /* Waitlist */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Waitlist; sourceTree = "<group>"; };
 		37FD780E2A29E28B00B36DB1 /* SyncErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncErrorHandler.swift; sourceTree = "<group>"; };
 		4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationDebugViewController.swift; sourceTree = "<group>"; };
+		4B0F3F4F2B9BFF2100392892 /* NetworkProtectionFAQView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionFAQView.swift; sourceTree = "<group>"; };
 		4B274F5F2AFEAECC003F0745 /* NetworkProtectionWidgetRefreshModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionWidgetRefreshModel.swift; sourceTree = "<group>"; };
 		4B37E04F2B928CA6009E81CA /* vpn-light-mode.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "vpn-light-mode.json"; sourceTree = "<group>"; };
 		4B470ED5299C49800086EBDC /* AppTrackingProtectionDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionDatabase.swift; sourceTree = "<group>"; };
@@ -4857,6 +4859,7 @@
 			children = (
 				EE9D68D02AE00CF300B55EF4 /* NetworkProtectionVPNSettingsView.swift */,
 				EE01EB3F2AFBD0000096AAC9 /* NetworkProtectionVPNSettingsViewModel.swift */,
+				4B0F3F4F2B9BFF2100392892 /* NetworkProtectionFAQView.swift */,
 			);
 			name = VPNSettings;
 			sourceTree = "<group>";
@@ -6912,6 +6915,7 @@
 				981CA7EA2617797500E119D5 /* MainViewController+AddFavoriteFlow.swift in Sources */,
 				373608902ABB1E6C00629E7F /* FavoritesDisplayModeStorage.swift in Sources */,
 				9872D205247DCAC100CEF398 /* TabPreviewsSource.swift in Sources */,
+				4B0F3F502B9BFF2100392892 /* NetworkProtectionFAQView.swift in Sources */,
 				F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */,
 				85DFEDEF24C7EA3B00973FE7 /* SmallOmniBarState.swift in Sources */,
 				1E908BF129827C480008C8F3 /* AutoconsentUserScript.swift in Sources */,

@@ -85,6 +85,17 @@ struct SubscriptionITPView: View {
         }
         .tint(Color(designSystemColor: .textPrimary))
         
+        
+        .alert(isPresented: $viewModel.navigationError) {
+            Alert(
+                title: Text(UserText.subscriptionBackendErrorTitle),
+                message: Text(UserText.subscriptionBackendErrorMessage),
+                dismissButton: .cancel(Text(UserText.subscriptionBackendErrorButton)) {
+                    dismiss()
+                })
+        }
+        
+        
         .sheet(isPresented: Binding(
             get: { viewModel.shouldShowExternalURLSheet },
             set: { if !$0 { viewModel.shouldNavigateToExternalURL = nil } }

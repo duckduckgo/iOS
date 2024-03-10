@@ -49,6 +49,15 @@ struct SubscriptionEmailView: View {
             )
         }
         
+        .alert(isPresented: $viewModel.navigationError) {
+            Alert(
+                title: Text(UserText.subscriptionBackendErrorTitle),
+                message: Text(UserText.subscriptionBackendErrorMessage),
+                dismissButton: .cancel(Text(UserText.subscriptionBackendErrorButton)) {
+                    dismiss()
+                })
+        }
+        
         .onAppear {
             viewModel.loadURL()
         }

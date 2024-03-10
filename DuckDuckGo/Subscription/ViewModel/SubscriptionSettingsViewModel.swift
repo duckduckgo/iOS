@@ -59,17 +59,14 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     @MainActor
     func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad) {
         Task {
-            guard let token = accountManager.accessToken else { return }
-
-            if case .success(let subscription) = await SubscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy) {
-                if !subscription.isActive {
-                    AccountManager().signOut()
-                    shouldDismissView = true
-                    return
-                } else {
-                    subscriptionInfo = subscription
-                    updateSubscriptionDetails(status: subscription.status, date: subscription.expiresOrRenewsAt, product: subscription.productId)
-                }
+            guard let token = self.accountManager.accessToken else { return }
+            let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
+            switch subscriptionResult {
+            case .success(let subscription):
+                updateSubscriptionDetails(status: subscription.status, date: subscription.expiresOrRenewsAt, product: subscription.productId)
+            case .failure(let error):
+                AccountManager().signOut()
+                shouldDismissView = true
             }
         }
     }
@@ -104,8 +101,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         }
     }
     
-    // Force a subscription Update to get changes from the backend every 10s
-    // This ensures that if the user changes anything in Apple's dialogs view will reflect updates
+    // Re-fetch subscription from server ignoring cache
+    // This ensure that if the user changed something on the Apple view, state will be updated
     private func setupSubscriptionUpdater() {
         subscriptionUpdateTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { [weak self] _ in
             guard let strongSelf = self else { return }
@@ -122,13 +119,21 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         self.subscriptionType = product == Constants.monthlyProductID ? UserText.subscriptionMonthly : UserText.subscriptionAnnual
     }
     
-    private func manageAppleSubscription() {
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            Task {
-                do {
-                    try await AppStore.showManageSubscriptions(in: windowScene)
-                } catch {
-                    openSubscriptionManagementURL()
+    func removeSubscription() {
+        AccountManager().signOut()
+        _ = ActionMessageView()
+        ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation,
+                                  presentationLocation: .withoutBottomBar)
+    }
+    
+    func manageSubscription() {
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                Task {
+                    do {
+                        try await AppStore.showManageSubscriptions(in: windowScene)
+                    } catch {
+                        openSubscriptionManagementURL()
+                    }
                 }
             }
         } else {

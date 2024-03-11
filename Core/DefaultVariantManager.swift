@@ -31,7 +31,7 @@ extension FeatureName {
 }
 
 public struct VariantIOS: Variant {
-    
+
     struct When {
         static let always = { return true }
         static let padDevice = { return UIDevice.current.userInterfaceIdiom == .pad }
@@ -39,7 +39,7 @@ public struct VariantIOS: Variant {
 
         static let inRequiredCountry = { return ["AU", "AT", "DK", "FI", "FR", "DE", "IT", "IE", "NZ", "NO", "ES", "SE", "GB"]
                 .contains(where: { Locale.current.regionCode == $0 }) }
-        
+
         static let inEnglish = { return Locale.current.languageCode == "en" }
 
         static let iOS15 = { () -> Bool in
@@ -80,23 +80,23 @@ public struct VariantIOS: Variant {
 }
 
 public protocol VariantRNG {
-    
+
     func nextInt(upperBound: Int) -> Int
-    
+
 }
 
 public class DefaultVariantManager: VariantManager {
-    
+
     public var currentVariant: Variant? {
         let variantName = ProcessInfo.processInfo.environment["VARIANT", default: storage.variant ?? "" ]
         return variants.first(where: { $0.name == variantName })
     }
-    
+
     private let variants: [Variant]
     private let storage: StatisticsStore
     private let rng: VariantRNG
     private let returningUserMeasurement: ReturnUserMeasurement
-    
+
     init(variants: [Variant],
          storage: StatisticsStore,
          rng: VariantRNG,
@@ -120,30 +120,30 @@ public class DefaultVariantManager: VariantManager {
     public func isSupported(feature: FeatureName) -> Bool {
         return currentVariant?.features.contains(feature) ?? false
     }
-    
+
     public func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Void) {
         guard !storage.hasInstallStatistics else {
             os_log("no new variant needed for existing user", log: .generalLog, type: .debug)
             return
         }
-        
+
         if let variant = currentVariant {
             os_log("already assigned variant: %s", log: .generalLog, type: .debug, String(describing: variant))
             return
         }
-        
+
         guard let variant = selectVariant() else {
             os_log("Failed to assign variant", log: .generalLog, type: .debug)
-            
+
             // it's possible this failed because there are none to assign, we should still let new install logic execute
             _ = newInstallCompletion(self)
             return
         }
-        
+
         storage.variant = variant.name
         newInstallCompletion(self)
     }
-    
+
     private func selectVariant() -> Variant? {
         if returningUserMeasurement.isReturningUser {
             return VariantIOS.returningUser
@@ -151,7 +151,7 @@ public class DefaultVariantManager: VariantManager {
 
         let totalWeight = variants.reduce(0, { $0 + $1.weight })
         let randomPercent = rng.nextInt(upperBound: totalWeight)
-        
+
         var runningTotal = 0
         for variant in variants {
             runningTotal += variant.weight
@@ -159,19 +159,19 @@ public class DefaultVariantManager: VariantManager {
                 return variant.isIncluded() ? variant : nil
             }
         }
-        
+
         return nil
     }
-    
+
 }
 
 public class Arc4RandomUniformVariantRNG: VariantRNG {
-    
+
     public init() { }
-    
+
     public func nextInt(upperBound: Int) -> Int {
         // swiftlint:disable:next legacy_random
         return Int(arc4random_uniform(UInt32(upperBound)))
     }
-    
+
 }

@@ -21,7 +21,7 @@ import UIKit
 
 @IBDesignable
 class TextFieldWithInsets: UITextField {
-    
+
     var onCopyAction: ((UITextField) -> Void)?
 
     @IBInspectable var leftInset: CGFloat = 0
@@ -52,7 +52,7 @@ class TextFieldWithInsets: UITextField {
         let height = bounds.size.height - topInset - bottomInset
         return CGRect(x: x, y: y, width: width, height: height)
     }
-    
+
     override func copy(_ sender: Any?) {
         if let action = onCopyAction {
             action(self)

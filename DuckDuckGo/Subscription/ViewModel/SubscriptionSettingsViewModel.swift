@@ -23,6 +23,7 @@ import StoreKit
 
 #if SUBSCRIPTION
 import Subscription
+import Core
 @available(iOS 15.0, *)
 final class SubscriptionSettingsViewModel: ObservableObject {
     
@@ -133,7 +134,5 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         subscriptionUpdateTimer?.invalidate()
         signOutObserver = nil
     }
-    
-    
 }
 #endif

@@ -33,7 +33,7 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
 
     @Published public var debugModeEnabled = false
     @Published public var isOnboarding = false
-    
+
     // We only want to show "Manage Trackers" and "Report an issue" if the user has enabled AppTP at least once
     @UserDefaultsWrapper(key: .appTPUsed, defaultValue: false)
     public var appTPUsed {
@@ -49,7 +49,7 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
         queue.maxConcurrentOperationCount = 1
         return queue
     }()
-    
+
     private let relativeFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.timeStyle = .none
@@ -57,13 +57,13 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
         formatter.doesRelativeDateFormatting = true
         return formatter
     }()
-    
+
     private let relativeTimeFormatter: RelativeDateTimeFormatter = {
         let formatter = RelativeDateTimeFormatter()
         formatter.unitsStyle = .short
         return formatter
     }()
-    
+
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM dd"
@@ -76,26 +76,26 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
         formatter.timeStyle = .medium
         return formatter
     }()
-    
+
     private let inputFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter
     }()
-    
+
     public func formattedDate(_ sectionName: String) -> String {
         guard let date = inputFormatter.date(from: sectionName) else {
             return "Invalid Date"
         }
-        
+
         let relativeDate = relativeFormatter.string(from: date)
         if relativeDate.rangeOfCharacter(from: .decimalDigits) != nil {
             return dateFormatter.string(from: date)
         }
-        
+
         return relativeDate
     }
-    
+
     /// Returns a relative datestring for the given timestamp. e.g. "5 min. ago"
     /// If the timestamp is within 1 second of the current time this function will return `nil`
     /// A `nil` return value should be considered "just now".
@@ -108,7 +108,7 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
             // return nil here and replace it with UserText on the view side.
             return nil
         }
-        
+
         return relativeTimeFormatter.localizedString(for: timestamp, relativeTo: Date())
     }
 
@@ -138,7 +138,7 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
         self.context.stalenessInterval = 0
 
         super.init()
-        
+
         self.isOnboarding = !appTPUsed
 
         setupFetchedResultsController()

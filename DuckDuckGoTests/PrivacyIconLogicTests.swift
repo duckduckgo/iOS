@@ -17,21 +17,23 @@
 //  limitations under the License.
 //
 
-import Foundation
-import XCTest
-import TrackerRadarKit
 import BrowserServicesKit
+import Foundation
+import Macros
 import PrivacyDashboard
+import TrackerRadarKit
+import XCTest
+
 @testable import Core
 @testable import DuckDuckGo
 
 class PrivacyIconLogicTests: XCTestCase {
     
-    static let pageURL = URL(string: "https://example.com")!
-    static let insecurePageURL = URL(string: "http://example.com")!
-    static let ddgSearchURL = URL(string: "https://duckduckgo.com/?q=catfood&t=h_&ia=web")!
-    static let ddgMainURL = URL(string: "https://duckduckgo.com")!
-    static let ddgSupportURL = URL(string: "https://duckduckgo.com/email/settings/support")!
+    static let pageURL = #URL("https://example.com")
+    static let insecurePageURL = #URL("http://example.com")
+    static let ddgSearchURL = #URL("https://duckduckgo.com/?q=catfood&t=h_&ia=web")
+    static let ddgMainURL = #URL("https://duckduckgo.com")
+    static let ddgSupportURL = #URL("https://duckduckgo.com/email/settings/support")
     
     func testPrivacyIconIsShieldForPageURL() {
         let url = PrivacyIconLogicTests.insecurePageURL

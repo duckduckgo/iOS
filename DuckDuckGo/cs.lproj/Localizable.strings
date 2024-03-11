@@ -38,7 +38,7 @@
 "action.title.copy.message" = "Adrese URL zkopírována";
 
 /* Delete action - button shown in alert */
-"action.title.delete" = "Delete";
+"action.title.delete" = "Smazat";
 
 /* Disable protection action */
 "action.title.disable.protection" = "Zakázat ochranu soukromí";
@@ -448,6 +448,18 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "Když DuckDuckGo na navštívené stránce zjistí vyskakovací okno žádající o souhlas se soubory cookie, můžeme zkusit automaticky nastavit tvou předvolbu na co nejméně souborů cookie a maximální ochranu soukromí a potom vyskakovací okno zavřít. Některé weby nenabízejí možnost si nastavit předvolby souborů cookie, takže podobná vyskakovací okna můžeme jen skrýt.";
 
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.completion" = "autofill.delete.all.passwords.completion";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.confirmation.body" = "autofill.delete.all.passwords.confirmation.body";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.confirmation.title" = "autofill.delete.all.passwords.confirmation.title";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
+
 /* Text link to email protection website */
 "autofill.enable.email.protection" = "Povol funkci Email Protection";
 
@@ -490,6 +502,15 @@
 /* Title for toast when copying username */
 "autofill.logins.copy-toast.username-copied" = "Uživatelské jméno zkopírované";
 
+/* Title of button in prompt requiring authentication before all passwords are deleted */
+"autofill.logins.delete.all.authentication.prompt.button" = "Ověřit";
+
+/* Title of prompt requiring authentication before all passwords are deleted */
+"autofill.logins.delete.all.authentication.prompt.title" = "Pro smazání všech hesel proveď ověření";
+
+/* Reason for authentication when deleting all logins */
+"autofill.logins.delete.all.authentication.reason" = "Ověřením potvrď, že chceš smazat všechna hesla";
+
 /* Address label for login details on autofill */
 "autofill.logins.details.address" = "URL webové stránky";
 
@@ -501,9 +522,6 @@
 
 /* Autofill alert button confirming delete autofill login */
 "autofill.logins.details.delete-confirmation.button" = "Smazat heslo";
-
-/* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Opravdu chceš smazat tohle heslo?";
 
 /* Title when editing autofill login details */
 "autofill.logins.details.edit-title" = "Upravit heslo";
@@ -564,6 +582,9 @@
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Zavřít";
+
+/* Title for button to delete all saved autofill passwords */
+"autofill.logins.list.delete.all" = "Smazat vše";
 
 /* Title for a toggle that enables autofill */
 "autofill.logins.list.enable" = "Ukládání a automatické vyplňování hesel";
@@ -627,6 +648,9 @@
 
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Žádné výsledky";
+
+/* Do not translate - stringsdict entry */
+"autofill.number.of.passwords" = "autofill.number.of.passwords";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.subtitle" = "Hesla se bezpečně ukládají do tvého zařízení.";

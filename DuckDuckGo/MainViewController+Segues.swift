@@ -203,6 +203,14 @@ extension MainViewController {
         launchSettings()
     }
 
+    func segueToPrivacyPro() {
+        os_log(#function, log: .generalLog, type: .debug)
+        hideAllHighlightsIfNeeded()
+        launchSettings {
+            $0.shouldNavigateToSubscriptionFlow = true
+        }
+    }
+
     func segueToDebugSettings() {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
@@ -237,7 +245,8 @@ extension MainViewController {
         let legacyViewProvider = SettingsLegacyViewProvider(syncService: syncService,
                                                             syncDataProviders: syncDataProviders,
                                                             appSettings: appSettings,
-                                                            bookmarksDatabase: bookmarksDatabase)
+                                                            bookmarksDatabase: bookmarksDatabase,
+                                                            tabManager: tabManager)
 #if SUBSCRIPTION
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider, accountManager: AccountManager())
 #else
@@ -265,7 +274,8 @@ extension MainViewController {
             RootDebugViewController(coder: coder,
                                     sync: self.syncService,
                                     bookmarksDatabase: self.bookmarksDatabase,
-                                    internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+                                    internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
+                                    tabManager: self.tabManager)
         }
 
         let controller = ThemableNavigationController(rootViewController: settings)

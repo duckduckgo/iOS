@@ -49,9 +49,14 @@ final class NetworkProtectionTunnelController: TunnelController {
     /// Starts the VPN connection used for Network Protection
     ///
     func start() async {
+        Pixel.fire(pixel: .networkProtectionControllerStartAttempt)
+
         do {
             try await startWithError()
+            Pixel.fire(pixel: .networkProtectionControllerStartSuccess)
         } catch {
+            Pixel.fire(pixel: .networkProtectionControllerStartFailure, error: error)
+
             #if DEBUG
             errorStore.lastErrorMessage = error.localizedDescription
             #endif

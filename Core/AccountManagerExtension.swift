@@ -1,5 +1,5 @@
 //
-//  AdAttributionReporterStorage.swift
+//  AccountManagerExtension.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,22 +17,15 @@
 //  limitations under the License.
 //
 
-import Core
+#if SUBSCRIPTION
+
 import Foundation
+import Subscription
 
-protocol AdAttributionReporterStorage {
-    var wasAttributionReportSuccessful: Bool { get async }
-
-    func markAttributionReportSuccessful() async
-}
-
-final class UserDefaultsAdAttributionReporterStorage: AdAttributionReporterStorage {
-    @MainActor
-    @UserDefaultsWrapper(key: .appleAdAttributionReportCompleted, defaultValue: false)
-    var wasAttributionReportSuccessful: Bool
-
-    @MainActor
-    func markAttributionReportSuccessful() async {
-        wasAttributionReportSuccessful = true
+public extension AccountManager {
+    convenience init() {
+        self.init(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
     }
 }
+
+#endif

@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "jacek/report-on-toggle",
-        "revision" : "94328e6d65d33acea4b9cfeb5aecf2640010f7e8"
+        "revision" : "bd6f55009a9b48af06ee391e8c1a088a1f584a7f"
       }
     },
     {
@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "branch" : "02-22-simple_report_screen",
-        "revision" : "505d19b0e79997db8c1789ed5dff534293f345a6"
+        "revision" : "43a6e1c1864846679a254e60c91332c3fbd922ee",
+        "version" : "3.3.0"
       }
     },
     {

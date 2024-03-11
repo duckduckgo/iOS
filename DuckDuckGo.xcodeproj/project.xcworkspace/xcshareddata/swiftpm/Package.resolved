@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "jacek/report-on-toggle",
-        "revision" : "bd6f55009a9b48af06ee391e8c1a088a1f584a7f"
+        "revision" : "4555c3dbf265f1dca0304c69e7013b9d46a758b3",
+        "version" : "121.0.0"
       }
     },
     {

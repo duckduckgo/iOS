@@ -21,6 +21,7 @@
 import SwiftUI
 import Foundation
 import DesignResourcesKit
+import Core
 
 @available(iOS 15.0, *)
 struct SubscriptionFlowView: View {
@@ -28,11 +29,12 @@ struct SubscriptionFlowView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = SubscriptionFlowViewModel()
     @State private var shouldShowNavigationBar = false
-    @State private var isActive: Bool = false
+    @State private var isActive = false
     @State private var transactionError: SubscriptionFlowViewModel.SubscriptionPurchaseError?
     @State private var errorMessage: SubscriptionErrorMessage = .general
     @State private var shouldPresentError: Bool = false
-    
+    @State private var isFirstOnAppear = true
+
     enum Constants {
         static let daxLogo = "Home"
         static let daxLogoSize: CGFloat = 24.0
@@ -73,7 +75,7 @@ struct SubscriptionFlowView: View {
         .tint(Color(designSystemColor: .textPrimary))
         .environment(\.rootPresentationMode, self.$isActive)
     }
-    
+
     @ViewBuilder
     private var dismissButton: some View {
         Button(action: { viewModel.finalizeSubscriptionFlow() }, label: { Text(UserText.subscriptionCloseButton) })
@@ -133,10 +135,10 @@ struct SubscriptionFlowView: View {
                 viewModel.shouldDismissView = false
             }
         }
-        
+
         .onChange(of: viewModel.userTappedRestoreButton) { _ in
-                isActive = true
-                viewModel.userTappedRestoreButton = false
+            isActive = true
+            viewModel.userTappedRestoreButton = false
         }
         
         .onChange(of: viewModel.transactionError) { value in
@@ -165,6 +167,12 @@ struct SubscriptionFlowView: View {
         }
         
         .onAppear(perform: {
+
+            if isFirstOnAppear && !viewModel.activateSubscriptionOnLoad {
+                isFirstOnAppear = false
+                Pixel.fire(pixel: .privacyProOfferScreenImpression)
+            }
+
             setUpAppearances()
             Task { await viewModel.initializeViewData() }
             
@@ -225,9 +233,8 @@ struct SubscriptionFlowView: View {
                 }
             )
         }
-        
     }
-    
+
     @ViewBuilder
     private var webView: some View {
         
@@ -242,19 +249,16 @@ struct SubscriptionFlowView: View {
             NavigationLink(destination: restoreView, isActive: $isActive) {
                 EmptyView()
             }.isDetailLink(false)
-             
-            
+
             AsyncHeadlessWebView(viewModel: viewModel.webViewModel)
                 .background()
             
             if viewModel.transactionStatus != .idle {
                 PurchaseInProgressView(status: getTransactionStatus())
             }
-
         }
     }
-    
-        
+
     private func setUpAppearances() {
         let navAppearance = UINavigationBar.appearance()
         navAppearance.backgroundColor = UIColor(designSystemColor: .background)
@@ -264,4 +268,13 @@ struct SubscriptionFlowView: View {
     }
 
 }
+
+// Commented out because CI fails if a SwiftUI preview is enabled https://app.asana.com/0/414709148257752/1206774081310425/f
+// @available(iOS 15.0, *)
+// struct SubscriptionFlowView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SubscriptionFlowView()
+//    }
+// }
+
 #endif

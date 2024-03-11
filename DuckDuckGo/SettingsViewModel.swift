@@ -52,8 +52,6 @@ final class SettingsViewModel: ObservableObject {
 #if SUBSCRIPTION
     private var accountManager: AccountManager
     private var signOutObserver: Any?
-    @UserDefaultsWrapper(key: .subscriptionIsActive, defaultValue: false)
-    static private var cachedHasActiveSubscription: Bool
         
     // Sheet Presentation & Navigation
     @Published var isRestoringSubscription: Bool = false
@@ -62,6 +60,8 @@ final class SettingsViewModel: ObservableObject {
     @Published var shouldShowDBP = false
     @Published var shouldShowITP = false
 #endif
+    @UserDefaultsWrapper(key: .subscriptionIsActive, defaultValue: false)
+    static private var cachedHasActiveSubscription: Bool
     
     
 #if NETWORK_PROTECTION
@@ -559,6 +559,7 @@ extension SettingsViewModel {
             if #available(iOS 15, *) {
                 switch NetworkProtectionAccessController().networkProtectionAccessType() {
                 case .inviteCodeInvited, .waitlistInvited:
+                    Pixel.fire(pixel: .privacyProVPNSettings)
                     pushViewController(legacyViewProvider.netP)
                 default:
                     pushViewController(legacyViewProvider.netPWaitlist)

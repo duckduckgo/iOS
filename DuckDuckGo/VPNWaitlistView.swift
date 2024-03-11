@@ -113,6 +113,13 @@ struct VPNWaitlistSignUpView: View {
 
 }
 
+@available(iOS 15.0, *)
+struct VPNWaitlistSignUpView_Previews: PreviewProvider {
+    static var previews: some View {
+        VPNWaitlistSignUpView(requestInFlight: false) { _ in }
+    }
+}
+
 // MARK: - Joined Waitlist Views
 
 @available(iOS 15.0, *)

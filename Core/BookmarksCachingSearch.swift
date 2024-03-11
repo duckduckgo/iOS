@@ -37,30 +37,30 @@ public protocol BookmarksStringSearchResult {
 }
 
 public protocol BookmarksSearchStore {
-    
+
     var dataDidChange: AnyPublisher<Void, Never> { get }
-    
+
     func bookmarksAndFavorites(completion: @escaping ([BookmarksCachingSearch.ScoredBookmark]) -> Void)
 }
 
 public class CoreDataBookmarksSearchStore: BookmarksSearchStore {
-    
+
     private let bookmarksStore: CoreDataDatabase
-    
+
     private let subject = PassthroughSubject<Void, Never>()
     public var dataDidChange: AnyPublisher<Void, Never>
-    
+
     public init(bookmarksStore: CoreDataDatabase) {
         self.bookmarksStore = bookmarksStore
         self.dataDidChange = self.subject.eraseToAnyPublisher()
-        
+
         registerForCoreDataStorageNotifications()
     }
-    
+
     public func bookmarksAndFavorites(completion: @escaping ([BookmarksCachingSearch.ScoredBookmark]) -> Void) {
-        
+
         let context = bookmarksStore.makeContext(concurrencyType: .privateQueueConcurrencyType)
-        
+
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "BookmarkEntity")
         fetchRequest.predicate = NSPredicate(
             format: "%K = false AND %K == NO",
@@ -72,7 +72,7 @@ public class CoreDataBookmarksSearchStore: BookmarksSearchStore {
                                           #keyPath(BookmarkEntity.url),
                                           #keyPath(BookmarkEntity.objectID)]
         fetchRequest.relationshipKeyPathsForPrefetching = [#keyPath(BookmarkEntity.favoriteFolders)]
-        
+
         context.perform {
             let result = try? context.fetch(fetchRequest) as? [[String: Any]]
 
@@ -83,14 +83,14 @@ public class CoreDataBookmarksSearchStore: BookmarksSearchStore {
             }
         }
     }
-    
+
     private func registerForCoreDataStorageNotifications() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(coreDataDidSave),
                                                name: NSManagedObjectContext.didSaveObjectsNotification,
                                                object: nil)
     }
-    
+
     @objc func coreDataDidSave(notification: Notification) {
         guard let externalContext = notification.object as? NSManagedObjectContext,
               externalContext.persistentStoreCoordinator == bookmarksStore.coordinator else { return }
@@ -106,20 +106,20 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
         public let url: URL
         public let isFavorite: Bool
         var score: Int
-        
+
         init(objectID: NSManagedObjectID, title: String, url: URL, isFavorite: Bool) {
             self.objectID = objectID
             self.title = title
             self.url = url
             self.isFavorite = isFavorite
-            
+
             if isFavorite {
                 score = 0
             } else {
                 score = -1
             }
         }
-        
+
         init?(bookmark: [String: Any]) {
             guard let title = bookmark[#keyPath(BookmarkEntity.title)] as? String,
                   let urlString = bookmark[#keyPath(BookmarkEntity.url)] as? String,
@@ -127,7 +127,7 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
                   let objectID = bookmark[#keyPath(BookmarkEntity.objectID)] as? NSManagedObjectID else {
                 return nil
             }
-            
+
             self.init(objectID: objectID,
                       title: title,
                       url: url,
@@ -138,7 +138,7 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
             return Self.init(objectID: objectID, title: title, url: url, isFavorite: !isFavorite)
         }
     }
-    
+
     private let bookmarksStore: BookmarksSearchStore
     private var cancellable: AnyCancellable?
 
@@ -147,17 +147,17 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
         self.cancellable = bookmarksStore.dataDidChange.sink { [weak self] _ in
             self?.refreshCache()
         }
-        
+
         loadCache()
     }
 
     public var hasData: Bool {
         return cachedBookmarksAndFavorites.count > 0
     }
-    
+
     private var cachedBookmarksAndFavorites = [ScoredBookmark]()
     private var cacheLoadedCondition = RunLoop.ResumeCondition()
-    
+
     private func loadCache() {
         bookmarksStore.bookmarksAndFavorites { result in
             self.cachedBookmarksAndFavorites = result
@@ -166,7 +166,7 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
             }
         }
     }
-    
+
     private var bookmarksAndFavorites: [ScoredBookmark] {
         RunLoop.current.run(until: cacheLoadedCondition)
         return cachedBookmarksAndFavorites
@@ -182,25 +182,25 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
     private func score(query: String, input: [ScoredBookmark]) -> [ScoredBookmark] {
         let query = query.lowercased()
         let tokens = query.split(separator: " ").filter { !$0.isEmpty }.map { String($0).lowercased() }
-        
+
         var input = input
         var result = [ScoredBookmark]()
-        
+
         for index in 0..<input.count {
             let entry = input[index]
             let title = entry.title.lowercased()
-            
+
             // Exact matches - full query
             if title.starts(with: query) { // High score for exact match from the beginning of the title
                 input[index].score += 200
             } else if title.contains(" \(query)") { // Exact match from the beginning of the word within string.
                 input[index].score += 100
             }
-            
+
             let domain = entry.url.host?.droppingWwwPrefix() ?? ""
-            
+
             // Tokenized matches
-            
+
             if tokens.count > 1 {
                 var matchesAllTokens = true
                 for token in tokens {
@@ -210,11 +210,11 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
                         break
                     }
                 }
-                
+
                 if matchesAllTokens {
                     // Score tokenized matches
                     input[index].score += 10
-                    
+
                     // Boost score if first token matches:
                     if let firstToken = tokens.first { // domain - high score boost
                         if domain.starts(with: firstToken) {
@@ -242,9 +242,9 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
         guard hasData else {
             return []
         }
-        
+
         let bookmarks = bookmarksAndFavorites
-                    
+
         let trimmed = query.trimmingWhitespace()
         var finalResult = self.score(query: trimmed, input: bookmarks)
         finalResult = finalResult.sorted { $0.score > $1.score }

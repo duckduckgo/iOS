@@ -66,7 +66,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
             case .success(let subscription):
                 subscriptionInfo = subscription
                 updateSubscriptionsStatusMesage(status: subscription.status, date: subscription.expiresOrRenewsAt, product: subscription.productId)
-            case .failure(let error):
+            case .failure:
                 AccountManager().signOut()
                 shouldDismissView = true
             }
@@ -76,13 +76,11 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     func manageSubscription() {
         switch subscriptionInfo?.platform {
         case .apple:
-            // manageAppleSubscription()
-            // manageGoogleSubscription()
             Task { await manageStripeSubscription() }
         case .google:
             manageGoogleSubscription()
         case .stripe:
-            manageStripeSubscription()
+            Task { await manageStripeSubscription() }
         default:
             return
         }
@@ -144,7 +142,6 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         Task {
             let serviceResponse = await  SubscriptionService.getCustomerPortalURL(accessToken: token, externalID: externalID)
             if case .success(let response) = serviceResponse {
-                // guard let url = URL(string: "https://billing.stripe.com/p/session/test_YWNjdF8xTkRRNjRJMGVCNGoxTUp1LF9QaWVGRm4xTkczS0tDaXVzRkhlTkNRRmFFTWVCWDBN01000Qwz0c2U") else { return }
                 guard let url = URL(string: response.customerPortalUrl) else { return }
                 openURL(url)
             }

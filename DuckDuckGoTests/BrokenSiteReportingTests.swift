@@ -114,7 +114,8 @@ final class BrokenSiteReportingTests: XCTestCase {
                                       model: test.model ?? "",
                                       errors: errors,
                                       httpStatusCodes: test.httpErrorCodes ?? [],
-                                      didOpenReportInfo: false)
+                                      didOpenReportInfo: false, 
+                                      toggleReportCounter: nil)
 
         let reporter = BrokenSiteReporter(pixelHandler: { params in
             

@@ -5124,9 +5124,11 @@
 				85CA53A724BB342B00A6288C /* Favicons */,
 				EE50052C29C3692700AE0773 /* FeatureFlags */,
 				8512BCBF2061B6110085E862 /* global.swift */,
+				858479C72B8792C900D156C1 /* History */,
 				F143C2E71E4A4CD400CFDE3A /* Info.plist */,
 				98B001AE251EABB40090EC07 /* InfoPlist.strings */,
 				F18608DE1E5E648100361C30 /* Javascript */,
+				EE7A92852AC6DE2500832A36 /* NetworkProtection */,
 				CBAA195B27C3982A00A4BD49 /* PrivacyFeatures.swift */,
 				CBAA195627BFDD9800A4BD49 /* SmarterEncryption */,
 				F1134EA71F3E2B3500B73467 /* Statistics */,
@@ -10037,7 +10039,7 @@
 			repositoryURL = "https://github.com/scinfu/SwiftSoup";
 			requirement = {
 				kind = exactVersion;
-				version = 2.7.0;
+				version = 2.7.1;
 			};
 		};
 		F1D43AF82B99C1D300BAB743 /* XCRemoteSwiftPackageReference "BareBonesBrowser" */ = {

@@ -32,7 +32,7 @@ public class BookmarksModelsErrorHandling: EventMapping<BookmarksModelError> {
             var domainEvent: Pixel.Event?
             var params = [String: String]()
             switch event {
-                
+
             case .bookmarkFolderExpected:
                 domainEvent = .bookmarkFolderExpected
             case .bookmarksListIndexNotMatchingBookmark:
@@ -49,12 +49,12 @@ public class BookmarksModelsErrorHandling: EventMapping<BookmarksModelError> {
                 domainEvent = .indexOutOfRange(model)
             case .saveFailed(let model):
                 domainEvent = .saveFailed(model)
-                
+
                 if let error = error as? NSError {
                     let processedErrors = CoreDataErrorsParser.parse(error: error)
                     params = processedErrors.errorPixelParameters
                 }
-                
+
             case .missingParent(let object):
                 domainEvent = .missingParent(object)
             }
@@ -68,14 +68,14 @@ public class BookmarksModelsErrorHandling: EventMapping<BookmarksModelError> {
             }
         }
     }
-    
+
     override init(mapping: @escaping EventMapping<BookmarksModelError>.Mapping) {
         fatalError("Use init()")
     }
 }
 
 public extension BookmarkEditorViewModel {
-    
+
     convenience init(editingEntityID: NSManagedObjectID,
                      bookmarksDatabase: CoreDataDatabase,
                      favoritesDisplayMode: FavoritesDisplayMode,
@@ -84,9 +84,9 @@ public extension BookmarkEditorViewModel {
                   bookmarksDatabase: bookmarksDatabase,
                   favoritesDisplayMode: favoritesDisplayMode,
                   errorEvents: BookmarksModelsErrorHandling(syncService: syncService))
-        
+
     }
-    
+
     convenience init(creatingFolderWithParentID parentFolderID: NSManagedObjectID?,
                      bookmarksDatabase: CoreDataDatabase,
                      favoritesDisplayMode: FavoritesDisplayMode,
@@ -99,7 +99,7 @@ public extension BookmarkEditorViewModel {
 }
 
 public extension BookmarkListViewModel {
-    
+
     convenience init(bookmarksDatabase: CoreDataDatabase,
                      parentID: NSManagedObjectID?,
                      favoritesDisplayMode: FavoritesDisplayMode,
@@ -112,14 +112,14 @@ public extension BookmarkListViewModel {
 }
 
 public extension FavoritesListViewModel {
-    
+
     convenience init(bookmarksDatabase: CoreDataDatabase, favoritesDisplayMode: FavoritesDisplayMode) {
         self.init(bookmarksDatabase: bookmarksDatabase, errorEvents: BookmarksModelsErrorHandling(), favoritesDisplayMode: favoritesDisplayMode)
     }
 }
 
 public extension MenuBookmarksViewModel {
-    
+
     convenience init(bookmarksDatabase: CoreDataDatabase, syncService: DDGSyncing?) {
         self.init(bookmarksDatabase: bookmarksDatabase, errorEvents: BookmarksModelsErrorHandling(syncService: syncService))
     }

@@ -21,9 +21,9 @@ import WebKit
 import UserScript
 
 public protocol LoginFormDetectionDelegate: NSObjectProtocol {
-    
+
     func loginFormDetectionUserScriptDetectedLoginForm(_ script: LoginFormDetectionUserScript)
-    
+
 }
 
 public class LoginFormDetectionUserScript: NSObject, UserScript {
@@ -33,15 +33,15 @@ public class LoginFormDetectionUserScript: NSObject, UserScript {
             "$IS_DEBUG$": isDebugBuild ? "true" : "false"
         ])
     }()
-    
+
     public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart
-    
+
     public var forMainFrameOnly: Bool = false
-    
+
     public var messageNames: [String] = [ "loginFormDetected" ]
-    
+
     public weak var delegate: LoginFormDetectionDelegate?
-    
+
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         delegate?.loginFormDetectionUserScriptDetectedLoginForm(self)
     }

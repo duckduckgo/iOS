@@ -56,24 +56,16 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }()
     
     @MainActor
-    func fetchAndUpdateSubscriptionDetails() {
+    func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad) {
         Task {
-            guard let token = accountManager.accessToken else { return }
-
-            if let cachedDate = SubscriptionService.cachedGetSubscriptionResponse?.expiresOrRenewsAt,
-               let cachedStatus =  SubscriptionService.cachedGetSubscriptionResponse?.status,
-               let productID =  SubscriptionService.cachedGetSubscriptionResponse?.productId {
-                updateSubscriptionDetails(status: cachedStatus, date: cachedDate, product: productID)
-            }
-
-            if case .success(let subscription) = await SubscriptionService.getSubscription(accessToken: token) {
-                if !subscription.isActive {
-                    AccountManager().signOut()
-                    shouldDismissView = true
-                    return
-                } else {
-                    updateSubscriptionDetails(status: subscription.status, date: subscription.expiresOrRenewsAt, product: subscription.productId)
-                }
+            guard let token = self.accountManager.accessToken else { return }
+            let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
+            switch subscriptionResult {
+            case .success(let subscription):
+                updateSubscriptionDetails(status: subscription.status, date: subscription.expiresOrRenewsAt, product: subscription.productId)
+            case .failure(let error):
+                AccountManager().signOut()
+                shouldDismissView = true
             }
         }
     }
@@ -86,11 +78,13 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         }
     }
     
+    // Re-fetch subscription from server ignoring cache
+    // This ensure that if the user changed something on the Apple view, state will be updated
     private func setupSubscriptionUpdater() {
         subscriptionUpdateTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { [weak self] _ in
             guard let strongSelf = self else { return }
             Task {
-                await strongSelf.fetchAndUpdateSubscriptionDetails()
+                await strongSelf.fetchAndUpdateSubscriptionDetails(cachePolicy: .reloadIgnoringLocalCacheData)
             }
         }
     }
@@ -104,7 +98,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     func removeSubscription() {
         AccountManager().signOut()
-        let messageView = ActionMessageView()
+        _ = ActionMessageView()
         ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation,
                                   presentationLocation: .withoutBottomBar)
     }

@@ -94,6 +94,11 @@ struct SettingsSubscriptionView: View {
                                action: { isShowingsubScriptionFlow = true },
                                isButton: true )
             
+            // Subscription Restore
+            .sheet(isPresented: $isShowingsubScriptionFlow,
+                   onDismiss: { Task { viewModel.onAppear() } },
+                   content: { SubscriptionFlowView(viewModel: subscriptionFlowViewModel).interactiveDismissDisabled() })
+            
             SettingsCustomCell(content: { iHaveASubscriptionView },
                                action: {
                                     isShowingsubScriptionFlow = true
@@ -139,12 +144,20 @@ struct SettingsSubscriptionView: View {
                                  subtitle: UserText.settingsPProDBPSubTitle,
                                  action: { isShowingDBP.toggle() }, isButton: true)
                 
+                .sheet(isPresented: $isShowingDBP) {
+                    SubscriptionPIRView()
+                }
+                
             }
             
             if viewModel.shouldShowITP {
                 SettingsCellView(label: UserText.settingsPProITRTitle,
                                  subtitle: UserText.settingsPProITRSubTitle,
                                  action: { isShowingITP.toggle() }, isButton: true)
+                
+                .sheet(isPresented: $isShowingITP) {
+                    SubscriptionITPView()
+                }
                 
             }
 
@@ -153,12 +166,7 @@ struct SettingsSubscriptionView: View {
             }
            
         }
-        .sheet(isPresented: $isShowingDBP) {
-            SubscriptionPIRView()
-        }
-        .sheet(isPresented: $isShowingITP) {
-            SubscriptionITPView()
-        }
+
     }
     
     var body: some View {
@@ -181,18 +189,6 @@ struct SettingsSubscriptionView: View {
                 }
             
             }
-            // Subscription Restore
-            .sheet(isPresented: $isShowingsubScriptionFlow) {
-                SubscriptionFlowView(viewModel: subscriptionFlowViewModel).interactiveDismissDisabled()
-            }
-            
-            
-            // Refresh subscription when dismissing the Subscription Flow
-            .onChange(of: isShowingsubScriptionFlow, perform: { value in
-                if !value {
-                    Task { viewModel.onAppear() }
-                }
-            })
             
             .onChange(of: viewModel.shouldNavigateToDBP, perform: { value in
                 if value {

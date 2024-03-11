@@ -248,8 +248,9 @@ extension SettingsViewModel {
     // This manual (re)initialization will go away once appSettings and
     // other dependencies are observable (Such as AppIcon and netP)
     // and we can use subscribers (Currently called from the view onAppear)
-    private func initState() {
-        self.state = SettingsState(
+    @MainActor
+    private func initState() async {
+        self.state = await SettingsState(
             appTheme: appSettings.currentThemeName,
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: appSettings.currentFireButtonAnimation,
@@ -275,15 +276,6 @@ extension SettingsViewModel {
         
         setupSubscribers()
         
-        #if SUBSCRIPTION
-        if #available(iOS 15, *) {
-            Task {
-                if state.subscription.enabled {
-                    await setupSubscriptionEnvironment()
-                }
-            }
-        }
-        #endif
     }
     
     private func getNetworkProtectionState() -> SettingsState.NetworkProtection {
@@ -297,14 +289,24 @@ extension SettingsViewModel {
         return SettingsState.NetworkProtection(enabled: enabled, status: "")
     }
     
-    private func getSubscriptionState() -> SettingsState.Subscription {
+    private func getSubscriptionState() async -> SettingsState.Subscription {
         var enabled = false
         var canPurchase = false
-        let hasActiveSubscription = Self.cachedHasActiveSubscription
-        #if SUBSCRIPTION
+        var hasActiveSubscription = false
+    
+#if SUBSCRIPTION
+        if #available(iOS 15, *) {
             enabled = featureFlagger.isFeatureOn(.subscription)
             canPurchase = SubscriptionPurchaseEnvironment.canPurchase
-        #endif
+            await setupSubscriptionEnvironment()
+            if let token = AccountManager().accessToken {
+                let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token)
+                if case .success(let subscription) = subscriptionResult {
+                    hasActiveSubscription = subscription.isActive
+                }
+            }
+        }
+#endif
         return SettingsState.Subscription(enabled: enabled,
                                         canPurchase: canPurchase,
                                         hasActiveSubscription: hasActiveSubscription)
@@ -354,9 +356,6 @@ extension SettingsViewModel {
         
         case .success(let subscription) where subscription.isActive:
             
-            // Cache Subscription state
-            cacheSubscriptionState(active: true)
-            
             // Check entitlements and update UI accordingly
             let entitlements: [Entitlement.ProductName] = [.identityTheftRestoration, .dataBrokerProtection, .networkProtection]
             for entitlement in entitlements {
@@ -382,18 +381,11 @@ extension SettingsViewModel {
     @available(iOS 15.0, *)
     private func signOutUser() {
         AccountManager().signOut()
-        cacheSubscriptionState(active: false)
         setupSubscriptionPurchaseOptions()
-    }
-    
-    private func cacheSubscriptionState(active: Bool) {
-        self.state.subscription.hasActiveSubscription = active
-        Self.cachedHasActiveSubscription = active
     }
     
     @available(iOS 15.0, *)
     private func setupSubscriptionPurchaseOptions() {
-        cacheSubscriptionState(active: false)
         PurchaseManager.shared.$availableProducts
             .receive(on: RunLoop.main)
             .sink { [weak self] products in
@@ -470,7 +462,7 @@ extension SettingsViewModel {
 extension SettingsViewModel {
     
     func onAppear() {
-        initState()
+        Task { await initState() }
         Task { await MainActor.run { navigateOnAppear() } }
     }
     

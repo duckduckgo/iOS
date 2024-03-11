@@ -33,5 +33,5 @@ class HistoryManager {
     func isHistoryFeatureEnabled() -> Bool {
         return privacyConfig.isEnabled(featureKey: .history) && variantManager.isSupported(feature: .history)
     }
-    
+
 }

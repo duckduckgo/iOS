@@ -23,7 +23,7 @@ import BrowserServicesKit
 public class InternalUserStore: InternalUserStoring {
     public init() {
     }
-    
+
     @UserDefaultsWrapper(key: .featureFlaggingDidVerifyInternalUser, defaultValue: false)
     public var isInternalUser: Bool
 }

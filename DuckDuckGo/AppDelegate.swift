@@ -452,6 +452,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         presentExpiredEntitlementNotification()
 #endif
+
+        updateSubscriptionStatus()
+    }
+
+    func updateSubscriptionStatus() {
+#if SUBSCRIPTION
+        Task {
+            guard let token = AccountManager().accessToken else {
+                return
+            }
+            let result = await SubscriptionService.getSubscription(accessToken: token)
+
+            switch result {
+            case .success(let success):
+                if success.isActive {
+                    DailyPixel.fire(pixel: .privacyProSubscriptionActive)
+                }
+            case .failure: break
+            }
+        }
+#endif
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

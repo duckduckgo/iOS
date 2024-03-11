@@ -42,7 +42,7 @@ public struct BookmarksExporter {
 
     func exportBookmarksToContent() throws -> String {
         var content = [Template.header]
-        
+
         let context = coreDataStorage.makeContext(concurrencyType: .mainQueueConcurrencyType)
         guard let rootFolder = BookmarkUtils.fetchRootFolder(context) else {
             throw BookmarksExporterError.brokenDatabaseStructure

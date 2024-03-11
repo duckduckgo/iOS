@@ -22,47 +22,47 @@ import WebKit
 import UserScript
 
 public class DebugUserScript: NSObject, UserScript {
-    
+
     struct MessageNames {
-        
+
         static let signpost = "signpost"
         static let log = "log"
-        
+
     }
-    
+
     public lazy var source: String = {
         return ""
     }()
-    
+
     public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart
-    
+
     public var forMainFrameOnly: Bool = false
-    
+
     public var messageNames: [String] = [ MessageNames.signpost, MessageNames.log ]
-    
+
     public weak var instrumentation: TabInstrumentation?
 
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         switch message.name {
-            
+
         case MessageNames.signpost:
             handleSignpost(message: message)
-            
+
         case MessageNames.log:
             handleLog(message: message)
-            
+
         default: break
         }
     }
-    
+
     private func handleLog(message: WKScriptMessage) {
         os_log("%s", log: .generalLog, type: .debug, String(describing: message.body))
     }
-    
+
     private func handleSignpost(message: WKScriptMessage) {
         guard let dict = message.body as? [String: Any],
         let event = dict["event"] as? String else { return }
-        
+
         if event == "Request Allowed" {
             if let elapsedTimeInMs = dict["time"] as? Double,
                 let url = dict["url"] as? String {

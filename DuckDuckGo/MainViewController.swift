@@ -1967,7 +1967,11 @@ extension MainViewController: TabDelegate {
     func tabDidRequestReportBrokenSite(tab: TabViewController) {
         segueToReportBrokenSite()
     }
-    
+
+    func tab(_ tab: TabViewController, didRequestToggleReportWithCompletionHandler completionHandler: @escaping (Bool) -> Void) {
+        segueToReportBrokenSite(mode: .toggleReport(completionHandler: completionHandler))
+    }
+
     func tabDidRequestBookmarks(tab: TabViewController) {
         Pixel.fire(pixel: .bookmarksButtonPressed,
                    withAdditionalParameters: [PixelParameters.originatedFromMenu: "1"])

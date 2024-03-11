@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "anh/netp-vpnsettings-clean-up",
-        "revision" : "4990859bb104c0c0cb2078707e5bb763115dc500"
+        "revision" : "cea7c43e5ab1d7484ab29abeda429350ed8a7dc1",
+        "version" : "120.0.0"
       }
     },
     {

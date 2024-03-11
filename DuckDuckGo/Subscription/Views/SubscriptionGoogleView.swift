@@ -32,7 +32,7 @@ struct SubscriptionGoogleView: View {
     
     var body: some View {
         ZStack {
-            Color(designSystemColor: .panel)
+            Color(designSystemColor: .background)
                            .edgesIgnoringSafeArea(.all)
             VStack(alignment: .center) {
                 Image("google-play").padding(.top, Constants.padding)
@@ -45,8 +45,8 @@ struct SubscriptionGoogleView: View {
                 Spacer()
             }
         }
-        .background(Color(designSystemColor: .background))
         .navigationBarTitle(UserText.subscriptionManageBillingGoogleTitle, displayMode: .inline)
+        .applyInsetGroupedListStyle()
     }
         
 }

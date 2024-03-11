@@ -10033,7 +10033,7 @@
 			repositoryURL = "https://github.com/scinfu/SwiftSoup";
 			requirement = {
 				kind = exactVersion;
-				version = 2.7.0;
+				version = 2.7.1;
 			};
 		};
 		F1D43AF82B99C1D300BAB743 /* XCRemoteSwiftPackageReference "BareBonesBrowser" */ = {

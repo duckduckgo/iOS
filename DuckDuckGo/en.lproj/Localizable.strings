@@ -2257,7 +2257,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "toast.protection.disabled" = "Privacy Protection disabled for %@";
 
 /* Confirmation of an action - populated with a domain name */
-"toast.protection.disabled.and.toggle.report.sent" = "Privacy Protection disabled for %@ and report sent.";
+"toast.protection.disabled.and.toggle.report.sent" = "Privacy Protections disabled for %@ and report sent.";
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Privacy Protection enabled for %@";

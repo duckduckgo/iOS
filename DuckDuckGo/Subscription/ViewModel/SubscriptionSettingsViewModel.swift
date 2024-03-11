@@ -64,7 +64,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
             let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
             switch subscriptionResult {
             case .success(let subscription):
-                updateSubscriptionDetails(status: subscription.status, date: subscription.expiresOrRenewsAt, product: subscription.productId)
+                subscriptionInfo = subscription
+                updateSubscriptionsStatusMesage(status: subscription.status, date: subscription.expiresOrRenewsAt, product: subscription.productId)
             case .failure(let error):
                 AccountManager().signOut()
                 shouldDismissView = true
@@ -75,7 +76,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     func manageSubscription() {
         switch subscriptionInfo?.platform {
         case .apple:
-            manageAppleSubscription()
+            // manageAppleSubscription()
+            manageGoogleSubscription()
         case .google:
             manageGoogleSubscription()
         case .stripe:
@@ -105,9 +107,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
             }
         }
     }
-
     
-    private func updateSubscriptionDetails(status: Subscription.Status, date: Date, product: String) {
+    private func updateSubscriptionsStatusMesage(status: Subscription.Status, date: Date, product: String) {
         let statusString = (status == .autoRenewable) ? UserText.subscriptionRenews : UserText.subscriptionExpires
         self.subscriptionDetails = UserText.subscriptionInfo(status: statusString, expiration: dateFormatter.string(from: date))
         self.subscriptionType = product == Constants.monthlyProductID ? UserText.subscriptionMonthly : UserText.subscriptionAnnual
@@ -126,11 +127,11 @@ final class SubscriptionSettingsViewModel: ObservableObject {
                    do {
                        try await AppStore.showManageSubscriptions(in: windowScene)
                    } catch {
-                       openSubscriptionManagementURL()
+                       openAppleSubscriptionURL()
                    }
             }
            } else {
-               openSubscriptionManagementURL()
+               openAppleSubscriptionURL()
            }
     }
     
@@ -142,7 +143,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         
     }
 
-    private func openSubscriptionManagementURL() {
+    private func openAppleSubscriptionURL() {
         let url = URL.manageSubscriptionsInAppStoreAppURL
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)

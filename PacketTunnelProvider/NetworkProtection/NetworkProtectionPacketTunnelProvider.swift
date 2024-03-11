@@ -321,8 +321,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 #if SUBSCRIPTION && ALPHA
         SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
 
-        let result = await AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)).hasEntitlement(for: .networkProtection, 
-                                                                                                                    cachePolicy: .reloadIgnoringLocalCacheData)
+        let result = await AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+            .hasEntitlement(for: .networkProtection, cachePolicy: .reloadIgnoringLocalCacheData)
         switch result {
         case .success(let hasEntitlement):
             return .success(hasEntitlement)

@@ -1,4 +1,3 @@
-
 DuckDuckGo-appen gir det mest omfattende personvernet på nettet med et trykk på en knapp. Med én nedlasting får du en hverdagsnettleser som tilbyr sømløs beskyttelse mens du søker og surfer samt tilgang til sporingsbeskyttelse på e-poster du får. Mange av disse beskyttelsene tilbys ikke som standard i de fleste populære nettleserne. 
 
 HØYDEPUNKTER 
@@ -19,9 +18,7 @@ Vi har også mange beskyttelser som ikke er tilgjengelige i de fleste nettlesere
 PERSONVERNKONTROLLER I HVERDAGEN
 • Trykk på Fire Button-knappen og brenn data – tøm faner og nettleserdata med Fire Button.
 
-• Signaliser personvernreferansene dine med GPC (Global Privacy Control) – som er innebygd i appen og uttrykker automatisk reservasjonsretten din ved å gi beskjed til nettstedene om at de ikke kan selge eller dele personopplysningene dine. Om dette kan brukes til å håndheve dine juridiske rettigheter (for eksempel i henhold til nåværende eller fremtidige CCPA- og GDPR-krav), avhenger av lovene i din jurisdiksjon. 
-
-Merknad om vår beskyttelse mot tredjeparts sporingslasting etter annonseklikk på DuckDuckGo: I utgangspunktet går vår beskyttelse mot tredjepartssporing langt utover hva du får i de fleste populære nettlesere, men vi jobber uavlatelig med å gjøre det mer omfattende. For øyeblikket er det slik at hvis en annonsør vil registrere konverteringer på sitt eget nettsted for våre private DuckDuckGo-søkeannonser, forhindrer ikke beskyttelsen mot tredjeparts sporingslasting bat.bing.com-forespørsler i å lastes på annonsørens nettsted etter DuckDuckGo-annonseklikk, men disse forespørslene stoppes i alle andre sammenhenger. Dette er fordi DuckDuckGos Private Search-annonsering skjer i samarbeid med Microsoft. Dette samarbeidet innebærer at du ser annonser anonymt på DuckDuckGo, og Microsoft har forpliktet seg til å ikke profilere brukernes annonseklikk.  
+• Signaliser personvernreferansene dine med GPC (Global Privacy Control) – som er innebygd i appen og uttrykker automatisk reservasjonsretten din ved å gi beskjed til nettstedene om at de ikke kan selge eller dele personopplysningene dine. Om dette kan brukes til å håndheve dine juridiske rettigheter (for eksempel i henhold til nåværende eller fremtidige CCPA- og GDPR-krav), avhenger av lovene i din jurisdiksjon.  
  
 Les mer om dette og sporingsbeskyttelsene våre på https://help.duckduckgo.com/privacy/web-tracking-protections/  
 

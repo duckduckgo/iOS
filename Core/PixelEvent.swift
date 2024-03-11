@@ -542,8 +542,6 @@ extension Pixel {
 
         case appRatingPromptFetchError
 
-        case appleAdAttribution
-
         case userBehaviorReloadTwice
         case userBehaviorReloadAndRestart
         case userBehaviorReloadAndFireButton
@@ -1062,9 +1060,6 @@ extension Pixel.Event {
         case .debugReturnUserUpdateATB: return "m_debug_return_user_update_atb"
             
         case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
-            
-        // MARK: - Apple Ad Attribution
-        case .appleAdAttribution: return "m_apple-ad-attribution"
 
         // MARK: - User behavior
         case .userBehaviorReloadTwice: return "m_reload-twice"

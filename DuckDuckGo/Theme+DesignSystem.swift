@@ -77,7 +77,7 @@ extension Theme {
     var searchBarTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
 
     var navigationBarTitleColor: UIColor { UIColor(designSystemColor: .textPrimary) }
-    var tableHeaderTextColor: UIColor {UIColor(designSystemColor: .textSecondary) }
+    var tableHeaderTextColor: UIColor { UIColor(designSystemColor: .textSecondary) }
 
     var faviconBackgroundColor: UIColor { UIColor(designSystemColor: .surface) }
 

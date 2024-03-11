@@ -52,7 +52,6 @@ final class SettingsViewModel: ObservableObject {
 #if SUBSCRIPTION
     private var accountManager: AccountManager
     private var signOutObserver: Any?
-    @UserDefaultsWrapper(key: .subscriptionIsActive, defaultValue: false)
         
     // Sheet Presentation & Navigation
     @Published var isRestoringSubscription: Bool = false
@@ -61,6 +60,7 @@ final class SettingsViewModel: ObservableObject {
     @Published var shouldShowDBP = false
     @Published var shouldShowITP = false
 #endif
+    @UserDefaultsWrapper(key: .subscriptionIsActive, defaultValue: false)
     static private var cachedHasActiveSubscription: Bool
     
     

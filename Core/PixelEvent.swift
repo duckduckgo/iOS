@@ -542,6 +542,11 @@ extension Pixel {
         
         case appRatingPromptFetchError
 
+        case protectionToggledOffBreakageReport
+        case toggleProtectionsDailyCount
+        case toggleReportDoNotSend
+        case toggleReportDismiss
+
         case userBehaviorReloadTwice
         case userBehaviorReloadAndRestart
         case userBehaviorReloadAndFireButton
@@ -549,6 +554,16 @@ extension Pixel {
         case userBehaviorReloadAndTogglePrivacyControls
         case userBehaviorFireButtonAndRestart
         case userBehaviorFireButtonAndTogglePrivacyControls
+
+        // MARK: History
+        case historyStoreLoadFailed
+        case historyRemoveFailed
+        case historyReloadFailed
+        case historyCleanEntriesFailed
+        case historyCleanVisitsFailed
+        case historySaveFailed
+        case historyInsertVisitFailed
+        case historyRemoveVisitsFailed
 
         // MARK: Privacy pro
         case privacyProSubscriptionActive
@@ -1090,6 +1105,12 @@ extension Pixel.Event {
             // MARK: - Return user measurement
         case .debugReturnUserAddATB: return "m_debug_return_user_add_atb"
         case .debugReturnUserUpdateATB: return "m_debug_return_user_update_atb"
+            
+        // MARK: - Toggle reports
+        case .protectionToggledOffBreakageReport: return "m_protection-toggled-off-breakage-report"
+        case .toggleProtectionsDailyCount: return "m_toggle-protections-daily-count"
+        case .toggleReportDoNotSend: return "m_toggle-report-do-not-send"
+        case .toggleReportDismiss: return "m_toggle-report-dismiss"
 
         case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
 
@@ -1101,6 +1122,16 @@ extension Pixel.Event {
         case .userBehaviorReloadAndTogglePrivacyControls: return "m_reload-and-toggle-privacy-controls"
         case .userBehaviorFireButtonAndRestart: return "m_fire-button-and-restart"
         case .userBehaviorFireButtonAndTogglePrivacyControls: return "m_fire-button-and-toggle-privacy-controls"
+
+        // MARK: - History debug
+        case .historyStoreLoadFailed: return "m_debug_history-store-load-failed"
+        case .historyRemoveFailed: return "m_debug_history-remove-failed"
+        case .historyReloadFailed: return "m_debug_history-reload-failed"
+        case .historyCleanEntriesFailed: return "m_debug_history-clean-entries-failed"
+        case .historyCleanVisitsFailed: return "m_debug_history-clean-visits-failed"
+        case .historySaveFailed: return "m_debug_history-save-failed"
+        case .historyInsertVisitFailed: return "m_debug_history-insert-visit-failed"
+        case .historyRemoveVisitsFailed: return "m_debug_history-remove-visits-failed"
 
             // MARK: Privacy pro
         case .privacyProSubscriptionActive: return "m_privacy-pro_app_subscription_active"

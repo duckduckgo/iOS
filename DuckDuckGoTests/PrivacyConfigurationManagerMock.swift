@@ -101,6 +101,7 @@ class PrivacyConfigurationMock: PrivacyConfiguration {
 }
 
 class PrivacyConfigurationManagerMock: PrivacyConfigurationManaging {
+
     var embeddedConfigData: BrowserServicesKit.PrivacyConfigurationManager.ConfigurationData {
         fatalError("not implemented")
     }
@@ -120,6 +121,7 @@ class PrivacyConfigurationManagerMock: PrivacyConfigurationManaging {
 
     var privacyConfig: PrivacyConfiguration = PrivacyConfigurationMock()
     var internalUserDecider: InternalUserDecider = DefaultInternalUserDecider()
+    var toggleProtectionsCounter: ToggleProtectionsCounter = ToggleProtectionsCounter(eventReporting: nil)
 
     var reloadFired = [(etag: String?, data: Data?)]()
     var reloadResult: PrivacyConfigurationManager.ReloadResult = .embedded

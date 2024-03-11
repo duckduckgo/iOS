@@ -95,27 +95,29 @@ final class BrokenSiteReportingTests: XCTestCase {
             errors = errs.map { MockError($0) }
         }
 
-        let websiteBreakage = WebsiteBreakage(siteUrl: URL(string: test.siteURL)!,
-                                              category: test.category,
-                                              description: test.providedDescription,
-                                              osVersion: test.os ?? "",
-                                              manufacturer: test.manufacturer ?? "",
-                                              upgradedHttps: test.wasUpgraded,
-                                              tdsETag: test.blocklistVersion,
-                                              blockedTrackerDomains: test.blockedTrackers,
-                                              installedSurrogates: test.surrogates,
-                                              isGPCEnabled: test.gpcEnabled ?? false,
-                                              ampURL: "",
-                                              urlParametersRemoved: false,
-                                              protectionsState: test.protectionsEnabled,
-                                              reportFlow: .dashboard,
-                                              siteType: .mobile,
-                                              atb: "",
-                                              model: test.model ?? "",
-                                              errors: errors,
-                                              httpStatusCodes: test.httpErrorCodes ?? [])
+        let report = BrokenSiteReport(siteUrl: URL(string: test.siteURL)!,
+                                      category: test.category,
+                                      description: test.providedDescription,
+                                      osVersion: test.os ?? "",
+                                      manufacturer: test.manufacturer ?? "",
+                                      upgradedHttps: test.wasUpgraded,
+                                      tdsETag: test.blocklistVersion,
+                                      blockedTrackerDomains: test.blockedTrackers,
+                                      installedSurrogates: test.surrogates,
+                                      isGPCEnabled: test.gpcEnabled ?? false,
+                                      ampURL: "",
+                                      urlParametersRemoved: false,
+                                      protectionsState: test.protectionsEnabled,
+                                      reportFlow: .dashboard,
+                                      siteType: .mobile,
+                                      atb: "",
+                                      model: test.model ?? "",
+                                      errors: errors,
+                                      httpStatusCodes: test.httpErrorCodes ?? [],
+                                      didOpenReportInfo: false,
+                                      toggleReportCounter: nil)
 
-        let reporter = WebsiteBreakageReporter(pixelHandler: { params in
+        let reporter = BrokenSiteReporter(pixelHandler: { params in
             
             for expectedParam in test.expectReportURLParams {
                 
@@ -136,7 +138,7 @@ final class BrokenSiteReportingTests: XCTestCase {
             onTestExecuted.fulfill()
             try? self.runReferenceTests(onTestExecuted: onTestExecuted)
         }, keyValueStoring: MockKeyValueStore())
-        try reporter.report(breakage: websiteBreakage)
+        try reporter.report(report, reportMode: .regular)
     }
 }
 

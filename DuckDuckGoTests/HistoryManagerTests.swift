@@ -20,16 +20,14 @@
 import Foundation
 import XCTest
 import BrowserServicesKit
+import Persistence
+import History
 @testable import Core
 
 final class HistoryManagerTests: XCTestCase {
 
-    let privacyConfig = MockPrivacyConfiguration()
+    let privacyConfigManager = MockPrivacyConfigurationManager()
     var variantManager = MockVariantManager()
-
-    lazy var historyManager: HistoryManager = {
-        HistoryManager(privacyConfig: privacyConfig, variantManager: variantManager)
-    }()
 
     func test() {
 
@@ -48,6 +46,7 @@ final class HistoryManagerTests: XCTestCase {
         ]
 
         let privacyConfig = MockPrivacyConfiguration()
+        let privacyConfigManager = MockPrivacyConfigurationManager()
         var variantManager = MockVariantManager()
 
         for condition in conditions {
@@ -56,11 +55,41 @@ final class HistoryManagerTests: XCTestCase {
                 return condition.privacy
             }
 
+            privacyConfigManager.privacyConfig = privacyConfig
             variantManager.isSupportedReturns = condition.variant
 
-            let historyManager = HistoryManager(privacyConfig: privacyConfig, variantManager: variantManager)
+            let model = CoreDataDatabase.loadModel(from: History.bundle, named: "BrowsingHistory")!
+            let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
+
+            let historyManager = HistoryManager(privacyConfigManager: privacyConfigManager, variantManager: variantManager, database: db) {
+                XCTFail("DB Error \($0)")
+            }
             XCTAssertEqual(condition.expected, historyManager.isHistoryFeatureEnabled(), String(describing: condition))
         }
 
+    }
+
+    func test_WhenManagerFailsToLoadStore_ThenThrowsError() {
+        let privacyConfig = MockPrivacyConfiguration()
+        let privacyConfigManager = MockPrivacyConfigurationManager()
+        var variantManager = MockVariantManager()
+
+        privacyConfig.isFeatureKeyEnabled = { feature, _ in
+            XCTAssertEqual(feature, .history)
+            return true
+        }
+
+        privacyConfigManager.privacyConfig = privacyConfig
+        variantManager.isSupportedReturns = true
+
+        let model = CoreDataDatabase.loadModel(from: History.bundle, named: "BrowsingHistory")!
+        let db = CoreDataDatabase(name: "Test", containerLocation: URL.aboutLink, model: model)
+
+        var error: Error?
+        let historyManager = HistoryManager(privacyConfigManager: privacyConfigManager, variantManager: variantManager, database: db) {
+            error = $0
+        }
+        _ = historyManager.historyCoordinator
+        XCTAssertNotNil(error)
     }
 }

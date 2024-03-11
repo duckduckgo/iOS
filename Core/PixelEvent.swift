@@ -542,6 +542,11 @@ extension Pixel {
         
         case appRatingPromptFetchError
 
+        case protectionToggledOffBreakageReport
+        case toggleProtectionsDailyCount
+        case toggleReportDoNotSend
+        case toggleReportDismiss
+
         case userBehaviorReloadTwice
         case userBehaviorReloadAndRestart
         case userBehaviorReloadAndFireButton
@@ -1100,6 +1105,12 @@ extension Pixel.Event {
             // MARK: - Return user measurement
         case .debugReturnUserAddATB: return "m_debug_return_user_add_atb"
         case .debugReturnUserUpdateATB: return "m_debug_return_user_update_atb"
+            
+        // MARK: - Toggle reports
+        case .protectionToggledOffBreakageReport: return "m_protection-toggled-off-breakage-report"
+        case .toggleProtectionsDailyCount: return "m_toggle-protections-daily-count"
+        case .toggleReportDoNotSend: return "m_toggle-report-do-not-send"
+        case .toggleReportDismiss: return "m_toggle-report-dismiss"
 
         case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
 

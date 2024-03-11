@@ -334,6 +334,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         clearDebugWaitlistState()
 
+        AppDependencyProvider.shared.toggleProtectionsCounter.sendEventsIfNeeded()
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
         return true

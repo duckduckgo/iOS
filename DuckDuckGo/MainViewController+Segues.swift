@@ -23,6 +23,7 @@ import Core
 import Bookmarks
 import BrowserServicesKit
 import SwiftUI
+import PrivacyDashboard
 
 #if SUBSCRIPTION
 import Subscription
@@ -123,7 +124,7 @@ extension MainViewController {
         present(controller, animated: true)
     }
 
-    func segueToReportBrokenSite() {
+    func segueToReportBrokenSite(mode: PrivacyDashboardMode = .report) {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
 
@@ -137,9 +138,9 @@ extension MainViewController {
         let controller = storyboard.instantiateInitialViewController { coder in
             PrivacyDashboardViewController(coder: coder,
                                            privacyInfo: privacyInfo,
+                                           dashboardMode: mode,
                                            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                            contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
-                                           initMode: .reportBrokenSite,
                                            breakageAdditionalInfo: self.currentTab?.makeBreakageAdditionalInfo())
         }
         

@@ -22,6 +22,7 @@ import XCTest
 @testable import Core
 @testable import BrowserServicesKit
 import WebKit
+import Common
 
 final class AutoconsentBackgroundTests: XCTestCase {
 
@@ -46,11 +47,12 @@ final class AutoconsentBackgroundTests: XCTestCase {
         """.data(using: .utf8)!
 
         let mockEmbeddedData = MockEmbeddedDataProvider(data: embeddedConfig, etag: "embedded")
-
+        let eventMapping = EventMapping<ToggleProtectionsCounterEvent> { _, _, _, _ in }
         let manager = PrivacyConfigurationManager(fetchedETag: nil,
                                                   fetchedData: nil,
                                                   embeddedDataProvider: mockEmbeddedData,
                                                   localProtection: MockDomainsProtectionStore(),
+                                                  toggleProtectionsCounterEventReporting: eventMapping,
                                                   internalUserDecider: DefaultInternalUserDecider())
         return AutoconsentUserScript(config: manager.privacyConfig,
                                      preferences: MockAutoconsentPreferences(),

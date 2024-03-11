@@ -165,14 +165,8 @@ class AutocompleteViewController: UIViewController {
     }
 
     private func cancelInFlightRequests() {
-//        if let inFlightRequest = lastRequest {
-//            inFlightRequest.cancel()
-//            lastRequest = nil
-//        }
-        
         task?.cancel()
         task = nil
-
     }
 
     private func requestSuggestions(query: String) {

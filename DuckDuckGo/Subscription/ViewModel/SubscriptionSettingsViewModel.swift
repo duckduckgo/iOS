@@ -77,7 +77,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         switch subscriptionInfo?.platform {
         case .apple:
             // manageAppleSubscription()
-            manageGoogleSubscription()
+            // manageGoogleSubscription()
+            Task { await manageStripeSubscription() }
         case .google:
             manageGoogleSubscription()
         case .stripe:
@@ -121,30 +122,38 @@ final class SubscriptionSettingsViewModel: ObservableObject {
                                   presentationLocation: .withoutBottomBar)
     }
     
-    private func manageAppleSubscription() {
+    @MainActor private func manageAppleSubscription() async {
+        let url = URL.manageSubscriptionsInAppStoreAppURL
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            Task {
-                   do {
-                       try await AppStore.showManageSubscriptions(in: windowScene)
-                   } catch {
-                       openAppleSubscriptionURL()
-                   }
-            }
-           } else {
-               openAppleSubscriptionURL()
+           do {
+               try await AppStore.showManageSubscriptions(in: windowScene)
+           } catch {
+               self.openURL(url)
            }
+        } else {
+            self.openURL(url)
+        }
     }
     
     private func manageGoogleSubscription() {
         shouldDisplayGoogleView = true
     }
     
-    private func manageStripeSubscription() {
+    @MainActor private func manageStripeSubscription() {
+        guard let token = accountManager.accessToken, let externalID = accountManager.externalID else { return }
+        Task {
+            let serviceResponse = await  SubscriptionService.getCustomerPortalURL(accessToken: token, externalID: externalID)
+            if case .success(let response) = serviceResponse {
+                // guard let url = URL(string: "https://billing.stripe.com/p/session/test_YWNjdF8xTkRRNjRJMGVCNGoxTUp1LF9QaWVGRm4xTkczS0tDaXVzRkhlTkNRRmFFTWVCWDBN01000Qwz0c2U") else { return }
+                guard let url = URL(string: response.customerPortalUrl) else { return }
+                openURL(url)
+            }
+        }
         
     }
 
-    private func openAppleSubscriptionURL() {
-        let url = URL.manageSubscriptionsInAppStoreAppURL
+    @MainActor
+    private func openURL(_ url: URL) {
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }

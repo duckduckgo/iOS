@@ -96,15 +96,11 @@ final class PrivacyDashboardViewController: UIViewController {
         applyTheme(ThemeManager.shared.currentTheme)
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    public override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         if !privacyDashboardDidTriggerDismiss {
             privacyDashboardController.handleViewWillDisappear()
         }
-    }
-
-    public override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
         privacyDashboardController.cleanUp()
     }
     

@@ -20,7 +20,7 @@
 import Foundation
 
 public class Link: NSObject, NSCoding {
-    
+
     struct Constants {
         static let ddgSuffix = " at DuckDuckGo"
     }
@@ -30,11 +30,11 @@ public class Link: NSObject, NSCoding {
         static let url = "url"
         static let localPath = "localPath"
     }
-    
+
     public let title: String?
     public let url: URL
     public let localFileURL: URL?
-    
+
     public var displayTitle: String {
         let host = url.host?.droppingWwwPrefix() ?? url.absoluteString
 

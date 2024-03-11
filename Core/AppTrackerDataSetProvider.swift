@@ -39,7 +39,7 @@ final public class AppTrackerDataSetProvider: EmbeddedDataProvider {
         if let url = Bundle.main.url(forResource: "trackerData", withExtension: "json") {
             return url
         }
-        
+
         return Bundle(for: Self.self).url(forResource: "trackerData", withExtension: "json")!
     }
 

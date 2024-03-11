@@ -357,7 +357,7 @@ extension SettingsViewModel {
             cacheSubscriptionState(active: true)
             
             // Check entitlements and update UI accordingly
-            let entitlements: [AccountManager.Entitlement] = [.identityTheftRestoration, .dataBrokerProtection, .networkProtection]
+            let entitlements: [Entitlement.ProductName] = [.identityTheftRestoration, .dataBrokerProtection, .networkProtection]
             for entitlement in entitlements {
                 if case .success = await AccountManager().hasEntitlement(for: entitlement) {
                     switch entitlement {
@@ -367,6 +367,8 @@ extension SettingsViewModel {
                         self.shouldShowDBP = true
                     case .networkProtection:
                         self.shouldShowNetP = true
+                    case .unknown:
+                        return
                     }
                 }
             }
@@ -565,6 +567,7 @@ extension SettingsViewModel {
             if #available(iOS 15, *) {
                 switch NetworkProtectionAccessController().networkProtectionAccessType() {
                 case .inviteCodeInvited, .waitlistInvited:
+                    Pixel.fire(pixel: .privacyProVPNSettings)
                     pushViewController(legacyViewProvider.netP)
                 default:
                     pushViewController(legacyViewProvider.netPWaitlist)

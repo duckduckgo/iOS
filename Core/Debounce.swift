@@ -20,17 +20,17 @@
 import Foundation
 
 public class Debounce {
-    
+
     private let queue: DispatchQueue
     private let interval: TimeInterval
-    
+
     private var currentWorkItem = DispatchWorkItem(block: {})
-    
+
     public init(queue: DispatchQueue, seconds: TimeInterval) {
         self.queue = queue
         self.interval = seconds
     }
-    
+
     public func schedule(_ block: @escaping (() -> Void)) {
         currentWorkItem.cancel()
         currentWorkItem = DispatchWorkItem(block: { block() })

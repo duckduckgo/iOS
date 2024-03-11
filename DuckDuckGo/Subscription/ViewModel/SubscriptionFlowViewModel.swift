@@ -124,10 +124,13 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 if value != nil {
                     switch value?.feature {
                     case FeatureName.netP:
+                        UniquePixel.fire(pixel: .privacyProWelcomeVPN)
                         self?.selectedFeature = .netP
                     case FeatureName.itr:
+                        UniquePixel.fire(pixel: .privacyProWelcomePersonalInformationRemoval)
                         self?.selectedFeature = .itr
                     case FeatureName.dbp:
+                        UniquePixel.fire(pixel: .privacyProWelcomeIdentityRestoration)
                         self?.selectedFeature = .dbp
                     default:
                         break
@@ -151,27 +154,62 @@ final class SubscriptionFlowViewModel: ObservableObject {
        
     }
     
+    // swiftlint:disable:next cyclomatic_complexity
     private func handleTransactionError(error: SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError) {
+
+        var isStoreError = false
+        var isBackendError = false
+
         switch error {
-        
         case .purchaseFailed:
+            isStoreError = true
             transactionError = .purchaseFailed
         case .missingEntitlements:
+            isBackendError = true
             transactionError = .missingEntitlements
         case .failedToGetSubscriptionOptions:
+            isStoreError = true
             transactionError = .failedToGetSubscriptionOptions
         case .failedToSetSubscription:
+            isBackendError = true
             transactionError = .failedToSetSubscription
+        case .failedToRestoreFromEmail, .failedToRestoreFromEmailSubscriptionInactive:
+            isBackendError = true
+            transactionError = .generalError
         case .failedToRestorePastPurchase:
+            isStoreError = true
             transactionError = .failedToRestorePastPurchase
+        case .subscriptionNotFound:
+            isStoreError = true
+            transactionError = .generalError
         case .subscriptionExpired:
+            isStoreError = true
             transactionError = .subscriptionExpired
         case .hasActiveSubscription:
+            isStoreError = true
+            isBackendError = true
             transactionError = .hasActiveSubscription
         case .cancelledByUser:
             transactionError = nil
+        case .accountCreationFailed:
+            DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailureAccountNotCreated)
+            transactionError = .generalError
         default:
             transactionError = .generalError
+        }
+
+        if isStoreError {
+            DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailureStoreError)
+        }
+
+        if isBackendError {
+            DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailureBackendError)
+        }
+
+        if let transactionError,
+           transactionError != .hasActiveSubscription && transactionError != .cancelledByUser {
+            // The observer of `transactionError` does the same calculation, if the error is anything else than .hasActiveSubscription then shows a "Something went wrong" alert
+            DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailure)
         }
     }
     
@@ -255,6 +293,5 @@ final class SubscriptionFlowViewModel: ObservableObject {
     func navigateBack() async {
         await webViewModel.navigationCoordinator.goBack()
     }
-    
 }
 #endif

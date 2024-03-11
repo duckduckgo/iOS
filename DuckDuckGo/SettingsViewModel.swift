@@ -297,7 +297,6 @@ extension SettingsViewModel {
         return SettingsState.NetworkProtection(enabled: enabled, status: "")
     }
     
-    #if SUBSCRIPTION
     private func getSubscriptionState() -> SettingsState.Subscription {
         var enabled = false
         var canPurchase = false
@@ -310,7 +309,6 @@ extension SettingsViewModel {
                                         canPurchase: canPurchase,
                                         hasActiveSubscription: hasActiveSubscription)
     }
-    #endif
     
     private func getSyncState() -> SettingsState.SyncSettings {
         SettingsState.SyncSettings(enabled: legacyViewProvider.syncService.featureFlags.contains(.userInterface),

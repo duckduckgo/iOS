@@ -363,6 +363,9 @@
 		8512EA5D24ED30D30073EE19 /* WidgetsExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8512EA4D24ED30D20073EE19 /* WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8512EA9D24EEA6820073EE19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F143C2B11E49D78C00CFDE3A /* Assets.xcassets */; };
 		851481882A600EFC00ABC65F /* RemoteMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 851481872A600EFC00ABC65F /* RemoteMessaging */; };
+		851624C22B95F8BD002D5CD7 /* HistoryCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851624C12B95F8BD002D5CD7 /* HistoryCapture.swift */; };
+		851624C52B9602A4002D5CD7 /* HistoryCaptureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851624C32B96029B002D5CD7 /* HistoryCaptureTests.swift */; };
+		851624C72B96389D002D5CD7 /* HistoryDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851624C62B96389D002D5CD7 /* HistoryDebugViewController.swift */; };
 		8517D98B221783A0006A8DD0 /* FindInPage.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8517D98A221783A0006A8DD0 /* FindInPage.xcassets */; };
 		851B1283221FE65E004781BC /* ImproveOnboardingExperiment1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B1281221FE64E004781BC /* ImproveOnboardingExperiment1Tests.swift */; };
 		851B128822200575004781BC /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B128722200575004781BC /* Onboarding.swift */; };
@@ -441,6 +444,7 @@
 		85875B6129912A9900115F05 /* SyncUI in Frameworks */ = {isa = PBXBuildFile; productRef = 85875B6029912A9900115F05 /* SyncUI */; };
 		8588026624E420BD00C24AB6 /* LargeOmniBarStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8588026424E4209900C24AB6 /* LargeOmniBarStateTests.swift */; };
 		8588026A24E424EE00C24AB6 /* AppWidthObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8588026824E424AF00C24AB6 /* AppWidthObserverTests.swift */; };
+		858D009D2B9799FC004E5B4C /* History in Frameworks */ = {isa = PBXBuildFile; productRef = 858D009C2B9799FC004E5B4C /* History */; };
 		8590CB612684D0600089F6BF /* CookieDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8590CB602684D0600089F6BF /* CookieDebugViewController.swift */; };
 		8590CB632684F10F0089F6BF /* ContentBlockerProtectionStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8590CB622684F10F0089F6BF /* ContentBlockerProtectionStoreTests.swift */; };
 		8590CB67268A2E520089F6BF /* RootDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8590CB66268A2E520089F6BF /* RootDebugViewController.swift */; };
@@ -1479,6 +1483,9 @@
 		8512EA5324ED30D20073EE19 /* Widgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Widgets.swift; sourceTree = "<group>"; };
 		8512EA5624ED30D30073EE19 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8512EA5824ED30D30073EE19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		851624C12B95F8BD002D5CD7 /* HistoryCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryCapture.swift; sourceTree = "<group>"; };
+		851624C32B96029B002D5CD7 /* HistoryCaptureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryCaptureTests.swift; sourceTree = "<group>"; };
+		851624C62B96389D002D5CD7 /* HistoryDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDebugViewController.swift; sourceTree = "<group>"; };
 		8517D98A221783A0006A8DD0 /* FindInPage.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FindInPage.xcassets; sourceTree = "<group>"; };
 		851B1281221FE64E004781BC /* ImproveOnboardingExperiment1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImproveOnboardingExperiment1Tests.swift; sourceTree = "<group>"; };
 		851B128722200575004781BC /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
@@ -2826,6 +2833,7 @@
 				37DF000C29F9CA80002B7D3E /* SyncDataProviders in Frameworks */,
 				1E6098A1290011E600A508F9 /* UserScript in Frameworks */,
 				D61CDA162B7CF77300A0FBB9 /* Subscription in Frameworks */,
+				858D009D2B9799FC004E5B4C /* History in Frameworks */,
 				C14882ED27F211A000D59F0C /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3928,6 +3936,7 @@
 			isa = PBXGroup;
 			children = (
 				858479C82B8792D800D156C1 /* HistoryManager.swift */,
+				851624C12B95F8BD002D5CD7 /* HistoryCapture.swift */,
 			);
 			name = History;
 			sourceTree = "<group>";
@@ -3936,6 +3945,7 @@
 			isa = PBXGroup;
 			children = (
 				858479CB2B8795C900D156C1 /* HistoryManagerTests.swift */,
+				851624C32B96029B002D5CD7 /* HistoryCaptureTests.swift */,
 			);
 			name = History;
 			sourceTree = "<group>";
@@ -3958,6 +3968,7 @@
 				F46FEC5627987A5F0061D9DF /* KeychainItemsDebugViewController.swift */,
 				EE72CA842A862D000043B5B3 /* NetworkProtectionDebugViewController.swift */,
 				CBFCB30D2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift */,
+				851624C62B96389D002D5CD7 /* HistoryDebugViewController.swift */,
 			);
 			name = Debug;
 			sourceTree = "<group>";
@@ -5966,6 +5977,7 @@
 				EE8E56892A56BCE400F11DCA /* NetworkProtection */,
 				D61CDA152B7CF77300A0FBB9 /* Subscription */,
 				D61CDA172B7CF78300A0FBB9 /* ZIPFoundation */,
+				858D009C2B9799FC004E5B4C /* History */,
 				B6A26C072B9835A000DF9EAD /* Macros */,
 			);
 			productName = Core;
@@ -6909,6 +6921,7 @@
 				C13F3F6A2B7F883A0083BE40 /* AuthConfirmationPromptViewController.swift in Sources */,
 				02C57C4B2514FEFB009E5129 /* DoNotSellSettingsViewController.swift in Sources */,
 				02A54A9C2A097C95000C8FED /* AppTPHomeViewSectionRenderer.swift in Sources */,
+				851624C72B96389D002D5CD7 /* HistoryDebugViewController.swift in Sources */,
 				8540BBA22440857A00017FE4 /* PreserveLoginsWorker.swift in Sources */,
 				85DFEDF924CF3D0E00973FE7 /* TabsBarCell.swift in Sources */,
 				F17922DB1E717C8D006E3D97 /* Suggestion.swift in Sources */,
@@ -7096,6 +7109,7 @@
 				981FED7422046017008488D7 /* AutoClearTests.swift in Sources */,
 				98DDF9F322C4029D00DE38DB /* InitHelpers.swift in Sources */,
 				B6AD9E3628D4510A0019CDE9 /* ContentBlockerRulesManagerMock.swift in Sources */,
+				851624C52B9602A4002D5CD7 /* HistoryCaptureTests.swift in Sources */,
 				F1E092C11E92A72E00732CCC /* UIColorExtensionTests.swift in Sources */,
 				85010504292FFB080033978F /* FireproofFaviconUpdaterTests.swift in Sources */,
 				F1D477C91F2139410031ED49 /* SmallOmniBarStateTests.swift in Sources */,
@@ -7229,6 +7243,7 @@
 				F1134EAB1F3E2C6A00B73467 /* StatisticsUserDefaults.swift in Sources */,
 				CB258D1E29A52AF900DEBA24 /* FileStore.swift in Sources */,
 				F1075C921E9EF827006BE8A8 /* UserDefaultsExtension.swift in Sources */,
+				851624C22B95F8BD002D5CD7 /* HistoryCapture.swift in Sources */,
 				85CA53AC24BBD39300A6288C /* FaviconRequestModifier.swift in Sources */,
 				CB258D1D29A52AF900DEBA24 /* EtagStorage.swift in Sources */,
 				C1B7B52D2894469D0098FD6A /* DefaultVariantManager.swift in Sources */,
@@ -10029,7 +10044,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = exactVersion;
-				version = 121.0.0;
+				version = 122.0.0;
 			};
 		};
 		B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */ = {
@@ -10190,6 +10205,11 @@
 		85875B6029912A9900115F05 /* SyncUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SyncUI;
+		};
+		858D009C2B9799FC004E5B4C /* History */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = History;
 		};
 		8599690E29D2F1C100DBF9FA /* DDGSync */ = {
 			isa = XCSwiftPackageProductDependency;

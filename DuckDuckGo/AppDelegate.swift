@@ -265,16 +265,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 })
             }
 
+        let historyManager = makeHistoryManager()
+
 #if APP_TRACKING_PROTECTION
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       appTrackingProtectionDatabase: appTrackingProtectionDatabase,
+                                      historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
                                       appSettings: AppDependencyProvider.shared.appSettings)
 #else
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
+                                      historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
                                       appSettings: AppDependencyProvider.shared.appSettings)
@@ -334,6 +338,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
         return true
+    }
+
+    private func makeHistoryManager() -> HistoryManager {
+        let historyManager = HistoryManager(privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
+                              variantManager: DefaultVariantManager(),
+                              database: HistoryDatabase.make()) { error in
+            Pixel.fire(pixel: .historyStoreLoadFailed, error: error)
+            if error.isDiskFull {
+                self.presentInsufficientDiskSpaceAlert()
+            } else {
+                self.presentPreemptiveCrashAlert()
+            }
+        }
+
+        // This is a compromise to support hot reloading via privacy config.
+        //  * If the history is disabled this will do nothing. If it is subsequently enabled then it won't start collecting history
+        //     until the app cold launches at least once.
+        //  * If the history is enabled this loads the store sets up the history manager
+        //     correctly. If the history manager is subsequently disabled it will stop working immediately.
+        historyManager.loadStore()
+        return historyManager
     }
 
     private func presentPreemptiveCrashAlert() {

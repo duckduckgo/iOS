@@ -18,8 +18,8 @@
 //
 
 import WebKit
-import Combine
 import Core
+import Combine
 import StoreKit
 import LocalAuthentication
 import BrowserServicesKit
@@ -34,6 +34,7 @@ import ContentBlocking
 import TrackerRadarKit
 import Networking
 import SecureStorage
+import History
 
 #if NETWORK_PROTECTION
 import NetworkProtection
@@ -175,6 +176,7 @@ class TabViewController: UIViewController {
         didSet {
             updateTabModel()
             delegate?.tabLoadingStateDidChange(tab: self)
+            historyCapture.titleDidChange(title, forURL: url)
         }
     }
     
@@ -272,6 +274,7 @@ class TabViewController: UIViewController {
     static func loadFromStoryboard(model: Tab,
                                    appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
                                    bookmarksDatabase: CoreDataDatabase,
+                                   historyManager: HistoryManager,
                                    syncService: DDGSyncing) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
@@ -279,6 +282,7 @@ class TabViewController: UIViewController {
                               tabModel: model,
                               appSettings: appSettings,
                               bookmarksDatabase: bookmarksDatabase,
+                              historyManager: historyManager,
                               syncService: syncService)
         })
         return controller
@@ -287,15 +291,21 @@ class TabViewController: UIViewController {
     private var userContentController: UserContentController {
         (webView.configuration.userContentController as? UserContentController)!
     }
-    
+
+    let historyManager: HistoryManager
+    let historyCapture: HistoryCapture
+
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
                    appSettings: AppSettings,
                    bookmarksDatabase: CoreDataDatabase,
+                   historyManager: HistoryManager,
                    syncService: DDGSyncing) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
+        self.historyManager = historyManager
+        self.historyCapture = HistoryCapture(historyManager: historyManager)
         self.syncService = syncService
         super.init(coder: aDecoder)
     }
@@ -303,7 +313,7 @@ class TabViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("Not implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -380,7 +390,8 @@ class TabViewController: UIViewController {
     
     func updateTabModel() {
         if let url = url {
-            tabModel.link = Link(title: title, url: url)
+            let link = Link(title: title, url: url)
+            tabModel.link = link
         } else {
             tabModel.link = nil
         }
@@ -1021,7 +1032,9 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+
         if let url = webView.url {
+            historyCapture.webViewDidCommit(url: url)
             instrumentation.willLoad(url: url)
         }
 
@@ -1058,6 +1071,7 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+
         let mimeType = MIMEType(from: navigationResponse.response.mimeType)
 
         let httpResponse = navigationResponse.response as? HTTPURLResponse
@@ -1130,6 +1144,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+
         adClickAttributionDetection.onDidFinishNavigation(url: webView.url)
         adClickAttributionLogic.onDidFinishNavigation(host: webView.url?.host)
         hideProgressIndicator()

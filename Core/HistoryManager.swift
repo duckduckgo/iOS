@@ -17,21 +17,196 @@
 //  limitations under the License.
 //
 
+import CoreData
 import Foundation
 import BrowserServicesKit
+import History
+import Common
+import Persistence
 
-class HistoryManager {
+public protocol HistoryManaging {
 
-    let privacyConfig: PrivacyConfiguration
+    var historyCoordinator: HistoryCoordinating { get }
+    func loadStore()
+
+}
+
+public class HistoryManager: HistoryManaging {
+
+    let privacyConfigManager: PrivacyConfigurationManaging
     let variantManager: VariantManager
+    let database: CoreDataDatabase
+    let onStoreLoadFailed: (Error) -> Void
 
-    init(privacyConfig: PrivacyConfiguration, variantManager: VariantManager) {
-        self.privacyConfig = privacyConfig
+    private var currentHistoryCoordinator: HistoryCoordinating?
+
+    public var historyCoordinator: HistoryCoordinating {
+        guard isHistoryFeatureEnabled() else {
+            currentHistoryCoordinator = nil
+            return NullHistoryCoordinator()
+        }
+
+        if let currentHistoryCoordinator {
+            return currentHistoryCoordinator
+        }
+
+        var loadError: Error?
+        database.loadStore { _, error in
+            loadError = error
+        }
+        
+        if let loadError {
+            onStoreLoadFailed(loadError)
+            return NullHistoryCoordinator()
+        }
+
+        let context = database.makeContext(concurrencyType: .privateQueueConcurrencyType)
+        let historyCoordinator = HistoryCoordinator(historyStoring: HistoryStore(context: context, eventMapper: HistoryStoreEventMapper()))
+        currentHistoryCoordinator = historyCoordinator
+        return historyCoordinator
+    }
+
+    public init(privacyConfigManager: PrivacyConfigurationManaging, variantManager: VariantManager, database: CoreDataDatabase, onStoreLoadFailed: @escaping (Error) -> Void) {
+        self.privacyConfigManager = privacyConfigManager
         self.variantManager = variantManager
+        self.database = database
+        self.onStoreLoadFailed = onStoreLoadFailed
     }
 
     func isHistoryFeatureEnabled() -> Bool {
-        return privacyConfig.isEnabled(featureKey: .history) && variantManager.isSupported(feature: .history)
+        return privacyConfigManager.privacyConfig.isEnabled(featureKey: .history) && variantManager.isSupported(feature: .history)
     }
 
+    public func removeAllHistory() async {
+        await withCheckedContinuation { continuation in
+            historyCoordinator.burnAll {
+                continuation.resume()
+            }
+        }
+    }
+
+    public func loadStore() {
+        historyCoordinator.loadHistory {
+            // Do migrations here if needed
+        }
+    }
+
+}
+
+class NullHistoryCoordinator: HistoryCoordinating {
+
+    func loadHistory(onCleanFinished: @escaping () -> Void) {
+    }
+
+    var history: History.BrowsingHistory?
+
+    var allHistoryVisits: [History.Visit]?
+
+    @Published private(set) public var historyDictionary: [URL: HistoryEntry]?
+    var historyDictionaryPublisher: Published<[URL: History.HistoryEntry]?>.Publisher {
+        $historyDictionary
+    }
+
+    func addVisit(of url: URL) -> History.Visit? {
+        return nil
+    }
+
+    func addBlockedTracker(entityName: String, on url: URL) {
+    }
+
+    func trackerFound(on: URL) {
+    }
+
+    func updateTitleIfNeeded(title: String, url: URL) {
+    }
+
+    func markFailedToLoadUrl(_ url: URL) {
+    }
+
+    func commitChanges(url: URL) {
+    }
+
+    func title(for url: URL) -> String? {
+        return nil
+    }
+
+    func burnAll(completion: @escaping () -> Void) {
+        completion()
+    }
+
+    func burnDomains(_ baseDomains: Set<String>, tld: Common.TLD, completion: @escaping () -> Void) {
+        completion()
+    }
+
+    func burnVisits(_ visits: [History.Visit], completion: @escaping () -> Void) {
+        completion()
+    }
+
+}
+
+public class HistoryDatabase {
+
+    private init() { }
+
+    public static var defaultDBLocation: URL = {
+        guard let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+            os_log("HistoryDatabase.make - OUT, failed to get application support directory")
+            fatalError("Failed to get location")
+        }
+        return url
+    }()
+
+    public static var defaultDBFileURL: URL = {
+        return defaultDBLocation.appendingPathComponent("History.sqlite", conformingTo: .database)
+    }()
+
+    public static func make(location: URL = defaultDBLocation, readOnly: Bool = false) -> CoreDataDatabase {
+        os_log("HistoryDatabase.make - IN - %s", location.absoluteString)
+        let bundle = History.bundle
+        guard let model = CoreDataDatabase.loadModel(from: bundle, named: "BrowsingHistory") else {
+            os_log("HistoryDatabase.make - OUT, failed to loadModel")
+            fatalError("Failed to load model")
+        }
+
+        let db = CoreDataDatabase(name: "History",
+                                  containerLocation: location,
+                                  model: model,
+                                  readOnly: readOnly)
+        os_log("HistoryDatabase.make - OUT")
+        return db
+    }
+}
+
+class HistoryStoreEventMapper: EventMapping<HistoryStore.HistoryStoreEvents> {
+    public init() {
+        super.init { event, error, _, _ in
+            switch event {
+            case .removeFailed:
+                Pixel.fire(pixel: .historyRemoveFailed, error: error)
+
+            case .reloadFailed:
+                Pixel.fire(pixel: .historyReloadFailed, error: error)
+
+            case .cleanEntriesFailed:
+                Pixel.fire(pixel: .historyCleanEntriesFailed, error: error)
+
+            case .cleanVisitsFailed:
+                Pixel.fire(pixel: .historyCleanVisitsFailed, error: error)
+
+            case .saveFailed:
+                Pixel.fire(pixel: .historySaveFailed, error: error)
+
+            case .insertVisitFailed:
+                Pixel.fire(pixel: .historyInsertVisitFailed, error: error)
+
+            case .removeVisitsFailed:
+                Pixel.fire(pixel: .historyRemoveVisitsFailed, error: error)
+            }
+
+        }
+    }
+
+    override init(mapping: @escaping EventMapping<HistoryStore.HistoryStoreEvents>.Mapping) {
+        fatalError("Use init()")
+    }
 }

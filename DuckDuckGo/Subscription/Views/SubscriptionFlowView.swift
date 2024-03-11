@@ -33,8 +33,6 @@ struct SubscriptionFlowView: View {
     @State private var transactionError: SubscriptionFlowViewModel.SubscriptionPurchaseError?
     @State private var errorMessage: SubscriptionErrorMessage = .general
     @State private var shouldPresentError: Bool = false
-    
-    @State private var shouldPresentError = false
     @State private var isFirstOnAppear = true
 
     enum Constants {

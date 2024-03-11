@@ -33,22 +33,22 @@ private struct Constants {
 
 public protocol Bookmark: BookmarkItem {
     var url: URL? { get set }
-    
+
     var displayTitle: String? { get }
 }
 
 public extension Bookmark {
-    
+
     var displayTitle: String? {
         let host = url?.host?.droppingWwwPrefix() ?? url?.absoluteString
-        
+
         var displayTitle = (title?.isEmpty ?? true) ? host : title
-        
+
         if let url = url, url.isDuckDuckGo,
             let title = displayTitle, title.hasSuffix(Constants.ddgSuffix) {
             displayTitle = String(title.dropLast(Constants.ddgSuffix.count))
         }
-        
+
         return displayTitle
     }
 }
@@ -58,7 +58,7 @@ public protocol BookmarkFolder: BookmarkItem {
 }
 
 public extension BookmarkFolder {
-    
+
     var numberOfChildrenDeep: Int {
         guard let children = children else { return 0 }
         return children.reduce(children.count) { $0 + (($1 as? BookmarkFolder)?.numberOfChildrenDeep ?? 0) }

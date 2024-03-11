@@ -334,8 +334,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         clearDebugWaitlistState()
 
-        reportAdAttribution()
-
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
         return true
@@ -422,12 +420,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 #endif
 
-    private func reportAdAttribution() {
-        Task.detached(priority: .background) {
-            await AdAttributionPixelReporter.shared.reportAttributionIfNeeded()
-        }
-    }
-
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
@@ -484,6 +476,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         presentExpiredEntitlementNotification()
+#endif
+
+        updateSubscriptionStatus()
+    }
+
+    func updateSubscriptionStatus() {
+#if SUBSCRIPTION
+        Task {
+            guard let token = AccountManager().accessToken else {
+                return
+            }
+            let result = await SubscriptionService.getSubscription(accessToken: token)
+
+            switch result {
+            case .success(let success):
+                if success.isActive {
+                    DailyPixel.fire(pixel: .privacyProSubscriptionActive)
+                }
+            case .failure: break
+            }
+        }
 #endif
     }
 

@@ -20,6 +20,7 @@
 import Foundation
 import SwiftUI
 import DesignResourcesKit
+import Core
 
 #if SUBSCRIPTION
 @available(iOS 15.0, *)
@@ -120,13 +121,20 @@ struct SubscriptionRestoreView: View {
                         .daxSubheadRegular()
                         .foregroundColor(Color(designSystemColor: .textSecondary))
                     getCellButton(buttonText: UserText.subscriptionActivateEmailButton,
-                                    action: buttonAction)
+                                  action: {
+                        DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailStart)
+                        DailyPixel.fire(pixel: .privacyProWelcomeAddDevice)
+                        buttonAction()
+                    })
                 } else if viewModel.subscriptionEmail == nil {
                     Text(UserText.subscriptionAddDeviceEmailDescription)
                         .daxSubheadRegular()
                         .foregroundColor(Color(designSystemColor: .textSecondary))
                     getCellButton(buttonText: UserText.subscriptionRestoreAddEmailButton,
-                                    action: buttonAction)
+                                  action: {
+                        Pixel.fire(pixel: .privacyProAddDeviceEnterEmail)
+                        buttonAction()
+                    })
                 } else {
                     Text(viewModel.subscriptionEmail ?? "").daxSubheadSemibold()
                     Text(UserText.subscriptionManageEmailDescription)
@@ -134,7 +142,10 @@ struct SubscriptionRestoreView: View {
                         .foregroundColor(Color(designSystemColor: .textSecondary))
                     HStack {
                         getCellButton(buttonText: UserText.subscriptionManageEmailButton,
-                                        action: buttonAction)
+                                      action: {
+                            Pixel.fire(pixel: .privacyProSubscriptionManagementEmail)
+                            buttonAction()
+                        })
                     }
                 }
             })
@@ -292,4 +303,13 @@ struct SubscriptionRestoreView_Previews: PreviewProvider {
             .previewDevice("iPhone 12")
     }
 }
+
+// Commented out because CI fails if a SwiftUI preview is enabled https://app.asana.com/0/414709148257752/1206774081310425/f
+// @available(iOS 15.0, *)
+// struct SubscriptionRestoreView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SubscriptionRestoreView()
+//    }
+// }
+
 #endif

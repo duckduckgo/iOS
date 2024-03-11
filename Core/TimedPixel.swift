@@ -20,20 +20,20 @@
 import Foundation
 
 public class TimedPixel {
-    
+
     let pixel: Pixel.Event
     let date: Date
-    
+
     public init(_ pixel: Pixel.Event, date: Date = Date()) {
         self.pixel = pixel
         self.date = date
     }
-    
+
     public func fire(_ fireDate: Date = Date(), withAdditionalParameters params: [String: String] = [:]) {
         let duration = String(fireDate.timeIntervalSince(date))
         var newParams = params
         newParams[PixelParameters.duration] = duration
         Pixel.fire(pixel: pixel, withAdditionalParameters: newParams)
     }
-    
+
 }

@@ -20,7 +20,7 @@
 import Foundation
 
 extension Locale {
-    
+
     public var isRegionInEurope: Bool {
         ["AD", "AL", "AT", "AZ", "BA", "BE", "BG", "BY", "CH", "CY", "CZ", "DE", "DK", "EE", "ES",
          "FI", "FR", "GE", "GI", "GR", "HR", "HU", "IE", "IS", "IT", "KZ", "LI", "LT", "LU", "LV",

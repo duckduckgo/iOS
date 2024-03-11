@@ -52,9 +52,9 @@ final class SubscriptionEmailViewModel: ObservableObject {
              subscriptionExpired,
              generalError
     }
-    
+
     private var cancellables = Set<AnyCancellable>()
-            
+
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
          accountManager: AccountManager = AccountManager()) {
@@ -115,6 +115,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
     
     private func completeActivation() {
+        DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailSuccess)
         subFeature.emailActivationComplete = false
         activateSubscription = true
     }

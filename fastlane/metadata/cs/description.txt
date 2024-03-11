@@ -20,7 +20,5 @@ KAŽDODENNÍ OCHRANA SOUKROMÍ
 
 • Ukaž, jak to vidíš se svým soukromím, pomocí Globální kontroly ochrany osobních údajů (GPC). - Další informace najdeš na https://help.duckduckgo.com/duckduckgo-help-pages/privacy/gpc/.
 
-Poznámka k naší ochraně před načítáním trackerů třetích stran po kliknutí na reklamu na DuckDuckGo: Tato naše ochrana jde vysoko nad rámec toho, co běžně nabízí většina oblíbených prohlížečů, ale neustále pracujeme na tom, aby byla ještě komplexnější. Aktuálně je to tak, že když chce inzerent na svých webových stránkách zjišťovat konverze z našich soukromých reklam ve vyhledávání DuckDuckGo, naše ochrana před načítáním trackerů třetích stran nezastaví načítání požadavků bat.bing.com na webových stránkách inzerenta po kliknutí na reklamu na DuckDuckGo, ale na všech ostatních místech tyto požadavky zablokujeme. Je to proto, že soukromé reklamy ve vyhledávání na DuckDuckGo provozujeme ve spolupráci se společností Microsoft. V rámci tohoto partnerství je zobrazování reklam na DuckDuckGo anonymní a společnost Microsoft se zavázala, že naše uživatele nebude po kliknutí na reklamy profilovat.
-
 Další informace o tomto tématu a bezplatné ochraně před trackery si můžeš přečíst na adrese https://help.duckduckgo.com/privacy/web-tracking-protections.
 

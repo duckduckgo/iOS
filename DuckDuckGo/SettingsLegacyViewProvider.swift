@@ -27,20 +27,23 @@ import Persistence
 import Common
 
 class SettingsLegacyViewProvider: ObservableObject {
-    
+
     let syncService: DDGSyncing
     let syncDataProviders: SyncDataProviders
     let appSettings: AppSettings
     let bookmarksDatabase: CoreDataDatabase
-    
-    init(syncService: DDGSyncing,
+    let tabManager: TabManager
+
+    init(syncService: any DDGSyncing,
          syncDataProviders: SyncDataProviders,
-         appSettings: AppSettings,
-         bookmarksDatabase: CoreDataDatabase) {
+         appSettings: any AppSettings,
+         bookmarksDatabase: CoreDataDatabase,
+         tabManager: TabManager) {
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
+        self.tabManager = tabManager
     }
     
     enum LegacyView {
@@ -104,7 +107,8 @@ class SettingsLegacyViewProvider: ObservableObject {
         if let viewController = storyboard.instantiateViewController(withIdentifier: "DebugMenu") as? RootDebugViewController {
             viewController.configure(sync: syncService,
                                      bookmarksDatabase: bookmarksDatabase,
-                                     internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+                                     internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
+                                     tabManager: tabManager)
             return viewController
         }
         return UIViewController()

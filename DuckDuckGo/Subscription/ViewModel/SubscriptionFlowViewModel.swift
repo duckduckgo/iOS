@@ -32,6 +32,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     let purchaseManager: PurchaseManager
     let accountManager: AccountManaging
+    let subscriptionManager: SubscriptionManaging
     let viewTitle = UserText.settingsPProSection
     var webViewModel: AsyncHeadlessWebViewViewModel
     
@@ -43,7 +44,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     private var canGoBackCancellable: AnyCancellable?
     
     // State variables
-    var purchaseURL = URL.subscriptionPurchase
+    var purchaseURL: URL { subscriptionManager.urlProvider.url(for: .purchase) }
     
     enum FeatureName {
         static let netP = "vpn"
@@ -88,11 +89,13 @@ final class SubscriptionFlowViewModel: ObservableObject {
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
          purchaseManager: PurchaseManager = PurchaseManager.shared,
          accountManager: AccountManaging = AppDependencyProvider.shared.subscriptionManager.accountManager,
+         subscriptionManager: SubscriptionManaging = AppDependencyProvider.shared.subscriptionManager,
          selectedFeature: SettingsViewModel.SettingsSection? = nil) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.purchaseManager = purchaseManager
         self.accountManager = accountManager
+        self.subscriptionManager = subscriptionManager
         self.selectedFeature = selectedFeature
         self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,
                                                           subFeature: subFeature,

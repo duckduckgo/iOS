@@ -29,7 +29,6 @@ final class SubscriptionITPViewModel: ObservableObject {
     
     var userScript: IdentityTheftRestorationPagesUserScript?
     var subFeature: IdentityTheftRestorationPagesFeature?
-    var manageITPURL = URL.identityTheftRestoration
     var viewTitle = UserText.subscriptionTitle
     
     enum Constants {
@@ -40,7 +39,8 @@ final class SubscriptionITPViewModel: ObservableObject {
     }
     
     // State variables
-    var itpURL = URL.identityTheftRestoration
+    var itpURL: URL { AppDependencyProvider.shared.subscriptionManager.urlProvider.url(for: .identityTheftRestoration) }
+
     @Published var shouldShowNavigationBar: Bool = false
     @Published var canNavigateBack: Bool = false
     @Published var isDownloadableContent: Bool = false
@@ -149,7 +149,7 @@ final class SubscriptionITPViewModel: ObservableObject {
     // swiftlint:enable function_body_length
     
     func initializeView() {
-        webViewModel.navigationCoordinator.navigateTo(url: manageITPURL )
+        webViewModel.navigationCoordinator.navigateTo(url: itpURL )
         Task { await setupSubscribers() }
         Pixel.fire(pixel: .privacyProIdentityRestorationSettings)
     }

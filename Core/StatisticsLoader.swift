@@ -23,21 +23,21 @@ import BrowserServicesKit
 import Networking
 
 public class StatisticsLoader {
-    
+
     public typealias Completion =  (() -> Void)
-    
+
     public static let shared = StatisticsLoader()
-    
+
     private let statisticsStore: StatisticsStore
     private let returnUserMeasurement: ReturnUserMeasurement
     private let parser = AtbParser()
-    
+
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
          returnUserMeasurement: ReturnUserMeasurement = KeychainReturnUserMeasurement()) {
         self.statisticsStore = statisticsStore
         self.returnUserMeasurement = returnUserMeasurement
     }
-    
+
     public func load(completion: @escaping Completion = {}) {
         if statisticsStore.hasInstallStatistics {
             completion()
@@ -45,18 +45,18 @@ public class StatisticsLoader {
         }
         requestInstallStatistics(completion: completion)
     }
-    
+
     private func requestInstallStatistics(completion: @escaping Completion = {}) {
         let configuration = APIRequest.Configuration(url: .atb)
         let request = APIRequest(configuration: configuration, urlSession: .session())
-        
+
         request.fetch { response, error in
             if let error = error {
                 os_log("Initial atb request failed with error %s", log: .generalLog, type: .debug, error.localizedDescription)
                 completion()
                 return
             }
-            
+
             if let data = response?.data, let atb  = try? self.parser.convert(fromJsonData: data) {
                 self.requestExti(atb: atb, completion: completion)
             } else {
@@ -64,14 +64,14 @@ public class StatisticsLoader {
             }
         }
     }
-    
+
     private func requestExti(atb: Atb, completion: @escaping Completion = {}) {
         let installAtb = atb.version + (statisticsStore.variant ?? "")
         let url = URL.makeExtiURL(atb: installAtb)
-        
+
         let configuration = APIRequest.Configuration(url: url)
         let request = APIRequest(configuration: configuration, urlSession: .session())
-        
+
         request.fetch { _, error in
             if let error = error {
                 os_log("Exti request failed with error %s", log: .generalLog, type: .debug, error.localizedDescription)
@@ -84,7 +84,7 @@ public class StatisticsLoader {
             completion()
         }
     }
-    
+
     public func refreshSearchRetentionAtb(completion: @escaping Completion = {}) {
         guard let url = StatisticsDependentURLFactory(statisticsStore: statisticsStore).makeSearchAtbURL() else {
             requestInstallStatistics(completion: completion)
@@ -93,7 +93,7 @@ public class StatisticsLoader {
 
         let configuration = APIRequest.Configuration(url: url)
         let request = APIRequest(configuration: configuration, urlSession: .session())
-        
+
         request.fetch { response, error in
             if let error = error {
                 os_log("Search atb request failed with error %s", log: .generalLog, type: .debug, error.localizedDescription)
@@ -107,7 +107,7 @@ public class StatisticsLoader {
             completion()
         }
     }
-    
+
     public func refreshAppRetentionAtb(completion: @escaping Completion = {}) {
         guard let url = StatisticsDependentURLFactory(statisticsStore: statisticsStore).makeAppAtbURL() else {
             requestInstallStatistics(completion: completion)
@@ -116,7 +116,7 @@ public class StatisticsLoader {
 
         let configuration = APIRequest.Configuration(url: url)
         let request = APIRequest(configuration: configuration, urlSession: .session())
-        
+
         request.fetch { response, error in
             if let error = error {
                 os_log("App atb request failed with error %s", log: .generalLog, type: .debug, error.localizedDescription)

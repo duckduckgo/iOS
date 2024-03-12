@@ -107,6 +107,7 @@ class TabViewController: UIViewController {
     private static let tld = AppDependencyProvider.shared.storageCache.tld
     private let adClickAttributionDetection = ContentBlocking.shared.makeAdClickAttributionDetection(tld: tld)
     let adClickAttributionLogic = ContentBlocking.shared.makeAdClickAttributionLogic(tld: tld)
+    
 
     private var httpsForced: Bool = false
     private var lastUpgradedURL: URL?
@@ -754,9 +755,9 @@ class TabViewController: UIViewController {
     private func makePrivacyDashboardViewController(coder: NSCoder) -> PrivacyDashboardViewController? {
         PrivacyDashboardViewController(coder: coder,
                                        privacyInfo: privacyInfo,
+                                       dashboardMode: .dashboard,
                                        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                        contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
-                                       initMode: .privacyDashboard,
                                        breakageAdditionalInfo: makeBreakageAdditionalInfo())
     }
     

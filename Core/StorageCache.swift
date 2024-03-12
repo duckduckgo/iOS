@@ -22,15 +22,15 @@ import BrowserServicesKit
 import Common
 
 public class StorageCache {
-    
+
     public let tld: TLD
-    
+
     public init() {
         tld = TLD()
     }
-    
+
     public init(tld: TLD) {
         self.tld = tld
     }
-  
+
 }

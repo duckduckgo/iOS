@@ -32,6 +32,7 @@ struct SubscriptionRestoreView: View {
     @State private var expandedItemId: Int = 0
     @State private var isAlertVisible = false
     @State private var isActive: Bool = false
+    var onDismissStack: (() -> Void)?
     
     private enum Constants {
         static let heroImage = "ManageSubscriptionHero"
@@ -273,10 +274,15 @@ struct SubscriptionRestoreView: View {
                                                     dismiss()
                                                  }),
                          secondaryButton: .cancel())
-        case .error:
-            return Alert(title: Text(UserText.subscriptionAppStoreErrorTitle), message: Text(UserText.subscriptionAppStoreErrorMessage))
         default:
-            return Alert(title: Text(UserText.subscriptionAppStoreErrorTitle), message: Text(UserText.subscriptionAppStoreErrorMessage))
+            return Alert(
+                title: Text(UserText.subscriptionBackendErrorTitle),
+                message: Text(UserText.subscriptionBackendErrorMessage),
+                dismissButton: .cancel(Text(UserText.subscriptionBackendErrorButton)) {
+                    onDismissStack?()
+                    dismiss()
+                }
+            )
         }
     }
     

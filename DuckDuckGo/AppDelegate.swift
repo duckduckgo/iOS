@@ -303,7 +303,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
 
 #if NETWORK_PROTECTION
+#if SUBSCRIPTION && ALPHA
+        // no-op
+#else
         VPNWaitlist.shared.registerBackgroundRefreshTaskHandler()
+#endif
 #endif
 
         RemoteMessaging.registerBackgroundRefreshTaskHandler(
@@ -332,7 +336,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupSubscriptionsEnvironment()
 #endif
 
+#if SUBSCRIPTION && ALPHA
+        // no-op
+#else
         clearDebugWaitlistState()
+#endif
 
         AppDependencyProvider.shared.toggleProtectionsCounter.sendEventsIfNeeded()
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
@@ -905,10 +913,15 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 presentNetworkProtectionStatusSettingsModal()
             }
 
+#if SUBSCRIPTION && ALPHA
+            // no-op
+#else
             if identifier == VPNWaitlist.notificationIdentifier {
                 presentNetworkProtectionWaitlistModal()
                 DailyPixel.fire(pixel: .networkProtectionWaitlistNotificationLaunched)
             }
+#endif
+            
 #endif
         }
 

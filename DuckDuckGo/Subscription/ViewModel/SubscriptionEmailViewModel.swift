@@ -28,10 +28,11 @@ import Subscription
 final class SubscriptionEmailViewModel: ObservableObject {
     
     let accountManager: AccountManaging
+    let subscriptionManager: SubscriptionManaging
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     
-    var emailURL = URL.activateSubscriptionViaEmail
+    var emailURL: URL!
     var viewTitle = UserText.subscriptionActivateEmail
     @Published var subscriptionEmail: String?
     @Published var shouldReloadWebView = false
@@ -58,27 +59,34 @@ final class SubscriptionEmailViewModel: ObservableObject {
 
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
-         accountManager: AccountManaging = AppDependencyProvider.shared.subscriptionManager.accountManager) {
+         accountManager: AccountManaging = AppDependencyProvider.shared.subscriptionManager.accountManager,
+         subscriptionManager: SubscriptionManaging = AppDependencyProvider.shared.subscriptionManager) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.accountManager = accountManager
+        self.subscriptionManager = subscriptionManager
         self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,
                                                           subFeature: subFeature,
                                                           settings: AsyncHeadlessWebViewSettings(bounces: false,
                                                                                                  allowedDomains: Self.allowedDomains,
                                                                                                  contentBlocking: false))
-        initializeView()
+        initializeView(urlProvider: subscriptionManager.urlProvider)
         setupTransactionObservers()
     }
     
-    private func initializeView() {
+    private func initializeView(urlProvider: SubscriptionURLProviding) {
         if accountManager.isUserAuthenticated {
             // If user is authenticated, we want to "Add or manage email" instead of activating
-            emailURL = accountManager.email == nil ? URL.addEmailToSubscription : URL.manageSubscriptionEmail
+            let addEmailURL = urlProvider.url(for: .addEmail)
+            let manageEmailURL = urlProvider.url(for: .manageEmail)
+
+            emailURL = accountManager.email == nil ? addEmailURL : manageEmailURL
             viewTitle = accountManager.email == nil ?  UserText.subscriptionRestoreAddEmailTitle : UserText.subscriptionManageEmailTitle
             
             // Also we assume subscription requires managing, and not activation
             managingSubscriptionEmail = true
+        } else {
+            emailURL = urlProvider.url(for: .activateWithEmail)
         }
     }
     

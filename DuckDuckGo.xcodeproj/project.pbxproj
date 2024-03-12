@@ -107,6 +107,7 @@
 		1DDF40202BA049FA006850D9 /* SettingsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDF401F2BA049FA006850D9 /* SettingsRootView.swift */; };
 		1DDF40292BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDF40282BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift */; };
 		1DDF402B2BA05A65006850D9 /* Settings.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DDF402A2BA05A65006850D9 /* Settings.xcassets */; };
+		1DDF402D2BA09482006850D9 /* SettingsMainSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDF402C2BA09482006850D9 /* SettingsMainSettingsView.swift */; };
 		1E016AB42949FEB500F21625 /* OmniBarNotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E016AB32949FEB500F21625 /* OmniBarNotificationViewModel.swift */; };
 		1E05D1D629C46EBB00BF9A1F /* DailyPixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E05D1D529C46EBB00BF9A1F /* DailyPixel.swift */; };
 		1E05D1D829C46EDA00BF9A1F /* TimedPixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E05D1D729C46EDA00BF9A1F /* TimedPixel.swift */; };
@@ -1237,6 +1238,7 @@
 		1DDF401F2BA049FA006850D9 /* SettingsRootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRootView.swift; sourceTree = "<group>"; };
 		1DDF40282BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPrivacyProtectionsView.swift; sourceTree = "<group>"; };
 		1DDF402A2BA05A65006850D9 /* Settings.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Settings.xcassets; sourceTree = "<group>"; };
+		1DDF402C2BA09482006850D9 /* SettingsMainSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsMainSettingsView.swift; sourceTree = "<group>"; };
 		1E016AB32949FEB500F21625 /* OmniBarNotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniBarNotificationViewModel.swift; sourceTree = "<group>"; };
 		1E05D1D529C46EBB00BF9A1F /* DailyPixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPixel.swift; sourceTree = "<group>"; };
 		1E05D1D729C46EDA00BF9A1F /* TimedPixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimedPixel.swift; sourceTree = "<group>"; };
@@ -3155,6 +3157,7 @@
 			isa = PBXGroup;
 			children = (
 				1DDF40282BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift */,
+				1DDF402C2BA09482006850D9 /* SettingsMainSettingsView.swift */,
 			);
 			name = Sections;
 			sourceTree = "<group>";
@@ -6909,6 +6912,7 @@
 				B6CB93E5286445AB0090FEB4 /* Base64DownloadSession.swift in Sources */,
 				1EEF387D285B1A1100383393 /* TrackerImageCache.swift in Sources */,
 				3151F0EC27357FEE00226F58 /* VoiceSearchFeedbackViewModel.swift in Sources */,
+				1DDF402D2BA09482006850D9 /* SettingsMainSettingsView.swift in Sources */,
 				85010502292FB1000033978F /* FireproofFaviconUpdater.swift in Sources */,
 				F1C4A70E1E57725800A6CA1B /* OmniBar.swift in Sources */,
 				981CA7EA2617797500E119D5 /* MainViewController+AddFavoriteFlow.swift in Sources */,

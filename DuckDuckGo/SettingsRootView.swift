@@ -29,6 +29,7 @@ struct SettingsRootView: View {
     var body: some View {
         List {
             SettingsPrivacyProtectionsView()
+            SettingsMainSettingsView()
         }
         .navigationBarTitle(UserText.settingsTitle, displayMode: .inline)
         .navigationBarItems(trailing: Button(UserText.navigationTitleDone) {

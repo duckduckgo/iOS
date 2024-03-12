@@ -26,15 +26,15 @@ import Networking
 import CoreData
 import Persistence
 import History
+import Combine
 
 class AutocompleteViewController: UIViewController {
     
     private static let session = URLSession(configuration: .ephemeral)
 
     struct Constants {
-        static let debounceDelay: TimeInterval = 0.1
+        static let debounceDelay = 100 // millis
         static let minItems = 1
-        static let maxLocalItems = 2
     }
 
     weak var delegate: AutocompleteViewControllerDelegate?
@@ -45,7 +45,9 @@ class AutocompleteViewController: UIViewController {
     private var receivedResponse = false
     private var pendingRequest = false
     
-    fileprivate var query = ""
+    @Published fileprivate var query = ""
+    fileprivate var queryDebounceCancellable: AnyCancellable?
+
     fileprivate var suggestions = [Suggestion]()
     fileprivate var selectedItem = -1
     
@@ -74,8 +76,6 @@ class AutocompleteViewController: UIViewController {
     }
 
     private var hidesBarsOnSwipeDefault = true
-    
-    private let debounce = Debounce(queue: .main, seconds: Constants.debounceDelay)
 
     @IBOutlet weak var tableView: UITableView!
     var shouldOffsetY = false
@@ -97,6 +97,12 @@ class AutocompleteViewController: UIViewController {
         super.viewDidLoad()
         configureTableView()
         applyTheme(ThemeManager.shared.currentTheme)
+
+        queryDebounceCancellable = $query
+            .debounce(for: .milliseconds(Constants.debounceDelay), scheduler: RunLoop.main)
+            .sink { [weak self] query in
+                self?.requestSuggestions(query: query)
+            }
     }
     
     private func configureTableView() {
@@ -137,12 +143,9 @@ class AutocompleteViewController: UIViewController {
     }
 
     func updateQuery(query: String) {
-        self.query = query
         selectedItem = -1
         cancelInFlightRequests()
-        debounce.schedule { [weak self] in
-            self?.requestSuggestions(query: query)
-        }
+        self.query = query
     }
     
     func willDismiss(with query: String) {
@@ -170,6 +173,7 @@ class AutocompleteViewController: UIViewController {
     }
 
     private func requestSuggestions(query: String) {
+        print("***", #function, query)
         selectedItem = -1
         tableView.reloadData()
 
@@ -185,10 +189,10 @@ class AutocompleteViewController: UIViewController {
         })
         pendingRequest = true
 
-        loader?.getSuggestions(query: query, completion: { [weak self] result, error in
+        loader?.getSuggestions(query: query) { [weak self] result, _ in
             self?.updateSuggestions(result?.all ?? [])
             self?.pendingRequest = false
-        })
+        }
     }
 
     private func updateSuggestions(_ newSuggestions: [Suggestion]) {

@@ -52,7 +52,7 @@ class SuggestionTableViewCell: UITableViewCell {
             typeImage.image = UIImage(named: "Bookmark-20")
             self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
 
-        case .historyEntry(title: let title, url: let url, _):
+        case .historyEntry(title: let title, url: let url, let allowedInTopHits):
             if url.isDuckDuckGoSearch, let searchQuery = url.searchQuery {
                 text = searchQuery
             } else {

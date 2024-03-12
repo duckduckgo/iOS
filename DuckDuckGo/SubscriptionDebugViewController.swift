@@ -32,7 +32,7 @@ import Subscription
 @available(iOS 15.0, *)
 final class SubscriptionDebugViewController: UITableViewController {
     
-    private let accountManager = AccountManager()
+    private let accountManager = AppDependencyProvider.shared.subscriptionManager.accountManager
     fileprivate var purchaseManager: PurchaseManager = PurchaseManager.shared
     
     private let titles = [
@@ -234,13 +234,13 @@ final class SubscriptionDebugViewController: UITableViewController {
     private func getEntitlements() {
         Task {
             var results: [String] = []
-            guard let token = accountManager.accessToken else {
+            guard accountManager.isUserAuthenticated else {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
                 return
             }
             let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
             for entitlement in entitlements {
-                if case let .success(result) = await AccountManager().hasEntitlement(for: entitlement) {
+                if case let .success(result) = await accountManager.hasEntitlement(for: entitlement) {
                     let resultSummary = "Entitlement check for \(entitlement.rawValue): \(result)"
                     results.append(resultSummary)
                     print(resultSummary)

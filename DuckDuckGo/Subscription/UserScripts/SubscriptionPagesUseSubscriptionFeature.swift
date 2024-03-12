@@ -87,6 +87,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
              generalError
     }
         
+    private let accountManager: AccountManaging = AppDependencyProvider.shared.subscriptionManager.accountManager
+
     // Transaction Status and erros are observed from ViewModels to handle errors in the UI
     @Published private(set) var transactionStatus: SubscriptionTransactionStatus = .idle
     @Published private(set) var transactionError: UseSubscriptionError?
@@ -163,7 +165,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     // MARK: Broker Methods (Called from WebView via UserScripts)
     func getSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
-        let authToken = AccountManager().authToken ?? Constants.empty
+        let authToken = accountManager.authToken ?? Constants.empty
         return [Constants.token: authToken]
     }
     
@@ -263,7 +265,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
 
         let authToken = subscriptionValues.token
-        let accountManager = AccountManager()
         if case let .success(accessToken) = await accountManager.exchangeAuthTokenToAccessToken(authToken),
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
             accountManager.storeAuthToken(token: authToken)
@@ -277,7 +278,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func backToSettings(params: Any, original: WKScriptMessage) async -> Encodable? {
-        let accountManager = AccountManager()
         if let accessToken = accountManager.accessToken,
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
             switch await SubscriptionService.getSubscription(accessToken: accessToken) {

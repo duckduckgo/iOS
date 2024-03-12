@@ -50,7 +50,7 @@ final class SettingsViewModel: ObservableObject {
     private let voiceSearchHelper: VoiceSearchHelperProtocol
 
 #if SUBSCRIPTION
-    private var accountManager: AccountManager
+    private var accountManager: AccountManaging
     private var signOutObserver: Any?
         
     // Sheet Presentation & Navigation
@@ -212,7 +212,7 @@ final class SettingsViewModel: ObservableObject {
     // MARK: Default Init
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
-         accountManager: AccountManager,
+         accountManager: AccountManaging,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          navigateOnAppearDestination: SettingsSection = .none) {
         self.state = SettingsState.defaults
@@ -299,7 +299,7 @@ extension SettingsViewModel {
             enabled = featureFlagger.isFeatureOn(.subscription)
             canPurchase = SubscriptionPurchaseEnvironment.canPurchase
             await setupSubscriptionEnvironment()
-            if let token = AccountManager().accessToken {
+            if let token = accountManager.accessToken {
                 let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token)
                 if case .success(let subscription) = subscriptionResult {
                     hasActiveSubscription = subscription.isActive
@@ -359,7 +359,7 @@ extension SettingsViewModel {
             // Check entitlements and update UI accordingly
             let entitlements: [Entitlement.ProductName] = [.identityTheftRestoration, .dataBrokerProtection, .networkProtection]
             for entitlement in entitlements {
-                if case .success = await AccountManager().hasEntitlement(for: entitlement) {
+                if case .success = await accountManager.hasEntitlement(for: entitlement) {
                     switch entitlement {
                     case .identityTheftRestoration:
                         self.shouldShowITP = true
@@ -380,7 +380,7 @@ extension SettingsViewModel {
     
     @available(iOS 15.0, *)
     private func signOutUser() {
-        AccountManager().signOut()
+        accountManager.signOut()
         setupSubscriptionPurchaseOptions()
     }
     

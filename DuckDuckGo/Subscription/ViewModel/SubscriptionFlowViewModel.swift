@@ -31,6 +31,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     let purchaseManager: PurchaseManager
+    let accountManager: AccountManaging
     let viewTitle = UserText.settingsPProSection
     var webViewModel: AsyncHeadlessWebViewViewModel
     
@@ -86,10 +87,12 @@ final class SubscriptionFlowViewModel: ObservableObject {
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
          purchaseManager: PurchaseManager = PurchaseManager.shared,
+         accountManager: AccountManaging = AppDependencyProvider.shared.subscriptionManager.accountManager,
          selectedFeature: SettingsViewModel.SettingsSection? = nil) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.purchaseManager = purchaseManager
+        self.accountManager = accountManager
         self.selectedFeature = selectedFeature
         self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,
                                                           subFeature: subFeature,
@@ -304,7 +307,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
     
     func updateSubscriptionStatus() async {
-        if AccountManager().isUserAuthenticated && hasActiveSubscription == false {
+        if accountManager.isUserAuthenticated && hasActiveSubscription == false {
             await disableGoBack()
             await webViewModel.navigationCoordinator.reload()
         }

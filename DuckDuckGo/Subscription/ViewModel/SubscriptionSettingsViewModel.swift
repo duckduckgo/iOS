@@ -33,7 +33,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         static let updateFrequency: Float = 10
     }
     
-    let accountManager: AccountManager
+    let accountManager: AccountManaging
     private var subscriptionUpdateTimer: Timer?
     private var signOutObserver: Any?
     
@@ -42,7 +42,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     @Published var shouldDisplayRemovalNotice: Bool = false
     @Published var shouldDismissView: Bool = false
     
-    init(accountManager: AccountManager = AccountManager()) {
+    init(accountManager: AccountManaging = AppDependencyProvider.shared.subscriptionManager.accountManager) {
         self.accountManager = accountManager
         Task { await fetchAndUpdateSubscriptionDetails() }
         setupSubscriptionUpdater()
@@ -64,7 +64,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
             case .success(let subscription):
                 updateSubscriptionDetails(status: subscription.status, date: subscription.expiresOrRenewsAt, product: subscription.productId)
             case .failure(let error):
-                AccountManager().signOut()
+                accountManager.signOut()
                 shouldDismissView = true
             }
         }
@@ -97,7 +97,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     func removeSubscription() {
-        AccountManager().signOut()
+        accountManager.signOut()
         _ = ActionMessageView()
         ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation,
                                   presentationLocation: .withoutBottomBar)

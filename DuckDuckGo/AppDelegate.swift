@@ -416,7 +416,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Task {
             SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
             SubscriptionPurchaseEnvironment.current = .appStore
-            await AccountManager().checkSubscriptionState()
+            await AppDependencyProvider.shared.subscriptionManager.accountManager.checkSubscriptionState()
         }
     }
 #endif
@@ -485,7 +485,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func updateSubscriptionStatus() {
 #if SUBSCRIPTION
         Task {
-            guard let token = AccountManager().accessToken else {
+            guard let token = AppDependencyProvider.shared.subscriptionManager.accountManager.accessToken else {
                 return
             }
             let result = await SubscriptionService.getSubscription(accessToken: token)

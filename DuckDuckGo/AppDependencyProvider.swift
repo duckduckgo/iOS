@@ -23,6 +23,10 @@ import BrowserServicesKit
 import DDGSync
 import Bookmarks
 
+#if SUBSCRIPTION
+import Subscription
+#endif
+
 protocol DependencyProvider {
 
     var appSettings: AppSettings { get }
@@ -39,6 +43,10 @@ protocol DependencyProvider {
     var configurationManager: ConfigurationManager { get }
     var toggleProtectionsCounter: ToggleProtectionsCounter { get }
     var userBehaviorMonitor: UserBehaviorMonitor { get }
+
+#if SUBSCRIPTION
+    var subscriptionManager: SubscriptionManaging { get }
+#endif
 
 }
 
@@ -69,4 +77,14 @@ class AppDependencyProvider: DependencyProvider {
     let toggleProtectionsCounter: ToggleProtectionsCounter = ContentBlocking.shared.privacyConfigurationManager.toggleProtectionsCounter
     let userBehaviorMonitor = UserBehaviorMonitor()
 
+#if SUBSCRIPTION
+    let subscriptionManager: SubscriptionManaging = {
+        let accountManager = AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+
+        // perform token migration if needed (to be removed before release)
+        try? accountManager.migrateAccessTokenToNewStore()
+
+        return SubscriptionManager(accountManager: accountManager)
+    }()
+#endif
 }

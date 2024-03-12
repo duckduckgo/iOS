@@ -414,6 +414,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if SUBSCRIPTION
     private func setupSubscriptionsEnvironment() {
         Task {
+            // todo - https://app.asana.com/0/0/1206811466624632/f
             SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
             SubscriptionPurchaseEnvironment.current = .appStore
             await AccountManager().checkSubscriptionState()

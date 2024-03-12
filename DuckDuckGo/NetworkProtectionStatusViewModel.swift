@@ -174,6 +174,18 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             .map(Self.statusImageID(connected:))
             .assign(to: \.statusImageID, onWeaklyHeld: self)
             .store(in: &cancellables)
+        isConnectedPublisher
+            .sink { [weak self] isConnected in
+                if !isConnected {
+                    self?.uploadTotal = Constants.defaultUploadVolume
+                    self?.downloadTotal = Constants.defaultDownloadVolume
+                    self?.throughputUpdateTimer?.invalidate()
+                    self?.throughputUpdateTimer = nil
+                } else {
+                    self?.setUpThroughputRefreshTimer()
+                }
+            }
+            .store(in: &cancellables)
     }
 
     private func setUpToggledStatePublisher() {
@@ -273,6 +285,11 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     }
 
     private func setUpThroughputRefreshTimer() {
+        if let throughputUpdateTimer, throughputUpdateTimer.isValid {
+            // Prevent the timer from being set up multiple times
+            return
+        }
+
         Task {
             // Refresh as soon as the timer is set up, rather than waiting for 1 second:
             await self.refreshDataVolumeTotals()

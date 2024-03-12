@@ -134,14 +134,22 @@ struct NetworkProtectionStatusView: View {
     private func locationDetails() -> some View {
         Section {
             if let location = statusModel.location {
+                var locationAttributedString: AttributedString {
+                    var attributedString = AttributedString(statusModel.preferredLocation.isNearest ? "\(location) (Nearest)" : location)
+                    attributedString.foregroundColor = .init(designSystemColor: .textPrimary)
+                    if let range = attributedString.range(of: "(Nearest)") {
+                        attributedString[range].foregroundColor = Color(.init(designSystemColor: .textSecondary))
+                    }
+                    return attributedString
+                }
+
                 NavigationLink(destination: NetworkProtectionVPNLocationView()) {
-                    let title = statusModel.preferredLocation.isNearest ? "\(location) (Nearest)" : location
-                    NetworkProtectionLocationItemView(title: title)
+                    NetworkProtectionLocationItemView(title: locationAttributedString)
                 }
             } else {
                 NavigationLink(destination: NetworkProtectionVPNLocationView()) {
                     NetworkProtectionLocationItemView(
-                        title: statusModel.preferredLocation.title
+                        title: AttributedString(statusModel.preferredLocation.title)
                     )
                 }
             }
@@ -257,14 +265,14 @@ private struct NetworkProtectionErrorView: View {
     }
 }
 
+@available(iOS 15.0, *)
 private struct NetworkProtectionLocationItemView: View {
-    let title: String
+    let title: AttributedString
 
     var body: some View {
         HStack(spacing: 16) {
             Text(title)
                 .daxBodyRegular()
-                .foregroundColor(.init(designSystemColor: .textPrimary))
         }
         .listRowBackground(Color(designSystemColor: .surface))
     }
@@ -301,16 +309,16 @@ private struct NetworkProtectionThroughputItemView: View {
 
             Spacer(minLength: 2)
 
-            Image("VPNUpload")
+            Image("VPNDownload")
                 .foregroundColor(.init(designSystemColor: .textSecondary))
-            Text(uploadSpeed)
+            Text(downloadSpeed)
                 .daxBodyRegular()
                 .foregroundColor(.init(designSystemColor: .textSecondary))
 
-            Image("VPNDownload")
+            Image("VPNUpload")
                 .foregroundColor(.init(designSystemColor: .textSecondary))
                 .padding(.leading, 4)
-            Text(downloadSpeed)
+            Text(uploadSpeed)
                 .daxBodyRegular()
                 .foregroundColor(.init(designSystemColor: .textSecondary))
         }

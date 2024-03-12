@@ -76,7 +76,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     func manageSubscription() {
         switch subscriptionInfo?.platform {
         case .apple:
-            Task { await manageStripeSubscription() }
+            Task { await manageAppleSubscription() }
         case .google:
             manageGoogleSubscription()
         case .stripe:
@@ -146,7 +146,6 @@ final class SubscriptionSettingsViewModel: ObservableObject {
                 openURL(url)
             }
         }
-        
     }
 
     @MainActor

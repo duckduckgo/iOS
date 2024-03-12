@@ -25,15 +25,15 @@ public class NavigatorSharePatchUserScript: NSObject, UserScript {
     public var source: String {
         return Self.loadJS("navigatorsharepatch", from: Bundle.core)
     }
-    
+
     public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart
-    
+
     public var forMainFrameOnly: Bool = false
-    
+
     public var messageNames: [String] = []
-    
+
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        
+
     }
 
 }

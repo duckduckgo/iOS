@@ -22,8 +22,8 @@ import BrowserServicesKit
 import Combine
 import Common
 
-
 public final class ContentBlocking {
+    
     public static let shared = ContentBlocking()
 
     public let privacyConfigurationManager: PrivacyConfigurationManaging
@@ -50,6 +50,7 @@ public final class ContentBlocking {
                                            embeddedDataProvider: AppPrivacyConfigurationDataProvider(),
                                            localProtection: DomainsProtectionUserDefaultsStore(),
                                            errorReporting: Self.debugEvents,
+                                           toggleProtectionsCounterEventReporting: toggleProtectionsEvents,
                                            internalUserDecider: internalUserDecider,
                                            installDate: statisticsStore.installDate)
         self.privacyConfigurationManager = privacyConfigurationManager
@@ -84,25 +85,25 @@ public final class ContentBlocking {
         switch event {
         case .trackerDataParseFailed:
             domainEvent = .trackerDataParseFailed
-            
+
         case .trackerDataReloadFailed:
             domainEvent = .trackerDataReloadFailed
-            
+
         case .trackerDataCouldNotBeLoaded:
             domainEvent = .trackerDataCouldNotBeLoaded
-            
+
         case .privacyConfigurationReloadFailed:
             domainEvent = .privacyConfigurationReloadFailed
-            
+
         case .privacyConfigurationParseFailed:
             domainEvent = .privacyConfigurationParseFailed
-            
+
         case .privacyConfigurationCouldNotBeLoaded:
             domainEvent = .privacyConfigurationCouldNotBeLoaded
-            
+
         case .contentBlockingCompilationFailed(let listName, let component):
             let defaultTDSListName = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
-            
+
             let listType: Pixel.Event.CompileRulesListType
             switch listName {
             case defaultTDSListName:
@@ -116,11 +117,11 @@ public final class ContentBlocking {
             }
 
             domainEvent = .contentBlockingCompilationFailed(listType: listType, component: component)
-            
+
         case .contentBlockingCompilationTime:
             domainEvent = .contentBlockingCompilationTime
         }
-        
+
         if let error = error {
             Pixel.fire(pixel: domainEvent,
                        error: error,
@@ -132,7 +133,7 @@ public final class ContentBlocking {
                        includedParameters: [],
                        onComplete: onComplete)
         }
-        
+
     }
 
     public func makeAdClickAttributionDetection(tld: TLD) -> AdClickAttributionDetection {
@@ -142,7 +143,7 @@ public final class ContentBlocking {
                                     errorReporting: attributionDebugEvents,
                                     log: .adAttributionLog)
     }
-    
+
     public func makeAdClickAttributionLogic(tld: TLD) -> AdClickAttributionLogic {
         AdClickAttributionLogic(featureConfig: adClickAttribution,
                                 rulesProvider: adClickAttributionRulesProvider,
@@ -151,7 +152,7 @@ public final class ContentBlocking {
                                 errorReporting: attributionDebugEvents,
                                 log: .adAttributionLog)
     }
-    
+
     private let attributionEvents = EventMapping<AdClickAttributionEvents> { event, _, parameters, _ in
         var shouldIncludeAppVersion = true
         let domainEvent: Pixel.Event
@@ -164,10 +165,10 @@ public final class ContentBlocking {
             domainEvent = .adClickAttributionPageLoads
             shouldIncludeAppVersion = false
         }
-        
+
         Pixel.fire(pixel: domainEvent, withAdditionalParameters: parameters ?? [:], includedParameters: shouldIncludeAppVersion ? [.appVersion] : [])
     }
-    
+
     private let attributionDebugEvents = EventMapping<AdClickAttributionDebugEvents> { event, _, _, _ in
         let domainEvent: Pixel.Event
         switch event {
@@ -192,29 +193,39 @@ public final class ContentBlocking {
         case .adAttributionLogicWrongVendorOnFailedCompilation:
             domainEvent = .adAttributionLogicWrongVendorOnFailedCompilation
         }
-        
+
         Pixel.fire(pixel: domainEvent, includedParameters: [])
     }
-            
+
+    private let toggleProtectionsEvents = EventMapping<ToggleProtectionsCounterEvent> { event, _, parameters, _ in
+        let domainEvent: Pixel.Event
+        switch event {
+        case .toggleProtectionsCounterDaily:
+            domainEvent = .toggleProtectionsDailyCount
+        }
+
+        Pixel.fire(pixel: domainEvent, withAdditionalParameters: parameters ?? [:])
+    }
+
 }
 
 public class DomainsProtectionUserDefaultsStore: DomainsProtectionStore {
-    
+
     private struct Keys {
         static let unprotectedDomains = "com.duckduckgo.contentblocker.whitelist"
         static let trackerList = "com.duckduckgo.trackerList"
     }
-    
+
     private let suiteName: String
-    
+
     public init(suiteName: String = ContentBlockerStoreConstants.groupName) {
         self.suiteName = suiteName
     }
-    
+
     private var userDefaults: UserDefaults? {
         return UserDefaults(suiteName: suiteName)
     }
-    
+
     public private(set) var unprotectedDomains: Set<String> {
         get {
             guard let data = userDefaults?.data(forKey: Keys.unprotectedDomains) else { return Set<String>() }
@@ -229,13 +240,13 @@ public class DomainsProtectionUserDefaultsStore: DomainsProtectionStore {
             userDefaults?.set(data, forKey: Keys.unprotectedDomains)
         }
     }
-    
+
     public func disableProtection(forDomain domain: String) {
         var domains = unprotectedDomains
         domains.insert(domain)
         unprotectedDomains = domains
     }
-    
+
     public func enableProtection(forDomain domain: String) {
         var domains = unprotectedDomains
         domains.remove(domain)

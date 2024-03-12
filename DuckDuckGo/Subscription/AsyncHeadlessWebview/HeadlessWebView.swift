@@ -32,6 +32,7 @@ struct HeadlessWebView: UIViewRepresentable {
     var onCanGoBack: ((Bool) -> Void)?
     var onCanGoForward: ((Bool) -> Void)?
     var onContentType: ((String) -> Void)?
+    var onNavigationError: ((Error?) -> Void)?
     var navigationCoordinator: HeadlessWebViewNavCoordinator
     
     func makeUIView(context: Context) -> WKWebView {
@@ -73,6 +74,7 @@ struct HeadlessWebView: UIViewRepresentable {
                     onCanGoBack: onCanGoBack,
                     onCanGoForward: onCanGoForward,
                     onContentType: onContentType,
+                    onNavigationError: onNavigationError,
                     settings: settings
         )
     }

@@ -20,7 +20,5 @@ CODZIENNA KONTROLA PRYWATNOŚCI
 
 • Zasygnalizuj swoje preferencje dotyczące prywatności za pomocą funkcji GPC (Global Privacy Control) - Więcej informacji znajdziesz na stronie https://help.duckduckgo.com/duckduckgo-help-pages/privacy/gpc/ 
 
-Informacja o naszym systemie ochrony przed wczytywaniem reklam przez strony trzecie po kliknięciu reklamy DuckDuckGo: nasza funkcja ochrony przed ładowaniem przez strony trzecie wykracza poza to, co jest domyślnie dostępne w większości popularnych przeglądarek, jednak nieustannie pracujemy nad tym, aby była ona jeszcze bardziej wszechstronna. Obecnie, jeśli reklamodawca chce wykryć konwersje na swojej stronie internetowej dla naszych prywatnych reklam wyszukiwania DuckDuckGo, nasza ochrona przed ładowaniem przez trackery stron trzecich nie blokuje ładowania zapytań bat.bing.com na stronie reklamodawcy po kliknięciu reklamy DuckDuckGo, ale zapytania te są blokowane we wszystkich innych kontekstach. Dzieje się tak dlatego, że reklama w wyszukiwarce prywatnej DuckDuckGo współpracuje z firmą Microsoft. W ramach tego partnerstwa oglądanie reklam w DuckDuckGo jest anonimowe, a firma Microsoft zobowiązała się nie profilować kliknięć reklam przez naszych użytkowników.
-
 Więcej informacji na ten temat oraz na temat naszej bezpłatnej ochrony przed śledzeniem można znaleźć na stronie https://help.duckduckgo.com/privacy/web-tracking-protections
 

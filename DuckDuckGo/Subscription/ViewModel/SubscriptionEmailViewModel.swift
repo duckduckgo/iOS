@@ -38,6 +38,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     @Published var activateSubscription = false
     @Published var managingSubscriptionEmail = false
     @Published var transactionError: SubscriptionRestoreError?
+    @Published var navigationError: Bool = false
     @Published var shouldDisplayInactiveError: Bool = false
     var webViewModel: AsyncHeadlessWebViewViewModel
     
@@ -52,9 +53,9 @@ final class SubscriptionEmailViewModel: ObservableObject {
              subscriptionExpired,
              generalError
     }
-    
+
     private var cancellables = Set<AnyCancellable>()
-            
+
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
          accountManager: AccountManager = AccountManager()) {
@@ -101,6 +102,17 @@ final class SubscriptionEmailViewModel: ObservableObject {
                 }
             }
         .store(in: &cancellables)
+        
+        webViewModel.$navigationError
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                guard let strongSelf = self else { return }
+                DispatchQueue.main.async {
+                    strongSelf.navigationError = error != nil ? true : false
+                }
+                
+            }
+            .store(in: &cancellables)
     }
     
     private func handleTransactionError(error: SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError) {
@@ -115,6 +127,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
     
     private func completeActivation() {
+        DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailSuccess)
         subFeature.emailActivationComplete = false
         activateSubscription = true
     }

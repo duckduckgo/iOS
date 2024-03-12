@@ -20,9 +20,9 @@
 import Foundation
 
 public extension UIKeyCommand {
-    
+
     static let inputBackspace = String(UnicodeScalar(8))
     static let inputTab = String(UnicodeScalar(9))
     static let inputEnter = String(UnicodeScalar(13))
-    
+
 }

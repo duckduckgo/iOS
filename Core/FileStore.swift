@@ -21,11 +21,11 @@ import Foundation
 import Configuration
 
 public class FileStore {
-    
+
     private let groupIdentifier: String = ContentBlockerStoreConstants.groupName
 
     public init() { }
-    
+
     public func persist(_ data: Data, for configuration: Configuration) throws {
         do {
             try data.write(to: persistenceLocation(for: configuration), options: .atomic)
@@ -34,26 +34,26 @@ public class FileStore {
             throw error
         }
     }
-    
+
     func removeData(forFile file: String) -> Bool {
         var fileUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier)
         fileUrl = fileUrl!.appendingPathComponent(file)
         guard let fileUrl = fileUrl else { return false }
         guard FileManager.default.fileExists(atPath: fileUrl.path) else { return true }
-        
+
         do {
             try FileManager.default.removeItem(at: fileUrl)
         } catch {
             return false
         }
-        
+
         return true
     }
-    
+
     public func loadAsString(for configuration: Configuration) -> String? {
         try? String(contentsOf: persistenceLocation(for: configuration))
     }
-    
+
     public func loadAsData(for configuration: Configuration) -> Data? {
         do {
             return try Data(contentsOf: persistenceLocation(for: configuration))
@@ -65,7 +65,7 @@ public class FileStore {
             return nil
         }
     }
-    
+
     func hasData(for configuration: Configuration) -> Bool {
         FileManager.default.fileExists(atPath: persistenceLocation(for: configuration).path)
     }

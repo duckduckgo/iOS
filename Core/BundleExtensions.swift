@@ -1,5 +1,5 @@
 //
-//  AdAttributionReporterStorage.swift
+//  BundleExtensions.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,22 +17,24 @@
 //  limitations under the License.
 //
 
-import Core
 import Foundation
 
-protocol AdAttributionReporterStorage {
-    var wasAttributionReportSuccessful: Bool { get async }
+extension Bundle {
+    public func appGroup(bundle: BundleGroup) -> String {
+        var appGroupName: String
 
-    func markAttributionReportSuccessful() async
+        switch bundle {
+        case .subs:
+            appGroupName = "SUBSCRIPTION_APP_GROUP"
+        }
+
+        guard let appGroup = object(forInfoDictionaryKey: appGroupName) as? String else {
+            fatalError("Info.plist is missing \(appGroupName)")
+        }
+        return appGroup
+    }
 }
 
-final class UserDefaultsAdAttributionReporterStorage: AdAttributionReporterStorage {
-    @MainActor
-    @UserDefaultsWrapper(key: .appleAdAttributionReportCompleted, defaultValue: false)
-    var wasAttributionReportSuccessful: Bool
-
-    @MainActor
-    func markAttributionReportSuccessful() async {
-        wasAttributionReportSuccessful = true
-    }
+public enum BundleGroup {
+    case subs
 }

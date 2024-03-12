@@ -17,10 +17,11 @@
 //  limitations under the License.
 //
 
-import XCTest
-import CoreData
-import Combine
 import Bookmarks
+import Combine
+import CoreData
+import Macros
+import XCTest
 
 @testable import Core
 
@@ -42,7 +43,7 @@ public class MockBookmarksSearchStore: BookmarksSearchStore {
 
 class BookmarksCachingSearchTests: XCTestCase {
     
-    let url = URL(string: "http://duckduckgo.com")!
+    let url = #URL("http://duckduckgo.com")
     
     let simpleStore = MockBookmarksSearchStore()
     let urlStore = MockBookmarksSearchStore()
@@ -85,9 +86,9 @@ class BookmarksCachingSearchTests: XCTestCase {
                                BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.f12a.rawValue, url: url, isFavorite: true)]
         
         urlStore.dataSet = [
-            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.urlExample1.rawValue, url: URL(string: "https://example.com")!, isFavorite: true),
-            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.urlExample2.rawValue, url: URL(string: "https://example.com")!, isFavorite: true),
-            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.urlNasa.rawValue, url: URL(string: "https://www.nasa.gov")!, isFavorite: true),
+            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.urlExample1.rawValue, url: #URL("https://example.com"), isFavorite: true),
+            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.urlExample2.rawValue, url: #URL("https://example.com"), isFavorite: true),
+            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.urlNasa.rawValue, url: #URL("https://www.nasa.gov"), isFavorite: true),
             BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.urlDDG.rawValue, url: url, isFavorite: true)]
     }
     
@@ -238,6 +239,6 @@ class BookmarksCachingSearchTests: XCTestCase {
 private extension BookmarksCachingSearchTests {
     enum Constants {
         static let bookmarkTitle = "my bookmark"
-        static let bookmarkURL = URL(string: "https://www.apple.com")!
+        static let bookmarkURL = #URL("https://www.apple.com")
     }
 }

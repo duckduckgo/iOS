@@ -46,6 +46,7 @@ final class SubscriptionITPViewModel: ObservableObject {
     @Published var isDownloadableContent: Bool = false
     @Published var activityItems: [Any] = []
     @Published var attachmentURL: URL?
+    @Published var navigationError: Bool = false
     var webViewModel: AsyncHeadlessWebViewViewModel
     
     @Published var shouldNavigateToExternalURL: URL?
@@ -81,8 +82,19 @@ final class SubscriptionITPViewModel: ObservableObject {
                                                           settings: webViewSettings)
     }
     
-    // Observe transaction status
+    // swiftlint:disable function_body_length
     private func setupSubscribers() async {
+        
+        webViewModel.$navigationError
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                guard let strongSelf = self else { return }
+                DispatchQueue.main.async {
+                    strongSelf.navigationError = error != nil ? true : false
+                }
+                
+            }
+            .store(in: &cancellables)
         
         webViewModel.$scrollPosition
             .receive(on: DispatchQueue.main)
@@ -134,10 +146,12 @@ final class SubscriptionITPViewModel: ObservableObject {
                 self?.canNavigateBack = value
             }
     }
+    // swiftlint:enable function_body_length
     
     func initializeView() {
         webViewModel.navigationCoordinator.navigateTo(url: manageITPURL )
         Task { await setupSubscribers() }
+        Pixel.fire(pixel: .privacyProIdentityRestorationSettings)
     }
     
     private func downloadAttachment(from url: URL) async {

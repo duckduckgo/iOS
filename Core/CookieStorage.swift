@@ -34,7 +34,7 @@ public class CookieStorage {
     }
 
     private var userDefaults: UserDefaults
-    
+
     var isConsumed: Bool {
         get {
             return userDefaults.bool(forKey: Keys.consumed, defaultValue: false)
@@ -43,7 +43,7 @@ public class CookieStorage {
             userDefaults.set(newValue, forKey: Keys.consumed)
         }
     }
-    
+
     /// Use the `updateCookies` function rather than the setter which is only visible for testing.
     var cookies: [HTTPCookie] {
         get {
@@ -54,17 +54,17 @@ public class CookieStorage {
                     cookieData.forEach({
                         properties[HTTPCookiePropertyKey(rawValue: $0.key)] = $0.value
                     })
-                    
+
                     if let cookie = HTTPCookie(properties: properties) {
                         os_log("read cookie %s %s %s", log: .generalLog, type: .debug, cookie.domain, cookie.name, cookie.value)
                         storedCookies.append(cookie)
                     }
                 }
             }
-            
+
             return storedCookies
         }
-        
+
         set {
             var cookies = [[String: Any?]]()
             newValue.forEach { cookie in
@@ -91,16 +91,16 @@ public class CookieStorage {
         case different
         case notConsumed
     }
-    
+
     /// Update ALL cookies. The absence of cookie domains here indicateds they have been removed by the website, so be sure to call this with all cookies that might need to be persisted even if those websites have not been visited yet.
     @discardableResult
     func updateCookies(_ cookies: [HTTPCookie], keepingPreservedLogins preservedLogins: PreserveLogins) -> CookieDomainsOnUpdateDiagnostic {
         guard isConsumed else { return .notConsumed }
-        
+
         isConsumed = false
-        
+
         let persisted = self.cookies
-        
+
         func cookiesByDomain(_ cookies: [HTTPCookie]) -> [String: [HTTPCookie]] {
             var byDomain = [String: [HTTPCookie]]()
             cookies.forEach { cookie in
@@ -110,7 +110,7 @@ public class CookieStorage {
             }
             return byDomain
         }
-        
+
         let updatedCookiesByDomain = cookiesByDomain(cookies)
         var persistedCookiesByDomain = cookiesByDomain(persisted)
 
@@ -119,16 +119,16 @@ public class CookieStorage {
             updatedDomains: updatedCookiesByDomain.keys.sorted(),
             persistedDomains: persistedCookiesByDomain.keys.sorted()
         )
-        
+
         let cookieDomains = Set(updatedCookiesByDomain.keys.map { $0 } + persistedCookiesByDomain.keys.map { $0 })
-        
+
         cookieDomains.forEach {
             persistedCookiesByDomain[$0] = updatedCookiesByDomain[$0]
         }
-        
+
         persistedCookiesByDomain.keys.forEach {
             guard !URL.isDuckDuckGo(domain: $0) else { return } // DDG cookies are for SERP settings only
-            
+
             if !preservedLogins.isAllowed(cookieDomain: $0) {
                 persistedCookiesByDomain.removeValue(forKey: $0)
             }
@@ -137,10 +137,10 @@ public class CookieStorage {
         let now = Date()
         self.cookies = persistedCookiesByDomain.map { $0.value }.joined().compactMap { $0 }
             .filter { $0.expiresDate == nil || $0.expiresDate! > now }
-        
+
         return diagnosticResult
     }
-    
+
     private func evaluateDomains(updatedDomains: [String], persistedDomains: [String]) -> CookieDomainsOnUpdateDiagnostic {
         if persistedDomains.isEmpty {
             return .empty
@@ -152,5 +152,5 @@ public class CookieStorage {
             return .different
         }
     }
-     
+
 }

@@ -19,10 +19,11 @@
 
 // swiftlint:disable file_length
 
-import Foundation
-import WebKit
 import BrowserServicesKit
 import Common
+import Foundation
+import Macros
+import WebKit
 
 public protocol UserAgentManager {
 
@@ -31,32 +32,31 @@ public protocol UserAgentManager {
     func update(webView: WKWebView, isDesktop: Bool, url: URL?)
 
     func userAgent(isDesktop: Bool) -> String
-    
+
 }
 
 public class DefaultUserAgentManager: UserAgentManager {
-    
+
     public static let shared: UserAgentManager = DefaultUserAgentManager()
 
     private var userAgent = UserAgent()
-    
+
     init() {
         prepareUserAgent()
     }
-    
+
     private func prepareUserAgent() {
         let webview = WKWebView()
-        webview.load(URLRequest.developerInitiated(URL(string: "about:blank")!))
-        
+        webview.load(URLRequest.developerInitiated(#URL("about:blank")))
         getDefaultAgent(webView: webview) { [weak self] agent in
             // Reference webview instance to keep it in scope and allow UA to be returned
             _ = webview
-            
+
             guard let defaultAgent = agent else { return }
             self?.userAgent = UserAgent(defaultAgent: defaultAgent)
         }
     }
-    
+
     public func userAgent(isDesktop: Bool) -> String {
         return userAgent.agent(forUrl: nil, isDesktop: isDesktop)
     }
@@ -69,21 +69,21 @@ public class DefaultUserAgentManager: UserAgentManager {
         let agent = userAgent.agent(forUrl: url, isDesktop: isDesktop)
         webView.customUserAgent = agent
     }
-    
+
     private func getDefaultAgent(webView: WKWebView, completion: @escaping (String?) -> Void) {
         webView.evaluateJavaScript("navigator.userAgent") { (result, _) in
             let agent = result as? String
             completion(agent)
         }
     }
-    
+
     public static var duckDuckGoUserAgent: String { duckduckGoUserAgent(for: AppVersion.shared) }
-    
+
     public static func duckduckGoUserAgent(for appVersion: AppVersion) -> String {
         let osVersion = UIDevice.current.systemVersion
         return "ddg_ios/\(appVersion.versionAndBuildNumber) (\(appVersion.identifier); iOS \(osVersion))"
     }
-    
+
 }
 
 struct UserAgent {
@@ -96,7 +96,7 @@ struct UserAgent {
         case brand
 
     }
-    
+
     private enum Constants {
         // swiftlint:disable line_length
         static let fallbackWekKitVersion = "605.1.15"
@@ -104,7 +104,7 @@ struct UserAgent {
         static let fallbackDefaultAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5 like Mac OS X) AppleWebKit/\(fallbackWekKitVersion) (KHTML, like Gecko) Mobile/15E148"
         static let desktopPrefixComponent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15)"
         static let fallbackVersionComponent = "Version/13.1.1"
-        
+
         static let uaOmitSitesConfigKey = "omitApplicationSites"
         static let uaOmitDomainConfigKey = "domain"
 
@@ -119,13 +119,13 @@ struct UserAgent {
         static let uaStateKey = "state"
         // swiftlint:enable line_length
     }
-    
+
     private struct Regex {
         static let suffix = "(AppleWebKit/.*) Mobile"
         static let webKitVersion = "AppleWebKit/([^ ]+) "
         static let osVersion = " OS ([0-9_]+)"
     }
-    
+
     private let baseAgent: String
     private let baseDesktopAgent: String
     private let version: String
@@ -145,11 +145,11 @@ struct UserAgent {
         brandComponent = UserAgent.createBrandComponent(withVersion: version)
         self.statistics = statistics
     }
-    
+
     private func omitApplicationSites(forConfig config: PrivacyConfiguration) -> [String] {
         let uaSettings = config.settings(for: .customUserAgent)
         let omitApplicationObjs = uaSettings[Constants.uaOmitSitesConfigKey] as? [[String: String]] ?? []
-        
+
         return omitApplicationObjs.map { $0[Constants.uaOmitDomainConfigKey] ?? "" }
     }
 
@@ -345,11 +345,11 @@ struct UserAgent {
     private static func createSafariComponent(fromAgent agent: String) -> String {
         let regex = try? NSRegularExpression(pattern: Regex.webKitVersion)
         let match = regex?.firstMatch(in: agent, options: [], range: NSRange(location: 0, length: agent.count))
-        
+
         guard let range = match?.range(at: 1) else {
             return Constants.fallbackSafariComponent
         }
-        
+
         let version = (agent as NSString).substring(with: range)
         return "Safari/\(version)"
     }
@@ -359,29 +359,29 @@ struct UserAgent {
     private static func createBaseAgent(fromAgent agent: String,
                                         versionComponent: String) -> String {
         var agentComponents = agent.split(separator: " ")
-        
+
         guard !agentComponents.isEmpty else {
             return agent
         }
-        
+
         agentComponents.insert(.init(versionComponent), at: agentComponents.endIndex - 1)
         return agentComponents.joined(separator: " ")
     }
-    
+
     private static func createBaseDesktopAgent(fromAgent agent: String,
                                                versionComponent: String) -> String {
         let regex = try? NSRegularExpression(pattern: Regex.suffix)
         let match = regex?.firstMatch(in: agent, options: [], range: NSRange(location: 0, length: agent.count))
-        
+
         guard let range = match?.range(at: 1) else {
             return createBaseDesktopAgent(fromAgent: Constants.fallbackDefaultAgent,
                                           versionComponent: versionComponent)
         }
-        
+
         let suffix = (agent as NSString).substring(with: range)
         return "\(Constants.desktopPrefixComponent) \(suffix) \(versionComponent)"
     }
-    
+
 }
 
 private extension StatisticsStore {

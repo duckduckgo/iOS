@@ -81,7 +81,8 @@ public struct UserText {
     public static let alertDisableProtectionPlaceholder = NSLocalizedString("alert.title.disable.protection.placeholder", value: "www.example.com", comment: "Disable potection alert placeholder - leave as it is")
     public static let messageProtectionDisabled = NSLocalizedString("toast.protection.disabled", value: "Privacy Protection disabled for %@", comment: "Confirmation of an action - populated with a domain name")
     public static let messageProtectionEnabled = NSLocalizedString("toast.protection.enabled", value: "Privacy Protection enabled for %@", comment: "Confirmation of an action - populated with a domain name")
-    
+    public static let messageProtectionDisabledAndToggleReportSent = NSLocalizedString("toast.protection.disabled.and.toggle.report.sent", value: "Privacy Protections disabled for %@ and report sent.", comment: "Confirmation of an action - populated with a domain name")
+
     public static let authAlertTitle = NSLocalizedString("auth.alert.title", value: "Authentication Required", comment: "Authentication Alert Title")
     public static let authAlertEncryptedConnectionMessage = NSLocalizedString("auth.alert.message.encrypted", value: "Sign in to %@. Your login information will be sent securely.", comment: "Authentication Alert - populated with a domain name")
     public static let authAlertPlainConnectionMessage = NSLocalizedString("auth.alert.message.plain", value: "Log in to %@. Your password will be sent insecurely because the connection is unencrypted.", comment: "Authentication Alert - populated with a domain name")
@@ -950,6 +951,20 @@ But if you *do* want a peek under the hood, you can find more information about 
     static let networkProtectionNotificationPromptTitle = NSLocalizedString("network-protection.waitlist.notification-prompt-title", value: "Know the instant you're invited", comment: "Title for the alert to confirm enabling notifications")
     static let networkProtectionNotificationPromptDescription = NSLocalizedString("network-protection.waitlist.notification-prompt-description", value: "Get a notification when your copy of Network Protection early access is ready.", comment: "Subtitle for the alert to confirm enabling notifications")
 
+    static let networkProtectionNotificationsTitle = NSLocalizedString("network.protection.notification.title", value: "DuckDuckGo", comment: "The title of the notifications shown from Network Protection")
+    static let networkProtectionConnectionSuccessNotificationBody = NSLocalizedString("network.protection.success.notification.body", value: "Network Protection is On. Your location and online activity are protected.", comment: "The body of the notification shown when Network Protection reconnects successfully")
+    static func networkProtectionConnectionSuccessNotificationBody(serverLocation: String) -> String {
+        let localized = NSLocalizedString(
+            "network.protection.success.notification.subtitle.including.serverLocation",
+            value: "Routing device traffic through %@.",
+            comment: "The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter"
+        )
+        return String(format: localized, serverLocation)
+    }
+    static let networkProtectionConnectionInterruptedNotificationBody = NSLocalizedString("network.protection.interrupted.notification.body", value: "Network Protection was interrupted. Attempting to reconnect now...", comment: "The body of the notification shown when Network Protection's connection is interrupted")
+    static let networkProtectionConnectionFailureNotificationBody = NSLocalizedString("network.protection.failure.notification.body", value: "Network Protection failed to connect. Please try again later.", comment: "The body of the notification shown when Network Protection fails to reconnect")
+    static let networkProtectionEntitlementExpiredNotificationBody = NSLocalizedString("network.protection.entitlement.expired.notification.body", value: "VPN disconnected due to expired subscription. Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.", comment: "The body of the notification when Privacy Pro subscription expired")
+
     // MARK: Settings Screeen
     public static let settingsTitle = NSLocalizedString("settings.title", value: "Settings", comment: "Title for the Settings View")
 
@@ -1119,6 +1134,10 @@ But if you *do* want a peek under the hood, you can find more information about 
     
     public static let subscriptionAppStoreErrorTitle = NSLocalizedString("subscription.restore.general.error.title", value: "Something Went Wrong", comment: "Alert for general error title")
     public static let subscriptionAppStoreErrorMessage = NSLocalizedString("subscription.restore.general.error.message", value: "The App Store was unable to process your purchase. Please try again later.", comment: "Alert for general error message")
+    
+    public static let subscriptionBackendErrorTitle = NSLocalizedString("subscription.restore.backend.error.title", value: "Something Went Wrong", comment: "Alert for general error title")
+    public static let subscriptionBackendErrorMessage = NSLocalizedString("subscription.restore.backend.error.message", value: "We’re having trouble connecting. Please try again later.", comment: "Alert for general error message")
+    public static let subscriptionBackendErrorButton = NSLocalizedString("subscription.restore.backend.error.button", value: "Back to Settings", comment: "Button text for general error message")
     
     // PIR:
     public static let subscriptionPIRHeroText = NSLocalizedString("subscription.pir.hero", value: "Activate Privacy Pro on desktop to set up Personal Information Removal", comment: "Hero Text for Personal information removal")

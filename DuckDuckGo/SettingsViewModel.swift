@@ -297,7 +297,7 @@ extension SettingsViewModel {
 #if SUBSCRIPTION
         if #available(iOS 15, *) {
             enabled = featureFlagger.isFeatureOn(.subscription)
-            canPurchase = SubscriptionPurchaseEnvironment.canPurchase
+            canPurchase = !PurchaseManager.shared.availableProducts.isEmpty
             await setupSubscriptionEnvironment()
             if let token = accountManager.accessToken {
                 let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token)

@@ -51,13 +51,8 @@ public class HistoryCapture {
         guard let url = url?.urlOrDuckDuckGoCleanQuery, let title, !title.isEmpty else {
             return
         }
-
-        if url.isDuckDuckGoSearch, let query = url.searchQuery {
-            coordinator.updateTitleIfNeeded(title: query, url: url)
-        } else {
-            coordinator.updateTitleIfNeeded(title: title, url: url)
-        }
         
+        coordinator.updateTitleIfNeeded(title: title, url: url)
         coordinator.commitChanges(url: url)
     }
 

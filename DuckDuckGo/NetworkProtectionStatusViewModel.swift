@@ -64,12 +64,26 @@ struct NetworkProtectionLocationStatusModel {
 }
 
 final class NetworkProtectionStatusViewModel: ObservableObject {
+
+    private enum Constants {
+        static let defaultDownloadVolume = "0 KB"
+        static let defaultUploadVolume = "0 KB"
+    }
+
     private static var dateFormatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.hour, .minute, .second]
         formatter.zeroFormattingBehavior = .pad
         return formatter
     }()
+
+    private let byteCountFormatter: ByteCountFormatter = {
+        let formatter = ByteCountFormatter()
+        formatter.allowsNonnumericFormatting = false
+        formatter.allowedUnits = [.useKB, .useMB, .useKB]
+        return formatter
+    }()
+
 
     private let tunnelController: TunnelController
     private let statusObserver: ConnectionStatusObserver
@@ -110,8 +124,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @Published public var location: String?
     @Published public var ipAddress: String?
 
-    @Published public var uploadSpeed: String = "0 KB/s"
-    @Published public var downloadSpeed: String = "0 KB/s"
+    @Published public var uploadTotal: String = Constants.defaultUploadVolume
+    @Published public var downloadTotal: String = Constants.defaultDownloadVolume
     private var throughputUpdateTimer: Timer?
 
     @Published public var animationsOn: Bool = false
@@ -259,58 +273,44 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     }
 
     private func setUpThroughputRefreshTimer() {
+        Task {
+            // Refresh as soon as the timer is set up, rather than waiting for 1 second:
+            await self.refreshDataVolumeTotals()
+        }
+
         throughputUpdateTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let strongSelf = self else { return }
             
             Task {
-                guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
-                    return
-                }
-
-                let data: ExtensionMessageString? = try? await activeSession.sendProviderMessage(.getConnectionThroughput)
-
-                guard let data else {
-                    return
-                }
-
-                let bytes = data.value.components(separatedBy: ",")
-                guard let receivedString = bytes.first,
-                      let sentString = bytes.last,
-                      let received = Int64(receivedString),
-                      let sent = Int64(sentString) else {
-                    return
-                }
-
-                await strongSelf.updateBandwidthCounts(sent: sent, received: received)
+                await strongSelf.refreshDataVolumeTotals()
             }
         }
     }
 
-    private var previousSentCount: Int64?
-    private var previousReceivedCount: Int64?
-    private let byteCountFormatter: ByteCountFormatter = {
-        let formatter = ByteCountFormatter()
-        formatter.allowsNonnumericFormatting = false
-        formatter.allowedUnits = [.useKB, .useMB, .useKB]
-        return formatter
-    }()
+    private func refreshDataVolumeTotals() async {
+        guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+            return
+        }
+
+        let data: ExtensionMessageString? = try? await activeSession.sendProviderMessage(.getConnectionThroughput)
+
+        guard let data else {
+            return
+        }
+
+        let bytes = data.value.components(separatedBy: ",")
+        guard let receivedString = bytes.first, let sentString = bytes.last,
+              let received = Int64(receivedString), let sent = Int64(sentString) else {
+            return
+        }
+
+        await updateBandwidthCounts(sent: sent, received: received)
+    }
 
     @MainActor
     private func updateBandwidthCounts(sent: Int64, received: Int64) {
-        if let previousSentCount {
-            let difference = max(sent - previousSentCount, 0)
-            let formatted = byteCountFormatter.string(fromByteCount: difference)
-            self.uploadSpeed = "\(formatted)/s"
-        }
-
-        if let previousReceivedCount {
-            let difference = max(received - previousReceivedCount, 0)
-            let formatted = byteCountFormatter.string(fromByteCount: difference)
-            self.downloadSpeed = "\(formatted)/s"
-        }
-
-        self.previousSentCount = sent
-        self.previousReceivedCount = received
+        self.uploadTotal = byteCountFormatter.string(fromByteCount: sent)
+        self.downloadTotal = byteCountFormatter.string(fromByteCount: received)
     }
 
     @MainActor

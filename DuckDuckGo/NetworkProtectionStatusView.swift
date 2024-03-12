@@ -160,8 +160,8 @@ struct NetworkProtectionStatusView: View {
 
             NetworkProtectionThroughputItemView(
                 title: "Data Volume",
-                downloadSpeed: statusModel.downloadSpeed,
-                uploadSpeed: statusModel.uploadSpeed
+                downloadSpeed: statusModel.downloadTotal,
+                uploadSpeed: statusModel.uploadTotal
             )
         } header: {
             Text(UserText.netPStatusViewConnectionDetails).foregroundColor(.init(designSystemColor: .textSecondary))

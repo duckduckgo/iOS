@@ -21,27 +21,14 @@ import SwiftUI
 import UIKit
 import DesignResourcesKit
 
-struct SettingsView: View {
-    
+struct SettingsRootView: View {
+
     @StateObject var viewModel: SettingsViewModel
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         List {
-            SettingsGeneralView()
-            SettingsSyncView()
-            SettingsLoginsView()
-            SettingsAppeareanceView()
-            SettingsPrivacyView()
-#if SUBSCRIPTION
-            if #available(iOS 15, *) {
-                SettingsSubscriptionView()
-            }
-#endif
-            SettingsCustomizeView()
-            SettingsMoreView()
-            SettingsAboutView()
-            SettingsDebugView()
+            SettingsPrivacyProtectionsView()
         }
         .navigationBarTitle(UserText.settingsTitle, displayMode: .inline)
         .navigationBarItems(trailing: Button(UserText.navigationTitleDone) {
@@ -53,5 +40,22 @@ struct SettingsView: View {
         .onAppear {
             viewModel.onAppear()
         }
+    }
+    
+}
+
+struct InsetGroupedListStyleModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 15, *) {
+            return AnyView(content.applyInsetGroupedListStyle())
+        } else {
+            return AnyView(content)
+        }
+    }
+}
+
+extension View {
+    func conditionalInsetGroupedListStyle() -> some View {
+        self.modifier(InsetGroupedListStyleModifier())
     }
 }

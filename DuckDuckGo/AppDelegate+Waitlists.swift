@@ -26,6 +26,9 @@ import BrowserServicesKit
 
 extension AppDelegate {
 
+#if SUBSCRIPTION && ALPHA
+    @available(*, deprecated, message: "[NetP Subscription] To be removed post-Privacy Pro launch")
+#endif
     func clearDebugWaitlistState() {
         if let inviteCode = VPNWaitlist.shared.waitlistStorage.getWaitlistInviteCode(),
            inviteCode == VPNWaitlistDebugViewController.Constants.mockInviteCode {
@@ -105,6 +108,9 @@ extension AppDelegate {
     }
 
 #if NETWORK_PROTECTION
+#if SUBSCRIPTION && ALPHA
+    @available(*, deprecated, message: "[NetP Subscription] To be removed post-Privacy Pro launch")
+#endif
     func fetchVPNWaitlistAuthToken(inviteCode: String) {
         Task {
             do {

@@ -916,6 +916,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
 #if NETWORK_PROTECTION
+#if SUBSCRIPTION && ALPHA
+    @available(*, deprecated, message: "[NetP Subscription] To be removed post-Privacy Pro launch")
+#endif
     private func presentNetworkProtectionWaitlistModal() {
         if #available(iOS 15, *) {
             let networkProtectionRoot = VPNWaitlistViewController(nibName: nil, bundle: nil)

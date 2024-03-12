@@ -24,7 +24,11 @@ import SwiftUI
 import Core
 import Waitlist
 
-@available(iOS 15.0, *)
+#if SUBSCRIPTION && ALPHA
+@available(iOS, introduced: 15.0, deprecated, message: "[NetP Subscription] To be removed post-Privacy Pro launch")
+#else
+@available(iOS 15, *)
+#endif
 final class VPNWaitlistTermsAndConditionsViewController: UIViewController {
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {

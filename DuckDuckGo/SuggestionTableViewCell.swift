@@ -47,13 +47,17 @@ class SuggestionTableViewCell: UITableViewCell {
             typeImage.image = UIImage(named: "Globe-20")
             self.accessibilityValue = UserText.voiceoverSuggestionTypeSearch
 
-        case .bookmark(title: let title, url: let url, isFavorite: let isFavorite, allowedInTopHits: let allowedInTopHits):
+        case .bookmark(title: let title, _, _, _):
             text = title
             typeImage.image = UIImage(named: "Bookmark-20")
             self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
 
-        case .historyEntry(title: let title, url: let url, allowedInTopHits: let allowedInTopHits):
-            text = title ?? url.absoluteString
+        case .historyEntry(title: let title, url: let url, _):
+            if url.isDuckDuckGoSearch, let searchQuery = url.searchQuery {
+                text = searchQuery
+            } else {
+                text = title ?? url.absoluteString
+            }
             typeImage.image = UIImage(named: "History-20")
             self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
 

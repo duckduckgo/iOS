@@ -178,11 +178,9 @@ class AutocompleteViewController: UIViewController {
                   let scheme = url.scheme,
                   scheme.description.hasPrefix("http"),
                   url.isValid else {
-                print("***", #function, "no url")
                 return nil
             }
 
-            print("***", #function, url)
             return url
         })
         pendingRequest = true

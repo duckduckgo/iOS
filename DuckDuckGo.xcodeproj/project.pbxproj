@@ -937,7 +937,6 @@
 		F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F176699D1E40BC86003D3222 /* Settings.storyboard */; };
 		F17669D71E43401C003D3222 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17669D61E43401C003D3222 /* MainViewController.swift */; };
 		F17843E91F36226700390DCD /* MockFiles in Resources */ = {isa = PBXBuildFile; fileRef = F17843E81F36226700390DCD /* MockFiles */; };
-		F17922DB1E717C8D006E3D97 /* Suggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17922DA1E717C8D006E3D97 /* Suggestion.swift */; };
 		F17922DE1E7192E6006E3D97 /* SuggestionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17922DD1E7192E6006E3D97 /* SuggestionTableViewCell.swift */; };
 		F17922E01E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17922DF1E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift */; };
 		F17922E21E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17922E11E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift */; };
@@ -949,7 +948,6 @@
 		F194FAFB1F14E622009B4DF8 /* UIFontExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F194FAFA1F14E622009B4DF8 /* UIFontExtensionTests.swift */; };
 		F198D78E1E39762C0088DA8A /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F198D78D1E39762C0088DA8A /* StringExtensionTests.swift */; };
 		F198D7981E3A45D90088DA8A /* WKWebViewConfigurationExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F198D7971E3A45D90088DA8A /* WKWebViewConfigurationExtensionTests.swift */; };
-		F1A5683A1E70F98E0081082E /* AutocompleteRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A568391E70F98E0081082E /* AutocompleteRequest.swift */; };
 		F1A886781F29394E0096251E /* WebCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A886771F29394E0096251E /* WebCacheManager.swift */; };
 		F1AE54E81F0425FC00D9A700 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AE54E71F0425FC00D9A700 /* AuthenticationViewController.swift */; };
 		F1BE54581E69DE1000FCF649 /* TutorialSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE54571E69DE1000FCF649 /* TutorialSettings.swift */; };
@@ -2633,7 +2631,6 @@
 		F176699E1E40BC86003D3222 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		F17669D61E43401C003D3222 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		F17843E81F36226700390DCD /* MockFiles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MockFiles; sourceTree = "<group>"; };
-		F17922DA1E717C8D006E3D97 /* Suggestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Suggestion.swift; sourceTree = "<group>"; };
 		F17922DD1E7192E6006E3D97 /* SuggestionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionTableViewCell.swift; sourceTree = "<group>"; };
 		F17922DF1E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteViewControllerDelegate.swift; sourceTree = "<group>"; };
 		F17922E11E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSuggestionsTableViewCell.swift; sourceTree = "<group>"; };
@@ -2646,7 +2643,6 @@
 		F197EA3B1E6885F20029BDC1 /* TextFieldWithInsets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextFieldWithInsets.swift; path = ../Core/TextFieldWithInsets.swift; sourceTree = "<group>"; };
 		F198D78D1E39762C0088DA8A /* StringExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
 		F198D7971E3A45D90088DA8A /* WKWebViewConfigurationExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewConfigurationExtensionTests.swift; sourceTree = "<group>"; };
-		F1A568391E70F98E0081082E /* AutocompleteRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteRequest.swift; sourceTree = "<group>"; };
 		F1A886771F29394E0096251E /* WebCacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebCacheManager.swift; sourceTree = "<group>"; };
 		F1AA54601E48D90700223211 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		F1AE54E71F0425FC00D9A700 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
@@ -5219,8 +5215,6 @@
 		F15D43211E70849A00BF2CDC /* Autocomplete */ = {
 			isa = PBXGroup;
 			children = (
-				F17922D31E7109C4006E3D97 /* API */,
-				F17922DC1E717C91006E3D97 /* Domain */,
 				F17922D41E7109DB006E3D97 /* UI */,
 			);
 			name = Autocomplete;
@@ -5273,14 +5267,6 @@
 			name = Mocks;
 			sourceTree = "<group>";
 		};
-		F17922D31E7109C4006E3D97 /* API */ = {
-			isa = PBXGroup;
-			children = (
-				F1A568391E70F98E0081082E /* AutocompleteRequest.swift */,
-			);
-			name = API;
-			sourceTree = "<group>";
-		};
 		F17922D41E7109DB006E3D97 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -5292,14 +5278,6 @@
 				8562CE142B9B645C00E1D399 /* CachedBookmarkSuggestions.swift */,
 			);
 			name = UI;
-			sourceTree = "<group>";
-		};
-		F17922DC1E717C91006E3D97 /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-				F17922DA1E717C8D006E3D97 /* Suggestion.swift */,
-			);
-			name = Domain;
 			sourceTree = "<group>";
 		};
 		F17D722C1E8B3563003E8B0E /* Domain */ = {
@@ -6865,7 +6843,6 @@
 				0268FC132A449F04000EE6A2 /* OnboardingContainerView.swift in Sources */,
 				858650D9246B0D3C00C36F8A /* DaxOnboardingViewController.swift in Sources */,
 				312E5746283BB04A00C18FA0 /* AutofillEmptySearchView.swift in Sources */,
-				F1A5683A1E70F98E0081082E /* AutocompleteRequest.swift in Sources */,
 				8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */,
 				0290472829E861BE0008FE3C /* AppTPTrackerDetailViewModel.swift in Sources */,
 				311BD1AD2836BB3900AEF6C1 /* AutofillItemsEmptyView.swift in Sources */,
@@ -6930,7 +6907,6 @@
 				851624C72B96389D002D5CD7 /* HistoryDebugViewController.swift in Sources */,
 				8540BBA22440857A00017FE4 /* PreserveLoginsWorker.swift in Sources */,
 				85DFEDF924CF3D0E00973FE7 /* TabsBarCell.swift in Sources */,
-				F17922DB1E717C8D006E3D97 /* Suggestion.swift in Sources */,
 				020108A729A6ABF600644F9D /* AppTPToggleView.swift in Sources */,
 				8562CE152B9B645C00E1D399 /* CachedBookmarkSuggestions.swift in Sources */,
 				02A54A982A093126000C8FED /* AppTPHomeViewModel.swift in Sources */,

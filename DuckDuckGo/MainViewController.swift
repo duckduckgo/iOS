@@ -508,11 +508,19 @@ class MainViewController: UIViewController {
                                                 #selector(onAddressBarPositionChanged),
                                                name: AppUserDefaults.Notifications.addressBarPositionChanged,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onShowFullURLAddressChanged),
+                                               name: AppUserDefaults.Notifications.showsFullURLAddressSettingChanged,
+                                               object: nil)
     }
 
     @objc func onAddressBarPositionChanged() {
         viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
         refreshViewsBasedOnAddressBarPosition(appSettings.currentAddressBarPosition)
+    }
+
+    @objc private func onShowFullURLAddressChanged() {
+        refreshOmniBar()
     }
 
     func refreshViewsBasedOnAddressBarPosition(_ position: AddressBarPosition) {
@@ -1032,7 +1040,7 @@ class MainViewController: UIViewController {
             return
         }
 
-        viewCoordinator.omniBar.refreshText(forUrl: tab.url)
+        viewCoordinator.omniBar.refreshText(forUrl: tab.url, forceFullURL: appSettings.showFullSiteAddress)
 
         if tab.isError {
             viewCoordinator.omniBar.hidePrivacyIcon()

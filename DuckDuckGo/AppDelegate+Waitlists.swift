@@ -51,6 +51,9 @@ extension AppDelegate {
     }
 
 #if NETWORK_PROTECTION
+#if SUBSCRIPTION && ALPHA
+    @available(*, deprecated, message: "[NetP Subscription] To be removed post-Privacy Pro launch")
+#endif
     private func checkNetworkProtectionWaitlist() {
         let accessController = NetworkProtectionAccessController()
         if accessController.isPotentialOrCurrentWaitlistUser {

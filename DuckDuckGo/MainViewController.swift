@@ -565,16 +565,7 @@ class MainViewController: UIViewController {
         findInPageBottomLayoutConstraint.constant = height
         keyboardHeight = height
 
-        if let suggestionsTray = suggestionTrayController {
-            let suggestionsFrameInView = suggestionsTray.view.convert(suggestionsTray.contentFrame, to: view)
-            
-            let overflow = suggestionsFrameInView.size.height + suggestionsFrameInView.origin.y - keyboardFrameInView.origin.y + 10
-            if overflow > 0 {
-                suggestionTrayController?.applyContentInset(UIEdgeInsets(top: 0, left: 0, bottom: overflow, right: 0))
-            } else {
-                suggestionTrayController?.applyContentInset(.zero)
-            }
-        }
+        suggestionTrayController?.applyContentInset(.init(top: 0, left: 0, bottom: keyboardHeight, right: 0))
 
         let y = self.view.frame.height - height
         let frame = self.findInPageView.frame

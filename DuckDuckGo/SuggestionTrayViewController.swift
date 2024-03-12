@@ -222,6 +222,7 @@ class SuggestionTrayViewController: UIViewController {
         let controller = FavoritesOverlay(viewModel: favoritesModel)
         controller.delegate = favoritesOverlayDelegate
         install(controller: controller, completion: onInstall)
+        controller.collectionView.contentInset = self.contentInsets
         favoritesOverlay = controller
     }
     
@@ -243,6 +244,7 @@ class SuggestionTrayViewController: UIViewController {
     private func installAutocompleteSuggestions() {
         let controller = AutocompleteViewController.loadFromStoryboard(bookmarksDatabase: bookmarksDatabase, historyCoordinator: historyCoordinator)
         install(controller: controller)
+        controller.tableView.contentInset = contentInsets
         controller.delegate = autocompleteDelegate
         controller.presentationDelegate = self
         autocompleteController = controller
@@ -275,9 +277,9 @@ class SuggestionTrayViewController: UIViewController {
         })
     }
     
+    var contentInsets = UIEdgeInsets.zero
     func applyContentInset(_ inset: UIEdgeInsets) {
-        autocompleteController?.tableView.contentInset = inset
-        favoritesOverlay?.collectionView.contentInset = inset
+        self.contentInsets = inset
     }
 }
 

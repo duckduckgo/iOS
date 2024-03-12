@@ -150,16 +150,7 @@ class AutocompleteViewController: UIViewController {
     
     func willDismiss(with query: String) {
         guard selectedItem != -1, selectedItem < suggestions.count else { return }
-  
-        // TODO fire pixels
-//        let suggestion = suggestions[selectedItem]
-//        if let url = suggestion.url {
-//            if query == url.absoluteString {
-//                firePixel(selectedSuggestion: suggestion)
-//            }
-//        } else if query == suggestion.suggestion {
-//            firePixel(selectedSuggestion: suggestion)
-//        }
+        // TODO fire pixel
     }
 
     @IBAction func onPlusButtonPressed(_ button: UIButton) {
@@ -268,31 +259,11 @@ extension AutocompleteViewController: UITableViewDataSource {
         return receivedResponse ? max(Constants.minItems, suggestions.count) : 0
     }
 
-    // TODO fire pixel  
-    private func firePixel(selectedSuggestion: Suggestion) {
-//        let resultsIncludeBookmarks: Bool
-//        if let firstSuggestion = suggestions.first {
-       //     resultsIncludeBookmarks = firstSuggestion.source == .local
-//        } else {
-//            resultsIncludeBookmarks = false
-//        }
-        
-//        let params = [PixelParameters.autocompleteBookmarkCapable: bookmarksSearch.hasData ? "true" : "false",
-//                      PixelParameters.autocompleteIncludedLocalResults: resultsIncludeBookmarks ? "true" : "false"]
-        
-//        if selectedSuggestion.source == .local {
-//            Pixel.fire(pixel: .autocompleteSelectedLocal, withAdditionalParameters: params)
-//        } else {
-//            Pixel.fire(pixel: .autocompleteSelectedRemote, withAdditionalParameters: params)
-//        }
-
-    }
 }
 
 extension AutocompleteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let suggestion = suggestions[indexPath.row]
-        firePixel(selectedSuggestion: suggestion)
         delegate?.autocomplete(selectedSuggestion: suggestion)
     }
 }

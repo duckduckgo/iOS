@@ -31,6 +31,7 @@ final class UserScripts: UserScriptsProvider {
     let autofillUserScript: AutofillUserScript
     let loginFormDetectionScript: LoginFormDetectionUserScript?
     let contentScopeUserScript: ContentScopeUserScript
+    let contentScopeUserScriptIsolated: ContentScopeUserScript
     let autoconsentUserScript: AutoconsentUserScript
 
     private(set) var faviconScript = FaviconUserScript()
@@ -50,6 +51,9 @@ final class UserScripts: UserScriptsProvider {
         loginFormDetectionScript = sourceProvider.loginDetectionEnabled ? LoginFormDetectionUserScript() : nil
         contentScopeUserScript = ContentScopeUserScript(sourceProvider.privacyConfigurationManager,
                                                         properties: sourceProvider.contentScopeProperties)
+        contentScopeUserScriptIsolated = ContentScopeUserScript(sourceProvider.privacyConfigurationManager,
+                                                        properties: sourceProvider.contentScopeProperties,
+                                                        isIsolated: true)
         autoconsentUserScript = AutoconsentUserScript(config: sourceProvider.privacyConfigurationManager.privacyConfig)
     }
 
@@ -66,7 +70,8 @@ final class UserScripts: UserScriptsProvider {
         autofillUserScript,
         printingUserScript,
         loginFormDetectionScript,
-        contentScopeUserScript
+        contentScopeUserScript,
+        contentScopeUserScriptIsolated
     ].compactMap({ $0 })
 
     @MainActor

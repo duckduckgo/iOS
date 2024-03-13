@@ -297,9 +297,9 @@ extension PrivacyDashboardViewController {
         }
 
         let webVitalsResult = await withCheckedContinuation({ continuation in
-            breakageAdditionalInfo.webVitals.notifyHandler(from: webView, handler: { result in
+            breakageAdditionalInfo.webVitals.notifyHandler { result in
                 continuation.resume(returning: result)
-            })
+            }
         })
 
         let blockedTrackerDomains = privacyInfo.trackerInfo.trackersBlocked.compactMap { $0.domain }

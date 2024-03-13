@@ -2196,7 +2196,9 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
         userScripts.loginFormDetectionScript?.delegate = self
         userScripts.autoconsentUserScript.delegate = self
-        userScripts.contentScopeUserScript.registerSubfeature(delegate: webVitals)
+
+        webVitals.targetWebview = webView
+        userScripts.contentScopeUserScriptIsolated.registerSubfeature(delegate: webVitals)
 
         adClickAttributionLogic.onRulesChanged(latestRules: ContentBlocking.shared.contentBlockingManager.currentRules)
 

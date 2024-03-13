@@ -1790,19 +1790,6 @@ extension MainViewController: AutocompleteViewControllerDelegate {
     func autocomplete(selectedSuggestion suggestion: Suggestion) {
         homeController?.chromeDelegate = nil
         dismissOmniBar()
-//        if let url = suggestion.url {
-//            if url.isBookmarklet() {
-//                executeBookmarklet(url)
-//            } else {
-//                loadUrl(url)
-//            }
-//        } else if let url = URL.makeSearchURL(text: suggestion.suggestion) {
-//            loadUrl(url)
-//        } else {
-//            os_log("Couldn‘t form URL for suggestion “%s”", log: .lifecycleLog, type: .error, suggestion.suggestion)
-//            return
-//        }
-
         switch suggestion {
         case .phrase(phrase: let phrase):
             if let url = URL.makeSearchURL(text: phrase) {
@@ -1816,9 +1803,9 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             } else {
                 loadUrl(url)
             }
-        case .bookmark(title: let title, url: let url, isFavorite: let isFavorite, allowedInTopHits: let allowedInTopHits):
+        case .bookmark(_, url: let url, _, _):
             loadUrl(url)
-        case .historyEntry(title: let title, url: let url, allowedInTopHits: let allowedInTopHits):
+        case .historyEntry(_, url: let url, _):
             loadUrl(url)
         case .unknown(value: let value):
             // TODO use log if too agresssive
@@ -1829,16 +1816,6 @@ extension MainViewController: AutocompleteViewControllerDelegate {
     }
 
     func autocomplete(pressedPlusButtonForSuggestion suggestion: Suggestion) {
-//        if let url = suggestion.url {
-//            if url.isDuckDuckGoSearch {
-//                viewCoordinator.omniBar.textField.text = suggestion.suggestion
-//            } else if !url.isBookmarklet() {
-//                viewCoordinator.omniBar.textField.text = url.absoluteString
-//            }
-//        } else {
-//            viewCoordinator.omniBar.textField.text = suggestion.suggestion
-//        }
-
         switch suggestion {
         case .phrase(phrase: let phrase):
         viewCoordinator.omniBar.textField.text = phrase
@@ -1848,9 +1825,9 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             } else if !url.isBookmarklet() {
                 viewCoordinator.omniBar.textField.text = url.absoluteString
             }
-        case .bookmark(title: let title, url: let url, isFavorite: let isFavorite, allowedInTopHits: let allowedInTopHits):
+        case .bookmark(title: let title, _, _, _):
             viewCoordinator.omniBar.textField.text = title
-        case .historyEntry(title: let title, url: let url, allowedInTopHits: let allowedInTopHits):
+        case .historyEntry(title: let title, _, _):
             viewCoordinator.omniBar.textField.text = title
         case .unknown(value: let value):
             // TODO use log if too agresssive
@@ -1861,26 +1838,21 @@ extension MainViewController: AutocompleteViewControllerDelegate {
     }
     
     func autocomplete(highlighted suggestion: Suggestion, for query: String) {
-//        if let url = suggestion.url {
-//            viewCoordinator.omniBar.textField.text = url.absoluteString
-//        } else {
-//            viewCoordinator.omniBar.textField.text = suggestion.suggestion
-//            if suggestion.suggestion.hasPrefix(query) {
-//                viewCoordinator.omniBar.selectTextToEnd(query.count)
-//            }
-//        }
 
         switch suggestion {
         case .phrase(phrase: let phrase):
             viewCoordinator.omniBar.textField.text = phrase
+            if phrase.hasPrefix(query) {
+                viewCoordinator.omniBar.selectTextToEnd(query.count)
+            }
         case .website(url: let url):
             viewCoordinator.omniBar.textField.text = url.absoluteString
-        case .bookmark(title: let title, url: let url, isFavorite: let isFavorite, allowedInTopHits: let allowedInTopHits):
+        case .bookmark(title: let title, _, _, _):
             viewCoordinator.omniBar.textField.text = title
             if title.hasPrefix(query) {
                 viewCoordinator.omniBar.selectTextToEnd(query.count)
             }
-        case .historyEntry(title: let title, url: let url, allowedInTopHits: let allowedInTopHits):
+        case .historyEntry(title: let title, let url, _):
             if (title ?? url.absoluteString).hasPrefix(query) {
                 viewCoordinator.omniBar.selectTextToEnd(query.count)
             }
@@ -1888,7 +1860,6 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             // TODO use log if too agresssive
             assertionFailure("Unknown suggestion: \(value)")
         }
-
     }
 
     func autocompleteWasDismissed() {

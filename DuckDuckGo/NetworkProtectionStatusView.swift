@@ -55,7 +55,6 @@ struct NetworkProtectionStatusView: View {
                 .animation(.default, value: statusModel.shouldShowError)
         })
         .applyInsetGroupedListStyle()
-        .navigationTitle(UserText.netPNavTitle)
     }
 
     @ViewBuilder

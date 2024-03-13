@@ -23,8 +23,8 @@ import BrowserServicesKit
 final public class AppPrivacyConfigurationDataProvider: EmbeddedDataProvider {
 
     public struct Constants {
-        public static let embeddedDataETag = "\"a427a69043b2baa27604bc10edb13de1\""
-        public static let embeddedDataSHA = "1d5c2e4113713fbf02bc617fc689981604ea53be172569a9fd744054b7355c39"
+        public static let embeddedDataETag = "\"73cfb8d6f397fd1de921f057db1bcc44\""
+        public static let embeddedDataSHA = "3debb4a1e5c6cc292b3c03d9ea6ce4daa8073ab0c033131f2f8dbe1f752dfaf1"
     }
 
     public var embeddedDataEtag: String {
@@ -39,7 +39,7 @@ final public class AppPrivacyConfigurationDataProvider: EmbeddedDataProvider {
         if let url = Bundle.main.url(forResource: "ios-config", withExtension: "json") {
             return url
         }
-        
+
         return Bundle(for: self).url(forResource: "ios-config", withExtension: "json")!
     }
 

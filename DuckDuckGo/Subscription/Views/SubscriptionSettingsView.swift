@@ -20,6 +20,7 @@
 import Foundation
 import SwiftUI
 import DesignResourcesKit
+import Core
 
 class SceneEnvironment: ObservableObject {
     weak var windowScene: UIWindowScene?
@@ -33,7 +34,8 @@ struct SubscriptionSettingsView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = SubscriptionSettingsViewModel()
     @StateObject var sceneEnvironment = SceneEnvironment()
-    
+    @State var isFirstOnAppear = true
+
     @ViewBuilder
     private var optionsView: some View {
         List {
@@ -56,7 +58,10 @@ struct SubscriptionSettingsView: View {
                         .daxBodyRegular()
                         .foregroundColor(Color.init(designSystemColor: .accent))
                 },
-                                   action: { Task { viewModel.manageSubscription() } },
+                                   action: {
+                    Pixel.fire(pixel: .privacyProSubscriptionManagementPlanBilling)
+                    Task { viewModel.manageSubscription() }
+                },
                                    isButton: true)
             }
             
@@ -68,7 +73,7 @@ struct SubscriptionSettingsView: View {
                             .daxBodyRegular()
                     })
                 }
-                
+
                 SettingsCustomCell(content: {
                     Text(UserText.subscriptionRemoveFromDevice)
                             .daxBodyRegular()
@@ -105,6 +110,7 @@ struct SubscriptionSettingsView: View {
                 primaryButton: .cancel(Text(UserText.subscriptionRemoveCancel)) {
                 },
                 secondaryButton: .destructive(Text(UserText.subscriptionRemove)) {
+                    Pixel.fire(pixel: .privacyProSubscriptionManagementRemoval)
                     viewModel.removeSubscription()
                     presentationMode.wrappedValue.dismiss()
                 }
@@ -124,10 +130,13 @@ struct SubscriptionSettingsView: View {
             } else {
                 optionsView
             }
-        }
+        }.onAppear(perform: {
+            if isFirstOnAppear {
+                isFirstOnAppear = false
+                Pixel.fire(pixel: .privacyProSubscriptionSettings)
+            }
+        })
         .navigationBarTitleDisplayMode(.inline)
-        
-        
     }
         
 }
@@ -148,4 +157,13 @@ struct SubscriptionSettingsView_Previews: PreviewProvider {
         // .preferredColorScheme(.dark)
     }
 }
+
+// Commented out because CI fails if a SwiftUI preview is enabled https://app.asana.com/0/414709148257752/1206774081310425/f
+// @available(iOS 15.0, *)
+// struct SubscriptionSettingsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SubscriptionSettingsView()
+//    }
+// }
+
 #endif

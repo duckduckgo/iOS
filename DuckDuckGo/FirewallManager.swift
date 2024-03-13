@@ -23,7 +23,6 @@ import Foundation
 import NetworkExtension
 import BrowserServicesKit
 import Common
-import Macros
 
 public protocol FirewallDelegate: AnyObject {
     func statusDidChange(newStatus: NEVPNStatus)
@@ -81,7 +80,7 @@ public class FirewallManager: FirewallManaging {
         config.requestCachePolicy = .reloadIgnoringLocalCacheData
         config.urlCache = nil
         let session = URLSession(configuration: config)
-        let url = #URL("https://bad_url")
+        let url = URL(string: "https://bad_url")!
 
         os_log("[INFO] Calling dummy URL to force VPN", log: FirewallManager.apptpLog, type: .debug)
         _ = try? await session.data(from: url)

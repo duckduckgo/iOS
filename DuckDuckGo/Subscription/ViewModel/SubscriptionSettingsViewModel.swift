@@ -65,7 +65,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
             switch subscriptionResult {
             case .success(let subscription):
                 subscriptionInfo = subscription
-                updateSubscriptionsStatusMesage(status: subscription.status,
+                updateSubscriptionsStatusMessage(status: subscription.status,
                                                 date: subscription.expiresOrRenewsAt,
                                                 product: subscription.productId,
                                                 billingPeriod: subscription.billingPeriod)
@@ -110,7 +110,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         }
     }
     
-    private func updateSubscriptionsStatusMesage(status: Subscription.Status, date: Date, product: String, billingPeriod: Subscription.BillingPeriod) {
+    private func updateSubscriptionsStatusMessage(status: Subscription.Status, date: Date, product: String, billingPeriod: Subscription.BillingPeriod) {
         let statusString = (status == .autoRenewable) ? UserText.subscriptionRenews : UserText.subscriptionExpires
         self.subscriptionDetails = UserText.subscriptionInfo(status: statusString, expiration: dateFormatter.string(from: date))
         self.subscriptionType = billingPeriod == .monthly ? UserText.subscriptionMonthly : UserText.subscriptionAnnual

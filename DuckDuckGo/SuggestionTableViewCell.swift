@@ -52,7 +52,7 @@ class SuggestionTableViewCell: UITableViewCell {
             typeImage.image = UIImage(named: "Bookmark-20")
             self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
 
-        case .historyEntry(title: let title, url: let url, let allowedInTopHits):
+        case .historyEntry(title: let title, url: let url, _):
             if url.isDuckDuckGoSearch, let searchQuery = url.searchQuery {
                 text = searchQuery
             } else {
@@ -62,7 +62,6 @@ class SuggestionTableViewCell: UITableViewCell {
             self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
 
         case .unknown(value: let value):
-            // TODO use log if too agressive
             assertionFailure("Unknown suggestion \(value)")
         }
 

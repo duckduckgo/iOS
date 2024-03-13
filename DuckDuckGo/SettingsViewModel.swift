@@ -164,6 +164,8 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
+
+                Pixel.fire(pixel: self.state.autocomplete ? .autocompleteEnabled : .autocompleteDisabled)
             }
         )
     }

@@ -149,8 +149,24 @@ class AutocompleteViewController: UIViewController {
     }
     
     func willDismiss(with query: String) {
-        guard selectedItem != -1, selectedItem < suggestions.count else { return }
-        // TODO fire pixel
+        guard suggestions.indices.contains(selectedItem) else { return }
+        let suggestion = suggestions[selectedItem]
+        firePixelForSelectedSuggestion(suggestion)
+    }
+
+    private func firePixelForSelectedSuggestion(_ suggestion: Suggestion) {
+        switch suggestion {
+        case .phrase(phrase: let phrase):
+            Pixel.fire(pixel: .autocompleteClickPhrase)
+        case .website(url: let url):
+            Pixel.fire(pixel: .autocompleteClickWebsite)
+        case .bookmark(title: let title, url: let url, isFavorite: let isFavorite, allowedInTopHits: let allowedInTopHits):
+            Pixel.fire(pixel: isFavorite ? .autocompleteClickFavorite : .autocompleteClickBookmark)
+        case .historyEntry(title: let title, url: let url, allowedInTopHits: let allowedInTopHits):
+            Pixel.fire(pixel: .autocompleteClickHistory)
+        case .unknown(value: let value):
+            assertionFailure("Unknown suggestion")
+        }
     }
 
     @IBAction func onPlusButtonPressed(_ button: UIButton) {
@@ -265,6 +281,7 @@ extension AutocompleteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let suggestion = suggestions[indexPath.row]
         delegate?.autocomplete(selectedSuggestion: suggestion)
+        firePixelForSelectedSuggestion(suggestion)
     }
 }
 
@@ -333,7 +350,6 @@ extension AutocompleteViewController: SuggestionLoadingDataSource {
 
 }
 
-// TODO can we just make history entry match suggestion in BSK?
 extension HistoryEntry: HistorySuggestion {
 
     public var numberOfVisits: Int {

@@ -1808,7 +1808,6 @@ extension MainViewController: AutocompleteViewControllerDelegate {
         case .historyEntry(_, url: let url, _):
             loadUrl(url)
         case .unknown(value: let value):
-            // TODO use log if too agresssive
             assertionFailure("Unknown suggestion: \(value)")
         }
 
@@ -1830,7 +1829,6 @@ extension MainViewController: AutocompleteViewControllerDelegate {
         case .historyEntry(title: let title, _, _):
             viewCoordinator.omniBar.textField.text = title
         case .unknown(value: let value):
-            // TODO use log if too agresssive
             assertionFailure("Unknown suggestion: \(value)")
         }
 
@@ -1857,7 +1855,6 @@ extension MainViewController: AutocompleteViewControllerDelegate {
                 viewCoordinator.omniBar.selectTextToEnd(query.count)
             }
         case .unknown(value: let value):
-            // TODO use log if too agresssive
             assertionFailure("Unknown suggestion: \(value)")
         }
     }

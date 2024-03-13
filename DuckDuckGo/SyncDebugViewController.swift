@@ -54,6 +54,7 @@ class SyncDebugViewController: UITableViewController {
     enum ModelRows: Int, CaseIterable {
 
         case bookmarks
+        case bookmarksStubs
 
     }
 
@@ -136,6 +137,8 @@ class SyncDebugViewController: UITableViewController {
                 } else {
                     cell.detailTextLabel?.text = "Error"
                 }
+            case .bookmarksStubs:
+                cell.textLabel?.text = "Tap to create stubs"
 
             case .none:
                 break
@@ -196,6 +199,27 @@ class SyncDebugViewController: UITableViewController {
                 udWrapper.wrappedValue = false
             case .getRecoveryCode:
                 showCopyPasteCodeAlert()
+
+            default: break
+            }
+        case .models:
+            switch ModelRows(rawValue: indexPath.row) {
+            case .bookmarksStubs:
+                let context = bookmarksDatabase.makeContext(concurrencyType: .mainQueueConcurrencyType)
+                
+                let root = BookmarkUtils.fetchRootFolder(context)!
+
+                _ = BookmarkEntity.makeBookmark(title: "Non stub", url: "url", parent: root, context: context)
+                let stub = BookmarkEntity.makeBookmark(title: "Stub", url: "", parent: root, context: context)
+                stub.isStub = true
+                let emptyStub = BookmarkEntity.makeBookmark(title: "", url: "", parent: root, context: context)
+                emptyStub.isStub = true
+
+                do {
+                    try context.save()
+                } catch {
+                    assertionFailure("Could not create stubs")
+                }
 
             default: break
             }

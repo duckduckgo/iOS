@@ -80,7 +80,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     private let byteCountFormatter: ByteCountFormatter = {
         let formatter = ByteCountFormatter()
         formatter.allowsNonnumericFormatting = false
-        formatter.allowedUnits = [.useKB, .useMB, .useKB]
+        formatter.allowedUnits = [.useKB, .useMB, .useGB]
         return formatter
     }()
 

@@ -87,7 +87,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
              generalError
     }
         
-    // Transaction Status and erros are observed from ViewModels to handle errors in the UI
+    // Transaction Status and errors are observed from ViewModels to handle errors in the UI
     @Published private(set) var transactionStatus: SubscriptionTransactionStatus = .idle
     @Published private(set) var transactionError: UseSubscriptionError?
     
@@ -113,11 +113,10 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func handler(forMethodNamed methodName: String) -> Subfeature.Handler? {
 
         os_log("WebView handler: %s", log: .subscription, type: .debug, methodName)
-
+        print("[SHIT] WebView handler. \(methodName)")
         switch methodName {
         case Handlers.getSubscription: return getSubscription
         case Handlers.setSubscription: return setSubscription
-        case Handlers.backToSettings: return backToSettings
         case Handlers.getSubscriptionOptions: return getSubscriptionOptions
         case Handlers.subscriptionSelected: return subscriptionSelected
         case Handlers.activateSubscription:
@@ -273,37 +272,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             setTransactionError(.failedToSetSubscription)
         }
 
-        return nil
-    }
-
-    func backToSettings(params: Any, original: WKScriptMessage) async -> Encodable? {
-        let accountManager = AccountManager()
-        if let accessToken = accountManager.accessToken,
-           case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
-            switch await SubscriptionService.getSubscription(accessToken: accessToken) {
-            
-            // If the account is not active, display an error and logout
-            case .success(let subscription) where !subscription.isActive:
-                setTransactionError(.failedToRestoreFromEmailSubscriptionInactive)
-                accountManager.signOut()
-                return nil
-            
-            case .success:
-
-                // Store the account data and mark as active
-                accountManager.storeAccount(token: accessToken,
-                                            email: accountDetails.email,
-                                            externalID: accountDetails.externalID)
-                emailActivationComplete = true
-                
-            case .failure:
-                os_log("Failed to restore subscription from Email", log: .subscription, type: .error)
-                setTransactionError(.failedToRestoreFromEmail)
-            }
-        } else {
-            os_log("General error. Could not get account Details", log: .subscription, type: .error)
-            setTransactionError(.generalError)
-        }
         return nil
     }
 

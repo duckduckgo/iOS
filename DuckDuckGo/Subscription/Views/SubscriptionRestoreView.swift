@@ -32,6 +32,7 @@ struct SubscriptionRestoreView: View {
     @State private var expandedItemId: Int = 0
     @State private var isAlertVisible = false
     @State private var isActive: Bool = false
+    @State private var shouldNavigateToSubscriptionFlow: Bool = false
     var onDismissStack: (() -> Void)?
     
     private enum Constants {
@@ -55,45 +56,53 @@ struct SubscriptionRestoreView: View {
     }
     
     var body: some View {
-        ZStack {
-            VStack(spacing: Constants.viewStackSpacing) {
+        NavigationView {
+            ZStack {
                 
-                // Email Activation View Hidden link
-                NavigationLink(destination: SubscriptionEmailView(isAddingDevice: viewModel.isAddingDevice), isActive: $isActive) {
-                    EmptyView()
-                }.isDetailLink(false)
+                VStack(spacing: Constants.viewStackSpacing) {
+                    headerView
+                    optionsView
+                    footerView
+                    Spacer()
+                    
+                    // Hidden link to display Subscription Welcome Page
+                    NavigationLink(destination: SubscriptionFlowView(), isActive: $shouldNavigateToSubscriptionFlow) {
+                        EmptyView()
+                    }.isDetailLink(false)
+                    
+                }.background(Color(designSystemColor: .background))
                 
-                headerView
-                optionsView
-                footerView
+                .navigationTitle(viewModel.isAddingDevice ? UserText.subscriptionAddDeviceTitle : UserText.subscriptionActivate)
+                .navigationBarBackButtonHidden(viewModel.transactionStatus != .idle)
+                .navigationBarTitleDisplayMode(.inline)
+                .applyInsetGroupedListStyle()
+            
+                .alert(isPresented: $isAlertVisible) { getAlert() }
+            
+                .onChange(of: viewModel.activationResult) { result in
+                    if result != .unknown {
+                        isAlertVisible = true
+                    }
+                }
+            
+                .sheet(isPresented: $isActive) {
+                    SubscriptionEmailView(isAddingDevice: viewModel.isAddingDevice)
+                }
+            
+                .onAppear {
+                    viewModel.initializeView()
+                    setUpAppearances()
+                }
                 
-                Spacer()
-            }.background(Color(designSystemColor: .background))
-            
-            
-            .navigationTitle(viewModel.isAddingDevice ? UserText.subscriptionAddDeviceTitle : UserText.subscriptionActivate)
-            .navigationBarBackButtonHidden(viewModel.transactionStatus != .idle)
-            .applyInsetGroupedListStyle()
-            
-            .alert(isPresented: $isAlertVisible) { getAlert() }
-            
-            .onChange(of: viewModel.activationResult) { result in
-                if result != .unknown {
-                    isAlertVisible = true
+                if viewModel.transactionStatus != .idle {
+                    PurchaseInProgressView(status: getTransactionStatus())
                 }
             }
-            .onAppear {
-                viewModel.initializeView()
-                setUpAppearances()
-            }
-            
-            if viewModel.transactionStatus != .idle {
-                PurchaseInProgressView(status: getTransactionStatus())
-            }
-        }
+        }.navigationViewStyle(.stack)
         
     }
     
+    // MARK: -
     private var listItems: [ListItem] {
         [
             .init(id: 0,
@@ -206,7 +215,8 @@ struct SubscriptionRestoreView: View {
                     .daxFootnoteRegular()
                     .foregroundColor(Color(designSystemColor: .textSecondary))
                 Button(action: {
-                    viewModel.restoreAppstoreTransaction()
+                    shouldNavigateToSubscriptionFlow = true
+                    // viewModel.restoreAppstoreTransaction()
                 }, label: {
                     Text(UserText.subscriptionRestoreAppleID)
                         .daxFootnoteSemibold()
@@ -254,7 +264,7 @@ struct SubscriptionRestoreView: View {
             return Alert(title: Text(UserText.subscriptionRestoreSuccessfulTitle),
                          message: Text(UserText.subscriptionRestoreSuccessfulMessage),
                          dismissButton: .default(Text(UserText.subscriptionRestoreSuccessfulButton)) {
-                            dismiss()
+                            shouldNavigateToSubscriptionFlow = true
                          }
             )
         case .notFound:

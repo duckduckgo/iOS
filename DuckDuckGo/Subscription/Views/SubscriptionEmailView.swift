@@ -32,54 +32,89 @@ struct SubscriptionEmailView: View {
     @State var isAddingDevice = false
     @State var shouldDisplayInactiveError = false
     
+    enum Constants {
+        static let navButtonPadding: CGFloat = 20.0
+        static let backButtonImage = "chevron.left"
+    }
+        
     var body: some View {
+        NavigationView {
+            baseView
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    backButton
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(UserText.subscriptionCloseButton) { dismiss() }
+                }
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationViewStyle(.stack)
+            
+            .alert(isPresented: $shouldDisplayInactiveError) {
+                Alert(
+                    title: Text(UserText.subscriptionRestoreEmailInactiveTitle),
+                    message: Text(UserText.subscriptionRestoreEmailInactiveMessage),
+                    dismissButton: .default(Text(UserText.actionOK)) {
+                        dismiss()
+                    }
+                )
+            }
+            
+            .alert(isPresented: $viewModel.navigationError) {
+                Alert(
+                    title: Text(UserText.subscriptionBackendErrorTitle),
+                    message: Text(UserText.subscriptionBackendErrorMessage),
+                    dismissButton: .cancel(Text(UserText.subscriptionBackendErrorButton)) {
+                        dismiss()
+                    })
+            }
+            
+            .onAppear {
+                viewModel.onAppear()
+            }
+                    
+            .onChange(of: viewModel.shouldDisplayInactiveError) { _ in
+                shouldDisplayInactiveError = true
+            }
+            .navigationTitle(viewModel.viewTitle)
+            
+            .onAppear(perform: {
+                setUpAppearances()
+                viewModel.onAppear()
+            })
+        }.tint(Color(designSystemColor: .textPrimary))
+    }
+    
+    private var baseView: some View {
         ZStack {
             VStack {
                 AsyncHeadlessWebView(viewModel: viewModel.webViewModel)
                     .background()
             }
         }
-        
-        .alert(isPresented: $shouldDisplayInactiveError) {
-            Alert(
-                title: Text(UserText.subscriptionRestoreEmailInactiveTitle),
-                message: Text(UserText.subscriptionRestoreEmailInactiveMessage),
-                dismissButton: .default(Text(UserText.actionOK)) {
-                    dismiss()
+    }
+    
+    @ViewBuilder
+    private var backButton: some View {
+        if viewModel.canNavigateBack {
+            Button(action: {
+                Task { await viewModel.navigateBack() }
+            }, label: {
+                HStack(spacing: 0) {
+                    Image(systemName: Constants.backButtonImage)
+                    Text(UserText.backButtonTitle)
                 }
-            )
+            })
         }
-        
-        .alert(isPresented: $viewModel.navigationError) {
-            Alert(
-                title: Text(UserText.subscriptionBackendErrorTitle),
-                message: Text(UserText.subscriptionBackendErrorMessage),
-                dismissButton: .cancel(Text(UserText.subscriptionBackendErrorButton)) {
-                    dismiss()
-                })
-        }
-        
-        .onAppear {
-            viewModel.loadURL()
-        }
-        
-        
-        .onChange(of: viewModel.activateSubscription) { active in
-            if active {
-                // If updating email, just go back
-                if isAddingDevice {
-                    dismiss()
-                } else {
-                    // Pop to Root view
-                    self.rootPresentationMode.wrappedValue.dismiss()
-                }
-            }
-        }
-        
-        .onChange(of: viewModel.shouldDisplayInactiveError) { _ in
-            shouldDisplayInactiveError = true
-        }
-        .navigationTitle(viewModel.viewTitle)
+    }
+    
+    private func setUpAppearances() {
+        let navAppearance = UINavigationBar.appearance()
+        navAppearance.backgroundColor = UIColor(designSystemColor: .surface)
+        navAppearance.barTintColor = UIColor(designSystemColor: .surface)
+        navAppearance.shadowImage = UIImage()
+        navAppearance.tintColor = UIColor(designSystemColor: .textPrimary)
     }
     
     

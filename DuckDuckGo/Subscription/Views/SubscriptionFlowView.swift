@@ -28,9 +28,8 @@ struct SubscriptionFlowView: View {
     
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = SubscriptionFlowViewModel()
-    @State private var shouldShowNavigationBar = false
-    @State private var isActive = false
-    @State private var transactionError: SubscriptionFlowViewModel.SubscriptionPurchaseError?
+
+    // Local View State
     @State private var errorMessage: SubscriptionErrorMessage = .general
     @State private var shouldPresentError: Bool = false
     @State private var isFirstOnAppear = true
@@ -69,11 +68,10 @@ struct SubscriptionFlowView: View {
                 }
                 .edgesIgnoringSafeArea(.top)
                 .navigationBarTitleDisplayMode(.inline)
-                .navigationBarHidden(!viewModel.shouldShowNavigationBar).animation(.easeOut)
+                .navigationBarHidden(!viewModel.state.shouldShowNavigationBar).animation(.easeOut)
         }
         .applyInsetGroupedListStyle()
         .tint(Color(designSystemColor: .textPrimary))
-        .environment(\.rootPresentationMode, self.$isActive)
     }
 
     @ViewBuilder
@@ -86,7 +84,7 @@ struct SubscriptionFlowView: View {
     
     @ViewBuilder
     private var backButton: some View {
-        if viewModel.canNavigateBack {
+        if viewModel.state.canNavigateBack {
             Button(action: {
                 Task { await viewModel.navigateBack() }
             }, label: {
@@ -100,7 +98,7 @@ struct SubscriptionFlowView: View {
     }
     
     private func getTransactionStatus() -> String {
-        switch viewModel.transactionStatus {
+        switch viewModel.state.transactionStatus {
         case .polling:
             return UserText.subscriptionCompletingPurchaseTitle
         case .purchasing:
@@ -120,7 +118,7 @@ struct SubscriptionFlowView: View {
                         
             // Show a dismiss button while the bar is not visible
             // But it should be hidden while performing a transaction
-            if !shouldShowNavigationBar && viewModel.transactionStatus == .idle {
+            if !viewModel.state.shouldShowNavigationBar && viewModel.state.transactionStatus == .idle {
                 HStack {
                     backButton.padding(.leading, Constants.navButtonPadding)
                     Spacer()
@@ -129,19 +127,13 @@ struct SubscriptionFlowView: View {
             }
         }
         
-        .onChange(of: viewModel.shouldDismissView) { result in
+        .onChange(of: viewModel.state.shouldDismissView) { result in
             if result {
                 dismiss()
-                viewModel.shouldDismissView = false
             }
         }
-
-        .onChange(of: viewModel.userTappedRestoreButton) { _ in
-            isActive = true
-            viewModel.userTappedRestoreButton = false
-        }
         
-        .onChange(of: viewModel.transactionError) { value in
+        .onChange(of: viewModel.state.transactionError) { value in
             
             if !shouldPresentError {
                 let displayError: Bool = {
@@ -168,26 +160,14 @@ struct SubscriptionFlowView: View {
         
         .onAppear(perform: {
 
-            if isFirstOnAppear && !viewModel.activateSubscriptionOnLoad {
+            if isFirstOnAppear && !viewModel.state.activateSubscriptionOnLoad {
                 isFirstOnAppear = false
                 Pixel.fire(pixel: .privacyProOfferScreenImpression)
             }
 
             setUpAppearances()
             Task { await viewModel.initializeViewData() }
-            
-            // Display the Restore page on load if required (With no animation)
-            if viewModel.activateSubscriptionOnLoad {
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2) {
-                    var transaction = Transaction()
-                        transaction.disablesAnimations = true
-                    withTransaction(transaction) {
-                        isActive = true
-                        viewModel.activateSubscriptionOnLoad = false
-                    }
-                    
-                }
-            }
+                        
         })
                 
         .alert(isPresented: $shouldPresentError) {
@@ -196,7 +176,7 @@ struct SubscriptionFlowView: View {
         }
         
         // The trailing close button should be hidden when a transaction is in progress
-        .navigationBarItems(trailing: viewModel.transactionStatus == .idle
+        .navigationBarItems(trailing: viewModel.state.transactionStatus == .idle
                             ? Button(UserText.subscriptionCloseButton) { viewModel.finalizeSubscriptionFlow() }
                             : nil)
     }
@@ -209,7 +189,7 @@ struct SubscriptionFlowView: View {
                 title: Text(UserText.subscriptionFoundTitle),
                 message: Text(UserText.subscriptionFoundText),
                 primaryButton: .cancel(Text(UserText.subscriptionFoundCancel)) {
-                    viewModel.transactionError = nil
+                    viewModel.clearTransactionError()
                 },
                 secondaryButton: .default(Text(UserText.subscriptionFoundRestore)) {
                     viewModel.restoreAppstoreTransaction()
@@ -239,21 +219,11 @@ struct SubscriptionFlowView: View {
     private var webView: some View {
         
         ZStack(alignment: .top) {
-            
-            // Restore View Hidden Link           
-            let restoreView = SubscriptionRestoreView(
-                onDismissStack: {
-                    viewModel.finalizeSubscriptionFlow()
-                    dismiss()
-                })
-            NavigationLink(destination: restoreView, isActive: $isActive) {
-                EmptyView()
-            }.isDetailLink(false)
 
             AsyncHeadlessWebView(viewModel: viewModel.webViewModel)
                 .background()
             
-            if viewModel.transactionStatus != .idle {
+            if viewModel.state.transactionStatus != .idle {
                 PurchaseInProgressView(status: getTransactionStatus())
             }
         }

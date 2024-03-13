@@ -28,6 +28,7 @@ struct SettingsSubscriptionView: View {
     @EnvironmentObject var viewModel: SettingsViewModel
     @StateObject var subscriptionFlowViewModel =  SubscriptionFlowViewModel()
     @State var isShowingsubScriptionFlow = false
+    @State var isShowingRestoreFlow = false
     @State var isShowingDBP = false
     @State var isShowingITP = false
     
@@ -94,17 +95,25 @@ struct SettingsSubscriptionView: View {
                                action: { isShowingsubScriptionFlow = true },
                                isButton: true )
             
-            // Subscription Restore
+            // Subscription Purchase
             .sheet(isPresented: $isShowingsubScriptionFlow,
                    onDismiss: { Task { viewModel.onAppear() } },
-                   content: { SubscriptionFlowView(viewModel: subscriptionFlowViewModel).interactiveDismissDisabled() })
+                   content: {
+                        SubscriptionFlowView().interactiveDismissDisabled()
+                })
             
             SettingsCustomCell(content: { iHaveASubscriptionView },
                                action: {
-                                    isShowingsubScriptionFlow = true
-                                    subscriptionFlowViewModel.activateSubscriptionOnLoad = true
+                                    isShowingRestoreFlow = true
                                 },
                                isButton: true )
+            
+            // Subscription Restore
+            .sheet(isPresented: $isShowingRestoreFlow,
+                   onDismiss: { Task { viewModel.onAppear() } },
+                   content: {
+                        SubscriptionRestoreView().interactiveDismissDisabled()
+                })
             
         }
     }
@@ -214,10 +223,10 @@ struct SettingsSubscriptionView: View {
                 }
             })
 
-            .onReceive(subscriptionFlowViewModel.$selectedFeature) { value in
-                guard let value else { return }
-                viewModel.onAppearNavigationTarget = value
-            }
+            // .onReceive(subscriptionFlowViewModel.$selectedFeature) { value in
+                // guard let value else { return }
+                // viewModel.onAppearNavigationTarget = value
+            // }
         }
     }
 }

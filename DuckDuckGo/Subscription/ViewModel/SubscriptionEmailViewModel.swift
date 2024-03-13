@@ -31,15 +31,17 @@ final class SubscriptionEmailViewModel: ObservableObject {
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     
+    private var canGoBackCancellable: AnyCancellable?
+    
     var emailURL = URL.activateSubscriptionViaEmail
-    var viewTitle = UserText.subscriptionActivateEmail
+    var viewTitle = UserText.subscriptionActivateEmailTitle
     @Published var subscriptionEmail: String?
     @Published var shouldReloadWebView = false
-    @Published var activateSubscription = false
     @Published var managingSubscriptionEmail = false
     @Published var transactionError: SubscriptionRestoreError?
     @Published var navigationError: Bool = false
     @Published var shouldDisplayInactiveError: Bool = false
+    @Published var canNavigateBack: Bool = false
     var webViewModel: AsyncHeadlessWebViewViewModel
     
     private static let allowedDomains = [
@@ -68,7 +70,17 @@ final class SubscriptionEmailViewModel: ObservableObject {
                                                                                                  allowedDomains: Self.allowedDomains,
                                                                                                  contentBlocking: false))
         initializeView()
+        Task { await setupSubscribers() }
         setupTransactionObservers()
+    }
+    
+    @MainActor
+    func navigateBack() async {
+        await webViewModel.navigationCoordinator.goBack()
+    }
+    
+    func onAppear() {
+        webViewModel.navigationCoordinator.navigateTo(url: emailURL )
     }
     
     private func initializeView() {
@@ -82,8 +94,16 @@ final class SubscriptionEmailViewModel: ObservableObject {
         }
     }
     
+    private func setupSubscribers() async {
+        canGoBackCancellable = webViewModel.$canGoBack
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.canNavigateBack = value
+            }
+    }
+    
     private func setupTransactionObservers() {
-        subFeature.$emailActivationComplete
+        subFeature.$activateSubscription
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 if value {
@@ -128,13 +148,8 @@ final class SubscriptionEmailViewModel: ObservableObject {
     
     private func completeActivation() {
         DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailSuccess)
-        subFeature.emailActivationComplete = false
-        activateSubscription = true
     }
     
-    func loadURL() {
-        webViewModel.navigationCoordinator.navigateTo(url: emailURL )
-    }
     
     deinit {
         cancellables.removeAll()

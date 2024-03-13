@@ -5767,7 +5767,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				B6F997CC2B8F380A00476735 /* PBXTargetDependency */,
 				F143C2EA1E4A4CD400CFDE3A /* PBXTargetDependency */,
 				8390447520BDCE10006461CD /* PBXTargetDependency */,
 				85482D932462DCD100EDEDD1 /* PBXTargetDependency */,
@@ -7400,10 +7399,6 @@
 			isa = PBXTargetDependency;
 			target = 84E341911E2F7EFB00BDBA6F /* DuckDuckGo */;
 			targetProxy = 9825F9CD293F2DE900F220F2 /* PBXContainerItemProxy */;
-		};
-		B6F997CC2B8F380A00476735 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = B6F997CB2B8F380A00476735 /* SwiftLintPlugin */;
 		};
 		B6F997CE2B8F380D00476735 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10043,8 +10038,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = exactVersion;
-				version = 122.1.1;
+				branch = daniel/subscription_cache_reset;
+				kind = branch;
 			};
 		};
 		B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */ = {
@@ -10270,11 +10265,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */;
 			productName = Macros;
-		};
-		B6F997CB2B8F380A00476735 /* SwiftLintPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */;
-			productName = "plugin:SwiftLintPlugin";
 		};
 		B6F997CD2B8F380D00476735 /* SwiftLintPlugin */ = {
 			isa = XCSwiftPackageProductDependency;

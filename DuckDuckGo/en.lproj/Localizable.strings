@@ -1983,6 +1983,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Description for Email activation */
 "subscription.activate.email.description" = "Use your email to activate your subscription on this device.";
 
+/* Activate subscription title */
+"subscription.activate.email.title" = "Activate Subscription";
+
 /* Restore button title for Managing Email */
 "subscription.activate.manage.email.button" = "Manage";
 

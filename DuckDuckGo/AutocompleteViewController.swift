@@ -164,7 +164,6 @@ class AutocompleteViewController: UIViewController {
     }
 
     private func requestSuggestions(query: String) {
-        print("***", #function, query)
         selectedItem = -1
         tableView.reloadData()
 
@@ -181,11 +180,7 @@ class AutocompleteViewController: UIViewController {
         pendingRequest = true
 
         loader?.getSuggestions(query: query) { [weak self] result, error in
-            guard error == nil else {
-                print("***", #function, String(describing: error))
-                return
-            }
-
+            guard error == nil else { return }
             self?.updateSuggestions(result?.all ?? [])
             self?.pendingRequest = false
         }

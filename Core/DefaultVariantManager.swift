@@ -62,6 +62,10 @@ public struct VariantIOS: Variant {
         VariantIOS(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "se", weight: doNotAllocate, isIncluded: When.always, features: []),
+
+        VariantIOS(name: "mc", weight: 1, isIncluded: When.always, features: []),
+        VariantIOS(name: "md", weight: 1, isIncluded: When.always, features: [.history]),
+
         returningUser
     ]
 

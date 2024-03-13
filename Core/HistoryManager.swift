@@ -74,9 +74,7 @@ public class HistoryManager: HistoryManaging {
     }
 
     func isHistoryFeatureEnabled() -> Bool {
-        // TODO change this before merging
-        #warning("this should be changed before merging")
-        return true // privacyConfigManager.privacyConfig.isEnabled(featureKey: .history) && variantManager.isSupported(feature: .history)
+        return privacyConfigManager.privacyConfig.isEnabled(featureKey: .history) && variantManager.isSupported(feature: .history)
     }
 
     public func removeAllHistory() async {

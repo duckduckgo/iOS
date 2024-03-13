@@ -132,8 +132,6 @@ struct NetworkProtectionStatusView: View {
     @ViewBuilder
     private func locationDetails() -> some View {
         Section {
-            let imageName = statusModel.preferredLocation.isNearest ? "VPNLocation" : nil
-
             if let location = statusModel.location {
                 var locationAttributedString: AttributedString {
                     var attributedString = AttributedString(statusModel.preferredLocation.isNearest ? "\(location) (Nearest)" : location)
@@ -145,9 +143,10 @@ struct NetworkProtectionStatusView: View {
                 }
 
                 NavigationLink(destination: NetworkProtectionVPNLocationView()) {
-                    NetworkProtectionLocationItemView(title: locationAttributedString, imageName: imageName)
+                    NetworkProtectionLocationItemView(title: locationAttributedString, imageName: nil)
                 }
             } else {
+                let imageName = statusModel.preferredLocation.isNearest ? "VPNLocation" : nil
                 NavigationLink(destination: NetworkProtectionVPNLocationView()) {
                     NetworkProtectionLocationItemView(
                         title: AttributedString(statusModel.preferredLocation.title), imageName: imageName

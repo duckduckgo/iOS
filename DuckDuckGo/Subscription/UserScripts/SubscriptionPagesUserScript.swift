@@ -25,6 +25,7 @@ import Combine
 import Foundation
 import WebKit
 import UserScript
+import Core
 
 ///
 /// The user script that will be the broker for all subscription features
@@ -62,8 +63,10 @@ extension SubscriptionPagesUserScript: WKScriptMessageHandlerWithReply {
 }
 
 extension SubscriptionPagesUserScript: WKScriptMessageHandler {
+    
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         // unsupported
+        os_log("SubscriptionPagesUserScript sent an unsupported message: %s", log: .generalLog, type: .fault, message.messageName)
     }
 }
 

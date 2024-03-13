@@ -20,8 +20,6 @@ CONTROLLI QUOTIDIANI SULLA PRIVACY
 
 • Global Privacy Control (GPC) per comunicare le proprie preferenze in materia di privacy - Per saperne di più, visita https://help.duckduckgo.com/duckduckgo-help-pages/privacy/gpc/ 
 
-Nota sulla nostra protezione dal caricamento dei sistemi di tracciamento di terze parti a seguito dei clic sugli annunci di DuckDuckGo: la nostra protezione dai sistemi di tracciamento di terze parti è superiore a quella disponibile per impostazione predefinita nei browser più diffusi, ma stiamo lavorando costantemente per renderla più completa. Attualmente, se un inserzionista desidera rilevare le conversioni sul proprio sito Web per i nostri annunci di ricerca privati di DuckDuckGo, la nostra protezione dal caricamento del sistemi di tracciamento di terze parti non interrompe il caricamento delle richieste di bat.bing.com sul sito Web dell'inserzionista in seguito ai clic sugli annunci di DuckDuckGo, ma tali richieste vengono interrotte in tutti gli altri contesti. Questo perché la pubblicità Private Search di DuckDuckGo è in collaborazione con Microsoft. Nell'ambito di questa partnership, la visualizzazione degli annunci su DuckDuckGo è anonima e Microsoft si è impegnata a non profilare i clic degli annunci dei nostri utenti.
-
 Maggiori informazioni su questo e sulle nostre protezioni gratuite dal tracciamento sono disponibili all'indirizzo https://help.duckduckgo.com/privacy/web-tracking-protections
 
 

@@ -90,7 +90,6 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     private let serverInfoObserver: ConnectionServerInfoObserver
     private let errorObserver: ConnectionErrorObserver
     private var cancellables: Set<AnyCancellable> = []
-    private var delayedToggleReenableCancellable: Cancellable?
 
     // MARK: Error
 

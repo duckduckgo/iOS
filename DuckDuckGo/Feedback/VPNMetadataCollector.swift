@@ -99,13 +99,16 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
     private let settings: VPNSettings
+    private let defaults: UserDefaults
 
     init(statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
          serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
-         settings: VPNSettings = .init(defaults: .networkProtectionGroupDefaults)) {
+         settings: VPNSettings = .init(defaults: .networkProtectionGroupDefaults),
+         defaults: UserDefaults = .networkProtectionGroupDefaults) {
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
         self.settings = settings
+        self.defaults = defaults
     }
 
     func collectMetadata() async -> VPNMetadata {
@@ -149,7 +152,7 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
 
-        let networkPathChange = settings.networkPathChange
+        let networkPathChange = defaults.networkPathChange
 
         let lastPathChange = String(describing: networkPathChange)
         var lastPathChangeDate = "unknown"

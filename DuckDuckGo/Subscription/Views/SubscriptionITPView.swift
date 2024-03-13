@@ -85,6 +85,17 @@ struct SubscriptionITPView: View {
         }
         .tint(Color(designSystemColor: .textPrimary))
         
+        
+        .alert(isPresented: $viewModel.navigationError) {
+            Alert(
+                title: Text(UserText.subscriptionBackendErrorTitle),
+                message: Text(UserText.subscriptionBackendErrorMessage),
+                dismissButton: .cancel(Text(UserText.subscriptionBackendErrorButton)) {
+                    dismiss()
+                })
+        }
+        
+        
         .sheet(isPresented: Binding(
             get: { viewModel.shouldShowExternalURLSheet },
             set: { if !$0 { viewModel.shouldNavigateToExternalURL = nil } }
@@ -163,4 +174,13 @@ struct SubscriptionITPView: View {
         navAppearance.tintColor = UIColor(designSystemColor: .textPrimary)
     }
 }
+
+// Commented out because CI fails if a SwiftUI preview is enabled https://app.asana.com/0/414709148257752/1206774081310425/f
+// @available(iOS 15.0, *)
+// struct SubscriptionITPView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SubscriptionITPView()
+//    }
+// }
+
 #endif

@@ -1,4 +1,3 @@
-
 DuckDuckGo-appen ger det mest omfattande integritetsskyddet online med ett enda knapptryck. Med en nedladdning får du en ny vardagswebbläsare som erbjuder sömlöst skydd medan du söker och surfar. Du får även tillgång till spårningsskydd för inkommande e-postmeddelanden. Många av dessa skydd erbjuds inte som standard i de populäraste webbläsarna.
 
 FUNKTIONER I FOKUS 
@@ -17,9 +16,7 @@ FUNKTIONER I FOKUS 
 INTEGRITETSKONTROLLER VARJE DAG
 • Tryck på brännarknappen, bränn data – Rensa dina flikar och webbläsardata med vår brännarknapp.
 
-• Ange dina integritetsinställningar med Global Privacy Control (GPC) – GPC är inbyggd i vår app och är till för att hjälpa dig att automatiskt utnyttja din rätt att välja genom att tala om för webbplatser att de inte får sälja eller dela din personliga information. Huruvida det kan användas för att genomdriva dina juridiska rättigheter (till exempel nuvarande eller framtida CCPA- eller GDPR-krav) beror på lagarna i din jurisdiktion. 
-
-Anmärkning gällande vårt tredjepartsskydd för inläsning av spårare efter DuckDuckGo-annonsklick: Vårt skydd för spårare från tredje part ger dig mer än vad du får som standard i de flesta populära webbläsare, men vi arbetar ständigt för att utöka det. Om en annonsör vill upptäcka konverteringar på sin egen webbplats för våra privata DuckDuckGo-sökannonser stoppar vårt skydd för laddning av spårare från tredje part inte bat.bing.com-förfrågningar från att läsas in på annonsörens webbplats efter DuckDuckGo-annonsklick, men dessa förfrågningar stoppas i alla andra sammanhang. Detta beror på att DuckDuckGo:s privata sökannonsering sker i samarbete med Microsoft. Enligt denna partnerskapsöverenskommelse är du anonym när du ser annonser på DuckDuckGo, och Microsoft har åtagit sig att inte profilera våra användares annonsklick.   
+• Ange dina integritetsinställningar med Global Privacy Control (GPC) – GPC är inbyggd i vår app och är till för att hjälpa dig att automatiskt utnyttja din rätt att välja genom att tala om för webbplatser att de inte får sälja eller dela din personliga information. Huruvida det kan användas för att genomdriva dina juridiska rättigheter (till exempel nuvarande eller framtida CCPA- eller GDPR-krav) beror på lagarna i din jurisdiktion.  
 
 Läs mer om detta och vårt skydd mot spårning på https://help.duckduckgo.com/privacy/web-tracking-protections/ 
 

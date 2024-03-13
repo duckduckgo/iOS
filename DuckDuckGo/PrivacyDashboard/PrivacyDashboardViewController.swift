@@ -223,16 +223,18 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
     func privacyDashboardController(_ privacyDashboardController: PrivacyDashboard.PrivacyDashboardController,
                                     didRequestSubmitBrokenSiteReportWithCategory category: String,
                                     description: String) {
-        let source: BrokenSiteReport.Source = privacyDashboardController.initDashboardMode == .report ? .appMenu : .dashboard
-        do {
-            let report = try makeBrokenSiteReport(category: category, description: description, source: source)
-            try brokenSiteReporter.report(report, reportMode: .regular)
-        } catch {
-            os_log("Failed to generate or send the broken site report: %@", type: .error, error.localizedDescription)
+        Task { @MainActor in
+            let source: BrokenSiteReport.Source = privacyDashboardController.initDashboardMode == .report ? .appMenu : .dashboard
+            do {
+                let report = try await makeBrokenSiteReport(category: category, description: description, source: source)
+                try brokenSiteReporter.report(report, reportMode: .regular)
+            } catch {
+                os_log("Failed to generate or send the broken site report: %@", type: .error, error.localizedDescription)
+            }
+
+            ActionMessageView.present(message: UserText.feedbackSumbittedConfirmation)
+            privacyDashboardCloseHandler()
         }
-        
-        ActionMessageView.present(message: UserText.feedbackSumbittedConfirmation)
-        privacyDashboardCloseHandler()
     }
 
 }
@@ -245,16 +247,18 @@ extension PrivacyDashboardViewController: PrivacyDashboardToggleReportDelegate {
                                     didRequestSubmitToggleReportWithSource source: BrokenSiteReport.Source,
                                     didOpenReportInfo: Bool,
                                     toggleReportCounter: Int?) {
-        do {
-            let report = try makeBrokenSiteReport(source: source,
-                                                  didOpenReportInfo: didOpenReportInfo,
-                                                  toggleReportCounter: toggleReportCounter)
-            try toggleProtectionsOffReporter.report(report, reportMode: .toggle)
-        } catch {
-            os_log("Failed to generate or send the broken site report: %@", type: .error, error.localizedDescription)
-        }
+        Task { @MainActor in
+            do {
+                let report = try await makeBrokenSiteReport(source: source,
+                                                      didOpenReportInfo: didOpenReportInfo,
+                                                      toggleReportCounter: toggleReportCounter)
+                try toggleProtectionsOffReporter.report(report, reportMode: .toggle)
+            } catch {
+                os_log("Failed to generate or send the broken site report: %@", type: .error, error.localizedDescription)
+            }
 
-        privacyDashboardCloseHandler()
+            privacyDashboardCloseHandler()
+        }
     }
 
 }
@@ -271,10 +275,10 @@ extension PrivacyDashboardViewController {
         let isDesktop: Bool
         let error: Error?
         let httpStatusCode: Int?
-        let openerContext: WebsiteBreakage.OpenerContext?
+        let openerContext: BrokenSiteReport.OpenerContext?
         let vpnOn: Bool
-        let jsPerformance: [Double]?
         let userRefreshCount: Int
+        let webVitals: WebVitalsSubfeature
     }
     
     enum BrokenSiteReportError: Error {
@@ -285,13 +289,19 @@ extension PrivacyDashboardViewController {
                                       description: String = "",
                                       source: BrokenSiteReport.Source,
                                       didOpenReportInfo: Bool = false,
-                                      toggleReportCounter: Int? = nil) throws -> BrokenSiteReport {
+                                      toggleReportCounter: Int? = nil) async throws -> BrokenSiteReport {
 
         guard let privacyInfo = privacyDashboardController.privacyInfo,
               let breakageAdditionalInfo = breakageAdditionalInfo  else {
             throw BrokenSiteReportError.failedToFetchTheCurrentWebsiteInfo
         }
-        
+
+        let webVitalsResult = await withCheckedContinuation({ continuation in
+            breakageAdditionalInfo.webVitals.notifyHandler(from: webView, handler: { result in
+                continuation.resume(returning: result)
+            })
+        })
+
         let blockedTrackerDomains = privacyInfo.trackerInfo.trackersBlocked.compactMap { $0.domain }
         let protectionsState = privacyConfigurationManager.privacyConfig.isFeature(.contentBlocking,
                                                                                    enabledForDomain: breakageAdditionalInfo.currentURL.host)
@@ -326,8 +336,8 @@ extension PrivacyDashboardViewController {
                                 httpStatusCodes: statusCodes,
                                 openerContext: breakageAdditionalInfo.openerContext,
                                 vpnOn: breakageAdditionalInfo.vpnOn,
-                                jsPerformance: breakageAdditionalInfo.jsPerformance,
-                                userRefreshCount: breakageAdditionalInfo.userRefreshCount),
+                                jsPerformance: webVitalsResult,
+                                userRefreshCount: breakageAdditionalInfo.userRefreshCount,
                                 didOpenReportInfo: didOpenReportInfo,
                                 toggleReportCounter: toggleReportCounter)
     }

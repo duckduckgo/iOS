@@ -118,8 +118,9 @@ class TabViewController: UIViewController {
     private var urlProvidedBasicAuthCredential: (credential: URLCredential, url: URL)?
     private var emailProtectionSignOutCancellable: AnyCancellable?
 
-    public var inferredOpenerContext: WebsiteBreakage.OpenerContext?
+    public var inferredOpenerContext: BrokenSiteReport.OpenerContext?
     private var refreshCountSinceLoad: Int = 0
+    private var webVitals: WebVitalsSubfeature = WebVitalsSubfeature()
 
     private var detectedLoginURL: URL?
     private var preserveLoginsWorker: PreserveLoginsWorker?
@@ -950,8 +951,8 @@ class TabViewController: UIViewController {
                                                                      httpStatusCode: lastHttpStatusCode,
                                                                      openerContext: inferredOpenerContext,
                                                                      vpnOn: vpnOn,
-                                                                     jsPerformance: nil,
-                                                                     userRefreshCount: refreshCountSinceLoad)
+                                                                     userRefreshCount: refreshCountSinceLoad,
+                                                                     webVitals: webVitals)
     }
 
     public func print() {
@@ -2195,6 +2196,7 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
         userScripts.loginFormDetectionScript?.delegate = self
         userScripts.autoconsentUserScript.delegate = self
+        userScripts.contentScopeUserScript.registerSubfeature(delegate: webVitals)
 
         adClickAttributionLogic.onRulesChanged(latestRules: ContentBlocking.shared.contentBlockingManager.currentRules)
 

@@ -1658,7 +1658,7 @@ https://duckduckgo.com/mac";
 "network.protection.vpn.notifications.title" = "VPN Notifications";
 
 /* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
-"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+"network.protection.vpn.preferred.location.nearest" = "Nearest Location";
 
 /* Title for the Preferred Location VPN Settings item. */
 "network.protection.vpn.preferred.location.title" = "Preferred Location";

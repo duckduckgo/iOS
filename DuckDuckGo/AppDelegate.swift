@@ -265,16 +265,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 })
             }
 
+        let historyManager = makeHistoryManager()
+
 #if APP_TRACKING_PROTECTION
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       appTrackingProtectionDatabase: appTrackingProtectionDatabase,
+                                      historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
                                       appSettings: AppDependencyProvider.shared.appSettings)
 #else
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
+                                      historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
                                       appSettings: AppDependencyProvider.shared.appSettings)
@@ -330,11 +334,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         clearDebugWaitlistState()
 
-        reportAdAttribution()
-
+        AppDependencyProvider.shared.toggleProtectionsCounter.sendEventsIfNeeded()
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
         return true
+    }
+
+    private func makeHistoryManager() -> HistoryManager {
+        let historyManager = HistoryManager(privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
+                              variantManager: DefaultVariantManager(),
+                              database: HistoryDatabase.make()) { error in
+            Pixel.fire(pixel: .historyStoreLoadFailed, error: error)
+            if error.isDiskFull {
+                self.presentInsufficientDiskSpaceAlert()
+            } else {
+                self.presentPreemptiveCrashAlert()
+            }
+        }
+
+        // This is a compromise to support hot reloading via privacy config.
+        //  * If the history is disabled this will do nothing. If it is subsequently enabled then it won't start collecting history
+        //     until the app cold launches at least once.
+        //  * If the history is enabled this loads the store sets up the history manager
+        //     correctly. If the history manager is subsequently disabled it will stop working immediately.
+        historyManager.loadStore()
+        return historyManager
     }
 
     private func presentPreemptiveCrashAlert() {
@@ -397,12 +421,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 #endif
 
-    private func reportAdAttribution() {
-        Task.detached(priority: .background) {
-            await AdAttributionPixelReporter.shared.reportAttributionIfNeeded()
-        }
-    }
-
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
@@ -459,6 +477,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         presentExpiredEntitlementNotification()
+#endif
+
+        updateSubscriptionStatus()
+    }
+
+    func updateSubscriptionStatus() {
+#if SUBSCRIPTION
+        Task {
+            guard let token = AccountManager().accessToken else {
+                return
+            }
+            let result = await SubscriptionService.getSubscription(accessToken: token)
+
+            switch result {
+            case .success(let success):
+                if success.isActive {
+                    DailyPixel.fire(pixel: .privacyProSubscriptionActive)
+                }
+            case .failure: break
+            }
+        }
 #endif
     }
 

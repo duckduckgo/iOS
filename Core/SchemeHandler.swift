@@ -21,13 +21,13 @@ import Foundation
 import BrowserServicesKit
 
 public class SchemeHandler {
-    
+
     public enum Action: Equatable {
         case open
         case askForConfirmation
         case cancel
     }
-    
+
     public enum SchemeType: Equatable {
         case navigational
         case external(Action)
@@ -51,14 +51,14 @@ public class SchemeHandler {
         case shortcutsProduction = "shortcuts-production"
         case workflow
     }
-    
+
     private enum BlockedScheme: String {
         case appleDataDetectors = "x-apple-data-detectors"
     }
-    
+
     public static func schemeType(for url: URL) -> SchemeType {
         guard let schemeString = url.scheme else { return .unknown }
-        
+
         guard BlockedScheme(rawValue: schemeString) == nil else {
             return .external(.cancel)
         }

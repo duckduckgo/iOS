@@ -33,5 +33,5 @@ public extension Configuration {
         case .FBConfig: return "FBConfig"
         }
     }
-    
+
 }

@@ -40,7 +40,7 @@ class NotFoundCachingDownloader: ImageDownloader {
         if shouldDownload(url) {
             return super.downloadImage(with: url, options: options, completionHandler: completionHandler)
         }
-        
+
         completionHandler?(.failure(.requestError(reason: .emptyRequest)))
         return nil
     }
@@ -49,7 +49,7 @@ class NotFoundCachingDownloader: ImageDownloader {
         guard let hashedKey = FaviconsHelper.defaultResource(forDomain: domain, sourcesProvider: sourcesProvider)?.cacheKey else { return }
         notFoundCache[hashedKey] = Date().timeIntervalSince1970
     }
-    
+
     func shouldDownload(_ url: URL, referenceDate: Date = Date()) -> Bool {
         guard let domain = url.host else { return false }
         return shouldDownload(forDomain: domain, referenceDate: referenceDate)

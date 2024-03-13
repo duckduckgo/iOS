@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Macros
 
 public typealias ProductWaitlistMakeHTTPRequest = (URL, _ method: String, _ body: Data?, @escaping ProductWaitlistHTTPRequestCompletion) -> Void
 public typealias ProductWaitlistHTTPRequestCompletion = (Data?, Error?) -> Void
@@ -134,9 +133,9 @@ public class ProductWaitlistRequest: WaitlistRequest {
 
     private var endpoint: URL {
 #if DEBUG
-        return #URL("https://quack.duckduckgo.com/api/auth/waitlist/")
+        return URL(string: "https://quack.duckduckgo.com/api/auth/waitlist/")!
 #else
-        return #URL("https://quack.duckduckgo.com/api/auth/waitlist/")
+        return URL(string: "https://quack.duckduckgo.com/api/auth/waitlist/")!
 #endif
     }
 

@@ -21,28 +21,28 @@ import Foundation
 import os.signpost
 
 public class Instruments {
-    
+
     public enum TimedEvent: String {
         case fetchingContentBlockerData
-        
+
         case loadingDisconnectMeStore
         case loadingEasylistStore
-        
+
         case tabInitialisation
-        
+
         case clearingData
 
         case injectScripts
     }
-    
+
     static public let shared = Instruments()
-    
+
     static var eventsLog = OSLog(subsystem: "com.duckduckgo.instrumentation", category: "Events")
 
     public func startTimedEvent(_ event: TimedEvent, info: String? = nil) -> Any? {
         if #available(iOSApplicationExtension 12.0, *) {
             let id = OSSignpostID(log: Instruments.eventsLog)
-            
+
             os_signpost(.begin,
                         log: Instruments.eventsLog,
                         name: "Timed Event",
@@ -52,7 +52,7 @@ public class Instruments {
         }
         return nil
     }
-    
+
     public func endTimedEvent(for spid: Any?, result: String? = nil) {
         if #available(iOSApplicationExtension 12.0, *),
             let id = spid as? OSSignpostID {

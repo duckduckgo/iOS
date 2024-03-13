@@ -24,28 +24,28 @@ public class AppTrackingProtectionAllowlistModel {
         public static let groupID = "\(Global.groupIdPrefix).apptp"
         public static let fileName = "appTPallowlist"
     }
-    
+
     private let filename: String
-    
+
     lazy private var allowlistUrl: URL? = {
         let groupContainerUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.groupID)
         return groupContainerUrl?.appendingPathComponent(self.filename, conformingTo: .text)
     }()
-    
+
     var allowedDomains: Set<String>
-    
+
     public init(filename: String = Constants.fileName) {
         self.allowedDomains = Set<String>()
         self.filename = filename
-        
+
         readFromFile()
     }
-    
+
     func writeToFile() {
         guard let allowlistUrl = allowlistUrl else {
             fatalError("Unable to get file location")
         }
-        
+
         // Write the allowlist as a textfile with one domain per line
         do {
             let string = allowedDomains.joined(separator: "\n")
@@ -59,7 +59,7 @@ public class AppTrackingProtectionAllowlistModel {
             print(error.localizedDescription)
         }
     }
-    
+
     public func readFromFile() {
         guard let allowlistUrl = allowlistUrl else {
             fatalError("Unable to get file location")
@@ -67,7 +67,7 @@ public class AppTrackingProtectionAllowlistModel {
         guard FileManager.default.fileExists(atPath: allowlistUrl.path) else {
             return
         }
-        
+
         // Read allowlist from file. Break the string into array then cast to a set.
         do {
             let strData = try String(contentsOf: allowlistUrl)
@@ -77,30 +77,30 @@ public class AppTrackingProtectionAllowlistModel {
             print(error.localizedDescription)
         }
     }
-    
+
     public func allow(domain: String) {
         allowedDomains.insert(domain)
         writeToFile()
     }
-    
+
     public func contains(domain: String) -> Bool {
         var check = domain
         while check.contains(".") {
             if allowedDomains.contains(check) {
                 return true
             }
-            
+
             check = String(check.components(separatedBy: ".").dropFirst().joined(separator: "."))
         }
-        
+
         return false
     }
-    
+
     public func remove(domain: String) {
         allowedDomains.remove(domain)
         writeToFile()
     }
-    
+
     public func clearList() {
         allowedDomains.removeAll()
         writeToFile()

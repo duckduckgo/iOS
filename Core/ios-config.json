@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1709563256742,
+    "version": 1710155313369,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -262,6 +262,9 @@
                     "domain": "newsmax.com"
                 },
                 {
+                    "domain": "meneame.net"
+                },
+                {
                     "domain": "earth.google.com"
                 },
                 {
@@ -305,7 +308,7 @@
                     }
                 }
             },
-            "hash": "b72f756b119c762183d04867e8927892"
+            "hash": "7401ca90e7ef3907f1c0f8cdf163b994"
         },
         "autofill": {
             "exceptions": [
@@ -3010,6 +3013,9 @@
                         "domain": "newser.com",
                         "rules": [
                             {
+                                "type": "disable-default"
+                            },
+                            {
                                 "selector": ".RightRailAds",
                                 "type": "hide-empty"
                             },
@@ -3999,7 +4005,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "70c18c8d5c08210844cb238822888fd7"
+            "hash": "065f70c0112e8f3a149bf4bc56f35203"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -4926,6 +4932,16 @@
                             }
                         ]
                     },
+                    "adition.com": {
+                        "rules": [
+                            {
+                                "rule": "ad3.adfarm1.adition.com/js",
+                                "domains": [
+                                    "servustv.com"
+                                ]
+                            }
+                        ]
+                    },
                     "adlightning.com": {
                         "rules": [
                             {
@@ -5567,7 +5583,8 @@
                                 "rule": "dpm.demdex.net/id",
                                 "domains": [
                                     "dhl.de",
-                                    "homedepot.com"
+                                    "homedepot.com",
+                                    "sbs.com.au"
                                 ]
                             }
                         ]
@@ -5913,6 +5930,12 @@
                         "rules": [
                             {
                                 "rule": "2a7e9.v.fwmrm.net/ad/g/1",
+                                "domains": [
+                                    "channel4.com"
+                                ]
+                            },
+                            {
+                                "rule": "2a7e9.v.fwmrm.net/ad/l/1",
                                 "domains": [
                                     "channel4.com"
                                 ]
@@ -7826,7 +7849,7 @@
                     "domain": "sundancecatalog.com"
                 }
             ],
-            "hash": "6768849b4f63b2e635698ac9dde79aa3"
+            "hash": "cff67ed6fc2962e0016ac3c65b6e4633"
         },
         "trackingCookies1p": {
             "settings": {

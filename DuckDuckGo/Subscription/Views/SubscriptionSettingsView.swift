@@ -35,7 +35,7 @@ struct SubscriptionSettingsView: View {
     @StateObject var viewModel = SubscriptionSettingsViewModel()
     @StateObject var sceneEnvironment = SceneEnvironment()
     @State var isFirstOnAppear = true
-
+    
     @ViewBuilder
     private var optionsView: some View {
         List {
@@ -63,6 +63,12 @@ struct SubscriptionSettingsView: View {
                     Task { viewModel.manageSubscription() }
                 },
                                    isButton: true)
+            }
+            
+            .sheet(isPresented: $viewModel.shouldDisplayStripeView) {
+                if let stripeViewModel = viewModel.stripeViewModel {
+                    SubscriptionExternalLinkView(viewModel: stripeViewModel, title: UserText.subscriptionManagePlan)
+                }
             }
             
             Section(header: Text(UserText.subscriptionManageDevices)) {
@@ -123,6 +129,13 @@ struct SubscriptionSettingsView: View {
         
         .onAppear {
             viewModel.fetchAndUpdateSubscriptionDetails()
+        }
+    }
+    
+    @ViewBuilder
+    private var stripeView: some View {
+        if let stripeViewModel = viewModel.stripeViewModel {
+            SubscriptionExternalLinkView(viewModel: stripeViewModel)
         }
     }
     

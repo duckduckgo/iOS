@@ -27,12 +27,6 @@ import Core
 @available(iOS 15.0, *)
 final class SubscriptionSettingsViewModel: ObservableObject {
     
-    enum Constants {
-        static let monthlyProductID = "ios.subscription.1month"
-        static let yearlyProductID = "ios.subscription.1year"
-        static let updateFrequency: Float = 10
-    }
-    
     let accountManager: AccountManager
     private var subscriptionUpdateTimer: Timer?
     private var signOutObserver: Any?
@@ -43,6 +37,12 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     @Published var shouldDisplayRemovalNotice: Bool = false
     @Published var shouldDismissView: Bool = false
     @Published var shouldDisplayGoogleView: Bool = false
+        
+    // Used to display stripe WebUI
+    @Published var stripeViewModel: SubscriptionExternalLinkViewModel?
+    @Published var shouldDisplayStripeView: Bool = false
+    private var externalAllowedDomains = ["stripe.com"]
+    
     
     init(accountManager: AccountManager = AccountManager()) {
         self.accountManager = accountManager
@@ -65,7 +65,10 @@ final class SubscriptionSettingsViewModel: ObservableObject {
             switch subscriptionResult {
             case .success(let subscription):
                 subscriptionInfo = subscription
-                updateSubscriptionsStatusMesage(status: subscription.status, date: subscription.expiresOrRenewsAt, product: subscription.productId)
+                updateSubscriptionsStatusMesage(status: subscription.status,
+                                                date: subscription.expiresOrRenewsAt,
+                                                product: subscription.productId,
+                                                billingPeriod: subscription.billingPeriod)
             case .failure:
                 AccountManager().signOut()
                 shouldDismissView = true
@@ -107,10 +110,10 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         }
     }
     
-    private func updateSubscriptionsStatusMesage(status: Subscription.Status, date: Date, product: String) {
+    private func updateSubscriptionsStatusMesage(status: Subscription.Status, date: Date, product: String, billingPeriod: Subscription.BillingPeriod) {
         let statusString = (status == .autoRenewable) ? UserText.subscriptionRenews : UserText.subscriptionExpires
         self.subscriptionDetails = UserText.subscriptionInfo(status: statusString, expiration: dateFormatter.string(from: date))
-        self.subscriptionType = product == Constants.monthlyProductID ? UserText.subscriptionMonthly : UserText.subscriptionAnnual
+        self.subscriptionType = billingPeriod == .monthly ? UserText.subscriptionMonthly : UserText.subscriptionAnnual
     }
     
     func removeSubscription() {
@@ -136,15 +139,25 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     private func manageGoogleSubscription() {
         shouldDisplayGoogleView = true
     }
-    
-    @MainActor private func manageStripeSubscription() {
+         
+    private func manageStripeSubscription() async {
         guard let token = accountManager.accessToken, let externalID = accountManager.externalID else { return }
-        Task {
-            let serviceResponse = await  SubscriptionService.getCustomerPortalURL(accessToken: token, externalID: externalID)
-            if case .success(let response) = serviceResponse {
-                guard let url = URL(string: response.customerPortalUrl) else { return }
-                openURL(url)
+        let serviceResponse = await  SubscriptionService.getCustomerPortalURL(accessToken: token, externalID: externalID)
+        
+        // Get Stripe Customer Portal URL and update the model
+        if case .success(let response) = serviceResponse {
+            guard let url = URL(string: response.customerPortalUrl) else { return }
+            if let existingModel = stripeViewModel {
+                existingModel.url = url
+            } else {
+                let model = SubscriptionExternalLinkViewModel(url: url, allowedDomains: externalAllowedDomains)
+                DispatchQueue.main.async {
+                    self.stripeViewModel = model
+                }
             }
+        }
+        DispatchQueue.main.async {
+            self.shouldDisplayStripeView = true
         }
     }
 

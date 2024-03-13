@@ -132,6 +132,8 @@ struct NetworkProtectionStatusView: View {
     @ViewBuilder
     private func locationDetails() -> some View {
         Section {
+            let imageName = statusModel.preferredLocation.isNearest ? "VPNLocation" : nil
+
             if let location = statusModel.location {
                 var locationAttributedString: AttributedString {
                     var attributedString = AttributedString(statusModel.preferredLocation.isNearest ? "\(location) (Nearest)" : location)
@@ -143,12 +145,12 @@ struct NetworkProtectionStatusView: View {
                 }
 
                 NavigationLink(destination: NetworkProtectionVPNLocationView()) {
-                    NetworkProtectionLocationItemView(title: locationAttributedString)
+                    NetworkProtectionLocationItemView(title: locationAttributedString, imageName: imageName)
                 }
             } else {
                 NavigationLink(destination: NetworkProtectionVPNLocationView()) {
                     NetworkProtectionLocationItemView(
-                        title: AttributedString(statusModel.preferredLocation.title)
+                        title: AttributedString(statusModel.preferredLocation.title), imageName: imageName
                     )
                 }
             }
@@ -267,9 +269,14 @@ private struct NetworkProtectionErrorView: View {
 @available(iOS 15.0, *)
 private struct NetworkProtectionLocationItemView: View {
     let title: AttributedString
+    let imageName: String?
 
     var body: some View {
-        HStack(spacing: 16) {
+        HStack(spacing: 8) {
+            if let imageName {
+                Image(imageName)
+            }
+
             Text(title)
                 .daxBodyRegular()
         }

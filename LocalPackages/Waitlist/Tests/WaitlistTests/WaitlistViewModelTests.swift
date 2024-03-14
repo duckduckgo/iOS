@@ -18,7 +18,6 @@
 //
 
 import Combine
-import Macros
 import UserNotifications
 import WaitlistMocks
 import XCTest
@@ -263,7 +262,7 @@ extension WaitlistViewModel {
             waitlistRequest: waitlistRequest,
             waitlistStorage: waitlistStorage,
             notificationService: notificationService,
-            downloadURL: #URL("https://duckduckgo.com")
+            downloadURL: URL(string: "https://duckduckgo.com")!
         )
     }
 }

@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "d110859c6100daa59bcbc200dd8565975faf2151",
-        "version" : "123.0.0"
+        "branch" : "autofill/anya-last-used",
+        "revision" : "9a8cd9662415fa004a12f92e0a0794f895100821"
       }
     },
     {

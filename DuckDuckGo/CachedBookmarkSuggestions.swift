@@ -22,21 +22,13 @@ import CoreData
 import Bookmarks
 import Suggestions
 import Persistence
+import Core
 
 final class CachedBookmarks {
 
     let context: NSManagedObjectContext
     lazy var all: [BookmarkSuggestion] = {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "BookmarkEntity")
-        fetchRequest.predicate = NSPredicate(
-            format: "%K = NO AND %K == NO",
-            #keyPath(BookmarkEntity.isFolder),
-            #keyPath(BookmarkEntity.isPendingDeletion)
-        )
-        fetchRequest.resultType = .dictionaryResultType
-        fetchRequest.propertiesToFetch = [#keyPath(BookmarkEntity.title),
-                                          #keyPath(BookmarkEntity.url)]
-        fetchRequest.relationshipKeyPathsForPrefetching = [#keyPath(BookmarkEntity.favoriteFolders)]
+        let fetchRequest = CoreDataBookmarksSearchStore.shallowBookmarksFetchRequest(context: context)
         let result = try? self.context.fetch(fetchRequest) as? [[String: Any]]
 
         return result?.compactMap { BookmarkSuggestion($0) } ?? []
@@ -56,13 +48,14 @@ struct BookmarkSuggestion: Suggestions.Bookmark {
 
     init?(_ properties: [String: Any]) {
         guard let title = properties[#keyPath(BookmarkEntity.title)] as? String,
-              let url = properties[#keyPath(BookmarkEntity.url)] as? String else {
+              let url = properties[#keyPath(BookmarkEntity.url)] as? String,
+              let favoritesFolderCount = properties[#keyPath(BookmarkEntity.favoriteFolders)] as? Int else {
                   return nil
               }
 
         self.title = title
         self.url = url
-        self.isFavorite = (properties[#keyPath(BookmarkEntity.favoriteFolders)] as? Set<NSManagedObject>)?.isEmpty != true
+        self.isFavorite = favoritesFolderCount > 0
     }
 
 }

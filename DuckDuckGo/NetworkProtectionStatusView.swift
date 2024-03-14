@@ -147,10 +147,14 @@ struct NetworkProtectionStatusView: View {
                 }
             } else {
                 let imageName = statusModel.preferredLocation.isNearest ? "VPNLocation" : nil
+                var nearestLocationAttributedString: AttributedString {
+                    var attributedString = AttributedString(statusModel.preferredLocation.title)
+                    attributedString.foregroundColor = .init(designSystemColor: .textPrimary)
+                    return attributedString
+                }
+
                 NavigationLink(destination: NetworkProtectionVPNLocationView()) {
-                    NetworkProtectionLocationItemView(
-                        title: AttributedString(statusModel.preferredLocation.title), imageName: imageName
-                    )
+                    NetworkProtectionLocationItemView(title: nearestLocationAttributedString, imageName: imageName)
                 }
             }
         } header: {

@@ -61,7 +61,7 @@ class SuggestionTableViewCell: UITableViewCell {
             if url.isDuckDuckGoSearch, let searchQuery = url.searchQuery {
                 text = searchQuery
             } else {
-                text = "This is a really long title, does it make the icon disappear?  We will find out shortly." // title ?? url.absoluteString
+                text = title ?? url.absoluteString
             }
             urlLabel.isHidden = false
             urlLabel.text = url.formattedForSuggestion()

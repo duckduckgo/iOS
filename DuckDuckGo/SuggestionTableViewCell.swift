@@ -30,6 +30,7 @@ class SuggestionTableViewCell: UITableViewCell {
     static let reuseIdentifier = "SuggestionTableViewCell"
 
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var urlLabel: UILabel!
     @IBOutlet weak var typeImage: UIImageView!
     @IBOutlet weak var plusButton: UIButton!
 
@@ -40,15 +41,19 @@ class SuggestionTableViewCell: UITableViewCell {
         case .phrase(phrase: let phrase):
             text = phrase
             typeImage.image = UIImage(named: "Find-Search-20")
+            urlLabel.isHidden = true
             self.accessibilityValue = UserText.voiceoverSuggestionTypeSearch
 
         case .website(url: let url):
             text = url.absoluteString
             typeImage.image = UIImage(named: "Globe-20")
+            urlLabel.isHidden = true
             self.accessibilityValue = UserText.voiceoverSuggestionTypeSearch
 
-        case .bookmark(title: let title, _, _, _):
+        case .bookmark(title: let title, let url, _, _):
             text = title
+            urlLabel.isHidden = url.isBookmarklet()
+            urlLabel.text = url.absoluteString.dropping(prefix: "https://").dropping(prefix: "http://")
             typeImage.image = UIImage(named: "Bookmark-20")
             self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
 
@@ -58,6 +63,8 @@ class SuggestionTableViewCell: UITableViewCell {
             } else {
                 text = title ?? url.absoluteString
             }
+            urlLabel.isHidden = false
+            urlLabel.text = url.absoluteString.dropping(prefix: "https://").dropping(prefix: "http://")
             typeImage.image = UIImage(named: "History-20")
             self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
 

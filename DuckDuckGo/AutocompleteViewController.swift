@@ -270,7 +270,16 @@ extension AutocompleteViewController: UITableViewDataSource {
         if appSettings.currentAddressBarPosition.isBottom && suggestions.isEmpty {
             return view.frame.height
         }
-        return 46
+
+        let defaultHeight: CGFloat = 46
+        guard suggestions.indices.contains(indexPath.row) else { return defaultHeight }
+
+        switch suggestions[indexPath.row] {
+        case .bookmark, .historyEntry:
+            return 60
+        default:
+            return defaultHeight
+        }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

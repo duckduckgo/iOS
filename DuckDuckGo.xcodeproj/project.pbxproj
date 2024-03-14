@@ -104,6 +104,7 @@
 		0A6CC0EF23904D5400E4F627 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0A6CC0EE23904D5400E4F627 /* Settings.bundle */; };
 		1CB7B82123CEA1F800AA24EA /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82023CEA1F800AA24EA /* DateExtension.swift */; };
 		1CB7B82323CEA28300AA24EA /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */; };
+		1D200C972BA3157A00108701 /* SettingsNextStepsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D200C962BA3157A00108701 /* SettingsNextStepsView.swift */; };
 		1DDF40202BA049FA006850D9 /* SettingsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDF401F2BA049FA006850D9 /* SettingsRootView.swift */; };
 		1DDF40292BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDF40282BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift */; };
 		1DDF402B2BA05A65006850D9 /* Settings.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DDF402A2BA05A65006850D9 /* Settings.xcassets */; };
@@ -1235,6 +1236,7 @@
 		0A6CC0EE23904D5400E4F627 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		1CB7B82023CEA1F800AA24EA /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
+		1D200C962BA3157A00108701 /* SettingsNextStepsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsNextStepsView.swift; sourceTree = "<group>"; };
 		1DDF401F2BA049FA006850D9 /* SettingsRootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRootView.swift; sourceTree = "<group>"; };
 		1DDF40282BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPrivacyProtectionsView.swift; sourceTree = "<group>"; };
 		1DDF402A2BA05A65006850D9 /* Settings.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Settings.xcassets; sourceTree = "<group>"; };
@@ -3158,6 +3160,7 @@
 			children = (
 				1DDF40282BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift */,
 				1DDF402C2BA09482006850D9 /* SettingsMainSettingsView.swift */,
+				1D200C962BA3157A00108701 /* SettingsNextStepsView.swift */,
 			);
 			name = Sections;
 			sourceTree = "<group>";
@@ -6921,6 +6924,7 @@
 				F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */,
 				85DFEDEF24C7EA3B00973FE7 /* SmallOmniBarState.swift in Sources */,
 				1E908BF129827C480008C8F3 /* AutoconsentUserScript.swift in Sources */,
+				1D200C972BA3157A00108701 /* SettingsNextStepsView.swift in Sources */,
 				4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */,
 				1E7A71192934EC6100B7EA19 /* OmniBarNotificationContainerView.swift in Sources */,
 				984D035C24AE15CD0066CFB8 /* TabSwitcherSettings.swift in Sources */,

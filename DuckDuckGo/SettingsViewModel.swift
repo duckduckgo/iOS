@@ -101,7 +101,8 @@ final class SettingsViewModel: ObservableObject {
     }
     
     var shouldShowNoMicrophonePermissionAlert: Bool = false
-    
+    var autocompleteSubtitle: String?
+
     // Used to automatically navigate on Appear to a specific section
     enum SettingsSection: String {
         case none, netP, dbp, itr, subscriptionFlow
@@ -216,6 +217,7 @@ final class SettingsViewModel: ObservableObject {
          legacyViewProvider: SettingsLegacyViewProvider,
          accountManager: AccountManager,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
+         variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          navigateOnAppearDestination: SettingsSection = .none) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
@@ -224,6 +226,7 @@ final class SettingsViewModel: ObservableObject {
         self.onAppearNavigationTarget = navigateOnAppearDestination
         
         setupNotificationObservers()
+        autocompleteSubtitle = variantManager.isSupported(feature: .history) ? UserText.settingsAutocompleteSubtitle : nil
     }
     
     deinit {
@@ -235,11 +238,13 @@ final class SettingsViewModel: ObservableObject {
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
+         variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          navigateOnAppearDestination: SettingsSection = .none) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
         self.voiceSearchHelper = voiceSearchHelper
         self.onAppearNavigationTarget = navigateOnAppearDestination
+        autocompleteSubtitle = variantManager.isSupported(feature: .history) ? UserText.settingsAutocompleteSubtitle : nil
     }
 #endif
     

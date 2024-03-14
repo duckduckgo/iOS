@@ -58,13 +58,15 @@ public struct VariantIOS: Variant {
     /// The list of cohorts in active ATB experiments.
     ///
     /// Variants set to `doNotAllocate` are active, but not adding users to a new cohort, do not change them unless you're sure the experiment is finished.
+    #warning("Do not merge commented out variant")
     public static let defaultVariants: [Variant] = [
         VariantIOS(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "se", weight: doNotAllocate, isIncluded: When.always, features: []),
 
-        VariantIOS(name: "mc", weight: 1, isIncluded: When.always, features: []),
-        VariantIOS(name: "md", weight: 1, isIncluded: When.always, features: [.history]),
+        // TODO comment this back in before merging
+        // VariantIOS(name: "mc", weight: 1, isIncluded: When.inEnglish, features: []),
+        VariantIOS(name: "md", weight: 1, isIncluded: When.inEnglish, features: [.history]),
 
         returningUser
     ]

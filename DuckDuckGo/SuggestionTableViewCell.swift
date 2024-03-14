@@ -53,7 +53,7 @@ class SuggestionTableViewCell: UITableViewCell {
         case .bookmark(title: let title, let url, _, _):
             text = title
             urlLabel.isHidden = url.isBookmarklet()
-            urlLabel.text = url.absoluteString.dropping(prefix: "https://").dropping(prefix: "http://")
+            urlLabel.text = url.formattedForSuggestion()
             typeImage.image = UIImage(named: "Bookmark-20")
             self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
 
@@ -61,10 +61,10 @@ class SuggestionTableViewCell: UITableViewCell {
             if url.isDuckDuckGoSearch, let searchQuery = url.searchQuery {
                 text = searchQuery
             } else {
-                text = title ?? url.absoluteString
+                text = "This is a really long title, does it make the icon disappear?  We will find out shortly." // title ?? url.absoluteString
             }
             urlLabel.isHidden = false
-            urlLabel.text = url.absoluteString.dropping(prefix: "https://").dropping(prefix: "http://")
+            urlLabel.text = url.formattedForSuggestion()
             typeImage.image = UIImage(named: "History-20")
             self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
 
@@ -79,6 +79,7 @@ class SuggestionTableViewCell: UITableViewCell {
             self.plusButton.setImage(UIImage(named: "Arrow-Top-Left-24"), for: .normal)
         }
 
+        urlLabel.textColor = theme.tableCellTextColor
         styleText(query: query,
                   text: text,
                   regularColor: theme.tableCellTextColor,
@@ -109,4 +110,15 @@ class SuggestionTableViewCell: UITableViewCell {
         
         label.attributedText = newText
     }
+}
+
+private extension URL {
+
+    func formattedForSuggestion() -> String {
+        let string = absoluteString
+            .dropping(prefix: "https://")
+            .dropping(prefix: "http://")
+        return pathComponents.isEmpty ? string : string.dropping(suffix: "/")
+    }
+
 }

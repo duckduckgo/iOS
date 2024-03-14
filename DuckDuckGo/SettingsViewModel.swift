@@ -56,6 +56,7 @@ final class SettingsViewModel: ObservableObject {
     // Sheet Presentation & Navigation
     @Published var isRestoringSubscription: Bool = false
     @Published var shouldDisplayRestoreSubscriptionError: Bool = false
+    @Published var isLoadingSubscriptionState: Bool = false
     @Published var shouldShowNetP = false
     @Published var shouldShowDBP = false
     @Published var shouldShowITP = false
@@ -358,6 +359,7 @@ extension SettingsViewModel {
             return
         }
         
+        isLoadingSubscriptionState = true
         // Fetch available subscriptions from the backend (or sign out)
         switch await SubscriptionService.getSubscription(accessToken: token) {
         
@@ -379,8 +381,11 @@ extension SettingsViewModel {
                     }
                 }
             }
+            isLoadingSubscriptionState = false
+                        
         default:
             // Account is active but there's not a valid subscription / entitlements
+            isLoadingSubscriptionState = false
             signOutUser()
         }
     }

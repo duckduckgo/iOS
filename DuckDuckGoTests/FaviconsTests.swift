@@ -20,7 +20,6 @@
 import Bookmarks
 import CoreData
 import Kingfisher
-import Macros
 import XCTest
 
 @testable import Core
@@ -99,8 +98,8 @@ class FaviconsTests: XCTestCase {
         switch options?[4] {
         case .alternativeSources(let sources):
             XCTAssertEqual(2, sources.count)
-            XCTAssertEqual(sources[0].url, #URL("https://example.com/favicon.ico"))
-            XCTAssertEqual(sources[1].url, #URL("http://example.com/favicon.ico"))
+            XCTAssertEqual(sources[0].url, URL(string: "https://example.com/favicon.ico")!)
+            XCTAssertEqual(sources[1].url, URL(string: "http://example.com/favicon.ico")!)
 
         default:
             XCTFail("Unexpected option")

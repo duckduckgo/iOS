@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Macros
 import Waitlist
 
 public struct TestWaitlist: Waitlist {
@@ -39,7 +38,7 @@ public struct TestWaitlist: Waitlist {
 
     public static var identifier: String = "mockIdentifier"
     public static var apiProductName: String = "mockApiProductName"
-    public static var downloadURL: URL = #URL("https://duckduckgo.com")
+    public static var downloadURL: URL = URL(string: "https://duckduckgo.com")!
     public static var backgroundTaskName: String = "BG Task"
 
     public static var backgroundRefreshTaskIdentifier: String = "bgtask"

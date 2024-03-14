@@ -490,7 +490,13 @@ extension SettingsViewModel {
                                   options: [:],
                                   completionHandler: nil)
     }
-        
+
+    func openOtherPlatforms() {
+        UIApplication.shared.open(URL.apps,
+                                  options: [:],
+                                  completionHandler: nil)
+    }
+
     @MainActor func openCookiePopupManagement() {
         pushViewController(legacyViewProvider.autoConsent)
     }

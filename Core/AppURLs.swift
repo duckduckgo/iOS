@@ -33,6 +33,7 @@ public extension URL {
     static let emailProtectionSignUp = URL(string: "\(base)/email/start-incontext")!
     static let emailProtectionQuickLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/email"))!
     static let aboutLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/about"))!
+    static let apps = URL(string: "\(base)/apps")!
 
     static let surrogates = URL(string: "\(staticBase)/surrogates.txt")!
 

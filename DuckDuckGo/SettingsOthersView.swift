@@ -33,12 +33,12 @@ struct SettingsOthersView: View {
                              isButton: true)
             SettingsCellView(label: "Share Feedback",
                              image: Image("Feedback"),
-                             action: { viewModel.presentLegacyView(.gpc) },
+                             action: { viewModel.presentLegacyView(.feedback) },
                              disclosureIndicator: true,
                              isButton: true)
             SettingsCellView(label: "DuckDuckGo for Other Platforms",
                              image: Image("OtherPlatforms"),
-                             action: { viewModel.presentLegacyView(.gpc) },
+                             action: { viewModel.openOtherPlatforms() },
                              disclosureIndicator: true,
                              isButton: true)
         }

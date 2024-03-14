@@ -186,6 +186,7 @@ struct SubscriptionFlowView: View {
                 message: Text(UserText.subscriptionFoundText),
                 primaryButton: .cancel(Text(UserText.subscriptionFoundCancel)) {
                     viewModel.clearTransactionError()
+                     viewModel.finalizeSubscriptionFlow()
                 },
                 secondaryButton: .default(Text(UserText.subscriptionFoundRestore)) {
                     viewModel.restoreAppstoreTransaction()

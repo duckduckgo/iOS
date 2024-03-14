@@ -27,6 +27,7 @@ struct SettingsSubscriptionView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
     @StateObject var subscriptionFlowViewModel =  SubscriptionFlowViewModel()
+    @StateObject var subscriptionRestoreViewModel =  SubscriptionRestoreViewModel()
     @State var isShowingsubScriptionFlow = false
     @State var isShowingRestoreFlow = false
     @State var isShowingDBP = false
@@ -223,10 +224,15 @@ struct SettingsSubscriptionView: View {
                 }
             })
 
-            // .onReceive(subscriptionFlowViewModel.$selectedFeature) { value in
-                // guard let value else { return }
-                // viewModel.onAppearNavigationTarget = value
-            // }
+            .onReceive(subscriptionFlowViewModel.$selectedFeature) { value in
+                guard let value else { return }
+                viewModel.onAppearNavigationTarget = value
+            }
+            
+            .onReceive(subscriptionRestoreViewModel.$selectedFeature) { value in
+                guard let value else { return }
+                viewModel.onAppearNavigationTarget = value
+            }
         }
     }
 }

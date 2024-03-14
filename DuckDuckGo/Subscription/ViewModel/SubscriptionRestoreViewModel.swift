@@ -48,6 +48,9 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         var shouldDismissView = false
     }
     
+    // Publish the currently selected feature
+    @Published var selectedFeature: SettingsViewModel.SettingsSection?
+    
     // Read only View State - Should only be modified from the VM
     @Published private(set) var state = State()
         
@@ -67,16 +70,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         Pixel.fire(pixel: .privacyProSettingsAddDevice)
         Task { await setupTransactionObserver() }
         refreshState()
-    }
-    
-    // Executed when the activate subscription is dismissed
-    func dismissEmailView() {
-        // If we've got a subscription activated
-        if !state.isAddingDevice && accountManager.email != nil {
-            state.shouldDismissView = true
-        } else {
-            refreshState()
-        }
     }
     
     func refreshState() {

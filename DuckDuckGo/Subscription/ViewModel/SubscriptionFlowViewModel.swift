@@ -35,7 +35,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     let viewTitle = UserText.settingsPProSection
     var purchaseURL = URL.subscriptionPurchase
-    var selectedFeature: SettingsViewModel.SettingsSection?
     
     private var cancellables = Set<AnyCancellable>()
     private var canGoBackCancellable: AnyCancellable?
@@ -56,6 +55,9 @@ final class SubscriptionFlowViewModel: ObservableObject {
         var transactionError: SubscriptionPurchaseError?
     }
 
+    // Publish the currently selected feature
+    @Published var selectedFeature: SettingsViewModel.SettingsSection?
+    
     // Read only View State - Should only be modified from the VM
     @Published private(set) var state = State()
 
@@ -262,6 +264,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
     
     deinit {
+        finalizeSubscriptionFlow()
         cancellables.removeAll()
     }
 

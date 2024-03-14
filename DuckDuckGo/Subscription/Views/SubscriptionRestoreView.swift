@@ -66,6 +66,12 @@ struct SubscriptionRestoreView: View {
     var body: some View {
         NavigationView {
             ZStack {
+                
+                // Progress View
+                if viewModel.state.transactionStatus != .idle {
+                    PurchaseInProgressView(status: getTransactionStatus())
+                }
+                
                 ScrollView {
                     VStack(spacing: Constants.sectionSpacing) {
                         headerView
@@ -77,6 +83,12 @@ struct SubscriptionRestoreView: View {
                         NavigationLink(destination: SubscriptionFlowView(),
                                        isActive: $shouldNavigateToSubscriptionFlow) {
                             EmptyView()
+                        }.isDetailLink(false)
+                        
+                        // Hidden link to display Email Activation View
+                        NavigationLink(destination: SubscriptionEmailView(),
+                                       isActive: $shouldNavigateToActivationFlow) {
+                              EmptyView()
                         }.isDetailLink(false)
                         
                     }.frame(maxWidth: Constants.boxMaxWidth)
@@ -91,45 +103,44 @@ struct SubscriptionRestoreView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .applyInsetGroupedListStyle()
                 .navigationBarItems(trailing: Button(UserText.subscriptionCloseButton) { })
-
-                
-                .alert(isPresented: $isAlertVisible) { getAlert() }
-            
-                .onChange(of: viewModel.state.activationResult) { result in
-                    if result != .unknown {
-                        isAlertVisible = true
-                    }
-                }
-                
-                .onChange(of: viewModel.state.shouldNavigateToActivationFlow) { result in
-                    shouldNavigateToActivationFlow = result
-                }
-                
-                .onChange(of: viewModel.state.shouldNavigateToSubscriptionFlow) { result in
-                    shouldNavigateToSubscriptionFlow = result
-                }
-                
-                .onChange(of: viewModel.state.shouldDismissView) { result in
-                    if result {
-                        dismiss()
-                    }
-                }
-            
-                .sheet(isPresented: $shouldNavigateToActivationFlow,
-                       onDismiss: { viewModel.refreshState() }) {
-                    SubscriptionEmailView(isAddingDevice: viewModel.state.isAddingDevice)
-                }
-            
-                .onAppear {
-                    viewModel.initializeView()
-                    setUpAppearances()
-                }
-                
-                if viewModel.state.transactionStatus != .idle {
-                    PurchaseInProgressView(status: getTransactionStatus())
-                }
+                .tint(Color.init(designSystemColor: .textPrimary))
+                .accentColor(Color.init(designSystemColor: .textPrimary))
             }
-        }.navigationViewStyle(.stack)
+        }
+        .alert(isPresented: $isAlertVisible) { getAlert() }
+    
+        .onChange(of: viewModel.state.activationResult) { result in
+            if result != .unknown {
+                isAlertVisible = true
+            }
+        }
+        
+        // Navigation Flow Binding
+        .onChange(of: viewModel.state.shouldNavigateToActivationFlow) { result in
+            shouldNavigateToActivationFlow = result
+        }
+        .onChange(of: shouldNavigateToActivationFlow) { result in
+            viewModel.showActivationFlow(result)
+        }
+        
+        // Subscription Flow Binding
+        .onChange(of: viewModel.state.shouldNavigateToSubscriptionFlow) { result in
+            shouldNavigateToSubscriptionFlow = result
+        }
+        .onChange(of: shouldNavigateToSubscriptionFlow) { result in
+            viewModel.showSubscriptionFlow(result)
+        }
+        
+        .onChange(of: viewModel.state.shouldDismissView) { result in
+            if result {
+                dismiss()
+            }
+        }
+    
+        .onAppear {
+            viewModel.initializeView()
+            setUpAppearances()
+        }
         
     }
     
@@ -164,7 +175,7 @@ struct SubscriptionRestoreView: View {
                                   action: {
                         DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailStart)
                         DailyPixel.fire(pixel: .privacyProWelcomeAddDevice)
-                        viewModel.navigateToActivationFlow()
+                        viewModel.showActivationFlow(true)
                     })
                 } else if viewModel.state.subscriptionEmail == nil {
                     Text(UserText.subscriptionAddDeviceEmailDescription)
@@ -173,7 +184,7 @@ struct SubscriptionRestoreView: View {
                     getCellButton(buttonText: UserText.subscriptionRestoreAddEmailButton,
                                   action: {
                         Pixel.fire(pixel: .privacyProAddDeviceEnterEmail, debounce: 1)
-                        viewModel.navigateToActivationFlow()
+                        viewModel.showActivationFlow(true)
                     })
                 } else {
                     Text(viewModel.state.subscriptionEmail ?? "").daxSubheadSemibold()
@@ -184,7 +195,7 @@ struct SubscriptionRestoreView: View {
                         getCellButton(buttonText: UserText.subscriptionManageEmailButton,
                                       action: {
                             Pixel.fire(pixel: .privacyProSubscriptionManagementEmail, debounce: 1)
-                            viewModel.navigateToActivationFlow()
+                            viewModel.showActivationFlow(true)
                         })
                     }
                 }
@@ -265,7 +276,7 @@ struct SubscriptionRestoreView: View {
             return Alert(title: Text(UserText.subscriptionRestoreSuccessfulTitle),
                          message: Text(UserText.subscriptionRestoreSuccessfulMessage),
                          dismissButton: .default(Text(UserText.subscriptionRestoreSuccessfulButton)) {
-                            viewModel.navigateToSubscriptionFlow()
+                        viewModel.showSubscriptionFlow(true)
                          }
             )
         case .notFound:

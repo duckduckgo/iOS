@@ -108,6 +108,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
             }
             .store(in: &cancellables)
                 
+        /*
         subFeature.$activateSubscription
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
@@ -116,7 +117,9 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 }
             }
             .store(in: &cancellables)
+         */
         
+        /*
         subFeature.$selectedFeature
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
@@ -139,6 +142,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 
             }
             .store(in: &cancellables)
+         */
         
         subFeature.$transactionError
             .receive(on: DispatchQueue.main)
@@ -269,7 +273,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     func finalizeSubscriptionFlow() {
         canGoBackCancellable?.cancel()
-        subFeature.selectedFeature = nil
         selectedFeature = nil
         subFeature.cleanup()
         state.shouldDismissView = true

@@ -91,9 +91,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     @Published private(set) var transactionStatus: SubscriptionTransactionStatus = .idle
     @Published private(set) var transactionError: UseSubscriptionError?
     
-    @Published private(set) var activateSubscription: Bool = false
-    @Published var selectedFeature: FeatureSelection?
-    @Published var emailActivationComplete: Bool = false
+    var onSetSubscription: (() -> Void)?
+    var onSelectFeature: ((FeatureSelection) -> Void)?
     
     weak var broker: UserScriptMessageBroker?
 
@@ -119,9 +118,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         case Handlers.setSubscription: return setSubscription
         case Handlers.getSubscriptionOptions: return getSubscriptionOptions
         case Handlers.subscriptionSelected: return subscriptionSelected
-        case Handlers.activateSubscription:
-            Pixel.fire(pixel: .privacyProRestorePurchaseOfferPageEntry)
-            return activateSubscription
+        case Handlers.activateSubscription: return activateSubscription
         case Handlers.featureSelected: return featureSelected
         default:
             return nil
@@ -267,6 +264,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
             accountManager.storeAuthToken(token: authToken)
             accountManager.storeAccount(token: accessToken, email: accountDetails.email, externalID: accountDetails.externalID)
+            onSetSubscription?()
         } else {
             os_log("Failed to obtain subscription options", log: .subscription, type: .error)
             setTransactionError(.failedToSetSubscription)
@@ -276,7 +274,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func activateSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
-        activateSubscription = true
+        Pixel.fire(pixel: .privacyProRestorePurchaseOfferPageEntry, debounce: 2)
         return nil
     }
 
@@ -286,7 +284,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             setTransactionError(.generalError)
             return nil
         }
-        selectedFeature = featureSelection
+        onSelectFeature?(featureSelection)
         
         return nil
     }
@@ -337,9 +335,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func cleanup() {
         setTransactionStatus(.idle)
         setTransactionError(nil)
-        activateSubscription = false
-        emailActivationComplete = false
-        selectedFeature = nil
         broker = nil
     }
     

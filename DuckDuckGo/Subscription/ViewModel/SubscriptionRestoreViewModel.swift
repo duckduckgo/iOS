@@ -69,11 +69,22 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         refreshState()
     }
     
+    // Executed when the activate subscription is dismissed
+    func dismissEmailView() {
+        // If we've got a subscription activated
+        if !state.isAddingDevice && accountManager.email != nil {
+            state.shouldDismissView = true
+        } else {
+            refreshState()
+        }
+    }
+    
     func refreshState() {
         state.subscriptionEmail = accountManager.email
         if accountManager.isUserAuthenticated {
             state.isAddingDevice = true
         }
+        state.shouldNavigateToActivationFlow = false
     }
     
     private func setupTransactionObserver() async {
@@ -124,7 +135,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
                 try await subFeature.restoreAccountFromAppStorePurchase()
                 DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreSuccess)
                 state.activationResult = .activated
-                navigateToSubscriptionFlow()
+                showSubscriptionFlow(true)
             } catch let error {
                 if let specificError = error as? SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError {
                     handleRestoreError(error: specificError)
@@ -134,13 +145,13 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     }
     
     @MainActor
-    func navigateToActivationFlow() {
-        self.state.shouldNavigateToActivationFlow = true
+    func showActivationFlow(_ visible: Bool) {
+        self.state.shouldNavigateToActivationFlow = visible
     }
     
     @MainActor
-    func navigateToSubscriptionFlow() {
-        self.state.shouldNavigateToSubscriptionFlow = true
+    func showSubscriptionFlow(_ visible: Bool) {
+        self.state.shouldNavigateToSubscriptionFlow = visible
     }
     
     @MainActor

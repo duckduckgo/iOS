@@ -27,10 +27,9 @@ struct SubscriptionEmailView: View {
         
     @StateObject var viewModel = SubscriptionEmailViewModel()
     @Environment(\.dismiss) var dismiss
-    @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
-    @State private var isActive: Bool = false
-    @State var isAddingDevice = false
+    
     @State var shouldDisplayInactiveError = false
+    @State var shouldDisplayNavigationError = false
     
     enum Constants {
         static let navButtonPadding: CGFloat = 20.0
@@ -38,52 +37,65 @@ struct SubscriptionEmailView: View {
     }
         
     var body: some View {
-        NavigationView {
-            baseView
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarLeading) {
-                    backButton
+        baseView
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarLeading) {
+                browserBackButton
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(UserText.subscriptionCloseButton) { viewModel.dismissView() }
+            }
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationViewStyle(.stack)
+        .navigationBarBackButtonHidden(true)
+        .tint(Color.init(designSystemColor: .textPrimary))
+        .accentColor(Color.init(designSystemColor: .textPrimary))
+        
+        .alert(isPresented: $shouldDisplayInactiveError) {
+            Alert(
+                title: Text(UserText.subscriptionRestoreEmailInactiveTitle),
+                message: Text(UserText.subscriptionRestoreEmailInactiveMessage),
+                dismissButton: .default(Text(UserText.actionOK)) {
+                    viewModel.dismissView()
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(UserText.subscriptionCloseButton) { dismiss() }
-                }
+            )
+        }
+        
+        .alert(isPresented: $shouldDisplayNavigationError) {
+            Alert(
+                title: Text(UserText.subscriptionBackendErrorTitle),
+                message: Text(UserText.subscriptionBackendErrorMessage),
+                dismissButton: .cancel(Text(UserText.subscriptionBackendErrorButton)) {
+                    viewModel.dismissView()
+                })
+        }
+        
+        .onAppear {
+            viewModel.onAppear()
+        }
+                
+        .onChange(of: viewModel.state.shouldDisplayInactiveError) { value in
+            shouldDisplayInactiveError = value
+        }
+        
+        .onChange(of: viewModel.state.shouldDisplaynavigationError) { value in
+            shouldDisplayNavigationError = value
+        }
+        
+        .onChange(of: viewModel.state.shouldDismissView) { value in
+            if value {
+                dismiss()
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationViewStyle(.stack)
-            
-            .alert(isPresented: $shouldDisplayInactiveError) {
-                Alert(
-                    title: Text(UserText.subscriptionRestoreEmailInactiveTitle),
-                    message: Text(UserText.subscriptionRestoreEmailInactiveMessage),
-                    dismissButton: .default(Text(UserText.actionOK)) {
-                        dismiss()
-                    }
-                )
-            }
-            
-            .alert(isPresented: $viewModel.navigationError) {
-                Alert(
-                    title: Text(UserText.subscriptionBackendErrorTitle),
-                    message: Text(UserText.subscriptionBackendErrorMessage),
-                    dismissButton: .cancel(Text(UserText.subscriptionBackendErrorButton)) {
-                        dismiss()
-                    })
-            }
-            
-            .onAppear {
-                viewModel.onAppear()
-            }
-                    
-            .onChange(of: viewModel.shouldDisplayInactiveError) { _ in
-                shouldDisplayInactiveError = true
-            }
-            .navigationTitle(viewModel.viewTitle)
-            
-            .onAppear(perform: {
-                setUpAppearances()
-                viewModel.onAppear()
-            })
-        }.tint(Color(designSystemColor: .textPrimary))
+        }
+        
+        .navigationTitle(viewModel.viewTitle)
+        
+        .onAppear(perform: {
+            setUpAppearances()
+            viewModel.onAppear()
+        })
+        
     }
     
     private var baseView: some View {
@@ -96,14 +108,14 @@ struct SubscriptionEmailView: View {
     }
     
     @ViewBuilder
-    private var backButton: some View {
-        if viewModel.canNavigateBack {
+    private var browserBackButton: some View {
+        if viewModel.shouldDisplayBackButton() {
             Button(action: {
                 Task { await viewModel.navigateBack() }
             }, label: {
                 HStack(spacing: 0) {
                     Image(systemName: Constants.backButtonImage)
-                    Text(UserText.backButtonTitle)
+                    Text(UserText.backButtonTitle).foregroundColor(Color(designSystemColor: .textPrimary))
                 }
             })
         }

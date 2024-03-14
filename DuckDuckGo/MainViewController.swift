@@ -1393,7 +1393,7 @@ class MainViewController: UIViewController {
     @objc
     private func onNetworkProtectionAccountSignIn(_ notification: Notification) {
         tunnelDefaults.resetEntitlementMessaging()
-        print("[NetP Subscription] Reset expired entitlement messaging")
+        os_log("[NetP Subscription] Reset expired entitlement messaging", log: .networkProtection, type: .info)
     }
 #endif
 

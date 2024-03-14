@@ -81,11 +81,7 @@ class SettingsLegacyViewProvider: ObservableObject {
     var feedback: UIViewController { instantiate("Feedback", fromStoryboard: "Feedback") }
     var about: UIViewController { AboutViewController() }
     
-#if SUBSCRIPTION && ALPHA
-    @available(iOS, introduced: 15.0, deprecated, message: "[NetP Subscription] To be removed post-Privacy Pro launch")
-#else
     @available(iOS 15, *)
-#endif
     var netPWaitlist: UIViewController { VPNWaitlistViewController(nibName: nil, bundle: nil) }
     
     @available(iOS 15, *)

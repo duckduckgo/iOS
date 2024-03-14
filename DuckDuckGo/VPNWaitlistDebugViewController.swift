@@ -24,9 +24,6 @@ import Core
 import BackgroundTasks
 import Waitlist
 
-#if SUBSCRIPTION && ALPHA
-@available(*, deprecated, message: "[NetP Subscription] To be removed post-Privacy Pro launch")
-#endif
 final class VPNWaitlistDebugViewController: UITableViewController {
 
     enum Constants {

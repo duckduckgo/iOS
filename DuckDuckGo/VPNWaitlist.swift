@@ -26,9 +26,6 @@ import Core
 import Waitlist
 import NetworkProtection
 
-#if SUBSCRIPTION && ALPHA
-@available(*, deprecated, message: "[NetP Subscription] To be removed post-Privacy Pro launch")
-#endif
 final class VPNWaitlist: Waitlist {
 
     enum AccessType {

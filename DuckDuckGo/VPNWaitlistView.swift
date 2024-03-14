@@ -24,11 +24,7 @@ import Core
 import Waitlist
 import DesignResourcesKit
 
-#if SUBSCRIPTION && ALPHA
-@available(iOS, introduced: 15.0, deprecated, message: "[NetP Subscription] To be removed post-Privacy Pro launch")
-#else
 @available(iOS 15, *)
-#endif
 struct VPNWaitlistView: View {
 
     @EnvironmentObject var viewModel: WaitlistViewModel

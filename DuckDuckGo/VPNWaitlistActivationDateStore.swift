@@ -22,9 +22,6 @@
 import Foundation
 import Core
 
-#if SUBSCRIPTION && ALPHA
-@available(*, deprecated, message: "[NetP Subscription] To be removed post-Privacy Pro launch")
-#endif
 protocol VPNWaitlistActivationDateStore {
 
     func setActivationDateIfNecessary()
@@ -35,9 +32,6 @@ protocol VPNWaitlistActivationDateStore {
 
 }
 
-#if SUBSCRIPTION && ALPHA
-@available(*, deprecated, message: "[NetP Subscription] To be removed post-Privacy Pro launch")
-#endif
 struct DefaultVPNWaitlistActivationDateStore: VPNWaitlistActivationDateStore {
 
     private enum Constants {

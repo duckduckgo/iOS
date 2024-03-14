@@ -23,20 +23,19 @@ import Bookmarks
 import Suggestions
 import Persistence
 
-class CachedBookmarks {
+final class CachedBookmarks {
 
     let context: NSManagedObjectContext
     lazy var all: [BookmarkSuggestion] = {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "BookmarkEntity")
         fetchRequest.predicate = NSPredicate(
-            format: "%K = false AND %K == NO",
+            format: "%K = NO AND %K == NO",
             #keyPath(BookmarkEntity.isFolder),
             #keyPath(BookmarkEntity.isPendingDeletion)
         )
         fetchRequest.resultType = .dictionaryResultType
         fetchRequest.propertiesToFetch = [#keyPath(BookmarkEntity.title),
-                                          #keyPath(BookmarkEntity.url),
-                                          #keyPath(BookmarkEntity.objectID)]
+                                          #keyPath(BookmarkEntity.url)]
         fetchRequest.relationshipKeyPathsForPrefetching = [#keyPath(BookmarkEntity.favoriteFolders)]
         let result = try? self.context.fetch(fetchRequest) as? [[String: Any]]
 

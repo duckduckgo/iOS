@@ -196,9 +196,11 @@ class AutocompleteViewController: UIViewController {
         pendingRequest = true
 
         loader?.getSuggestions(query: query) { [weak self] result, error in
+            defer {
+                self?.pendingRequest = false
+            }
             guard error == nil else { return }
             self?.updateSuggestions(result?.all ?? [])
-            self?.pendingRequest = false
         }
     }
 

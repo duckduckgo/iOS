@@ -19,7 +19,6 @@
 
 import BrowserServicesKit
 import Foundation
-import Macros
 
 public extension URL {
 
@@ -49,7 +48,7 @@ public extension URL {
     static let exti = URL(string: "\(base)/exti/\(devMode)")!
     static let feedback = URL(string: "\(base)/feedback.js?type=app-feedback")!
 
-    static let appStore = #URL("https://apps.apple.com/app/duckduckgo-privacy-browser/id663592361")
+    static let appStore = URL(string: "https://apps.apple.com/app/duckduckgo-privacy-browser/id663592361")!
 
     static let mac = URL(string: "\(base)/mac")!
     static let windows = URL(string: "\(base)/windows")!

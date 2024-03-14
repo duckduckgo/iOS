@@ -81,7 +81,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     private func handleRestoreError(error: SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError) {
         switch error {
         case .failedToRestorePastPurchase:
-            activationResult = .notFound
+            activationResult = .error
         case .subscriptionExpired:
             activationResult = .expired
         case .subscriptionNotFound:

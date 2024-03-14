@@ -31,8 +31,9 @@ final class SubscriptionFlowViewModel: ObservableObject {
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     let purchaseManager: PurchaseManager
-    let viewTitle = UserText.settingsPProSection
     var webViewModel: AsyncHeadlessWebViewViewModel
+    
+    let viewTitle = UserText.settingsPProSection
     var purchaseURL = URL.subscriptionPurchase
     var selectedFeature: SettingsViewModel.SettingsSection?
     
@@ -72,14 +73,10 @@ final class SubscriptionFlowViewModel: ObservableObject {
         var transactionError: SubscriptionPurchaseError?
     }
 
-    // View State
+    // Read only View State - Should only be modified from the VM
     @Published private(set) var state = State()
 
-    private static let allowedDomains = [
-        "duckduckgo.com",
-        "microsoftonline.com",
-        "duosecurity.com",
-    ]
+    private static let allowedDomains = [ "duckduckgo.com" ]
     
     private var webViewSettings =  AsyncHeadlessWebViewSettings(bounces: false,
                                                                 allowedDomains: allowedDomains,
@@ -253,9 +250,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
         
     @MainActor
-    private func disableGoBack() {
-        canGoBackCancellable?.cancel()
-        state.canNavigateBack = false
+    private func backButtonEnabled(_ enabled: Bool) {
+        state.canNavigateBack = enabled
     }
     
     private func urlRemovingQueryParams(_ url: URL) -> URL? {
@@ -275,6 +271,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
         subFeature.selectedFeature = nil
         selectedFeature = nil
         subFeature.cleanup()
+        state.shouldDismissView = true
     }
     
     deinit {
@@ -287,8 +284,9 @@ final class SubscriptionFlowViewModel: ObservableObject {
         Task {
             do {
                 try await subFeature.restoreAccountFromAppStorePurchase()
-                disableGoBack()
+                backButtonEnabled(false)
                 await webViewModel.navigationCoordinator.reload()
+                backButtonEnabled(true)
             } catch let error {
                 if let specificError = error as? SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError {
                     handleTransactionError(error: specificError)

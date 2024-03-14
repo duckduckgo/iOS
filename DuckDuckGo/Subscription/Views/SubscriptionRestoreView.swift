@@ -27,41 +27,43 @@ import Core
 struct SubscriptionRestoreView: View {
     
     @Environment(\.dismiss) var dismiss
-    @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
     @StateObject var viewModel = SubscriptionRestoreViewModel()
-    @State private var expandedItemId: Int = 0
+    
     @State private var isAlertVisible = false
     @State private var isActive: Bool = false
     @State private var shouldNavigateToSubscriptionFlow: Bool = false
+    @State private var shouldDisplayEmailActivationFlow: Bool = false
     var onDismissStack: (() -> Void)?
     
     private enum Constants {
         static let heroImage = "ManageSubscriptionHero"
         static let appleIDIcon = "Platform-Apple-16"
         static let emailIcon = "Email-16"
-        static let headerLineSpacing = 10.0
-        static let viewStackSpacing = 20.0
-        static let footerLineSpacing = 7.0
         static let openIndicator = "chevron.up"
         static let closedIndicator = "chevron.down"
+        
+        static let viewPadding = EdgeInsets(top: 10, leading: 30, bottom: 0, trailing: 30)
+        static let sectionSpacing: CGFloat = 20
+        static let headerLineSpacing = 10.0
+        static let footerLineSpacing = 7.0
+        
         static let cornerRadius = 12.0
+        static let boxPadding: CGFloat = 25
+        static let borderWidth: CGFloat = 1.0
+        static let boxLineSpacing: CGFloat = 18
+        
         static let buttonCornerRadius = 8.0
         static let buttonInsets = EdgeInsets(top: 10.0, leading: 16.0, bottom: 10.0, trailing: 16.0)
-        static let cellLineSpacing = 12.0
-        static let cellPadding = 20.0
-        static let headerPadding = EdgeInsets(top: 16.0, leading: 30.0, bottom: 0, trailing: 30.0)
-        static let viewPadding: CGFloat = 18.0
-        static let listPadding = EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30)
-        static let borderWidth: CGFloat = 1.0
+        static let baseInsets = EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30)
+        
     }
     
     var body: some View {
         NavigationView {
             ZStack {
-                
-                VStack(spacing: Constants.viewStackSpacing) {
+                VStack(spacing: Constants.sectionSpacing) {
                     headerView
-                    optionsView
+                    emailView
                     footerView
                     Spacer()
                     
@@ -70,23 +72,28 @@ struct SubscriptionRestoreView: View {
                         EmptyView()
                     }.isDetailLink(false)
                     
-                }.background(Color(designSystemColor: .background))
+                }
+                .padding(Constants.viewPadding)
+                .background(Color(designSystemColor: .background))
                 
-                .navigationTitle(viewModel.isAddingDevice ? UserText.subscriptionAddDeviceTitle : UserText.subscriptionActivate)
-                .navigationBarBackButtonHidden(viewModel.transactionStatus != .idle)
+                
+                .navigationTitle(viewModel.state.isAddingDevice ? UserText.subscriptionAddDeviceTitle : UserText.subscriptionActivate)
+                .navigationBarBackButtonHidden(viewModel.state.transactionStatus != .idle)
                 .navigationBarTitleDisplayMode(.inline)
                 .applyInsetGroupedListStyle()
-            
+                .navigationBarItems(trailing: Button(UserText.subscriptionCloseButton) { })
+                .tint(Color(designSystemColor: .icons))
+                
                 .alert(isPresented: $isAlertVisible) { getAlert() }
             
-                .onChange(of: viewModel.activationResult) { result in
+                .onChange(of: viewModel.state.activationResult) { result in
                     if result != .unknown {
                         isAlertVisible = true
                     }
                 }
             
-                .sheet(isPresented: $isActive) {
-                    SubscriptionEmailView(isAddingDevice: viewModel.isAddingDevice)
+                .sheet(isPresented: $shouldDisplayEmailActivationFlow) {
+                    SubscriptionEmailView(isAddingDevice: viewModel.state.isAddingDevice)
                 }
             
                 .onAppear {
@@ -94,7 +101,7 @@ struct SubscriptionRestoreView: View {
                     setUpAppearances()
                 }
                 
-                if viewModel.transactionStatus != .idle {
+                if viewModel.state.transactionStatus != .idle {
                     PurchaseInProgressView(status: getTransactionStatus())
                 }
             }
@@ -103,30 +110,28 @@ struct SubscriptionRestoreView: View {
     }
     
     // MARK: -
-    private var listItems: [ListItem] {
-        [
-            .init(id: 0,
-                  content: getCellTitle(icon: Constants.emailIcon,
-                                        text: UserText.subscriptionActivateEmail),
-                  expandedContent: getEmailCellContent(buttonAction: { isActive = true }))
-        ]
-    }
     
-    private func getCellTitle(icon: String, text: String) -> AnyView {
-        AnyView(
+    private var emailView: some View {
+        emailCellContent
+        .background(Color(designSystemColor: .panel))
+        .padding(Constants.boxPadding)
+        .overlay(
+            RoundedRectangle(cornerRadius: Constants.cornerRadius)
+                .stroke(Color(designSystemColor: .lines), lineWidth: Constants.borderWidth)
+        )
+    }
+   
+    private var emailCellContent: some View {
+        VStack(alignment: .leading, spacing: Constants.boxLineSpacing) {
             HStack {
-                Image(icon)
-                Text(text)
+                Image(Constants.emailIcon)
+                Text(UserText.subscriptionActivateEmail)
                     .daxSubheadSemibold()
                     .foregroundColor(Color(designSystemColor: .textPrimary))
             }
-        )
-    }
-    
-    private func getEmailCellContent(buttonAction: @escaping () -> Void) -> AnyView {
-        AnyView(
+            
             VStack(alignment: .leading) {
-                if !viewModel.isAddingDevice {
+                if !viewModel.state.isAddingDevice {
                     Text(UserText.subscriptionActivateEmailDescription)
                         .daxSubheadRegular()
                         .foregroundColor(Color(designSystemColor: .textSecondary))
@@ -134,19 +139,19 @@ struct SubscriptionRestoreView: View {
                                   action: {
                         DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailStart)
                         DailyPixel.fire(pixel: .privacyProWelcomeAddDevice)
-                        buttonAction()
+                        // buttonAction()
                     })
-                } else if viewModel.subscriptionEmail == nil {
+                } else if viewModel.state.subscriptionEmail == nil {
                     Text(UserText.subscriptionAddDeviceEmailDescription)
                         .daxSubheadRegular()
                         .foregroundColor(Color(designSystemColor: .textSecondary))
                     getCellButton(buttonText: UserText.subscriptionRestoreAddEmailButton,
                                   action: {
                         Pixel.fire(pixel: .privacyProAddDeviceEnterEmail)
-                        buttonAction()
+                        // buttonAction()
                     })
                 } else {
-                    Text(viewModel.subscriptionEmail ?? "").daxSubheadSemibold()
+                    Text(viewModel.state.subscriptionEmail ?? "").daxSubheadSemibold()
                     Text(UserText.subscriptionManageEmailDescription)
                         .daxSubheadRegular()
                         .foregroundColor(Color(designSystemColor: .textSecondary))
@@ -154,11 +159,13 @@ struct SubscriptionRestoreView: View {
                         getCellButton(buttonText: UserText.subscriptionManageEmailButton,
                                       action: {
                             Pixel.fire(pixel: .privacyProSubscriptionManagementEmail)
-                            buttonAction()
+                            // buttonAction()
                         })
                     }
                 }
-            })
+            }
+            
+        }
     }
     
     private func getCellButton(buttonText: String, action: @escaping () -> Void) -> AnyView {
@@ -175,12 +182,12 @@ struct SubscriptionRestoreView: View {
             })
             .background(Color(designSystemColor: .accent))
             .cornerRadius(Constants.buttonCornerRadius)
-            .padding(.top, Constants.cellLineSpacing)
+            
         )
     }
                 
     private func getTransactionStatus() -> String {
-        switch viewModel.transactionStatus {
+        switch viewModel.state.transactionStatus {
         case .polling:
             return UserText.subscriptionCompletingPurchaseTitle
         case .purchasing:
@@ -194,22 +201,22 @@ struct SubscriptionRestoreView: View {
     
     private var headerView: some View {
         VStack(spacing: Constants.headerLineSpacing) {
-            Image(Constants.heroImage).padding(.bottom, Constants.cellLineSpacing)
-            Text(viewModel.isAddingDevice ? UserText.subscriptionAddDeviceHeaderTitle : UserText.subscriptionActivateTitle)
+            Image(Constants.heroImage)
+            Text(viewModel.state.isAddingDevice ? UserText.subscriptionAddDeviceHeaderTitle : UserText.subscriptionActivateTitle)
                 .daxHeadline()
                 .multilineTextAlignment(.center)
                 .foregroundColor(Color(designSystemColor: .textPrimary))
-            Text(viewModel.isAddingDevice ? UserText.subscriptionAddDeviceDescription : UserText.subscriptionActivateHeaderDescription)
+            Text(viewModel.state.isAddingDevice ? UserText.subscriptionAddDeviceDescription : UserText.subscriptionActivateHeaderDescription)
                 .daxFootnoteRegular()
                 .foregroundColor(Color(designSystemColor: .textSecondary))
                 .multilineTextAlignment(.center)
         }
-        .padding(Constants.headerPadding)
+        
     }
     
     @ViewBuilder
     private var footerView: some View {
-        if !viewModel.isAddingDevice {
+        if !viewModel.state.isAddingDevice {
             VStack(alignment: .leading, spacing: Constants.footerLineSpacing) {
                 Text(UserText.subscriptionActivateDescription)
                     .daxFootnoteRegular()
@@ -223,43 +230,11 @@ struct SubscriptionRestoreView: View {
                         .foregroundColor(Color(designSystemColor: .accent))
                 })
             }
-            .padding(Constants.listPadding)
         }
     }
-    
-    private var optionsView: some View {
-        VStack {
-            ForEach(Array(zip(listItems.indices, listItems)), id: \.1.id) { _, item in
-                VStack(alignment: .leading, spacing: Constants.cellLineSpacing) {
-                    HStack {
-                        item.content
-                        Spacer()
-                        if listItems.count > 1 {
-                            Image(systemName: expandedItemId == item.id ? Constants.openIndicator : Constants.closedIndicator)
-                                .foregroundColor(Color(designSystemColor: .textPrimary))
-                        }
-                    }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        expandedItemId = expandedItemId == item.id ? 0 : item.id
-                    }
-                    if expandedItemId == item.id {
-                        item.expandedContent
-                    }
-                }
-                .padding(Constants.cellPadding)
-                .background(Color(designSystemColor: .panel))
-                .overlay(
-                    RoundedRectangle(cornerRadius: Constants.cornerRadius)
-                        .stroke(Color(designSystemColor: .lines), lineWidth: Constants.borderWidth)
-                )
-                .padding(Constants.listPadding)
-            }
-        }
-    }
-        
+       
     private func getAlert() -> Alert {
-        switch viewModel.activationResult {
+        switch viewModel.state.activationResult {
         case .activated:
             return Alert(title: Text(UserText.subscriptionRestoreSuccessfulTitle),
                          message: Text(UserText.subscriptionRestoreSuccessfulMessage),
@@ -303,7 +278,7 @@ struct SubscriptionRestoreView: View {
         navAppearance.shadowImage = UIImage()
         navAppearance.tintColor = UIColor(designSystemColor: .textPrimary)
     }
-    
+      
     struct ListItem {
         let id: Int
         let content: AnyView
@@ -316,16 +291,7 @@ struct SubscriptionRestoreView: View {
 struct SubscriptionRestoreView_Previews: PreviewProvider {
     static var previews: some View {
         SubscriptionRestoreView()
-            .previewDevice("iPhone 12")
     }
 }
-
-// Commented out because CI fails if a SwiftUI preview is enabled https://app.asana.com/0/414709148257752/1206774081310425/f
-// @available(iOS 15.0, *)
-// struct SubscriptionRestoreView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SubscriptionRestoreView()
-//    }
-// }
 
 #endif

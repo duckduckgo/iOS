@@ -76,7 +76,9 @@ struct SubscriptionFlowView: View {
 
     @ViewBuilder
     private var dismissButton: some View {
-        Button(action: { viewModel.finalizeSubscriptionFlow() }, label: { Text(UserText.subscriptionCloseButton) })
+        Button(action: {
+            viewModel.finalizeSubscriptionFlow()
+        }, label: { Text(UserText.subscriptionCloseButton) })
         .padding(Constants.navButtonPadding)
         .contentShape(Rectangle())
         .tint(Color(designSystemColor: .textPrimary))
@@ -209,7 +211,6 @@ struct SubscriptionFlowView: View {
                 message: Text(UserText.subscriptionBackendErrorMessage),
                 dismissButton: .cancel(Text(UserText.subscriptionBackendErrorButton)) {
                     viewModel.finalizeSubscriptionFlow()
-                    dismiss()
                 }
             )
         }

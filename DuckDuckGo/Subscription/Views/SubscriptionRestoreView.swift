@@ -33,8 +33,6 @@ struct SubscriptionRestoreView: View {
     @State private var shouldNavigateToSubscriptionFlow = false
     @State private var shouldNavigateToActivationFlow = false
     
-    var onDismissStack: (() -> Void)?
-    
     private enum Constants {
         static let heroImage = "ManageSubscriptionHero"
         static let appleIDIcon = "Platform-Apple-16"
@@ -78,19 +76,7 @@ struct SubscriptionRestoreView: View {
                         emailView
                         footerView
                         Spacer()
-                        
-                        // Hidden link to display Subscription Welcome Page
-                        NavigationLink(destination: SubscriptionFlowView(),
-                                       isActive: $shouldNavigateToSubscriptionFlow) {
-                            EmptyView()
-                        }.isDetailLink(false)
-                        
-                        // Hidden link to display Email Activation View
-                        NavigationLink(destination: SubscriptionEmailView(),
-                                       isActive: $shouldNavigateToActivationFlow) {
-                              EmptyView()
-                        }.isDetailLink(false)
-                        
+                        navigationLinks
                     }.frame(maxWidth: Constants.boxMaxWidth)
                 }
                 .frame(maxWidth: Constants.maxWidth, alignment: .center)
@@ -102,7 +88,7 @@ struct SubscriptionRestoreView: View {
                 .navigationBarBackButtonHidden(viewModel.state.transactionStatus != .idle)
                 .navigationBarTitleDisplayMode(.inline)
                 .applyInsetGroupedListStyle()
-                .navigationBarItems(trailing: Button(UserText.subscriptionCloseButton) { })
+                .navigationBarItems(trailing: Button(UserText.subscriptionCloseButton) { viewModel.dismissView() })
                 .tint(Color.init(designSystemColor: .textPrimary))
                 .accentColor(Color.init(designSystemColor: .textPrimary))
             }
@@ -145,6 +131,22 @@ struct SubscriptionRestoreView: View {
     }
     
     // MARK: -
+    
+    @ViewBuilder
+    private var navigationLinks: some View {
+        
+        // Hidden link to display Subscription Welcome Page
+        NavigationLink(destination: SubscriptionFlowView(),
+                       isActive: $shouldNavigateToSubscriptionFlow) {
+            EmptyView()
+        }.isDetailLink(false)
+        
+        // Hidden link to display Email Activation View
+        NavigationLink(destination: SubscriptionEmailView(onDismissStack: { viewModel.dismissView() }),
+                       isActive: $shouldNavigateToActivationFlow) {
+              EmptyView()
+        }.isDetailLink(false)
+    }
     
     private var emailView: some View {
         emailCellContent
@@ -297,7 +299,6 @@ struct SubscriptionRestoreView: View {
                 title: Text(UserText.subscriptionBackendErrorTitle),
                 message: Text(UserText.subscriptionBackendErrorMessage),
                 dismissButton: .cancel(Text(UserText.subscriptionBackendErrorButton)) {
-                    onDismissStack?()
                     viewModel.dismissView()
                 }
             )

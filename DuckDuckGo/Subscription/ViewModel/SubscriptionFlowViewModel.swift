@@ -44,23 +44,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
         static let navigationBarHideThreshold = 80.0
     }
     
-    enum FeatureName {
-        static let netP = "vpn"
-        static let itr = "identity-theft-restoration"
-        static let dbp = "personal-information-removal"
-    }
-    
-    enum SubscriptionPurchaseError: Error {
-        case purchaseFailed,
-             missingEntitlements,
-             failedToGetSubscriptionOptions,
-             failedToSetSubscription,
-             failedToRestorePastPurchase,
-             subscriptionExpired,
-             hasActiveSubscription,
-             cancelledByUser,
-             generalError
-    }
     
     struct State {
         var hasActiveSubscription = false

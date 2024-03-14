@@ -85,9 +85,17 @@ struct SubscriptionSettingsView: View {
 
             Section(header: Text(UserText.subscriptionHelpAndSupport),
                     footer: Text(UserText.subscriptionFAQFooter)) {
+                
                 NavigationLink(destination: Text(UserText.subscriptionFAQ)) {
                     SettingsCustomCell(content: {
                         Text(UserText.subscriptionFAQ)
+                            .daxBodyRegular()
+                    })
+                }
+                
+                NavigationLink(destination: SubscriptionFlowView()) {
+                    SettingsCustomCell(content: {
+                        Text("Test subscriptionf flow view")
                             .daxBodyRegular()
                     })
                 }

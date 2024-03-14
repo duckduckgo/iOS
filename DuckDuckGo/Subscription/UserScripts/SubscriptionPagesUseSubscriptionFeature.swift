@@ -66,10 +66,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         static let month = "monthly"
         static let year = "yearly"
     }
-        
-    struct FeatureSelection: Codable {
-        let feature: String
-    }
     
     enum UseSubscriptionError: Error {
         case purchaseFailed,
@@ -91,8 +87,13 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     @Published private(set) var transactionStatus: SubscriptionTransactionStatus = .idle
     @Published private(set) var transactionError: UseSubscriptionError?
     
+    // Subscription Activation Actions
     var onSetSubscription: (() -> Void)?
-    var onSelectFeature: ((FeatureSelection) -> Void)?
+    var onSelectFeature: ((SubscriptionFeatureSelection) -> Void)?
+    
+    struct FeatureSelection: Codable {
+        let feature: String
+    }
     
     weak var broker: UserScriptMessageBroker?
 
@@ -281,9 +282,15 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func featureSelected(params: Any, original: WKScriptMessage) async -> Encodable? {
         guard let featureSelection: FeatureSelection = DecodableHelper.decode(from: params) else {
             assertionFailure("SubscriptionPagesUserScript: expected JSON representation of FeatureSelection")
+            return nil
+        }
+
+        guard let featureSelection = SubscriptionFeatureSelection(featureName: featureSelection.feature) else {
+            assertionFailure("SubscriptionPagesUserScript: unexpected feature name value")
             setTransactionError(.generalError)
             return nil
         }
+
         onSelectFeature?(featureSelection)
         
         return nil

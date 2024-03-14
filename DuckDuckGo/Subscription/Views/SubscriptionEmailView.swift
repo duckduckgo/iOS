@@ -30,6 +30,7 @@ struct SubscriptionEmailView: View {
     
     @State var shouldDisplayInactiveError = false
     @State var shouldDisplayNavigationError = false
+    var onDismissStack: (() -> Void)?
     
     enum Constants {
         static let navButtonPadding: CGFloat = 20.0
@@ -43,7 +44,7 @@ struct SubscriptionEmailView: View {
                 browserBackButton
             }
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(UserText.subscriptionCloseButton) { viewModel.dismissView() }
+                Button(UserText.subscriptionCloseButton) { onDismissStack?() }
             }
         }
         .navigationBarTitleDisplayMode(.inline)

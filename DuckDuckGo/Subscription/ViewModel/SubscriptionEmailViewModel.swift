@@ -36,6 +36,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     var emailURL = URL.activateSubscriptionViaEmail
     var viewTitle = UserText.subscriptionActivateEmailTitle
     var webViewModel: AsyncHeadlessWebViewViewModel
+    var selectedFeature: SettingsViewModel.SettingsSection?
     
     struct State {
         var subscriptionEmail: String?
@@ -118,6 +119,20 @@ final class SubscriptionEmailViewModel: ObservableObject {
             }
         }
         
+        subFeature.onSelectFeature = { feature in
+            switch feature {
+            case SubscriptionFeatureSelection.netP:
+                UniquePixel.fire(pixel: .privacyProWelcomeVPN)
+                self.selectedFeature = .netP
+            case SubscriptionFeatureSelection.itr:
+                UniquePixel.fire(pixel: .privacyProWelcomePersonalInformationRemoval)
+                self.selectedFeature = .itr
+            case SubscriptionFeatureSelection.dbp:
+                UniquePixel.fire(pixel: .privacyProWelcomeIdentityRestoration)
+                self.selectedFeature = .dbp
+            }
+        }
+          
         subFeature.$transactionError
             .receive(on: DispatchQueue.main)
             .removeDuplicates()
@@ -147,15 +162,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
                 
             }
             .store(in: &cancellables)
-        
-        webViewModel.$url
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] url in
-                guard let strongSelf = self else { return }
-                print(url)
-                
-            }
-            .store(in: &cancellables)
     }
     
     func shouldDisplayBackButton() -> Bool {
@@ -167,6 +173,8 @@ final class SubscriptionEmailViewModel: ObservableObject {
         }
         return true
     }
+    
+    // MARK: -
     
     private func handleTransactionError(error: SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError) {
         switch error {
@@ -188,6 +196,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
     
     deinit {
+        selectedFeature = nil
         cancellables.removeAll()
        
     }

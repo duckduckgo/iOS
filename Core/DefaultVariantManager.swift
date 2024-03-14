@@ -51,7 +51,8 @@ public struct VariantIOS: Variant {
     }
 
     /// This variant is used for returning users to separate them from really new users.
-    static let returningUser = VariantIOS(name: "ru", weight: doNotAllocate, isIncluded: When.always, features: [])
+    #warning("Remove feature from returning history before merging")
+    static let returningUser = VariantIOS(name: "ru", weight: doNotAllocate, isIncluded: When.always, features: [.history])
 
     static let doNotAllocate = 0
 

@@ -100,7 +100,7 @@ struct SettingsSubscriptionView: View {
             .sheet(isPresented: $isShowingsubScriptionFlow,
                    onDismiss: { Task { viewModel.onAppear() } },
                    content: {
-                        SubscriptionFlowView().interactiveDismissDisabled()
+                        SubscriptionFlowView(viewModel: subscriptionFlowViewModel).interactiveDismissDisabled()
                 })
             
             SettingsCustomCell(content: { iHaveASubscriptionView },
@@ -113,7 +113,7 @@ struct SettingsSubscriptionView: View {
             .sheet(isPresented: $isShowingRestoreFlow,
                    onDismiss: { Task { viewModel.onAppear() } },
                    content: {
-                        SubscriptionRestoreView().interactiveDismissDisabled()
+                        SubscriptionRestoreView(viewModel: subscriptionRestoreViewModel).interactiveDismissDisabled()
                 })
             
         }
@@ -226,13 +226,15 @@ struct SettingsSubscriptionView: View {
                     isShowingsubScriptionFlow = true
                 }
             })
-
+            
+            // Selected Feature handler for Subscription Flow
             .onReceive(subscriptionFlowViewModel.$selectedFeature) { value in
                 guard let value else { return }
                 viewModel.onAppearNavigationTarget = value
             }
             
-            .onReceive(subscriptionRestoreViewModel.$selectedFeature) { value in
+            // Selected Feature handler for Subscription Restore
+            .onReceive(subscriptionRestoreViewModel.emailViewModel.$selectedFeature) { value in
                 guard let value else { return }
                 viewModel.onAppearNavigationTarget = value
             }

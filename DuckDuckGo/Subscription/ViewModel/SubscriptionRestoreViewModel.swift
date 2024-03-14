@@ -52,11 +52,14 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         }
     }
     
-    // Publish the currently selected feature
+    // Publish the currently selected feature    
     @Published var selectedFeature: SettingsViewModel.SettingsSection?
     
     // Read only View State - Should only be modified from the VM
     @Published private(set) var state = State()
+    
+    // Email View Model
+    var emailViewModel = SubscriptionEmailViewModel()
         
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),

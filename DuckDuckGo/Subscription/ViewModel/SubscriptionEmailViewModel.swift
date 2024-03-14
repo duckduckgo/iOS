@@ -36,7 +36,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
     var emailURL = URL.activateSubscriptionViaEmail
     var viewTitle = UserText.subscriptionActivateEmailTitle
     var webViewModel: AsyncHeadlessWebViewViewModel
-    var selectedFeature: SettingsViewModel.SettingsSection?
     
     struct State {
         var subscriptionEmail: String?
@@ -51,6 +50,9 @@ final class SubscriptionEmailViewModel: ObservableObject {
     
     // Read only View State - Should only be modified from the VM
     @Published private(set) var state = State()
+    
+    // Publish the currently selected feature
+    @Published var selectedFeature: SettingsViewModel.SettingsSection?
     
     private static let allowedDomains = [ "duckduckgo.com" ]
     
@@ -115,7 +117,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
     
     private func setupObservers() {
-                
+        // Feature Callback
         subFeature.onSetSubscription = {
             UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
             DispatchQueue.main.async {
@@ -127,19 +129,27 @@ final class SubscriptionEmailViewModel: ObservableObject {
             self.dismissView()
         }
         
-        subFeature.onSelectFeature = { feature in
-            switch feature {
-            case SubscriptionFeatureSelection.netP:
-                UniquePixel.fire(pixel: .privacyProWelcomeVPN)
-                self.selectedFeature = .netP
-            case SubscriptionFeatureSelection.itr:
-                UniquePixel.fire(pixel: .privacyProWelcomePersonalInformationRemoval)
-                self.selectedFeature = .itr
-            case SubscriptionFeatureSelection.dbp:
-                UniquePixel.fire(pixel: .privacyProWelcomeIdentityRestoration)
-                self.selectedFeature = .dbp
+        // Feature observers
+        subFeature.$selectedFeature
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                if value != nil {
+                    switch value {
+                    case .netP:
+                        UniquePixel.fire(pixel: .privacyProWelcomeVPN)
+                        self?.selectedFeature = .netP
+                    case .itr:
+                        UniquePixel.fire(pixel: .privacyProWelcomePersonalInformationRemoval)
+                        self?.selectedFeature = .itr
+                    case .dbp:
+                        UniquePixel.fire(pixel: .privacyProWelcomeIdentityRestoration)
+                        self?.selectedFeature = .dbp
+                    default:
+                        return
+                    }
+                }
             }
-        }
+            .store(in: &cancellables)
           
         subFeature.$transactionError
             .receive(on: DispatchQueue.main)
@@ -152,6 +162,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
             }
         .store(in: &cancellables)
         
+        // WebViewModel Observers
         webViewModel.$canGoBack
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -206,7 +217,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
     
     deinit {
-        selectedFeature = nil
         cancellables.removeAll()
        
     }

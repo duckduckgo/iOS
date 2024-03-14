@@ -161,7 +161,8 @@ struct SubscriptionRestoreView: View {
         }.isDetailLink(false)
         
         // Hidden link to display Email Activation View
-        NavigationLink(destination: SubscriptionEmailView(isModal: isModal,
+        NavigationLink(destination: SubscriptionEmailView(viewModel: viewModel.emailViewModel,
+                                                          isModal: isModal,
                                                           onDismissStack: { viewModel.dismissView() }),
                        isActive: $shouldNavigateToActivationFlow) {
               EmptyView()

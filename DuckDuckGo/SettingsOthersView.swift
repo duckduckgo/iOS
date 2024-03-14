@@ -1,5 +1,5 @@
 //
-//  SettingsMainSettingsView.swift
+//  SettingsOthersView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -20,39 +20,24 @@
 import SwiftUI
 import UIKit
 
-struct SettingsMainSettingsView: View {
+struct SettingsOthersView: View {
 
     @EnvironmentObject var viewModel: SettingsViewModel
 
     var body: some View {
-        Section(header: Text("Main Settings")) {
-            SettingsCellView(label: "General",
-                             image: Image("General"),
+        Section {
+            SettingsCellView(label: "About",
+                             image: Image("LogoIcon"),
                              action: { viewModel.presentLegacyView(.gpc) },
                              disclosureIndicator: true,
                              isButton: true)
-            SettingsCellView(label: "Sync & Backup",
-                             image: Image("Sync"),
+            SettingsCellView(label: "Share Feedback",
+                             image: Image("Feedback"),
                              action: { viewModel.presentLegacyView(.gpc) },
                              disclosureIndicator: true,
                              isButton: true)
-            SettingsCellView(label: "Appearance",
-                             image: Image("Appearance"),
-                             action: { viewModel.presentLegacyView(.gpc) },
-                             disclosureIndicator: true,
-                             isButton: true)
-            SettingsCellView(label: "Passwords",
-                             image: Image("Passwords"),
-                             action: { viewModel.presentLegacyView(.gpc) },
-                             disclosureIndicator: true,
-                             isButton: true)
-            SettingsCellView(label: "Accessibility",
-                             image: Image("Accessibility"),
-                             action: { viewModel.presentLegacyView(.gpc) },
-                             disclosureIndicator: true,
-                             isButton: true)
-            SettingsCellView(label: "Data Clearing",
-                             image: Image("DataClearing"),
+            SettingsCellView(label: "DuckDuckGo for Other Platforms",
+                             image: Image("OtherPlatforms"),
                              action: { viewModel.presentLegacyView(.gpc) },
                              disclosureIndicator: true,
                              isButton: true)

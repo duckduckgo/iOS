@@ -23,7 +23,7 @@ import UIKit
 struct SettingsNextStepsView: View {
 
     @EnvironmentObject var viewModel: SettingsViewModel
-    
+
     var body: some View {
         Section(header: Text("Next Steps")) {
             SettingsCellView(label: "Add App to Your Dock",
@@ -49,5 +49,5 @@ struct SettingsNextStepsView: View {
         }
 
     }
- 
+
 }

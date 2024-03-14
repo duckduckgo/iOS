@@ -105,6 +105,7 @@
 		1CB7B82123CEA1F800AA24EA /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82023CEA1F800AA24EA /* DateExtension.swift */; };
 		1CB7B82323CEA28300AA24EA /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */; };
 		1D200C972BA3157A00108701 /* SettingsNextStepsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D200C962BA3157A00108701 /* SettingsNextStepsView.swift */; };
+		1D200C992BA3176D00108701 /* SettingsOthersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D200C982BA3176D00108701 /* SettingsOthersView.swift */; };
 		1DDF40202BA049FA006850D9 /* SettingsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDF401F2BA049FA006850D9 /* SettingsRootView.swift */; };
 		1DDF40292BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDF40282BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift */; };
 		1DDF402B2BA05A65006850D9 /* Settings.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DDF402A2BA05A65006850D9 /* Settings.xcassets */; };
@@ -1237,6 +1238,7 @@
 		1CB7B82023CEA1F800AA24EA /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
 		1D200C962BA3157A00108701 /* SettingsNextStepsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsNextStepsView.swift; sourceTree = "<group>"; };
+		1D200C982BA3176D00108701 /* SettingsOthersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsOthersView.swift; sourceTree = "<group>"; };
 		1DDF401F2BA049FA006850D9 /* SettingsRootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRootView.swift; sourceTree = "<group>"; };
 		1DDF40282BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPrivacyProtectionsView.swift; sourceTree = "<group>"; };
 		1DDF402A2BA05A65006850D9 /* Settings.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Settings.xcassets; sourceTree = "<group>"; };
@@ -3161,6 +3163,7 @@
 				1DDF40282BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift */,
 				1DDF402C2BA09482006850D9 /* SettingsMainSettingsView.swift */,
 				1D200C962BA3157A00108701 /* SettingsNextStepsView.swift */,
+				1D200C982BA3176D00108701 /* SettingsOthersView.swift */,
 			);
 			name = Sections;
 			sourceTree = "<group>";
@@ -6605,6 +6608,7 @@
 				1E162605296840D80004127F /* Triangle.swift in Sources */,
 				B609D5522862EAFF0088CAC2 /* InlineWKDownloadDelegate.swift in Sources */,
 				B652DEFD287BE67400C12A9C /* UserScripts.swift in Sources */,
+				1D200C992BA3176D00108701 /* SettingsOthersView.swift in Sources */,
 				31DD208427395A5A008FB313 /* VoiceSearchHelper.swift in Sources */,
 				9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */,
 				F44D279E27F331BB0037F371 /* AutofillLoginPromptViewModel.swift in Sources */,

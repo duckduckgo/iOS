@@ -23,7 +23,7 @@ import UIKit
 struct SettingsPrivacyProtectionsView: View {
 
     @EnvironmentObject var viewModel: SettingsViewModel
-    
+
     var body: some View {
         Section(header: Text("Privacy Protections")) {
             SettingsCellView(label: "Default Browser",
@@ -59,5 +59,5 @@ struct SettingsPrivacyProtectionsView: View {
         }
 
     }
- 
+
 }

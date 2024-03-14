@@ -156,16 +156,16 @@ class AutocompleteViewController: UIViewController {
 
     private func firePixelForSelectedSuggestion(_ suggestion: Suggestion) {
         switch suggestion {
-        case .phrase(phrase: let phrase):
+        case .phrase:
             Pixel.fire(pixel: .autocompleteClickPhrase)
-        case .website(url: let url):
+        case .website:
             Pixel.fire(pixel: .autocompleteClickWebsite)
-        case .bookmark(title: let title, url: let url, isFavorite: let isFavorite, allowedInTopHits: let allowedInTopHits):
+        case .bookmark(_, _, isFavorite: let isFavorite, _):
             Pixel.fire(pixel: isFavorite ? .autocompleteClickFavorite : .autocompleteClickBookmark)
-        case .historyEntry(title: let title, url: let url, allowedInTopHits: let allowedInTopHits):
+        case .historyEntry:
             Pixel.fire(pixel: .autocompleteClickHistory)
         case .unknown(value: let value):
-            assertionFailure("Unknown suggestion")
+            assertionFailure("Unknown suggestion \(value)")
         }
     }
 

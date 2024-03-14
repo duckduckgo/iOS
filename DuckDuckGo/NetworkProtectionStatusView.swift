@@ -27,7 +27,6 @@ struct NetworkProtectionStatusView: View {
     @Environment(\.colorScheme) var colorScheme
 
     @StateObject public var statusModel: NetworkProtectionStatusViewModel
-    @State private var isFeedbackFormActive = false
 
     var body: some View {
         List {
@@ -196,38 +195,17 @@ struct NetworkProtectionStatusView: View {
     @ViewBuilder
     private func about() -> some View {
         Section {
-            NavigationLink("Frequently Asked Questions", destination: NetworkProtectionFAQView())
+            NavigationLink(UserText.netPVPNSettingsFAQ, destination: NetworkProtectionFAQView())
+                .daxBodyRegular()
+                .foregroundColor(.init(designSystemColor: .textPrimary))
+
+            NavigationLink(UserText.netPVPNSettingsShareFeedback, destination: VPNFeedbackFormCategoryView())
                 .daxBodyRegular()
                 .foregroundColor(.init(designSystemColor: .textPrimary))
         } header: {
             Text("About").foregroundColor(.init(designSystemColor: .textSecondary))
-        } footer: {
-            inviteOnlyFooter()
         }
         .listRowBackground(Color(designSystemColor: .surface))
-    }
-
-    @ViewBuilder
-    private func inviteOnlyFooter() -> some View {
-        Text("\(UserText.networkProtectionWaitlistAvailabilityDisclaimer) [\(UserText.netPStatusViewShareFeedback)](share-feedback)")
-            .foregroundColor(.init(designSystemColor: .textSecondary))
-            .accentColor(.init(designSystemColor: .accent))
-            .daxFootnoteRegular()
-            .padding(.top, 6)
-            .background(NavigationLink(isActive: $isFeedbackFormActive) {
-                VPNFeedbackFormCategoryView()
-            } label: {
-                EmptyView()
-            })
-            .environment(\.openURL, OpenURLAction { url in
-                switch url.absoluteString {
-                case "share-feedback":
-                    isFeedbackFormActive = true
-                    return .handled
-                default:
-                    return .discarded
-                }
-            })
     }
 
     @ViewBuilder

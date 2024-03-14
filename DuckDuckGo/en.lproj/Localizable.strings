@@ -1666,6 +1666,12 @@ https://duckduckgo.com/mac";
 /* Footer text for the Always on VPN setting item. */
 "network.protection.vpn.secure.dns.setting.footer" = "Our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.";
 
+/* Title for the FAQ row in the VPN status screen. */
+"network.protection.vpn.settings.faq" = "Frequently Asked Questions";
+
+/* Title for the feedback row in the VPN status screen. */
+"network.protection.vpn.settings.share-feedback" = "Share VPN Feedback";
+
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN Settings";
 

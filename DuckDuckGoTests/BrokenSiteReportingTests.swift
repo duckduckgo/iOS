@@ -82,6 +82,7 @@ final class BrokenSiteReportingTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
     }
     
+    //swiftlint:disable:next function_body_length
     private func runReferenceTests(onTestExecuted: XCTestExpectation) throws {
         
         guard let test = referenceTests.popLast() else {

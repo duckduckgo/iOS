@@ -24,6 +24,10 @@ import UIKit
 import Common
 import NetworkExtension
 
+#if SUBSCRIPTION
+import Subscription
+#endif
+
 private class DefaultTunnelSessionProvider: TunnelSessionProvider {
     func activeSession() async -> NETunnelProviderSession? {
         try? await ConnectionSessionUtilities.activeSession()
@@ -94,12 +98,22 @@ extension NetworkProtectionVPNSettingsViewModel {
 extension NetworkProtectionLocationListCompositeRepository {
     convenience init() {
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+#if SUBSCRIPTION
+        let shouldUseSubsToken = AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription) && AccountManager().accessToken != nil
+        self.init(
+            environment: settings.selectedEnvironment,
+            fetchToken: shouldUseSubsToken ? { AccountManager().accessToken } : NetworkProtectionKeychainTokenStore().fetchToken,
+            errorEvents: .networkProtectionAppDebugEvents,
+            isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
+        )
+#else
         self.init(
             environment: settings.selectedEnvironment,
             tokenStore: NetworkProtectionKeychainTokenStore(),
             errorEvents: .networkProtectionAppDebugEvents,
-            isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
+            isSubscriptionEnabled: false
         )
+#endif
     }
 }
 

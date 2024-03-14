@@ -75,14 +75,14 @@ struct SubscriptionRestoreView: View {
                 }
                 .padding(Constants.viewPadding)
                 .background(Color(designSystemColor: .background))
-                
+                .tint(Color(designSystemColor: .icons))
                 
                 .navigationTitle(viewModel.state.isAddingDevice ? UserText.subscriptionAddDeviceTitle : UserText.subscriptionActivate)
                 .navigationBarBackButtonHidden(viewModel.state.transactionStatus != .idle)
                 .navigationBarTitleDisplayMode(.inline)
                 .applyInsetGroupedListStyle()
                 .navigationBarItems(trailing: Button(UserText.subscriptionCloseButton) { })
-                .tint(Color(designSystemColor: .icons))
+
                 
                 .alert(isPresented: $isAlertVisible) { getAlert() }
             
@@ -223,7 +223,7 @@ struct SubscriptionRestoreView: View {
                     .foregroundColor(Color(designSystemColor: .textSecondary))
                 Button(action: {
                     shouldNavigateToSubscriptionFlow = true
-                    // viewModel.restoreAppstoreTransaction()
+                     viewModel.restoreAppstoreTransaction()
                 }, label: {
                     Text(UserText.subscriptionRestoreAppleID)
                         .daxFootnoteSemibold()

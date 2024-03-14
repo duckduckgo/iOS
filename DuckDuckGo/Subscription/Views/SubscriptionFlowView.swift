@@ -162,11 +162,6 @@ struct SubscriptionFlowView: View {
         
         .onAppear(perform: {
 
-            if isFirstOnAppear && !viewModel.state.activateSubscriptionOnLoad {
-                isFirstOnAppear = false
-                Pixel.fire(pixel: .privacyProOfferScreenImpression)
-            }
-
             setUpAppearances()
             Task { await viewModel.initializeViewData() }
                         

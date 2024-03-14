@@ -261,6 +261,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
     
     func initializeViewData() async {
+        Pixel.fire(pixel: .privacyProOfferScreenImpression, debounce: 2)
         await self.setupTransactionObserver()
         await self .setupWebViewObservers()
         webViewModel.navigationCoordinator.navigateTo(url: purchaseURL )
@@ -303,5 +304,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     func clearTransactionError() {
         state.transactionError = nil
     }
+       
 }
 #endif

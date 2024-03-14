@@ -1203,8 +1203,6 @@
 		0268FC122A449F04000EE6A2 /* OnboardingContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerView.swift; sourceTree = "<group>"; };
 		026DABA328242BC80089E0B5 /* MockUserAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserAgent.swift; sourceTree = "<group>"; };
 		026F08B729B7DC480079B9DF /* EmbeddedAppTPDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedAppTPDataTests.swift; sourceTree = "<group>"; };
-		027CB4102BA1F5F5005592A1 /* BrowserServicesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BrowserServicesKit; path = ../BrowserServicesKit; sourceTree = "<group>"; };
-		027CB4112BA1F630005592A1 /* content-scope-scripts */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "content-scope-scripts"; path = "../content-scope-scripts"; sourceTree = "<group>"; };
 		027F48732A4B5904001A1C6C /* AppTPAboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPAboutView.swift; sourceTree = "<group>"; };
 		027F48752A4B5FBE001A1C6C /* AppTPLinkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPLinkButton.swift; sourceTree = "<group>"; };
 		027F48772A4B663C001A1C6C /* AppTPFAQView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPFAQView.swift; sourceTree = "<group>"; };
@@ -3714,8 +3712,6 @@
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
-				027CB4112BA1F630005592A1 /* content-scope-scripts */,
-				027CB4102BA1F5F5005592A1 /* BrowserServicesKit */,
 				EE3B98EB2A963515002F63A0 /* WidgetsExtensionAlpha.entitlements */,
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				EEB8FDB92A990AEE00EBEDCF /* Configuration-Alpha.xcconfig */,
@@ -10023,8 +10019,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = exactVersion;
-				version = 122.2.1;
+				kind = revision;
+				revision = a8d76cd3f1352fd9a4f7125fbad3531dce11110b;
 			};
 		};
 		B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */ = {

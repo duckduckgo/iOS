@@ -190,7 +190,205 @@
           "version": "0.9.18"
         }
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "barebonesbrowser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/BareBonesBrowser.git",
+      "state" : {
+        "revision" : "31e5bfedc3c2ca005640c4bf2b6959d69b0e18b9",
+        "version" : "0.1.0"
+      }
+    },
+    {
+      "identity" : "bloom_cpp",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/bloom_cpp.git",
+      "state" : {
+        "revision" : "8076199456290b61b4544bf2f4caf296759906a0",
+        "version" : "3.0.0"
+      }
+    },
+    {
+      "identity" : "browserserviceskit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
+      "state" : {
+        "revision" : "1295a22823157c9b7d11793299cd58b189e87629",
+        "version" : "122.2.1"
+      }
+    },
+    {
+      "identity" : "cocoaasyncsocket",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/robbiehanson/CocoaAsyncSocket",
+      "state" : {
+        "revision" : "dbdc00669c1ced63b27c3c5f052ee4d28f10150c",
+        "version" : "7.6.5"
+      }
+    },
+    {
+      "identity" : "content-scope-scripts",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/content-scope-scripts",
+      "state" : {
+        "revision" : "f6241631fc14cc2d0f47950bfdc4d6c30bf90130",
+        "version" : "5.4.0"
+      }
+    },
+    {
+      "identity" : "designresourceskit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/DesignResourcesKit",
+      "state" : {
+        "revision" : "d7ea2561ec7624c224f52e1c9b349075ddf1c782",
+        "version" : "2.0.0"
+      }
+    },
+    {
+      "identity" : "duckduckgo-autofill",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
+      "state" : {
+        "revision" : "03d3e3a959dd75afbe8c59b5a203ea676d37555d",
+        "version" : "10.1.0"
+      }
+    },
+    {
+      "identity" : "grdb.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/GRDB.swift.git",
+      "state" : {
+        "revision" : "9f049d7b97b1e68ffd86744b500660d34a9e79b8",
+        "version" : "2.3.0"
+      }
+    },
+    {
+      "identity" : "ios-js-support",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/ios-js-support",
+      "state" : {
+        "revision" : "6a6789ac8104a587316c58af75539753853b50d9",
+        "version" : "2.0.0"
+      }
+    },
+    {
+      "identity" : "kingfisher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onevcat/Kingfisher.git",
+      "state" : {
+        "revision" : "5b92f029fab2cce44386d28588098b5be0824ef5",
+        "version" : "7.11.0"
+      }
+    },
+    {
+      "identity" : "lottie-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/lottie-ios.git",
+      "state" : {
+        "revision" : "abf5510e261c85ffddd29de0bca9b72592ea2bdd",
+        "version" : "3.3.0"
+      }
+    },
+    {
+      "identity" : "ohhttpstubs",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AliSoftware/OHHTTPStubs.git",
+      "state" : {
+        "revision" : "12f19662426d0434d6c330c6974d53e2eb10ecd9",
+        "version" : "9.1.0"
+      }
+    },
+    {
+      "identity" : "privacy-dashboard",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/privacy-dashboard",
+      "state" : {
+        "revision" : "43a6e1c1864846679a254e60c91332c3fbd922ee",
+        "version" : "3.3.0"
+      }
+    },
+    {
+      "identity" : "punycodeswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/gumob/PunycodeSwift.git",
+      "state" : {
+        "revision" : "4356ec54e073741449640d3d50a1fd24fd1e1b8b",
+        "version" : "2.1.0"
+      }
+    },
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser",
+      "state" : {
+        "revision" : "c8ed701b513cf5177118a175d85fbbbcd707ab41",
+        "version" : "1.3.0"
+      }
+    },
+    {
+      "identity" : "swift-syntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-syntax.git",
+      "state" : {
+        "revision" : "64889f0c732f210a935a0ad7cda38f77f876262d",
+        "version" : "509.1.1"
+      }
+    },
+    {
+      "identity" : "swifter",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/httpswift/swifter.git",
+      "state" : {
+        "revision" : "9483a5d459b45c3ffd059f7b55f9638e268632fd",
+        "version" : "1.5.0"
+      }
+    },
+    {
+      "identity" : "swiftsoup",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/scinfu/SwiftSoup",
+      "state" : {
+        "revision" : "1d39e56d364cba79ce43b341f9661b534cccb18d",
+        "version" : "2.7.1"
+      }
+    },
+    {
+      "identity" : "sync_crypto",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/sync_crypto",
+      "state" : {
+        "revision" : "2ab6ab6f0f96b259c14c2de3fc948935fc16ac78",
+        "version" : "0.2.0"
+      }
+    },
+    {
+      "identity" : "trackerradarkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/TrackerRadarKit",
+      "state" : {
+        "revision" : "a6b7ba151d9dc6684484f3785293875ec01cc1ff",
+        "version" : "1.2.2"
+      }
+    },
+    {
+      "identity" : "wireguard-apple",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/wireguard-apple",
+      "state" : {
+        "revision" : "2d8172c11478ab11b0f5ad49bdb4f93f4b3d5e0d",
+        "version" : "1.1.1"
+      }
+    },
+    {
+      "identity" : "zipfoundation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/weichsel/ZIPFoundation.git",
+      "state" : {
+        "revision" : "b979e8b52c7ae7f3f39fa0182e738e9e7257eb78",
+        "version" : "0.9.18"
+      }
+    }
+  ],
+  "version" : 2
 }

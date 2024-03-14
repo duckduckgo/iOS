@@ -107,7 +107,10 @@ final class SubscriptionEmailViewModel: ObservableObject {
         canGoBackCancellable = webViewModel.$canGoBack
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
-                self?.state.canNavigateBack = value
+                self?.state.canNavigateBack = false
+                if self?.webViewModel.url != URL.activateSubscriptionViaEmail.forComparison() {
+                    self?.state.canNavigateBack = value
+                }
             }
     }
     

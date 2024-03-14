@@ -30,6 +30,8 @@ struct SubscriptionEmailView: View {
     
     @State var shouldDisplayInactiveError = false
     @State var shouldDisplayNavigationError = false
+    @State var isModal = true
+    
     var onDismissStack: (() -> Void)?
     
     enum Constants {
@@ -44,7 +46,7 @@ struct SubscriptionEmailView: View {
                 browserBackButton
             }
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(UserText.subscriptionCloseButton) { onDismissStack?() }
+                closeButton
             }
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -97,6 +99,15 @@ struct SubscriptionEmailView: View {
             viewModel.onAppear()
         })
         
+    }
+    
+    // MARK: -
+    
+    @ViewBuilder
+    private var closeButton: some View {
+        if isModal {
+            Button(UserText.subscriptionCloseButton) { onDismissStack?() }
+        }
     }
     
     private var baseView: some View {

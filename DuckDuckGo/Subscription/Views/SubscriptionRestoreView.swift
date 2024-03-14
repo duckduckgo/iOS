@@ -32,6 +32,7 @@ struct SubscriptionRestoreView: View {
     @State private var isAlertVisible = false
     @State private var shouldNavigateToSubscriptionFlow = false
     @State private var shouldNavigateToActivationFlow = false
+    @State var isModal = true
     
     private enum Constants {
         static let heroImage = "ManageSubscriptionHero"
@@ -99,7 +100,7 @@ struct SubscriptionRestoreView: View {
                 .navigationBarBackButtonHidden(viewModel.state.transactionStatus != .idle)
                 .navigationBarTitleDisplayMode(.inline)
                 .applyInsetGroupedListStyle()
-                .navigationBarItems(trailing: Button(UserText.subscriptionCloseButton) { viewModel.dismissView() })
+                .navigationBarItems(trailing: closeButton)
                 .tint(Color.init(designSystemColor: .textPrimary))
                 .accentColor(Color.init(designSystemColor: .textPrimary))
             }
@@ -144,6 +145,13 @@ struct SubscriptionRestoreView: View {
     // MARK: -
     
     @ViewBuilder
+    private var closeButton: some View {
+        if isModal {
+            Button(UserText.subscriptionCloseButton) { viewModel.dismissView() }
+        }
+    }
+    
+    @ViewBuilder
     private var navigationLinks: some View {
         
         // Hidden link to display Subscription Welcome Page
@@ -153,7 +161,8 @@ struct SubscriptionRestoreView: View {
         }.isDetailLink(false)
         
         // Hidden link to display Email Activation View
-        NavigationLink(destination: SubscriptionEmailView(onDismissStack: { viewModel.dismissView() }),
+        NavigationLink(destination: SubscriptionEmailView(isModal: isModal,
+                                                          onDismissStack: { viewModel.dismissView() }),
                        isActive: $shouldNavigateToActivationFlow) {
               EmptyView()
         }.isDetailLink(false)

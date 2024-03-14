@@ -30,9 +30,9 @@ struct SubscriptionRestoreView: View {
     @StateObject var viewModel = SubscriptionRestoreViewModel()
     
     @State private var isAlertVisible = false
-    @State private var isActive: Bool = false
-    @State private var shouldNavigateToSubscriptionFlow: Bool = false
-    @State private var shouldDisplayEmailActivationFlow: Bool = false
+    @State private var shouldNavigateToSubscriptionFlow = false
+    @State private var shouldNavigateToActivationFlow = false
+    
     var onDismissStack: (() -> Void)?
     
     private enum Constants {
@@ -74,7 +74,8 @@ struct SubscriptionRestoreView: View {
                         Spacer()
                         
                         // Hidden link to display Subscription Welcome Page
-                        NavigationLink(destination: SubscriptionFlowView(), isActive: $shouldNavigateToSubscriptionFlow) {
+                        NavigationLink(destination: SubscriptionFlowView(),
+                                       isActive: $shouldNavigateToSubscriptionFlow) {
                             EmptyView()
                         }.isDetailLink(false)
                         
@@ -99,8 +100,23 @@ struct SubscriptionRestoreView: View {
                         isAlertVisible = true
                     }
                 }
+                
+                .onChange(of: viewModel.state.shouldNavigateToActivationFlow) { result in
+                    shouldNavigateToActivationFlow = result
+                }
+                
+                .onChange(of: viewModel.state.shouldNavigateToSubscriptionFlow) { result in
+                    shouldNavigateToSubscriptionFlow = result
+                }
+                
+                .onChange(of: viewModel.state.shouldDismissView) { result in
+                    if result {
+                        dismiss()
+                    }
+                }
             
-                .sheet(isPresented: $shouldDisplayEmailActivationFlow) {
+                .sheet(isPresented: $shouldNavigateToActivationFlow,
+                       onDismiss: { viewModel.refreshState() }) {
                     SubscriptionEmailView(isAddingDevice: viewModel.state.isAddingDevice)
                 }
             
@@ -148,7 +164,7 @@ struct SubscriptionRestoreView: View {
                                   action: {
                         DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailStart)
                         DailyPixel.fire(pixel: .privacyProWelcomeAddDevice)
-                        // buttonAction()
+                        viewModel.navigateToActivationFlow()
                     })
                 } else if viewModel.state.subscriptionEmail == nil {
                     Text(UserText.subscriptionAddDeviceEmailDescription)
@@ -157,7 +173,7 @@ struct SubscriptionRestoreView: View {
                     getCellButton(buttonText: UserText.subscriptionRestoreAddEmailButton,
                                   action: {
                         Pixel.fire(pixel: .privacyProAddDeviceEnterEmail, debounce: 1)
-                        // buttonAction()
+                        viewModel.navigateToActivationFlow()
                     })
                 } else {
                     Text(viewModel.state.subscriptionEmail ?? "").daxSubheadSemibold()
@@ -168,7 +184,7 @@ struct SubscriptionRestoreView: View {
                         getCellButton(buttonText: UserText.subscriptionManageEmailButton,
                                       action: {
                             Pixel.fire(pixel: .privacyProSubscriptionManagementEmail, debounce: 1)
-                            // buttonAction()
+                            viewModel.navigateToActivationFlow()
                         })
                     }
                 }
@@ -233,7 +249,6 @@ struct SubscriptionRestoreView: View {
                     .daxFootnoteRegular()
                     .foregroundColor(Color(designSystemColor: .textSecondary))
                 Button(action: {
-                    shouldNavigateToSubscriptionFlow = true
                      viewModel.restoreAppstoreTransaction()
                 }, label: {
                     Text(UserText.subscriptionRestoreAppleID)
@@ -250,25 +265,21 @@ struct SubscriptionRestoreView: View {
             return Alert(title: Text(UserText.subscriptionRestoreSuccessfulTitle),
                          message: Text(UserText.subscriptionRestoreSuccessfulMessage),
                          dismissButton: .default(Text(UserText.subscriptionRestoreSuccessfulButton)) {
-                            shouldNavigateToSubscriptionFlow = true
+                            viewModel.navigateToSubscriptionFlow()
                          }
             )
         case .notFound:
             return Alert(title: Text(UserText.subscriptionRestoreNotFoundTitle),
                          message: Text(UserText.subscriptionRestoreNotFoundMessage),
                          primaryButton: .default(Text(UserText.subscriptionRestoreNotFoundPlans),
-                                                 action: {
-                                                    dismiss()
-                                                 }),
+                                                 action: { viewModel.dismissView() }),
                          secondaryButton: .cancel())
             
         case .expired:
             return Alert(title: Text(UserText.subscriptionRestoreNotFoundTitle),
                          message: Text(UserText.subscriptionRestoreNotFoundMessage),
                          primaryButton: .default(Text(UserText.subscriptionRestoreNotFoundPlans),
-                                                 action: {
-                                                    dismiss()
-                                                 }),
+                                                 action: { viewModel.dismissView() }),
                          secondaryButton: .cancel())
         default:
             return Alert(
@@ -276,7 +287,7 @@ struct SubscriptionRestoreView: View {
                 message: Text(UserText.subscriptionBackendErrorMessage),
                 dismissButton: .cancel(Text(UserText.subscriptionBackendErrorButton)) {
                     onDismissStack?()
-                    dismiss()
+                    viewModel.dismissView()
                 }
             )
         }
@@ -296,13 +307,6 @@ struct SubscriptionRestoreView: View {
         let expandedContent: AnyView
     }
     
-}
-
-@available(iOS 15.0, *)
-struct SubscriptionRestoreView_Previews: PreviewProvider {
-    static var previews: some View {
-        SubscriptionRestoreView()
-    }
 }
 
 #endif

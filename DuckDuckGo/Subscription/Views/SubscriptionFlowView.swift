@@ -32,7 +32,6 @@ struct SubscriptionFlowView: View {
     // Local View State
     @State private var errorMessage: SubscriptionErrorMessage = .general
     @State private var shouldPresentError: Bool = false
-    @State private var isFirstOnAppear = true
 
     enum Constants {
         static let daxLogo = "Home"

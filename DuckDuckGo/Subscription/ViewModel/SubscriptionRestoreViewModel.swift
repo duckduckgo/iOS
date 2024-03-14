@@ -43,6 +43,9 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         var transactionStatus: SubscriptionTransactionStatus = .idle
         var activationResult: SubscriptionActivationResult = .unknown
         var subscriptionEmail: String?
+        var shouldNavigateToSubscriptionFlow = false
+        var shouldNavigateToActivationFlow = false
+        var shouldDismissView = false
     }
     
     // Read only View State - Should only be modified from the VM
@@ -62,11 +65,15 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     func initializeView() {
         Pixel.fire(pixel: .privacyProSettingsAddDevice)
+        Task { await setupTransactionObserver() }
+        refreshState()
+    }
+    
+    func refreshState() {
         state.subscriptionEmail = accountManager.email
         if accountManager.isUserAuthenticated {
             state.isAddingDevice = true
         }
-        Task { await setupTransactionObserver() }
     }
     
     private func setupTransactionObserver() async {
@@ -117,12 +124,28 @@ final class SubscriptionRestoreViewModel: ObservableObject {
                 try await subFeature.restoreAccountFromAppStorePurchase()
                 DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreSuccess)
                 state.activationResult = .activated
+                navigateToSubscriptionFlow()
             } catch let error {
                 if let specificError = error as? SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError {
                     handleRestoreError(error: specificError)
                 }
             }
         }
+    }
+    
+    @MainActor
+    func navigateToActivationFlow() {
+        self.state.shouldNavigateToActivationFlow = true
+    }
+    
+    @MainActor
+    func navigateToSubscriptionFlow() {
+        self.state.shouldNavigateToSubscriptionFlow = true
+    }
+    
+    @MainActor
+    func dismissView() {
+        state.shouldDismissView = true
     }
     
     

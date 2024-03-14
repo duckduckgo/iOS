@@ -28,22 +28,20 @@ struct SettingsNextStepsView: View {
         Section(header: Text("Next Steps")) {
             SettingsCellView(label: "Add App to Your Dock",
                              image: Image("AddToDock"),
-                             action: { viewModel.presentLegacyView(.gpc) },
-                             disclosureIndicator: true,
+                             action: { viewModel.presentLegacyView(.addToDock) },
                              isButton: true)
-            SettingsCellView(label: "Add Widget to Home Screen",
-                             image: Image("AddWidget"),
-                             action: { viewModel.presentLegacyView(.gpc) },
-                             disclosureIndicator: true,
-                             isButton: true)
+            NavigationLink(destination: WidgetEducationView()) {
+                SettingsCellView(label: "Add Widget to Home Screen",
+                                 image: Image("AddWidget"))
+            }
             SettingsCellView(label: "Set Your Address Bar Position",
                              image: Image("AddressBarPosition"),
-                             action: { viewModel.presentLegacyView(.gpc) },
+                             action: { /*TODO*/ },
                              disclosureIndicator: true,
                              isButton: true)
             SettingsCellView(label: "Enable Voice Search",
                              image: Image("AddressBarPosition"),
-                             action: { viewModel.presentLegacyView(.gpc) },
+                             action: { /*TODO*/ },
                              disclosureIndicator: true,
                              isButton: true)
         }

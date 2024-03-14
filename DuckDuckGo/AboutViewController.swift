@@ -24,49 +24,71 @@ import DesignResourcesKit
 
 class AboutViewController: UIHostingController<AboutView> {
 
-    convenience init() {
-        self.init(rootView: AboutView())
+    convenience init(viewModel: SettingsViewModel) {
+        self.init(rootView: AboutView(viewModel: viewModel))
     }
 
 }
 
 struct AboutView: View {
 
+    @StateObject var viewModel: SettingsViewModel
+
     var body: some View {
-        ScrollView {
-            VStack(spacing: 12) {
-                Image("Logo")
-                    .resizable()
-                    .frame(width: 96, height: 96)
-                    .padding(.top)
-
-                Image("TextDuckDuckGo")
-
-                Text("Welcome to the Duck Side!")
-                    .daxHeadline()
-
-                Rectangle()
-                    .frame(width: 80, height: 0.5)
-                    .foregroundColor(Color(designSystemColor: .lines))
-                    .padding()
-
-                Text(LocalizedStringKey(UserText.aboutText))
-                    .lineLimit(nil)
-                    .multilineTextAlignment(.leading)
-                    .foregroundColor(.primary)
-                    .tintIfAvailable(Color(designSystemColor: .accent))
-                    .padding(.horizontal, 32)
-                    .padding(.bottom)
-
-                Spacer()
-            }
-            .frame(maxWidth: .infinity)
+        List {
+            AboutViewText()
+            AboutViewVersion()
         }
-        .background(Rectangle()
-            .ignoresSafeArea()
-            .foregroundColor(Color(designSystemColor: .background)))
+        .environmentObject(viewModel)
+        .conditionalInsetGroupedListStyle()
     }
+}
 
+struct AboutViewText: View {
+
+    var body: some View {
+        VStack(spacing: 12) {
+            Image("Logo")
+                .resizable()
+                .frame(width: 96, height: 96)
+                .padding(.top)
+
+            Image("TextDuckDuckGo")
+
+            Text("Welcome to the Duck Side!")
+                .daxHeadline()
+
+            Rectangle()
+                .frame(width: 80, height: 0.5)
+                .foregroundColor(Color(designSystemColor: .lines))
+                .padding()
+
+            Text(LocalizedStringKey(UserText.aboutText))
+                .lineLimit(nil)
+                .multilineTextAlignment(.leading)
+                .foregroundColor(.primary)
+                .tintIfAvailable(Color(designSystemColor: .accent))
+                .padding(.horizontal, 32)
+                .padding(.bottom)
+
+            Spacer()
+        }
+        .listRowInsets(EdgeInsets(top: -12, leading: -12, bottom: -12, trailing: -12))
+        .listRowBackground(Color(designSystemColor: .background).edgesIgnoringSafeArea(.all))
+        .frame(maxWidth: .infinity)
+    }
+}
+
+struct AboutViewVersion: View {
+
+    @EnvironmentObject var viewModel: SettingsViewModel
+
+    var body: some View {
+        Section(header: Text("DuckDuckGo for iOS")) {
+            SettingsCellView(label: UserText.settingsVersion,
+                             accesory: .rightDetail(viewModel.state.version))
+        }
+    }
 }
 
 private extension View {

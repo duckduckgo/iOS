@@ -28,7 +28,7 @@ struct SettingsOthersView: View {
         Section {
             SettingsCellView(label: "About",
                              image: Image("LogoIcon"),
-                             action: { viewModel.presentLegacyView(.gpc) },
+                             action: { viewModel.presentLegacyView(.about) },
                              disclosureIndicator: true,
                              isButton: true)
             SettingsCellView(label: "Share Feedback",

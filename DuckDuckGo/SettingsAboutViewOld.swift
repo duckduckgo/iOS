@@ -1,5 +1,5 @@
 //
-//  SettingsAboutView.swift
+//  SettingsAboutViewOld.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -20,8 +20,8 @@
 import SwiftUI
 import UIKit
 
-struct SettingsAboutView: View {
-    
+struct SettingsAboutViewOld: View {
+
     @EnvironmentObject var viewModel: SettingsViewModel
     
     var body: some View {

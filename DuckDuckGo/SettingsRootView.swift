@@ -32,6 +32,7 @@ struct SettingsRootView: View {
             SettingsMainSettingsView()
             SettingsNextStepsView()
             SettingsOthersView()
+            SettingsDebugView()
         }
         .navigationBarTitle(UserText.settingsTitle, displayMode: .inline)
         .navigationBarItems(trailing: Button(UserText.navigationTitleDone) {

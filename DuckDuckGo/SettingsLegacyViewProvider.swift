@@ -59,6 +59,7 @@ class SettingsLegacyViewProvider: ObservableObject {
              autoclearData,
              keyboard,
              netP,
+             aboutOld,
              about,
              feedback, debug
     }
@@ -79,8 +80,12 @@ class SettingsLegacyViewProvider: ObservableObject {
     var autoclearData: UIViewController { instantiate("AutoClearSettingsViewController", fromStoryboard: "Settings") }
     var keyboard: UIViewController { instantiate("Keyboard", fromStoryboard: "Settings") }
     var feedback: UIViewController { instantiate("Feedback", fromStoryboard: "Feedback") }
-    var about: UIViewController { AboutViewController() }
-    
+    var aboutOld: UIViewController { AboutViewControllerOld() }
+
+    func about(viewModel: SettingsViewModel) -> UIViewController {
+        return AboutViewController(viewModel: viewModel)
+    }
+
     @available(iOS 15.0, *)
     var netPWaitlist: UIViewController { VPNWaitlistViewController(nibName: nil, bundle: nil) }
     

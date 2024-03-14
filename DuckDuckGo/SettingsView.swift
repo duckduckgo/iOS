@@ -40,7 +40,7 @@ struct SettingsView: View {
 #endif
             SettingsCustomizeView()
             SettingsMoreView()
-            SettingsAboutView()
+            SettingsAboutViewOld()
             SettingsDebugView()
         }
         .navigationBarTitle(UserText.settingsTitle, displayMode: .inline)

@@ -380,13 +380,16 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
         // no-op
     }
 
+    // swiftlint:disable function_parameter_count
     func secureVaultManager(_: SecureVaultManager,
                             promptUserToAutofillCredentialsForDomain domain: String,
                             withAccounts accounts: [SecureVaultModels.WebsiteAccount],
                             withTrigger trigger: AutofillUserScript.GetTriggerType,
+                            onAccountSelected account: @escaping (SecureVaultModels.WebsiteAccount?) -> Void,
                             completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
         // no-op
     }
+    // swiftlint:enable function_parameter_count
 
     func secureVaultManager(_: SecureVaultManager,
                             promptUserWithGeneratedPassword password: String,

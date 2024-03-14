@@ -2008,10 +2008,10 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.add.device.button" = "Add to Another Device";
 
 /* Subscription Add device Info */
-"subscription.add.device.description" = "Access your Privacy Pro subscription on other devices via an email address.";
+"subscription.add.device.description" = "Access your Privacy Pro subscription via an email address.";
 
 /* Add subscription to other device title  */
-"subscription.add.device.header.title" = "Use your subscription on all your devices";
+"subscription.add.device.header.title" = "Use your subscription on other devices";
 
 /* Resend activation instructions button */
 "subscription.add.device.resend.instructions" = "Resend Instructions";

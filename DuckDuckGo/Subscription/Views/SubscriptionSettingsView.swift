@@ -38,6 +38,7 @@ struct SubscriptionSettingsView: View {
     @State var shouldDisplayStripeView = false
     @State var shouldDisplayGoogleView = false
     @State var shouldDisplayRemovalNotice = false
+    @State var shouldDisplayFAQView = false
     
     var body: some View {
         optionsView
@@ -109,12 +110,15 @@ struct SubscriptionSettingsView: View {
         Section(header: Text(UserText.subscriptionHelpAndSupport),
                 footer: Text(UserText.subscriptionFAQFooter)) {
             
-            NavigationLink(destination: Text(UserText.subscriptionFAQ)) {
-                SettingsCustomCell(content: {
-                    Text(UserText.subscriptionFAQ)
-                        .daxBodyRegular()
-                })
-            }
+            
+            SettingsCustomCell(content: {
+                Text(UserText.subscriptionFAQ)
+                    .daxBodyRegular()
+                    .foregroundColor(Color(designSystemColor: .accent))
+            },
+                               action: { viewModel.displayFAQView(true) },
+                               disclosureIndicator: false,
+                               isButton: true)
 
         }
     }
@@ -165,6 +169,14 @@ struct SubscriptionSettingsView: View {
         .onChange(of: shouldDisplayRemovalNotice) { value in
             viewModel.displayRemovalNotice(value)
         }
+        
+        // Removal Notice
+        .onChange(of: viewModel.state.shouldDisplayFAQView) { value in
+            shouldDisplayFAQView = value
+        }
+        .onChange(of: shouldDisplayFAQView) { value in
+            viewModel.displayFAQView(value)
+        }
 
         
         // Remove subscription
@@ -182,6 +194,10 @@ struct SubscriptionSettingsView: View {
             )
         }
         
+        .sheet(isPresented: $shouldDisplayFAQView, content: {
+            SubscriptionExternalLinkView(viewModel: viewModel.state.FAQViewModel, title: UserText.subscriptionFAQ)
+        })
+        
         .onAppear {
             viewModel.fetchAndUpdateSubscriptionDetails()
         }
@@ -193,7 +209,7 @@ struct SubscriptionSettingsView: View {
             SubscriptionExternalLinkView(viewModel: stripeViewModel)
         }
     }
-    
+        
         
 }
 #endif

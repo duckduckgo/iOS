@@ -114,7 +114,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func handler(forMethodNamed methodName: String) -> Subfeature.Handler? {
 
         os_log("WebView handler: %s", log: .subscription, type: .debug, methodName)
-        print("[SHIT] WebView handler. \(methodName)")
         switch methodName {
         case Handlers.getSubscription: return getSubscription
         case Handlers.setSubscription: return setSubscription

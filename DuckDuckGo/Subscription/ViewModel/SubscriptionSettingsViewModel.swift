@@ -40,10 +40,14 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         var shouldDisplayRemovalNotice: Bool = false
         var shouldDismissView: Bool = false
         var shouldDisplayGoogleView: Bool = false
+        var shouldDisplayFAQView: Bool = false
         
         // Used to display stripe WebUI
         var stripeViewModel: SubscriptionExternalLinkViewModel?
         var shouldDisplayStripeView: Bool = false
+        
+        // Used to display the FAQ WebUI
+        var FAQViewModel: SubscriptionExternalLinkViewModel = SubscriptionExternalLinkViewModel(url: URL.subscriptionFAQ)
     }
 
     // Publish the currently selected feature
@@ -147,6 +151,12 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     func displayRemovalNotice(_ value: Bool) {
         if value != state.shouldDisplayRemovalNotice {
             state.shouldDisplayRemovalNotice = value
+        }
+    }
+    
+    func displayFAQView(_ value: Bool) {
+        if value != state.shouldDisplayFAQView {
+            state.shouldDisplayFAQView = value
         }
     }
     

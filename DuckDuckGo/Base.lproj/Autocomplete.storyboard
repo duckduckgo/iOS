@@ -35,6 +35,10 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="251" image="SuggestLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="Dnd-CT-WA4">
                                                     <rect key="frame" x="16" y="11" width="24" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="24" id="XbS-9a-1vc"/>
+                                                        <constraint firstAttribute="height" constant="24" id="Y0E-R6-git"/>
+                                                    </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="L3L-RT-TDk">
                                                     <rect key="frame" x="48" y="4" width="39.5" height="38"/>

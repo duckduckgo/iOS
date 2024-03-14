@@ -391,13 +391,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    private func presentExpiredEntitlementNotification() {
+    private func presentExpiredEntitlementNotificationIfNeeded() {
         let presenter = NetworkProtectionNotificationsPresenterTogglableDecorator(
             settings: VPNSettings(defaults: .networkProtectionGroupDefaults),
             defaults: .networkProtectionGroupDefaults,
             wrappee: NetworkProtectionUNNotificationPresenter()
         )
         presenter.showEntitlementNotification()
+    }
+
+    private func presentVPNEarlyAccessOverAlert() {
+        let alertController = CriticalAlerts.makeVPNEarlyAccessOverAlert()
+        window?.rootViewController?.present(alertController, animated: true) { [weak self] in
+            self?.tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
+        }
     }
 #endif
 
@@ -481,11 +488,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if NETWORK_PROTECTION
         widgetRefreshModel.refreshVPNWidget()
 
+        let configManager = ContentBlocking.shared.privacyConfigurationManager
+        let waitlistBetaActive = configManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlistBetaActive)
+        let vpnIsActivated = NetworkProtectionKeychainTokenStore().isFeatureActivated
+        if !waitlistBetaActive && vpnIsActivated {
+            presentVPNEarlyAccessOverAlert()
+        }
+
         if tunnelDefaults.showEntitlementAlert {
             presentExpiredEntitlementAlert()
         }
 
-        presentExpiredEntitlementNotification()
+        presentExpiredEntitlementNotificationIfNeeded()
 #endif
 
         updateSubscriptionStatus()

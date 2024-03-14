@@ -2368,6 +2368,7 @@
 		BD862E0A2B30F9300073E2EE /* VPNFeedbackFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNFeedbackFormView.swift; sourceTree = "<group>"; };
 		BDA583862B98B6C700732FDC /* AccountManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagerExtension.swift; sourceTree = "<group>"; };
 		BDC234F62B27F51100D3C798 /* UniquePixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniquePixel.swift; sourceTree = "<group>"; };
+		BDFF03172BA0C58200F324C9 /* BrowserServicesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BrowserServicesKit; path = ../BrowserServicesKit; sourceTree = "<group>"; };
 		C10CB5F22A1A5BDF0048E503 /* AutofillViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillViews.swift; sourceTree = "<group>"; };
 		C111B26827F579EF006558B1 /* BookmarkOrFolderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkOrFolderTests.swift; sourceTree = "<group>"; };
 		C12726ED2A5FF88C00215B02 /* EmailSignupPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignupPromptView.swift; sourceTree = "<group>"; };
@@ -3728,6 +3729,7 @@
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
+				BDFF03172BA0C58200F324C9 /* BrowserServicesKit */,
 				EE3B98EB2A963515002F63A0 /* WidgetsExtensionAlpha.entitlements */,
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				EEB8FDB92A990AEE00EBEDCF /* Configuration-Alpha.xcconfig */,

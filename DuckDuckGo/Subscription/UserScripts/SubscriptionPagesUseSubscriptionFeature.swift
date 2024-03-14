@@ -86,11 +86,11 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     // Transaction Status and errors are observed from ViewModels to handle errors in the UI
     @Published private(set) var transactionStatus: SubscriptionTransactionStatus = .idle
     @Published private(set) var transactionError: UseSubscriptionError?
-    @Published private(set) var selectedFeature: SubscriptionFeatureSelection?
     
     // Subscription Activation Actions
     var onSetSubscription: (() -> Void)?
     var onBackToSettings: (() -> Void)?
+    var onFeatureSelected: ((SubscriptionFeatureSelection) -> Void)?
     
     struct FeatureSelection: Codable {
         let feature: String
@@ -292,7 +292,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             return nil
         }
 
-        self.selectedFeature = featureSelection
+        onFeatureSelected?(featureSelection)
         
         return nil
     }

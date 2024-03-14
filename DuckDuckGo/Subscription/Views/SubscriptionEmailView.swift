@@ -92,6 +92,12 @@ struct SubscriptionEmailView: View {
             }
         }
         
+        .onChange(of: viewModel.state.shouldDismissStack) { value in
+            if value {
+                onDismissStack?()
+            }
+        }
+        
         .navigationTitle(viewModel.viewTitle)
         
         .onAppear(perform: {

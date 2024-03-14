@@ -45,6 +45,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
         var shouldDisplayInactiveError: Bool = false
         var canNavigateBack: Bool = false
         var shouldDismissView: Bool = false
+        var shouldDismissStack: Bool = false
         var subscriptionActive: Bool = false
     }
     
@@ -75,8 +76,11 @@ final class SubscriptionEmailViewModel: ObservableObject {
                                                           settings: AsyncHeadlessWebViewSettings(bounces: false,
                                                                                                  allowedDomains: Self.allowedDomains,
                                                                                                  contentBlocking: false))
-        initializeView()
-        Task { await setupSubscribers() }
+        
+        Task {
+            await initializeView()
+            await setupSubscribers()
+        }
         setupObservers()
     }
     
@@ -90,10 +94,11 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
     
     func onAppear() {
-        initializeView()
+        Task { await initializeView() }
         webViewModel.navigationCoordinator.navigateTo(url: emailURL )
     }
     
+    @MainActor
     private func initializeView() {
         if accountManager.isUserAuthenticated {
             // If user is authenticated, we want to "Add or manage email" instead of activating
@@ -129,27 +134,23 @@ final class SubscriptionEmailViewModel: ObservableObject {
             self.dismissView()
         }
         
-        // Feature observers
-        subFeature.$selectedFeature
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] value in
-                if value != nil {
-                    switch value {
-                    case .netP:
-                        UniquePixel.fire(pixel: .privacyProWelcomeVPN)
-                        self?.selectedFeature = .netP
-                    case .itr:
-                        UniquePixel.fire(pixel: .privacyProWelcomePersonalInformationRemoval)
-                        self?.selectedFeature = .itr
-                    case .dbp:
-                        UniquePixel.fire(pixel: .privacyProWelcomeIdentityRestoration)
-                        self?.selectedFeature = .dbp
-                    default:
-                        return
-                    }
+        subFeature.onFeatureSelected = { feature in
+            DispatchQueue.main.async {
+                switch feature {
+                case .netP:
+                    UniquePixel.fire(pixel: .privacyProWelcomeVPN)
+                    self.selectedFeature = .netP
+                case .itr:
+                    UniquePixel.fire(pixel: .privacyProWelcomePersonalInformationRemoval)
+                    self.selectedFeature = .itr
+                case .dbp:
+                    UniquePixel.fire(pixel: .privacyProWelcomeIdentityRestoration)
+                    self.selectedFeature = .dbp
                 }
+                self.state.shouldDismissStack = true
             }
-            .store(in: &cancellables)
+            
+        }
           
         subFeature.$transactionError
             .receive(on: DispatchQueue.main)

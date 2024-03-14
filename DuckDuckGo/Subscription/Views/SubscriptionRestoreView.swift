@@ -44,35 +44,43 @@ struct SubscriptionRestoreView: View {
         
         static let viewPadding = EdgeInsets(top: 10, leading: 30, bottom: 0, trailing: 30)
         static let sectionSpacing: CGFloat = 20
+        static let maxWidth: CGFloat = 768
+        static let boxMaxWidth: CGFloat = 500
         static let headerLineSpacing = 10.0
         static let footerLineSpacing = 7.0
         
         static let cornerRadius = 12.0
-        static let boxPadding: CGFloat = 25
+        static let boxPadding = EdgeInsets(top: 25,
+                                           leading: 20,
+                                           bottom: 25,
+                                           trailing: 20)
         static let borderWidth: CGFloat = 1.0
-        static let boxLineSpacing: CGFloat = 18
+        static let boxLineSpacing: CGFloat = 14
         
         static let buttonCornerRadius = 8.0
         static let buttonInsets = EdgeInsets(top: 10.0, leading: 16.0, bottom: 10.0, trailing: 16.0)
-        static let baseInsets = EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30)
+        static let buttonTopPadding: CGFloat = 20
         
     }
     
     var body: some View {
         NavigationView {
             ZStack {
-                VStack(spacing: Constants.sectionSpacing) {
-                    headerView
-                    emailView
-                    footerView
-                    Spacer()
-                    
-                    // Hidden link to display Subscription Welcome Page
-                    NavigationLink(destination: SubscriptionFlowView(), isActive: $shouldNavigateToSubscriptionFlow) {
-                        EmptyView()
-                    }.isDetailLink(false)
-                    
+                ScrollView {
+                    VStack(spacing: Constants.sectionSpacing) {
+                        headerView
+                        emailView
+                        footerView
+                        Spacer()
+                        
+                        // Hidden link to display Subscription Welcome Page
+                        NavigationLink(destination: SubscriptionFlowView(), isActive: $shouldNavigateToSubscriptionFlow) {
+                            EmptyView()
+                        }.isDetailLink(false)
+                        
+                    }.frame(maxWidth: Constants.boxMaxWidth)
                 }
+                .frame(maxWidth: Constants.maxWidth, alignment: .center)
                 .padding(Constants.viewPadding)
                 .background(Color(designSystemColor: .background))
                 .tint(Color(designSystemColor: .icons))
@@ -113,12 +121,13 @@ struct SubscriptionRestoreView: View {
     
     private var emailView: some View {
         emailCellContent
-        .background(Color(designSystemColor: .panel))
-        .padding(Constants.boxPadding)
-        .overlay(
-            RoundedRectangle(cornerRadius: Constants.cornerRadius)
-                .stroke(Color(designSystemColor: .lines), lineWidth: Constants.borderWidth)
-        )
+            .padding(Constants.boxPadding)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Color(designSystemColor: .panel))
+            .overlay(
+                RoundedRectangle(cornerRadius: Constants.cornerRadius)
+                    .stroke(Color(designSystemColor: .lines), lineWidth: Constants.borderWidth)
+            )
     }
    
     private var emailCellContent: some View {
@@ -147,7 +156,7 @@ struct SubscriptionRestoreView: View {
                         .foregroundColor(Color(designSystemColor: .textSecondary))
                     getCellButton(buttonText: UserText.subscriptionRestoreAddEmailButton,
                                   action: {
-                        Pixel.fire(pixel: .privacyProAddDeviceEnterEmail)
+                        Pixel.fire(pixel: .privacyProAddDeviceEnterEmail, debounce: 1)
                         // buttonAction()
                     })
                 } else {
@@ -158,30 +167,32 @@ struct SubscriptionRestoreView: View {
                     HStack {
                         getCellButton(buttonText: UserText.subscriptionManageEmailButton,
                                       action: {
-                            Pixel.fire(pixel: .privacyProSubscriptionManagementEmail)
+                            Pixel.fire(pixel: .privacyProSubscriptionManagementEmail, debounce: 1)
                             // buttonAction()
                         })
                     }
                 }
             }
-            
         }
     }
     
     private func getCellButton(buttonText: String, action: @escaping () -> Void) -> AnyView {
         AnyView(
-            Button(action: action, label: {
-                Text(buttonText)
-                    .daxButton()
-                    .padding(Constants.buttonInsets)
-                    .foregroundColor(.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: Constants.buttonCornerRadius)
-                            .stroke(Color.clear, lineWidth: 1)
-                    )
-            })
-            .background(Color(designSystemColor: .accent))
-            .cornerRadius(Constants.buttonCornerRadius)
+            VStack {
+                Button(action: action, label: {
+                    Text(buttonText)
+                        .daxButton()
+                        .padding(Constants.buttonInsets)
+                        .foregroundColor(.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: Constants.buttonCornerRadius)
+                                .stroke(Color.clear, lineWidth: 1)
+                        )
+                })
+                
+                .background(Color(designSystemColor: .accent))
+                .cornerRadius(Constants.buttonCornerRadius)
+            }.padding(.top, Constants.boxLineSpacing)
             
         )
     }

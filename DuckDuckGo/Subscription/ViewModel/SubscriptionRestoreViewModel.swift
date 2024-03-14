@@ -126,9 +126,5 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     }
     
     
-    func firePixel(_ pixel: Pixel.Event, debounce: Int = 1) {
-        
-    }
-    
 }
 #endif

@@ -88,6 +88,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
     
     func onAppear() {
+        initializeView()
         webViewModel.navigationCoordinator.navigateTo(url: emailURL )
     }
     
@@ -117,6 +118,10 @@ final class SubscriptionEmailViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.state.subscriptionActive = true
             }
+        }
+        
+        subFeature.onBackToSettings = {
+            self.dismissView()
         }
         
         subFeature.onSelectFeature = { feature in
@@ -192,7 +197,9 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
     
     func dismissView() {
-        state.shouldDismissView = true
+        DispatchQueue.main.async {
+            self.state.shouldDismissView = true
+        }
     }
     
     deinit {

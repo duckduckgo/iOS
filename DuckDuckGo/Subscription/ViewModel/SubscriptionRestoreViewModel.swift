@@ -46,6 +46,10 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         var shouldNavigateToSubscriptionFlow = false
         var shouldNavigateToActivationFlow = false
         var shouldDismissView = false
+        
+        var viewTitle: String {
+            isAddingDevice ? UserText.subscriptionAddDeviceTitle : UserText.subscriptionActivate
+        }
     }
     
     // Publish the currently selected feature

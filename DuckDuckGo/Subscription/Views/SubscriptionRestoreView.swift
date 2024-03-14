@@ -62,7 +62,18 @@ struct SubscriptionRestoreView: View {
     }
     
     var body: some View {
-        NavigationView {
+        if viewModel.state.isAddingDevice {
+            baseView
+        } else {
+            NavigationView {
+                baseView
+            }
+        }
+    }
+        
+    
+    private var baseView: some View {
+        Group {
             ZStack {
                 
                 // Progress View
@@ -84,7 +95,7 @@ struct SubscriptionRestoreView: View {
                 .background(Color(designSystemColor: .background))
                 .tint(Color(designSystemColor: .icons))
                 
-                .navigationTitle(viewModel.state.isAddingDevice ? UserText.subscriptionAddDeviceTitle : UserText.subscriptionActivate)
+                .navigationTitle(viewModel.state.viewTitle)
                 .navigationBarBackButtonHidden(viewModel.state.transactionStatus != .idle)
                 .navigationBarTitleDisplayMode(.inline)
                 .applyInsetGroupedListStyle()
@@ -94,7 +105,7 @@ struct SubscriptionRestoreView: View {
             }
         }
         .alert(isPresented: $isAlertVisible) { getAlert() }
-    
+        
         .onChange(of: viewModel.state.activationResult) { result in
             if result != .unknown {
                 isAlertVisible = true
@@ -122,13 +133,13 @@ struct SubscriptionRestoreView: View {
                 dismiss()
             }
         }
-    
+        
         .onAppear {
             viewModel.initializeView()
             setUpAppearances()
         }
-        
     }
+    
     
     // MARK: -
     

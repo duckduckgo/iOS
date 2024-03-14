@@ -40,14 +40,8 @@ struct SubscriptionSettingsView: View {
     @State var shouldDisplayRemovalNotice = false
     
     var body: some View {
-        Group {
-            if #available(iOS 16.0, *) {
-                optionsView
-                    .scrollDisabled(true)
-            } else {
-                optionsView
-            }
-        }.onAppear(perform: {
+        optionsView
+            .onAppear(perform: {
                 Pixel.fire(pixel: .privacyProSubscriptionSettings, debounce: 1)
         })
         .navigationBarTitleDisplayMode(.inline)
@@ -121,30 +115,23 @@ struct SubscriptionSettingsView: View {
                         .daxBodyRegular()
                 })
             }
-            
-           
+
         }
     }
     
     @ViewBuilder
     private var optionsView: some View {
+        NavigationLink(destination: SubscriptionGoogleView(),
+                       isActive: $shouldDisplayGoogleView) {
+            EmptyView()
+        }
+        
         List {
             headerSection
             manageSection
             devicesSection
             helpSection
             
-            NavigationLink(destination: SubscriptionFlowView()) {
-                SettingsCustomCell(content: {
-                    Text("Test subscriptionf flow view")
-                        .daxBodyRegular()
-                })
-            }
-            
-            NavigationLink(destination: SubscriptionGoogleView(),
-                           isActive: $shouldDisplayGoogleView) {
-                EmptyView()
-            }
         }
         .navigationTitle(UserText.settingsPProManageSubscription)
         .applyInsetGroupedListStyle()

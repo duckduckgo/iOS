@@ -90,6 +90,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     // Subscription Activation Actions
     var onSetSubscription: (() -> Void)?
     var onSelectFeature: ((SubscriptionFeatureSelection) -> Void)?
+    var onBackToSettings: (() -> Void)?
     
     struct FeatureSelection: Codable {
         let feature: String
@@ -121,6 +122,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         case Handlers.subscriptionSelected: return subscriptionSelected
         case Handlers.activateSubscription: return activateSubscription
         case Handlers.featureSelected: return featureSelected
+        case Handlers.backToSettings: return backToSettings
         default:
             return nil
         }
@@ -295,6 +297,28 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         
         return nil
     }
+    
+    func backToSettings(params: Any, original: WKScriptMessage) async -> Encodable? {
+           let accountManager = AccountManager()
+           if let accessToken = accountManager.accessToken,
+              case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
+               switch await SubscriptionService.getSubscription(accessToken: accessToken) {
+                   
+               case .success:
+                   accountManager.storeAccount(token: accessToken,
+                                               email: accountDetails.email,
+                                               externalID: accountDetails.externalID)
+                   onBackToSettings?()
+               default:
+                   break
+               }
+                                  
+           } else {
+               os_log("General error. Could not get account Details", log: .subscription, type: .error)
+               setTransactionError(.generalError)
+           }
+           return nil
+       }
 
     // MARK: Push actions (Push Data back to WebViews)
     enum SubscribeActionName: String {

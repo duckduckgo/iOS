@@ -17,10 +17,10 @@
 //  limitations under the License.
 //
 
-import Foundation
 import BrowserServicesKit
-import SecureStorage
+import Foundation
 import GRDB
+import SecureStorage
 
 // swiftlint:disable file_length
 typealias MockVaultFactory = SecureVaultFactory<MockSecureVault<MockDatabaseProvider>>
@@ -222,6 +222,10 @@ final class MockSecureVault<T: AutofillDatabaseProvider>: AutofillSecureVault {
 
 // MARK: - Mock Providers
 
+private extension URL {
+    static let duckduckgo = URL(string: "https://duckduckgo.com/")!
+}
+
 class MockDatabaseProvider: AutofillDatabaseProvider {
 
     // swiftlint:disable identifier_name
@@ -237,7 +241,7 @@ class MockDatabaseProvider: AutofillDatabaseProvider {
     var db: GRDB.DatabaseWriter
     // swiftlint:enable identifier_name
 
-    required init(file: URL = URL(string: "https://duckduckgo.com/")!, key: Data = Data()) throws {
+    required init(file: URL = .duckduckgo, key: Data = Data()) throws {
         db = (try? DatabaseQueue(named: "Test"))!
     }
 

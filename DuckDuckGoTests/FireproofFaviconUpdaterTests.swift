@@ -17,12 +17,13 @@
 //  limitations under the License.
 //
 
-import Foundation
-import XCTest
-@testable import DuckDuckGo
-import Persistence
-import Core
 import Bookmarks
+import Core
+import Foundation
+import Persistence
+import XCTest
+
+@testable import DuckDuckGo
 
 class FireproofFaviconUpdaterTests: XCTestCase, TabNotifying, FaviconProviding {
 

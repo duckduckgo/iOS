@@ -18,6 +18,7 @@
 //
 
 import XCTest
+
 @testable import BrowserServicesKit
 @testable import Core
 
@@ -46,7 +47,8 @@ final class AppURLsTests: XCTestCase {
         appConfig = AppPrivacyConfiguration(data: privacyData,
                                             identifier: "",
                                             localProtection: localProtection,
-                                            internalUserDecider: DefaultInternalUserDecider())
+                                            internalUserDecider: DefaultInternalUserDecider(),
+                                            toggleProtectionsCounter: ToggleProtectionsCounter(eventReporting: nil))
     }
 
     func testWhenRemoveInternalSearchParametersFromSearchUrlThenUrlIsChanged() throws {
@@ -76,7 +78,7 @@ final class AppURLsTests: XCTestCase {
     }
 
     func testBaseUrlDoesNotHaveSubDomain() {
-        XCTAssertEqual(URL.ddg, URL(string: "https://duckduckgo.com"))
+        XCTAssertEqual(URL.ddg, URL(string: "https://duckduckgo.com")!)
     }
 
     func testWhenMobileStatsParamsAreAppliedThenTheyReturnAnUpdatedUrl() throws {

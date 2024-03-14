@@ -23,6 +23,7 @@ import DDGSync
 import WebKit
 import BrowserServicesKit
 import Persistence
+import History
 
 class TabManager {
 
@@ -31,6 +32,7 @@ class TabManager {
     private var tabControllerCache = [TabViewController]()
 
     private let bookmarksDatabase: CoreDataDatabase
+    private let historyManager: HistoryManager
     private let syncService: DDGSyncing
     private var previewsSource: TabPreviewsSource
     weak var delegate: TabDelegate?
@@ -42,11 +44,13 @@ class TabManager {
     init(model: TabsModel,
          previewsSource: TabPreviewsSource,
          bookmarksDatabase: CoreDataDatabase,
+         historyManager: HistoryManager,
          syncService: DDGSyncing,
          delegate: TabDelegate) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
+        self.historyManager = historyManager
         self.syncService = syncService
         self.delegate = delegate
         let index = model.currentIndex
@@ -68,7 +72,10 @@ class TabManager {
     @MainActor
     private func buildController(forTab tab: Tab, url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) -> TabViewController {
         let configuration =  WKWebViewConfiguration.persistent()
-        let controller = TabViewController.loadFromStoryboard(model: tab, bookmarksDatabase: bookmarksDatabase, syncService: syncService)
+        let controller = TabViewController.loadFromStoryboard(model: tab,
+                                                              bookmarksDatabase: bookmarksDatabase,
+                                                              historyManager: historyManager,
+                                                              syncService: syncService)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -120,7 +127,7 @@ class TabManager {
         return current(createIfNeeded: true)!
     }
 
-    func addURLRequest(_ request: URLRequest,
+    func addURLRequest(_ request: URLRequest?,
                        with configuration: WKWebViewConfiguration,
                        inheritedAttribution: AdClickAttributionLogic.State?) -> TabViewController {
 
@@ -128,11 +135,19 @@ class TabManager {
             fatalError("Failed to copy configuration")
         }
 
-        let tab = Tab(link: request.url == nil ? nil : Link(title: nil, url: request.url!))
+        let tab: Tab
+        if let request {
+            tab = Tab(link: request.url == nil ? nil : Link(title: nil, url: request.url!))
+        } else {
+            tab = Tab()
+        }
         model.insert(tab: tab, at: model.currentIndex + 1)
         model.select(tabAt: model.currentIndex + 1)
 
-        let controller = TabViewController.loadFromStoryboard(model: tab, bookmarksDatabase: bookmarksDatabase, syncService: syncService)
+        let controller = TabViewController.loadFromStoryboard(model: tab,
+                                                              bookmarksDatabase: bookmarksDatabase,
+                                                              historyManager: historyManager,
+                                                              syncService: syncService)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,

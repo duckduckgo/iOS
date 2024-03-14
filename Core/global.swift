@@ -39,9 +39,9 @@ public struct Global {
 public class CoreModule { }
 
 extension Bundle {
-    
+
     public static var core: Bundle {
         return Bundle(for: CoreModule.self)
     }
-    
+
 }

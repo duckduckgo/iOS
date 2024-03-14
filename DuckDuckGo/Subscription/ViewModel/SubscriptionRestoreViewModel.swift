@@ -52,11 +52,11 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         self.purchaseManager = purchaseManager
         self.accountManager = accountManager
         self.isAddingDevice = isAddingDevice
-        initializeView()
     }
     
     func initializeView() {
         Task { await updateAccountEmail() }
+        Pixel.fire(pixel: .privacyProSettingsAddDevice)
         subscriptionEmail = accountManager.email
         if accountManager.isUserAuthenticated {
             isAddingDevice = true
@@ -82,13 +82,19 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     private func handleRestoreError(error: SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError) {
         switch error {
         case .failedToRestorePastPurchase:
-            activationResult = .notFound
+            activationResult = .error
         case .subscriptionExpired:
             activationResult = .expired
         case .subscriptionNotFound:
             activationResult = .notFound
         default:
             activationResult = .error
+        }
+
+        if activationResult == .notFound {
+            DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreFailureNotFound)
+        } else {
+            DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreFailureOther)
         }
     }
     
@@ -99,10 +105,12 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     @MainActor
     func restoreAppstoreTransaction() {
+        DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreStart)
         Task {
             activationResult = .unknown
             do {
                 try await subFeature.restoreAccountFromAppStorePurchase()
+                DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreSuccess)
                 activationResult = .activated
             } catch let error {
                 if let specificError = error as? SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError {

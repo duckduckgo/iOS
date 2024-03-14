@@ -23,12 +23,11 @@ import StoreKit
 
 #if SUBSCRIPTION
 import Subscription
+import Core
 @available(iOS 15.0, *)
 final class SubscriptionSettingsViewModel: ObservableObject {
     
     enum Constants {
-        static let autoRenewable = "Auto-Renewable"
-        static let notAutoRenewable = "Not Auto-Renewable"
         static let monthlyProductID = "ios.subscription.1month"
         static let yearlyProductID = "ios.subscription.1year"
         static let updateFrequency: Float = 10
@@ -57,24 +56,16 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }()
     
     @MainActor
-    func fetchAndUpdateSubscriptionDetails() {
+    func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad) {
         Task {
-            guard let token = accountManager.accessToken else { return }
-
-            if let cachedDate = SubscriptionService.cachedSubscriptionDetailsResponse?.expiresOrRenewsAt,
-               let cachedStatus =  SubscriptionService.cachedSubscriptionDetailsResponse?.status,
-               let productID =  SubscriptionService.cachedSubscriptionDetailsResponse?.productId {
-                updateSubscriptionDetails(status: cachedStatus, date: cachedDate, product: productID)
-            }
-
-            if case .success(let response) = await SubscriptionService.getSubscriptionDetails(token: token) {
-                if !response.isSubscriptionActive {
-                    AccountManager().signOut()
-                    shouldDismissView = true
-                    return
-                } else {
-                    updateSubscriptionDetails(status: response.status, date: response.expiresOrRenewsAt, product: response.productId)
-                }
+            guard let token = self.accountManager.accessToken else { return }
+            let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
+            switch subscriptionResult {
+            case .success(let subscription):
+                updateSubscriptionDetails(status: subscription.status, date: subscription.expiresOrRenewsAt, product: subscription.productId)
+            case .failure(let error):
+                AccountManager().signOut()
+                shouldDismissView = true
             }
         }
     }
@@ -87,25 +78,27 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         }
     }
     
+    // Re-fetch subscription from server ignoring cache
+    // This ensure that if the user changed something on the Apple view, state will be updated
     private func setupSubscriptionUpdater() {
         subscriptionUpdateTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { [weak self] _ in
             guard let strongSelf = self else { return }
             Task {
-                await strongSelf.fetchAndUpdateSubscriptionDetails()
+                await strongSelf.fetchAndUpdateSubscriptionDetails(cachePolicy: .reloadIgnoringLocalCacheData)
             }
         }
     }
 
     
-    private func updateSubscriptionDetails(status: String, date: Date, product: String) {
-        let statusString = (status == Self.Constants.autoRenewable) ? UserText.subscriptionRenews : UserText.subscriptionExpires
+    private func updateSubscriptionDetails(status: Subscription.Status, date: Date, product: String) {
+        let statusString = (status == .autoRenewable) ? UserText.subscriptionRenews : UserText.subscriptionExpires
         self.subscriptionDetails = UserText.subscriptionInfo(status: statusString, expiration: dateFormatter.string(from: date))
         self.subscriptionType = product == Constants.monthlyProductID ? UserText.subscriptionMonthly : UserText.subscriptionAnnual
     }
     
     func removeSubscription() {
         AccountManager().signOut()
-        let messageView = ActionMessageView()
+        _ = ActionMessageView()
         ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation,
                                   presentationLocation: .withoutBottomBar)
     }
@@ -135,7 +128,5 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         subscriptionUpdateTimer?.invalidate()
         signOutObserver = nil
     }
-    
-    
 }
 #endif

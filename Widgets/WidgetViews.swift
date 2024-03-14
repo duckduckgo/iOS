@@ -17,8 +17,8 @@
 //  limitations under the License.
 //
 
-import WidgetKit
 import SwiftUI
+import WidgetKit
 
 struct FavoriteView: View {
 

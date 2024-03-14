@@ -17,8 +17,8 @@
 //  limitations under the License.
 //
 
-import Foundation
 import BrowserServicesKit
+import Foundation
 
 public extension URL {
 

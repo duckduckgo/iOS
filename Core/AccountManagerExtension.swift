@@ -1,5 +1,5 @@
 //
-//  Subscription.swift
+//  AccountManagerExtension.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,8 +17,15 @@
 //  limitations under the License.
 //
 
-import Foundation
+#if SUBSCRIPTION
 
-struct Subscription: Encodable {
-    let token: String
+import Foundation
+import Subscription
+
+public extension AccountManager {
+    convenience init() {
+        self.init(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+    }
 }
+
+#endif

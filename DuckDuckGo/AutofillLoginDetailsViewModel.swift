@@ -19,14 +19,14 @@
 
 // swiftlint:disable file_length
 
-import Foundation
 import BrowserServicesKit
 import Common
-import SwiftUI
 import Core
-import DesignResourcesKit
-import SecureStorage
 import DDGSync
+import DesignResourcesKit
+import Foundation
+import SecureStorage
+import SwiftUI
 
 protocol AutofillLoginDetailsViewModelDelegate: AnyObject {
     func autofillLoginDetailsViewModelDidSave()

@@ -108,7 +108,8 @@ class MainViewController: UIViewController {
     private var emailCancellables = Set<AnyCancellable>()
     
 #if NETWORK_PROTECTION
-    private var netpCancellables = Set<AnyCancellable>()
+    private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
+    private var vpnCancellables = Set<AnyCancellable>()
 #endif
 
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
@@ -160,6 +161,7 @@ class MainViewController: UIViewController {
         fatalError("Use init?(code:")
     }
     
+    var historyManager: HistoryManager
     var viewCoordinator: MainViewCoordinator!
     
 #if APP_TRACKING_PROTECTION
@@ -167,6 +169,7 @@ class MainViewController: UIViewController {
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
         appTrackingProtectionDatabase: CoreDataDatabase,
+        historyManager: HistoryManager,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
         appSettings: AppSettings = AppUserDefaults()
@@ -174,6 +177,7 @@ class MainViewController: UIViewController {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
+        self.historyManager = historyManager
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
@@ -189,12 +193,14 @@ class MainViewController: UIViewController {
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
+        historyManager: HistoryManager,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
         appSettings: AppSettings
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
+        self.historyManager = historyManager
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
@@ -705,6 +711,7 @@ class MainViewController: UIViewController {
         tabManager = TabManager(model: tabsModel,
                                 previewsSource: previewsSource,
                                 bookmarksDatabase: bookmarksDatabase,
+                                historyManager: historyManager,
                                 syncService: syncService,
                                 delegate: self)
     }
@@ -1333,28 +1340,60 @@ class MainViewController: UIViewController {
             .sink { [weak self] notification in
                 self?.onNetworkProtectionAccountSignIn(notification)
             }
-            .store(in: &netpCancellables)
-    }
-    
-    @objc
-    private func onNetworkProtectionAccountSignIn(_ notification: Notification) {
-        guard let token = AccountManager().accessToken else {
-            assertionFailure("[NetP Subscription] AccountManager signed in but token could not be retrieved")
-            return
-        }
+            .store(in: &vpnCancellables)
 
-        VPNSettings(defaults: .networkProtectionGroupDefaults).resetEntitlementMessaging()
-        print("[NetP Subscription] Reset expired entitlement messaging")
+        NotificationCenter.default.publisher(for: .vpnEntitlementMessagingDidChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.onNetworkProtectionEntitlementMessagingChange()
+            }
+            .store(in: &vpnCancellables)
 
-        Task {
-            do {
-                // todo - https://app.asana.com/0/0/1206541966681608/f
-                try NetworkProtectionKeychainTokenStore().store(NetworkProtectionKeychainTokenStore.makeToken(from: token))
-                print("[NetP Subscription] Stored derived NetP auth token")
-            } catch {
-                print("[NetP Subscription] Failed to store derived NetP auth token: \(error)")
+        let notificationCallback: CFNotificationCallback = { _, _, name, _, _ in
+            if let name {
+                NotificationCenter.default.post(name: Notification.Name(name.rawValue as String),
+                                                object: nil)
             }
         }
+
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(),
+                                        UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque()),
+                                        notificationCallback,
+                                        Notification.Name.vpnEntitlementMessagingDidChange.rawValue as CFString,
+                                        nil, .deliverImmediately)
+    }
+
+    private func onNetworkProtectionEntitlementMessagingChange() {
+        if tunnelDefaults.showEntitlementAlert {
+            presentExpiredEntitlementAlert()
+        }
+
+        presentExpiredEntitlementNotification()
+    }
+
+    private func presentExpiredEntitlementAlert() {
+        let alertController = CriticalAlerts.makeExpiredEntitlementAlert { [weak self] in
+            self?.segueToPrivacyPro()
+        }
+        dismiss(animated: true) {
+            self.present(alertController, animated: true, completion: nil)
+            self.tunnelDefaults.showEntitlementAlert = false
+        }
+    }
+
+    private func presentExpiredEntitlementNotification() {
+        let presenter = NetworkProtectionNotificationsPresenterTogglableDecorator(
+            settings: VPNSettings(defaults: .networkProtectionGroupDefaults),
+            defaults: .networkProtectionGroupDefaults,
+            wrappee: NetworkProtectionUNNotificationPresenter()
+        )
+        presenter.showEntitlementNotification()
+    }
+
+    @objc
+    private func onNetworkProtectionAccountSignIn(_ notification: Notification) {
+        tunnelDefaults.resetEntitlementMessaging()
+        print("[NetP Subscription] Reset expired entitlement messaging")
     }
 #endif
 
@@ -1502,6 +1541,11 @@ extension MainViewController: BrowserChromeDelegate {
     // 1.0 - full size, 0.0 - hidden
     private func updateToolbarConstant(_ ratio: CGFloat) {
         var bottomHeight = toolbarHeight
+        if viewCoordinator.addressBarPosition.isBottom {
+            // When position is set to bottom, contentContainer is pinned to top
+            // of navigationBarContainer, hence the adjustment.
+            bottomHeight += viewCoordinator.navigationBarContainer.frame.height
+        }
         bottomHeight += view.safeAreaInsets.bottom
         let multiplier = viewCoordinator.toolbar.isHidden ? 1.0 : 1.0 - ratio
         viewCoordinator.constraints.toolbarBottom.constant = bottomHeight * multiplier
@@ -1833,7 +1877,8 @@ extension MainViewController: TabDelegate {
         showBars()
         currentTab?.dismiss()
 
-        let newTab = tabManager.addURLRequest(navigationAction.request,
+        // Don't use a request or else the page gets stuck on "about:blank"
+        let newTab = tabManager.addURLRequest(nil,
                                               with: configuration,
                                               inheritedAttribution: inheritingAttribution)
         newTab.openedByPage = true
@@ -1913,7 +1958,11 @@ extension MainViewController: TabDelegate {
     func tabDidRequestReportBrokenSite(tab: TabViewController) {
         segueToReportBrokenSite()
     }
-    
+
+    func tab(_ tab: TabViewController, didRequestToggleReportWithCompletionHandler completionHandler: @escaping (Bool) -> Void) {
+        segueToReportBrokenSite(mode: .toggleReport(completionHandler: completionHandler))
+    }
+
     func tabDidRequestBookmarks(tab: TabViewController) {
         Pixel.fire(pixel: .bookmarksButtonPressed,
                    withAdditionalParameters: [PixelParameters.originatedFromMenu: "1"])
@@ -2199,6 +2248,8 @@ extension MainViewController: AutoClearWorker {
         if self.syncService.authState == .inactive {
             self.bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
         }
+
+        await historyManager.removeAllHistory()
 
         self.clearInProgress = false
         

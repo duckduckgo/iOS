@@ -31,11 +31,11 @@ import DDGSync
 class RootDebugViewController: UITableViewController {
 
     enum Row: Int {
-        case resetAutoconsentPrompt = 665
         case crashFatalError = 666
         case crashMemory = 667
         case toggleInspectableWebViews = 668
         case toggleInternalUserState = 669
+        case openVanillaBrowser = 670
     }
 
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -49,22 +49,26 @@ class RootDebugViewController: UITableViewController {
     private var bookmarksDatabase: CoreDataDatabase?
     private var sync: DDGSyncing?
     private var internalUserDecider: DefaultInternalUserDecider?
+    var tabManager: TabManager?
 
     init?(coder: NSCoder,
           sync: DDGSyncing,
           bookmarksDatabase: CoreDataDatabase,
-          internalUserDecider: InternalUserDecider) {
+          internalUserDecider: InternalUserDecider,
+          tabManager: TabManager) {
 
         self.sync = sync
         self.bookmarksDatabase = bookmarksDatabase
         self.internalUserDecider = internalUserDecider as? DefaultInternalUserDecider
+        self.tabManager = tabManager
         super.init(coder: coder)
     }
         
-    func configure(sync: DDGSyncing, bookmarksDatabase: CoreDataDatabase, internalUserDecider: InternalUserDecider) {
+    func configure(sync: DDGSyncing, bookmarksDatabase: CoreDataDatabase, internalUserDecider: InternalUserDecider, tabManager: TabManager) {
         self.sync = sync
         self.bookmarksDatabase = bookmarksDatabase
         self.internalUserDecider = internalUserDecider as? DefaultInternalUserDecider
+        self.tabManager = tabManager
     }
 
     required init?(coder: NSCoder) {
@@ -107,43 +111,38 @@ class RootDebugViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if tableView.cellForRow(at: indexPath)?.tag == Row.resetAutoconsentPrompt.rawValue {
-            AppUserDefaults().clearAutoconsentUserSetting()
+
+        defer {
             tableView.deselectRow(at: indexPath, animated: true)
         }
-        
-        if tableView.cellForRow(at: indexPath)?.tag == Row.crashFatalError.rawValue {
-            fatalError(#function)
-        }
 
-        if tableView.cellForRow(at: indexPath)?.tag == Row.crashMemory.rawValue {
-            var arrays = [String]()
-            while 1 != 2 {
-                arrays.append(UUID().uuidString)
+        if let rowTag = tableView.cellForRow(at: indexPath)?.tag,
+            let row = Row(rawValue: rowTag),
+           let cell = tableView.cellForRow(at: indexPath) {
+
+            switch row {
+            case .crashFatalError:
+                fatalError(#function)
+            case .crashMemory:
+                var arrays = [String]()
+                while 1 != 2 {
+                    arrays.append(UUID().uuidString)
+                }
+            case .toggleInspectableWebViews:
+                let defaults = AppUserDefaults()
+                defaults.inspectableWebViewEnabled.toggle()
+                cell.accessoryType = defaults.inspectableWebViewEnabled ? .checkmark : .none
+                NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.inspectableWebViewsToggled))
+            case .toggleInternalUserState:
+                let newState = !(internalUserDecider?.isInternalUser ?? false)
+                internalUserDecider?.debugSetInternalUserState(newState)
+                cell.accessoryType = newState ? .checkmark : .none
+                NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.inspectableWebViewsToggled))
+            case .openVanillaBrowser:
+                openVanillaBrowser(nil)
             }
         }
-
-        if let cell = tableView.cellForRow(at: indexPath), cell.tag == Row.toggleInspectableWebViews.rawValue {
-            tableView.deselectRow(at: indexPath, animated: true)
-
-            let defaults = AppUserDefaults()
-            defaults.inspectableWebViewEnabled.toggle()
-            cell.accessoryType = defaults.inspectableWebViewEnabled ? .checkmark : .none
-            NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.inspectableWebViewsToggled))
-        }
-
-        if let cell = tableView.cellForRow(at: indexPath), cell.tag == Row.toggleInternalUserState.rawValue {
-            tableView.deselectRow(at: indexPath, animated: true)
-
-            let newState = !(internalUserDecider?.isInternalUser ?? false)
-            internalUserDecider?.debugSetInternalUserState(newState)
-            cell.accessoryType = newState ? .checkmark : .none
-            NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.inspectableWebViewsToggled))
-        }
-
     }
-
 }
 
 extension RootDebugViewController: DiagnosticReportDataSourceDelegate {

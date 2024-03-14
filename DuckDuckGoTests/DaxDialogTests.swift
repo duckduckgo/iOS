@@ -17,13 +17,14 @@
 //  limitations under the License.
 //
 
-import XCTest
-@testable import DuckDuckGo
-@testable import Core
 import BrowserServicesKit
-import TrackerRadarKit
 import ContentBlocking
 import PrivacyDashboard
+import TrackerRadarKit
+import XCTest
+
+@testable import Core
+@testable import DuckDuckGo
 
 private struct MockEntityProvider: EntityProviding {
     

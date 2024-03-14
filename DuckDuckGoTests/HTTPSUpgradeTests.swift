@@ -17,10 +17,10 @@
 //  limitations under the License.
 //
 
-import XCTest
+import BrowserServicesKit
 import OHHTTPStubs
 import OHHTTPStubsSwift
-import BrowserServicesKit
+import XCTest
 
 @testable import Core
 

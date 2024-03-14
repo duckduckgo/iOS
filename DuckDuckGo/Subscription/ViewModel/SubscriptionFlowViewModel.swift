@@ -227,7 +227,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 guard let strongSelf = self else { return }
-                strongSelf.canNavigateBack = value
+                strongSelf.state.canNavigateBack = value
             }
     }
     

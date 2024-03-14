@@ -32,16 +32,25 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     private var signOutObserver: Any?
     private var subscriptionInfo: SubscriptionService.GetSubscriptionResponse?
     
-    @Published var subscriptionDetails: String = ""
-    @Published var subscriptionType: String = ""
-    @Published var shouldDisplayRemovalNotice: Bool = false
-    @Published var shouldDismissView: Bool = false
-    @Published var shouldDisplayGoogleView: Bool = false
-        
-    // Used to display stripe WebUI
-    @Published var stripeViewModel: SubscriptionExternalLinkViewModel?
-    @Published var shouldDisplayStripeView: Bool = false
     private var externalAllowedDomains = ["stripe.com"]
+    
+    struct State {
+        var subscriptionDetails: String = ""
+        var subscriptionType: String = ""
+        var shouldDisplayRemovalNotice: Bool = false
+        var shouldDismissView: Bool = false
+        var shouldDisplayGoogleView: Bool = false
+        
+        // Used to display stripe WebUI
+        var stripeViewModel: SubscriptionExternalLinkViewModel?
+        var shouldDisplayStripeView: Bool = false
+    }
+
+    // Publish the currently selected feature
+    @Published var selectedFeature: SettingsViewModel.SettingsSection?
+    
+    // Read only View State - Should only be modified from the VM
+    @Published private(set) var state = State()
     
     
     init(accountManager: AccountManager = AccountManager()) {
@@ -71,7 +80,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
                                                 billingPeriod: subscription.billingPeriod)
             case .failure:
                 AccountManager().signOut()
-                shouldDismissView = true
+                state.shouldDismissView = true
             }
         }
     }
@@ -81,7 +90,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         case .apple:
             Task { await manageAppleSubscription() }
         case .google:
-            manageGoogleSubscription()
+            displayGoogleView(true)
         case .stripe:
             Task { await manageStripeSubscription() }
         default:
@@ -94,7 +103,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     private func setupNotificationObservers() {
         signOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut, object: nil, queue: .main) { [weak self] _ in
             DispatchQueue.main.async {
-                self?.shouldDismissView = true
+                self?.state.shouldDismissView = true
             }
         }
     }
@@ -112,8 +121,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     private func updateSubscriptionsStatusMessage(status: Subscription.Status, date: Date, product: String, billingPeriod: Subscription.BillingPeriod) {
         let statusString = (status == .autoRenewable) ? UserText.subscriptionRenews : UserText.subscriptionExpires
-        self.subscriptionDetails = UserText.subscriptionInfo(status: statusString, expiration: dateFormatter.string(from: date))
-        self.subscriptionType = billingPeriod == .monthly ? UserText.subscriptionMonthly : UserText.subscriptionAnnual
+        state.subscriptionDetails = UserText.subscriptionInfo(status: statusString, expiration: dateFormatter.string(from: date))
+        state.subscriptionType = billingPeriod == .monthly ? UserText.subscriptionMonthly : UserText.subscriptionAnnual
     }
     
     func removeSubscription() {
@@ -122,6 +131,26 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation,
                                   presentationLocation: .withoutBottomBar)
     }
+    
+    func displayGoogleView(_ value: Bool) {
+        if value != state.shouldDisplayGoogleView {
+            state.shouldDisplayGoogleView = value
+        }
+    }
+    
+    func displayStripeView(_ value: Bool) {
+        if value != state.shouldDisplayStripeView {
+            state.shouldDisplayStripeView = value
+        }
+    }
+    
+    func displayRemovalNotice(_ value: Bool) {
+        if value != state.shouldDisplayRemovalNotice {
+            state.shouldDisplayRemovalNotice = value
+        }
+    }
+    
+    // MARK: -
     
     @MainActor private func manageAppleSubscription() async {
         let url = URL.manageSubscriptionsInAppStoreAppURL
@@ -135,10 +164,6 @@ final class SubscriptionSettingsViewModel: ObservableObject {
             self.openURL(url)
         }
     }
-    
-    private func manageGoogleSubscription() {
-        shouldDisplayGoogleView = true
-    }
          
     private func manageStripeSubscription() async {
         guard let token = accountManager.accessToken, let externalID = accountManager.externalID else { return }
@@ -147,17 +172,17 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         // Get Stripe Customer Portal URL and update the model
         if case .success(let response) = serviceResponse {
             guard let url = URL(string: response.customerPortalUrl) else { return }
-            if let existingModel = stripeViewModel {
+            if let existingModel = state.stripeViewModel {
                 existingModel.url = url
             } else {
                 let model = SubscriptionExternalLinkViewModel(url: url, allowedDomains: externalAllowedDomains)
                 DispatchQueue.main.async {
-                    self.stripeViewModel = model
+                    self.state.stripeViewModel = model
                 }
             }
         }
         DispatchQueue.main.async {
-            self.shouldDisplayStripeView = true
+            self.displayStripeView(true)
         }
     }
 

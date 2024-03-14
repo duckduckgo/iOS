@@ -139,12 +139,16 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     @MainActor
     func showActivationFlow(_ visible: Bool) {
-        self.state.shouldNavigateToActivationFlow = visible
+        if visible != state.shouldDismissView {
+            self.state.shouldNavigateToActivationFlow = visible
+        }
     }
     
     @MainActor
     func showSubscriptionFlow(_ visible: Bool) {
-        self.state.shouldNavigateToSubscriptionFlow = visible
+        if visible != state.shouldNavigateToSubscriptionFlow {
+            self.state.shouldNavigateToSubscriptionFlow = visible
+        }
     }
     
     @MainActor

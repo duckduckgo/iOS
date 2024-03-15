@@ -86,15 +86,21 @@ struct SubscriptionEmailView: View {
             shouldDisplayNavigationError = value
         }
         
-        .onChange(of: viewModel.state.shouldDismissView) { value in
-            if value {
+        // Observe changes to shouldDismissView
+        .onChange(of: viewModel.state.shouldDismissView) { shouldDismiss in
+            if shouldDismiss {
                 dismiss()
+
+                // Reset shouldDismissView after dismissal to ensure it can trigger again
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    viewModel.resetDismissalState()
+                }
             }
         }
         
-        .onChange(of: viewModel.state.shouldDismissStack) { value in
+        .onChange(of: viewModel.state.shouldDismissView) { value in
             if value {
-                onDismissStack?()
+                dismiss()
             }
         }
         

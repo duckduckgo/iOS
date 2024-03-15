@@ -93,6 +93,10 @@ final class SubscriptionEmailViewModel: ObservableObject {
         }
     }
     
+    func resetDismissalState() {
+        state.shouldDismissView = false
+    }
+    
     func onAppear() {
         Task { await initializeView() }
         webViewModel.navigationCoordinator.navigateTo(url: emailURL )
@@ -162,15 +166,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
                 }
             }
         .store(in: &cancellables)
-        
-        // WebViewModel Observers
-        webViewModel.$canGoBack
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let strongSelf = self else { return }
-            }
-            .store(in: &cancellables)
-
         
         webViewModel.$navigationError
             .receive(on: DispatchQueue.main)

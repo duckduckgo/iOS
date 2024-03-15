@@ -485,7 +485,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if NETWORK_PROTECTION
         widgetRefreshModel.refreshVPNWidget()
 
-        if vpnFeatureVisibilty.shouldShowThankYouMessaging() {
+        if vpnFeatureVisibilty.shouldShowThankYouMessaging() && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
             presentVPNEarlyAccessOverAlert()
         }
 

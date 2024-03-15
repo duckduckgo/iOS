@@ -88,7 +88,7 @@ struct CriticalAlerts {
     }
 
     static func makeVPNEarlyAccessOverAlert() -> UIAlertController {
-        let alertController = UIAlertController(title: UserText.vpnAccessRevokedAlertTitle,
+        let alertController = UIAlertController(title: UserText.vpnEarlyAccessOverAlertTitle,
                                                 message: UserText.vpnEarlyAccessOverAlertMessage,
                                                 preferredStyle: .alert)
         alertController.overrideUserInterfaceStyle()

@@ -47,7 +47,7 @@ struct SettingsDataClearingView: View {
                                   isButton: true)
             }
         }
-        .applySettingsListModifiers(title: "Appearance",
+        .applySettingsListModifiers(title: "Data Clearing",
                                     displayMode: .inline,
                                     viewModel: viewModel)
     }

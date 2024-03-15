@@ -34,16 +34,14 @@ struct SettingsNextStepsView: View {
                 SettingsCellView(label: "Add Widget to Home Screen",
                                  image: Image("AddWidget"))
             }
-            SettingsCellView(label: "Set Your Address Bar Position",
-                             image: Image("AddressBarPosition"),
-                             action: { /*TODO*/ },
-                             disclosureIndicator: true,
-                             isButton: true)
-            SettingsCellView(label: "Enable Voice Search",
-                             image: Image("AddressBarPosition"),
-                             action: { /*TODO*/ },
-                             disclosureIndicator: true,
-                             isButton: true)
+            NavigationLink(destination: SettingsAppearanceView().environmentObject(viewModel)) {
+                SettingsCellView(label: "Set Your Address Bar Position",
+                                 image: Image("AddressBarPosition"))
+            }
+            NavigationLink(destination: SettingsAccessibilityView().environmentObject(viewModel)) {
+                SettingsCellView(label: "Enable Voice Search",
+                                 image: Image("AddressBarPosition"))
+            }
         }
 
     }

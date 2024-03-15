@@ -1,5 +1,5 @@
 //
-//  SettingsView.swift
+//  SettingsRootView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -51,12 +51,6 @@ struct InsetGroupedListStyleModifier: ViewModifier {
     }
 }
 
-extension View {
-    func conditionalInsetGroupedListStyle() -> some View {
-        self.modifier(InsetGroupedListStyleModifier())
-    }
-}
-
 struct SettingsListModifiers: ViewModifier {
     @EnvironmentObject var viewModel: SettingsViewModel
     let title: String
@@ -78,6 +72,10 @@ struct SettingsListModifiers: ViewModifier {
 }
 
 extension View {
+    func conditionalInsetGroupedListStyle() -> some View {
+        self.modifier(InsetGroupedListStyleModifier())
+    }
+
     func applySettingsListModifiers(title: String, displayMode: NavigationBarItem.TitleDisplayMode = .inline, viewModel: SettingsViewModel) -> some View {
         self.modifier(SettingsListModifiers(title: title, displayMode: displayMode))
             .environmentObject(viewModel)

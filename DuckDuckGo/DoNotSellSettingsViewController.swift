@@ -20,6 +20,7 @@
 import UIKit
 import Core
 
+//TODO: REMOVE
 class DoNotSellSettingsViewController: UITableViewController {
 
     @IBOutlet var labels: [UILabel]!

@@ -57,7 +57,7 @@ struct SettingsAccessibilityView: View {
                 shouldShowNoMicrophonePermissionAlert = value
             }
         }
-        .applySettingsListModifiers(title: "Appearance",
+        .applySettingsListModifiers(title: "Accessibility",
                                     displayMode: .inline,
                                     viewModel: viewModel)
     }

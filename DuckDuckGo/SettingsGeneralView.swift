@@ -33,6 +33,12 @@ struct SettingsGeneralView: View {
                                  accesory: .toggle(isOn: viewModel.applicationLockBinding))
 
             }
+
+            Section(header: Text("Private Search")) {
+                SettingsCellView(label: UserText.settingsAutocomplete,
+                                 accesory: .toggle(isOn: viewModel.autocompleteBinding))
+            }
+
             Section(header: Text(UserText.settingsCustomizeSection),
                     footer: Text(UserText.settingsAssociatedAppsDescription)) {
 

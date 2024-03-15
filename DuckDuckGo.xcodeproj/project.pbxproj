@@ -115,6 +115,11 @@
 		1DEAADEA2BA4539800E25A97 /* SettingsAppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADE92BA4539800E25A97 /* SettingsAppearanceView.swift */; };
 		1DEAADEC2BA45B4500E25A97 /* SettingsAccessibilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADEB2BA45B4400E25A97 /* SettingsAccessibilityView.swift */; };
 		1DEAADEE2BA45DFE00E25A97 /* SettingsDataClearingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADED2BA45DFE00E25A97 /* SettingsDataClearingView.swift */; };
+		1DEAADF02BA46E0700E25A97 /* PrivateSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADEF2BA46E0600E25A97 /* PrivateSearchView.swift */; };
+		1DEAADF22BA4716C00E25A97 /* SettingsStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADF12BA4716C00E25A97 /* SettingsStatus.swift */; };
+		1DEAADF42BA47B5300E25A97 /* WebTrackingProtectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADF32BA47B5300E25A97 /* WebTrackingProtectionView.swift */; };
+		1DEAADF62BA4809400E25A97 /* CookiePopUpProtectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADF52BA4809400E25A97 /* CookiePopUpProtectionView.swift */; };
+		1DEAADF92BA4892600E25A97 /* SettingsPrivacyProView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADF82BA4892600E25A97 /* SettingsPrivacyProView.swift */; };
 		1E016AB42949FEB500F21625 /* OmniBarNotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E016AB32949FEB500F21625 /* OmniBarNotificationViewModel.swift */; };
 		1E05D1D629C46EBB00BF9A1F /* DailyPixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E05D1D529C46EBB00BF9A1F /* DailyPixel.swift */; };
 		1E05D1D829C46EDA00BF9A1F /* TimedPixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E05D1D729C46EDA00BF9A1F /* TimedPixel.swift */; };
@@ -1253,6 +1258,11 @@
 		1DEAADE92BA4539800E25A97 /* SettingsAppearanceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsAppearanceView.swift; sourceTree = "<group>"; };
 		1DEAADEB2BA45B4400E25A97 /* SettingsAccessibilityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsAccessibilityView.swift; sourceTree = "<group>"; };
 		1DEAADED2BA45DFE00E25A97 /* SettingsDataClearingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsDataClearingView.swift; sourceTree = "<group>"; };
+		1DEAADEF2BA46E0600E25A97 /* PrivateSearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateSearchView.swift; sourceTree = "<group>"; };
+		1DEAADF12BA4716C00E25A97 /* SettingsStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStatus.swift; sourceTree = "<group>"; };
+		1DEAADF32BA47B5300E25A97 /* WebTrackingProtectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebTrackingProtectionView.swift; sourceTree = "<group>"; };
+		1DEAADF52BA4809400E25A97 /* CookiePopUpProtectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookiePopUpProtectionView.swift; sourceTree = "<group>"; };
+		1DEAADF82BA4892600E25A97 /* SettingsPrivacyProView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPrivacyProView.swift; sourceTree = "<group>"; };
 		1E016AB32949FEB500F21625 /* OmniBarNotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniBarNotificationViewModel.swift; sourceTree = "<group>"; };
 		1E05D1D529C46EBB00BF9A1F /* DailyPixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPixel.swift; sourceTree = "<group>"; };
 		1E05D1D729C46EDA00BF9A1F /* TimedPixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimedPixel.swift; sourceTree = "<group>"; };
@@ -3171,6 +3181,7 @@
 			isa = PBXGroup;
 			children = (
 				1DEAADE32BA386C600E25A97 /* PrivacyProtections */,
+				1DEAADF72BA488E600E25A97 /* Privacy Pro */,
 				1DEAADE42BA386D100E25A97 /* MainSettings */,
 				1DEAADE52BA386E000E25A97 /* NextSteps */,
 				1DEAADE62BA386E800E25A97 /* Others */,
@@ -3182,6 +3193,9 @@
 			isa = PBXGroup;
 			children = (
 				1DDF40282BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift */,
+				1DEAADEF2BA46E0600E25A97 /* PrivateSearchView.swift */,
+				1DEAADF32BA47B5300E25A97 /* WebTrackingProtectionView.swift */,
+				1DEAADF52BA4809400E25A97 /* CookiePopUpProtectionView.swift */,
 			);
 			name = PrivacyProtections;
 			sourceTree = "<group>";
@@ -3213,6 +3227,14 @@
 				1D200C9A2BA31A6A00108701 /* AboutView.swift */,
 			);
 			name = Others;
+			sourceTree = "<group>";
+		};
+		1DEAADF72BA488E600E25A97 /* Privacy Pro */ = {
+			isa = PBXGroup;
+			children = (
+				1DEAADF82BA4892600E25A97 /* SettingsPrivacyProView.swift */,
+			);
+			name = "Privacy Pro";
 			sourceTree = "<group>";
 		};
 		1E162603296840790004127F /* SwiftUI */ = {
@@ -4779,6 +4801,7 @@
 				D6E83C472B20C812006C8AFB /* SettingsHostingController.swift */,
 				D6E83C112B1E6AB3006C8AFB /* SettingsView.swift */,
 				D6E83C302B1EA309006C8AFB /* SettingsCell.swift */,
+				1DEAADF12BA4716C00E25A97 /* SettingsStatus.swift */,
 				D6E83C322B1F1279006C8AFB /* Sections */,
 				85449EF623FDA03100512AAF /* UIkit */,
 			);
@@ -6669,6 +6692,7 @@
 				D68DF81C2B58302E0023DBEA /* SubscriptionRestoreView.swift in Sources */,
 				D664C7CE2B289AA200CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift in Sources */,
 				EE9D68DC2AE16AE100B55EF4 /* NotificationsAuthorizationController.swift in Sources */,
+				1DEAADF92BA4892600E25A97 /* SettingsPrivacyProView.swift in Sources */,
 				AA3D854923DA1DFB00788410 /* AppIcon.swift in Sources */,
 				D6E83C2E2B1EA06E006C8AFB /* SettingsViewModel.swift in Sources */,
 				8590CB612684D0600089F6BF /* CookieDebugViewController.swift in Sources */,
@@ -6776,6 +6800,7 @@
 				1E8AD1C927BFAD1500ABA377 /* DirectoryMonitor.swift in Sources */,
 				377D80222AB48554002AF251 /* FavoritesDisplayModeSyncHandler.swift in Sources */,
 				1E8AD1D127C000AB00ABA377 /* OngoingDownloadRow.swift in Sources */,
+				1DEAADF02BA46E0700E25A97 /* PrivateSearchView.swift in Sources */,
 				85058366219AE9EA00ED4EDB /* HomePageConfiguration.swift in Sources */,
 				EE0153E12A6EABE0002A8B26 /* NetworkProtectionConvenienceInitialisers.swift in Sources */,
 				C17B595B2A03AAD30055F2D1 /* PasswordGenerationPromptView.swift in Sources */,
@@ -6807,6 +6832,7 @@
 				EE458D142ABB652900FC651A /* NetworkProtectionDebugUtilities.swift in Sources */,
 				8528AE7C212EF4A200D0BD74 /* AppRatingPrompt.swift in Sources */,
 				CB2A7EEF283D185100885F67 /* RulesCompilationMonitor.swift in Sources */,
+				1DEAADF22BA4716C00E25A97 /* SettingsStatus.swift in Sources */,
 				C18ED43C2AB8364400BF3805 /* FileTextPreviewDebugViewController.swift in Sources */,
 				1EEF12502851016B003DDE57 /* PrivacyIconAndTrackersAnimator.swift in Sources */,
 				31CB4251273AF50700FA0F3F /* SpeechRecognizerProtocol.swift in Sources */,
@@ -7035,10 +7061,12 @@
 				F1D796EE1E7AF2EB0019D451 /* UIViewControllerExtension.swift in Sources */,
 				1EE411F12857C3640003FE64 /* TrackerAnimationImageProvider.swift in Sources */,
 				1E7A711C2934EEBC00B7EA19 /* OmniBarNotification.swift in Sources */,
+				1DEAADF42BA47B5300E25A97 /* WebTrackingProtectionView.swift in Sources */,
 				02EC02C429AFA33000557F1A /* AppTPBreakageFormView.swift in Sources */,
 				F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */,
 				BD862E092B30F63E0073E2EE /* VPNMetadataCollector.swift in Sources */,
 				D6E83C682B23B6A3006C8AFB /* FontSettings.swift in Sources */,
+				1DEAADF62BA4809400E25A97 /* CookiePopUpProtectionView.swift in Sources */,
 				31EF52E1281B3BDC0034796E /* AutofillLoginListItemViewModel.swift in Sources */,
 				1E4FAA6627D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift in Sources */,
 				D6D95CE12B6D52DA00960317 /* RootPresentationMode.swift in Sources */,

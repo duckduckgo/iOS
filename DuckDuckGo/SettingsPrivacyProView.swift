@@ -1,5 +1,5 @@
 //
-//  SettingsOthersView.swift
+//  SettingsPrivacyProView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -20,25 +20,20 @@
 import SwiftUI
 import UIKit
 
-struct SettingsOthersView: View {
+struct SettingsPrivacyProView: View {
 
     @EnvironmentObject var viewModel: SettingsViewModel
 
     var body: some View {
         Section {
-            NavigationLink(destination: AboutView().environmentObject(viewModel)) {
-                SettingsCellView(label: "About",
-                                 image: Image("LogoIcon"))
+#if SUBSCRIPTION
+            if #available(iOS 15, *) {
+                NavigationLink(destination: SettingsSubscriptionView().environmentObject(viewModel)) {
+                    SettingsCellView(label: "Privacy Pro",
+                                     image: Image("PrivacyPro"))
+                }
             }
-            SettingsCellView(label: "Share Feedback",
-                             image: Image("Feedback"),
-                             action: { viewModel.presentLegacyView(.feedback) },
-                             isButton: true)
-            SettingsCellView(label: "DuckDuckGo on Other Platforms",
-                             image: Image("OtherPlatforms"),
-                             action: { viewModel.openOtherPlatforms() },
-                             webLinkIndicator: true,
-                             isButton: true)
+#endif
         }
 
     }

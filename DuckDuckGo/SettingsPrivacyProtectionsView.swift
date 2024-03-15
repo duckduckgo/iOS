@@ -26,36 +26,52 @@ struct SettingsPrivacyProtectionsView: View {
 
     var body: some View {
         Section(header: Text("Privacy Protections")) {
+            // Default Browser
             SettingsCellView(label: "Default Browser",
-                             subtitle: "Make DuckDuckGo your default",
                              image: Image("DefaultBrowser"),
-                             action: { viewModel.presentLegacyView(.gpc) },
-                             disclosureIndicator: true,
+                             action: { viewModel.setAsDefaultBrowser() },
+                             webLinkIndicator: true,
                              isButton: true)
-            SettingsCellView(label: "Private Search",
-                             subtitle: "Search without being tracked",
-                             image: Image("Search"),
-                             action: { viewModel.presentLegacyView(.gpc) },
-                             disclosureIndicator: true,
-                             isButton: true)
-            SettingsCellView(label: "Web Tracking Protection",
-                             subtitle: "Automatically block web trackers",
-                             image: Image("WebTrackingProtection"),
-                             action: { viewModel.presentLegacyView(.gpc) },
-                             disclosureIndicator: true,
-                             isButton: true)
-            SettingsCellView(label: "Cookie Pop-Up Protection",
-                             subtitle: "Banish cookies & hide the pop-ups",
-                             image: Image("CookiePopUpProtection"),
-                             action: { viewModel.presentLegacyView(.gpc) },
-                             disclosureIndicator: true,
-                             isButton: true)
+
+            // Private Search
+            NavigationLink(destination: PrivateSearchView().environmentObject(viewModel)) {
+                SettingsCellView(label: "Private Search",
+                                 image: Image("Search"),
+                                 statusIndicator: StatusIndicatorView(status: .on))
+            }
+
+            // Web Tracking Protection
+            NavigationLink(destination: WebTrackingProtectionView().environmentObject(viewModel)) {
+                SettingsCellView(label: "Web Tracking Protection",
+                                 image: Image("WebTrackingProtection"),
+                                 statusIndicator: StatusIndicatorView(status: .on))
+            }
+
+            // Cookie Pop-Up Protection
+            NavigationLink(destination: CookiePopUpProtectionView().environmentObject(viewModel)) {
+                SettingsCellView(label: "Cookie Pop-Up Protection",
+                                 image: Image("CookiePopUpProtection"),
+                                 statusIndicator: StatusIndicatorView(status: viewModel.cookiePopUpProtectionStatus))
+            }
+
+            // Email Protection
             SettingsCellView(label: "Email Protection",
-                             subtitle: "Block email trackers",
                              image: Image("EmailProtection"),
-                             action: { viewModel.presentLegacyView(.gpc) },
+                             action: { viewModel.openEmailProtection() },
+                             statusIndicator: StatusIndicatorView(status: viewModel.emailProtectionStatus),
                              disclosureIndicator: true,
                              isButton: true)
+
+            // Network Protection
+#if NETWORK_PROTECTION
+            if viewModel.state.networkProtection.enabled {
+                SettingsCellView(label: UserText.netPNavTitle,
+                                 image: Image("NetworkProtection"),
+                                 action: { viewModel.presentLegacyView(.netP) },
+                                 disclosureIndicator: true,
+                                 isButton: true)
+            }
+#endif
         }
 
     }

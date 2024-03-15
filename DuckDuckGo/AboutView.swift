@@ -81,7 +81,7 @@ struct AboutViewVersion: View {
     }
 }
 
-private extension View {
+extension View {
     
     @ViewBuilder func tintIfAvailable(_ color: Color) -> some View {
         if #available(iOS 16.0, *) {

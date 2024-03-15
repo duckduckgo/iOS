@@ -166,6 +166,25 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
+    var gpcBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.sendDoNotSell },
+            set: {
+                self.appSettings.sendDoNotSell = $0
+                self.state.sendDoNotSell = $0
+                NotificationCenter.default.post(name: AppUserDefaults.Notifications.doNotSellStatusChange, object: nil)
+            }
+        )
+    }
+    var autoconsentBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.autoconsentEnabled },
+            set: {
+                self.appSettings.autoconsentEnabled = $0
+                self.state.autoconsentEnabled = $0
+            }
+        )
+    }
     var voiceSearchEnabledBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.voiceSearchEnabled },
@@ -207,6 +226,15 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
+
+    var cookiePopUpProtectionStatus: StatusIndicator {
+        return appSettings.autoconsentEnabled ? .on : .off
+    }
+
+    var emailProtectionStatus: StatusIndicator {
+        return EmailManager().isSignedIn ? .on : .off
+    }
+
 #if SUBSCRIPTION
     // MARK: Default Init
     init(state: SettingsState? = nil,
@@ -493,6 +521,12 @@ extension SettingsViewModel {
 
     func openOtherPlatforms() {
         UIApplication.shared.open(URL.apps,
+                                  options: [:],
+                                  completionHandler: nil)
+    }
+
+    func openMoreSearchSettings() {
+        UIApplication.shared.open(URL.searchSettings,
                                   options: [:],
                                   completionHandler: nil)
     }

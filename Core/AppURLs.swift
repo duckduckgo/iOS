@@ -34,6 +34,7 @@ public extension URL {
     static let emailProtectionQuickLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/email"))!
     static let aboutLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/about"))!
     static let apps = URL(string: "\(base)/apps")!
+    static let searchSettings = URL(string: "\(base)/settings")!
 
     static let surrogates = URL(string: "\(staticBase)/surrogates.txt")!
 

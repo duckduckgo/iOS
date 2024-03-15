@@ -98,12 +98,6 @@ struct SubscriptionEmailView: View {
             }
         }
         
-        .onChange(of: viewModel.state.shouldDismissView) { value in
-            if value {
-                dismiss()
-            }
-        }
-        
         .navigationTitle(viewModel.viewTitle)
         
         .onAppear(perform: {

@@ -134,16 +134,18 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     func restoreAppstoreTransaction() {
         DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreStart)
         Task {
+            state.transactionStatus = .restoring
             state.activationResult = .unknown
             do {
                 try await subFeature.restoreAccountFromAppStorePurchase()
                 DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreSuccess)
                 state.activationResult = .activated
-                showSubscriptionFlow(true)
+                state.transactionStatus = .idle
             } catch let error {
                 if let specificError = error as? SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError {
                     handleRestoreError(error: specificError)
                 }
+                state.transactionStatus = .idle
             }
         }
     }
@@ -152,13 +154,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     func showActivationFlow(_ visible: Bool) {
         if visible != state.shouldDismissView {
             self.state.shouldNavigateToActivationFlow = visible
-        }
-    }
-    
-    @MainActor
-    func showSubscriptionFlow(_ visible: Bool) {
-        if visible != state.shouldShowWelcomePage {
-            self.state.shouldShowWelcomePage = visible
         }
     }
     

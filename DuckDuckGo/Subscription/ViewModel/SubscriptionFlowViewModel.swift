@@ -92,42 +92,29 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 }
             }
             .store(in: &cancellables)
-                
-        /*
-        subFeature.$activateSubscription
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] value in
-                if value {
-                    // self?.userTappedRestoreButton = true
-                }
-            }
-            .store(in: &cancellables)
-         */
         
-        /*
-        subFeature.$selectedFeature
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] value in
-                if value != nil {
-                    switch value?.feature {
-                    case FeatureName.netP:
-                        UniquePixel.fire(pixel: .privacyProWelcomeVPN)
-                        self?.selectedFeature = .netP
-                    case FeatureName.itr:
-                        UniquePixel.fire(pixel: .privacyProWelcomePersonalInformationRemoval)
-                        self?.selectedFeature = .itr
-                    case FeatureName.dbp:
-                        UniquePixel.fire(pixel: .privacyProWelcomeIdentityRestoration)
-                        self?.selectedFeature = .dbp
-                    default:
-                        break
-                    }
-                    self?.finalizeSubscriptionFlow()
-                }
-                
-            }
-            .store(in: &cancellables)
-         */
+        
+        subFeature.onBackToSettings = {
+            self.webViewModel.navigationCoordinator.navigateTo(url: URL.subscriptionPurchase)
+        }
+        
+         subFeature.onFeatureSelected = { feature in
+             DispatchQueue.main.async {
+                 switch feature {
+                 case .netP:
+                     UniquePixel.fire(pixel: .privacyProWelcomeVPN)
+                     self.selectedFeature = .netP
+                 case .itr:
+                     UniquePixel.fire(pixel: .privacyProWelcomePersonalInformationRemoval)
+                     self.selectedFeature = .itr
+                 case .dbp:
+                     UniquePixel.fire(pixel: .privacyProWelcomeIdentityRestoration)
+                     self.selectedFeature = .dbp
+                 }
+                 self.state.shouldDismissView = true
+             }
+             
+         }
         
         subFeature.$transactionError
             .receive(on: DispatchQueue.main)
@@ -135,7 +122,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
             .sink { [weak self] value in
                 guard let strongSelf = self else { return }
                 if let value {
-                    strongSelf.handleTransactionError(error: value)
+                    Task { await strongSelf.handleTransactionError(error: value) }
                 }
             }
         .store(in: &cancellables)
@@ -143,6 +130,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
     
     // swiftlint:disable:next cyclomatic_complexity
+    @MainActor
     private func handleTransactionError(error: SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError) {
 
         var isStoreError = false
@@ -227,8 +215,20 @@ final class SubscriptionFlowViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 guard let strongSelf = self else { return }
-                strongSelf.state.canNavigateBack = value
+                strongSelf.state.canNavigateBack = false
+                guard let currentURL = self?.webViewModel.url else { return }
+                if strongSelf.backButtonForURL(currentURL: currentURL) {
+                    DispatchQueue.main.async {
+                        strongSelf.state.canNavigateBack = value
+                    }
+                }
             }
+    }
+    
+    private func backButtonForURL(currentURL: URL) -> Bool {
+        return currentURL != URL.subscriptionBaseURL.forComparison() &&
+            currentURL != URL.subscriptionActivateSuccess.forComparison() &&
+            currentURL != URL.subscriptionPurchase.forComparison()
     }
     
     @MainActor
@@ -239,12 +239,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     @MainActor
     private func backButtonEnabled(_ enabled: Bool) {
         state.canNavigateBack = enabled
-    }
-    
-    private func urlRemovingQueryParams(_ url: URL) -> URL? {
-        var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
-        urlComponents?.query = nil // Remove the query string
-        return urlComponents?.url
     }
     
     func initializeViewData() async {
@@ -288,6 +282,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
         await webViewModel.navigationCoordinator.goBack()
     }
     
+    @MainActor
     func clearTransactionError() {
         state.transactionError = nil
     }

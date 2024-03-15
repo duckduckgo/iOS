@@ -64,47 +64,58 @@ struct SubscriptionRestoreView: View {
     
     var body: some View {
         if viewModel.state.isAddingDevice {
-            baseView
-        } else {
-            NavigationView {
+            ZStack {
                 baseView
+            }
+        } else {
+            ZStack {
+                
+                NavigationView {
+                    baseView
+                }
+                if viewModel.state.transactionStatus != .idle {
+                    PurchaseInProgressView(status: getTransactionStatus())
+                }
+              
             }
         }
     }
         
-    
+    @ViewBuilder
     private var baseView: some View {
+       
         Group {
-            ZStack {
-                
-                // Progress View
-                if viewModel.state.transactionStatus != .idle {
-                    PurchaseInProgressView(status: getTransactionStatus())
-                }
-                
-                ScrollView {
-                    VStack(spacing: Constants.sectionSpacing) {
-                        headerView
-                        emailView
-                        footerView
-                        Spacer()
-                        navigationLinks
-                    }.frame(maxWidth: Constants.boxMaxWidth)
-                }
-                .frame(maxWidth: Constants.maxWidth, alignment: .center)
-                .padding(Constants.viewPadding)
-                .background(Color(designSystemColor: .background))
-                .tint(Color(designSystemColor: .icons))
-                
-                .navigationTitle(viewModel.state.viewTitle)
-                .navigationBarBackButtonHidden(viewModel.state.transactionStatus != .idle)
-                .navigationBarTitleDisplayMode(.inline)
-                .applyInsetGroupedListStyle()
-                .navigationBarItems(trailing: closeButton)
-                .tint(Color.init(designSystemColor: .textPrimary))
-                .accentColor(Color.init(designSystemColor: .textPrimary))
+            ScrollView {
+                VStack(spacing: Constants.sectionSpacing) {
+                    headerView
+                    emailView
+                    footerView
+                    Spacer()
+                    
+                    // Hidden link to display Email Activation View
+                    NavigationLink(destination: SubscriptionEmailView(viewModel: viewModel.emailViewModel,
+                                                                      isModal: isModal,
+                                                                      onDismissStack: { viewModel.dismissView() }),
+                                   isActive: $shouldNavigateToActivationFlow) {
+                          EmptyView()
+                    }.isDetailLink(false)
+                    
+                }.frame(maxWidth: Constants.boxMaxWidth)
             }
+            .frame(maxWidth: Constants.maxWidth, alignment: .center)
+            .padding(Constants.viewPadding)
+            .background(Color(designSystemColor: .background))
+            .tint(Color(designSystemColor: .icons))
+            
+            .navigationTitle(viewModel.state.viewTitle)
+            .navigationBarBackButtonHidden(viewModel.state.transactionStatus != .idle)
+            .navigationBarTitleDisplayMode(.inline)
+            .applyInsetGroupedListStyle()
+            .navigationBarItems(trailing: closeButton)
+            .tint(Color.init(designSystemColor: .textPrimary))
+            .accentColor(Color.init(designSystemColor: .textPrimary))
         }
+        
         .alert(isPresented: $isAlertVisible) { getAlert() }
         
         .onChange(of: viewModel.state.activationResult) { result in
@@ -119,14 +130,6 @@ struct SubscriptionRestoreView: View {
         }
         .onChange(of: shouldNavigateToActivationFlow) { result in
             viewModel.showActivationFlow(result)
-        }
-        
-        // Subscription Welcome Page Binding
-        .onChange(of: viewModel.state.shouldShowWelcomePage) { result in
-            shouldShowWelcomePage = result
-        }
-        .onChange(of: shouldShowWelcomePage) { result in
-            viewModel.showSubscriptionFlow(result)
         }
         
         .onChange(of: viewModel.state.shouldDismissView) { result in
@@ -155,24 +158,6 @@ struct SubscriptionRestoreView: View {
         if isModal {
             Button(UserText.subscriptionCloseButton) { viewModel.dismissView() }
         }
-    }
-    
-    @ViewBuilder
-    private var navigationLinks: some View {
-        
-        // Hidden link to display Subscription Welcome Page
-        NavigationLink(destination: SubscriptionFlowView(),
-                       isActive: $shouldShowWelcomePage) {
-            EmptyView()
-        }.isDetailLink(false)
-        
-        // Hidden link to display Email Activation View
-        NavigationLink(destination: SubscriptionEmailView(viewModel: viewModel.emailViewModel,
-                                                          isModal: isModal,
-                                                          onDismissStack: { viewModel.dismissView() }),
-                       isActive: $shouldNavigateToActivationFlow) {
-              EmptyView()
-        }.isDetailLink(false)
     }
     
     private var emailView: some View {
@@ -305,7 +290,7 @@ struct SubscriptionRestoreView: View {
             return Alert(title: Text(UserText.subscriptionRestoreSuccessfulTitle),
                          message: Text(UserText.subscriptionRestoreSuccessfulMessage),
                          dismissButton: .default(Text(UserText.subscriptionRestoreSuccessfulButton)) {
-                        viewModel.showSubscriptionFlow(true)
+                            viewModel.dismissView()
                          }
             )
         case .notFound:

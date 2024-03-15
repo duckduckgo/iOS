@@ -36,7 +36,7 @@ struct SettingsView: View {
         if #available(iOS 15.0, *) {
             
             if let target = deepLinkTarget {
-                NavigationLink(destination: deepLinkdestinationView(for: target),
+                NavigationLink(destination: deepLinkDestinationView(for: target),
                                isActive: $shouldDisplayDeepLinkPush) {
                     EmptyView()
                 }
@@ -87,7 +87,7 @@ struct SettingsView: View {
                content: {
                     if #available(iOS 15.0, *) {
                         if let target = deepLinkTarget {
-                            deepLinkdestinationView(for: target)
+                            deepLinkDestinationView(for: target)
                         }
                     }
                 })
@@ -117,7 +117,7 @@ struct SettingsView: View {
     // MARK: DeepLink Views
     @available(iOS 15.0, *)
     @ViewBuilder
-     func deepLinkdestinationView(for target: SettingsViewModel.SettingsDeepLinkSection) -> some View {
+     func deepLinkDestinationView(for target: SettingsViewModel.SettingsDeepLinkSection) -> some View {
         switch target {
         case .dbp:
             SubscriptionPIRView()

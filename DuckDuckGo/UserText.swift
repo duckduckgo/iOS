@@ -665,7 +665,7 @@ In addition to the details entered into this form, your app issue report will co
     static let vpnAccessRevokedAlertActionCancel = NSLocalizedString("vpn.access-revoked.alert.action.cancel", value: "Dismiss", comment: "Cancel action for the alert when the subscription expires")
 
     static let vpnEarlyAccessOverAlertTitle = NSLocalizedString("vpn.early-access.over.alert.title", value: "DuckDuckGo VPN early access is over", comment: "Alert title for the alert when the early access period is over")
-    static let vpnEarlyAccessOverAlertMessage = NSLocalizedString("vpn.early-access.over.alert.message", value: "Thank you for being a tester! To continue using the VPN, subscribe to DuckDuckGo Privacy Pro and get 40% off with promo code THANKYOU\n\nOffer redeemable in the desktop version of the DuckDuckGo browser by U.S. customers who install from duckduckgo.com/app", comment: "Alert message for the alert when the early access period is over")
+    static let vpnEarlyAccessOverAlertMessage = NSLocalizedString("vpn.early-access.over.alert.message", value: "Thank you for being a tester! To continue using the VPN, subscribe to DuckDuckGo Privacy Pro and get 40% off with promo code THANKYOU\n\nOffer redeemable for a limited time only in the desktop version of the DuckDuckGo browser by U.S. testers  who install from duckduckgo.com/app", comment: "Alert message for the alert when the early access period is over")
     static let vpnEarlyAccessOverAlertAction = NSLocalizedString("vpn.early-access.over.alert.action", value: "OK", comment: "Alert action for the alert when the early access period is over")
 
     // MARK: Notifications

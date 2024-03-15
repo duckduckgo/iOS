@@ -578,8 +578,6 @@ extension SettingsViewModel: AutofillLoginSettingsListViewControllerDelegate {
         onRequestPopLegacyView?()
     }
 }
-// swiftlint:enable file_length
-
 
 // MARK: DeepLinks
 extension SettingsViewModel {
@@ -644,3 +642,4 @@ extension SettingsViewModel {
         }
     }
 }
+// swiftlint:enable file_length

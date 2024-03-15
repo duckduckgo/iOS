@@ -1522,6 +1522,7 @@
 		8544C37A250B823600A0FE73 /* UserText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
 		8546A5492A672959003929BF /* MainViewController+Email.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+Email.swift"; sourceTree = "<group>"; };
 		85480CB229226B1E007E8F13 /* CrashCollectionExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashCollectionExtensionTests.swift; sourceTree = "<group>"; };
+		85481A6A2BA46AFB00F9EFB0 /* AppRatingPrompt 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppRatingPrompt 2.xcdatamodel"; sourceTree = "<group>"; };
 		85482D882462DCD100EDEDD1 /* OpenAction.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OpenAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		85482D8C2462DCD100EDEDD1 /* ActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionViewController.swift; sourceTree = "<group>"; };
 		85482D8F2462DCD100EDEDD1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -10357,9 +10358,10 @@
 		8528AE7F212F15D600D0BD74 /* AppRatingPrompt.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				85481A6A2BA46AFB00F9EFB0 /* AppRatingPrompt 2.xcdatamodel */,
 				8528AE80212F15D600D0BD74 /* AppRatingPrompt.xcdatamodel */,
 			);
-			currentVersion = 8528AE80212F15D600D0BD74 /* AppRatingPrompt.xcdatamodel */;
+			currentVersion = 85481A6A2BA46AFB00F9EFB0 /* AppRatingPrompt 2.xcdatamodel */;
 			path = AppRatingPrompt.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

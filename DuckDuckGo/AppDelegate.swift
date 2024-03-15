@@ -845,9 +845,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func refreshShortcuts() {
 #if NETWORK_PROTECTION
-        guard NetworkProtectionKeychainTokenStore().isFeatureActivated else {
-            return
-        }
+        guard vpnFeatureVisibilty.shouldShowVPNShortcut() else { return }
 
         let items = [
             UIApplicationShortcutItem(type: ShortcutKey.openVPNSettings,

@@ -37,6 +37,9 @@ public protocol NetworkProtectionFeatureVisibility {
     /// Whether to enforce entitlement check
     /// This should always happen post-launch
     func shouldMonitorEntitlement() -> Bool
+
+    /// Whether to show VPN shortcut on the homescreen
+    func shouldShowVPNShortcut() -> Bool
 }
 
 public extension NetworkProtectionFeatureVisibility {
@@ -50,5 +53,9 @@ public extension NetworkProtectionFeatureVisibility {
 
     func shouldKeepWaitlist() -> Bool {
         !isPrivacyProLaunched() && isWaitlistBetaActive() && isWaitlistUser()
+    }
+
+    func shouldShowVPNShortcut() -> Bool {
+        isPrivacyProLaunched() || shouldKeepWaitlist()
     }
 }

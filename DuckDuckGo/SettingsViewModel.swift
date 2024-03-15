@@ -283,8 +283,7 @@ extension SettingsViewModel {
         var enabled = false
         #if NETWORK_PROTECTION
             if #available(iOS 15, *) {
-                let accessController = NetworkProtectionAccessController()
-                enabled = accessController.networkProtectionAccessType() != .none
+                enabled = DefaultNetworkProtectionVisibility().shouldKeepWaitlist()
             }
         #endif
         return SettingsState.NetworkProtection(enabled: enabled, status: "")

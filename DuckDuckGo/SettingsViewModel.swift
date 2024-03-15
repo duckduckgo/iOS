@@ -357,16 +357,16 @@ extension SettingsViewModel {
         case .success(let subscription) where subscription.isActive:
             
             // Check entitlements and update UI accordingly
-            let entitlements: [Entitlement.ProductName] = [.identityTheftRestoration, .dataBrokerProtection, .networkProtection]
+            let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
             for entitlement in entitlements {
-                if case .success = await AccountManager().hasEntitlement(for: entitlement) {
+                if case let .success(result) = await AccountManager().hasEntitlement(for: entitlement) {
                     switch entitlement {
                     case .identityTheftRestoration:
-                        self.shouldShowITP = true
+                        self.shouldShowITP = result
                     case .dataBrokerProtection:
-                        self.shouldShowDBP = true
+                        self.shouldShowDBP = result
                     case .networkProtection:
-                        self.shouldShowNetP = true
+                        self.shouldShowNetP = result
                     case .unknown:
                         return
                     }

@@ -2365,7 +2365,6 @@
 		BD862E0A2B30F9300073E2EE /* VPNFeedbackFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNFeedbackFormView.swift; sourceTree = "<group>"; };
 		BDA583862B98B6C700732FDC /* AccountManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagerExtension.swift; sourceTree = "<group>"; };
 		BDC234F62B27F51100D3C798 /* UniquePixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniquePixel.swift; sourceTree = "<group>"; };
-		BDFF03172BA0C58200F324C9 /* BrowserServicesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BrowserServicesKit; path = ../BrowserServicesKit; sourceTree = "<group>"; };
 		BDFF03192BA39C5A00F324C9 /* NetworkProtectionFeatureVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionFeatureVisibility.swift; sourceTree = "<group>"; };
 		BDFF031C2BA3D2BD00F324C9 /* DefaultNetworkProtectionVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNetworkProtectionVisibility.swift; sourceTree = "<group>"; };
 		BDFF03202BA3D3CF00F324C9 /* NetworkProtectionVisibilityForTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionVisibilityForTunnelProvider.swift; sourceTree = "<group>"; };
@@ -3723,7 +3722,6 @@
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
-				BDFF03172BA0C58200F324C9 /* BrowserServicesKit */,
 				EE3B98EB2A963515002F63A0 /* WidgetsExtensionAlpha.entitlements */,
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				EEB8FDB92A990AEE00EBEDCF /* Configuration-Alpha.xcconfig */,
@@ -10047,7 +10045,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "anh/netp-subscription-clean-up";
+				branch = "anh/netp-pre-launch";
 				kind = branch;
 			};
 		};

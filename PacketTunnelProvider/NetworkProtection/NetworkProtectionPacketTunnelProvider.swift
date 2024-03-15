@@ -234,23 +234,22 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
-#if SUBSCRIPTION && ALPHA
-        let isSubscriptionEnabled = true
-        let tokenStore = NetworkProtectionKeychainTokenStore(
-            keychainType: .dataProtection(.unspecified),
-            errorEvents: nil,
-            isSubscriptionEnabled: isSubscriptionEnabled,
-            accessTokenProvider: { AccountManager().accessToken }
-        )
-#else
-        let isSubscriptionEnabled = false
-        let tokenStore = NetworkProtectionKeychainTokenStore(
-            keychainType: .dataProtection(.unspecified),
-            errorEvents: nil,
-            isSubscriptionEnabled: isSubscriptionEnabled,
-            accessTokenProvider: { nil }
-        )
+        let isSubscriptionEnabled = NetworkProtectionVisibilityForTunnelProvider().isPrivacyProLaunched()
+        let accessTokenProvider: () -> String? = {
+#if SUBSCRIPTION
+            if NetworkProtectionVisibilityForTunnelProvider().shouldMonitoringEntitlement() {
+                return { AccountManager().accessToken }
+            }
 #endif
+            return { nil }
+        }()
+        let tokenStore = NetworkProtectionKeychainTokenStore(
+            keychainType: .dataProtection(.unspecified),
+            errorEvents: nil,
+            isSubscriptionEnabled: isSubscriptionEnabled,
+            accessTokenProvider: accessTokenProvider
+        )
+
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
@@ -318,7 +317,11 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     private static func entitlementCheck() async -> Result<Bool, Error> {
-#if SUBSCRIPTION && ALPHA
+#if SUBSCRIPTION
+        guard NetworkProtectionVisibilityForTunnelProvider().shouldMonitoringEntitlement() else {
+            return .success(true)
+        }
+
         // todo - https://app.asana.com/0/0/1206811466624632/f
         SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
 

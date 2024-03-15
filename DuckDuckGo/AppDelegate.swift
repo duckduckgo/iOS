@@ -75,6 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if NETWORK_PROTECTION
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
+    let vpnFeatureVisibilty = DefaultNetworkProtectionVisibility()
 #endif
 
     private var autoClear: AutoClear?
@@ -303,11 +304,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
 
 #if NETWORK_PROTECTION
-#if SUBSCRIPTION && ALPHA
-        // no-op
-#else
-        VPNWaitlist.shared.registerBackgroundRefreshTaskHandler()
-#endif
+        if vpnFeatureVisibilty.shouldKeepWaitlist() {
+            VPNWaitlist.shared.registerBackgroundRefreshTaskHandler()
+        }
 #endif
 
         RemoteMessaging.registerBackgroundRefreshTaskHandler(
@@ -336,11 +335,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupSubscriptionsEnvironment()
 #endif
 
-#if SUBSCRIPTION && ALPHA
-        // no-op
-#else
-        clearDebugWaitlistState()
-#endif
+        if vpnFeatureVisibilty.shouldKeepWaitlist() {
+            clearDebugWaitlistState()
+        }
 
         AppDependencyProvider.shared.toggleProtectionsCounter.sendEventsIfNeeded()
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
@@ -488,10 +485,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if NETWORK_PROTECTION
         widgetRefreshModel.refreshVPNWidget()
 
-        let configManager = ContentBlocking.shared.privacyConfigurationManager
-        let waitlistBetaActive = configManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlistBetaActive)
-        let vpnIsActivated = NetworkProtectionKeychainTokenStore().isFeatureActivated
-        if !waitlistBetaActive && vpnIsActivated {
+        if vpnFeatureVisibilty.shouldShowThankYouMessaging() {
             presentVPNEarlyAccessOverAlert()
         }
 
@@ -927,15 +921,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 presentNetworkProtectionStatusSettingsModal()
             }
 
-#if SUBSCRIPTION && ALPHA
-            // no-op
-#else
-            if identifier == VPNWaitlist.notificationIdentifier {
+            if vpnFeatureVisibilty.shouldKeepWaitlist(), identifier == VPNWaitlist.notificationIdentifier {
                 presentNetworkProtectionWaitlistModal()
                 DailyPixel.fire(pixel: .networkProtectionWaitlistNotificationLaunched)
             }
-#endif
-            
+
 #endif
         }
 

@@ -22,8 +22,10 @@ import SwiftUI
 import DesignResourcesKit
 import Core
 
+
 #if SUBSCRIPTION
 @available(iOS 15.0, *)
+// swiftlint:disable type_body_length
 struct SubscriptionRestoreView: View {
     
     @Environment(\.dismiss) var dismiss
@@ -334,5 +336,5 @@ struct SubscriptionRestoreView: View {
     }
     
 }
-
+// swiftlint:enable type_body_length
 #endif

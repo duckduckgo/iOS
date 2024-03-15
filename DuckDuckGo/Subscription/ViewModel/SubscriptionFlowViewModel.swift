@@ -135,7 +135,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
        
     }
     
-    // swiftlint:disable:next cyclomatic_complexity
+    // swiftlint:disable cyclomatic_complexity
     @MainActor
     private func handleTransactionError(error: SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError) {
 
@@ -194,6 +194,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailure)
         }
     }
+    // swiftlint:enable cyclomatic_complexity
     
     private func setupWebViewObservers() async {
         webViewModel.$scrollPosition

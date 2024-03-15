@@ -78,17 +78,19 @@ struct SettingsView: View {
         }
         
         // MARK: Deeplink Modifiers
+        
         .sheet(isPresented: $shouldDisplayDeepLinkSheet,
                onDismiss: {
                     viewModel.onAppear()
                     shouldDisplayDeepLinkSheet = false
-               }) {
-            if #available(iOS 15.0, *) {
-                if let target = deepLinkTarget {
-                    deepLinkdestinationView(for: target)
-                }
-            }
-        }
+                },
+               content: {
+                    if #available(iOS 15.0, *) {
+                        if let target = deepLinkTarget {
+                            deepLinkdestinationView(for: target)
+                        }
+                    }
+                })
        
        .onChange(of: viewModel.deepLinkTarget) { link in
            guard let link else { return }
@@ -134,7 +136,6 @@ struct SettingsView: View {
         switch link {
         case .netP:
             viewModel.presentLegacyView(.netP)
-            break
         default:
             return
         }

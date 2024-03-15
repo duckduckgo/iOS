@@ -5755,6 +5755,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D621BB1F2BA4E774007AC6A8 /* PBXTargetDependency */,
 				F143C2EA1E4A4CD400CFDE3A /* PBXTargetDependency */,
 				8390447520BDCE10006461CD /* PBXTargetDependency */,
 				85482D932462DCD100EDEDD1 /* PBXTargetDependency */,
@@ -7423,6 +7424,10 @@
 		B6F997E02B8F383700476735 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = B6F997DF2B8F383700476735 /* SwiftLintPlugin */;
+		};
+		D621BB1F2BA4E774007AC6A8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = D621BB1E2BA4E774007AC6A8 /* SwiftLintPlugin */;
 		};
 		F143C2EA1E4A4CD400CFDE3A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10284,6 +10289,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 854007E52B57FB020001BD98 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
 			productName = ZIPFoundation;
+		};
+		D621BB1E2BA4E774007AC6A8 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */;
+			productName = "plugin:SwiftLintPlugin";
 		};
 		EE8E56892A56BCE400F11DCA /* NetworkProtection */ = {
 			isa = XCSwiftPackageProductDependency;

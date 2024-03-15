@@ -113,6 +113,8 @@
 		1DDF402D2BA09482006850D9 /* SettingsMainSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDF402C2BA09482006850D9 /* SettingsMainSettingsView.swift */; };
 		1DEAADE82BA38AA500E25A97 /* SettingsGeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADE72BA38AA500E25A97 /* SettingsGeneralView.swift */; };
 		1DEAADEA2BA4539800E25A97 /* SettingsAppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADE92BA4539800E25A97 /* SettingsAppearanceView.swift */; };
+		1DEAADEC2BA45B4500E25A97 /* SettingsAccessibilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADEB2BA45B4400E25A97 /* SettingsAccessibilityView.swift */; };
+		1DEAADEE2BA45DFE00E25A97 /* SettingsDataClearingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADED2BA45DFE00E25A97 /* SettingsDataClearingView.swift */; };
 		1E016AB42949FEB500F21625 /* OmniBarNotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E016AB32949FEB500F21625 /* OmniBarNotificationViewModel.swift */; };
 		1E05D1D629C46EBB00BF9A1F /* DailyPixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E05D1D529C46EBB00BF9A1F /* DailyPixel.swift */; };
 		1E05D1D829C46EDA00BF9A1F /* TimedPixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E05D1D729C46EDA00BF9A1F /* TimedPixel.swift */; };
@@ -1249,6 +1251,8 @@
 		1DDF402C2BA09482006850D9 /* SettingsMainSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsMainSettingsView.swift; sourceTree = "<group>"; };
 		1DEAADE72BA38AA500E25A97 /* SettingsGeneralView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsGeneralView.swift; sourceTree = "<group>"; };
 		1DEAADE92BA4539800E25A97 /* SettingsAppearanceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsAppearanceView.swift; sourceTree = "<group>"; };
+		1DEAADEB2BA45B4400E25A97 /* SettingsAccessibilityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsAccessibilityView.swift; sourceTree = "<group>"; };
+		1DEAADED2BA45DFE00E25A97 /* SettingsDataClearingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsDataClearingView.swift; sourceTree = "<group>"; };
 		1E016AB32949FEB500F21625 /* OmniBarNotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniBarNotificationViewModel.swift; sourceTree = "<group>"; };
 		1E05D1D529C46EBB00BF9A1F /* DailyPixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPixel.swift; sourceTree = "<group>"; };
 		1E05D1D729C46EDA00BF9A1F /* TimedPixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimedPixel.swift; sourceTree = "<group>"; };
@@ -3188,6 +3192,8 @@
 				1DDF402C2BA09482006850D9 /* SettingsMainSettingsView.swift */,
 				1DEAADE72BA38AA500E25A97 /* SettingsGeneralView.swift */,
 				1DEAADE92BA4539800E25A97 /* SettingsAppearanceView.swift */,
+				1DEAADEB2BA45B4400E25A97 /* SettingsAccessibilityView.swift */,
+				1DEAADED2BA45DFE00E25A97 /* SettingsDataClearingView.swift */,
 			);
 			name = MainSettings;
 			sourceTree = "<group>";
@@ -6904,6 +6910,7 @@
 				C17B595A2A03AAD30055F2D1 /* PasswordGenerationPromptViewController.swift in Sources */,
 				8531A08E1F9950E6000484F0 /* UnprotectedSitesViewController.swift in Sources */,
 				CBD4F13C279EBF4A00B20FD7 /* HomeMessage.swift in Sources */,
+				1DEAADEC2BA45B4500E25A97 /* SettingsAccessibilityView.swift in Sources */,
 				85C8E61D2B0E47380029A6BD /* BookmarksDatabaseSetup.swift in Sources */,
 				4BBBBA8E2B031B4200D965DA /* VPNWaitlistViewController.swift in Sources */,
 				3132FA2C27A07A1B00DD7A12 /* FilePreview.swift in Sources */,
@@ -6957,6 +6964,7 @@
 				85058369219F424500ED4EDB /* UIColorExtension.swift in Sources */,
 				D6E83C312B1EA309006C8AFB /* SettingsCell.swift in Sources */,
 				85058368219C49E000ED4EDB /* HomeViewSectionRenderers.swift in Sources */,
+				1DEAADEE2BA45DFE00E25A97 /* SettingsDataClearingView.swift in Sources */,
 				EE01EB432AFC1E0A0096AAC9 /* NetworkProtectionVPNLocationView.swift in Sources */,
 				9820EAF522613CD30089094D /* WebProgressWorker.swift in Sources */,
 				B6CB93E5286445AB0090FEB4 /* Base64DownloadSession.swift in Sources */,

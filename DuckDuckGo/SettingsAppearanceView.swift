@@ -1,5 +1,5 @@
 //
-//  SettingsGeneralView.swift
+//  SettingsAppearanceView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -21,33 +21,32 @@ import Core
 import SwiftUI
 import DesignResourcesKit
 
-struct SettingsGeneralView: View {
+struct SettingsAppearanceView: View {
 
     @EnvironmentObject var viewModel: SettingsViewModel
 
     var body: some View {
         List {
-            Section(header: Text(UserText.settingsPrivacySection),
-                    footer: Text(UserText.settingsAutoLockDescription)) {
-                SettingsCellView(label: UserText.settingsAutolock,
-                                 accesory: .toggle(isOn: viewModel.applicationLockBinding))
+            Section {
+                if viewModel.state.addressbar.enabled {
+                    SettingsPickerCellView(label: UserText.settingsAddressBar,
+                                           options: AddressBarPosition.allCases,
+                                           selectedOption: viewModel.addressBarPositionBinding)
+                }
 
-            }
-            Section(header: Text(UserText.settingsCustomizeSection),
-                    footer: Text(UserText.settingsAssociatedAppsDescription)) {
-
-                SettingsCellView(label: UserText.settingsKeyboard,
-                                 action: { viewModel.presentLegacyView(.keyboard) },
+                let image = Image(uiImage: viewModel.state.appIcon.smallImage ?? UIImage())
+                SettingsCellView(label: UserText.settingsIcon,
+                                 action: { viewModel.presentLegacyView(.appIcon ) },
+                                 accesory: .image(image),
                                  disclosureIndicator: true,
                                  isButton: true)
-                SettingsCellView(label: UserText.settingsPreviews,
-                                 accesory: .toggle(isOn: viewModel.longPressBinding))
 
-                SettingsCellView(label: UserText.settingsAssociatedApps,
-                                 accesory: .toggle(isOn: viewModel.universalLinksBinding))
+                SettingsPickerCellView(label: UserText.settingsTheme,
+                                       options: ThemeName.allCases,
+                                       selectedOption: viewModel.themeBinding)
             }
         }
-        .applySettingsListModifiers(title: "General",
+        .applySettingsListModifiers(title: "Appearance",
                                     displayMode: .inline,
                                     viewModel: viewModel)
     }

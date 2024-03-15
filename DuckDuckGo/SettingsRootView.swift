@@ -34,16 +34,9 @@ struct SettingsRootView: View {
             SettingsOthersView()
             SettingsDebugView()
         }
-        .navigationBarTitle(UserText.settingsTitle, displayMode: .inline)
-        .navigationBarItems(trailing: Button(UserText.navigationTitleDone) {
-            viewModel.onRequestDismissSettings?()
-        })
-        .accentColor(Color(designSystemColor: .textPrimary))
-        .environmentObject(viewModel)
-        .conditionalInsetGroupedListStyle()
-        .onAppear {
-            viewModel.onAppear()
-        }
+        .applySettingsListModifiers(title: UserText.settingsTitle,
+                                    displayMode: .inline,
+                                    viewModel: viewModel)
     }
     
 }
@@ -61,5 +54,32 @@ struct InsetGroupedListStyleModifier: ViewModifier {
 extension View {
     func conditionalInsetGroupedListStyle() -> some View {
         self.modifier(InsetGroupedListStyleModifier())
+    }
+}
+
+struct SettingsListModifiers: ViewModifier {
+    @EnvironmentObject var viewModel: SettingsViewModel
+    let title: String
+    let displayMode: NavigationBarItem.TitleDisplayMode
+
+    func body(content: Content) -> some View {
+        content
+            .navigationBarTitle(title, displayMode: displayMode)
+            .navigationBarItems(trailing: Button(UserText.navigationTitleDone) {
+                viewModel.onRequestDismissSettings?()
+            })
+            .accentColor(Color(designSystemColor: .textPrimary))
+            .environmentObject(viewModel)
+            .conditionalInsetGroupedListStyle()
+            .onAppear {
+                viewModel.onAppear()
+            }
+    }
+}
+
+extension View {
+    func applySettingsListModifiers(title: String, displayMode: NavigationBarItem.TitleDisplayMode = .inline, viewModel: SettingsViewModel) -> some View {
+        self.modifier(SettingsListModifiers(title: title, displayMode: displayMode))
+            .environmentObject(viewModel)
     }
 }

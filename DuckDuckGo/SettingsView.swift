@@ -29,9 +29,9 @@ struct SettingsView: View {
     var body: some View {
         List {
             SettingsGeneralViewOld()
-            SettingsSyncView()
+            SettingsSyncViewOld()
             SettingsLoginsView()
-            SettingsAppeareanceView()
+            SettingsAppeareanceViewOld()
             SettingsPrivacyView()
 #if SUBSCRIPTION
             if #available(iOS 15, *) {

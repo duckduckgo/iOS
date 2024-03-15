@@ -1,5 +1,5 @@
 //
-//  SettingsSyncView.swift
+//  SettingsSyncViewOld.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -23,8 +23,8 @@ import UIKit
 import Core
 import DDGSync
 
-struct SettingsSyncView: View {
-    
+struct SettingsSyncViewOld: View {
+
     @EnvironmentObject var viewModel: SettingsViewModel
     @EnvironmentObject var viewProvider: SettingsLegacyViewProvider
     

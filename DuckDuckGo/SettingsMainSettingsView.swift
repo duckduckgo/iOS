@@ -19,6 +19,7 @@
 
 import SwiftUI
 import UIKit
+import SyncUI
 
 struct SettingsMainSettingsView: View {
 
@@ -30,16 +31,15 @@ struct SettingsMainSettingsView: View {
                 SettingsCellView(label: "General",
                                  image: Image("General"))
             }
-            SettingsCellView(label: "Sync & Backup",
+            SettingsCellView(label: SyncUI.UserText.syncTitle,
                              image: Image("Sync"),
-                             action: { viewModel.presentLegacyView(.gpc) },
+                             action: { viewModel.presentLegacyView(.sync) },
                              disclosureIndicator: true,
                              isButton: true)
-            SettingsCellView(label: "Appearance",
-                             image: Image("Appearance"),
-                             action: { viewModel.presentLegacyView(.gpc) },
-                             disclosureIndicator: true,
-                             isButton: true)
+            NavigationLink(destination: SettingsAppearanceView().environmentObject(viewModel)) {
+                SettingsCellView(label: "Appearance",
+                                 image: Image("Appearance"))
+            }
             SettingsCellView(label: "Passwords",
                              image: Image("Passwords"),
                              action: { viewModel.presentLegacyView(.gpc) },

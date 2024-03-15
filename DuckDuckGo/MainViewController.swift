@@ -161,6 +161,7 @@ class MainViewController: UIViewController {
         fatalError("Use init?(code:")
     }
     
+    var historyManager: HistoryManager
     var viewCoordinator: MainViewCoordinator!
     
 #if APP_TRACKING_PROTECTION
@@ -168,6 +169,7 @@ class MainViewController: UIViewController {
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
         appTrackingProtectionDatabase: CoreDataDatabase,
+        historyManager: HistoryManager,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
         appSettings: AppSettings = AppUserDefaults()
@@ -175,6 +177,7 @@ class MainViewController: UIViewController {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
+        self.historyManager = historyManager
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
@@ -190,12 +193,14 @@ class MainViewController: UIViewController {
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
+        historyManager: HistoryManager,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
         appSettings: AppSettings
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
+        self.historyManager = historyManager
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
@@ -706,6 +711,7 @@ class MainViewController: UIViewController {
         tabManager = TabManager(model: tabsModel,
                                 previewsSource: previewsSource,
                                 bookmarksDatabase: bookmarksDatabase,
+                                historyManager: historyManager,
                                 syncService: syncService,
                                 delegate: self)
     }
@@ -1386,23 +1392,8 @@ class MainViewController: UIViewController {
 
     @objc
     private func onNetworkProtectionAccountSignIn(_ notification: Notification) {
-        guard let token = AccountManager().accessToken else {
-            assertionFailure("[NetP Subscription] AccountManager signed in but token could not be retrieved")
-            return
-        }
-
         tunnelDefaults.resetEntitlementMessaging()
         print("[NetP Subscription] Reset expired entitlement messaging")
-
-        Task {
-            do {
-                // todo - https://app.asana.com/0/0/1206541966681608/f
-                try NetworkProtectionKeychainTokenStore().store(NetworkProtectionKeychainTokenStore.makeToken(from: token))
-                print("[NetP Subscription] Stored derived NetP auth token")
-            } catch {
-                print("[NetP Subscription] Failed to store derived NetP auth token: \(error)")
-            }
-        }
     }
 #endif
 
@@ -1967,7 +1958,11 @@ extension MainViewController: TabDelegate {
     func tabDidRequestReportBrokenSite(tab: TabViewController) {
         segueToReportBrokenSite()
     }
-    
+
+    func tab(_ tab: TabViewController, didRequestToggleReportWithCompletionHandler completionHandler: @escaping (Bool) -> Void) {
+        segueToReportBrokenSite(mode: .toggleReport(completionHandler: completionHandler))
+    }
+
     func tabDidRequestBookmarks(tab: TabViewController) {
         Pixel.fire(pixel: .bookmarksButtonPressed,
                    withAdditionalParameters: [PixelParameters.originatedFromMenu: "1"])
@@ -2253,6 +2248,8 @@ extension MainViewController: AutoClearWorker {
         if self.syncService.authState == .inactive {
             self.bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
         }
+
+        await historyManager.removeAllHistory()
 
         self.clearInProgress = false
         

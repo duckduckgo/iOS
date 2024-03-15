@@ -81,7 +81,8 @@ public struct UserText {
     public static let alertDisableProtectionPlaceholder = NSLocalizedString("alert.title.disable.protection.placeholder", value: "www.example.com", comment: "Disable potection alert placeholder - leave as it is")
     public static let messageProtectionDisabled = NSLocalizedString("toast.protection.disabled", value: "Privacy Protection disabled for %@", comment: "Confirmation of an action - populated with a domain name")
     public static let messageProtectionEnabled = NSLocalizedString("toast.protection.enabled", value: "Privacy Protection enabled for %@", comment: "Confirmation of an action - populated with a domain name")
-    
+    public static let messageProtectionDisabledAndToggleReportSent = NSLocalizedString("toast.protection.disabled.and.toggle.report.sent", value: "Privacy Protections disabled for %@ and report sent.", comment: "Confirmation of an action - populated with a domain name")
+
     public static let authAlertTitle = NSLocalizedString("auth.alert.title", value: "Authentication Required", comment: "Authentication Alert Title")
     public static let authAlertEncryptedConnectionMessage = NSLocalizedString("auth.alert.message.encrypted", value: "Sign in to %@. Your login information will be sent securely.", comment: "Authentication Alert - populated with a domain name")
     public static let authAlertPlainConnectionMessage = NSLocalizedString("auth.alert.message.plain", value: "Log in to %@. Your password will be sent insecurely because the connection is unencrypted.", comment: "Authentication Alert - populated with a domain name")
@@ -1095,8 +1096,8 @@ But if you *do* want a peek under the hood, you can find more information about 
             
     // Add to other devices (AppleID / Email)
     public static let subscriptionAddDeviceTitle = NSLocalizedString("subscription.add.device.title", value: "Add Device", comment: "Add to another device view title")
-    public static let subscriptionAddDeviceHeaderTitle = NSLocalizedString("subscription.add.device.header.title", value: "Use your subscription on all your devices", comment: "Add subscription to other device title ")
-    public static let subscriptionAddDeviceDescription = NSLocalizedString("subscription.add.device.description", value: "Access your Privacy Pro subscription on other devices via an email address.", comment: "Subscription Add device Info")
+    public static let subscriptionAddDeviceHeaderTitle = NSLocalizedString("subscription.add.device.header.title", value: "Use your subscription on other devices", comment: "Add subscription to other device title ")
+    public static let subscriptionAddDeviceDescription = NSLocalizedString("subscription.add.device.description", value: "Access your Privacy Pro subscription via an email address.", comment: "Subscription Add device Info")
     public static let subscriptionAvailableInApple = NSLocalizedString("subscription.available.apple", value: "Privacy Pro is available on any device signed in to the same Apple ID.", comment: "Subscription availability message on Apple devices")
     public static let subscriptionManageEmailResendInstructions = NSLocalizedString("subscription.add.device.resend.instructions", value: "Resend Instructions", comment: "Resend activation instructions button")
     
@@ -1133,6 +1134,14 @@ But if you *do* want a peek under the hood, you can find more information about 
     
     public static let subscriptionAppStoreErrorTitle = NSLocalizedString("subscription.restore.general.error.title", value: "Something Went Wrong", comment: "Alert for general error title")
     public static let subscriptionAppStoreErrorMessage = NSLocalizedString("subscription.restore.general.error.message", value: "The App Store was unable to process your purchase. Please try again later.", comment: "Alert for general error message")
+    
+    public static let subscriptionBackendErrorTitle = NSLocalizedString("subscription.restore.backend.error.title", value: "Something Went Wrong", comment: "Alert for general error title")
+    public static let subscriptionBackendErrorMessage = NSLocalizedString("subscription.restore.backend.error.message", value: "We’re having trouble connecting. Please try again later.", comment: "Alert for general error message")
+    public static let subscriptionBackendErrorButton = NSLocalizedString("subscription.restore.backend.error.button", value: "Back to Settings", comment: "Button text for general error message")
+    
+    public static let subscriptionManageBillingGoogleTitle = NSLocalizedString("subscription.billing.google.title", value: "Subscription Plans", comment: "Title for the manage billing page")
+    public static let subscriptionManageBillingGoogleText = NSLocalizedString("subscription.billing.google.text", value: "Your subscription was purchased through the Google Play Store. To renew your subscription, please open Google Play Store subscription settings on a device signed in to the same Google Account used to originally purchase your subscription.", comment: "Text for the manage billing page")
+    
     
     // PIR:
     public static let subscriptionPIRHeroText = NSLocalizedString("subscription.pir.hero", value: "Activate Privacy Pro on desktop to set up Personal Information Removal", comment: "Hero Text for Personal information removal")

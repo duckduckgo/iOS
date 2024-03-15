@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-import Macros
 import SwiftUI
 import WidgetKit
 
@@ -307,7 +306,7 @@ extension Image {
 struct WidgetViews_Previews: PreviewProvider {
 
     static let mockFavorites: [Favorite] = {
-        let duckDuckGoFavorite = Favorite(url: #URL("https://duckduckgo.com/"),
+        let duckDuckGoFavorite = Favorite(url: URL(string: "https://duckduckgo.com/")!,
                                           domain: "duckduckgo.com",
                                           title: "title",
                                           favicon: nil)

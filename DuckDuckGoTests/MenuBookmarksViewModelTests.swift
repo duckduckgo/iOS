@@ -20,7 +20,6 @@
 import Bookmarks
 import DuckDuckGo
 import Foundation
-import Macros
 import Persistence
 import XCTest
 
@@ -36,7 +35,7 @@ private extension MenuBookmarksViewModel {
 
 class MenuBookmarksViewModelTests: XCTestCase {
     
-    let url = #URL("https://test.com")
+    let url = URL(string: "https://test.com")!
     var db: CoreDataDatabase!
     
     override func setUpWithError() throws {

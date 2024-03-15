@@ -23,29 +23,33 @@ import XCTest
 /// Test all permutations according to https://app.asana.com/0/0/1206812323779606/f
 final class NetworkProtectionFeatureVisibilityTests: XCTestCase {
     func testPrivacyProNotYetLaunched() {
-        // Current waitlist user -> VPN works as usual, no thank-you, no PP access, no entitlement check
+        // Current waitlist user -> VPN works as usual, no thank-you, no entitlement check
         let mockWithVPNAccess = NetworkProtectionFeatureVisibilityMocks(with: [.isWaitlistBetaActive, .isWaitlistUser])
         XCTAssertFalse(mockWithVPNAccess.shouldMonitorEntitlement())
         XCTAssertTrue(mockWithVPNAccess.shouldKeepWaitlist())
         XCTAssertFalse(mockWithVPNAccess.shouldShowThankYouMessaging())
+        XCTAssertTrue(mockWithVPNAccess.shouldShowVPNShortcut())
 
         // Not current waitlist user -> Show nothing, use nothing
         let mockWithBetaActive = NetworkProtectionFeatureVisibilityMocks(with: [.isWaitlistBetaActive])
         XCTAssertFalse(mockWithBetaActive.shouldMonitorEntitlement())
         XCTAssertFalse(mockWithBetaActive.shouldKeepWaitlist())
         XCTAssertFalse(mockWithBetaActive.shouldShowThankYouMessaging())
+        XCTAssertFalse(mockWithBetaActive.shouldShowVPNShortcut())
 
         // Waitlist beta OFF, current waitlist user -> Show nothing, use nothing
         let mockWithBetaInactive = NetworkProtectionFeatureVisibilityMocks(with: [.isWaitlistUser])
         XCTAssertFalse(mockWithBetaInactive.shouldMonitorEntitlement())
         XCTAssertFalse(mockWithBetaInactive.shouldKeepWaitlist())
         XCTAssertFalse(mockWithBetaInactive.shouldShowThankYouMessaging())
+        XCTAssertFalse(mockWithBetaInactive.shouldShowVPNShortcut())
 
         // Waitlist beta OFF, not current waitlist user -> Show nothing, use nothing
         let mockWithNothing = NetworkProtectionFeatureVisibilityMocks(with: [])
         XCTAssertFalse(mockWithNothing.shouldMonitorEntitlement())
         XCTAssertFalse(mockWithNothing.shouldKeepWaitlist())
         XCTAssertFalse(mockWithNothing.shouldShowThankYouMessaging())
+        XCTAssertFalse(mockWithNothing.shouldShowVPNShortcut())
     }
 
     func testPrivacyProLaunched() {
@@ -56,24 +60,28 @@ final class NetworkProtectionFeatureVisibilityTests: XCTestCase {
         XCTAssertTrue(mockWithVPNAccess.shouldMonitorEntitlement())
         XCTAssertFalse(mockWithVPNAccess.shouldKeepWaitlist())
         XCTAssertTrue(mockWithVPNAccess.shouldShowThankYouMessaging())
+        XCTAssertTrue(mockWithVPNAccess.shouldShowVPNShortcut())
 
         // Not current waitlist user -> Enforce entitlement check, no more VPN use, no thank-you
         let mockWithBetaActive = baseMock.adding([.isWaitlistBetaActive])
         XCTAssertTrue(mockWithBetaActive.shouldMonitorEntitlement())
         XCTAssertFalse(mockWithBetaActive.shouldKeepWaitlist())
         XCTAssertFalse(mockWithBetaActive.shouldShowThankYouMessaging())
+        XCTAssertTrue(mockWithBetaActive.shouldShowVPNShortcut())
 
         // Waitlist beta OFF, current waitlist user -> Show thank-you, enforce entitlement check, no more VPN use
         let mockWithBetaInactive = baseMock.adding([.isWaitlistUser])
         XCTAssertTrue(mockWithBetaInactive.shouldMonitorEntitlement())
         XCTAssertFalse(mockWithBetaInactive.shouldKeepWaitlist())
         XCTAssertTrue(mockWithBetaInactive.shouldShowThankYouMessaging())
+        XCTAssertTrue(mockWithBetaInactive.shouldShowVPNShortcut())
 
         // Waitlist beta OFF, not current wailist user -> Enforce entitlement check, nothing else
         let mockWithNothingElse = baseMock
         XCTAssertTrue(mockWithNothingElse.shouldMonitorEntitlement())
         XCTAssertFalse(mockWithNothingElse.shouldKeepWaitlist())
         XCTAssertFalse(mockWithNothingElse.shouldShowThankYouMessaging())
+        XCTAssertTrue(mockWithNothingElse.shouldShowVPNShortcut())
     }
 }
 

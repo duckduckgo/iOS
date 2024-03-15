@@ -102,7 +102,7 @@ final class SettingsViewModel: ObservableObject {
     // Used to automatically navigate to a specific section
     // immediately after loading the Settings View
     @Published var deepLinkTarget: SettingsDeepLinkSection?
-    @Published var deepLinkTrigger: Int = 0
+    private var previousDeepLinkTarget: SettingsDeepLinkSection?
     
     // MARK: Bindings
     
@@ -247,8 +247,8 @@ extension SettingsViewModel {
     // other dependencies are observable (Such as AppIcon and netP)
     // and we can use subscribers (Currently called from the view onAppear)
     @MainActor
-    private func initState() {
-        self.state = SettingsState(
+    private func initState() async {
+        self.state = await SettingsState(
             appTheme: appSettings.currentThemeName,
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: appSettings.currentFireButtonAnimation,
@@ -268,7 +268,7 @@ extension SettingsViewModel {
             speechRecognitionAvailable: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
             loginsEnabled: featureFlagger.isFeatureOn(.autofillAccessCredentialManagement),
             networkProtection: getNetworkProtectionState(),
-            subscription: SettingsState.Subscription(enabled: false, canPurchase: false, hasActiveSubscription: false),
+            subscription: getSubscriptionState(),
             sync: getSyncState()
         )
         
@@ -288,11 +288,11 @@ extension SettingsViewModel {
     }
        
     private func getSubscriptionState() async -> SettingsState.Subscription {
-        var enabled = false
-        var canPurchase = false
-        var hasActiveSubscription = false
-    
-#if SUBSCRIPTION
+            var enabled = false
+            var canPurchase = false
+            var hasActiveSubscription = false
+        
+    #if SUBSCRIPTION
         if #available(iOS 15, *) {
             enabled = featureFlagger.isFeatureOn(.subscription)
             canPurchase = SubscriptionPurchaseEnvironment.canPurchase
@@ -304,11 +304,11 @@ extension SettingsViewModel {
                 }
             }
         }
-#endif
+    #endif
         return SettingsState.Subscription(enabled: enabled,
                                         canPurchase: canPurchase,
                                         hasActiveSubscription: hasActiveSubscription)
-    }
+        }
     
     private func getSyncState() -> SettingsState.SyncSettings {
         SettingsState.SyncSettings(enabled: legacyViewProvider.syncService.featureFlags.contains(.userInterface),
@@ -467,16 +467,12 @@ extension SettingsViewModel {
     func onAppear() {
         Task {
             await initState()
-            
-            // Update Subscription State
-            let subscriptionState = await self.getSubscriptionState()
-            DispatchQueue.main.async {
-                self.state.subscription = subscriptionState
-            }
-            
             handleDeepLink()
         }
-        
+    }
+    
+    func onDissapear() {
+        self.deepLinkTarget = nil
     }
     
     func setAsDefaultBrowser() {
@@ -632,7 +628,6 @@ extension SettingsViewModel {
         
     private func triggerDeepLinkNavigation(to target: SettingsDeepLinkSection) {
         deepLinkTarget = target
-        deepLinkTrigger += 1
     }
     
     private func handleDeepLink() {
@@ -640,8 +635,11 @@ extension SettingsViewModel {
         // Trigger navigation on launch
         // A small delay is required to allow the view to load
         if let link = self.deepLinkTarget {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                self.triggerDeepLinkNavigation(to: link)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                if link != self.previousDeepLinkTarget {
+                    self.triggerDeepLinkNavigation(to: link)
+                    self.previousDeepLinkTarget = link
+                }
             }
         }
     }

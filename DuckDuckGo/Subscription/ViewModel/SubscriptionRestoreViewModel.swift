@@ -92,13 +92,16 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     @MainActor
     private func resetState() {
         state.subscriptionEmail = accountManager.email
+        
+        state.isAddingDevice = false
         if accountManager.isUserAuthenticated {
             state.isAddingDevice = true
         }
+        
         state.shouldNavigateToActivationFlow = false
         state.shouldShowPlans = false
         state.shouldShowWelcomePage = false
-        state.shouldDismissView = false
+        // state.shouldDismissView = false        
     }
     
     private func setupTransactionObserver() async {

@@ -73,10 +73,15 @@ struct SettingsView: View {
             viewModel.onAppear()
         }
         
+        .onAppear {
+            viewModel.onDissapear()
+        }
+        
         // MARK: Deeplink Modifiers
         .sheet(isPresented: $shouldDisplayDeepLinkSheet,
                onDismiss: {
-                   shouldDisplayDeepLinkSheet = false
+                    viewModel.onAppear()
+                    shouldDisplayDeepLinkSheet = false
                }) {
             if #available(iOS 15.0, *) {
                 if let target = deepLinkTarget {
@@ -85,8 +90,8 @@ struct SettingsView: View {
             }
         }
        
-       .onChange(of: viewModel.deepLinkTrigger) { _ in
-           guard let link = viewModel.deepLinkTarget else { return }
+       .onChange(of: viewModel.deepLinkTarget) { link in
+           guard let link else { return }
            self.deepLinkTarget = link
            
            switch link.type {

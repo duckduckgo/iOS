@@ -24,9 +24,6 @@ public protocol NetworkProtectionFeatureVisibility {
     func isWaitlistUser() -> Bool
     func isPrivacyProLaunched() -> Bool
 
-    /// Whether to show Privacy Pro entry point and let the user purchase a subscription
-    func shouldShowPrivacyPro() -> Bool
-
     /// Whether to show the thank-you messaging for current waitlist users
     func shouldShowThankYouMessaging() -> Bool
 
@@ -43,10 +40,6 @@ public protocol NetworkProtectionFeatureVisibility {
 }
 
 public extension NetworkProtectionFeatureVisibility {
-    func shouldShowPrivacyPro() -> Bool {
-        isPrivacyProLaunched()
-    }
-
     func shouldShowThankYouMessaging() -> Bool {
         isPrivacyProLaunched() && isWaitlistUser()
     }

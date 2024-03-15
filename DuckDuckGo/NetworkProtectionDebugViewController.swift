@@ -613,7 +613,6 @@ isWaitlistBetaActive: \(vpnVisibility.isWaitlistBetaActive() ? "YES" : "NO")
 isWaitlistUser: \(vpnVisibility.isWaitlistUser() ? "YES" : "NO")
 isPrivacyProLaunched: \(vpnVisibility.isPrivacyProLaunched() ? "YES" : "NO")
 
-shouldShowPrivacyPro: \(vpnVisibility.shouldShowPrivacyPro() ? "YES" : "NO")
 shouldShowThankYouMessaging: \(vpnVisibility.shouldShowThankYouMessaging() ? "YES" : "NO")
 shouldKeepWaitlist: \(vpnVisibility.shouldKeepWaitlist() ? "YES" : "NO")
 shouldMonitorEntitlement: \(vpnVisibility.shouldMonitorEntitlement() ? "YES" : "NO")

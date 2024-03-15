@@ -85,11 +85,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     }
     
     @MainActor
-    func onDisappear() {
-        resetState()
-    }
-    
-    @MainActor
     private func resetState() {
         state.subscriptionEmail = accountManager.email
         
@@ -101,7 +96,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         state.shouldNavigateToActivationFlow = false
         state.shouldShowPlans = false
         state.shouldShowWelcomePage = false
-        // state.shouldDismissView = false        
+        state.shouldDismissView = false
     }
     
     private func setupTransactionObserver() async {

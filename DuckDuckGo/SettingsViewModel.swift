@@ -248,8 +248,8 @@ extension SettingsViewModel {
     // other dependencies are observable (Such as AppIcon and netP)
     // and we can use subscribers (Currently called from the view onAppear)
     @MainActor
-    private func initState() async {
-        self.state = await SettingsState(
+    private func initState() {
+        self.state = SettingsState(
             appTheme: appSettings.currentThemeName,
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: appSettings.currentFireButtonAnimation,
@@ -269,7 +269,7 @@ extension SettingsViewModel {
             speechRecognitionAvailable: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
             loginsEnabled: featureFlagger.isFeatureOn(.autofillAccessCredentialManagement),
             networkProtection: getNetworkProtectionState(),
-            subscription: getSubscriptionState(),
+            subscription: SettingsState.Subscription(enabled: false, canPurchase: false, hasActiveSubscription: false),
             sync: getSyncState()
         )
         
@@ -287,7 +287,7 @@ extension SettingsViewModel {
         #endif
         return SettingsState.NetworkProtection(enabled: enabled, status: "")
     }
-    
+       
     private func getSubscriptionState() async -> SettingsState.Subscription {
         var enabled = false
         var canPurchase = false
@@ -344,6 +344,7 @@ extension SettingsViewModel {
     @available(iOS 15.0, *)
     @MainActor
     private func setupSubscriptionEnvironment() async {
+        
         // Active subscription check
         guard let token = accountManager.accessToken else {
             setupSubscriptionPurchaseOptions()
@@ -465,7 +466,16 @@ extension SettingsViewModel {
 extension SettingsViewModel {
     
     func onAppear() {
-        Task { await initState() }
+        Task {
+            await initState()
+            
+            // Update Subscription State
+            let subscriptionState = await self.getSubscriptionState()
+            DispatchQueue.main.async {
+                self.state.subscription = subscriptionState
+            }
+        }
+        
     }
     
     func setAsDefaultBrowser() {

@@ -253,16 +253,15 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
     
     func finalizeSubscriptionFlow() {
-        canGoBackCancellable?.cancel()
-        selectedFeature = nil
-        subFeature.cleanup()
         DispatchQueue.main.async {
             self.state.shouldDismissView = true
         }
     }
     
     deinit {
-        finalizeSubscriptionFlow()
+        canGoBackCancellable?.cancel()
+        selectedFeature = nil
+        subFeature.cleanup()
         cancellables.removeAll()
     }
 

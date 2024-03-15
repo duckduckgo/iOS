@@ -224,6 +224,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         return cell
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section) {
         case .clearData: return ClearDataRows.allCases.count

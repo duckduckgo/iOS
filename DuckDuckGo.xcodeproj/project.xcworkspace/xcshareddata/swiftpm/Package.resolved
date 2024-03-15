@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "mariusz/rollback-cpm-default",
-        "revision" : "27fc2586952cb9b72b3b0e870f473e6778f525c8"
+        "revision" : "bcafd206465427c560f9f581def57d8eef53748c",
+        "version" : "124.1.0"
       }
     },
     {

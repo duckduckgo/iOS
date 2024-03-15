@@ -246,13 +246,19 @@ final class SubscriptionFlowViewModel: ObservableObject {
         await self.setupTransactionObserver()
         await self .setupWebViewObservers()
         webViewModel.navigationCoordinator.navigateTo(url: purchaseURL )
+        DispatchQueue.main.async {
+            self.selectedFeature = nil
+            self.state.shouldDismissView = false
+        }
     }
     
     func finalizeSubscriptionFlow() {
         canGoBackCancellable?.cancel()
         selectedFeature = nil
         subFeature.cleanup()
-        state.shouldDismissView = true
+        DispatchQueue.main.async {
+            self.state.shouldDismissView = true
+        }
     }
     
     deinit {

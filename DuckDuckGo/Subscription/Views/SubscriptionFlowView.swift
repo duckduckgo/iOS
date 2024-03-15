@@ -160,7 +160,6 @@ struct SubscriptionFlowView: View {
         }
         
         .onAppear(perform: {
-
             setUpAppearances()
             Task { await viewModel.initializeViewData() }
                         

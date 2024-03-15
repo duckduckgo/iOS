@@ -100,12 +100,14 @@ class FireproofFaviconUpdater: NSObject, FaviconUserScriptDelegate {
 
         let notFolderPredicate = NSPredicate(format: "%K = NO", #keyPath(BookmarkEntity.isFolder))
         let notDeletedPredicate = NSPredicate(format: "%K = NO", #keyPath(BookmarkEntity.isPendingDeletion))
+        let notStubsPredicate = NSPredicate(format: "%K == NO OR %K == nil", #keyPath(BookmarkEntity.isStub), #keyPath(BookmarkEntity.isStub))
 
         let request = BookmarkEntity.fetchRequest()
         request.fetchLimit = 1
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
             notFolderPredicate,
             notDeletedPredicate,
+            notStubsPredicate,
             domainPredicate
         ])
         let result = (try? context.count(for: request)) ?? 0 > 0

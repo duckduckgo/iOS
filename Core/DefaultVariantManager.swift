@@ -51,22 +51,19 @@ public struct VariantIOS: Variant {
     }
 
     /// This variant is used for returning users to separate them from really new users.
-    #warning("Remove feature from returning history before merging")
-    static let returningUser = VariantIOS(name: "ru", weight: doNotAllocate, isIncluded: When.always, features: [.history])
+    static let returningUser = VariantIOS(name: "ru", weight: doNotAllocate, isIncluded: When.always, features: [])
 
     static let doNotAllocate = 0
 
     /// The list of cohorts in active ATB experiments.
     ///
     /// Variants set to `doNotAllocate` are active, but not adding users to a new cohort, do not change them unless you're sure the experiment is finished.
-    #warning("Do not merge commented out variant")
     public static let defaultVariants: [Variant] = [
         VariantIOS(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "se", weight: doNotAllocate, isIncluded: When.always, features: []),
 
-        // TODO comment this back in before merging
-        // VariantIOS(name: "mc", weight: 1, isIncluded: When.inEnglish, features: []),
+        VariantIOS(name: "mc", weight: 1, isIncluded: When.inEnglish, features: []),
         VariantIOS(name: "md", weight: 1, isIncluded: When.inEnglish, features: [.history]),
 
         returningUser

@@ -63,7 +63,7 @@ extension NetworkProtectionKeychainTokenStore {
         let isSubscriptionEnabled: Bool
         let accessTokenProvider: () -> String?
 #if SUBSCRIPTION
-        if DefaultNetworkProtectionVisibility.availablity().isPrivacyProLaunched() {
+        if DefaultNetworkProtectionVisibility.lite().isPrivacyProLaunched() {
             isSubscriptionEnabled = true
             accessTokenProvider = { AccountManager().accessToken }
         } else {

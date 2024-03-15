@@ -41,8 +41,9 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
         self.featureFlagger = featureFlagger
     }
 
-    /// A version with fewer dependencies that can't check for isWaitlistUser()
-    static func availablity() -> DefaultNetworkProtectionVisibility {
+    /// A lite version with fewer dependencies
+    /// We need this to run shouldMonitorEntitlement() check inside the token store
+    static func lite() -> DefaultNetworkProtectionVisibility {
         DefaultNetworkProtectionVisibility(networkProtectionTokenStore: nil, networkProtectionAccessManager: nil)
     }
 

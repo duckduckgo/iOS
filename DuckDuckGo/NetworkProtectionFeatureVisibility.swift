@@ -17,23 +17,29 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import Foundation
 
-protocol NetworkProtectionFeatureVisibility {
+public protocol NetworkProtectionFeatureVisibility {
     func isWaitlistBetaActive() -> Bool
     func isWaitlistUser() -> Bool
-    func hasWaitlistAccess() -> Bool
     func isPrivacyProLaunched() -> Bool
 
+    /// Whether to show Privacy Pro entry point and let the user purchase a subscription
     func shouldShowPrivacyPro() -> Bool
+
+    /// Whether to show the thank-you messaging for current waitlist users
     func shouldShowThankYouMessaging() -> Bool
+
+    /// Whether to let the user continues to use the VPN
+    /// This should only happen pre-launch
     func shouldKeepWaitlist() -> Bool
-    func shouldMonitoringEntitlement() -> Bool
+
+    /// Whether to enforce entitlement check
+    /// This should always happen post-launch
+    func shouldMonitorEntitlement() -> Bool
 }
 
-extension NetworkProtectionFeatureVisibility {
+public extension NetworkProtectionFeatureVisibility {
     func shouldShowPrivacyPro() -> Bool {
         isPrivacyProLaunched()
     }
@@ -43,9 +49,6 @@ extension NetworkProtectionFeatureVisibility {
     }
 
     func shouldKeepWaitlist() -> Bool {
-        !isPrivacyProLaunched() && hasWaitlistAccess()
+        !isPrivacyProLaunched() && isWaitlistBetaActive() && isWaitlistUser()
     }
 }
-
-
-#endif

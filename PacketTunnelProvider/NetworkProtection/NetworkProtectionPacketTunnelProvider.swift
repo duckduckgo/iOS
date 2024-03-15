@@ -237,7 +237,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let isSubscriptionEnabled = NetworkProtectionVisibilityForTunnelProvider().isPrivacyProLaunched()
         let accessTokenProvider: () -> String? = {
 #if SUBSCRIPTION
-            if NetworkProtectionVisibilityForTunnelProvider().shouldMonitoringEntitlement() {
+            if NetworkProtectionVisibilityForTunnelProvider().shouldMonitorEntitlement() {
                 return { AccountManager().accessToken }
             }
 #endif
@@ -318,7 +318,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
     private static func entitlementCheck() async -> Result<Bool, Error> {
 #if SUBSCRIPTION
-        guard NetworkProtectionVisibilityForTunnelProvider().shouldMonitoringEntitlement() else {
+        guard NetworkProtectionVisibilityForTunnelProvider().shouldMonitorEntitlement() else {
             return .success(true)
         }
 

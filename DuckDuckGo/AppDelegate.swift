@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if NETWORK_PROTECTION
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
-    let vpnFeatureVisibilty = DefaultNetworkProtectionVisibility()
+    lazy var vpnFeatureVisibilty = DefaultNetworkProtectionVisibility()
 #endif
 
     private var autoClear: AutoClear?

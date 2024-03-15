@@ -61,11 +61,6 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
         return hasLegacyAuthToken || hasBeenInvited
     }
 
-    func hasWaitlistAccess() -> Bool {
-        let vpnAccessType = networkProtectionAccessManager.networkProtectionAccessType()
-        return vpnAccessType != .none
-    }
-
     // todo - https://app.asana.com/0/0/1206844038943626/f
     func isPrivacyProLaunched() -> Bool {
 #if SUBSCRIPTION && ALPHA
@@ -76,7 +71,7 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
     }
     
     // todo - https://app.asana.com/0/0/1206844038943626/f
-    func shouldMonitoringEntitlement() -> Bool {
+    func shouldMonitorEntitlement() -> Bool {
 #if SUBSCRIPTION && ALPHA
         true
 #else

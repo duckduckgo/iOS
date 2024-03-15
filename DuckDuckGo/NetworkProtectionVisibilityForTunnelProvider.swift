@@ -30,10 +30,6 @@ struct NetworkProtectionVisibilityForTunnelProvider: NetworkProtectionFeatureVis
         preconditionFailure("Does not apply to Tunnel Provider")
     }
     
-    func hasWaitlistAccess() -> Bool {
-        preconditionFailure("Does not apply to Tunnel Provider")
-    }
-    
     // todo - https://app.asana.com/0/0/1206844038943626/f
     func isPrivacyProLaunched() -> Bool {
 #if SUBSCRIPTION && ALPHA
@@ -44,7 +40,7 @@ struct NetworkProtectionVisibilityForTunnelProvider: NetworkProtectionFeatureVis
     }
     
     // todo - https://app.asana.com/0/0/1206844038943626/f
-    func shouldMonitoringEntitlement() -> Bool {
+    func shouldMonitorEntitlement() -> Bool {
 #if SUBSCRIPTION && ALPHA
         true
 #else

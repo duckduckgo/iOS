@@ -99,7 +99,7 @@ class SyncDebugViewController: UITableViewController {
         return titles[section]
     }
 
-    // swiftlint:disable:next cyclomatic_complexity
+    // swiftlint:disable:next cyclomatic_complexity function_body_length
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
@@ -184,8 +184,7 @@ class SyncDebugViewController: UITableViewController {
         }
     }
 
-    // swiftlint:disable:next cyclomatic_complexity
-    // swiftlint:disable:next function_body_length
+    // swiftlint:disable:next cyclomatic_complexity function_body_length
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch Sections(rawValue: indexPath.section) {
         case .info:

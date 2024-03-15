@@ -91,6 +91,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     var onSetSubscription: (() -> Void)?
     var onBackToSettings: (() -> Void)?
     var onFeatureSelected: ((SubscriptionFeatureSelection) -> Void)?
+    var onActivateSubscription: (() -> Void)?
     
     struct FeatureSelection: Codable {
         let feature: String
@@ -277,6 +278,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
 
     func activateSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
         Pixel.fire(pixel: .privacyProRestorePurchaseOfferPageEntry, debounce: 2)
+        onActivateSubscription?()
         return nil
     }
 

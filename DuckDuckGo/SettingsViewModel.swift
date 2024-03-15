@@ -102,7 +102,7 @@ final class SettingsViewModel: ObservableObject {
     // Used to automatically navigate to a specific section
     // immediately after loading the Settings View
     @Published var deepLinkTarget: SettingsDeepLinkSection?
-    @Published var deepLinkNavigate: SettingsDeepLinkSection?
+    @Published var deepLinkTrigger: Int = 0
     
     // MARK: Bindings
     
@@ -631,20 +631,26 @@ extension SettingsViewModel {
         deepLinkTarget = nil
     }
     
+    func triggerDeepLinkNavigation(to target: SettingsDeepLinkSection) {
+        deepLinkTarget = target
+        deepLinkTrigger += 1
+    }
+    
     private func setupDeepLinkObserver() {
-        $deepLinkTarget
+        
+        $deepLinkTrigger
             .removeDuplicates()
-            .receive(on: RunLoop.main)
-            .sink { [weak self] deepLink in
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
                 
-                guard deepLink != nil else { return }
-
+                guard let deepLink = self.deepLinkTarget else { return }
+                
                 // We need to wait for the view to render
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    if self?.deepLinkTarget == .netP {
-                        self?.presentLegacyView(.netP)
+                    if deepLink == .netP {
+                        self.presentLegacyView(.netP)
                     } else {
-                        self?.deepLinkNavigate = deepLink
+                        self.triggerDeepLinkNavigation(to: deepLink)
                     }
                 }
             }

@@ -83,17 +83,15 @@ struct SettingsView: View {
             }
         }
        
-       .onChange(of: viewModel.deepLinkNavigate) { link in
-           if link != nil {
-               switch link?.type {
-               case .sheet:
-                   self.shouldDisplayDeepLinkSheet = true
-               case .push:
-                   self.shouldDisplayDeepLinkPush = true
-               case .none:
-                   break
-               }
+       .onChange(of: viewModel.deepLinkTrigger) { _ in
+           guard let link = viewModel.deepLinkTarget else { return }
+           switch link.type {
+           case .sheet:
+               self.shouldDisplayDeepLinkSheet = true
+           case .push:
+               self.shouldDisplayDeepLinkPush = true
            }
+           
        }
        
     }

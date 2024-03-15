@@ -48,8 +48,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
         var hasActiveSubscription = false
         var transactionStatus: SubscriptionTransactionStatus = .idle
         var userTappedRestoreButton = false
-        var activateSubscriptionOnLoad: Bool = false
         var shouldDismissView = false
+        var shouldActivateSubscription = false
         var shouldShowNavigationBar: Bool = false
         var canNavigateBack: Bool = false
         var transactionError: SubscriptionPurchaseError?
@@ -96,6 +96,12 @@ final class SubscriptionFlowViewModel: ObservableObject {
         
         subFeature.onBackToSettings = {
             self.webViewModel.navigationCoordinator.navigateTo(url: URL.subscriptionPurchase)
+        }
+        
+        subFeature.onActivateSubscription = {
+            DispatchQueue.main.async {
+                self.state.shouldActivateSubscription = true
+            }
         }
         
          subFeature.onFeatureSelected = { feature in
@@ -248,6 +254,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
             self.webViewModel.navigationCoordinator.navigateTo(url: self.purchaseURL )
             self.selectedFeature = nil
             self.state.shouldDismissView = false
+            self.state.shouldActivateSubscription = false
         }
     }
     

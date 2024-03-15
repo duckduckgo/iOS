@@ -34,7 +34,7 @@ struct SettingsView: View {
         // Hidden navigationLink for programatic navigation
         if #available(iOS 15.0, *) {
             if let target = viewModel.deepLinkTarget {
-                NavigationLink(destination: destinationView(for: target),
+                NavigationLink(destination: viewModel.deepLinkdestinationView(for: target),
                                isActive: $shouldDisplayDeepLinkPush) {
                     EmptyView()
                 }
@@ -78,48 +78,24 @@ struct SettingsView: View {
                }) {
             if #available(iOS 15.0, *) {
                 if let target = viewModel.deepLinkTarget {
-                    destinationView(for: target)
+                    viewModel.deepLinkdestinationView(for: target)
                 }
             }
         }
-        .onChange(of: viewModel.deepLinkTarget) { target in
-            guard target != nil else { return }
-
-            // We need to wait for the view to render
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                if viewModel.deepLinkTarget == .netP {
-                    viewModel.presentLegacyView(.netP)
-                } else {
-                    switch target?.type {
-                    case .sheet:
-                        shouldDisplayDeepLinkSheet = true
-                    case .push:
-                        shouldDisplayDeepLinkPush = true
-                    case .none:
-                        break
-                    }
-                    
-                }
-            }
-        }
-    }
-    
-    // MARK: DeepLink Views
-    @available(iOS 15.0, *)
-    @ViewBuilder
-    private func destinationView(for target: SettingsViewModel.SettingsDeepLinkSection) -> some View {
-        switch target {
-        case .dbp:
-            SubscriptionPIRView()
-        case .itr:
-            SubscriptionITPView()
-        case .subscriptionFlow:
-            SubscriptionFlowView()
-        case .subscriptionRestoreFlow:
-            SubscriptionRestoreView()
-        default:
-            EmptyView()
-        }
+       
+       .onChange(of: viewModel.deepLinkNavigate) { link in
+           if link != nil {
+               switch link?.type {
+               case .sheet:
+                   self.shouldDisplayDeepLinkSheet = true
+               case .push:
+                   self.shouldDisplayDeepLinkPush = true
+               case .none:
+                   break
+               }
+           }
+       }
+       
     }
     
 }

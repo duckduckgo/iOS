@@ -102,50 +102,7 @@ final class SettingsViewModel: ObservableObject {
     // Used to automatically navigate to a specific section
     // immediately after loading the Settings View
     @Published var deepLinkTarget: SettingsDeepLinkSection?
-    
-    enum SettingsDeepLinkSection: Identifiable {
-        case netP
-        case dbp
-        case itr
-        case subscriptionFlow
-        case subscriptionRestoreFlow
-        // Add other cases as needed
-
-        var id: String {
-            switch self {
-            case .netP: return "netP"
-            case .dbp: return "dbp"
-            case .itr: return "itr"
-            case .subscriptionFlow: return "subscriptionFlow"
-            case .subscriptionRestoreFlow: return "subscriptionRestoreFlow"
-            // Ensure all cases are covered
-            }
-        }
-
-        // Define the presentation type: .sheet or .push
-        // Default to .sheet, specify .push where needed
-        var type: DeepLinkType {
-            switch self {
-            // Specify cases that require .push presentation
-            // Example:
-            // case .dbp:
-            //     return .push
-            // For all other cases, default to .sheet
-            default:
-                return .sheet
-            }
-        }
-    }
-
-    // Define DeepLinkType outside the enum if not already defined
-    enum DeepLinkType {
-        case sheet
-        case push
-    }
-    
-    func resetDeepLinkTarget() {
-        deepLinkTarget = nil
-    }
+    @Published var deepLinkNavigate: SettingsDeepLinkSection?
     
     // MARK: Bindings
     
@@ -261,6 +218,7 @@ final class SettingsViewModel: ObservableObject {
         self.deepLinkTarget = deepLink
         
         setupNotificationObservers()
+        setupDeepLinkObserver()
         
     }
     
@@ -278,6 +236,7 @@ final class SettingsViewModel: ObservableObject {
         self.legacyViewProvider = legacyViewProvider
         self.voiceSearchHelper = voiceSearchHelper
         self.deepLinkTarget = deepLink
+        setupDeepLinkObserver()
     }
 #endif
     
@@ -507,15 +466,6 @@ extension SettingsViewModel {
     
     func onAppear() {
         Task { await initState() }
- 
-        $deepLinkTarget
-            .receive(on: RunLoop.main)
-            .sink { [weak self] deepLink in
-                print(deepLink)
-            }
-            .store(in: &cancellables)
-        
-        
     }
     
     func setAsDefaultBrowser() {
@@ -622,3 +572,92 @@ extension SettingsViewModel: AutofillLoginSettingsListViewControllerDelegate {
     }
 }
 // swiftlint:enable file_length
+
+
+// MARK: DeepLinks
+extension SettingsViewModel {
+    
+    enum SettingsDeepLinkSection: Identifiable {
+        case netP
+        case dbp
+        case itr
+        case subscriptionFlow
+        case subscriptionRestoreFlow
+        // Add other cases as needed
+
+        var id: String {
+            switch self {
+            case .netP: return "netP"
+            case .dbp: return "dbp"
+            case .itr: return "itr"
+            case .subscriptionFlow: return "subscriptionFlow"
+            case .subscriptionRestoreFlow: return "subscriptionRestoreFlow"
+            // Ensure all cases are covered
+            }
+        }
+
+        // Define the presentation type: .sheet or .push
+        // Default to .sheet, specify .push where needed
+        var type: DeepLinkType {
+            switch self {
+            // Specify cases that require .push presentation
+            // Example:
+            // case .dbp:
+            //     return .push
+            // For all other cases, default to .sheet
+            default:
+                return .sheet
+            }
+        }
+    }
+
+    // Define DeepLinkType outside the enum if not already defined
+    enum DeepLinkType {
+        case sheet
+        case push
+    }
+    
+    func resetDeepLinkTarget() {
+        deepLinkTarget = nil
+    }
+    
+    private func setupDeepLinkObserver() {
+        $deepLinkTarget
+            .removeDuplicates()
+            .receive(on: RunLoop.main)
+            .sink { [weak self] deepLink in
+                
+                guard deepLink != nil else { return }
+
+                // We need to wait for the view to render
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    if self?.deepLinkTarget == .netP {
+                        self?.presentLegacyView(.netP)
+                    } else {
+                        self?.deepLinkNavigate = deepLink
+                    }
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    // MARK: DeepLink Views
+    @available(iOS 15.0, *)
+    @ViewBuilder
+     func deepLinkdestinationView(for target: SettingsViewModel.SettingsDeepLinkSection) -> some View {
+        switch target {
+        case .dbp:
+            SubscriptionPIRView()
+        case .itr:
+            SubscriptionITPView()
+        case .subscriptionFlow:
+            SubscriptionFlowView()
+        case .subscriptionRestoreFlow:
+            SubscriptionRestoreView()
+        default:
+            EmptyView()
+        }
+    }
+    
+    
+}

@@ -149,10 +149,7 @@ struct SubscriptionRestoreView: View {
             viewModel.onAppear()
             setUpAppearances()
         }
-        
-        .onDisappear {
-            viewModel.onDisappear()
-        }
+                
     }
     
     

@@ -20,7 +20,6 @@
 import Bookmarks
 import Common
 import Foundation
-import Macros
 import Persistence
 import SwiftSoup
 
@@ -218,7 +217,7 @@ final public class BookmarksImporter {
         static let FavoritesFolder = "DuckDuckGo Favorites"
         static let BookmarksFolder = "DuckDuckGo Bookmarks"
         static let bookmarkURLString = "https://duckduckgo.com"
-        static let bookmarkURL = #URL("https://duckduckgo.com")
+        static let bookmarkURL = URL(string: "https://duckduckgo.com")!
         static let favoriteAttribute = "duckduckgo:favorite"
         static let isFavorite = "true"
         static let idAttribute = "id"

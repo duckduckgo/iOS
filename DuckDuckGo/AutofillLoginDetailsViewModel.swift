@@ -25,7 +25,6 @@ import Core
 import DDGSync
 import DesignResourcesKit
 import Foundation
-import Macros
 import SecureStorage
 import SwiftUI
 
@@ -59,7 +58,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
 
     enum Constants {
-        static let privateEmailURL = #URL("https://duckduckgo.com/email")
+        static let privateEmailURL = URL(string: "https://duckduckgo.com/email")!
     }
     
     weak var delegate: AutofillLoginDetailsViewModelDelegate?

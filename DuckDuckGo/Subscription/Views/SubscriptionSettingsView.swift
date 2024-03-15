@@ -35,7 +35,7 @@ struct SubscriptionSettingsView: View {
     @StateObject var viewModel = SubscriptionSettingsViewModel()
     @StateObject var sceneEnvironment = SceneEnvironment()
     @State var isFirstOnAppear = true
-
+    
     @ViewBuilder
     private var optionsView: some View {
         List {
@@ -65,6 +65,12 @@ struct SubscriptionSettingsView: View {
                                    isButton: true)
             }
             
+            .sheet(isPresented: $viewModel.shouldDisplayStripeView) {
+                if let stripeViewModel = viewModel.stripeViewModel {
+                    SubscriptionExternalLinkView(viewModel: stripeViewModel, title: UserText.subscriptionManagePlan)
+                }
+            }
+            
             Section(header: Text(UserText.subscriptionManageDevices)) {
                 
                 NavigationLink(destination: SubscriptionRestoreView()) {
@@ -91,6 +97,10 @@ struct SubscriptionSettingsView: View {
                             .daxBodyRegular()
                     })
                 }
+            }
+            
+            NavigationLink(destination: SubscriptionGoogleView(), isActive: $viewModel.shouldDisplayGoogleView) {
+                EmptyView()
             }
         }
         .navigationTitle(UserText.settingsPProManageSubscription)
@@ -119,6 +129,13 @@ struct SubscriptionSettingsView: View {
         
         .onAppear {
             viewModel.fetchAndUpdateSubscriptionDetails()
+        }
+    }
+    
+    @ViewBuilder
+    private var stripeView: some View {
+        if let stripeViewModel = viewModel.stripeViewModel {
+            SubscriptionExternalLinkView(viewModel: stripeViewModel)
         }
     }
     
@@ -151,10 +168,6 @@ struct SubscriptionSettingsView_Previews: PreviewProvider {
         NavigationView {
             SubscriptionSettingsView().navigationBarTitleDisplayMode(.inline)
         }
-        // You can customize the preview environment here if needed.
-        // For example, you can set a specific device, size, or dark mode/light mode.
-        // .previewDevice(PreviewDevice(rawValue: "iPhone 12"))
-        // .preferredColorScheme(.dark)
     }
 }
 

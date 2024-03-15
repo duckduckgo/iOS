@@ -113,7 +113,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
                  }
                  self.state.shouldDismissView = true
              }
-             
          }
         
         subFeature.$transactionError
@@ -245,17 +244,16 @@ final class SubscriptionFlowViewModel: ObservableObject {
         Pixel.fire(pixel: .privacyProOfferScreenImpression, debounce: 2)
         await self.setupTransactionObserver()
         await self .setupWebViewObservers()
-        webViewModel.navigationCoordinator.navigateTo(url: purchaseURL )
         DispatchQueue.main.async {
+            self.webViewModel.navigationCoordinator.navigateTo(url: self.purchaseURL )
             self.selectedFeature = nil
             self.state.shouldDismissView = false
         }
     }
     
+    @MainActor
     func finalizeSubscriptionFlow() {
-        DispatchQueue.main.async {
-            self.state.shouldDismissView = true
-        }
+        self.state.shouldDismissView = true
     }
     
     deinit {

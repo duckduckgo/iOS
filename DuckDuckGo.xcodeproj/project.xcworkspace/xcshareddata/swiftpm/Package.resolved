@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "838cb53a8f7050d87ae6931b45ce126ece994359",
-        "version" : "123.0.1"
+        "branch" : "sam/update-wireguard-framework-to-1.1.3",
+        "revision" : "979cdaf53eb9747b4883975bcefd158b4ea7f0b7"
       }
     },
     {
@@ -194,8 +194,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/wireguard-apple",
       "state" : {
-        "revision" : "2d8172c11478ab11b0f5ad49bdb4f93f4b3d5e0d",
-        "version" : "1.1.1"
+        "revision" : "13fd026384b1af11048451061cc1b21434990668",
+        "version" : "1.1.3"
       }
     },
     {

@@ -10023,8 +10023,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = exactVersion;
-				version = 123.0.1;
+				branch = "sam/update-wireguard-framework-to-1.1.3";
+				kind = branch;
 			};
 		};
 		B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */ = {

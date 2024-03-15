@@ -162,7 +162,11 @@ struct SubscriptionFlowView: View {
         .onAppear(perform: {
             setUpAppearances()
             Task { await viewModel.initializeViewData() }
-                        
+            viewModel.onAppear()
+        })
+        
+        .onDisappear(perform: {
+            viewModel.onDisappear()
         })
                 
         .alert(isPresented: $shouldPresentError) {

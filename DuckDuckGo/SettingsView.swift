@@ -28,13 +28,15 @@ struct SettingsView: View {
     
     @State private var shouldDisplayDeepLinkSheet: Bool = false
     @State private var shouldDisplayDeepLinkPush: Bool = false
+    @State var deepLinkTarget: SettingsViewModel.SettingsDeepLinkSection?
     
     var body: some View {
         
         // Hidden navigationLink for programatic navigation
         if #available(iOS 15.0, *) {
-            if let target = viewModel.deepLinkTarget {
-                NavigationLink(destination: viewModel.deepLinkdestinationView(for: target),
+            
+            if let target = deepLinkTarget {
+                NavigationLink(destination: deepLinkdestinationView(for: target),
                                isActive: $shouldDisplayDeepLinkPush) {
                     EmptyView()
                 }
@@ -77,23 +79,60 @@ struct SettingsView: View {
                    shouldDisplayDeepLinkSheet = false
                }) {
             if #available(iOS 15.0, *) {
-                if let target = viewModel.deepLinkTarget {
-                    viewModel.deepLinkdestinationView(for: target)
+                if let target = deepLinkTarget {
+                    deepLinkdestinationView(for: target)
                 }
             }
         }
        
        .onChange(of: viewModel.deepLinkTrigger) { _ in
            guard let link = viewModel.deepLinkTarget else { return }
+           self.deepLinkTarget = link
+           
            switch link.type {
            case .sheet:
-               self.shouldDisplayDeepLinkSheet = true
-           case .push:
-               self.shouldDisplayDeepLinkPush = true
+               DispatchQueue.main.async {
+                   self.shouldDisplayDeepLinkSheet = true
+               }
+           case .navigation:
+               DispatchQueue.main.async {
+                   self.shouldDisplayDeepLinkPush = true
+               }
+           case.uikit:
+               DispatchQueue.main.async {
+                   triggerLegacyLink(link)
+               }
            }
-           
        }
        
+    }
+    
+    // MARK: DeepLink Views
+    @available(iOS 15.0, *)
+    @ViewBuilder
+     func deepLinkdestinationView(for target: SettingsViewModel.SettingsDeepLinkSection) -> some View {
+        switch target {
+        case .dbp:
+            SubscriptionPIRView()
+        case .itr:
+            SubscriptionITPView()
+        case .subscriptionFlow:
+            SubscriptionFlowView()
+        case .subscriptionRestoreFlow:
+            SubscriptionRestoreView()
+        default:
+            EmptyView()
+        }
+    }
+    
+    private func triggerLegacyLink(_ link: SettingsViewModel.SettingsDeepLinkSection) {
+        switch link {
+        case .netP:
+            viewModel.presentLegacyView(.netP)
+            break
+        default:
+            return
+        }
     }
     
 }

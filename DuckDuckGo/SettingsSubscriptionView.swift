@@ -204,28 +204,32 @@ struct SettingsSubscriptionView: View {
             }
             
             // Selected Feature handler for Subscription Flow
-            .onReceive(subscriptionFlowViewModel.$selectedFeature) { value in
+            .onChange(of: subscriptionFlowViewModel.selectedFeature) { value in
                 guard let value else { return }
-                viewModel.triggerDeepLinkNavigation(to: value)
+                print("target1")
+                viewModel.deepLinkTarget = value
             }
             
             // Selected Feature handler for Subscription Restore
-            .onReceive(subscriptionRestoreViewModel.emailViewModel.$selectedFeature) { value in
+            .onChange(of: subscriptionRestoreViewModel.emailViewModel.selectedFeature) { value in
                 guard let value else { return }
-                viewModel.triggerDeepLinkNavigation(to: value)
+                print("target2")
+                viewModel.deepLinkTarget = value
             }
             
              // Selected Feature handler for SubscriptionActivation
             .onChange(of: subscriptionFlowViewModel.state.shouldActivateSubscription) { value in
                 if value {
-                    viewModel.triggerDeepLinkNavigation(to: .subscriptionRestoreFlow)
+                    print("target3")
+                    viewModel.deepLinkTarget = .subscriptionRestoreFlow
                 }
             }
             
             // Selected Feature handler for Show Plans
             .onChange(of: subscriptionRestoreViewModel.state.shouldShowPlans) { value in
-               if value {
-                   viewModel.triggerDeepLinkNavigation(to: .subscriptionFlow)
+                if value {
+                    print("target4")
+                   viewModel.deepLinkTarget = .subscriptionRestoreFlow
                }
             }
         }

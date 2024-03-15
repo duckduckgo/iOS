@@ -101,6 +101,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
         subFeature.onActivateSubscription = {
             DispatchQueue.main.async {
                 self.state.shouldActivateSubscription = true
+                self.state.shouldDismissView = true
             }
         }
         
@@ -250,12 +251,24 @@ final class SubscriptionFlowViewModel: ObservableObject {
         Pixel.fire(pixel: .privacyProOfferScreenImpression, debounce: 2)
         await self.setupTransactionObserver()
         await self .setupWebViewObservers()
-        DispatchQueue.main.async {
-            self.webViewModel.navigationCoordinator.navigateTo(url: self.purchaseURL )
-            self.selectedFeature = nil
-            self.state.shouldDismissView = false
-            self.state.shouldActivateSubscription = false
-        }
+    }
+    
+    @MainActor
+    func onAppear() {
+        resetState()
+    }
+    
+    @MainActor
+    func onDisappear() {
+        resetState()
+    }
+    
+    @MainActor
+    private func resetState() {
+        self.webViewModel.navigationCoordinator.navigateTo(url: self.purchaseURL )
+        self.selectedFeature = nil
+        self.state.shouldDismissView = false
+        self.state.shouldActivateSubscription = false
     }
     
     @MainActor

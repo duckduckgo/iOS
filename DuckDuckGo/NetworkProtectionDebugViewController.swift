@@ -59,6 +59,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case networkPath
         case lastDisconnectError
         case vpnConfiguration
+        case featureVisibility
     }
 
     enum ClearDataRows: Int, CaseIterable {
@@ -89,6 +90,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case shutDown
         case showEntitlementMessaging
         case resetEntitlementMessaging
+        case resetThankYouMessaging
     }
 
     enum NetworkPathRows: Int, CaseIterable {
@@ -106,6 +108,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     enum ConfigurationRows: Int, CaseIterable {
         case baseConfigurationData
         case fullProtocolConfigurationData
+    }
+
+    enum VisibilityRows: Int, CaseIterable {
+        case visibility
     }
 
     // MARK: Properties
@@ -208,6 +214,9 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .vpnConfiguration:
             configure(cell, forConfigurationRow: indexPath.row)
 
+        case .featureVisibility:
+            configure(cell, forVisibilityRow: indexPath.row)
+
         case.none:
             break
         }
@@ -226,6 +235,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .lastDisconnectError: return LastDisconnectErrorRows.allCases.count
         case .connectionTest: return ConnectionTestRows.allCases.count + connectionTestResults.count
         case .vpnConfiguration: return ConfigurationRows.allCases.count
+        case .featureVisibility: return VisibilityRows.allCases.count
         case .none: return 0
 
         }
@@ -259,6 +269,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
                 }
             }
         case .vpnConfiguration:
+            break
+        case .featureVisibility:
             break
         case .none:
             break
@@ -370,6 +382,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             cell.textLabel?.text = "Show Entitlement Messaging"
         case .resetEntitlementMessaging:
             cell.textLabel?.text = "Reset Entitlement Messaging"
+        case .resetThankYouMessaging:
+            cell.textLabel?.text = "Reset Thank You Messaging"
         case .none:
             break
         }
@@ -389,6 +403,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             UserDefaults.networkProtectionGroupDefaults.enableEntitlementMessaging()
         case .resetEntitlementMessaging:
             UserDefaults.networkProtectionGroupDefaults.resetEntitlementMessaging()
+        case .resetThankYouMessaging:
+            UserDefaults.networkProtectionGroupDefaults.resetThankYouMessaging()
         case .none:
             break
         }
@@ -584,6 +600,24 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
             self.tableView.reloadData()
         }
+    }
+
+    // MARK: Feature Visibility
+
+    private func configure(_ cell: UITableViewCell, forVisibilityRow row: Int) {
+        let vpnVisibility = DefaultNetworkProtectionVisibility()
+
+        cell.textLabel?.font = .monospacedSystemFont(ofSize: 13.0, weight: .regular)
+        cell.textLabel?.text = """
+isWaitlistBetaActive: \(vpnVisibility.isWaitlistBetaActive() ? "YES" : "NO")
+isWaitlistUser: \(vpnVisibility.isWaitlistUser() ? "YES" : "NO")
+isPrivacyProLaunched: \(vpnVisibility.isPrivacyProLaunched() ? "YES" : "NO")
+
+shouldShowPrivacyPro: \(vpnVisibility.shouldShowPrivacyPro() ? "YES" : "NO")
+shouldShowThankYouMessaging: \(vpnVisibility.shouldShowThankYouMessaging() ? "YES" : "NO")
+shouldKeepWaitlist: \(vpnVisibility.shouldKeepWaitlist() ? "YES" : "NO")
+shouldMonitorEntitlement: \(vpnVisibility.shouldMonitorEntitlement() ? "YES" : "NO")
+"""
     }
 
     // MARK: Selection Actions

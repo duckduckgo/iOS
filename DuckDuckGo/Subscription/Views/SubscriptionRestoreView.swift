@@ -38,7 +38,7 @@ struct SubscriptionRestoreView: View {
     
     private enum Constants {
         static let heroImage = "ManageSubscriptionHero"
-        static let appleIDIcon = "Platform-Apple-16"
+        static let appleIDIcon = "Platform-Apple-16-subscriptions"
         static let emailIcon = "Email-16"
         static let openIndicator = "chevron.up"
         static let closedIndicator = "chevron.down"
@@ -169,6 +169,7 @@ struct SubscriptionRestoreView: View {
             .padding(Constants.boxPadding)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(Color(designSystemColor: .panel))
+            .cornerRadius(Constants.cornerRadius)
             .overlay(
                 RoundedRectangle(cornerRadius: Constants.cornerRadius)
                     .stroke(Color(designSystemColor: .lines), lineWidth: Constants.borderWidth)

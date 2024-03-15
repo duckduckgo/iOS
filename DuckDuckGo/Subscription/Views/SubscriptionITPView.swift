@@ -152,7 +152,7 @@ struct SubscriptionITPView: View {
         if viewModel.isDownloadableContent {
             Button(action: { isShowingActivityView = true }, label: { Image(Constants.shareImage) })
                 .popover(isPresented: $isShowingActivityView, arrowEdge: .bottom) {
-                    SubscriptionActivityViewController(activityItems: [viewModel.attachmentURL], applicationActivities: nil)
+                    SubscriptionActivityViewController(activityItems: [viewModel.attachmentURL ?? ""], applicationActivities: nil)
                 }
         }
     }

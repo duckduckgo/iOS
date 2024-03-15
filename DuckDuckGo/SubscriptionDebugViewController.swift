@@ -234,7 +234,7 @@ final class SubscriptionDebugViewController: UITableViewController {
     private func getEntitlements() {
         Task {
             var results: [String] = []
-            guard let token = accountManager.accessToken else {
+            guard let _ = accountManager.accessToken else {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
                 return
             }

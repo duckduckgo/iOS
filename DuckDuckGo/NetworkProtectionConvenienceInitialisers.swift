@@ -62,6 +62,7 @@ extension NetworkProtectionKeychainTokenStore {
     convenience init() {
         let isSubscriptionEnabled: Bool
         let accessTokenProvider: () -> String?
+#if SUBSCRIPTION
         if DefaultNetworkProtectionVisibility.availablity().isPrivacyProLaunched() {
             isSubscriptionEnabled = true
             accessTokenProvider = { AccountManager().accessToken }
@@ -69,6 +70,10 @@ extension NetworkProtectionKeychainTokenStore {
             isSubscriptionEnabled = false
             accessTokenProvider = { nil }
         }
+#else
+        isSubscriptionEnabled = false
+        accessTokenProvider = { nil }
+#endif
 
         self.init(keychainType: .dataProtection(.unspecified),
                   serviceName: "\(Bundle.main.bundleIdentifier!).authToken",

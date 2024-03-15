@@ -1,5 +1,5 @@
 //
-//  SettingsOthersView.swift
+//  SettingsGeneralViewOld.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -20,26 +20,26 @@
 import SwiftUI
 import UIKit
 
-struct SettingsOthersView: View {
+struct SettingsGeneralViewOld: View {
 
     @EnvironmentObject var viewModel: SettingsViewModel
-
+    
     var body: some View {
         Section {
-            NavigationLink(destination: AboutView().environmentObject(viewModel)) {
-                SettingsCellView(label: "About",
-                                 image: Image("LogoIcon"))
+            SettingsCellView(label: UserText.settingsSetDefault,
+                             action: { viewModel.setAsDefaultBrowser() },
+                             isButton: true)
+            
+            SettingsCellView(label: UserText.settingsAddToDock,
+                             action: { viewModel.presentLegacyView(.addToDock) },
+                             isButton: true)
+            
+            NavigationLink(destination: WidgetEducationView()) {
+                SettingsCellView(label: UserText.settingsAddWidget)
             }
-            SettingsCellView(label: "Share Feedback",
-                             image: Image("Feedback"),
-                             disclosureIndicator: true,
-                             isButton: true)
-            SettingsCellView(label: "DuckDuckGo for Other Platforms",
-                             image: Image("OtherPlatforms"),
-                             action: { viewModel.openOtherPlatforms() },
-                             isButton: true)
+
         }
 
     }
-
+ 
 }

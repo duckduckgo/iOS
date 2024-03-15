@@ -28,7 +28,7 @@ struct SettingsView: View {
     
     var body: some View {
         List {
-            SettingsGeneralView()
+            SettingsGeneralViewOld()
             SettingsSyncView()
             SettingsLoginsView()
             SettingsAppeareanceView()

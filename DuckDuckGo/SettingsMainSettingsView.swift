@@ -26,11 +26,10 @@ struct SettingsMainSettingsView: View {
 
     var body: some View {
         Section(header: Text("Main Settings")) {
-            SettingsCellView(label: "General",
-                             image: Image("General"),
-                             action: { viewModel.presentLegacyView(.gpc) },
-                             disclosureIndicator: true,
-                             isButton: true)
+            NavigationLink(destination: SettingsGeneralView().environmentObject(viewModel)) {
+                SettingsCellView(label: "General",
+                                 image: Image("General"))
+            }
             SettingsCellView(label: "Sync & Backup",
                              image: Image("Sync"),
                              action: { viewModel.presentLegacyView(.gpc) },

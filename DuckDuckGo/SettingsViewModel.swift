@@ -546,8 +546,7 @@ extension SettingsViewModel {
         case .fireproofSites: pushViewController(legacyViewProvider.fireproofSites)
         case .autoclearData: pushViewController(legacyViewProvider.autoclearData)
         case .keyboard: pushViewController(legacyViewProvider.keyboard)
-        case .aboutOld: pushViewController(legacyViewProvider.aboutOld)
-        case .about: pushViewController(legacyViewProvider.about(viewModel: self))
+        case .about: pushViewController(legacyViewProvider.about)
         case .debug: pushViewController(legacyViewProvider.debug)
             
         case .feedback:

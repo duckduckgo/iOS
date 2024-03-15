@@ -1,5 +1,5 @@
 //
-//  AboutViewController.swift
+//  AboutView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,29 +17,19 @@
 //  limitations under the License.
 //
 
-import UIKit
 import Core
 import SwiftUI
 import DesignResourcesKit
 
-class AboutViewController: UIHostingController<AboutView> {
-
-    convenience init(viewModel: SettingsViewModel) {
-        self.init(rootView: AboutView(viewModel: viewModel))
-    }
-
-}
-
 struct AboutView: View {
 
-    @StateObject var viewModel: SettingsViewModel
+    @EnvironmentObject var viewModel: SettingsViewModel
 
     var body: some View {
         List {
             AboutViewText()
             AboutViewVersion()
         }
-        .environmentObject(viewModel)
         .conditionalInsetGroupedListStyle()
     }
 }

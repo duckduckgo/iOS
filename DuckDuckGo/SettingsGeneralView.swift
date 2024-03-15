@@ -2,7 +2,7 @@
 //  SettingsGeneralView.swift
 //  DuckDuckGo
 //
-//  Copyright © 2023 DuckDuckGo. All rights reserved.
+//  Copyright © 2017 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,29 +17,42 @@
 //  limitations under the License.
 //
 
+import Core
 import SwiftUI
-import UIKit
+import DesignResourcesKit
 
 struct SettingsGeneralView: View {
-    
+
     @EnvironmentObject var viewModel: SettingsViewModel
-    
+
     var body: some View {
-        Section {
-            SettingsCellView(label: UserText.settingsSetDefault,
-                             action: { viewModel.setAsDefaultBrowser() },
-                             isButton: true)
-            
-            SettingsCellView(label: UserText.settingsAddToDock,
-                             action: { viewModel.presentLegacyView(.addToDock) },
-                             isButton: true)
-            
-            NavigationLink(destination: WidgetEducationView()) {
-                SettingsCellView(label: UserText.settingsAddWidget)
+        List {
+            Section(header: Text(UserText.settingsPrivacySection),
+                    footer: Text(UserText.settingsAutoLockDescription)) {
+                SettingsCellView(label: UserText.settingsAutolock,
+                                 accesory: .toggle(isOn: viewModel.applicationLockBinding))
+
             }
+            Section(header: Text(UserText.settingsCustomizeSection),
+                    footer: Text(UserText.settingsAssociatedAppsDescription)) {
 
+                SettingsCellView(label: UserText.settingsKeyboard,
+                                 action: { viewModel.presentLegacyView(.keyboard) },
+                                 disclosureIndicator: true,
+                                 isButton: true)
+                SettingsCellView(label: UserText.settingsPreviews,
+                                 accesory: .toggle(isOn: viewModel.longPressBinding))
+
+                SettingsCellView(label: UserText.settingsAssociatedApps,
+                                 accesory: .toggle(isOn: viewModel.universalLinksBinding))
+            }
         }
-
+        .navigationBarTitle(UserText.settingsTitle, displayMode: .inline)
+        .navigationBarItems(trailing: Button(UserText.navigationTitleDone) {
+            viewModel.onRequestDismissSettings?()
+        })
+        .accentColor(Color(designSystemColor: .textPrimary))
+        .environmentObject(viewModel)
+        .conditionalInsetGroupedListStyle()
     }
- 
 }

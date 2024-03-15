@@ -52,6 +52,9 @@ final class SettingsViewModel: ObservableObject {
 #if SUBSCRIPTION
     private var accountManager: AccountManager
     private var signOutObserver: Any?
+    private var isPrivacyProEnabled: Bool {
+        AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
+    }
         
     // Sheet Presentation & Navigation
     @Published var isRestoringSubscription: Bool = false
@@ -294,7 +297,7 @@ extension SettingsViewModel {
         
     #if SUBSCRIPTION
         if #available(iOS 15, *) {
-            enabled = featureFlagger.isFeatureOn(.subscription)
+            enabled = isPrivacyProEnabled
             canPurchase = SubscriptionPurchaseEnvironment.canPurchase
             await setupSubscriptionEnvironment()
             if let token = AccountManager().accessToken {
@@ -324,7 +327,8 @@ extension SettingsViewModel {
                                      return SyncUI.UserText.syncTitle
                                  }())
     }
-        
+     
+    
     private func firePixel(_ event: Pixel.Event) {
         Pixel.fire(pixel: event)
     }

@@ -60,7 +60,7 @@ extension ConnectionServerInfoObserverThroughSession {
 
 extension NetworkProtectionKeychainTokenStore {
     convenience init() {
-        let isSubscriptionEnabled = AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
+        let isSubscriptionEnabled = AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
 #if SUBSCRIPTION && ALPHA
         let accessTokenProvider: () -> String? = { AccountManager().accessToken }
 #else
@@ -83,7 +83,7 @@ extension NetworkProtectionCodeRedemptionCoordinator {
             tokenStore: NetworkProtectionKeychainTokenStore(),
             isManualCodeRedemptionFlow: isManualCodeRedemptionFlow,
             errorEvents: .networkProtectionAppDebugEvents,
-            isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
+            isSubscriptionEnabled: AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
         )
     }
 }
@@ -110,7 +110,7 @@ extension NetworkProtectionLocationListCompositeRepository {
             environment: settings.selectedEnvironment,
             tokenStore: NetworkProtectionKeychainTokenStore(),
             errorEvents: .networkProtectionAppDebugEvents,
-            isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
+            isSubscriptionEnabled: AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
         )
     }
 }

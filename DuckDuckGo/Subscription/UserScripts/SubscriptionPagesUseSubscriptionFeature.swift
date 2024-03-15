@@ -175,13 +175,16 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
                         
             switch await AppStorePurchaseFlow.subscriptionOptions() {
             case .success(let subscriptionOptions):
-                return subscriptionOptions
+                if AppDependencyProvider.shared.subscriptionFeatureAvailability.isSubscriptionPurchaseAllowed {
+                    return subscriptionOptions
+                } else {
+                    return SubscriptionOptions.empty
+                }
             case .failure:
                 os_log("Failed to obtain subscription options", log: .subscription, type: .error)
                 setTransactionError(.failedToGetSubscriptionOptions)
                 return nil
             }
-                        
         }
     }
     

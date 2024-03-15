@@ -414,7 +414,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if SUBSCRIPTION
     private func setupSubscriptionsEnvironment() {
         Task {
-            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+            
+            #if DEBUG || ALPHA
+                SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+            #else
+                SubscriptionPurchaseEnvironment.currentServiceEnvironment = .production
+            #endif
             SubscriptionPurchaseEnvironment.current = .appStore
             await AccountManager().checkSubscriptionState()
         }

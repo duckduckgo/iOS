@@ -30,7 +30,7 @@ struct SubscriptionRestoreView: View {
     @StateObject var viewModel = SubscriptionRestoreViewModel()
     
     @State private var isAlertVisible = false
-    @State private var shouldNavigateToSubscriptionFlow = false
+    @State private var shouldShowWelcomePage = false
     @State private var shouldNavigateToActivationFlow = false
     @State var isModal = true
     
@@ -121,15 +121,21 @@ struct SubscriptionRestoreView: View {
             viewModel.showActivationFlow(result)
         }
         
-        // Subscription Flow Binding
-        .onChange(of: viewModel.state.shouldNavigateToSubscriptionFlow) { result in
-            shouldNavigateToSubscriptionFlow = result
+        // Subscription Welcome Page Binding
+        .onChange(of: viewModel.state.shouldShowWelcomePage) { result in
+            shouldShowWelcomePage = result
         }
-        .onChange(of: shouldNavigateToSubscriptionFlow) { result in
+        .onChange(of: shouldShowWelcomePage) { result in
             viewModel.showSubscriptionFlow(result)
         }
         
         .onChange(of: viewModel.state.shouldDismissView) { result in
+            if result {
+                dismiss()
+            }
+        }
+        
+        .onChange(of: viewModel.state.shouldShowPlans) { result in
             if result {
                 dismiss()
             }
@@ -156,7 +162,7 @@ struct SubscriptionRestoreView: View {
         
         // Hidden link to display Subscription Welcome Page
         NavigationLink(destination: SubscriptionFlowView(),
-                       isActive: $shouldNavigateToSubscriptionFlow) {
+                       isActive: $shouldShowWelcomePage) {
             EmptyView()
         }.isDetailLink(false)
         
@@ -306,14 +312,14 @@ struct SubscriptionRestoreView: View {
             return Alert(title: Text(UserText.subscriptionRestoreNotFoundTitle),
                          message: Text(UserText.subscriptionRestoreNotFoundMessage),
                          primaryButton: .default(Text(UserText.subscriptionRestoreNotFoundPlans),
-                                                 action: { viewModel.dismissView() }),
+                                                 action: { viewModel.showPlans() }),
                          secondaryButton: .cancel())
             
         case .expired:
             return Alert(title: Text(UserText.subscriptionRestoreNotFoundTitle),
                          message: Text(UserText.subscriptionRestoreNotFoundMessage),
                          primaryButton: .default(Text(UserText.subscriptionRestoreNotFoundPlans),
-                                                 action: { viewModel.dismissView() }),
+                                                 action: { viewModel.showPlans() }),
                          secondaryButton: .cancel())
         default:
             return Alert(

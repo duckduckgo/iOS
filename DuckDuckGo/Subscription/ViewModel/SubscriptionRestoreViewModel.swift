@@ -43,8 +43,9 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         var transactionStatus: SubscriptionTransactionStatus = .idle
         var activationResult: SubscriptionActivationResult = .unknown
         var subscriptionEmail: String?
-        var shouldNavigateToSubscriptionFlow = false
+        var shouldShowWelcomePage = false
         var shouldNavigateToActivationFlow = false
+        var shouldShowPlans = false
         var shouldDismissView = false
         
         var viewTitle: String {
@@ -53,7 +54,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     }
     
     // Publish the currently selected feature    
-    @Published var selectedFeature: SettingsViewModel.SettingsSection?
+    @Published var selectedFeature: SettingsViewModel.SettingsDeepLinkSection?
     
     // Read only View State - Should only be modified from the VM
     @Published private(set) var state = State()
@@ -85,6 +86,9 @@ final class SubscriptionRestoreViewModel: ObservableObject {
             state.isAddingDevice = true
         }
         state.shouldNavigateToActivationFlow = false
+        state.shouldShowPlans = false
+        state.shouldShowWelcomePage = false
+        state.shouldDismissView = false
     }
     
     private func setupTransactionObserver() async {
@@ -153,9 +157,15 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     @MainActor
     func showSubscriptionFlow(_ visible: Bool) {
-        if visible != state.shouldNavigateToSubscriptionFlow {
-            self.state.shouldNavigateToSubscriptionFlow = visible
+        if visible != state.shouldShowWelcomePage {
+            self.state.shouldShowWelcomePage = visible
         }
+    }
+    
+    @MainActor
+    func showPlans() {
+        state.shouldShowPlans = true
+        state.shouldDismissView = true
     }
     
     @MainActor

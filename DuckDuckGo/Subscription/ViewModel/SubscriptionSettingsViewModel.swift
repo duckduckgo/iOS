@@ -51,7 +51,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
 
     // Publish the currently selected feature
-    @Published var selectedFeature: SettingsViewModel.SettingsSection?
+    @Published var selectedFeature: SettingsViewModel.SettingsDeepLinkSection?
     
     // Read only View State - Should only be modified from the VM
     @Published private(set) var state = State()

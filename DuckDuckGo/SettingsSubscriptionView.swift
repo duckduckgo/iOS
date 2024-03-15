@@ -28,8 +28,8 @@ struct SettingsSubscriptionView: View {
     @EnvironmentObject var viewModel: SettingsViewModel
     @StateObject var subscriptionFlowViewModel =  SubscriptionFlowViewModel()
     @StateObject var subscriptionRestoreViewModel =  SubscriptionRestoreViewModel()
-    @State var isShowingsubScriptionFlow = false
-    @State var isShowingRestoreFlow = false
+    @State var isShowingSubscriptionFlow = false
+    @State var isShowingSubscriptionRestoreFlow = false
     @State var isShowingDBP = false
     @State var isShowingITP = false
     
@@ -93,11 +93,11 @@ struct SettingsSubscriptionView: View {
         Group {
             SettingsCustomCell(content: { subscriptionDescriptionView })
             SettingsCustomCell(content: { learnMoreView },
-                               action: { isShowingsubScriptionFlow = true },
+                               action: { isShowingSubscriptionFlow = true },
                                isButton: true )
             
             // Subscription Purchase
-            .sheet(isPresented: $isShowingsubScriptionFlow,
+            .sheet(isPresented: $isShowingSubscriptionFlow,
                    onDismiss: { Task { viewModel.onAppear() } },
                    content: {
                         SubscriptionFlowView(viewModel: subscriptionFlowViewModel).interactiveDismissDisabled()
@@ -105,12 +105,12 @@ struct SettingsSubscriptionView: View {
             
             SettingsCustomCell(content: { iHaveASubscriptionView },
                                action: {
-                                    isShowingRestoreFlow = true
+                                    isShowingSubscriptionRestoreFlow = true
                                 },
                                isButton: true )
             
             // Subscription Restore
-            .sheet(isPresented: $isShowingRestoreFlow,
+            .sheet(isPresented: $isShowingSubscriptionRestoreFlow,
                    onDismiss: { Task { viewModel.onAppear() } },
                    content: {
                         SubscriptionRestoreView(viewModel: subscriptionRestoreViewModel).interactiveDismissDisabled()
@@ -203,40 +203,29 @@ struct SettingsSubscriptionView: View {
             
             }
             
-            .onChange(of: viewModel.shouldNavigateToDBP, perform: { value in
-                if value {
-                    // Allow the sheet to dismiss before presenting a new one
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Constants.navigationDelay) {
-                        isShowingDBP = true
-                    }
-                }
-            })
-            
-            .onChange(of: viewModel.shouldNavigateToITP, perform: { value in
-                if value {
-                    // Allow the sheet to dismiss before presenting a new one
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Constants.navigationDelay) {
-                        isShowingITP = true
-                    }
-                }
-            })
-
-            .onChange(of: viewModel.shouldNavigateToSubscriptionFlow, perform: { value in
-                if value {
-                    isShowingsubScriptionFlow = true
-                }
-            })
-            
             // Selected Feature handler for Subscription Flow
             .onReceive(subscriptionFlowViewModel.$selectedFeature) { value in
                 guard let value else { return }
-                viewModel.onAppearNavigationTarget = value
+                viewModel.deepLinkTarget = value
             }
             
             // Selected Feature handler for Subscription Restore
             .onReceive(subscriptionRestoreViewModel.emailViewModel.$selectedFeature) { value in
                 guard let value else { return }
-                viewModel.onAppearNavigationTarget = value
+                viewModel.deepLinkTarget = value
+            }
+            
+            // Selected Feature handler for Show Plans
+            // .onReceive(subscriptionFlowViewModel.state.shouldDisplayRestorePage) { _ in
+           //     viewModel.deepLinkTarget = .subscriptionFlow
+            // }
+            
+            // Selected Feature handler for Show Plans
+            .onReceive(subscriptionRestoreViewModel.$state) { state in
+                
+                if state.shouldShowPlans {
+                    viewModel.deepLinkTarget = .subscriptionFlow
+                }
             }
         }
     }

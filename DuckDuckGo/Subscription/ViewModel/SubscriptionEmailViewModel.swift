@@ -53,7 +53,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     @Published private(set) var state = State()
     
     // Publish the currently selected feature
-    @Published var selectedFeature: SettingsViewModel.SettingsSection?
+    @Published var selectedFeature: SettingsViewModel.SettingsDeepLinkSection?
     
     private static let allowedDomains = [ "duckduckgo.com" ]
     

@@ -56,7 +56,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
 
     // Publish the currently selected feature
-    @Published var selectedFeature: SettingsViewModel.SettingsSection?
+    @Published var selectedFeature: SettingsViewModel.SettingsDeepLinkSection?
     
     // Read only View State - Should only be modified from the VM
     @Published private(set) var state = State()
@@ -70,7 +70,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
          purchaseManager: PurchaseManager = PurchaseManager.shared,
-         selectedFeature: SettingsViewModel.SettingsSection? = nil) {
+         selectedFeature: SettingsViewModel.SettingsDeepLinkSection? = nil) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.purchaseManager = purchaseManager

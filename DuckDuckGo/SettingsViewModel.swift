@@ -79,13 +79,7 @@ final class SettingsViewModel: ObservableObject {
     var onRequestPopLegacyView: (() -> Void)?
     var onRequestDismissSettings: (() -> Void)?
     
-    // SwiftUI Programatic Navigation Variables
-    // Add more views as needed here...
-    @Published var shouldNavigateToDBP = false
-    @Published var shouldNavigateToITP = false
-    @Published var shouldNavigateToSubscriptionFlow = false
-    
-    // Our View State
+    // View State
     @Published private(set) var state: SettingsState
     
     // MARK: Cell Visibility
@@ -102,15 +96,59 @@ final class SettingsViewModel: ObservableObject {
     }
     
     var shouldShowNoMicrophonePermissionAlert: Bool = false
+
+    // MARK: - Deep linking
     
-    // Used to automatically navigate on Appear to a specific section
-    enum SettingsSection: String {
-        case none, netP, dbp, itr, subscriptionFlow
+    // Used to automatically navigate to a specific section
+    // immediately after loading the Settings View
+    @Published var deepLinkTarget: SettingsDeepLinkSection?
+    
+    enum SettingsDeepLinkSection: Identifiable {
+        case netP
+        case dbp
+        case itr
+        case subscriptionFlow
+        case subscriptionRestoreFlow
+        // Add other cases as needed
+
+        var id: String {
+            switch self {
+            case .netP: return "netP"
+            case .dbp: return "dbp"
+            case .itr: return "itr"
+            case .subscriptionFlow: return "subscriptionFlow"
+            case .subscriptionRestoreFlow: return "subscriptionRestoreFlow"
+            // Ensure all cases are covered
+            }
+        }
+
+        // Define the presentation type: .sheet or .push
+        // Default to .sheet, specify .push where needed
+        var type: DeepLinkType {
+            switch self {
+            // Specify cases that require .push presentation
+            // Example:
+            // case .dbp:
+            //     return .push
+            // For all other cases, default to .sheet
+            default:
+                return .sheet
+            }
+        }
+    }
+
+    // Define DeepLinkType outside the enum if not already defined
+    enum DeepLinkType {
+        case sheet
+        case push
     }
     
-    @Published var onAppearNavigationTarget: SettingsSection
+    func resetDeepLinkTarget() {
+        deepLinkTarget = nil
+    }
     
     // MARK: Bindings
+    
     var themeBinding: Binding<ThemeName> {
         Binding<ThemeName>(
             get: { self.state.appTheme },
@@ -215,14 +253,15 @@ final class SettingsViewModel: ObservableObject {
          legacyViewProvider: SettingsLegacyViewProvider,
          accountManager: AccountManager,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
-         navigateOnAppearDestination: SettingsSection = .none) {
+         deepLink: SettingsDeepLinkSection? = nil) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
         self.accountManager = accountManager
         self.voiceSearchHelper = voiceSearchHelper
-        self.onAppearNavigationTarget = navigateOnAppearDestination
+        self.deepLinkTarget = deepLink
         
         setupNotificationObservers()
+        
     }
     
     deinit {
@@ -234,11 +273,11 @@ final class SettingsViewModel: ObservableObject {
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
-         navigateOnAppearDestination: SettingsSection = .none) {
+         deepLink: SettingsDeepLinkSection = .none) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
         self.voiceSearchHelper = voiceSearchHelper
-        self.onAppearNavigationTarget = navigateOnAppearDestination
+        self.deepLinkTarget = deepLink
     }
 #endif
     
@@ -468,7 +507,15 @@ extension SettingsViewModel {
     
     func onAppear() {
         Task { await initState() }
-        Task { await MainActor.run { navigateOnAppear() } }
+ 
+        $deepLinkTarget
+            .receive(on: RunLoop.main)
+            .sink { [weak self] deepLink in
+                print(deepLink)
+            }
+            .store(in: &cancellables)
+        
+        
     }
     
     func setAsDefaultBrowser() {
@@ -494,27 +541,6 @@ extension SettingsViewModel {
     
     @MainActor func dismissSettings() {
         onRequestDismissSettings?()
-    }
-
-    @MainActor
-    private func navigateOnAppear() {
-        // We need a short delay to let the SwifttUI view lifecycle complete
-        // Otherwise the transition can be inconsistent
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-            switch self.onAppearNavigationTarget {
-            case .netP:
-                self.presentLegacyView(.netP)
-            case .dbp:
-                self.shouldNavigateToDBP = true
-            case .itr:
-                self.shouldNavigateToITP = true
-            case .subscriptionFlow:
-                self.shouldNavigateToSubscriptionFlow = true
-            default:
-                break
-            }
-            self.onAppearNavigationTarget = .none
-        }
     }
 
 }

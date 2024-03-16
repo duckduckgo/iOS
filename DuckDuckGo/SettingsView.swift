@@ -28,19 +28,23 @@ struct SettingsView: View {
     
     @State private var shouldDisplayDeepLinkSheet: Bool = false
     @State private var shouldDisplayDeepLinkPush: Bool = false
+#if SUBSCRIPTION
     @State var deepLinkTarget: SettingsViewModel.SettingsDeepLinkSection?
+#endif
     
     var body: some View {
         
         // Hidden navigationLink for programatic navigation
         if #available(iOS 15.0, *) {
             
+            #if SUBSCRIPTION
             if let target = deepLinkTarget {
                 NavigationLink(destination: deepLinkDestinationView(for: target),
                                isActive: $shouldDisplayDeepLinkPush) {
                     EmptyView()
                 }
             }
+            #endif
         }
         
         // Settings Sections

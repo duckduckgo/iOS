@@ -97,11 +97,13 @@ final class SettingsViewModel: ObservableObject {
     
     var shouldShowNoMicrophonePermissionAlert: Bool = false
 
+#if SUBSCRIPTION
     // MARK: - Deep linking
     
     // Used to automatically navigate to a specific section
     // immediately after loading the Settings View
     @Published private(set) var deepLinkTarget: SettingsDeepLinkSection?
+#endif
     
     // MARK: Bindings
     
@@ -465,7 +467,9 @@ extension SettingsViewModel {
     func onAppear() {
         Task {
             await initState()
+#if SUBSCRIPTION
             triggerDeepLinkNavigation(to: self.deepLinkTarget)
+#endif
         }
     }
     

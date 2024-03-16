@@ -77,6 +77,7 @@ struct SettingsView: View {
             viewModel.onDissapear()
         }
         
+#if SUBSCRIPTION
         // MARK: Deeplink Modifiers
         
         .sheet(isPresented: $shouldDisplayDeepLinkSheet,
@@ -111,9 +112,10 @@ struct SettingsView: View {
                 }
             }
         })
-       
+#endif
     }
-    
+
+#if SUBSCRIPTION
     // MARK: DeepLink Views
     @available(iOS 15.0, *)
     @ViewBuilder
@@ -140,7 +142,7 @@ struct SettingsView: View {
             return
         }
     }
-    
+#endif
 }
 
 struct InsetGroupedListStyleModifier: ViewModifier {

@@ -100,8 +100,9 @@ final class SubscriptionFlowViewModel: ObservableObject {
         
         subFeature.onActivateSubscription = {
             DispatchQueue.main.async {
-                self.state.shouldActivateSubscription = true
                 self.state.shouldDismissView = true
+                self.state.shouldActivateSubscription = true
+                
             }
         }
         

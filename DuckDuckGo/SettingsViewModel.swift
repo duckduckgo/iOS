@@ -100,12 +100,13 @@ final class SettingsViewModel: ObservableObject {
     
     var shouldShowNoMicrophonePermissionAlert: Bool = false
 
+#if SUBSCRIPTION
     // MARK: - Deep linking
     
     // Used to automatically navigate to a specific section
     // immediately after loading the Settings View
-    @Published var deepLinkTarget: SettingsDeepLinkSection?
-    private var previousDeepLinkTarget: SettingsDeepLinkSection?
+    @Published private(set) var deepLinkTarget: SettingsDeepLinkSection?
+#endif
     
     // MARK: Bindings
     
@@ -238,7 +239,6 @@ final class SettingsViewModel: ObservableObject {
         self.legacyViewProvider = legacyViewProvider
         self.voiceSearchHelper = voiceSearchHelper
         self.deepLinkTarget = deepLink
-        handleDeepLink()
     }
 #endif
     
@@ -471,7 +471,9 @@ extension SettingsViewModel {
     func onAppear() {
         Task {
             await initState()
-            handleDeepLink()
+#if SUBSCRIPTION
+            triggerDeepLinkNavigation(to: self.deepLinkTarget)
+#endif
         }
     }
     
@@ -584,8 +586,9 @@ extension SettingsViewModel: AutofillLoginSettingsListViewControllerDelegate {
 }
 
 // MARK: DeepLinks
+#if SUBSCRIPTION
 extension SettingsViewModel {
-    
+
     enum SettingsDeepLinkSection: Identifiable {
         case netP
         case dbp
@@ -614,7 +617,7 @@ extension SettingsViewModel {
             // case .dbp:
             //     return .push           
             case .netP:
-                return .uikit
+                return .UIKitView
             default:
                 return .sheet
             }
@@ -625,25 +628,20 @@ extension SettingsViewModel {
     enum DeepLinkType {
         case sheet
         case navigation
-        case uikit
+        case UIKitView
     }
-        
-    private func triggerDeepLinkNavigation(to target: SettingsDeepLinkSection) {
-        deepLinkTarget = target
-    }
-    
-    private func handleDeepLink() {
-        
-        // Trigger navigation on launch
-        // A small delay is required to allow the view to load
-        if let link = self.deepLinkTarget {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                if link != self.previousDeepLinkTarget {
-                    self.triggerDeepLinkNavigation(to: link)
-                    self.previousDeepLinkTarget = link
-                }
+            
+    // Navigate to a section in settings
+    func triggerDeepLinkNavigation(to target: SettingsDeepLinkSection?) {
+        guard let target else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.deepLinkTarget = target
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.deepLinkTarget = nil
             }
         }
     }
 }
+#endif
 // swiftlint:enable file_length

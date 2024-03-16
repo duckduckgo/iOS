@@ -610,7 +610,7 @@ extension SettingsViewModel {
             // case .dbp:
             //     return .push           
             case .netP:
-                return .uikit
+                return .UIKitView
             default:
                 return .sheet
             }
@@ -621,7 +621,7 @@ extension SettingsViewModel {
     enum DeepLinkType {
         case sheet
         case navigation
-        case uikit
+        case UIKitView
     }
         
     private func triggerDeepLinkNavigation(to target: SettingsDeepLinkSection) {

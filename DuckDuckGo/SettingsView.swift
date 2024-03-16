@@ -105,7 +105,7 @@ struct SettingsView: View {
                DispatchQueue.main.async {
                    self.shouldDisplayDeepLinkPush = true
                }
-           case.uikit:
+           case.UIKitView:
                DispatchQueue.main.async {
                    triggerLegacyLink(link)
                }

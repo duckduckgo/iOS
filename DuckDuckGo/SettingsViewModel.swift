@@ -578,8 +578,9 @@ extension SettingsViewModel: AutofillLoginSettingsListViewControllerDelegate {
 }
 
 // MARK: DeepLinks
+#if SUBSCRIPTION
 extension SettingsViewModel {
-    
+
     enum SettingsDeepLinkSection: Identifiable {
         case netP
         case dbp
@@ -634,4 +635,5 @@ extension SettingsViewModel {
         }
     }
 }
+#endif
 // swiftlint:enable file_length

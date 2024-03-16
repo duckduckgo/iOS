@@ -92,25 +92,25 @@ struct SettingsView: View {
                     }
                 })
        
-       .onChange(of: viewModel.deepLinkTarget) { link in
-           guard let link else { return }
-           self.deepLinkTarget = link
-           
-           switch link.type {
-           case .sheet:
-               DispatchQueue.main.async {
-                   self.shouldDisplayDeepLinkSheet = true
-               }
-           case .navigation:
-               DispatchQueue.main.async {
-                   self.shouldDisplayDeepLinkPush = true
-               }
-           case.UIKitView:
-               DispatchQueue.main.async {
-                   triggerLegacyLink(link)
-               }
-           }
-       }
+        .onReceive(viewModel.$deepLinkTarget, perform: { link in
+            guard let link else { return }
+            self.deepLinkTarget = link
+            
+            switch link.type {
+            case .sheet:
+                DispatchQueue.main.async {
+                    self.shouldDisplayDeepLinkSheet = true
+                }
+            case .navigation:
+                DispatchQueue.main.async {
+                    self.shouldDisplayDeepLinkPush = true
+                }
+            case.UIKitView:
+                DispatchQueue.main.async {
+                    triggerLegacyLink(link)
+                }
+            }
+        })
        
     }
     

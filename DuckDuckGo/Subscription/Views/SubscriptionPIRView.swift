@@ -45,8 +45,8 @@ struct SubscriptionPIRView: View {
         static let headerPadding = 5.0
         static let generalSpacing = 20.0
         static let cornerRadius = 10.0
-        static let windowsIcon = "Platform-Windows-16"
-        static let macOSIcon = "Platform-Apple-16"
+        static let windowsIcon = "Platform-Windows-16-subscriptions"
+        static let macOSIcon = "Platform-Apple-16-subscriptions"
     }
     
     var body: some View {

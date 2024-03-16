@@ -204,6 +204,7 @@ extension MainViewController {
         launchSettings()
     }
 
+#if SUBSCRIPTION
     func segueToPrivacyPro() {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
@@ -211,6 +212,7 @@ extension MainViewController {
             $0.triggerDeepLinkNavigation(to: .subscriptionFlow)
         }
     }
+#endif
 
     func segueToDebugSettings() {
         os_log(#function, log: .generalLog, type: .debug)

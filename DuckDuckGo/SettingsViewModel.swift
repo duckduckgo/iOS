@@ -230,12 +230,10 @@ final class SettingsViewModel: ObservableObject {
     // MARK: Default Init
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
-         voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
-         deepLink: SettingsDeepLinkSection = .none) {
+         voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
         self.voiceSearchHelper = voiceSearchHelper
-        self.deepLinkTarget = deepLink
     }
 #endif
     
@@ -474,7 +472,9 @@ extension SettingsViewModel {
     }
     
     func onDissapear() {
+#if SUBSCRIPTION
         self.deepLinkTarget = nil
+#endif
     }
     
     func setAsDefaultBrowser() {

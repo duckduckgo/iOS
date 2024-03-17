@@ -50,7 +50,7 @@ struct WebTrackingProtectionViewText: View {
             StatusIndicatorView(status: .alwaysOn)
                 .padding(.top, -4)
 
-            Text("DuckDuckGo never tracks you and we aim to protect your privacy as much as possible. We continually maintain and develop layers of protection to keep up with new tracking methods and provide many protections that other browsers don’t offer by default.\n[Learn More](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)")
+            Text(UserText.webTrackingProtectionExplanation)
                 .font(.system(size: 16))
                 .lineLimit(nil)
                 .multilineTextAlignment(.center)

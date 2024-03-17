@@ -1825,6 +1825,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Automatically Clear Data";
 
+/* Explanation in Settings how the cookie pop up protection feature works */
+"settings.cookie.pop.up.protection.explanation" = "When DuckDuckGo detects cookie pop-ups on sites you visit, we can automatically set your cookie preferences to minimize cookies and maximize privacy, then close pop-ups.\n[Learn More](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#cookie-pop-up-management)";
+
 /* Settings screen cell text for Cookie popups */
 "settings.cookie.popups" = "Manage Cookie Pop-ups";
 
@@ -1934,6 +1937,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Settings screen cell for voice search */
 "settings.voice.search" = "Private Voice Search";
+
+/* Explanation in Settings how the web tracking protection feature works */
+"settings.web.tracking.protection.explanation" = "DuckDuckGo never tracks you and we aim to protect your privacy as much as possible. We continually maintain and develop layers of protection to keep up with new tracking methods and provide many protections that other browsers don’t offer by default.\n[Learn More](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Submit Report";
@@ -2305,7 +2311,10 @@ But if you *do* want a peek under the hood, you can find more information about 
 "voiceSearch.cancel" = "Cancel";
 
 /* Voice-search footer note with on-device privacy warning */
-"voiceSearch.footer.note" = "Audio is processed on-device. It's not stored or shared with anyone, including DuckDuckGo.";
+"voiceSearch.footer.note" = "Add Private Voice Search option to the address bar. Audio is not stored or shared with anyone, including DuckDuckGo.";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note.old" = "Audio is processed on-device. It's not stored or shared with anyone, including DuckDuckGo.";
 
 /* Cancel action for the alert when the subscription expires */
 "vpn.access-revoked.alert.action.cancel" = "Dismiss";

@@ -38,7 +38,7 @@ struct SettingsAccessibilityView: View {
                 }
             }
 
-            Section(footer: Text("Add Private Voice Search option to the address bar. Audio is not stored or shared with anyone, including DuckDuckGo.")) {
+            Section(footer: Text(UserText.voiceSearchFooter)) {
                 if viewModel.state.speechRecognitionAvailable {
                     SettingsCellView(label: UserText.settingsVoiceSearch,
                                      accesory: .toggle(isOn: viewModel.voiceSearchEnabledBinding))

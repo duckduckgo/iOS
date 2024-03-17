@@ -48,7 +48,7 @@ class SettingsHostingController: UIHostingController<AnyView> {
             self?.navigationController?.dismiss(animated: true)
         }
 
-        //TODO: Select view based on the cohort
+        // TODO: Select view based on the cohort
 //        let settingsView = SettingsView(viewModel: viewModel)
         let settingsRootView = SettingsRootView(viewModel: viewModel)
         self.rootView = AnyView(settingsRootView)

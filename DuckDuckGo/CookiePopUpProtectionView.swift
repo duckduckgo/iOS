@@ -1,5 +1,5 @@
 //
-//  WebTrackingProtectionView.swift
+//  CookiePopUpProtectionView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -52,7 +52,7 @@ struct CookiePopUpProtectionViewText: View {
             StatusIndicatorView(status: viewModel.cookiePopUpProtectionStatus)
                 .padding(.top, -4)
 
-            Text("When DuckDuckGo detects cookie pop-ups on sites you visit, we can automatically set your cookie preferences to minimize cookies and maximize privacy, then close pop-ups.\n[Learn More](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#cookie-pop-up-management)")
+            Text(UserText.cookiePopUpProtectionExplanation)
                 .font(.system(size: 16))
                 .lineLimit(nil)
                 .multilineTextAlignment(.center)

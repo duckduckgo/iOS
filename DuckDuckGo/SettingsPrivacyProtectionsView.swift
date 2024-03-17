@@ -55,12 +55,12 @@ struct SettingsPrivacyProtectionsView: View {
             }
 
             // Email Protection
-            SettingsCellView(label: "Email Protection",
-                             image: Image("EmailProtection"),
-                             action: { viewModel.openEmailProtection() },
-                             statusIndicator: StatusIndicatorView(status: viewModel.emailProtectionStatus),
-                             disclosureIndicator: true,
-                             isButton: true)
+            NavigationLink(destination: EmailProtectionView().environmentObject(viewModel)) {
+                SettingsCellView(label: "Email Protection",
+                                 image: Image("EmailProtection"),
+                                 action: { viewModel.openEmailProtection() },
+                                 statusIndicator: StatusIndicatorView(status: viewModel.emailProtectionStatus))
+            }
 
             // Network Protection
 #if NETWORK_PROTECTION

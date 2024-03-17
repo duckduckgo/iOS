@@ -25,46 +25,21 @@ struct WebTrackingProtectionView: View {
 
     @EnvironmentObject var viewModel: SettingsViewModel
 
+    var description: PrivacyProtectionDescription {
+        PrivacyProtectionDescription(imageName: "WebTrackingProtectionContent",
+                                     title: "Web Tracking Protection",
+                                     status: .alwaysOn,
+                                     explanation: UserText.webTrackingProtectionExplanation)
+    }
+
     var body: some View {
         List {
-            WebTrackingProtectionViewText()
+            PrivacyProtectionDescriptionView(content: description)
             WebTrackingProtectionViewSettings()
         }
         .applySettingsListModifiers(title: "Web Tracking Protection",
                                     displayMode: .inline,
                                     viewModel: viewModel)
-    }
-}
-
-struct WebTrackingProtectionViewText: View {
-
-    var body: some View {
-        VStack(spacing: 8) {
-            Image("WebTrackingProtectionContent")
-                .resizable()
-                .frame(width: 128, height: 96)
-
-            Text("Web Tracking Protection")
-                .font(.title3)
-
-            StatusIndicatorView(status: .alwaysOn)
-                .padding(.top, -4)
-
-            Text(UserText.webTrackingProtectionExplanation)
-                .font(.system(size: 16))
-                .lineLimit(nil)
-                .multilineTextAlignment(.center)
-                .foregroundColor(.secondary)
-                .tintIfAvailable(Color(designSystemColor: .accent))
-                .padding(.horizontal, 32)
-                .padding(.top, 8)
-                .padding(.bottom)
-
-            Spacer()
-        }
-        .listRowInsets(EdgeInsets(top: -12, leading: -12, bottom: -12, trailing: -12))
-        .listRowBackground(Color(designSystemColor: .background).edgesIgnoringSafeArea(.all))
-        .frame(maxWidth: .infinity)
     }
 }
 

@@ -48,6 +48,7 @@ final class SettingsViewModel: ObservableObject {
     private var legacyViewProvider: SettingsLegacyViewProvider
     private lazy var versionProvider: AppVersion = AppVersion.shared
     private let voiceSearchHelper: VoiceSearchHelperProtocol
+    var emailManager: EmailManager { EmailManager() }
 
 #if SUBSCRIPTION
     private var accountManager: AccountManager
@@ -96,6 +97,7 @@ final class SettingsViewModel: ObservableObject {
     }
     
     var shouldShowNoMicrophonePermissionAlert: Bool = false
+    @Published var shouldShowEmailAlert: Bool = false
 
 #if SUBSCRIPTION
     // MARK: - Deep linking
@@ -230,7 +232,7 @@ final class SettingsViewModel: ObservableObject {
     }
 
     var emailProtectionStatus: StatusIndicator {
-        return EmailManager().isSignedIn ? .on : .off
+        return emailManager.isSignedIn ? .on : .off
     }
 
     var syncStatus: StatusIndicator {
@@ -522,6 +524,18 @@ extension SettingsViewModel {
     
     func openEmailProtection() {
         UIApplication.shared.open(URL.emailProtectionQuickLink,
+                                  options: [:],
+                                  completionHandler: nil)
+    }
+
+    func openEmailAccountManagement() {
+        UIApplication.shared.open(URL.emailProtectionAccountLink,
+                                  options: [:],
+                                  completionHandler: nil)
+    }
+
+    func openEmailSupport() {
+        UIApplication.shared.open(URL.emailProtectionSupportLink,
                                   options: [:],
                                   completionHandler: nil)
     }

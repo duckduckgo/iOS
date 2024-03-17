@@ -25,48 +25,21 @@ struct CookiePopUpProtectionView: View {
 
     @EnvironmentObject var viewModel: SettingsViewModel
 
+    var description: PrivacyProtectionDescription {
+        PrivacyProtectionDescription(imageName: "CookiePopUpProtectionContent",
+                                     title: "Cookie Pop-Up Protection",
+                                     status: viewModel.cookiePopUpProtectionStatus,
+                                     explanation: UserText.cookiePopUpProtectionExplanation)
+    }
+
     var body: some View {
         List {
-            CookiePopUpProtectionViewText()
+            PrivacyProtectionDescriptionView(content: description)
             CookiePopUpProtectionViewSettings()
         }
         .applySettingsListModifiers(title: "Cookie Pop-Up Protection",
                                     displayMode: .inline,
                                     viewModel: viewModel)
-    }
-}
-
-struct CookiePopUpProtectionViewText: View {
-
-    @EnvironmentObject var viewModel: SettingsViewModel
-
-    var body: some View {
-        VStack(spacing: 8) {
-            Image("CookiePopUpProtectionContent")
-                .resizable()
-                .frame(width: 128, height: 96)
-
-            Text("Cookie Pop-Up Protection")
-                .font(.title3)
-
-            StatusIndicatorView(status: viewModel.cookiePopUpProtectionStatus)
-                .padding(.top, -4)
-
-            Text(UserText.cookiePopUpProtectionExplanation)
-                .font(.system(size: 16))
-                .lineLimit(nil)
-                .multilineTextAlignment(.center)
-                .foregroundColor(.secondary)
-                .tintIfAvailable(Color(designSystemColor: .accent))
-                .padding(.horizontal, 32)
-                .padding(.top, 8)
-                .padding(.bottom)
-
-            Spacer()
-        }
-        .listRowInsets(EdgeInsets(top: -12, leading: -12, bottom: -12, trailing: -12))
-        .listRowBackground(Color(designSystemColor: .background).edgesIgnoringSafeArea(.all))
-        .frame(maxWidth: .infinity)
     }
 }
 

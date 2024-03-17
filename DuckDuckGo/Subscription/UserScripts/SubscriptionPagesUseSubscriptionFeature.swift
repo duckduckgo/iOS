@@ -226,8 +226,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             let purchaseTransactionJWS: String
 
             switch await appStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id,
-                                                                   emailAccessToken: emailAccessToken,
-                                                                   subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)) {
+                                                                   emailAccessToken: emailAccessToken) {
             case .success(let transactionJWS):
                 purchaseTransactionJWS = transactionJWS
 
@@ -252,8 +251,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             }
             
             setTransactionStatus(.polling)
-            switch await appStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS,
-                                                                           subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)) {
+            switch await appStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS) {
             case .success(let purchaseUpdate):
                 DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess)
                 UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
@@ -352,7 +350,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func restoreAccountFromAppStorePurchase() async throws {
         setTransactionStatus(.restoring)
         
-        let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+        let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase()
         switch result {
         case .success:
             setTransactionStatus(.idle)

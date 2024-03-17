@@ -413,7 +413,7 @@ extension SettingsViewModel {
     @available(iOS 15.0, *)
     func restoreAccountPurchase() async {
         DispatchQueue.main.async { self.isRestoringSubscription = true }
-        let result = await subscriptionManager.flowProvider.appStoreRestoreFlow.restoreAccountFromPastPurchase(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+        let result = await subscriptionManager.flowProvider.appStoreRestoreFlow.restoreAccountFromPastPurchase()
         switch result {
         case .success:
             DispatchQueue.main.async {

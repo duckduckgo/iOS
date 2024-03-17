@@ -32,7 +32,11 @@ import Subscription
 @available(iOS 15.0, *)
 final class SubscriptionDebugViewController: UITableViewController {
     
-    private let accountManager = AppDependencyProvider.shared.subscriptionManager.accountManager
+    private var subscriptionManager: SubscriptionManaging = AppDependencyProvider.shared.subscriptionManager
+    private var accountManager: AccountManaging { subscriptionManager.accountManager }
+    private lazy var authService = subscriptionManager.serviceProvider.makeAuthService()
+    private lazy var subscriptionService = subscriptionManager.serviceProvider.makeSubscriptionService()
+
     fileprivate var purchaseManager: PurchaseManager = PurchaseManager.shared
     
     private let titles = [
@@ -207,7 +211,7 @@ final class SubscriptionDebugViewController: UITableViewController {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Token not available")
                 return
             }
-            switch await AuthService.validateToken(accessToken: token) {
+            switch await authService.validateToken(accessToken: token) {
             case .success(let response):
                 showAlert(title: "Token details", message: "\(response)")
             case .failure(let error):
@@ -222,7 +226,7 @@ final class SubscriptionDebugViewController: UITableViewController {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
                 return
             }
-            switch await SubscriptionService.getSubscription(accessToken: token) {
+            switch await subscriptionService.getSubscription(accessToken: token) {
             case .success(let response):
                 showAlert(title: "Subscription info", message: "\(response)")
             case .failure(let error):

@@ -86,8 +86,17 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
              accountCreationFailed,
              generalError
     }
-        
+    
+    private let subscriptionManager: SubscriptionManaging = AppDependencyProvider.shared.subscriptionManager
     private let accountManager: AccountManaging = AppDependencyProvider.shared.subscriptionManager.accountManager
+
+    private lazy var subscriptionService = subscriptionManager.serviceProvider.makeSubscriptionService()
+
+    @available(iOS 15.0, *)
+    private var appStorePurchaseFlow: AppStorePurchaseFlow { subscriptionManager.flowProvider.appStorePurchaseFlow }
+
+    @available(iOS 15.0, *)
+    private var appStoreRestoreFlow: AppStoreRestoreFlow { subscriptionManager.flowProvider.appStoreRestoreFlow }
 
     // Transaction Status and erros are observed from ViewModels to handle errors in the UI
     @Published private(set) var transactionStatus: SubscriptionTransactionStatus = .idle
@@ -176,7 +185,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             setTransactionStatus(.purchasing)
             resetSubscriptionFlow()
                         
-            switch await AppStorePurchaseFlow.subscriptionOptions() {
+            switch await appStorePurchaseFlow.subscriptionOptions() {
             case .success(let subscriptionOptions):
                 return subscriptionOptions
             case .failure:
@@ -216,7 +225,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             let emailAccessToken = try? EmailManager().getToken()
             let purchaseTransactionJWS: String
 
-            switch await AppStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id,
+            switch await appStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id,
                                                                    emailAccessToken: emailAccessToken,
                                                                    subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)) {
             case .success(let transactionJWS):
@@ -243,7 +252,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             }
             
             setTransactionStatus(.polling)
-            switch await AppStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS,
+            switch await appStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS,
                                                                            subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)) {
             case .success(let purchaseUpdate):
                 DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess)
@@ -280,7 +289,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func backToSettings(params: Any, original: WKScriptMessage) async -> Encodable? {
         if let accessToken = accountManager.accessToken,
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
-            switch await SubscriptionService.getSubscription(accessToken: accessToken) {
+            switch await subscriptionService.getSubscription(accessToken: accessToken) {
             
             // If the account is not active, display an error and logout
             case .success(let subscription) where !subscription.isActive:
@@ -343,7 +352,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func restoreAccountFromAppStorePurchase() async throws {
         setTransactionStatus(.restoring)
         
-        let result = await AppStoreRestoreFlow.restoreAccountFromPastPurchase(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+        let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
         switch result {
         case .success:
             setTransactionStatus(.idle)

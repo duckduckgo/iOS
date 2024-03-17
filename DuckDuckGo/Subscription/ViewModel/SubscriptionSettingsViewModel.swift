@@ -27,7 +27,10 @@ import Core
 @available(iOS 15.0, *)
 final class SubscriptionSettingsViewModel: ObservableObject {
     
-    let accountManager: AccountManaging
+    private var subscriptionManager: SubscriptionManaging
+    var accountManager: AccountManaging { subscriptionManager.accountManager }
+    private lazy var subscriptionService = subscriptionManager.serviceProvider.makeSubscriptionService()
+
     private var subscriptionUpdateTimer: Timer?
     private var signOutObserver: Any?
     private var subscriptionInfo: SubscriptionService.GetSubscriptionResponse?
@@ -44,8 +47,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     private var externalAllowedDomains = ["stripe.com"]
     
     
-    init(accountManager: AccountManaging = AppDependencyProvider.shared.subscriptionManager.accountManager) {
-        self.accountManager = accountManager
+    init(subscriptionManager: SubscriptionManaging = AppDependencyProvider.shared.subscriptionManager) {
+        self.subscriptionManager = subscriptionManager
         Task { await fetchAndUpdateSubscriptionDetails() }
         setupSubscriptionUpdater()
         setupNotificationObservers()
@@ -58,10 +61,10 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }()
     
     @MainActor
-    func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad) {
+    func fetchAndUpdateSubscriptionDetails(cachePolicy: CachePolicy = .returnCacheDataElseLoad) {
         Task {
             guard let token = self.accountManager.accessToken else { return }
-            let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
+            let subscriptionResult = await subscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
             switch subscriptionResult {
             case .success(let subscription):
                 subscriptionInfo = subscription
@@ -70,7 +73,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
                                                 product: subscription.productId,
                                                 billingPeriod: subscription.billingPeriod)
             case .failure:
-                AccountManager().signOut()
+                accountManager.signOut()
                 shouldDismissView = true
             }
         }
@@ -142,8 +145,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
          
     private func manageStripeSubscription() async {
         guard let token = accountManager.accessToken, let externalID = accountManager.externalID else { return }
-        let serviceResponse = await  SubscriptionService.getCustomerPortalURL(accessToken: token, externalID: externalID)
-        
+        let serviceResponse = await subscriptionService.getCustomerPortalURL(accessToken: token, externalID: externalID)
+
         // Get Stripe Customer Portal URL and update the model
         if case .success(let response) = serviceResponse {
             guard let url = URL(string: response.customerPortalUrl) else { return }

@@ -240,7 +240,12 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             keychainType: .dataProtection(.unspecified),
             errorEvents: nil,
             isSubscriptionEnabled: isSubscriptionEnabled,
-            accessTokenProvider: { AccountManager().accessToken }
+            accessTokenProvider: {
+                let configuration = DefaultSubscriptionConfiguration(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs),
+                                                                     purchasePlatform: .appStore,
+                                                                     serviceEnvironment: .staging)
+                return SubscriptionManager(configuration: configuration).accountManager.accessToken
+            }
         )
 #else
         let isSubscriptionEnabled = false
@@ -319,10 +324,12 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
     private static func entitlementCheck() async -> Result<Bool, Error> {
 #if SUBSCRIPTION && ALPHA
-        SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+        let configuration = DefaultSubscriptionConfiguration(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs),
+                                                             purchasePlatform: .appStore,
+                                                             serviceEnvironment: .staging)
+        let accountManager = SubscriptionManager(configuration: configuration).accountManager
 
-        let result = await AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
-            .hasEntitlement(for: .networkProtection, cachePolicy: .reloadIgnoringLocalCacheData)
+        let result = await accountManager.hasEntitlement(for: .networkProtection, cachePolicy: .reloadIgnoringLocalCacheData)
         switch result {
         case .success(let hasEntitlement):
             return .success(hasEntitlement)

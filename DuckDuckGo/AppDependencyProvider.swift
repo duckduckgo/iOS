@@ -79,14 +79,11 @@ class AppDependencyProvider: DependencyProvider {
 
 #if SUBSCRIPTION
     let subscriptionManager: SubscriptionManaging = {
-        let configuration = DefaultSubscriptionConfiguration(purchasePlatform: .appStore, serviceEnvironment: .staging)
+        let configuration = DefaultSubscriptionConfiguration(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs),
+                                                             purchasePlatform: .appStore,
+                                                             serviceEnvironment: .staging)
 
-        let accountManager = AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
-
-        // perform token migration if needed (to be removed before release)
-        try? accountManager.migrateAccessTokenToNewStore()
-
-        return SubscriptionManager(configuration: configuration, accountManager: accountManager)
+        return SubscriptionManager(configuration: configuration)
     }()
 #endif
 }

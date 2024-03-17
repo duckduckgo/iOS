@@ -250,7 +250,7 @@ extension MainViewController {
                                                             tabManager: tabManager)
 #if SUBSCRIPTION
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider,
-                                                  accountManager: AppDependencyProvider.shared.subscriptionManager.accountManager)
+                                                  subscriptionManager: AppDependencyProvider.shared.subscriptionManager)
 #else
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider)
 #endif

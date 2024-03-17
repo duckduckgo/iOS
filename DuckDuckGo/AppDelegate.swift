@@ -483,10 +483,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func updateSubscriptionStatus() {
 #if SUBSCRIPTION
         Task {
-            guard let token = AppDependencyProvider.shared.subscriptionManager.accountManager.accessToken else {
+            let subscriptionManager = AppDependencyProvider.shared.subscriptionManager
+            guard let token = subscriptionManager.accountManager.accessToken else {
                 return
             }
-            let result = await SubscriptionService.getSubscription(accessToken: token)
+
+            let subscriptionService = subscriptionManager.serviceProvider.makeSubscriptionService()
+            let result = await subscriptionService.getSubscription(accessToken: token)
 
             switch result {
             case .success(let success):

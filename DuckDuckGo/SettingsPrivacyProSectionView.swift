@@ -1,5 +1,5 @@
 //
-//  SettingsPrivacyProView.swift
+//  SettingsPrivacyProSectionView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -20,21 +20,16 @@
 import SwiftUI
 import UIKit
 
-struct SettingsPrivacyProView: View {
+struct SettingsPrivacyProSectionView: View {
 
     @EnvironmentObject var viewModel: SettingsViewModel
 
     var body: some View {
-        Section {
 #if SUBSCRIPTION
-            if #available(iOS 15, *) {
-                NavigationLink(destination: SettingsSubscriptionView().environmentObject(viewModel)) {
-                    SettingsCellView(label: "Privacy Pro",
-                                     image: Image("PrivacyPro"))
-                }
-            }
-#endif
+        if #available(iOS 15, *) {
+            SettingsSubscriptionView()
         }
+#endif
 
     }
 

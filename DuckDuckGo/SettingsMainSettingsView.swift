@@ -34,9 +34,11 @@ struct SettingsMainSettingsView: View {
             }
 
             // Sync & Backup
+            let statusIndicator = viewModel.syncStatus == .on ? StatusIndicatorView(status: viewModel.syncStatus, isDotHidden: true) : nil
             SettingsCellView(label: SyncUI.UserText.syncTitle,
                              image: Image("Sync"),
                              action: { viewModel.presentLegacyView(.sync) },
+                             statusIndicator: statusIndicator,
                              disclosureIndicator: true,
                              isButton: true)
 

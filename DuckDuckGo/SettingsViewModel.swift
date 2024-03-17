@@ -237,6 +237,10 @@ final class SettingsViewModel: ObservableObject {
         return EmailManager().isSignedIn ? .on : .off
     }
 
+    var syncStatus: StatusIndicator {
+        legacyViewProvider.syncService.authState != .inactive ? .on : .off
+    }
+
 #if SUBSCRIPTION
     // MARK: Default Init
     init(state: SettingsState? = nil,

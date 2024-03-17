@@ -42,12 +42,15 @@ enum StatusIndicator: Equatable {
 
 struct StatusIndicatorView: View {
     var status: StatusIndicator
+    var isDotHidden = false
 
     var body: some View {
         HStack(spacing: 6) {
-            Circle()
-                .frame(width: 8, height: 8)
-                .foregroundColor(colorForStatus(status))
+            if !isDotHidden {
+                Circle()
+                    .frame(width: 8, height: 8)
+                    .foregroundColor(colorForStatus(status))
+            }
 
             Text(status.text)
                 .font(.system(size: 16))

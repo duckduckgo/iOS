@@ -234,14 +234,16 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
+        let featureVisibility = NetworkProtectionVisibilityForTunnelProvider()
+        let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
         let accessTokenProvider: () -> String? = {
 #if SUBSCRIPTION
-            return { AccountManager().accessToken }
+            if featureVisibility.shouldMonitorEntitlement() {
+                return { AccountManager().accessToken }
+            }
 #endif
             return { nil }
         }()
-        let isSubscriptionEnabled = accessTokenProvider() != nil
-
         let tokenStore = NetworkProtectionKeychainTokenStore(
             keychainType: .dataProtection(.unspecified),
             errorEvents: nil,
@@ -317,7 +319,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
     private static func entitlementCheck() async -> Result<Bool, Error> {
 #if SUBSCRIPTION
-        guard AccountManager().accessToken != nil else {
+        guard NetworkProtectionVisibilityForTunnelProvider().shouldMonitorEntitlement() else {
             return .success(true)
         }
 

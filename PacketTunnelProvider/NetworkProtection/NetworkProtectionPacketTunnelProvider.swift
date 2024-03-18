@@ -323,8 +323,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             return .success(true)
         }
 
-        // todo - https://app.asana.com/0/0/1206811466624632/f
-        SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+        if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {
+            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+        }
 
         let result = await AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
             .hasEntitlement(for: .networkProtection, cachePolicy: .reloadIgnoringLocalCacheData)

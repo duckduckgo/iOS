@@ -67,6 +67,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     }
 
     enum FeatureVisibilityRows: Int, CaseIterable {
+        case toggleSelectedEnvironment
         case updateSubscriptionOverride
         case debugInfo
     }
@@ -612,6 +613,13 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
     private func configure(_ cell: UITableViewCell, forVisibilityRow row: Int) {
         switch FeatureVisibilityRows(rawValue: row) {
+        case .toggleSelectedEnvironment:
+            let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+            if settings.selectedEnvironment == .production {
+                cell.textLabel?.text = "Selected Environment: PRODUCTION"
+            } else {
+                cell.textLabel?.text = "Selected Environment: STAGING"
+            }
         case .updateSubscriptionOverride:
             let defaults = UserDefaults.networkProtectionGroupDefaults
             if let subscriptionOverrideEnabled = defaults.subscriptionOverrideEnabled {
@@ -624,6 +632,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
             cell.textLabel?.font = .monospacedSystemFont(ofSize: 13.0, weight: .regular)
             cell.textLabel?.text = """
+Endpoint: \(VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment.endpointURL.absoluteString)
+
 isPrivacyProLaunched: \(vpnVisibility.isPrivacyProLaunched() ? "YES" : "NO")
 isWaitlistBetaActive: \(vpnVisibility.isWaitlistBetaActive() ? "YES" : "NO")
 isWaitlistUser: \(vpnVisibility.isWaitlistUser() ? "YES" : "NO")
@@ -640,6 +650,14 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
     
     private func didSelectFeatureVisibility(at indexPath: IndexPath) {
         switch FeatureVisibilityRows(rawValue: indexPath.row) {
+        case .toggleSelectedEnvironment:
+            let vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+            if vpnSettings.selectedEnvironment == .production {
+                vpnSettings.selectedEnvironment = .staging
+            } else {
+                vpnSettings.selectedEnvironment = .production
+            }
+            tableView.reloadData()
         case .updateSubscriptionOverride:
             let defaults = UserDefaults.networkProtectionGroupDefaults
             if let subscriptionOverrideEnabled = defaults.subscriptionOverrideEnabled {

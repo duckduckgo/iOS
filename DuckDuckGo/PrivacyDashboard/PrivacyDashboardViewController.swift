@@ -278,7 +278,7 @@ extension PrivacyDashboardViewController {
         let openerContext: BrokenSiteReport.OpenerContext?
         let vpnOn: Bool
         let userRefreshCount: Int
-        let webVitals: WebVitalsSubfeature
+        let performanceMetrics: PerformanceMetricsSubfeature
     }
     
     enum BrokenSiteReportError: Error {
@@ -297,11 +297,14 @@ extension PrivacyDashboardViewController {
         }
 
         // Skipped for now until feature supported in C-S-S
-//        let webVitalsResult = await withCheckedContinuation({ continuation in
-//            breakageAdditionalInfo.webVitals.notifyHandler { result in
-//                continuation.resume(returning: result)
-//            }
-//        })
+        var webVitalsResult: [Double]?
+        if privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .performanceMetrics) {
+            webVitalsResult = await withCheckedContinuation({ continuation in
+                breakageAdditionalInfo.performanceMetrics.notifyHandler { result in
+                    continuation.resume(returning: result)
+                }
+            })
+        }
 
         let blockedTrackerDomains = privacyInfo.trackerInfo.trackersBlocked.compactMap { $0.domain }
         let protectionsState = privacyConfigurationManager.privacyConfig.isFeature(.contentBlocking,
@@ -337,7 +340,7 @@ extension PrivacyDashboardViewController {
                                 httpStatusCodes: statusCodes,
                                 openerContext: breakageAdditionalInfo.openerContext,
                                 vpnOn: breakageAdditionalInfo.vpnOn,
-                                jsPerformance: nil,
+                                jsPerformance: webVitalsResult,
                                 userRefreshCount: breakageAdditionalInfo.userRefreshCount,
                                 didOpenReportInfo: didOpenReportInfo,
                                 toggleReportCounter: toggleReportCounter)

@@ -120,7 +120,7 @@ class TabViewController: UIViewController {
 
     public var inferredOpenerContext: BrokenSiteReport.OpenerContext?
     private var refreshCountSinceLoad: Int = 0
-    private var webVitals: WebVitalsSubfeature = WebVitalsSubfeature()
+    private var performanceMetrics: PerformanceMetricsSubfeature = PerformanceMetricsSubfeature()
 
     private var detectedLoginURL: URL?
     private var preserveLoginsWorker: PreserveLoginsWorker?
@@ -952,7 +952,7 @@ class TabViewController: UIViewController {
                                                                      openerContext: inferredOpenerContext,
                                                                      vpnOn: vpnOn,
                                                                      userRefreshCount: refreshCountSinceLoad,
-                                                                     webVitals: webVitals)
+                                                                     performanceMetrics: performanceMetrics)
     }
 
     public func print() {
@@ -2197,8 +2197,8 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.loginFormDetectionScript?.delegate = self
         userScripts.autoconsentUserScript.delegate = self
 
-        webVitals.targetWebview = webView
-        userScripts.contentScopeUserScriptIsolated.registerSubfeature(delegate: webVitals)
+        performanceMetrics.targetWebview = webView
+        userScripts.contentScopeUserScriptIsolated.registerSubfeature(delegate: performanceMetrics)
 
         adClickAttributionLogic.onRulesChanged(latestRules: ContentBlocking.shared.contentBlockingManager.currentRules)
 

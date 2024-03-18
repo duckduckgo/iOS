@@ -602,10 +602,10 @@ extension Pixel {
         case privacyProSubscriptionManagementPlanBilling
         case privacyProSubscriptionManagementRemoval
         // Web pixels
-        case privacyProOfferMonthlyPriceClick // m.privacy-pro.offer.monthly-price.click.c.ios
-        case privacyProOfferYearlyPriceClick // m.privacy-pro.offer.yearly-price.click.c.ios
-        case privacyProAddEmailSuccess // m.privacy-pro.app.add-email.success.u.ios
-        case privacyProWelcomeFAQClieck // m.privacy-pro.welcome.faq.click.u.ios
+        case privacyProOfferMonthlyPriceClick
+        case privacyProOfferYearlyPriceClick
+        case privacyProAddEmailSuccess
+        case privacyProWelcomeFAQClieck
     }
     
 }

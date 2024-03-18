@@ -601,6 +601,11 @@ extension Pixel {
         case privacyProSubscriptionManagementEmail
         case privacyProSubscriptionManagementPlanBilling
         case privacyProSubscriptionManagementRemoval
+        // Web pixels
+        case privacyProOfferMonthlyPriceClick // m.privacy-pro.offer.monthly-price.click.c.ios
+        case privacyProOfferYearlyPriceClick // m.privacy-pro.offer.yearly-price.click.c.ios
+        case privacyProAddEmailSuccess // m.privacy-pro.app.add-email.success.u.ios
+        case privacyProWelcomeFAQClieck // m.privacy-pro.welcome.faq.click.u.ios
     }
     
 }
@@ -1174,6 +1179,11 @@ extension Pixel.Event {
         case .privacyProSubscriptionManagementEmail: return "m_privacy-pro_manage-email_edit_click"
         case .privacyProSubscriptionManagementPlanBilling: return "m_privacy-pro_settings_change-plan-or-billing_click"
         case .privacyProSubscriptionManagementRemoval: return "m_privacy-pro_settings_remove-from-device_click"
+            // Web
+        case .privacyProOfferMonthlyPriceClick: return "m_privacy-pro_offer_monthly-price_click"
+        case .privacyProOfferYearlyPriceClick: return "m_privacy-pro_offer_yearly-price_click"
+        case .privacyProAddEmailSuccess: return "m_privacy-pro_app_add-email_success_u"
+        case .privacyProWelcomeFAQClieck: return "m_privacy-pro_welcome_faq_click_u"
         }
     }
 }

@@ -96,6 +96,7 @@ final class SettingsViewModel: ObservableObject {
     }
     
     var shouldShowNoMicrophonePermissionAlert: Bool = false
+    var autocompleteSubtitle: String?
 
 #if SUBSCRIPTION
     // MARK: - Deep linking
@@ -104,7 +105,7 @@ final class SettingsViewModel: ObservableObject {
     // immediately after loading the Settings View
     @Published private(set) var deepLinkTarget: SettingsDeepLinkSection?
 #endif
-    
+
     // MARK: Bindings
     
     var themeBinding: Binding<ThemeName> {
@@ -161,6 +162,8 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
+
+                Pixel.fire(pixel: self.state.autocomplete ? .autocompleteEnabled : .autocompleteDisabled)
             }
         )
     }
@@ -211,6 +214,7 @@ final class SettingsViewModel: ObservableObject {
          legacyViewProvider: SettingsLegacyViewProvider,
          accountManager: AccountManager,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
+         variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
@@ -219,7 +223,7 @@ final class SettingsViewModel: ObservableObject {
         self.deepLinkTarget = deepLink
         
         setupNotificationObservers()
-        
+        autocompleteSubtitle = variantManager.isSupported(feature: .history) ? UserText.settingsAutocompleteSubtitle : nil
     }
     
     deinit {
@@ -230,10 +234,12 @@ final class SettingsViewModel: ObservableObject {
     // MARK: Default Init
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
+         variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
         self.voiceSearchHelper = voiceSearchHelper
+        autocompleteSubtitle = variantManager.isSupported(feature: .history) ? UserText.settingsAutocompleteSubtitle : nil
     }
 #endif
     

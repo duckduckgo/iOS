@@ -51,6 +51,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         Sections.lastDisconnectError: "Last Disconnect Error",
         Sections.connectionTest: "Connection Test",
         Sections.vpnConfiguration: "VPN Configuration",
+        Sections.vpnMetadata: "VPN Metadata",
     ]
 
     enum Sections: Int, CaseIterable {
@@ -64,6 +65,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case networkPath
         case lastDisconnectError
         case vpnConfiguration
+        case vpnMetadata
     }
 
     enum FeatureVisibilityRows: Int, CaseIterable {
@@ -73,10 +75,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     }
 
     enum ClearDataRows: Int, CaseIterable {
-
         case clearAuthToken
         case clearAllVPNData
-
     }
 
     enum DebugFeatureRows: Int, CaseIterable {
@@ -120,6 +120,11 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case fullProtocolConfigurationData
     }
 
+    enum MetadataRows: Int, CaseIterable {
+        case refreshMetadata
+        case metadataContents
+    }
+
     // MARK: Properties
 
     private let debugFeatures: NetworkProtectionDebugFeatures
@@ -130,6 +135,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     private var lastDisconnectError: String?
     private var baseConfigurationData: String?
     private var fullProtocolConfigurationData: String?
+    private var vpnMetadata: VPNMetadata?
 
     private struct ConnectionTestResult {
         let interface: String
@@ -163,6 +169,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         loadLastDisconnectError()
         loadConfigurationData()
         startPathMonitor()
+
+        Task {
+            await self.refreshMetadata()
+        }
     }
 
     // MARK: Table View
@@ -220,6 +230,9 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .vpnConfiguration:
             configure(cell, forConfigurationRow: indexPath.row)
 
+        case .vpnMetadata:
+            configure(cell, forMetadataRow: indexPath.row)
+
         case .featureVisibility:
             configure(cell, forVisibilityRow: indexPath.row)
 
@@ -242,6 +255,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .lastDisconnectError: return LastDisconnectErrorRows.allCases.count
         case .connectionTest: return ConnectionTestRows.allCases.count + connectionTestResults.count
         case .vpnConfiguration: return ConfigurationRows.allCases.count
+        case .vpnMetadata: return MetadataRows.allCases.count
         case .featureVisibility: return FeatureVisibilityRows.allCases.count
         case .none: return 0
 
@@ -277,6 +291,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             }
         case .vpnConfiguration:
             break
+        case .vpnMetadata:
+            didSelectVPNMetadataAction(at: indexPath)
         case .featureVisibility:
             didSelectFeatureVisibility(at: indexPath)
         case .none:
@@ -571,7 +587,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .none:
             assertionFailure("Couldn't map configuration row")
         }
-
     }
 
     private func loadConfigurationData() {
@@ -606,6 +621,35 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             }
 
             self.tableView.reloadData()
+        }
+    }
+
+    // MARK: - VPN Metadata
+
+    private func configure(_ cell: UITableViewCell, forMetadataRow row: Int) {
+        cell.textLabel?.font = .systemFont(ofSize: 17)
+
+        switch MetadataRows(rawValue: row) {
+        case .refreshMetadata:
+            cell.textLabel?.text = "Refresh Metadata"
+        case .metadataContents:
+            cell.textLabel?.font = .monospacedSystemFont(ofSize: 13.0, weight: .regular)
+            cell.textLabel?.text = vpnMetadata?.toPrettyPrintedJSON() ?? "No Metadata"
+        case .none:
+            assertionFailure("Couldn't map configuration row")
+        }
+    }
+
+    private func didSelectVPNMetadataAction(at indexPath: IndexPath) {
+        switch MetadataRows(rawValue: indexPath.row) {
+        case .refreshMetadata:
+            Task {
+                await refreshMetadata()
+            }
+        case .metadataContents:
+            break
+        case .none:
+            break
         }
     }
 
@@ -647,7 +691,14 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
             break
         }
     }
-    
+
+    @MainActor
+    private func refreshMetadata() async {
+        let collector = DefaultVPNMetadataCollector()
+        self.vpnMetadata = await collector.collectMetadata()
+        self.tableView.reloadData()
+    }
+
     private func didSelectFeatureVisibility(at indexPath: IndexPath) {
         switch FeatureVisibilityRows(rawValue: indexPath.row) {
         case .toggleSelectedEnvironment:

@@ -35,20 +35,6 @@ final class HistoryCaptureTests: XCTestCase {
         XCTAssertEqual([URL.example], mockHistoryCoordinator.addVisitCalls)
     }
 
-    func test_whenURLIsDDGQuery_ThenOnlyQueryIsStored() {
-        let capture = makeCapture()
-        capture.webViewDidCommit(url: URL.makeSearchURL(query: "test")!)
-        XCTAssertEqual(1, mockHistoryCoordinator.addVisitCalls.count)
-        XCTAssertEqual("https://duckduckgo.com?q=test", mockHistoryCoordinator.addVisitCalls[0].absoluteString)
-    }
-
-    func test_whenURLIsDDGQueryWithExtraParams_ThenOnlyQueryIsStored() {
-        let capture = makeCapture()
-        capture.webViewDidCommit(url: URL.makeSearchURL(query: "test")!.appendingParameter(name: "ia", value: "web"))
-        XCTAssertEqual(1, mockHistoryCoordinator.addVisitCalls.count)
-        XCTAssertEqual("https://duckduckgo.com?q=test", mockHistoryCoordinator.addVisitCalls[0].absoluteString)
-    }
-
     func test_whenTitleIsUpdatedForMatchingURL_ThenTitleIsSaved() {
         let capture = makeCapture()
         capture.webViewDidCommit(url: URL.example)

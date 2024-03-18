@@ -1022,12 +1022,14 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsPProActivationPendingTitle = NSLocalizedString("settings.subscription.activation.pending.title", value: "Your Subscription is Being Activated", comment: "Subscription activation pending title")
     public static let settingsPProActivationPendingDescription = NSLocalizedString("settings.subscription.activation.pending.description", value: "This is taking longer than usual, please check back later.", comment: "Subscription activation pending description")
     
-    
     // Customize Section
     public static let settingsCustomizeSection = NSLocalizedString("settings.customize", value: "Customize", comment: "Settings title for the customize section")
     public static let settingsKeyboard = NSLocalizedString("settings.keyboard", value: "Keyboard", comment: "Settings screen cell for Keyboard")
     public static let settingsPreviews = NSLocalizedString("settings.previews", value: "Long-Press Previews", comment: "Settings screen cell for long press previews")
     public static let settingsAutocomplete = NSLocalizedString("settings.autocomplete", value: "Autocomplete Suggestions", comment: "Settings screen cell for autocomplete")
+
+    // Hardcoded for the experiment
+    public static let settingsAutocompleteSubtitle = "See search suggestions, including your bookmarks and recently visited sites"
     public static let settingsVoiceSearch = NSLocalizedString("settings.voice.search", value: "Private Voice Search", comment: "Settings screen cell for voice search")
     public static let settingsAssociatedApps = NSLocalizedString("settings.associated.apps", value: "Open Links in Associated Apps", comment: "Settings screen cell for opening links in associated apps")
     public static let settingsAssociatedAppsDescription = NSLocalizedString("settings.associated.apps.description", value: "Disable to prevent links from automatically opening in other installed apps.", comment: "Description for associated apps description")

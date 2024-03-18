@@ -241,9 +241,9 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
     
     private func backButtonForURL(currentURL: URL) -> Bool {
-        return currentURL != subscriptionManager.urlProvider.url(for: .purchase).forComparison() &&
-        currentURL != subscriptionManager.urlProvider.url(for: .welcome).forComparison() &&
-        currentURL != subscriptionManager.urlProvider.url(for: .activateWithEmailSuccess).forComparison()
+        return currentURL != subscriptionManager.urlProvider.url(for: .purchase).removingSubscriptionEnvironmentParameter() &&
+        currentURL != subscriptionManager.urlProvider.url(for: .welcome).removingSubscriptionEnvironmentParameter() &&
+        currentURL != subscriptionManager.urlProvider.url(for: .activateWithEmailSuccess).removingSubscriptionEnvironmentParameter()
     }
     
     @MainActor
@@ -321,22 +321,4 @@ final class SubscriptionFlowViewModel: ObservableObject {
        
 }
 
-extension URL {
-    func forComparison() -> URL {
-        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else {
-            return self
-        }
-
-        if let queryItems = components.queryItems, !queryItems.isEmpty {
-            components.queryItems = queryItems.filter { !["environment"].contains($0.name) }
-
-            if components.queryItems?.isEmpty ?? true {
-                components.queryItems = nil
-            }
-        } else {
-            components.queryItems = nil
-        }
-        return components.url ?? self
-    }
-}
 #endif

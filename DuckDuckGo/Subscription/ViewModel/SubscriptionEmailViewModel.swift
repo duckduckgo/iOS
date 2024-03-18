@@ -127,7 +127,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 self?.state.canNavigateBack = false
-                if self?.webViewModel.url != self?.subscriptionManager.urlProvider.url(for: .activateWithEmail).forComparison() {
+                if self?.webViewModel.url != self?.subscriptionManager.urlProvider.url(for: .activateWithEmail).removingSubscriptionEnvironmentParameter() {
                     self?.state.canNavigateBack = value
                 }
             }
@@ -190,8 +190,8 @@ final class SubscriptionEmailViewModel: ObservableObject {
     func shouldDisplayBackButton() -> Bool {
         // Hide the back button after activation
         if state.subscriptionActive &&
-            (webViewModel.url == subscriptionManager.urlProvider.url(for: .activateWithEmailSuccess).forComparison() ||
-             webViewModel.url == subscriptionManager.urlProvider.url(for: .purchase).forComparison()) {
+            (webViewModel.url == subscriptionManager.urlProvider.url(for: .activateWithEmailSuccess).removingSubscriptionEnvironmentParameter() ||
+             webViewModel.url == subscriptionManager.urlProvider.url(for: .purchase).removingSubscriptionEnvironmentParameter()) {
             return false
         }
         return true
@@ -224,6 +224,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
         cancellables.removeAll()
        
     }
-
 }
+
 #endif

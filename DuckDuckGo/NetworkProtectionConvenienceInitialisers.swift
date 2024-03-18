@@ -60,20 +60,16 @@ extension ConnectionServerInfoObserverThroughSession {
 
 extension NetworkProtectionKeychainTokenStore {
     convenience init() {
-        let isSubscriptionEnabled: Bool
-        let accessTokenProvider: () -> String?
+        let featureVisibility = DefaultNetworkProtectionVisibility.forTokenStore()
+        let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
+        let accessTokenProvider: () -> String? = {
 #if SUBSCRIPTION
-        if DefaultNetworkProtectionVisibility.lite().isPrivacyProLaunched() {
-            isSubscriptionEnabled = true
-            accessTokenProvider = { AccountManager().accessToken }
-        } else {
-            isSubscriptionEnabled = false
-            accessTokenProvider = { nil }
-        }
-#else
-        isSubscriptionEnabled = false
-        accessTokenProvider = { nil }
+            if featureVisibility.shouldMonitorEntitlement() {
+                return { AccountManager().accessToken }
+            }
 #endif
+            return { nil }
+        }()
 
         self.init(keychainType: .dataProtection(.unspecified),
                   serviceName: "\(Bundle.main.bundleIdentifier!).authToken",

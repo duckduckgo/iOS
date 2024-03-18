@@ -234,10 +234,11 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
-        let isSubscriptionEnabled = NetworkProtectionVisibilityForTunnelProvider().isPrivacyProLaunched()
+        let featureVisibility = NetworkProtectionVisibilityForTunnelProvider()
+        let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
         let accessTokenProvider: () -> String? = {
 #if SUBSCRIPTION
-            if NetworkProtectionVisibilityForTunnelProvider().shouldMonitorEntitlement() {
+            if featureVisibility.shouldMonitorEntitlement() {
                 return { AccountManager().accessToken }
             }
 #endif

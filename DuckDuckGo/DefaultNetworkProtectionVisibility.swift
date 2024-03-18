@@ -43,7 +43,7 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
 
     /// A lite version with fewer dependencies
     /// We need this to run shouldMonitorEntitlement() check inside the token store
-    static func lite() -> DefaultNetworkProtectionVisibility {
+    static func forTokenStore() -> DefaultNetworkProtectionVisibility {
         DefaultNetworkProtectionVisibility(networkProtectionTokenStore: nil, networkProtectionAccessManager: nil)
     }
 

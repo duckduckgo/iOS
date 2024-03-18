@@ -1537,6 +1537,9 @@ https://duckduckgo.com/mac";
 /* The body of the notification shown when Network Protection fails to reconnect */
 "network.protection.failure.notification.body" = "Network Protection failed to connect. Please try again later.";
 
+/* Title for the VPN FAQ screen. */
+"network.protection.faq.title" = "DuckDuckGo VPN FAQ";
+
 /* The body of the notification shown when Network Protection's connection is interrupted */
 "network.protection.interrupted.notification.body" = "Network Protection was interrupted. Attempting to reconnect now...";
 

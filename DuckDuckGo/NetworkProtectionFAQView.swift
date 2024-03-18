@@ -41,7 +41,7 @@ struct NetworkProtectionFAQView: View {
             webView
                 .ignoresSafeArea()
         }
-        .navigationTitle("DuckDuckGo VPN FAQ")
+        .navigationTitle(UserText.netPFrequentlyAskedQuestionsTitle)
     }
 
 }

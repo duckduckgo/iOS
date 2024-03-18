@@ -161,9 +161,6 @@ struct SettingsListModifiers: ViewModifier {
     func body(content: Content) -> some View {
         content
             .navigationBarTitle(title, displayMode: displayMode)
-            .navigationBarItems(trailing: Button(UserText.navigationTitleDone) {
-                viewModel.onRequestDismissSettings?()
-            })
             .accentColor(Color(designSystemColor: .textPrimary))
             .environmentObject(viewModel)
             .conditionalInsetGroupedListStyle()

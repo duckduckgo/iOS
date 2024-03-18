@@ -845,7 +845,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func refreshShortcuts() {
 #if NETWORK_PROTECTION
-        guard vpnFeatureVisibilty.shouldShowVPNShortcut() else { return }
+        guard vpnFeatureVisibilty.shouldShowVPNShortcut() else {
+            UIApplication.shared.shortcutItems = nil
+            return
+        }
 
         let items = [
             UIApplicationShortcutItem(type: ShortcutKey.openVPNSettings,

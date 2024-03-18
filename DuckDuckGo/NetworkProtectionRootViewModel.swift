@@ -31,7 +31,11 @@ final class NetworkProtectionRootViewModel: ObservableObject {
     var initialViewKind: NetworkProtectionInitialViewKind
 
     init(featureActivation: NetworkProtectionFeatureActivation = NetworkProtectionKeychainTokenStore()) {
+#if ALPHA || DEBUG
         initialViewKind = featureActivation.isFeatureActivated ? .status : .invite
+#else
+        initialViewKind = .status
+#endif
     }
 }
 

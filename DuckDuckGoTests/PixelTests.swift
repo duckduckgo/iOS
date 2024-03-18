@@ -166,5 +166,37 @@ class PixelTests: XCTestCase {
         
         wait(for: [expectation], timeout: 1.0)
     }
+    
+    func testPixelDebouncePreventsFiringWithinInterval() {
+        let firstFireExpectation = XCTestExpectation(description: "First pixel fire should succeed")
+        let thirdFireExpectation = XCTestExpectation(description: "Third pixel fire should succeed after debounce interval")
+
+        stub(condition: isHost(self.host)) { _ -> HTTPStubsResponse in
+            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+        }
+
+        let pixel = Pixel.Event.appLaunch
+        let debounceInterval = 1 // Debounce interval of 5 seconds
+
+        // Should be OK
+        Pixel.fire(pixel: pixel, forDeviceType: .phone, onComplete: { error in
+            XCTAssertNil(error)
+            firstFireExpectation.fulfill()
+        }, debounce: debounceInterval)
+
+        // Should be debounced
+        Pixel.fire(pixel: pixel, forDeviceType: .phone, onComplete: { _ in
+        }, debounce: debounceInterval)
+
+        // Should be OK
+        DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.seconds(debounceInterval + 1)) {
+            Pixel.fire(pixel: pixel, forDeviceType: .phone, onComplete: { error in
+                XCTAssertNil(error)
+                thirdFireExpectation.fulfill()
+            }, debounce: debounceInterval)
+        }
+
+        wait(for: [firstFireExpectation, thirdFireExpectation], timeout: Double(debounceInterval + 2))
+    }
 
 }

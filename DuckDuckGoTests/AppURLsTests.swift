@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-import Macros
 import XCTest
 
 @testable import BrowserServicesKit
@@ -48,7 +47,8 @@ final class AppURLsTests: XCTestCase {
         appConfig = AppPrivacyConfiguration(data: privacyData,
                                             identifier: "",
                                             localProtection: localProtection,
-                                            internalUserDecider: DefaultInternalUserDecider())
+                                            internalUserDecider: DefaultInternalUserDecider(),
+                                            toggleProtectionsCounter: ToggleProtectionsCounter(eventReporting: nil))
     }
 
     func testWhenRemoveInternalSearchParametersFromSearchUrlThenUrlIsChanged() throws {
@@ -62,7 +62,7 @@ final class AppURLsTests: XCTestCase {
     }
 
     func testWhenRemoveInternalSearchParametersFromNonSearchUrlThenUrlIsUnchanged() {
-        let example = #URL("https://duckduckgo.com?atb=x&t=y&ko=z")
+        let example = URL(string: "https://duckduckgo.com?atb=x&t=y&ko=z")!
         let result = example.removingInternalSearchParameters()
         XCTAssertEqual(example.absoluteString, result.absoluteString)
     }
@@ -78,13 +78,13 @@ final class AppURLsTests: XCTestCase {
     }
 
     func testBaseUrlDoesNotHaveSubDomain() {
-        XCTAssertEqual(URL.ddg, #URL("https://duckduckgo.com"))
+        XCTAssertEqual(URL.ddg, URL(string: "https://duckduckgo.com")!)
     }
 
     func testWhenMobileStatsParamsAreAppliedThenTheyReturnAnUpdatedUrl() throws {
         mockStatisticsStore.atb = "x"
         let actual = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore)
-            .applyingStatsParams(to: #URL("http://duckduckgo.com?atb=wrong&t=wrong"))
+            .applyingStatsParams(to: URL(string: "http://duckduckgo.com?atb=wrong&t=wrong")!)
         XCTAssertEqual(actual.getParameter(named: "atb"), "x")
         XCTAssertEqual(actual.getParameter(named: "t"), "ddg_ios")
     }
@@ -92,70 +92,70 @@ final class AppURLsTests: XCTestCase {
     func testWhenAtbMatchesThenHasMobileStatsParamsIsTrue() {
         mockStatisticsStore.atb = "x"
         let result = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore)
-            .hasCorrectMobileStatsParams(url: #URL("http://duckduckgo.com?atb=x&t=ddg_ios"))
+            .hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=x&t=ddg_ios")!)
         XCTAssertTrue(result)
     }
 
     func testWhenAtbIsMismatchedThenHasMobileStatsParamsIsFalse() {
         mockStatisticsStore.atb = "y"
         let result = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore)
-            .hasCorrectMobileStatsParams(url: #URL("http://duckduckgo.com?atb=x&t=ddg_ios"))
+            .hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=x&t=ddg_ios")!)
         XCTAssertFalse(result)
     }
 
     func testWhenAtbIsMissingThenHasMobileStatsParamsIsFalse() {
         mockStatisticsStore.atb = "x"
         let result = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore)
-            .hasCorrectMobileStatsParams(url: #URL("http://duckduckgo.com?t=ddg_ios"))
+            .hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?t=ddg_ios")!)
         XCTAssertFalse(result)
     }
 
     func testWhenSourceIsMismatchedThenHasMobileStatsParamsIsFalse() {
         mockStatisticsStore.atb = "x"
         let result = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore)
-            .hasCorrectMobileStatsParams(url: #URL("http://duckduckgo.com?atb=x&t=ddg_desktop"))
+            .hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=x&t=ddg_desktop")!)
         XCTAssertFalse(result)
     }
 
     func testWhenSourceIsMissingThenHasMobileStatsParamsIsFalse() {
         mockStatisticsStore.atb = "x"
         let result = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore)
-            .hasCorrectMobileStatsParams(url: #URL("http://duckduckgo.com?atb=y"))
+            .hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=y")!)
         XCTAssertFalse(result)
     }
 
     func testWhenUrlIsDdgWithASearchParamThenIsSearchIsTrue() {
-        let result = #URL("http://duckduckgo.com?q=hello").isDuckDuckGoSearch
+        let result = URL(string: "http://duckduckgo.com?q=hello")!.isDuckDuckGoSearch
         XCTAssertTrue(result)
     }
 
     func testWhenUrlHasNoSearchParamsThenIsSearchIsFalse() {
-        let result = #URL("http://duckduckgo.com?test=hello").isDuckDuckGoSearch
+        let result = URL(string: "http://duckduckgo.com?test=hello")!.isDuckDuckGoSearch
         XCTAssertFalse(result)
     }
 
     func testWhenUrlIsNonDdgThenIsSearchIsFalse() {
-        let result = #URL("http://www.example.com?q=hello").isDuckDuckGoSearch
+        let result = URL(string: "http://www.example.com?q=hello")!.isDuckDuckGoSearch
         XCTAssertFalse(result)
     }
 
     func testWhenNonDdgUrlHasDdgParamThenIsDdgIsFalse() {
-        let result = #URL("http://www.example.com?x=duckduckgo.com").isDuckDuckGo
+        let result = URL(string: "http://www.example.com?x=duckduckgo.com")!.isDuckDuckGo
         XCTAssertFalse(result)
     }
 
     func testWhenDdgUrlIsHttpThenIsDddgIsTrue() {
-        let result = #URL("http://duckduckgo.com").isDuckDuckGo
+        let result = URL(string: "http://duckduckgo.com")!.isDuckDuckGo
         XCTAssertTrue(result)
     }
 
     func testWhenDdgUrlIsHttpsThenIsDddgIsTrue() {
-        let result = #URL("https://duckduckgo.com").isDuckDuckGo
+        let result = URL(string: "https://duckduckgo.com")!.isDuckDuckGo
         XCTAssertTrue(result)
     }
 
     func testWhenDdgUrlHasSubdomainThenIsDddgIsTrue() {
-        let result = #URL("http://www.duckduckgo.com").isDuckDuckGo
+        let result = URL(string: "http://www.duckduckgo.com")!.isDuckDuckGo
         XCTAssertTrue(result)
     }
     
@@ -235,7 +235,7 @@ final class AppURLsTests: XCTestCase {
     }
     
     func testWhenExistingQueryUsesVerticalThenItIsAppliedToNewOne() throws {
-        let contextURL = #URL("https://duckduckgo.com/?q=query&iar=images&ko=-1&ia=images")
+        let contextURL = URL(string: "https://duckduckgo.com/?q=query&iar=images&ko=-1&ia=images")!
         let url = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore)
             .makeSearchURL(query: "query", queryContext: contextURL)!
         
@@ -244,7 +244,7 @@ final class AppURLsTests: XCTestCase {
     }
     
     func testWhenExistingQueryUsesVerticalWithMapsThenTheseAreIgnored() throws {
-        let contextURL = #URL("https://duckduckgo.com/?q=query&iar=images&ko=-1&ia=images&iaxm=maps")
+        let contextURL = URL(string: "https://duckduckgo.com/?q=query&iar=images&ko=-1&ia=images&iaxm=maps")!
         let url = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore)
             .makeSearchURL(query: "query", queryContext: contextURL)!
         
@@ -255,7 +255,7 @@ final class AppURLsTests: XCTestCase {
     }
     
     func testWhenExistingQueryHasNoVerticalThenItIsAbsentInNewOne() throws {
-        let contextURL = #URL("https://example.com")
+        let contextURL = URL(string: "https://example.com")!
         let url = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore)
             .makeSearchURL(query: "query", queryContext: contextURL)!
         
@@ -275,20 +275,20 @@ final class AppURLsTests: XCTestCase {
     }
 
     func testWhenDdgUrlWithSearchParamThenSearchQueryReturned() {
-        let url = #URL("https://www.duckduckgo.com/?ko=-1&kl=wt-wt&q=some%20search")
+        let url = URL(string: "https://www.duckduckgo.com/?ko=-1&kl=wt-wt&q=some%20search")!
         let expected = "some search"
         let actual = url.searchQuery
         XCTAssertEqual(actual, expected)
     }
 
     func testWhenNoSearchParamInDdgUrlThenSearchQueryReturnsNil() {
-        let url = #URL("https://www.duckduckgo.com/?ko=-1&kl=wt-wt")
+        let url = URL(string: "https://www.duckduckgo.com/?ko=-1&kl=wt-wt")!
         let result = url.searchQuery
         XCTAssertNil(result)
     }
 
     func testWhenNotDdgUrlThenSearchQueryReturnsNil() {
-        let url = #URL("https://www.test.com/?ko=-1&kl=wt-wt&q=some%20search")
+        let url = URL(string: "https://www.test.com/?ko=-1&kl=wt-wt&q=some%20search")!
         let result = url.searchQuery
         XCTAssertNil(result)
     }

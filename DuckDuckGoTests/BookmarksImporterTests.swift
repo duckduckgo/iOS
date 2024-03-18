@@ -18,7 +18,6 @@
 //
 
 import Bookmarks
-import Macros
 import SwiftSoup
 import XCTest
 
@@ -197,6 +196,6 @@ private extension BookmarksImporterTests {
     enum Constants {
         static let bookmarkTitle = "my bookmark"
         static let bookmarkURLString = "https://duckduckgo.com"
-        static let bookmarkURL = #URL("https://duckduckgo.com")
+        static let bookmarkURL = URL(string: "https://duckduckgo.com")!
     }
 }

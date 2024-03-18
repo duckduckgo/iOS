@@ -20,58 +20,142 @@
 #if SUBSCRIPTION
 import SwiftUI
 import Foundation
+import Core
 
 @available(iOS 15.0, *)
 struct SubscriptionEmailView: View {
         
     @StateObject var viewModel = SubscriptionEmailViewModel()
     @Environment(\.dismiss) var dismiss
-    @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
-    @State private var isActive: Bool = false
-    @State var isAddingDevice = false
-    @State var shouldDisplayInactiveError = false
     
+    @State var shouldDisplayInactiveError = false
+    @State var shouldDisplayNavigationError = false
+    @State var isModal = true
+    
+    var onDismissStack: (() -> Void)?
+    
+    enum Constants {
+        static let navButtonPadding: CGFloat = 20.0
+        static let backButtonImage = "chevron.left"
+    }
+        
     var body: some View {
-        ZStack {
-            VStack {
-                AsyncHeadlessWebView(viewModel: viewModel.webViewModel)
-                    .background()
+        baseView
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarLeading) {
+                browserBackButton
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                closeButton
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationViewStyle(.stack)
+        .navigationBarBackButtonHidden(true)
+        .tint(Color.init(designSystemColor: .textPrimary))
+        .accentColor(Color.init(designSystemColor: .textPrimary))
         
         .alert(isPresented: $shouldDisplayInactiveError) {
             Alert(
                 title: Text(UserText.subscriptionRestoreEmailInactiveTitle),
                 message: Text(UserText.subscriptionRestoreEmailInactiveMessage),
                 dismissButton: .default(Text(UserText.actionOK)) {
-                    dismiss()
+                    viewModel.dismissView()
                 }
             )
         }
         
-        .onAppear {
-            viewModel.loadURL()
+        .alert(isPresented: $shouldDisplayNavigationError) {
+            Alert(
+                title: Text(UserText.subscriptionBackendErrorTitle),
+                message: Text(UserText.subscriptionBackendErrorMessage),
+                dismissButton: .cancel(Text(UserText.subscriptionBackendErrorButton)) {
+                    viewModel.dismissView()
+                })
         }
         
+        .onAppear {
+            viewModel.onAppear()
+        }
+                
+        .onChange(of: viewModel.state.shouldDisplayInactiveError) { value in
+            shouldDisplayInactiveError = value
+        }
         
-        .onChange(of: viewModel.activateSubscription) { active in
-            if active {
-                // If updating email, just go back
-                if isAddingDevice {
-                    dismiss()
-                } else {
-                    // Pop to Root view
-                    self.rootPresentationMode.wrappedValue.dismiss()
+        .onChange(of: viewModel.state.shouldDisplaynavigationError) { value in
+            shouldDisplayNavigationError = value
+        }
+        
+        // Observe changes to shouldDismissView
+        .onChange(of: viewModel.state.shouldDismissView) { shouldDismiss in
+            if shouldDismiss {
+                dismiss()
+
+                // Reset shouldDismissView after dismissal to ensure it can trigger again
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    viewModel.resetDismissalState()
                 }
             }
         }
         
-        .onChange(of: viewModel.shouldDisplayInactiveError) { _ in
-            shouldDisplayInactiveError = true
-        }
         .navigationTitle(viewModel.viewTitle)
+        
+        .onAppear(perform: {
+            setUpAppearances()
+            viewModel.onAppear()
+        })
+        
+    }
+    
+    // MARK: -
+    
+    @ViewBuilder
+    private var closeButton: some View {
+        if isModal {
+            Button(UserText.subscriptionCloseButton) { onDismissStack?() }
+        }
+    }
+    
+    private var baseView: some View {
+        ZStack {
+            VStack {
+                AsyncHeadlessWebView(viewModel: viewModel.webViewModel)
+                    .background()
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var browserBackButton: some View {
+        if viewModel.shouldDisplayBackButton() {
+            Button(action: {
+                Task { await viewModel.navigateBack() }
+            }, label: {
+                HStack(spacing: 0) {
+                    Image(systemName: Constants.backButtonImage)
+                    Text(UserText.backButtonTitle).foregroundColor(Color(designSystemColor: .textPrimary))
+                }
+            })
+        }
+    }
+    
+    private func setUpAppearances() {
+        let navAppearance = UINavigationBar.appearance()
+        navAppearance.backgroundColor = UIColor(designSystemColor: .surface)
+        navAppearance.barTintColor = UIColor(designSystemColor: .surface)
+        navAppearance.shadowImage = UIImage()
+        navAppearance.tintColor = UIColor(designSystemColor: .textPrimary)
     }
     
     
 }
+
+// Commented out because CI fails if a SwiftUI preview is enabled https://app.asana.com/0/414709148257752/1206774081310425/f
+// @available(iOS 15.0, *)
+// struct SubscriptionEmailView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SubscriptionEmailView()
+//    }
+// }
+
 #endif

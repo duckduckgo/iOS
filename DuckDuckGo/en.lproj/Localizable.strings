@@ -1983,6 +1983,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Description for Email activation */
 "subscription.activate.email.description" = "Use your email to activate your subscription on this device.";
 
+/* Activate subscription title */
+"subscription.activate.email.title" = "Activate Subscription";
+
 /* Restore button title for Managing Email */
 "subscription.activate.manage.email.button" = "Manage";
 
@@ -2005,10 +2008,10 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.add.device.button" = "Add to Another Device";
 
 /* Subscription Add device Info */
-"subscription.add.device.description" = "Access your Privacy Pro subscription on other devices via an email address.";
+"subscription.add.device.description" = "Access your Privacy Pro subscription via an email address.";
 
 /* Add subscription to other device title  */
-"subscription.add.device.header.title" = "Use your subscription on all your devices";
+"subscription.add.device.header.title" = "Use your subscription on other devices";
 
 /* Resend activation instructions button */
 "subscription.add.device.resend.instructions" = "Resend Instructions";
@@ -2036,6 +2039,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Subscription availability message on Apple devices */
 "subscription.available.apple" = "Privacy Pro is available on any device signed in to the same Apple ID.";
+
+/* Text for the manage billing page */
+"subscription.billing.google.text" = "Your subscription was purchased through the Google Play Store. To renew your subscription, please open Google Play Store subscription settings on a device signed in to the same Google Account used to originally purchase your subscription.";
+
+/* Title for the manage billing page */
+"subscription.billing.google.title" = "Subscription Plans";
 
 /* Subscription Removal confirmation message */
 "subscription.cancel.message" = "Your subscription has been removed from this device.";
@@ -2151,6 +2160,15 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* text for renewal string */
 "subscription.renews" = "renews";
 
+/* Button text for general error message */
+"subscription.restore.backend.error.button" = "Back to Settings";
+
+/* Alert for general error message */
+"subscription.restore.backend.error.message" = "We’re having trouble connecting. Please try again later.";
+
+/* Alert for general error title */
+"subscription.restore.backend.error.title" = "Something Went Wrong";
+
 /* Alert for general error message */
 "subscription.restore.general.error.message" = "The App Store was unable to process your purchase. Please try again later.";
 
@@ -2255,6 +2273,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.disabled" = "Privacy Protection disabled for %@";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.disabled.and.toggle.report.sent" = "Privacy Protections disabled for %@ and report sent.";
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Privacy Protection enabled for %@";

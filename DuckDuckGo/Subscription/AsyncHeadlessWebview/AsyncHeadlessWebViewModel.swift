@@ -37,6 +37,7 @@ final class AsyncHeadlessWebViewViewModel: ObservableObject {
     @Published var canGoBack: Bool = false
     @Published var canGoForward: Bool = false
     @Published var contentType: String = ""
+    @Published var navigationError: Error?
     @Published var allowedDomains: [String]?
 
     var navigationCoordinator = HeadlessWebViewNavCoordinator(webView: nil)
@@ -61,7 +62,9 @@ final class AsyncHeadlessWebViewViewModel: ObservableObject {
             initialScrollPositionSubject.send(newPosition)
             isFirstUpdate = false
         } else {
-            subsequentScrollPositionSubject.send(newPosition)
+            DispatchQueue.main.async {
+                self.subsequentScrollPositionSubject.send(newPosition)
+            }
         }
     }
     

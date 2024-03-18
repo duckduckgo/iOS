@@ -105,7 +105,7 @@ class KeychainReturnUserMeasurement: ReturnUserMeasurement {
             kSecClass as String: secClassCFString,
             kSecMatchLimit as String: kSecMatchLimitOne,
             kSecReturnAttributes as String: true, // Needs to be true or returns nothing.
-            kSecReturnRef as String: true,
+            kSecReturnRef as String: true
         ]
         var returnArrayRef: CFTypeRef?
         let status = SecItemCopyMatching(query as CFDictionary, &returnArrayRef)

@@ -18,7 +18,6 @@
 //
 
 import BrowserServicesKit
-import Macros
 import WebKit
 import XCTest
 
@@ -66,11 +65,11 @@ final class UserAgentTests: XCTestCase {
     }
     
     private struct Constants {
-        static let url = #URL("http://example.com/index.html")
-        static let noAppUrl = #URL("http://cvs.com/index.html")
-        static let noAppSubdomainUrl = #URL("http://subdomain.cvs.com/index.html")
-        static let ddgFixedUrl = #URL("http://test2.com/index.html")
-        static let ddgDefaultUrl = #URL("http://test3.com/index.html")
+        static let url = URL(string: "http://example.com/index.html")!
+        static let noAppUrl = URL(string: "http://cvs.com/index.html")!
+        static let noAppSubdomainUrl = URL(string: "http://subdomain.cvs.com/index.html")!
+        static let ddgFixedUrl = URL(string: "http://test2.com/index.html")!
+        static let ddgDefaultUrl = URL(string: "http://test3.com/index.html")!
     }
     
     let testConfig = """

@@ -65,6 +65,9 @@ struct AsyncHeadlessWebView: View {
                 onContentType: { value in
                     viewModel.contentType = value
                 },
+                onNavigationError: { value in
+                    viewModel.navigationError = value
+                },
                 navigationCoordinator: viewModel.navigationCoordinator
             )
             .frame(width: geometry.size.width, height: geometry.size.height)

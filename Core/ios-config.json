@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1709563256742,
+    "version": 1710501855617,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -262,6 +262,21 @@
                     "domain": "newsmax.com"
                 },
                 {
+                    "domain": "meneame.net"
+                },
+                {
+                    "domain": "espn.com"
+                },
+                {
+                    "domain": "usaa.com"
+                },
+                {
+                    "domain": "publico.es"
+                },
+                {
+                    "domain": "cnbc.com"
+                },
+                {
                     "domain": "earth.google.com"
                 },
                 {
@@ -289,7 +304,7 @@
             "state": "enabled",
             "features": {
                 "onByDefault": {
-                    "state": "enabled",
+                    "state": "disabled",
                     "rollout": {
                         "steps": [
                             {
@@ -305,7 +320,7 @@
                     }
                 }
             },
-            "hash": "b72f756b119c762183d04867e8927892"
+            "hash": "9aaa080c235ddd8df4295c4d73c87a94"
         },
         "autofill": {
             "exceptions": [
@@ -1025,8 +1040,11 @@
         },
         "clientBrandHint": {
             "exceptions": [],
+            "settings": {
+                "domains": []
+            },
             "state": "disabled",
-            "hash": "728493ef7a1488e4781656d3f9db84aa"
+            "hash": "d35dd75140cdfe166762013e59eb076d"
         },
         "contentBlocking": {
             "state": "enabled",
@@ -3010,6 +3028,9 @@
                         "domain": "newser.com",
                         "rules": [
                             {
+                                "type": "disable-default"
+                            },
+                            {
                                 "selector": ".RightRailAds",
                                 "type": "hide-empty"
                             },
@@ -3920,6 +3941,23 @@
                         ]
                     },
                     {
+                        "domain": "uzone.id",
+                        "rules": [
+                            {
+                                "selector": "[class^='box-ads']",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": "[class^='section-ads']",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".parallax-container",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "washingtontimes.com",
                         "rules": [
                             {
@@ -3999,7 +4037,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "70c18c8d5c08210844cb238822888fd7"
+            "hash": "2f1178300a22f85803bc42c676ea2cab"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -4664,11 +4702,6 @@
             "state": "disabled",
             "hash": "d07b5bf740e4d648c94e1ac65c4305d9"
         },
-        "notificationPermissions": {
-            "exceptions": [],
-            "state": "disabled",
-            "hash": "728493ef7a1488e4781656d3f9db84aa"
-        },
         "privacyDashboard": {
             "exceptions": [],
             "features": {
@@ -4922,6 +4955,16 @@
                                 "rule": "c1.adform.net/serving/cookie/match",
                                 "domains": [
                                     "dhl.de"
+                                ]
+                            }
+                        ]
+                    },
+                    "adition.com": {
+                        "rules": [
+                            {
+                                "rule": "ad3.adfarm1.adition.com/js",
+                                "domains": [
+                                    "servustv.com"
                                 ]
                             }
                         ]
@@ -5567,7 +5610,8 @@
                                 "rule": "dpm.demdex.net/id",
                                 "domains": [
                                     "dhl.de",
-                                    "homedepot.com"
+                                    "homedepot.com",
+                                    "sbs.com.au"
                                 ]
                             }
                         ]
@@ -5912,15 +5956,10 @@
                     "fwmrm.net": {
                         "rules": [
                             {
-                                "rule": "2a7e9.v.fwmrm.net/ad/g/1",
+                                "rule": "v.fwmrm.net/ad",
                                 "domains": [
+                                    "6play.fr",
                                     "channel4.com"
-                                ]
-                            },
-                            {
-                                "rule": "7cbf2.v.fwmrm.net/ad/g/1",
-                                "domains": [
-                                    "6play.fr"
                                 ]
                             }
                         ]
@@ -7826,7 +7865,7 @@
                     "domain": "sundancecatalog.com"
                 }
             ],
-            "hash": "6768849b4f63b2e635698ac9dde79aa3"
+            "hash": "4d2da0fe5691d4283ebfb1021270c6ea"
         },
         "trackingCookies1p": {
             "settings": {

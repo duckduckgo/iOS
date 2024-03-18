@@ -30,6 +30,7 @@ import Bookmarks
 import Persistence
 import PrivacyDashboard
 import Networking
+import Suggestions
 
 #if SUBSCRIPTION
 import Subscription
@@ -161,6 +162,7 @@ class MainViewController: UIViewController {
         fatalError("Use init?(code:")
     }
     
+    var historyManager: HistoryManager
     var viewCoordinator: MainViewCoordinator!
     
 #if APP_TRACKING_PROTECTION
@@ -168,6 +170,7 @@ class MainViewController: UIViewController {
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
         appTrackingProtectionDatabase: CoreDataDatabase,
+        historyManager: HistoryManager,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
         appSettings: AppSettings = AppUserDefaults()
@@ -175,6 +178,7 @@ class MainViewController: UIViewController {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
+        self.historyManager = historyManager
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
@@ -190,12 +194,14 @@ class MainViewController: UIViewController {
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
+        historyManager: HistoryManager,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
         appSettings: AppSettings
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
+        self.historyManager = historyManager
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
@@ -366,7 +372,8 @@ class MainViewController: UIViewController {
         guard let controller = storyboard.instantiateInitialViewController(creator: { coder in
             SuggestionTrayViewController(coder: coder,
                                          favoritesViewModel: self.favoritesViewModel,
-                                         bookmarksSearch: self.bookmarksCachingSearch)
+                                         bookmarksDatabase: self.bookmarksDatabase,
+                                         historyCoordinator: self.historyManager.historyCoordinator)
         }) else {
             assertionFailure()
             return
@@ -560,12 +567,12 @@ class MainViewController: UIViewController {
 
         if let suggestionsTray = suggestionTrayController {
             let suggestionsFrameInView = suggestionsTray.view.convert(suggestionsTray.contentFrame, to: view)
-            
+
             let overflow = suggestionsFrameInView.size.height + suggestionsFrameInView.origin.y - keyboardFrameInView.origin.y + 10
             if overflow > 0 {
-                suggestionTrayController?.applyContentInset(UIEdgeInsets(top: 0, left: 0, bottom: overflow, right: 0))
+                suggestionsTray.applyContentInset(UIEdgeInsets(top: 0, left: 0, bottom: overflow, right: 0))
             } else {
-                suggestionTrayController?.applyContentInset(.zero)
+                suggestionsTray.applyContentInset(.zero)
             }
         }
 
@@ -706,6 +713,7 @@ class MainViewController: UIViewController {
         tabManager = TabManager(model: tabsModel,
                                 previewsSource: previewsSource,
                                 bookmarksDatabase: bookmarksDatabase,
+                                historyManager: historyManager,
                                 syncService: syncService,
                                 delegate: self)
     }
@@ -1386,23 +1394,8 @@ class MainViewController: UIViewController {
 
     @objc
     private func onNetworkProtectionAccountSignIn(_ notification: Notification) {
-        guard let token = AccountManager().accessToken else {
-            assertionFailure("[NetP Subscription] AccountManager signed in but token could not be retrieved")
-            return
-        }
-
         tunnelDefaults.resetEntitlementMessaging()
         print("[NetP Subscription] Reset expired entitlement messaging")
-
-        Task {
-            do {
-                // todo - https://app.asana.com/0/0/1206541966681608/f
-                try NetworkProtectionKeychainTokenStore().store(NetworkProtectionKeychainTokenStore.makeToken(from: token))
-                print("[NetP Subscription] Stored derived NetP auth token")
-            } catch {
-                print("[NetP Subscription] Failed to store derived NetP auth token: \(error)")
-            }
-        }
     }
 #endif
 
@@ -1782,42 +1775,72 @@ extension MainViewController: AutocompleteViewControllerDelegate {
     func autocomplete(selectedSuggestion suggestion: Suggestion) {
         homeController?.chromeDelegate = nil
         dismissOmniBar()
-        if let url = suggestion.url {
+        switch suggestion {
+        case .phrase(phrase: let phrase):
+            if let url = URL.makeSearchURL(text: phrase) {
+                loadUrl(url)
+            } else {
+                os_log("Couldn‘t form URL for suggestion “%s”", log: .lifecycleLog, type: .error, phrase)
+            }
+        case .website(url: let url):
             if url.isBookmarklet() {
                 executeBookmarklet(url)
             } else {
                 loadUrl(url)
             }
-        } else if let url = URL.makeSearchURL(text: suggestion.suggestion) {
+        case .bookmark(_, url: let url, _, _):
             loadUrl(url)
-        } else {
-            os_log("Couldn‘t form URL for suggestion “%s”", log: .lifecycleLog, type: .error, suggestion.suggestion)
-            return
+        case .historyEntry(_, url: let url, _):
+            loadUrl(url)
+        case .unknown(value: let value):
+            assertionFailure("Unknown suggestion: \(value)")
         }
+
         showHomeRowReminder()
     }
 
     func autocomplete(pressedPlusButtonForSuggestion suggestion: Suggestion) {
-        if let url = suggestion.url {
-            if url.isDuckDuckGoSearch {
-                viewCoordinator.omniBar.textField.text = suggestion.suggestion
+        switch suggestion {
+        case .phrase(phrase: let phrase):
+        viewCoordinator.omniBar.textField.text = phrase
+        case .website(url: let url):
+            if url.isDuckDuckGoSearch, let query = url.searchQuery {
+                viewCoordinator.omniBar.textField.text = query
             } else if !url.isBookmarklet() {
                 viewCoordinator.omniBar.textField.text = url.absoluteString
             }
-        } else {
-            viewCoordinator.omniBar.textField.text = suggestion.suggestion
+        case .bookmark(title: let title, _, _, _):
+            viewCoordinator.omniBar.textField.text = title
+        case .historyEntry(title: let title, _, _):
+            viewCoordinator.omniBar.textField.text = title
+        case .unknown(value: let value):
+            assertionFailure("Unknown suggestion: \(value)")
         }
+
         viewCoordinator.omniBar.textDidChange()
     }
     
     func autocomplete(highlighted suggestion: Suggestion, for query: String) {
-        if let url = suggestion.url {
-            viewCoordinator.omniBar.textField.text = url.absoluteString
-        } else {
-            viewCoordinator.omniBar.textField.text = suggestion.suggestion
-            if suggestion.suggestion.hasPrefix(query) {
+
+        switch suggestion {
+        case .phrase(phrase: let phrase):
+            viewCoordinator.omniBar.textField.text = phrase
+            if phrase.hasPrefix(query) {
                 viewCoordinator.omniBar.selectTextToEnd(query.count)
             }
+        case .website(url: let url):
+            viewCoordinator.omniBar.textField.text = url.absoluteString
+        case .bookmark(title: let title, _, _, _):
+            viewCoordinator.omniBar.textField.text = title
+            if title.hasPrefix(query) {
+                viewCoordinator.omniBar.selectTextToEnd(query.count)
+            }
+        case .historyEntry(title: let title, let url, _):
+            if (title ?? url.absoluteString).hasPrefix(query) {
+                viewCoordinator.omniBar.selectTextToEnd(query.count)
+            }
+        case .unknown(value: let value):
+            assertionFailure("Unknown suggestion: \(value)")
         }
     }
 
@@ -1967,7 +1990,11 @@ extension MainViewController: TabDelegate {
     func tabDidRequestReportBrokenSite(tab: TabViewController) {
         segueToReportBrokenSite()
     }
-    
+
+    func tab(_ tab: TabViewController, didRequestToggleReportWithCompletionHandler completionHandler: @escaping (Bool) -> Void) {
+        segueToReportBrokenSite(mode: .toggleReport(completionHandler: completionHandler))
+    }
+
     func tabDidRequestBookmarks(tab: TabViewController) {
         Pixel.fire(pixel: .bookmarksButtonPressed,
                    withAdditionalParameters: [PixelParameters.originatedFromMenu: "1"])
@@ -2253,6 +2280,8 @@ extension MainViewController: AutoClearWorker {
         if self.syncService.authState == .inactive {
             self.bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
         }
+
+        await historyManager.removeAllHistory()
 
         self.clearInProgress = false
         

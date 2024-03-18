@@ -46,16 +46,33 @@ struct PrivateSearchView: View {
 struct PrivateSearchViewSettings: View {
 
     @EnvironmentObject var viewModel: SettingsViewModel
+    @State var shouldShowNoMicrophonePermissionAlert = false
 
     var body: some View {
         Section(header: Text("Search Settings")) {
             SettingsCellView(label: UserText.settingsAutocomplete,
                              accesory: .toggle(isOn: viewModel.autocompleteBinding))
+            if viewModel.state.speechRecognitionAvailable {
+                SettingsCellView(label: UserText.settingsVoiceSearch,
+                                 accesory: .toggle(isOn: viewModel.voiceSearchEnabledBinding))
+            }
             SettingsCellView(label: "More Search Settings",
                              subtitle: "Customize your language, region, and more",
                              action: { viewModel.openMoreSearchSettings() },
                              disclosureIndicator: true,
                              isButton: true)
+        }
+        .alert(isPresented: $shouldShowNoMicrophonePermissionAlert) {
+            Alert(title: Text(UserText.noVoicePermissionAlertTitle),
+                  message: Text(UserText.noVoicePermissionAlertMessage),
+                  dismissButton: .default(Text(UserText.noVoicePermissionAlertOKbutton),
+                  action: {
+                    viewModel.shouldShowNoMicrophonePermissionAlert = false
+                })
+            )
+        }
+        .onChange(of: viewModel.shouldShowNoMicrophonePermissionAlert) { value in
+            shouldShowNoMicrophonePermissionAlert = value
         }
     }
 }

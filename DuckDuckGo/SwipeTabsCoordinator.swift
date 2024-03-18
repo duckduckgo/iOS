@@ -50,6 +50,13 @@ class SwipeTabsCoordinator: NSObject {
         coordinator.navigationBarCollectionView
     }
     
+    private lazy var dataSource = UICollectionViewDiffableDataSource<Int, TabItem>(collectionView: collectionView) { [weak self] in
+        guard let self else {
+            return UICollectionViewCell()
+        }
+        return self.collectionView($0, cellForItemAt: $1, item: $2)
+    }
+
     init(coordinator: MainViewCoordinator,
          tabPreviewsSource: TabPreviewsSource,
          appSettings: AppSettings,
@@ -64,13 +71,14 @@ class SwipeTabsCoordinator: NSObject {
         self.selectTab = selectTab
         self.newTab = newTab
         self.onSwipeStarted = onSwipeStarted
-                
+
         super.init()
         
         collectionView.register(OmniBarCell.self, forCellWithReuseIdentifier: "omnibar")
         collectionView.isPagingEnabled = true
         collectionView.delegate = self
-        collectionView.dataSource = self
+//        collectionView.dataSource = self
+        collectionView.dataSource = self.dataSource
         collectionView.decelerationRate = .fast
         collectionView.backgroundColor = .clear
 
@@ -149,7 +157,13 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
             }
         }
     }
-    
+
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let cell = cell as? OmniBarCell {
+            cell.setActive(true)
+        }
+    }
+
     private func swipeCurrentViewProportionally(offset: CGFloat) {
         currentView?.transform.tx = offset
     }
@@ -251,15 +265,29 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
 
 }
 
+struct TabItem: Hashable {
+//    let uuid = UUID()
+    let uid: String
+    let url: URL?
+    let isActive: Bool
+}
+
 // MARK: Public Interface
 extension SwipeTabsCoordinator {
     
     func refresh(tabsModel: TabsModel, scrollToSelected: Bool = false) {
         self.tabsModel = tabsModel
-        coordinator.navigationBarCollectionView.reloadData()
         
+        var snapshot = NSDiffableDataSourceSnapshot<Int, TabItem>()
+        snapshot.appendSections([0])
+        snapshot.appendItems(tabsModel.tabs.map({ tab in
+            TabItem(uid: tab.uid, url: tab.link?.url, isActive: tabsModel.currentTab == tab)
+        }))
+
+        self.dataSource.apply(snapshot)
+
         updateLayout()
-        
+
         if scrollToSelected {
             scrollToCurrent()
         }
@@ -294,57 +322,123 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
             fatalError("Not \(OmniBarCell.self)")
         }
 
-        if !isEnabled || tabsModel.currentIndex == indexPath.row {
-            cell.omniBar = coordinator.omniBar
-        } else {
-            cell.omniBar = OmniBar.loadFromXib()
-            cell.omniBar?.translatesAutoresizingMaskIntoConstraints = false
-            cell.updateConstraints()
-            cell.omniBar?.decorate(with: ThemeManager.shared.currentTheme)
-            
-            cell.omniBar?.showSeparator()
-            if self.appSettings.currentAddressBarPosition.isBottom {
-                cell.omniBar?.moveSeparatorToTop()
-            } else {
-                cell.omniBar?.moveSeparatorToBottom()
-            }
-
-            if let url = tabsModel.safeGetTabAt(indexPath.row)?.link?.url {
-                cell.omniBar?.startBrowsing()
-                cell.omniBar?.refreshText(forUrl: url)
-            }
-
-        }
+//        if !isEnabled || tabsModel.currentIndex == indexPath.row {
+//            cell.omniBar = coordinator.omniBar
+//        } else {
+//            cell.omniBar = OmniBar.loadFromXib()
+//            cell.omniBar?.translatesAutoresizingMaskIntoConstraints = false
+//            cell.updateConstraints()
+//            cell.omniBar?.decorate(with: ThemeManager.shared.currentTheme)
+//            
+//            cell.omniBar?.showSeparator()
+//            if self.appSettings.currentAddressBarPosition.isBottom {
+//                cell.omniBar?.moveSeparatorToTop()
+//            } else {
+//                cell.omniBar?.moveSeparatorToBottom()
+//            }
+//
+//            if let url = tabsModel.safeGetTabAt(indexPath.row)?.link?.url {
+//                cell.omniBar?.startBrowsing()
+//                cell.omniBar?.refreshText(forUrl: url)
+//            }
+//
+//        }
         
         return cell
     }
-    
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath, item: TabItem) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "omnibar", for: indexPath) as? OmniBarCell else {
+            fatalError("Not \(OmniBarCell.self)")
+        }
+
+        cell.activeOmniBar = coordinator.omniBar
+        cell.setActive(!isEnabled || item.isActive)
+
+        //        if isEnabled && !item.isActive {
+        cell.updateConstraints()
+        cell.fakeOmniBar.decorate(with: ThemeManager.shared.currentTheme)
+
+        if self.appSettings.currentAddressBarPosition.isBottom {
+            cell.fakeOmniBar.moveSeparatorToTop()
+        } else {
+            cell.fakeOmniBar.moveSeparatorToBottom()
+        }
+
+        if let url = item.url {
+            cell.fakeOmniBar.startBrowsing()
+            cell.fakeOmniBar.refreshText(forUrl: url)
+        }
+        //        }
+
+        return cell
+    }
 }
 
 class OmniBarCell: UICollectionViewCell {
     
-    weak var omniBar: OmniBar? {
-        didSet {
-            subviews.forEach { $0.removeFromSuperview() }
-            if let omniBar {
-                addSubview(omniBar)
-                
-                NSLayoutConstraint.activate([
-                    constrainView(omniBar, by: .leadingMargin),
-                    constrainView(omniBar, by: .trailingMargin),
-                    constrainView(omniBar, by: .top),
-                    constrainView(omniBar, by: .bottom),
-                ])
-                
-            }
+    private(set) lazy var fakeOmniBar: OmniBar = {
+        let omniBar = OmniBar.loadFromXib()
+        omniBar.translatesAutoresizingMaskIntoConstraints = false
+
+        omniBar.showSeparator()
+        return omniBar
+    }()
+
+    weak var activeOmniBar: OmniBar?
+    var omniBar: OmniBar? {
+        isActive ? activeOmniBar : fakeOmniBar
+    }
+
+    private var isActive: Bool = false
+
+    func setActive(_ isActive: Bool) {
+        guard let activeOmniBar else {
+            return
         }
+
+        if isActive {
+            installOmniBar(activeOmniBar)
+        }
+        fakeOmniBar.isHidden = isActive
+        self.isActive = isActive
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        installOmniBar(fakeOmniBar)
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func willRemoveSubview(_ subview: UIView) {
+        super.willRemoveSubview(subview)
+
+        if subview == activeOmniBar {
+            setActive(false)
+        }
+    }
+
+    func installOmniBar(_ omniBar: OmniBar) {
+        addSubview(omniBar)
+        NSLayoutConstraint.activate([
+            constrainView(omniBar, by: .leadingMargin),
+            constrainView(omniBar, by: .trailingMargin),
+            constrainView(omniBar, by: .top),
+            constrainView(omniBar, by: .bottom),
+        ])
+    }
+
     override func updateConstraints() {
         super.updateConstraints()
         let left = superview?.safeAreaInsets.left ?? 0
         let right = superview?.safeAreaInsets.right ?? 0
-        omniBar?.updateOmniBarPadding(left: left, right: right)
+        
+        fakeOmniBar.updateOmniBarPadding(left: left, right: right)
+        activeOmniBar?.updateOmniBarPadding(left: left, right: right)
     }
     
 }

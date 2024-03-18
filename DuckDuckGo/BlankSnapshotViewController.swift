@@ -146,7 +146,8 @@ extension BlankSnapshotViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "omnibar", for: indexPath) as? OmniBarCell else {
             fatalError("Not \(OmniBarCell.self)")
         }
-        cell.omniBar = viewCoordinator.omniBar
+        cell.activeOmniBar = viewCoordinator.omniBar
+        cell.setActive(true)
         return cell
     }
 

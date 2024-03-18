@@ -79,7 +79,7 @@ struct VPNFeedbackFormCategoryView: View {
 
 @available(iOS 15.0, *)
 struct VPNFeedbackFormView: View {
-    @ObservedObject var viewModel: VPNFeedbackFormViewModel
+    @StateObject var viewModel: VPNFeedbackFormViewModel
     @Environment(\.dismiss) private var dismiss
     @FocusState private var isTextEditorFocused: Bool
 

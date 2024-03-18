@@ -62,7 +62,9 @@ final class AsyncHeadlessWebViewViewModel: ObservableObject {
             initialScrollPositionSubject.send(newPosition)
             isFirstUpdate = false
         } else {
-            subsequentScrollPositionSubject.send(newPosition)
+            DispatchQueue.main.async {
+                self.subsequentScrollPositionSubject.send(newPosition)
+            }
         }
     }
     

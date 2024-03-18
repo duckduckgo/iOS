@@ -133,9 +133,11 @@ struct NetworkProtectionStatusView: View {
         Section {
             if let location = statusModel.location {
                 var locationAttributedString: AttributedString {
-                    var attributedString = AttributedString(statusModel.preferredLocation.isNearest ? "\(location) (Nearest)" : location)
+                    var attributedString = AttributedString(
+                        statusModel.preferredLocation.isNearest ? "\(location) \(UserText.netPVPNLocationNearest)" : location
+                    )
                     attributedString.foregroundColor = .init(designSystemColor: .textPrimary)
-                    if let range = attributedString.range(of: "(Nearest)") {
+                    if let range = attributedString.range(of: UserText.netPVPNLocationNearest) {
                         attributedString[range].foregroundColor = Color(.init(designSystemColor: .textSecondary))
                     }
                     return attributedString

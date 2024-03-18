@@ -54,6 +54,8 @@ class SyncDebugViewController: UITableViewController {
     enum ModelRows: Int, CaseIterable {
 
         case bookmarks
+        case bookmarksStubs
+        case bookmarksStubsCreate
 
     }
 
@@ -97,7 +99,7 @@ class SyncDebugViewController: UITableViewController {
         return titles[section]
     }
 
-    // swiftlint:disable:next cyclomatic_complexity
+    // swiftlint:disable:next cyclomatic_complexity function_body_length
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
@@ -136,6 +138,21 @@ class SyncDebugViewController: UITableViewController {
                 } else {
                     cell.detailTextLabel?.text = "Error"
                 }
+            case .bookmarksStubs:
+                cell.textLabel?.text = "Bookmark stubs"
+
+                let context = bookmarksDatabase.makeContext(concurrencyType: .mainQueueConcurrencyType)
+                let fr = BookmarkEntity.fetchRequest()
+                fr.predicate = NSPredicate(format: "%K = TRUE", #keyPath(BookmarkEntity.isStub))
+
+                let result = try? context.count(for: fr)
+                if let result {
+                    cell.detailTextLabel?.text = "\(result)"
+                } else {
+                    cell.detailTextLabel?.text = "Error"
+                }
+            case .bookmarksStubsCreate:
+                cell.textLabel?.text = "Tap to create stubs"
 
             case .none:
                 break
@@ -167,7 +184,7 @@ class SyncDebugViewController: UITableViewController {
         }
     }
 
-    // swiftlint:disable:next cyclomatic_complexity
+    // swiftlint:disable:next cyclomatic_complexity function_body_length
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch Sections(rawValue: indexPath.section) {
         case .info:
@@ -196,6 +213,31 @@ class SyncDebugViewController: UITableViewController {
                 udWrapper.wrappedValue = false
             case .getRecoveryCode:
                 showCopyPasteCodeAlert()
+
+            default: break
+            }
+        case .models:
+            switch ModelRows(rawValue: indexPath.row) {
+            case .bookmarksStubsCreate:
+                let context = bookmarksDatabase.makeContext(concurrencyType: .mainQueueConcurrencyType)
+                
+                let root = BookmarkUtils.fetchRootFolder(context)!
+
+                _ = BookmarkEntity.makeBookmark(title: "Non stub", url: "url", parent: root, context: context)
+                let stub = BookmarkEntity.makeBookmark(title: "Stub", url: "", parent: root, context: context)
+                stub.isStub = true
+                let emptyStub = BookmarkEntity.makeBookmark(title: "", url: "", parent: root, context: context)
+                emptyStub.isStub = true
+                emptyStub.title = nil
+                emptyStub.url = nil
+
+                do {
+                    try context.save()
+                } catch {
+                    assertionFailure("Could not create stubs")
+                }
+
+                tableView.reloadData()
 
             default: break
             }

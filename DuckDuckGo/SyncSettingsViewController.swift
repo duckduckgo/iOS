@@ -31,6 +31,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
     let syncService: DDGSyncing
     let syncBookmarksAdapter: SyncBookmarksAdapter
+    let syncCredentialsAdapter: SyncCredentialsAdapter
     var connector: RemoteConnecting?
 
     let userAuthenticator = UserAuthenticator(reason: UserText.syncUserUserAuthenticationReason)
@@ -55,9 +56,15 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     var cancellables = Set<AnyCancellable>()
 
     // For some reason, on iOS 14, the viewDidLoad wasn't getting called so do some setup here
-    init(syncService: DDGSyncing, syncBookmarksAdapter: SyncBookmarksAdapter, appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
+    init(
+        syncService: DDGSyncing,
+        syncBookmarksAdapter: SyncBookmarksAdapter,
+        syncCredentialsAdapter: SyncCredentialsAdapter,
+        appSettings: AppSettings = AppDependencyProvider.shared.appSettings
+    ) {
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
+        self.syncCredentialsAdapter = syncCredentialsAdapter
 
         let viewModel = SyncSettingsViewModel(
             isOnDevEnvironment: { syncService.serverEnvironment == .development },
@@ -72,6 +79,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         setUpFaviconsFetcherSwitch(viewModel)
         setUpFavoritesDisplayModeSwitch(viewModel, appSettings)
         setUpSyncPaused(viewModel, appSettings)
+        setUpSyncInvalidObjectsInfo(viewModel)
         setUpSyncFeatureFlags(viewModel)
         refreshForState(syncService.authState)
 
@@ -185,6 +193,27 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
             }
             .store(in: &cancellables)
     }
+
+    private func setUpSyncInvalidObjectsInfo(_ viewModel: SyncSettingsViewModel) {
+        syncService.isSyncInProgressPublisher
+            .removeDuplicates()
+            .filter { !$0 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updateInvalidObjects(viewModel)
+            }
+            .store(in: &cancellables)
+    }
+
+    private func updateInvalidObjects(_ viewModel: SyncSettingsViewModel) {
+        viewModel.invalidBookmarksTitles = syncBookmarksAdapter.provider?
+            .fetchDescriptionsForObjectsThatFailedValidation()
+            .map { $0.truncated(length: 15) } ?? []
+
+        let invalidCredentialsObjects: [String] = (try? syncCredentialsAdapter.provider?.fetchDescriptionsForObjectsThatFailedValidation()) ?? []
+        viewModel.invalidCredentialsTitles = invalidCredentialsObjects.map({ $0.truncated(length: 15) })
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()

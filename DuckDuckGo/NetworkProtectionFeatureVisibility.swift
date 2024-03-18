@@ -31,8 +31,9 @@ public protocol NetworkProtectionFeatureVisibility {
     /// This should only happen pre-launch
     func shouldKeepWaitlist() -> Bool
 
-    /// Whether to enforce entitlement check
+    /// Whether to enforce entitlement check and show entitlement-related messaging
     /// This should always happen post-launch
+    /// N.B. Backend will independently check for valid entitlement regardless of this value
     func shouldMonitorEntitlement() -> Bool
 
     /// Whether to show VPN shortcut on the homescreen
@@ -48,6 +49,7 @@ public extension NetworkProtectionFeatureVisibility {
         !isPrivacyProLaunched() && isWaitlistBetaActive() && isWaitlistUser()
     }
 
+    // todo - https://app.asana.com/0/0/1206827703748771/f
     func shouldShowVPNShortcut() -> Bool {
         isPrivacyProLaunched() || shouldKeepWaitlist()
     }

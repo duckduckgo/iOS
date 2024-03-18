@@ -629,7 +629,7 @@ isWaitlistBetaActive: \(vpnVisibility.isWaitlistBetaActive() ? "YES" : "NO")
 isWaitlistUser: \(vpnVisibility.isWaitlistUser() ? "YES" : "NO")
 
 shouldShowThankYouMessaging: \(vpnVisibility.shouldShowThankYouMessaging() ? "YES" : "NO")
-shouldKeepWaitlist: \(vpnVisibility.shouldKeepWaitlist() ? "YES" : "NO")
+shouldKeepVPNAccessViaWaitlist: \(vpnVisibility.shouldKeepVPNAccessViaWaitlist() ? "YES" : "NO")
 shouldMonitorEntitlement: \(vpnVisibility.shouldMonitorEntitlement() ? "YES" : "NO")
 shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
 """

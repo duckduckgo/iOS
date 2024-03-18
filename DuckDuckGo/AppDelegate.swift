@@ -304,7 +304,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
 
 #if NETWORK_PROTECTION
-        if vpnFeatureVisibilty.shouldKeepWaitlist() {
+        if vpnFeatureVisibilty.shouldKeepVPNAccessViaWaitlist() {
             VPNWaitlist.shared.registerBackgroundRefreshTaskHandler()
         }
 #endif
@@ -335,7 +335,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupSubscriptionsEnvironment()
 #endif
 
-        if vpnFeatureVisibilty.shouldKeepWaitlist() {
+        if vpnFeatureVisibilty.shouldKeepVPNAccessViaWaitlist() {
             clearDebugWaitlistState()
         }
 
@@ -924,7 +924,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 presentNetworkProtectionStatusSettingsModal()
             }
 
-            if vpnFeatureVisibilty.shouldKeepWaitlist(), identifier == VPNWaitlist.notificationIdentifier {
+            if vpnFeatureVisibilty.shouldKeepVPNAccessViaWaitlist(), identifier == VPNWaitlist.notificationIdentifier {
                 presentNetworkProtectionWaitlistModal()
                 DailyPixel.fire(pixel: .networkProtectionWaitlistNotificationLaunched)
             }

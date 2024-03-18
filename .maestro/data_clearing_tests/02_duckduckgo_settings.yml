@@ -40,12 +40,12 @@ tags:
     id: "alert.forget-data.confirm"
 - assertVisible:
     id: "searchEntry"
-- tapOn: "Close Tabs and Clear Data"
 - runFlow:
     when:
         visible: "Cancel"
     commands:
         - tapOn: "Cancel"
+- tapOn: "Close Tabs and Clear Data"
 - tapOn:
     id: "alert.forget-data.confirm"
 

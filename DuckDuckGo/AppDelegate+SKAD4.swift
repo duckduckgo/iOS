@@ -27,8 +27,10 @@ extension AppDelegate {
         
         if #available(iOS 16.1, *) {
             SKAdNetwork.updatePostbackConversionValue(conversionValue, coarseValue: .high, lockWindow: true, completionHandler: { error in
-                if let error = error {
+                if let error {
                     os_log("SKAD 4 postback failed %@", type: .error, error.localizedDescription)
+                } else {
+                    os_log("SKAD 4 postback succeeded", type: .debug)
                 }
             })
         } else {

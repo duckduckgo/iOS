@@ -26,7 +26,10 @@ import Core
 import Networking
 import NetworkExtension
 import NetworkProtection
+
+#if SUBSCRIPTION
 import Subscription
+#endif
 
 // swiftlint:disable type_body_length
 
@@ -231,14 +234,23 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
-#if ALPHA
+#if SUBSCRIPTION && ALPHA
         let isSubscriptionEnabled = true
+        let tokenStore = NetworkProtectionKeychainTokenStore(
+            keychainType: .dataProtection(.unspecified),
+            errorEvents: nil,
+            isSubscriptionEnabled: isSubscriptionEnabled,
+            accessTokenProvider: { AccountManager().accessToken }
+        )
 #else
         let isSubscriptionEnabled = false
+        let tokenStore = NetworkProtectionKeychainTokenStore(
+            keychainType: .dataProtection(.unspecified),
+            errorEvents: nil,
+            isSubscriptionEnabled: isSubscriptionEnabled,
+            accessTokenProvider: { nil }
+        )
 #endif
-        let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
-                                                             errorEvents: nil,
-                                                             isSubscriptionEnabled: isSubscriptionEnabled)
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
@@ -306,17 +318,20 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     private static func entitlementCheck() async -> Result<Bool, Error> {
-#if ALPHA
+#if SUBSCRIPTION && ALPHA
         SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
-#endif
 
-        let result = await AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)).hasEntitlement(for: .networkProtection)
+        let result = await AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+            .hasEntitlement(for: .networkProtection, cachePolicy: .reloadIgnoringLocalCacheData)
         switch result {
         case .success(let hasEntitlement):
             return .success(hasEntitlement)
         case .failure(let error):
             return .failure(error)
         }
+#else
+        return .success(true)
+#endif
     }
 }
 

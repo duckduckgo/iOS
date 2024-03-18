@@ -1905,7 +1905,7 @@ extension MainViewController: TabDelegate {
         }
         tabManager?.save()
         tabsBarController?.refresh(tabsModel: tabManager.model)
-        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
+        // note: model in swipeTabsCoordinator doesn't need to be updated here
     }
     
     func tab(_ tab: TabViewController, didUpdatePreview preview: UIImage) {

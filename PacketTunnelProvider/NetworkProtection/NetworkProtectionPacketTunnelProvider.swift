@@ -244,7 +244,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 let configuration = DefaultSubscriptionConfiguration(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs),
                                                                      purchasePlatform: .appStore,
                                                                      serviceEnvironment: .staging)
-                return SubscriptionManager(configuration: configuration).accountManager.accessToken
+                return SubscriptionManager(configuration: configuration).tokenStorage.accessToken
             }
         )
 #else

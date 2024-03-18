@@ -297,7 +297,7 @@ extension SettingsViewModel {
             enabled = featureFlagger.isFeatureOn(.subscription)
             canPurchase = !PurchaseManager.shared.availableProducts.isEmpty
             await setupSubscriptionEnvironment()
-            if let token = accountManager.accessToken {
+            if let token = subscriptionManager.tokenStorage.accessToken {
                 let subscriptionResult = await subscriptionService.getSubscription(accessToken: token)
                 if case .success(let subscription) = subscriptionResult {
                     hasActiveSubscription = subscription.isActive
@@ -345,7 +345,7 @@ extension SettingsViewModel {
     private func setupSubscriptionEnvironment() async {
         
         // Active subscription check
-        guard let token = accountManager.accessToken else {
+        guard let token = subscriptionManager.tokenStorage.accessToken else {
             setupSubscriptionPurchaseOptions()
             return
         }

@@ -76,7 +76,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     @MainActor
     func fetchAndUpdateSubscriptionDetails(cachePolicy: CachePolicy = .returnCacheDataElseLoad) {
         Task {
-            guard let token = self.accountManager.accessToken else { return }
+            guard let token = self.subscriptionManager.tokenStorage.accessToken else { return }
             let subscriptionResult = await subscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
             switch subscriptionResult {
             case .success(let subscription):
@@ -179,7 +179,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
          
     private func manageStripeSubscription() async {
-        guard let token = accountManager.accessToken, let externalID = accountManager.externalID else { return }
+        guard let token = subscriptionManager.tokenStorage.accessToken, let externalID = accountManager.externalID else { return }
         let serviceResponse = await subscriptionService.getCustomerPortalURL(accessToken: token, externalID: externalID)
 
         // Get Stripe Customer Portal URL and update the model

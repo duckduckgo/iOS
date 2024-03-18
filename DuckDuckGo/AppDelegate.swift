@@ -486,7 +486,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if SUBSCRIPTION
         Task {
             let subscriptionManager = AppDependencyProvider.shared.subscriptionManager
-            guard let token = subscriptionManager.accountManager.accessToken else {
+            guard let token = subscriptionManager.tokenStorage.accessToken else {
                 return
             }
 

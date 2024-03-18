@@ -188,8 +188,8 @@ final class SubscriptionDebugViewController: UITableViewController {
     
     private func showAccountDetails() {
         let title = accountManager.isUserAuthenticated ? "Authenticated" : "Not Authenticated"
-        let message = accountManager.isUserAuthenticated ? ["AuthToken: \(accountManager.authToken ?? "")",
-                                                   "AccessToken: \(accountManager.accessToken ?? "")",
+        let message = accountManager.isUserAuthenticated ? ["AuthToken: \(subscriptionManager.tokenStorage.authToken ?? "")",
+                                                   "AccessToken: \(subscriptionManager.tokenStorage.accessToken ?? "")",
                                                    "Email: \(accountManager.email ?? "")"].joined(separator: "\n") : nil
         showAlert(title: title, message: message)
     }
@@ -207,7 +207,7 @@ final class SubscriptionDebugViewController: UITableViewController {
     
     private func validateToken() {
         Task {
-            guard let token = accountManager.accessToken else {
+            guard let token = subscriptionManager.tokenStorage.accessToken else {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Token not available")
                 return
             }
@@ -222,7 +222,7 @@ final class SubscriptionDebugViewController: UITableViewController {
     
     private func getSubscription() {
         Task {
-            guard let token = accountManager.accessToken else {
+            guard let token = subscriptionManager.tokenStorage.accessToken else {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
                 return
             }

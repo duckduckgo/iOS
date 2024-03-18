@@ -173,7 +173,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     // MARK: Broker Methods (Called from WebView via UserScripts)
     func getSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
-        let authToken = accountManager.authToken ?? Constants.empty
+        let authToken = subscriptionManager.tokenStorage.authToken ?? Constants.empty
         return [Constants.token: authToken]
     }
     
@@ -273,7 +273,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         let authToken = subscriptionValues.token
         if case let .success(accessToken) = await accountManager.exchangeAuthTokenToAccessToken(authToken),
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
-            accountManager.storeAuthToken(token: authToken)
+            subscriptionManager.tokenStorage.authToken = authToken
+            subscriptionManager.tokenStorage.accessToken = accessToken
             accountManager.storeAccount(token: accessToken, email: accountDetails.email, externalID: accountDetails.externalID)
             onSetSubscription?()
         } else {
@@ -308,11 +309,12 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
     
     func backToSettings(params: Any, original: WKScriptMessage) async -> Encodable? {
-           if let accessToken = accountManager.accessToken,
+           if let accessToken = subscriptionManager.tokenStorage.accessToken,
               case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
                switch await subscriptionService.getSubscription(accessToken: accessToken) {
                    
                case .success:
+                   subscriptionManager.tokenStorage.accessToken = accessToken
                    accountManager.storeAccount(token: accessToken,
                                                email: accountDetails.email,
                                                externalID: accountDetails.externalID)

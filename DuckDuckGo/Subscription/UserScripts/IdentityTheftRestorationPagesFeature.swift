@@ -44,7 +44,7 @@ final class IdentityTheftRestorationPagesFeature: Subfeature, ObservableObject {
         static let getAccessToken = "getAccessToken"
     }
 
-    private let accountManager: AccountManaging = AppDependencyProvider.shared.subscriptionManager.accountManager
+    private let tokenStorage: SubscriptionTokenStorage = AppDependencyProvider.shared.subscriptionManager.tokenStorage
 
     weak var broker: UserScriptMessageBroker?
     var featureName: String = Constants.featureName
@@ -69,7 +69,7 @@ final class IdentityTheftRestorationPagesFeature: Subfeature, ObservableObject {
     }
     
     func getAccessToken(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        if let accessToken = accountManager.accessToken {
+        if let accessToken = tokenStorage.accessToken {
             return [Constants.token: accessToken]
         } else {
             return [String: String]()

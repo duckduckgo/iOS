@@ -62,7 +62,7 @@ extension NetworkProtectionKeychainTokenStore {
     convenience init() {
         let isSubscriptionEnabled = AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
 #if SUBSCRIPTION && ALPHA
-        let accessTokenProvider: () -> String? = { AppDependencyProvider.shared.subscriptionManager.accountManager.accessToken }
+        let accessTokenProvider: () -> String? = { AppDependencyProvider.shared.subscriptionManager.tokenStorage.accessToken }
 #else
         let accessTokenProvider: () -> String? = { nil }
 #endif

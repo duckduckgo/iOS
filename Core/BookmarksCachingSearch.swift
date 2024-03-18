@@ -63,9 +63,10 @@ public class CoreDataBookmarksSearchStore: BookmarksSearchStore {
 
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "BookmarkEntity")
         fetchRequest.predicate = NSPredicate(
-            format: "%K = false AND %K == NO",
+            format: "%K = false AND %K == NO AND (%K == NO OR %K == nil)",
             #keyPath(BookmarkEntity.isFolder),
-            #keyPath(BookmarkEntity.isPendingDeletion)
+            #keyPath(BookmarkEntity.isPendingDeletion),
+            #keyPath(BookmarkEntity.isStub), #keyPath(BookmarkEntity.isStub)
         )
         fetchRequest.resultType = .dictionaryResultType
         fetchRequest.propertiesToFetch = [#keyPath(BookmarkEntity.title),

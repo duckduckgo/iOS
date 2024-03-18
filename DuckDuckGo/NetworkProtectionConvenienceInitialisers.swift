@@ -24,6 +24,10 @@ import UIKit
 import Common
 import NetworkExtension
 
+#if SUBSCRIPTION
+import Subscription
+#endif
+
 private class DefaultTunnelSessionProvider: TunnelSessionProvider {
     func activeSession() async -> NETunnelProviderSession? {
         try? await ConnectionSessionUtilities.activeSession()
@@ -56,10 +60,18 @@ extension ConnectionServerInfoObserverThroughSession {
 
 extension NetworkProtectionKeychainTokenStore {
     convenience init() {
+        let isSubscriptionEnabled = AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
+#if SUBSCRIPTION && ALPHA
+        let accessTokenProvider: () -> String? = { AccountManager().accessToken }
+#else
+        let accessTokenProvider: () -> String? = { nil }
+#endif
+
         self.init(keychainType: .dataProtection(.unspecified),
                   serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
                   errorEvents: .networkProtectionAppDebugEvents,
-                  isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription))
+                  isSubscriptionEnabled: isSubscriptionEnabled,
+                  accessTokenProvider: accessTokenProvider)
     }
 }
 

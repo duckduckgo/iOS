@@ -188,7 +188,7 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     @MainActor
     func collectVPNState() async -> VPNMetadata.VPNState {
         let connectionState = String(describing: statusObserver.recentValue)
-        let connectedServer = serverInfoObserver.recentValue.serverLocation?.country ?? "none" // TODO: Build proper location string
+        let connectedServer = serverInfoObserver.recentValue.serverLocation?.serverLocation ?? "none"
         let connectedServerIP = serverInfoObserver.recentValue.serverAddress ?? "none"
 
         return .init(connectionState: connectionState,

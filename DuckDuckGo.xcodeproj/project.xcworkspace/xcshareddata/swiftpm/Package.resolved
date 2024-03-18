@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sam/update-wireguard-framework-to-1.1.3",
-        "revision" : "adc57eb11d20f3c479ec2b342cff13f812eacc87"
+        "revision" : "810bf41347ff437b5d0154405a238553537240a4",
+        "version" : "125.0.2"
       }
     },
     {

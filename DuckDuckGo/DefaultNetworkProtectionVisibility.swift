@@ -30,15 +30,18 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
     private let networkProtectionTokenStore: NetworkProtectionTokenStore?
     private let networkProtectionAccessManager: NetworkProtectionAccess?
     private let featureFlagger: FeatureFlagger
+    private let userDefaults: UserDefaults
 
     init(privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
          networkProtectionTokenStore: NetworkProtectionTokenStore? = NetworkProtectionKeychainTokenStore(),
          networkProtectionAccessManager: NetworkProtectionAccess? = NetworkProtectionAccessController(),
-         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
+         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
+         userDefaults: UserDefaults = .networkProtectionGroupDefaults) {
         self.privacyConfigurationManager = privacyConfigurationManager
         self.networkProtectionTokenStore = networkProtectionTokenStore
         self.networkProtectionAccessManager = networkProtectionAccessManager
         self.featureFlagger = featureFlagger
+        self.userDefaults = userDefaults
     }
 
     /// A lite version with fewer dependencies
@@ -73,20 +76,21 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
 
     // todo - https://app.asana.com/0/0/1206844038943626/f
     func isPrivacyProLaunched() -> Bool {
-#if SUBSCRIPTION && ALPHA
-        true
+        if let subscriptionOverrideEnabled = userDefaults.subscriptionOverrideEnabled {
+#if ALPHA || DEBUG
+            // only allows disabling subscription in Alpha or Debug build
+            return subscriptionOverrideEnabled
 #else
-        featureFlagger.isFeatureOn(.subscription)
+            return true
 #endif
+        }
+
+        return featureFlagger.isFeatureOn(.subscription)
     }
     
     // todo - https://app.asana.com/0/0/1206844038943626/f
     func shouldMonitorEntitlement() -> Bool {
-#if SUBSCRIPTION && ALPHA
-        true
-#else
         isPrivacyProLaunched()
-#endif
     }
 }
 

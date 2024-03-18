@@ -37,6 +37,7 @@ import NetworkProtection
 // swiftlint:disable:next type_body_length
 final class NetworkProtectionDebugViewController: UITableViewController {
     private let titles = [
+        Sections.featureVisibility: "Feature Visibility",
         Sections.clearData: "Clear Data",
         Sections.debugFeature: "Debug Features",
         Sections.debugCommand: "Debug Commands",
@@ -45,11 +46,11 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         Sections.networkPath: "Network Path",
         Sections.lastDisconnectError: "Last Disconnect Error",
         Sections.connectionTest: "Connection Test",
-        Sections.vpnConfiguration: "VPN Configuration"
-
+        Sections.vpnConfiguration: "VPN Configuration",
     ]
 
     enum Sections: Int, CaseIterable {
+        case featureVisibility
         case clearData
         case debugFeature
         case debugCommand
@@ -59,7 +60,11 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case networkPath
         case lastDisconnectError
         case vpnConfiguration
-        case featureVisibility
+    }
+
+    enum FeatureVisibilityRows: Int, CaseIterable {
+        case updateSubscriptionOverride
+        case debugInfo
     }
 
     enum ClearDataRows: Int, CaseIterable {
@@ -108,10 +113,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     enum ConfigurationRows: Int, CaseIterable {
         case baseConfigurationData
         case fullProtocolConfigurationData
-    }
-
-    enum VisibilityRows: Int, CaseIterable {
-        case visibility
     }
 
     // MARK: Properties
@@ -217,7 +218,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .featureVisibility:
             configure(cell, forVisibilityRow: indexPath.row)
 
-        case.none:
+        case .none:
             break
         }
 
@@ -236,7 +237,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .lastDisconnectError: return LastDisconnectErrorRows.allCases.count
         case .connectionTest: return ConnectionTestRows.allCases.count + connectionTestResults.count
         case .vpnConfiguration: return ConfigurationRows.allCases.count
-        case .featureVisibility: return VisibilityRows.allCases.count
+        case .featureVisibility: return FeatureVisibilityRows.allCases.count
         case .none: return 0
 
         }
@@ -272,7 +273,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .vpnConfiguration:
             break
         case .featureVisibility:
-            break
+            didSelectFeatureVisibility(at: indexPath)
         case .none:
             break
         }
@@ -606,18 +607,50 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     // MARK: Feature Visibility
 
     private func configure(_ cell: UITableViewCell, forVisibilityRow row: Int) {
-        let vpnVisibility = DefaultNetworkProtectionVisibility()
+        switch FeatureVisibilityRows(rawValue: row) {
+        case .updateSubscriptionOverride:
+            let defaults = UserDefaults.networkProtectionGroupDefaults
+            if let subscriptionOverrideEnabled = defaults.subscriptionOverrideEnabled {
+                cell.textLabel?.text = subscriptionOverrideEnabled ? "Subscription Override: ENABLED" : "Subscription Override: DISABLED"
+            } else {
+                cell.textLabel?.text = "Subscription Override: N/A"
+            }
+        case .debugInfo:
+            let vpnVisibility = DefaultNetworkProtectionVisibility()
 
-        cell.textLabel?.font = .monospacedSystemFont(ofSize: 13.0, weight: .regular)
-        cell.textLabel?.text = """
+            cell.textLabel?.font = .monospacedSystemFont(ofSize: 13.0, weight: .regular)
+            cell.textLabel?.text = """
+isPrivacyProLaunched: \(vpnVisibility.isPrivacyProLaunched() ? "YES" : "NO")
 isWaitlistBetaActive: \(vpnVisibility.isWaitlistBetaActive() ? "YES" : "NO")
 isWaitlistUser: \(vpnVisibility.isWaitlistUser() ? "YES" : "NO")
-isPrivacyProLaunched: \(vpnVisibility.isPrivacyProLaunched() ? "YES" : "NO")
 
 shouldShowThankYouMessaging: \(vpnVisibility.shouldShowThankYouMessaging() ? "YES" : "NO")
 shouldKeepWaitlist: \(vpnVisibility.shouldKeepWaitlist() ? "YES" : "NO")
 shouldMonitorEntitlement: \(vpnVisibility.shouldMonitorEntitlement() ? "YES" : "NO")
+shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
 """
+        case .none:
+            break
+        }
+    }
+    
+    private func didSelectFeatureVisibility(at indexPath: IndexPath) {
+        switch FeatureVisibilityRows(rawValue: indexPath.row) {
+        case .updateSubscriptionOverride:
+            let defaults = UserDefaults.networkProtectionGroupDefaults
+            if let subscriptionOverrideEnabled = defaults.subscriptionOverrideEnabled {
+                if subscriptionOverrideEnabled {
+                    defaults.subscriptionOverrideEnabled = false
+                } else {
+                    defaults.resetsubscriptionOverrideEnabled()
+                }
+            } else {
+                defaults.subscriptionOverrideEnabled = true
+            }
+            tableView.reloadData()
+        case .debugInfo, .none:
+            break
+        }
     }
 
     // MARK: Selection Actions

@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "sam/update-wireguard-framework-to-1.1.3",
-        "revision" : "979cdaf53eb9747b4883975bcefd158b4ea7f0b7"
+        "revision" : "adc57eb11d20f3c479ec2b342cff13f812eacc87"
       }
     },
     {

@@ -31,53 +31,37 @@ final class SubscriptionFlowViewModel: ObservableObject {
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     let purchaseManager: PurchaseManager
-    let viewTitle = UserText.settingsPProSection
     var webViewModel: AsyncHeadlessWebViewViewModel
+    
+    let viewTitle = UserText.settingsPProSection
+    var purchaseURL = URL.subscriptionPurchase
+    
+    private var cancellables = Set<AnyCancellable>()
+    private var canGoBackCancellable: AnyCancellable?
     
     enum Constants {
         static let navigationBarHideThreshold = 80.0
     }
     
-    private var cancellables = Set<AnyCancellable>()
-    private var canGoBackCancellable: AnyCancellable?
     
-    // State variables
-    var purchaseURL = URL.subscriptionPurchase
-    
-    enum FeatureName {
-        static let netP = "vpn"
-        static let itr = "identity-theft-restoration"
-        static let dbp = "personal-information-removal"
-    }
-    
-    enum SubscriptionPurchaseError: Error {
-        case purchaseFailed,
-             missingEntitlements,
-             failedToGetSubscriptionOptions,
-             failedToSetSubscription,
-             failedToRestorePastPurchase,
-             subscriptionExpired,
-             hasActiveSubscription,
-             cancelledByUser,
-             generalError
+    struct State {
+        var hasActiveSubscription = false
+        var transactionStatus: SubscriptionTransactionStatus = .idle
+        var userTappedRestoreButton = false
+        var shouldDismissView = false
+        var shouldActivateSubscription = false
+        var shouldShowNavigationBar: Bool = false
+        var canNavigateBack: Bool = false
+        var transactionError: SubscriptionPurchaseError?
     }
 
-    // Published properties
-    @Published var hasActiveSubscription = false
-    @Published var transactionStatus: SubscriptionTransactionStatus = .idle
-    @Published var userTappedRestoreButton = false
-    @Published var activateSubscriptionOnLoad: Bool = false
-    @Published var shouldDismissView = false
-    @Published var shouldShowNavigationBar: Bool = false
-    @Published var selectedFeature: SettingsViewModel.SettingsSection?
-    @Published var canNavigateBack: Bool = false
-    @Published var transactionError: SubscriptionPurchaseError?
+    // Publish the currently selected feature
+    @Published var selectedFeature: SettingsViewModel.SettingsDeepLinkSection?
+    
+    // Read only View State - Should only be modified from the VM
+    @Published private(set) var state = State()
 
-    private static let allowedDomains = [
-        "duckduckgo.com",
-        "microsoftonline.com",
-        "duosecurity.com",
-    ]
+    private static let allowedDomains = [ "duckduckgo.com" ]
     
     private var webViewSettings =  AsyncHeadlessWebViewSettings(bounces: false,
                                                                 allowedDomains: allowedDomains,
@@ -86,7 +70,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
          purchaseManager: PurchaseManager = PurchaseManager.shared,
-         selectedFeature: SettingsViewModel.SettingsSection? = nil) {
+         selectedFeature: SettingsViewModel.SettingsDeepLinkSection? = nil) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.purchaseManager = purchaseManager
@@ -108,38 +92,36 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 }
             }
             .store(in: &cancellables)
-                
-        subFeature.$activateSubscription
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] value in
-                if value {
-                    self?.userTappedRestoreButton = true
-                }
-            }
-            .store(in: &cancellables)
         
-        subFeature.$selectedFeature
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] value in
-                if value != nil {
-                    switch value?.feature {
-                    case FeatureName.netP:
-                        UniquePixel.fire(pixel: .privacyProWelcomeVPN)
-                        self?.selectedFeature = .netP
-                    case FeatureName.itr:
-                        UniquePixel.fire(pixel: .privacyProWelcomePersonalInformationRemoval)
-                        self?.selectedFeature = .itr
-                    case FeatureName.dbp:
-                        UniquePixel.fire(pixel: .privacyProWelcomeIdentityRestoration)
-                        self?.selectedFeature = .dbp
-                    default:
-                        break
-                    }
-                    self?.finalizeSubscriptionFlow()
-                }
+        
+        subFeature.onBackToSettings = {
+            self.webViewModel.navigationCoordinator.navigateTo(url: URL.subscriptionPurchase)
+        }
+        
+        subFeature.onActivateSubscription = {
+            DispatchQueue.main.async {
+                self.state.shouldDismissView = true
+                self.state.shouldActivateSubscription = true
                 
             }
-            .store(in: &cancellables)
+        }
+        
+         subFeature.onFeatureSelected = { feature in
+             DispatchQueue.main.async {
+                 switch feature {
+                 case .netP:
+                     UniquePixel.fire(pixel: .privacyProWelcomeVPN)
+                     self.selectedFeature = .netP
+                 case .itr:
+                     UniquePixel.fire(pixel: .privacyProWelcomePersonalInformationRemoval)
+                     self.selectedFeature = .itr
+                 case .dbp:
+                     UniquePixel.fire(pixel: .privacyProWelcomeIdentityRestoration)
+                     self.selectedFeature = .dbp
+                 }
+                 self.state.shouldDismissView = true
+             }
+         }
         
         subFeature.$transactionError
             .receive(on: DispatchQueue.main)
@@ -147,14 +129,15 @@ final class SubscriptionFlowViewModel: ObservableObject {
             .sink { [weak self] value in
                 guard let strongSelf = self else { return }
                 if let value {
-                    strongSelf.handleTransactionError(error: value)
+                    Task { await strongSelf.handleTransactionError(error: value) }
                 }
             }
         .store(in: &cancellables)
        
     }
     
-    // swiftlint:disable:next cyclomatic_complexity
+    // swiftlint:disable cyclomatic_complexity
+    @MainActor
     private func handleTransactionError(error: SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError) {
 
         var isStoreError = false
@@ -163,39 +146,39 @@ final class SubscriptionFlowViewModel: ObservableObject {
         switch error {
         case .purchaseFailed:
             isStoreError = true
-            transactionError = .purchaseFailed
+            state.transactionError = .purchaseFailed
         case .missingEntitlements:
             isBackendError = true
-            transactionError = .missingEntitlements
+            state.transactionError = .missingEntitlements
         case .failedToGetSubscriptionOptions:
             isStoreError = true
-            transactionError = .failedToGetSubscriptionOptions
+            state.transactionError = .failedToGetSubscriptionOptions
         case .failedToSetSubscription:
             isBackendError = true
-            transactionError = .failedToSetSubscription
+            state.transactionError = .failedToSetSubscription
         case .failedToRestoreFromEmail, .failedToRestoreFromEmailSubscriptionInactive:
             isBackendError = true
-            transactionError = .generalError
+            state.transactionError = .generalError
         case .failedToRestorePastPurchase:
             isStoreError = true
-            transactionError = .failedToRestorePastPurchase
+            state.transactionError = .failedToRestorePastPurchase
         case .subscriptionNotFound:
             isStoreError = true
-            transactionError = .generalError
+            state.transactionError = .generalError
         case .subscriptionExpired:
             isStoreError = true
-            transactionError = .subscriptionExpired
+            state.transactionError = .subscriptionExpired
         case .hasActiveSubscription:
             isStoreError = true
             isBackendError = true
-            transactionError = .hasActiveSubscription
+            state.transactionError = .hasActiveSubscription
         case .cancelledByUser:
-            transactionError = nil
+            state.transactionError = nil
         case .accountCreationFailed:
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailureAccountNotCreated)
-            transactionError = .generalError
+            state.transactionError = .generalError
         default:
-            transactionError = .generalError
+            state.transactionError = .generalError
         }
 
         if isStoreError {
@@ -206,12 +189,13 @@ final class SubscriptionFlowViewModel: ObservableObject {
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailureBackendError)
         }
 
-        if let transactionError,
-           transactionError != .hasActiveSubscription && transactionError != .cancelledByUser {
+        if state.transactionError != .hasActiveSubscription &&
+           state.transactionError != .cancelledByUser {
             // The observer of `transactionError` does the same calculation, if the error is anything else than .hasActiveSubscription then shows a "Something went wrong" alert
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailure)
         }
     }
+    // swiftlint:enable cyclomatic_complexity
     
     private func setupWebViewObservers() async {
         webViewModel.$scrollPosition
@@ -219,7 +203,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
             .sink { [weak self] value in
                 guard let strongSelf = self else { return }
                 DispatchQueue.main.async {
-                    strongSelf.shouldShowNavigationBar = value.y > Constants.navigationBarHideThreshold
+                    strongSelf.state.shouldShowNavigationBar = value.y > Constants.navigationBarHideThreshold
                 }
             }
             .store(in: &cancellables)
@@ -229,7 +213,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
             .sink { [weak self] error in
                 guard let strongSelf = self else { return }
                 DispatchQueue.main.async {
-                    strongSelf.transactionError = error != nil ? .generalError : nil
+                    strongSelf.state.transactionError = error != nil ? .generalError : nil
                 }
                 
             }
@@ -239,60 +223,77 @@ final class SubscriptionFlowViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 guard let strongSelf = self else { return }
-                strongSelf.canNavigateBack = value
+                strongSelf.state.canNavigateBack = false
+                guard let currentURL = self?.webViewModel.url else { return }
+                if strongSelf.backButtonForURL(currentURL: currentURL) {
+                    DispatchQueue.main.async {
+                        strongSelf.state.canNavigateBack = value
+                    }
+                }
             }
+    }
+    
+    private func backButtonForURL(currentURL: URL) -> Bool {
+        return currentURL != URL.subscriptionBaseURL.forComparison() &&
+            currentURL != URL.subscriptionActivateSuccess.forComparison() &&
+            currentURL != URL.subscriptionPurchase.forComparison()
     }
     
     @MainActor
     private func setTransactionStatus(_ status: SubscriptionTransactionStatus) {
-        self.transactionStatus = status
+        self.state.transactionStatus = status
     }
         
     @MainActor
-    private func disableGoBack() {
-        canGoBackCancellable?.cancel()
-        canNavigateBack = false
-    }
-    
-    private func urlRemovingQueryParams(_ url: URL) -> URL? {
-        var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
-        urlComponents?.query = nil // Remove the query string
-        return urlComponents?.url
+    private func backButtonEnabled(_ enabled: Bool) {
+        state.canNavigateBack = enabled
     }
     
     func initializeViewData() async {
+        Pixel.fire(pixel: .privacyProOfferScreenImpression, debounce: 2)
         await self.setupTransactionObserver()
         await self .setupWebViewObservers()
-        await self.updateSubscriptionStatus()
-        webViewModel.navigationCoordinator.navigateTo(url: purchaseURL )
     }
     
+    @MainActor
+    func onAppear() {
+        resetState()
+    }
+    
+    @MainActor
+    func onDisappear() {
+        resetState()
+    }
+    
+    @MainActor
+    private func resetState() {
+        self.webViewModel.navigationCoordinator.navigateTo(url: self.purchaseURL )
+        self.selectedFeature = nil
+        self.state.shouldDismissView = false
+        self.state.shouldActivateSubscription = false
+    }
+    
+    @MainActor
     func finalizeSubscriptionFlow() {
-        canGoBackCancellable?.cancel()
-        subFeature.selectedFeature = nil
-        hasActiveSubscription = false
-        transactionStatus = .idle
-        userTappedRestoreButton = false
-        shouldShowNavigationBar = false
-        selectedFeature = nil
-        transactionError = nil
-        canNavigateBack = false
-        shouldDismissView = true
-        subFeature.cleanup()
+        self.state.shouldDismissView = true
     }
     
     deinit {
+        canGoBackCancellable?.cancel()
+        selectedFeature = nil
+        subFeature.cleanup()
         cancellables.removeAll()
     }
 
     @MainActor
     func restoreAppstoreTransaction() {
-        transactionError = nil
+        clearTransactionError()
         Task {
             do {
                 try await subFeature.restoreAccountFromAppStorePurchase()
-                disableGoBack()
+                backButtonEnabled(false)
                 await webViewModel.navigationCoordinator.reload()
+                backButtonEnabled(true)
             } catch let error {
                 if let specificError = error as? SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError {
                     handleTransactionError(error: specificError)
@@ -301,16 +302,15 @@ final class SubscriptionFlowViewModel: ObservableObject {
         }
     }
     
-    func updateSubscriptionStatus() async {
-        if AccountManager().isUserAuthenticated && hasActiveSubscription == false {
-            await disableGoBack()
-            await webViewModel.navigationCoordinator.reload()
-        }
-    }
-    
     @MainActor
     func navigateBack() async {
         await webViewModel.navigationCoordinator.goBack()
     }
+    
+    @MainActor
+    func clearTransactionError() {
+        state.transactionError = nil
+    }
+       
 }
 #endif

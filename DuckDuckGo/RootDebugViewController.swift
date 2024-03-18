@@ -31,6 +31,7 @@ import DDGSync
 class RootDebugViewController: UITableViewController {
 
     enum Row: Int {
+        case resetAutoconsentPrompt = 665
         case crashFatalError = 666
         case crashMemory = 667
         case toggleInspectableWebViews = 668
@@ -117,10 +118,12 @@ class RootDebugViewController: UITableViewController {
         }
 
         if let rowTag = tableView.cellForRow(at: indexPath)?.tag,
-            let row = Row(rawValue: rowTag),
+           let row = Row(rawValue: rowTag),
            let cell = tableView.cellForRow(at: indexPath) {
 
             switch row {
+            case .resetAutoconsentPrompt:
+                AppUserDefaults().clearAutoconsentUserSetting()
             case .crashFatalError:
                 fatalError(#function)
             case .crashMemory:

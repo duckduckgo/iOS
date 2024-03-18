@@ -66,10 +66,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         static let month = "monthly"
         static let year = "yearly"
     }
-        
-    struct FeatureSelection: Codable {
-        let feature: String
-    }
     
     enum UseSubscriptionError: Error {
         case purchaseFailed,
@@ -98,13 +94,19 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     @available(iOS 15.0, *)
     private var appStoreRestoreFlow: AppStoreRestoreFlow { subscriptionManager.flowProvider.appStoreRestoreFlow }
 
-    // Transaction Status and erros are observed from ViewModels to handle errors in the UI
+    // Transaction Status and errors are observed from ViewModels to handle errors in the UI
     @Published private(set) var transactionStatus: SubscriptionTransactionStatus = .idle
     @Published private(set) var transactionError: UseSubscriptionError?
     
-    @Published private(set) var activateSubscription: Bool = false
-    @Published var selectedFeature: FeatureSelection?
-    @Published var emailActivationComplete: Bool = false
+    // Subscription Activation Actions
+    var onSetSubscription: (() -> Void)?
+    var onBackToSettings: (() -> Void)?
+    var onFeatureSelected: ((SubscriptionFeatureSelection) -> Void)?
+    var onActivateSubscription: (() -> Void)?
+    
+    struct FeatureSelection: Codable {
+        let feature: String
+    }
     
     weak var broker: UserScriptMessageBroker?
 
@@ -124,17 +126,14 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func handler(forMethodNamed methodName: String) -> Subfeature.Handler? {
 
         os_log("WebView handler: %s", log: .subscription, type: .debug, methodName)
-
         switch methodName {
         case Handlers.getSubscription: return getSubscription
         case Handlers.setSubscription: return setSubscription
-        case Handlers.backToSettings: return backToSettings
         case Handlers.getSubscriptionOptions: return getSubscriptionOptions
         case Handlers.subscriptionSelected: return subscriptionSelected
-        case Handlers.activateSubscription:
-            Pixel.fire(pixel: .privacyProRestorePurchaseOfferPageEntry)
-            return activateSubscription
+        case Handlers.activateSubscription: return activateSubscription
         case Handlers.featureSelected: return featureSelected
+        case Handlers.backToSettings: return backToSettings
         default:
             return nil
         }
@@ -276,6 +275,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
             accountManager.storeAuthToken(token: authToken)
             accountManager.storeAccount(token: accessToken, email: accountDetails.email, externalID: accountDetails.externalID)
+            onSetSubscription?()
         } else {
             os_log("Failed to obtain subscription options", log: .subscription, type: .error)
             setTransactionError(.failedToSetSubscription)
@@ -284,51 +284,48 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         return nil
     }
 
-    func backToSettings(params: Any, original: WKScriptMessage) async -> Encodable? {
-        if let accessToken = accountManager.accessToken,
-           case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
-            switch await subscriptionService.getSubscription(accessToken: accessToken) {
-            
-            // If the account is not active, display an error and logout
-            case .success(let subscription) where !subscription.isActive:
-                setTransactionError(.failedToRestoreFromEmailSubscriptionInactive)
-                accountManager.signOut()
-                return nil
-            
-            case .success:
-
-                // Store the account data and mark as active
-                accountManager.storeAccount(token: accessToken,
-                                            email: accountDetails.email,
-                                            externalID: accountDetails.externalID)
-                emailActivationComplete = true
-                
-            case .failure:
-                os_log("Failed to restore subscription from Email", log: .subscription, type: .error)
-                setTransactionError(.failedToRestoreFromEmail)
-            }
-        } else {
-            os_log("General error. Could not get account Details", log: .subscription, type: .error)
-            setTransactionError(.generalError)
-        }
-        return nil
-    }
-
     func activateSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
-        activateSubscription = true
+        Pixel.fire(pixel: .privacyProRestorePurchaseOfferPageEntry, debounce: 2)
+        onActivateSubscription?()
         return nil
     }
 
     func featureSelected(params: Any, original: WKScriptMessage) async -> Encodable? {
         guard let featureSelection: FeatureSelection = DecodableHelper.decode(from: params) else {
             assertionFailure("SubscriptionPagesUserScript: expected JSON representation of FeatureSelection")
+            return nil
+        }
+
+        guard let featureSelection = SubscriptionFeatureSelection(featureName: featureSelection.feature) else {
+            assertionFailure("SubscriptionPagesUserScript: unexpected feature name value")
             setTransactionError(.generalError)
             return nil
         }
-        selectedFeature = featureSelection
+
+        onFeatureSelected?(featureSelection)
         
         return nil
     }
+    
+    func backToSettings(params: Any, original: WKScriptMessage) async -> Encodable? {
+           if let accessToken = accountManager.accessToken,
+              case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
+               switch await subscriptionService.getSubscription(accessToken: accessToken) {
+                   
+               case .success:
+                   accountManager.storeAccount(token: accessToken,
+                                               email: accountDetails.email,
+                                               externalID: accountDetails.externalID)
+                   onBackToSettings?()
+               default:
+                   break
+               }
+           } else {
+               os_log("General error. Could not get account Details", log: .subscription, type: .error)
+               setTransactionError(.generalError)
+           }
+           return nil
+       }
 
     // MARK: Push actions (Push Data back to WebViews)
     enum SubscribeActionName: String {
@@ -376,9 +373,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func cleanup() {
         setTransactionStatus(.idle)
         setTransactionError(nil)
-        activateSubscription = false
-        emailActivationComplete = false
-        selectedFeature = nil
         broker = nil
     }
     

@@ -2,7 +2,7 @@
 "back.button" = "Back";
 
 /* Alert message for multiple invalid bookmark being filtered out of synced data */
-"bookmarks.invalid.objects.present.description.many" = "Your bookmarks for %1$@ and other sites (%2$d) can't sync because some of their fields exceed the character limit.";
+"bookmarks.invalid.objects.present.description.many" = "Your bookmarks for %1$@ and %2$d other sites can't sync because some of their fields exceed the character limit.";
 
 /* Alert message for 1 invalid bookmark being filtered out of synced data */
 "bookmarks.invalid.objects.present.description.one" = "Your bookmark for %@ can't sync because one of its fields exceeds the character limit.";
@@ -50,7 +50,7 @@
 "connect.with.server.sheet.title" = "Sync and Back Up This Device";
 
 /* Alert message for multiple invalid logins being filtered out of synced data */
-"credentials.invalid.objects.present.description.many" = "Your passwords for %1$@ and other sites (%2$d) can't sync because some of their fields exceed the character limit.";
+"credentials.invalid.objects.present.description.many" = "Your passwords for %1$@ and %2$d other sites can't sync because some of their fields exceed the character limit.";
 
 /* Alert message for 1 invalid login being filtered out of synced data */
 "credentials.invalid.objects.present.description.one" = "Your password for %@ can't sync because one of its fields exceeds the character limit.";

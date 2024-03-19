@@ -30,6 +30,11 @@ import Bookmarks
 import Persistence
 import PrivacyDashboard
 import Networking
+import Suggestions
+
+#if SUBSCRIPTION
+import Subscription
+#endif
 
 #if NETWORK_PROTECTION
 import NetworkProtection
@@ -104,7 +109,8 @@ class MainViewController: UIViewController {
     private var emailCancellables = Set<AnyCancellable>()
     
 #if NETWORK_PROTECTION
-    private var netpCancellables = Set<AnyCancellable>()
+    private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
+    private var vpnCancellables = Set<AnyCancellable>()
 #endif
 
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
@@ -150,11 +156,13 @@ class MainViewController: UIViewController {
     
     var postClear: (() -> Void)?
     var clearInProgress = false
+    var dataStoreWarmup: DataStoreWarmup? = DataStoreWarmup()
 
     required init?(coder: NSCoder) {
         fatalError("Use init?(code:")
     }
     
+    var historyManager: HistoryManager
     var viewCoordinator: MainViewCoordinator!
     
 #if APP_TRACKING_PROTECTION
@@ -162,6 +170,7 @@ class MainViewController: UIViewController {
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
         appTrackingProtectionDatabase: CoreDataDatabase,
+        historyManager: HistoryManager,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
         appSettings: AppSettings = AppUserDefaults()
@@ -169,6 +178,7 @@ class MainViewController: UIViewController {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
+        self.historyManager = historyManager
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
@@ -184,12 +194,14 @@ class MainViewController: UIViewController {
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
+        historyManager: HistoryManager,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
         appSettings: AppSettings
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
+        self.historyManager = historyManager
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
@@ -201,11 +213,9 @@ class MainViewController: UIViewController {
         bindSyncService()
     }
 #endif
-    
-    fileprivate var tabCountInfo: TabCountInfo?
-    
+
     func loadFindInPage() {
-        
+
         let view = FindInPageView.loadFromXib()
         self.view.addSubview(view)
         
@@ -260,7 +270,7 @@ class MainViewController: UIViewController {
         subscribeToEmailProtectionStatusNotifications()
 
 #if NETWORK_PROTECTION && SUBSCRIPTION
-        subscribeToNetworkProtectionSubscriptionEvents()
+        subscribeToNetworkProtectionEvents()
 #endif
 
         findInPageView.delegate = self
@@ -362,7 +372,8 @@ class MainViewController: UIViewController {
         guard let controller = storyboard.instantiateInitialViewController(creator: { coder in
             SuggestionTrayViewController(coder: coder,
                                          favoritesViewModel: self.favoritesViewModel,
-                                         bookmarksSearch: self.bookmarksCachingSearch)
+                                         bookmarksDatabase: self.bookmarksDatabase,
+                                         historyCoordinator: self.historyManager.historyCoordinator)
         }) else {
             assertionFailure()
             return
@@ -556,12 +567,12 @@ class MainViewController: UIViewController {
 
         if let suggestionsTray = suggestionTrayController {
             let suggestionsFrameInView = suggestionsTray.view.convert(suggestionsTray.contentFrame, to: view)
-            
+
             let overflow = suggestionsFrameInView.size.height + suggestionsFrameInView.origin.y - keyboardFrameInView.origin.y + 10
             if overflow > 0 {
-                suggestionTrayController?.applyContentInset(UIEdgeInsets(top: 0, left: 0, bottom: overflow, right: 0))
+                suggestionsTray.applyContentInset(UIEdgeInsets(top: 0, left: 0, bottom: overflow, right: 0))
             } else {
-                suggestionTrayController?.applyContentInset(.zero)
+                suggestionsTray.applyContentInset(.zero)
             }
         }
 
@@ -678,11 +689,18 @@ class MainViewController: UIViewController {
         let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
 
         let tabsModel: TabsModel
-        let shouldClearTabsModelOnStartup = AutoClearSettingsModel(settings: appSettings) != nil
-        if shouldClearTabsModelOnStartup {
+        if let settings = AutoClearSettingsModel(settings: appSettings) {
+            // This needs to be refactored so that tabs model is injected and cleared before view did load,
+            //  but for now, ensure this happens in the right order by clearing data here too, if needed.
             tabsModel = TabsModel(desktop: isPadDevice)
             tabsModel.save()
             previewsSource.removeAllPreviews()
+
+            if settings.action.contains(.clearData) {
+                Task { @MainActor in
+                    await forgetData()
+                }
+            }
         } else {
             if let storedModel = TabsModel.get() {
                 // Save new model in case of migration
@@ -695,6 +713,7 @@ class MainViewController: UIViewController {
         tabManager = TabManager(model: tabsModel,
                                 previewsSource: previewsSource,
                                 bookmarksDatabase: bookmarksDatabase,
+                                historyManager: historyManager,
                                 syncService: syncService,
                                 delegate: self)
     }
@@ -1318,46 +1337,66 @@ class MainViewController: UIViewController {
     }
 
 #if NETWORK_PROTECTION && SUBSCRIPTION
-    private func subscribeToNetworkProtectionSubscriptionEvents() {
+    private func subscribeToNetworkProtectionEvents() {
         NotificationCenter.default.publisher(for: .accountDidSignIn)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] notification in
                 self?.onNetworkProtectionAccountSignIn(notification)
             }
-            .store(in: &netpCancellables)
-        NotificationCenter.default.publisher(for: .accountDidSignOut)
+            .store(in: &vpnCancellables)
+
+        NotificationCenter.default.publisher(for: .vpnEntitlementMessagingDidChange)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] notification in
-                self?.onNetworkProtectionAccountSignOut(notification)
+            .sink { [weak self] _ in
+                self?.onNetworkProtectionEntitlementMessagingChange()
             }
-            .store(in: &netpCancellables)
+            .store(in: &vpnCancellables)
+
+        let notificationCallback: CFNotificationCallback = { _, _, name, _, _ in
+            if let name {
+                NotificationCenter.default.post(name: Notification.Name(name.rawValue as String),
+                                                object: nil)
+            }
+        }
+
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(),
+                                        UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque()),
+                                        notificationCallback,
+                                        Notification.Name.vpnEntitlementMessagingDidChange.rawValue as CFString,
+                                        nil, .deliverImmediately)
     }
-    
+
+    private func onNetworkProtectionEntitlementMessagingChange() {
+        if tunnelDefaults.showEntitlementAlert {
+            presentExpiredEntitlementAlert()
+        }
+
+        presentExpiredEntitlementNotification()
+    }
+
+    private func presentExpiredEntitlementAlert() {
+        let alertController = CriticalAlerts.makeExpiredEntitlementAlert { [weak self] in
+            self?.segueToPrivacyPro()
+        }
+        dismiss(animated: true) {
+            self.present(alertController, animated: true, completion: nil)
+            self.tunnelDefaults.showEntitlementAlert = false
+        }
+    }
+
+    private func presentExpiredEntitlementNotification() {
+        let presenter = NetworkProtectionNotificationsPresenterTogglableDecorator(
+            settings: VPNSettings(defaults: .networkProtectionGroupDefaults),
+            defaults: .networkProtectionGroupDefaults,
+            wrappee: NetworkProtectionUNNotificationPresenter()
+        )
+        presenter.showEntitlementNotification()
+    }
+
     @objc
     private func onNetworkProtectionAccountSignIn(_ notification: Notification) {
-        guard let token = AccountManager().accessToken else {
-            assertionFailure("[NetP Subscription] AccountManager signed in but token could not be retrieved")
-            return
-        }
-
-        Task {
-            do {
-                try await NetworkProtectionCodeRedemptionCoordinator().exchange(accessToken: token)
-                print("[NetP Subscription] Exchanged access token for auth token successfully")
-            } catch {
-                print("[NetP Subscription] Failed to exchange access token for auth token: \(error)")
-            }
-        }
-    }
-
-    @objc
-    private func onNetworkProtectionAccountSignOut(_ notification: Notification) {
-        do {
-            try NetworkProtectionKeychainTokenStore().deleteToken()
-            print("[NetP Subscription] Deleted NetP auth token after signing out from Privacy Pro")
-        } catch {
-            print("[NetP Subscription] Failed to delete NetP auth token after signing out from Privacy Pro: \(error)")
-        }
+        tunnelDefaults.resetEntitlementMessaging()
+        os_log("[NetP Subscription] Reset expired entitlement messaging", log: .networkProtection, type: .info)
     }
 #endif
 
@@ -1505,6 +1544,11 @@ extension MainViewController: BrowserChromeDelegate {
     // 1.0 - full size, 0.0 - hidden
     private func updateToolbarConstant(_ ratio: CGFloat) {
         var bottomHeight = toolbarHeight
+        if viewCoordinator.addressBarPosition.isBottom {
+            // When position is set to bottom, contentContainer is pinned to top
+            // of navigationBarContainer, hence the adjustment.
+            bottomHeight += viewCoordinator.navigationBarContainer.frame.height
+        }
         bottomHeight += view.safeAreaInsets.bottom
         let multiplier = viewCoordinator.toolbar.isHidden ? 1.0 : 1.0 - ratio
         viewCoordinator.constraints.toolbarBottom.constant = bottomHeight * multiplier
@@ -1732,42 +1776,72 @@ extension MainViewController: AutocompleteViewControllerDelegate {
     func autocomplete(selectedSuggestion suggestion: Suggestion) {
         homeController?.chromeDelegate = nil
         dismissOmniBar()
-        if let url = suggestion.url {
+        switch suggestion {
+        case .phrase(phrase: let phrase):
+            if let url = URL.makeSearchURL(text: phrase) {
+                loadUrl(url)
+            } else {
+                os_log("Couldn‘t form URL for suggestion “%s”", log: .lifecycleLog, type: .error, phrase)
+            }
+        case .website(url: let url):
             if url.isBookmarklet() {
                 executeBookmarklet(url)
             } else {
                 loadUrl(url)
             }
-        } else if let url = URL.makeSearchURL(text: suggestion.suggestion) {
+        case .bookmark(_, url: let url, _, _):
             loadUrl(url)
-        } else {
-            os_log("Couldn‘t form URL for suggestion “%s”", log: .lifecycleLog, type: .error, suggestion.suggestion)
-            return
+        case .historyEntry(_, url: let url, _):
+            loadUrl(url)
+        case .unknown(value: let value):
+            assertionFailure("Unknown suggestion: \(value)")
         }
+
         showHomeRowReminder()
     }
 
     func autocomplete(pressedPlusButtonForSuggestion suggestion: Suggestion) {
-        if let url = suggestion.url {
-            if url.isDuckDuckGoSearch {
-                viewCoordinator.omniBar.textField.text = suggestion.suggestion
+        switch suggestion {
+        case .phrase(phrase: let phrase):
+        viewCoordinator.omniBar.textField.text = phrase
+        case .website(url: let url):
+            if url.isDuckDuckGoSearch, let query = url.searchQuery {
+                viewCoordinator.omniBar.textField.text = query
             } else if !url.isBookmarklet() {
                 viewCoordinator.omniBar.textField.text = url.absoluteString
             }
-        } else {
-            viewCoordinator.omniBar.textField.text = suggestion.suggestion
+        case .bookmark(title: let title, _, _, _):
+            viewCoordinator.omniBar.textField.text = title
+        case .historyEntry(title: let title, _, _):
+            viewCoordinator.omniBar.textField.text = title
+        case .unknown(value: let value):
+            assertionFailure("Unknown suggestion: \(value)")
         }
+
         viewCoordinator.omniBar.textDidChange()
     }
     
     func autocomplete(highlighted suggestion: Suggestion, for query: String) {
-        if let url = suggestion.url {
-            viewCoordinator.omniBar.textField.text = url.absoluteString
-        } else {
-            viewCoordinator.omniBar.textField.text = suggestion.suggestion
-            if suggestion.suggestion.hasPrefix(query) {
+
+        switch suggestion {
+        case .phrase(phrase: let phrase):
+            viewCoordinator.omniBar.textField.text = phrase
+            if phrase.hasPrefix(query) {
                 viewCoordinator.omniBar.selectTextToEnd(query.count)
             }
+        case .website(url: let url):
+            viewCoordinator.omniBar.textField.text = url.absoluteString
+        case .bookmark(title: let title, _, _, _):
+            viewCoordinator.omniBar.textField.text = title
+            if title.hasPrefix(query) {
+                viewCoordinator.omniBar.selectTextToEnd(query.count)
+            }
+        case .historyEntry(title: let title, let url, _):
+            if (title ?? url.absoluteString).hasPrefix(query) {
+                viewCoordinator.omniBar.selectTextToEnd(query.count)
+            }
+        case .unknown(value: let value):
+            assertionFailure("Unknown suggestion: \(value)")
         }
     }
 
@@ -1836,7 +1910,8 @@ extension MainViewController: TabDelegate {
         showBars()
         currentTab?.dismiss()
 
-        let newTab = tabManager.addURLRequest(navigationAction.request,
+        // Don't use a request or else the page gets stuck on "about:blank"
+        let newTab = tabManager.addURLRequest(nil,
                                               with: configuration,
                                               inheritedAttribution: inheritingAttribution)
         newTab.openedByPage = true
@@ -1916,7 +1991,11 @@ extension MainViewController: TabDelegate {
     func tabDidRequestReportBrokenSite(tab: TabViewController) {
         segueToReportBrokenSite()
     }
-    
+
+    func tab(_ tab: TabViewController, didRequestToggleReportWithCompletionHandler completionHandler: @escaping (Bool) -> Void) {
+        segueToReportBrokenSite(mode: .toggleReport(completionHandler: completionHandler))
+    }
+
     func tabDidRequestBookmarks(tab: TabViewController) {
         Pixel.fire(pixel: .bookmarksButtonPressed,
                    withAdditionalParameters: [PixelParameters.originatedFromMenu: "1"])
@@ -2049,8 +2128,12 @@ extension MainViewController: TabSwitcherDelegate {
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTab tab: Tab) {
         if tabManager.count == 1 {
             // Make sure UI updates finish before dimissing the view.
+            // However, as a result, viewDidAppear on the home controller thinks the tab 
+            //  switcher is still presented.
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                tabSwitcher.dismiss()
+                tabSwitcher.dismiss(animated: true) {
+                    self.homeController?.viewDidAppear(true)
+                }
             }
         }
         closeTab(tab)
@@ -2155,6 +2238,7 @@ extension MainViewController: AutoClearWorker {
     }
 
     func forgetTabs() {
+        omniBar.resignFirstResponder()
         findInPageView?.done()
         tabManager.removeAll()
     }
@@ -2166,33 +2250,44 @@ extension MainViewController: AutoClearWorker {
         swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
         Favicons.shared.clearCache(.tabs)
     }
-    
-    func forgetData() {
+
+    @MainActor
+    func clearDataFinished(_: AutoClear) {
+        refreshUIAfterClear()
+    }
+
+    func forgetData() async {
         guard !clearInProgress else {
             assertionFailure("Shouldn't get called multiple times")
             return
         }
         clearInProgress = true
+
+        // This needs to happen only once per app launch
+        if let dataStoreWarmup {
+            await dataStoreWarmup.ensureReady()
+            self.dataStoreWarmup = nil
+        }
+
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
         let pixel = TimedPixel(.forgetAllDataCleared)
-        WebCacheManager.shared.clear(tabCountInfo: tabCountInfo) {
-            pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
+        await WebCacheManager.shared.clear()
+        pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
 
-            AutoconsentManagement.shared.clearCache()
-            DaxDialogs.shared.clearHeldURLData()
+        AutoconsentManagement.shared.clearCache()
+        DaxDialogs.shared.clearHeldURLData()
 
-            if self.syncService.authState == .inactive {
-                self.bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
-            }
-
-            self.refreshUIAfterClear()
-            self.clearInProgress = false
-            
-            self.postClear?()
-            self.postClear = nil
+        if self.syncService.authState == .inactive {
+            self.bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
         }
 
+        await historyManager.removeAllHistory()
+
+        self.clearInProgress = false
+        
+        self.postClear?()
+        self.postClear = nil
     }
     
     func stopAllOngoingDownloads() {
@@ -2202,23 +2297,24 @@ extension MainViewController: AutoClearWorker {
     func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
-        
-        self.tabCountInfo = tabManager.makeTabCountInfo()
-        
+        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.burn)
+
         tabManager.prepareAllTabsExceptCurrentForDataClearing()
         
         fireButtonAnimator.animate {
             self.tabManager.prepareCurrentTabForDataClearing()
             self.stopAllOngoingDownloads()
             self.forgetTabs()
-            self.forgetData()
+            await self.forgetData()
+            Instruments.shared.endTimedEvent(for: spid)
             DaxDialogs.shared.resumeRegularFlow()
         } onTransitionCompleted: {
             ActionMessageView.present(message: UserText.actionForgetAllDone,
                                       presentationLocation: .withBottomBar(andAddressBarBottom: self.appSettings.currentAddressBarPosition.isBottom))
             transitionCompletion?()
+            self.refreshUIAfterClear()
         } completion: {
-            Instruments.shared.endTimedEvent(for: spid)
+            // Ideally this should happen once data clearing has finished AND the animation is finished
             if showNextDaxDialog {
                 self.homeController?.showNextDaxDialog()
             } else if KeyboardSettings().onNewTab {

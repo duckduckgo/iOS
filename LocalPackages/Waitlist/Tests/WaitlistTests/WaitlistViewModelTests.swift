@@ -17,10 +17,11 @@
 //  limitations under the License.
 //
 
-import XCTest
 import Combine
 import UserNotifications
 import WaitlistMocks
+import XCTest
+
 @testable import Waitlist
 
 class WaitlistViewModelTests: XCTestCase {

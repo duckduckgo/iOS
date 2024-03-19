@@ -25,6 +25,11 @@ import Common
 import Combine
 import SyncUI
 
+
+#if SUBSCRIPTION
+import Subscription
+#endif
+
 #if APP_TRACKING_PROTECTION
 import NetworkExtension
 #endif
@@ -42,9 +47,24 @@ final class SettingsViewModel: ObservableObject {
     private lazy var animator: FireButtonAnimator = FireButtonAnimator(appSettings: AppUserDefaults())
     private var legacyViewProvider: SettingsLegacyViewProvider
     private lazy var versionProvider: AppVersion = AppVersion.shared
-    private var accountManager: AccountManager
     private let voiceSearchHelper: VoiceSearchHelperProtocol
 
+#if SUBSCRIPTION
+    private var accountManager: AccountManager
+    private var signOutObserver: Any?
+        
+    // Sheet Presentation & Navigation
+    @Published var isRestoringSubscription: Bool = false
+    @Published var shouldDisplayRestoreSubscriptionError: Bool = false
+    @Published var isLoadingSubscriptionState: Bool = false
+    @Published var shouldShowNetP = false
+    @Published var shouldShowDBP = false
+    @Published var shouldShowITP = false
+#endif
+    @UserDefaultsWrapper(key: .subscriptionIsActive, defaultValue: false)
+    static private var cachedHasActiveSubscription: Bool
+    
+    
 #if NETWORK_PROTECTION
     private let connectionObserver = ConnectionStatusObserverThroughSession()
 #endif
@@ -53,25 +73,13 @@ final class SettingsViewModel: ObservableObject {
     private lazy var isPad = UIDevice.current.userInterfaceIdiom == .pad
     private var cancellables = Set<AnyCancellable>()
     
-    // Defaults
-    @UserDefaultsWrapper(key: .subscriptionIsActive, defaultValue: false)
-    static private var cachedHasActiveSubscription: Bool
-
     // Closures to interact with legacy view controllers through the container
     var onRequestPushLegacyView: ((UIViewController) -> Void)?
     var onRequestPresentLegacyView: ((UIViewController, _ modal: Bool) -> Void)?
     var onRequestPopLegacyView: (() -> Void)?
     var onRequestDismissSettings: (() -> Void)?
     
-    // SwiftUI Programatic Navigation Variables
-    // Add more views as needed here...    
-    @Published var shouldNavigateToDBP = false
-    @Published var shouldNavigateToITP = false
-    
-    // Subscription Entitlement names: TBD
-    static let entitlementNames = ["dummy1", "dummy2", "dummy3"]
-    
-    // Our View State
+    // View State
     @Published private(set) var state: SettingsState
     
     // MARK: Cell Visibility
@@ -86,16 +94,20 @@ final class SettingsViewModel: ObservableObject {
         case networkProtection
 #endif
     }
-                
+    
     var shouldShowNoMicrophonePermissionAlert: Bool = false
+    var autocompleteSubtitle: String?
+
+#if SUBSCRIPTION
+    // MARK: - Deep linking
     
-    // Used to automatically navigate on Appear to a specific section
-    enum SettingsSection: String {
-        case none, netP, dbp, itp
-    }
-    @Published var onAppearNavigationTarget: SettingsSection
-    
+    // Used to automatically navigate to a specific section
+    // immediately after loading the Settings View
+    @Published private(set) var deepLinkTarget: SettingsDeepLinkSection?
+#endif
+
     // MARK: Bindings
+    
     var themeBinding: Binding<ThemeName> {
         Binding<ThemeName>(
             get: { self.state.appTheme },
@@ -150,6 +162,8 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
+
+                Pixel.fire(pixel: self.state.autocomplete ? .autocompleteEnabled : .autocompleteDisabled)
             }
         )
     }
@@ -194,29 +208,51 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-
+#if SUBSCRIPTION
     // MARK: Default Init
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
          accountManager: AccountManager,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
-         navigateOnAppearDestination: SettingsSection = .none) {
+         variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
+         deepLink: SettingsDeepLinkSection? = nil) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
         self.accountManager = accountManager
         self.voiceSearchHelper = voiceSearchHelper
-        self.onAppearNavigationTarget = navigateOnAppearDestination
+        self.deepLinkTarget = deepLink
+        
+        setupNotificationObservers()
+        autocompleteSubtitle = variantManager.isSupported(feature: .history) ? UserText.settingsAutocompleteSubtitle : nil
     }
+    
+    deinit {
+        signOutObserver = nil
+    }
+    
+#else
+    // MARK: Default Init
+    init(state: SettingsState? = nil,
+         legacyViewProvider: SettingsLegacyViewProvider,
+         variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
+         voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper) {
+        self.state = SettingsState.defaults
+        self.legacyViewProvider = legacyViewProvider
+        self.voiceSearchHelper = voiceSearchHelper
+        autocompleteSubtitle = variantManager.isSupported(feature: .history) ? UserText.settingsAutocompleteSubtitle : nil
+    }
+#endif
+    
 }
- 
 // MARK: Private methods
 extension SettingsViewModel {
     
-    // This manual (re)initialzation will go away once appSettings and
+    // This manual (re)initialization will go away once appSettings and
     // other dependencies are observable (Such as AppIcon and netP)
     // and we can use subscribers (Currently called from the view onAppear)
-    private func initState() {
-        self.state = SettingsState(
+    @MainActor
+    private func initState() async {
+        self.state = await SettingsState(
             appTheme: appSettings.currentThemeName,
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: appSettings.currentFireButtonAnimation,
@@ -242,40 +278,40 @@ extension SettingsViewModel {
         
         setupSubscribers()
         
-        #if SUBSCRIPTION
-        if #available(iOS 15, *) {
-            Task {
-                if state.subscription.enabled {
-                    await setupSubscriptionEnvironment()
-                }
-            }
-        }
-        #endif
     }
     
     private func getNetworkProtectionState() -> SettingsState.NetworkProtection {
         var enabled = false
         #if NETWORK_PROTECTION
             if #available(iOS 15, *) {
-                let accessController = NetworkProtectionAccessController()
-                enabled = accessController.networkProtectionAccessType() != .none
+                enabled = DefaultNetworkProtectionVisibility().shouldKeepVPNAccessViaWaitlist()
             }
         #endif
         return SettingsState.NetworkProtection(enabled: enabled, status: "")
     }
-    
-    private func getSubscriptionState() -> SettingsState.Subscription {
-        var enabled = false
-        var canPurchase = false
-        let hasActiveSubscription = Self.cachedHasActiveSubscription
-        #if SUBSCRIPTION
+       
+    private func getSubscriptionState() async -> SettingsState.Subscription {
+            var enabled = false
+            var canPurchase = false
+            var hasActiveSubscription = false
+        
+    #if SUBSCRIPTION
+        if #available(iOS 15, *) {
             enabled = featureFlagger.isFeatureOn(.subscription)
             canPurchase = SubscriptionPurchaseEnvironment.canPurchase
-        #endif
+            await setupSubscriptionEnvironment()
+            if let token = AccountManager().accessToken {
+                let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token)
+                if case .success(let subscription) = subscriptionResult {
+                    hasActiveSubscription = subscription.isActive
+                }
+            }
+        }
+    #endif
         return SettingsState.Subscription(enabled: enabled,
                                         canPurchase: canPurchase,
                                         hasActiveSubscription: hasActiveSubscription)
-    }
+        }
     
     private func getSyncState() -> SettingsState.SyncSettings {
         SettingsState.SyncSettings(enabled: legacyViewProvider.syncService.featureFlags.contains(.userInterface),
@@ -312,55 +348,107 @@ extension SettingsViewModel {
     private func setupSubscriptionEnvironment() async {
         
         // Active subscription check
-        if let token = accountManager.accessToken {
+        guard let token = accountManager.accessToken else {
+            setupSubscriptionPurchaseOptions()
+            return
+        }
+        
+        isLoadingSubscriptionState = true
+        // Fetch available subscriptions from the backend (or sign out)
+        switch await SubscriptionService.getSubscription(accessToken: token) {
+        
+        case .success(let subscription) where subscription.isActive:
             
-            // Fetch available subscriptions from the backend (or sign out)
-            if case .success(let response) = await SubscriptionService.getSubscriptionDetails(token: token) {
-                if !response.isSubscriptionActive {
-                    AccountManager().signOut()
-                    setupSubscriptionPurchaseOptions()
-                    return
-                }
-                
-                // Check for valid entitlements
-                let hasEntitlements = await AccountManager().hasEntitlement(for: Self.entitlementNames.first!)
-                self.state.subscription.hasActiveSubscription = hasEntitlements ? true : false
-                
-                // Cache Subscription state
-                Self.cachedHasActiveSubscription = self.state.subscription.hasActiveSubscription
-                
-                // Enable Subscription purchase if there's no active subscription
-                if self.state.subscription.hasActiveSubscription == false {
-                    setupSubscriptionPurchaseOptions()
+            // Check entitlements and update UI accordingly
+            let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
+            for entitlement in entitlements {
+                if case let .success(result) = await AccountManager().hasEntitlement(for: entitlement) {
+                    switch entitlement {
+                    case .identityTheftRestoration:
+                        self.shouldShowITP = result
+                    case .dataBrokerProtection:
+                        self.shouldShowDBP = result
+                    case .networkProtection:
+                        self.shouldShowNetP = result
+                    case .unknown:
+                        return
+                    }
                 }
             }
-        } else {
-            setupSubscriptionPurchaseOptions()
+            isLoadingSubscriptionState = false
+                        
+        default:
+            // Account is active but there's not a valid subscription / entitlements
+            isLoadingSubscriptionState = false
+            signOutUser()
         }
     }
     
     @available(iOS 15.0, *)
+    private func signOutUser() {
+        AccountManager().signOut()
+        setupSubscriptionPurchaseOptions()
+    }
+    
+    @available(iOS 15.0, *)
     private func setupSubscriptionPurchaseOptions() {
-        self.state.subscription.hasActiveSubscription = false
         PurchaseManager.shared.$availableProducts
             .receive(on: RunLoop.main)
             .sink { [weak self] products in
                 self?.state.subscription.canPurchase = !products.isEmpty
             }.store(in: &cancellables)
     }
-    #endif
+        
+    private func setupNotificationObservers() {
+        signOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut, object: nil, queue: .main) { [weak self] _ in
+            if #available(iOS 15.0, *) {
+                guard let strongSelf = self else { return }
+                Task { await strongSelf.setupSubscriptionEnvironment() }
+            }
+        }
+    }
+    
+    @available(iOS 15.0, *)
+    func restoreAccountPurchase() async {
+        DispatchQueue.main.async { self.isRestoringSubscription = true }
+        let result = await AppStoreRestoreFlow.restoreAccountFromPastPurchase(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+        switch result {
+        case .success:
+            DispatchQueue.main.async {
+                self.isRestoringSubscription = false
+            }
+            await self.setupSubscriptionEnvironment()
+            
+        case .failure:
+            DispatchQueue.main.async {
+                self.isRestoringSubscription = false
+                self.shouldDisplayRestoreSubscriptionError = true
+            }
+        }
+    }
+    
+#endif  // SUBSCRIPTION
     
     #if NETWORK_PROTECTION
     private func updateNetPStatus(connectionStatus: ConnectionStatus) {
-        switch NetworkProtectionAccessController().networkProtectionAccessType() {
-        case .none, .waitlistAvailable, .waitlistJoined, .waitlistInvitedPendingTermsAcceptance:
-            self.state.networkProtection.status = VPNWaitlist.shared.settingsSubtitle
-        case .waitlistInvited, .inviteCodeInvited:
+        if DefaultNetworkProtectionVisibility().isPrivacyProLaunched() {
             switch connectionStatus {
             case .connected:
                 self.state.networkProtection.status = UserText.netPCellConnected
             default:
                 self.state.networkProtection.status = UserText.netPCellDisconnected
+            }
+        } else {
+            switch NetworkProtectionAccessController().networkProtectionAccessType() {
+            case .none, .waitlistAvailable, .waitlistJoined, .waitlistInvitedPendingTermsAcceptance:
+                self.state.networkProtection.status = VPNWaitlist.shared.settingsSubtitle
+            case .waitlistInvited, .inviteCodeInvited:
+                switch connectionStatus {
+                case .connected:
+                    self.state.networkProtection.status = UserText.netPCellConnected
+                default:
+                    self.state.networkProtection.status = UserText.netPCellDisconnected
+                }
             }
         }
     }
@@ -389,8 +477,18 @@ extension SettingsViewModel {
 extension SettingsViewModel {
     
     func onAppear() {
-        initState()
-        Task { await MainActor.run { navigateOnAppear() } }
+        Task {
+            await initState()
+#if SUBSCRIPTION
+            triggerDeepLinkNavigation(to: self.deepLinkTarget)
+#endif
+        }
+    }
+    
+    func onDissapear() {
+#if SUBSCRIPTION
+        self.deepLinkTarget = nil
+#endif
     }
     
     func setAsDefaultBrowser() {
@@ -418,25 +516,6 @@ extension SettingsViewModel {
         onRequestDismissSettings?()
     }
 
-    @MainActor
-    private func navigateOnAppear() {
-        // We need a short delay to let the SwifttUI view lifecycle complete
-        // Otherwise the transition can be inconsistent
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            switch self.onAppearNavigationTarget {
-            case .netP:
-                self.presentLegacyView(.netP)
-            case .dbp:
-                self.shouldNavigateToDBP = true
-            case .itp:
-                self.shouldNavigateToITP = true
-            default:
-                break
-            }
-            self.onAppearNavigationTarget = .none
-        }
-    }
-
 }
 
 // MARK: Legacy View Presentation
@@ -457,8 +536,6 @@ extension SettingsViewModel {
         case .fireproofSites: pushViewController(legacyViewProvider.fireproofSites)
         case .autoclearData: pushViewController(legacyViewProvider.autoclearData)
         case .keyboard: pushViewController(legacyViewProvider.keyboard)
-        case .windowsApp: pushViewController(legacyViewProvider.windows)
-        case .macApp: pushViewController(legacyViewProvider.mac)
         case .about: pushViewController(legacyViewProvider.about)
         case .debug: pushViewController(legacyViewProvider.debug)
             
@@ -484,12 +561,8 @@ extension SettingsViewModel {
 #if NETWORK_PROTECTION
         case .netP:
             if #available(iOS 15, *) {
-                switch NetworkProtectionAccessController().networkProtectionAccessType() {
-                case .inviteCodeInvited, .waitlistInvited:
-                    pushViewController(legacyViewProvider.netP)
-                default:
-                    pushViewController(legacyViewProvider.netPWaitlist)
-                }
+                Pixel.fire(pixel: .privacyProVPNSettings)
+                pushViewController(legacyViewProvider.netP)
             }
 #endif
         
@@ -516,4 +589,64 @@ extension SettingsViewModel: AutofillLoginSettingsListViewControllerDelegate {
         onRequestPopLegacyView?()
     }
 }
+
+// MARK: DeepLinks
+#if SUBSCRIPTION
+extension SettingsViewModel {
+
+    enum SettingsDeepLinkSection: Identifiable {
+        case netP
+        case dbp
+        case itr
+        case subscriptionFlow
+        case subscriptionRestoreFlow
+        // Add other cases as needed
+
+        var id: String {
+            switch self {
+            case .netP: return "netP"
+            case .dbp: return "dbp"
+            case .itr: return "itr"
+            case .subscriptionFlow: return "subscriptionFlow"
+            case .subscriptionRestoreFlow: return "subscriptionRestoreFlow"
+            // Ensure all cases are covered
+            }
+        }
+
+        // Define the presentation type: .sheet or .push
+        // Default to .sheet, specify .push where needed
+        var type: DeepLinkType {
+            switch self {
+            // Specify cases that require .push presentation
+            // Example:
+            // case .dbp:
+            //     return .push           
+            case .netP:
+                return .UIKitView
+            default:
+                return .sheet
+            }
+        }
+    }
+
+    // Define DeepLinkType outside the enum if not already defined
+    enum DeepLinkType {
+        case sheet
+        case navigation
+        case UIKitView
+    }
+            
+    // Navigate to a section in settings
+    func triggerDeepLinkNavigation(to target: SettingsDeepLinkSection?) {
+        guard let target else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.deepLinkTarget = target
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.deepLinkTarget = nil
+            }
+        }
+    }
+}
+#endif
 // swiftlint:enable file_length

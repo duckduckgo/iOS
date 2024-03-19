@@ -1,6 +1,4 @@
-The DuckDuckGo app provides the most comprehensive online privacy protection with the push of a button. With one free download, you get an everyday private Internet browser that offers seamless protection while you search and browse, and even access to tracking protection for emails you receive.
-
-Protecting your privacy online is like protecting your home. Locking the front door won’t stop the most determined folks from getting inside, especially if you’ve left the back door and windows unlocked and an extra key under the doormat. That’s why we offer multiple types of privacy protection, most of which aren’t offered in most popular browsers by default.
+DuckDuckGo is a free browser that provides the most comprehensive online privacy protection in one app. Unlike most popular browsers, it has powerful privacy protections by default, including our search engine that doesn’t track your history and over a dozen other built-in protections. Millions of people use DuckDuckGo as their go-to browser to protect their everyday online activities, from searching to browsing, emailing, and more.
  
 FEATURE HIGHLIGHTS
 • Search Privately by Default - DuckDuckGo Private Search comes built-in, so you can easily search the web without being tracked.
@@ -22,9 +20,7 @@ EVERYDAY PRIVACY CONTROLS
  
 • Signal Your Privacy Preference with Global Privacy Control (GPC) - Built in to our app, GPC intends to help you express your opt-out rights automatically by telling websites not to sell or share your personal information. Whether it can be used to enforce your legal rights (for example, current or future CCPA, GDPR requirements) depends on the laws in your jurisdiction.
  
-Note about our 3rd-Party Tracker Loading Protection following DuckDuckGo ad clicks: Our 3rd-Party Tracker Protection goes above and beyond what you get in most popular browsers by default, but we’re constantly working to make it more comprehensive. Currently, if an advertiser wants to detect conversions on their own website for our private DuckDuckGo search ads, our 3rd-Party Tracker Loading Protection will not stop bat.bing.com requests from loading on the advertiser’s website following DuckDuckGo ad clicks, but those requests are stopped in all other contexts. This is because DuckDuckGo private search advertising is in partnership with Microsoft. As part of that partnership, viewing ads on DuckDuckGo is anonymous and Microsoft has committed to not profile our users’ ad clicks.
- 
-Read more about this and our free Tracking Protections at https://help.duckduckgo.com/privacy/web-tracking-protections
+Read more about our free Tracking Protections at https://help.duckduckgo.com/privacy/web-tracking-protections
 
 You don't need to wait to take back your privacy. Join the millions of people using DuckDuckGo and protect many of your everyday online activities with one app. It's privacy, simplified. 
 

@@ -24,6 +24,7 @@ import Bookmarks
 import simd
 import WidgetKit
 import Common
+import PrivacyDashboard
 
 // swiftlint:disable file_length
 extension TabViewController {
@@ -403,9 +404,10 @@ extension TabViewController {
     
     private func onBrowsingSettingsAction() {
         Pixel.fire(pixel: .browsingMenuSettings)
+        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.openSettings)
         delegate?.tabDidRequestSettings(tab: self)
     }
-    
+
     private func buildToggleProtectionEntry(forDomain domain: String) -> BrowsingMenuEntry {
         let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
         let isProtected = !config.isUserUnprotected(domain: domain)
@@ -413,12 +415,23 @@ extension TabViewController {
         let image = isProtected ? UIImage(named: "Protections-Blocked-16")! : UIImage(named: "Protections-16")!
     
         return BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
-            Pixel.fire(pixel: isProtected ? .browsingMenuDisableProtection : .browsingMenuEnableProtection)
-            self?.togglePrivacyProtection(domain: domain)
+            self?.onToggleProtectionAction(forDomain: domain, isProtected: isProtected)
         })
     }
-    
-    private func togglePrivacyProtection(domain: String) {
+
+    private func onToggleProtectionAction(forDomain domain: String, isProtected: Bool) {
+        let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
+        if isProtected && ToggleReportsFeature(privacyConfiguration: config).isEnabled {
+            delegate?.tab(self, didRequestToggleReportWithCompletionHandler: { [weak self] didSendReport in
+                self?.togglePrivacyProtection(domain: domain, didSendReport: didSendReport)
+            })
+        } else {
+            togglePrivacyProtection(domain: domain)
+        }
+        Pixel.fire(pixel: isProtected ? .browsingMenuDisableProtection : .browsingMenuEnableProtection)
+    }
+
+    private func togglePrivacyProtection(domain: String, didSendReport: Bool = false) {
         let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
         let isProtected = !config.isUserUnprotected(domain: domain)
         if isProtected {
@@ -429,7 +442,11 @@ extension TabViewController {
         
         let message: String
         if isProtected {
-            message = UserText.messageProtectionDisabled.format(arguments: domain)
+            if didSendReport {
+                message = UserText.messageProtectionDisabledAndToggleReportSent.format(arguments: domain)
+            } else {
+                message = UserText.messageProtectionDisabled.format(arguments: domain)
+            }
         } else {
             message = UserText.messageProtectionEnabled.format(arguments: domain)
         }
@@ -441,5 +458,7 @@ extension TabViewController {
                                   onAction: { [weak self] in
             self?.togglePrivacyProtection(domain: domain)
         })
+        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.toggleProtections)
     }
+
 }

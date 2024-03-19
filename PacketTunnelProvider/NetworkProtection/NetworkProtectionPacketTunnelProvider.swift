@@ -27,6 +27,12 @@ import Networking
 import NetworkExtension
 import NetworkProtection
 
+#if SUBSCRIPTION
+import Subscription
+#endif
+
+// swiftlint:disable type_body_length
+
 // Initial implementation for initial Network Protection tests. Will be fleshed out with https://app.asana.com/0/1203137811378537/1204630829332227/f
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
@@ -35,12 +41,12 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     // MARK: - PacketTunnelProvider.Event reporting
 
     private static var packetTunnelProviderEvents: EventMapping<PacketTunnelProvider.Event> = .init { event, _, _, _ in
-        let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+        let defaults = UserDefaults.networkProtectionGroupDefaults
 
         switch event {
         case .userBecameActive:
             DailyPixel.fire(pixel: .networkProtectionActiveUser,
-                            withAdditionalParameters: ["cohort": UniquePixel.dateString(for: settings.vpnFirstEnabled)])
+                            withAdditionalParameters: ["cohort": UniquePixel.dateString(for: defaults.vpnFirstEnabled)])
         case .reportConnectionAttempt(attempt: let attempt):
             switch attempt {
             case .connecting:
@@ -57,7 +63,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             case .failureRecovered:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelFailureRecovered)
             case .networkPathChanged(let newPath):
-                settings.apply(change: .setNetworkPathChange(newPath))
+                defaults.updateNetworkPath(with: newPath)
             }
         case .reportLatency(result: let result):
             switch result {
@@ -67,8 +73,33 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 guard quality != .unknown else { return }
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionLatency(quality: quality))
             }
-        case .rekeyCompleted:
-            Pixel.fire(pixel: .networkProtectionRekeyCompleted)
+        case .rekeyAttempt(let step):
+            switch step {
+            case .begin:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionRekeyAttempt)
+            case .failure(let error):
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionRekeyFailure, error: error)
+            case .success:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionRekeyCompleted)
+            }
+        case .tunnelStartAttempt(let step):
+            switch step {
+            case .begin:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartAttempt)
+            case .failure(let error):
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartFailure, error: error)
+            case .success:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartSuccess)
+            }
+        case .tunnelUpdateAttempt(let step):
+            switch step {
+            case .begin:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelUpdateAttempt)
+            case .failure(let error):
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelUpdateFailure, error: error)
+            case .success:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelUpdateSuccess)
+            }
         }
     }
 
@@ -162,6 +193,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 params[PixelParameters.wireguardErrorCode] = String(code)
             case .noAuthTokenFound:
                 pixelEvent = .networkProtectionNoAuthTokenFoundError
+            case .vpnAccessRevoked:
+                return
             case .unhandledError(function: let function, line: let line, error: let error):
                 pixelEvent = .networkProtectionUnhandledError
                 params[PixelParameters.function] = function
@@ -201,27 +234,45 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
-        let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
-                                                             errorEvents: nil)
+        let featureVisibility = NetworkProtectionVisibilityForTunnelProvider()
+        let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
+        let accessTokenProvider: () -> String? = {
+#if SUBSCRIPTION
+            if featureVisibility.shouldMonitorEntitlement() {
+                return { AccountManager().accessToken }
+            }
+#endif
+            return { nil }
+        }()
+        let tokenStore = NetworkProtectionKeychainTokenStore(
+            keychainType: .dataProtection(.unspecified),
+            errorEvents: nil,
+            isSubscriptionEnabled: isSubscriptionEnabled,
+            accessTokenProvider: accessTokenProvider
+        )
+
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
-        let nofificationsPresenterDecorator = NetworkProtectionNotificationsPresenterTogglableDecorator(
+        let notificationsPresenterDecorator = NetworkProtectionNotificationsPresenterTogglableDecorator(
             settings: settings,
+            defaults: .networkProtectionGroupDefaults,
             wrappee: notificationsPresenter
         )
         notificationsPresenter.requestAuthorization()
-        super.init(notificationsPresenter: nofificationsPresenterDecorator,
+        super.init(notificationsPresenter: notificationsPresenterDecorator,
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
                    controllerErrorStore: errorStore,
                    keychainType: .dataProtection(.unspecified),
                    tokenStore: tokenStore,
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
-                   settings: settings)
+                   settings: settings,
+                   defaults: .networkProtectionGroupDefaults,
+                   isSubscriptionEnabled: isSubscriptionEnabled,
+                   entitlementCheck: Self.entitlementCheck)
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
-        observeStatusChanges()
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
     }
 
@@ -259,16 +310,37 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
     private let activationDateStore = DefaultVPNWaitlistActivationDateStore()
 
-    private func observeStatusChanges() {
-        connectionStatusPublisher.sink { [weak self] status in
-            if case .connected = status {
-                self?.activationDateStore.setActivationDateIfNecessary()
-                self?.activationDateStore.updateLastActiveDate()
-            }
-        }
-        .store(in: &cancellables)
+    public override func handleConnectionStatusChange(old: ConnectionStatus, new: ConnectionStatus) {
+        super.handleConnectionStatusChange(old: old, new: new)
+
+        activationDateStore.setActivationDateIfNecessary()
+        activationDateStore.updateLastActiveDate()
     }
 
+    private static func entitlementCheck() async -> Result<Bool, Error> {
+#if SUBSCRIPTION
+        guard NetworkProtectionVisibilityForTunnelProvider().shouldMonitorEntitlement() else {
+            return .success(true)
+        }
+
+        if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {
+            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+        }
+
+        let result = await AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+            .hasEntitlement(for: .networkProtection, cachePolicy: .reloadIgnoringLocalCacheData)
+        switch result {
+        case .success(let hasEntitlement):
+            return .success(hasEntitlement)
+        case .failure(let error):
+            return .failure(error)
+        }
+#else
+        return .success(true)
+#endif
+    }
 }
+
+// swiftlint:enable type_body_length
 
 #endif

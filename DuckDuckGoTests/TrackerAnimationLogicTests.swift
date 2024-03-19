@@ -17,12 +17,13 @@
 //  limitations under the License.
 //
 
-import Foundation
-import XCTest
-import TrackerRadarKit
 import BrowserServicesKit
 import ContentBlocking
+import Foundation
 import PrivacyDashboard
+import TrackerRadarKit
+import XCTest
+
 @testable import Core
 @testable import DuckDuckGo
 

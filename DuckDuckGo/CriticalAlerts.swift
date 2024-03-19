@@ -70,4 +70,33 @@ struct CriticalAlerts {
         return alertController
     }
 
+    static func makeExpiredEntitlementAlert(completion: @escaping () -> Void) -> UIAlertController {
+        let alertController = UIAlertController(title: UserText.vpnAccessRevokedAlertTitle,
+                                                message: UserText.vpnAccessRevokedAlertMessage,
+                                                preferredStyle: .alert)
+        alertController.overrideUserInterfaceStyle()
+
+        let closeButton = UIAlertAction(title: UserText.vpnAccessRevokedAlertActionCancel, style: .cancel)
+        let subscribeButton = UIAlertAction(title: UserText.vpnAccessRevokedAlertActionSubscribe, style: .default) { _ in
+            completion()
+        }
+
+        alertController.addAction(closeButton)
+        alertController.addAction(subscribeButton)
+        alertController.preferredAction = subscribeButton
+        return alertController
+    }
+
+    static func makeVPNEarlyAccessOverAlert() -> UIAlertController {
+        let alertController = UIAlertController(title: UserText.vpnEarlyAccessOverAlertTitle,
+                                                message: UserText.vpnEarlyAccessOverAlertMessage,
+                                                preferredStyle: .alert)
+        alertController.overrideUserInterfaceStyle()
+
+        let closeButton = UIAlertAction(title: UserText.vpnEarlyAccessOverAlertAction, style: .cancel)
+
+        alertController.addAction(closeButton)
+        return alertController
+    }
+
 }

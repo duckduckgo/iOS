@@ -41,7 +41,7 @@ public class DDGPersistenceContainer {
 
     private static func createPersistenceStoreCoordinator(name: String, model: NSManagedObjectModel) -> NSPersistentStoreCoordinator? {
         guard let storeURL = storeURL(for: name) else { return nil }
-        
+
         let persistenceStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
         let options = [ NSMigratePersistentStoresAutomaticallyOption: true,
                         NSInferMappingModelAutomaticallyOption: true ]
@@ -53,7 +53,7 @@ public class DDGPersistenceContainer {
 
         return persistenceStoreCoordinator
     }
-    
+
     public static func storeURL(for name: String) -> URL? {
         let fileManager = FileManager.default
         guard let docsDir = fileManager.urls(for: .documentDirectory, in: .userDomainMask).last else { return nil }

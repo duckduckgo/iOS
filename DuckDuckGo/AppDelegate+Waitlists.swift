@@ -22,6 +22,7 @@ import Core
 import BackgroundTasks
 import NetworkProtection
 import Waitlist
+import BrowserServicesKit
 
 extension AppDelegate {
 
@@ -34,20 +35,14 @@ extension AppDelegate {
     }
 
     func checkWaitlists() {
-        checkWindowsWaitlist()
 
 #if NETWORK_PROTECTION
-        checkNetworkProtectionWaitlist()
+        if vpnFeatureVisibilty.shouldKeepVPNAccessViaWaitlist() {
+            checkNetworkProtectionWaitlist()
+        }
 #endif
         checkWaitlistBackgroundTasks()
 
-    }
-
-    private func checkWindowsWaitlist() {
-        WindowsBrowserWaitlist.shared.fetchInviteCodeIfAvailable { error in
-            guard error == nil else { return }
-            WindowsBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
-        }
     }
 
 #if NETWORK_PROTECTION
@@ -59,12 +54,17 @@ extension AppDelegate {
 
         VPNWaitlist.shared.fetchInviteCodeIfAvailable { [weak self] error in
             guard error == nil else {
-#if !DEBUG
+
                 if error == .alreadyHasInviteCode, UIApplication.shared.applicationState == .active {
                     // If the user already has an invite code but their auth token has gone missing, attempt to redeem it again.
                     let tokenStore = NetworkProtectionKeychainTokenStore()
                     let waitlistStorage = VPNWaitlist.shared.waitlistStorage
-                    if let inviteCode = waitlistStorage.getWaitlistInviteCode(), !tokenStore.isFeatureActivated {
+                    let configManager = ContentBlocking.shared.privacyConfigurationManager
+                    let waitlistBetaActive = configManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlistBetaActive)
+
+                    if let inviteCode = waitlistStorage.getWaitlistInviteCode(),
+                       !tokenStore.isFeatureActivated,
+                       waitlistBetaActive {
                         let pixel: Pixel.Event = .networkProtectionWaitlistRetriedInviteCodeRedemption
 
                         do {
@@ -80,7 +80,7 @@ extension AppDelegate {
                         self?.fetchVPNWaitlistAuthToken(inviteCode: inviteCode)
                     }
                 }
-#endif
+
                 return
 
             }
@@ -95,11 +95,9 @@ extension AppDelegate {
 #endif
 
     private func checkWaitlistBackgroundTasks() {
+        guard vpnFeatureVisibilty.shouldKeepVPNAccessViaWaitlist() else { return }
+
         BGTaskScheduler.shared.getPendingTaskRequests { tasks in
-            let hasWindowsBrowserWaitlistTask = tasks.contains { $0.identifier == WindowsBrowserWaitlist.backgroundRefreshTaskIdentifier }
-            if !hasWindowsBrowserWaitlistTask {
-                WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
-            }
 
 #if NETWORK_PROTECTION
             let hasVPNWaitlistTask = tasks.contains { $0.identifier == VPNWaitlist.backgroundRefreshTaskIdentifier }

@@ -17,10 +17,11 @@
 //  limitations under the License.
 //
 
-import XCTest
-import SwiftSoup
-@testable import Core
 import Bookmarks
+import SwiftSoup
+import XCTest
+
+@testable import Core
 
 @MainActor
 class BookmarksImporterTests: XCTestCase {

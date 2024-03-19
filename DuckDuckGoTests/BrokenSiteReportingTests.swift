@@ -38,6 +38,22 @@ final class BrokenSiteReportingTests: XCTestCase {
         static let tests = "privacy-reference-tests/broken-site-reporting/tests.json"
     }
 
+    struct MockError: LocalizedError {
+        let description: String
+
+        init(_ description: String) {
+            self.description = description
+        }
+
+        var errorDescription: String? {
+            description
+        }
+
+        var localizedDescription: String? {
+            description
+        }
+    }
+
     override func setUp() {
         super.setUp()
 
@@ -73,34 +89,46 @@ final class BrokenSiteReportingTests: XCTestCase {
         }
         
         os_log("Testing [%s]", type: .info, test.name)
-        
-        let websiteBreakage = WebsiteBreakage(siteUrl: URL(string: test.siteURL)!,
-                                              category: test.category,
-                                              description: "",
-                                              osVersion: test.os ?? "",
-                                              manufacturer: test.manufacturer ?? "",
-                                              upgradedHttps: test.wasUpgraded,
-                                              tdsETag: test.blocklistVersion,
-                                              blockedTrackerDomains: test.blockedTrackers,
-                                              installedSurrogates: test.surrogates,
-                                              isGPCEnabled: test.gpcEnabled ?? false,
-                                              ampURL: "",
-                                              urlParametersRemoved: false,
-                                              protectionsState: test.protectionsEnabled,
-                                              reportFlow: .dashboard,
-                                              siteType: .mobile,
-                                              atb: "",
-                                              model: test.model ?? "",
-                                              error: nil,
-                                              httpStatusCode: nil)
 
-        let reporter = WebsiteBreakageReporter(pixelHandler: { params in
+        var errors: [Error]?
+        if let errs = test.errorDescriptions {
+            errors = errs.map { MockError($0) }
+        }
+
+        let report = BrokenSiteReport(siteUrl: URL(string: test.siteURL)!,
+                                      category: test.category,
+                                      description: test.providedDescription,
+                                      osVersion: test.os ?? "",
+                                      manufacturer: test.manufacturer ?? "",
+                                      upgradedHttps: test.wasUpgraded,
+                                      tdsETag: test.blocklistVersion,
+                                      blockedTrackerDomains: test.blockedTrackers,
+                                      installedSurrogates: test.surrogates,
+                                      isGPCEnabled: test.gpcEnabled ?? false,
+                                      ampURL: "",
+                                      urlParametersRemoved: false,
+                                      protectionsState: test.protectionsEnabled,
+                                      reportFlow: .dashboard,
+                                      siteType: .mobile,
+                                      atb: "",
+                                      model: test.model ?? "",
+                                      errors: errors,
+                                      httpStatusCodes: test.httpErrorCodes ?? [],
+                                      didOpenReportInfo: false,
+                                      toggleReportCounter: nil)
+
+        let reporter = BrokenSiteReporter(pixelHandler: { params in
             
             for expectedParam in test.expectReportURLParams {
                 
                 if let actualValue = params[expectedParam.name],
                    let expectedCleanValue = expectedParam.value.removingPercentEncoding {
-                    if actualValue != expectedCleanValue {
+                    if expectedParam.name == "errorDescriptions" {
+                        // `localizedDescription` includes class information. This format is likely to differ per platform
+                        // anyway. So we'll just check if the value contains an array of strings
+                        XCTAssert(actualValue.split(separator: ",").count > 1,
+                                  "Param \(expectedParam.name) expected to be an array of strings. Received: \(actualValue)")
+                    } else if actualValue != expectedCleanValue {
                         XCTFail("Mismatching param: \(expectedParam.name) => \(expectedCleanValue) != \(actualValue)")
                     }
                 } else {
@@ -110,7 +138,7 @@ final class BrokenSiteReportingTests: XCTestCase {
             onTestExecuted.fulfill()
             try? self.runReferenceTests(onTestExecuted: onTestExecuted)
         }, keyValueStoring: MockKeyValueStore())
-        try reporter.report(breakage: websiteBreakage)
+        try reporter.report(report, reportMode: .regular)
     }
 }
 
@@ -133,6 +161,7 @@ private struct Test: Codable {
     let siteURL: String
     let wasUpgraded: Bool
     let category: String
+    let providedDescription: String?
     let blockedTrackers, surrogates: [String]
     let atb, blocklistVersion: String
     let expectReportURLPrefix: String
@@ -141,6 +170,8 @@ private struct Test: Codable {
     let manufacturer, model, os: String?
     let gpcEnabled: Bool?
     let protectionsEnabled: Bool
+    let errorDescriptions: [String]?
+    let httpErrorCodes: [Int]?
 }
 
 // MARK: - ExpectReportURLParam

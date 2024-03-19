@@ -27,20 +27,23 @@ import Persistence
 import Common
 
 class SettingsLegacyViewProvider: ObservableObject {
-    
+
     let syncService: DDGSyncing
     let syncDataProviders: SyncDataProviders
     let appSettings: AppSettings
     let bookmarksDatabase: CoreDataDatabase
-    
-    init(syncService: DDGSyncing,
+    let tabManager: TabManager
+
+    init(syncService: any DDGSyncing,
          syncDataProviders: SyncDataProviders,
-         appSettings: AppSettings,
-         bookmarksDatabase: CoreDataDatabase) {
+         appSettings: any AppSettings,
+         bookmarksDatabase: CoreDataDatabase,
+         tabManager: TabManager) {
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
+        self.tabManager = tabManager
     }
     
     enum LegacyView {
@@ -55,8 +58,6 @@ class SettingsLegacyViewProvider: ObservableObject {
              fireproofSites,
              autoclearData,
              keyboard,
-             macApp,
-             windowsApp,
              netP,
              about,
              feedback, debug
@@ -78,11 +79,9 @@ class SettingsLegacyViewProvider: ObservableObject {
     var autoclearData: UIViewController { instantiate("AutoClearSettingsViewController", fromStoryboard: "Settings") }
     var keyboard: UIViewController { instantiate("Keyboard", fromStoryboard: "Settings") }
     var feedback: UIViewController { instantiate("Feedback", fromStoryboard: "Feedback") }
-    var mac: UIViewController { MacWaitlistViewController(nibName: nil, bundle: nil) }
-    var windows: UIViewController { WindowsWaitlistViewController(nibName: nil, bundle: nil) }
     var about: UIViewController { AboutViewController() }
     
-    @available(iOS 15.0, *)
+    @available(iOS 15, *)
     var netPWaitlist: UIViewController { VPNWaitlistViewController(nibName: nil, bundle: nil) }
     
     @available(iOS 15, *)
@@ -108,7 +107,8 @@ class SettingsLegacyViewProvider: ObservableObject {
         if let viewController = storyboard.instantiateViewController(withIdentifier: "DebugMenu") as? RootDebugViewController {
             viewController.configure(sync: syncService,
                                      bookmarksDatabase: bookmarksDatabase,
-                                     internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+                                     internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
+                                     tabManager: tabManager)
             return viewController
         }
         return UIViewController()

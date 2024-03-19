@@ -23,17 +23,17 @@ import CoreData
 import Persistence
 
 public class Database {
-    
+
     fileprivate struct Constants {
         static let databaseGroupID = "\(Global.groupIdPrefix).database"
-        
+
         static let databaseName = "Database"
     }
-    
+
     public static let shared = makeCoreDataDatabase()
-    
+
     static func makeCoreDataDatabase() -> CoreDataDatabase {
-        
+
         guard let appRatingModel = CoreDataDatabase.loadModel(from: .main, named: "AppRatingPrompt"),
               let remoteMessagingModel = CoreDataDatabase.loadModel(from: .main, named: "RemoteMessaging"),
               let managedObjectModel = NSManagedObjectModel(byMerging: [appRatingModel,
@@ -41,7 +41,7 @@ public class Database {
                                                                         HTTPSUpgrade.managedObjectModel]) else {
             fatalError("No DB scheme found")
         }
-        
+
         let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Database.Constants.databaseGroupID)!
         return CoreDataDatabase(name: Constants.databaseName,
                                 containerLocation: url,

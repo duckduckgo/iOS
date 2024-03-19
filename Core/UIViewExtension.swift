@@ -73,7 +73,7 @@ extension UIView {
             view.removeFromSuperview()
         }
     }
-    
+
     @MainActor
     public func createImageSnapshot(inBounds bounds: CGRect? = nil) -> UIImage? {
         let bounds = bounds ?? self.frame
@@ -85,5 +85,5 @@ extension UIView {
         UIGraphicsEndImageContext()
         return image
     }
-    
+
 }

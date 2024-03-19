@@ -448,6 +448,18 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "When DuckDuckGo detects cookie consent pop-ups on sites you visit, we can try to automatically set your cookie preferences to minimize cookies and maximize privacy, then close the pop-ups. Some sites don't provide an option to manage cookie preferences, so we can only hide pop-ups like these.";
 
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.completion" = "autofill.delete.all.passwords.completion";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.confirmation.body" = "autofill.delete.all.passwords.confirmation.body";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.confirmation.title" = "autofill.delete.all.passwords.confirmation.title";
+
+/* Do not translate - stringsdict entry */
+"autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
+
 /* Text link to email protection website */
 "autofill.enable.email.protection" = "Enable Email Protection";
 
@@ -490,6 +502,15 @@
 /* Title for toast when copying username */
 "autofill.logins.copy-toast.username-copied" = "Username copied";
 
+/* Title of button in prompt requiring authentication before all passwords are deleted */
+"autofill.logins.delete.all.authentication.prompt.button" = "Authenticate Now";
+
+/* Title of prompt requiring authentication before all passwords are deleted */
+"autofill.logins.delete.all.authentication.prompt.title" = "Authenticate To Delete All Passwords";
+
+/* Reason for authentication when deleting all logins */
+"autofill.logins.delete.all.authentication.reason" = "Authenticate to confirm you want to delete all passwords";
+
 /* Address label for login details on autofill */
 "autofill.logins.details.address" = "Website URL";
 
@@ -501,9 +522,6 @@
 
 /* Autofill alert button confirming delete autofill login */
 "autofill.logins.details.delete-confirmation.button" = "Delete Password";
-
-/* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Are you sure you want to delete this password?";
 
 /* Title when editing autofill login details */
 "autofill.logins.details.edit-title" = "Edit Password";
@@ -564,6 +582,9 @@
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Close";
+
+/* Title for button to delete all saved autofill passwords */
+"autofill.logins.list.delete.all" = "Delete All";
 
 /* Title for a toggle that enables autofill */
 "autofill.logins.list.enable" = "Save and autofill passwords";
@@ -627,6 +648,9 @@
 
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "No Results";
+
+/* Do not translate - stringsdict entry */
+"autofill.number.of.passwords" = "autofill.number.of.passwords";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.subtitle" = "Passwords are stored securely on your device.";
@@ -1372,9 +1396,6 @@
 /* Title for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Get DuckDuckGo for Mac!";
 
-/* Disclaimer for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.windows" = "Windows coming soon!";
-
 /* Title for the macOS waitlist button redirecting to Windows waitlist */
 "mac-waitlist.join-waitlist-screen.windows-waitlist" = "Looking for the Windows version?";
 
@@ -1507,6 +1528,15 @@ https://duckduckgo.com/mac";
 /* Subtitle text for the Network Protection settings row */
 "network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Join the private waitlist";
 
+/* The body of the notification when Privacy Pro subscription expired */
+"network.protection.entitlement.expired.notification.body" = "VPN disconnected due to expired subscription. Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
+
+/* The body of the notification shown when Network Protection fails to reconnect */
+"network.protection.failure.notification.body" = "Network Protection failed to connect. Please try again later.";
+
+/* The body of the notification shown when Network Protection's connection is interrupted */
+"network.protection.interrupted.notification.body" = "Network Protection was interrupted. Attempting to reconnect now...";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
@@ -1521,6 +1551,9 @@ https://duckduckgo.com/mac";
 
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
+
+/* The title of the notifications shown from Network Protection */
+"network.protection.notification.title" = "DuckDuckGo";
 
 /* Title text for an iOS quick action that opens VPN settings */
 "network.protection.quick-action.open-vpn" = "Open VPN";
@@ -1569,6 +1602,12 @@ https://duckduckgo.com/mac";
 
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
+
+/* The body of the notification shown when Network Protection reconnects successfully */
+"network.protection.success.notification.body" = "Network Protection is On. Your location and online activity are protected.";
+
+/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
+"network.protection.success.notification.subtitle.including.serverLocation" = "Routing device traffic through %@.";
 
 /* Title for the button to link to the iOS app settings and enable notifications app-wide. */
 "network.protection.turn.on.notifications.button.title" = "Turn On Notifications";
@@ -1834,6 +1873,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings title for the privacy section */
 "settings.privacy" = "Privacy";
 
+/* Subscription activation pending description */
+"settings.subscription.activation.pending.description" = "This is taking longer than usual, please check back later.";
+
+/* Subscription activation pending title */
+"settings.subscription.activation.pending.title" = "Your Subscription is Being Activated";
+
 /* Data Broker protection cell subtitle for privacy pro */
 "settings.subscription.DBP.subtitle" = "Remove your info from sites that sell it";
 
@@ -1843,8 +1888,11 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Privacy pro description subtext */
 "settings.subscription.description" = "More seamless privacy with three new protections, including:";
 
+/* I have a Subscription button text for privacy pro */
+"settings.subscription.existing.subscription" = "I Have a Subscription";
+
 /* Privacy pro features list */
-"settings.subscription.features" = " • VPN (Virtual Private Network)
+"settings.subscription.features" = " • VPN
  • Personal Information Removal
  • Identity Theft Restoration";
 
@@ -1854,8 +1902,8 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Identity theft restoration cell title for privacy pro */
 "settings.subscription.ITR.title" = "Identity Theft Restoration";
 
-/* Learn more button text for privacy pro */
-"settings.subscription.learn.more" = "Learn More";
+/* Get Privacy Pro button text for privacy pro */
+"settings.subscription.learn.more" = "Get Privacy Pro";
 
 /* Subscription Settings button text for privacy pro */
 "settings.subscription.manage" = "Subscription Settings";
@@ -1908,6 +1956,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Subscription Activation Window Title */
 "subscription.activate" = "Activate Subscription";
 
+/* Subscription Activation Info */
+"subscription.activate..header.description" = "Access your Privacy Pro subscription on this device via Apple ID or an email address.";
+
+/* Restore button title for Email */
+"subscription.activate.add.email.button" = "Add Email";
+
 /* Apple ID option for activation */
 "subscription.activate.appleid" = "Apple ID";
 
@@ -1918,13 +1972,19 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.activate.appleid.description" = "Restore your purchase to activate your subscription on this device.";
 
 /* Subscription Activation Info */
-"subscription.activate.description" = "Access your Privacy Pro subscription on this device via Apple ID or an email address.";
+"subscription.activate.description" = "Your subscription is automatically available in DuckDuckGo on any device signed in to your Apple ID.";
 
 /* Email option for activation */
 "subscription.activate.email" = "Email";
 
+/* Restore button title for Email */
+"subscription.activate.email.button" = "Enter Email";
+
 /* Description for Email activation */
 "subscription.activate.email.description" = "Use your email to activate your subscription on this device.";
+
+/* Activate subscription title */
+"subscription.activate.email.title" = "Activate Subscription";
 
 /* Restore button title for Managing Email */
 "subscription.activate.manage.email.button" = "Manage";
@@ -1939,10 +1999,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.activate.manage.email.title" = "Manage Email";
 
 /* Restore button title for AppleID */
-"subscription.activate.restore.apple" = "Restore";
-
-/* Restore button title for Email */
-"subscription.activate.restore.email" = "Enter Email";
+"subscription.activate.restore.apple" = "Restore Purchase";
 
 /* Subscription Activation Title */
 "subscription.activate.title" = "Activate your subscription on this device";
@@ -1951,10 +2008,10 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.add.device.button" = "Add to Another Device";
 
 /* Subscription Add device Info */
-"subscription.add.device.description" = "Access your Privacy Pro subscription on any of your devices via Apple ID or by adding an email address.";
+"subscription.add.device.description" = "Access your Privacy Pro subscription via an email address.";
 
 /* Add subscription to other device title  */
-"subscription.add.device.header.title" = "Use your subscription on all your devices";
+"subscription.add.device.header.title" = "Use your subscription on other devices";
 
 /* Resend activation instructions button */
 "subscription.add.device.resend.instructions" = "Resend Instructions";
@@ -1971,20 +2028,53 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Add Email";
 
+/* Description for Email adding */
+"subscription.addDevice.email.description" = "Add an email address to access your subscription in DuckDuckGo on other devices. We’ll only use this address to verify your subscription.";
+
+/* Title for Alert messages */
+"subscription.alert.title" = "subscription.alert.title";
+
+/* Subscription type */
+"subscription.annual" = "Annual Subscription";
+
 /* Subscription availability message on Apple devices */
 "subscription.available.apple" = "Privacy Pro is available on any device signed in to the same Apple ID.";
+
+/* Text for the manage billing page */
+"subscription.billing.google.text" = "Your subscription was purchased through the Google Play Store. To renew your subscription, please open Google Play Store subscription settings on a device signed in to the same Google Account used to originally purchase your subscription.";
+
+/* Title for the manage billing page */
+"subscription.billing.google.title" = "Subscription Plans";
 
 /* Subscription Removal confirmation message */
 "subscription.cancel.message" = "Your subscription has been removed from this device.";
 
 /* Change plan or billing title */
-"subscription.change.plan" = "Change Plan Or Billing";
+"subscription.change.plan" = "Change Plan or Billing";
+
+/* Navigation Button for closing subscription view */
+"subscription.close" = "Close";
+
+/* Title for Confirm messages */
+"subscription.confirm.title" = "Are you sure?";
+
+/* Alert content for not found subscription */
+"subscription.email.inactive.alert.message" = "The subscription associated with this email is no longer active.";
+
+/* Alert title for not found subscription */
+"subscription.email.inactive.alert.title" = "Subscription Not Found";
+
+/* Alert content for not found subscription */
+"subscription.expired.alert.message" = "The subscription associated with this Apple ID is no longer active.";
+
+/* text for expiration string */
+"subscription.expires" = "expires";
 
 /* FAQ Button */
 "subscription.faq" = "Privacy Pro FAQ";
 
 /* FAQ Description */
-"subscription.faq.description" = "Visit our Privacy Pro help pages for answers to frequently asked questions";
+"subscription.faq.description" = "Get answers to frequently asked questions about Privacy Pro in our help pages.";
 
 /* Cancel action for the existing subscription dialog */
 "subscription.found.cancel" = "Cancel";
@@ -2005,19 +2095,43 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.manage.devices" = "Manage Devices";
 
 /* Description for Email Management options */
-"subscription.manage.email.description" = "You can use this email to activate your subscription on your other devices.";
+"subscription.manage.email.description" = "You can use this email to activate your subscription from browser settings in the DuckDuckGo app on your other devices.";
 
 /* Manage Plan header */
 "subscription.manage.plan" = "Manage Plan";
 
+/* Header for the subscription section */
+"subscription.manage.title" = "Subscription";
+
+/* Subscription type */
+"subscription.monthly" = "Monthly Subscription";
+
 /* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "The subscription associated with this Apple ID is no longer active.";
+"subscription.notFound.alert.message" = "There is no subscription associated with this Apple ID.";
 
 /* Alert title for not found subscription */
 "subscription.notFound.alert.title" = "Subscription Not Found";
 
 /* View plans button text */
 "subscription.notFound.view.plans" = "View Plans";
+
+/* Hero Text for Personal information removal */
+"subscription.pir.hero" = "Activate Privacy Pro on desktop to set up Personal Information Removal";
+
+/* Description on how to use Personal information removal in desktop. The first placeholder references a location in the Desktop application. <i.e: Settings > Privacy Pro>, and the second, the menu entry. i.e. <I have a Subscription> */
+"subscription.pir.heroText" = "In the DuckDuckGo browser for desktop, go to %1$@ and click %2$@ to get started.";
+
+/* Settings references a menu in the Desktop app, Privacy Pro, references our product name */
+"subscription.pir.heroTextLocation" = "Settings > Privacy Pro";
+
+/* Menu item for enabling Personal Information Removal on Desktop */
+"subscription.pir.heroTextMenyEntry" = "I have a subscription";
+
+/* Text for the 'macOS' button */
+"subscription.pir.macos" = "macOS";
+
+/* Text for the 'Windows' button */
+"subscription.pir.windows" = "Windows";
 
 /* Progress view title when completing the purchase */
 "subscription.progress.view.completing.purchase" = "Completing purchase...";
@@ -2035,13 +2149,31 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.remove.from.device.text" = "You will no longer be able to access your Privacy Pro subscription on this device. This will not cancel your subscription, and it will remain active on your other devices.";
 
 /* Remove from device confirmation dialog title */
-"subscription.remove.from.device.title" = "Remove From This Device?";
+"subscription.remove.from.device.title" = "Remove from this device?";
 
 /* Remove subscription button text */
 "subscription.remove.subscription" = "Remove Subscription";
 
 /* Remove subscription cancel button text */
 "subscription.remove.subscription.cancel" = "Cancel";
+
+/* text for renewal string */
+"subscription.renews" = "renews";
+
+/* Button text for general error message */
+"subscription.restore.backend.error.button" = "Back to Settings";
+
+/* Alert for general error message */
+"subscription.restore.backend.error.message" = "We’re having trouble connecting. Please try again later.";
+
+/* Alert for general error title */
+"subscription.restore.backend.error.title" = "Something Went Wrong";
+
+/* Alert for general error message */
+"subscription.restore.general.error.message" = "The App Store was unable to process your purchase. Please try again later.";
+
+/* Alert for general error title */
+"subscription.restore.general.error.title" = "Something Went Wrong";
 
 /* Alert button text for restored purchase alert */
 "subscription.restore.success.alert.button" = "OK";
@@ -2052,8 +2184,11 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Alert title for restored purchase */
 "subscription.restore.success.alert.title" = "You’re all set.";
 
-/* Subscription Expiration Data */
-"subscription.subscription.active.caption" = "Your Privacy Pro subscription renews on %@";
+/* Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)' */
+"subscription.subscription.active.caption" = "Your subscription %1$@ on %2$@";
+
+/* Navigation bar Title for subscriptions */
+"subscription.title" = "Privacy Pro";
 
 /* Message confirming that recovery code was copied to clipboard */
 "sync.code.copied" = "Recovery code copied to clipboard";
@@ -2140,6 +2275,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 "toast.protection.disabled" = "Privacy Protection disabled for %@";
 
 /* Confirmation of an action - populated with a domain name */
+"toast.protection.disabled.and.toggle.report.sent" = "Privacy Protections disabled for %@ and report sent.";
+
+/* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Privacy Protection enabled for %@";
 
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
@@ -2171,6 +2309,27 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Voice-search footer note with on-device privacy warning */
 "voiceSearch.footer.note" = "Audio is processed on-device. It's not stored or shared with anyone, including DuckDuckGo.";
+
+/* Cancel action for the alert when the subscription expires */
+"vpn.access-revoked.alert.action.cancel" = "Dismiss";
+
+/* Primary action for the alert when the subscription expires */
+"vpn.access-revoked.alert.action.subscribe" = "Subscribe";
+
+/* Alert message for the alert when the Privacy Pro subscription expiress */
+"vpn.access-revoked.alert.message" = "Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
+
+/* Alert title for the alert when the Privacy Pro subscription expires */
+"vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
+
+/* Alert action for the alert when the early access period is over */
+"vpn.early-access.over.alert.action" = "OK";
+
+/* Alert message for the alert when the early access period is over */
+"vpn.early-access.over.alert.message" = "Thank you for being a tester! To continue using the VPN, subscribe to DuckDuckGo Privacy Pro and get 40% off with promo code THANKYOU\n\nOffer redeemable for a limited time only in the desktop version of the DuckDuckGo browser by U.S. testers  who install from duckduckgo.com/app";
+
+/* Alert title for the alert when the early access period is over */
+"vpn.early-access.over.alert.title" = "DuckDuckGo VPN early access is over";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";
@@ -2210,15 +2369,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Title for the 'unable to install' category of the VPN feedback form */
 "vpn.feedback-form.category.unable-to-install" = "Unable to install VPN";
-
-/* Action title for the alert when the VPN feedback form can't be submitted */
-"vpn.feedback-form.error.action" = "OK";
-
-/* Message for the alert when the VPN feedback form can't be submitted */
-"vpn.feedback-form.error.message" = "Failed to share your feedback. Please try again.";
-
-/* Title for the alert when the VPN feedback form can't be submitted */
-"vpn.feedback-form.error.title" = "Error";
 
 /* Title for the feedback sent view description of the VPN feedback form */
 "vpn.feedback-form.sending-confirmation.description" = "Your feedback will help us improve the\nDuckDuckGo VPN.";
@@ -2325,49 +2475,11 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "A message from %@:";
 
-/* Title for the Windows waitlist notification */
-"windows-waitlist.available.notification.title" = "Try DuckDuckGo for Windows!";
-
-/* Description on the invite screen */
-"windows-waitlist.invite-screen.step-1.description" = "Visit this URL on your Windows device to download:";
-
-/* Description on the invite screen */
-"windows-waitlist.invite-screen.step-2.description" = "Open DuckDuckGo Installer in Downloads, select Install, then enter your invite code.";
-
-/* Subtitle for the Windows Waitlist Invite screen */
-"windows-waitlist.invite-screen.subtitle" = "Ready to use DuckDuckGo on Windows?";
-
 /* Title for the Windows waitlist button redirecting to Mac waitlist */
 "windows-waitlist.join-waitlist-screen.mac-waitlist" = "Looking for the Mac version?";
 
-/* Title for the Join Windows Waitlist screen */
-"windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Get early access to try DuckDuckGo for Windows!";
-
-/* Message for the alert to confirm enabling notifications */
-"windows-waitlist.joined.no-notification.get-notification-confirmation-message" = "We’ll send you a notification when your copy of DuckDuckGo for Windows is ready for download. ";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"windows-waitlist.joined.notifications-declined" = "Your invite to try DuckDuckGo for Windows will arrive here. Check back soon, or we can send you a notification when it’s your turn.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"windows-waitlist.joined.notifications-enabled" = "We’ll send you a notification when your copy of DuckDuckGo for Windows is ready for download.";
-
 /* Title for the settings subtitle */
 "windows-waitlist.settings.browse-privately" = "Browse privately with our app for Windows";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"windows-waitlist.share-sheet.invite-code-message" = "You’re invited!
-
-Ready to use DuckDuckGo on Windows?
-
-Step 1
-Visit this URL on your Windows device to download:
-https://duckduckgo.com/windows
-
-Step 2
-Open DuckDuckGo Installer in Downloads, select Install, then enter your invite code.
-
-Invite code: %@";
 
 /* Message used when sharing to iMessage */
 "windows-waitlist.share-sheet.message" = "Ready to start browsing privately on Windows?

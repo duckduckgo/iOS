@@ -5,7 +5,6 @@
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>com.duckduckgo.app.vpnWaitlistStatus</string>
-		<string>com.duckduckgo.app.windowsBrowserWaitlistStatus</string>
 		<string>com.duckduckgo.app.configurationRefresh</string>
 		<string>com.duckduckgo.app.remoteMessageRefresh</string>
 	</array>
@@ -225,6 +224,8 @@
 	</array>
 	<key>UIStatusBarHidden</key>
 	<true/>
+	<key>SUBSCRIPTION_APP_GROUP</key>
+	<string>$(AppIdentifierPrefix)$(SUBSCRIPTION_APP_GROUP)</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleDefault</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>

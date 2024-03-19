@@ -18,6 +18,7 @@
 //
 
 import XCTest
+
 @testable import Core
 
 class NotFoundCachingDownloaderTests: XCTestCase {

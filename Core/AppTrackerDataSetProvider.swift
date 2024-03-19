@@ -23,8 +23,8 @@ import BrowserServicesKit
 final public class AppTrackerDataSetProvider: EmbeddedDataProvider {
 
     public struct Constants {
-        public static let embeddedDataETag = "\"144361b3801e3d4c33c5aff8d8de3c6b\""
-        public static let embeddedDataSHA = "0cf5a43c234d54c3168cc28a65c19b0c5804c15e87aae3e8368d2b2f775a1a8b"
+        public static let embeddedDataETag = "\"07bd7f610e3fa234856abcc2b56ab10e\""
+        public static let embeddedDataSHA = "1d7ef8f4c5a717a5d82f43383e33290021358d6255db12b6fdd0928e28d123ee"
     }
 
     public var embeddedDataEtag: String {
@@ -39,7 +39,7 @@ final public class AppTrackerDataSetProvider: EmbeddedDataProvider {
         if let url = Bundle.main.url(forResource: "trackerData", withExtension: "json") {
             return url
         }
-        
+
         return Bundle(for: Self.self).url(forResource: "trackerData", withExtension: "json")!
     }
 

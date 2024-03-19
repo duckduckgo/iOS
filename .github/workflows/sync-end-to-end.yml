@@ -44,6 +44,7 @@ jobs:
           -destination "platform=iOS Simulator,name=iPhone 15" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
+          -skipMacroValidation \
           ONLY_ACTIVE_ARCH=NO \
         | tee xcodebuild.log
 

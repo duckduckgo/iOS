@@ -20,13 +20,13 @@
 import Foundation
 
 public class PreserveLogins {
-    
+
     public struct Notifications {
         public static let loginDetectionStateChanged = Foundation.Notification.Name("com.duckduckgo.ios.PreserveLogins.loginDetectionStateChanged")
     }
-    
+
     public static let shared = PreserveLogins()
-    
+
     @UserDefaultsWrapper(key: .preserveLoginsAllowedDomains, defaultValue: [])
     private(set) public var allowedDomains: [String]
 
@@ -36,7 +36,7 @@ public class PreserveLogins {
             NotificationCenter.default.post(name: Notifications.loginDetectionStateChanged, object: nil)
         }
     }
-    
+
     public func addToAllowed(domain: String) {
         allowedDomains += [domain]
     }
@@ -46,7 +46,6 @@ public class PreserveLogins {
         return allowedDomains.contains(where: { $0 == cookieDomain
             || ".\($0)" == cookieDomain
             || (cookieDomain.hasPrefix(".") && $0.hasSuffix(cookieDomain)) })
-        
     }
 
     public func remove(domain: String) {
@@ -56,7 +55,7 @@ public class PreserveLogins {
     public func clearAll() {
         allowedDomains = []
     }
-    
+
     public func isAllowed(fireproofDomain domain: String) -> Bool {
         return allowedDomains.contains(domain)
     }

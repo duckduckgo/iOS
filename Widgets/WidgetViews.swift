@@ -17,8 +17,8 @@
 //  limitations under the License.
 //
 
-import WidgetKit
 import SwiftUI
+import WidgetKit
 import DesignResourcesKit
 
 // swiftlint:disable file_length
@@ -31,7 +31,7 @@ struct FavoriteView: View {
 
         ZStack {
             RoundedRectangle(cornerRadius: 10)
-                .fill(Color.widgetSearchFieldBackground)
+                .fill(Color.widgetFavoritesBackground)
 
             if let favorite = favorite {
 
@@ -40,7 +40,7 @@ struct FavoriteView: View {
                     ZStack {
                         
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(favorite.needsColorBackground ? Color.forDomain(favorite.domain) : Color.widgetSearchFieldBackground)
+                            .fill(favorite.needsColorBackground ? Color.forDomain(favorite.domain) : Color.widgetFavoritesBackground)
                             .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 2)
                         
                         if let image = favorite.favicon {
@@ -83,10 +83,10 @@ struct LargeSearchFieldView: View {
         Link(destination: DeepLinks.newSearch) {
             ZStack {
 
-                RoundedRectangle(cornerSize: CGSize(width: 8, height: 8))
+                Capsule(style: .circular)
                     .fill(Color.widgetSearchFieldBackground)
                     .frame(minHeight: 46, maxHeight: 46)
-                    .padding(.vertical, 16)
+                    .padding(16)
 
                 HStack {
 
@@ -95,15 +95,13 @@ struct LargeSearchFieldView: View {
                         .frame(width: 24, height: 24, alignment: .leading)
 
                     Text(UserText.searchDuckDuckGo)
-                        .daxBodyRegular()
-                        .foregroundColor(Color(designSystemColor: .textSecondary))
+                        .foregroundColor(Color.widgetSearchFieldText)
 
                     Spacer()
 
-                    Image("Find-Search-20")
-                        .opacity(0.5)
+                    Image("WidgetSearchLoupe")
 
-                }.padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                }.padding(EdgeInsets(top: 0, leading: 27, bottom: 0, trailing: 27))
 
             }.unredacted()
         }
@@ -128,6 +126,7 @@ struct FavoritesRowView: View {
 
             }
         }
+        .padding(.horizontal, 16)
 
     }
 
@@ -169,7 +168,7 @@ struct FavoritesWidgetView: View {
 
     var body: some View {
         ZStack {
-            Rectangle().fill(Color(designSystemColor: .surface))
+            Rectangle().fill(Color.widgetBackground)
 
             VStack(alignment: .center, spacing: 0) {
 
@@ -209,7 +208,7 @@ struct FavoritesWidgetView: View {
             .padding(EdgeInsets(top: widgetFamily == .systemLarge ? 48 : 60, leading: 0, bottom: 0, trailing: 0))
 
         }
-        .widgetContainerBackground(color: Color(designSystemColor: .surface))
+        .widgetContainerBackground(color: .widgetBackground)
     }
 }
 
@@ -219,7 +218,7 @@ struct SearchWidgetView: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .fill(Color(designSystemColor: .surface))
+                .fill(Color.widgetBackground)
                 .accessibilityLabel(Text(UserText.searchDuckDuckGo))
 
             VStack(alignment: .center, spacing: 15) {
@@ -232,64 +231,62 @@ struct SearchWidgetView: View {
 
                 ZStack(alignment: Alignment(horizontal: .trailing, vertical: .center)) {
 
-                    RoundedRectangle(cornerSize: CGSize(width: 8, height: 8))
+                    Capsule(style: .circular)
                         .fill(Color.widgetSearchFieldBackground)
-                        .frame(width: 126, height: 46)
+                        .frame(width: 123, height: 46)
 
-                    Image("Find-Search-20")
-                        .frame(width: 20, height: 20)
-                        .padding(.leading)
-                        .padding(.trailing, 13)
+                    Image("WidgetSearchLoupe")
+                        .padding(.trailing)
                         .isHidden(false)
-                        .accessibilityHidden(true)
-                        .opacity(0.5)
+
                 }
             }.accessibilityHidden(true)
         }
-        .widgetContainerBackground(color: Color(designSystemColor: .surface))
+        .widgetContainerBackground(color: .widgetBackground)
     }
-}
 
-struct PasswordsWidgetView: View {
-    var entry: Provider.Entry
+    struct PasswordsWidgetView: View {
+        var entry: Provider.Entry
 
-    var body: some View {
-        ZStack {
-            Rectangle()
-                .fill(Color(designSystemColor: .surface))
-                .accessibilityLabel(Text(UserText.passwordsSearch))
+        var body: some View {
+            ZStack {
+                Rectangle()
+                        .fill(Color(designSystemColor: .surface))
+                        .accessibilityLabel(Text(UserText.passwordsSearch))
 
-            VStack(alignment: .center, spacing: 11) {
+                VStack(alignment: .center, spacing: 11) {
 
-                Image("WidgetPasswordIllustration")
-                    .frame(width: 96, height: 64)
-                    .isHidden(false)
-                    .accessibilityHidden(true)
-
-                ZStack(alignment: Alignment(horizontal: .leading, vertical: .center)) {
-
-                    RoundedRectangle(cornerSize: CGSize(width: 8, height: 8))
-                        .fill(Color.widgetSearchFieldBackground)
-                        .frame(width: 126, height: 44)
-
-                    HStack {
-                        Text("Passwords")
-                            .daxFootnoteRegular()
-                            .foregroundColor(Color(designSystemColor: .textSecondary))
-
-                        Image("Find-Search-20")
-                            .padding(.leading)
+                    Image("WidgetPasswordIllustration")
+                            .frame(width: 96, height: 64)
                             .isHidden(false)
                             .accessibilityHidden(true)
-                            .opacity(0.5)
-                            .frame(width: 20, height: 20)
-                    }
-                    .padding(.horizontal, 13)
-                }
 
-            }.accessibilityHidden(true)
+                    ZStack(alignment: Alignment(horizontal: .leading, vertical: .center)) {
+
+                        RoundedRectangle(cornerSize: CGSize(width: 8, height: 8))
+                                .fill(Color.widgetSearchFieldBackground)
+                                .frame(width: 126, height: 44)
+
+                        HStack {
+                            Text("Passwords")
+                                    .daxFootnoteRegular()
+                                    .foregroundColor(Color(designSystemColor: .textSecondary))
+
+                            Image("Find-Search-20")
+                                    .padding(.leading)
+                                    .isHidden(false)
+                                    .accessibilityHidden(true)
+                                    .opacity(0.5)
+                                    .frame(width: 20, height: 20)
+                        }
+                                .padding(.horizontal, 13)
+                    }
+
+                }
+                        .accessibilityHidden(true)
+            }
+                    .widgetContainerBackground(color: Color(designSystemColor: .surface))
         }
-        .widgetContainerBackground(color: Color(designSystemColor: .surface))
     }
 }
 
@@ -301,6 +298,8 @@ extension View {
             containerBackground(for: .widget) {
                 color
             }
+        } else {
+            self
         }
     }
 

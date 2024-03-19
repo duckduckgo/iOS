@@ -31,6 +31,9 @@ final class NetworkProtectionTunnelController: TunnelController {
     private let debugFeatures = NetworkProtectionDebugFeatures()
     private let tokenStore = NetworkProtectionKeychainTokenStore()
     private let errorStore = NetworkProtectionTunnelErrorStore()
+    private let notificationCenter: NotificationCenter = .default
+    private var previousStatus: NEVPNStatus = .invalid
+    private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Starting & Stopping the VPN
 
@@ -39,12 +42,21 @@ final class NetworkProtectionTunnelController: TunnelController {
         case simulateControllerFailureError
     }
 
+    init() {
+        subscribeToStatusChanges()
+    }
+
     /// Starts the VPN connection used for Network Protection
     ///
     func start() async {
+        Pixel.fire(pixel: .networkProtectionControllerStartAttempt)
+
         do {
             try await startWithError()
+            Pixel.fire(pixel: .networkProtectionControllerStartSuccess)
         } catch {
+            Pixel.fire(pixel: .networkProtectionControllerStartFailure, error: error)
+
             #if DEBUG
             errorStore.lastErrorMessage = error.localizedDescription
             #endif
@@ -129,24 +141,20 @@ final class NetworkProtectionTunnelController: TunnelController {
 
         options["activationAttemptId"] = UUID().uuidString as NSString
         options["authToken"] = try tokenStore.fetchToken() as NSString?
+        options[NetworkProtectionOptionKey.selectedEnvironment] = VPNSettings(defaults: .networkProtectionGroupDefaults)
+            .selectedEnvironment.rawValue as NSString
 
         do {
             try tunnelManager.connection.startVPNTunnel(options: options)
             UniquePixel.fire(pixel: .networkProtectionNewUser) { error in
                 guard error != nil else { return }
-                VPNSettings(defaults: .networkProtectionGroupDefaults).vpnFirstEnabled = Pixel.Event.networkProtectionNewUser.lastFireDate(
+                UserDefaults.networkProtectionGroupDefaults.vpnFirstEnabled = Pixel.Event.networkProtectionNewUser.lastFireDate(
                     uniquePixelStorage: UniquePixel.storage
                 )
             }
         } catch {
             Pixel.fire(pixel: .networkProtectionActivationRequestFailed, error: error)
             throw error
-        }
-
-        if !debugFeatures.alwaysOnDisabled {
-            Task {
-                try await enableOnDemand(tunnelManager: tunnelManager)
-            }
         }
     }
 
@@ -229,6 +237,35 @@ final class NetworkProtectionTunnelController: TunnelController {
 
         // reconnect on reboot
         tunnelManager.onDemandRules = [NEOnDemandRuleConnect()]
+    }
+
+    // MARK: - Observing Status Changes
+
+    private func subscribeToStatusChanges() {
+        notificationCenter.publisher(for: .NEVPNStatusDidChange)
+            .sink(receiveValue: handleStatusChange(_:))
+            .store(in: &cancellables)
+    }
+
+    private func handleStatusChange(_ notification: Notification) {
+        guard !debugFeatures.alwaysOnDisabled,
+              let session = (notification.object as? NETunnelProviderSession),
+              session.status != previousStatus,
+              let manager = session.manager as? NETunnelProviderManager else {
+            return
+        }
+
+        Task { @MainActor in
+            previousStatus = session.status
+
+            switch session.status {
+            case .connected:
+                try await enableOnDemand(tunnelManager: manager)
+            default:
+                break
+            }
+
+        }
     }
 
     // MARK: - On Demand

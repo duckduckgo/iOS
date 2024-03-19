@@ -596,6 +596,10 @@ extension Pixel {
         case privacyProSubscriptionManagementEmail
         case privacyProSubscriptionManagementPlanBilling
         case privacyProSubscriptionManagementRemoval
+
+        // Full site address setting
+        case settingsShowFullSiteAddressEnabled
+        case settingsShowFullSiteAddressDisabled
     }
     
 }
@@ -1164,6 +1168,9 @@ extension Pixel.Event {
         case .privacyProSubscriptionManagementEmail: return "m_privacy-pro_manage-email_edit_click"
         case .privacyProSubscriptionManagementPlanBilling: return "m_privacy-pro_settings_change-plan-or-billing_click"
         case .privacyProSubscriptionManagementRemoval: return "m_privacy-pro_settings_remove-from-device_click"
+
+        case .settingsShowFullSiteAddressEnabled: return "m_settings_show_full_url_on"
+        case .settingsShowFullSiteAddressDisabled: return "m_settings_show_full_url_off"
         }
     }
 }

@@ -24,7 +24,7 @@ import Core
 import Waitlist
 import DesignResourcesKit
 
-@available(iOS 15.0, *)
+@available(iOS 15, *)
 struct VPNWaitlistView: View {
 
     @EnvironmentObject var viewModel: WaitlistViewModel

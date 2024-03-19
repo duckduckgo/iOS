@@ -605,7 +605,7 @@ extension Pixel {
         case privacyProOfferMonthlyPriceClick
         case privacyProOfferYearlyPriceClick
         case privacyProAddEmailSuccess
-        case privacyProWelcomeFAQClieck
+        case privacyProWelcomeFAQClick
     }
     
 }
@@ -1183,7 +1183,7 @@ extension Pixel.Event {
         case .privacyProOfferMonthlyPriceClick: return "m_privacy-pro_offer_monthly-price_click"
         case .privacyProOfferYearlyPriceClick: return "m_privacy-pro_offer_yearly-price_click"
         case .privacyProAddEmailSuccess: return "m_privacy-pro_app_add-email_success_u"
-        case .privacyProWelcomeFAQClieck: return "m_privacy-pro_welcome_faq_click_u"
+        case .privacyProWelcomeFAQClick: return "m_privacy-pro_welcome_faq_click_u"
         }
     }
 }

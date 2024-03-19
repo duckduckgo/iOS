@@ -359,7 +359,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func subscriptionsWelcomeFaqClicked(params: Any, original: WKScriptMessage) async -> Encodable? {
-        UniquePixel.fire(pixel: .privacyProWelcomeFAQClieck)
+        UniquePixel.fire(pixel: .privacyProWelcomeFAQClick)
         return nil
     }
 

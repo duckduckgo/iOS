@@ -242,51 +242,34 @@ struct SearchWidgetView: View {
                 }
             }.accessibilityHidden(true)
         }
-        .widgetContainerBackground(color: .widgetBackground)
+        .widgetContainerBackground(color: Color(designSystemColor: .surface))
     }
+}
 
-    struct PasswordsWidgetView: View {
-        var entry: Provider.Entry
+struct PasswordsWidgetView: View {
+    var entry: Provider.Entry
 
-        var body: some View {
-            ZStack {
-                Rectangle()
-                        .fill(Color(designSystemColor: .surface))
-                        .accessibilityLabel(Text(UserText.passwordsSearch))
+    var body: some View {
+        ZStack {
+            Rectangle()
+                    .fill(Color(designSystemColor: .surface))
+                    .accessibilityLabel(Text(UserText.passwords))
 
-                VStack(alignment: .center, spacing: 11) {
+            VStack(alignment: .center, spacing: 14) {
 
-                    Image("WidgetPasswordIllustration")
-                            .frame(width: 96, height: 64)
-                            .isHidden(false)
-                            .accessibilityHidden(true)
-
-                    ZStack(alignment: Alignment(horizontal: .leading, vertical: .center)) {
-
-                        RoundedRectangle(cornerSize: CGSize(width: 8, height: 8))
-                                .fill(Color.widgetSearchFieldBackground)
-                                .frame(width: 126, height: 44)
-
-                        HStack {
-                            Text("Passwords")
-                                    .daxFootnoteRegular()
-                                    .foregroundColor(Color(designSystemColor: .textSecondary))
-
-                            Image("Find-Search-20")
-                                    .padding(.leading)
-                                    .isHidden(false)
-                                    .accessibilityHidden(true)
-                                    .opacity(0.5)
-                                    .frame(width: 20, height: 20)
-                        }
-                                .padding(.horizontal, 13)
-                    }
-
-                }
+                Image("WidgetPasswordIllustration")
+                        .frame(width: 96, height: 72)
+                        .isHidden(false)
                         .accessibilityHidden(true)
+
+                Text(UserText.passwords)
+                        .daxSubheadRegular()
+                        .foregroundColor(Color(designSystemColor: .textPrimary))
+
             }
-                    .widgetContainerBackground(color: Color(designSystemColor: .surface))
+            .accessibilityHidden(true)
         }
+        .widgetContainerBackground(color: Color(designSystemColor: .surface))
     }
 }
 

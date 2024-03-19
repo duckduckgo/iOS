@@ -57,9 +57,9 @@ struct UserText {
                                                                   value: "Quickly search your saved DuckDuckGo passwords.",
                                                                   comment: "Description of search passwords widget in widget gallery")
 
-    static let passwordsSearch = NSLocalizedString("widget.passwords.search",
-                                                    value: "Search Passwords",
-                                                    comment: "Text in search passwords widget")
+    static let passwords = NSLocalizedString("widget.passwords",
+                                             value: "Passwords",
+                                             comment: "Text in passwords widget")
 
     static let lockScreenSearchTitle = NSLocalizedString(
         "lock.screen.widget.search.title",

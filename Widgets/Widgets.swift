@@ -200,7 +200,7 @@ struct PasswordsWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            return PasswordsWidgetView(entry: entry).widgetURL(DeepLinks.openPasswords)
+            PasswordsWidgetView(entry: entry).widgetURL(DeepLinks.openPasswords)
         }
         .configurationDisplayName(UserText.passwordsWidgetGalleryDisplayName)
         .description(UserText.passwordsWidgetGalleryDescription)

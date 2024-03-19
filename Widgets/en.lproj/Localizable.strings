@@ -58,8 +58,8 @@
 /* Message shown in the favorites widget empty state. */
 "widget.no.favorites.message" = "Quickly visit your favorite sites.";
 
-/* Text in search passwords widget */
-"widget.passwords.search" = "Search Passwords";
+/* Text in passwords widget */
+"widget.passwords" = "Passwords";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Search DuckDuckGo";

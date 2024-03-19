@@ -31,7 +31,8 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     let purchaseManager: PurchaseManager
     let accountManager: AccountManaging
-    
+    let subscriptionManager: SubscriptionManaging
+
     private var cancellables = Set<AnyCancellable>()
     
     enum SubscriptionActivationResult {
@@ -66,11 +67,13 @@ final class SubscriptionRestoreViewModel: ObservableObject {
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
          purchaseManager: PurchaseManager = PurchaseManager.shared,
          accountManager: AccountManaging = AppDependencyProvider.shared.subscriptionManager.accountManager,
+         subscriptionManager: SubscriptionManaging = AppDependencyProvider.shared.subscriptionManager,
          isAddingDevice: Bool = false) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.purchaseManager = purchaseManager
         self.accountManager = accountManager
+        self.subscriptionManager = subscriptionManager
         self.state.isAddingDevice = false
     }
     
@@ -89,7 +92,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         state.subscriptionEmail = accountManager.email
         
         state.isAddingDevice = false
-        if accountManager.isUserAuthenticated {
+        if subscriptionManager.isUserAuthenticated {
             state.isAddingDevice = true
         }
         

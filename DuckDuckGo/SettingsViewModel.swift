@@ -383,7 +383,7 @@ extension SettingsViewModel {
     
     @available(iOS 15.0, *)
     private func signOutUser() {
-        accountManager.signOut()
+        subscriptionManager.signOut()
         setupSubscriptionPurchaseOptions()
     }
     

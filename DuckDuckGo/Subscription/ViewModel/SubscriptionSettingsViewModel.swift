@@ -86,7 +86,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
                                                 product: subscription.productId,
                                                 billingPeriod: subscription.billingPeriod)
             case .failure:
-                accountManager.signOut()
+                subscriptionManager.signOut()
                 state.shouldDismissView = true
             }
         }
@@ -133,7 +133,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     func removeSubscription() {
-        accountManager.signOut()
+        subscriptionManager.signOut()
         _ = ActionMessageView()
         ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation,
                                   presentationLocation: .withoutBottomBar)

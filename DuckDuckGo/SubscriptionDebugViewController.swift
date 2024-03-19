@@ -175,7 +175,7 @@ final class SubscriptionDebugViewController: UITableViewController {
 
     // MARK: Account Status Actions
     private func clearAuthData() {
-        accountManager.signOut()
+        subscriptionManager.signOut()
         showAlert(title: "Data cleared!")
     }
     
@@ -187,8 +187,8 @@ final class SubscriptionDebugViewController: UITableViewController {
     }
     
     private func showAccountDetails() {
-        let title = accountManager.isUserAuthenticated ? "Authenticated" : "Not Authenticated"
-        let message = accountManager.isUserAuthenticated ? ["AuthToken: \(subscriptionManager.tokenStorage.authToken ?? "")",
+        let title = subscriptionManager.isUserAuthenticated ? "Authenticated" : "Not Authenticated"
+        let message = subscriptionManager.isUserAuthenticated ? ["AuthToken: \(subscriptionManager.tokenStorage.authToken ?? "")",
                                                    "AccessToken: \(subscriptionManager.tokenStorage.accessToken ?? "")",
                                                    "Email: \(accountManager.email ?? "")"].joined(separator: "\n") : nil
         showAlert(title: title, message: message)
@@ -238,7 +238,7 @@ final class SubscriptionDebugViewController: UITableViewController {
     private func getEntitlements() {
         Task {
             var results: [String] = []
-            guard accountManager.isUserAuthenticated else {
+            guard subscriptionManager.isUserAuthenticated else {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
                 return
             }

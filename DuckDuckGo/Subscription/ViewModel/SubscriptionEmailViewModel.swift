@@ -107,7 +107,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     
     @MainActor
     private func initializeView(urlProvider: SubscriptionURLProviding) {
-        if accountManager.isUserAuthenticated {
+        if subscriptionManager.isUserAuthenticated {
             // If user is authenticated, we want to "Add or manage email" instead of activating
             let addEmailURL = urlProvider.url(for: .addEmail)
             let manageEmailURL = urlProvider.url(for: .manageEmail)

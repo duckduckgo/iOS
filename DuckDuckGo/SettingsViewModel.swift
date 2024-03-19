@@ -157,6 +157,7 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.state.showsFullURL = $0
                 self.appSettings.showFullSiteAddress = $0
+                self.firePixel($0 ? .settingsShowFullSiteAddressEnabled : .settingsShowFullSiteAddressDisabled)
             }
         )
     }

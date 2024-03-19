@@ -681,6 +681,7 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
             } else {
                 vpnSettings.selectedEnvironment = .production
             }
+            vpnSettings.selectedServer = .automatic
             tableView.reloadData()
         case .updateSubscriptionOverride:
             let defaults = UserDefaults.networkProtectionGroupDefaults

@@ -112,8 +112,10 @@ final class SubscriptionEmailViewModel: ObservableObject {
             let addEmailURL = urlProvider.url(for: .addEmail)
             let manageEmailURL = urlProvider.url(for: .manageEmail)
 
-            emailURL = accountManager.email == nil ? addEmailURL : manageEmailURL
-            viewTitle = accountManager.email == nil ?  UserText.subscriptionRestoreAddEmailTitle : UserText.subscriptionManageEmailTitle
+            let hasNoEmail = subscriptionManager.accountStorage.email != nil
+
+            emailURL = hasNoEmail ? addEmailURL : manageEmailURL
+            viewTitle = hasNoEmail ?  UserText.subscriptionRestoreAddEmailTitle : UserText.subscriptionManageEmailTitle
             
             // Also we assume subscription requires managing, and not activation
             state.managingSubscriptionEmail = true

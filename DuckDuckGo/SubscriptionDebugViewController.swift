@@ -190,7 +190,7 @@ final class SubscriptionDebugViewController: UITableViewController {
         let title = subscriptionManager.isUserAuthenticated ? "Authenticated" : "Not Authenticated"
         let message = subscriptionManager.isUserAuthenticated ? ["AuthToken: \(subscriptionManager.tokenStorage.authToken ?? "")",
                                                    "AccessToken: \(subscriptionManager.tokenStorage.accessToken ?? "")",
-                                                   "Email: \(accountManager.email ?? "")"].joined(separator: "\n") : nil
+                                                                 "Email: \(subscriptionManager.accountStorage.email ?? "")"].joined(separator: "\n") : nil
         showAlert(title: title, message: message)
     }
             

@@ -89,7 +89,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     @MainActor
     private func resetState() {
-        state.subscriptionEmail = accountManager.email
+        state.subscriptionEmail = subscriptionManager.accountStorage.email
         
         state.isAddingDevice = false
         if subscriptionManager.isUserAuthenticated {

@@ -179,7 +179,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
          
     private func manageStripeSubscription() async {
-        guard let token = subscriptionManager.tokenStorage.accessToken, let externalID = accountManager.externalID else { return }
+        guard let token = subscriptionManager.tokenStorage.accessToken, let externalID = subscriptionManager.accountStorage.externalID else { return }
         let serviceResponse = await subscriptionService.getCustomerPortalURL(accessToken: token, externalID: externalID)
 
         // Get Stripe Customer Portal URL and update the model

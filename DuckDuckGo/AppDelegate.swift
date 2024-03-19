@@ -417,6 +417,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setupSubscriptionsEnvironment() {
         Task {
             SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+            // Please update this to production when the subscription env is changed
+            VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment = .staging
             SubscriptionPurchaseEnvironment.current = .appStore
             await AccountManager().checkSubscriptionState()
         }

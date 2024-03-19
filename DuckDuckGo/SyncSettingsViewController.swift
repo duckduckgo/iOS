@@ -79,7 +79,9 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         setUpFaviconsFetcherSwitch(viewModel)
         setUpFavoritesDisplayModeSwitch(viewModel, appSettings)
         setUpSyncPaused(viewModel, appSettings)
-        setUpSyncInvalidObjectsInfo(viewModel)
+        if DDGSync.isFieldValidationEnabled {
+            setUpSyncInvalidObjectsInfo(viewModel)
+        }
         setUpSyncFeatureFlags(viewModel)
         refreshForState(syncService.authState)
 

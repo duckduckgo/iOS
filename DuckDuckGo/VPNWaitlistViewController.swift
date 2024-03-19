@@ -24,7 +24,7 @@ import SwiftUI
 import Core
 import Waitlist
 
-@available(iOS 15.0, *)
+@available(iOS 15, *)
 final class VPNWaitlistViewController: UIViewController {
 
     private let viewModel: WaitlistViewModel

@@ -69,7 +69,7 @@ struct VPNMetadata: Encodable {
 
     func toPrettyPrintedJSON() -> String? {
         let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
 
         guard let encodedMetadata = try? encoder.encode(self) else {
             assertionFailure("Failed to encode metadata")
@@ -81,6 +81,7 @@ struct VPNMetadata: Encodable {
 
     func toBase64() -> String {
         let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys]
 
         do {
             let encodedMetadata = try encoder.encode(self)

@@ -35,6 +35,7 @@ struct SettingsCustomizeView: View {
                              isButton: true)
             
             SettingsCellView(label: UserText.settingsAutocomplete,
+                             subtitle: viewModel.autocompleteSubtitle,
                              accesory: .toggle(isOn: viewModel.autocompleteBinding))
             
             if viewModel.state.speechRecognitionAvailable {

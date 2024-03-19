@@ -78,10 +78,9 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
     func isPrivacyProLaunched() -> Bool {
         if let subscriptionOverrideEnabled = userDefaults.subscriptionOverrideEnabled {
 #if ALPHA || DEBUG
-            // only allows disabling subscription in Alpha or Debug build
             return subscriptionOverrideEnabled
 #else
-            return true
+            return false
 #endif
         }
 

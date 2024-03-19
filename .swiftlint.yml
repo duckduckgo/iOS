@@ -7,6 +7,7 @@ disabled_rules:
   - todo
   - unused_capture_list
   - trailing_comma
+  - cyclomatic_complexity
 
 opt_in_rules:
   - closure_end_indentation

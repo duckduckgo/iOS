@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "graeme/expired-entitlements-stuff",
-        "revision" : "cbf9868b711563d6471a8384028f218f83e89a44"
+        "revision" : "0c73586c2628381b8a63be65fd2bc1824e58d7f9",
+        "version" : "126.2.0"
       }
     },
     {

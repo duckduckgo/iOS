@@ -126,7 +126,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     private let pathMonitor = NWPathMonitor()
 
     private var currentNetworkPath: String?
-    private var lastError: String?
     private var baseConfigurationData: String?
     private var fullProtocolConfigurationData: String?
     private var vpnMetadata: VPNMetadata?

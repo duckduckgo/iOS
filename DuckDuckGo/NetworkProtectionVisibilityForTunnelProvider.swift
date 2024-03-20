@@ -37,7 +37,9 @@ struct NetworkProtectionVisibilityForTunnelProvider: NetworkProtectionFeatureVis
     // todo - https://app.asana.com/0/0/1206844038943626/f
     func isPrivacyProLaunched() -> Bool {
 #if SUBSCRIPTION
-        AccountManager().accessToken != nil
+        let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
+        let tokenStore = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
+        return tokenStore.accessToken != nil
 #else
         false
 #endif

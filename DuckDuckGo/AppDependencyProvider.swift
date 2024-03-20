@@ -28,6 +28,10 @@ import Subscription
 import Subscription
 #endif
 
+#if NETWORK_PROTECTION
+import NetworkProtection
+#endif
+
 protocol DependencyProvider {
 
     var appSettings: AppSettings { get }
@@ -85,9 +89,18 @@ class AppDependencyProvider: DependencyProvider {
 
 #if SUBSCRIPTION
     let subscriptionManager: SubscriptionManaging = {
+
+        var serviceEnvironment: SubscriptionServiceEnvironment = .staging
+
+#if NETWORK_PROTECTION
+        if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {
+            serviceEnvironment = .staging
+        }
+#endif
+
         let configuration = DefaultSubscriptionConfiguration(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs),
                                                              purchasePlatform: .appStore,
-                                                             serviceEnvironment: .staging)
+                                                             serviceEnvironment: serviceEnvironment)
 
         return SubscriptionManager(configuration: configuration)
     }()

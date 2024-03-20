@@ -239,12 +239,11 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let accessTokenProvider: () -> String? = {
 #if SUBSCRIPTION
             if featureVisibility.shouldMonitorEntitlement() {
-                return { 
-	// TODO: FIXME
-let subscriptiongroup = subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)
-Tokenstore blah blh
-AccountManager().accessToken 
-}
+                return {
+                    let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
+                    let tokenStore = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
+                    return tokenStore.accessToken
+                }
             }
 #endif
             return { nil }
@@ -328,16 +327,14 @@ AccountManager().accessToken
             return .success(true)
         }
 
-        if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {
-            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
-        }
-// TODO: FIXM
-	let configuration = DefaultSubscriptionConfiguration(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs),
-                                                             purchasePlatform: .appStore,
-                                                             serviceEnvironment: .staging)
-        let accountManager = SubscriptionManager(configuration: configuration).accountManager
+        let vpnEnvironment = VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment
+        let serviceEnvironment: SubscriptionServiceEnvironment = vpnEnvironment == .production ? .production : .staging
+        let configuration = DefaultSubscriptionConfiguration(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs),
+                                                             purchasePlatform: .stripe, // TODO: Not relevant in this context
+                                                             serviceEnvironment: serviceEnvironment)
+        let subscriptionManager = SubscriptionManager(configuration: configuration)
 
-        let result = await accountManager.hasEntitlement(for: .networkProtection, cachePolicy: .reloadIgnoringLocalCacheData)
+        let result = await subscriptionManager.accountManager.hasEntitlement(for: .networkProtection, cachePolicy: .reloadIgnoringLocalCacheData)
         switch result {
         case .success(let hasEntitlement):
             return .success(hasEntitlement)

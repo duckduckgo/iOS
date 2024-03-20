@@ -20,8 +20,6 @@ CONTROALE DE CONFIDENȚIALITATE ZILNICE
 
 • Semnalează-ți preferințele în materie de confidențialitate cu Controlul global al confidențialității (GPC) Află mai multe la adresa https://help.duckduckgo.com/duckduckgo-help-pages/privacy/gpc/ 
 
-Notă despre protecția noastră împotriva încărcării tehnologiilor de urmărire terțe după ce ai făcut clic pe reclame DuckDuckGo: Protecția noastră împotriva tehnologiilor de urmărire terțe depășește cu mult ceea ce primești în mod implicit de la cele mai populare browsere și lucrăm constant pentru a o face chiar și mai cuprinzătoare. În prezent, dacă un agent de publicitate dorește să detecteze conversiile pe propriul site pentru reclamele noastre private la căutările pe DuckDuckGo, protecția noastră împotriva încărcării tehnologiilor de urmărire terțe nu va opri încărcarea solicitărilor bat.bing.com pe site-ul agenției de publicitate în urma clicurilor pe reclame DuckDuckGo, dar aceste solicitări sunt oprite în toate celelalte contexte. Acest lucru se datorează faptului că reclamele în cazul căutării private DuckDuckGo sunt oferite în parteneriat cu Microsoft. Ca parte a acestui parteneriat, vizualizarea anunțurilor pe DuckDuckGo este anonimă, iar Microsoft s-a angajat să nu profileze clicurile pe anunțuri ale utilizatorilor noștri.
-
 Citește mai multe despre acest lucru și despre instrumentele noastre gratuite de protecție împotriva urmăririi pe https://help.duckduckgo.com/privacy/web-tracking-protections
 
 

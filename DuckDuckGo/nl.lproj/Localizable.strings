@@ -1813,6 +1813,9 @@
 /* Settings screen cell text for addess bar position */
 "settings.address.bar" = "Positie van adresbalk";
 
+/* Settings screen cell title for toggling full URL visibility in address bar */
+"settings.address.full.url" = "Volledig siteadres weergeven";
+
 /* Settings screen appearance section title */
 "settings.appearance" = "Uiterlijk";
 

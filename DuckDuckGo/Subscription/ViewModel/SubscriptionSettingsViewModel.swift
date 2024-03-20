@@ -23,23 +23,39 @@ import StoreKit
 
 #if SUBSCRIPTION
 import Subscription
+import Core
 @available(iOS 15.0, *)
 final class SubscriptionSettingsViewModel: ObservableObject {
-    
-    enum Constants {
-        static let monthlyProductID = "ios.subscription.1month"
-        static let yearlyProductID = "ios.subscription.1year"
-        static let updateFrequency: Float = 10
-    }
     
     let accountManager: AccountManager
     private var subscriptionUpdateTimer: Timer?
     private var signOutObserver: Any?
+    private var subscriptionInfo: SubscriptionService.GetSubscriptionResponse?
     
-    @Published var subscriptionDetails: String = ""
-    @Published var subscriptionType: String = ""
-    @Published var shouldDisplayRemovalNotice: Bool = false
-    @Published var shouldDismissView: Bool = false
+    private var externalAllowedDomains = ["stripe.com"]
+    
+    struct State {
+        var subscriptionDetails: String = ""
+        var subscriptionType: String = ""
+        var shouldDisplayRemovalNotice: Bool = false
+        var shouldDismissView: Bool = false
+        var shouldDisplayGoogleView: Bool = false
+        var shouldDisplayFAQView: Bool = false
+        
+        // Used to display stripe WebUI
+        var stripeViewModel: SubscriptionExternalLinkViewModel?
+        var shouldDisplayStripeView: Bool = false
+        
+        // Used to display the FAQ WebUI
+        var FAQViewModel: SubscriptionExternalLinkViewModel = SubscriptionExternalLinkViewModel(url: URL.subscriptionFAQ)
+    }
+
+    // Publish the currently selected feature
+    @Published var selectedFeature: SettingsViewModel.SettingsDeepLinkSection?
+    
+    // Read only View State - Should only be modified from the VM
+    @Published private(set) var state = State()
+    
     
     init(accountManager: AccountManager = AccountManager()) {
         self.accountManager = accountManager
@@ -55,75 +71,133 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }()
     
     @MainActor
-    func fetchAndUpdateSubscriptionDetails() {
+    func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad) {
         Task {
-            guard let token = accountManager.accessToken else { return }
-
-            if let cachedDate = SubscriptionService.cachedGetSubscriptionResponse?.expiresOrRenewsAt,
-               let cachedStatus =  SubscriptionService.cachedGetSubscriptionResponse?.status,
-               let productID =  SubscriptionService.cachedGetSubscriptionResponse?.productId {
-                updateSubscriptionDetails(status: cachedStatus, date: cachedDate, product: productID)
-            }
-
-            if case .success(let subscription) = await SubscriptionService.getSubscription(accessToken: token) {
-                if !subscription.isActive {
-                    AccountManager().signOut()
-                    shouldDismissView = true
-                    return
-                } else {
-                    updateSubscriptionDetails(status: subscription.status, date: subscription.expiresOrRenewsAt, product: subscription.productId)
-                }
+            guard let token = self.accountManager.accessToken else { return }
+            let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
+            switch subscriptionResult {
+            case .success(let subscription):
+                subscriptionInfo = subscription
+                updateSubscriptionsStatusMessage(status: subscription.status,
+                                                date: subscription.expiresOrRenewsAt,
+                                                product: subscription.productId,
+                                                billingPeriod: subscription.billingPeriod)
+            case .failure:
+                AccountManager().signOut()
+                state.shouldDismissView = true
             }
         }
     }
+    
+    func manageSubscription() {
+        switch subscriptionInfo?.platform {
+        case .apple:
+            Task { await manageAppleSubscription() }
+        case .google:
+            displayGoogleView(true)
+        case .stripe:
+            Task { await manageStripeSubscription() }
+        default:
+            return
+        }
+    }
+    
+    // MARK: -
     
     private func setupNotificationObservers() {
         signOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut, object: nil, queue: .main) { [weak self] _ in
             DispatchQueue.main.async {
-                self?.shouldDismissView = true
+                self?.state.shouldDismissView = true
             }
         }
     }
     
+    // Re-fetch subscription from server ignoring cache
+    // This ensure that if the user changed something on the Apple view, state will be updated
     private func setupSubscriptionUpdater() {
         subscriptionUpdateTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { [weak self] _ in
             guard let strongSelf = self else { return }
             Task {
-                await strongSelf.fetchAndUpdateSubscriptionDetails()
+                await strongSelf.fetchAndUpdateSubscriptionDetails(cachePolicy: .reloadIgnoringLocalCacheData)
             }
         }
     }
-
     
-    private func updateSubscriptionDetails(status: Subscription.Status, date: Date, product: String) {
+    private func updateSubscriptionsStatusMessage(status: Subscription.Status, date: Date, product: String, billingPeriod: Subscription.BillingPeriod) {
         let statusString = (status == .autoRenewable) ? UserText.subscriptionRenews : UserText.subscriptionExpires
-        self.subscriptionDetails = UserText.subscriptionInfo(status: statusString, expiration: dateFormatter.string(from: date))
-        self.subscriptionType = product == Constants.monthlyProductID ? UserText.subscriptionMonthly : UserText.subscriptionAnnual
+        state.subscriptionDetails = UserText.subscriptionInfo(status: statusString, expiration: dateFormatter.string(from: date))
+        state.subscriptionType = billingPeriod == .monthly ? UserText.subscriptionMonthly : UserText.subscriptionAnnual
     }
     
     func removeSubscription() {
         AccountManager().signOut()
-        let messageView = ActionMessageView()
+        _ = ActionMessageView()
         ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation,
                                   presentationLocation: .withoutBottomBar)
     }
     
-    func manageSubscription() {
-            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                Task {
-                    do {
-                        try await AppStore.showManageSubscriptions(in: windowScene)
-                    } catch {
-                        openSubscriptionManagementURL()
-                    }
-                }
+    func displayGoogleView(_ value: Bool) {
+        if value != state.shouldDisplayGoogleView {
+            state.shouldDisplayGoogleView = value
+        }
+    }
+    
+    func displayStripeView(_ value: Bool) {
+        if value != state.shouldDisplayStripeView {
+            state.shouldDisplayStripeView = value
+        }
+    }
+    
+    func displayRemovalNotice(_ value: Bool) {
+        if value != state.shouldDisplayRemovalNotice {
+            state.shouldDisplayRemovalNotice = value
+        }
+    }
+    
+    func displayFAQView(_ value: Bool) {
+        if value != state.shouldDisplayFAQView {
+            state.shouldDisplayFAQView = value
+        }
+    }
+    
+    // MARK: -
+    
+    @MainActor private func manageAppleSubscription() async {
+        let url = URL.manageSubscriptionsInAppStoreAppURL
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+           do {
+               try await AppStore.showManageSubscriptions(in: windowScene)
+           } catch {
+               self.openURL(url)
+           }
+        } else {
+            self.openURL(url)
+        }
+    }
+         
+    private func manageStripeSubscription() async {
+        guard let token = accountManager.accessToken, let externalID = accountManager.externalID else { return }
+        let serviceResponse = await  SubscriptionService.getCustomerPortalURL(accessToken: token, externalID: externalID)
+        
+        // Get Stripe Customer Portal URL and update the model
+        if case .success(let response) = serviceResponse {
+            guard let url = URL(string: response.customerPortalUrl) else { return }
+            if let existingModel = state.stripeViewModel {
+                existingModel.url = url
             } else {
-                openSubscriptionManagementURL()
+                let model = SubscriptionExternalLinkViewModel(url: url, allowedDomains: externalAllowedDomains)
+                DispatchQueue.main.async {
+                    self.state.stripeViewModel = model
+                }
             }
         }
+        DispatchQueue.main.async {
+            self.displayStripeView(true)
+        }
+    }
 
-    private func openSubscriptionManagementURL() {
-        let url = URL.manageSubscriptionsInAppStoreAppURL
+    @MainActor
+    private func openURL(_ url: URL) {
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
@@ -133,7 +207,5 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         subscriptionUpdateTimer?.invalidate()
         signOutObserver = nil
     }
-    
-    
 }
 #endif

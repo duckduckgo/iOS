@@ -22,26 +22,26 @@ import Foundation
 import Configuration
 
 public protocol BlockerListETagStorage {
-    
+
     func saveEtag(_ etag: String, for configuration: Configuration)
     func loadEtag(for configuration: Configuration) -> String?
-    
+
 }
 
 public struct UserDefaultsETagStorage: BlockerListETagStorage {
-    
+
     private let defaults = UserDefaults(suiteName: "com.duckduckgo.blocker-list.etags")
-    
+
     public init() { }
-    
+
     public func loadEtag(for configuration: Configuration) -> String? {
         let etag = defaults?.string(forKey: configuration.storeKey)
         os_log("stored etag for %s %s", log: .generalLog, type: .debug, configuration.storeKey, etag ?? "nil")
         return etag
     }
-    
+
     public func saveEtag(_ etag: String, for configuration: Configuration) {
         defaults?.set(etag, forKey: configuration.storeKey)
     }
-    
+
 }

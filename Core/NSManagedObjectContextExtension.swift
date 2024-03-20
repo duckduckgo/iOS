@@ -21,7 +21,7 @@ import CoreData
 import Persistence
 
 extension Array where Element == CoreDataErrorsParser.ErrorInfo {
-    
+
     var errorPixelParameters: [String: String] {
         let params: [String: String]
         if let first = first {
@@ -38,18 +38,18 @@ extension Array where Element == CoreDataErrorsParser.ErrorInfo {
 }
 
 extension NSManagedObjectContext {
-    
+
     public func save(onErrorFire event: Pixel.Event) throws {
         do {
             try save()
         } catch {
             let nsError = error as NSError
             let processedErrors = CoreDataErrorsParser.parse(error: nsError)
-            
+
             Pixel.fire(pixel: event,
                        error: error,
                        withAdditionalParameters: processedErrors.errorPixelParameters)
-            
+
             throw error
         }
     }

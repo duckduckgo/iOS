@@ -24,7 +24,7 @@ import Core
 import Waitlist
 import DesignResourcesKit
 
-@available(iOS 15.0, *)
+@available(iOS 15, *)
 struct VPNWaitlistView: View {
 
     @EnvironmentObject var viewModel: WaitlistViewModel
@@ -111,6 +111,13 @@ struct VPNWaitlistSignUpView: View {
         }
     }
 
+}
+
+@available(iOS 15.0, *)
+struct VPNWaitlistSignUpView_Previews: PreviewProvider {
+    static var previews: some View {
+        VPNWaitlistSignUpView(requestInFlight: false) { _ in }
+    }
 }
 
 // MARK: - Joined Waitlist Views

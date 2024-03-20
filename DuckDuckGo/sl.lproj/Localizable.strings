@@ -1813,6 +1813,9 @@
 /* Settings screen cell text for addess bar position */
 "settings.address.bar" = "Položaj naslovne vrstice";
 
+/* Settings screen cell title for toggling full URL visibility in address bar */
+"settings.address.full.url" = "Prikaži polni naslov spletnega mesta";
+
 /* Settings screen appearance section title */
 "settings.appearance" = "Izgled";
 

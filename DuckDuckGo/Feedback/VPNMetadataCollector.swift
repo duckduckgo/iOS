@@ -69,7 +69,7 @@ struct VPNMetadata: Encodable {
 
     func toPrettyPrintedJSON() -> String? {
         let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
 
         guard let encodedMetadata = try? encoder.encode(self) else {
             assertionFailure("Failed to encode metadata")
@@ -81,6 +81,7 @@ struct VPNMetadata: Encodable {
 
     func toBase64() -> String {
         let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys]
 
         do {
             let encodedMetadata = try encoder.encode(self)
@@ -99,13 +100,16 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
     private let settings: VPNSettings
+    private let defaults: UserDefaults
 
     init(statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
          serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
-         settings: VPNSettings = .init(defaults: .networkProtectionGroupDefaults)) {
+         settings: VPNSettings = .init(defaults: .networkProtectionGroupDefaults),
+         defaults: UserDefaults = .networkProtectionGroupDefaults) {
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
         self.settings = settings
+        self.defaults = defaults
     }
 
     func collectMetadata() async -> VPNMetadata {
@@ -149,7 +153,7 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
 
-        let networkPathChange = settings.networkPathChange
+        let networkPathChange = defaults.networkPathChange
 
         let lastPathChange = String(describing: networkPathChange)
         var lastPathChangeDate = "unknown"
@@ -185,7 +189,7 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     @MainActor
     func collectVPNState() async -> VPNMetadata.VPNState {
         let connectionState = String(describing: statusObserver.recentValue)
-        let connectedServer = serverInfoObserver.recentValue.serverLocation ?? "none"
+        let connectedServer = serverInfoObserver.recentValue.serverLocation?.serverLocation ?? "none"
         let connectedServerIP = serverInfoObserver.recentValue.serverAddress ?? "none"
 
         return .init(connectionState: connectionState,

@@ -26,5 +26,8 @@ final class SubscriptionPIRViewModel: ObservableObject {
     
     var viewTitle = UserText.subscriptionTitle
             
+    func onAppear() {
+        Pixel.fire(pixel: .privacyProPersonalInformationRemovalSettings)
+    }
 }
 #endif

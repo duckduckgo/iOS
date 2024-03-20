@@ -20,7 +20,6 @@
 import BrowserServicesKit
 import ContentBlocking
 import Foundation
-import Macros
 import PrivacyDashboard
 import TrackerRadarKit
 import XCTest
@@ -30,7 +29,7 @@ import XCTest
 
 class TrackerAnimationLogicTests: XCTestCase {
 
-    static let pageURL = #URL("https://example.com")
+    static let pageURL = URL(string: "https://example.com")!
     
     func testAnimationLogicToAnimateTrackersIfAnyBlocked() {
         let trackerInfo = makeBlockedTrackerInfo(pageURL: Self.pageURL)

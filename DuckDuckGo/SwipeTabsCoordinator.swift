@@ -73,6 +73,8 @@ class SwipeTabsCoordinator: NSObject {
         collectionView.dataSource = self
         collectionView.decelerationRate = .fast
         collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
 
         updateLayout()
     }
@@ -92,7 +94,6 @@ class SwipeTabsCoordinator: NSObject {
     
     private func updateLayout() {
         let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
-        layout?.scrollDirection = .horizontal
         layout?.itemSize = CGSize(width: coordinator.superview.frame.size.width, height: coordinator.omniBar.frame.height)
         layout?.minimumLineSpacing = 0
         layout?.minimumInteritemSpacing = 0
@@ -117,12 +118,6 @@ class SwipeTabsCoordinator: NSObject {
 
 // MARK: UICollectionViewDelegate
 extension SwipeTabsCoordinator: UICollectionViewDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        DispatchQueue.main.async {
-            self.scrollToCurrent()
-        }
-    }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
          

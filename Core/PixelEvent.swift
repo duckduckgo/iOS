@@ -100,9 +100,14 @@ extension Pixel {
         case homeScreenEditFavorite
         case homeScreenDeleteFavorite
         
-        case autocompleteSelectedLocal
-        case autocompleteSelectedRemote
-        
+        case autocompleteEnabled
+        case autocompleteDisabled
+        case autocompleteClickPhrase
+        case autocompleteClickWebsite
+        case autocompleteClickBookmark
+        case autocompleteClickFavorite
+        case autocompleteClickHistory
+
         case feedbackPositive
         case feedbackNegativePrefix(category: String)
         
@@ -596,6 +601,11 @@ extension Pixel {
         case privacyProSubscriptionManagementEmail
         case privacyProSubscriptionManagementPlanBilling
         case privacyProSubscriptionManagementRemoval
+        // Web pixels
+        case privacyProOfferMonthlyPriceClick
+        case privacyProOfferYearlyPriceClick
+        case privacyProAddEmailSuccess
+        case privacyProWelcomeFAQClick
     }
     
 }
@@ -677,9 +687,14 @@ extension Pixel.Event {
         case .homeScreenEditFavorite: return "mh_ef"
         case .homeScreenDeleteFavorite: return "mh_df"
             
-        case .autocompleteSelectedLocal: return "m_au_l"
-        case .autocompleteSelectedRemote: return "m_au_r"
-            
+        case .autocompleteEnabled: return "m_autocomplete_toggled_on"
+        case .autocompleteDisabled: return "m_autocomplete_toggled_off"
+        case .autocompleteClickPhrase: return "m_autocomplete_click_phrase"
+        case .autocompleteClickWebsite: return "m_autocomplete_click_website"
+        case .autocompleteClickBookmark: return "m_autocomplete_click_bookmark"
+        case .autocompleteClickFavorite: return "m_autocomplete_click_favorite"
+        case .autocompleteClickHistory: return "m_autocomplete_click_history"
+
         case .feedbackPositive: return "mfbs_positive_submit"
         case .feedbackNegativePrefix(category: let category): return "mfbs_negative_\(category)"
             
@@ -1133,7 +1148,7 @@ extension Pixel.Event {
         case .historyInsertVisitFailed: return "m_debug_history-insert-visit-failed"
         case .historyRemoveVisitsFailed: return "m_debug_history-remove-visits-failed"
 
-            // MARK: Privacy pro
+        // MARK: Privacy pro
         case .privacyProSubscriptionActive: return "m_privacy-pro_app_subscription_active"
         case .privacyProOfferScreenImpression: return "m_privacy-pro_offer_screen_impression"
         case .privacyProPurchaseAttempt: return "m_privacy-pro_terms-conditions_subscribe_click"
@@ -1164,6 +1179,11 @@ extension Pixel.Event {
         case .privacyProSubscriptionManagementEmail: return "m_privacy-pro_manage-email_edit_click"
         case .privacyProSubscriptionManagementPlanBilling: return "m_privacy-pro_settings_change-plan-or-billing_click"
         case .privacyProSubscriptionManagementRemoval: return "m_privacy-pro_settings_remove-from-device_click"
+            // Web
+        case .privacyProOfferMonthlyPriceClick: return "m_privacy-pro_offer_monthly-price_click"
+        case .privacyProOfferYearlyPriceClick: return "m_privacy-pro_offer_yearly-price_click"
+        case .privacyProAddEmailSuccess: return "m_privacy-pro_app_add-email_success_u"
+        case .privacyProWelcomeFAQClick: return "m_privacy-pro_welcome_faq_click_u"
         }
     }
 }

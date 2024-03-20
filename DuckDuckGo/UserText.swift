@@ -673,6 +673,10 @@ In addition to the details entered into this form, your app issue report will co
     static let vpnAccessRevokedAlertActionSubscribe = NSLocalizedString("vpn.access-revoked.alert.action.subscribe", value: "Subscribe", comment: "Primary action for the alert when the subscription expires")
     static let vpnAccessRevokedAlertActionCancel = NSLocalizedString("vpn.access-revoked.alert.action.cancel", value: "Dismiss", comment: "Cancel action for the alert when the subscription expires")
 
+    static let vpnEarlyAccessOverAlertTitle = NSLocalizedString("vpn.early-access.over.alert.title", value: "DuckDuckGo VPN early access is over", comment: "Alert title for the alert when the early access period is over")
+    static let vpnEarlyAccessOverAlertMessage = NSLocalizedString("vpn.early-access.over.alert.message", value: "Thank you for being a tester! To continue using the VPN, subscribe to DuckDuckGo Privacy Pro and get 40% off with promo code THANKYOU\n\nOffer redeemable for a limited time only in the desktop version of the DuckDuckGo browser by U.S. testers  who install from duckduckgo.com/app", comment: "Alert message for the alert when the early access period is over")
+    static let vpnEarlyAccessOverAlertAction = NSLocalizedString("vpn.early-access.over.alert.action", value: "OK", comment: "Alert action for the alert when the early access period is over")
+
     // MARK: Notifications
     
     public static let macWaitlistAvailableNotificationTitle = NSLocalizedString("mac-waitlist.available.notification.title", value: "DuckDuckGo for Mac is ready!", comment: "Title for the macOS waitlist notification")
@@ -1027,12 +1031,14 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsPProActivationPendingTitle = NSLocalizedString("settings.subscription.activation.pending.title", value: "Your Subscription is Being Activated", comment: "Subscription activation pending title")
     public static let settingsPProActivationPendingDescription = NSLocalizedString("settings.subscription.activation.pending.description", value: "This is taking longer than usual, please check back later.", comment: "Subscription activation pending description")
     
-    
     // Customize Section
     public static let settingsCustomizeSection = NSLocalizedString("settings.customize", value: "Customize", comment: "Settings title for the customize section")
     public static let settingsKeyboard = NSLocalizedString("settings.keyboard", value: "Keyboard", comment: "Settings screen cell for Keyboard")
     public static let settingsPreviews = NSLocalizedString("settings.previews", value: "Long-Press Previews", comment: "Settings screen cell for long press previews")
     public static let settingsAutocomplete = NSLocalizedString("settings.autocomplete", value: "Autocomplete Suggestions", comment: "Settings screen cell for autocomplete")
+
+    // Hardcoded for the experiment
+    public static let settingsAutocompleteSubtitle = "See search suggestions, including your bookmarks and recently visited sites"
     public static let settingsVoiceSearch = NSLocalizedString("settings.voice.search", value: "Private Voice Search", comment: "Settings screen cell for voice search")
     public static let settingsAssociatedApps = NSLocalizedString("settings.associated.apps", value: "Open Links in Associated Apps", comment: "Settings screen cell for opening links in associated apps")
     public static let settingsAssociatedAppsDescription = NSLocalizedString("settings.associated.apps.description", value: "Disable to prevent links from automatically opening in other installed apps.", comment: "Description for associated apps description")

@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "anya/rmf-build-number-support",
-        "revision" : "a6cd33249ef3bc96c8af57339319c7c1b8df8770"
+        "revision" : "05e3446229ce43733bdacb3e34ed4a1af011003c",
+        "version" : "127.1.0"
       }
     },
     {
@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "revision" : "c67d268bf234760f49034a0fe7a6137a1b216b05",
-        "version" : "3.2.0"
+        "revision" : "43a6e1c1864846679a254e60c91332c3fbd922ee",
+        "version" : "3.3.0"
       }
     },
     {
@@ -194,8 +194,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/wireguard-apple",
       "state" : {
-        "revision" : "2d8172c11478ab11b0f5ad49bdb4f93f4b3d5e0d",
-        "version" : "1.1.1"
+        "revision" : "13fd026384b1af11048451061cc1b21434990668",
+        "version" : "1.1.3"
       }
     },
     {

@@ -1813,6 +1813,9 @@
 /* Settings screen cell text for addess bar position */
 "settings.address.bar" = "Posizione Barra degli indirizzi";
 
+/* Settings screen cell title for toggling full URL visibility in address bar */
+"settings.address.full.url" = "Mostra l'indirizzo completo del sito";
+
 /* Settings screen appearance section title */
 "settings.appearance" = "Aspetto";
 

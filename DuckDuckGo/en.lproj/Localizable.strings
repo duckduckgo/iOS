@@ -1804,6 +1804,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings screen cell text for addess bar position */
 "settings.address.bar" = "Address Bar Position";
 
+/* Settings screen cell title for toggling full URL visibility in address bar */
+"settings.address.full.url" = "Show Full Site Address";
+
 /* Settings screen appearance section title */
 "settings.appearance" = "Appearance";
 

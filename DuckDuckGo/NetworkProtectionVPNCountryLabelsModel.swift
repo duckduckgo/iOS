@@ -24,8 +24,13 @@ struct NetworkProtectionVPNCountryLabelsModel {
     let emoji: String
     let title: String
 
-    init(country: String) {
-        self.title = Locale.current.localizedString(forRegionCode: country) ?? country.capitalized
+    init(country: String, useFullCountryName: Bool = true) {
+        if useFullCountryName {
+            self.title = Locale.current.localizedString(forRegionCode: country) ?? country.capitalized
+        } else {
+            self.title = country.localizedUppercase
+        }
+
         self.emoji = Self.flag(country: country)
     }
 

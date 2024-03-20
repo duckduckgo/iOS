@@ -88,18 +88,12 @@ extension NetworkProtectionCodeRedemptionCoordinator {
     }
 }
 
-extension NetworkProtectionVPNNotificationsViewModel {
+extension NetworkProtectionVPNSettingsViewModel {
     convenience init() {
         self.init(
             notificationsAuthorization: NotificationsAuthorizationController(),
             settings: VPNSettings(defaults: .networkProtectionGroupDefaults)
         )
-    }
-}
-
-extension NetworkProtectionVPNSettingsViewModel {
-    convenience init() {
-        self.init(settings: VPNSettings(defaults: .networkProtectionGroupDefaults))
     }
 }
 

@@ -136,6 +136,8 @@ final class NetworkProtectionTunnelController: TunnelController {
 
         options["activationAttemptId"] = UUID().uuidString as NSString
         options["authToken"] = try tokenStore.fetchToken() as NSString?
+        options[NetworkProtectionOptionKey.selectedEnvironment] = VPNSettings(defaults: .networkProtectionGroupDefaults)
+            .selectedEnvironment.rawValue as NSString
 
         do {
             try tunnelManager.connection.startVPNTunnel(options: options)

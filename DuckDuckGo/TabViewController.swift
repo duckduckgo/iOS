@@ -120,7 +120,7 @@ class TabViewController: UIViewController {
 
     public var inferredOpenerContext: BrokenSiteReport.OpenerContext?
     private var refreshCountSinceLoad: Int = 0
-    private var performanceMetrics: PerformanceMetricsSubfeature = PerformanceMetricsSubfeature()
+    private var performanceMetrics: PerformanceMetricsSubfeature
 
     private var detectedLoginURL: URL?
     private var preserveLoginsWorker: PreserveLoginsWorker?
@@ -131,6 +131,16 @@ class TabViewController: UIViewController {
     private let netPConnectionObserver = ConnectionStatusObserverThroughSession()
     private var netPConnectionObserverCancellable: AnyCancellable?
     private var netPConnectionStatus: ConnectionStatus = .default
+    private var netPConnected: Bool {
+        switch netPConnectionStatus {
+        case .connected:
+            return true
+        default:
+            break
+        }
+
+        return false
+    }
 #endif
 
     // Required to know when to disable autofill, see SaveLoginViewModel for details
@@ -311,6 +321,7 @@ class TabViewController: UIViewController {
         self.historyManager = historyManager
         self.historyCapture = HistoryCapture(historyManager: historyManager)
         self.syncService = syncService
+        self.performanceMetrics = PerformanceMetricsSubfeature(targetWebview: webView)
         super.init(coder: aDecoder)
     }
 
@@ -933,15 +944,7 @@ class TabViewController: UIViewController {
         guard let currentURL = url else {
             return nil
         }
-        var vpnOn = false
-#if NETWORK_PROTECTION
-        switch netPConnectionStatus {
-        case .connected:
-            vpnOn = true
-        default:
-            break
-        }
-#endif
+
         return PrivacyDashboardViewController.BreakageAdditionalInfo(currentURL: currentURL,
                                                                      httpsForced: httpsForced,
                                                                      ampURLString: linkProtection.lastAMPURLString ?? "",
@@ -950,7 +953,7 @@ class TabViewController: UIViewController {
                                                                      error: lastError,
                                                                      httpStatusCode: lastHttpStatusCode,
                                                                      openerContext: inferredOpenerContext,
-                                                                     vpnOn: vpnOn,
+                                                                     vpnOn: netPConnected,
                                                                      userRefreshCount: refreshCountSinceLoad,
                                                                      performanceMetrics: performanceMetrics)
     }
@@ -1223,7 +1226,7 @@ extension TabViewController: WKNavigationDelegate {
         showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
 
         Task { @MainActor in
-            if await ReferrerInfo.isSERPReferred(from: webView) {
+            if await webView.isCurrentSiteReferredFromDuckDuckGo {
                 inferredOpenerContext = .serp
             }
         }
@@ -1560,20 +1563,19 @@ extension TabViewController: WKNavigationDelegate {
         }
     }
 
-    private func inferLoadContex(for navigationAction: WKNavigationAction) {
-        if navigationAction.navigationType != .reload {
-            if let currentUrl = webView.url, currentUrl.isDuckDuckGoSearch,
-               let newUrl = navigationAction.request.url, !newUrl.isDuckDuckGoSearch {
-                inferredOpenerContext = .serp
-            } else if navigationAction.navigationType == .linkActivated
-                        || navigationAction.navigationType == .other
-                        || navigationAction.navigationType == .formSubmitted {
-                inferredOpenerContext = .navigation
-            } else {
-                inferredOpenerContext = nil
-            }
+    private func inferLoadContext(for navigationAction: WKNavigationAction) -> BrokenSiteReport.OpenerContext? {
+        guard navigationAction.navigationType != .reload else { return nil }
+        guard let currentUrl = webView.url, let newUrl = navigationAction.request.url else { return nil }
+
+        if currentUrl.isDuckDuckGoSearch && !newUrl.isDuckDuckGoSearch {
+            return .serp
         } else {
-            inferredOpenerContext = nil
+            switch navigationAction.navigationType {
+            case .linkActivated, .other, .formSubmitted:
+                return .navigation
+            default:
+                return nil
+            }
         }
     }
 
@@ -1598,7 +1600,7 @@ extension TabViewController: WKNavigationDelegate {
             self.urlProvidedBasicAuthCredential = nil
         }
 
-        inferLoadContex(for: navigationAction)
+        inferredOpenerContext = inferLoadContext(for: navigationAction)
 
         if shouldReissueSearch(for: url) {
             reissueSearchWithRequiredParams(for: url)
@@ -2196,8 +2198,6 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
         userScripts.loginFormDetectionScript?.delegate = self
         userScripts.autoconsentUserScript.delegate = self
-
-        performanceMetrics.targetWebview = webView
         userScripts.contentScopeUserScriptIsolated.registerSubfeature(delegate: performanceMetrics)
 
         adClickAttributionLogic.onRulesChanged(latestRules: ContentBlocking.shared.contentBlockingManager.currentRules)

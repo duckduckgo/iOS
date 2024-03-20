@@ -150,6 +150,18 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
+
+    var addressBarShowsFullURL: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.showsFullURL },
+            set: {
+                self.state.showsFullURL = $0
+                self.appSettings.showFullSiteAddress = $0
+                self.firePixel($0 ? .settingsShowFullSiteAddressEnabled : .settingsShowFullSiteAddressDisabled)
+            }
+        )
+    }
+
     var applicationLockBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.applicationLock },
@@ -261,6 +273,7 @@ extension SettingsViewModel {
             fireButtonAnimation: appSettings.currentFireButtonAnimation,
             textSize: SettingsState.TextSize(enabled: !isPad, size: appSettings.textSize),
             addressbar: SettingsState.AddressBar(enabled: !isPad, position: appSettings.currentAddressBarPosition),
+            showsFullURL: appSettings.showFullSiteAddress,
             sendDoNotSell: appSettings.sendDoNotSell,
             autoconsentEnabled: appSettings.autoconsentEnabled,
             autoclearDataEnabled: AutoClearSettingsModel(settings: appSettings) != nil,

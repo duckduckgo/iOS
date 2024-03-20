@@ -23,12 +23,42 @@ extension OmniBar {
 
     struct AddressDisplayHelper {
 
-        static func addressForDisplay(url: URL, showsFullURL: Bool) -> String {
-            guard !showsFullURL, let shortAddress = shortURLString(url) else {
-                return url.absoluteString
+        static func addressForDisplay(url: URL, showsFullURL: Bool) -> NSAttributedString {
+
+            if !showsFullURL, let shortAddress = shortURLString(url) {
+                return NSAttributedString(
+                    string: shortAddress,
+                    attributes: [.foregroundColor: ThemeManager.shared.currentTheme.searchBarTextColor])
+            } else {
+                return deemphasisePath(forUrl: url)
+            }
+        }
+
+        static func deemphasisePath(forUrl url: URL) -> NSAttributedString {
+
+            let s = url.absoluteString
+            let attributedString = NSMutableAttributedString(string: s)
+            guard let c = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+                return attributedString
             }
 
-            return shortAddress
+            let theme = ThemeManager.shared.currentTheme
+
+            if let pathStart = c.rangeOfPath?.lowerBound {
+                let urlEnd = s.endIndex
+
+                let pathRange = NSRange(pathStart ..< urlEnd, in: s)
+                attributedString.addAttribute(.foregroundColor, value: theme.searchBarTextDeemphasisColor, range: pathRange)
+
+                let domainRange = NSRange(s.startIndex ..< pathStart, in: s)
+                attributedString.addAttribute(.foregroundColor, value: theme.searchBarTextColor, range: domainRange)
+
+            } else {
+                let range = NSRange(s.startIndex ..< s.endIndex, in: s)
+                attributedString.addAttribute(.foregroundColor, value: theme.searchBarTextColor, range: range)
+            }
+
+            return attributedString
         }
 
         /// Creates a string containing a short version the http(s) URL.

@@ -570,11 +570,12 @@ In addition to the details entered into this form, your app issue report will co
     
     // MARK: Network Protection
     
-    public static let netPNavTitle = NSLocalizedString("netP.title", value: "Network Protection", comment: "Title for the Network Protection feature")
+    public static let netPSettingsTitle = NSLocalizedString("netP.settings.title", value: "VPN", comment: "Title for the DuckDuckGo VPN feature in settings")
+    public static let netPNavTitle = NSLocalizedString("netP.title", value: "DuckDuckGo VPN", comment: "Title for the DuckDuckGo VPN feature")
     public static let netPCellConnected = NSLocalizedString("netP.cell.connected", value: "Connected", comment: "String indicating NetP is connected when viewed from the settings screen")
     public static let netPCellDisconnected = NSLocalizedString("netP.cell.disconnected", value: "Not connected", comment: "String indicating NetP is disconnected when viewed from the settings screen")
     
-    static let netPInviteTitle = NSLocalizedString("network.protection.invite.dialog.title", value: "You’re invited to try Network Protection", comment: "Title for the network protection invite screen")
+    static let netPInviteTitle = NSLocalizedString("network.protection.invite.dialog.title", value: "You’re invited to try DuckDuckGo VPN", comment: "Title for the network protection invite screen")
     static let netPInviteMessage = NSLocalizedString("network.protection.invite.dialog.message", value: "Enter your invite code to get started.", comment: "Message for the network protection invite dialog")
     static let netPInviteFieldPrompt = NSLocalizedString("network.protection.invite.field.prompt", value: "Invite Code", comment: "Prompt for the network protection invite code text field")
     static let netPInviteSuccessTitle = NSLocalizedString("network.protection.invite.success.title", value: "Success! You’re in.", comment: "Title for the network protection invite success view")
@@ -597,6 +598,8 @@ In addition to the details entered into this form, your app issue report will co
     static let netPStatusViewConnectionDetails = NSLocalizedString("network.protection.status.view.connection.details", value: "Connection Details", comment: "Connection details label shown in NetworkProtection's status view.")
     static let netPStatusViewSettingsSectionTitle = NSLocalizedString("network.protection.status.view.settings.section.title", value: "Manage", comment: "Label shown on the title of the settings section in NetworkProtection's status view.")
     static let netPVPNSettingsTitle = NSLocalizedString("network.protection.vpn.settings.title", value: "VPN Settings", comment: "Title for the VPN Settings screen.")
+    static let netPVPNSettingsFAQ = NSLocalizedString("network.protection.vpn.settings.faq", value: "Frequently Asked Questions", comment: "Title for the FAQ row in the VPN status screen.")
+    static let netPVPNSettingsShareFeedback = NSLocalizedString("network.protection.vpn.settings.share-feedback", value: "Share VPN Feedback", comment: "Title for the feedback row in the VPN status screen.")
     static func netPVPNSettingsLocationSubtitleFormattedCityAndCountry(city: String, country: String) -> String {
         let localized = NSLocalizedString("network.protection.vpn.location.subtitle.formatted.city.and.country", value: "%@, %@", comment: "Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States")
         return localized.format(arguments: city, country)
@@ -606,16 +609,20 @@ In addition to the details entered into this form, your app issue report will co
     static let netPStatusViewErrorConnectionFailedTitle = NSLocalizedString("network.protection.status.view.error.connection.failed.title", value: "Failed to Connect.", comment: "Generic connection failed error title shown in NetworkProtection's status view.")
     static let netPStatusViewErrorConnectionFailedMessage = NSLocalizedString("network.protection.status.view.error.connection.failed.message", value: "Please try again later.", comment: "Generic connection failed error message shown in NetworkProtection's status view.")
     static let netPPreferredLocationSettingTitle = NSLocalizedString("network.protection.vpn.preferred.location.title", value: "Preferred Location", comment: "Title for the Preferred Location VPN Settings item.")
-    static let netPPreferredLocationNearest = NSLocalizedString("network.protection.vpn.preferred.location.nearest", value: "Nearest Available", comment: "Label for the Preferred Location VPN Settings item when the nearest available location is selected.")
+    static let netPPreferredLocationNearest = NSLocalizedString("network.protection.vpn.preferred.location.nearest", value: "Nearest Location", comment: "Label for the Preferred Location VPN Settings item when the nearest available location is selected.")
     static let netPVPNLocationTitle = NSLocalizedString("network.protection.vpn.location.title", value: "VPN Location", comment: "Title for the VPN Location screen.")
     static let netPVPNLocationRecommendedSectionTitle = NSLocalizedString("network.protection.vpn.location.recommended.section.title", value: "Recommended", comment: "Title for the VPN Location screen's Recommended section.")
     static let netPVPNLocationRecommendedSectionFooter = NSLocalizedString("network.protection.vpn.location.recommended.section.footer", value: "Automatically connect to the nearest server we can find.", comment: "Footer describing the VPN Location screen's Recommended section which just has Nearest Available.")
     static let netPVPNLocationAllCountriesSectionTitle = NSLocalizedString("network.protection.vpn.location.all.countries.section.title", value: "All Countries", comment: "Title for the VPN Location screen's All Countries section.")
-    static let netPVPNLocationNearestAvailableItemTitle = NSLocalizedString("network.protection.vpn.location.nearest.available.item.title", value: "Nearest Available", comment: "Title for the VPN Location screen's Nearest Available selection item.")
     static func netPVPNLocationCountryItemFormattedCitiesCount(_ count: Int) -> String {
         let message = NSLocalizedString("network.protection.vpn.location.country.item.formatted.cities.count", value: "%d cities", comment: "Subtitle of countries item when there are multiple cities, example : ")
         return message.format(arguments: count)
     }
+    static let netPVPNLocationNearest = NSLocalizedString("network.protection.vpn.location.nearest", value: "(Nearest)", comment: "Description of the location type in the VPN status screen")
+    static let vpnLocationConnected = NSLocalizedString("network.protection.vpn.location.connected", value: "Connected Location", comment: "Description of the location type in the VPN status screen")
+    static let vpnLocationSelected = NSLocalizedString("network.protection.vpn.location.selected", value: "Selected Location", comment: "Description of the location type in the VPN status screen")
+    static let vpnDataVolume = NSLocalizedString("network.protection.vpn.data-volume", value: "Data Volume", comment: "Title for the data volume section in the VPN status screen")
+    static let vpnAbout = NSLocalizedString("network.protection.vpn.about", value: "About", comment: "Title of the About section in the VPN status screen")
     static let netPExcludeLocalNetworksSettingTitle = NSLocalizedString("network.protection.vpn.exclude.local.networks.setting.title", value: "Exclude Local Networks", comment: "Title for the Exclude Local Networks setting item.")
     static let netPExcludeLocalNetworksSettingFooter = NSLocalizedString("network.protection.vpn.exclude.local.networks.setting.footer", value: "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.", comment: "Footer text for the Exclude Local Networks setting item.")
     static let netPSecureDNSSettingFooter = NSLocalizedString("network.protection.vpn.secure.dns.setting.footer", value: "Our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.", comment: "Footer text for the Always on VPN setting item.")
@@ -623,7 +630,8 @@ In addition to the details entered into this form, your app issue report will co
     static let netPTurnOnNotificationsSectionFooter = NSLocalizedString("network.protection.turn.on.notifications.section.footer", value: "Allow DuckDuckGo to notify you if your connection drops or VPN status changes.", comment: "Footer text under the button to link to the iOS app settings and enable notifications app-wide.")
     static let netPVPNAlertsToggleTitle = NSLocalizedString("network.protection.vpn.alerts.toggle.title", value: "VPN Alerts", comment: "Title for the toggle for VPN alerts.")
     static let netPVPNAlertsToggleSectionFooter = NSLocalizedString("network.protection.vpn.alerts.toggle.section.footer", value: "Get notified if your connection drops or VPN status changes.", comment: "List section footer for the toggle for VPN alerts.")
-    
+    static let netPFrequentlyAskedQuestionsTitle = NSLocalizedString("network.protection.faq.title", value: "DuckDuckGo VPN FAQ", comment: "Title for the VPN FAQ screen.")
+
     static let netPOpenVPNQuickAction = NSLocalizedString("network.protection.quick-action.open-vpn", value: "Open VPN", comment: "Title text for an iOS quick action that opens VPN settings")
     
     static let inviteDialogContinueButton = NSLocalizedString("invite.dialog.continue.button", value: "Continue", comment: "Continue button on an invite dialog")
@@ -908,7 +916,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     
     // MARK: - VPN Waitlist
     
-    static let networkProtectionWaitlistJoinTitle = NSLocalizedString("network-protection.waitlist.join.title", value: "Network Protection Early Access", comment: "Title for Network Protection join waitlist screen")
+    static let networkProtectionWaitlistJoinTitle = NSLocalizedString("network-protection.waitlist.join.title", value: "VPN Early Access", comment: "Title for Network Protection join waitlist screen")
     static let networkProtectionWaitlistJoinSubtitle1 = NSLocalizedString("network-protection.waitlist.join.subtitle.1", value: "Secure your connection anytime, anywhere with Network Protection, the VPN from DuckDuckGo.", comment: "First subtitle for Network Protection join waitlist screen")
     static let networkProtectionWaitlistJoinSubtitle2 = NSLocalizedString("network-protection.waitlist.join.subtitle.2", value: "Join the waitlist, and we’ll notify you when it’s your turn.", comment: "Second subtitle for Network Protection join waitlist screen")
     
@@ -916,10 +924,10 @@ But if you *do* want a peek under the hood, you can find more information about 
     static let networkProtectionWaitlistJoinedWithNotificationsSubtitle1 = NSLocalizedString("network-protection.waitlist.joined.with-notifications.subtitle.1", value: "New invites are sent every few days, on a first come, first served basis.", comment: "Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled")
     static let networkProtectionWaitlistJoinedWithNotificationsSubtitle2 = NSLocalizedString("network-protection.waitlist.joined.with-notifications.subtitle.2", value: "We’ll notify you when your invite is ready.", comment: "Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled")
     
-    static let networkProtectionWaitlistNotificationTitle = NSLocalizedString("network-protection.waitlist.notification.title", value: "Network Protection is ready!", comment: "Title for Network Protection waitlist notification")
+    static let networkProtectionWaitlistNotificationTitle = NSLocalizedString("network-protection.waitlist.notification.title", value: "DuckDuckGo VPN is ready!", comment: "Title for Network Protection waitlist notification")
     static let networkProtectionWaitlistNotificationText = NSLocalizedString("network-protection.waitlist.notification.text", value: "Open your invite", comment: "Title for Network Protection waitlist notification")
     
-    static let networkProtectionWaitlistInvitedTitle = NSLocalizedString("network-protection.waitlist.invited.title", value: "You’re invited to try\nNetwork Protection early access!", comment: "Title for Network Protection invited screen")
+    static let networkProtectionWaitlistInvitedTitle = NSLocalizedString("network-protection.waitlist.invited.title", value: "You’re invited to try\nDuckDuckGo VPN early access!", comment: "Title for Network Protection invited screen")
     static let networkProtectionWaitlistInvitedSubtitle = NSLocalizedString("network-protection.waitlist.invited.subtitle", value: "Get an extra layer of protection online with the VPN built for speed and simplicity. Encrypt your internet connection across your entire device and hide your location and IP address from sites you visit.", comment: "Subtitle for Network Protection invited screen")
     
     static let networkProtectionWaitlistInvitedSection1Title = NSLocalizedString("network-protection.waitlist.invited.section-1.title", value: "Full-device coverage", comment: "Title for section 1 of the Network Protection invited screen")
@@ -936,12 +944,12 @@ But if you *do* want a peek under the hood, you can find more information about 
     static let networkProtectionWaitlistButtonAgreeAndContinue = NSLocalizedString("network-protection.waitlist.button.agree-and-continue", value: "Agree and Continue", comment: "Agree and Continue button for Network Protection join waitlist screen")
     static let networkProtectionWaitlistButtonExistingInviteCode = NSLocalizedString("network-protection.waitlist.button.existing-invite-code", value: "I Have an Invite Code", comment: "Button title for users who already have an invite code")
     
-    static let networkProtectionWaitlistAvailabilityDisclaimer = NSLocalizedString("network-protection.waitlist.availability-disclaimer", value: "Network Protection is free to use during early access.", comment: "Availability disclaimer for Network Protection join waitlist screen")
+    static let networkProtectionWaitlistAvailabilityDisclaimer = NSLocalizedString("network-protection.waitlist.availability-disclaimer", value: "DuckDuckGo VPN is free to use during early access.", comment: "Availability disclaimer for Network Protection join waitlist screen")
     
     static let networkProtectionPrivacyPolicyTitle = NSLocalizedString("network-protection.privacy-policy.title", value: "Privacy Policy", comment: "Privacy Policy title for Network Protection")
     
-    static let networkProtectionWaitlistNotificationAlertDescription = NSLocalizedString("network-protection.waitlist.notification-alert.description", value: "We’ll send you a notification when your invite to test Network Protection is ready.", comment: "Body text for the alert to enable notifications")
-    
+    static let networkProtectionWaitlistNotificationAlertDescription = NSLocalizedString("network-protection.waitlist.notification-alert.description", value: "We’ll send you a notification when your invite to test DuckDuckGo VPN is ready.", comment: "Body text for the alert to enable notifications")
+
     static let networkProtectionWaitlistGetStarted = NSLocalizedString("network-protection.waitlist.get-started", value: "Get Started", comment: "Button title text for the Network Protection waitlist confirmation prompt")
     static let networkProtectionWaitlistAgreeAndContinue = NSLocalizedString("network-protection.waitlist.agree-and-continue", value: "Agree and Continue", comment: "Title text for the Network Protection terms and conditions accept button")
     

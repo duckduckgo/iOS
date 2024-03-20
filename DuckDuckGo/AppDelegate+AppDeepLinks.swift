@@ -57,7 +57,9 @@ extension AppDelegate {
 #endif
 
         case .openPasswords:
-            mainViewController.launchAutofillLogins(openSearch: true)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [weak self] in
+                mainViewController.launchAutofillLogins(openSearch: true)
+            }
 
         default:
             guard app.applicationState == .active,

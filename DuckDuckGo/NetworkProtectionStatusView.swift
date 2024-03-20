@@ -173,7 +173,7 @@ struct NetworkProtectionStatusView: View {
             }
 
             NetworkProtectionThroughputItemView(
-                title: "Data Volume",
+                title: UserText.vpnDataVolume,
                 downloadSpeed: statusModel.downloadTotal,
                 uploadSpeed: statusModel.uploadTotal
             )
@@ -206,7 +206,7 @@ struct NetworkProtectionStatusView: View {
                 .daxBodyRegular()
                 .foregroundColor(.init(designSystemColor: .textPrimary))
         } header: {
-            Text("About").foregroundColor(.init(designSystemColor: .textSecondary))
+            Text(UserText.vpnAbout).foregroundColor(.init(designSystemColor: .textSecondary))
         }
         .listRowBackground(Color(designSystemColor: .surface))
     }

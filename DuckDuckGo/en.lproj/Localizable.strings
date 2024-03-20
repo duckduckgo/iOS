@@ -1630,6 +1630,9 @@ https://duckduckgo.com/mac";
 /* Title for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.title" = "VPN Alerts";
 
+/* Title for the data volume section in the VPN status screen */
+"network.protection.vpn.data-volume" = "Data Volume";
+
 /* Footer text for the Exclude Local Networks setting item. */
 "network.protection.vpn.exclude.local.networks.setting.footer" = "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.";
 

@@ -81,7 +81,7 @@ class SettingsLegacyViewProvider: ObservableObject {
     var feedback: UIViewController { instantiate("Feedback", fromStoryboard: "Feedback") }
     var about: UIViewController { AboutViewController() }
     
-    @available(iOS 15.0, *)
+    @available(iOS 15, *)
     var netPWaitlist: UIViewController { VPNWaitlistViewController(nibName: nil, bundle: nil) }
     
     @available(iOS 15, *)

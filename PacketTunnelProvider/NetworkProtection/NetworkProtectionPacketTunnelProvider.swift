@@ -234,28 +234,28 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
-#if SUBSCRIPTION && ALPHA
-        let isSubscriptionEnabled = true
-        let tokenStore = NetworkProtectionKeychainTokenStore(
-            keychainType: .dataProtection(.unspecified),
-            errorEvents: nil,
-            isSubscriptionEnabled: isSubscriptionEnabled,
-            accessTokenProvider: {
-                let configuration = DefaultSubscriptionConfiguration(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs),
-                                                                     purchasePlatform: .appStore,
-                                                                     serviceEnvironment: .staging)
-                return SubscriptionManager(configuration: configuration).tokenStorage.accessToken
+        let featureVisibility = NetworkProtectionVisibilityForTunnelProvider()
+        let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
+        let accessTokenProvider: () -> String? = {
+#if SUBSCRIPTION
+            if featureVisibility.shouldMonitorEntitlement() {
+                return { 
+	// TODO: FIXME
+let subscriptiongroup = subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)
+Tokenstore blah blh
+AccountManager().accessToken 
+}
             }
-        )
-#else
-        let isSubscriptionEnabled = false
+#endif
+            return { nil }
+        }()
         let tokenStore = NetworkProtectionKeychainTokenStore(
             keychainType: .dataProtection(.unspecified),
             errorEvents: nil,
             isSubscriptionEnabled: isSubscriptionEnabled,
-            accessTokenProvider: { nil }
+            accessTokenProvider: accessTokenProvider
         )
-#endif
+
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
@@ -323,8 +323,16 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     private static func entitlementCheck() async -> Result<Bool, Error> {
-#if SUBSCRIPTION && ALPHA
-        let configuration = DefaultSubscriptionConfiguration(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs),
+#if SUBSCRIPTION
+        guard NetworkProtectionVisibilityForTunnelProvider().shouldMonitorEntitlement() else {
+            return .success(true)
+        }
+
+        if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {
+            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+        }
+// TODO: FIXM
+	let configuration = DefaultSubscriptionConfiguration(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs),
                                                              purchasePlatform: .appStore,
                                                              serviceEnvironment: .staging)
         let accountManager = SubscriptionManager(configuration: configuration).accountManager

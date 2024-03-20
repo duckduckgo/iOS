@@ -60,12 +60,16 @@ extension ConnectionServerInfoObserverThroughSession {
 
 extension NetworkProtectionKeychainTokenStore {
     convenience init() {
-        let isSubscriptionEnabled = AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
-#if SUBSCRIPTION && ALPHA
-        let accessTokenProvider: () -> String? = { AppDependencyProvider.shared.subscriptionManager.tokenStorage.accessToken }
-#else
-        let accessTokenProvider: () -> String? = { nil }
+        let featureVisibility = DefaultNetworkProtectionVisibility.forTokenStore()
+        let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
+        let accessTokenProvider: () -> String? = {
+#if SUBSCRIPTION
+            if featureVisibility.shouldMonitorEntitlement() {
+                return { AppDependencyProvider.shared.subscriptionManager.tokenStorage.accessToken }
+            }
 #endif
+            return { nil }
+        }()
 
         self.init(keychainType: .dataProtection(.unspecified),
                   serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
@@ -83,7 +87,7 @@ extension NetworkProtectionCodeRedemptionCoordinator {
             tokenStore: NetworkProtectionKeychainTokenStore(),
             isManualCodeRedemptionFlow: isManualCodeRedemptionFlow,
             errorEvents: .networkProtectionAppDebugEvents,
-            isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
+            isSubscriptionEnabled: DefaultNetworkProtectionVisibility().isPrivacyProLaunched()
         )
     }
 }
@@ -110,7 +114,7 @@ extension NetworkProtectionLocationListCompositeRepository {
             environment: settings.selectedEnvironment,
             tokenStore: NetworkProtectionKeychainTokenStore(),
             errorEvents: .networkProtectionAppDebugEvents,
-            isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
+            isSubscriptionEnabled: DefaultNetworkProtectionVisibility().isPrivacyProLaunched()
         )
     }
 }

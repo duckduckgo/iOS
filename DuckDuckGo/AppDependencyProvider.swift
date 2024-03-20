@@ -22,6 +22,7 @@ import Core
 import BrowserServicesKit
 import DDGSync
 import Bookmarks
+import Subscription
 
 #if SUBSCRIPTION
 import Subscription
@@ -43,6 +44,7 @@ protocol DependencyProvider {
     var configurationManager: ConfigurationManager { get }
     var toggleProtectionsCounter: ToggleProtectionsCounter { get }
     var userBehaviorMonitor: UserBehaviorMonitor { get }
+    var subscriptionFeatureAvailability: SubscriptionFeatureAvailability { get }
 
 #if SUBSCRIPTION
     var subscriptionManager: SubscriptionManaging { get }
@@ -76,6 +78,10 @@ class AppDependencyProvider: DependencyProvider {
 
     let toggleProtectionsCounter: ToggleProtectionsCounter = ContentBlocking.shared.privacyConfigurationManager.toggleProtectionsCounter
     let userBehaviorMonitor = UserBehaviorMonitor()
+    
+    let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
+        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+        purchasePlatform: .appStore)
 
 #if SUBSCRIPTION
     let subscriptionManager: SubscriptionManaging = {

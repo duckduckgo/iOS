@@ -54,6 +54,9 @@ final class SettingsViewModel: ObservableObject {
     private var accountManager: AccountManaging { subscriptionManager.accountManager }
     private lazy var subscriptionService = subscriptionManager.serviceProvider.makeSubscriptionService()
     private var signOutObserver: Any?
+    private var isPrivacyProEnabled: Bool {
+        AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
+    }
         
     // Sheet Presentation & Navigation
     @Published var isRestoringSubscription: Bool = false
@@ -98,6 +101,7 @@ final class SettingsViewModel: ObservableObject {
     }
     
     var shouldShowNoMicrophonePermissionAlert: Bool = false
+    var autocompleteSubtitle: String?
 
 #if SUBSCRIPTION
     // MARK: - Deep linking
@@ -106,7 +110,7 @@ final class SettingsViewModel: ObservableObject {
     // immediately after loading the Settings View
     @Published private(set) var deepLinkTarget: SettingsDeepLinkSection?
 #endif
-    
+
     // MARK: Bindings
     
     var themeBinding: Binding<ThemeName> {
@@ -163,6 +167,8 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
+
+                Pixel.fire(pixel: self.state.autocomplete ? .autocompleteEnabled : .autocompleteDisabled)
             }
         )
     }
@@ -213,6 +219,7 @@ final class SettingsViewModel: ObservableObject {
          legacyViewProvider: SettingsLegacyViewProvider,
          subscriptionManager: SubscriptionManaging,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
+         variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
@@ -221,7 +228,7 @@ final class SettingsViewModel: ObservableObject {
         self.deepLinkTarget = deepLink
         
         setupNotificationObservers()
-        
+        autocompleteSubtitle = variantManager.isSupported(feature: .history) ? UserText.settingsAutocompleteSubtitle : nil
     }
     
     deinit {
@@ -232,10 +239,12 @@ final class SettingsViewModel: ObservableObject {
     // MARK: Default Init
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
+         variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
         self.voiceSearchHelper = voiceSearchHelper
+        autocompleteSubtitle = variantManager.isSupported(feature: .history) ? UserText.settingsAutocompleteSubtitle : nil
     }
 #endif
     
@@ -280,8 +289,7 @@ extension SettingsViewModel {
         var enabled = false
         #if NETWORK_PROTECTION
             if #available(iOS 15, *) {
-                let accessController = NetworkProtectionAccessController()
-                enabled = accessController.networkProtectionAccessType() != .none
+                enabled = DefaultNetworkProtectionVisibility().shouldKeepVPNAccessViaWaitlist()
             }
         #endif
         return SettingsState.NetworkProtection(enabled: enabled, status: "")
@@ -294,7 +302,7 @@ extension SettingsViewModel {
         
     #if SUBSCRIPTION
         if #available(iOS 15, *) {
-            enabled = featureFlagger.isFeatureOn(.subscription)
+            enabled = isPrivacyProEnabled
             canPurchase = !PurchaseManager.shared.availableProducts.isEmpty
             await setupSubscriptionEnvironment()
             if let token = subscriptionManager.tokenStorage.accessToken {
@@ -324,7 +332,8 @@ extension SettingsViewModel {
                                      return SyncUI.UserText.syncTitle
                                  }())
     }
-        
+     
+    
     private func firePixel(_ event: Pixel.Event) {
         Pixel.fire(pixel: event)
     }
@@ -428,15 +437,24 @@ extension SettingsViewModel {
     
     #if NETWORK_PROTECTION
     private func updateNetPStatus(connectionStatus: ConnectionStatus) {
-        switch NetworkProtectionAccessController().networkProtectionAccessType() {
-        case .none, .waitlistAvailable, .waitlistJoined, .waitlistInvitedPendingTermsAcceptance:
-            self.state.networkProtection.status = VPNWaitlist.shared.settingsSubtitle
-        case .waitlistInvited, .inviteCodeInvited:
+        if DefaultNetworkProtectionVisibility().isPrivacyProLaunched() {
             switch connectionStatus {
             case .connected:
                 self.state.networkProtection.status = UserText.netPCellConnected
             default:
                 self.state.networkProtection.status = UserText.netPCellDisconnected
+            }
+        } else {
+            switch NetworkProtectionAccessController().networkProtectionAccessType() {
+            case .none, .waitlistAvailable, .waitlistJoined, .waitlistInvitedPendingTermsAcceptance:
+                self.state.networkProtection.status = VPNWaitlist.shared.settingsSubtitle
+            case .waitlistInvited, .inviteCodeInvited:
+                switch connectionStatus {
+                case .connected:
+                    self.state.networkProtection.status = UserText.netPCellConnected
+                default:
+                    self.state.networkProtection.status = UserText.netPCellDisconnected
+                }
             }
         }
     }
@@ -549,13 +567,8 @@ extension SettingsViewModel {
 #if NETWORK_PROTECTION
         case .netP:
             if #available(iOS 15, *) {
-                switch NetworkProtectionAccessController().networkProtectionAccessType() {
-                case .inviteCodeInvited, .waitlistInvited:
-                    Pixel.fire(pixel: .privacyProVPNSettings)
-                    pushViewController(legacyViewProvider.netP)
-                default:
-                    pushViewController(legacyViewProvider.netPWaitlist)
-                }
+                Pixel.fire(pixel: .privacyProVPNSettings)
+                pushViewController(legacyViewProvider.netP)
             }
 #endif
         

@@ -159,7 +159,8 @@ struct NetworkProtectionStatusView: View {
                 }
             }
         } header: {
-            Text(statusModel.isNetPEnabled ? "Connected Location" : "Selected Location").foregroundColor(.init(designSystemColor: .textSecondary))
+            Text(statusModel.isNetPEnabled ? UserText.vpnLocationConnected : UserText.vpnLocationSelected)
+                .foregroundColor(.init(designSystemColor: .textSecondary))
         }
         .listRowBackground(Color(designSystemColor: .surface))
     }

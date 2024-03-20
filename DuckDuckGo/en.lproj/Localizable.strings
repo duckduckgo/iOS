@@ -1624,6 +1624,9 @@ https://duckduckgo.com/mac";
 /* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
 "network.protection.turn.on.notifications.section.footer" = "Allow DuckDuckGo to notify you if your connection drops or VPN status changes.";
 
+/* Title of the About section in the VPN status screen */
+"network.protection.vpn.about" = "About";
+
 /* List section footer for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.section.footer" = "Get notified if your connection drops or VPN status changes.";
 

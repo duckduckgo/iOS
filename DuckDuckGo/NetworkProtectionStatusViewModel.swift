@@ -87,7 +87,6 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         return formatter
     }()
 
-
     private let tunnelController: TunnelController
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
@@ -109,19 +108,23 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @Published public var shouldShowError: Bool = false
 
     // MARK: Header
+
     @Published public var statusImageID: String
     @Published public var headerTitle: String
 
     // MARK: Toggle Item
+
     @Published public var isNetPEnabled = false
     @Published public var statusMessage: String
     @Published public var shouldDisableToggle: Bool = false
 
     // MARK: Location
+
     private let settings: VPNSettings
     @Published public var preferredLocation: NetworkProtectionLocationStatusModel
 
     // MARK: Connection Details
+
     @Published public var shouldShowConnectionDetails: Bool = false
     @Published public var location: String?
     @Published public var ipAddress: String?
@@ -129,6 +132,10 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @Published public var uploadTotal: String = Constants.defaultUploadVolume
     @Published public var downloadTotal: String = Constants.defaultDownloadVolume
     private var throughputUpdateTimer: Timer?
+
+    var shouldShowFAQ: Bool {
+        AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
+    }
 
     @Published public var animationsOn: Bool = false
 

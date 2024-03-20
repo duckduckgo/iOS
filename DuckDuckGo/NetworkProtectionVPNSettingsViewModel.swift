@@ -41,18 +41,11 @@ final class NetworkProtectionVPNSettingsViewModel: ObservableObject {
         self.settings.notifyStatusChanges
     }
 
-    @Published public var preferredLocation: NetworkProtectionLocationSettingsItemModel
     @Published public var excludeLocalNetworks: Bool = true
 
     init(notificationsAuthorization: NotificationsAuthorizationControlling, settings: VPNSettings) {
         self.settings = settings
         self.notificationsAuthorization = notificationsAuthorization
-        self.preferredLocation = NetworkProtectionLocationSettingsItemModel(selectedLocation: settings.selectedLocation)
-        settings.selectedLocationPublisher
-            .receive(on: DispatchQueue.main)
-            .map(NetworkProtectionLocationSettingsItemModel.init(selectedLocation:))
-            .assign(to: \.preferredLocation, onWeaklyHeld: self)
-            .store(in: &cancellables)
         
         settings.excludeLocalNetworksPublisher
             .receive(on: DispatchQueue.main)
@@ -90,35 +83,6 @@ final class NetworkProtectionVPNSettingsViewModel: ObservableObject {
             viewKind = .authorized
         @unknown default:
             assertionFailure("Unhandled enum case")
-        }
-    }
-}
-
-struct NetworkProtectionLocationSettingsItemModel {
-    enum LocationIcon {
-        case defaultIcon
-        case emoji(String)
-    }
-
-    let title: String
-    let icon: LocationIcon
-
-    init(selectedLocation: VPNSettings.SelectedLocation) {
-        switch selectedLocation {
-        case .nearest:
-            title = UserText.netPPreferredLocationNearest
-            icon = .defaultIcon
-        case .location(let location):
-            let countryLabelsModel = NetworkProtectionVPNCountryLabelsModel(country: location.country)
-            if let city = location.city {
-                title = UserText.netPVPNSettingsLocationSubtitleFormattedCityAndCountry(
-                    city: city,
-                    country: countryLabelsModel.title
-                )
-            } else {
-                title = countryLabelsModel.title
-            }
-            icon = .emoji(countryLabelsModel.emoji)
         }
     }
 }

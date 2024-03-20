@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+// swiftlint:disable file_length
+
 #if SUBSCRIPTION
 import BrowserServicesKit
 import Common
@@ -55,6 +57,12 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         static let subscriptionSelected = "subscriptionSelected"
         static let activateSubscription = "activateSubscription"
         static let featureSelected = "featureSelected"
+        // Pixels related events
+        static let subscriptionsMonthlyPriceClicked = "subscriptionsMonthlyPriceClicked"
+        static let subscriptionsYearlyPriceClicked = "subscriptionsYearlyPriceClicked"
+        static let subscriptionsUnknownPriceClicked = "subscriptionsUnknownPriceClicked"
+        static let subscriptionsAddEmailSuccess = "subscriptionsAddEmailSuccess"
+        static let subscriptionsWelcomeFaqClicked = "subscriptionsWelcomeFaqClicked"
     }
     
     struct ProductIDs {
@@ -123,7 +131,14 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         case Handlers.activateSubscription: return activateSubscription
         case Handlers.featureSelected: return featureSelected
         case Handlers.backToSettings: return backToSettings
+        // Pixel related events
+        case Handlers.subscriptionsMonthlyPriceClicked: return subscriptionsMonthlyPriceClicked
+        case Handlers.subscriptionsYearlyPriceClicked: return subscriptionsYearlyPriceClicked
+        case Handlers.subscriptionsUnknownPriceClicked: return subscriptionsUnknownPriceClicked
+        case Handlers.subscriptionsAddEmailSuccess: return subscriptionsAddEmailSuccess
+        case Handlers.subscriptionsWelcomeFaqClicked: return subscriptionsWelcomeFaqClicked
         default:
+            os_log("Unhandled web message: %s", log: .subscription, type: .error, methodName)
             return nil
         }
     }
@@ -175,13 +190,16 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
                         
             switch await AppStorePurchaseFlow.subscriptionOptions() {
             case .success(let subscriptionOptions):
-                return subscriptionOptions
+                if AppDependencyProvider.shared.subscriptionFeatureAvailability.isSubscriptionPurchaseAllowed {
+                    return subscriptionOptions
+                } else {
+                    return SubscriptionOptions.empty
+                }
             case .failure:
                 os_log("Failed to obtain subscription options", log: .subscription, type: .error)
                 setTransactionError(.failedToGetSubscriptionOptions)
                 return nil
             }
-                        
         }
     }
     
@@ -298,28 +316,55 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         
         return nil
     }
-    
+
     func backToSettings(params: Any, original: WKScriptMessage) async -> Encodable? {
-           let accountManager = AccountManager()
-           if let accessToken = accountManager.accessToken,
-              case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
-               switch await SubscriptionService.getSubscription(accessToken: accessToken) {
-                   
-               case .success:
-                   accountManager.storeAccount(token: accessToken,
-                                               email: accountDetails.email,
-                                               externalID: accountDetails.externalID)
-                   onBackToSettings?()
-               default:
-                   break
-               }
-                                  
-           } else {
-               os_log("General error. Could not get account Details", log: .subscription, type: .error)
-               setTransactionError(.generalError)
-           }
-           return nil
-       }
+        let accountManager = AccountManager()
+        if let accessToken = accountManager.accessToken,
+           case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
+            switch await SubscriptionService.getSubscription(accessToken: accessToken) {
+
+            case .success:
+                accountManager.storeAccount(token: accessToken,
+                                            email: accountDetails.email,
+                                            externalID: accountDetails.externalID)
+                onBackToSettings?()
+            default:
+                break
+            }
+
+        } else {
+            os_log("General error. Could not get account Details", log: .subscription, type: .error)
+            setTransactionError(.generalError)
+        }
+        return nil
+    }
+
+    // MARK: Pixel related actions
+
+    func subscriptionsMonthlyPriceClicked(params: Any, original: WKScriptMessage) async -> Encodable? {
+        Pixel.fire(pixel: .privacyProOfferMonthlyPriceClick)
+        return nil
+    }
+
+    func subscriptionsYearlyPriceClicked(params: Any, original: WKScriptMessage) async -> Encodable? {
+        Pixel.fire(pixel: .privacyProOfferYearlyPriceClick)
+        return nil
+    }
+
+    func subscriptionsUnknownPriceClicked(params: Any, original: WKScriptMessage) async -> Encodable? {
+        // Not used
+        return nil
+    }
+
+    func subscriptionsAddEmailSuccess(params: Any, original: WKScriptMessage) async -> Encodable? {
+        UniquePixel.fire(pixel: .privacyProAddEmailSuccess)
+        return nil
+    }
+
+    func subscriptionsWelcomeFaqClicked(params: Any, original: WKScriptMessage) async -> Encodable? {
+        UniquePixel.fire(pixel: .privacyProWelcomeFAQClick)
+        return nil
+    }
 
     // MARK: Push actions (Push Data back to WebViews)
     enum SubscribeActionName: String {
@@ -373,3 +418,5 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
 }
 
 #endif
+
+// swiftlint:enable file_length

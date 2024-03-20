@@ -120,7 +120,7 @@ class TabViewController: UIViewController {
 
     public var inferredOpenerContext: BrokenSiteReport.OpenerContext?
     private var refreshCountSinceLoad: Int = 0
-    private var performanceMetrics: PerformanceMetricsSubfeature
+    private var performanceMetrics: PerformanceMetricsSubfeature?
 
     private var detectedLoginURL: URL?
     private var preserveLoginsWorker: PreserveLoginsWorker?
@@ -321,7 +321,6 @@ class TabViewController: UIViewController {
         self.historyManager = historyManager
         self.historyCapture = HistoryCapture(historyManager: historyManager)
         self.syncService = syncService
-        self.performanceMetrics = PerformanceMetricsSubfeature(targetWebview: webView)
         super.init(coder: aDecoder)
     }
 
@@ -2198,7 +2197,9 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
         userScripts.loginFormDetectionScript?.delegate = self
         userScripts.autoconsentUserScript.delegate = self
-        userScripts.contentScopeUserScriptIsolated.registerSubfeature(delegate: performanceMetrics)
+
+        performanceMetrics = PerformanceMetricsSubfeature(targetWebview: webView)
+        userScripts.contentScopeUserScriptIsolated.registerSubfeature(delegate: performanceMetrics!)
 
         adClickAttributionLogic.onRulesChanged(latestRules: ContentBlocking.shared.contentBlockingManager.currentRules)
 

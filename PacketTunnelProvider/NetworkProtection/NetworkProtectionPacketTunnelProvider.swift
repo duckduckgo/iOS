@@ -26,7 +26,10 @@ import Core
 import Networking
 import NetworkExtension
 import NetworkProtection
+
+#if SUBSCRIPTION
 import Subscription
+#endif
 
 // swiftlint:disable type_body_length
 
@@ -231,14 +234,23 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
-#if ALPHA
-        let isSubscriptionEnabled = true
-#else
-        let isSubscriptionEnabled = false
+        let featureVisibility = NetworkProtectionVisibilityForTunnelProvider()
+        let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
+        let accessTokenProvider: () -> String? = {
+#if SUBSCRIPTION
+            if featureVisibility.shouldMonitorEntitlement() {
+                return { AccountManager().accessToken }
+            }
 #endif
-        let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
-                                                             errorEvents: nil,
-                                                             isSubscriptionEnabled: isSubscriptionEnabled)
+            return { nil }
+        }()
+        let tokenStore = NetworkProtectionKeychainTokenStore(
+            keychainType: .dataProtection(.unspecified),
+            errorEvents: nil,
+            isSubscriptionEnabled: isSubscriptionEnabled,
+            accessTokenProvider: accessTokenProvider
+        )
+
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
@@ -306,17 +318,26 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     private static func entitlementCheck() async -> Result<Bool, Error> {
-#if ALPHA
-        SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
-#endif
+#if SUBSCRIPTION
+        guard NetworkProtectionVisibilityForTunnelProvider().shouldMonitorEntitlement() else {
+            return .success(true)
+        }
 
-        let result = await AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)).hasEntitlement(for: .networkProtection)
+        if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {
+            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+        }
+
+        let result = await AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+            .hasEntitlement(for: .networkProtection, cachePolicy: .reloadIgnoringLocalCacheData)
         switch result {
         case .success(let hasEntitlement):
             return .success(hasEntitlement)
         case .failure(let error):
             return .failure(error)
         }
+#else
+        return .success(true)
+#endif
     }
 }
 

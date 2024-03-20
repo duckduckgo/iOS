@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import Suggestions
 
 class SuggestionTableViewCell: UITableViewCell {
     
@@ -29,23 +30,46 @@ class SuggestionTableViewCell: UITableViewCell {
     static let reuseIdentifier = "SuggestionTableViewCell"
 
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var urlLabel: UILabel!
     @IBOutlet weak var typeImage: UIImageView!
     @IBOutlet weak var plusButton: UIButton!
 
     func updateFor(query: String, suggestion: Suggestion, with theme: Theme, isAddressBarAtBottom: Bool) {
 
-        switch suggestion.source {
-        case .local:
+        var text: String = ""
+        switch suggestion {
+        case .phrase(phrase: let phrase):
+            text = phrase
+            typeImage.image = UIImage(named: "Find-Search-20")
+            urlLabel.isHidden = true
+            self.accessibilityValue = UserText.voiceoverSuggestionTypeSearch
+
+        case .website(url: let url):
+            text = url.absoluteString
+            typeImage.image = UIImage(named: "Globe-20")
+            urlLabel.isHidden = true
+            self.accessibilityValue = UserText.voiceoverSuggestionTypeSearch
+
+        case .bookmark(title: let title, let url, _, _):
+            text = title
+            urlLabel.isHidden = url.isBookmarklet()
+            urlLabel.text = url.formattedForSuggestion()
             typeImage.image = UIImage(named: "Bookmark-20")
             self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
-        case .remote:
-            if suggestion.url != nil {
-                typeImage.image = UIImage(named: "Globe-20")
-                self.accessibilityValue = UserText.voiceoverSuggestionTypeWebsite
+
+        case .historyEntry(title: let title, url: let url, _):
+            if url.isDuckDuckGoSearch, let searchQuery = url.searchQuery {
+                text = searchQuery
             } else {
-                typeImage.image = UIImage(named: "Find-Search-20")
-                self.accessibilityValue = UserText.voiceoverSuggestionTypeSearch
+                text = title ?? url.absoluteString
             }
+            urlLabel.isHidden = false
+            urlLabel.text = url.formattedForSuggestion()
+            typeImage.image = UIImage(named: "History-20")
+            self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
+
+        case .unknown(value: let value):
+            assertionFailure("Unknown suggestion \(value)")
         }
 
         self.plusButton.accessibilityLabel = UserText.voiceoverActionAutocomplete
@@ -55,8 +79,9 @@ class SuggestionTableViewCell: UITableViewCell {
             self.plusButton.setImage(UIImage(named: "Arrow-Top-Left-24"), for: .normal)
         }
 
+        urlLabel.textColor = theme.tableCellTextColor
         styleText(query: query,
-                  text: suggestion.suggestion,
+                  text: text,
                   regularColor: theme.tableCellTextColor,
                   suggestionColor: theme.autocompleteSuggestionTextColor)
     }
@@ -85,4 +110,15 @@ class SuggestionTableViewCell: UITableViewCell {
         
         label.attributedText = newText
     }
+}
+
+private extension URL {
+
+    func formattedForSuggestion() -> String {
+        let string = absoluteString
+            .dropping(prefix: "https://")
+            .dropping(prefix: "http://")
+        return pathComponents.isEmpty ? string : string.dropping(suffix: "/")
+    }
+
 }

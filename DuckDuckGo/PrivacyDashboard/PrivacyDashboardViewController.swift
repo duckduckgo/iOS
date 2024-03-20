@@ -278,7 +278,7 @@ extension PrivacyDashboardViewController {
         let openerContext: BrokenSiteReport.OpenerContext?
         let vpnOn: Bool
         let userRefreshCount: Int
-        let performanceMetrics: PerformanceMetricsSubfeature
+        let performanceMetrics: PerformanceMetricsSubfeature?
     }
     
     enum BrokenSiteReportError: Error {
@@ -300,7 +300,8 @@ extension PrivacyDashboardViewController {
         var webVitalsResult: [Double]?
         if privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .performanceMetrics) {
             webVitalsResult = await withCheckedContinuation({ continuation in
-                breakageAdditionalInfo.performanceMetrics.notifyHandler { result in
+                guard let performanceMetrics = breakageAdditionalInfo.performanceMetrics else { continuation.resume(returning: nil); return }
+                performanceMetrics.notifyHandler { result in
                     continuation.resume(returning: result)
                 }
             })

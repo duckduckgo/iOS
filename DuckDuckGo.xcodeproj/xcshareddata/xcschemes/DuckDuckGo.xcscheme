@@ -124,7 +124,7 @@
          <EnvironmentVariable
             key = "VARIANT"
             value = "md"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "ONBOARDING"

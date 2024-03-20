@@ -384,7 +384,7 @@ class OmniBar: UIView {
         if let query = url.searchQuery {
             textField.text = query
         } else {
-            textField.text = AddressDisplayHelper.addressForDisplay(url: url, showsFullURL: textField.isEditing || forceFullURL)
+            textField.attributedText = AddressDisplayHelper.addressForDisplay(url: url, showsFullURL: textField.isEditing || forceFullURL)
         }
     }
 
@@ -530,7 +530,7 @@ extension OmniBar: Themable {
         searchStackContainer?.tintColor = theme.barTintColor
         
         if let url = textField.text.flatMap({ URL(trimmedAddressBarString: $0.trimmingWhitespace()) }) {
-            textField.text = AddressDisplayHelper.addressForDisplay(url: url, showsFullURL: textField.isEditing)
+            textField.attributedText = AddressDisplayHelper.addressForDisplay(url: url, showsFullURL: textField.isEditing)
         }
         textField.textColor = theme.searchBarTextColor
         textField.tintColor = UIColor(designSystemColor: .accent)

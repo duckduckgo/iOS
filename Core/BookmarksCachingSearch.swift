@@ -60,18 +60,7 @@ public class CoreDataBookmarksSearchStore: BookmarksSearchStore {
     public func bookmarksAndFavorites(completion: @escaping ([BookmarksCachingSearch.ScoredBookmark]) -> Void) {
 
         let context = bookmarksStore.makeContext(concurrencyType: .privateQueueConcurrencyType)
-
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "BookmarkEntity")
-        fetchRequest.predicate = NSPredicate(
-            format: "%K = false AND %K == NO",
-            #keyPath(BookmarkEntity.isFolder),
-            #keyPath(BookmarkEntity.isPendingDeletion)
-        )
-        fetchRequest.resultType = .dictionaryResultType
-        fetchRequest.propertiesToFetch = [#keyPath(BookmarkEntity.title),
-                                          #keyPath(BookmarkEntity.url),
-                                          #keyPath(BookmarkEntity.objectID)]
-        fetchRequest.relationshipKeyPathsForPrefetching = [#keyPath(BookmarkEntity.favoriteFolders)]
+        let fetchRequest = Self.shallowBookmarksFetchRequest(context: context)
 
         context.perform {
             let result = try? context.fetch(fetchRequest) as? [[String: Any]]
@@ -95,6 +84,38 @@ public class CoreDataBookmarksSearchStore: BookmarksSearchStore {
         guard let externalContext = notification.object as? NSManagedObjectContext,
               externalContext.persistentStoreCoordinator == bookmarksStore.coordinator else { return }
         subject.send()
+    }
+
+    /// Creates an `NSFetchRequest` to retrieve each bookmark as a shallow dictionary.
+    ///
+    /// The dictionary contains
+    ///   * `#keyPath(BookmarkEntity.title)`
+    ///   * `#keyPath(BookmarkEntity.url)`
+    ///   * `#keyPath(BookmarkEntity.objectID)`
+    ///   * `#keyPath(BookmarkEntity.favoriteFolders)`
+    ///
+    ///   Note that is `#keyPath(BookmarkEntity.favoriteFolders)` an `Int` representing the count of favorites folders this bookmark is contained in
+    public static func shallowBookmarksFetchRequest(context: NSManagedObjectContext) -> NSFetchRequest<NSFetchRequestResult> {
+        let favExpression = NSExpressionDescription()
+                favExpression.name = #keyPath(BookmarkEntity.favoriteFolders)
+                favExpression.expression = NSExpression(forFunction: "count:",
+                                                        arguments: [NSExpression(forKeyPath: #keyPath(BookmarkEntity.favoriteFolders))])
+                favExpression.expressionResultType = .integer64AttributeType
+
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "BookmarkEntity")
+        fetchRequest.predicate = NSPredicate(
+            format: "%K = false AND %K == NO AND (%K == NO OR %K == nil)",
+            #keyPath(BookmarkEntity.isFolder),
+            #keyPath(BookmarkEntity.isPendingDeletion),
+            #keyPath(BookmarkEntity.isStub), #keyPath(BookmarkEntity.isStub)
+        )
+        fetchRequest.resultType = .dictionaryResultType
+        fetchRequest.propertiesToFetch = [#keyPath(BookmarkEntity.title),
+                                          #keyPath(BookmarkEntity.url),
+                                          #keyPath(BookmarkEntity.objectID),
+                                          favExpression]
+
+        return fetchRequest
     }
 }
 
@@ -124,14 +145,16 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
             guard let title = bookmark[#keyPath(BookmarkEntity.title)] as? String,
                   let urlString = bookmark[#keyPath(BookmarkEntity.url)] as? String,
                   let url = URL(string: urlString),
-                  let objectID = bookmark[#keyPath(BookmarkEntity.objectID)] as? NSManagedObjectID else {
+                  let objectID = bookmark[#keyPath(BookmarkEntity.objectID)] as? NSManagedObjectID,
+                  let favoritesFolderCount = bookmark[#keyPath(BookmarkEntity.favoriteFolders)] as? Int
+                else {
                 return nil
             }
 
             self.init(objectID: objectID,
                       title: title,
                       url: url,
-                      isFavorite: (bookmark[#keyPath(BookmarkEntity.favoriteFolders)] as? Set<NSManagedObject>)?.isEmpty != true)
+                      isFavorite: favoritesFolderCount > 0)
         }
 
         public func togglingFavorite() -> BookmarksStringSearchResult {

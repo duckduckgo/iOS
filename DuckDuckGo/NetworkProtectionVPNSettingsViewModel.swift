@@ -20,29 +20,51 @@
 #if NETWORK_PROTECTION
 
 import Foundation
+import UserNotifications
 import NetworkProtection
 import Combine
+
+enum NetworkProtectionNotificationsViewKind: Equatable {
+    case loading
+    case unauthorized
+    case authorized
+}
 
 final class NetworkProtectionVPNSettingsViewModel: ObservableObject {
     private let settings: VPNSettings
     private var cancellables: Set<AnyCancellable> = []
 
-    @Published public var preferredLocation: NetworkProtectionLocationSettingsItemModel
+    private var notificationsAuthorization: NotificationsAuthorizationControlling
+    @Published var viewKind: NetworkProtectionNotificationsViewKind = .loading
+
+    var alertsEnabled: Bool {
+        self.settings.notifyStatusChanges
+    }
+
     @Published public var excludeLocalNetworks: Bool = true
 
-    init(settings: VPNSettings) {
+    init(notificationsAuthorization: NotificationsAuthorizationControlling, settings: VPNSettings) {
         self.settings = settings
-        self.preferredLocation = NetworkProtectionLocationSettingsItemModel(selectedLocation: settings.selectedLocation)
-        settings.selectedLocationPublisher
-            .receive(on: DispatchQueue.main)
-            .map(NetworkProtectionLocationSettingsItemModel.init(selectedLocation:))
-            .assign(to: \.preferredLocation, onWeaklyHeld: self)
-            .store(in: &cancellables)
+        self.notificationsAuthorization = notificationsAuthorization
         
         settings.excludeLocalNetworksPublisher
             .receive(on: DispatchQueue.main)
             .assign(to: \.excludeLocalNetworks, onWeaklyHeld: self)
             .store(in: &cancellables)
+    }
+
+    @MainActor
+    func onViewAppeared() async {
+        let status = await notificationsAuthorization.authorizationStatus
+        updateViewKind(for: status)
+    }
+
+    func turnOnNotifications() {
+        notificationsAuthorization.requestAlertAuthorization()
+    }
+
+    func didToggleAlerts(to enabled: Bool) {
+        settings.notifyStatusChanges = enabled
     }
 
     func toggleExcludeLocalNetworks() {
@@ -52,34 +74,22 @@ final class NetworkProtectionVPNSettingsViewModel: ObservableObject {
     private static func localizedString(forRegionCode: String) -> String {
         Locale.current.localizedString(forRegionCode: forRegionCode) ?? forRegionCode.capitalized
     }
+
+    private func updateViewKind(for authorizationStatus: UNAuthorizationStatus) {
+        switch authorizationStatus {
+        case .notDetermined, .denied:
+            viewKind = .unauthorized
+        case .authorized, .ephemeral, .provisional:
+            viewKind = .authorized
+        @unknown default:
+            assertionFailure("Unhandled enum case")
+        }
+    }
 }
 
-struct NetworkProtectionLocationSettingsItemModel {
-    enum LocationIcon {
-        case defaultIcon
-        case emoji(String)
-    }
-
-    let title: String
-    let icon: LocationIcon
-
-    init(selectedLocation: VPNSettings.SelectedLocation) {
-        switch selectedLocation {
-        case .nearest:
-            title = UserText.netPPreferredLocationNearest
-            icon = .defaultIcon
-        case .location(let location):
-            let countryLabelsModel = NetworkProtectionVPNCountryLabelsModel(country: location.country)
-            if let city = location.city {
-                title = UserText.netPVPNSettingsLocationSubtitleFormattedCityAndCountry(
-                    city: city,
-                    country: countryLabelsModel.title
-                )
-            } else {
-                title = countryLabelsModel.title
-            }
-            icon = .emoji(countryLabelsModel.emoji)
-        }
+extension NetworkProtectionVPNSettingsViewModel: NotificationsPermissionsControllerDelegate {
+    func authorizationStateDidChange(toStatus status: UNAuthorizationStatus) {
+        updateViewKind(for: status)
     }
 }
 

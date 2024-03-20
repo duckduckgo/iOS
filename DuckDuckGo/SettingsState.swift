@@ -57,6 +57,7 @@ struct SettingsState {
     var fireButtonAnimation: FireButtonAnimationType
     var textSize: TextSize
     var addressbar: AddressBar
+    var showsFullURL: Bool
 
     // Privacy properties
     var sendDoNotSell: Bool
@@ -97,6 +98,7 @@ struct SettingsState {
             fireButtonAnimation: .fireRising,
             textSize: TextSize(enabled: false, size: 100),
             addressbar: AddressBar(enabled: false, position: .top),
+            showsFullURL: false,
             sendDoNotSell: true,
             autoconsentEnabled: false,
             autoclearDataEnabled: false,

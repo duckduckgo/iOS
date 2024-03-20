@@ -24,6 +24,10 @@ import UIKit
 import Common
 import NetworkExtension
 
+#if SUBSCRIPTION
+import Subscription
+#endif
+
 private class DefaultTunnelSessionProvider: TunnelSessionProvider {
     func activeSession() async -> NETunnelProviderSession? {
         try? await ConnectionSessionUtilities.activeSession()
@@ -56,10 +60,22 @@ extension ConnectionServerInfoObserverThroughSession {
 
 extension NetworkProtectionKeychainTokenStore {
     convenience init() {
+        let featureVisibility = DefaultNetworkProtectionVisibility.forTokenStore()
+        let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
+        let accessTokenProvider: () -> String? = {
+#if SUBSCRIPTION
+            if featureVisibility.shouldMonitorEntitlement() {
+                return { AccountManager().accessToken }
+            }
+#endif
+            return { nil }
+        }()
+
         self.init(keychainType: .dataProtection(.unspecified),
                   serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
                   errorEvents: .networkProtectionAppDebugEvents,
-                  isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription))
+                  isSubscriptionEnabled: isSubscriptionEnabled,
+                  accessTokenProvider: accessTokenProvider)
     }
 }
 
@@ -71,7 +87,7 @@ extension NetworkProtectionCodeRedemptionCoordinator {
             tokenStore: NetworkProtectionKeychainTokenStore(),
             isManualCodeRedemptionFlow: isManualCodeRedemptionFlow,
             errorEvents: .networkProtectionAppDebugEvents,
-            isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
+            isSubscriptionEnabled: DefaultNetworkProtectionVisibility().isPrivacyProLaunched()
         )
     }
 }
@@ -98,7 +114,7 @@ extension NetworkProtectionLocationListCompositeRepository {
             environment: settings.selectedEnvironment,
             tokenStore: NetworkProtectionKeychainTokenStore(),
             errorEvents: .networkProtectionAppDebugEvents,
-            isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
+            isSubscriptionEnabled: DefaultNetworkProtectionVisibility().isPrivacyProLaunched()
         )
     }
 }

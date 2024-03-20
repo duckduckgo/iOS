@@ -166,8 +166,30 @@ class AppUserDefaultsTests: XCTestCase {
         XCTAssertEqual(appUserDefaults.autofillCredentialsEnabled, false)
     }
 
-    func testDefaultAutoconsentStateIsTrue() {
+    func testDefaultAutoconsentStateIsFalse_WhenNotInRollout() {
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        appUserDefaults.featureFlagger = createFeatureFlagger(withSubfeatureEnabled: false)
+        XCTAssertFalse(appUserDefaults.autoconsentEnabled)
+    }
+
+    func testDefaultAutoconsentStateIsTrue_WhenInRollout() {
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        appUserDefaults.featureFlagger = createFeatureFlagger(withSubfeatureEnabled: true)
+        XCTAssertTrue(appUserDefaults.autoconsentEnabled)
+    }
+
+    func testAutoconsentReadsUserStoredValue_RegardlessOfRolloutState() {
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+     
+        // When setting disabled by user and rollout enabled
+        appUserDefaults.autoconsentEnabled = false
+        appUserDefaults.featureFlagger = createFeatureFlagger(withSubfeatureEnabled: true)
+
+        XCTAssertFalse(appUserDefaults.autoconsentEnabled)
+
+        // When setting enabled by user and rollout disabled
+        appUserDefaults.autoconsentEnabled = true
+        appUserDefaults.featureFlagger = createFeatureFlagger(withSubfeatureEnabled: false)
 
         XCTAssertTrue(appUserDefaults.autoconsentEnabled)
     }

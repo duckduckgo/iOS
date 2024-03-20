@@ -34,15 +34,15 @@ public enum FeatureFlag: String {
     case networkProtection
     case networkProtectionWaitlistAccess
     case networkProtectionWaitlistActive
-    case subscription
     case swipeTabs
+    case autoconsentOnByDefault
     case history
 }
 
 extension FeatureFlag: FeatureFlagSourceProviding {
     public var source: FeatureFlagSource {
         switch self {
-        case .debugMenu, .appTrackingProtection, .subscription, .swipeTabs:
+        case .debugMenu, .appTrackingProtection, .swipeTabs:
             return .internalOnly
         case .sync:
             return .remoteReleasable(.subfeature(SyncSubfeature.level0ShowSync))
@@ -66,8 +66,11 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .remoteReleasable(.subfeature(AutofillSubfeature.onByDefault))
         case .incontextSignup:
             return .remoteReleasable(.feature(.incontextSignup))
+        case .autoconsentOnByDefault:
+            return .remoteReleasable(.subfeature(AutoconsentSubfeature.onByDefault))
         case .history:
             return .remoteReleasable(.feature(.history))
+        
         }
     }
 }

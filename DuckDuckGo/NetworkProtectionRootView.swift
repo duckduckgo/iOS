@@ -32,13 +32,19 @@ struct NetworkProtectionRootView: View {
             redemptionCoordinator: NetworkProtectionCodeRedemptionCoordinator(isManualCodeRedemptionFlow: true),
             completion: inviteCompletion
         )
-        switch model.initialViewKind {
-        case .invite:
-            NetworkProtectionInviteView(model: inviteViewModel)
-        case .status:
+        if DefaultNetworkProtectionVisibility().isPrivacyProLaunched() {
             NetworkProtectionStatusView(
                 statusModel: NetworkProtectionStatusViewModel()
             )
+        } else {
+            switch model.initialViewKind {
+            case .invite:
+                NetworkProtectionInviteView(model: inviteViewModel)
+            case .status:
+                NetworkProtectionStatusView(
+                    statusModel: NetworkProtectionStatusViewModel()
+                )
+            }
         }
     }
 }

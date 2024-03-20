@@ -65,7 +65,7 @@ extension NetworkProtectionKeychainTokenStore {
         let accessTokenProvider: () -> String? = {
 #if SUBSCRIPTION
             if featureVisibility.shouldMonitorEntitlement() {
-                return { AccountManager().accessToken }
+                return { AppDependencyProvider.shared.subscriptionManager.tokenStorage.accessToken }
             }
 #endif
             return { nil }

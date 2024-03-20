@@ -27,13 +27,14 @@ import Subscription
 @available(iOS 15.0, *)
 final class SubscriptionEmailViewModel: ObservableObject {
     
-    let accountManager: AccountManager
+    let accountManager: AccountManaging
+    let subscriptionManager: SubscriptionManaging
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     
     private var canGoBackCancellable: AnyCancellable?
     
-    var emailURL = URL.activateSubscriptionViaEmail
+    var emailURL: URL!
     var viewTitle = UserText.subscriptionActivateEmailTitle
     var webViewModel: AsyncHeadlessWebViewViewModel
     
@@ -67,10 +68,12 @@ final class SubscriptionEmailViewModel: ObservableObject {
 
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
-         accountManager: AccountManager = AccountManager()) {
+         accountManager: AccountManaging = AppDependencyProvider.shared.subscriptionManager.accountManager,
+         subscriptionManager: SubscriptionManaging = AppDependencyProvider.shared.subscriptionManager) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.accountManager = accountManager
+        self.subscriptionManager = subscriptionManager
         self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,
                                                           subFeature: subFeature,
                                                           settings: AsyncHeadlessWebViewSettings(bounces: false,
@@ -78,7 +81,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
                                                                                                  contentBlocking: false))
         
         Task {
-            await initializeView()
+            await initializeView(urlProvider: subscriptionManager.urlProvider)
             await setupSubscribers()
         }
         setupObservers()
@@ -98,19 +101,26 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
     
     func onAppear() {
-        Task { await initializeView() }
+        Task { await initializeView(urlProvider: subscriptionManager.urlProvider) }
         webViewModel.navigationCoordinator.navigateTo(url: emailURL )
     }
     
     @MainActor
-    private func initializeView() {
-        if accountManager.isUserAuthenticated {
+    private func initializeView(urlProvider: SubscriptionURLProviding) {
+        if subscriptionManager.isUserAuthenticated {
             // If user is authenticated, we want to "Add or manage email" instead of activating
-            emailURL = accountManager.email == nil ? URL.addEmailToSubscription : URL.manageSubscriptionEmail
-            viewTitle = accountManager.email == nil ?  UserText.subscriptionRestoreAddEmailTitle : UserText.subscriptionManageEmailTitle
+            let addEmailURL = urlProvider.url(for: .addEmail)
+            let manageEmailURL = urlProvider.url(for: .manageEmail)
+
+            let hasNoEmail = subscriptionManager.accountStorage.email != nil
+
+            emailURL = hasNoEmail ? addEmailURL : manageEmailURL
+            viewTitle = hasNoEmail ?  UserText.subscriptionRestoreAddEmailTitle : UserText.subscriptionManageEmailTitle
             
             // Also we assume subscription requires managing, and not activation
             state.managingSubscriptionEmail = true
+        } else {
+            emailURL = urlProvider.url(for: .activateWithEmail)
         }
     }
     
@@ -119,7 +129,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 self?.state.canNavigateBack = false
-                if self?.webViewModel.url != URL.activateSubscriptionViaEmail.forComparison() {
+                if self?.webViewModel.url != self?.subscriptionManager.urlProvider.url(for: .activateWithEmail).removingSubscriptionEnvironmentParameter() {
                     self?.state.canNavigateBack = value
                 }
             }
@@ -182,8 +192,8 @@ final class SubscriptionEmailViewModel: ObservableObject {
     func shouldDisplayBackButton() -> Bool {
         // Hide the back button after activation
         if state.subscriptionActive &&
-            (webViewModel.url == URL.subscriptionActivateSuccess.forComparison() ||
-             webViewModel.url == URL.subscriptionPurchase.forComparison()) {
+            (webViewModel.url == subscriptionManager.urlProvider.url(for: .activateWithEmailSuccess).removingSubscriptionEnvironmentParameter() ||
+             webViewModel.url == subscriptionManager.urlProvider.url(for: .purchase).removingSubscriptionEnvironmentParameter()) {
             return false
         }
         return true
@@ -216,6 +226,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
         cancellables.removeAll()
        
     }
-
 }
+
 #endif

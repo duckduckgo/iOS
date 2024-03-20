@@ -30,8 +30,9 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     let purchaseManager: PurchaseManager
-    let accountManager: AccountManager
-    
+    let accountManager: AccountManaging
+    let subscriptionManager: SubscriptionManaging
+
     private var cancellables = Set<AnyCancellable>()
     
     enum SubscriptionActivationResult {
@@ -65,12 +66,14 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
          purchaseManager: PurchaseManager = PurchaseManager.shared,
-         accountManager: AccountManager = AccountManager(),
+         accountManager: AccountManaging = AppDependencyProvider.shared.subscriptionManager.accountManager,
+         subscriptionManager: SubscriptionManaging = AppDependencyProvider.shared.subscriptionManager,
          isAddingDevice: Bool = false) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.purchaseManager = purchaseManager
         self.accountManager = accountManager
+        self.subscriptionManager = subscriptionManager
         self.state.isAddingDevice = false
     }
     
@@ -86,10 +89,10 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     @MainActor
     private func resetState() {
-        state.subscriptionEmail = accountManager.email
+        state.subscriptionEmail = subscriptionManager.accountStorage.email
         
         state.isAddingDevice = false
-        if accountManager.isUserAuthenticated {
+        if subscriptionManager.isUserAuthenticated {
             state.isAddingDevice = true
         }
         

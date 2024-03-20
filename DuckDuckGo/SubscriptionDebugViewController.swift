@@ -32,7 +32,11 @@ import Subscription
 @available(iOS 15.0, *)
 final class SubscriptionDebugViewController: UITableViewController {
     
-    private let accountManager = AccountManager()
+    private var subscriptionManager: SubscriptionManaging = AppDependencyProvider.shared.subscriptionManager
+    private var accountManager: AccountManaging { subscriptionManager.accountManager }
+    private lazy var authService = subscriptionManager.serviceProvider.makeAuthService()
+    private lazy var subscriptionService = subscriptionManager.serviceProvider.makeSubscriptionService()
+
     fileprivate var purchaseManager: PurchaseManager = PurchaseManager.shared
     
     private let titles = [
@@ -171,7 +175,7 @@ final class SubscriptionDebugViewController: UITableViewController {
 
     // MARK: Account Status Actions
     private func clearAuthData() {
-        accountManager.signOut()
+        subscriptionManager.signOut()
         showAlert(title: "Data cleared!")
     }
     
@@ -183,10 +187,10 @@ final class SubscriptionDebugViewController: UITableViewController {
     }
     
     private func showAccountDetails() {
-        let title = accountManager.isUserAuthenticated ? "Authenticated" : "Not Authenticated"
-        let message = accountManager.isUserAuthenticated ? ["AuthToken: \(accountManager.authToken ?? "")",
-                                                   "AccessToken: \(accountManager.accessToken ?? "")",
-                                                   "Email: \(accountManager.email ?? "")"].joined(separator: "\n") : nil
+        let title = subscriptionManager.isUserAuthenticated ? "Authenticated" : "Not Authenticated"
+        let message = subscriptionManager.isUserAuthenticated ? ["AuthToken: \(subscriptionManager.tokenStorage.authToken ?? "")",
+                                                   "AccessToken: \(subscriptionManager.tokenStorage.accessToken ?? "")",
+                                                                 "Email: \(subscriptionManager.accountStorage.email ?? "")"].joined(separator: "\n") : nil
         showAlert(title: title, message: message)
     }
             
@@ -203,11 +207,11 @@ final class SubscriptionDebugViewController: UITableViewController {
     
     private func validateToken() {
         Task {
-            guard let token = accountManager.accessToken else {
+            guard let token = subscriptionManager.tokenStorage.accessToken else {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Token not available")
                 return
             }
-            switch await AuthService.validateToken(accessToken: token) {
+            switch await authService.validateToken(accessToken: token) {
             case .success(let response):
                 showAlert(title: "Token details", message: "\(response)")
             case .failure(let error):
@@ -218,11 +222,11 @@ final class SubscriptionDebugViewController: UITableViewController {
     
     private func getSubscription() {
         Task {
-            guard let token = accountManager.accessToken else {
+            guard let token = subscriptionManager.tokenStorage.accessToken else {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
                 return
             }
-            switch await SubscriptionService.getSubscription(accessToken: token) {
+            switch await subscriptionService.getSubscription(accessToken: token) {
             case .success(let response):
                 showAlert(title: "Subscription info", message: "\(response)")
             case .failure(let error):
@@ -234,13 +238,13 @@ final class SubscriptionDebugViewController: UITableViewController {
     private func getEntitlements() {
         Task {
             var results: [String] = []
-            guard accountManager.accessToken != nil else {
+            guard subscriptionManager.isUserAuthenticated else {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
                 return
             }
             let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
             for entitlement in entitlements {
-                if case let .success(result) = await AccountManager().hasEntitlement(for: entitlement) {
+                if case let .success(result) = await accountManager.hasEntitlement(for: entitlement) {
                     let resultSummary = "Entitlement check for \(entitlement.rawValue): \(result)"
                     results.append(resultSummary)
                     print(resultSummary)

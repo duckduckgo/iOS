@@ -31,10 +31,12 @@ final class SubscriptionFlowViewModel: ObservableObject {
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     let purchaseManager: PurchaseManager
+    let accountManager: AccountManaging
+    let subscriptionManager: SubscriptionManaging
     var webViewModel: AsyncHeadlessWebViewViewModel
     
     let viewTitle = UserText.settingsPProSection
-    var purchaseURL = URL.subscriptionPurchase
+    var purchaseURL: URL { subscriptionManager.urlProvider.url(for: .purchase) }
     
     private var cancellables = Set<AnyCancellable>()
     private var canGoBackCancellable: AnyCancellable?
@@ -70,10 +72,14 @@ final class SubscriptionFlowViewModel: ObservableObject {
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
          purchaseManager: PurchaseManager = PurchaseManager.shared,
+         accountManager: AccountManaging = AppDependencyProvider.shared.subscriptionManager.accountManager,
+         subscriptionManager: SubscriptionManaging = AppDependencyProvider.shared.subscriptionManager,
          selectedFeature: SettingsViewModel.SettingsDeepLinkSection? = nil) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.purchaseManager = purchaseManager
+        self.accountManager = accountManager
+        self.subscriptionManager = subscriptionManager
         self.selectedFeature = selectedFeature
         self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,
                                                           subFeature: subFeature,
@@ -94,8 +100,9 @@ final class SubscriptionFlowViewModel: ObservableObject {
             .store(in: &cancellables)
         
         
-        subFeature.onBackToSettings = {
-            self.webViewModel.navigationCoordinator.navigateTo(url: URL.subscriptionPurchase)
+        subFeature.onBackToSettings = { [weak self] in
+            guard let purchaseURL = self?.purchaseURL else { return }
+            self?.webViewModel.navigationCoordinator.navigateTo(url: purchaseURL)
         }
         
         subFeature.onActivateSubscription = {
@@ -234,9 +241,9 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
     
     private func backButtonForURL(currentURL: URL) -> Bool {
-        return currentURL != URL.subscriptionBaseURL.forComparison() &&
-            currentURL != URL.subscriptionActivateSuccess.forComparison() &&
-            currentURL != URL.subscriptionPurchase.forComparison()
+        return currentURL != subscriptionManager.urlProvider.url(for: .purchase).removingSubscriptionEnvironmentParameter() &&
+        currentURL != subscriptionManager.urlProvider.url(for: .welcome).removingSubscriptionEnvironmentParameter() &&
+        currentURL != subscriptionManager.urlProvider.url(for: .activateWithEmailSuccess).removingSubscriptionEnvironmentParameter()
     }
     
     @MainActor
@@ -313,4 +320,5 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
        
 }
+
 #endif

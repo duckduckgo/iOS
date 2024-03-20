@@ -251,7 +251,8 @@ extension MainViewController {
                                                             bookmarksDatabase: bookmarksDatabase,
                                                             tabManager: tabManager)
 #if SUBSCRIPTION
-        let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider, accountManager: AccountManager())
+        let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider,
+                                                  subscriptionManager: AppDependencyProvider.shared.subscriptionManager)
 #else
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider)
 #endif

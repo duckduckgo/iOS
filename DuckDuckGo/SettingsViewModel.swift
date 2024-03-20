@@ -50,7 +50,9 @@ final class SettingsViewModel: ObservableObject {
     private let voiceSearchHelper: VoiceSearchHelperProtocol
 
 #if SUBSCRIPTION
-    private var accountManager: AccountManager
+    private var subscriptionManager: SubscriptionManaging
+    private var accountManager: AccountManaging { subscriptionManager.accountManager }
+    private lazy var subscriptionService = subscriptionManager.serviceProvider.makeSubscriptionService()
     private var signOutObserver: Any?
     private var isPrivacyProEnabled: Bool {
         AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
@@ -215,13 +217,13 @@ final class SettingsViewModel: ObservableObject {
     // MARK: Default Init
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
-         accountManager: AccountManager,
+         subscriptionManager: SubscriptionManaging,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
-        self.accountManager = accountManager
+        self.subscriptionManager = subscriptionManager
         self.voiceSearchHelper = voiceSearchHelper
         self.deepLinkTarget = deepLink
         
@@ -301,10 +303,10 @@ extension SettingsViewModel {
     #if SUBSCRIPTION
         if #available(iOS 15, *) {
             enabled = isPrivacyProEnabled
-            canPurchase = SubscriptionPurchaseEnvironment.canPurchase
+            canPurchase = !PurchaseManager.shared.availableProducts.isEmpty
             await setupSubscriptionEnvironment()
-            if let token = AccountManager().accessToken {
-                let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token)
+            if let token = subscriptionManager.tokenStorage.accessToken {
+                let subscriptionResult = await subscriptionService.getSubscription(accessToken: token)
                 if case .success(let subscription) = subscriptionResult {
                     hasActiveSubscription = subscription.isActive
                 }
@@ -352,21 +354,21 @@ extension SettingsViewModel {
     private func setupSubscriptionEnvironment() async {
         
         // Active subscription check
-        guard let token = accountManager.accessToken else {
+        guard let token = subscriptionManager.tokenStorage.accessToken else {
             setupSubscriptionPurchaseOptions()
             return
         }
         
         isLoadingSubscriptionState = true
         // Fetch available subscriptions from the backend (or sign out)
-        switch await SubscriptionService.getSubscription(accessToken: token) {
-        
+        switch await subscriptionService.getSubscription(accessToken: token) {
+
         case .success(let subscription) where subscription.isActive:
             
             // Check entitlements and update UI accordingly
             let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
             for entitlement in entitlements {
-                if case let .success(result) = await AccountManager().hasEntitlement(for: entitlement) {
+                if case let .success(result) = await accountManager.hasEntitlement(for: entitlement) {
                     switch entitlement {
                     case .identityTheftRestoration:
                         self.shouldShowITP = result
@@ -390,7 +392,7 @@ extension SettingsViewModel {
     
     @available(iOS 15.0, *)
     private func signOutUser() {
-        AccountManager().signOut()
+        subscriptionManager.signOut()
         setupSubscriptionPurchaseOptions()
     }
     
@@ -415,7 +417,7 @@ extension SettingsViewModel {
     @available(iOS 15.0, *)
     func restoreAccountPurchase() async {
         DispatchQueue.main.async { self.isRestoringSubscription = true }
-        let result = await AppStoreRestoreFlow.restoreAccountFromPastPurchase(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+        let result = await subscriptionManager.flowProvider.appStoreRestoreFlow.restoreAccountFromPastPurchase()
         switch result {
         case .success:
             DispatchQueue.main.async {

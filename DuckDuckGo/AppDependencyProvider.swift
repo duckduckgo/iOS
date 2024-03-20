@@ -24,6 +24,14 @@ import DDGSync
 import Bookmarks
 import Subscription
 
+#if SUBSCRIPTION
+import Subscription
+#endif
+
+#if NETWORK_PROTECTION
+import NetworkProtection
+#endif
+
 protocol DependencyProvider {
 
     var appSettings: AppSettings { get }
@@ -41,6 +49,10 @@ protocol DependencyProvider {
     var toggleProtectionsCounter: ToggleProtectionsCounter { get }
     var userBehaviorMonitor: UserBehaviorMonitor { get }
     var subscriptionFeatureAvailability: SubscriptionFeatureAvailability { get }
+
+#if SUBSCRIPTION
+    var subscriptionManager: SubscriptionManaging { get }
+#endif
 
 }
 
@@ -75,4 +87,22 @@ class AppDependencyProvider: DependencyProvider {
         privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
         purchasePlatform: .appStore)
 
+#if SUBSCRIPTION
+    let subscriptionManager: SubscriptionManaging = {
+
+        var serviceEnvironment: SubscriptionServiceEnvironment = .staging
+
+#if NETWORK_PROTECTION
+        if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {
+            serviceEnvironment = .staging
+        }
+#endif
+
+        let configuration = DefaultSubscriptionConfiguration(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs),
+                                                             purchasePlatform: .appStore,
+                                                             serviceEnvironment: serviceEnvironment)
+
+        return SubscriptionManager(configuration: configuration)
+    }()
+#endif
 }

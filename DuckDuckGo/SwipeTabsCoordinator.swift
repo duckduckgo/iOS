@@ -101,8 +101,6 @@ class SwipeTabsCoordinator: NSObject {
     }
     
     private func scrollToCurrent() {
-        guard isEnabled else { return }
-        
         let targetOffset = collectionView.frame.width * CGFloat(tabsModel.currentIndex)
 
         guard targetOffset != collectionView.contentOffset.x else {

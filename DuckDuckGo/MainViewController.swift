@@ -304,8 +304,8 @@ class MainViewController: UIViewController {
 
         startOnboardingFlowIfNotSeenBefore()
         tabsBarController?.refresh(tabsModel: tabManager.model)
-        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
-        
+        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
+
         _ = AppWidthObserver.shared.willResize(toWidth: view.frame.width)
         applyWidth()
 
@@ -1284,7 +1284,7 @@ class MainViewController: UIViewController {
         }
         attachHomeScreen()
         tabsBarController?.refresh(tabsModel: tabManager.model)
-        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
+        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
         homeController?.openedAsNewTab(allowingKeyboard: allowingKeyboard)
     }
     

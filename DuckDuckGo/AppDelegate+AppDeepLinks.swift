@@ -57,7 +57,7 @@ extension AppDelegate {
 #endif
 
         case .openPasswords:
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
                 mainViewController.launchAutofillLogins(openSearch: true)
             }
 

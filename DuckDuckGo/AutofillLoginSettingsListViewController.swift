@@ -179,11 +179,10 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         registerForKeyboardNotifications()
 
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        authenticate()
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        authenticate()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -364,7 +363,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         }
 
         if openSearch {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 self.searchController.searchBar.searchTextField.becomeFirstResponder()
             }
             openSearch = false

@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 struct PrivacyProtectionDescription {
     let imageName: String
@@ -39,20 +40,20 @@ struct PrivacyProtectionDescriptionView: View {
                 .frame(width: 128, height: 96)
 
             Text(content.title)
-                .font(.title3)
+                .daxTitle2()
+                .multilineTextAlignment(.center)
+                .foregroundColor(.init(designSystemColor: .textPrimary))
 
             StatusIndicatorView(status: content.status)
                 .padding(.top, -4)
 
             Text(LocalizedStringKey(content.explanation))
-                .font(.system(size: 16))
-                .lineLimit(nil)
+                .daxBodyRegular()
                 .multilineTextAlignment(.center)
-                .foregroundColor(.secondary)
+                .foregroundColor(.init(designSystemColor: .textSecondary))
                 .tintIfAvailable(Color(designSystemColor: .accent))
                 .padding(.horizontal, 32)
                 .padding(.top, 8)
-                .padding(.bottom)
 
             Spacer()
         }

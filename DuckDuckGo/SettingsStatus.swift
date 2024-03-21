@@ -24,7 +24,6 @@ enum StatusIndicator: Equatable {
     case alwaysOn
     case on
     case off
-    case custom(String)
 
     var text: String {
         switch self {
@@ -34,8 +33,6 @@ enum StatusIndicator: Equatable {
             return "On"
         case .off:
             return "Off"
-        case .custom(let customText):
-            return customText
         }
     }
 }
@@ -53,8 +50,8 @@ struct StatusIndicatorView: View {
             }
 
             Text(status.text)
-                .font(.system(size: 16))
-                .foregroundColor(.secondary)
+                .daxSubheadRegular()
+                .foregroundColor(Color(designSystemColor: .textSecondary))
         }
     }
 
@@ -63,9 +60,7 @@ struct StatusIndicatorView: View {
         case .on, .alwaysOn:
             return Color("AlertGreen")
         case .off:
-            return Color.secondary.opacity(0.33)
-        case .custom:
-            return .orange
+            return Color(designSystemColor: .textSecondary).opacity(0.33)
         }
     }
 }

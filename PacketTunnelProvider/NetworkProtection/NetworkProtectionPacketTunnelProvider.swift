@@ -52,6 +52,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             case .connecting:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptConnecting)
             case .success:
+                let versionStore = NetworkProtectionLastVersionRunStore(userDefaults: .networkProtectionGroupDefaults)
+                versionStore.lastExtensionVersionRun = AppVersion.shared.versionAndBuildNumber
+
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptSuccess)
             case .failure:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptFailure)

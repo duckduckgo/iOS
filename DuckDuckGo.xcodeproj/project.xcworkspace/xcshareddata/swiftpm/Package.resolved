@@ -49,8 +49,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "f6241631fc14cc2d0f47950bfdc4d6c30bf90130",
-        "version" : "5.4.0"
+        "revision" : "edd96481d49b094c260f9a79e078abdbdd3a83fb",
+        "version" : "5.6.0"
       }
     },
     {
@@ -139,8 +139,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser",
       "state" : {
-        "revision" : "c8ed701b513cf5177118a175d85fbbbcd707ab41",
-        "version" : "1.3.0"
+        "revision" : "46989693916f56d1186bd59ac15124caef896560",
+        "version" : "1.3.1"
       }
     },
     {
@@ -182,7 +182,7 @@
     {
       "identity" : "trackerradarkit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/duckduckgo/TrackerRadarKit.git",
+      "location" : "https://github.com/duckduckgo/TrackerRadarKit",
       "state" : {
         "revision" : "a6b7ba151d9dc6684484f3785293875ec01cc1ff",
         "version" : "1.2.2"

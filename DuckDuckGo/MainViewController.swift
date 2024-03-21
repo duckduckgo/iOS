@@ -874,7 +874,7 @@ class MainViewController: UIViewController {
         loadUrlInNewTab(url, reuseExisting: reuseExisting, inheritedAttribution: nil)
     }
 
-    func loadUrlInNewTab(_ url: URL, reuseExisting: Bool = false, inheritedAttribution: AdClickAttributionLogic.State?) {
+    func loadUrlInNewTab(_ url: URL, reuseExisting: Bool = false, inheritedAttribution: AdClickAttributionLogic.State?, fromExternalLink: Bool = false) {
         func worker() {
             allowContentUnderflow = false
             viewCoordinator.navigationBarContainer.alpha = 1
@@ -884,9 +884,9 @@ class MainViewController: UIViewController {
                 return
             } else if reuseExisting, let existing = tabManager.firstHomeTab() {
                 tabManager.selectTab(existing)
-                loadUrl(url)
+                loadUrl(url, fromExternalLink: fromExternalLink)
             } else {
-                addTab(url: url, inheritedAttribution: inheritedAttribution)
+                addTab(url: url, inheritedAttribution: inheritedAttribution, fromExternalLink: fromExternalLink)
             }
             refreshOmniBar()
             refreshTabIcon()
@@ -921,9 +921,12 @@ class MainViewController: UIViewController {
         loadUrl(url)
     }
 
-    func loadUrl(_ url: URL) {
+    func loadUrl(_ url: URL, fromExternalLink: Bool = false) {
         prepareTabForRequest {
             self.currentTab?.load(url: url)
+            if fromExternalLink {
+                self.currentTab?.inferredOpenerContext = .external
+            }
         }
     }
 
@@ -956,8 +959,9 @@ class MainViewController: UIViewController {
         select(tab: tab)
     }
 
-    private func addTab(url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) {
+    private func addTab(url: URL?, inheritedAttribution: AdClickAttributionLogic.State?, fromExternalLink: Bool = false) {
         let tab = tabManager.add(url: url, inheritedAttribution: inheritedAttribution)
+        tab.inferredOpenerContext = .external
         dismissOmniBar()
         attachTab(tab: tab)
     }

@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "3a6d8f3f3fe278fb316fe927c4ef005a19d03d71",
-        "version" : "129.0.0"
+        "branch" : "anh/pp/add-metadata",
+        "revision" : "a1890713d0e08d2a68f7c6d6c8ac995c4f2e183b"
       }
     },
     {

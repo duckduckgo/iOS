@@ -63,11 +63,13 @@ struct VPNMetadata: Encodable {
     }
 
     struct PrivacyProInfo: Encodable {
+        // swiftlint:disable nesting
         enum Source: String, Encodable {
             case `internal`
             case waitlist
             case other
         }
+        // swiftlint:enable nesting
 
         let enableSource: Source
         let betaParticipant: Bool

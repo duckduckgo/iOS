@@ -63,7 +63,6 @@ extension PixelExperiment {
     // Pixel parameter - cohort
     public static var parameters: [String: String] {
         guard let cohort else {
-            assertionFailure("Cohort not available")
             return [:]
         }
 

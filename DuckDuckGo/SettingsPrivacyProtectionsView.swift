@@ -23,7 +23,6 @@ import Core
 
 struct SettingsPrivacyProtectionsView: View {
 
-    @State private var isNavigating = false
     @EnvironmentObject var viewModel: SettingsViewModel
 
     var body: some View {

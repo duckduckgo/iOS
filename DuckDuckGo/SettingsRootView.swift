@@ -51,7 +51,7 @@ struct SettingsRootView: View {
             SettingsPrivacyProtectionsView()
 #if SUBSCRIPTION
             if #available(iOS 15, *) {
-                SettingsPrivacyProSectionView()
+                SettingsPrivacyProView()
             }
 #endif
             SettingsMainSettingsView()
@@ -155,12 +155,12 @@ struct InsetGroupedListStyleModifier: ViewModifier {
 
 struct SettingsListModifiers: ViewModifier {
     @EnvironmentObject var viewModel: SettingsViewModel
-    let title: String
+    let title: String?
     let displayMode: NavigationBarItem.TitleDisplayMode
 
     func body(content: Content) -> some View {
         content
-            .navigationBarTitle(title, displayMode: displayMode)
+            .navigationBarTitle(title ?? "", displayMode: displayMode)
             .accentColor(Color(designSystemColor: .textPrimary))
             .environmentObject(viewModel)
             .conditionalInsetGroupedListStyle()
@@ -175,7 +175,7 @@ extension View {
         self.modifier(InsetGroupedListStyleModifier())
     }
 
-    func applySettingsListModifiers(title: String, displayMode: NavigationBarItem.TitleDisplayMode = .inline, viewModel: SettingsViewModel) -> some View {
+    func applySettingsListModifiers(title: String? = nil, displayMode: NavigationBarItem.TitleDisplayMode = .inline, viewModel: SettingsViewModel) -> some View {
         self.modifier(SettingsListModifiers(title: title, displayMode: displayMode))
             .environmentObject(viewModel)
     }

@@ -19,12 +19,14 @@
 
 import UIKit
 import BrowserServicesKit
+import Core
 
 class AutofillDebugViewController: UITableViewController {
 
     enum Row: Int {
         case toggleAutofillDebugScript = 201
         case resetEmailProtectionInContextSignUp = 202
+        case resetDaysSinceInstalledTo0 = 203
     }
 
     let defaults = AppUserDefaults()
@@ -45,6 +47,9 @@ class AutofillDebugViewController: UITableViewController {
                 NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.autofillDebugScriptToggled))
             } else if cell.tag == Row.resetEmailProtectionInContextSignUp.rawValue {
                 EmailManager().resetEmailProtectionInContextPrompt()
+                tableView.deselectRow(at: indexPath, animated: true)
+            } else if cell.tag == Row.resetDaysSinceInstalledTo0.rawValue {
+                StatisticsUserDefaults().installDate = Date()
                 tableView.deselectRow(at: indexPath, animated: true)
             }
         }

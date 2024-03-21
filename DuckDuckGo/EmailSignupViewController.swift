@@ -422,7 +422,16 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
     }
 
     func secureVaultManager(_: SecureVaultManager, didRequestRuntimeConfigurationForDomain domain: String, completionHandler: @escaping (String?) -> Void) {
-        completionHandler(nil)
+        let contentScopeProperties = ContentScopeProperties(gpcEnabled: AppDependencyProvider.shared.appSettings.sendDoNotSell,
+                                                            sessionKey: "",
+                                                            featureToggles: ContentScopeFeatureToggles.supportedFeaturesOniOS)
+
+        let runtimeConfig = DefaultAutofillSourceProvider.Builder(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                                                                  properties: contentScopeProperties)
+            .build()
+            .buildRuntimeConfigResponse()
+        
+        completionHandler(runtimeConfig)
     }
 
     func secureVaultManager(_: SecureVaultManager, didReceivePixel pixel: AutofillUserScript.JSPixel) {

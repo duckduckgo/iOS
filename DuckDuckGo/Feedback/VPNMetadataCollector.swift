@@ -116,7 +116,7 @@ protocol VPNMetadataCollector {
 final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
-    private let networkProtectionAccessManager: NetworkProtectionAccessController
+    private let accessManager: NetworkProtectionAccessController
     private let tokenStore: NetworkProtectionTokenStore
     private let settings: VPNSettings
     private let defaults: UserDefaults
@@ -129,7 +129,7 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
          defaults: UserDefaults = .networkProtectionGroupDefaults) {
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
-        self.networkProtectionAccessManager = networkProtectionAccessManager
+        self.accessManager = networkProtectionAccessManager
         self.tokenStore = tokenStore
         self.settings = settings
         self.defaults = defaults
@@ -278,7 +278,7 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     }
 
     func collectPrivacyProInfo() -> VPNMetadata.PrivacyProInfo {
-        let accessType = networkProtectionAccessManager.networkProtectionAccessType()
+        let accessType = accessManager.networkProtectionAccessType()
         var hasToken: Bool {
             guard let token = try? tokenStore.fetchToken(),
                   !token.hasPrefix(NetworkProtectionKeychainTokenStore.authTokenPrefix) else {
@@ -288,7 +288,7 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
         }
 
         return .init(
-            enableSource: .init(from: networkProtectionAccessManager.networkProtectionAccessType()),
+            enableSource: .init(from: accessManager.networkProtectionAccessType()),
             betaParticipant: accessType == .waitlistJoined,
             hasToken: hasToken,
             subscriptionActive: AccountManager().accessToken != nil

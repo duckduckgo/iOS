@@ -41,7 +41,7 @@ struct SettingsAccessibilityView: View {
             Section(footer: Text(UserText.voiceSearchFooter)) {
                 if viewModel.state.speechRecognitionAvailable {
                     SettingsCellView(label: UserText.settingsVoiceSearch,
-                                     accesory: .toggle(isOn: viewModel.voiceSearchEnabledBinding))
+                                     accesory: .toggle(isOn: viewModel.voiceSearchEnabledAccessibilityBinding))
                 }
             }
             .alert(isPresented: $shouldShowNoMicrophonePermissionAlert) {
@@ -60,5 +60,9 @@ struct SettingsAccessibilityView: View {
         .applySettingsListModifiers(title: "Accessibility",
                                     displayMode: .inline,
                                     viewModel: viewModel)
+        .onForwardNavigationAppear {
+            Pixel.fire(pixel: .settingsAccessibilityOpen,
+                       withAdditionalParameters: PixelExperiment.parameters)
+        }
     }
 }

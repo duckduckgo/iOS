@@ -28,12 +28,6 @@ struct SettingsAppearanceView: View {
     var body: some View {
         List {
             Section {
-                if viewModel.state.addressbar.enabled {
-                    SettingsPickerCellView(label: UserText.settingsAddressBar,
-                                           options: AddressBarPosition.allCases,
-                                           selectedOption: viewModel.addressBarPositionBinding)
-                }
-
                 let image = Image(uiImage: viewModel.state.appIcon.smallImage ?? UIImage())
                 SettingsCellView(label: UserText.settingsIcon,
                                  action: { viewModel.presentLegacyView(.appIcon ) },
@@ -45,9 +39,23 @@ struct SettingsAppearanceView: View {
                                        options: ThemeName.allCases,
                                        selectedOption: viewModel.themeBinding)
             }
+
+            if viewModel.state.addressbar.enabled {
+                Section(header: Text("Address Bar")) {
+                    SettingsPickerCellView(label: UserText.settingsAddressBar,
+                                           options: AddressBarPosition.allCases,
+                                           selectedOption: viewModel.addressBarPositionBinding)
+                    SettingsCellView(label: "Full Website Address",
+                                     accesory: .toggle(isOn: viewModel.applicationLockBinding))
+                }
+            }
         }
         .applySettingsListModifiers(title: "Appearance",
                                     displayMode: .inline,
                                     viewModel: viewModel)
+        .onForwardNavigationAppear {
+            Pixel.fire(pixel: .settingsAppearanceOpen,
+                       withAdditionalParameters: PixelExperiment.parameters)
+        }
     }
 }

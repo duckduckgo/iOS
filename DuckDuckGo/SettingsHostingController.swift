@@ -19,6 +19,7 @@
 
 import UIKit
 import SwiftUI
+import Core
 #if SUBSCRIPTION
 import Subscription
 #endif
@@ -48,10 +49,12 @@ class SettingsHostingController: UIHostingController<AnyView> {
             self?.navigationController?.dismiss(animated: true)
         }
 
-        // TODO: Select view based on the cohort
-//        let settingsView = SettingsView(viewModel: viewModel)
-        let settingsRootView = SettingsRootView(viewModel: viewModel)
-        self.rootView = AnyView(settingsRootView)
+        let settingsView: AnyView
+        switch PixelExperiment.cohort {
+        case .control, .none: settingsView = AnyView(SettingsView(viewModel: viewModel))
+        case .newSettings: settingsView = AnyView(SettingsRootView(viewModel: viewModel))
+        }
+        self.rootView = AnyView(settingsView)
     }
 
     required init?(coder aDecoder: NSCoder) {

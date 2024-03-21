@@ -38,10 +38,10 @@ struct SettingsGeneralView: View {
             Section(header: Text("Private Search"),
                     footer: Text(UserText.voiceSearchFooter)) {
                 SettingsCellView(label: UserText.settingsAutocomplete,
-                                 accesory: .toggle(isOn: viewModel.autocompleteBinding))
+                                 accesory: .toggle(isOn: viewModel.autocompleteGeneralBinding))
                 if viewModel.state.speechRecognitionAvailable {
                     SettingsCellView(label: UserText.settingsVoiceSearch,
-                                     accesory: .toggle(isOn: viewModel.voiceSearchEnabledBinding))
+                                     accesory: .toggle(isOn: viewModel.voiceSearchEnabledGeneralBinding))
                 }
             }
             .alert(isPresented: $shouldShowNoMicrophonePermissionAlert) {
@@ -74,5 +74,9 @@ struct SettingsGeneralView: View {
         .applySettingsListModifiers(title: "General",
                                     displayMode: .inline,
                                     viewModel: viewModel)
+        .onForwardNavigationAppear {
+            Pixel.fire(pixel: .settingsGeneralOpen,
+                       withAdditionalParameters: PixelExperiment.parameters)
+        }
     }
 }

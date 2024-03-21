@@ -68,7 +68,6 @@ extension Pixel {
         case browsingMenuShare
         case browsingMenuCopy
         case browsingMenuPrint
-        case browsingMenuSettings
         case browsingMenuFindInPage
         case browsingMenuDisableProtection
         case browsingMenuEnableProtection
@@ -119,8 +118,6 @@ extension Pixel {
         case daxDialogsFireEducationConfirmed
         case daxDialogsFireEducationCancelled
         
-        case defaultBrowserButtonPressedSettings
-        
         case widgetsOnboardingCTAPressed
         case widgetsOnboardingDeclineOptionPressed
         case widgetsOnboardingMovedToBackground
@@ -145,8 +142,7 @@ extension Pixel {
         case bookmarkImportFailureUnknown
         case bookmarkExportSuccess
         case bookmarkExportFailure
-        
-        case textSizeSettingsShown
+
         case textSizeSettingsChanged
         
         case downloadStarted
@@ -596,6 +592,49 @@ extension Pixel {
         case privacyProSubscriptionManagementEmail
         case privacyProSubscriptionManagementPlanBilling
         case privacyProSubscriptionManagementRemoval
+
+        // MARK: Pixel Experiment
+        case pixelExperimentEnrollment
+        case settingsPresented
+        case settingsSetAsDefault
+        case settingsPrivateSearchOpen
+        case settingsPrivateSearchAutocompleteOn
+        case settingsPrivateSearchAutocompleteOff
+        case settingsVoiceSearchOn
+        case settingsVoiceSearchOff
+        case settingsPrivateSearchVoiceSearchOn
+        case settingsPrivateSearchVoiceSearchOff
+        case settingsWebTrackingProtectionOpen
+        case settingsGpcOn
+        case settingsGpcOff
+        case settingsEmailProtectionOpen
+        case settingsEmailProtectionLearnMore
+        case settingsGeneralOpen
+        case settingsAutocompleteOn
+        case settingsAutocompleteOff
+        case settingsGeneralAutocompleteOn
+        case settingsGeneralAutocompleteOff
+        case settingsGeneralVoiceSearchOn
+        case settingsGeneralVoiceSearchOff
+        case settingsSyncOpen
+        case settingsAppearanceOpen
+        case settingsAddressBarSelectorPressed
+        case settingsAddressBarTopSelected
+        case settingsAddressBarBottomSelected
+        case settingsIconSelectorPressed
+        case settingsThemeSelectorPressed
+        case settingsAccessibilityOpen
+        case settingsAccessiblityTextSize
+        case settingsAccessibilityVoiceSearchOn
+        case settingsAccessibilityVoiceSearchOff
+        case settingsDataClearingOpen
+        case settingsFireButtonSelectorPressed
+        case settingsDataClearingClearDataOpen
+        case settingsAutomaticallyClearDataOpen
+        case settingsAutomaticallyClearDataOn
+        case settingsAutomaticallyClearDataOff
+        case settingsNextStepsAddAppToDock
+        case settingsNextStepsAddWidget
     }
     
 }
@@ -644,7 +683,6 @@ extension Pixel.Event {
         case .browsingMenuToggleBrowsingMode: return "mb_dm"
         case .browsingMenuCopy: return "mb_cp"
         case .browsingMenuPrint: return "mb_pr"
-        case .browsingMenuSettings: return "mb_st"
         case .browsingMenuFindInPage: return "mb_fp"
         case .browsingMenuDisableProtection: return "mb_wla"
         case .browsingMenuEnableProtection: return "mb_wlr"
@@ -696,8 +734,6 @@ extension Pixel.Event {
         case .daxDialogsFireEducationConfirmed: return "m_dx_fe_co"
         case .daxDialogsFireEducationCancelled: return "m_dx_fe_ca"
             
-        case .defaultBrowserButtonPressedSettings: return "m_db_s"
-            
         case .widgetsOnboardingCTAPressed: return "m_o_w_a"
         case .widgetsOnboardingDeclineOptionPressed: return "m_o_w_d"
         case .widgetsOnboardingMovedToBackground: return "m_o_w_b"
@@ -722,8 +758,7 @@ extension Pixel.Event {
         case .bookmarkImportFailureUnknown: return "m_bi_e_unknown"
         case .bookmarkExportSuccess: return "m_be_a"
         case .bookmarkExportFailure: return "m_be_e"
-            
-        case .textSizeSettingsShown: return "m_text_size_settings_shown"
+
         case .textSizeSettingsChanged: return "m_text_size_settings_changed"
             
         case .downloadStarted: return "m_download_started"
@@ -1164,6 +1199,49 @@ extension Pixel.Event {
         case .privacyProSubscriptionManagementEmail: return "m_privacy-pro_manage-email_edit_click"
         case .privacyProSubscriptionManagementPlanBilling: return "m_privacy-pro_settings_change-plan-or-billing_click"
         case .privacyProSubscriptionManagementRemoval: return "m_privacy-pro_settings_remove-from-device_click"
+
+        // MARK: Pixel Experiment
+        case .pixelExperimentEnrollment: return "pixel_experiment_enrollment"
+        case .settingsPresented: return "m_settings_presented"
+        case .settingsSetAsDefault: return "m_settings_set_as_default"
+        case .settingsPrivateSearchOpen: return "m_settings_private_search_open"
+        case .settingsPrivateSearchAutocompleteOn: return "m_settings_private_search_autocomplete_on"
+        case .settingsPrivateSearchAutocompleteOff: return "m_settings_private_search_autocomplete_off"
+        case .settingsVoiceSearchOn: return "m_settings_voice_search_on"
+        case .settingsVoiceSearchOff: return "m_settings_voice_search_off"
+        case .settingsPrivateSearchVoiceSearchOn: return "m_settings_private_search_voice_search_on"
+        case .settingsPrivateSearchVoiceSearchOff: return "m_settings_private_search_voice_search_off"
+        case .settingsWebTrackingProtectionOpen: return "m_settings_web_tracking_protection_open"
+        case .settingsGpcOn: return "m_settings_gpc_on"
+        case .settingsGpcOff: return "m_settings_gpc_off"
+        case .settingsEmailProtectionOpen: return "m_settings_email_protection_open"
+        case .settingsEmailProtectionLearnMore: return "m_settings_email_protection_learn_more"
+        case .settingsGeneralOpen: return "m_settings_general_open"
+        case .settingsAutocompleteOn: return "m_settings_autocomplete_on"
+        case .settingsAutocompleteOff: return "m_settings_autocomplete_off"
+        case .settingsGeneralAutocompleteOn: return "m_settings_general_autocomplete_on"
+        case .settingsGeneralAutocompleteOff: return "m_settings_general_autocomplete_off"
+        case .settingsGeneralVoiceSearchOn: return "m_settings_general_voice_search_on"
+        case .settingsGeneralVoiceSearchOff: return "m_settings_general_voice_search_off"
+        case .settingsSyncOpen: return "m_settings_sync_open"
+        case .settingsAppearanceOpen: return "m_settings_appearance_open"
+        case .settingsAddressBarSelectorPressed: return "m_settings_address_bar_selector_pressed"
+        case .settingsAddressBarTopSelected: return "m_settings_address_bar_top_selected"
+        case .settingsAddressBarBottomSelected: return "m_settings_address_bar_bottom_selected"
+        case .settingsIconSelectorPressed: return "m_settings_icon_selector_pressed"
+        case .settingsThemeSelectorPressed: return "m_settings_theme_selector_pressed"
+        case .settingsAccessibilityOpen: return "m_settings_accessibility_open"
+        case .settingsAccessiblityTextSize: return "m_settings_accessiblity_text_size"
+        case .settingsAccessibilityVoiceSearchOn: return "m_settings_accessibility_voice_search_on"
+        case .settingsAccessibilityVoiceSearchOff: return "m_settings_accessibility_voice_search_off"
+        case .settingsDataClearingOpen: return "m_settings_data_clearing_open"
+        case .settingsFireButtonSelectorPressed: return "m_settings_fire_button_selector_pressed"
+        case .settingsDataClearingClearDataOpen: return "m_settings_data_clearing_clear_data_open"
+        case .settingsAutomaticallyClearDataOpen: return "m_settings_data_clearing_clear_data_open"
+        case .settingsAutomaticallyClearDataOn: return "m_settings_automatically_clear_data_on"
+        case .settingsAutomaticallyClearDataOff: return "m_settings_automatically_clear_data_off"
+        case .settingsNextStepsAddAppToDock: return "m_settings_next_steps_add_app_to_dock"
+        case .settingsNextStepsAddWidget: return "m_settings_next_steps_add_widget"
         }
     }
 }

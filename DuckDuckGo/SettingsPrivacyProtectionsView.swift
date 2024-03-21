@@ -19,9 +19,11 @@
 
 import SwiftUI
 import UIKit
+import Core
 
 struct SettingsPrivacyProtectionsView: View {
 
+    @State private var isNavigating = false
     @EnvironmentObject var viewModel: SettingsViewModel
 
     var body: some View {
@@ -58,7 +60,6 @@ struct SettingsPrivacyProtectionsView: View {
             NavigationLink(destination: EmailProtectionView().environmentObject(viewModel)) {
                 SettingsCellView(label: "Email Protection",
                                  image: Image("EmailProtection"),
-                                 action: { viewModel.openEmailProtection() },
                                  statusIndicator: StatusIndicatorView(status: viewModel.emailProtectionStatus))
             }
 

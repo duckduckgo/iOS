@@ -50,5 +50,9 @@ struct SettingsDataClearingView: View {
         .applySettingsListModifiers(title: "Data Clearing",
                                     displayMode: .inline,
                                     viewModel: viewModel)
+        .onForwardNavigationAppear {
+            Pixel.fire(pixel: .settingsDataClearingOpen,
+                       withAdditionalParameters: PixelExperiment.parameters)
+        }
     }
 }

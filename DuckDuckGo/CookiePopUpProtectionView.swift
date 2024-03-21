@@ -40,6 +40,10 @@ struct CookiePopUpProtectionView: View {
         .applySettingsListModifiers(title: "Cookie Pop-Up Protection",
                                     displayMode: .inline,
                                     viewModel: viewModel)
+        .onForwardNavigationAppear {
+            Pixel.fire(pixel: .settingsAutoconsentShown,
+                       withAdditionalParameters: PixelExperiment.parameters)
+        }
     }
 }
 

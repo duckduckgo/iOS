@@ -256,6 +256,8 @@ extension MainViewController {
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider)
 #endif
 
+        Pixel.fire(pixel: .settingsPresented,
+                   withAdditionalParameters: PixelExperiment.parameters)
         let settingsController = SettingsHostingController(viewModel: settingsViewModel, viewProvider: legacyViewProvider)
         settingsController.applyTheme(ThemeManager.shared.currentTheme)
         

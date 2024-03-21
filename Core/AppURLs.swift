@@ -20,6 +20,8 @@
 import BrowserServicesKit
 import Foundation
 
+// swiftlint:disable line_length
+
 public extension URL {
 
     private static let base: String = ProcessInfo.processInfo.environment["BASE_URL", default: "https://duckduckgo.com"]
@@ -33,6 +35,7 @@ public extension URL {
     static let emailProtectionQuickLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/email"))!
     static let emailProtectionAccountLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/email/settings/account"))!
     static let emailProtectionSupportLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/email/settings/support"))!
+    static let emailProtectionHelpPageLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/duckduckgo-help-pages/email-protection/what-is-duckduckgo-email-protection/"))!
     static let aboutLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/about"))!
     static let apps = URL(string: "\(base)/apps")!
     static let searchSettings = URL(string: "\(base)/settings")!
@@ -266,3 +269,5 @@ public final class StatisticsDependentURLFactory {
     }
 
 }
+
+// swiftlint:enable line_length

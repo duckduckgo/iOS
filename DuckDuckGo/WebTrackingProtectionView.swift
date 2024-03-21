@@ -40,6 +40,10 @@ struct WebTrackingProtectionView: View {
         .applySettingsListModifiers(title: "Web Tracking Protection",
                                     displayMode: .inline,
                                     viewModel: viewModel)
+        .onForwardNavigationAppear {
+            Pixel.fire(pixel: .settingsWebTrackingProtectionOpen,
+                       withAdditionalParameters: PixelExperiment.parameters)
+        }
     }
 }
 

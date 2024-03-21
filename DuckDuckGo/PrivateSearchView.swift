@@ -40,6 +40,10 @@ struct PrivateSearchView: View {
         .applySettingsListModifiers(title: "Private Search",
                                     displayMode: .inline,
                                     viewModel: viewModel)
+        .onForwardNavigationAppear {
+            Pixel.fire(pixel: .settingsPrivateSearchOpen,
+                       withAdditionalParameters: PixelExperiment.parameters)
+        }
     }
 }
 
@@ -51,10 +55,10 @@ struct PrivateSearchViewSettings: View {
     var body: some View {
         Section(header: Text("Search Settings")) {
             SettingsCellView(label: UserText.settingsAutocomplete,
-                             accesory: .toggle(isOn: viewModel.autocompleteBinding))
+                             accesory: .toggle(isOn: viewModel.autocompletePrivateSearchBinding))
             if viewModel.state.speechRecognitionAvailable {
                 SettingsCellView(label: UserText.settingsVoiceSearch,
-                                 accesory: .toggle(isOn: viewModel.voiceSearchEnabledBinding))
+                                 accesory: .toggle(isOn: viewModel.voiceSearchEnabledPrivateSearchBinding))
             }
             SettingsCellView(label: "More Search Settings",
                              subtitle: "Customize your language, region, and more",
@@ -74,5 +78,25 @@ struct PrivateSearchViewSettings: View {
         .onChange(of: viewModel.shouldShowNoMicrophonePermissionAlert) { value in
             shouldShowNoMicrophonePermissionAlert = value
         }
+    }
+}
+
+struct ForwardNavigationAppearModifier: ViewModifier {
+    @State private var hasAppeared = false
+    let action: () -> Void
+
+    func body(content: Content) -> some View {
+        content.onAppear {
+            if !hasAppeared {
+                action()
+                hasAppeared = true
+            }
+        }
+    }
+}
+
+extension View {
+    func onForwardNavigationAppear(perform action: @escaping () -> Void) -> some View {
+        self.modifier(ForwardNavigationAppearModifier(action: action))
     }
 }

@@ -107,6 +107,7 @@
 		1D200C972BA3157A00108701 /* SettingsNextStepsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D200C962BA3157A00108701 /* SettingsNextStepsView.swift */; };
 		1D200C992BA3176D00108701 /* SettingsOthersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D200C982BA3176D00108701 /* SettingsOthersView.swift */; };
 		1D200C9B2BA31A6A00108701 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D200C9A2BA31A6A00108701 /* AboutView.swift */; };
+		1D8F727F2BA86D8000E31493 /* PixelExperiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8F727E2BA86D8000E31493 /* PixelExperiment.swift */; };
 		1DDF40202BA049FA006850D9 /* SettingsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDF401F2BA049FA006850D9 /* SettingsRootView.swift */; };
 		1DDF40292BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDF40282BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift */; };
 		1DDF402B2BA05A65006850D9 /* Settings.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DDF402A2BA05A65006850D9 /* Settings.xcassets */; };
@@ -1254,6 +1255,7 @@
 		1D200C962BA3157A00108701 /* SettingsNextStepsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsNextStepsView.swift; sourceTree = "<group>"; };
 		1D200C982BA3176D00108701 /* SettingsOthersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsOthersView.swift; sourceTree = "<group>"; };
 		1D200C9A2BA31A6A00108701 /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		1D8F727E2BA86D8000E31493 /* PixelExperiment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelExperiment.swift; sourceTree = "<group>"; };
 		1DDF401F2BA049FA006850D9 /* SettingsRootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRootView.swift; sourceTree = "<group>"; };
 		1DDF40282BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPrivacyProtectionsView.swift; sourceTree = "<group>"; };
 		1DDF402A2BA05A65006850D9 /* Settings.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Settings.xcassets; sourceTree = "<group>"; };
@@ -5005,6 +5007,7 @@
 				1E05D1D729C46EDA00BF9A1F /* TimedPixel.swift */,
 				1E05D1D529C46EBB00BF9A1F /* DailyPixel.swift */,
 				85E242162AB1B54D000F3E28 /* ReturnUserMeasurement.swift */,
+				1D8F727E2BA86D8000E31493 /* PixelExperiment.swift */,
 			);
 			name = Statistics;
 			sourceTree = "<group>";
@@ -7416,6 +7419,7 @@
 				85E242172AB1B54D000F3E28 /* ReturnUserMeasurement.swift in Sources */,
 				85BDC3142434D8F80053DB07 /* DebugUserScript.swift in Sources */,
 				85011867290028C400BDEE27 /* BookmarksDatabase.swift in Sources */,
+				1D8F727F2BA86D8000E31493 /* PixelExperiment.swift in Sources */,
 				85D2187B24BF9F85004373D2 /* FaviconUserScript.swift in Sources */,
 				37FD780F2A29E28B00B36DB1 /* SyncErrorHandler.swift in Sources */,
 				85F21DC621145DD5002631A6 /* global.swift in Sources */,

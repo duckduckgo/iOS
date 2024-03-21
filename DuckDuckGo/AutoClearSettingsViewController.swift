@@ -145,9 +145,13 @@ class AutoClearSettingsViewController: UITableViewController {
         if sender.isOn {
             clearDataSettings = AutoClearSettingsModel()
             tableView.insertSections(.init(integersIn: Sections.action.rawValue...Sections.timing.rawValue), with: .fade)
+            Pixel.fire(pixel: .settingsAutomaticallyClearDataOn,
+                       withAdditionalParameters: PixelExperiment.parameters)
         } else {
             clearDataSettings = nil
             tableView.deleteSections(.init(integersIn: Sections.action.rawValue...Sections.timing.rawValue), with: .fade)
+                Pixel.fire(pixel: .settingsAutomaticallyClearDataOff,
+                           withAdditionalParameters: PixelExperiment.parameters)
         }
         
         storeSettingsIfChanged()

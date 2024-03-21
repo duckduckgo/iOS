@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Suggestions
 
 protocol OmniBarDelegate: AnyObject {
 

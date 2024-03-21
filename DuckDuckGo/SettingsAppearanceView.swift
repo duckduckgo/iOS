@@ -45,8 +45,8 @@ struct SettingsAppearanceView: View {
                     SettingsPickerCellView(label: UserText.settingsAddressBar,
                                            options: AddressBarPosition.allCases,
                                            selectedOption: viewModel.addressBarPositionBinding)
-                    SettingsCellView(label: "Full Website Address",
-                                     accesory: .toggle(isOn: viewModel.applicationLockBinding))
+                    SettingsCellView(label: UserText.settingsFullURL,
+                                     accesory: .toggle(isOn: viewModel.addressBarShowsFullURL))
                 }
             }
         }

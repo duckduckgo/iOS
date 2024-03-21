@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Suggestions
 
 protocol AutocompleteViewControllerDelegate: AnyObject {
 

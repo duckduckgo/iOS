@@ -56,7 +56,8 @@ struct SettingsAppeareanceViewOld: View {
                                        selectedOption: viewModel.addressBarPositionBinding)
             }
             
-            
+            SettingsCellView(label: UserText.settingsFullURL,
+                             accesory: .toggle(isOn: viewModel.addressBarShowsFullURL))
         }
     
         

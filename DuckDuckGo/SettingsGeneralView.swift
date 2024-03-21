@@ -38,6 +38,7 @@ struct SettingsGeneralView: View {
             Section(header: Text("Private Search"),
                     footer: Text(UserText.voiceSearchFooter)) {
                 SettingsCellView(label: UserText.settingsAutocomplete,
+                                 subtitle: viewModel.autocompleteSubtitle,
                                  accesory: .toggle(isOn: viewModel.autocompleteGeneralBinding))
                 if viewModel.state.speechRecognitionAvailable {
                     SettingsCellView(label: UserText.settingsVoiceSearch,

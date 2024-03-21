@@ -84,7 +84,7 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
 #endif
         }
 
-        return featureFlagger.isFeatureOn(.subscription)
+        return AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
     }
     
     // todo - https://app.asana.com/0/0/1206844038943626/f

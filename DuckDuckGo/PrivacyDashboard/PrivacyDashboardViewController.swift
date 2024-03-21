@@ -250,8 +250,8 @@ extension PrivacyDashboardViewController: PrivacyDashboardToggleReportDelegate {
         Task { @MainActor in
             do {
                 let report = try await makeBrokenSiteReport(source: source,
-                                                      didOpenReportInfo: didOpenReportInfo,
-                                                      toggleReportCounter: toggleReportCounter)
+                                                            didOpenReportInfo: didOpenReportInfo,
+                                                            toggleReportCounter: toggleReportCounter)
                 try toggleProtectionsOffReporter.report(report, reportMode: .toggle)
             } catch {
                 os_log("Failed to generate or send the broken site report: %@", type: .error, error.localizedDescription)
@@ -285,6 +285,20 @@ extension PrivacyDashboardViewController {
         case failedToFetchTheCurrentWebsiteInfo
     }
 
+    private func calculateWebVitals(breakageAdditionalInfo: BreakageAdditionalInfo, privacyConfig: PrivacyConfiguration) async -> [Double]? {
+        var webVitalsResult: [Double]?
+        if privacyConfig.isEnabled(featureKey: .performanceMetrics) {
+            webVitalsResult = await withCheckedContinuation({ continuation in
+                guard let performanceMetrics = breakageAdditionalInfo.performanceMetrics else { continuation.resume(returning: nil); return }
+                performanceMetrics.notifyHandler { result in
+                    continuation.resume(returning: result)
+                }
+            })
+        }
+
+        return webVitalsResult
+    }
+
     private func makeBrokenSiteReport(category: String = "",
                                       description: String = "",
                                       source: BrokenSiteReport.Source,
@@ -296,16 +310,8 @@ extension PrivacyDashboardViewController {
             throw BrokenSiteReportError.failedToFetchTheCurrentWebsiteInfo
         }
 
-        // Skipped for now until feature supported in C-S-S
-        var webVitalsResult: [Double]?
-        if privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .performanceMetrics) {
-            webVitalsResult = await withCheckedContinuation({ continuation in
-                guard let performanceMetrics = breakageAdditionalInfo.performanceMetrics else { continuation.resume(returning: nil); return }
-                performanceMetrics.notifyHandler { result in
-                    continuation.resume(returning: result)
-                }
-            })
-        }
+        let webVitalsResult = await calculateWebVitals(breakageAdditionalInfo: breakageAdditionalInfo,
+                                                       privacyConfig: privacyConfigurationManager.privacyConfig)
 
         let blockedTrackerDomains = privacyInfo.trackerInfo.trackersBlocked.compactMap { $0.domain }
         let protectionsState = privacyConfigurationManager.privacyConfig.isFeature(.contentBlocking,

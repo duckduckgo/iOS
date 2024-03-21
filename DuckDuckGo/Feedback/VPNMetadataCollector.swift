@@ -29,7 +29,7 @@ struct VPNMetadata: Encodable {
 
     struct AppInfo: Encodable {
         let appVersion: String
-        let lastVersionRun: String
+        let lastExtensionVersionRun: String
         let isInternalUser: Bool
     }
 
@@ -132,10 +132,14 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
 
     private func collectAppInfoMetadata() -> VPNMetadata.AppInfo {
         let appVersion = AppVersion.shared.versionNumber
-        let versionStore = NetworkProtectionLastVersionRunStore()
+        let versionStore = NetworkProtectionLastVersionRunStore(userDefaults: .networkProtectionGroupDefaults)
         let isInternalUser = AppDependencyProvider.shared.internalUserDecider.isInternalUser
 
-        return .init(appVersion: appVersion, lastVersionRun: versionStore.lastVersionRun ?? "Unknown", isInternalUser: isInternalUser)
+        return .init(
+            appVersion: appVersion,
+            lastExtensionVersionRun: versionStore.lastExtensionVersionRun ?? "Unknown",
+            isInternalUser: isInternalUser
+        )
     }
     
     private func collectDeviceInfoMetadata() -> VPNMetadata.DeviceInfo {

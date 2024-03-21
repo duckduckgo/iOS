@@ -924,7 +924,9 @@ class MainViewController: UIViewController {
     func loadUrl(_ url: URL, fromExternalLink: Bool = false) {
         prepareTabForRequest {
             self.currentTab?.load(url: url)
-            self.currentTab?.inferredOpenerContext = .external
+            if fromExternalLink {
+                self.currentTab?.inferredOpenerContext = .external
+            }
         }
     }
 

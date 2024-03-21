@@ -52,8 +52,8 @@ final class UserScripts: UserScriptsProvider {
         contentScopeUserScript = ContentScopeUserScript(sourceProvider.privacyConfigurationManager,
                                                         properties: sourceProvider.contentScopeProperties)
         contentScopeUserScriptIsolated = ContentScopeUserScript(sourceProvider.privacyConfigurationManager,
-                                                        properties: sourceProvider.contentScopeProperties,
-                                                        isIsolated: true)
+                                                                properties: sourceProvider.contentScopeProperties,
+                                                                isIsolated: true)
         autoconsentUserScript = AutoconsentUserScript(config: sourceProvider.privacyConfigurationManager.privacyConfig)
     }
 

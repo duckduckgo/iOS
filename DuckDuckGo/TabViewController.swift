@@ -2442,10 +2442,12 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
     }
 
+    // swiftlint:disable function_parameter_count
     func secureVaultManager(_: SecureVaultManager,
                             promptUserToAutofillCredentialsForDomain domain: String,
                             withAccounts accounts: [SecureVaultModels.WebsiteAccount],
                             withTrigger trigger: AutofillUserScript.GetTriggerType,
+                            onAccountSelected: @escaping (SecureVaultModels.WebsiteAccount?) -> Void,
                             completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
   
         if !AutofillSettingStatus.isAutofillEnabledInSettings, featureFlagger.isFeatureOn(.autofillCredentialInjecting) {
@@ -2463,12 +2465,15 @@ extension TabViewController: SecureVaultManagerDelegate {
             let accountMatches = autofillWebsiteAccountMatcher.findDeduplicatedSortedMatches(accounts: accounts, for: domain)
 
             presentAutofillPromptViewController(accountMatches: accountMatches, domain: domain, trigger: trigger, useLargeDetent: false) { account in
+                onAccountSelected(account)
+            } completionHandler: { account in
                 completionHandler(account)
             }
         } else {
             completionHandler(nil)
         }
     }
+    // swiftlint:enable function_parameter_count
 
     func secureVaultManager(_: SecureVaultManager,
                             promptUserWithGeneratedPassword password: String,
@@ -2492,25 +2497,34 @@ extension TabViewController: SecureVaultManagerDelegate {
     }
 
     /// Using Bool for detent size parameter to be backward compatible with iOS 14
+    // swiftlint:disable function_parameter_count
     func presentAutofillPromptViewController(accountMatches: AccountMatches,
                                              domain: String,
                                              trigger: AutofillUserScript.GetTriggerType,
                                              useLargeDetent: Bool,
+                                             onAccountSelected: @escaping (SecureVaultModels.WebsiteAccount?) -> Void,
                                              completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
         let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accountMatches,
                                                                              domain: domain,
-                                                                             trigger: trigger) { account, showExpanded in
+                                                                             trigger: trigger,
+                                                                             onAccountSelected: { account in
+            onAccountSelected(account)
+        }, completion: { account, showExpanded in
             if showExpanded {
                 self.presentAutofillPromptViewController(accountMatches: accountMatches,
                                                          domain: domain,
                                                          trigger: trigger,
-                                                         useLargeDetent: showExpanded) { account in
+                                                         useLargeDetent: showExpanded,
+                                                         onAccountSelected: { account in
+                    onAccountSelected(account)
+                },
+                                                         completionHandler: { account in
                     completionHandler(account)
-                }
+                })
             } else {
                 completionHandler(account)
             }
-        }
+        })
 
         if #available(iOS 15.0, *) {
             if let presentationController = autofillPromptViewController.presentationController as? UISheetPresentationController {
@@ -2525,7 +2539,8 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
         self.present(autofillPromptViewController, animated: true, completion: nil)
     }
-    
+    // swiftlint:enable function_parameter_count
+
     // Used on macOS to request authentication for individual autofill items
     func secureVaultManager(_: BrowserServicesKit.SecureVaultManager,
                             isAuthenticatedFor type: BrowserServicesKit.AutofillType,

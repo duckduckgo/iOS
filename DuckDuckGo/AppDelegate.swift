@@ -435,7 +435,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
 #endif
             SubscriptionPurchaseEnvironment.current = .appStore
-            await AccountManager().checkSubscriptionState()
+            await AccountManager().refreshSubscriptionAndEntitlements()
         }
     }
 #endif

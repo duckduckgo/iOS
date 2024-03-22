@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "michal/subs-and-ent-caching",
-        "revision" : "f9f510d69508f83eab2dea36102626b2d473e258"
+        "revision" : "91d9eb23c33ae8c1a6e19314c0349e42eab70326",
+        "version" : "129.1.3"
       }
     },
     {

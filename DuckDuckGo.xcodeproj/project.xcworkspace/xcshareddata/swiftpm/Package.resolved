@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sam/vpn-ship-review-problems",
-        "revision" : "88e39245187f9dab31dcf759e84b637e520d9013"
+        "revision" : "40093418106389c945bbe6df585fdb02833716df",
+        "version" : "129.1.1"
       }
     },
     {

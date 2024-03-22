@@ -413,7 +413,10 @@ extension Pixel {
         case webKitDidTerminate
         case webKitTerminationDidReloadCurrentTab
         case webKitDidTerminateDuringWarmup
-        
+
+        case webKitWarmupUnexpectedDidFinish
+        case webKitWarmupUnexpectedDidTerminate
+
         case backgroundTaskSubmissionFailed
         
         case blankOverlayNotDismissed
@@ -995,7 +998,10 @@ extension Pixel.Event {
         case .webKitDidTerminate: return "m_d_wkt"
         case .webKitDidTerminateDuringWarmup: return "m_d_webkit-terminated-during-warmup"
         case .webKitTerminationDidReloadCurrentTab: return "m_d_wktct"
-            
+
+        case .webKitWarmupUnexpectedDidFinish: return "m_d_webkit-warmup-unexpected-did-finish"
+        case .webKitWarmupUnexpectedDidTerminate: return "m_d_webkit-warmup-unexpected-did-terminate"
+
         case .backgroundTaskSubmissionFailed: return "m_bt_rf"
             
         case .blankOverlayNotDismissed: return "m_d_ovs"

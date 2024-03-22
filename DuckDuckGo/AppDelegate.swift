@@ -634,6 +634,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             await autoClear?.applicationWillMoveToForeground()
             showKeyboardIfSettingOn = true
             syncService.scheduler.resumeSyncQueue()
+
+#if SUBSCRIPTION
+            await AccountManager().refreshSubscriptionAndEntitlements()
+#endif
         }
     }
 

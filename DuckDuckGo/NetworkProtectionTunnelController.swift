@@ -222,7 +222,7 @@ final class NetworkProtectionTunnelController: TunnelController {
     /// Setups the tunnel manager if it's not set up already.
     ///
     private func setup(_ tunnelManager: NETunnelProviderManager) {
-        tunnelManager.localizedDescription = "DuckDuckGo Network Protection"
+        tunnelManager.localizedDescription = "DuckDuckGo VPN"
         tunnelManager.isEnabled = true
 
         tunnelManager.protocolConfiguration = {

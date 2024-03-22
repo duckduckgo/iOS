@@ -1355,6 +1355,18 @@ class MainViewController: UIViewController {
                 self?.onNetworkProtectionAccountSignIn(notification)
             }
             .store(in: &vpnCancellables)
+        NotificationCenter.default.publisher(for: .entitlementsDidChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                self?.onEntitlementsChange(notification)
+            }
+            .store(in: &vpnCancellables)
+        NotificationCenter.default.publisher(for: .accountDidSignOut)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                self?.onNetworkProtectionAccountSignOut(notification)
+            }
+            .store(in: &vpnCancellables)
 
         NotificationCenter.default.publisher(for: .vpnEntitlementMessagingDidChange)
             .receive(on: DispatchQueue.main)
@@ -1408,6 +1420,24 @@ class MainViewController: UIViewController {
     private func onNetworkProtectionAccountSignIn(_ notification: Notification) {
         tunnelDefaults.resetEntitlementMessaging()
         os_log("[NetP Subscription] Reset expired entitlement messaging", log: .networkProtection, type: .info)
+    }
+
+    @objc
+    private func onEntitlementsChange(_ notification: Notification) {
+        Task {
+            guard case .success(false) = await AccountManager().hasEntitlement(for: .networkProtection) else { return }
+            let controller = NetworkProtectionTunnelController()
+            await controller.stop()
+        }
+    }
+
+    @objc
+    private func onNetworkProtectionAccountSignOut(_ notification: Notification) {
+        Task {
+            let controller = NetworkProtectionTunnelController()
+            await controller.stop()
+            await controller.removeVPN()
+        }
     }
 #endif
 

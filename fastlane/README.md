@@ -37,6 +37,14 @@ Fetches and updates certificates and provisioning profiles for Ad-Hoc distributi
 
 Fetches and updates certificates and provisioning profiles for Alpha distribution
 
+### sync_signing_alpha_adhoc
+
+```sh
+[bundle exec] fastlane sync_signing_alpha_adhoc
+```
+
+Fetches and updates certificates and provisioning profiles for Ad-Hoc distribution
+
 ### adhoc
 
 ```sh
@@ -44,6 +52,14 @@ Fetches and updates certificates and provisioning profiles for Alpha distributio
 ```
 
 Makes Ad-Hoc build with a specified name in a given directory
+
+### alpha_adhoc
+
+```sh
+[bundle exec] fastlane alpha_adhoc
+```
+
+Makes Ad-Hoc build for alpha with a specified name in a given directory
 
 ### release_appstore
 

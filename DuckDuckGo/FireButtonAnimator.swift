@@ -46,9 +46,9 @@ enum FireButtonAnimationType: String, CaseIterable, Identifiable, CustomStringCo
         }
     }
     
-    var composition: Animation? {
+    var composition: LottieAnimation? {
         guard let fileName = fileName else { return nil }
-        return Animation.named(fileName, animationCache: LRUAnimationCache.sharedCache)
+        return LottieAnimation.named(fileName, animationCache: LRUAnimationCache.sharedCache)
     }
 
     var transition: Double {
@@ -98,8 +98,8 @@ enum FireButtonAnimationType: String, CaseIterable, Identifiable, CustomStringCo
 class FireButtonAnimator {
     
     private let appSettings: AppSettings
-    private var preLoadedComposition: Animation?
-    
+    private var preLoadedComposition: LottieAnimation?
+
     init(appSettings: AppSettings) {
         self.appSettings = appSettings
         reloadPreLoadedComposition()
@@ -133,7 +133,7 @@ class FireButtonAnimator {
         
         window.addSubview(snapshot)
         
-        let animationView = AnimationView(animation: composition)
+        let animationView = LottieAnimationView(animation: composition)
         let currentAnimation = appSettings.currentFireButtonAnimation
         let speed = currentAnimation.speed
         animationView.contentMode = .scaleAspectFill

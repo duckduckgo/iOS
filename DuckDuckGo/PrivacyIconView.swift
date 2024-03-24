@@ -28,12 +28,12 @@ enum PrivacyIcon {
 class PrivacyIconView: UIView {
 
     @IBOutlet var daxLogoImageView: UIImageView!
-    @IBOutlet var staticShieldAnimationView: AnimationView!
-    @IBOutlet var staticShieldDotAnimationView: AnimationView!
-    
-    @IBOutlet var shieldAnimationView: AnimationView!
-    @IBOutlet var shieldDotAnimationView: AnimationView!
-    
+    @IBOutlet var staticShieldAnimationView: LottieAnimationView!
+    @IBOutlet var staticShieldDotAnimationView: LottieAnimationView!
+
+    @IBOutlet var shieldAnimationView: LottieAnimationView!
+    @IBOutlet var shieldDotAnimationView: LottieAnimationView!
+
     public required init?(coder aDecoder: NSCoder) {
         icon = .shield
         
@@ -57,12 +57,12 @@ class PrivacyIconView: UIView {
     func loadAnimations(for theme: Theme, animationCache cache: AnimationCacheProvider = LRUAnimationCache.sharedCache) {
         let useLightStyle = theme.currentImageSet == .light
         
-        let shieldAnimation = Animation.named(useLightStyle ? "shield" : "dark-shield", animationCache: cache)
+        let shieldAnimation = LottieAnimation.named(useLightStyle ? "shield" : "dark-shield", animationCache: cache)
         shieldAnimationView.animation = shieldAnimation
         staticShieldAnimationView.animation = shieldAnimation
         staticShieldAnimationView.currentProgress = 0.0
         
-        let shieldWithDotAnimation = Animation.named(useLightStyle ? "shield-dot" : "dark-shield-dot", animationCache: cache)
+        let shieldWithDotAnimation = LottieAnimation.named(useLightStyle ? "shield-dot" : "dark-shield-dot", animationCache: cache)
         shieldDotAnimationView.animation = shieldWithDotAnimation
         staticShieldDotAnimationView.animation = shieldWithDotAnimation
         staticShieldDotAnimationView.currentProgress = 1.0
@@ -128,7 +128,7 @@ class PrivacyIconView: UIView {
         daxLogoImageView.isHidden = true
     }
     
-    func shieldAnimationView(for icon: PrivacyIcon) -> AnimationView? {
+    func shieldAnimationView(for icon: PrivacyIcon) -> LottieAnimationView? {
         switch icon {
         case .shield:
             return shieldAnimationView

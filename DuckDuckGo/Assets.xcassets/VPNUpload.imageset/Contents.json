@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Server-24.pdf",
+      "filename" : "vpn-upload.pdf",
       "idiom" : "universal"
     }
   ],
@@ -10,7 +10,6 @@
     "version" : 1
   },
   "properties" : {
-    "preserves-vector-representation" : true,
     "template-rendering-intent" : "template"
   }
 }

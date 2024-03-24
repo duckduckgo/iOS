@@ -380,13 +380,16 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
         // no-op
     }
 
+    // swiftlint:disable function_parameter_count
     func secureVaultManager(_: SecureVaultManager,
                             promptUserToAutofillCredentialsForDomain domain: String,
                             withAccounts accounts: [SecureVaultModels.WebsiteAccount],
                             withTrigger trigger: AutofillUserScript.GetTriggerType,
+                            onAccountSelected account: @escaping (SecureVaultModels.WebsiteAccount?) -> Void,
                             completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
         // no-op
     }
+    // swiftlint:enable function_parameter_count
 
     func secureVaultManager(_: SecureVaultManager,
                             promptUserWithGeneratedPassword password: String,
@@ -422,7 +425,16 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
     }
 
     func secureVaultManager(_: SecureVaultManager, didRequestRuntimeConfigurationForDomain domain: String, completionHandler: @escaping (String?) -> Void) {
-        completionHandler(nil)
+        let contentScopeProperties = ContentScopeProperties(gpcEnabled: AppDependencyProvider.shared.appSettings.sendDoNotSell,
+                                                            sessionKey: "",
+                                                            featureToggles: ContentScopeFeatureToggles.supportedFeaturesOniOS)
+
+        let runtimeConfig = DefaultAutofillSourceProvider.Builder(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                                                                  properties: contentScopeProperties)
+            .build()
+            .buildRuntimeConfigResponse()
+        
+        completionHandler(runtimeConfig)
     }
 
     func secureVaultManager(_: SecureVaultManager, didReceivePixel pixel: AutofillUserScript.JSPixel) {

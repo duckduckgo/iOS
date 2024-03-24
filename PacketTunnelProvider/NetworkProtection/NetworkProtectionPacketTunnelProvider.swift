@@ -52,6 +52,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             case .connecting:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptConnecting)
             case .success:
+                let versionStore = NetworkProtectionLastVersionRunStore(userDefaults: .networkProtectionGroupDefaults)
+                versionStore.lastExtensionVersionRun = AppVersion.shared.versionAndBuildNumber
+
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptSuccess)
             case .failure:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptFailure)
@@ -328,7 +331,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         }
 
         let result = await AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
-            .hasEntitlement(for: .networkProtection, cachePolicy: .reloadIgnoringLocalCacheData)
+            .hasEntitlement(for: .networkProtection)
         switch result {
         case .success(let hasEntitlement):
             return .success(hasEntitlement)

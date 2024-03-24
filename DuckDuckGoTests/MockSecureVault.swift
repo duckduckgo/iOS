@@ -96,6 +96,12 @@ final class MockSecureVault<T: AutofillDatabaseProvider>: AutofillSecureVault {
         return accountID
     }
 
+    func updateLastUsedFor(accountId: Int64) throws {
+        if var account = storedAccounts.first(where: { $0.id == String(accountId) }) {
+            account.lastUsed = Date()
+        }
+    }
+
     func deleteWebsiteCredentialsFor(accountId: Int64) throws {
         storedCredentials[accountId] = nil
     }
@@ -276,6 +282,12 @@ class MockDatabaseProvider: AutofillDatabaseProvider {
     func websiteAccountsForTopLevelDomain(_ eTLDplus1: String) throws -> [SecureVaultModels.WebsiteAccount] {
         self._forDomain.append(eTLDplus1)
         return _accounts
+    }
+
+    func updateLastUsedForAccountId(_ accountId: Int64) throws {
+        if var account = _accounts.first(where: { $0.id == String(accountId) }) {
+            account.lastUsed = Date()
+        }
     }
 
     func deleteWebsiteCredentialsForAccountId(_ accountId: Int64) throws {

@@ -37,7 +37,7 @@ extension AppDelegate {
     func checkWaitlists() {
 
 #if NETWORK_PROTECTION
-        if vpnFeatureVisibilty.shouldKeepVPNAccessViaWaitlist() {
+        if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() {
             checkNetworkProtectionWaitlist()
         }
 #endif
@@ -95,7 +95,7 @@ extension AppDelegate {
 #endif
 
     private func checkWaitlistBackgroundTasks() {
-        guard vpnFeatureVisibilty.shouldKeepVPNAccessViaWaitlist() else { return }
+        guard vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() else { return }
 
         BGTaskScheduler.shared.getPendingTaskRequests { tasks in
 

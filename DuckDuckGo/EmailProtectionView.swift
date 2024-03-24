@@ -27,7 +27,7 @@ struct EmailProtectionView: View {
     @State var shouldShowEmailAlert = false
 
     var description: PrivacyProtectionDescription {
-        PrivacyProtectionDescription(imageName: "EmailProtectionContent",
+        PrivacyProtectionDescription(imageName: "SettingsEmailProtectionContent",
                                      title: "Email Protection",
                                      status: viewModel.emailProtectionStatus,
                                      explanation: UserText.emailProtectionExplanation)

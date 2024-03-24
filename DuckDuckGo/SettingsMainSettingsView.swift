@@ -30,13 +30,13 @@ struct SettingsMainSettingsView: View {
             // General
             NavigationLink(destination: SettingsGeneralView().environmentObject(viewModel)) {
                 SettingsCellView(label: "General",
-                                 image: Image("General"))
+                                 image: Image("SettingsGeneral"))
             }
 
             // Sync & Backup
             let statusIndicator = viewModel.syncStatus == .on ? StatusIndicatorView(status: viewModel.syncStatus, isDotHidden: true) : nil
             SettingsCellView(label: SyncUI.UserText.syncTitle,
-                             image: Image("Sync"),
+                             image: Image("SettingsSync"),
                              action: { viewModel.presentLegacyView(.sync) },
                              statusIndicator: statusIndicator,
                              disclosureIndicator: true,
@@ -45,12 +45,12 @@ struct SettingsMainSettingsView: View {
             // Appearance
             NavigationLink(destination: SettingsAppearanceView().environmentObject(viewModel)) {
                 SettingsCellView(label: "Appearance",
-                                 image: Image("Appearance"))
+                                 image: Image("SettingsAppearance"))
             }
 
             // Passwords
             SettingsCellView(label: UserText.settingsLogins,
-                             image: Image("Passwords"),
+                             image: Image("SettingsPasswords"),
                              action: { viewModel.presentLegacyView(.logins) },
                              disclosureIndicator: true,
                              isButton: true)
@@ -58,13 +58,13 @@ struct SettingsMainSettingsView: View {
             // Accessibility
             NavigationLink(destination: SettingsAccessibilityView().environmentObject(viewModel)) {
                 SettingsCellView(label: "Accessibility",
-                                 image: Image("Accessibility"))
+                                 image: Image("SettingsAccessibility"))
             }
 
             // Data Clearing
             NavigationLink(destination: SettingsDataClearingView().environmentObject(viewModel)) {
                 SettingsCellView(label: "Data Clearing",
-                                 image: Image("DataClearing"))
+                                 image: Image("SettingsDataClearing"))
             }
         }
 

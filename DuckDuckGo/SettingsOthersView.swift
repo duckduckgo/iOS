@@ -31,11 +31,11 @@ struct SettingsOthersView: View {
                                  image: Image("LogoIcon"))
             }
             SettingsCellView(label: "Share Feedback",
-                             image: Image("Feedback"),
+                             image: Image("SettingsFeedback"),
                              action: { viewModel.presentLegacyView(.feedback) },
                              isButton: true)
             SettingsCellView(label: "DuckDuckGo on Other Platforms",
-                             image: Image("OtherPlatforms"),
+                             image: Image("SettingsOtherPlatforms"),
                              action: { viewModel.openOtherPlatforms() },
                              webLinkIndicator: true,
                              isButton: true)

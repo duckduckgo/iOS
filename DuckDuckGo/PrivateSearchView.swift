@@ -26,7 +26,7 @@ struct PrivateSearchView: View {
     @EnvironmentObject var viewModel: SettingsViewModel
 
     var description: PrivacyProtectionDescription {
-        PrivacyProtectionDescription(imageName: "PrivateSearchContent",
+        PrivacyProtectionDescription(imageName: "SettingsPrivateSearchContent",
                                      title: "Private Search",
                                      status: .alwaysOn,
                                      explanation: UserText.privateSearchExplanation)

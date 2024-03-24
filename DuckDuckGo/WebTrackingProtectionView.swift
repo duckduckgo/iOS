@@ -26,7 +26,7 @@ struct WebTrackingProtectionView: View {
     @EnvironmentObject var viewModel: SettingsViewModel
 
     var description: PrivacyProtectionDescription {
-        PrivacyProtectionDescription(imageName: "WebTrackingProtectionContent",
+        PrivacyProtectionDescription(imageName: "SettingsWebTrackingProtectionContent",
                                      title: "Web Tracking Protection",
                                      status: .alwaysOn,
                                      explanation: UserText.webTrackingProtectionExplanation)

@@ -29,7 +29,7 @@ struct SettingsPrivacyProtectionsView: View {
         Section(header: Text("Privacy Protections")) {
             // Default Browser
             SettingsCellView(label: "Default Browser",
-                             image: Image("DefaultBrowser"),
+                             image: Image("SettingsDefaultBrowser"),
                              action: { viewModel.setAsDefaultBrowser() },
                              webLinkIndicator: true,
                              isButton: true)
@@ -37,28 +37,28 @@ struct SettingsPrivacyProtectionsView: View {
             // Private Search
             NavigationLink(destination: PrivateSearchView().environmentObject(viewModel)) {
                 SettingsCellView(label: "Private Search",
-                                 image: Image("Search"),
+                                 image: Image("SettingsSearch"),
                                  statusIndicator: StatusIndicatorView(status: .on))
             }
 
             // Web Tracking Protection
             NavigationLink(destination: WebTrackingProtectionView().environmentObject(viewModel)) {
                 SettingsCellView(label: "Web Tracking Protection",
-                                 image: Image("WebTrackingProtection"),
+                                 image: Image("SettingsWebTrackingProtection"),
                                  statusIndicator: StatusIndicatorView(status: .on))
             }
 
             // Cookie Pop-Up Protection
             NavigationLink(destination: CookiePopUpProtectionView().environmentObject(viewModel)) {
                 SettingsCellView(label: "Cookie Pop-Up Protection",
-                                 image: Image("CookiePopUpProtection"),
+                                 image: Image("SettingsCookiePopUpProtection"),
                                  statusIndicator: StatusIndicatorView(status: viewModel.cookiePopUpProtectionStatus))
             }
 
             // Email Protection
             NavigationLink(destination: EmailProtectionView().environmentObject(viewModel)) {
                 SettingsCellView(label: "Email Protection",
-                                 image: Image("EmailProtection"),
+                                 image: Image("SettingsEmailProtection"),
                                  statusIndicator: StatusIndicatorView(status: viewModel.emailProtectionStatus))
             }
 
@@ -66,7 +66,7 @@ struct SettingsPrivacyProtectionsView: View {
 #if NETWORK_PROTECTION
             if viewModel.state.networkProtection.enabled {
                 SettingsCellView(label: UserText.netPSettingsTitle,
-                                 image: Image("NetworkProtection"),
+                                 image: Image("SettingsNetworkProtection"),
                                  action: { viewModel.presentLegacyView(.netP) },
                                  disclosureIndicator: true,
                                  isButton: true)

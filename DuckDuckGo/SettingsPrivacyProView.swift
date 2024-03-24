@@ -33,7 +33,7 @@ struct SettingsPrivacyProView: View {
                     // Privacy Pro
                     NavigationLink(destination: SettingsPrivacyProDetailView().environmentObject(viewModel)) {
                         SettingsCellView(label: "Privacy Pro",
-                                         image: Image("PrivacyPro"))
+                                         image: Image("SettingsPrivacyPro"))
                     }
                 }
             }

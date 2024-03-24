@@ -26,7 +26,7 @@ struct CookiePopUpProtectionView: View {
     @EnvironmentObject var viewModel: SettingsViewModel
 
     var description: PrivacyProtectionDescription {
-        PrivacyProtectionDescription(imageName: "CookiePopUpProtectionContent",
+        PrivacyProtectionDescription(imageName: "SettingsCookiePopUpProtectionContent",
                                      title: "Cookie Pop-Up Protection",
                                      status: viewModel.cookiePopUpProtectionStatus,
                                      explanation: UserText.cookiePopUpProtectionExplanation)

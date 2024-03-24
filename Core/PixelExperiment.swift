@@ -75,9 +75,6 @@ extension PixelExperiment {
 final internal class PixelExperimentLogic {
 
     var cohort: PixelExperiment? {
-        // TODO: Remove
-        return .newSettings
-
         guard isInstalled else { return nil }
 
         if let allocatedCohort,

@@ -1429,7 +1429,7 @@ class MainViewController: UIViewController {
 
             let controller = NetworkProtectionTunnelController()
 
-            if controller.isInstalled {
+            if await controller.isInstalled {
                 tunnelDefaults.enableEntitlementMessaging()
             }
 

@@ -25,28 +25,28 @@ struct SettingsNextStepsView: View {
     @EnvironmentObject var viewModel: SettingsViewModel
 
     var body: some View {
-        Section(header: Text("Next Steps")) {
+        Section(header: Text(UserText.nextSteps)) {
             // Add App to Your Dock
-            SettingsCellView(label: "Add App to Your Dock",
+            SettingsCellView(label: UserText.settingsAddToDock,
                              image: Image("SettingsAddToDock"),
                              action: { viewModel.presentLegacyView(.addToDock) },
                              isButton: true)
 
             // Add Widget to Home Screen
             NavigationLink(destination: WidgetEducationView()) {
-                SettingsCellView(label: "Add Widget to Home Screen",
+                SettingsCellView(label: UserText.settingsAddWidget,
                                  image: Image("SettingsAddWidget"))
             }
 
             // Set Your Address Bar Position
             NavigationLink(destination: SettingsAppearanceView().environmentObject(viewModel)) {
-                SettingsCellView(label: "Set Your Address Bar Position",
+                SettingsCellView(label: UserText.setYourAddressBarPosition,
                                  image: Image("SettingsAddressBarPosition"))
             }
 
             // Enable Voice Search
             NavigationLink(destination: SettingsAccessibilityView().environmentObject(viewModel)) {
-                SettingsCellView(label: "Enable Voice Search",
+                SettingsCellView(label: UserText.enableVoiceSearch,
                                  image: Image("SettingsAddressBarPosition"))
             }
         }

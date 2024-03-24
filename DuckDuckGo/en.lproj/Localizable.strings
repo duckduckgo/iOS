@@ -1822,14 +1822,18 @@ Our privacy protections work without having to know anything about the technical
 
 But if you *do* want a peek under the hood, you can find more information about how DuckDuckGo privacy protections work on our [help pages](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
+/* Settings screen accessibility section title */
+"settings.accessibility" = "Accessibility";
+
 /* Settings screen cell text for adding the app to the dock */
 "settings.add.to.dock" = "Add App to Your Dock";
 
 /* Settings screen cell text for add widget to the home screen */
 "settings.add.widget" = "Add Widget to Home Screen";
 
-/* Settings screen cell text for addess bar position */
-"settings.address.bar" = "Address Bar Position";
+/* Name of the settings subsection related to the address bar
+   Settings screen cell text for addess bar position */
+"settings.address.bar" = "Address Bar";
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
 "settings.address.full.url" = "Show Full Site Address";
@@ -1855,6 +1859,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Automatically Clear Data";
 
+/* The name of Settings category in Privacy Features related to configuration of the privacy feature related to cookie pop-ups */
+"settings.cookie.pop-up-protection.protection" = "Cookie Pop-Up Protection";
+
 /* Explanation in Settings how the cookie pop up protection feature works */
 "settings.cookie.pop.up.protection.explanation" = "DuckDuckGo will try to select the most private settings available and hide these pop-ups for you.\n[Learn More](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#cookie-pop-up-management)";
 
@@ -1864,8 +1871,18 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings title for the customize section */
 "settings.customize" = "Customize";
 
-/* Settings screen cell text for setting the app as default browser */
-"settings.default.browser" = "Set as Default Browser";
+/* The name of a settings subsection related to the data clearing */
+"settings.data.clearing" = "Data Clearing";
+
+/* Settings screen cell text for setting the app as default browser
+   The name of Settings category in Privacy Features related to configuration of the default browser */
+"settings.default.browser" = "Default Browser";
+
+/* Label of a button disabling email protection */
+"settings.disable.email.protection.autofill" = "Disable Email Protection Autofill";
+
+/* Settings cell to link users to other products by DuckDuckGo */
+"settings.duckduckgo.on.other.platforms" = "DuckDuckGo on Other Platforms";
 
 /* Explanation in Settings how the email protection feature works */
 "settings.email.protection.explanation" = "Block email trackers and hide your address without switching your email provider.\n[Learn More](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/email-protection/what-is-duckduckgo-email-protection/)";
@@ -1874,10 +1891,13 @@ But if you *do* want a peek under the hood, you can find more information about 
 "settings.email.protection.signing.out.alert" = "Signing out of your Email Protection account will disable Duck Address autofill in this browser. You can still use these addresses and receive forwarded email as usual";
 
 /* Settings cell for Email Protection */
-"settings.emailProtection" = "Email Protection";
-
-/* Settings cell for Email Protection */
 "settings.emailProtection.description" = "Block email trackers and hide your address";
+
+/* Label of a button enabling the email protection feature */
+"settings.enable.email.protection" = "Enable Email Protection";
+
+/* Settings screen cell text for enabling voice search */
+"settings.enable.voice.search" = "Enable Voice Search";
 
 /* Settings cell for Feedback */
 "settings.feedback" = "Share Feedback";
@@ -1888,6 +1908,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings screen cell text for Fireproof Sites */
 "settings.fireproof.sites" = "Fireproof Sites";
 
+/* The name of the settings subsection containing general settings */
+"settings.general" = "General";
+
 /* Settings screen cell text for GPC */
 "settings.gpc" = "Global Privacy Control (GPC)";
 
@@ -1897,11 +1920,29 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Keyboard";
 
+/* Switch button label. */
+"settings.let.duckduckgo.manage.cookie.consent.popups" = "Let DuckDuckGo manage cookie consent pop-ups";
+
 /* Settings screen cell text for passwords */
 "settings.logins" = "Passwords";
 
+/* The name of the settings section containing main settings */
+"settings.main.settings" = "Main Settings";
+
+/* Label of a button managing email protection account */
+"settings.manage.account" = "Manage Account";
+
 /* Settings title for the 'More' section */
 "settings.more" = "More from DuckDuckGo";
+
+/* Button navigating to other settings related to search */
+"settings.more.search.settings" = "More Search Settings";
+
+/* Subtitle of the 'More Search Settings' button */
+"settings.more.search.settings.explanation" = "Customize your language, region, and more";
+
+/* The name of a settings category listing next steps */
+"settings.next.steps" = "Next Steps";
 
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
@@ -1912,8 +1953,17 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings title for the privacy section */
 "settings.privacy" = "Privacy";
 
+/* The name of Settings category in Privacy Features related to configuration of the search */
+"settings.private.search" = "Private Search";
+
 /* Explanation in Settings how the private search feature works */
 "settings.private.search.explanation" = "DuckDuckGo Private Search is your default search engine, so you can search the web without being tracked.";
+
+/* Header of settings related to search */
+"settings.search.settings" = "Search Settings";
+
+/* Settings screen cell text for setting address bar position */
+"settings.set.your.address.bar.position" = "Set Your Address Bar Position";
 
 /* Subscription activation pending description */
 "settings.subscription.activation.pending.description" = "This is taking longer than usual, please check back later.";
@@ -1956,6 +2006,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* VPN cell title for privacy pro */
 "settings.subscription.VPN.title" = "VPN";
 
+/* Label of a button navigating to the Support page */
+"settings.support" = "Support";
+
 /* Settings screen cell text for sync and backup */
 "settings.sync" = "Sync & Backup";
 
@@ -1976,6 +2029,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Settings screen cell for voice search */
 "settings.voice.search" = "Private Voice Search";
+
+/* The name of Settings category in Privacy Features related to configuration of the web tracking protection feature */
+"settings.web.tracking.protection" = "Web Tracking Protection";
 
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo automatically blocks hidden trackers as you browse the web.\n[Learn More](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";

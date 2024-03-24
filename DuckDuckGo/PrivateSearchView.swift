@@ -27,7 +27,7 @@ struct PrivateSearchView: View {
 
     var description: PrivacyProtectionDescription {
         PrivacyProtectionDescription(imageName: "SettingsPrivateSearchContent",
-                                     title: "Private Search",
+                                     title: UserText.privateSearch,
                                      status: .alwaysOn,
                                      explanation: UserText.privateSearchExplanation)
     }
@@ -37,7 +37,7 @@ struct PrivateSearchView: View {
             PrivacyProtectionDescriptionView(content: description)
             PrivateSearchViewSettings()
         }
-        .applySettingsListModifiers(title: "Private Search",
+        .applySettingsListModifiers(title: UserText.privateSearch,
                                     displayMode: .inline,
                                     viewModel: viewModel)
         .onForwardNavigationAppear {
@@ -53,7 +53,7 @@ struct PrivateSearchViewSettings: View {
     @State var shouldShowNoMicrophonePermissionAlert = false
 
     var body: some View {
-        Section(header: Text("Search Settings")) {
+        Section(header: Text(UserText.searchSettings)) {
             // Autocomplete Suggestions
             SettingsCellView(label: UserText.settingsAutocomplete,
                              subtitle: viewModel.autocompleteSubtitle,
@@ -67,8 +67,8 @@ struct PrivateSearchViewSettings: View {
             }
 
             // More Search Settings
-            SettingsCellView(label: "More Search Settings",
-                             subtitle: "Customize your language, region, and more",
+            SettingsCellView(label: UserText.moreSearchSettings,
+                             subtitle: UserText.moreSearchSettingsExplanation,
                              action: { viewModel.openMoreSearchSettings() },
                              disclosureIndicator: true,
                              isButton: true)

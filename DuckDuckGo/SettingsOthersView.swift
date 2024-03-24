@@ -28,18 +28,18 @@ struct SettingsOthersView: View {
         Section {
             // About
             NavigationLink(destination: AboutView().environmentObject(viewModel)) {
-                SettingsCellView(label: "About",
+                SettingsCellView(label: UserText.settingsAboutSection,
                                  image: Image("LogoIcon"))
             }
 
             // Share Feedback
-            SettingsCellView(label: "Share Feedback",
+            SettingsCellView(label: UserText.settingsFeedback,
                              image: Image("SettingsFeedback"),
                              action: { viewModel.presentLegacyView(.feedback) },
                              isButton: true)
 
             // DuckDuckGo on Other Platforms
-            SettingsCellView(label: "DuckDuckGo on Other Platforms",
+            SettingsCellView(label: UserText.duckduckgoOnOtherPlatforms,
                              image: Image("SettingsOtherPlatforms"),
                              action: { viewModel.openOtherPlatforms() },
                              webLinkIndicator: true,

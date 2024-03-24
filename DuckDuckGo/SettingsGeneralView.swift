@@ -36,7 +36,7 @@ struct SettingsGeneralView: View {
 
             }
 
-            Section(header: Text("Private Search"),
+            Section(header: Text(UserText.privateSearch),
                     footer: Text(UserText.voiceSearchFooter)) {
                 // Autocomplete Suggestions
                 SettingsCellView(label: UserText.settingsAutocomplete,
@@ -79,7 +79,7 @@ struct SettingsGeneralView: View {
                                  accesory: .toggle(isOn: viewModel.universalLinksBinding))
             }
         }
-        .applySettingsListModifiers(title: "General",
+        .applySettingsListModifiers(title: UserText.general,
                                     displayMode: .inline,
                                     viewModel: viewModel)
         .onForwardNavigationAppear {

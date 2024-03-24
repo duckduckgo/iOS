@@ -43,7 +43,7 @@ struct SettingsAppearanceView: View {
             }
 
             if viewModel.state.addressbar.enabled {
-                Section(header: Text("Address Bar")) {
+                Section(header: Text(UserText.addressBar)) {
                     // Address Bar Position
                     SettingsPickerCellView(label: UserText.settingsAddressBar,
                                            options: AddressBarPosition.allCases,
@@ -55,7 +55,7 @@ struct SettingsAppearanceView: View {
                 }
             }
         }
-        .applySettingsListModifiers(title: "Appearance",
+        .applySettingsListModifiers(title: UserText.settingsAppearanceSection,
                                     displayMode: .inline,
                                     viewModel: viewModel)
         .onForwardNavigationAppear {

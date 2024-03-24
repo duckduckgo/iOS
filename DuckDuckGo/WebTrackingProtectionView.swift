@@ -27,7 +27,7 @@ struct WebTrackingProtectionView: View {
 
     var description: PrivacyProtectionDescription {
         PrivacyProtectionDescription(imageName: "SettingsWebTrackingProtectionContent",
-                                     title: "Web Tracking Protection",
+                                     title: UserText.webTrackingProtection,
                                      status: .alwaysOn,
                                      explanation: UserText.webTrackingProtectionExplanation)
     }
@@ -37,7 +37,7 @@ struct WebTrackingProtectionView: View {
             PrivacyProtectionDescriptionView(content: description)
             WebTrackingProtectionViewSettings()
         }
-        .applySettingsListModifiers(title: "Web Tracking Protection",
+        .applySettingsListModifiers(title: UserText.webTrackingProtection,
                                     displayMode: .inline,
                                     viewModel: viewModel)
         .onForwardNavigationAppear {

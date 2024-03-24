@@ -26,10 +26,10 @@ struct SettingsMainSettingsView: View {
     @EnvironmentObject var viewModel: SettingsViewModel
 
     var body: some View {
-        Section(header: Text("Main Settings")) {
+        Section(header: Text(UserText.mainSettings)) {
             // General
             NavigationLink(destination: SettingsGeneralView().environmentObject(viewModel)) {
-                SettingsCellView(label: "General",
+                SettingsCellView(label: UserText.general,
                                  image: Image("SettingsGeneral"))
             }
 
@@ -44,7 +44,7 @@ struct SettingsMainSettingsView: View {
 
             // Appearance
             NavigationLink(destination: SettingsAppearanceView().environmentObject(viewModel)) {
-                SettingsCellView(label: "Appearance",
+                SettingsCellView(label: UserText.settingsAppearanceSection,
                                  image: Image("SettingsAppearance"))
             }
 
@@ -57,13 +57,13 @@ struct SettingsMainSettingsView: View {
 
             // Accessibility
             NavigationLink(destination: SettingsAccessibilityView().environmentObject(viewModel)) {
-                SettingsCellView(label: "Accessibility",
+                SettingsCellView(label: UserText.accessibility,
                                  image: Image("SettingsAccessibility"))
             }
 
             // Data Clearing
             NavigationLink(destination: SettingsDataClearingView().environmentObject(viewModel)) {
-                SettingsCellView(label: "Data Clearing",
+                SettingsCellView(label: UserText.dataClearing,
                                  image: Image("SettingsDataClearing"))
             }
         }

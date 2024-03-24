@@ -51,7 +51,7 @@ struct SettingsDataClearingView: View {
                                   isButton: true)
             }
         }
-        .applySettingsListModifiers(title: "Data Clearing",
+        .applySettingsListModifiers(title: UserText.dataClearing,
                                     displayMode: .inline,
                                     viewModel: viewModel)
         .onForwardNavigationAppear {

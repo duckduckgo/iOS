@@ -28,7 +28,7 @@ struct SettingsPrivacyProtectionsView: View {
     var body: some View {
         Section(header: Text("Privacy Protections")) {
             // Default Browser
-            SettingsCellView(label: "Default Browser",
+            SettingsCellView(label: UserText.defaultBrowser,
                              image: Image("SettingsDefaultBrowser"),
                              action: { viewModel.setAsDefaultBrowser() },
                              webLinkIndicator: true,
@@ -36,28 +36,28 @@ struct SettingsPrivacyProtectionsView: View {
 
             // Private Search
             NavigationLink(destination: PrivateSearchView().environmentObject(viewModel)) {
-                SettingsCellView(label: "Private Search",
+                SettingsCellView(label: UserText.privateSearch,
                                  image: Image("SettingsSearch"),
                                  statusIndicator: StatusIndicatorView(status: .on))
             }
 
             // Web Tracking Protection
             NavigationLink(destination: WebTrackingProtectionView().environmentObject(viewModel)) {
-                SettingsCellView(label: "Web Tracking Protection",
+                SettingsCellView(label: UserText.webTrackingProtection,
                                  image: Image("SettingsWebTrackingProtection"),
                                  statusIndicator: StatusIndicatorView(status: .on))
             }
 
             // Cookie Pop-Up Protection
             NavigationLink(destination: CookiePopUpProtectionView().environmentObject(viewModel)) {
-                SettingsCellView(label: "Cookie Pop-Up Protection",
+                SettingsCellView(label: UserText.cookiePopUpProtection,
                                  image: Image("SettingsCookiePopUpProtection"),
                                  statusIndicator: StatusIndicatorView(status: viewModel.cookiePopUpProtectionStatus))
             }
 
             // Email Protection
             NavigationLink(destination: EmailProtectionView().environmentObject(viewModel)) {
-                SettingsCellView(label: "Email Protection",
+                SettingsCellView(label: UserText.emailProtection,
                                  image: Image("SettingsEmailProtection"),
                                  statusIndicator: StatusIndicatorView(status: viewModel.emailProtectionStatus))
             }

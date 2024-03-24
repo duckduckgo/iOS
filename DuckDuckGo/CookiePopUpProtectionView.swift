@@ -27,7 +27,7 @@ struct CookiePopUpProtectionView: View {
 
     var description: PrivacyProtectionDescription {
         PrivacyProtectionDescription(imageName: "SettingsCookiePopUpProtectionContent",
-                                     title: "Cookie Pop-Up Protection",
+                                     title: UserText.cookiePopUpProtection,
                                      status: viewModel.cookiePopUpProtectionStatus,
                                      explanation: UserText.cookiePopUpProtectionExplanation)
     }
@@ -37,7 +37,7 @@ struct CookiePopUpProtectionView: View {
             PrivacyProtectionDescriptionView(content: description)
             CookiePopUpProtectionViewSettings()
         }
-        .applySettingsListModifiers(title: "Cookie Pop-Up Protection",
+        .applySettingsListModifiers(title: UserText.cookiePopUpProtection,
                                     displayMode: .inline,
                                     viewModel: viewModel)
         .onForwardNavigationAppear {
@@ -54,7 +54,7 @@ struct CookiePopUpProtectionViewSettings: View {
     var body: some View {
         Section {
             // Let DuckDuckGo manage cookie consent pop-ups
-            SettingsCellView(label: "Let DuckDuckGo manage cookie consent pop-ups",
+            SettingsCellView(label: UserText.letDuckDuckGoManageCookieConsentPopups,
                              accesory: .toggle(isOn: viewModel.autoconsentBinding))
         }
     }

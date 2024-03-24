@@ -28,7 +28,7 @@ struct EmailProtectionView: View {
 
     var description: PrivacyProtectionDescription {
         PrivacyProtectionDescription(imageName: "SettingsEmailProtectionContent",
-                                     title: "Email Protection",
+                                     title: UserText.emailProtection,
                                      status: viewModel.emailProtectionStatus,
                                      explanation: UserText.emailProtectionExplanation)
     }
@@ -38,7 +38,7 @@ struct EmailProtectionView: View {
             PrivacyProtectionDescriptionView(content: description)
             EmailProtectionViewSettings()
         }
-        .applySettingsListModifiers(title: "Email Protection",
+        .applySettingsListModifiers(title: UserText.emailProtection,
                                     displayMode: .inline,
                                     viewModel: viewModel)
         .onForwardNavigationAppear {
@@ -46,13 +46,13 @@ struct EmailProtectionView: View {
                        withAdditionalParameters: PixelExperiment.parameters)
         }
         .alert(isPresented: $shouldShowEmailAlert) {
-            Alert(title: Text("Disable Email Protection Autofill"),
+            Alert(title: Text(UserText.disableEmailProtectionAutofill),
                   message: Text(UserText.emailProtectionSigningOutAlert),
                   primaryButton: .default(Text(UserText.actionOK), action: {
                 try? viewModel.emailManager.signOut()
                 viewModel.shouldShowEmailAlert = false
             }),
-                  secondaryButton: .cancel(Text("Cancel"), action: {
+                  secondaryButton: .cancel(Text(UserText.actionCancel), action: {
                 viewModel.shouldShowEmailAlert = false
             })
             )
@@ -72,20 +72,20 @@ struct EmailProtectionViewSettings: View {
             let userEmail = viewModel.emailManager.userEmail ?? ""
             Section(header: Text(userEmail)) {
                 // Manage Account
-                SettingsCellView(label: "Manage Account",
+                SettingsCellView(label: UserText.manageAccount,
                                  action: { viewModel.openEmailAccountManagement() },
                                  webLinkIndicator: true,
                                  isButton: true)
 
                 // Disable Email Protection Autofill
-                SettingsCellView(label: "Disable Email Protection Autofill",
+                SettingsCellView(label: UserText.disableEmailProtectionAutofill,
                                  action: { viewModel.shouldShowEmailAlert = true },
                                  isButton: true)
             }
 
             Section {
                 // Support
-                SettingsCellView(label: "Support",
+                SettingsCellView(label: UserText.support,
                                  action: { viewModel.openEmailSupport() },
                                  webLinkIndicator: true,
                                  isButton: true)
@@ -93,7 +93,7 @@ struct EmailProtectionViewSettings: View {
         } else {
             // Enable Email Protection
             Section {
-                SettingsCellView(label: "Enable Email Protection",
+                SettingsCellView(label: UserText.enableEmailProtection,
                                  action: { viewModel.openEmailProtection() },
                                  webLinkIndicator: true,
                                  isButton: true)

@@ -3204,6 +3204,7 @@
 				D6E83C5D2B224676006C8AFB /* SettingsCustomizeView.swift */,
 				D6E83C612B23298B006C8AFB /* SettingsMoreView.swift */,
 				D6E83C112B1E6AB3006C8AFB /* SettingsView.swift */,
+				02C57C4A2514FEFB009E5129 /* DoNotSellSettingsViewController.swift */,
 			);
 			name = Old;
 			sourceTree = "<group>";
@@ -4042,7 +4043,6 @@
 				AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */,
 				98F0FC1F21FF18E700CE77AB /* AutoClearSettingsViewController.swift */,
 				1EE7C298294227EC0026C8CB /* AutoconsentSettingsViewController.swift */,
-				02C57C4A2514FEFB009E5129 /* DoNotSellSettingsViewController.swift */,
 				85449EF423FDA02800512AAF /* KeyboardSettingsViewController.swift */,
 				8540BD5523D9E9C20057FDD2 /* PreserveLoginsSettingsViewController.swift */,
 				1E865AEF272042DB001C74F3 /* TextSizeSettingsViewController.swift */,

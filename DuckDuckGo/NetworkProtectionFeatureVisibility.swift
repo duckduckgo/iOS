@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Subscription
 
 public protocol NetworkProtectionFeatureVisibility {
     func isWaitlistBetaActive() -> Bool
@@ -49,8 +50,12 @@ public extension NetworkProtectionFeatureVisibility {
         !isPrivacyProLaunched() && isWaitlistBetaActive() && isWaitlistUser()
     }
 
-    // todo - https://app.asana.com/0/0/1206827703748771/f
     func shouldShowVPNShortcut() -> Bool {
-        isPrivacyProLaunched() || shouldKeepVPNAccessViaWaitlist()
+        if isPrivacyProLaunched() {
+            let accountManager = AccountManager()
+            return accountManager.isUserAuthenticated
+        } else {
+            return shouldKeepVPNAccessViaWaitlist()
+        }
     }
 }

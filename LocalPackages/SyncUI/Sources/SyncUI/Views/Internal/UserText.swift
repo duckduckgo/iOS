@@ -53,43 +53,13 @@ public struct UserText {
     static let invalidCredentialsPresentTitle = NSLocalizedString("credentials.invalid.objects.present.title", bundle: Bundle.module, value: "Some logins are not syncing due to excessively long content in certain fields.", comment: "Alert title for invalid logins being filtered out of synced data")
 
     static func invalidBookmarksPresentDescription(_ invalidItemTitle: String, numberOfOtherInvalidItems: Int) -> String {
-        let localized: String = {
-            guard numberOfOtherInvalidItems > 0 else {
-                return NSLocalizedString(
-                    "bookmarks.invalid.objects.present.description.one",
-                    bundle: Bundle.module,
-                    value: "Your bookmark for %@ can't sync because one of its fields exceeds the character limit.",
-                    comment: "Alert message for 1 invalid bookmark being filtered out of synced data"
-                )
-            }
-            return NSLocalizedString(
-                "bookmarks.invalid.objects.present.description.many",
-                bundle: Bundle.module,
-                value: "Your bookmarks for %@ and %d other sites can't sync because some of their fields exceed the character limit.",
-                comment: "Alert message for multiple invalid bookmark being filtered out of synced data"
-            )
-        }()
-        return String(format: localized, invalidItemTitle, numberOfOtherInvalidItems)
+        let message = NSLocalizedString("bookmarks.invalid.objects.present.description", bundle: Bundle.module, comment: "Do not translate - stringsdict entry")
+        return String(format: message, numberOfOtherInvalidItems, invalidItemTitle)
     }
 
     static func invalidCredentialsPresentDescription(_ invalidItemTitle: String, numberOfOtherInvalidItems: Int) -> String {
-        let localized: String = {
-            guard numberOfOtherInvalidItems > 0 else {
-                return NSLocalizedString(
-                    "credentials.invalid.objects.present.description.one",
-                    bundle: Bundle.module,
-                    value: "Your password for %@ can't sync because one of its fields exceeds the character limit.",
-                    comment: "Alert message for 1 invalid login being filtered out of synced data"
-                )
-            }
-            return NSLocalizedString(
-                "credentials.invalid.objects.present.description.many",
-                bundle: Bundle.module,
-                value: "Your passwords for %@ and %d other sites can't sync because some of their fields exceed the character limit.",
-                comment: "Alert message for multiple invalid logins being filtered out of synced data"
-            )
-        }()
-        return String(format: localized, invalidItemTitle, numberOfOtherInvalidItems)
+        let message = NSLocalizedString("credentials.invalid.objects.present.description", bundle: Bundle.module, comment: "Do not translate - stringsdict entry")
+        return String(format: message, numberOfOtherInvalidItems, invalidItemTitle)
     }
 
     // Synced Devices

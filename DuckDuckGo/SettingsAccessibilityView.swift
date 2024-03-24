@@ -29,6 +29,7 @@ struct SettingsAccessibilityView: View {
     var body: some View {
         List {
             Section {
+                // Text Size
                 if viewModel.state.textSize.enabled {
                     SettingsCellView(label: UserText.settingsText,
                                      action: { viewModel.presentLegacyView(.textSize) },
@@ -39,6 +40,7 @@ struct SettingsAccessibilityView: View {
             }
 
             Section(footer: Text(UserText.voiceSearchFooter)) {
+                // Private Voice Search
                 if viewModel.state.speechRecognitionAvailable {
                     SettingsCellView(label: UserText.settingsVoiceSearch,
                                      accesory: .toggle(isOn: viewModel.voiceSearchEnabledAccessibilityBinding))

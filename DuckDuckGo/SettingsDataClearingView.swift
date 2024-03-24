@@ -28,16 +28,20 @@ struct SettingsDataClearingView: View {
     var body: some View {
         List {
             Section {
+                // Fire Button Animation
                 SettingsPickerCellView(label: UserText.settingsFirebutton,
                                        options: FireButtonAnimationType.allCases,
                                        selectedOption: viewModel.fireButtonAnimationBinding)
             }
 
             Section {
+                // Fireproof Sites
                 SettingsCellView(label: UserText.settingsFireproofSites,
                                   action: { viewModel.presentLegacyView(.fireproofSites) },
                                  disclosureIndicator: true,
                                  isButton: true)
+
+                // Automatically Clear Data
                 SettingsCellView(label: UserText.settingsClearData,
                                   action: { viewModel.presentLegacyView(.autoclearData) },
                                   accesory: .rightDetail(viewModel.state.autoclearDataEnabled

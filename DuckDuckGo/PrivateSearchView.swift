@@ -54,14 +54,19 @@ struct PrivateSearchViewSettings: View {
 
     var body: some View {
         Section(header: Text("Search Settings")) {
+            // Autocomplete Suggestions
             SettingsCellView(label: UserText.settingsAutocomplete,
                              subtitle: viewModel.autocompleteSubtitle,
                              accesory: .toggle(isOn: viewModel.autocompletePrivateSearchBinding))
+
+            // Private Voice Search
             if viewModel.state.speechRecognitionAvailable {
                 SettingsCellView(label: UserText.settingsVoiceSearch,
                                  subtitle: UserText.voiceSearchFooter,
                                  accesory: .toggle(isOn: viewModel.voiceSearchEnabledPrivateSearchBinding))
             }
+
+            // More Search Settings
             SettingsCellView(label: "More Search Settings",
                              subtitle: "Customize your language, region, and more",
                              action: { viewModel.openMoreSearchSettings() },

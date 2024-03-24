@@ -28,6 +28,7 @@ struct SettingsGeneralView: View {
 
     var body: some View {
         List {
+            // Application Lock
             Section(header: Text(UserText.settingsPrivacySection),
                     footer: Text(UserText.settingsAutoLockDescription)) {
                 SettingsCellView(label: UserText.settingsAutolock,
@@ -37,9 +38,12 @@ struct SettingsGeneralView: View {
 
             Section(header: Text("Private Search"),
                     footer: Text(UserText.voiceSearchFooter)) {
+                // Autocomplete Suggestions
                 SettingsCellView(label: UserText.settingsAutocomplete,
                                  subtitle: viewModel.autocompleteSubtitle,
                                  accesory: .toggle(isOn: viewModel.autocompleteGeneralBinding))
+
+                // Private Voice Search
                 if viewModel.state.speechRecognitionAvailable {
                     SettingsCellView(label: UserText.settingsVoiceSearch,
                                      accesory: .toggle(isOn: viewModel.voiceSearchEnabledGeneralBinding))
@@ -60,14 +64,17 @@ struct SettingsGeneralView: View {
 
             Section(header: Text(UserText.settingsCustomizeSection),
                     footer: Text(UserText.settingsAssociatedAppsDescription)) {
-
+                // Keyboard
                 SettingsCellView(label: UserText.settingsKeyboard,
                                  action: { viewModel.presentLegacyView(.keyboard) },
                                  disclosureIndicator: true,
                                  isButton: true)
+
+                // Long-Press Previews
                 SettingsCellView(label: UserText.settingsPreviews,
                                  accesory: .toggle(isOn: viewModel.longPressBinding))
 
+                // Open Links in Associated Apps
                 SettingsCellView(label: UserText.settingsAssociatedApps,
                                  accesory: .toggle(isOn: viewModel.universalLinksBinding))
             }

@@ -26,14 +26,19 @@ struct SettingsOthersView: View {
 
     var body: some View {
         Section {
+            // About
             NavigationLink(destination: AboutView().environmentObject(viewModel)) {
                 SettingsCellView(label: "About",
                                  image: Image("LogoIcon"))
             }
+
+            // Share Feedback
             SettingsCellView(label: "Share Feedback",
                              image: Image("SettingsFeedback"),
                              action: { viewModel.presentLegacyView(.feedback) },
                              isButton: true)
+
+            // DuckDuckGo on Other Platforms
             SettingsCellView(label: "DuckDuckGo on Other Platforms",
                              image: Image("SettingsOtherPlatforms"),
                              action: { viewModel.openOtherPlatforms() },

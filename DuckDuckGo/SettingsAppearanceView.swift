@@ -28,6 +28,7 @@ struct SettingsAppearanceView: View {
     var body: some View {
         List {
             Section {
+                // App Icon
                 let image = Image(uiImage: viewModel.state.appIcon.smallImage ?? UIImage())
                 SettingsCellView(label: UserText.settingsIcon,
                                  action: { viewModel.presentLegacyView(.appIcon ) },
@@ -35,6 +36,7 @@ struct SettingsAppearanceView: View {
                                  disclosureIndicator: true,
                                  isButton: true)
 
+                // Theme
                 SettingsPickerCellView(label: UserText.settingsTheme,
                                        options: ThemeName.allCases,
                                        selectedOption: viewModel.themeBinding)
@@ -42,9 +44,12 @@ struct SettingsAppearanceView: View {
 
             if viewModel.state.addressbar.enabled {
                 Section(header: Text("Address Bar")) {
+                    // Address Bar Position
                     SettingsPickerCellView(label: UserText.settingsAddressBar,
                                            options: AddressBarPosition.allCases,
                                            selectedOption: viewModel.addressBarPositionBinding)
+
+                    // Show Full Site Address
                     SettingsCellView(label: UserText.settingsFullURL,
                                      accesory: .toggle(isOn: viewModel.addressBarShowsFullURL))
                 }

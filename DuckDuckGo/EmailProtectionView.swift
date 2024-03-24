@@ -71,22 +71,27 @@ struct EmailProtectionViewSettings: View {
         if viewModel.emailManager.isSignedIn {
             let userEmail = viewModel.emailManager.userEmail ?? ""
             Section(header: Text(userEmail)) {
+                // Manage Account
                 SettingsCellView(label: "Manage Account",
                                  action: { viewModel.openEmailAccountManagement() },
                                  webLinkIndicator: true,
                                  isButton: true)
+
+                // Disable Email Protection Autofill
                 SettingsCellView(label: "Disable Email Protection Autofill",
                                  action: { viewModel.shouldShowEmailAlert = true },
                                  isButton: true)
             }
 
             Section {
+                // Support
                 SettingsCellView(label: "Support",
                                  action: { viewModel.openEmailSupport() },
                                  webLinkIndicator: true,
                                  isButton: true)
             }
         } else {
+            // Enable Email Protection
             Section {
                 SettingsCellView(label: "Enable Email Protection",
                                  action: { viewModel.openEmailProtection() },

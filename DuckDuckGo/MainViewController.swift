@@ -1427,10 +1427,14 @@ class MainViewController: UIViewController {
         Task {
             guard case .success(false) = await AccountManager().hasEntitlement(for: .networkProtection) else { return }
 
-            tunnelDefaults.enableEntitlementMessaging()
-
             let controller = NetworkProtectionTunnelController()
+
+            if controller.isInstalled {
+                tunnelDefaults.enableEntitlementMessaging()
+            }
+
             await controller.stop()
+            await controller.removeVPN()
         }
     }
 

@@ -41,6 +41,8 @@ class PrivacyInfoContainerView: UIView {
         [trackers1Animation, trackers2Animation, trackers3Animation].forEach { animationView in
             animationView.contentMode = .scaleAspectFill
             animationView.backgroundBehavior = .pauseAndRestore
+            // Trackers animation do not render properly using Lottie CoreAnimation. Running them on the CPU seems working fine.
+            animationView.configuration = LottieConfiguration(renderingEngine: .mainThread)
         }
         
         loadAnimations(for: ThemeManager.shared.currentTheme)

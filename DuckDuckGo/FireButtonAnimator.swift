@@ -48,7 +48,7 @@ enum FireButtonAnimationType: String, CaseIterable, Identifiable, CustomStringCo
     
     var composition: LottieAnimation? {
         guard let fileName = fileName else { return nil }
-        return LottieAnimation.named(fileName, animationCache: LRUAnimationCache.sharedCache)
+        return LottieAnimation.named(fileName, animationCache: DefaultAnimationCache.sharedCache)
     }
 
     var transition: Double {

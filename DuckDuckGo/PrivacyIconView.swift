@@ -54,7 +54,7 @@ class PrivacyIconView: UIView {
         updateAccessibilityLabels(for: icon)
     }
     
-    func loadAnimations(for theme: Theme, animationCache cache: AnimationCacheProvider = LRUAnimationCache.sharedCache) {
+    func loadAnimations(for theme: Theme, animationCache cache: AnimationCacheProvider = DefaultAnimationCache.sharedCache) {
         let useLightStyle = theme.currentImageSet == .light
         
         let shieldAnimation = LottieAnimation.named(useLightStyle ? "shield" : "dark-shield", animationCache: cache)

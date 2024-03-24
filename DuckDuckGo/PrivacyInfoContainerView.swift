@@ -46,7 +46,7 @@ class PrivacyInfoContainerView: UIView {
         loadAnimations(for: ThemeManager.shared.currentTheme)
     }
     
-    private func loadAnimations(for theme: Theme, animationCache cache: AnimationCacheProvider = LRUAnimationCache.sharedCache) {
+    private func loadAnimations(for theme: Theme, animationCache cache: AnimationCacheProvider = DefaultAnimationCache.sharedCache) {
         let useLightStyle = theme.currentImageSet == .light
 
         trackers1Animation.animation = LottieAnimation.named(useLightStyle ? "trackers-1" : "dark-trackers-1", animationCache: cache)

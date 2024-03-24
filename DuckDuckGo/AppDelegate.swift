@@ -817,7 +817,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if NETWORK_PROTECTION
             if shortcutItem.type == ShortcutKey.openVPNSettings {
-                presentNetworkProtectionStatusSettingsModal()
+                let visibility = DefaultNetworkProtectionVisibility()
+                if visibility.shouldShowVPNShortcut() {
+                    presentNetworkProtectionStatusSettingsModal()
+                }
             }
 #endif
 

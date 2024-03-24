@@ -3192,13 +3192,20 @@
 			name = AppTPBreakageForm;
 			sourceTree = "<group>";
 		};
-		1DDF40262BA04CF0006850D9 /* New */ = {
+		1DDEC5982BB0677D000329FF /* Old */ = {
 			isa = PBXGroup;
 			children = (
-				1DDF401F2BA049FA006850D9 /* SettingsRootView.swift */,
-				1DDF40272BA04CF3006850D9 /* Sections */,
+				D6E83C372B1F2236006C8AFB /* SettingsGeneralViewOld.swift */,
+				D6E83C392B1F231A006C8AFB /* SettingsSyncViewOld.swift */,
+				D6E83C402B1FC285006C8AFB /* SettingsAppeareanceViewOld.swift */,
+				D6E83C632B238432006C8AFB /* SettingsAboutViewOld.swift */,
+				D6E83C3C2B1F2C03006C8AFB /* SettingsLoginsView.swift */,
+				D6E83C592B2213ED006C8AFB /* SettingsPrivacyView.swift */,
+				D6E83C5D2B224676006C8AFB /* SettingsCustomizeView.swift */,
+				D6E83C612B23298B006C8AFB /* SettingsMoreView.swift */,
+				D6E83C112B1E6AB3006C8AFB /* SettingsView.swift */,
 			);
-			name = New;
+			name = Old;
 			sourceTree = "<group>";
 		};
 		1DDF40272BA04CF3006850D9 /* Sections */ = {
@@ -3251,6 +3258,7 @@
 			children = (
 				1D200C982BA3176D00108701 /* SettingsOthersView.swift */,
 				1D200C9A2BA31A6A00108701 /* AboutView.swift */,
+				D6E83C652B23936F006C8AFB /* SettingsDebugView.swift */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -3260,6 +3268,7 @@
 			children = (
 				1D5216AB2BAC1F11002FE1ED /* SettingsPrivacyProView.swift */,
 				1DEAADF82BA4892600E25A97 /* SettingsPrivacyProDetailView.swift */,
+				D69FBF752B28BE3600B505F1 /* SettingsSubscriptionView.swift */,
 			);
 			name = "Privacy Pro";
 			sourceTree = "<group>";
@@ -4822,32 +4831,15 @@
 			name = DesktopDownloads;
 			sourceTree = "<group>";
 		};
-		D6E83C322B1F1279006C8AFB /* Sections */ = {
-			isa = PBXGroup;
-			children = (
-				D6E83C372B1F2236006C8AFB /* SettingsGeneralViewOld.swift */,
-				D6E83C392B1F231A006C8AFB /* SettingsSyncViewOld.swift */,
-				D6E83C3C2B1F2C03006C8AFB /* SettingsLoginsView.swift */,
-				D6E83C402B1FC285006C8AFB /* SettingsAppeareanceViewOld.swift */,
-				D6E83C592B2213ED006C8AFB /* SettingsPrivacyView.swift */,
-				D69FBF752B28BE3600B505F1 /* SettingsSubscriptionView.swift */,
-				D6E83C5D2B224676006C8AFB /* SettingsCustomizeView.swift */,
-				D6E83C612B23298B006C8AFB /* SettingsMoreView.swift */,
-				D6E83C632B238432006C8AFB /* SettingsAboutViewOld.swift */,
-				D6E83C652B23936F006C8AFB /* SettingsDebugView.swift */,
-			);
-			name = Sections;
-			sourceTree = "<group>";
-		};
 		D6E83C3B2B1F27BA006C8AFB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1DDF40262BA04CF0006850D9 /* New */,
+				1DDEC5982BB0677D000329FF /* Old */,
 				D6E83C472B20C812006C8AFB /* SettingsHostingController.swift */,
-				D6E83C112B1E6AB3006C8AFB /* SettingsView.swift */,
+				1DDF401F2BA049FA006850D9 /* SettingsRootView.swift */,
 				D6E83C302B1EA309006C8AFB /* SettingsCell.swift */,
 				1DEAADF12BA4716C00E25A97 /* SettingsStatus.swift */,
-				D6E83C322B1F1279006C8AFB /* Sections */,
+				1DDF40272BA04CF3006850D9 /* Sections */,
 				85449EF623FDA03100512AAF /* UIkit */,
 			);
 			name = Views;

@@ -60,28 +60,28 @@ final class NetworkProtectionFeatureVisibilityTests: XCTestCase {
         XCTAssertTrue(mockWithVPNAccess.shouldMonitorEntitlement())
         XCTAssertFalse(mockWithVPNAccess.shouldKeepVPNAccessViaWaitlist())
         XCTAssertTrue(mockWithVPNAccess.shouldShowThankYouMessaging())
-        XCTAssertTrue(mockWithVPNAccess.shouldShowVPNShortcut())
+        XCTAssertFalse(mockWithVPNAccess.shouldShowVPNShortcut())
 
         // Not current waitlist user -> Enforce entitlement check, no more VPN use, no thank-you
         let mockWithBetaActive = baseMock.adding([.isWaitlistBetaActive])
         XCTAssertTrue(mockWithBetaActive.shouldMonitorEntitlement())
         XCTAssertFalse(mockWithBetaActive.shouldKeepVPNAccessViaWaitlist())
         XCTAssertFalse(mockWithBetaActive.shouldShowThankYouMessaging())
-        XCTAssertTrue(mockWithBetaActive.shouldShowVPNShortcut())
+        XCTAssertFalse(mockWithBetaActive.shouldShowVPNShortcut())
 
         // Waitlist beta OFF, current waitlist user -> Show thank-you, enforce entitlement check, no more VPN use
         let mockWithBetaInactive = baseMock.adding([.isWaitlistUser])
         XCTAssertTrue(mockWithBetaInactive.shouldMonitorEntitlement())
         XCTAssertFalse(mockWithBetaInactive.shouldKeepVPNAccessViaWaitlist())
         XCTAssertTrue(mockWithBetaInactive.shouldShowThankYouMessaging())
-        XCTAssertTrue(mockWithBetaInactive.shouldShowVPNShortcut())
+        XCTAssertFalse(mockWithBetaInactive.shouldShowVPNShortcut())
 
-        // Waitlist beta OFF, not current wailist user -> Enforce entitlement check, nothing else
+        // Waitlist beta OFF, not current waitlist user -> Enforce entitlement check, nothing else
         let mockWithNothingElse = baseMock
         XCTAssertTrue(mockWithNothingElse.shouldMonitorEntitlement())
         XCTAssertFalse(mockWithNothingElse.shouldKeepVPNAccessViaWaitlist())
         XCTAssertFalse(mockWithNothingElse.shouldShowThankYouMessaging())
-        XCTAssertTrue(mockWithNothingElse.shouldShowVPNShortcut())
+        XCTAssertFalse(mockWithNothingElse.shouldShowVPNShortcut())
     }
 }
 

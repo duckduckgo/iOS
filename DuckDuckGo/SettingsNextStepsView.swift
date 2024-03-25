@@ -47,7 +47,7 @@ struct SettingsNextStepsView: View {
             // Enable Voice Search
             NavigationLink(destination: SettingsAccessibilityView().environmentObject(viewModel)) {
                 SettingsCellView(label: UserText.enableVoiceSearch,
-                                 image: Image("SettingsAddressBarPosition"))
+                                 image: Image("SettingsVoiceSearch"))
             }
         }
 

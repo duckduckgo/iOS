@@ -87,6 +87,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = UserText.autofillLoginListSearchPlaceholder
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -180,8 +181,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         authenticate()
     }
 
@@ -922,11 +923,31 @@ extension AutofillLoginSettingsListViewController: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
         viewModel.isSearching = searchController.isActive
-        if let query = searchController.searchBar.text {
+
+        if viewModel.isSearching {
+            viewModel.isCancelingSearch = false
+        }
+
+        if !viewModel.isCancelingSearch, let query = searchController.searchBar.text {
             viewModel.filterData(with: query)
             emptySearchView.query = query
             tableView.reloadData()
         }
+    }
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        searchController.searchBar.resignFirstResponder()
+    }
+}
+
+extension AutofillLoginSettingsListViewController: UISearchBarDelegate {
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        viewModel.isCancelingSearch = true
+        viewModel.isSearching = false
+
+        viewModel.filterData(with: "")
+        tableView.reloadData()
     }
 }
 

@@ -1194,7 +1194,7 @@ extension Pixel.Event {
         case .privacyProFeatureEnabled: return "m_privacy-pro_feature_enabled"
         case .privacyProPromotionDialogShownVPN: return "m_privacy-pro_promotion-dialog_shown_vpn"
         case .privacyProVPNAccessRevokedDialogShown: return "m_privacy-pro_vpn_access-revoked-dialog_shown"
-        case .privacyProVPNBetaStoppedWhenPrivacyProEnabled: return "m_privacy-pro_vpn_beta-stopped-when-privacy-pro-enabled"
+        case .privacyProVPNBetaStoppedWhenPrivacyProEnabled: return "m_privacy-pro_vpn-beta-stopped-when-privacy-pro-enabled"
             // Web
         case .privacyProOfferMonthlyPriceClick: return "m_privacy-pro_offer_monthly-price_click"
         case .privacyProOfferYearlyPriceClick: return "m_privacy-pro_offer_yearly-price_click"

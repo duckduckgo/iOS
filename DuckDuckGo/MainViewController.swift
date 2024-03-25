@@ -1436,9 +1436,6 @@ class MainViewController: UIViewController {
 
             await controller.stop()
             await controller.removeVPN()
-
-            DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled,
-                                         withAdditionalParameters: ["source": "browser"])
         }
     }
 
@@ -1448,9 +1445,6 @@ class MainViewController: UIViewController {
             let controller = NetworkProtectionTunnelController()
             await controller.stop()
             await controller.removeVPN()
-            
-            DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled,
-                                         withAdditionalParameters: ["source": "browser"])
         }
     }
 #endif

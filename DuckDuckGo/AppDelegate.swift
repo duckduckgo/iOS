@@ -404,6 +404,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let alertController = CriticalAlerts.makeVPNEarlyAccessOverAlert()
         window?.rootViewController?.present(alertController, animated: true) { [weak self] in
             DailyPixel.fireDailyAndCount(pixel: .privacyProPromotionDialogShownVPN)
+            DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled)
             self?.tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
         }
     }

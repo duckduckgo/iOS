@@ -436,7 +436,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
 #endif
             SubscriptionPurchaseEnvironment.current = .appStore
-            await AccountManager().checkSubscriptionState()
         }
     }
 #endif
@@ -509,18 +508,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func updateSubscriptionStatus() {
 #if SUBSCRIPTION
         Task {
-            guard let token = AccountManager().accessToken else {
-                return
-            }
-            let result = await SubscriptionService.getSubscription(accessToken: token)
+            let accountManager = AccountManager()
 
-            switch result {
-            case .success(let success):
-                if success.isActive {
+            guard let token = accountManager.accessToken else { return }
+
+            if case .success(let subscription) = await SubscriptionService.getSubscription(accessToken: token,
+                                                                                           cachePolicy: .reloadIgnoringLocalCacheData) {
+                if subscription.isActive {
                     DailyPixel.fire(pixel: .privacyProSubscriptionActive)
+                } else {
+                    accountManager.signOut()
                 }
-            case .failure: break
             }
+
+            _ = await accountManager.fetchEntitlements(cachePolicy: .reloadIgnoringLocalCacheData)
         }
 #endif
     }
@@ -694,7 +695,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             showKeyboardIfSettingOn = false
 
             if !handleAppDeepLink(app, mainViewController, url) {
-                mainViewController?.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil)
+                mainViewController?.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil, fromExternalLink: true)
             }
         }
 

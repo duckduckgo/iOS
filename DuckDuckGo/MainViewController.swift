@@ -874,7 +874,7 @@ class MainViewController: UIViewController {
         loadUrlInNewTab(url, reuseExisting: reuseExisting, inheritedAttribution: nil)
     }
 
-    func loadUrlInNewTab(_ url: URL, reuseExisting: Bool = false, inheritedAttribution: AdClickAttributionLogic.State?) {
+    func loadUrlInNewTab(_ url: URL, reuseExisting: Bool = false, inheritedAttribution: AdClickAttributionLogic.State?, fromExternalLink: Bool = false) {
         func worker() {
             allowContentUnderflow = false
             viewCoordinator.navigationBarContainer.alpha = 1
@@ -884,9 +884,9 @@ class MainViewController: UIViewController {
                 return
             } else if reuseExisting, let existing = tabManager.firstHomeTab() {
                 tabManager.selectTab(existing)
-                loadUrl(url)
+                loadUrl(url, fromExternalLink: fromExternalLink)
             } else {
-                addTab(url: url, inheritedAttribution: inheritedAttribution)
+                addTab(url: url, inheritedAttribution: inheritedAttribution, fromExternalLink: fromExternalLink)
             }
             refreshOmniBar()
             refreshTabIcon()
@@ -921,9 +921,12 @@ class MainViewController: UIViewController {
         loadUrl(url)
     }
 
-    func loadUrl(_ url: URL) {
+    func loadUrl(_ url: URL, fromExternalLink: Bool = false) {
         prepareTabForRequest {
             self.currentTab?.load(url: url)
+            if fromExternalLink {
+                self.currentTab?.inferredOpenerContext = .external
+            }
         }
     }
 
@@ -956,8 +959,9 @@ class MainViewController: UIViewController {
         select(tab: tab)
     }
 
-    private func addTab(url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) {
+    private func addTab(url: URL?, inheritedAttribution: AdClickAttributionLogic.State?, fromExternalLink: Bool = false) {
         let tab = tabManager.add(url: url, inheritedAttribution: inheritedAttribution)
+        tab.inferredOpenerContext = .external
         dismissOmniBar()
         attachTab(tab: tab)
     }
@@ -1352,6 +1356,18 @@ class MainViewController: UIViewController {
                 self?.onNetworkProtectionAccountSignIn(notification)
             }
             .store(in: &vpnCancellables)
+        NotificationCenter.default.publisher(for: .entitlementsDidChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                self?.onEntitlementsChange(notification)
+            }
+            .store(in: &vpnCancellables)
+        NotificationCenter.default.publisher(for: .accountDidSignOut)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                self?.onNetworkProtectionAccountSignOut(notification)
+            }
+            .store(in: &vpnCancellables)
 
         NotificationCenter.default.publisher(for: .vpnEntitlementMessagingDidChange)
             .receive(on: DispatchQueue.main)
@@ -1405,6 +1421,27 @@ class MainViewController: UIViewController {
     private func onNetworkProtectionAccountSignIn(_ notification: Notification) {
         tunnelDefaults.resetEntitlementMessaging()
         os_log("[NetP Subscription] Reset expired entitlement messaging", log: .networkProtection, type: .info)
+    }
+
+    @objc
+    private func onEntitlementsChange(_ notification: Notification) {
+        Task {
+            guard case .success(false) = await AccountManager().hasEntitlement(for: .networkProtection) else { return }
+
+            tunnelDefaults.enableEntitlementMessaging()
+
+            let controller = NetworkProtectionTunnelController()
+            await controller.stop()
+        }
+    }
+
+    @objc
+    private func onNetworkProtectionAccountSignOut(_ notification: Notification) {
+        Task {
+            let controller = NetworkProtectionTunnelController()
+            await controller.stop()
+            await controller.removeVPN()
+        }
     }
 #endif
 

@@ -45,7 +45,7 @@ jobs:
         xcodebuild clean build \
         -target "DuckDuckGo" \
         -scheme "DuckDuckGo" \
-        -destination "platform=iOS Simulator,name=iPhone 14"
+        -destination "platform=iOS Simulator,name=iPhone 14" \
         -skipPackagePluginValidation \
         -skipMacroValidation
 

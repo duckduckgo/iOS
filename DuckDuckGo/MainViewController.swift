@@ -669,14 +669,6 @@ class MainViewController: UIViewController {
         currentTab?.saveAsBookmark(favorite: true, viewModel: menuBookmarksViewModel)
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            ThemeManager.shared.refreshSystemTheme()
-        }
-    }
-    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if let presentedViewController {
             return presentedViewController.supportedInterfaceOrientations

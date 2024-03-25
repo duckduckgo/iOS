@@ -375,17 +375,16 @@ class OmniBar: UIView {
     }
 
     func refreshText(forUrl url: URL?, forceFullURL: Bool = false) {
-        if !textField.isEditing {
-            guard let url = url else {
-                textField.text = nil
-                return
-            }
-            
-            if let query = url.searchQuery {
-                textField.text = query
-            } else {
-                textField.attributedText = AddressDisplayHelper.addressForDisplay(url: url, showsFullURL: textField.isEditing || forceFullURL)
-            }
+        guard !textField.isEditing else { return }
+        guard let url = url else {
+            textField.text = nil
+            return
+        }
+
+        if let query = url.searchQuery {
+            textField.text = query
+        } else {
+            textField.attributedText = AddressDisplayHelper.addressForDisplay(url: url, showsFullURL: textField.isEditing || forceFullURL)
         }
     }
 

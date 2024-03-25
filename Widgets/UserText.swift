@@ -58,7 +58,7 @@ struct UserText {
                                                                   comment: "Description of search passwords widget in widget gallery")
 
     static let passwords = NSLocalizedString("widget.passwords",
-                                             value: "Passwords",
+                                             value: "Search\nPasswords",
                                              comment: "Text in passwords widget")
 
     static let lockScreenSearchTitle = NSLocalizedString(

@@ -267,6 +267,7 @@ struct PasswordsWidgetView: View {
                 Text(UserText.passwords)
                         .daxSubheadRegular()
                         .foregroundColor(Color(designSystemColor: .textPrimary))
+                        .multilineTextAlignment(.center)
 
             }
             .accessibilityHidden(true)

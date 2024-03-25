@@ -59,7 +59,7 @@
 "widget.no.favorites.message" = "Quickly visit your favorite sites.";
 
 /* Text in passwords widget */
-"widget.passwords" = "Passwords";
+"widget.passwords" = "Search\nPasswords";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Search DuckDuckGo";

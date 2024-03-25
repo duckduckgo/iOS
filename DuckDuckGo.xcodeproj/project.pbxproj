@@ -9963,7 +9963,7 @@
 		9825F9D4293F2DE900F220F2 /* Build configuration list for PBXNativeTarget "PerformanceTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9825F9D5293F2DE900F220F2 /* Debg */,
+				9825F9D5293F2DE900F220F2 /* Debug */,
 				D664C7EA2B28A0FD00CBFA76 /* Alpha Debug */,
 				EE5A7C522A82BBB700387C84 /* Alpha */,
 				9825F9D6293F2DE900F220F2 /* Release */,

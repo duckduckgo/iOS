@@ -1434,6 +1434,11 @@ class MainViewController: UIViewController {
                 tunnelDefaults.enableEntitlementMessaging()
             }
 
+            if await controller.isConnected {
+                DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled,
+                                             withAdditionalParameters: ["source": "browser"])
+            }
+
             await controller.stop()
             await controller.removeVPN()
         }
@@ -1443,6 +1448,12 @@ class MainViewController: UIViewController {
     private func onNetworkProtectionAccountSignOut(_ notification: Notification) {
         Task {
             let controller = NetworkProtectionTunnelController()
+            
+            if await controller.isConnected {
+                DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled,
+                                             withAdditionalParameters: ["source": "browser"])
+            }
+
             await controller.stop()
             await controller.removeVPN()
         }

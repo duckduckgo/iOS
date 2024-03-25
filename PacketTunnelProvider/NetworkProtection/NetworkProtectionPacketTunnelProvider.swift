@@ -331,7 +331,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         }
 
         let result = await AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
-            .hasEntitlement(for: .networkProtection, cachePolicy: .reloadIgnoringLocalCacheData)
+            .hasEntitlement(for: .networkProtection)
         switch result {
         case .success(let hasEntitlement):
             return .success(hasEntitlement)

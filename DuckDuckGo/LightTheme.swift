@@ -22,6 +22,7 @@ import UIKit
 // If you add a new colour here:
 //  * and it uses the design system, please put it in Theme+DesignSystem instead
 //  * and it doesn't use the design, please only do so with designer approval
+@available(*, deprecated, renamed: "AutoupdatingTheme")
 struct LightTheme: Theme {
     var name = ThemeName.light
     

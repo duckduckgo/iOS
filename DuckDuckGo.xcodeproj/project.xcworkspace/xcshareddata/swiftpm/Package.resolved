@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "91b012d9450af211f7c47b9fde811e3a8292b16b",
-        "version" : "129.1.4"
+        "branch" : "michal/proper-purchase-options-platform",
+        "revision" : "1179ae051c39049bc8907575b96077592a8ab4c2"
       }
     },
     {

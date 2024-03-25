@@ -428,12 +428,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if SUBSCRIPTION
     private func setupSubscriptionsEnvironment() {
         Task {
+#if DEBUG && ALPHA
             SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+#else
+            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .production
+#endif
+
 #if NETWORK_PROTECTION
             if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {
                 SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
             }
 #endif
+
             SubscriptionPurchaseEnvironment.current = .appStore
         }
     }

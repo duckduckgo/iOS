@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "sam/startup-logging-cleanup",
-        "revision" : "fca1775a072c209dfe38a18bb09f47c1f40f673b"
+        "revision" : "e888df9b10a6c0368ed3ad4d0f858c53c7d49570"
       }
     },
     {

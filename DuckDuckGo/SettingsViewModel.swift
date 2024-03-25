@@ -120,9 +120,7 @@ final class SettingsViewModel: ObservableObject {
             get: { self.state.appTheme },
             set: {
                 self.state.appTheme = $0
-                self.appSettings.currentThemeName = $0
                 ThemeManager.shared.enableTheme(with: $0)
-                ThemeManager.shared.updateUserInterfaceStyle()
             }
         )
     }

@@ -14,6 +14,9 @@ name: "CodeQL"
 on:
   schedule:
     - cron: '0 2 * * *' # Run at 2 AM UTC
+  push:
+    branches:
+      - 'sam/fix-codeql'
 
 jobs:
   analyze:

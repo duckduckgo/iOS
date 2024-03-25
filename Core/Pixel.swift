@@ -271,16 +271,6 @@ private extension Pixel.Event {
     
 }
 
-/// NSError supports this through `NSUnderlyingError`, but there's no support for this for Swift's `Error`.  This protocol does that.
-///
-/// The reason why this protocol returns a code and a domain instead of just an `Error` or `NSError` is so that the error implementing
-/// this protocol has full control over these values, and is able to override them as it best sees fit.
-///
-protocol ErrorWithUnderlyingError: Error {
-    var underlyingErrorCode: Int { get }
-    var underlyingErrorDomain: String { get }
-}
-
 extension Dictionary where Key == String, Value == String {
     mutating func appendErrorPixelParams(error: Error) {
         let nsError = error as NSError
@@ -288,10 +278,7 @@ extension Dictionary where Key == String, Value == String {
         self[PixelParameters.errorCode] = "\(nsError.code)"
         self[PixelParameters.errorDomain] = nsError.domain
 
-        if let underlyingError = error as? ErrorWithUnderlyingError {
-            self[PixelParameters.underlyingErrorCode] = "\(underlyingError.underlyingErrorCode)"
-            self[PixelParameters.underlyingErrorDomain] = underlyingError.underlyingErrorDomain
-        } else if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
+        if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
             self[PixelParameters.underlyingErrorCode] = "\(underlyingError.code)"
             self[PixelParameters.underlyingErrorDomain] = underlyingError.domain
         } else if let sqlErrorCode = nsError.userInfo["NSSQLiteErrorDomain"] as? NSNumber {

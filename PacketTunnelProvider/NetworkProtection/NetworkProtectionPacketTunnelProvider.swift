@@ -137,11 +137,19 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 pixelEvent = .networkProtectionClientFailedToParseServerListResponse
             case .failedToEncodeRegisterKeyRequest:
                 pixelEvent = .networkProtectionClientFailedToEncodeRegisterKeyRequest
+            case .noResponseFromRegisterEndpoint:
+                return
+            case .unexpectedStatusFromRegisterEndpoint:
+                return
             case .failedToFetchRegisteredServers(let eventError):
                 pixelEvent = .networkProtectionClientFailedToFetchRegisteredServers
                 pixelError = eventError
             case .failedToParseRegisteredServersResponse:
                 pixelEvent = .networkProtectionClientFailedToParseRegisteredServersResponse
+            case .noResponseFromRedeemEndpoint:
+                return
+            case .unexpectedStatusFromRedeemEndpoint:
+                return
             case .failedToEncodeRedeemRequest, .invalidInviteCode, .failedToRedeemInviteCode, .failedToParseRedeemResponse:
                 pixelEvent = .networkProtectionUnhandledError
                 // Should never be sent from the extension

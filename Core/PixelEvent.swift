@@ -601,8 +601,7 @@ extension Pixel {
         case privacyProSubscriptionManagementEmail
         case privacyProSubscriptionManagementPlanBilling
         case privacyProSubscriptionManagementRemoval
-        case privacyProLaunched
-        case privacyProPromotionDialogShownDBP
+        case privacyProFeatureEnabled
         case privacyProPromotionDialogShownVPN
         case privacyProVPNAccessRevokedDialogShown
         case privacyProVPNBetaStoppedWhenPrivacyProEnabled
@@ -1192,8 +1191,7 @@ extension Pixel.Event {
         case .settingsShowFullSiteAddressEnabled: return "m_settings_show_full_url_on"
         case .settingsShowFullSiteAddressDisabled: return "m_settings_show_full_url_off"
             // Launch
-        case .privacyProLaunched: return "m_privacy-pro_feature_enabled"
-        case .privacyProPromotionDialogShownDBP: return "m_privacy-pro_promotion-dialog_shown_dbp"
+        case .privacyProFeatureEnabled: return "m_privacy-pro_feature_enabled"
         case .privacyProPromotionDialogShownVPN: return "m_privacy-pro_promotion-dialog_shown_vpn"
         case .privacyProVPNAccessRevokedDialogShown: return "m_privacy-pro_vpn_access-revoked-dialog_shown"
         case .privacyProVPNBetaStoppedWhenPrivacyProEnabled: return "m_privacy-pro_vpn_beta-stopped-when-privacy-pro-enabled"

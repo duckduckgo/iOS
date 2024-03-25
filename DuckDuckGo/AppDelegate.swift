@@ -386,6 +386,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             #endif
         }
         window?.rootViewController?.present(alertController, animated: true) { [weak self] in
+            DailyPixel.fireDailyAndCount(pixel: .privacyProVPNAccessRevokedDialogShown)
             self?.tunnelDefaults.showEntitlementAlert = false
         }
     }
@@ -402,6 +403,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func presentVPNEarlyAccessOverAlert() {
         let alertController = CriticalAlerts.makeVPNEarlyAccessOverAlert()
         window?.rootViewController?.present(alertController, animated: true) { [weak self] in
+            DailyPixel.fireDailyAndCount(pixel: .privacyProPromotionDialogShownVPN)
             self?.tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
         }
     }
@@ -456,6 +458,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         StatisticsLoader.shared.load {
             StatisticsLoader.shared.refreshAppRetentionAtb()
             self.fireAppLaunchPixel()
+            self.firePrivacyProFeatureEnabledPixel()
             self.fireAppTPActiveUserPixel()
         }
         
@@ -558,6 +561,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
         }
+    }
+
+    private func firePrivacyProFeatureEnabledPixel() {
+#if SUBSCRIPTION
+        let subscriptionFeatureAvailability = AppDependencyProvider.shared.subscriptionFeatureAvailability
+        guard subscriptionFeatureAvailability.isFeatureAvailable,
+              subscriptionFeatureAvailability.isSubscriptionPurchaseAllowed else {
+            return
+        }
+
+        DailyPixel.fire(pixel: .privacyProFeatureEnabled)
+#endif
     }
 
     private func fireAppTPActiveUserPixel() {

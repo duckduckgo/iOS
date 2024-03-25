@@ -1403,6 +1403,7 @@ class MainViewController: UIViewController {
         }
         dismiss(animated: true) {
             self.present(alertController, animated: true, completion: nil)
+            DailyPixel.fireDailyAndCount(pixel: .privacyProVPNAccessRevokedDialogShown)
             self.tunnelDefaults.showEntitlementAlert = false
         }
     }
@@ -1435,6 +1436,9 @@ class MainViewController: UIViewController {
 
             await controller.stop()
             await controller.removeVPN()
+
+            DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled,
+                                         withAdditionalParameters: ["source": "browser"])
         }
     }
 
@@ -1444,6 +1448,9 @@ class MainViewController: UIViewController {
             let controller = NetworkProtectionTunnelController()
             await controller.stop()
             await controller.removeVPN()
+            
+            DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled,
+                                         withAdditionalParameters: ["source": "browser"])
         }
     }
 #endif

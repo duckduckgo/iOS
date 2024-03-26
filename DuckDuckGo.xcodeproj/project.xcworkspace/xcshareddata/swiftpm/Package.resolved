@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "bunn/dbp/css-scroll",
-        "revision" : "9c45fab686df4bcee5599d8e3115a85642666944"
+        "revision" : "00d3a6f0040479e1d814a3ae02d1a1dea8225bed",
+        "version" : "131.1.0"
       }
     },
     {

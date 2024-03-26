@@ -413,7 +413,10 @@ extension Pixel {
         case webKitDidTerminate
         case webKitTerminationDidReloadCurrentTab
         case webKitDidTerminateDuringWarmup
-        
+
+        case webKitWarmupUnexpectedDidFinish
+        case webKitWarmupUnexpectedDidTerminate
+
         case backgroundTaskSubmissionFailed
         
         case blankOverlayNotDismissed
@@ -601,6 +604,10 @@ extension Pixel {
         case privacyProSubscriptionManagementEmail
         case privacyProSubscriptionManagementPlanBilling
         case privacyProSubscriptionManagementRemoval
+        case privacyProFeatureEnabled
+        case privacyProPromotionDialogShownVPN
+        case privacyProVPNAccessRevokedDialogShown
+        case privacyProVPNBetaStoppedWhenPrivacyProEnabled
 
         // Full site address setting
         case settingsShowFullSiteAddressEnabled
@@ -995,7 +1002,10 @@ extension Pixel.Event {
         case .webKitDidTerminate: return "m_d_wkt"
         case .webKitDidTerminateDuringWarmup: return "m_d_webkit-terminated-during-warmup"
         case .webKitTerminationDidReloadCurrentTab: return "m_d_wktct"
-            
+
+        case .webKitWarmupUnexpectedDidFinish: return "m_d_webkit-warmup-unexpected-did-finish"
+        case .webKitWarmupUnexpectedDidTerminate: return "m_d_webkit-warmup-unexpected-did-terminate"
+
         case .backgroundTaskSubmissionFailed: return "m_bt_rf"
             
         case .blankOverlayNotDismissed: return "m_d_ovs"
@@ -1186,6 +1196,11 @@ extension Pixel.Event {
         case .privacyProSubscriptionManagementRemoval: return "m_privacy-pro_settings_remove-from-device_click"
         case .settingsShowFullSiteAddressEnabled: return "m_settings_show_full_url_on"
         case .settingsShowFullSiteAddressDisabled: return "m_settings_show_full_url_off"
+            // Launch
+        case .privacyProFeatureEnabled: return "m_privacy-pro_feature_enabled"
+        case .privacyProPromotionDialogShownVPN: return "m_privacy-pro_promotion-dialog_shown_vpn"
+        case .privacyProVPNAccessRevokedDialogShown: return "m_privacy-pro_vpn-access-revoked-dialog_shown"
+        case .privacyProVPNBetaStoppedWhenPrivacyProEnabled: return "m_privacy-pro_vpn-beta-stopped-when-privacy-pro-enabled"
             // Web
         case .privacyProOfferMonthlyPriceClick: return "m_privacy-pro_offer_monthly-price_click"
         case .privacyProOfferYearlyPriceClick: return "m_privacy-pro_offer_yearly-price_click"

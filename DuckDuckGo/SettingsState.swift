@@ -44,6 +44,7 @@ struct SettingsState {
         var enabled: Bool
         var canPurchase: Bool
         var hasActiveSubscription: Bool
+        var isSubscriptionPendingActivation: Bool
     }
     
     struct SyncSettings {
@@ -113,8 +114,10 @@ struct SettingsState {
             speechRecognitionAvailable: false,
             loginsEnabled: false,
             networkProtection: NetworkProtection(enabled: false, status: ""),
-            subscription: Subscription(enabled: false, canPurchase: false,
-                                   hasActiveSubscription: false),
+            subscription: Subscription(enabled: false,
+                                       canPurchase: false,
+                                       hasActiveSubscription: false,
+                                       isSubscriptionPendingActivation: false),
             sync: SyncSettings(enabled: false, title: "")
         )
     }

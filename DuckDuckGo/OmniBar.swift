@@ -375,7 +375,7 @@ class OmniBar: UIView {
     }
 
     func refreshText(forUrl url: URL?, forceFullURL: Bool = false) {
-
+        guard !textField.isEditing else { return }
         guard let url = url else {
             textField.text = nil
             return

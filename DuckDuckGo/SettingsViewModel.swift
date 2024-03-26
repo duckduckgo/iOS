@@ -52,7 +52,6 @@ final class SettingsViewModel: ObservableObject {
 #if SUBSCRIPTION
     private var accountManager: AccountManager
     private var signOutObserver: Any?
-    private var subscriptionDidChangeObserver: Any?
     private var isPrivacyProEnabled: Bool {
         AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
     }
@@ -244,7 +243,6 @@ final class SettingsViewModel: ObservableObject {
     
     deinit {
         signOutObserver = nil
-        subscriptionDidChangeObserver = nil
     }
     
 #else
@@ -440,15 +438,6 @@ extension SettingsViewModel {
         
     private func setupNotificationObservers() {
         signOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut, object: nil, queue: .main) { [weak self] _ in
-            if #available(iOS 15.0, *) {
-                guard let strongSelf = self else { return }
-                Task { await strongSelf.setupSubscriptionEnvironment() }
-            }
-        }
-
-        subscriptionDidChangeObserver = NotificationCenter.default.addObserver(forName: .subscriptionDidChange,
-                                                                               object: nil,
-                                                                               queue: .main) { [weak self] _ in
             if #available(iOS 15.0, *) {
                 guard let strongSelf = self else { return }
                 Task { await strongSelf.setupSubscriptionEnvironment() }

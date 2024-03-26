@@ -101,6 +101,7 @@ class SwipeTabsCoordinator: NSObject {
     }
     
     private func scrollToCurrent() {
+        guard isEnabled else { return }
         let targetOffset = collectionView.frame.width * CGFloat(tabsModel.currentIndex)
 
         guard targetOffset != collectionView.contentOffset.x else {
@@ -207,10 +208,13 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        print("***", #function, state)
         switch state {
         case .idle:
             state = .starting(scrollView.contentOffset)
             
+            // TODO if swiping 
+
         default: break
         }
     }

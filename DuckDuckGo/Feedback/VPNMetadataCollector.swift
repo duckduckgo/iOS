@@ -24,6 +24,7 @@ import Common
 import NetworkProtection
 import NetworkExtension
 import Network
+import Subscription
 
 struct VPNMetadata: Encodable {
 
@@ -61,11 +62,27 @@ struct VPNMetadata: Encodable {
         let selectedServer: String
     }
 
+    struct PrivacyProInfo: Encodable {
+        // swiftlint:disable nesting
+        enum Source: String, Encodable {
+            case `internal`
+            case waitlist
+            case other
+        }
+        // swiftlint:enable nesting
+
+        let enableSource: Source
+        let betaParticipant: Bool
+        let hasToken: Bool
+        let subscriptionActive: Bool
+    }
+
     let appInfo: AppInfo
     let deviceInfo: DeviceInfo
     let networkInfo: NetworkInfo
     let vpnState: VPNState
     let vpnSettingsState: VPNSettingsState
+    let privacyProInfo: PrivacyProInfo
 
     func toPrettyPrintedJSON() -> String? {
         let encoder = JSONEncoder()
@@ -99,15 +116,21 @@ protocol VPNMetadataCollector {
 final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
+    private let accessManager: NetworkProtectionAccessController
+    private let tokenStore: NetworkProtectionTokenStore
     private let settings: VPNSettings
     private let defaults: UserDefaults
 
     init(statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
          serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
+         networkProtectionAccessManager: NetworkProtectionAccessController = NetworkProtectionAccessController(),
+         tokenStore: NetworkProtectionTokenStore = NetworkProtectionKeychainTokenStore(),
          settings: VPNSettings = .init(defaults: .networkProtectionGroupDefaults),
          defaults: UserDefaults = .networkProtectionGroupDefaults) {
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
+        self.accessManager = networkProtectionAccessManager
+        self.tokenStore = tokenStore
         self.settings = settings
         self.defaults = defaults
     }
@@ -118,13 +141,15 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
         let networkInfoMetadata = await collectNetworkInformation()
         let vpnState = await collectVPNState()
         let vpnSettingsState = collectVPNSettingsState()
+        let privacyProInfo = collectPrivacyProInfo()
 
         return VPNMetadata(
             appInfo: appInfoMetadata,
             deviceInfo: deviceInfoMetadata,
             networkInfo: networkInfoMetadata,
             vpnState: vpnState,
-            vpnSettingsState: vpnSettingsState
+            vpnSettingsState: vpnSettingsState,
+            privacyProInfo: privacyProInfo
         )
     }
 
@@ -242,7 +267,7 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     }
 
     func collectVPNSettingsState() -> VPNMetadata.VPNSettingsState {
-        return .init(
+        .init(
             connectOnLoginEnabled: settings.connectOnLogin,
             includeAllNetworksEnabled: settings.includeAllNetworks,
             enforceRoutesEnabled: settings.enforceRoutes,
@@ -251,25 +276,35 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
             selectedServer: settings.selectedServer.stringValue ?? "automatic"
         )
     }
-}
 
-extension Network.NWPath {
-    /// A description that's safe from a privacy standpoint.
-    ///
-    /// Ref: https://app.asana.com/0/0/1206712493935053/1206712516729780/f
-    ///
-    var anonymousDescription: String {
-        var description = "NWPath("
-
-        description += "status: \(status), "
-
-        if #available(iOS 14.2, *), case .unsatisfied = status {
-            description += "unsatisfiedReason: \(unsatisfiedReason), "
+    func collectPrivacyProInfo() -> VPNMetadata.PrivacyProInfo {
+        let accessType = accessManager.networkProtectionAccessType()
+        var hasToken: Bool {
+            guard let token = try? tokenStore.fetchToken(),
+                  !token.hasPrefix(NetworkProtectionKeychainTokenStore.authTokenPrefix) else {
+                return false
+            }
+            return true
         }
 
-        description += "availableInterfaces: \(availableInterfaces)"
-        description += ")"
+        return .init(
+            enableSource: .init(from: accessManager.networkProtectionAccessType()),
+            betaParticipant: accessType == .waitlistJoined,
+            hasToken: hasToken,
+            subscriptionActive: AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)).accessToken != nil
+        )
+    }
+}
 
-        return description
+extension VPNMetadata.PrivacyProInfo.Source {
+    init(from accessType: NetworkProtectionAccessType) {
+        switch accessType {
+        case .inviteCodeInvited:
+            self = .internal
+        case .waitlistInvited:
+            self = .waitlist
+        default:
+            self = .other
+        }
     }
 }

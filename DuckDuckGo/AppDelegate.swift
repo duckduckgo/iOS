@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if NETWORK_PROTECTION
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
-    lazy var vpnFeatureVisibilty = DefaultNetworkProtectionVisibility()
+    lazy var vpnFeatureVisibility = DefaultNetworkProtectionVisibility()
 #endif
 
     private var autoClear: AutoClear?
@@ -305,7 +305,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
 
 #if NETWORK_PROTECTION
-        if vpnFeatureVisibilty.shouldKeepVPNAccessViaWaitlist() {
+        if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() {
             VPNWaitlist.shared.registerBackgroundRefreshTaskHandler()
         }
 #endif
@@ -336,7 +336,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupSubscriptionsEnvironment()
 #endif
 
-        if vpnFeatureVisibilty.shouldKeepVPNAccessViaWaitlist() {
+        if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() {
             clearDebugWaitlistState()
         }
 
@@ -387,6 +387,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             #endif
         }
         window?.rootViewController?.present(alertController, animated: true) { [weak self] in
+            DailyPixel.fireDailyAndCount(pixel: .privacyProVPNAccessRevokedDialogShown)
             self?.tunnelDefaults.showEntitlementAlert = false
         }
     }
@@ -403,6 +404,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func presentVPNEarlyAccessOverAlert() {
         let alertController = CriticalAlerts.makeVPNEarlyAccessOverAlert()
         window?.rootViewController?.present(alertController, animated: true) { [weak self] in
+            DailyPixel.fireDailyAndCount(pixel: .privacyProPromotionDialogShownVPN)
             self?.tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
         }
     }
@@ -429,12 +431,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if SUBSCRIPTION
     private func setupSubscriptionsEnvironment() {
         Task {
+#if DEBUG && ALPHA
             SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+#else
+            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .production
+#endif
+
 #if NETWORK_PROTECTION
             if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {
                 SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
             }
 #endif
+
             SubscriptionPurchaseEnvironment.current = .appStore
         }
     }
@@ -457,6 +465,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         StatisticsLoader.shared.load {
             StatisticsLoader.shared.refreshAppRetentionAtb()
             self.fireAppLaunchPixel()
+            self.firePrivacyProFeatureEnabledPixel()
             self.fireAppTPActiveUserPixel()
         }
         
@@ -491,7 +500,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if NETWORK_PROTECTION
         widgetRefreshModel.refreshVPNWidget()
 
-        if vpnFeatureVisibilty.shouldShowThankYouMessaging() && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
+        if vpnFeatureVisibility.shouldShowThankYouMessaging() && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
             presentVPNEarlyAccessOverAlert()
         }
 
@@ -559,6 +568,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
         }
+    }
+
+    private func firePrivacyProFeatureEnabledPixel() {
+#if SUBSCRIPTION
+        let subscriptionFeatureAvailability = AppDependencyProvider.shared.subscriptionFeatureAvailability
+        guard subscriptionFeatureAvailability.isFeatureAvailable,
+              subscriptionFeatureAvailability.isSubscriptionPurchaseAllowed else {
+            return
+        }
+
+        DailyPixel.fire(pixel: .privacyProFeatureEnabled)
+#endif
     }
 
     private func fireAppTPActiveUserPixel() {
@@ -818,7 +839,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if NETWORK_PROTECTION
             if shortcutItem.type == ShortcutKey.openVPNSettings {
-                presentNetworkProtectionStatusSettingsModal()
+                let visibility = DefaultNetworkProtectionVisibility()
+                if visibility.shouldShowVPNShortcut() {
+                    presentNetworkProtectionStatusSettingsModal()
+                }
             }
 #endif
 
@@ -853,7 +877,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func refreshShortcuts() {
 #if NETWORK_PROTECTION
-        guard vpnFeatureVisibilty.shouldShowVPNShortcut() else {
+        guard vpnFeatureVisibility.shouldShowVPNShortcut() else {
             UIApplication.shared.shortcutItems = nil
             return
         }
@@ -930,7 +954,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 presentNetworkProtectionStatusSettingsModal()
             }
 
-            if vpnFeatureVisibilty.shouldKeepVPNAccessViaWaitlist(), identifier == VPNWaitlist.notificationIdentifier {
+            if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist(), identifier == VPNWaitlist.notificationIdentifier {
                 presentNetworkProtectionWaitlistModal()
                 DailyPixel.fire(pixel: .networkProtectionWaitlistNotificationLaunched)
             }

@@ -1854,7 +1854,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "settings.autolock" = "Application Lock";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening.";
+"settings.autolock.description" = "If Touch ID, Face ID, or a system passcode is enabled, you'll be asked to unlock the app when opening it.";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Automatically Clear Data";
@@ -1888,7 +1888,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "settings.email.protection.explanation" = "Block email trackers and hide your address without switching your email provider.\n[Learn More](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/email-protection/what-is-duckduckgo-email-protection/)";
 
 /* Alert presented to user after clicking on 'Sign out' in Email Protection Settings */
-"settings.email.protection.signing.out.alert" = "Signing out of your Email Protection account will disable Duck Address autofill in this browser. You can still use these addresses and receive forwarded email as usual";
+"settings.email.protection.signing.out.alert" = "Signing out of your Email Protection account will disable Duck Address autofill in this browser. You can still use these addresses and receive forwarded email as usual.";
 
 /* Settings cell for Email Protection */
 "settings.emailProtection.description" = "Block email trackers and hide your address";

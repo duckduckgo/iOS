@@ -48,7 +48,7 @@ struct EmailProtectionView: View {
         .alert(isPresented: $shouldShowEmailAlert) {
             Alert(title: Text(UserText.disableEmailProtectionAutofill),
                   message: Text(UserText.emailProtectionSigningOutAlert),
-                  primaryButton: .default(Text(UserText.actionOK), action: {
+                  primaryButton: .default(Text(UserText.autofillKeepEnabledAlertDisableAction), action: {
                 try? viewModel.emailManager.signOut()
                 viewModel.shouldShowEmailAlert = false
             }),

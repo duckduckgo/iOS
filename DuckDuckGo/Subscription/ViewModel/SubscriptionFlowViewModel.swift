@@ -149,6 +149,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
             state.transactionError = .purchaseFailed
         case .missingEntitlements:
             isBackendError = true
+            state.shouldDismissView = true
             state.transactionError = .missingEntitlements
         case .failedToGetSubscriptionOptions:
             isStoreError = true

@@ -143,7 +143,6 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
     }
 
     func revokeNetworkProtectionAccess() {
-        networkProtectionWaitlistStorage.deleteWaitlistState()
         try? NetworkProtectionKeychainTokenStore().deleteToken()
 
         Task {

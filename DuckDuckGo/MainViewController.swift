@@ -1435,8 +1435,7 @@ class MainViewController: UIViewController {
             }
 
             if await controller.isConnected {
-                DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled,
-                                             withAdditionalParameters: ["source": "browser"])
+                DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled)
             }
 
             await controller.stop()
@@ -1450,8 +1449,7 @@ class MainViewController: UIViewController {
             let controller = NetworkProtectionTunnelController()
             
             if await controller.isConnected {
-                DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled,
-                                             withAdditionalParameters: ["source": "browser"])
+                DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled)
             }
 
             await controller.stop()

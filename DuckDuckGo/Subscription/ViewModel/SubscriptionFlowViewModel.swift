@@ -42,17 +42,15 @@ final class SubscriptionFlowViewModel: ObservableObject {
     enum Constants {
         static let navigationBarHideThreshold = 80.0
     }
-    
-    
+        
     struct State {
         var hasActiveSubscription = false
         var transactionStatus: SubscriptionTransactionStatus = .idle
         var userTappedRestoreButton = false
-        var shouldDismissView = false
         var shouldActivateSubscription = false
-        var shouldShowNavigationBar: Bool = false
         var canNavigateBack: Bool = false
         var transactionError: SubscriptionPurchaseError?
+        var shouldHideBackButton = false
     }
 
     // Publish the currently selected feature
@@ -101,7 +99,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
         subFeature.onActivateSubscription = {
             DispatchQueue.main.async {
                 self.state.shouldActivateSubscription = true
-                
             }
         }
         
@@ -118,7 +115,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
                      UniquePixel.fire(pixel: .privacyProWelcomeIdentityRestoration)
                      self.selectedFeature = .dbp
                  }
-                 self.state.shouldDismissView = true
              }
          }
         
@@ -148,7 +144,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
             state.transactionError = .purchaseFailed
         case .missingEntitlements:
             isBackendError = true
-            state.shouldDismissView = true
             state.transactionError = .missingEntitlements
         case .failedToGetSubscriptionOptions:
             isStoreError = true
@@ -198,16 +193,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     // swiftlint:enable cyclomatic_complexity
     
     private func setupWebViewObservers() async {
-        webViewModel.$scrollPosition
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] value in
-                guard let strongSelf = self else { return }
-                DispatchQueue.main.async {
-                    strongSelf.state.shouldShowNavigationBar = value.y > Constants.navigationBarHideThreshold
-                }
-            }
-            .store(in: &cancellables)
-        
         webViewModel.$navigationError
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
@@ -248,10 +233,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
 
     @MainActor
     private func resetState() {
-        self.webViewModel.navigationCoordinator.navigateTo(url: self.purchaseURL )
-        self.selectedFeature = nil
-        self.state.shouldDismissView = false
-        self.state.shouldActivateSubscription = false
+        self.state = State()
     }
     
     deinit {
@@ -277,6 +259,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
         Pixel.fire(pixel: .privacyProOfferScreenImpression, debounce: 2)
         await self.setupTransactionObserver()
         await self .setupWebViewObservers()
+        self.webViewModel.navigationCoordinator.navigateTo(url: self.purchaseURL )
     }
         
     func onDisappear() async {
@@ -284,11 +267,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
             self.resetState()
         }
         cleanUp()
-    }
-    
-    @MainActor
-    func finalizeSubscriptionFlow() {
-        self.state.shouldDismissView = true
     }
 
     @MainActor

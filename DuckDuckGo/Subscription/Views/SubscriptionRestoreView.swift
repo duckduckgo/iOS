@@ -29,13 +29,15 @@ import Core
 struct SubscriptionRestoreView: View {
     
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var viewModel: SubscriptionRestoreViewModel
-    @ObservedObject var emailViewModel: SubscriptionEmailViewModel
+    @StateObject var viewModel: SubscriptionRestoreViewModel
+    @StateObject var emailViewModel: SubscriptionEmailViewModel
     
     @State private var isAlertVisible = false
     @State private var shouldShowWelcomePage = false
     @State private var shouldNavigateToActivationFlow = false
+    var onDismissStack: (() -> Void)
     var onRequirePurchase: (() -> Void)?
+    
     
     private enum Constants {
         static let heroImage = "ManageSubscriptionHero"

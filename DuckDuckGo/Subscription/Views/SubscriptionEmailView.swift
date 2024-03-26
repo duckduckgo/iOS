@@ -26,12 +26,11 @@ import Combine
 @available(iOS 15.0, *)
 struct SubscriptionEmailView: View {
         
-    @ObservedObject var viewModel: SubscriptionEmailViewModel
+    @StateObject var viewModel: SubscriptionEmailViewModel
     @Environment(\.dismiss) var dismiss
     
     @State var shouldDisplayInactiveError = false
     @State var shouldDisplayNavigationError = false
-    
     var onDismissStack: (() -> Void)?
     
     enum Constants {

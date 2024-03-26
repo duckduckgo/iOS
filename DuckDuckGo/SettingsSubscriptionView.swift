@@ -26,8 +26,6 @@ import Subscription
 struct SettingsSubscriptionView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
-    @State var isShowingSubscriptionFlow = false
-    @State var currentSubscriptionView: SubscriptionContainerView.CurrentView = .subscribe
     @State var isShowingDBP = false
     @State var isShowingITP = false
     
@@ -47,18 +45,6 @@ struct SettingsSubscriptionView: View {
                 Text(UserText.settingsPProFeatures).daxFootnoteRegular()
             }.foregroundColor(Color(designSystemColor: .textSecondary))
         }
-    }
-    
-    private var learnMoreView: some View {
-        Text(UserText.settingsPProLearnMore)
-            .daxBodyRegular()
-            .foregroundColor(Color.init(designSystemColor: .accent))
-    }
-    
-    private var iHaveASubscriptionView: some View {
-        Text(UserText.settingsPProIHaveASubscription)
-            .daxBodyRegular()
-            .foregroundColor(Color.init(designSystemColor: .accent))
     }
     
     @ViewBuilder
@@ -90,29 +76,18 @@ struct SettingsSubscriptionView: View {
     private var purchaseSubscriptionView: some View {
         Group {
             SettingsCustomCell(content: { subscriptionDescriptionView })
-            SettingsCustomCell(content: { learnMoreView },
-                               action: {
-                                    currentSubscriptionView = .subscribe
-                                    isShowingSubscriptionFlow = true
-                                },
-                               isButton: true )
-                        
             
-            SettingsCustomCell(content: { iHaveASubscriptionView },
-                               action: {
-                                    currentSubscriptionView = .restore
-                                    isShowingSubscriptionFlow = true
-                                },
-                                isButton: true )
+            NavigationLink(destination: SubscriptionContainerView(currentView: .subscribe),
+                           label: {
+                                SettingsCellView(label: UserText.settingsPProLearnMore )
+                            })
             
+            NavigationLink(destination: SubscriptionContainerView(currentView: .restore),
+                           label: {
+                                SettingsCellView(label: UserText.settingsPProIHaveASubscription )
+                            })
         }
         
-        // Subscription Purchase
-        .sheet(isPresented: $isShowingSubscriptionFlow,
-               onDismiss: { Task { viewModel.onAppear() } },
-               content: {
-                SubscriptionContainerView(currentView: currentSubscriptionView).interactiveDismissDisabled()
-            })
     }
     
     @ViewBuilder

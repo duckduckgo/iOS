@@ -28,6 +28,7 @@ struct SubscriptionContainerView: View {
         case subscribe, restore
     }
     
+    @Environment(\.dismiss) var dismiss
     @State var currentView: CurrentView
     private var flowViewModel: SubscriptionFlowViewModel
     private var restoreViewModel: SubscriptionRestoreViewModel
@@ -45,9 +46,14 @@ struct SubscriptionContainerView: View {
     var body: some View {
         switch currentView {
         case .subscribe:
-            SubscriptionFlowView(viewModel: flowViewModel, onRequireRestore: { currentView = .restore })
+            SubscriptionFlowView(viewModel: flowViewModel,
+                                 onDismissStack: { dismiss() },
+                                 onRequireRestore: { currentView = .restore })
         case .restore:
-            SubscriptionRestoreView(viewModel: restoreViewModel, emailViewModel: emailViewModel, onRequirePurchase: { currentView = .subscribe })
+            SubscriptionRestoreView(viewModel: restoreViewModel,
+                                    emailViewModel: emailViewModel,
+                                    onDismissStack: { dismiss() },
+                                    onRequirePurchase: { currentView = .subscribe })
         }
         
     }

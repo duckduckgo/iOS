@@ -29,12 +29,13 @@ import Core
 struct SubscriptionRestoreView: View {
     
     @Environment(\.dismiss) var dismiss
-    @StateObject var viewModel = SubscriptionRestoreViewModel()
+    @ObservedObject var viewModel: SubscriptionRestoreViewModel
+    @ObservedObject var emailViewModel: SubscriptionEmailViewModel
     
     @State private var isAlertVisible = false
     @State private var shouldShowWelcomePage = false
     @State private var shouldNavigateToActivationFlow = false
-    @State var isModal = true
+    var onRequirePurchase: (() -> Void)?
     
     private enum Constants {
         static let heroImage = "ManageSubscriptionHero"
@@ -82,10 +83,8 @@ struct SubscriptionRestoreView: View {
             }
         }
     }
-        
-    @ViewBuilder
-    private var baseView: some View {
-       
+    
+    private var contentView: some View {
         Group {
             ScrollView {
                 VStack(spacing: Constants.sectionSpacing) {
@@ -95,8 +94,7 @@ struct SubscriptionRestoreView: View {
                     Spacer()
                     
                     // Hidden link to display Email Activation View
-                    NavigationLink(destination: SubscriptionEmailView(viewModel: viewModel.emailViewModel,
-                                                                      isModal: isModal,
+                    NavigationLink(destination: SubscriptionEmailView(viewModel: emailViewModel,
                                                                       onDismissStack: { viewModel.dismissView() }),
                                    isActive: $shouldNavigateToActivationFlow) {
                           EmptyView()
@@ -117,40 +115,48 @@ struct SubscriptionRestoreView: View {
             .tint(Color.init(designSystemColor: .textPrimary))
             .accentColor(Color.init(designSystemColor: .textPrimary))
         }
-        
-        .alert(isPresented: $isAlertVisible) { getAlert() }
-        
-        .onChange(of: viewModel.state.activationResult) { result in
-            if result != .unknown {
-                isAlertVisible = true
+    }
+    
+    @ViewBuilder
+    private var baseView: some View {
+       
+        contentView
+            .alert(isPresented: $isAlertVisible) { getAlert() }
+            
+            .onChange(of: viewModel.state.activationResult) { result in
+                if result != .unknown {
+                    isAlertVisible = true
+                }
             }
-        }
-        
-        // Navigation Flow Binding
-        .onChange(of: viewModel.state.shouldNavigateToActivationFlow) { result in
-            shouldNavigateToActivationFlow = result
-        }
-        .onChange(of: shouldNavigateToActivationFlow) { result in
-            viewModel.showActivationFlow(result)
-        }
-        
-        .onChange(of: viewModel.state.shouldDismissView) { result in
-            if result {
-                dismiss()
+            
+            // Navigation Flow Binding
+            .onChange(of: viewModel.state.shouldNavigateToActivationFlow) { result in
+                shouldNavigateToActivationFlow = result
             }
-        }
-        
-        .onChange(of: viewModel.state.shouldShowPlans) { result in
-            if result {
-                dismiss()
+            .onChange(of: shouldNavigateToActivationFlow) { result in
+                viewModel.showActivationFlow(result)
             }
-        }
-        
-        .onAppear {
-            viewModel.initializeView()
-            viewModel.onAppear()
-            setUpAppearances()
-        }
+            
+            .onChange(of: viewModel.state.shouldDismissView) { result in
+                if result {
+                    dismiss()
+                }
+            }
+            
+            .onChange(of: viewModel.state.shouldShowPlans) { result in
+                if result {
+                    onRequirePurchase?()
+                }
+            }
+            
+            .onAppear {
+                Task { await viewModel.onAppear() }
+                setUpAppearances()
+            }
+            
+            .onDisappear {
+                Task { await viewModel.onDissappear() }
+           }
                 
     }
     
@@ -159,9 +165,9 @@ struct SubscriptionRestoreView: View {
     
     @ViewBuilder
     private var closeButton: some View {
-        if isModal {
+        
             Button(UserText.subscriptionCloseButton) { viewModel.dismissView() }
-        }
+        
     }
     
     private var emailView: some View {

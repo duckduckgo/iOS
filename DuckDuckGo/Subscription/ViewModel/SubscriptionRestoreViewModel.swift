@@ -58,12 +58,9 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     // Read only View State - Should only be modified from the VM
     @Published private(set) var state = State()
-    
-    // Email View Model
-    var emailViewModel = SubscriptionEmailViewModel()
         
-    init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
-         subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
+    init(userScript: SubscriptionPagesUserScript,
+         subFeature: SubscriptionPagesUseSubscriptionFeature,
          purchaseManager: PurchaseManager = PurchaseManager.shared,
          accountManager: AccountManager = AccountManager(),
          isAddingDevice: Bool = false) {
@@ -74,14 +71,25 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         self.state.isAddingDevice = false
     }
     
-    func initializeView() {
+    
+    func onAppear() async {
+        DispatchQueue.main.async {
+            self.resetState()
+        }
         Pixel.fire(pixel: .privacyProSettingsAddDevice)
-        Task { await setupTransactionObserver() }
+        await setupTransactionObserver()
+    }
+        
+    func onDissappear() async {
+        DispatchQueue.main.async {
+            self.resetState()
+        }
+        cleanUp()
     }
     
-    @MainActor
-    func onAppear() {
-        resetState()
+    private func cleanUp() {
+        cancellables.removeAll()
+        
     }
     
     @MainActor
@@ -168,7 +176,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     @MainActor
     func showPlans() {
         state.shouldShowPlans = true
-        state.shouldDismissView = true
     }
     
     @MainActor

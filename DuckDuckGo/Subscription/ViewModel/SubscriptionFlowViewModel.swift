@@ -67,8 +67,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
                                                                 allowedDomains: allowedDomains,
                                                                 contentBlocking: false)
         
-    init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
-         subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
+    init(userScript: SubscriptionPagesUserScript,
+         subFeature: SubscriptionPagesUseSubscriptionFeature,
          purchaseManager: PurchaseManager = PurchaseManager.shared,
          selectedFeature: SettingsViewModel.SettingsDeepLinkSection? = nil) {
         self.userScript = userScript
@@ -100,7 +100,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
         
         subFeature.onActivateSubscription = {
             DispatchQueue.main.async {
-                self.state.shouldDismissView = true
                 self.state.shouldActivateSubscription = true
                 
             }
@@ -240,6 +239,25 @@ final class SubscriptionFlowViewModel: ObservableObject {
             currentURL != URL.subscriptionPurchase.forComparison()
     }
     
+    private func cleanUp() {
+        canGoBackCancellable?.cancel()
+        selectedFeature = nil
+        subFeature.cleanup()
+        cancellables.removeAll()
+    }
+
+    @MainActor
+    private func resetState() {
+        self.webViewModel.navigationCoordinator.navigateTo(url: self.purchaseURL )
+        self.selectedFeature = nil
+        self.state.shouldDismissView = false
+        self.state.shouldActivateSubscription = false
+    }
+    
+    deinit {
+        cleanUp()
+    }
+    
     @MainActor
     private func setTransactionStatus(_ status: SubscriptionTransactionStatus) {
         self.state.transactionStatus = status
@@ -249,41 +267,28 @@ final class SubscriptionFlowViewModel: ObservableObject {
     private func backButtonEnabled(_ enabled: Bool) {
         state.canNavigateBack = enabled
     }
-    
-    func initializeViewData() async {
+
+    // MARK: -
+        
+    func onAppear() async {
+        DispatchQueue.main.async {
+            self.resetState()
+        }
         Pixel.fire(pixel: .privacyProOfferScreenImpression, debounce: 2)
         await self.setupTransactionObserver()
         await self .setupWebViewObservers()
     }
-    
-    @MainActor
-    func onAppear() {
-        resetState()
-    }
-    
-    @MainActor
-    func onDisappear() {
-        resetState()
-    }
-    
-    @MainActor
-    private func resetState() {
-        self.webViewModel.navigationCoordinator.navigateTo(url: self.purchaseURL )
-        self.selectedFeature = nil
-        self.state.shouldDismissView = false
-        self.state.shouldActivateSubscription = false
+        
+    func onDisappear() async {
+        DispatchQueue.main.async {
+            self.resetState()
+        }
+        cleanUp()
     }
     
     @MainActor
     func finalizeSubscriptionFlow() {
         self.state.shouldDismissView = true
-    }
-    
-    deinit {
-        canGoBackCancellable?.cancel()
-        selectedFeature = nil
-        subFeature.cleanup()
-        cancellables.removeAll()
     }
 
     @MainActor
@@ -312,6 +317,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     func clearTransactionError() {
         state.transactionError = nil
     }
-       
+    
 }
 #endif

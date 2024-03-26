@@ -65,8 +65,8 @@ final class SubscriptionEmailViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
 
-    init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
-         subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
+    init(userScript: SubscriptionPagesUserScript,
+         subFeature: SubscriptionPagesUseSubscriptionFeature,
          accountManager: AccountManager = AccountManager()) {
         self.userScript = userScript
         self.subFeature = subFeature
@@ -214,6 +214,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     
     deinit {
         cancellables.removeAll()
+        canGoBackCancellable = nil
        
     }
 

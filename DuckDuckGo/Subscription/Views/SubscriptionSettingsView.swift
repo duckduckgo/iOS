@@ -89,7 +89,7 @@ struct SubscriptionSettingsView: View {
     private var devicesSection: some View {
         Section(header: Text(UserText.subscriptionManageDevices)) {
             
-            NavigationLink(destination: SubscriptionRestoreView(isModal: false)) {
+            NavigationLink(destination: SubscriptionContainerView(currentView: .restore)) {
                 SettingsCustomCell(content: {
                     Text(UserText.subscriptionAddDeviceButton)
                         .daxBodyRegular()

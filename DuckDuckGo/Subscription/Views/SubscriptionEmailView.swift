@@ -21,16 +21,16 @@
 import SwiftUI
 import Foundation
 import Core
+import Combine
 
 @available(iOS 15.0, *)
 struct SubscriptionEmailView: View {
         
-    @StateObject var viewModel = SubscriptionEmailViewModel()
+    @ObservedObject var viewModel: SubscriptionEmailViewModel
     @Environment(\.dismiss) var dismiss
     
     @State var shouldDisplayInactiveError = false
     @State var shouldDisplayNavigationError = false
-    @State var isModal = true
     
     var onDismissStack: (() -> Void)?
     
@@ -111,9 +111,7 @@ struct SubscriptionEmailView: View {
     
     @ViewBuilder
     private var closeButton: some View {
-        if isModal {
             Button(UserText.subscriptionCloseButton) { onDismissStack?() }
-        }
     }
     
     private var baseView: some View {

@@ -27,8 +27,9 @@ import Core
 struct SubscriptionFlowView: View {
     
     @Environment(\.dismiss) var dismiss
-    @StateObject var viewModel = SubscriptionFlowViewModel()
-
+    @ObservedObject var viewModel: SubscriptionFlowViewModel
+    var onRequireRestore: (() -> Void)?
+    
     // Local View State
     @State private var errorMessage: SubscriptionErrorMessage = .general
     @State private var shouldPresentError: Bool = false
@@ -134,6 +135,14 @@ struct SubscriptionFlowView: View {
             }
         }
         
+        .onChange(of: viewModel.state.shouldActivateSubscription) { result in
+            if result {
+                withAnimation {
+                    onRequireRestore?()
+                }
+            }
+        }
+        
         .onChange(of: viewModel.state.transactionError) { value in
             
             if !shouldPresentError {
@@ -161,12 +170,11 @@ struct SubscriptionFlowView: View {
         
         .onAppear(perform: {
             setUpAppearances()
-            Task { await viewModel.initializeViewData() }
-            viewModel.onAppear()
+            Task { await viewModel.onAppear() }
         })
         
         .onDisappear(perform: {
-            viewModel.onDisappear()
+            Task { await viewModel.onDisappear() }
         })
                 
         .alert(isPresented: $shouldPresentError) {
@@ -200,7 +208,8 @@ struct SubscriptionFlowView: View {
                 title: Text(UserText.subscriptionAppStoreErrorTitle),
                 message: Text(UserText.subscriptionAppStoreErrorMessage),
                 dismissButton: .cancel(Text(UserText.actionOK)) {
-                    Task { await viewModel.initializeViewData() }
+                    viewModel.clearTransactionError()
+                    viewModel.finalizeSubscriptionFlow()
                 }
             )
         case .backend, .general:
@@ -208,6 +217,7 @@ struct SubscriptionFlowView: View {
                 title: Text(UserText.subscriptionBackendErrorTitle),
                 message: Text(UserText.subscriptionBackendErrorMessage),
                 dismissButton: .cancel(Text(UserText.subscriptionBackendErrorButton)) {
+                    viewModel.clearTransactionError()
                     viewModel.finalizeSubscriptionFlow()
                 }
             )

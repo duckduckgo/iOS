@@ -26,10 +26,8 @@ import Subscription
 struct SettingsSubscriptionView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
-    @StateObject var subscriptionFlowViewModel =  SubscriptionFlowViewModel()
-    @StateObject var subscriptionRestoreViewModel =  SubscriptionRestoreViewModel()
     @State var isShowingSubscriptionFlow = false
-    @State var isShowingSubscriptionRestoreFlow = false
+    @State var currentSubscriptionView: SubscriptionContainerView.CurrentView = .subscribe
     @State var isShowingDBP = false
     @State var isShowingITP = false
     
@@ -93,30 +91,28 @@ struct SettingsSubscriptionView: View {
         Group {
             SettingsCustomCell(content: { subscriptionDescriptionView })
             SettingsCustomCell(content: { learnMoreView },
-                               action: { isShowingSubscriptionFlow = true },
+                               action: {
+                                    currentSubscriptionView = .subscribe
+                                    isShowingSubscriptionFlow = true
+                                },
                                isButton: true )
-            
-            // Subscription Purchase
-            .sheet(isPresented: $isShowingSubscriptionFlow,
-                   onDismiss: { Task { viewModel.onAppear() } },
-                   content: {
-                        SubscriptionFlowView(viewModel: subscriptionFlowViewModel).interactiveDismissDisabled()
-                })
+                        
             
             SettingsCustomCell(content: { iHaveASubscriptionView },
                                action: {
-                                    isShowingSubscriptionRestoreFlow = true
+                                    currentSubscriptionView = .restore
+                                    isShowingSubscriptionFlow = true
                                 },
-                               isButton: true )
-            
-            // Subscription Restore
-            .sheet(isPresented: $isShowingSubscriptionRestoreFlow,
-                   onDismiss: { Task { viewModel.onAppear() } },
-                   content: {
-                        SubscriptionRestoreView(viewModel: subscriptionRestoreViewModel).interactiveDismissDisabled()
-                })
+                                isButton: true )
             
         }
+        
+        // Subscription Purchase
+        .sheet(isPresented: $isShowingSubscriptionFlow,
+               onDismiss: { Task { viewModel.onAppear() } },
+               content: {
+                SubscriptionContainerView(currentView: currentSubscriptionView).interactiveDismissDisabled()
+            })
     }
     
     @ViewBuilder
@@ -201,32 +197,7 @@ struct SettingsSubscriptionView: View {
                     purchaseSubscriptionView
                 }
             }
-
-            // Selected Feature handler for Subscription Flow
-            .onChange(of: subscriptionFlowViewModel.selectedFeature) { value in
-                guard let value else { return }
-                viewModel.triggerDeepLinkNavigation(to: value)
-            }
-            
-            // Selected Feature handler for Subscription Restore
-            .onChange(of: subscriptionRestoreViewModel.emailViewModel.selectedFeature) { value in
-                guard let value else { return }
-                viewModel.triggerDeepLinkNavigation(to: value)
-            }
-            
-             // Selected Feature handler for SubscriptionActivation
-            .onChange(of: subscriptionFlowViewModel.state.shouldActivateSubscription) { value in
-                if value {
-                    viewModel.triggerDeepLinkNavigation(to: .subscriptionRestoreFlow)
-                }
-            }
-            
-            // Selected Feature handler for Show Plans
-            .onChange(of: subscriptionRestoreViewModel.state.shouldShowPlans) { value in
-                if value {
-                   viewModel.triggerDeepLinkNavigation(to: .subscriptionFlow)
-               }
-            }
+    
         }
     }
 }

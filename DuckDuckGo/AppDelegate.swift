@@ -430,7 +430,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if SUBSCRIPTION
     private func setupSubscriptionsEnvironment() {
         Task {
-#if DEBUG && ALPHA
+#if DEBUG || ALPHA
             SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
 #else
             SubscriptionPurchaseEnvironment.currentServiceEnvironment = .production

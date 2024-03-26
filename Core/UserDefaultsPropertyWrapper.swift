@@ -127,6 +127,7 @@ public struct UserDefaultsWrapper<T> {
         case didRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didRefreshTimestamp"
         case didBurnTimestamp = "com.duckduckgo.ios.userBehavior.didBurnTimestamp"
 
+        case sendCrashLogs = "com.duckduckgo.ios.sendCrashLogs"
     }
 
     private let key: Key

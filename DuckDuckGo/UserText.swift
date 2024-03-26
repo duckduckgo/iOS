@@ -1054,7 +1054,9 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsAboutDDG = NSLocalizedString("settings.about.ddg", value: "About DuckDuckGo", comment: "Settings cell for About DDG")
     public static let settingsVersion = NSLocalizedString("settings.version", value: "Version", comment: "Settings cell for Version")
     public static let settingsFeedback = NSLocalizedString("settings.feedback", value: "Share Feedback", comment: "Settings cell for Feedback")
-    
+    public static let settingsSendCrashLogs = NSLocalizedString("settings.send.crash.logs", value: "Send Crash Logs", comment: "Settings cell for Send Crash Logs")
+    public static let settingsSendCrashLogsDescription = NSLocalizedString("settings.send.crash.logs.description", value: "Enable to automatically send crash logs when detected. This helps us constantly improve stability of the app.", comment: "Settings section footer for Send Crash Logs")
+
     // MARK: Subscriptions
     
     // Loaders

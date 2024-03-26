@@ -76,7 +76,8 @@ struct SettingsState {
 
     // About properties
     var version: String
-        
+    var sendCrashLogs: Bool?
+
     // Features
     var debugModeEnabled: Bool
     var voiceSearchEnabled: Bool
@@ -109,6 +110,7 @@ struct SettingsState {
             allowUniversalLinks: true,
             activeWebsiteAccount: nil,
             version: "0.0.0.0",
+            sendCrashLogs: nil,
             debugModeEnabled: false,
             voiceSearchEnabled: false,
             speechRecognitionAvailable: false,

@@ -1903,6 +1903,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings title for the privacy section */
 "settings.privacy" = "Privacy";
 
+/* Settings cell for Send Crash Logs */
+"settings.send.crash.logs" = "Send Crash Logs";
+
+/* Settings section footer for Send Crash Logs */
+"settings.send.crash.logs.description" = "Enable to automatically send crash logs when detected. This helps us constantly improve stability of the app.";
+
 /* Subscription activation pending description */
 "settings.subscription.activation.pending.description" = "This is taking longer than usual, please check back later.";
 

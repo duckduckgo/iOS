@@ -223,6 +223,14 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
+
+    var sendCrashLogsBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.sendCrashLogs ?? false },
+            set: { self.state.sendCrashLogs = $0 }
+        )
+    }
+
 #if SUBSCRIPTION
     // MARK: Default Init
     init(state: SettingsState? = nil,
@@ -283,6 +291,7 @@ extension SettingsViewModel {
             allowUniversalLinks: appSettings.allowUniversalLinks,
             activeWebsiteAccount: nil,
             version: versionProvider.versionAndBuildNumber,
+            sendCrashLogs: appSettings.sendCrashLogs,
             debugModeEnabled: featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild,
             voiceSearchEnabled: AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled,
             speechRecognitionAvailable: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,

@@ -343,6 +343,8 @@ public class AppUserDefaults: AppSettings {
         }
     }
 
+    @UserDefaultsWrapper(key: .sendCrashLogs, defaultValue: nil)
+    var sendCrashLogs: Bool?
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

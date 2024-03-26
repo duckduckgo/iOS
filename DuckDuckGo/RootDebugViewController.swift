@@ -37,6 +37,7 @@ class RootDebugViewController: UITableViewController {
         case toggleInspectableWebViews = 668
         case toggleInternalUserState = 669
         case openVanillaBrowser = 670
+        case resetSendCrashLogs = 671
     }
 
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -143,6 +144,8 @@ class RootDebugViewController: UITableViewController {
                 NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.inspectableWebViewsToggled))
             case .openVanillaBrowser:
                 openVanillaBrowser(nil)
+            case .resetSendCrashLogs:
+                AppUserDefaults().sendCrashLogs = nil
             }
         }
     }

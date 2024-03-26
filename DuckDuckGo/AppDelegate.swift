@@ -132,41 +132,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Configuration.setURLProvider(AppConfigurationURLProvider())
         }
 
-        CrashCollection.start(platform: .iOS,
-                              firePixelHandler: { params in
-            print("-- sending pixel")
-//            Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
-        }, showPromptIfCanSendCrashReport: { canSend in
+        CrashCollection.start(
+            platform: .iOS,
+            firePixelHandler: { params in
+                Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
+            }, showPromptIfCanSendCrashReport: { canSend in
 
-            print("-- showing alert")
-            let shouldAlwaysSend = false // get value from userdefaults
+                let shouldSend = AppDependencyProvider.shared.appSettings.sendCrashLogs
 
-//            if shouldAlwaysSend {
-//                shouldSendHandler(true)
-//            } else {
-                let controller = UIAlertController(title: "Send crash report?",
-                                                   message: "It looks like our app has crashed. Please help us fix the issue by sending a crash report.",
-                                                   preferredStyle: .alert)
-
-                controller.addAction(UIAlertAction(title: "Send", style: .default) { _ in
-                    print("-- tapped send")
+                switch shouldSend {
+                case true:
                     canSend(true)
-                })
+                case false:
+                    break
+                default:
+                    DispatchQueue.main.async {
+                        let controller = UIAlertController(
+                            title: "Send crash report?",
+                            message: "It looks like the app has crashed. Please help us fix the issue by sending a crash report.",
+                            preferredStyle: .alert
+                        )
 
-                controller.addAction(UIAlertAction(title: "Always send", style: .default) { _ in
-                    print("-- tapped always send")
-                    // TODO: set user defaults value to true
-                    canSend(true)
-                })
+                        controller.addAction(UIAlertAction(title: "Send Crash Logs", style: .default) { _ in
+                            print("-- tapped send")
+                            AppDependencyProvider.shared.appSettings.sendCrashLogs = true
+                            canSend(true)
+                        })
 
-                controller.addAction(UIAlertAction(title: "No, thanks", style: .default) { _ in
-                    print("-- tapped no")
-                    canSend(false)
-                })
-
-                self.window?.rootViewController?.present(controller, animated: true)
-//            }
-        })
+                        controller.addAction(UIAlertAction(title: "Don't Send Crash Logs", style: .destructive) { _ in
+                            print("-- tapped no")
+                            canSend(false)
+                        })
+                        self.window?.rootViewController?.present(controller, animated: true)
+                    }
+                }
+            })
 
         clearTmp()
 

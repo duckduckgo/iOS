@@ -88,6 +88,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var syncStateCancellable: AnyCancellable?
     private var isSyncInProgressCancellable: AnyCancellable?
 
+    private let crashCollection = CrashCollection(platform: .iOS, log: .generalLog)
+
     // MARK: lifecycle
 
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
@@ -132,41 +134,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Configuration.setURLProvider(AppConfigurationURLProvider())
         }
 
-        CrashCollection.start(
-            platform: .iOS,
-            firePixelHandler: { params in
-                Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
-            }, showPromptIfCanSendCrashReport: { canSend in
+        crashCollection.start { params in
+            Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
+        } showPromptIfCanSendCrashReport: { completion in
+            let shouldSend = AppDependencyProvider.shared.appSettings.sendCrashLogs
 
-                let shouldSend = AppDependencyProvider.shared.appSettings.sendCrashLogs
+            switch shouldSend {
+            case true:
+                completion(true)
+            case false:
+                break
+            default:
+                DispatchQueue.main.async {
+                    let controller = UIAlertController(
+                        title: "Send crash report?",
+                        message: "It looks like the app has crashed. Please help us fix the issue by sending a crash report.",
+                        preferredStyle: .alert
+                    )
 
-                switch shouldSend {
-                case true:
-                    canSend(true)
-                case false:
-                    break
-                default:
-                    DispatchQueue.main.async {
-                        let controller = UIAlertController(
-                            title: "Send crash report?",
-                            message: "It looks like the app has crashed. Please help us fix the issue by sending a crash report.",
-                            preferredStyle: .alert
-                        )
+                    controller.addAction(UIAlertAction(title: "Send Crash Logs", style: .default) { _ in
+                        print("-- tapped send")
+                        AppDependencyProvider.shared.appSettings.sendCrashLogs = true
+                        completion(true)
+                    })
 
-                        controller.addAction(UIAlertAction(title: "Send Crash Logs", style: .default) { _ in
-                            print("-- tapped send")
-                            AppDependencyProvider.shared.appSettings.sendCrashLogs = true
-                            canSend(true)
-                        })
-
-                        controller.addAction(UIAlertAction(title: "Don't Send Crash Logs", style: .destructive) { _ in
-                            print("-- tapped no")
-                            canSend(false)
-                        })
-                        self.window?.rootViewController?.present(controller, animated: true)
-                    }
+                    controller.addAction(UIAlertAction(title: "Don't Send Crash Logs", style: .destructive) { _ in
+                        print("-- tapped no")
+                        completion(false)
+                    })
+                    self.window?.rootViewController?.present(controller, animated: true)
                 }
-            })
+            }
+        }
 
         clearTmp()
 

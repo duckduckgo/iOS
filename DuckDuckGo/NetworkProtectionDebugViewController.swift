@@ -681,6 +681,7 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
                 vpnSettings.selectedEnvironment = .production
             }
             vpnSettings.selectedServer = .automatic
+            NetworkProtectionLocationListCompositeRepository.clearCache()
             tableView.reloadData()
         case .updateSubscriptionOverride:
             let defaults = UserDefaults.networkProtectionGroupDefaults

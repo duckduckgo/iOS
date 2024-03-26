@@ -152,6 +152,11 @@ final class SubscriptionEmailViewModel: ObservableObject {
                     self.selectedFeature = .dbp
                 }
                 self.state.shouldDismissStack = true
+                
+                // Reset shouldDismissStack after dismissal to ensure it can be triggered again
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.state.shouldDismissStack = false
+                }
             }
             
         }

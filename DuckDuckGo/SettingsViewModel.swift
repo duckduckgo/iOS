@@ -791,7 +791,6 @@ extension SettingsViewModel {
                 pushViewController(legacyViewProvider.netP)
             }
 #endif
-        
         }
     }
  

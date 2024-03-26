@@ -53,25 +53,19 @@ struct PrivateSearchViewSettings: View {
     @State var shouldShowNoMicrophonePermissionAlert = false
 
     var body: some View {
-        Section(header: Text(UserText.searchSettings)) {
+        Section(header: Text(UserText.searchSettings),
+                footer: Text(viewModel.autocompleteSubtitle ?? "")) {
             // Autocomplete Suggestions
             SettingsCellView(label: UserText.settingsAutocomplete,
-                             subtitle: viewModel.autocompleteSubtitle,
                              accesory: .toggle(isOn: viewModel.autocompletePrivateSearchBinding))
+        }
 
+        Section(footer: Text(UserText.voiceSearchFooter)) {
             // Private Voice Search
             if viewModel.state.speechRecognitionAvailable {
                 SettingsCellView(label: UserText.settingsVoiceSearch,
-                                 subtitle: UserText.voiceSearchFooter,
                                  accesory: .toggle(isOn: viewModel.voiceSearchEnabledPrivateSearchBinding))
             }
-
-            // More Search Settings
-            SettingsCellView(label: UserText.moreSearchSettings,
-                             subtitle: UserText.moreSearchSettingsExplanation,
-                             action: { viewModel.openMoreSearchSettings() },
-                             disclosureIndicator: true,
-                             isButton: true)
         }
         .alert(isPresented: $shouldShowNoMicrophonePermissionAlert) {
             Alert(title: Text(UserText.noVoicePermissionAlertTitle),
@@ -84,6 +78,15 @@ struct PrivateSearchViewSettings: View {
         }
         .onChange(of: viewModel.shouldShowNoMicrophonePermissionAlert) { value in
             shouldShowNoMicrophonePermissionAlert = value
+        }
+
+        Section {
+            // More Search Settings
+            SettingsCellView(label: UserText.moreSearchSettings,
+                             subtitle: UserText.moreSearchSettingsExplanation,
+                             action: { viewModel.openMoreSearchSettings() },
+                             disclosureIndicator: true,
+                             isButton: true)
         }
     }
 }

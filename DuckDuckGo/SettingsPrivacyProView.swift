@@ -28,15 +28,7 @@ struct SettingsPrivacyProView: View {
     var body: some View {
 #if SUBSCRIPTION
         if #available(iOS 15, *) {
-            if viewModel.state.subscription.enabled {
-                Section {
-                    // Privacy Pro
-                    NavigationLink(destination: SettingsPrivacyProDetailView().environmentObject(viewModel)) {
-                        SettingsCellView(label: UserText.settingsPProSection,
-                                         image: Image("SettingsPrivacyPro"))
-                    }
-                }
-            }
+            SettingsSubscriptionView()
         }
 #endif
     }

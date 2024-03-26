@@ -121,7 +121,6 @@
 		1DEAADF22BA4716C00E25A97 /* SettingsStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADF12BA4716C00E25A97 /* SettingsStatus.swift */; };
 		1DEAADF42BA47B5300E25A97 /* WebTrackingProtectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADF32BA47B5300E25A97 /* WebTrackingProtectionView.swift */; };
 		1DEAADF62BA4809400E25A97 /* CookiePopUpProtectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADF52BA4809400E25A97 /* CookiePopUpProtectionView.swift */; };
-		1DEAADF92BA4892600E25A97 /* SettingsPrivacyProDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADF82BA4892600E25A97 /* SettingsPrivacyProDetailView.swift */; };
 		1DEAADFB2BA71E9A00E25A97 /* SettingsPrivacyProtectionDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADFA2BA71E9A00E25A97 /* SettingsPrivacyProtectionDescriptionView.swift */; };
 		1DEAADFF2BA7832F00E25A97 /* EmailProtectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADFE2BA7832F00E25A97 /* EmailProtectionView.swift */; };
 		1E016AB42949FEB500F21625 /* OmniBarNotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E016AB32949FEB500F21625 /* OmniBarNotificationViewModel.swift */; };
@@ -1276,7 +1275,6 @@
 		1DEAADF12BA4716C00E25A97 /* SettingsStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStatus.swift; sourceTree = "<group>"; };
 		1DEAADF32BA47B5300E25A97 /* WebTrackingProtectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebTrackingProtectionView.swift; sourceTree = "<group>"; };
 		1DEAADF52BA4809400E25A97 /* CookiePopUpProtectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookiePopUpProtectionView.swift; sourceTree = "<group>"; };
-		1DEAADF82BA4892600E25A97 /* SettingsPrivacyProDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPrivacyProDetailView.swift; sourceTree = "<group>"; };
 		1DEAADFA2BA71E9A00E25A97 /* SettingsPrivacyProtectionDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPrivacyProtectionDescriptionView.swift; sourceTree = "<group>"; };
 		1DEAADFE2BA7832F00E25A97 /* EmailProtectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailProtectionView.swift; sourceTree = "<group>"; };
 		1E016AB32949FEB500F21625 /* OmniBarNotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniBarNotificationViewModel.swift; sourceTree = "<group>"; };
@@ -3268,7 +3266,6 @@
 			isa = PBXGroup;
 			children = (
 				1D5216AB2BAC1F11002FE1ED /* SettingsPrivacyProView.swift */,
-				1DEAADF82BA4892600E25A97 /* SettingsPrivacyProDetailView.swift */,
 				D69FBF752B28BE3600B505F1 /* SettingsSubscriptionView.swift */,
 			);
 			name = "Privacy Pro";
@@ -6710,7 +6707,6 @@
 				D68DF81C2B58302E0023DBEA /* SubscriptionRestoreView.swift in Sources */,
 				D664C7CE2B289AA200CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift in Sources */,
 				EE9D68DC2AE16AE100B55EF4 /* NotificationsAuthorizationController.swift in Sources */,
-				1DEAADF92BA4892600E25A97 /* SettingsPrivacyProDetailView.swift in Sources */,
 				AA3D854923DA1DFB00788410 /* AppIcon.swift in Sources */,
 				D6E83C2E2B1EA06E006C8AFB /* SettingsViewModel.swift in Sources */,
 				8590CB612684D0600089F6BF /* CookieDebugViewController.swift in Sources */,

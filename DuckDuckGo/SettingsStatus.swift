@@ -50,7 +50,7 @@ struct StatusIndicatorView: View {
             }
 
             Text(status.text)
-                .daxSubheadRegular()
+                .daxBodyRegular()
                 .foregroundColor(Color(designSystemColor: .textSecondary))
         }
     }

@@ -87,7 +87,7 @@ struct SubscriptionEmailView: View {
         }
         
         .onChange(of: viewModel.state.shouldDismissStack) { _ in
-                onDismissStack?()
+            onDismissStack?()
         }
         
         // Observe changes to shouldDismissView

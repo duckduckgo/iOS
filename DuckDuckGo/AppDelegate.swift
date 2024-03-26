@@ -524,8 +524,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                                                            cachePolicy: .reloadIgnoringLocalCacheData) {
                 if subscription.isActive {
                     DailyPixel.fire(pixel: .privacyProSubscriptionActive)
-                } else {
-                    accountManager.signOut()
                 }
             }
 

@@ -446,7 +446,9 @@ extension SettingsViewModel {
             }
         }
 
-        subscriptionDidChangeObserver = NotificationCenter.default.addObserver(forName: .subscriptionDidChange, object: nil, queue: .main) { [weak self] _ in
+        subscriptionDidChangeObserver = NotificationCenter.default.addObserver(forName: .subscriptionDidChange,
+                                                                               object: nil,
+                                                                               queue: .main) { [weak self] _ in
             if #available(iOS 15.0, *) {
                 guard let strongSelf = self else { return }
                 Task { await strongSelf.setupSubscriptionEnvironment() }

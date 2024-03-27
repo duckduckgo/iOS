@@ -35,7 +35,8 @@ struct SubscriptionRestoreView: View {
     @State private var isAlertVisible = false
     @State private var shouldShowWelcomePage = false
     @State private var shouldNavigateToActivationFlow = false
-    var onDismissStack: (() -> Void)
+    @Binding var shouldDismissStack: Bool
+    
     var onRequirePurchase: (() -> Void)?
     
     
@@ -95,7 +96,7 @@ struct SubscriptionRestoreView: View {
                     
                     // Hidden link to display Email Activation View
                     NavigationLink(destination: SubscriptionEmailView(viewModel: emailViewModel,
-                                                                      onDismissStack: { viewModel.dismissView() }),
+                                                                      shouldDismissStack: $shouldDismissStack ),
                                    isActive: $shouldNavigateToActivationFlow) {
                           EmptyView()
                     }.isDetailLink(false)

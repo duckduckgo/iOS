@@ -78,6 +78,12 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         }
         Pixel.fire(pixel: .privacyProSettingsAddDevice)
         await setupTransactionObserver()
+        guard let token = accountManager.accessToken else { return }
+        if case .success(let details) = await accountManager.fetchAccountDetails(with: token) {
+            DispatchQueue.main.async {
+                self.state.subscriptionEmail = details.email
+            }
+        }
     }
         
     func onDissappear() async {
@@ -94,8 +100,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     @MainActor
     private func resetState() {
-        state.subscriptionEmail = accountManager.email
-        
         state.isAddingDevice = false
         if accountManager.isUserAuthenticated {
             state.isAddingDevice = true

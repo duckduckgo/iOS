@@ -28,7 +28,6 @@ struct SubscriptionFlowView: View {
         
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel: SubscriptionFlowViewModel
-    var onDismissStack: (() -> Void)?
     var onRequireRestore: (() -> Void)?
     
     @State private var isPurchaseInProgress = false

@@ -31,7 +31,8 @@ struct SubscriptionEmailView: View {
     
     @State var shouldDisplayInactiveError = false
     @State var shouldDisplayNavigationError = false
-    var onDismissStack: (() -> Void)?
+    @State var backButtonText = UserText.backButtonTitle
+    @Binding var shouldDismissStack: Bool
     
     enum Constants {
         static let navButtonPadding: CGFloat = 20.0
@@ -39,13 +40,11 @@ struct SubscriptionEmailView: View {
     }
         
     var body: some View {
+        Button(action: { shouldDismissStack = true }, label: { Text("Dismiss stack") })
         baseView
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) {
                 browserBackButton
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                closeButton
             }
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -72,10 +71,6 @@ struct SubscriptionEmailView: View {
                     viewModel.dismissView()
                 })
         }
-        
-        .onAppear {
-            viewModel.onAppear()
-        }
                 
         .onChange(of: viewModel.state.shouldDisplayInactiveError) { value in
             shouldDisplayInactiveError = value
@@ -86,18 +81,13 @@ struct SubscriptionEmailView: View {
         }
         
         .onChange(of: viewModel.state.shouldDismissStack) { _ in
-            onDismissStack?()
+            shouldDismissStack = true
         }
         
         // Observe changes to shouldDismissView
         .onChange(of: viewModel.state.shouldDismissView) { shouldDismiss in
             if shouldDismiss {
                 dismiss()
-
-                // Reset shouldDismissView after dismissal to ensure it can trigger again
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    viewModel.resetDismissalState()
-                }
             }
         }
         
@@ -112,11 +102,6 @@ struct SubscriptionEmailView: View {
     
     // MARK: -
     
-    @ViewBuilder
-    private var closeButton: some View {
-            Button(UserText.subscriptionCloseButton) { onDismissStack?() }
-    }
-    
     private var baseView: some View {
         ZStack {
             VStack {
@@ -128,16 +113,14 @@ struct SubscriptionEmailView: View {
     
     @ViewBuilder
     private var browserBackButton: some View {
-        if viewModel.shouldDisplayBackButton() {
-            Button(action: {
-                Task { await viewModel.navigateBack() }
-            }, label: {
-                HStack(spacing: 0) {
-                    Image(systemName: Constants.backButtonImage)
-                    Text(UserText.backButtonTitle).foregroundColor(Color(designSystemColor: .textPrimary))
-                }
-            })
-        }
+        Button(action: {
+            Task { await viewModel.navigateBack() }
+        }, label: {
+            HStack(spacing: 0) {
+                Image(systemName: Constants.backButtonImage)
+                Text(viewModel.state.backButtonTitle).foregroundColor(Color(designSystemColor: .textPrimary))
+            }
+        })
     }
     
     private func setUpAppearances() {

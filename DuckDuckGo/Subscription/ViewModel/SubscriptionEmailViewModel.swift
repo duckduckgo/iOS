@@ -47,6 +47,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
         var shouldDismissView: Bool = false
         var shouldDismissStack: Bool = false
         var subscriptionActive: Bool = false
+        var backButtonTitle: String = UserText.backButtonTitle
     }
     
     // Read only View State - Should only be modified from the VM
@@ -89,7 +90,14 @@ final class SubscriptionEmailViewModel: ObservableObject {
         if state.canNavigateBack {
             await webViewModel.navigationCoordinator.goBack()
         } else {
-            state.shouldDismissView = true
+            // If not in the Welcome page, dismiss the view, otherwise, assume we
+            // came from Activation, so dismiss the entire stack
+            if webViewModel.url?.forComparison() != URL.subscriptionPurchase.forComparison() {
+                state.shouldDismissView = true
+            } else {
+                canGoBackCancellable = nil
+                state.shouldDismissStack = true
+            }
         }
     }
     
@@ -118,10 +126,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
         canGoBackCancellable = webViewModel.$canGoBack
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
-                self?.state.canNavigateBack = false
-                if self?.webViewModel.url != URL.activateSubscriptionViaEmail.forComparison() {
-                    self?.state.canNavigateBack = value
-                }
+                self?.updateBackButton(canNavigateBack: value)
             }
     }
     
@@ -151,12 +156,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
                     UniquePixel.fire(pixel: .privacyProWelcomeIdentityRestoration)
                     self.selectedFeature = .dbp
                 }
-                self.state.shouldDismissStack = true
-                
-                // Reset shouldDismissStack after dismissal to ensure it can be triggered again
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.state.shouldDismissStack = false
-                }
             }
             
         }
@@ -171,7 +170,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
                 }
             }
         .store(in: &cancellables)
-        
+
         webViewModel.$navigationError
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
@@ -184,14 +183,20 @@ final class SubscriptionEmailViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func shouldDisplayBackButton() -> Bool {
-        // Hide the back button after activation
-        if state.subscriptionActive &&
-            (webViewModel.url == URL.subscriptionActivateSuccess.forComparison() ||
-             webViewModel.url == URL.subscriptionPurchase.forComparison()) {
-            return false
+    func updateBackButton(canNavigateBack: Bool) {
+        
+        // Disable Browser navigation by default
+        self.state.canNavigateBack = false
+        
+        // If the view is not Activation Success, or Welcome page, allow WebView Back Navigation
+        if self.webViewModel.url?.forComparison() != URL.subscriptionActivateSuccess.forComparison() &&
+            self.webViewModel.url?.forComparison() != URL.subscriptionPurchase.forComparison() {
+            self.state.canNavigateBack = canNavigateBack
+        } else {
+            self.state.backButtonTitle = UserText.settingsTitle
         }
-        return true
+        
+        
     }
     
     // MARK: -

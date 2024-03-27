@@ -47,13 +47,12 @@ struct SubscriptionContainerView: View {
         switch currentView {
         case .subscribe:
             SubscriptionFlowView(viewModel: flowViewModel,
-                                 onDismissStack: { dismiss() },
                                  onRequireRestore: { currentView = .restore })
         case .restore:
             SubscriptionRestoreView(viewModel: restoreViewModel,
                                     emailViewModel: emailViewModel,
-                                    onDismissStack: { dismiss() },
                                     onRequirePurchase: { currentView = .subscribe })
+            
         }
         
     }

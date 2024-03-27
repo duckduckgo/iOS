@@ -79,7 +79,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
         
         Task {
             await initializeView()
-            await setupSubscribers()
         }
         setupObservers()
     }
@@ -99,7 +98,13 @@ final class SubscriptionEmailViewModel: ObservableObject {
     
     func onAppear() {
         Task { await initializeView() }
+        Task { await setupSubscribers() }
         webViewModel.navigationCoordinator.navigateTo(url: emailURL )
+    }
+    
+    func onDissappear() {
+        cancellables.removeAll()
+        canGoBackCancellable = nil
     }
     
     @MainActor
@@ -219,6 +224,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     
     deinit {
         cancellables.removeAll()
+        canGoBackCancellable = nil
        
     }
 

@@ -54,7 +54,7 @@ class MenuButton: UIView {
     
     private let bookmarksIconView = UIImageView()
 
-    let anim = AnimationView(name: "menu_light")
+    let anim = LottieAnimationView(name: "menu_light")
     let pointerView: UIView = UIView(frame: CGRect(x: 0,
                                                    y: 0,
                                                    width: Constants.pointerViewWidth,
@@ -190,9 +190,9 @@ extension MenuButton: Themable {
 
         switch theme.currentImageSet {
         case .light:
-            anim.animation = Animation.named("menu_light")
+            anim.animation = LottieAnimation.named("menu_light")
         case .dark:
-            anim.animation = Animation.named("menu_dark")
+            anim.animation = LottieAnimation.named("menu_dark")
         }
         
         if currentState == State.closeImage {

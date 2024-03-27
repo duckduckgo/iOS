@@ -161,8 +161,8 @@ struct SubscriptionFlowView: View {
         
         .onAppear(perform: {
             setUpAppearances()
-            Task { await viewModel.initializeViewData() }
-            viewModel.onAppear()
+            Task { await viewModel.onAppear() }
+          
         })
         
         .onDisappear(perform: {
@@ -200,7 +200,8 @@ struct SubscriptionFlowView: View {
                 title: Text(UserText.subscriptionAppStoreErrorTitle),
                 message: Text(UserText.subscriptionAppStoreErrorMessage),
                 dismissButton: .cancel(Text(UserText.actionOK)) {
-                    Task { await viewModel.initializeViewData() }
+                    viewModel.clearTransactionError()
+                    viewModel.finalizeSubscriptionFlow()
                 }
             )
         case .backend, .general:

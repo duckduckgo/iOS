@@ -1813,6 +1813,9 @@
 /* Settings screen cell text for addess bar position */
 "settings.address.bar" = "Placering af adresselinje";
 
+/* Settings screen cell title for toggling full URL visibility in address bar */
+"settings.address.full.url" = "Vis hele webstedsadressen";
+
 /* Settings screen appearance section title */
 "settings.appearance" = "udseende";
 

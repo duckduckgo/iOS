@@ -1813,6 +1813,9 @@
 /* Settings screen cell text for addess bar position */
 "settings.address.bar" = "Adres Çubuğu Konumu";
 
+/* Settings screen cell title for toggling full URL visibility in address bar */
+"settings.address.full.url" = "Tam Site Adresini Göster";
+
 /* Settings screen appearance section title */
 "settings.appearance" = "Görünüm";
 

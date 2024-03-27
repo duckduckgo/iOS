@@ -287,6 +287,53 @@ extension SyncSettingsView {
     }
 
     @ViewBuilder
+    func syncHasInvalidItems(for itemType: LimitedItemType) -> some View {
+        var title: String {
+            switch itemType {
+            case .bookmarks:
+                return UserText.invalidBookmarksPresentTitle
+            case .credentials:
+                return UserText.invalidCredentialsPresentTitle
+            }
+        }
+        var description: String {
+            switch itemType {
+            case .bookmarks:
+                assert(!model.invalidBookmarksTitles.isEmpty)
+                let firstInvalidBookmarkTitle = model.invalidBookmarksTitles.first ?? ""
+                return UserText.invalidBookmarksPresentDescription(
+                    firstInvalidBookmarkTitle,
+                    numberOfOtherInvalidItems: model.invalidBookmarksTitles.count - 1
+                )
+
+            case .credentials:
+                assert(!model.invalidCredentialsTitles.isEmpty)
+                let firstInvalidCredentialTitle = model.invalidCredentialsTitles.first ?? ""
+                return UserText.invalidCredentialsPresentDescription(
+                    firstInvalidCredentialTitle,
+                    numberOfOtherInvalidItems: model.invalidCredentialsTitles.count - 1
+                )
+            }
+        }
+        var actionTitle: String {
+            switch itemType {
+            case .bookmarks:
+                return UserText.bookmarksLimitExceededAction
+            case .credentials:
+                return UserText.credentialsLimitExceededAction
+            }
+        }
+        SyncWarningMessageView(title: title, message: description, buttonTitle: actionTitle) {
+            switch itemType {
+            case .bookmarks:
+                model.manageBookmarks()
+            case .credentials:
+                model.manageLogins()
+            }
+        }
+    }
+
+    @ViewBuilder
     func devEnvironmentIndicator() -> some View {
         if model.isOnDevEnvironment {
             Button(action: {

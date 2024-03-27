@@ -85,6 +85,13 @@ final class NetworkProtectionTunnelController: TunnelController {
 
     // MARK: - Connection Status Querying
 
+    var isInstalled: Bool {
+        get async {
+            let tunnelManager = await loadTunnelManager()
+            return tunnelManager != nil
+        }
+    }
+
     /// Queries Network Protection to know if its VPN is connected.
     ///
     /// - Returns: `true` if the VPN is connected, connecting or reasserting, and `false` otherwise.
@@ -222,7 +229,7 @@ final class NetworkProtectionTunnelController: TunnelController {
     /// Setups the tunnel manager if it's not set up already.
     ///
     private func setup(_ tunnelManager: NETunnelProviderManager) {
-        tunnelManager.localizedDescription = "DuckDuckGo Network Protection"
+        tunnelManager.localizedDescription = "DuckDuckGo VPN"
         tunnelManager.isEnabled = true
 
         tunnelManager.protocolConfiguration = {

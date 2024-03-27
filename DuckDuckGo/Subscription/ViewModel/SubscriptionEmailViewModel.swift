@@ -79,7 +79,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
         
         Task {
             await initializeView()
-            await setupSubscribers()
         }
         setupObservers()
     }
@@ -99,7 +98,13 @@ final class SubscriptionEmailViewModel: ObservableObject {
     
     func onAppear() {
         Task { await initializeView() }
+        Task { await setupSubscribers() }
         webViewModel.navigationCoordinator.navigateTo(url: emailURL )
+    }
+    
+    func onDissappear() {
+        cancellables.removeAll()
+        canGoBackCancellable = nil
     }
     
     @MainActor
@@ -152,6 +157,11 @@ final class SubscriptionEmailViewModel: ObservableObject {
                     self.selectedFeature = .dbp
                 }
                 self.state.shouldDismissStack = true
+                
+                // Reset shouldDismissStack after dismissal to ensure it can be triggered again
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.state.shouldDismissStack = false
+                }
             }
             
         }
@@ -214,6 +224,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     
     deinit {
         cancellables.removeAll()
+        canGoBackCancellable = nil
        
     }
 

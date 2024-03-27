@@ -113,7 +113,7 @@ public struct UserDefaultsWrapper<T> {
         case networkProtectionWaitlistTermsAndConditionsAccepted = "com.duckduckgo.ios.vpn.terms-and-conditions-accepted"
 
         case addressBarPosition = "com.duckduckgo.ios.addressbarposition"
-        case showFullSiteAddress = "com.duckduckgo.ios.showfullsiteaddress"
+        case showFullURLAddress = "com.duckduckgo.ios.showfullurladdress"
 
         case webContainerId = "com.duckduckgo.ios.webcontainer.id"
 

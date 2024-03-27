@@ -74,7 +74,6 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
         return hasLegacyAuthToken || hasBeenInvited
     }
 
-    // todo - https://app.asana.com/0/0/1206844038943626/f
     func isPrivacyProLaunched() -> Bool {
         if let subscriptionOverrideEnabled = userDefaults.subscriptionOverrideEnabled {
 #if ALPHA || DEBUG
@@ -87,7 +86,6 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
         return AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
     }
     
-    // todo - https://app.asana.com/0/0/1206844038943626/f
     func shouldMonitorEntitlement() -> Bool {
         isPrivacyProLaunched()
     }

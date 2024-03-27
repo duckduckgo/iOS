@@ -20,7 +20,7 @@ tags:
     id: "searchEntry"
 - tapOn: 
     id: "searchEntry"
-- inputText: "https://privacy-test-pages.glitch.me"
+- inputText: "https://privacy-test-pages.site"
 - pressKey: Enter
 
 # Manage onboarding

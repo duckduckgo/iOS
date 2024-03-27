@@ -629,7 +629,7 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
             XCTAssertNil(selectedItems.first?.id, file: file, line: line)
             XCTAssertEqual(
                 selectedItems.first?.name,
-                UserText.netPVPNLocationNearestAvailableItemTitle,
+                UserText.netPPreferredLocationNearest,
                 file: file,
                 line: line
             )

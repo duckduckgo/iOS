@@ -28,6 +28,7 @@ class AutofillLoginPromptViewController: UIViewController {
     typealias AutofillLoginPromptViewControllerCompletion = (_ account: SecureVaultModels.WebsiteAccount?,
                                                              _ showExpanded: Bool) -> Void
     let completion: AutofillLoginPromptViewControllerCompletion?
+    let onAccountSelected: (SecureVaultModels.WebsiteAccount?) -> Void
 
     private let accounts: AccountMatches
     private let domain: String
@@ -36,10 +37,12 @@ class AutofillLoginPromptViewController: UIViewController {
     internal init(accounts: AccountMatches,
                   domain: String,
                   trigger: AutofillUserScript.GetTriggerType,
+                  onAccountSelected: @escaping (SecureVaultModels.WebsiteAccount?) -> Void,
                   completion: AutofillLoginPromptViewControllerCompletion? = nil) {
         self.accounts = accounts
         self.domain = domain
         self.trigger = trigger
+        self.onAccountSelected = onAccountSelected
         self.completion = completion
         super.init(nibName: nil, bundle: nil)
     }
@@ -111,6 +114,8 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
         } else {
             Pixel.fire(pixel: .autofillLoginsFillLoginInlineManualConfirmed)
         }
+
+        onAccountSelected(account)
 
         if AppDependencyProvider.shared.autofillLoginSession.isSessionValid {
             dismiss(animated: true, completion: nil)

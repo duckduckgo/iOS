@@ -59,6 +59,14 @@ public struct SyncSettingsView: View {
                         syncPaused(for: .credentials)
                     }
 
+                    if !model.invalidBookmarksTitles.isEmpty {
+                        syncHasInvalidItems(for: .bookmarks)
+                    }
+
+                    if !model.invalidCredentialsTitles.isEmpty {
+                        syncHasInvalidItems(for: .credentials)
+                    }
+
                     devices()
 
                     options()

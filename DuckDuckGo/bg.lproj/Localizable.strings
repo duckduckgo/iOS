@@ -1813,6 +1813,9 @@
 /* Settings screen cell text for addess bar position */
 "settings.address.bar" = "Позиция на адресната лента";
 
+/* Settings screen cell title for toggling full URL visibility in address bar */
+"settings.address.full.url" = "Показване на пълния адрес на сайта";
+
 /* Settings screen appearance section title */
 "settings.appearance" = "Външен Вид";
 

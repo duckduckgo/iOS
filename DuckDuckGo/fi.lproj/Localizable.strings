@@ -1813,6 +1813,9 @@
 /* Settings screen cell text for addess bar position */
 "settings.address.bar" = "Osoitepalkin sijainti";
 
+/* Settings screen cell title for toggling full URL visibility in address bar */
+"settings.address.full.url" = "Näytä sivuston osoite kokonaan";
+
 /* Settings screen appearance section title */
 "settings.appearance" = "Ulkoasu";
 

@@ -180,9 +180,8 @@ struct SettingsSubscriptionView: View {
     }
     
     var body: some View {
-        if viewModel.state.subscription.enabled {
+        if viewModel.state.subscription.enabled && viewModel.state.subscription.canPurchase {
             Section(header: Text(UserText.settingsPProSection)) {
-                
                 if viewModel.state.subscription.hasActiveSubscription {
                                         
                     if !viewModel.isLoadingSubscriptionState {
@@ -196,13 +195,13 @@ struct SettingsSubscriptionView: View {
                             noEntitlementsAvailableView
                         }
                     }
+                } else if viewModel.state.subscription.isSubscriptionPendingActivation {
+                    noEntitlementsAvailableView
                 } else {
                     purchaseSubscriptionView
-                    
                 }
-            
             }
-            
+
             // Selected Feature handler for Subscription Flow
             .onChange(of: subscriptionFlowViewModel.selectedFeature) { value in
                 guard let value else { return }

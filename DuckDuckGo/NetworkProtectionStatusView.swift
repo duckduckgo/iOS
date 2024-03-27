@@ -24,8 +24,9 @@ import NetworkProtection
 
 @available(iOS 15, *)
 struct NetworkProtectionStatusView: View {
+    @Environment(\.colorScheme) var colorScheme
+
     @StateObject public var statusModel: NetworkProtectionStatusViewModel
-    @State private var isFeedbackFormActive = false
 
     var body: some View {
         List {
@@ -35,11 +36,16 @@ struct NetworkProtectionStatusView: View {
                     message: errorItem.message
                 )
             }
+
             toggle()
+            locationDetails()
+
             if statusModel.shouldShowConnectionDetails {
                 connectionDetails()
             }
+
             settings()
+            about()
         }
         .padding(.top, statusModel.error == nil ? 0 : -20)
         .if(statusModel.animationsOn, transform: {
@@ -48,7 +54,6 @@ struct NetworkProtectionStatusView: View {
                 .animation(.default, value: statusModel.shouldShowError)
         })
         .applyInsetGroupedListStyle()
-        .navigationTitle(UserText.netPNavTitle)
     }
 
     @ViewBuilder
@@ -59,9 +64,14 @@ struct NetworkProtectionStatusView: View {
                     Text(UserText.netPStatusViewTitle)
                         .daxBodyRegular()
                         .foregroundColor(.init(designSystemColor: .textPrimary))
-                    Text(statusModel.statusMessage)
-                        .daxFootnoteRegular()
-                        .foregroundColor(.init(designSystemColor: .textSecondary))
+
+                    HStack {
+                        statusBadge(isConnected: statusModel.isNetPEnabled)
+
+                        Text(statusModel.statusMessage)
+                            .daxFootnoteRegular()
+                            .foregroundColor(.init(designSystemColor: .textSecondary))
+                    }
                 }
 
                 Toggle("", isOn: Binding(
@@ -75,6 +85,7 @@ struct NetworkProtectionStatusView: View {
                 .disabled(statusModel.shouldDisableToggle)
                 .toggleStyle(SwitchToggleStyle(tint: .init(designSystemColor: .accent)))
             }
+            .padding([.top, .bottom], 2)
         } header: {
             header()
         }
@@ -83,20 +94,27 @@ struct NetworkProtectionStatusView: View {
     }
 
     @ViewBuilder
+    private func statusBadge(isConnected: Bool) -> some View {
+        Circle()
+            .foregroundStyle(isConnected ? .green : .yellow)
+            .frame(width: 8, height: 8)
+    }
+
+    @ViewBuilder
     private func header() -> some View {
         HStack {
             Spacer(minLength: 0)
             VStack(alignment: .center, spacing: 8) {
-                Image(statusModel.statusImageID)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 96)
-                    .padding(8)
+                if colorScheme == .light {
+                    headerAnimationView("vpn-light-mode")
+                } else {
+                    headerAnimationView("vpn-dark-mode")
+                }
                 Text(statusModel.headerTitle)
                     .daxHeadline()
                     .multilineTextAlignment(.center)
                     .foregroundColor(.init(designSystemColor: .textPrimary))
-                Text(UserText.netPStatusHeaderMessage)
+                Text(statusModel.isNetPEnabled ? UserText.netPStatusHeaderMessageOn : UserText.netPStatusHeaderMessageOff)
                     .daxFootnoteRegular()
                     .multilineTextAlignment(.center)
                     .foregroundColor(.init(designSystemColor: .textSecondary))
@@ -111,24 +129,54 @@ struct NetworkProtectionStatusView: View {
     }
 
     @ViewBuilder
-    private func connectionDetails() -> some View {
+    private func locationDetails() -> some View {
         Section {
             if let location = statusModel.location {
-                NavigationLink(destination: NetworkProtectionVPNLocationView()) {
-                    NetworkProtectionServerItemView(
-                        imageID: "Server-Location-24",
-                        title: UserText.netPStatusViewLocation,
-                        value: location
+                var locationAttributedString: AttributedString {
+                    var attributedString = AttributedString(
+                        statusModel.preferredLocation.isNearest ? "\(location) \(UserText.netPVPNLocationNearest)" : location
                     )
+                    attributedString.foregroundColor = .init(designSystemColor: .textPrimary)
+                    if let range = attributedString.range(of: UserText.netPVPNLocationNearest) {
+                        attributedString[range].foregroundColor = Color(.init(designSystemColor: .textSecondary))
+                    }
+                    return attributedString
+                }
+
+                NavigationLink(destination: NetworkProtectionVPNLocationView()) {
+                    NetworkProtectionLocationItemView(title: locationAttributedString, imageName: nil)
+                }
+            } else {
+                let imageName = statusModel.preferredLocation.isNearest ? "VPNLocation" : nil
+                var nearestLocationAttributedString: AttributedString {
+                    var attributedString = AttributedString(statusModel.preferredLocation.title)
+                    attributedString.foregroundColor = .init(designSystemColor: .textPrimary)
+                    return attributedString
+                }
+
+                NavigationLink(destination: NetworkProtectionVPNLocationView()) {
+                    NetworkProtectionLocationItemView(title: nearestLocationAttributedString, imageName: imageName)
                 }
             }
+        } header: {
+            Text(statusModel.isNetPEnabled ? UserText.vpnLocationConnected : UserText.vpnLocationSelected)
+                .foregroundColor(.init(designSystemColor: .textSecondary))
+        }
+        .listRowBackground(Color(designSystemColor: .surface))
+    }
+
+    @ViewBuilder
+    private func connectionDetails() -> some View {
+        Section {
             if let ipAddress = statusModel.ipAddress {
-                NetworkProtectionServerItemView(
-                    imageID: "IP-24",
-                    title: UserText.netPStatusViewIPAddress,
-                    value: ipAddress
-                )
+                NetworkProtectionServerItemView(title: UserText.netPStatusViewIPAddress, value: ipAddress)
             }
+
+            NetworkProtectionThroughputItemView(
+                title: UserText.vpnDataVolume,
+                downloadSpeed: statusModel.downloadTotal,
+                uploadSpeed: statusModel.uploadTotal
+            )
         } header: {
             Text(UserText.netPStatusViewConnectionDetails).foregroundColor(.init(designSystemColor: .textSecondary))
         }
@@ -141,38 +189,46 @@ struct NetworkProtectionStatusView: View {
             NavigationLink(UserText.netPVPNSettingsTitle, destination: NetworkProtectionVPNSettingsView())
                 .daxBodyRegular()
                 .foregroundColor(.init(designSystemColor: .textPrimary))
-            NavigationLink(UserText.netPVPNNotificationsTitle, destination: NetworkProtectionVPNNotificationsView())
-                .daxBodyRegular()
-                .foregroundColor(.init(designSystemColor: .textPrimary))
         } header: {
             Text(UserText.netPStatusViewSettingsSectionTitle).foregroundColor(.init(designSystemColor: .textSecondary))
-        } footer: {
-            inviteOnlyFooter()
         }
         .listRowBackground(Color(designSystemColor: .surface))
     }
 
     @ViewBuilder
-    private func inviteOnlyFooter() -> some View {
-        Text("\(UserText.networkProtectionWaitlistAvailabilityDisclaimer) [\(UserText.netPStatusViewShareFeedback)](share-feedback)")
-            .foregroundColor(.init(designSystemColor: .textSecondary))
-            .accentColor(.init(designSystemColor: .accent))
-            .daxFootnoteRegular()
-            .padding(.top, 6)
-            .background(NavigationLink(isActive: $isFeedbackFormActive) {
-                VPNFeedbackFormCategoryView()
-            } label: {
-                EmptyView()
-            })
-            .environment(\.openURL, OpenURLAction { url in
-                switch url.absoluteString {
-                case "share-feedback":
-                    isFeedbackFormActive = true
-                    return .handled
-                default:
-                    return .discarded
-                }
-            })
+    private func about() -> some View {
+        Section {
+            if statusModel.shouldShowFAQ {
+                NavigationLink(UserText.netPVPNSettingsFAQ, destination: NetworkProtectionFAQView())
+                    .daxBodyRegular()
+                    .foregroundColor(.init(designSystemColor: .textPrimary))
+            }
+
+            NavigationLink(UserText.netPVPNSettingsShareFeedback, destination: VPNFeedbackFormCategoryView())
+                .daxBodyRegular()
+                .foregroundColor(.init(designSystemColor: .textPrimary))
+        } header: {
+            Text(UserText.vpnAbout).foregroundColor(.init(designSystemColor: .textSecondary))
+        }
+        .listRowBackground(Color(designSystemColor: .surface))
+    }
+
+    @ViewBuilder
+    private func headerAnimationView(_ animationName: String) -> some View {
+        LottieView(
+            lottieFile: animationName,
+            loopMode: .withIntro(
+                .init(
+                    // Skip the intro if NetP is enabled, but the user didn't manually trigger it
+                    skipIntro: statusModel.isNetPEnabled && !statusModel.shouldDisableToggle,
+                    introStartFrame: 0,
+                    introEndFrame: 100,
+                    loopStartFrame: 130,
+                    loopEndFrame: 370
+                )
+            ),
+            isAnimating: $statusModel.isNetPEnabled
+        )
     }
 }
 
@@ -196,19 +252,65 @@ private struct NetworkProtectionErrorView: View {
     }
 }
 
+@available(iOS 15.0, *)
+private struct NetworkProtectionLocationItemView: View {
+    let title: AttributedString
+    let imageName: String?
+
+    var body: some View {
+        HStack(spacing: 8) {
+            if let imageName {
+                Image(imageName)
+            }
+
+            Text(title)
+                .daxBodyRegular()
+        }
+        .listRowBackground(Color(designSystemColor: .surface))
+    }
+}
+
 private struct NetworkProtectionServerItemView: View {
-    let imageID: String
     let title: String
     let value: String
 
     var body: some View {
         HStack(spacing: 16) {
-            Image(imageID)
             Text(title)
                 .daxBodyRegular()
                 .foregroundColor(.init(designSystemColor: .textPrimary))
             Spacer(minLength: 2)
             Text(value)
+                .daxBodyRegular()
+                .foregroundColor(.init(designSystemColor: .textSecondary))
+        }
+        .listRowBackground(Color(designSystemColor: .surface))
+    }
+}
+
+private struct NetworkProtectionThroughputItemView: View {
+    let title: String
+    let downloadSpeed: String
+    let uploadSpeed: String
+
+    var body: some View {
+        HStack(spacing: 4) {
+            Text(title)
+                .daxBodyRegular()
+                .foregroundColor(.init(designSystemColor: .textPrimary))
+
+            Spacer(minLength: 2)
+
+            Image("VPNDownload")
+                .foregroundColor(.init(designSystemColor: .textSecondary))
+            Text(downloadSpeed)
+                .daxBodyRegular()
+                .foregroundColor(.init(designSystemColor: .textSecondary))
+
+            Image("VPNUpload")
+                .foregroundColor(.init(designSystemColor: .textSecondary))
+                .padding(.leading, 4)
+            Text(uploadSpeed)
                 .daxBodyRegular()
                 .foregroundColor(.init(designSystemColor: .textSecondary))
         }

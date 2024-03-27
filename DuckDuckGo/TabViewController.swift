@@ -118,6 +118,10 @@ class TabViewController: UIViewController {
     private var urlProvidedBasicAuthCredential: (credential: URLCredential, url: URL)?
     private var emailProtectionSignOutCancellable: AnyCancellable?
 
+    public var inferredOpenerContext: BrokenSiteReport.OpenerContext?
+    private var refreshCountSinceLoad: Int = 0
+    private var performanceMetrics: PerformanceMetricsSubfeature?
+
     private var detectedLoginURL: URL?
     private var preserveLoginsWorker: PreserveLoginsWorker?
 
@@ -127,6 +131,16 @@ class TabViewController: UIViewController {
     private let netPConnectionObserver = ConnectionStatusObserverThroughSession()
     private var netPConnectionObserverCancellable: AnyCancellable?
     private var netPConnectionStatus: ConnectionStatus = .default
+    private var netPConnected: Bool {
+        switch netPConnectionStatus {
+        case .connected:
+            return true
+        default:
+            break
+        }
+
+        return false
+    }
 #endif
 
     // Required to know when to disable autofill, see SaveLoginViewModel for details
@@ -577,6 +591,8 @@ class TabViewController: UIViewController {
             assert(urlRequest.attribution == .user, "WebView requests should be user attributed")
         }
 
+        refreshCountSinceLoad = 0
+
         webView.stopLoading()
         dismissJSAlertIfNeeded()
         webView.load(urlRequest)
@@ -927,13 +943,18 @@ class TabViewController: UIViewController {
         guard let currentURL = url else {
             return nil
         }
+
         return PrivacyDashboardViewController.BreakageAdditionalInfo(currentURL: currentURL,
                                                                      httpsForced: httpsForced,
                                                                      ampURLString: linkProtection.lastAMPURLString ?? "",
                                                                      urlParametersRemoved: linkProtection.urlParametersRemoved,
                                                                      isDesktop: tabModel.isDesktop,
                                                                      error: lastError,
-                                                                     httpStatusCode: lastHttpStatusCode)
+                                                                     httpStatusCode: lastHttpStatusCode,
+                                                                     openerContext: inferredOpenerContext,
+                                                                     vpnOn: netPConnected,
+                                                                     userRefreshCount: refreshCountSinceLoad,
+                                                                     performanceMetrics: performanceMetrics)
     }
 
     public func print() {
@@ -1197,11 +1218,17 @@ extension TabViewController: WKNavigationDelegate {
     
     private func onWebpageDidFinishLoading() {
         os_log("webpageLoading finished", log: .generalLog, type: .debug)
-        
+
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
 
         showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
+
+        Task { @MainActor in
+            if await webView.isCurrentSiteReferredFromDuckDuckGo {
+                inferredOpenerContext = .serp
+            }
+        }
     }
 
     func showDaxDialogOrStartTrackerNetworksAnimationIfNeeded() {
@@ -1383,6 +1410,12 @@ extension TabViewController: WKNavigationDelegate {
 
         didGoBackForward = (navigationAction.navigationType == .backForward)
 
+        if navigationAction.navigationType != .reload && navigationAction.navigationType != .other {
+            // Ignore .other actions because refresh can cause a redirect
+            // This is also handled in loadRequest(_:)
+            refreshCountSinceLoad = 0
+        }
+
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
         // which would skip link rewrites.
         if navigationAction.navigationType != .backForward && navigationAction.isTargetingMainFrame() {
@@ -1529,6 +1562,22 @@ extension TabViewController: WKNavigationDelegate {
         }
     }
 
+    private func inferLoadContext(for navigationAction: WKNavigationAction) -> BrokenSiteReport.OpenerContext? {
+        guard navigationAction.navigationType != .reload else { return nil }
+        guard let currentUrl = webView.url, let newUrl = navigationAction.request.url else { return nil }
+
+        if currentUrl.isDuckDuckGoSearch && !newUrl.isDuckDuckGoSearch {
+            return .serp
+        } else {
+            switch navigationAction.navigationType {
+            case .linkActivated, .other, .formSubmitted:
+                return .navigation
+            default:
+                return nil
+            }
+        }
+    }
+
     private func performNavigationFor(url: URL,
                                       navigationAction: WKNavigationAction,
                                       allowPolicy: WKNavigationActionPolicy,
@@ -1549,6 +1598,8 @@ extension TabViewController: WKNavigationDelegate {
                   url != urlProvidedBasicAuthCredential.url {
             self.urlProvidedBasicAuthCredential = nil
         }
+
+        inferredOpenerContext = inferLoadContext(for: navigationAction)
 
         if shouldReissueSearch(for: url) {
             reissueSearchWithRequiredParams(for: url)
@@ -2108,6 +2159,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
             reload()
         }
 
+        refreshCountSinceLoad += 1
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.refresh)
     }
 
@@ -2145,6 +2197,9 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
         userScripts.loginFormDetectionScript?.delegate = self
         userScripts.autoconsentUserScript.delegate = self
+
+        performanceMetrics = PerformanceMetricsSubfeature(targetWebview: webView)
+        userScripts.contentScopeUserScriptIsolated.registerSubfeature(delegate: performanceMetrics!)
 
         adClickAttributionLogic.onRulesChanged(latestRules: ContentBlocking.shared.contentBlockingManager.currentRules)
 
@@ -2387,10 +2442,12 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
     }
 
+    // swiftlint:disable function_parameter_count
     func secureVaultManager(_: SecureVaultManager,
                             promptUserToAutofillCredentialsForDomain domain: String,
                             withAccounts accounts: [SecureVaultModels.WebsiteAccount],
                             withTrigger trigger: AutofillUserScript.GetTriggerType,
+                            onAccountSelected: @escaping (SecureVaultModels.WebsiteAccount?) -> Void,
                             completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
   
         if !AutofillSettingStatus.isAutofillEnabledInSettings, featureFlagger.isFeatureOn(.autofillCredentialInjecting) {
@@ -2408,12 +2465,15 @@ extension TabViewController: SecureVaultManagerDelegate {
             let accountMatches = autofillWebsiteAccountMatcher.findDeduplicatedSortedMatches(accounts: accounts, for: domain)
 
             presentAutofillPromptViewController(accountMatches: accountMatches, domain: domain, trigger: trigger, useLargeDetent: false) { account in
+                onAccountSelected(account)
+            } completionHandler: { account in
                 completionHandler(account)
             }
         } else {
             completionHandler(nil)
         }
     }
+    // swiftlint:enable function_parameter_count
 
     func secureVaultManager(_: SecureVaultManager,
                             promptUserWithGeneratedPassword password: String,
@@ -2437,25 +2497,34 @@ extension TabViewController: SecureVaultManagerDelegate {
     }
 
     /// Using Bool for detent size parameter to be backward compatible with iOS 14
+    // swiftlint:disable function_parameter_count
     func presentAutofillPromptViewController(accountMatches: AccountMatches,
                                              domain: String,
                                              trigger: AutofillUserScript.GetTriggerType,
                                              useLargeDetent: Bool,
+                                             onAccountSelected: @escaping (SecureVaultModels.WebsiteAccount?) -> Void,
                                              completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
         let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accountMatches,
                                                                              domain: domain,
-                                                                             trigger: trigger) { account, showExpanded in
+                                                                             trigger: trigger,
+                                                                             onAccountSelected: { account in
+            onAccountSelected(account)
+        }, completion: { account, showExpanded in
             if showExpanded {
                 self.presentAutofillPromptViewController(accountMatches: accountMatches,
                                                          domain: domain,
                                                          trigger: trigger,
-                                                         useLargeDetent: showExpanded) { account in
+                                                         useLargeDetent: showExpanded,
+                                                         onAccountSelected: { account in
+                    onAccountSelected(account)
+                },
+                                                         completionHandler: { account in
                     completionHandler(account)
-                }
+                })
             } else {
                 completionHandler(account)
             }
-        }
+        })
 
         if #available(iOS 15.0, *) {
             if let presentationController = autofillPromptViewController.presentationController as? UISheetPresentationController {
@@ -2470,7 +2539,8 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
         self.present(autofillPromptViewController, animated: true, completion: nil)
     }
-    
+    // swiftlint:enable function_parameter_count
+
     // Used on macOS to request authentication for individual autofill items
     func secureVaultManager(_: BrowserServicesKit.SecureVaultManager,
                             isAuthenticatedFor type: BrowserServicesKit.AutofillType,

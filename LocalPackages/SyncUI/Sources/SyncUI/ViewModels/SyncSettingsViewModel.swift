@@ -81,6 +81,8 @@ public class SyncSettingsViewModel: ObservableObject {
     @Published public var isSyncingDevices = false
     @Published public var isSyncBookmarksPaused = false
     @Published public var isSyncCredentialsPaused = false
+    @Published public var invalidBookmarksTitles: [String] = []
+    @Published public var invalidCredentialsTitles: [String] = []
 
     @Published var isBusy = false
     @Published var recoveryCode = ""

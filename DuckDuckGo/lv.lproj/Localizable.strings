@@ -1813,6 +1813,9 @@
 /* Settings screen cell text for addess bar position */
 "settings.address.bar" = "Adreses joslas pozīcija";
 
+/* Settings screen cell title for toggling full URL visibility in address bar */
+"settings.address.full.url" = "Rādīt pilnu vietnes adresi";
+
 /* Settings screen appearance section title */
 "settings.appearance" = "Parādas";
 

@@ -86,6 +86,10 @@ struct SubscriptionEmailView: View {
             shouldDisplayNavigationError = value
         }
         
+        .onChange(of: viewModel.state.shouldDismissStack) { _ in
+            onDismissStack?()
+        }
+        
         // Observe changes to shouldDismissView
         .onChange(of: viewModel.state.shouldDismissView) { shouldDismiss in
             if shouldDismiss {

@@ -1813,6 +1813,9 @@
 /* Settings screen cell text for addess bar position */
 "settings.address.bar" = "Pozice adresního řádku";
 
+/* Settings screen cell title for toggling full URL visibility in address bar */
+"settings.address.full.url" = "Zobrazovat celou adresu webu";
+
 /* Settings screen appearance section title */
 "settings.appearance" = "Vzhled";
 

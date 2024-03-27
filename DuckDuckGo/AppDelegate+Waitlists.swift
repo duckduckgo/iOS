@@ -37,7 +37,7 @@ extension AppDelegate {
     func checkWaitlists() {
 
 #if NETWORK_PROTECTION
-        if vpnFeatureVisibilty.shouldKeepVPNAccessViaWaitlist() {
+        if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() {
             checkNetworkProtectionWaitlist()
         }
 #endif
@@ -54,35 +54,7 @@ extension AppDelegate {
 
         VPNWaitlist.shared.fetchInviteCodeIfAvailable { [weak self] error in
             guard error == nil else {
-
-                if error == .alreadyHasInviteCode, UIApplication.shared.applicationState == .active {
-                    // If the user already has an invite code but their auth token has gone missing, attempt to redeem it again.
-                    let tokenStore = NetworkProtectionKeychainTokenStore()
-                    let waitlistStorage = VPNWaitlist.shared.waitlistStorage
-                    let configManager = ContentBlocking.shared.privacyConfigurationManager
-                    let waitlistBetaActive = configManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlistBetaActive)
-
-                    if let inviteCode = waitlistStorage.getWaitlistInviteCode(),
-                       !tokenStore.isFeatureActivated,
-                       waitlistBetaActive {
-                        let pixel: Pixel.Event = .networkProtectionWaitlistRetriedInviteCodeRedemption
-
-                        do {
-                            if let token = try tokenStore.fetchToken() {
-                                DailyPixel.fireDailyAndCount(pixel: pixel, withAdditionalParameters: [ "tokenState": "found" ])
-                            } else {
-                                DailyPixel.fireDailyAndCount(pixel: pixel, withAdditionalParameters: [ "tokenState": "nil" ])
-                            }
-                        } catch {
-                            DailyPixel.fireDailyAndCount(pixel: pixel, error: error, withAdditionalParameters: [ "tokenState": "error" ])
-                        }
-
-                        self?.fetchVPNWaitlistAuthToken(inviteCode: inviteCode)
-                    }
-                }
-
                 return
-
             }
 
             guard let inviteCode = VPNWaitlist.shared.waitlistStorage.getWaitlistInviteCode() else {
@@ -95,7 +67,7 @@ extension AppDelegate {
 #endif
 
     private func checkWaitlistBackgroundTasks() {
-        guard vpnFeatureVisibilty.shouldKeepVPNAccessViaWaitlist() else { return }
+        guard vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() else { return }
 
         BGTaskScheduler.shared.getPendingTaskRequests { tasks in
 

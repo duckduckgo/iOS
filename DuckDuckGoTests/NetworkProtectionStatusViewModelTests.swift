@@ -104,8 +104,8 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
 
     func testStatusUpdate_connected_updatesStatusMessageEverySecond_withTimeLapsed() throws {
         statusObserver.subject.send(.connected(connectedDate: Date()))
-        try waitForPublisher(viewModel.$statusMessage, toEmit: "Connected - 00:00:00")
-        try waitForPublisher(viewModel.$statusMessage, toEmit: "Connected - 00:00:01")
+        try waitForPublisher(viewModel.$statusMessage, toEmit: "Connected · 00:00:00")
+        try waitForPublisher(viewModel.$statusMessage, toEmit: "Connected · 00:00:01")
     }
 
     func testStatusUpdate_disconnecting_updateStatusToDisconnecting() throws {
@@ -152,10 +152,10 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
     }
 
     func testStatusUpdate_publishesLocation() throws {
-        let location = "SomeLocation"
-        let serverInfo = NetworkProtectionStatusServerInfo(serverLocation: location, serverAddress: nil)
+        let attributes = serverAttributes()
+        let serverInfo = NetworkProtectionStatusServerInfo(serverLocation: attributes, serverAddress: nil)
         serverInfoObserver.subject.send(serverInfo)
-        try waitForPublisher(viewModel.$location, toEmit: location)
+        try waitForPublisher(viewModel.$location, toEmit: "🇺🇸 El Segundo, United States")
     }
 
     func testStatusUpdate_publishesIPAddress() throws {
@@ -176,8 +176,8 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
     func testStatusUpdate_anyServerInfoPropertiesNonNil_showsConnectionDetails() throws {
         for serverInfo in [
             NetworkProtectionStatusServerInfo(serverLocation: nil, serverAddress: "123.123.123.123"),
-            NetworkProtectionStatusServerInfo(serverLocation: "Antartica", serverAddress: nil),
-            NetworkProtectionStatusServerInfo(serverLocation: "Your Garden", serverAddress: "111.222.333.444")
+            NetworkProtectionStatusServerInfo(serverLocation: serverAttributes(), serverAddress: nil),
+            NetworkProtectionStatusServerInfo(serverLocation: serverAttributes(), serverAddress: "111.222.333.444")
         ] {
             serverInfoObserver.subject.send(serverInfo)
             try waitForPublisher(viewModel.$shouldShowConnectionDetails, toEmit: true)
@@ -206,4 +206,22 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: nil)
         wait(for: [expectation], timeout: 20)
     }
+
+    private func serverAttributes() -> NetworkProtectionServerInfo.ServerAttributes {
+        let json = """
+        {
+            "city": "El Segundo",
+            "country": "us",
+            "latitude": 33.9192,
+            "longitude": -118.4165,
+            "region": "North America",
+            "state": "ca",
+            "tzOffset": -28800
+        }
+        """
+
+        // swiftlint:disable:next force_try
+        return try! JSONDecoder().decode(NetworkProtectionServerInfo.ServerAttributes.self, from: json.data(using: .utf8)!)
+    }
+
 }

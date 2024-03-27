@@ -176,7 +176,7 @@ struct SettingsSubscriptionView: View {
     }
     
     var body: some View {
-        if viewModel.state.subscription.enabled {
+        if viewModel.state.subscription.enabled && viewModel.state.subscription.canPurchase {
             Section(header: Text(UserText.settingsPProSection)) {
                 if viewModel.state.subscription.hasActiveSubscription {
                                         

@@ -210,6 +210,10 @@ final class MockSecureVault<T: AutofillDatabaseProvider>: AutofillSecureVault {
         []
     }
 
+    func accountTitlesForSyncableCredentials(modifiedBefore date: Date) throws -> [String] {
+        []
+    }
+
     func deleteSyncableCredentials(_ syncableCredentials: SecureVaultModels.SyncableCredentials, in database: Database) throws {
     }
 
@@ -400,6 +404,10 @@ class MockDatabaseProvider: AutofillDatabaseProvider {
     }
 
     func modifiedSyncableCredentials() throws -> [SecureVaultModels.SyncableCredentials] {
+        []
+    }
+
+    func modifiedSyncableCredentials(before date: Date) throws -> [SecureVaultModels.SyncableCredentials] {
         []
     }
 

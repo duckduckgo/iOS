@@ -430,7 +430,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if SUBSCRIPTION
     private func setupSubscriptionsEnvironment() {
         Task {
-#if DEBUG && ALPHA
+#if DEBUG || ALPHA
             SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
 #else
             SubscriptionPurchaseEnvironment.currentServiceEnvironment = .production
@@ -524,8 +524,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                                                            cachePolicy: .reloadIgnoringLocalCacheData) {
                 if subscription.isActive {
                     DailyPixel.fire(pixel: .privacyProSubscriptionActive)
-                } else {
-                    accountManager.signOut()
                 }
             }
 

@@ -72,24 +72,17 @@ extension EventMapping where Event == NetworkProtectionError {
             pixelEvent = .networkProtectionNoAuthTokenFoundError
         case .vpnAccessRevoked:
             return
-        case
-                .noServerRegistrationInfo,
+        case .noServerRegistrationInfo,
                 .couldNotSelectClosestServer,
                 .couldNotGetPeerPublicKey,
                 .couldNotGetPeerHostName,
                 .couldNotGetInterfaceAddressRange,
                 .failedToEncodeRegisterKeyRequest,
-                .noServerListFound,
                 .serverListInconsistency,
                 .failedToFetchRegisteredServers,
                 .failedToFetchServerList,
                 .failedToParseServerListResponse,
                 .failedToParseRegisteredServersResponse,
-                .failedToEncodeServerList,
-                .failedToDecodeServerList,
-                .failedToWriteServerList,
-                .couldNotCreateServerListDirectory,
-                .failedToReadServerList,
                 .wireGuardCannotLocateTunnelFileDescriptor,
                 .wireGuardInvalidState,
                 .wireGuardDnsResolution,

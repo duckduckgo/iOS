@@ -75,7 +75,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     }
     
     func initializeView() {
-        Pixel.fire(pixel: .privacyProSettingsAddDevice)
         Task { await setupTransactionObserver() }
     }
     

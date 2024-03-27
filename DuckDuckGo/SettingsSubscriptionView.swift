@@ -40,7 +40,7 @@ struct SettingsSubscriptionView: View {
         static let navigationDelay = 0.3
         static let infoIcon = "info-16"
     }
-    
+
     private var subscriptionDescriptionView: some View {
         VStack(alignment: .leading) {
             Text(UserText.settingsPProSubscribe).daxBodyRegular()
@@ -113,12 +113,11 @@ struct SettingsSubscriptionView: View {
             .sheet(isPresented: $isShowingSubscriptionRestoreFlow,
                    onDismiss: { Task { viewModel.onAppear() } },
                    content: {
-                        SubscriptionRestoreView(viewModel: subscriptionRestoreViewModel).interactiveDismissDisabled()
-                })
-            
+                SubscriptionRestoreView(viewModel: subscriptionRestoreViewModel).interactiveDismissDisabled()
+            })
         }
     }
-    
+
     @ViewBuilder
     private var noEntitlementsAvailableView: some View {
         Group {

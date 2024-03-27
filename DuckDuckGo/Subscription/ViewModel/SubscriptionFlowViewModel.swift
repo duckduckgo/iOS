@@ -42,6 +42,10 @@ final class SubscriptionFlowViewModel: ObservableObject {
     enum Constants {
         static let navigationBarHideThreshold = 80.0
     }
+    
+    enum SelectedFeature {
+        case netP, dbp, itr, none
+    }
         
     struct State {
         var hasActiveSubscription = false
@@ -51,10 +55,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
         var canNavigateBack: Bool = false
         var transactionError: SubscriptionPurchaseError?
         var shouldHideBackButton = false
+        var selectedFeature: SelectedFeature = .none
     }
-
-    // Publish the currently selected feature
-    @Published var selectedFeature: SettingsViewModel.SettingsDeepLinkSection?
     
     // Read only View State - Should only be modified from the VM
     @Published private(set) var state = State()
@@ -72,7 +74,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
         self.userScript = userScript
         self.subFeature = subFeature
         self.purchaseManager = purchaseManager
-        self.selectedFeature = selectedFeature
         self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,
                                                           subFeature: subFeature,
                                                           settings: webViewSettings)
@@ -107,13 +108,13 @@ final class SubscriptionFlowViewModel: ObservableObject {
                  switch feature {
                  case .netP:
                      UniquePixel.fire(pixel: .privacyProWelcomeVPN)
-                     self.selectedFeature = .netP
-                 case .itr:
-                     UniquePixel.fire(pixel: .privacyProWelcomePersonalInformationRemoval)
-                     self.selectedFeature = .itr
+                     self.state.selectedFeature = .netP
                  case .dbp:
+                     UniquePixel.fire(pixel: .privacyProWelcomePersonalInformationRemoval)
+                     self.state.selectedFeature = .dbp
+                 case .itr:
                      UniquePixel.fire(pixel: .privacyProWelcomeIdentityRestoration)
-                     self.selectedFeature = .dbp
+                     self.state.selectedFeature = .itr
                  }
              }
          }
@@ -219,14 +220,14 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
     
     private func backButtonForURL(currentURL: URL) -> Bool {
-        return currentURL != URL.subscriptionBaseURL.forComparison() &&
-            currentURL != URL.subscriptionActivateSuccess.forComparison() &&
-            currentURL != URL.subscriptionPurchase.forComparison()
+        print(currentURL)
+        return currentURL.forComparison() != URL.subscriptionBaseURL.forComparison() &&
+        currentURL.forComparison() != URL.subscriptionActivateSuccess.forComparison() &&
+        currentURL.forComparison() != URL.subscriptionPurchase.forComparison()
     }
     
     private func cleanUp() {
         canGoBackCancellable?.cancel()
-        selectedFeature = nil
         subFeature.cleanup()
         cancellables.removeAll()
     }

@@ -32,6 +32,9 @@ struct SubscriptionFlowView: View {
     var onRequireRestore: (() -> Void)?
     
     @State private var isPurchaseInProgress = false
+    @State private var isShowingITR = false
+    @State private var isShowingDBP = false
+    @State private var isShowingNetP = false
     
     // Local View State
     @State private var errorMessage: SubscriptionErrorMessage = .general
@@ -53,6 +56,12 @@ struct SubscriptionFlowView: View {
     }
     
     var body: some View {
+        
+        // Hidden Navigation Links for Onboarding sections
+        NavigationLink(destination: NetworkProtectionRootView(inviteCompletion: {}).navigationViewStyle(.stack), isActive: $isShowingNetP, label: { EmptyView() })
+        NavigationLink(destination: SubscriptionITPView().navigationViewStyle(.stack), isActive: $isShowingITR, label: { EmptyView() })
+        NavigationLink(destination: SubscriptionPIRView().navigationViewStyle(.stack), isActive: $isShowingDBP, label: { EmptyView() })
+        
         baseView
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarLeading) {
@@ -108,6 +117,20 @@ struct SubscriptionFlowView: View {
     private var baseView: some View {
         ZStack(alignment: .top) {
             webView
+        }
+        
+        .onChange(of: viewModel.state.selectedFeature) { feature in
+            print("SelectedFeature \(feature)")
+            switch feature {
+            case .dbp:
+                self.isShowingDBP = true
+            case .itr:
+                self.isShowingITR = true
+            case .netP:
+                self.isShowingNetP = true
+            default:
+                break
+            }
         }
         
         .onChange(of: viewModel.state.shouldActivateSubscription) { result in

@@ -136,12 +136,12 @@ class MainViewCoordinator {
 
 }
 
-extension MainViewCoordinator: Themable {
+extension MainViewCoordinator {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         superview.backgroundColor = theme.mainViewBackgroundColor
         logoText.tintColor = theme.ddgTextTintColor
-        omniBar.decorate(with: theme)
     }
 
 }

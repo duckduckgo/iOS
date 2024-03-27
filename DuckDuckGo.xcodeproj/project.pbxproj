@@ -345,7 +345,6 @@
 		850250B520D80419002199C7 /* AtbAndVariantCleanupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850250B420D80419002199C7 /* AtbAndVariantCleanupTests.swift */; };
 		850365F323DE087800D0F787 /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850365F223DE087800D0F787 /* UIImageViewExtension.swift */; };
 		85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B891F69692C002A95D8 /* contentblocker.js */; };
-		85047C752A0D3C2900D2FF3F /* SyncSettingsViewController+Themable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85047C742A0D3C2900D2FF3F /* SyncSettingsViewController+Themable.swift */; };
 		85047C772A0D5D3D00D2FF3F /* SyncSettingsViewController+SyncDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85047C762A0D5D3D00D2FF3F /* SyncSettingsViewController+SyncDelegate.swift */; };
 		850559C923C61B5D0055C0D5 /* login-form-detection.js in Resources */ = {isa = PBXBuildFile; fileRef = 850559C823C61B5D0055C0D5 /* login-form-detection.js */; };
 		850559D023CF647C0055C0D5 /* PreserveLogins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850559CF23CF647C0055C0D5 /* PreserveLogins.swift */; };
@@ -1479,7 +1478,6 @@
 		850250B420D80419002199C7 /* AtbAndVariantCleanupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtbAndVariantCleanupTests.swift; sourceTree = "<group>"; };
 		850365F223DE087800D0F787 /* UIImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
 		85047B891F69692C002A95D8 /* contentblocker.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = contentblocker.js; sourceTree = "<group>"; };
-		85047C742A0D3C2900D2FF3F /* SyncSettingsViewController+Themable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncSettingsViewController+Themable.swift"; sourceTree = "<group>"; };
 		85047C762A0D5D3D00D2FF3F /* SyncSettingsViewController+SyncDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncSettingsViewController+SyncDelegate.swift"; sourceTree = "<group>"; };
 		850559C823C61B5D0055C0D5 /* login-form-detection.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "login-form-detection.js"; sourceTree = "<group>"; };
 		850559CF23CF647C0055C0D5 /* PreserveLogins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreserveLogins.swift; sourceTree = "<group>"; };
@@ -4143,7 +4141,6 @@
 			children = (
 				85582DFF29D7409700E9AE35 /* SyncSettingsViewController+PDFRendering.swift */,
 				85F98F91296F32BD00742F4A /* SyncSettingsViewController.swift */,
-				85047C742A0D3C2900D2FF3F /* SyncSettingsViewController+Themable.swift */,
 				85047C762A0D5D3D00D2FF3F /* SyncSettingsViewController+SyncDelegate.swift */,
 			);
 			name = Controllers;
@@ -6634,7 +6631,6 @@
 				8546A54A2A672959003929BF /* MainViewController+Email.swift in Sources */,
 				F4F6DFB226E6AEC100ED7E12 /* AddOrEditBookmarkViewController.swift in Sources */,
 				EE458D0D2AB1DA4600FC651A /* EventMapping+NetworkProtectionError.swift in Sources */,
-				85047C752A0D3C2900D2FF3F /* SyncSettingsViewController+Themable.swift in Sources */,
 				F44D279F27F331BB0037F371 /* AutofillLoginPromptViewController.swift in Sources */,
 				C1BF0BA529B63D7200482B73 /* AutofillLoginPromptHelper.swift in Sources */,
 				D664C7C92B289AA200CBFA76 /* AsyncHeadlessWebView.swift in Sources */,

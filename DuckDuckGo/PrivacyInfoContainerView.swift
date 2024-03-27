@@ -22,7 +22,6 @@ import Lottie
 
 class PrivacyInfoContainerView: UIView {
     
-    private var currentlyLoadedStyle: ThemeManager.ImageSet!
     
     @IBOutlet var privacyIcon: PrivacyIconView!
     @IBOutlet var maskingView: UIView!
@@ -45,7 +44,7 @@ class PrivacyInfoContainerView: UIView {
             animationView.configuration = LottieConfiguration(renderingEngine: .mainThread)
         }
         
-        loadAnimations(for: ThemeManager.shared.currentTheme)
+        decorate()
     }
     
     private func loadAnimations(for theme: Theme, animationCache cache: AnimationCacheProvider = DefaultAnimationCache.sharedCache) {
@@ -57,7 +56,6 @@ class PrivacyInfoContainerView: UIView {
         
         privacyIcon.loadAnimations(for: theme, animationCache: cache)
         
-        currentlyLoadedStyle = theme.currentImageSet
     }
     
     func trackerAnimationView(for trackerCount: Int) -> LottieAnimationView? {
@@ -75,16 +73,23 @@ class PrivacyInfoContainerView: UIView {
         trackers2Animation.isAnimationPlaying ||
         trackers3Animation.isAnimationPlaying
     }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            loadAnimations(for: ThemeManager.shared.currentTheme)
+        }
+    }
 }
 
-extension PrivacyInfoContainerView: Themable {
+extension PrivacyInfoContainerView {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         
         maskingView.backgroundColor = theme.searchBarBackgroundColor
         
-        if theme.currentImageSet != currentlyLoadedStyle {
-            loadAnimations(for: theme)
-        }
+        loadAnimations(for: theme)
     }
 }

@@ -85,10 +85,12 @@ class TabSwitcherButton: UIView {
         label.isUserInteractionEnabled = false
         
         addSubview(pointerView)
-        addSubview(anim)
         addSubview(label)
-        
+        addSubview(anim)
         configureAnimationView()
+
+        decorate()
+
         addInteraction(UIPointerInteraction(delegate: self))
     }
 
@@ -191,23 +193,32 @@ class TabSwitcherButton: UIView {
             setAlpha()
         }
     }
-}
 
-extension TabSwitcherButton: Themable {
-    
-    func decorate(with theme: Theme) {
-        tintColor = theme.barTintColor
-        label.textColor = theme.barTintColor
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            updateAnimationColor()
+        }
+    }
 
-        switch theme.currentImageSet {
+    private func updateAnimationColor() {
+        switch ThemeManager.shared.currentTheme.currentImageSet {
         case .light:
             anim.animation = LottieAnimation.named("new_tab_dark")
         case .dark:
             anim.animation = LottieAnimation.named("new_tab")
         }
+    }
+}
 
-        addSubview(anim)
-        configureAnimationView()
+extension TabSwitcherButton {
+    
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
+        
+        tintColor = theme.barTintColor
+        label.textColor = theme.barTintColor
+
+        updateAnimationColor()
     }
 }
 

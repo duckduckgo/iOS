@@ -35,8 +35,8 @@ final class AutoconsentSettingsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        applyTheme(ThemeManager.shared.currentTheme)
-        
+        decorate()
+
         autoconsentToggle.isOn = appSettings.autoconsentEnabled
         
         let fontSize = FontSettings.fontSizeForHeaderView
@@ -61,11 +61,6 @@ final class AutoconsentSettingsViewController: UITableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let theme = ThemeManager.shared.currentTheme
-        cell.decorate(with: theme)
-    }
-    
     @IBAction private func onAutoconsentValueChanged(_ sender: Any) {
         appSettings.autoconsentEnabled = autoconsentToggle.isOn
         Pixel.fire(pixel: autoconsentToggle.isOn ? .settingsAutoconsentOn : .settingsAutoconsentOff)
@@ -73,9 +68,10 @@ final class AutoconsentSettingsViewController: UITableViewController {
     
 }
 
-extension AutoconsentSettingsViewController: Themable {
+extension AutoconsentSettingsViewController {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         
         infoText.textColor = theme.tableHeaderTextColor
         

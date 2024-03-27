@@ -93,7 +93,8 @@ final class PrivacyDashboardViewController: UIViewController {
         super.viewDidLoad()
         privacyDashboardController.setup(for: webView)
         privacyDashboardController.preferredLocale = Bundle.main.preferredLocalizations.first
-        applyTheme(ThemeManager.shared.currentTheme)
+        
+        decorate()
     }
 
     public override func viewDidDisappear(_ animated: Bool) {
@@ -140,23 +141,22 @@ final class PrivacyDashboardViewController: UIViewController {
         dismiss(animated: true)
     }
 
-}
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
 
-extension PrivacyDashboardViewController: Themable {
-    
-    func decorate(with theme: Theme) {
-        view.backgroundColor = theme.privacyDashboardWebviewBackgroundColor
-        privacyDashboardController.theme = privacyDashboardTheme(from: theme)
-    }
-    
-    private func privacyDashboardTheme(from theme: Theme) -> PrivacyDashboardTheme {
-        switch theme.name {
-        case .light: return .light
-        case .dark: return .dark
-        default: return .light
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            privacyDashboardController.theme = .init()
         }
     }
+}
 
+extension PrivacyDashboardViewController {
+    
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
+        view.backgroundColor = theme.privacyDashboardWebviewBackgroundColor
+        privacyDashboardController.theme = .init(theme)
+    }
 }
 
 // MARK: - PrivacyDashboardControllerDelegate
@@ -353,4 +353,23 @@ extension PrivacyDashboardViewController {
                                 toggleReportCounter: toggleReportCounter)
     }
 
+}
+
+private extension PrivacyDashboardTheme {
+    init(_ userInterfaceStyle: UIUserInterfaceStyle = ThemeManager.shared.currentInterfaceStyle) {
+        switch userInterfaceStyle {
+        case .light: self = .light
+        case .dark: self = .dark
+        case .unspecified: self = .light
+        @unknown default: self = .light
+        }
+    }
+
+    init(_ theme: Theme) {
+        switch theme.name {
+        case .light: self = .light
+        case .dark: self = .dark
+        case .systemDefault: self.init(ThemeManager.shared.currentInterfaceStyle)
+        }
+    }
 }

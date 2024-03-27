@@ -130,7 +130,7 @@ class TabViewGridCell: TabViewCell {
         }
         isCurrent = delegate?.isCurrent(tab: tab) ?? false
         
-        decorate(with: ThemeManager.shared.currentTheme)
+        decorate()
         
         border.layer.borderWidth = isCurrent ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
 
@@ -167,9 +167,17 @@ class TabViewGridCell: TabViewCell {
             favicon.loadFavicon(forDomain: tab.link?.url.host, usingCache: .tabs)
         }
     }
-    
-    override func decorate(with theme: Theme) {
-        super.decorate(with: theme)
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            decorate()
+        }
+    }
+
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         border.layer.borderColor = theme.tabSwitcherCellBorderColor.cgColor
         unread.image = Self.unreadImage(for: theme)
         

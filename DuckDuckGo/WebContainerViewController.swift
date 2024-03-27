@@ -47,8 +47,6 @@ class WebContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        applyTheme(ThemeManager.shared.currentTheme)
-
         let webView = WKWebView(frame: view.frame)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
@@ -101,5 +99,3 @@ class WebContainerViewController: UIViewController {
     }
 
 }
-
-extension WebContainerViewController: Themable { }

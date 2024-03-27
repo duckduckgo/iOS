@@ -73,7 +73,7 @@ class FavoritesOverlay: UIViewController {
         
         registerForKeyboardNotifications()
         
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
     }
     
     override func viewDidLayoutSubviews() {
@@ -114,6 +114,11 @@ class FavoritesOverlay: UIViewController {
         collectionView.scrollIndicatorInsets = .zero
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        view.backgroundColor = AppWidthObserver.shared.isLargeWidth ? .clear : ThemeManager.shared.currentTheme.backgroundColor
+    }
 }
 
 extension FavoritesOverlay: FavoritesHomeViewSectionRendererDelegate {
@@ -153,11 +158,7 @@ extension FavoritesOverlay: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = renderer.collectionView(collectionView, cellForItemAt: indexPath)
-        if let themable = cell as? Themable {
-            themable.decorate(with: theme)
-        }
-        return cell
+        return renderer.collectionView(collectionView, cellForItemAt: indexPath)
     }
 }
 
@@ -177,9 +178,10 @@ extension FavoritesOverlay: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension FavoritesOverlay: Themable {
+extension FavoritesOverlay {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         self.theme = theme
         view.backgroundColor = AppWidthObserver.shared.isLargeWidth ? .clear : theme.backgroundColor
     }

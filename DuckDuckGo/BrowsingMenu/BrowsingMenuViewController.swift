@@ -83,7 +83,7 @@ final class BrowsingMenuViewController: UIViewController {
 
         configureHeader()
 
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
     }
 
     private func configureHeader() {
@@ -197,6 +197,10 @@ final class BrowsingMenuViewController: UIViewController {
         DispatchQueue.main.async { [weak self] in
             self?.flashScrollIndicatorsIfNeeded()
         }
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            configureArrow(with: ThemeManager.shared.currentTheme.browsingMenuBackgroundColor)
+        }
     }
 
     func flashScrollIndicatorsIfNeeded() {
@@ -247,7 +251,6 @@ final class BrowsingMenuViewController: UIViewController {
         tableView.superview?.layoutIfNeeded()
         tableViewHeight.constant = tableView.contentSize.height + tableView.contentInset.bottom + tableView.contentInset.top
     }
-
 }
 
 extension BrowsingMenuViewController: UITableViewDelegate {
@@ -282,7 +285,7 @@ extension BrowsingMenuViewController: UITableViewDataSource {
                 fatalError("Cell should be dequeued")
             }
             
-            cell.configure(image: image, label: name, accessibilityLabel: accessibilityLabel, theme: theme, showNotificationDot: showNotificationDot)
+            cell.configure(image: image, label: name, accessibilityLabel: accessibilityLabel, showNotificationDot: showNotificationDot)
             return cell
         case .separator:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "BrowsingMenuSeparatorViewCell",
@@ -317,9 +320,10 @@ extension BrowsingMenuViewController: UIViewControllerTransitioningDelegate {
 
 }
 
-extension BrowsingMenuViewController: Themable {
+extension BrowsingMenuViewController {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         
         configureShadow(for: theme)
         
@@ -329,8 +333,6 @@ extension BrowsingMenuViewController: Themable {
             headerButton.highlight.backgroundColor = theme.browsingMenuHighlightColor
             headerButton.backgroundColor = theme.browsingMenuBackgroundColor
         }
-        
-        configureArrow(with: theme.browsingMenuBackgroundColor)
         
         horizontalContainer.backgroundColor = theme.browsingMenuBackgroundColor
         tableView.backgroundColor = theme.browsingMenuBackgroundColor

@@ -30,4 +30,5 @@ struct DeepLinks {
     static let addFavorite = AppDeepLinkSchemes.addFavorite.url
 
     static let openVPN = AppDeepLinkSchemes.openVPN.url
+    static let openPasswords = AppDeepLinkSchemes.openPasswords.url
 }

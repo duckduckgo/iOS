@@ -56,6 +56,11 @@ extension AppDelegate {
             presentNetworkProtectionStatusSettingsModal()
 #endif
 
+        case .openPasswords:
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
+                mainViewController.launchAutofillLogins(openSearch: true)
+            }
+
         default:
             guard app.applicationState == .active,
                   let currentTab = mainViewController.currentTab else {

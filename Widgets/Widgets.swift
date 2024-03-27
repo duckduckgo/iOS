@@ -195,12 +195,27 @@ struct FavoritesWidget: Widget {
     }
 }
 
+struct PasswordsWidget: Widget {
+    let kind: String = "PasswordsWidget"
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+            PasswordsWidgetView(entry: entry).widgetURL(DeepLinks.openPasswords)
+        }
+        .configurationDisplayName(UserText.passwordsWidgetGalleryDisplayName)
+        .description(UserText.passwordsWidgetGalleryDescription)
+        .supportedFamilies([.systemSmall])
+    }
+
+}
+
 @main
 struct Widgets: WidgetBundle {
 
     @WidgetBundleBuilder
     var body: some Widget {
         SearchWidget()
+        PasswordsWidget()
         FavoritesWidget()
 
 #if ALPHA
@@ -215,6 +230,7 @@ struct Widgets: WidgetBundle {
             EmailProtectionLockScreenWidget()
             FireButtonLockScreenWidget()
             FavoritesLockScreenWidget()
+            PasswordsLockScreenWidget()
         }
 
     }

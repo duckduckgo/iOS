@@ -136,7 +136,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         crashCollection.start { params in
             Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
-        } showPromptIfCanSendCrashReport: { completion in
+        } showPromptIfCanSendCrashReport: { _, completion in
             let shouldSend = AppDependencyProvider.shared.appSettings.sendCrashLogs
 
             switch shouldSend {

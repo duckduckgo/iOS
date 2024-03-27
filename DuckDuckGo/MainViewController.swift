@@ -548,6 +548,7 @@ class MainViewController: UIViewController {
     @objc func onAddressBarPositionChanged() {
         viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
         refreshViewsBasedOnAddressBarPosition(appSettings.currentAddressBarPosition)
+        updateAddressBarPositionRelatedColors()
     }
 
     @objc private func onShowFullURLAddressChanged() {
@@ -2409,19 +2410,27 @@ extension MainViewController: AutoClearWorker {
 }
 
 extension MainViewController {
-    
+
+    private func updateAddressBarPositionRelatedColors() {
+        let theme = ThemeManager.shared.currentTheme
+
+        if appSettings.currentAddressBarPosition == .bottom {
+            viewCoordinator.statusBackground.backgroundColor = theme.backgroundColor
+        } else {
+            if AppWidthObserver.shared.isLargeWidth {
+                viewCoordinator.statusBackground.backgroundColor = theme.tabsBarBackgroundColor
+            } else {
+                viewCoordinator.statusBackground.backgroundColor = theme.omniBarBackgroundColor
+            }
+        }
+    }
+
     private func decorate() {
         let theme = ThemeManager.shared.currentTheme
 
         setNeedsStatusBarAppearanceUpdate()
 
-        // Does not appear to get updated when setting changes.
-
-        if AppWidthObserver.shared.isLargeWidth {
-            viewCoordinator.statusBackground.backgroundColor = theme.tabsBarBackgroundColor
-        } else {
-            viewCoordinator.statusBackground.backgroundColor = theme.omniBarBackgroundColor
-        }
+        updateAddressBarPositionRelatedColors()
 
         view.backgroundColor = theme.mainViewBackgroundColor
 
@@ -2436,10 +2445,6 @@ extension MainViewController {
         
         
         viewCoordinator.logoText.tintColor = theme.ddgTextTintColor
-
-        if appSettings.currentAddressBarPosition == .bottom {
-            viewCoordinator.statusBackground.backgroundColor = theme.backgroundColor
-        }
     }
 
 }

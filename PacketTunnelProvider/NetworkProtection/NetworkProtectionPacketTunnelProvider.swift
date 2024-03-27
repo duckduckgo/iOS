@@ -149,20 +149,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 pixelEvent = .networkProtectionClientInvalidAuthToken
             case .serverListInconsistency:
                 return
-            case .failedToEncodeServerList:
-                pixelEvent = .networkProtectionServerListStoreFailedToEncodeServerList
-            case .failedToDecodeServerList:
-                pixelEvent = .networkProtectionServerListStoreFailedToDecodeServerList
-            case .failedToWriteServerList(let eventError):
-                pixelEvent = .networkProtectionServerListStoreFailedToWriteServerList
-                pixelError = eventError
-            case .noServerListFound:
-                return
-            case .couldNotCreateServerListDirectory:
-                return
-            case .failedToReadServerList(let eventError):
-                pixelEvent = .networkProtectionServerListStoreFailedToReadServerList
-                pixelError = eventError
             case .failedToCastKeychainValueToData(let field):
                 pixelEvent = .networkProtectionKeychainErrorFailedToCastKeychainValueToData
                 params[PixelParameters.keychainFieldName] = field

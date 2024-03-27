@@ -153,7 +153,7 @@ public final class SyncBookmarksAdapter {
         )
         if !didMigrateToImprovedListsHandling {
             didMigrateToImprovedListsHandling = true
-            provider.lastSyncTimestamp = nil
+            provider.updateSyncTimestamps(server: nil, local: nil)
         }
 
         bindSyncErrorPublisher(provider)

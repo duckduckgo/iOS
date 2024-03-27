@@ -37,7 +37,7 @@ struct NetworkProtectionVisibilityForTunnelProvider: NetworkProtectionFeatureVis
     // todo - https://app.asana.com/0/0/1206844038943626/f
     func isPrivacyProLaunched() -> Bool {
 #if SUBSCRIPTION
-        AccountManager().accessToken != nil
+        AccountManager().isUserAuthenticated
 #else
         false
 #endif

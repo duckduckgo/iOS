@@ -133,9 +133,9 @@ struct SettingsView: View {
         case .itr:
             SubscriptionITPView()
         case .subscriptionFlow:
-            SubscriptionFlowView()
+            SubscriptionContainerView(currentView: .subscribe)
         case .subscriptionRestoreFlow:
-            SubscriptionRestoreView()
+            SubscriptionContainerView(currentView: .restore)
         default:
             EmptyView()
         }

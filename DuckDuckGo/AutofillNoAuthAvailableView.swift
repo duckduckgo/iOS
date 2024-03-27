@@ -25,6 +25,7 @@ class AutofillNoAuthAvailableView: UIView {
         super.init(frame: frame)
         installSubviews()
         installConstraints()
+        decorate()
     }
 
     required init?(coder: NSCoder) {
@@ -174,9 +175,10 @@ class AutofillNoAuthAvailableView: UIView {
     }
 }
 
-extension AutofillNoAuthAvailableView: Themable {
+extension AutofillNoAuthAvailableView {
 
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         title.textColor = theme.autofillDefaultTitleTextColor
         subtitle.textColor = theme.autofillDefaultSubtitleTextColor
     }

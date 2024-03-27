@@ -49,7 +49,7 @@ class ThemeManager {
         updateUserInterfaceStyle()
     }
 
-    func updateUserInterfaceStyle(window: UIWindow? = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first) {
+    func updateUserInterfaceStyle(window: UIWindow? = UIApplication.shared.firstKeyWindow) {
         switch appSettings.currentThemeName {
 
         case .dark:
@@ -64,4 +64,7 @@ class ThemeManager {
         }
     }
 
+    var currentInterfaceStyle: UIUserInterfaceStyle {
+        UIApplication.shared.firstKeyWindow?.traitCollection.userInterfaceStyle ?? UIUserInterfaceStyle(.light)
+    }
 }

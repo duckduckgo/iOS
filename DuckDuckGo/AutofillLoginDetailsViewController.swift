@@ -103,7 +103,7 @@ class AutofillLoginDetailsViewController: UIViewController {
         installSubviews()
         setupCancellables()
         setupTableViewAppearance()
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
         installConstraints()
         configureNotifications()
         setupNavigationBar()
@@ -332,12 +332,11 @@ extension AutofillLoginDetailsViewController: AutofillLoginDetailsViewModelDeleg
 
 // MARK: Themable
 
-extension AutofillLoginDetailsViewController: Themable {
+extension AutofillLoginDetailsViewController {
 
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         lockedView.backgroundColor = theme.backgroundColor
-
-        noAuthAvailableView.decorate(with: theme)
 
         view.backgroundColor = theme.backgroundColor
 

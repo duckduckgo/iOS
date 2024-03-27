@@ -26,7 +26,8 @@ class ThemeManagerTests: XCTestCase {
     private class MockRootController: UIViewController, Themable {
         var onDecorate: XCTestExpectation?
         
-        func decorate(with theme: Theme) {
+        private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
             onDecorate?.fulfill()
         }
     }

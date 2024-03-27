@@ -56,6 +56,8 @@ class FindInPageView: UIView {
         doneButton.isPointerInteractionEnabled = true
 
         inputText.accessibilityLabel = UserText.findInPage
+
+        decorate()
     }
     
     override func resignFirstResponder() -> Bool {
@@ -121,8 +123,9 @@ extension FindInPageView: UITextFieldDelegate {
     
 }
 
-extension FindInPageView: Themable {
-    func decorate(with theme: Theme) {
+extension FindInPageView {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         backgroundColor = theme.barBackgroundColor
         tintColor = theme.barTintColor
         nextButton.tintColor = theme.barTintColor

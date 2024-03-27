@@ -17,11 +17,3 @@
 //  limitations under the License.
 //
 import UIKit
-
-class ThemableNavigationController: UINavigationController {
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ThemeManager.shared.currentTheme.statusBarStyle
-    }
-
-}

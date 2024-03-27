@@ -333,7 +333,7 @@ class TabViewController: UIViewController {
         
         preserveLoginsWorker = PreserveLoginsWorker(controller: self)
         initAttributionLogic()
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
         addTextSizeObserver()
         subscribeToEmailProtectionSignOutNotification()
 
@@ -1006,6 +1006,16 @@ class TabViewController: UIViewController {
         cleanUpBeforeClosing()
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            switch ThemeManager.shared.currentTheme.currentImageSet {
+            case .light:
+                errorInfoImage?.image = UIImage(named: "ErrorInfoLight")
+            case .dark:
+                errorInfoImage?.image = UIImage(named: "ErrorInfoDark")
+            }
+        }
+    }
 }
 
 // MARK: - LoginFormDetectionDelegate
@@ -2330,9 +2340,10 @@ extension TabViewController: AdClickAttributionLogicDelegate {
 }
 
 // MARK: - Themable
-extension TabViewController: Themable {
+extension TabViewController {
 
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         view.backgroundColor = theme.backgroundColor
         error?.backgroundColor = theme.backgroundColor
         errorHeader.textColor = theme.barTintColor
@@ -2341,13 +2352,6 @@ extension TabViewController: Themable {
         if let webView {
             webView.scrollView.refreshControl?.backgroundColor = theme.mainViewBackgroundColor
             webView.scrollView.refreshControl?.tintColor = .secondaryLabel
-        }
-        
-        switch theme.currentImageSet {
-        case .light:
-            errorInfoImage?.image = UIImage(named: "ErrorInfoLight")
-        case .dark:
-            errorInfoImage?.image = UIImage(named: "ErrorInfoDark")
         }
     }
     

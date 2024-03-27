@@ -72,7 +72,7 @@ class TabsBarViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
 
         tabSwitcherButton.delegate = self
         tabSwitcherContainer.addSubview(tabSwitcherButton)
@@ -272,14 +272,14 @@ extension TabsBarViewController: UICollectionViewDataSource {
 
 }
 
-extension TabsBarViewController: Themable {
+extension TabsBarViewController {
 
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         view.backgroundColor = theme.tabsBarBackgroundColor
         view.tintColor = theme.barTintColor
         collectionView.backgroundColor = theme.tabsBarBackgroundColor
         buttonsBackground.backgroundColor = theme.tabsBarBackgroundColor
-        tabSwitcherButton.decorate(with: theme)
         
         collectionView.reloadData()
     }

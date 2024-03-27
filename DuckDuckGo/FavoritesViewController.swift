@@ -133,7 +133,7 @@ class FavoritesViewController: UIViewController {
 
         updateHeroImage()
 
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
 
         bindSyncService()
     }
@@ -251,12 +251,7 @@ extension FavoritesViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = renderer.collectionView(collectionView, cellForItemAt: indexPath)
-        if let themable = cell as? Themable,
-            let theme = theme {
-            themable.decorate(with: theme)
-        }
-        return cell
+        return renderer.collectionView(collectionView, cellForItemAt: indexPath)
     }
 
     func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
@@ -290,9 +285,10 @@ extension FavoritesViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension FavoritesViewController: Themable {
+extension FavoritesViewController {
 
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         self.theme = theme
         view.backgroundColor = theme.backgroundColor
         collectionView.backgroundColor = .clear

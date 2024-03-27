@@ -40,7 +40,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         super.viewDidLoad()
         refreshModel()
         navigationItem.rightBarButtonItems = model.isEmpty ? [] : [ editButton ]
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
         tableView.contentInset = UIEdgeInsets(top: -20, left: 0, bottom: 0, right: 0)
     }
     
@@ -229,12 +229,11 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
 }
 
-extension PreserveLoginsSettingsViewController: Themable {
+extension PreserveLoginsSettingsViewController {
 
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         decorateNavigationBar(with: theme)
-
-        overrideSystemTheme(with: theme)
 
         tableView.separatorColor = theme.tableCellSeparatorColor
         tableView.backgroundColor = theme.backgroundColor

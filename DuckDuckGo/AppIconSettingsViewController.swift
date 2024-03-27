@@ -29,7 +29,7 @@ class AppIconSettingsViewController: UICollectionViewController {
         super.viewDidLoad()
 
         collectionView.dataSource = dataSource
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
     }
 
     private func initSelection() {
@@ -66,7 +66,6 @@ class AppIconDataSource: NSObject, UICollectionViewDataSource {
             as? AppIconSettingsCell else {
                 fatalError("Expected IconSettingsCell")
         }
-        cell.decorate(with: ThemeManager.shared.currentTheme)
 
         let appIcon = appIcons[indexPath.row]
         cell.appIcon = appIcon
@@ -95,9 +94,10 @@ class AppIconWorker {
 
 }
 
-extension AppIconSettingsViewController: Themable {
+extension AppIconSettingsViewController {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         collectionView.backgroundColor = theme.backgroundColor
         collectionView.reloadData()
         initSelection()

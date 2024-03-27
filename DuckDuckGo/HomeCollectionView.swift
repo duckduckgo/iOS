@@ -73,11 +73,11 @@ class HomeCollectionView: UICollectionView {
     
     func configure(withController controller: HomeViewController,
                    favoritesViewModel: FavoritesListInteracting,
-                   appTPHomeViewModel: AnyObject?, // Set to AnyObject so that AppTP can be disabled easily
-                   andTheme theme: Theme) {
+                   appTPHomeViewModel: AnyObject? // Set to AnyObject so that AppTP can be disabled easily
+    ) {
         self.controller = controller
-        renderers = HomeViewSectionRenderers(controller: controller, theme: theme)
-        
+        renderers = HomeViewSectionRenderers(controller: controller)
+
         homePageConfiguration.components(favoritesViewModel: favoritesViewModel).forEach { component in
             switch component {
             case .navigationBarSearch(let fixed):
@@ -190,14 +190,6 @@ class HomeCollectionView: UICollectionView {
     }
 }
 
-extension HomeCollectionView: Themable {
-
-    func decorate(with theme: Theme) {
-        renderers.decorate(with: theme)
-        reloadData()
-    }
-    
-}
 
 extension HomeCollectionView: UIGestureRecognizerDelegate {
     

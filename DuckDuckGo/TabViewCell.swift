@@ -28,7 +28,7 @@ protocol TabViewCellDelegate: AnyObject {
     
 }
 
-class TabViewCell: UICollectionViewCell, Themable {
+class TabViewCell: UICollectionViewCell {
     
     struct Constants {
         static let swipeToDeleteAlpha: CGFloat = 0.5
@@ -154,8 +154,6 @@ class TabViewCell: UICollectionViewCell, Themable {
         let inactiveStates: [UIGestureRecognizer.State] = [.possible, .failed, .cancelled, .ended]
         return inactiveStates.contains(gestureRecognizer.state)
     }
-    
-    func decorate(with theme: Theme) {}
 }
 
 extension TabViewCell: UIGestureRecognizerDelegate {

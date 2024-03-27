@@ -105,12 +105,10 @@ class HomeViewSectionRenderers: NSObject,
     }
     
     private weak var controller: HomeViewController!
-    private var theme: Theme
     private var renderers = [HomeViewSectionRenderer]()
     
-    init(controller: HomeViewController, theme: Theme) {
+    init(controller: HomeViewController) {
         self.controller = controller
-        self.theme = theme
         super.init()
     }
 
@@ -189,23 +187,15 @@ class HomeViewSectionRenderers: NSObject,
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = renderers[indexPath.section].collectionView(collectionView, cellForItemAt: indexPath)
-        if let themable = cell as? Themable {
-            themable.decorate(with: theme)
-        }
-        return cell
+        return renderers[indexPath.section].collectionView(collectionView, cellForItemAt: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
-        let cell = renderers[indexPath.section].collectionView(collectionView,
-                                                               viewForSupplementaryElementOfKind: kind,
-                                                               at: indexPath)
-        if let themable = cell as? Themable {
-            themable.decorate(with: theme)
-        }
-        return cell
+        return renderers[indexPath.section].collectionView(collectionView,
+                                                           viewForSupplementaryElementOfKind: kind,
+                                                           at: indexPath)
     }
 
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
@@ -284,12 +274,4 @@ class HomeViewSectionRenderers: NSObject,
         return renderers[section].collectionView(collectionView, dropSessionDidUpdate: session, withDestinationIndexPath: destinationIndexPath)
     }
 
-}
-
-extension HomeViewSectionRenderers: Themable {
-    
-    func decorate(with theme: Theme) {
-        self.theme = theme
-    }
-    
 }

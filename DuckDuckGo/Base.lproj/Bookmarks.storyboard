@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LwJ-9t-P9z">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LwJ-9t-P9z">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -63,10 +63,10 @@
             </objects>
             <point key="canvasLocation" x="3135" y="724"/>
         </scene>
-        <!--Themable Navigation Controller-->
+        <!--Navigation Controller-->
         <scene sceneID="eey-lA-vN2">
             <objects>
-                <navigationController extendedLayoutIncludesOpaqueBars="YES" toolbarHidden="NO" id="LwJ-9t-P9z" customClass="ThemableNavigationController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController extendedLayoutIncludesOpaqueBars="YES" toolbarHidden="NO" id="LwJ-9t-P9z" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="zS6-pF-vUE"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="UeR-D3-osZ">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -361,10 +361,10 @@
             </objects>
             <point key="canvasLocation" x="2268" y="724.58770614692662"/>
         </scene>
-        <!--Themable Navigation Controller-->
+        <!--Navigation Controller-->
         <scene sceneID="fE1-2G-ggP">
             <objects>
-                <navigationController id="DPG-CO-7kQ" customClass="ThemableNavigationController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController id="DPG-CO-7kQ" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="i4b-6A-etd">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>

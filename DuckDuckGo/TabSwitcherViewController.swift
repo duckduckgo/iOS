@@ -94,7 +94,7 @@ class TabSwitcherViewController: UIViewController {
         refreshTitle()
         setupBackgroundView()
         currentSelection = tabsModel.currentIndex
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
         becomeFirstResponder()
         
         if !tabSwitcherSettings.hasSeenNewLayout {
@@ -342,6 +342,13 @@ class TabSwitcherViewController: UIViewController {
         tabsModel.tabs.forEach { $0.removeObserver(self) }
         super.dismiss(animated: animated, completion: completion)
     }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            refreshDisplayModeButton()
+        }
+    }
 }
 
 extension TabSwitcherViewController: TabViewCellDelegate {
@@ -516,9 +523,10 @@ extension TabSwitcherViewController: TabObserver {
     }
 }
 
-extension TabSwitcherViewController: Themable {
+extension TabSwitcherViewController {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         view.backgroundColor = theme.backgroundColor
         
         refreshDisplayModeButton(theme: theme)

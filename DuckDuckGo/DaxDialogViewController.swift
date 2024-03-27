@@ -61,11 +61,6 @@ class DaxDialogViewController: UIViewController {
     }
     
     var onTapCta: (() -> Void)?
-    var theme: Theme? {
-        didSet {
-            applyTheme(theme ?? ThemeManager.shared.currentTheme)
-        }
-    }
     
     private var position: Int = 0
     private var chars = [Character]()
@@ -79,8 +74,8 @@ class DaxDialogViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        applyTheme(theme ?? ThemeManager.shared.currentTheme)
-        
+        decorate()
+
         initLabel()
         initCTA()
         
@@ -150,7 +145,7 @@ class DaxDialogViewController: UIViewController {
     }
     
     private func updateMessage() {
-        let theme = self.theme ?? ThemeManager.shared.currentTheme
+        let theme = ThemeManager.shared.currentTheme
         
         guard let message = message else { return }
         let baseText = attributedString(from: String(Array(message)[0 ..< position]), color: theme.daxDialogTextColor)
@@ -176,15 +171,22 @@ class DaxDialogViewController: UIViewController {
         return string.attributedStringFromMarkdown(color: color, fontSize: isSmall ? 16 : 18)
     }
      
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            finish()
+        }
+    }
 }
 
-extension DaxDialogViewController: Themable {
+extension DaxDialogViewController {
 
-    func decorate(with theme: Theme) {
-        let themeToUse = self.theme ?? theme
-        textArea.backgroundColor = themeToUse.daxDialogBackgroundColor
-        pointer.backgroundColor = themeToUse.daxDialogBackgroundColor
-        finish() // skip animation if user changes theme, this forces update
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
+        textArea.backgroundColor = theme.daxDialogBackgroundColor
+        pointer.backgroundColor = theme.daxDialogBackgroundColor
+//        finish() // skip animation if user changes theme, this forces update
     }
     
 }

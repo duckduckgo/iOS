@@ -20,7 +20,7 @@
 import Core
 import UIKit
 
-class WebContainerNavigationController: ThemableNavigationController {
+class WebContainerNavigationController: UINavigationController {
 
     var url: URL?
 

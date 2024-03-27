@@ -413,6 +413,10 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         setTransactionStatus(.idle)
         setTransactionError(nil)
         broker = nil
+        onFeatureSelected = nil
+        onSetSubscription = nil
+        onActivateSubscription = nil
+        onBackToSettings = nil
     }
     
 }

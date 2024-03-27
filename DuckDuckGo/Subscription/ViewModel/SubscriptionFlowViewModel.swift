@@ -250,28 +250,28 @@ final class SubscriptionFlowViewModel: ObservableObject {
         state.canNavigateBack = enabled
     }
     
-    func initializeViewData() async {
+    @MainActor
+    func onAppear() async {
+        DispatchQueue.main.async {
+            self.resetState()
+            self.webViewModel.navigationCoordinator.navigateTo(url: self.purchaseURL )
+        }
         Pixel.fire(pixel: .privacyProOfferScreenImpression, debounce: 2)
         await self.setupTransactionObserver()
         await self .setupWebViewObservers()
     }
-    
-    @MainActor
-    func onAppear() {
-        resetState()
-    }
-    
-    @MainActor
+        
     func onDisappear() {
-        resetState()
+        DispatchQueue.main.async {
+            self.resetState()
+        }
+        canGoBackCancellable?.cancel()
+        cancellables.removeAll()
     }
     
     @MainActor
     private func resetState() {
-        self.webViewModel.navigationCoordinator.navigateTo(url: self.purchaseURL )
-        self.selectedFeature = nil
-        self.state.shouldDismissView = false
-        self.state.shouldActivateSubscription = false
+        self.state = State()
     }
     
     @MainActor

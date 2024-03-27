@@ -30,10 +30,9 @@ final class SubscriptionITPViewModel: ObservableObject {
     var userScript: IdentityTheftRestorationPagesUserScript?
     var subFeature: IdentityTheftRestorationPagesFeature?
     var manageITPURL = URL.identityTheftRestoration
-    var viewTitle = UserText.subscriptionTitle
+    var viewTitle = UserText.settingsPProITRTitle
     
     enum Constants {
-        static let navigationBarHideThreshold = 15.0
         static let downloadableContent = ["application/pdf"]
         static let blankURL = "about:blank"
         static let externalSchemes =  ["tel", "sms", "facetime"]
@@ -41,7 +40,6 @@ final class SubscriptionITPViewModel: ObservableObject {
     
     // State variables
     var itpURL = URL.identityTheftRestoration
-    @Published var shouldShowNavigationBar: Bool = false
     @Published var canNavigateBack: Bool = false
     @Published var isDownloadableContent: Bool = false
     @Published var activityItems: [Any] = []
@@ -55,11 +53,7 @@ final class SubscriptionITPViewModel: ObservableObject {
     }
     
     private var currentURL: URL?
-    private static let allowedDomains = [
-        "duckduckgo.com",
-        "microsoftonline.com",
-        "duosecurity.com",
-    ]
+    private static let allowedDomains = [ "duckduckgo.com" ]
     
     private var externalLinksViewModel: SubscriptionExternalLinkViewModel?
     // Limit navigation to these external domains
@@ -81,8 +75,7 @@ final class SubscriptionITPViewModel: ObservableObject {
                                                           subFeature: subFeature,
                                                           settings: webViewSettings)
     }
-    
-    // swiftlint:disable function_body_length
+        
     private func setupSubscribers() async {
         
         webViewModel.$navigationError
@@ -93,14 +86,6 @@ final class SubscriptionITPViewModel: ObservableObject {
                     strongSelf.navigationError = error != nil ? true : false
                 }
                 
-            }
-            .store(in: &cancellables)
-        
-        webViewModel.$scrollPosition
-            .receive(on: DispatchQueue.main)
-            .throttle(for: .milliseconds(100), scheduler: DispatchQueue.main, latest: true)
-            .sink { [weak self] value in
-                self?.shouldShowNavigationBar = (value.y > Constants.navigationBarHideThreshold)
             }
             .store(in: &cancellables)
         
@@ -146,7 +131,7 @@ final class SubscriptionITPViewModel: ObservableObject {
                 self?.canNavigateBack = value
             }
     }
-    // swiftlint:enable function_body_length
+
     
     func initializeView() {
         webViewModel.navigationCoordinator.navigateTo(url: manageITPURL )

@@ -499,8 +499,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if NETWORK_PROTECTION
         widgetRefreshModel.refreshVPNWidget()
 
-        if vpnFeatureVisibility.shouldShowThankYouMessaging() && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
-            presentVPNEarlyAccessOverAlert()
+        if vpnFeatureVisibility.shouldShowThankYouMessaging() {
+            stopTunnelAndShowThankYouMessagingIfNeeded()
         }
 
         if tunnelDefaults.showEntitlementAlert {
@@ -511,6 +511,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #endif
 
         updateSubscriptionStatus()
+    }
+
+    private func stopTunnelAndShowThankYouMessagingIfNeeded() {
+        Task {
+            let controller = NetworkProtectionTunnelController()
+
+            if await controller.isConnected {
+                DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled)
+            }
+
+            await controller.stop()
+            await controller.removeVPN()
+
+            if !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
+                await MainActor.run {
+                    self.presentVPNEarlyAccessOverAlert()
+                }
+            }
+        }
     }
 
     func updateSubscriptionStatus() {

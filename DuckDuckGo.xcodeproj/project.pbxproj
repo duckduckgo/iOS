@@ -10032,8 +10032,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = revision;
-				revision = 32b0411ec7392c8eb2c7896e89b04f8d4ce7db5a;
+				kind = exactVersion;
+				version = 131.1.2;
 			};
 		};
 		B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */ = {

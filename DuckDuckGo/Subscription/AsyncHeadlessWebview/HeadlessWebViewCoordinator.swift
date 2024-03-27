@@ -188,11 +188,22 @@ extension HeadlessWebViewCoordinator: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: any Error) {
-        onNavigationError?(error)
+        handleWebViewError(error)
+                
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        onNavigationError?(error)
+        handleWebViewError(error)
+    }
+    
+    private func handleWebViewError(_ error: Error) {
+        let NSError = error as NSError
+        // Check for the specific NSURLErrorDomain and the cancelled error code -999 and ignore
+        if NSError.domain == NSURLErrorDomain && NSError.code == -999 {
+            return
+        } else {
+            onNavigationError?(error)
+        }
     }
     
     // Javascript Confirm dialogs Delegate

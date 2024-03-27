@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "michal/fix-accnt-mngr-cnvnc-init",
-        "revision" : "6e501513cda48f2b1e8801107d633803328c4a9b"
+        "revision" : "dfb35745561322b2b80f8be0810ddb2c806e077e",
+        "version" : "132.0.0"
       }
     },
     {
@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "revision" : "43a6e1c1864846679a254e60c91332c3fbd922ee",
-        "version" : "3.3.0"
+        "revision" : "620921fea14569eb00745cb5a44890d5890d99ec",
+        "version" : "3.4.0"
       }
     },
     {

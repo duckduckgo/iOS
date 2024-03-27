@@ -10032,8 +10032,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "michal/fix-accnt-mngr-cnvnc-init";
-				kind = branch;
+				kind = exactVersion;
+				version = 132.0.0;
 			};
 		};
 		B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */ = {

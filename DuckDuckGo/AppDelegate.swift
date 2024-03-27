@@ -499,9 +499,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if NETWORK_PROTECTION
         widgetRefreshModel.refreshVPNWidget()
 
-        if vpnFeatureVisibility.shouldShowThankYouMessaging() {
-            stopTunnelAndShowThankYouMessagingIfNeeded()
-        }
+        stopTunnelAndShowThankYouMessagingIfNeeded()
 
         if tunnelDefaults.showEntitlementAlert {
             presentExpiredEntitlementAlert()
@@ -514,20 +512,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func stopTunnelAndShowThankYouMessagingIfNeeded() {
-        Task {
-            let controller = NetworkProtectionTunnelController()
+        if vpnFeatureVisibility.shouldShowThankYouMessaging() && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
+            presentVPNEarlyAccessOverAlert()
 
-            if await controller.isConnected {
-                DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled)
-            }
+            Task {
+                let controller = NetworkProtectionTunnelController()
 
-            await controller.stop()
-            await controller.removeVPN()
-
-            if !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
-                await MainActor.run {
-                    self.presentVPNEarlyAccessOverAlert()
+                if await controller.isConnected {
+                    DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled)
                 }
+
+                await controller.stop()
+                await controller.removeVPN()
             }
         }
     }

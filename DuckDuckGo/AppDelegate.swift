@@ -134,35 +134,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Configuration.setURLProvider(AppConfigurationURLProvider())
         }
 
-        crashCollection.start { params in
-            Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
-        } showPromptIfCanSendCrashReport: { _, completion in
-            let shouldSend = AppDependencyProvider.shared.appSettings.sendCrashLogs
+        crashCollection.start { pixelParameters, _, sendReport in
+            pixelParameters.forEach { params in
+                Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
+            }
 
-            switch shouldSend {
-            case true:
-                completion(true)
-            case false:
-                break
-            default:
-                DispatchQueue.main.async {
-                    let controller = UIAlertController(
-                        title: "Send crash report?",
-                        message: "It looks like the app has crashed. Please help us fix the issue by sending a crash report.",
-                        preferredStyle: .alert
-                    )
-
-                    controller.addAction(UIAlertAction(title: "Send Crash Logs", style: .default) { _ in
-                        print("-- tapped send")
-                        AppDependencyProvider.shared.appSettings.sendCrashLogs = true
-                        completion(true)
-                    })
-
-                    controller.addAction(UIAlertAction(title: "Don't Send Crash Logs", style: .destructive) { _ in
-                        print("-- tapped no")
-                        completion(false)
-                    })
-                    self.window?.rootViewController?.present(controller, animated: true)
+            DispatchQueue.main.async {
+                guard let viewController = self.window?.rootViewController else {
+                    return
+                }
+                let crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
+                crashReportUploaderOnboarding.presentOnboardingIfNeeded(from: viewController) { shouldSend in
+                    if shouldSend {
+                        sendReport()
+                    }
                 }
             }
         }

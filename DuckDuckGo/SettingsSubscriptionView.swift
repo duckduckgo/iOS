@@ -77,12 +77,12 @@ struct SettingsSubscriptionView: View {
         Group {
             SettingsCustomCell(content: { subscriptionDescriptionView })
             
-            NavigationLink(destination: SubscriptionContainerView(currentView: .subscribe),
+            NavigationLink(destination: SubscriptionContainerView(currentView: .subscribe).navigationViewStyle(.stack),
                            label: {
                                 SettingsCellView(label: UserText.settingsPProLearnMore )
                             })
             
-            NavigationLink(destination: SubscriptionContainerView(currentView: .restore),
+            NavigationLink(destination: SubscriptionContainerView(currentView: .restore).navigationViewStyle(.stack),
                            label: {
                                 SettingsCellView(label: UserText.settingsPProIHaveASubscription )
                             })
@@ -145,11 +145,6 @@ struct SettingsSubscriptionView: View {
             NavigationLink(destination: SubscriptionSettingsView()) {
                 SettingsCustomCell(content: { manageSubscriptionView })
             }
-            
-            NavigationLink(destination: SubscriptionContainerView(currentView: .subscribe),
-                           label: {
-                                SettingsCellView(label: "Test (Remove Me)" )
-                            })
            
         }
 

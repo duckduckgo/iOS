@@ -74,10 +74,8 @@ struct SubscriptionRestoreView: View {
             }
         } else {
             ZStack {
+                baseView
                 
-                NavigationView {
-                    baseView
-                }
                 if viewModel.state.transactionStatus != .idle {
                     PurchaseInProgressView(status: getTransactionStatus())
                 }
@@ -113,7 +111,7 @@ struct SubscriptionRestoreView: View {
             .navigationBarBackButtonHidden(viewModel.state.transactionStatus != .idle)
             .navigationBarTitleDisplayMode(.inline)
             .applyInsetGroupedListStyle()
-            .navigationBarItems(trailing: closeButton)
+            .interactiveDismissDisabled(viewModel.subFeature.transactionStatus != .idle)
             .tint(Color.init(designSystemColor: .textPrimary))
             .accentColor(Color.init(designSystemColor: .textPrimary))
         }
@@ -164,13 +162,6 @@ struct SubscriptionRestoreView: View {
     
     
     // MARK: -
-    
-    @ViewBuilder
-    private var closeButton: some View {
-        
-            Button(UserText.subscriptionCloseButton) { viewModel.dismissView() }
-        
-    }
     
     private var emailView: some View {
         emailCellContent

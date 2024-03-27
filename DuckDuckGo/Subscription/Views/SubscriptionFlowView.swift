@@ -78,7 +78,7 @@ struct SubscriptionFlowView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarBackButtonHidden(viewModel.state.canNavigateBack)
+            .navigationBarBackButtonHidden(viewModel.state.canNavigateBack || viewModel.subFeature.transactionStatus != .idle)
             .interactiveDismissDisabled(viewModel.subFeature.transactionStatus != .idle)
             .edgesIgnoringSafeArea(.bottom)
             .tint(Color(designSystemColor: .textPrimary))

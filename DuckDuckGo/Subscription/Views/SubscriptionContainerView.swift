@@ -63,12 +63,6 @@ struct SubscriptionContainerView: View {
                 .environmentObject(subscriptionNavController)
             }
         }
-        .onReceive(subscriptionNavController.$shouldDismissStack) { shouldDismiss in
-            if shouldDismiss {
-                print("We should dismiss this stack")
-                dismiss()
-            }
-        }
         
     }
     

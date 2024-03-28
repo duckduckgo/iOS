@@ -46,7 +46,7 @@ public enum PixelExperiment: String, CaseIterable {
     /// Enables this experiment for new users when called from the new installation path.
     public static func install() {
         // Disable the experiment until all other experiments are finished
-        // logic.install()
+//        logic.install()
     }
 
     static func cleanup() {
@@ -56,14 +56,17 @@ public enum PixelExperiment: String, CaseIterable {
     // These are the variants. Rename or add/remove them as needed.  If you change the string value
     //  remember to keep it clear for privacy triage.
     case control
-    case newSettings = "variant1"
+    case newSettings
+
+    // Internal state for users not included in any variant
+    case noVariant
 }
 
 extension PixelExperiment {
 
     // Pixel parameter - cohort
     public static var parameters: [String: String] {
-        guard let cohort else {
+        guard let cohort, cohort != .noVariant else {
             return [:]
         }
 
@@ -77,14 +80,25 @@ final internal class PixelExperimentLogic {
     var cohort: PixelExperiment? {
         guard isInstalled else { return nil }
 
+        // Check if a cohort is already allocated and valid
         if let allocatedCohort,
-           // if the stored cohort doesn't match, allocate a new one
            let cohort = PixelExperiment(rawValue: allocatedCohort) {
             return cohort
         }
 
-        // For now, just use equal distribution of all cohorts.
-        let cohort = PixelExperiment.allCases.randomElement()!
+        let randomNumber = Int.random(in: 0..<100)
+
+        // Allocate user to a cohort based on the random number
+        let cohort: PixelExperiment
+        if randomNumber < 5 {
+            cohort = .control
+        } else if randomNumber < 10 {
+            cohort = .newSettings
+        } else {
+            cohort = .noVariant
+        }
+
+        // Store and use the selected cohort
         allocatedCohort = cohort.rawValue
         fireEnrollmentPixel()
         return cohort
@@ -107,6 +121,10 @@ final internal class PixelExperimentLogic {
     }
 
     func fireEnrollmentPixel() {
+        guard cohort != .noVariant else {
+            return
+        }
+
         Pixel.fire(pixel: .pixelExperimentEnrollment,
                    withAdditionalParameters: PixelExperiment.parameters)
     }

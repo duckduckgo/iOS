@@ -28,16 +28,16 @@ struct SubscriptionFlowView: View {
         
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel: SubscriptionFlowViewModel
-    var onRequireRestore: (() -> Void)?
     
     @State private var isPurchaseInProgress = false
     @State private var isShowingITR = false
     @State private var isShowingDBP = false
     @State private var isShowingNetP = false
+    @Binding var currentView: SubscriptionContainerView.CurrentView
     
     // Local View State
     @State private var errorMessage: SubscriptionErrorMessage = .general
-    @State private var shouldPresentError: Bool = false
+    @State private var isPresentingError: Bool = false
 
     enum Constants {
         static let daxLogo = "Home"
@@ -140,14 +140,14 @@ struct SubscriptionFlowView: View {
         .onChange(of: viewModel.state.shouldActivateSubscription) { result in
             if result {
                 withAnimation {
-                    onRequireRestore?()
+                    currentView = .restore
                 }
             }
         }
         
         .onChange(of: viewModel.state.transactionError) { value in
             
-            if !shouldPresentError {
+            if !isPresentingError {
                 let displayError: Bool = {
                     switch value {
                     case .hasActiveSubscription:
@@ -165,7 +165,7 @@ struct SubscriptionFlowView: View {
                 }()
                 
                 if displayError {
-                    shouldPresentError = true
+                    isPresentingError = true
                 }
             }
         }
@@ -181,7 +181,7 @@ struct SubscriptionFlowView: View {
             Task { await viewModel.onDisappear() }
         })
                 
-        .alert(isPresented: $shouldPresentError) {
+        .alert(isPresented: $isPresentingError) {
             getAlert(error: self.errorMessage)
             
         }

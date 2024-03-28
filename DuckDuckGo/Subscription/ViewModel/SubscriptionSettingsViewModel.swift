@@ -37,14 +37,14 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     struct State {
         var subscriptionDetails: String = ""
         var subscriptionType: String = ""
-        var shouldDisplayRemovalNotice: Bool = false
+        var isShowingRemovalNotice: Bool = false
         var shouldDismissView: Bool = false
-        var shouldDisplayGoogleView: Bool = false
-        var shouldDisplayFAQView: Bool = false
+        var isShowingGoogleView: Bool = false
+        var isShowingFAQView: Bool = false
         
         // Used to display stripe WebUI
         var stripeViewModel: SubscriptionExternalLinkViewModel?
-        var shouldDisplayStripeView: Bool = false
+        var isShowingStripeView: Bool = false
         
         // Used to display the FAQ WebUI
         var FAQViewModel: SubscriptionExternalLinkViewModel = SubscriptionExternalLinkViewModel(url: URL.subscriptionFAQ)
@@ -137,26 +137,26 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     func displayGoogleView(_ value: Bool) {
-        if value != state.shouldDisplayGoogleView {
-            state.shouldDisplayGoogleView = value
+        if value != state.isShowingGoogleView {
+            state.isShowingGoogleView = value
         }
     }
     
     func displayStripeView(_ value: Bool) {
-        if value != state.shouldDisplayStripeView {
-            state.shouldDisplayStripeView = value
+        if value != state.isShowingStripeView {
+            state.isShowingStripeView = value
         }
     }
     
     func displayRemovalNotice(_ value: Bool) {
-        if value != state.shouldDisplayRemovalNotice {
-            state.shouldDisplayRemovalNotice = value
+        if value != state.isShowingRemovalNotice {
+            state.isShowingRemovalNotice = value
         }
     }
     
     func displayFAQView(_ value: Bool) {
-        if value != state.shouldDisplayFAQView {
-            state.shouldDisplayFAQView = value
+        if value != state.isShowingFAQView {
+            state.isShowingFAQView = value
         }
     }
     

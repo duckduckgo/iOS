@@ -28,9 +28,9 @@ struct SubscriptionEmailView: View {
         
     @StateObject var viewModel: SubscriptionEmailViewModel
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var subscriptionNavController: SubscriptionNavigationController
-    @State var shouldDisplayInactiveError = false
-    @State var shouldDisplayNavigationError = false
+        
+    @State var isPresentingInactiveError = false
+    @State var isPresentingNavigationError = false
     @State var backButtonText = UserText.backButtonTitle
     
     enum Constants {
@@ -39,7 +39,6 @@ struct SubscriptionEmailView: View {
     }
         
     var body: some View {
-        Button(action: { subscriptionNavController.shouldDismissStack = true }, label: { Text("Dismiss stack") })
         baseView
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) {
@@ -52,7 +51,7 @@ struct SubscriptionEmailView: View {
         .tint(Color.init(designSystemColor: .textPrimary))
         .accentColor(Color.init(designSystemColor: .textPrimary))
         
-        .alert(isPresented: $shouldDisplayInactiveError) {
+        .alert(isPresented: $isPresentingInactiveError) {
             Alert(
                 title: Text(UserText.subscriptionRestoreEmailInactiveTitle),
                 message: Text(UserText.subscriptionRestoreEmailInactiveMessage),
@@ -62,7 +61,7 @@ struct SubscriptionEmailView: View {
             )
         }
         
-        .alert(isPresented: $shouldDisplayNavigationError) {
+        .alert(isPresented: $isPresentingNavigationError) {
             Alert(
                 title: Text(UserText.subscriptionBackendErrorTitle),
                 message: Text(UserText.subscriptionBackendErrorMessage),
@@ -71,22 +70,16 @@ struct SubscriptionEmailView: View {
                 })
         }
                 
-        .onChange(of: viewModel.state.shouldDisplayInactiveError) { value in
-            shouldDisplayInactiveError = value
+        .onChange(of: viewModel.state.isPresentingInactiveError) { value in
+            isPresentingInactiveError = value
         }
         
         .onChange(of: viewModel.state.shouldDisplaynavigationError) { value in
-            shouldDisplayNavigationError = value
+            isPresentingNavigationError = value
         }
         
         // Observe changes to shouldDismissView
         .onChange(of: viewModel.state.shouldDismissView) { shouldDismiss in
-            if shouldDismiss {
-                dismiss()
-            }
-        }
-        
-        .onReceive(subscriptionNavController.$shouldDismissStack) { shouldDismiss in
             if shouldDismiss {
                 dismiss()
             }

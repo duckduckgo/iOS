@@ -22,23 +22,19 @@ import SwiftUI
 import DesignResourcesKit
 import Core
 
-class SceneEnvironment: ObservableObject {
-    weak var windowScene: UIWindowScene?
-}
-
 #if SUBSCRIPTION
 @available(iOS 15.0, *)
 struct SubscriptionSettingsView: View {
-    
-    @Environment(\.presentationMode) var presentationMode
+        
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = SubscriptionSettingsViewModel()
-    @StateObject var sceneEnvironment = SceneEnvironment()
     
-    @State var shouldDisplayStripeView = false
-    @State var shouldDisplayGoogleView = false
-    @State var shouldDisplayRemovalNotice = false
-    @State var shouldDisplayFAQView = false
+    @State private var rootPresentation: Bool = false
+    
+    @State var isShowingStripeView = false
+    @State var isShowingGoogleView = false
+    @State var isShowingRemovalNotice = false
+    @State var isShowingFAQView = false
     
     var body: some View {
         optionsView
@@ -78,7 +74,7 @@ struct SubscriptionSettingsView: View {
                 Task { viewModel.manageSubscription() }
                                 },
                                isButton: true)
-                .sheet(isPresented: $shouldDisplayStripeView) {
+                .sheet(isPresented: $isShowingStripeView) {
                     if let stripeViewModel = viewModel.state.stripeViewModel {
                         SubscriptionExternalLinkView(viewModel: stripeViewModel, title: UserText.subscriptionManagePlan)
                     }
@@ -89,12 +85,13 @@ struct SubscriptionSettingsView: View {
     private var devicesSection: some View {
         Section(header: Text(UserText.subscriptionManageDevices)) {
             
-                NavigationLink(destination: SubscriptionContainerView(currentView: .restore, isUserAuthenticated: true)) {
+                NavigationLink(destination: SubscriptionContainerView(currentView: .restore),
+                               isActive: $rootPresentation) {
                 SettingsCustomCell(content: {
                     Text(UserText.subscriptionAddDeviceButton)
                         .daxBodyRegular()
                 })
-                }
+                }.isDetailLink(false)
 
             SettingsCustomCell(content: {
                 Text(UserText.subscriptionRemoveFromDevice)
@@ -126,7 +123,7 @@ struct SubscriptionSettingsView: View {
     @ViewBuilder
     private var optionsView: some View {
         NavigationLink(destination: SubscriptionGoogleView(),
-                       isActive: $shouldDisplayGoogleView) {
+                       isActive: $isShowingGoogleView) {
             EmptyView()
         }
         
@@ -147,40 +144,40 @@ struct SubscriptionSettingsView: View {
         }
         
         // Google Binding
-        .onChange(of: viewModel.state.shouldDisplayGoogleView) { value in
-            shouldDisplayGoogleView = value
+        .onChange(of: viewModel.state.isShowingGoogleView) { value in
+            isShowingGoogleView = value
         }
-        .onChange(of: shouldDisplayGoogleView) { value in
+        .onChange(of: isShowingGoogleView) { value in
             viewModel.displayGoogleView(value)
         }
         
         // Stripe Binding
-        .onChange(of: viewModel.state.shouldDisplayStripeView) { value in
-            shouldDisplayStripeView = value
+        .onChange(of: viewModel.state.isShowingStripeView) { value in
+            isShowingStripeView = value
         }
-        .onChange(of: shouldDisplayStripeView) { value in
+        .onChange(of: isShowingStripeView) { value in
             viewModel.displayStripeView(value)
         }
         
         // Removal Notice
-        .onChange(of: viewModel.state.shouldDisplayRemovalNotice) { value in
-            shouldDisplayRemovalNotice = value
+        .onChange(of: viewModel.state.isShowingRemovalNotice) { value in
+            isShowingRemovalNotice = value
         }
-        .onChange(of: shouldDisplayRemovalNotice) { value in
+        .onChange(of: isShowingRemovalNotice) { value in
             viewModel.displayRemovalNotice(value)
         }
         
         // Removal Notice
-        .onChange(of: viewModel.state.shouldDisplayFAQView) { value in
-            shouldDisplayFAQView = value
+        .onChange(of: viewModel.state.isShowingFAQView) { value in
+            isShowingFAQView = value
         }
-        .onChange(of: shouldDisplayFAQView) { value in
+        .onChange(of: isShowingFAQView) { value in
             viewModel.displayFAQView(value)
         }
 
         
         // Remove subscription
-        .alert(isPresented: $shouldDisplayRemovalNotice) {
+        .alert(isPresented: $isShowingRemovalNotice) {
             Alert(
                 title: Text(UserText.subscriptionRemoveFromDeviceConfirmTitle),
                 message: Text(UserText.subscriptionRemoveFromDeviceConfirmText),
@@ -189,12 +186,12 @@ struct SubscriptionSettingsView: View {
                 secondaryButton: .destructive(Text(UserText.subscriptionRemove)) {
                     Pixel.fire(pixel: .privacyProSubscriptionManagementRemoval)
                     viewModel.removeSubscription()
-                    presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 }
             )
         }
         
-        .sheet(isPresented: $shouldDisplayFAQView, content: {
+        .sheet(isPresented: $isShowingFAQView, content: {
             SubscriptionExternalLinkView(viewModel: viewModel.state.FAQViewModel, title: UserText.subscriptionFAQ)
         })
         

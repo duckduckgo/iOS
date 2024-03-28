@@ -29,16 +29,14 @@ import Core
 struct SubscriptionRestoreView: View {
 
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var subscriptionNavController: SubscriptionNavigationController
+    
     @StateObject var viewModel: SubscriptionRestoreViewModel
     @StateObject var emailViewModel: SubscriptionEmailViewModel
     
     @State private var isAlertVisible = false
-    @State private var shouldShowWelcomePage = false
-    @State private var shouldNavigateToActivationFlow = false
-        
-    var onRequirePurchase: (() -> Void)?
-    
+    @State private var isShowingWelcomePage = false
+    @State private var isShowingActivationFlow = false
+    @Binding var currentView: SubscriptionContainerView.CurrentView
     
     private enum Constants {
         static let heroImage = "ManageSubscriptionHero"
@@ -94,9 +92,8 @@ struct SubscriptionRestoreView: View {
                     Spacer()
                     
                     // Hidden link to display Email Activation View
-                    NavigationLink(destination: SubscriptionEmailView(viewModel: emailViewModel)
-                            .environmentObject(subscriptionNavController),
-                                   isActive: $shouldNavigateToActivationFlow) {
+                    NavigationLink(destination: SubscriptionEmailView(viewModel: emailViewModel),
+                                   isActive: $isShowingActivationFlow) {
                           EmptyView()
                     }.isDetailLink(false)
                     
@@ -130,10 +127,10 @@ struct SubscriptionRestoreView: View {
             }
             
             // Navigation Flow Binding
-            .onChange(of: viewModel.state.shouldNavigateToActivationFlow) { result in
-                shouldNavigateToActivationFlow = result
+            .onChange(of: viewModel.state.isShowingActivationFlow) { result in
+                isShowingActivationFlow = result
             }
-            .onChange(of: shouldNavigateToActivationFlow) { result in
+            .onChange(of: isShowingActivationFlow) { result in
                 viewModel.showActivationFlow(result)
             }
             
@@ -142,16 +139,10 @@ struct SubscriptionRestoreView: View {
                     dismiss()
                 }
             }
-        
-            .onReceive(subscriptionNavController.$shouldDismissStack) { shouldDismiss in
-                if shouldDismiss {
-                    dismiss()
-                }
-            }
             
             .onChange(of: viewModel.state.shouldShowPlans) { result in
                 if result {
-                    onRequirePurchase?()
+                    currentView = .subscribe
                 }
             }
             

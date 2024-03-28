@@ -21,12 +21,6 @@ import Foundation
 import SwiftUI
 
 #if SUBSCRIPTION
-final class SubscriptionNavigationController: ObservableObject {
-    @Published var shouldDismissStack: Bool = false
-    
-}
-
-
 @available(iOS 15.0, *)
 struct SubscriptionContainerView: View {
     
@@ -36,12 +30,11 @@ struct SubscriptionContainerView: View {
     
     @Environment(\.dismiss) var dismiss
     @State var currentView: CurrentView
-    @StateObject private var subscriptionNavController = SubscriptionNavigationController()
     private var flowViewModel: SubscriptionFlowViewModel
     private var restoreViewModel: SubscriptionRestoreViewModel
     private var emailViewModel: SubscriptionEmailViewModel
     
-    init(currentView: CurrentView, isUserAuthenticated: Bool = false) {
+    init(currentView: CurrentView) {
         let userScript = SubscriptionPagesUserScript()
         let subFeature = SubscriptionPagesUseSubscriptionFeature()
         self.flowViewModel = SubscriptionFlowViewModel(userScript: userScript, subFeature: subFeature)
@@ -55,12 +48,11 @@ struct SubscriptionContainerView: View {
             switch currentView {
             case .subscribe:
                 SubscriptionFlowView(viewModel: flowViewModel,
-                                     onRequireRestore: { currentView = .restore })
+                                     currentView: $currentView)
             case .restore:
                 SubscriptionRestoreView(viewModel: restoreViewModel,
                                         emailViewModel: emailViewModel,
-                                        onRequirePurchase: { currentView = .subscribe })
-                .environmentObject(subscriptionNavController)
+                                        currentView: $currentView )
             }
         }
         

@@ -43,8 +43,8 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         var transactionStatus: SubscriptionTransactionStatus = .idle
         var activationResult: SubscriptionActivationResult = .unknown
         var subscriptionEmail: String?
-        var shouldShowWelcomePage = false
-        var shouldNavigateToActivationFlow = false
+        var isShowingWelcomePage = false
+        var isShowingActivationFlow = false
         var shouldShowPlans = false
         var shouldDismissView = false
         
@@ -105,9 +105,9 @@ final class SubscriptionRestoreViewModel: ObservableObject {
             state.isAddingDevice = true
         }
         
-        state.shouldNavigateToActivationFlow = false
+        state.isShowingActivationFlow = false
         state.shouldShowPlans = false
-        state.shouldShowWelcomePage = false
+        state.isShowingWelcomePage = false
         state.shouldDismissView = false
     }
     
@@ -173,7 +173,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     @MainActor
     func showActivationFlow(_ visible: Bool) {
         if visible != state.shouldDismissView {
-            self.state.shouldNavigateToActivationFlow = visible
+            self.state.isShowingActivationFlow = visible
         }
     }
     

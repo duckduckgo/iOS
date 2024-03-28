@@ -42,7 +42,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
         var managingSubscriptionEmail = false
         var transactionError: SubscriptionRestoreError?
         var shouldDisplaynavigationError: Bool = false
-        var shouldDisplayInactiveError: Bool = false
+        var isPresentingInactiveError: Bool = false
         var canNavigateBack: Bool = false
         var shouldDismissView: Bool = false
         var shouldDismissStack: Bool = false
@@ -215,7 +215,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
         default:
             state.transactionError = .generalError
         }
-        state.shouldDisplayInactiveError = true
+        state.isPresentingInactiveError = true
     }
     
     func dismissView() {

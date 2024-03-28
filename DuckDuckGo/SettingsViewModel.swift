@@ -310,7 +310,8 @@ extension SettingsViewModel {
             var enabled = false
             var canPurchase = false
             var hasActiveSubscription = false
-        
+            var isSubscriptionPendingActivation = false
+
     #if SUBSCRIPTION
         if #available(iOS 15, *) {
             enabled = isPrivacyProEnabled
@@ -318,15 +319,21 @@ extension SettingsViewModel {
             await setupSubscriptionEnvironment()
             if let token = AccountManager().accessToken {
                 let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token)
-                if case .success(let subscription) = subscriptionResult {
+                switch subscriptionResult {
+                case .success(let subscription):
                     hasActiveSubscription = subscription.isActive
+                case .failure:
+                    if await PurchaseManager.hasActiveSubscription() {
+                        isSubscriptionPendingActivation = true
+                    }
                 }
             }
         }
     #endif
         return SettingsState.Subscription(enabled: enabled,
                                         canPurchase: canPurchase,
-                                        hasActiveSubscription: hasActiveSubscription)
+                                        hasActiveSubscription: hasActiveSubscription,
+                                        isSubscriptionPendingActivation: isSubscriptionPendingActivation)
         }
     
     private func getSyncState() -> SettingsState.SyncSettings {
@@ -374,31 +381,44 @@ extension SettingsViewModel {
         // Fetch available subscriptions from the backend (or sign out)
         switch await SubscriptionService.getSubscription(accessToken: token) {
         
-        case .success(let subscription) where subscription.isActive:
-            
-            // Check entitlements and update UI accordingly
-            let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
-            for entitlement in entitlements {
-                if case let .success(result) = await AccountManager().hasEntitlement(for: entitlement) {
-                    switch entitlement {
-                    case .identityTheftRestoration:
-                        self.shouldShowITP = result
-                    case .dataBrokerProtection:
-                        self.shouldShowDBP = result
-                    case .networkProtection:
-                        self.shouldShowNetP = result
-                    case .unknown:
-                        return
+        case .success(let subscription):
+            if subscription.isActive {
+                state.subscription.hasActiveSubscription = true
+                state.subscription.isSubscriptionPendingActivation = false
+
+                // Check entitlements and update UI accordingly
+                let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
+                for entitlement in entitlements {
+                    if case let .success(result) = await AccountManager().hasEntitlement(for: entitlement) {
+                        switch entitlement {
+                        case .identityTheftRestoration:
+                            self.shouldShowITP = result
+                        case .dataBrokerProtection:
+                            self.shouldShowDBP = result
+                        case .networkProtection:
+                            self.shouldShowNetP = result
+                        case .unknown:
+                            return
+                        }
                     }
                 }
+            } else {
+                // Sign out in case subscription is no longer active, reset the state
+                state.subscription.hasActiveSubscription = false
+                state.subscription.isSubscriptionPendingActivation = false
+                signOutUser()
             }
-            isLoadingSubscriptionState = false
-                        
-        default:
+
+        case .failure:
             // Account is active but there's not a valid subscription / entitlements
-            isLoadingSubscriptionState = false
-            signOutUser()
+            if await PurchaseManager.hasActiveSubscription() {
+                state.subscription.isSubscriptionPendingActivation = true
+            } else {
+                // Sign out in case access token is present but no subscription and there is no active transaction on Apple ID
+                signOutUser()
+            }
         }
+        isLoadingSubscriptionState = false
     }
     
     @available(iOS 15.0, *)

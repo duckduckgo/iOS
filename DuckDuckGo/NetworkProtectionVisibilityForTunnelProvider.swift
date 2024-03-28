@@ -34,16 +34,14 @@ struct NetworkProtectionVisibilityForTunnelProvider: NetworkProtectionFeatureVis
         preconditionFailure("Does not apply to Tunnel Provider")
     }
     
-    // todo - https://app.asana.com/0/0/1206844038943626/f
     func isPrivacyProLaunched() -> Bool {
 #if SUBSCRIPTION
-        AccountManager().accessToken != nil
+        AccountManager().isUserAuthenticated
 #else
         false
 #endif
     }
     
-    // todo - https://app.asana.com/0/0/1206844038943626/f
     func shouldMonitorEntitlement() -> Bool {
         isPrivacyProLaunched()
     }

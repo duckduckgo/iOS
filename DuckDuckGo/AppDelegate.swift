@@ -386,6 +386,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             #endif
         }
         window?.rootViewController?.present(alertController, animated: true) { [weak self] in
+            DailyPixel.fireDailyAndCount(pixel: .privacyProVPNAccessRevokedDialogShown)
             self?.tunnelDefaults.showEntitlementAlert = false
         }
     }
@@ -402,6 +403,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func presentVPNEarlyAccessOverAlert() {
         let alertController = CriticalAlerts.makeVPNEarlyAccessOverAlert()
         window?.rootViewController?.present(alertController, animated: true) { [weak self] in
+            DailyPixel.fireDailyAndCount(pixel: .privacyProPromotionDialogShownVPN)
             self?.tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
         }
     }
@@ -428,12 +430,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if SUBSCRIPTION
     private func setupSubscriptionsEnvironment() {
         Task {
+#if DEBUG || ALPHA
             SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+#else
+            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .production
+#endif
+
 #if NETWORK_PROTECTION
             if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {
                 SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
             }
 #endif
+
             SubscriptionPurchaseEnvironment.current = .appStore
         }
     }
@@ -456,6 +464,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         StatisticsLoader.shared.load {
             StatisticsLoader.shared.refreshAppRetentionAtb()
             self.fireAppLaunchPixel()
+            self.firePrivacyProFeatureEnabledPixel()
             self.fireAppTPActiveUserPixel()
         }
         
@@ -490,9 +499,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if NETWORK_PROTECTION
         widgetRefreshModel.refreshVPNWidget()
 
-        if vpnFeatureVisibility.shouldShowThankYouMessaging() && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
-            presentVPNEarlyAccessOverAlert()
-        }
+        stopTunnelAndShowThankYouMessagingIfNeeded()
 
         if tunnelDefaults.showEntitlementAlert {
             presentExpiredEntitlementAlert()
@@ -502,6 +509,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #endif
 
         updateSubscriptionStatus()
+    }
+
+    private func stopTunnelAndShowThankYouMessagingIfNeeded() {
+        if vpnFeatureVisibility.shouldShowThankYouMessaging() && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
+            presentVPNEarlyAccessOverAlert()
+
+            Task {
+                let controller = NetworkProtectionTunnelController()
+
+                if await controller.isConnected {
+                    DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled)
+                }
+
+                await controller.stop()
+                await controller.removeVPN()
+            }
+        }
     }
 
     func updateSubscriptionStatus() {
@@ -515,8 +539,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                                                            cachePolicy: .reloadIgnoringLocalCacheData) {
                 if subscription.isActive {
                     DailyPixel.fire(pixel: .privacyProSubscriptionActive)
-                } else {
-                    accountManager.signOut()
                 }
             }
 
@@ -558,6 +580,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
         }
+    }
+
+    private func firePrivacyProFeatureEnabledPixel() {
+#if SUBSCRIPTION
+        let subscriptionFeatureAvailability = AppDependencyProvider.shared.subscriptionFeatureAvailability
+        guard subscriptionFeatureAvailability.isFeatureAvailable,
+              subscriptionFeatureAvailability.isSubscriptionPurchaseAllowed else {
+            return
+        }
+
+        DailyPixel.fire(pixel: .privacyProFeatureEnabled)
+#endif
     }
 
     private func fireAppTPActiveUserPixel() {

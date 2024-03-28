@@ -34,26 +34,36 @@ public class DataStoreWarmup {
 
 private class BlockingNavigationDelegate: NSObject, WKNavigationDelegate {
 
-    let finished = PassthroughSubject<Void, Never>()
+    var finished: PassthroughSubject? = PassthroughSubject<Void, Never>()
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
         return .allow
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        finished.send()
+        if let finished {
+            finished.send()
+            self.finished = nil
+        } else {
+            Pixel.fire(pixel: .webKitWarmupUnexpectedDidFinish, includedParameters: [.appVersion])
+        }
     }
 
     func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
         Pixel.fire(pixel: .webKitDidTerminateDuringWarmup)
-        // We won't get a `didFinish` if the webview crashes
-        finished.send()
+
+        if let finished {
+            finished.send()
+            self.finished = nil
+        } else {
+            Pixel.fire(pixel: .webKitWarmupUnexpectedDidTerminate, includedParameters: [.appVersion])
+        }
     }
 
     var cancellable: AnyCancellable?
     func waitForLoad() async {
         await withCheckedContinuation { continuation in
-            cancellable = finished.sink { _ in
+            cancellable = finished?.sink { _ in
                 continuation.resume()
             }
         }

@@ -42,6 +42,7 @@ struct SubscriptionRestoreView: View {
     @State private var shouldNavigateToActivationFlow = false
     @Binding var shouldDismissStack: Bool
     
+    var source: SubscriptionRestoreView.Source = .settings
     var onRequirePurchase: (() -> Void)?
     
     
@@ -157,11 +158,11 @@ struct SubscriptionRestoreView: View {
             .onAppear {
                 Task { await viewModel.onAppear() }
                 setUpAppearances()
-switch source {
-case .addAnotherDevice:
-Pixel.fire(pixel: .privacyProSettingsAddDevice, debounce: 2)
-default: break
-}
+                switch source {
+                    case .addAnotherDevice:
+                        Pixel.fire(pixel: .privacyProSettingsAddDevice, debounce: 2)
+                    default: break
+                }
             }
 
             .onDisappear {

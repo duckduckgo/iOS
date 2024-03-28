@@ -29,7 +29,9 @@ struct SubscriptionContainerView: View {
     }
     
     @Environment(\.dismiss) var dismiss
-    @State var currentView: CurrentView
+    @State var currentView: CurrentView = .subscribe
+    @State var shouldDismissStack: Bool = false
+    @State var isAccountActive: Bool = false
     private var flowViewModel: SubscriptionFlowViewModel
     private var restoreViewModel: SubscriptionRestoreViewModel
     private var emailViewModel: SubscriptionEmailViewModel
@@ -37,10 +39,10 @@ struct SubscriptionContainerView: View {
     init(currentView: CurrentView) {
         let userScript = SubscriptionPagesUserScript()
         let subFeature = SubscriptionPagesUseSubscriptionFeature()
+        self.flowViewModel = SubscriptionFlowViewModel(userScript: userScript, subFeature: subFeature)
+        self.restoreViewModel = SubscriptionRestoreViewModel(userScript: userScript, subFeature: subFeature)
+        self.emailViewModel = SubscriptionEmailViewModel(userScript: userScript, subFeature: subFeature)
         self.currentView = currentView
-        flowViewModel = SubscriptionFlowViewModel(userScript: userScript, subFeature: subFeature)
-        restoreViewModel = SubscriptionRestoreViewModel(userScript: userScript, subFeature: subFeature)
-        emailViewModel = SubscriptionEmailViewModel(userScript: userScript, subFeature: subFeature)
     }
     
     var body: some View {
@@ -51,6 +53,8 @@ struct SubscriptionContainerView: View {
         case .restore:
             SubscriptionRestoreView(viewModel: restoreViewModel,
                                     emailViewModel: emailViewModel,
+                                    shouldDismissStack: $shouldDismissStack,
+                                    source: isAccountActive ? .addAnotherDevice : .settings,
                                     onRequirePurchase: { currentView = .subscribe })
             
         }

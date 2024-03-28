@@ -1,5 +1,5 @@
 //
-//  SettingsAppeareanceView.swift
+//  SettingsAppeareanceViewOld.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -20,8 +20,8 @@
 import SwiftUI
 import UIKit
 
-struct SettingsAppeareanceView: View {
-        
+struct SettingsAppeareanceViewOld: View {
+
     @EnvironmentObject var viewModel: SettingsViewModel
 
     var body: some View {

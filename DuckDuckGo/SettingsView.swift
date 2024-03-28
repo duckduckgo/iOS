@@ -31,7 +31,7 @@ struct SettingsView: View {
 #if SUBSCRIPTION
     @State var deepLinkTarget: SettingsViewModel.SettingsDeepLinkSection?
 #endif
-    
+
     var body: some View {
         
         // Hidden navigationLink for programatic navigation
@@ -49,10 +49,10 @@ struct SettingsView: View {
         
         // Settings Sections
         List {
-            SettingsGeneralView()
-            SettingsSyncView()
+            SettingsGeneralViewOld()
+            SettingsSyncViewOld()
             SettingsLoginsView()
-            SettingsAppeareanceView()
+            SettingsAppeareanceViewOld()
             SettingsPrivacyView()
 #if SUBSCRIPTION
             if #available(iOS 15, *) {
@@ -61,9 +61,8 @@ struct SettingsView: View {
 #endif
             SettingsCustomizeView()
             SettingsMoreView()
-            SettingsAboutView()
+            SettingsAboutViewOld()
             SettingsDebugView()
-            
         }
         .navigationBarTitle(UserText.settingsTitle, displayMode: .inline)
         .navigationBarItems(trailing: Button(UserText.navigationTitleDone) {
@@ -150,20 +149,4 @@ struct SettingsView: View {
         }
     }
 #endif
-}
-
-struct InsetGroupedListStyleModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        if #available(iOS 15, *) {
-            return AnyView(content.applyInsetGroupedListStyle())
-        } else {
-            return AnyView(content)
-        }
-    }
-}
-
-extension View {
-    func conditionalInsetGroupedListStyle() -> some View {
-        self.modifier(InsetGroupedListStyleModifier())
-    }
 }

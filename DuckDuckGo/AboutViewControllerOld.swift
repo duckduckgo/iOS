@@ -1,5 +1,5 @@
 //
-//  AboutViewController.swift
+//  AboutViewControllerOld.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -22,15 +22,15 @@ import Core
 import SwiftUI
 import DesignResourcesKit
 
-class AboutViewController: UIHostingController<AboutView> {
+class AboutViewControllerOld: UIHostingController<AboutViewOld> {
 
     convenience init() {
-        self.init(rootView: AboutView())
+        self.init(rootView: AboutViewOld())
     }
 
 }
 
-struct AboutView: View {
+struct AboutViewOld: View {
 
     var body: some View {
         ScrollView {
@@ -65,18 +65,6 @@ struct AboutView: View {
         .background(Rectangle()
             .ignoresSafeArea()
             .foregroundColor(Color(designSystemColor: .background)))
-    }
-
-}
-
-private extension View {
-    
-    @ViewBuilder func tintIfAvailable(_ color: Color) -> some View {
-        if #available(iOS 16.0, *) {
-            tint(color)
-        } else {
-            self
-        }
     }
 
 }

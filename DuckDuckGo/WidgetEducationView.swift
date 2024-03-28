@@ -19,6 +19,7 @@
 
 import SwiftUI
 import DesignResourcesKit
+import Core
 
 extension Font {
     init(uiFont: UIFont) {
@@ -47,6 +48,10 @@ struct WidgetEducationView: View {
                 .padding(.top, Const.Padding.top)
             }
         }.navigationBarTitle(UserText.settingsAddWidget, displayMode: .inline)
+            .onForwardNavigationAppear {
+                Pixel.fire(pixel: .settingsNextStepsAddWidget,
+                           withAdditionalParameters: PixelExperiment.parameters)
+            }
     }
     
     private var secondParagraphText: Text {

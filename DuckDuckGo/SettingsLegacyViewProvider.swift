@@ -79,8 +79,8 @@ class SettingsLegacyViewProvider: ObservableObject {
     var autoclearData: UIViewController { instantiate("AutoClearSettingsViewController", fromStoryboard: "Settings") }
     var keyboard: UIViewController { instantiate("Keyboard", fromStoryboard: "Settings") }
     var feedback: UIViewController { instantiate("Feedback", fromStoryboard: "Feedback") }
-    var about: UIViewController { AboutViewController() }
-    
+    var about: UIViewController { AboutViewControllerOld() }
+
     @available(iOS 15, *)
     var netPWaitlist: UIViewController { VPNWaitlistViewController(nibName: nil, bundle: nil) }
     

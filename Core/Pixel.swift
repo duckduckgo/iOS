@@ -127,6 +127,9 @@ public struct PixelParameters {
     public static let returnUserErrorCode = "error_code"
     public static let returnUserOldATB = "old_atb"
     public static let returnUserNewATB = "new_atb"
+
+    // Pixel Experiment
+    public static let cohort = "cohort"
 }
 
 public struct PixelValues {

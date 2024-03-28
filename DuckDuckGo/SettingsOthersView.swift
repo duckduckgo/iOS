@@ -1,5 +1,5 @@
 //
-//  SettingsAboutView.swift
+//  SettingsOthersView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -20,27 +20,32 @@
 import SwiftUI
 import UIKit
 
-struct SettingsAboutView: View {
-    
+struct SettingsOthersView: View {
+
     @EnvironmentObject var viewModel: SettingsViewModel
-    
+
     var body: some View {
-        Section(header: Text(UserText.settingsAboutSection)) {
-            
-            SettingsCellView(label: UserText.settingsAboutDDG,
-                             action: { viewModel.presentLegacyView(.about) },
-                             disclosureIndicator: true,
-                             isButton: true)
-            
-            SettingsCellView(label: UserText.settingsVersion,
-                             accesory: .rightDetail(viewModel.state.version))
-            
+        Section {
+            // About
+            NavigationLink(destination: AboutView().environmentObject(viewModel)) {
+                SettingsCellView(label: UserText.settingsAboutSection,
+                                 image: Image("LogoIcon"))
+            }
+
+            // Share Feedback
             SettingsCellView(label: UserText.settingsFeedback,
+                             image: Image("SettingsFeedback"),
                              action: { viewModel.presentLegacyView(.feedback) },
                              isButton: true)
-                        
+
+            // DuckDuckGo on Other Platforms
+            SettingsCellView(label: UserText.duckduckgoOnOtherPlatforms,
+                             image: Image("SettingsOtherPlatforms"),
+                             action: { viewModel.openOtherPlatforms() },
+                             webLinkIndicator: true,
+                             isButton: true)
         }
 
     }
- 
+
 }

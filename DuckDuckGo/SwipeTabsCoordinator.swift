@@ -305,7 +305,7 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
 
             if let url = tabsModel.safeGetTabAt(indexPath.row)?.link?.url {
                 cell.omniBar?.startBrowsing()
-                cell.omniBar?.refreshText(forUrl: url)
+                cell.omniBar?.refreshText(forUrl: url, forceFullURL: appSettings.showFullSiteAddress)
                 cell.omniBar?.resetPrivacyIcon(for: url)
             }
 

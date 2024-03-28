@@ -208,12 +208,9 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        print("***", #function, state)
         switch state {
         case .idle:
             state = .starting(scrollView.contentOffset)
-            
-            // TODO if swiping 
 
         default: break
         }

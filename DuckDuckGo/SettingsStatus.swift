@@ -47,11 +47,13 @@ struct StatusIndicatorView: View {
                 Circle()
                     .frame(width: 8, height: 8)
                     .foregroundColor(colorForStatus(status))
+                    .animation(.easeInOut(duration: 0.3), value: status)
             }
 
             Text(status.text)
                 .daxBodyRegular()
                 .foregroundColor(Color(designSystemColor: .textSecondary))
+                .animation(.easeInOut(duration: 0.3), value: status)
         }
     }
 

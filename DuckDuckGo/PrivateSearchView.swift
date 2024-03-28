@@ -54,7 +54,7 @@ struct PrivateSearchViewSettings: View {
 
     var body: some View {
         Section(header: Text(UserText.searchSettings),
-                footer: Text(viewModel.autocompleteSubtitle ?? "")) {
+                footer: Text(UserText.settingsAutocompleteSubtitle)) {
             // Autocomplete Suggestions
             SettingsCellView(label: UserText.settingsAutocomplete,
                              accesory: .toggle(isOn: viewModel.autocompletePrivateSearchBinding))
@@ -85,7 +85,7 @@ struct PrivateSearchViewSettings: View {
             SettingsCellView(label: UserText.moreSearchSettings,
                              subtitle: UserText.moreSearchSettingsExplanation,
                              action: { viewModel.openMoreSearchSettings() },
-                             disclosureIndicator: true,
+                             webLinkIndicator: true,
                              isButton: true)
         }
     }

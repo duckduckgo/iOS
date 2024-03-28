@@ -29,15 +29,14 @@ struct SettingsGeneralView: View {
     var body: some View {
         List {
             // Application Lock
-            Section(header: Text(UserText.settingsPrivacySection),
-                    footer: Text(UserText.settingsAutoLockDescription)) {
+            Section(footer: Text(UserText.settingsAutoLockDescription)) {
                 SettingsCellView(label: UserText.settingsAutolock,
                                  accesory: .toggle(isOn: viewModel.applicationLockBinding))
 
             }
 
             Section(header: Text(UserText.privateSearch),
-                    footer: Text(viewModel.autocompleteSubtitle ?? "")) {
+                    footer: Text(UserText.settingsAutocompleteSubtitle)) {
                 // Autocomplete Suggestions
                 SettingsCellView(label: UserText.settingsAutocomplete,
                                  accesory: .toggle(isOn: viewModel.autocompleteGeneralBinding))

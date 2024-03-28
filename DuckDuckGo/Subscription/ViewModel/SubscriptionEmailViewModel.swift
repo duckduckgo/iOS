@@ -80,7 +80,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
         
         Task {
             await initializeView()
-            await setupSubscribers()
         }
         setupObservers()
     }
@@ -107,7 +106,13 @@ final class SubscriptionEmailViewModel: ObservableObject {
     
     func onAppear() {
         Task { await initializeView() }
+        Task { await setupSubscribers() }
         webViewModel.navigationCoordinator.navigateTo(url: emailURL )
+    }
+    
+    func onDissappear() {
+        cancellables.removeAll()
+        canGoBackCancellable = nil
     }
     
     @MainActor
@@ -133,6 +138,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     private func setupObservers() {
         // Feature Callback
         subFeature.onSetSubscription = {
+            DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailSuccess)
             UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
             DispatchQueue.main.async {
                 self.state.subscriptionActive = true
@@ -210,10 +216,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
             state.transactionError = .generalError
         }
         state.shouldDisplayInactiveError = true
-    }
-    
-    private func completeActivation() {
-        DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailSuccess)
     }
     
     func dismissView() {

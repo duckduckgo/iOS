@@ -27,7 +27,12 @@ import Core
 @available(iOS 15.0, *)
 // swiftlint:disable type_body_length
 struct SubscriptionRestoreView: View {
-    
+
+    enum Source {
+        case addAnotherDevice
+        case settings
+    }
+
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel: SubscriptionRestoreViewModel
     @StateObject var emailViewModel: SubscriptionEmailViewModel
@@ -65,7 +70,6 @@ struct SubscriptionRestoreView: View {
         static let buttonCornerRadius = 8.0
         static let buttonInsets = EdgeInsets(top: 10.0, leading: 16.0, bottom: 10.0, trailing: 16.0)
         static let buttonTopPadding: CGFloat = 20
-        
     }
     
     var body: some View {
@@ -153,15 +157,19 @@ struct SubscriptionRestoreView: View {
             .onAppear {
                 Task { await viewModel.onAppear() }
                 setUpAppearances()
+switch source {
+case .addAnotherDevice:
+Pixel.fire(pixel: .privacyProSettingsAddDevice, debounce: 2)
+default: break
+}
             }
-            
+
             .onDisappear {
                 Task { await viewModel.onDissappear() }
            }
                 
     }
-    
-    
+
     // MARK: -
     
     private var emailView: some View {

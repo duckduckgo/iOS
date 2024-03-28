@@ -83,15 +83,21 @@ class SwipeTabsCoordinator: NSObject {
         
         case idle
         case starting(CGPoint)
-        case swiping(CGPoint, FloatingPointSign)
-        
+        case swiping(CGPoint, FloatingPointSign, Int)
+        case paging(CGPoint, FloatingPointSign, Int)
+
     }
     
     var state: State = .idle
     
-    weak var preview: UIView?
+    weak var preview: UIView? {
+        willSet {
+            preview?.removeFromSuperview()
+        }
+    }
+
     weak var currentView: UIView?
-    
+
     private func updateLayout() {
         let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
         layout?.itemSize = CGSize(width: coordinator.superview.frame.size.width, height: coordinator.omniBar.frame.height)
@@ -112,37 +118,74 @@ class SwipeTabsCoordinator: NSObject {
                                          at: .centeredHorizontally,
                                          animated: false)
     }
+
+    weak var previewCollectionView: UICollectionView?
+    var previewDataSource: TabsPreviewDataSource?
+
+}
+
+class TabsPreviewDataSource: NSObject, UICollectionViewDataSource {
+
+    let tabsModel: TabsModel
+    let tabPreviewsSource: TabPreviewsSource
+
+    init(tabsModel: TabsModel, tabPreviewsSource: TabPreviewsSource) {
+        self.tabsModel = tabsModel
+        self.tabPreviewsSource = tabPreviewsSource
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return tabsModel.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "preview", for: indexPath)
+        if cell.backgroundColor == nil {
+            cell.backgroundColor = UIColor(red: CGFloat.random(in: 0 ..< 1),
+                                           green: CGFloat.random(in: 0 ..< 1),
+                                           blue: CGFloat.random(in: 0 ..< 1),
+                                           alpha: 1.0)
+        }
+        return cell
+    }
+
 }
 
 // MARK: UICollectionViewDelegate
 extension SwipeTabsCoordinator: UICollectionViewDelegate {
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-         
-        switch state {
-        case .idle: break
-            
-        case .starting(let startPosition):
-            let offset = startPosition.x - scrollView.contentOffset.x
-            prepareCurrentView()
-            preparePreview(offset)
-            state = .swiping(startPosition, offset.sign)
-            onSwipeStarted()
-        
-        case .swiping(let startPosition, let sign):
-            let offset = startPosition.x - scrollView.contentOffset.x
-            if offset.sign == sign {
-                let modifier = sign == .plus ? -1.0 : 1.0
-                swipePreviewProportionally(offset: offset, modifier: modifier)
-                swipeCurrentViewProportionally(offset: offset)
-                currentView?.transform.tx = offset
-            } else {
-                cleanUpViews()
-                state = .starting(startPosition)
-            }
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        if previewCollectionView == nil {
+            let dataSource = TabsPreviewDataSource(tabsModel: tabsModel, tabPreviewsSource: tabPreviewsSource)
+            self.previewDataSource = dataSource
+
+            let layout = UICollectionViewFlowLayout()
+            layout.itemSize = coordinator.contentContainer.frame.size
+            layout.minimumLineSpacing = 0
+            layout.minimumInteritemSpacing = 0
+            layout.scrollDirection = .horizontal
+
+            let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+            collectionView.register(PreviewCell.self, forCellWithReuseIdentifier: "preview")
+            collectionView.isUserInteractionEnabled = false
+
+            collectionView.dataSource = dataSource
+            collectionView.frame = CGRect(origin: .zero, size: coordinator.contentContainer.frame.size)
+            coordinator.contentContainer.addSubview(collectionView)
+            previewCollectionView = collectionView
         }
     }
-    
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        previewCollectionView?.contentOffset = scrollView.contentOffset
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        print("***", coordinator.navigationBarCollectionView.indexPathsForVisibleItems)
+        previewCollectionView?.removeFromSuperview()
+        previewDataSource = nil
+    }
+
     private func swipeCurrentViewProportionally(offset: CGFloat) {
         currentView?.transform.tx = offset
     }
@@ -164,10 +207,11 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
         }
     }
     
-    private func preparePreview(_ offset: CGFloat) {
-        let modifier = (offset > 0 ? -1 : 1)
+    private func preparePreview(_ offset: CGFloat, page: Int = 0) {
+        let modifier = (offset > 0 ? -1 : 1) + page
         let nextIndex = tabsModel.currentIndex + modifier
-        
+        print("***", #function, offset, page, nextIndex)
+
         guard tabsModel.tabs.indices.contains(nextIndex) || tabsModel.tabs.last?.link != nil else {
             return
         }
@@ -206,35 +250,6 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
         coordinator.logoContainer.isHidden = isHidden
     }
     
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        switch state {
-        case .idle:
-            state = .starting(scrollView.contentOffset)
-            
-        default: break
-        }
-    }
-
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        defer {
-            cleanUpViews()
-            state = .idle
-        }
-        
-        let point = CGPoint(x: coordinator.navigationBarCollectionView.bounds.midX,
-                            y: coordinator.navigationBarCollectionView.bounds.midY)
-        
-        guard let index = coordinator.navigationBarCollectionView.indexPathForItem(at: point)?.row else {
-            assertionFailure("invalid index")
-            return
-        }
-        feedbackGenerator.selectionChanged()
-        if index >= tabsModel.count {
-            newTab()
-        } else {
-            selectTab(index)
-        }
-    }
 
     private func cleanUpViews() {
         currentView?.transform = .identity
@@ -341,6 +356,10 @@ class OmniBarCell: UICollectionViewCell {
         omniBar?.updateOmniBarPadding(left: left, right: right)
     }
     
+}
+
+class PreviewCell: UICollectionViewCell {
+
 }
 
 extension TabsModel {

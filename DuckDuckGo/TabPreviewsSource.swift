@@ -51,11 +51,7 @@ class TabPreviewsSource {
     
     func update(preview: UIImage, forTab tab: Tab) {
         cache[tab.uid] = preview
-        
-        if tabSettings.isGridViewEnabled {
-            store(preview: preview, forTab: tab)
-        }
-
+        store(preview: preview, forTab: tab)
         tab.didUpdatePreview()
     }
     

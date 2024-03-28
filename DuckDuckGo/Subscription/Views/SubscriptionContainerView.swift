@@ -21,6 +21,12 @@ import Foundation
 import SwiftUI
 
 #if SUBSCRIPTION
+final class SubscriptionNavigationController: ObservableObject {
+    @Published var shouldDismissStack: Bool = false
+    
+}
+
+
 @available(iOS 15.0, *)
 struct SubscriptionContainerView: View {
     
@@ -29,14 +35,13 @@ struct SubscriptionContainerView: View {
     }
     
     @Environment(\.dismiss) var dismiss
-    @State var currentView: CurrentView = .subscribe
-    @State var shouldDismissStack: Bool = false
-    @State var isAccountActive: Bool = false
+    @State var currentView: CurrentView
+    @StateObject private var subscriptionNavController = SubscriptionNavigationController()
     private var flowViewModel: SubscriptionFlowViewModel
     private var restoreViewModel: SubscriptionRestoreViewModel
     private var emailViewModel: SubscriptionEmailViewModel
     
-    init(currentView: CurrentView) {
+    init(currentView: CurrentView, isUserAuthenticated: Bool = false) {
         let userScript = SubscriptionPagesUserScript()
         let subFeature = SubscriptionPagesUseSubscriptionFeature()
         self.flowViewModel = SubscriptionFlowViewModel(userScript: userScript, subFeature: subFeature)
@@ -46,19 +51,27 @@ struct SubscriptionContainerView: View {
     }
     
     var body: some View {
-        switch currentView {
-        case .subscribe:
-            SubscriptionFlowView(viewModel: flowViewModel,
-                                 onRequireRestore: { currentView = .restore })
-        case .restore:
-            SubscriptionRestoreView(viewModel: restoreViewModel,
-                                    emailViewModel: emailViewModel,
-                                    shouldDismissStack: $shouldDismissStack,
-                                    source: isAccountActive ? .addAnotherDevice : .settings,
-                                    onRequirePurchase: { currentView = .subscribe })
-            
+        VStack {
+            switch currentView {
+            case .subscribe:
+                SubscriptionFlowView(viewModel: flowViewModel,
+                                     onRequireRestore: { currentView = .restore })
+            case .restore:
+                SubscriptionRestoreView(viewModel: restoreViewModel,
+                                        emailViewModel: emailViewModel,
+                                        onRequirePurchase: { currentView = .subscribe })
+                .environmentObject(subscriptionNavController)
+            }
+        }
+        .onReceive(subscriptionNavController.$shouldDismissStack) { shouldDismiss in
+            if shouldDismiss {
+                print("We should dismiss this stack")
+                dismiss()
+            }
         }
         
     }
+    
+    
 }
 #endif

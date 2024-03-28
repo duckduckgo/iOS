@@ -57,9 +57,15 @@ struct SubscriptionFlowView: View {
     var body: some View {
         
         // Hidden Navigation Links for Onboarding sections
-        NavigationLink(destination: NetworkProtectionRootView(inviteCompletion: {}).navigationViewStyle(.stack), isActive: $isShowingNetP, label: { EmptyView() })
-        NavigationLink(destination: SubscriptionITPView().navigationViewStyle(.stack), isActive: $isShowingITR, label: { EmptyView() })
-        NavigationLink(destination: SubscriptionPIRView().navigationViewStyle(.stack), isActive: $isShowingDBP, label: { EmptyView() })
+        NavigationLink(destination: NetworkProtectionRootView(inviteCompletion: {}).navigationViewStyle(.stack),
+                       isActive: $isShowingNetP,
+                       label: { EmptyView() })
+        NavigationLink(destination: SubscriptionITPView().navigationViewStyle(.stack),
+                       isActive: $isShowingITR,
+                       label: { EmptyView() })
+        NavigationLink(destination: SubscriptionPIRView().navigationViewStyle(.stack),
+                       isActive: $isShowingDBP,
+                       label: { EmptyView() })
         
         baseView
             .toolbar {
@@ -119,7 +125,6 @@ struct SubscriptionFlowView: View {
         }
         
         .onChange(of: viewModel.state.selectedFeature) { feature in
-            print("SelectedFeature \(feature)")
             switch feature {
             case .dbp:
                 self.isShowingDBP = true
@@ -166,11 +171,13 @@ struct SubscriptionFlowView: View {
         }
         
         .onAppear(perform: {
+            print("[Appear] SubscriptionFlowView")
             setUpAppearances()
             Task { await viewModel.onAppear() }
         })
         
         .onDisappear(perform: {
+            print("[Dissapear] SubscriptionFlowView")
             Task { await viewModel.onDisappear() }
         })
                 

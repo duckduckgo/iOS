@@ -28,21 +28,15 @@ import Core
 // swiftlint:disable type_body_length
 struct SubscriptionRestoreView: View {
 
-    enum Source {
-        case addAnotherDevice
-        case settings
-    }
-
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var subscriptionNavController: SubscriptionNavigationController
     @StateObject var viewModel: SubscriptionRestoreViewModel
     @StateObject var emailViewModel: SubscriptionEmailViewModel
     
     @State private var isAlertVisible = false
     @State private var shouldShowWelcomePage = false
     @State private var shouldNavigateToActivationFlow = false
-    @Binding var shouldDismissStack: Bool
-    
-    var source: SubscriptionRestoreView.Source = .settings
+        
     var onRequirePurchase: (() -> Void)?
     
     
@@ -100,8 +94,8 @@ struct SubscriptionRestoreView: View {
                     Spacer()
                     
                     // Hidden link to display Email Activation View
-                    NavigationLink(destination: SubscriptionEmailView(viewModel: emailViewModel,
-                                                                      shouldDismissStack: $shouldDismissStack ),
+                    NavigationLink(destination: SubscriptionEmailView(viewModel: emailViewModel)
+                            .environmentObject(subscriptionNavController),
                                    isActive: $shouldNavigateToActivationFlow) {
                           EmptyView()
                     }.isDetailLink(false)
@@ -148,6 +142,13 @@ struct SubscriptionRestoreView: View {
                     dismiss()
                 }
             }
+        
+            .onReceive(subscriptionNavController.$shouldDismissStack) { shouldDismiss in
+                if shouldDismiss {
+                    print("We should dismiss this stack")
+                    dismiss()
+                }
+            }
             
             .onChange(of: viewModel.state.shouldShowPlans) { result in
                 if result {
@@ -156,16 +157,16 @@ struct SubscriptionRestoreView: View {
             }
             
             .onAppear {
+                print("[Appear] SubscriptionRestoreView")
                 Task { await viewModel.onAppear() }
                 setUpAppearances()
-                switch source {
-                    case .addAnotherDevice:
-                        Pixel.fire(pixel: .privacyProSettingsAddDevice, debounce: 2)
-                    default: break
+                if viewModel.state.isAddingDevice {
+                    Pixel.fire(pixel: .privacyProSettingsAddDevice, debounce: 2)
                 }
             }
 
             .onDisappear {
+                print("[DisAppear] SubscriptionRestoreView")
                 Task { await viewModel.onDissappear() }
            }
                 

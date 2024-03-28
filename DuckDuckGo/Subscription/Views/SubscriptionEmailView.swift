@@ -28,11 +28,10 @@ struct SubscriptionEmailView: View {
         
     @StateObject var viewModel: SubscriptionEmailViewModel
     @Environment(\.dismiss) var dismiss
-    
+    @EnvironmentObject var subscriptionNavController: SubscriptionNavigationController
     @State var shouldDisplayInactiveError = false
     @State var shouldDisplayNavigationError = false
     @State var backButtonText = UserText.backButtonTitle
-    @Binding var shouldDismissStack: Bool
     
     enum Constants {
         static let navButtonPadding: CGFloat = 20.0
@@ -40,7 +39,7 @@ struct SubscriptionEmailView: View {
     }
         
     var body: some View {
-        Button(action: { shouldDismissStack = true }, label: { Text("Dismiss stack") })
+        Button(action: { subscriptionNavController.shouldDismissStack = true }, label: { Text("Dismiss stack") })
         baseView
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) {
@@ -80,10 +79,6 @@ struct SubscriptionEmailView: View {
             shouldDisplayNavigationError = value
         }
         
-        .onChange(of: viewModel.state.shouldDismissStack) { _ in
-            shouldDismissStack = true
-        }
-        
         // Observe changes to shouldDismissView
         .onChange(of: viewModel.state.shouldDismissView) { shouldDismiss in
             if shouldDismiss {
@@ -91,9 +86,17 @@ struct SubscriptionEmailView: View {
             }
         }
         
+        .onReceive(subscriptionNavController.$shouldDismissStack) { shouldDismiss in
+            if shouldDismiss {
+                print("We should dismiss this stack")
+                dismiss()
+            }
+        }
+        
         .navigationTitle(viewModel.viewTitle)
         
         .onAppear(perform: {
+            print("[Appear] SubscriptionEmailView")
             setUpAppearances()
             viewModel.onAppear()
         })

@@ -121,7 +121,7 @@ struct SettingsSubscriptionView: View {
     
     @ViewBuilder
     private var subscriptionDetailsView: some View {
-        Group {
+        
             if viewModel.shouldShowNetP {
                 SettingsCellView(label: UserText.settingsPProVPNTitle,
                                  subtitle: viewModel.state.networkProtection.status != "" ? viewModel.state.networkProtection.status : nil,
@@ -131,32 +131,28 @@ struct SettingsSubscriptionView: View {
             }
             
             if viewModel.shouldShowDBP {
-                SettingsCellView(label: UserText.settingsPProDBPTitle,
-                                 subtitle: UserText.settingsPProDBPSubTitle,
-                                 action: { isShowingDBP.toggle() }, isButton: true)
-                
-                .sheet(isPresented: $isShowingDBP) {
-                    SubscriptionPIRView()
-                }
+                NavigationLink(destination: SubscriptionPIRView(),
+                               isActive: $isShowingDBP,
+                               label: {
+                    SettingsCellView(label: UserText.settingsPProDBPTitle,
+                                     subtitle: UserText.settingsPProDBPSubTitle)
+                })
                 
             }
-            
+                    
             if viewModel.shouldShowITP {
-                SettingsCellView(label: UserText.settingsPProITRTitle,
-                                 subtitle: UserText.settingsPProITRSubTitle,
-                                 action: { isShowingITP.toggle() }, isButton: true)
-                
-                .sheet(isPresented: $isShowingITP) {
-                    SubscriptionITPView()
-                }
+                NavigationLink(destination: SubscriptionITPView(),
+                               isActive: $isShowingITP,
+                               label: {
+                    SettingsCellView(label: UserText.settingsPProITRTitle,
+                                     subtitle: UserText.settingsPProITRSubTitle)
+                })
                 
             }
 
             NavigationLink(destination: SubscriptionSettingsView()) {
                 SettingsCustomCell(content: { manageSubscriptionView })
             }
-           
-        }
 
     }
     

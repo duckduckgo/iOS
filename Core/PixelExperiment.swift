@@ -78,8 +78,6 @@ extension PixelExperiment {
 final internal class PixelExperimentLogic {
 
     var cohort: PixelExperiment? {
-        return .newSettings
-
         guard isInstalled else { return nil }
 
         // Check if a cohort is already allocated and valid

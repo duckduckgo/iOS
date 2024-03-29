@@ -72,25 +72,9 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     func onFirstAppear() async {
         DispatchQueue.main.async {
             self.resetState()
-            self.state.isLoading = true
         }
-        if state.isAddingDevice {
-            Pixel.fire(pixel: .privacyProSettingsAddDevice, debounce: 2)
-        }
+        await setupContent()
         await setupTransactionObserver()
-        
-        guard let token = accountManager.accessToken else { return }
-        switch await accountManager.fetchAccountDetails(with: token) {
-        case .success(let details):
-            DispatchQueue.main.async {
-                self.state.subscriptionEmail = details.email
-                self.state.isLoading = false
-                self.state.viewTitle = UserText.subscriptionAddDeviceTitle
-            }
-        default:
-            state.isLoading = false
-            self.state.viewTitle = UserText.subscriptionActivate
-        }
     }
         
     func onFirstDisappear() async {
@@ -99,6 +83,30 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     private func cleanUp() {
         cancellables.removeAll()
+    }
+    
+    private func setupContent() async {
+        if state.isAddingDevice {
+            DispatchQueue.main.async {
+                self.state.isLoading = true
+            }
+            Pixel.fire(pixel: .privacyProSettingsAddDevice)
+            guard let token = accountManager.accessToken else { return }
+            switch await accountManager.fetchAccountDetails(with: token) {
+            case .success(let details):
+                DispatchQueue.main.async {
+                    self.state.subscriptionEmail = details.email
+                    self.state.isLoading = false
+                    self.state.viewTitle = UserText.subscriptionAddDeviceTitle
+                }
+            default:
+                state.isLoading = false
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.state.viewTitle = UserText.subscriptionActivate
+            }
+        }
     }
     
     @MainActor

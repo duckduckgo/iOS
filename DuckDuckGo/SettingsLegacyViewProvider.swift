@@ -91,6 +91,7 @@ class SettingsLegacyViewProvider: ObservableObject {
     var syncSettings: UIViewController {
         return SyncSettingsViewController(syncService: self.syncService,
                                           syncBookmarksAdapter: self.syncDataProviders.bookmarksAdapter,
+                                          syncCredentialsAdapter: self.syncDataProviders.credentialsAdapter,
                                           appSettings: self.appSettings)
     }
     

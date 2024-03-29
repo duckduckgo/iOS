@@ -313,11 +313,6 @@ extension Pixel {
         case networkProtectionClientFailedToParseRedeemResponse
         case networkProtectionClientInvalidAuthToken
         
-        case networkProtectionServerListStoreFailedToEncodeServerList
-        case networkProtectionServerListStoreFailedToDecodeServerList
-        case networkProtectionServerListStoreFailedToWriteServerList
-        case networkProtectionServerListStoreFailedToReadServerList
-        
         case networkProtectionKeychainErrorFailedToCastKeychainValueToData
         case networkProtectionKeychainReadError
         case networkProtectionKeychainWriteError
@@ -942,10 +937,6 @@ extension Pixel.Event {
         case .networkProtectionClientFailedToRedeemInviteCode: return "m_netp_backend_api_error_failed_to_redeem_invite_code"
         case .networkProtectionClientFailedToParseRedeemResponse: return "m_netp_backend_api_error_parsing_redeem_response_failed"
         case .networkProtectionClientInvalidAuthToken: return "m_netp_backend_api_error_invalid_auth_token"
-        case .networkProtectionServerListStoreFailedToEncodeServerList: return "m_netp_storage_error_failed_to_encode_server_list"
-        case .networkProtectionServerListStoreFailedToDecodeServerList: return "m_netp_storage_error_failed_to_decode_server_list"
-        case .networkProtectionServerListStoreFailedToWriteServerList: return "m_netp_storage_error_server_list_file_system_write_failed"
-        case .networkProtectionServerListStoreFailedToReadServerList: return "m_netp_storage_error_server_list_file_system_read_failed"
         case .networkProtectionKeychainErrorFailedToCastKeychainValueToData: return "m_netp_keychain_error_failed_to_cast_keychain_value_to_data"
         case .networkProtectionKeychainReadError: return "m_netp_keychain_error_read_failed"
         case .networkProtectionKeychainWriteError: return "m_netp_keychain_error_write_failed"

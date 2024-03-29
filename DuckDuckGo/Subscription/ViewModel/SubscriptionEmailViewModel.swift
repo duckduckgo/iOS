@@ -79,7 +79,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
         
         Task {
             await initializeView()
-            await setupSubscribers()
         }
         setupObservers()
     }
@@ -99,7 +98,13 @@ final class SubscriptionEmailViewModel: ObservableObject {
     
     func onAppear() {
         Task { await initializeView() }
+        Task { await setupSubscribers() }
         webViewModel.navigationCoordinator.navigateTo(url: emailURL )
+    }
+    
+    func onDissappear() {
+        cancellables.removeAll()
+        canGoBackCancellable = nil
     }
     
     @MainActor
@@ -128,6 +133,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     private func setupObservers() {
         // Feature Callback
         subFeature.onSetSubscription = {
+            DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailSuccess)
             UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
             DispatchQueue.main.async {
                 self.state.subscriptionActive = true
@@ -152,6 +158,11 @@ final class SubscriptionEmailViewModel: ObservableObject {
                     self.selectedFeature = .dbp
                 }
                 self.state.shouldDismissStack = true
+                
+                // Reset shouldDismissStack after dismissal to ensure it can be triggered again
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.state.shouldDismissStack = false
+                }
             }
             
         }
@@ -202,10 +213,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
         state.shouldDisplayInactiveError = true
     }
     
-    private func completeActivation() {
-        DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailSuccess)
-    }
-    
     func dismissView() {
         DispatchQueue.main.async {
             self.state.shouldDismissView = true
@@ -214,6 +221,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     
     deinit {
         cancellables.removeAll()
+        canGoBackCancellable = nil
        
     }
 

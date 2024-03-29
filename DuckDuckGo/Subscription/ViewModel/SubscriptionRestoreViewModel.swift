@@ -75,13 +75,21 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     }
     
     func initializeView() {
-        Pixel.fire(pixel: .privacyProSettingsAddDevice)
         Task { await setupTransactionObserver() }
     }
     
     @MainActor
     func onAppear() {
         resetState()
+        Task {
+            guard let token = accountManager.accessToken else { return }
+            if case .success(let details) = await accountManager.fetchAccountDetails(with: token) {
+                DispatchQueue.main.async {
+                    self.state.subscriptionEmail = details.email
+                }
+            }
+        }
+
     }
     
     @MainActor

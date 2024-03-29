@@ -431,7 +431,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if SUBSCRIPTION
     private func setupSubscriptionsEnvironment() {
         Task {
-#if DEBUG && ALPHA
+#if DEBUG || ALPHA
             SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
 #else
             SubscriptionPurchaseEnvironment.currentServiceEnvironment = .production
@@ -500,9 +500,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if NETWORK_PROTECTION
         widgetRefreshModel.refreshVPNWidget()
 
-        if vpnFeatureVisibility.shouldShowThankYouMessaging() && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
-            presentVPNEarlyAccessOverAlert()
-        }
+        stopTunnelAndShowThankYouMessagingIfNeeded()
 
         if tunnelDefaults.showEntitlementAlert {
             presentExpiredEntitlementAlert()
@@ -512,6 +510,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #endif
 
         updateSubscriptionStatus()
+    }
+
+    private func stopTunnelAndShowThankYouMessagingIfNeeded() {
+        if vpnFeatureVisibility.shouldShowThankYouMessaging() && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
+            presentVPNEarlyAccessOverAlert()
+
+            Task {
+                let controller = NetworkProtectionTunnelController()
+
+                if await controller.isConnected {
+                    DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled)
+                }
+
+                await controller.stop()
+                await controller.removeVPN()
+            }
+        }
     }
 
     func updateSubscriptionStatus() {
@@ -525,8 +540,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                                                            cachePolicy: .reloadIgnoringLocalCacheData) {
                 if subscription.isActive {
                     DailyPixel.fire(pixel: .privacyProSubscriptionActive)
-                } else {
-                    accountManager.signOut()
                 }
             }
 

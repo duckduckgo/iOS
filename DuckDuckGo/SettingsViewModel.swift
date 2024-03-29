@@ -578,7 +578,9 @@ extension SettingsViewModel {
                     }
                 }
             } else {
-                // Sign out in case subscription is no longer active
+                // Sign out in case subscription is no longer active, reset the state
+                state.subscription.hasActiveSubscription = false
+                state.subscription.isSubscriptionPendingActivation = false
                 signOutUser()
             }
 

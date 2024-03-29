@@ -204,7 +204,7 @@ struct SubscriptionSettingsView: View {
         })
         
         .onFirstAppear {
-            viewModel.onAppear()
+            viewModel.onFirstAppear()
         }
     }
     

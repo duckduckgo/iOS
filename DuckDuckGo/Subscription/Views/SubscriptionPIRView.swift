@@ -72,7 +72,7 @@ struct SubscriptionPIRView: View {
             }
         }
         .onFirstAppear {
-            viewModel.onAppear()
+            viewModel.onFirstAppear()
         }
     }
         

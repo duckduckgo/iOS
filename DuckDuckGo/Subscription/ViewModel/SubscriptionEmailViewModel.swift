@@ -102,7 +102,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
     
     @MainActor
-    func onAppear() {
+    func onFirstAppear() {
         setupObservers()
         if accountManager.isUserAuthenticated {
             // If user is authenticated, we want to "Add or manage email" instead of activating
@@ -117,7 +117,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
         }
     }
     
-    func onDisappear() {
+    func onFirstDisappear() {
         cancellables.removeAll()
         canGoBackCancellable = nil
     }

@@ -148,7 +148,7 @@ struct SubscriptionRestoreView: View {
             }
         
             .onFirstAppear {
-                Task { await viewModel.onAppear() }
+                Task { await viewModel.onFirstAppear() }
                 setUpAppearances()
                 if viewModel.state.isAddingDevice {
                     Pixel.fire(pixel: .privacyProSettingsAddDevice, debounce: 2)
@@ -156,7 +156,7 @@ struct SubscriptionRestoreView: View {
             }
 
             .onFirstDisappear {
-                Task { await viewModel.onDisappear() }
+                Task { await viewModel.onFirstDisappear() }
            }
                 
     }

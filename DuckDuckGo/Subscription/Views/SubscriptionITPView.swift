@@ -77,7 +77,7 @@ struct SubscriptionITPView: View {
         .tint(Color(designSystemColor: .textPrimary))
         
         .onFirstAppear {
-            viewModel.onAppear()
+            viewModel.onFirstAppear()
             setUpAppearances()
         }
         

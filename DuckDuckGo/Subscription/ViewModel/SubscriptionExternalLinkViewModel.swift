@@ -53,7 +53,7 @@ final class SubscriptionExternalLinkViewModel: ObservableObject {
             }
     }
     
-    func onAppear() {
+    func onFirstAppear() {
         Task { await setupSubscribers() }
         webViewModel.navigationCoordinator.navigateTo(url: url)
         

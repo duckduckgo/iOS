@@ -58,7 +58,7 @@ public struct OnFirstDisappearModifier: ViewModifier {
 }
 
 extension View {
-    
+        
     func onFirstAppear(_ onFirstAppearAction: @escaping () -> Void ) -> some View {
         return modifier(OnFirstAppearModifier(onFirstAppearAction))
     }

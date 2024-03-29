@@ -131,7 +131,7 @@ struct SubscriptionEmailView: View {
         
         .onFirstAppear {
             setUpAppearances()
-            viewModel.onAppear()
+            viewModel.onFirstAppear()
         }
         
     }

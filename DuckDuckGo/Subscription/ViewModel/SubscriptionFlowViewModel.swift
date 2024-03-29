@@ -233,7 +233,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
 
     @MainActor
-    private func resetState() {
+    func resetState() {
         self.state = State()
     }
     
@@ -253,7 +253,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
 
     // MARK: -
     
-    func onAppear() async {
+    func onFirstAppear() async {
         DispatchQueue.main.async {
             self.resetState()
         }
@@ -265,10 +265,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
         Pixel.fire(pixel: .privacyProOfferScreenImpression)
     }
         
-    func onDisappear() async {
-        DispatchQueue.main.async {
-            self.resetState()
-        }
+    func onFirstDisappear() async {
         cleanUp()
     }
 

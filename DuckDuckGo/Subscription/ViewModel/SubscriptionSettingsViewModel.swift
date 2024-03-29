@@ -69,7 +69,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         return formatter
     }()
     
-    func onAppear() {
+    func onFirstAppear() {
         fetchAndUpdateSubscriptionDetails()
     }
         

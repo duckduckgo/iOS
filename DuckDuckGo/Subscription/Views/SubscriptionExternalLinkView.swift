@@ -52,7 +52,7 @@ struct SubscriptionExternalLinkView: View {
             
             .onFirstAppear {
                 setUpAppearances()
-                viewModel.onAppear()
+                viewModel.onFirstAppear()
             }
         }.tint(Color(designSystemColor: .textPrimary))
     }

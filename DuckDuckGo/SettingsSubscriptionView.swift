@@ -28,6 +28,7 @@ struct SettingsSubscriptionView: View {
     @EnvironmentObject var viewModel: SettingsViewModel
     @State var isShowingDBP = false
     @State var isShowingITP = false
+    @State private var navigationCoordinator = SubscriptionNavigationCoordinator()
     
     enum Constants {
         static let purchaseDescriptionPadding = 5.0
@@ -77,12 +78,16 @@ struct SettingsSubscriptionView: View {
         Group {
             SettingsCustomCell(content: { subscriptionDescriptionView })
             
-            NavigationLink(destination: SubscriptionContainerView(currentView: .subscribe).navigationViewStyle(.stack),
+            NavigationLink(destination: SubscriptionContainerView(currentView: .subscribe)
+                .navigationViewStyle(.stack)
+                .environmentObject(navigationCoordinator),
                            label: {
                                 SettingsCellView(label: UserText.settingsPProLearnMore )
                             })
             
-            NavigationLink(destination: SubscriptionContainerView(currentView: .restore).navigationViewStyle(.stack),
+            NavigationLink(destination: SubscriptionContainerView(currentView: .restore)
+                .navigationViewStyle(.stack)
+                .environmentObject(navigationCoordinator),
                            label: {
                                 SettingsCellView(label: UserText.settingsPProIHaveASubscription )
                             })
@@ -143,7 +148,8 @@ struct SettingsSubscriptionView: View {
                 
             }
             
-            NavigationLink(destination: SubscriptionContainerView(currentView: .subscribe).navigationViewStyle(.stack),
+            NavigationLink(destination: SubscriptionContainerView(currentView: .subscribe)
+                .navigationViewStyle(.stack),
                            label: {
                                 Text("TEST: Remove me")
                             })

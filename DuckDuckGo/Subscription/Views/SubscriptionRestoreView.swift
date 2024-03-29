@@ -150,9 +150,6 @@ struct SubscriptionRestoreView: View {
             .onFirstAppear {
                 Task { await viewModel.onFirstAppear() }
                 setUpAppearances()
-                if viewModel.state.isAddingDevice {
-                    Pixel.fire(pixel: .privacyProSettingsAddDevice, debounce: 2)
-                }
             }
 
             .onFirstDisappear {
@@ -184,37 +181,39 @@ struct SubscriptionRestoreView: View {
                     .foregroundColor(Color(designSystemColor: .textPrimary))
             }
             
-            VStack(alignment: .leading) {
-                if !viewModel.state.isAddingDevice {
-                    Text(UserText.subscriptionActivateEmailDescription)
-                        .daxSubheadRegular()
-                        .foregroundColor(Color(designSystemColor: .textSecondary))
-                    getCellButton(buttonText: UserText.subscriptionActivateEmailButton,
-                                  action: {
-                        DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailStart)
-                        DailyPixel.fire(pixel: .privacyProWelcomeAddDevice)
-                        viewModel.showActivationFlow(true)
-                    })
-                } else if viewModel.state.subscriptionEmail == nil {
-                    Text(UserText.subscriptionAddDeviceEmailDescription)
-                        .daxSubheadRegular()
-                        .foregroundColor(Color(designSystemColor: .textSecondary))
-                    getCellButton(buttonText: UserText.subscriptionRestoreAddEmailButton,
-                                  action: {
-                        Pixel.fire(pixel: .privacyProAddDeviceEnterEmail, debounce: 1)
-                        viewModel.showActivationFlow(true)
-                    })
-                } else {
-                    Text(viewModel.state.subscriptionEmail ?? "").daxSubheadSemibold()
-                    Text(UserText.subscriptionManageEmailDescription)
-                        .daxSubheadRegular()
-                        .foregroundColor(Color(designSystemColor: .textSecondary))
-                    HStack {
-                        getCellButton(buttonText: UserText.subscriptionManageEmailButton,
+            if !viewModel.state.isLoading {
+                VStack(alignment: .leading) {
+                    if !viewModel.state.isAddingDevice {
+                        Text(UserText.subscriptionActivateEmailDescription)
+                            .daxSubheadRegular()
+                            .foregroundColor(Color(designSystemColor: .textSecondary))
+                        getCellButton(buttonText: UserText.subscriptionActivateEmailButton,
                                       action: {
-                            Pixel.fire(pixel: .privacyProSubscriptionManagementEmail, debounce: 1)
+                            DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailStart)
+                            DailyPixel.fire(pixel: .privacyProWelcomeAddDevice)
                             viewModel.showActivationFlow(true)
                         })
+                    } else if viewModel.state.subscriptionEmail == nil {
+                        Text(UserText.subscriptionAddDeviceEmailDescription)
+                            .daxSubheadRegular()
+                            .foregroundColor(Color(designSystemColor: .textSecondary))
+                        getCellButton(buttonText: UserText.subscriptionRestoreAddEmailButton,
+                                      action: {
+                            Pixel.fire(pixel: .privacyProAddDeviceEnterEmail, debounce: 1)
+                            viewModel.showActivationFlow(true)
+                        })
+                    } else {
+                        Text(viewModel.state.subscriptionEmail ?? "").daxSubheadSemibold()
+                        Text(UserText.subscriptionManageEmailDescription)
+                            .daxSubheadRegular()
+                            .foregroundColor(Color(designSystemColor: .textSecondary))
+                        HStack {
+                            getCellButton(buttonText: UserText.subscriptionManageEmailButton,
+                                          action: {
+                                Pixel.fire(pixel: .privacyProSubscriptionManagementEmail, debounce: 1)
+                                viewModel.showActivationFlow(true)
+                            })
+                        }
                     }
                 }
             }

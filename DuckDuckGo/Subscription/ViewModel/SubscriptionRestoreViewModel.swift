@@ -47,10 +47,8 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         var isShowingActivationFlow = false
         var shouldShowPlans = false
         var shouldDismissView = false
-        
-        var viewTitle: String {
-            isAddingDevice ? UserText.subscriptionAddDeviceTitle : UserText.subscriptionActivate
-        }
+        var isLoading = false
+        var viewTitle: String = ""
     }
     
     // Publish the currently selected feature    
@@ -71,20 +69,27 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         self.state.isAddingDevice = false
     }
     
-    func onAppear() {
+    func onFirstAppear() async {
         DispatchQueue.main.async {
             self.resetState()
+            self.state.isLoading = true
         }
-    }
-    
-    func onFirstAppear() async {
-        Pixel.fire(pixel: .privacyProSettingsAddDevice)
+        if state.isAddingDevice {
+            Pixel.fire(pixel: .privacyProSettingsAddDevice, debounce: 2)
+        }
         await setupTransactionObserver()
+        
         guard let token = accountManager.accessToken else { return }
-        if case .success(let details) = await accountManager.fetchAccountDetails(with: token) {
+        switch await accountManager.fetchAccountDetails(with: token) {
+        case .success(let details):
             DispatchQueue.main.async {
                 self.state.subscriptionEmail = details.email
+                self.state.isLoading = false
+                self.state.viewTitle = UserText.subscriptionAddDeviceTitle
             }
+        default:
+            state.isLoading = false
+            self.state.viewTitle = UserText.subscriptionActivate
         }
     }
         

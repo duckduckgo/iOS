@@ -53,8 +53,7 @@ struct SubscriptionEmailView: View {
         NavigationLink(destination: SubscriptionPIRView().navigationViewStyle(.stack),
                        isActive: $isShowingDBP,
                        label: { EmptyView() })
-                
-        Button(action: { navigationCoordinator.shouldPopToAppSettings = true }) { Text("Pop to root") }
+                        
         baseView
         
         .toolbar {

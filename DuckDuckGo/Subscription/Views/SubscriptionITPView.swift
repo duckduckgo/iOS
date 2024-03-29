@@ -76,11 +76,10 @@ struct SubscriptionITPView: View {
         .navigationBarTitleDisplayMode(.inline)
         .tint(Color(designSystemColor: .textPrimary))
         
-        .onAppear(perform: {
-            print("[Appear] SubscriptionITPView")
-            setUpAppearances()
+        .onFirstAppear {
             viewModel.initializeView()
-        })
+            setUpAppearances()
+        }
         
         .alert(isPresented: $viewModel.navigationError) {
             Alert(

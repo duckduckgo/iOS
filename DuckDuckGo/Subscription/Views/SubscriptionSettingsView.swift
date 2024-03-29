@@ -177,9 +177,8 @@ struct SubscriptionSettingsView: View {
             viewModel.displayFAQView(value)
         }
         
-        .onReceive(navigationCoordinator.$shouldDismissStack) { shouldDismiss in
+        .onReceive(navigationCoordinator.$shouldPopToSubscriptionSettings) { shouldDismiss in
             if shouldDismiss {
-                print("We should dismiss this stack")
                 isShowingRestoreView = false
             }
         }
@@ -205,8 +204,7 @@ struct SubscriptionSettingsView: View {
         })
         
         .onAppear {
-            print("[Appear] SubscriptionSettingsView")
-            viewModel.fetchAndUpdateSubscriptionDetails()
+            viewModel.onAppear()
         }
     }
     

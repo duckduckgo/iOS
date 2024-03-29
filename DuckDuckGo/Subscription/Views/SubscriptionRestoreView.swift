@@ -152,7 +152,6 @@ struct SubscriptionRestoreView: View {
             }
         
             .onAppear {
-                print("[Appear] SubscriptionRestoreView")
                 Task { await viewModel.onAppear() }
                 setUpAppearances()
                 if viewModel.state.isAddingDevice {
@@ -161,7 +160,6 @@ struct SubscriptionRestoreView: View {
             }
 
             .onDisappear {
-                print("[DisAppear] SubscriptionRestoreView")
                 Task { await viewModel.onDissappear() }
            }
                 

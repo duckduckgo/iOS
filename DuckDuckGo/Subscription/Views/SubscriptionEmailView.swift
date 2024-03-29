@@ -54,7 +54,9 @@ struct SubscriptionEmailView: View {
                        isActive: $isShowingDBP,
                        label: { EmptyView() })
                 
+        Button(action: { navigationCoordinator.shouldPopToAppSettings = true }) { Text("Pop to root") }
         baseView
+        
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) {
                 browserBackButton
@@ -99,10 +101,16 @@ struct SubscriptionEmailView: View {
                 dismiss()
             }
         }
-        
-        .onChange(of: viewModel.state.shouldDismissStack) { shouldDismiss in
+                
+        .onChange(of: viewModel.state.shouldPopToSubscriptionSettings) { shouldDismiss in
             if shouldDismiss {
-                navigationCoordinator.shouldDismissStack.toggle()
+                navigationCoordinator.shouldPopToSubscriptionSettings.toggle()
+            }
+        }
+        
+        .onChange(of: viewModel.state.shouldPopToAppSettings) { shouldDismiss in
+            if shouldDismiss {
+                navigationCoordinator.shouldPopToAppSettings.toggle()
             }
         }
         
@@ -126,7 +134,6 @@ struct SubscriptionEmailView: View {
         }
         
         .onAppear(perform: {
-            print("[Appear] SubscriptionEmailView")
             setUpAppearances()
             viewModel.onAppear()
         })

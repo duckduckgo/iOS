@@ -28,6 +28,8 @@ struct SettingsSubscriptionView: View {
     @EnvironmentObject var viewModel: SettingsViewModel
     @State var isShowingDBP = false
     @State var isShowingITP = false
+    @State var isShowingRestoreFlow = false
+    @State var isShowingSubscribeFlow = false
     @State private var navigationCoordinator = SubscriptionNavigationCoordinator()
     
     enum Constants {
@@ -75,24 +77,26 @@ struct SettingsSubscriptionView: View {
     
     @ViewBuilder
     private var purchaseSubscriptionView: some View {
+
         Group {
             SettingsCustomCell(content: { subscriptionDescriptionView })
             
-            NavigationLink(destination: SubscriptionContainerView(currentView: .subscribe)
+            let subscribeView = SubscriptionContainerView(currentView: .subscribe)
                 .navigationViewStyle(.stack)
-                .environmentObject(navigationCoordinator),
-                           label: {
-                                SettingsCellView(label: UserText.settingsPProLearnMore )
-                            })
+                .environmentObject(navigationCoordinator)
+            let restoreView = SubscriptionContainerView(currentView: .restore)
+                .navigationViewStyle(.stack)
+                .environmentObject(navigationCoordinator)
             
-            NavigationLink(destination: SubscriptionContainerView(currentView: .restore)
-                .navigationViewStyle(.stack)
-                .environmentObject(navigationCoordinator),
-                           label: {
-                                SettingsCellView(label: UserText.settingsPProIHaveASubscription )
-                            })
-                        
+            NavigationLink(destination: subscribeView,
+                           isActive: $isShowingSubscribeFlow,
+                           label: { SettingsCellView(label: UserText.settingsPProLearnMore ) })
+            
+            NavigationLink(destination: restoreView,
+                           isActive: $isShowingRestoreFlow,
+                           label: { SettingsCellView(label: UserText.settingsPProIHaveASubscription ) })
         }
+
         
     }
 
@@ -176,6 +180,13 @@ struct SettingsSubscriptionView: View {
                     noEntitlementsAvailableView
                 } else {
                     purchaseSubscriptionView
+                }
+            }
+            
+            .onReceive(navigationCoordinator.$shouldPopToAppSettings) { shouldDismiss in
+                if shouldDismiss {
+                    isShowingRestoreFlow = false
+                    isShowingSubscribeFlow = false
                 }
             }
     

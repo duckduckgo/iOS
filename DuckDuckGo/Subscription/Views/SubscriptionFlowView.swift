@@ -176,13 +176,11 @@ struct SubscriptionFlowView: View {
         }
         
         .onAppear(perform: {
-            print("[Appear] SubscriptionFlowView")
             setUpAppearances()
             Task { await viewModel.onAppear() }
         })
         
         .onDisappear(perform: {
-            print("[Dissapear] SubscriptionFlowView")
             Task { await viewModel.onDisappear() }
         })
                 

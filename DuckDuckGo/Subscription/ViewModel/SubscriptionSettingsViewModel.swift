@@ -70,21 +70,26 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         return formatter
     }()
     
-    @MainActor
-    func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad) {
+    func onAppear() {
+        fetchAndUpdateSubscriptionDetails()
+    }
+        
+    private func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad) {
         Task {
             guard let token = self.accountManager.accessToken else { return }
             let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
             switch subscriptionResult {
             case .success(let subscription):
                 subscriptionInfo = subscription
-                updateSubscriptionsStatusMessage(status: subscription.status,
+                await updateSubscriptionsStatusMessage(status: subscription.status,
                                                 date: subscription.expiresOrRenewsAt,
                                                 product: subscription.productId,
                                                 billingPeriod: subscription.billingPeriod)
             case .failure:
                 AccountManager().signOut()
-                state.shouldDismissView = true
+                DispatchQueue.main.async {
+                    self.state.shouldDismissView = true
+                }
             }
         }
     }
@@ -117,12 +122,11 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     private func setupSubscriptionUpdater() {
         subscriptionUpdateTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { [weak self] _ in
             guard let strongSelf = self else { return }
-            Task {
-                await strongSelf.fetchAndUpdateSubscriptionDetails(cachePolicy: .reloadIgnoringLocalCacheData)
-            }
+                strongSelf.fetchAndUpdateSubscriptionDetails(cachePolicy: .reloadIgnoringLocalCacheData)
         }
     }
     
+    @MainActor
     private func updateSubscriptionsStatusMessage(status: Subscription.Status, date: Date, product: String, billingPeriod: Subscription.BillingPeriod) {
         let statusString = (status == .autoRenewable) ? UserText.subscriptionRenews : UserText.subscriptionExpires
         state.subscriptionDetails = UserText.subscriptionInfo(status: statusString, expiration: dateFormatter.string(from: date))

@@ -20,11 +20,14 @@
 import Foundation
 
 final class SubscriptionNavigationCoordinator: ObservableObject {
-    @Published var shouldDismissStack: Bool = false {
+    @Published var shouldPopToSubscriptionSettings: Bool = false {
         didSet {
-            if shouldDismissStack {
-                shouldDismissStack = false
-            }
+            print("[DISMISS]: Should Dismiss Manage Stack")
+        }
+    }
+    @Published var shouldPopToAppSettings: Bool = false {
+        didSet {
+            print("[DISMISS]: Should Dismiss Activation Stack")
         }
     }
 }

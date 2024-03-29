@@ -49,10 +49,11 @@ final class SubscriptionEmailViewModel: ObservableObject {
         var isPresentingInactiveError: Bool = false
         var canNavigateBack: Bool = false
         var shouldDismissView: Bool = false
-        var shouldDismissStack: Bool = false
         var subscriptionActive: Bool = false
         var backButtonTitle: String = UserText.backButtonTitle
         var selectedFeature: SelectedFeature = .none
+        var shouldPopToSubscriptionSettings: Bool = false
+        var shouldPopToAppSettings: Bool = false
     }
     
     // Read only View State - Should only be modified from the VM
@@ -91,8 +92,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
             if webViewModel.url?.forComparison() != URL.subscriptionPurchase.forComparison() {
                 state.shouldDismissView = true
             } else {
-                canGoBackCancellable = nil
-                state.shouldDismissStack = true
+                state.shouldPopToAppSettings = true
             }
         }
     }
@@ -120,7 +120,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
             // Also we assume subscription requires managing, and not activation
             state.managingSubscriptionEmail = true
         }
-        if webViewModel.url == nil {
+        if webViewModel.url?.forComparison() != URL.subscriptionActivateSuccess {
             self.webViewModel.navigationCoordinator.navigateTo(url: self.emailURL)
         }
         
@@ -198,6 +198,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
         if self.webViewModel.url?.forComparison() != URL.subscriptionActivateSuccess.forComparison() &&
             self.webViewModel.url?.forComparison() != URL.subscriptionPurchase.forComparison() {
             self.state.canNavigateBack = canNavigateBack
+            self.state.backButtonTitle = UserText.backButtonTitle
         } else {
             self.state.backButtonTitle = UserText.settingsTitle
         }
@@ -226,7 +227,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     
     func dismissStack() {
         DispatchQueue.main.async {
-            self.state.shouldDismissStack = true
+            self.state.shouldPopToSubscriptionSettings = true
         }
     }
     

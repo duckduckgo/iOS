@@ -71,10 +71,9 @@ struct SubscriptionPIRView: View {
                 }
             }
         }
-        .onAppear(perform: {
-            print("[Appear] SubscriptionPIRView")
-            viewModel.onAppear()
-        })
+        .onFirstAppear {
+            viewModel.onFirstAppear()
+        }
     }
         
     

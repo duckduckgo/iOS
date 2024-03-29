@@ -22,6 +22,16 @@ import SwiftUI
 import DesignResourcesKit
 import Core
 
+final class SubscriptionNavigationCoordinator: ObservableObject {
+    @Published var shouldDismissStack: Bool = false {
+        didSet {
+            if shouldDismissStack {
+                shouldDismissStack = false
+            }
+        }
+    }
+}
+
 #if SUBSCRIPTION
 @available(iOS 15.0, *)
 struct SubscriptionSettingsView: View {
@@ -29,12 +39,13 @@ struct SubscriptionSettingsView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = SubscriptionSettingsViewModel()
     
-    @State private var rootPresentation: Bool = false
+    @State var navigationCoordinator = SubscriptionNavigationCoordinator()
     
     @State var isShowingStripeView = false
     @State var isShowingGoogleView = false
     @State var isShowingRemovalNotice = false
     @State var isShowingFAQView = false
+    @State var isShowingRestoreView = false
     
     var body: some View {
         optionsView
@@ -85,13 +96,14 @@ struct SubscriptionSettingsView: View {
     private var devicesSection: some View {
         Section(header: Text(UserText.subscriptionManageDevices)) {
             
-                NavigationLink(destination: SubscriptionContainerView(currentView: .restore),
-                               isActive: $rootPresentation) {
+            NavigationLink(destination: SubscriptionContainerView(currentView: .restore)
+                                            .environmentObject(navigationCoordinator),
+                           isActive: $isShowingRestoreView) {
                 SettingsCustomCell(content: {
                     Text(UserText.subscriptionAddDeviceButton)
                         .daxBodyRegular()
                 })
-                }.isDetailLink(false)
+            }.isDetailLink(false)
 
             SettingsCustomCell(content: {
                 Text(UserText.subscriptionRemoveFromDevice)
@@ -173,6 +185,13 @@ struct SubscriptionSettingsView: View {
         }
         .onChange(of: isShowingFAQView) { value in
             viewModel.displayFAQView(value)
+        }
+        
+        .onReceive(navigationCoordinator.$shouldDismissStack) { shouldDismiss in
+            if shouldDismiss {
+                print("We should dismiss this stack")
+                isShowingRestoreView = false
+            }
         }
 
         

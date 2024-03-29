@@ -77,11 +77,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
                                                           settings: AsyncHeadlessWebViewSettings(bounces: false,
                                                                                                  allowedDomains: Self.allowedDomains,
                                                                                                  contentBlocking: false))
-        
-        Task {
-            await initializeView()
-        }
-        setupObservers()
     }
     
     @MainActor
@@ -106,8 +101,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     
     func onAppear() {
         Task { await initializeView() }
-        Task { await setupSubscribers() }
-        webViewModel.navigationCoordinator.navigateTo(url: emailURL )
+        setupObservers()
     }
     
     func onDissappear() {
@@ -125,17 +119,18 @@ final class SubscriptionEmailViewModel: ObservableObject {
             // Also we assume subscription requires managing, and not activation
             state.managingSubscriptionEmail = true
         }
+        webViewModel.navigationCoordinator.navigateTo(url: emailURL)
     }
-    
-    private func setupSubscribers() async {
+        
+    private func setupObservers() {
+        
+        // Webview navigation
         canGoBackCancellable = webViewModel.$canGoBack
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 self?.updateBackButton(canNavigateBack: value)
             }
-    }
-    
-    private func setupObservers() {
+        
         // Feature Callback
         subFeature.onSetSubscription = {
             DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailSuccess)
@@ -143,10 +138,11 @@ final class SubscriptionEmailViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.state.subscriptionActive = true
             }
+            self.dismissStack()
         }
         
         subFeature.onBackToSettings = {
-            self.dismissView()
+            self.dismissStack()
         }
         
         subFeature.onFeatureSelected = { feature in
@@ -221,6 +217,12 @@ final class SubscriptionEmailViewModel: ObservableObject {
     func dismissView() {
         DispatchQueue.main.async {
             self.state.shouldDismissView = true
+        }
+    }
+    
+    func dismissStack() {
+        DispatchQueue.main.async {
+            self.state.shouldDismissStack = true
         }
     }
     

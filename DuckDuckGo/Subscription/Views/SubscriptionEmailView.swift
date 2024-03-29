@@ -27,6 +27,7 @@ import Combine
 struct SubscriptionEmailView: View {
         
     @StateObject var viewModel: SubscriptionEmailViewModel
+    @EnvironmentObject var navigationCoordinator: SubscriptionNavigationCoordinator
     @Environment(\.dismiss) var dismiss
         
     @State var isPresentingInactiveError = false
@@ -82,6 +83,12 @@ struct SubscriptionEmailView: View {
         .onChange(of: viewModel.state.shouldDismissView) { shouldDismiss in
             if shouldDismiss {
                 dismiss()
+            }
+        }
+        
+        .onChange(of: viewModel.state.shouldDismissStack) { shouldDismiss in
+            if shouldDismiss {
+                navigationCoordinator.shouldDismissStack.toggle()
             }
         }
         

@@ -26,7 +26,7 @@ import Subscription
 struct SettingsSubscriptionView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
-    @EnvironmentObject var navigationCoordinator: SubscriptionNavigationCoordinator
+    @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
     @State var isShowingDBP = false
     @State var isShowingITP = false
     @State var isShowingRestoreFlow = false
@@ -83,10 +83,10 @@ struct SettingsSubscriptionView: View {
             
             let subscribeView = SubscriptionContainerView(currentView: .subscribe)
                 .navigationViewStyle(.stack)
-                .environmentObject(navigationCoordinator)
+                .environmentObject(subscriptionNavigationCoordinator)
             let restoreView = SubscriptionContainerView(currentView: .restore)
                 .navigationViewStyle(.stack)
-                .environmentObject(navigationCoordinator)
+                .environmentObject(subscriptionNavigationCoordinator)
             
             NavigationLink(destination: subscribeView,
                            isActive: $isShowingSubscribeFlow,
@@ -150,9 +150,9 @@ struct SettingsSubscriptionView: View {
                 
             }
 
-            NavigationLink(destination: SubscriptionSettingsView()) {
+        NavigationLink(destination: SubscriptionSettingsView().environmentObject(subscriptionNavigationCoordinator)) {
                 SettingsCustomCell(content: { manageSubscriptionView })
-            }
+        }
 
     }
     
@@ -179,7 +179,7 @@ struct SettingsSubscriptionView: View {
                 }
             }
             
-            .onReceive(navigationCoordinator.$shouldPopToAppSettings) { shouldDismiss in
+            .onReceive(subscriptionNavigationCoordinator.$shouldPopToAppSettings) { shouldDismiss in
                 if shouldDismiss {
                     isShowingRestoreFlow = false
                     isShowingSubscribeFlow = false

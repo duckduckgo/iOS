@@ -29,7 +29,7 @@ struct SubscriptionContainerView: View {
     }
     
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var navigationCoordinator: SubscriptionNavigationCoordinator
+    @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
     @State private var currentViewState: CurrentView
     private let flowViewModel: SubscriptionFlowViewModel
     private let restoreViewModel: SubscriptionRestoreViewModel
@@ -50,11 +50,11 @@ struct SubscriptionContainerView: View {
             switch currentViewState {
             case .subscribe:
                 SubscriptionFlowView(viewModel: flowViewModel,
-                                     currentView: $currentViewState).environmentObject(navigationCoordinator)
+                                     currentView: $currentViewState).environmentObject(subscriptionNavigationCoordinator)
             case .restore:
                 SubscriptionRestoreView(viewModel: restoreViewModel,
                                         emailViewModel: emailViewModel,
-                                        currentView: $currentViewState).environmentObject(navigationCoordinator)
+                                        currentView: $currentViewState).environmentObject(subscriptionNavigationCoordinator)
             }
         }
     }

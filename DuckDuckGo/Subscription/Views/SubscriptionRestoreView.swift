@@ -30,7 +30,7 @@ struct SubscriptionRestoreView: View {
 
     @Environment(\.dismiss) var dismiss
     
-    @EnvironmentObject var navigationCoordinator: SubscriptionNavigationCoordinator
+    @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
     @StateObject var viewModel: SubscriptionRestoreViewModel
     @StateObject var emailViewModel: SubscriptionEmailViewModel
     
@@ -93,7 +93,7 @@ struct SubscriptionRestoreView: View {
                     Spacer()
                     
                     // Hidden link to display Email Activation View
-                    NavigationLink(destination: SubscriptionEmailView(viewModel: emailViewModel).environmentObject(navigationCoordinator),
+                    NavigationLink(destination: SubscriptionEmailView(viewModel: emailViewModel).environmentObject(subscriptionNavigationCoordinator),
                                    isActive: $isShowingActivationFlow) {
                           EmptyView()
                     }.isDetailLink(false)

@@ -27,7 +27,7 @@ import Core
 struct SubscriptionFlowView: View {
         
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var navigationCoordinator: SubscriptionNavigationCoordinator
+    @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
     @StateObject var viewModel: SubscriptionFlowViewModel
     
     @State private var isPurchaseInProgress = false

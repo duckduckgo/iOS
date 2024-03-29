@@ -28,7 +28,7 @@ struct SubscriptionSettingsView: View {
         
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = SubscriptionSettingsViewModel()
-    @EnvironmentObject var navigationCoordinator: SubscriptionNavigationCoordinator
+    @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
     
     @State var isShowingStripeView = false
     @State var isShowingGoogleView = false
@@ -86,7 +86,7 @@ struct SubscriptionSettingsView: View {
         Section(header: Text(UserText.subscriptionManageDevices)) {
             
             NavigationLink(destination: SubscriptionContainerView(currentView: .restore)
-                                            .environmentObject(navigationCoordinator),
+                                            .environmentObject(subscriptionNavigationCoordinator),
                            isActive: $isShowingRestoreView) {
                 SettingsCustomCell(content: {
                     Text(UserText.subscriptionAddDeviceButton)
@@ -176,7 +176,7 @@ struct SubscriptionSettingsView: View {
             viewModel.displayFAQView(value)
         }
         
-        .onReceive(navigationCoordinator.$shouldPopToSubscriptionSettings) { shouldDismiss in
+        .onReceive(subscriptionNavigationCoordinator.$shouldPopToSubscriptionSettings) { shouldDismiss in
             if shouldDismiss {
                 isShowingRestoreView = false
             }
@@ -218,18 +218,6 @@ struct SubscriptionSettingsView: View {
 }
 #endif
 
-
-#if SUBSCRIPTION && DEBUG
-@available(iOS 15.0, *)
-
-struct SubscriptionSettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            SubscriptionSettingsView().navigationBarTitleDisplayMode(.inline)
-        }
-    }
-}
-
 // Commented out because CI fails if a SwiftUI preview is enabled https://app.asana.com/0/414709148257752/1206774081310425/f
 // @available(iOS 15.0, *)
 // struct SubscriptionSettingsView_Previews: PreviewProvider {
@@ -237,5 +225,3 @@ struct SubscriptionSettingsView_Previews: PreviewProvider {
 //        SubscriptionSettingsView()
 //    }
 // }
-
-#endif

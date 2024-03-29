@@ -110,7 +110,7 @@ struct SettingsView: View {
                 DispatchQueue.main.async {
                     self.shouldDisplayDeepLinkSheet = true
                 }
-            case .navigation:
+            case .navigationLink:
                 DispatchQueue.main.async {
                     self.shouldDisplayDeepLinkPush = true
                 }

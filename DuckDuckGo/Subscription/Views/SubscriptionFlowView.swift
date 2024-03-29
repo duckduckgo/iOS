@@ -171,6 +171,10 @@ struct SubscriptionFlowView: View {
             }
         }
         
+        .onFirstAppear {
+            viewModel.onFirstAppear()
+        }
+        
         .onAppear(perform: {
             print("[Appear] SubscriptionFlowView")
             setUpAppearances()

@@ -146,7 +146,11 @@ struct SubscriptionRestoreView: View {
                     currentView = .subscribe
                 }
             }
-            
+                
+            .onFirstAppear {
+                viewModel.onFirstAppear()
+            }
+        
             .onAppear {
                 print("[Appear] SubscriptionRestoreView")
                 Task { await viewModel.onAppear() }

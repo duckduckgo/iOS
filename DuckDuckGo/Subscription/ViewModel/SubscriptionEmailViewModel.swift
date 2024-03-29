@@ -37,6 +37,10 @@ final class SubscriptionEmailViewModel: ObservableObject {
     var viewTitle = UserText.subscriptionActivateEmailTitle
     var webViewModel: AsyncHeadlessWebViewViewModel
     
+    enum SelectedFeature {
+        case netP, dbp, itr, none
+    }
+    
     struct State {
         var subscriptionEmail: String?
         var managingSubscriptionEmail = false
@@ -48,13 +52,11 @@ final class SubscriptionEmailViewModel: ObservableObject {
         var shouldDismissStack: Bool = false
         var subscriptionActive: Bool = false
         var backButtonTitle: String = UserText.backButtonTitle
+        var selectedFeature: SelectedFeature = .none
     }
     
     // Read only View State - Should only be modified from the VM
     @Published private(set) var state = State()
-    
-    // Publish the currently selected feature
-    @Published var selectedFeature: SettingsViewModel.SettingsDeepLinkSection?
     
     private static let allowedDomains = [ "duckduckgo.com" ]
     
@@ -100,7 +102,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
     
     func onAppear() {
-        Task { await initializeView() }
         setupObservers()
     }
     
@@ -110,7 +111,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
     
     @MainActor
-    private func initializeView() {
+    func onFirstAppear() {
         if accountManager.isUserAuthenticated {
             // If user is authenticated, we want to "Add or manage email" instead of activating
             emailURL = accountManager.email == nil ? URL.addEmailToSubscription : URL.manageSubscriptionEmail
@@ -119,7 +120,10 @@ final class SubscriptionEmailViewModel: ObservableObject {
             // Also we assume subscription requires managing, and not activation
             state.managingSubscriptionEmail = true
         }
-        webViewModel.navigationCoordinator.navigateTo(url: emailURL)
+        if webViewModel.url == nil {
+            self.webViewModel.navigationCoordinator.navigateTo(url: self.emailURL)
+        }
+        
     }
         
     private func setupObservers() {
@@ -150,13 +154,13 @@ final class SubscriptionEmailViewModel: ObservableObject {
                 switch feature {
                 case .netP:
                     UniquePixel.fire(pixel: .privacyProWelcomeVPN)
-                    self.selectedFeature = .netP
+                    self.state.selectedFeature = .netP
                 case .itr:
                     UniquePixel.fire(pixel: .privacyProWelcomePersonalInformationRemoval)
-                    self.selectedFeature = .itr
+                    self.state.selectedFeature = .itr
                 case .dbp:
                     UniquePixel.fire(pixel: .privacyProWelcomeIdentityRestoration)
-                    self.selectedFeature = .dbp
+                    self.state.selectedFeature = .dbp
                 }
             }
             

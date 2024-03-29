@@ -22,16 +22,6 @@ import SwiftUI
 import DesignResourcesKit
 import Core
 
-final class SubscriptionNavigationCoordinator: ObservableObject {
-    @Published var shouldDismissStack: Bool = false {
-        didSet {
-            if shouldDismissStack {
-                shouldDismissStack = false
-            }
-        }
-    }
-}
-
 #if SUBSCRIPTION
 @available(iOS 15.0, *)
 struct SubscriptionSettingsView: View {

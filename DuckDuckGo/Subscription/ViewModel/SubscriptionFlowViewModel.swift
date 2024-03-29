@@ -252,15 +252,20 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
 
     // MARK: -
-        
+    
+    func onFirstAppear() {
+        if webViewModel.url == nil {
+            self.webViewModel.navigationCoordinator.navigateTo(url: self.purchaseURL)
+        }
+        Pixel.fire(pixel: .privacyProOfferScreenImpression)
+    }
+    
     func onAppear() async {
         DispatchQueue.main.async {
             self.resetState()
         }
-        Pixel.fire(pixel: .privacyProOfferScreenImpression, debounce: 2)
         await self.setupTransactionObserver()
         await self .setupWebViewObservers()
-        self.webViewModel.navigationCoordinator.navigateTo(url: self.purchaseURL )
     }
         
     func onDisappear() async {

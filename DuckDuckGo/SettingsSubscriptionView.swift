@@ -147,12 +147,6 @@ struct SettingsSubscriptionView: View {
                 }
                 
             }
-            
-            NavigationLink(destination: SubscriptionContainerView(currentView: .subscribe)
-                .navigationViewStyle(.stack),
-                           label: {
-                                Text("TEST: Remove me")
-                            })
 
             NavigationLink(destination: SubscriptionSettingsView()) {
                 SettingsCustomCell(content: { manageSubscriptionView })

@@ -71,12 +71,15 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         self.state.isAddingDevice = false
     }
     
+    func onFirstAppear() {
+        Pixel.fire(pixel: .privacyProSettingsAddDevice)
+    }
     
     func onAppear() async {
         DispatchQueue.main.async {
             self.resetState()
         }
-        Pixel.fire(pixel: .privacyProSettingsAddDevice)
+        
         await setupTransactionObserver()
         guard let token = accountManager.accessToken else { return }
         if case .success(let details) = await accountManager.fetchAccountDetails(with: token) {

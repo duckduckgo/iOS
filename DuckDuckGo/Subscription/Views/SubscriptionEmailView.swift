@@ -33,6 +33,9 @@ struct SubscriptionEmailView: View {
     @State var isPresentingInactiveError = false
     @State var isPresentingNavigationError = false
     @State var backButtonText = UserText.backButtonTitle
+    @State private var isShowingITR = false
+    @State private var isShowingDBP = false
+    @State private var isShowingNetP = false
     
     enum Constants {
         static let navButtonPadding: CGFloat = 20.0
@@ -40,6 +43,17 @@ struct SubscriptionEmailView: View {
     }
         
     var body: some View {
+        // Hidden Navigation Links for Onboarding sections
+        NavigationLink(destination: NetworkProtectionRootView(inviteCompletion: {}).navigationViewStyle(.stack),
+                       isActive: $isShowingNetP,
+                       label: { EmptyView() })
+        NavigationLink(destination: SubscriptionITPView().navigationViewStyle(.stack),
+                       isActive: $isShowingITR,
+                       label: { EmptyView() })
+        NavigationLink(destination: SubscriptionPIRView().navigationViewStyle(.stack),
+                       isActive: $isShowingDBP,
+                       label: { EmptyView() })
+                
         baseView
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) {
@@ -92,7 +106,24 @@ struct SubscriptionEmailView: View {
             }
         }
         
+        .onChange(of: viewModel.state.selectedFeature) { feature in
+            switch feature {
+            case .dbp:
+                self.isShowingDBP = true
+            case .itr:
+                self.isShowingITR = true
+            case .netP:
+                self.isShowingNetP = true
+            default:
+                break
+            }
+        }
+        
         .navigationTitle(viewModel.viewTitle)
+
+        .onFirstAppear {
+            viewModel.onFirstAppear()
+        }
         
         .onAppear(perform: {
             print("[Appear] SubscriptionEmailView")

@@ -30,35 +30,33 @@ struct SubscriptionContainerView: View {
     
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var navigationCoordinator: SubscriptionNavigationCoordinator
-    @State var currentView: CurrentView
-    private var flowViewModel: SubscriptionFlowViewModel
-    private var restoreViewModel: SubscriptionRestoreViewModel
-    private var emailViewModel: SubscriptionEmailViewModel
+    @State private var currentViewState: CurrentView
+    private let flowViewModel: SubscriptionFlowViewModel
+    private let restoreViewModel: SubscriptionRestoreViewModel
+    private let emailViewModel: SubscriptionEmailViewModel
     
     init(currentView: CurrentView) {
+        _currentViewState = State(initialValue: currentView)
+        
         let userScript = SubscriptionPagesUserScript()
         let subFeature = SubscriptionPagesUseSubscriptionFeature()
-        self.flowViewModel = SubscriptionFlowViewModel(userScript: userScript, subFeature: subFeature)
-        self.restoreViewModel = SubscriptionRestoreViewModel(userScript: userScript, subFeature: subFeature)
-        self.emailViewModel = SubscriptionEmailViewModel(userScript: userScript, subFeature: subFeature)
-        self.currentView = currentView
+        flowViewModel = SubscriptionFlowViewModel(userScript: userScript, subFeature: subFeature)
+        restoreViewModel = SubscriptionRestoreViewModel(userScript: userScript, subFeature: subFeature)
+        emailViewModel = SubscriptionEmailViewModel(userScript: userScript, subFeature: subFeature)
     }
     
     var body: some View {
         VStack {
-            switch currentView {
+            switch currentViewState {
             case .subscribe:
                 SubscriptionFlowView(viewModel: flowViewModel,
-                                     currentView: $currentView).environmentObject(navigationCoordinator)
+                                     currentView: $currentViewState).environmentObject(navigationCoordinator)
             case .restore:
                 SubscriptionRestoreView(viewModel: restoreViewModel,
                                         emailViewModel: emailViewModel,
-                                        currentView: $currentView ).environmentObject(navigationCoordinator)
+                                        currentView: $currentViewState).environmentObject(navigationCoordinator)
             }
         }
-        
     }
-    
-    
 }
 #endif

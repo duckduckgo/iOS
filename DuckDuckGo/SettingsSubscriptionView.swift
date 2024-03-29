@@ -160,18 +160,16 @@ struct SettingsSubscriptionView: View {
         if viewModel.state.subscription.enabled && viewModel.state.subscription.canPurchase {
             Section(header: Text(UserText.settingsPProSection)) {
                 if viewModel.state.subscription.hasActiveSubscription {
-                                        
-                    if !viewModel.isLoadingSubscriptionState {
                         
-                        // Allow managing the subscription if we have some entitlements
-                        if viewModel.shouldShowDBP || viewModel.shouldShowITP || viewModel.shouldShowNetP {
-                            subscriptionDetailsView
-                            
-                            // If no entitlements it should mean the backend is still out of sync
-                        } else {
-                            noEntitlementsAvailableView
-                        }
+                    // Allow managing the subscription if we have some entitlements
+                    if viewModel.shouldShowDBP || viewModel.shouldShowITP || viewModel.shouldShowNetP {
+                        subscriptionDetailsView
+                        
+                        // If no entitlements it should mean the backend is still out of sync
+                    } else {
+                        noEntitlementsAvailableView
                     }
+                    
                 } else if viewModel.state.subscription.isSubscriptionPendingActivation {
                     noEntitlementsAvailableView
                 } else {

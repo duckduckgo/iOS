@@ -101,17 +101,9 @@ final class SubscriptionEmailViewModel: ObservableObject {
         state.shouldDismissView = false
     }
     
+    @MainActor
     func onAppear() {
         setupObservers()
-    }
-    
-    func onDissappear() {
-        cancellables.removeAll()
-        canGoBackCancellable = nil
-    }
-    
-    @MainActor
-    func onFirstAppear() {
         if accountManager.isUserAuthenticated {
             // If user is authenticated, we want to "Add or manage email" instead of activating
             emailURL = accountManager.email == nil ? URL.addEmailToSubscription : URL.manageSubscriptionEmail
@@ -123,7 +115,11 @@ final class SubscriptionEmailViewModel: ObservableObject {
         if webViewModel.url?.forComparison() != URL.subscriptionActivateSuccess {
             self.webViewModel.navigationCoordinator.navigateTo(url: self.emailURL)
         }
-        
+    }
+    
+    func onDisappear() {
+        cancellables.removeAll()
+        canGoBackCancellable = nil
     }
         
     private func setupObservers() {

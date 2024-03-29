@@ -1,5 +1,5 @@
 //
-//  View+TopMostController.swift
+//  View+AppearModifiers.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -38,10 +38,33 @@ public struct OnFirstAppearModifier: ViewModifier {
     }
 }
 
+public struct OnFirstDisappearModifier: ViewModifier {
+
+    private let onFirstDisappearAction: () -> Void
+    @State private var hasDisappeared = false
+    
+    public init(_ onFirstDisappearAction: @escaping () -> Void) {
+        self.onFirstDisappearAction = onFirstDisappearAction
+    }
+    
+    public func body(content: Content) -> some View {
+        content
+            .onDisappear {
+                guard !hasDisappeared else { return }
+                hasDisappeared = true
+                onFirstDisappearAction()
+            }
+    }
+}
+
 extension View {
     
     func onFirstAppear(_ onFirstAppearAction: @escaping () -> Void ) -> some View {
         return modifier(OnFirstAppearModifier(onFirstAppearAction))
+    }
+    
+    func onFirstDisappear(_ onFirstDisappearAction: @escaping () -> Void ) -> some View {
+        return modifier(OnFirstDisappearModifier(onFirstDisappearAction))
     }
     
 }

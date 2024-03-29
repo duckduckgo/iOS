@@ -203,7 +203,7 @@ struct SubscriptionSettingsView: View {
             SubscriptionExternalLinkView(viewModel: viewModel.state.FAQViewModel, title: UserText.subscriptionFAQ)
         })
         
-        .onAppear {
+        .onFirstAppear {
             viewModel.onAppear()
         }
     }

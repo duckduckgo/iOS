@@ -59,7 +59,6 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     init(accountManager: AccountManager = AccountManager()) {
         self.accountManager = accountManager
-        Task { await fetchAndUpdateSubscriptionDetails() }
         setupSubscriptionUpdater()
         setupNotificationObservers()
     }

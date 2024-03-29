@@ -172,17 +172,13 @@ struct SubscriptionFlowView: View {
         }
         
         .onFirstAppear {
-            viewModel.onFirstAppear()
-        }
-        
-        .onAppear(perform: {
             setUpAppearances()
             Task { await viewModel.onAppear() }
-        })
+        }
         
-        .onDisappear(perform: {
+        .onFirstDisappear {
             Task { await viewModel.onDisappear() }
-        })
+        }
                 
         .alert(isPresented: $isPresentingError) {
             getAlert(error: self.errorMessage)

@@ -104,13 +104,13 @@ struct SubscriptionEmailView: View {
                 
         .onChange(of: viewModel.state.shouldPopToSubscriptionSettings) { shouldDismiss in
             if shouldDismiss {
-                navigationCoordinator.shouldPopToSubscriptionSettings.toggle()
+                navigationCoordinator.shouldPopToSubscriptionSettings = true
             }
         }
         
         .onChange(of: viewModel.state.shouldPopToAppSettings) { shouldDismiss in
             if shouldDismiss {
-                navigationCoordinator.shouldPopToAppSettings.toggle()
+                navigationCoordinator.shouldPopToAppSettings = true
             }
         }
         
@@ -128,15 +128,11 @@ struct SubscriptionEmailView: View {
         }
         
         .navigationTitle(viewModel.viewTitle)
-
-        .onFirstAppear {
-            viewModel.onFirstAppear()
-        }
         
-        .onAppear(perform: {
+        .onFirstAppear {
             setUpAppearances()
             viewModel.onAppear()
-        })
+        }
         
     }
     

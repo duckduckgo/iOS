@@ -657,11 +657,11 @@ extension SettingsViewModel {
             // Specify cases that require .push presentation
             // Example:
             // case .dbp:
-            //     return .push           
+            //     return .sheet
             case .netP:
                 return .UIKitView
             default:
-                return .sheet
+                return .navigationLink
             }
         }
     }
@@ -669,7 +669,7 @@ extension SettingsViewModel {
     // Define DeepLinkType outside the enum if not already defined
     enum DeepLinkType {
         case sheet
-        case navigation
+        case navigationLink
         case UIKitView
     }
             

@@ -26,7 +26,7 @@ struct SettingsView: View {
     
     @StateObject var viewModel: SettingsViewModel
     @Environment(\.presentationMode) var presentationMode
-    
+    @State private var subscriptionNavigationCoordinator = SubscriptionNavigationCoordinator()
     @State private var shouldDisplayDeepLinkSheet: Bool = false
     @State private var shouldDisplayDeepLinkPush: Bool = false
 #if SUBSCRIPTION
@@ -57,7 +57,7 @@ struct SettingsView: View {
             SettingsPrivacyView()
 #if SUBSCRIPTION
             if #available(iOS 15, *) {
-                SettingsSubscriptionView()
+                SettingsSubscriptionView().environmentObject(subscriptionNavigationCoordinator)
             }
 #endif
             SettingsCustomizeView()
@@ -134,9 +134,9 @@ struct SettingsView: View {
         case .itr:
             SubscriptionITPView()
         case .subscriptionFlow:
-            SubscriptionContainerView(currentView: .subscribe)
+            SubscriptionContainerView(currentView: .subscribe).environmentObject(subscriptionNavigationCoordinator)
         case .subscriptionRestoreFlow:
-            SubscriptionContainerView(currentView: .restore)
+            SubscriptionContainerView(currentView: .restore).environmentObject(subscriptionNavigationCoordinator)
         default:
             EmptyView()
         }

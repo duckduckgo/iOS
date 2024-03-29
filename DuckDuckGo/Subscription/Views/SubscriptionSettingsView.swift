@@ -28,8 +28,7 @@ struct SubscriptionSettingsView: View {
         
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = SubscriptionSettingsViewModel()
-    
-    @State var navigationCoordinator = SubscriptionNavigationCoordinator()
+    @EnvironmentObject var navigationCoordinator: SubscriptionNavigationCoordinator
     
     @State var isShowingStripeView = false
     @State var isShowingGoogleView = false

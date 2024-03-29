@@ -26,11 +26,11 @@ import Subscription
 struct SettingsSubscriptionView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
+    @EnvironmentObject var navigationCoordinator: SubscriptionNavigationCoordinator
     @State var isShowingDBP = false
     @State var isShowingITP = false
     @State var isShowingRestoreFlow = false
     @State var isShowingSubscribeFlow = false
-    @State private var navigationCoordinator = SubscriptionNavigationCoordinator()
     
     enum Constants {
         static let purchaseDescriptionPadding = 5.0

@@ -396,7 +396,7 @@ extension SettingsViewModel {
         }
                 
         // Fetch available subscriptions from the backend (or sign out)
-        switch await SubscriptionService.getSubscription(accessToken: token, cachePolicy: .returnCacheDataElseLoad) {
+        switch await SubscriptionService.getSubscription(accessToken: token) {
         
         case .success(let subscription):
             if subscription.isActive {

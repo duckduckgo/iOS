@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sam/improve-sub-library-error-reporting",
-        "revision" : "a2a029628d0c275bb6e506eec3e810171094137b"
+        "revision" : "73f68ee1c0dda3cd4a0b0cc3cc38a6cc7e605829",
+        "version" : "132.0.1"
       }
     },
     {

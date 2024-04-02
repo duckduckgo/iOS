@@ -1,5 +1,5 @@
 //
-//  SubscriptionPIRViewModel.swift
+//  SubscriptionNavigationCoordinator.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,16 +18,8 @@
 //
 
 import Foundation
-import Core
 
-#if SUBSCRIPTION
-@available(iOS 15.0, *)
-final class SubscriptionPIRViewModel: ObservableObject {
-    
-    var viewTitle = UserText.settingsPProDBPTitle
-            
-    func onFirstAppear() {
-        Pixel.fire(pixel: .privacyProPersonalInformationRemovalSettings)
-    }
+final class SubscriptionNavigationCoordinator: ObservableObject {
+    @Published var shouldPopToSubscriptionSettings: Bool = false
+    @Published var shouldPopToAppSettings: Bool = false
 }
-#endif

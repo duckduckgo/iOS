@@ -22,6 +22,7 @@ import UIKit
 
 #if SUBSCRIPTION
 import Subscription
+import Core
 @available(iOS 15.0, *)
 struct SettingsSubscriptionView: View {
     
@@ -87,7 +88,10 @@ struct SettingsSubscriptionView: View {
             let restoreView = SubscriptionContainerView(currentView: .restore)
                 .navigationViewStyle(.stack)
                 .environmentObject(subscriptionNavigationCoordinator)
-            
+                .onFirstAppear {
+                    Pixel.fire(pixel: .privacyProRestorePurchaseClick)
+                }
+
             NavigationLink(destination: subscribeView,
                            isActive: $isShowingSubscribeFlow,
                            label: { SettingsCellView(label: UserText.settingsPProLearnMore ) })
@@ -96,8 +100,6 @@ struct SettingsSubscriptionView: View {
                            isActive: $isShowingRestoreFlow,
                            label: { SettingsCellView(label: UserText.settingsPProIHaveASubscription ) })
         }
-
-        
     }
 
     @ViewBuilder

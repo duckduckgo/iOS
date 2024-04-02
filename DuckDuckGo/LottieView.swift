@@ -40,8 +40,8 @@ struct LottieView: UIViewRepresentable {
     var isAnimating: Binding<Bool>
     private let loopMode: LoopMode
 
-    let animationView = AnimationView()
-    
+    let animationView = LottieAnimationView()
+
     init(lottieFile: String, delay: TimeInterval = 0, loopMode: LoopMode = .mode(.playOnce), isAnimating: Binding<Bool> = .constant(true)) {
         self.lottieFile = lottieFile
         self.delay = delay
@@ -49,8 +49,8 @@ struct LottieView: UIViewRepresentable {
         self.loopMode = loopMode
     }
 
-    func makeUIView(context: Context) -> some AnimationView {
-        animationView.animation = Animation.named(lottieFile)
+    func makeUIView(context: Context) -> some LottieAnimationView {
+        animationView.animation = LottieAnimation.named(lottieFile)
         animationView.contentMode = .scaleAspectFit
         animationView.clipsToBounds = false
 

@@ -578,6 +578,7 @@ extension Pixel {
         case privacyProPurchaseFailureAccountNotCreated
         case privacyProPurchaseSuccess
         case privacyProRestorePurchaseOfferPageEntry
+        case privacyProRestorePurchaseClick
         case privacyProRestorePurchaseEmailStart
         case privacyProRestorePurchaseStoreStart
         case privacyProRestorePurchaseEmailSuccess
@@ -1164,6 +1165,7 @@ extension Pixel.Event {
         case .privacyProPurchaseFailureBackendError: return "m_privacy-pro_app_subscription-purchase_failure_account-creation"
         case .privacyProPurchaseSuccess: return "m_privacy-pro_app_subscription-purchase_success"
         case .privacyProRestorePurchaseOfferPageEntry: return "m_privacy-pro_offer_restore-purchase_click"
+        case .privacyProRestorePurchaseClick: return "m_privacy-pro_app-settings_restore-purchase_click"
         case .privacyProRestorePurchaseEmailStart: return "m_privacy-pro_activate-subscription_enter-email_click"
         case .privacyProRestorePurchaseStoreStart: return "m_privacy-pro_activate-subscription_restore-purchase_click"
         case .privacyProRestorePurchaseEmailSuccess: return "m_privacy-pro_app_subscription-restore-using-email_success"

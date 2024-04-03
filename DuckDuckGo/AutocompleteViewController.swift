@@ -137,11 +137,6 @@ class AutocompleteViewController: UIViewController {
         navigationController?.hidesBarsOnSwipe = hidesBarsOnSwipeDefault
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        tableView.reloadData()
-    }
-
     func updateQuery(query: String) {
         selectedItem = -1
         cancelInFlightRequests()
@@ -306,7 +301,6 @@ extension AutocompleteViewController {
     private func decorate() {
         let theme = ThemeManager.shared.currentTheme
         tableView.separatorColor = theme.tableCellSeparatorColor
-        tableView.reloadData()
     }
 }
 

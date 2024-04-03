@@ -349,10 +349,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func prepareTabsModel(appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
-                                  isDesktop: Bool = UIDevice.current.userInterfaceIdiom == .pad) -> TabsModel {        
+                                  isDesktop: Bool = UIDevice.current.userInterfaceIdiom == .pad) -> TabsModel {
         let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
         let tabsModel: TabsModel
-        if let settings = AutoClearSettingsModel(settings: appSettings) {
+        if AutoClearSettingsModel(settings: appSettings) != nil {
             tabsModel = TabsModel(desktop: isPadDevice)
             tabsModel.save()
         } else {

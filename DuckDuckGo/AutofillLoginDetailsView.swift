@@ -148,7 +148,10 @@ struct AutofillLoginDetailsView: View {
                              actionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsAddress),
                              action: { viewModel.copyToPasteboard(.address) },
                              secondaryActionTitle: viewModel.websiteIsValidUrl ? UserText.autofillOpenWebsitePrompt : nil,
-                             secondaryAction: viewModel.websiteIsValidUrl ? { viewModel.openUrl() } : nil)
+                             secondaryAction: viewModel.websiteIsValidUrl ? { viewModel.openUrl() } : nil,
+                             buttonImageName: "Globe-24",
+                             buttonAccessibilityLabel: UserText.autofillOpenWebsitePrompt,
+                             buttonAction: viewModel.websiteIsValidUrl ? { viewModel.openUrl() } : nil)
             }
 
             Section {

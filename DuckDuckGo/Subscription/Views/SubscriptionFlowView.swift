@@ -170,10 +170,6 @@ struct SubscriptionFlowView: View {
             Task { await viewModel.onFirstAppear() }
         }
         
-        .onFirstDisappear {
-            Task { await viewModel.onFirstDisappear() }
-        }
-        
         .onAppear {
             Task { await viewModel.onAppear() }
         }

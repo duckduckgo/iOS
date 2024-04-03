@@ -72,7 +72,9 @@ struct SubscriptionFlowView: View {
                     backButton
                 }
                 ToolbarItem(placement: .principal) {
-                    DaxLogoNavbarTitle()
+                    if viewModel.state.viewTitle == UserText.subscriptionTitle {
+                        DaxLogoNavbarTitle()
+                    }
                 }
             }
             .navigationBarTitleDisplayMode(.inline)

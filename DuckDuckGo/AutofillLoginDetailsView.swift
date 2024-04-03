@@ -324,9 +324,12 @@ struct AutofillLoginDetailsView: View {
                      action: { viewModel.isPasswordHidden.toggle() },
                      secondaryActionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
                      secondaryAction: { viewModel.copyToPasteboard(.password) },
-                     buttonImageName: "Copy-24",
-                     buttonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
-                     buttonAction: { viewModel.copyToPasteboard(.password) })
+                     buttonImageName: viewModel.isPasswordHidden ? "Eye-24" : "Eye-Closed-24",
+                     buttonAccessibilityLabel: viewModel.isPasswordHidden ? UserText.autofillShowPassword : UserText.autofillHidePassword,
+                     buttonAction: { viewModel.isPasswordHidden.toggle() },
+                     secondaryButtonImageName: "Copy-24",
+                     secondaryButtonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
+                     secondaryButtonAction: { viewModel.copyToPasteboard(.password) })
     }
 
 
@@ -430,6 +433,10 @@ private struct CopyableCell: View {
     var buttonAccessibilityLabel: String?
     var buttonAction: (() -> Void)?
 
+    var secondaryButtonImageName: String?
+    var secondaryButtonAccessibilityLabel: String?
+    var secondaryButtonAction: (() -> Void)?
+
     var body: some View {
         ZStack {
             HStack {
@@ -455,7 +462,11 @@ private struct CopyableCell: View {
                 }
                 .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 8))
                 
-                Spacer(minLength: buttonImageName != nil ? Constants.textFieldImageSize : 8)
+                if secondaryButtonImageName != nil {
+                    Spacer(minLength: Constants.textFieldImageSize * 2)
+                } else {
+                    Spacer(minLength: buttonImageName != nil ? Constants.textFieldImageSize : 8)
+                }
             }
             .copyable(isSelected: selectedCell == id,
                       menuTitle: actionTitle,
@@ -469,7 +480,7 @@ private struct CopyableCell: View {
             
             if let buttonImageName = buttonImageName, let buttonAccessibilityLabel = buttonAccessibilityLabel {
                 let differenceBetweenImageSizeAndTapAreaPerEdge = (Constants.textFieldTapSize - Constants.textFieldImageSize) / 2.0
-                HStack(alignment: .center) {
+                HStack(alignment: .center, spacing: 0) {
                     Spacer()
                     
                     Button {
@@ -495,6 +506,34 @@ private struct CopyableCell: View {
                     .accessibilityLabel(buttonAccessibilityLabel)
                     .contentShape(Rectangle())
                     .frame(width: Constants.textFieldTapSize, height: Constants.textFieldTapSize)
+
+                    if let secondaryButtonImageName = secondaryButtonImageName,
+                        let secondaryButtonAccessibilityLabel = secondaryButtonAccessibilityLabel {
+                        Button {
+                            secondaryButtonAction?()
+                            self.selectedCell = nil
+                        } label: {
+                            VStack(alignment: .trailing) {
+                                Spacer()
+                                HStack {
+                                    Spacer()
+                                    Image(secondaryButtonImageName)
+                                        .resizable()
+                                        .frame(width: Constants.textFieldImageSize, height: Constants.textFieldImageSize)
+                                        .foregroundColor(Color(UIColor.label).opacity(Constants.textFieldImageOpacity))
+                                        .opacity(subtitle.isEmpty ? 0 : 1)
+                                    Spacer()
+                                }
+                                Spacer()
+                            }
+                        }
+                        .buttonStyle(.plain) // Prevent taps from being forwarded to the container view
+                        .background(BackgroundColor(isSelected: selectedCell == id).color)
+                        .accessibilityLabel(secondaryButtonAccessibilityLabel)
+                        .contentShape(Rectangle())
+                        .frame(width: Constants.textFieldTapSize, height: Constants.textFieldTapSize)
+                    }
+
                 }
                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: -differenceBetweenImageSizeAndTapAreaPerEdge))
             }
@@ -598,7 +637,7 @@ private struct Constants {
     static let minRowHeight: CGFloat = 60
     static let textFieldImageOpacity: CGFloat = 0.84
     static let textFieldImageSize: CGFloat = 20
-    static let textFieldTapSize: CGFloat = 44
+    static let textFieldTapSize: CGFloat = 32
     static let insets = EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
 }
 

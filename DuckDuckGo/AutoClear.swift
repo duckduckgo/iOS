@@ -33,14 +33,15 @@ class AutoClear {
     private let worker: AutoClearWorker
     private var timestamp: TimeInterval?
     
-    private lazy var appSettings = AppDependencyProvider.shared.appSettings
-    
+    private let appSettings: AppSettings
+
     var isClearingEnabled: Bool {
         return AutoClearSettingsModel(settings: appSettings) != nil
     }
     
-    init(worker: AutoClearWorker) {
+    init(worker: AutoClearWorker, appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
         self.worker = worker
+        self.appSettings = appSettings
     }
     
     @MainActor

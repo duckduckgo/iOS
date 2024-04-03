@@ -193,6 +193,18 @@ class TabSwitcherButton: UIView {
             setAlpha()
         }
     }
+}
+
+extension TabSwitcherButton {
+    
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
+        
+        tintColor = theme.barTintColor
+        label.textColor = theme.barTintColor
+
+        updateAnimationColor()
+    }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
@@ -207,18 +219,6 @@ class TabSwitcherButton: UIView {
         default:
             anim.animation = LottieAnimation.named("new_tab_dark")
         }
-    }
-}
-
-extension TabSwitcherButton {
-    
-    private func decorate() {
-        let theme = ThemeManager.shared.currentTheme
-        
-        tintColor = theme.barTintColor
-        label.textColor = theme.barTintColor
-
-        updateAnimationColor()
     }
 }
 

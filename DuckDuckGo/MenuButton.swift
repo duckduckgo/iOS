@@ -183,13 +183,15 @@ class MenuButton: UIView {
             setAlpha()
         }
     }
+}
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
+extension MenuButton {
+    
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
+        tintColor = theme.barTintColor
 
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAnimationForCurrentAppearance()
-        }
+        updateAnimationForCurrentAppearance()
     }
 
     private func updateAnimationForCurrentAppearance() {
@@ -204,15 +206,13 @@ class MenuButton: UIView {
             anim.currentProgress = 1.0
         }
     }
-}
 
-extension MenuButton {
-    
-    private func decorate() {
-        let theme = ThemeManager.shared.currentTheme
-        tintColor = theme.barTintColor
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
 
-        updateAnimationForCurrentAppearance()
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            updateAnimationForCurrentAppearance()
+        }
     }
 }
 

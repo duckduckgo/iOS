@@ -142,14 +142,6 @@ class FavoriteHomeCell: UICollectionViewCell {
         view.layer.shadowOpacity = 0.12
         view.layer.masksToBounds = false
     }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection), let favorite {
-                updateFor(favorite: favorite)
-        }
-    }
 }
 
 private extension BookmarkEntity {
@@ -180,4 +172,11 @@ extension FavoriteHomeCell {
         titleLabel.textColor = theme.favoriteTextColor
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection), let favorite {
+                updateFor(favorite: favorite)
+        }
+    }
 }

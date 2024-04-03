@@ -170,14 +170,6 @@ class DaxDialogViewController: UIViewController {
     private func attributedString(from string: String, color: UIColor) -> NSAttributedString {
         return string.attributedStringFromMarkdown(color: color, fontSize: isSmall ? 16 : 18)
     }
-     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            finish()
-        }
-    }
 }
 
 extension DaxDialogViewController {
@@ -186,7 +178,13 @@ extension DaxDialogViewController {
         let theme = ThemeManager.shared.currentTheme
         textArea.backgroundColor = theme.daxDialogBackgroundColor
         pointer.backgroundColor = theme.daxDialogBackgroundColor
-//        finish() // skip animation if user changes theme, this forces update
     }
-    
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            finish()
+        }
+    }
 }

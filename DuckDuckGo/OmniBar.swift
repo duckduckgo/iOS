@@ -544,5 +544,13 @@ extension OmniBar {
         searchLoupe.alpha = 0.5
         cancelButton.setTitleColor(theme.barTintColor, for: .normal)
     }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            privacyIconAndTrackersAnimator.resetImageProvider()
+        }
+    }
 }
 // swiftlint:enable file_length

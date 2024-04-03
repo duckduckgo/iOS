@@ -140,14 +140,6 @@ final class PrivacyDashboardViewController: UIViewController {
         privacyDashboardDidTriggerDismiss = true
         dismiss(animated: true)
     }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            privacyDashboardController.theme = .init()
-        }
-    }
 }
 
 extension PrivacyDashboardViewController {
@@ -156,6 +148,14 @@ extension PrivacyDashboardViewController {
         let theme = ThemeManager.shared.currentTheme
         view.backgroundColor = theme.privacyDashboardWebviewBackgroundColor
         privacyDashboardController.theme = .init(theme)
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            privacyDashboardController.theme = .init()
+        }
     }
 }
 

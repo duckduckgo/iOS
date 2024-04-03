@@ -191,18 +191,6 @@ final class BrowsingMenuViewController: UIViewController {
         ViewHighlighter.showIn(window, focussedOnView: cell.entryImage)
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        DispatchQueue.main.async { [weak self] in
-            self?.flashScrollIndicatorsIfNeeded()
-        }
-
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            configureArrow(with: ThemeManager.shared.currentTheme.browsingMenuBackgroundColor)
-        }
-    }
-
     func flashScrollIndicatorsIfNeeded() {
         if tableView.bounds.height < tableView.contentSize.height {
             tableView.flashScrollIndicators()
@@ -341,5 +329,17 @@ extension BrowsingMenuViewController {
         separator.backgroundColor = theme.browsingMenuSeparatorColor
         
         tableView.reloadData()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        DispatchQueue.main.async { [weak self] in
+            self?.flashScrollIndicatorsIfNeeded()
+        }
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            configureArrow(with: ThemeManager.shared.currentTheme.browsingMenuBackgroundColor)
+        }
     }
 }

@@ -200,14 +200,6 @@ class ProgressView: UIView, CAAnimationDelegate {
         super.prepareForInterfaceBuilder()
         backgroundColor = .cornflowerBlue
     }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            decorate()
-        }
-    }
 }
 
 extension ProgressView {
@@ -221,5 +213,13 @@ extension ProgressView {
         }
         
         progressLayer.colors = colors
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            decorate()
+        }
     }
 }

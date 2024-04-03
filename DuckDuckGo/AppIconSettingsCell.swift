@@ -43,12 +43,6 @@ class AppIconSettingsCell: UICollectionViewCell {
             layer.borderWidth = isSelected ? 2.0 : 0.0
         }
     }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        decorate()
-    }
 }
 
 extension AppIconSettingsCell {
@@ -57,4 +51,11 @@ extension AppIconSettingsCell {
         layer.borderColor = theme.iconCellBorderColor.cgColor
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            decorate()
+        }
+    }
 }

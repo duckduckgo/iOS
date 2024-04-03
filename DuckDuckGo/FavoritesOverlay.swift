@@ -113,12 +113,6 @@ class FavoritesOverlay: UIViewController {
         collectionView.contentInset = .zero
         collectionView.scrollIndicatorInsets = .zero
     }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        view.backgroundColor = AppWidthObserver.shared.isLargeWidth ? .clear : ThemeManager.shared.currentTheme.backgroundColor
-    }
 }
 
 extension FavoritesOverlay: FavoritesHomeViewSectionRendererDelegate {
@@ -184,5 +178,11 @@ extension FavoritesOverlay {
         let theme = ThemeManager.shared.currentTheme
         self.theme = theme
         view.backgroundColor = AppWidthObserver.shared.isLargeWidth ? .clear : theme.backgroundColor
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        view.backgroundColor = AppWidthObserver.shared.isLargeWidth ? .clear : ThemeManager.shared.currentTheme.backgroundColor
     }
 }

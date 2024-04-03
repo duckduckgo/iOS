@@ -62,14 +62,6 @@ class PositiveFeedbackViewController: UIViewController {
         
         feedbackForm.configureForPositiveSentiment()
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            leaveFeedbackButton.layer.borderColor = ThemeManager.shared.currentTheme.buttonTintColor.cgColor
-        }
-    }
 }
 
 extension PositiveFeedbackViewController {
@@ -86,4 +78,11 @@ extension PositiveFeedbackViewController {
         doneButton.setTitleColor(theme.buttonTintColor, for: .normal)
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            leaveFeedbackButton.layer.borderColor = ThemeManager.shared.currentTheme.buttonTintColor.cgColor
+        }
+    }
 }

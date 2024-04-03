@@ -1010,17 +1010,6 @@ class TabViewController: UIViewController {
         temporaryDownloadForPreviewedFile?.cancel()
         cleanUpBeforeClosing()
     }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            switch ThemeManager.shared.currentTheme.currentImageSet {
-            case .light:
-                errorInfoImage?.image = UIImage(named: "ErrorInfoLight")
-            case .dark:
-                errorInfoImage?.image = UIImage(named: "ErrorInfoDark")
-            }
-        }
-    }
 }
 
 // MARK: - LoginFormDetectionDelegate

@@ -512,6 +512,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func stopTunnelAndShowThankYouMessagingIfNeeded() {
+        if AccountManager().isUserAuthenticated {
+            tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
+            return
+        }
+
         if vpnFeatureVisibility.shouldShowThankYouMessaging() && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
             presentVPNEarlyAccessOverAlert()
 

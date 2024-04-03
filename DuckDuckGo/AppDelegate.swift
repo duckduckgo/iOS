@@ -753,7 +753,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         Task { @MainActor in
-            await autoClear?.applicationWillMoveToForeground()
+            // Autoclear should have happened by now
             showKeyboardIfSettingOn = false
 
             if !handleAppDeepLink(app, mainViewController, url) {

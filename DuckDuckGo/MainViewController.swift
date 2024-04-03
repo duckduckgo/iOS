@@ -89,6 +89,8 @@ class MainViewController: UIViewController {
     let appSettings: AppSettings
     private var launchTabObserver: LaunchTabNotification.Observer?
     
+    var doRefreshAfterClear = true
+
 #if APP_TRACKING_PROTECTION
     private let appTrackingProtectionDatabase: CoreDataDatabase
 #endif
@@ -866,6 +868,7 @@ class MainViewController: UIViewController {
                 selectTab(existing)
                 return
             } else if reuseExisting, let existing = tabManager.firstHomeTab() {
+                doRefreshAfterClear = false
                 tabManager.selectTab(existing)
                 loadUrl(url, fromExternalLink: fromExternalLink)
             } else {
@@ -2291,6 +2294,10 @@ extension MainViewController: AutoClearWorker {
     }
 
     func refreshUIAfterClear() {
+        guard doRefreshAfterClear else {
+            doRefreshAfterClear = true
+            return
+        }
         showBars()
         attachHomeScreen()
         tabsBarController?.refresh(tabsModel: tabManager.model)

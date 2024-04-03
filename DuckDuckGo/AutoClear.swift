@@ -87,8 +87,8 @@ class AutoClear {
             let timestamp = timestamp,
             shouldClearData(elapsedTime: Date().timeIntervalSince1970 - timestamp) else { return }
         
+        self.timestamp = nil
         worker.clearNavigationStack()
         await clearData()
-        self.timestamp = nil
     }
 }

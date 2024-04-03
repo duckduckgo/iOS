@@ -47,15 +47,12 @@ class PrivacyInfoContainerView: UIView {
         decorate()
     }
     
-    private func loadAnimations(for theme: Theme, animationCache cache: AnimationCacheProvider = DefaultAnimationCache.sharedCache) {
-        let useLightStyle = theme.currentImageSet == .light
-
-        trackers1Animation.animation = LottieAnimation.named(useLightStyle ? "trackers-1" : "dark-trackers-1", animationCache: cache)
-        trackers2Animation.animation = LottieAnimation.named(useLightStyle ? "trackers-2" : "dark-trackers-2", animationCache: cache)
-        trackers3Animation.animation = LottieAnimation.named(useLightStyle ? "trackers-3" : "dark-trackers-3", animationCache: cache)
+    private func loadAnimations(animationCache cache: AnimationCacheProvider = DefaultAnimationCache.sharedCache) {
+        let useDarkStyle = traitCollection.userInterfaceStyle == .dark
         
-        privacyIcon.loadAnimations(for: theme, animationCache: cache)
-        
+        trackers1Animation.animation = LottieAnimation.named(useDarkStyle ? "dark-trackers-1" : "trackers-1", animationCache: cache)
+        trackers2Animation.animation = LottieAnimation.named(useDarkStyle ? "dark-trackers-2" : "trackers-2", animationCache: cache)
+        trackers3Animation.animation = LottieAnimation.named(useDarkStyle ? "dark-trackers-3" : "trackers-3", animationCache: cache)
     }
     
     func trackerAnimationView(for trackerCount: Int) -> LottieAnimationView? {
@@ -78,7 +75,7 @@ class PrivacyInfoContainerView: UIView {
         super.traitCollectionDidChange(previousTraitCollection)
 
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            loadAnimations(for: ThemeManager.shared.currentTheme)
+            loadAnimations()
         }
     }
 }
@@ -90,6 +87,6 @@ extension PrivacyInfoContainerView {
         
         maskingView.backgroundColor = theme.searchBarBackgroundColor
         
-        loadAnimations(for: theme)
+        loadAnimations()
     }
 }

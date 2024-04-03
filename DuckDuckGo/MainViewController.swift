@@ -84,7 +84,7 @@ class MainViewController: UIViewController {
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
     
-    var tabManager: TabManager!
+    let tabManager: TabManager
     let previewsSource = TabPreviewsSource()
     let appSettings: AppSettings
     private var launchTabObserver: LaunchTabNotification.Observer?
@@ -138,7 +138,7 @@ class MainViewController: UIViewController {
     
     lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
-        return tabManager?.current(createIfNeeded: false)
+        return tabManager.current(createIfNeeded: false)
     }
     
     var searchBarRect: CGRect {
@@ -173,7 +173,8 @@ class MainViewController: UIViewController {
         historyManager: HistoryManager,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
-        appSettings: AppSettings = AppUserDefaults()
+        appSettings: AppSettings = AppUserDefaults(),
+        tabsModel: TabsModel
     ) {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.bookmarksDatabase = bookmarksDatabase
@@ -184,9 +185,16 @@ class MainViewController: UIViewController {
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         self.appSettings = appSettings
-        
+
+        self.tabManager = TabManager(model: tabsModel,
+                                     previewsSource: previewsSource,
+                                     bookmarksDatabase: bookmarksDatabase,
+                                     historyManager: historyManager,
+                                     syncService: syncService)
+
         super.init(nibName: nil, bundle: nil)
         
+        tabManager.delegate = self
         bindFavoritesDisplayMode()
         bindSyncService()
     }
@@ -197,7 +205,8 @@ class MainViewController: UIViewController {
         historyManager: HistoryManager,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
-        appSettings: AppSettings
+        appSettings: AppSettings,
+        tabsModel: TabsModel
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -207,9 +216,18 @@ class MainViewController: UIViewController {
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         self.appSettings = appSettings
-        
+
+        self.tabManager = TabManager(model: tabsModel,
+                                     previewsSource: previewsSource,
+                                     bookmarksDatabase: bookmarksDatabase,
+                                     historyManager: historyManager,
+                                     syncService: syncService)
+
+
         super.init(nibName: nil, bundle: nil)
         
+        self.tabManager.delegate = self
+
         bindSyncService()
     }
 #endif
@@ -263,7 +281,6 @@ class MainViewController: UIViewController {
         initTabButton()
         initMenuButton()
         initBookmarksButton()
-        configureTabManager()
         loadInitialView()
         previewsSource.prepare()
         addLaunchTabNotificationObserver()
@@ -690,40 +707,6 @@ class MainViewController: UIViewController {
         
     @objc func dismissSuggestionTray() {
         dismissOmniBar()
-    }
-
-    private func configureTabManager() {
-
-        let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
-
-        let tabsModel: TabsModel
-        if let settings = AutoClearSettingsModel(settings: appSettings) {
-            // This needs to be refactored so that tabs model is injected and cleared before view did load,
-            //  but for now, ensure this happens in the right order by clearing data here too, if needed.
-            tabsModel = TabsModel(desktop: isPadDevice)
-            tabsModel.save()
-            previewsSource.removeAllPreviews()
-
-            if settings.action.contains(.clearData) {
-                Task { @MainActor in
-                    await forgetData()
-                }
-            }
-        } else {
-            if let storedModel = TabsModel.get() {
-                // Save new model in case of migration
-                storedModel.save()
-                tabsModel = storedModel
-            } else {
-                tabsModel = TabsModel(desktop: isPadDevice)
-            }
-        }
-        tabManager = TabManager(model: tabsModel,
-                                previewsSource: previewsSource,
-                                bookmarksDatabase: bookmarksDatabase,
-                                historyManager: historyManager,
-                                syncService: syncService,
-                                delegate: self)
     }
 
     private func addLaunchTabNotificationObserver() {
@@ -1999,7 +1982,7 @@ extension MainViewController: TabDelegate {
         if currentTab == tab {
             refreshControls()
         }
-        tabManager?.save()
+        tabManager.save()
         tabsBarController?.refresh(tabsModel: tabManager.model)
         // note: model in swipeTabsCoordinator doesn't need to be updated here
         // https://app.asana.com/0/414235014887631/1206847376910045/f
@@ -2246,7 +2229,7 @@ extension MainViewController: TabSwitcherButtonDelegate {
     }
 
     func showTabSwitcher() {
-        guard let currentTab = currentTab ?? tabManager?.current(createIfNeeded: true) else {
+        guard let currentTab = currentTab ?? tabManager.current(createIfNeeded: true) else {
             fatalError("Unable to get current tab")
         }
         

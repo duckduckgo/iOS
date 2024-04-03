@@ -267,6 +267,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
 
         let historyManager = makeHistoryManager()
+        let tabsModel = prepareTabsModel()
 
 #if APP_TRACKING_PROTECTION
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
@@ -275,14 +276,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                       historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
-                                      appSettings: AppDependencyProvider.shared.appSettings)
+                                      appSettings: AppDependencyProvider.shared.appSettings,
+                                      tabsModel: tabsModel)
 #else
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
-                                      appSettings: AppDependencyProvider.shared.appSettings)
+                                      appSettings: AppDependencyProvider.shared.appSettings,
+                                      tabsModel: tabsModel)
 #endif
 
         main.loadViewIfNeeded()
@@ -343,6 +346,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
         return true
+    }
+
+    private func prepareTabsModel(appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
+                                  isDesktop: Bool = UIDevice.current.userInterfaceIdiom == .pad) -> TabsModel {        
+        let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
+        let tabsModel: TabsModel
+        if let settings = AutoClearSettingsModel(settings: appSettings) {
+            tabsModel = TabsModel(desktop: isPadDevice)
+            tabsModel.save()
+        } else {
+            if let storedModel = TabsModel.get() {
+                // Save new model in case of migration
+                storedModel.save()
+                tabsModel = storedModel
+            } else {
+                tabsModel = TabsModel(desktop: isPadDevice)
+            }
+        }
+        return tabsModel
     }
 
     private func makeHistoryManager() -> HistoryManager {

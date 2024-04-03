@@ -45,14 +45,12 @@ class TabManager {
          previewsSource: TabPreviewsSource,
          bookmarksDatabase: CoreDataDatabase,
          historyManager: HistoryManager,
-         syncService: DDGSyncing,
-         delegate: TabDelegate) {
+         syncService: DDGSyncing) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.syncService = syncService
-        self.delegate = delegate
         let index = model.currentIndex
         let tab = model.tabs[index]
         if tab.link != nil {

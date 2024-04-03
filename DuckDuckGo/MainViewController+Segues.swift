@@ -244,14 +244,17 @@ extension MainViewController {
         }
     }
     
-    private func launchSettings(completion: ((SettingsViewModel) -> Void)? = nil) {
+    func launchSettings(completion: ((SettingsViewModel) -> Void)? = nil,
+                        deepLinkTarget: SettingsViewModel.SettingsDeepLinkSection? = nil) {
         let legacyViewProvider = SettingsLegacyViewProvider(syncService: syncService,
                                                             syncDataProviders: syncDataProviders,
                                                             appSettings: appSettings,
                                                             bookmarksDatabase: bookmarksDatabase,
                                                             tabManager: tabManager)
 #if SUBSCRIPTION
-        let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider, accountManager: AccountManager())
+        let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider,
+                                                  accountManager: AccountManager(),
+                                                  deepLink: deepLinkTarget)
 #else
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider)
 #endif

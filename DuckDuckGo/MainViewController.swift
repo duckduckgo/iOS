@@ -2320,6 +2320,7 @@ extension MainViewController: AutoClearWorker {
         refreshUIAfterClear()
     }
 
+    @MainActor
     func forgetData() async {
         guard !clearInProgress else {
             assertionFailure("Shouldn't get called multiple times")

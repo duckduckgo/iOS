@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "anh/pp/add-metadata",
-        "revision" : "0cba47cf651175806bc151366605f8b19802d3ee"
+        "revision" : "73f68ee1c0dda3cd4a0b0cc3cc38a6cc7e605829",
+        "version" : "132.0.1"
       }
     },
     {
@@ -50,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "2f44185cca2edefbae7557393a61a23c282abbf8",
-        "version" : "5.7.0"
+        "revision" : "62d5dc3d02f6a8347dc5f0b52162a0107d38b74c",
+        "version" : "5.8.0"
       }
     },
     {
@@ -100,12 +100,12 @@
       }
     },
     {
-      "identity" : "lottie-ios",
+      "identity" : "lottie-spm",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/duckduckgo/lottie-ios.git",
+      "location" : "https://github.com/airbnb/lottie-spm.git",
       "state" : {
-        "revision" : "abf5510e261c85ffddd29de0bca9b72592ea2bdd",
-        "version" : "3.3.0"
+        "revision" : "3bd43e12d6fb54654366a61f7cfaca787318b8ce",
+        "version" : "4.4.1"
       }
     },
     {
@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "revision" : "43a6e1c1864846679a254e60c91332c3fbd922ee",
-        "version" : "3.3.0"
+        "revision" : "620921fea14569eb00745cb5a44890d5890d99ec",
+        "version" : "3.4.0"
       }
     },
     {
@@ -183,7 +183,7 @@
     {
       "identity" : "trackerradarkit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/duckduckgo/TrackerRadarKit.git",
+      "location" : "https://github.com/duckduckgo/TrackerRadarKit",
       "state" : {
         "revision" : "a6b7ba151d9dc6684484f3785293875ec01cc1ff",
         "version" : "1.2.2"

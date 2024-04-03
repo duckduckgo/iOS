@@ -27,14 +27,17 @@ import Core
 @available(iOS 15.0, *)
 // swiftlint:disable type_body_length
 struct SubscriptionRestoreView: View {
-    
+
     @Environment(\.dismiss) var dismiss
-    @StateObject var viewModel = SubscriptionRestoreViewModel()
+    
+    @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
+    @StateObject var viewModel: SubscriptionRestoreViewModel
+    @StateObject var emailViewModel: SubscriptionEmailViewModel
     
     @State private var isAlertVisible = false
-    @State private var shouldShowWelcomePage = false
-    @State private var shouldNavigateToActivationFlow = false
-    @State var isModal = true
+    @State private var isShowingWelcomePage = false
+    @State private var isShowingActivationFlow = false
+    @Binding var currentView: SubscriptionContainerView.CurrentView
     
     private enum Constants {
         static let heroImage = "ManageSubscriptionHero"
@@ -61,7 +64,6 @@ struct SubscriptionRestoreView: View {
         static let buttonCornerRadius = 8.0
         static let buttonInsets = EdgeInsets(top: 10.0, leading: 16.0, bottom: 10.0, trailing: 16.0)
         static let buttonTopPadding: CGFloat = 20
-        
     }
     
     var body: some View {
@@ -71,10 +73,8 @@ struct SubscriptionRestoreView: View {
             }
         } else {
             ZStack {
+                baseView
                 
-                NavigationView {
-                    baseView
-                }
                 if viewModel.state.transactionStatus != .idle {
                     PurchaseInProgressView(status: getTransactionStatus())
                 }
@@ -82,10 +82,8 @@ struct SubscriptionRestoreView: View {
             }
         }
     }
-        
-    @ViewBuilder
-    private var baseView: some View {
-       
+    
+    private var contentView: some View {
         Group {
             ScrollView {
                 VStack(spacing: Constants.sectionSpacing) {
@@ -95,10 +93,8 @@ struct SubscriptionRestoreView: View {
                     Spacer()
                     
                     // Hidden link to display Email Activation View
-                    NavigationLink(destination: SubscriptionEmailView(viewModel: viewModel.emailViewModel,
-                                                                      isModal: isModal,
-                                                                      onDismissStack: { viewModel.dismissView() }),
-                                   isActive: $shouldNavigateToActivationFlow) {
+                    NavigationLink(destination: SubscriptionEmailView(viewModel: emailViewModel).environmentObject(subscriptionNavigationCoordinator),
+                                   isActive: $isShowingActivationFlow) {
                           EmptyView()
                     }.isDetailLink(false)
                     
@@ -113,56 +109,56 @@ struct SubscriptionRestoreView: View {
             .navigationBarBackButtonHidden(viewModel.state.transactionStatus != .idle)
             .navigationBarTitleDisplayMode(.inline)
             .applyInsetGroupedListStyle()
-            .navigationBarItems(trailing: closeButton)
+            .interactiveDismissDisabled(viewModel.subFeature.transactionStatus != .idle)
             .tint(Color.init(designSystemColor: .textPrimary))
             .accentColor(Color.init(designSystemColor: .textPrimary))
         }
-        
-        .alert(isPresented: $isAlertVisible) { getAlert() }
-        
-        .onChange(of: viewModel.state.activationResult) { result in
-            if result != .unknown {
-                isAlertVisible = true
-            }
-        }
-        
-        // Navigation Flow Binding
-        .onChange(of: viewModel.state.shouldNavigateToActivationFlow) { result in
-            shouldNavigateToActivationFlow = result
-        }
-        .onChange(of: shouldNavigateToActivationFlow) { result in
-            viewModel.showActivationFlow(result)
-        }
-        
-        .onChange(of: viewModel.state.shouldDismissView) { result in
-            if result {
-                dismiss()
-            }
-        }
-        
-        .onChange(of: viewModel.state.shouldShowPlans) { result in
-            if result {
-                dismiss()
-            }
-        }
-        
-        .onAppear {
-            viewModel.initializeView()
-            viewModel.onAppear()
-            setUpAppearances()
-        }
-                
     }
-    
-    
-    // MARK: -
     
     @ViewBuilder
-    private var closeButton: some View {
-        if isModal {
-            Button(UserText.subscriptionCloseButton) { viewModel.dismissView() }
-        }
+    private var baseView: some View {
+       
+        contentView
+            .alert(isPresented: $isAlertVisible) { getAlert() }
+            
+            .onChange(of: viewModel.state.activationResult) { result in
+                if result != .unknown {
+                    isAlertVisible = true
+                }
+            }
+            
+            // Navigation Flow Binding
+            .onChange(of: viewModel.state.isShowingActivationFlow) { result in
+                isShowingActivationFlow = result
+            }
+            .onChange(of: isShowingActivationFlow) { result in
+                viewModel.showActivationFlow(result)
+            }
+            
+            .onChange(of: viewModel.state.shouldDismissView) { result in
+                if result {
+                    dismiss()
+                }
+            }
+            
+            .onChange(of: viewModel.state.shouldShowPlans) { result in
+                if result {
+                    currentView = .subscribe
+                }
+            }
+        
+            .onFirstAppear {
+                Task { await viewModel.onFirstAppear() }
+                setUpAppearances()
+            }
+
+            .onFirstDisappear {
+                Task { await viewModel.onFirstDisappear() }
+           }
+                
     }
+
+    // MARK: -
     
     private var emailView: some View {
         emailCellContent
@@ -185,37 +181,39 @@ struct SubscriptionRestoreView: View {
                     .foregroundColor(Color(designSystemColor: .textPrimary))
             }
             
-            VStack(alignment: .leading) {
-                if !viewModel.state.isAddingDevice {
-                    Text(UserText.subscriptionActivateEmailDescription)
-                        .daxSubheadRegular()
-                        .foregroundColor(Color(designSystemColor: .textSecondary))
-                    getCellButton(buttonText: UserText.subscriptionActivateEmailButton,
-                                  action: {
-                        DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailStart)
-                        DailyPixel.fire(pixel: .privacyProWelcomeAddDevice)
-                        viewModel.showActivationFlow(true)
-                    })
-                } else if viewModel.state.subscriptionEmail == nil {
-                    Text(UserText.subscriptionAddDeviceEmailDescription)
-                        .daxSubheadRegular()
-                        .foregroundColor(Color(designSystemColor: .textSecondary))
-                    getCellButton(buttonText: UserText.subscriptionRestoreAddEmailButton,
-                                  action: {
-                        Pixel.fire(pixel: .privacyProAddDeviceEnterEmail, debounce: 1)
-                        viewModel.showActivationFlow(true)
-                    })
-                } else {
-                    Text(viewModel.state.subscriptionEmail ?? "").daxSubheadSemibold()
-                    Text(UserText.subscriptionManageEmailDescription)
-                        .daxSubheadRegular()
-                        .foregroundColor(Color(designSystemColor: .textSecondary))
-                    HStack {
-                        getCellButton(buttonText: UserText.subscriptionManageEmailButton,
+            if !viewModel.state.isLoading {
+                VStack(alignment: .leading) {
+                    if !viewModel.state.isAddingDevice {
+                        Text(UserText.subscriptionActivateEmailDescription)
+                            .daxSubheadRegular()
+                            .foregroundColor(Color(designSystemColor: .textSecondary))
+                        getCellButton(buttonText: UserText.subscriptionActivateEmailButton,
                                       action: {
-                            Pixel.fire(pixel: .privacyProSubscriptionManagementEmail, debounce: 1)
+                            DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailStart)
+                            DailyPixel.fire(pixel: .privacyProWelcomeAddDevice)
                             viewModel.showActivationFlow(true)
                         })
+                    } else if viewModel.state.subscriptionEmail == nil {
+                        Text(UserText.subscriptionAddDeviceEmailDescription)
+                            .daxSubheadRegular()
+                            .foregroundColor(Color(designSystemColor: .textSecondary))
+                        getCellButton(buttonText: UserText.subscriptionRestoreAddEmailButton,
+                                      action: {
+                            Pixel.fire(pixel: .privacyProAddDeviceEnterEmail, debounce: 1)
+                            viewModel.showActivationFlow(true)
+                        })
+                    } else {
+                        Text(viewModel.state.subscriptionEmail ?? "").daxSubheadSemibold()
+                        Text(UserText.subscriptionManageEmailDescription)
+                            .daxSubheadRegular()
+                            .foregroundColor(Color(designSystemColor: .textSecondary))
+                        HStack {
+                            getCellButton(buttonText: UserText.subscriptionManageEmailButton,
+                                          action: {
+                                Pixel.fire(pixel: .privacyProSubscriptionManagementEmail, debounce: 1)
+                                viewModel.showActivationFlow(true)
+                            })
+                        }
                     }
                 }
             }

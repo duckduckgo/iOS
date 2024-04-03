@@ -48,6 +48,20 @@ public struct UserText {
     static let credentialsLimitExceededDescription = NSLocalizedString("credentials.limit.exceeded.description", bundle: Bundle.module, value: "Logins limit exceeded. Delete some to resume syncing.", comment: "Sync Paused Errors - Credentials Limit Exceeded Description")
     static let bookmarksLimitExceededAction = NSLocalizedString("bookmarks.limit.exceeded.action", bundle: Bundle.module, value: "Manage Bookmarks", comment: "Sync Paused Errors - Bookmarks Limit Exceeded Action")
     static let credentialsLimitExceededAction = NSLocalizedString("credentials.limit.exceeded.action", bundle: Bundle.module, value: "Manage Logins", comment: "Sync Paused Errors - Credentials Limit Exceeded Action")
+    // Sync Filtered Items Errors
+    static let invalidBookmarksPresentTitle = NSLocalizedString("bookmarks.invalid.objects.present.title", bundle: Bundle.module, value: "Some bookmarks are not syncing due to excessively long content in certain fields.", comment: "Alert title for invalid bookmarks being filtered out of synced data")
+    static let invalidCredentialsPresentTitle = NSLocalizedString("credentials.invalid.objects.present.title", bundle: Bundle.module, value: "Some logins are not syncing due to excessively long content in certain fields.", comment: "Alert title for invalid logins being filtered out of synced data")
+
+    static func invalidBookmarksPresentDescription(_ invalidItemTitle: String, numberOfOtherInvalidItems: Int) -> String {
+        let message = NSLocalizedString("bookmarks.invalid.objects.present.description", bundle: Bundle.module, comment: "Do not translate - stringsdict entry")
+        return String(format: message, numberOfOtherInvalidItems, invalidItemTitle)
+    }
+
+    static func invalidCredentialsPresentDescription(_ invalidItemTitle: String, numberOfOtherInvalidItems: Int) -> String {
+        let message = NSLocalizedString("credentials.invalid.objects.present.description", bundle: Bundle.module, comment: "Do not translate - stringsdict entry")
+        return String(format: message, numberOfOtherInvalidItems, invalidItemTitle)
+    }
+
     // Synced Devices
     static let syncedDevicesSectionHeader = NSLocalizedString("synced.devices.section.header", bundle: Bundle.module, value: "Synced Devices", comment: "Synced Devices - Section Header")
     static let syncedDevicesThisDeviceLabel = NSLocalizedString("synced.devices.this.device.label", bundle: Bundle.module, value: "This Device", comment: "Synced Devices - This Device Label")

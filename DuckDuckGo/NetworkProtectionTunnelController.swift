@@ -85,6 +85,13 @@ final class NetworkProtectionTunnelController: TunnelController {
 
     // MARK: - Connection Status Querying
 
+    var isInstalled: Bool {
+        get async {
+            let tunnelManager = await loadTunnelManager()
+            return tunnelManager != nil
+        }
+    }
+
     /// Queries Network Protection to know if its VPN is connected.
     ///
     /// - Returns: `true` if the VPN is connected, connecting or reasserting, and `false` otherwise.

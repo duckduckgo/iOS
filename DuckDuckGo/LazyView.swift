@@ -1,5 +1,5 @@
 //
-//  NetworkProtectionVisibilityForTunnelProvider.swift
+//  LazyView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,34 +17,16 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import Foundation
+import SwiftUI
 
-#if SUBSCRIPTION
-import Subscription
-#endif
-
-struct NetworkProtectionVisibilityForTunnelProvider: NetworkProtectionFeatureVisibility {
-    func isWaitlistBetaActive() -> Bool {
-        preconditionFailure("Does not apply to Tunnel Provider")
+// https://gist.github.com/chriseidhof/d2fcafb53843df343fe07f3c0dac41d5
+struct LazyView<Content: View>: View {
+    let build: () -> Content
+    init(_ build: @autoclosure @escaping () -> Content) {
+        self.build = build
     }
-
-    func isWaitlistUser() -> Bool {
-        preconditionFailure("Does not apply to Tunnel Provider")
-    }
-    
-    func isPrivacyProLaunched() -> Bool {
-#if SUBSCRIPTION
-        AccountManager().isUserAuthenticated
-#else
-        false
-#endif
-    }
-    
-    func shouldMonitorEntitlement() -> Bool {
-        isPrivacyProLaunched()
+    var body: Content {
+        build()
     }
 }
-
-#endif

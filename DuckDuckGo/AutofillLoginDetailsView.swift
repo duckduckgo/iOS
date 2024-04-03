@@ -463,7 +463,7 @@ private struct CopyableCell: View {
                 .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 8))
                 
                 if secondaryButtonImageName != nil {
-                    Spacer(minLength: Constants.textFieldImageSize * 2)
+                    Spacer(minLength: Constants.textFieldImageSize * 2 + 8)
                 } else {
                     Spacer(minLength: buttonImageName != nil ? Constants.textFieldImageSize : 8)
                 }

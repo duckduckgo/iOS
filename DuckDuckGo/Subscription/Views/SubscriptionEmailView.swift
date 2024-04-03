@@ -40,6 +40,8 @@ struct SubscriptionEmailView: View {
     enum Constants {
         static let navButtonPadding: CGFloat = 20.0
         static let backButtonImage = "chevron.left"
+        static let daxLogo = "Home"
+        static let daxLogoSize: CGFloat = 24.0
     }
         
     var body: some View {
@@ -59,6 +61,9 @@ struct SubscriptionEmailView: View {
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) {
                 browserBackButton
+            }
+            ToolbarItemGroup(placement: .principal) {
+                daxLogoToolbarItem
             }
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -126,7 +131,7 @@ struct SubscriptionEmailView: View {
             }
         }
         
-        .navigationTitle(viewModel.viewTitle)
+        .navigationTitle(viewModel.state.viewTitle)
         
         .onFirstAppear {
             setUpAppearances()
@@ -156,6 +161,19 @@ struct SubscriptionEmailView: View {
                 Text(viewModel.state.backButtonTitle).foregroundColor(Color(designSystemColor: .textPrimary))
             }
         })
+    }
+    
+    @ViewBuilder
+    private var daxLogoToolbarItem: some View {
+        if viewModel.state.viewTitle == UserText.subscriptionTitle {
+            HStack {
+                Image(Constants.daxLogo)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
+                Text(viewModel.state.viewTitle).daxBodyRegular()
+            }
+        }
     }
     
     private func setUpAppearances() {

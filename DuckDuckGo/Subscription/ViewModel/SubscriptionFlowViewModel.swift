@@ -32,12 +32,12 @@ final class SubscriptionFlowViewModel: ObservableObject {
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     let purchaseManager: PurchaseManager
     var webViewModel: AsyncHeadlessWebViewViewModel
-    
-    let viewTitle = UserText.settingsPProSection
+        
     var purchaseURL = URL.subscriptionPurchase
     
     private var cancellables = Set<AnyCancellable>()
     private var canGoBackCancellable: AnyCancellable?
+    private var urlCancellable: AnyCancellable?
     
     enum Constants {
         static let navigationBarHideThreshold = 80.0
@@ -56,6 +56,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
         var transactionError: SubscriptionPurchaseError?
         var shouldHideBackButton = false
         var selectedFeature: SelectedFeature = .none
+        var viewTitle: String = UserText.subscriptionTitle
     }
     
     // Read only View State - Should only be modified from the VM
@@ -217,6 +218,20 @@ final class SubscriptionFlowViewModel: ObservableObject {
                     }
                 }
             }
+        
+        urlCancellable = webViewModel.$url
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let strongSelf = self else { return }
+                strongSelf.state.canNavigateBack = false
+                guard let currentURL = self?.webViewModel.url else { return }
+                if currentURL.forComparison() == URL.addEmailToSubscription {
+                    strongSelf.state.viewTitle = UserText.subscriptionAddEmail
+                } else {
+                    strongSelf.state.viewTitle = UserText.subscriptionTitle
+                }
+            }
+        
     }
     
     private func backButtonForURL(currentURL: URL) -> Bool {

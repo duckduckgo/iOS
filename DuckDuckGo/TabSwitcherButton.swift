@@ -201,11 +201,11 @@ class TabSwitcherButton: UIView {
     }
 
     private func updateAnimationColor() {
-        switch ThemeManager.shared.currentTheme.currentImageSet {
-        case .light:
-            anim.animation = LottieAnimation.named("new_tab_dark")
+        switch traitCollection.userInterfaceStyle {
         case .dark:
             anim.animation = LottieAnimation.named("new_tab")
+        default:
+            anim.animation = LottieAnimation.named("new_tab_dark")
         }
     }
 }

@@ -103,7 +103,6 @@ extension VPNWaitlistViewController: WaitlistViewModelDelegate {
             let alertController = UIAlertController(title: UserText.networkProtectionNotificationPromptTitle,
                                                     message: UserText.networkProtectionNotificationPromptDescription,
                                                     preferredStyle: .alert)
-            alertController.overrideUserInterfaceStyle()
 
             alertController.addAction(title: UserText.waitlistNoThanks) {
                 continuation.resume(returning: false)

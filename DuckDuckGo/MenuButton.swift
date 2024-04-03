@@ -188,16 +188,16 @@ class MenuButton: UIView {
         super.traitCollectionDidChange(previousTraitCollection)
 
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAnimationForCurrentTheme()
+            updateAnimationForCurrentAppearance()
         }
     }
 
-    private func updateAnimationForCurrentTheme() {
-        switch ThemeManager.shared.currentTheme.currentImageSet {
-        case .light:
-            anim.animation = LottieAnimation.named("menu_light")
+    private func updateAnimationForCurrentAppearance() {
+        switch traitCollection.userInterfaceStyle {
         case .dark:
             anim.animation = LottieAnimation.named("menu_dark")
+        default:
+            anim.animation = LottieAnimation.named("menu_light")
         }
 
         if currentState == State.closeImage {
@@ -212,7 +212,7 @@ extension MenuButton {
         let theme = ThemeManager.shared.currentTheme
         tintColor = theme.barTintColor
 
-        updateAnimationForCurrentTheme()
+        updateAnimationForCurrentAppearance()
     }
 }
 

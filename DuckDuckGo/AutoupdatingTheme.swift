@@ -25,14 +25,6 @@ import UIKit
 struct AutoupdatingTheme: Theme {
     let name = ThemeName.systemDefault
 
-    var currentImageSet: ThemeManager.ImageSet {
-        switch UIScreen.main.traitCollection.userInterfaceStyle {
-        case .dark: return .dark
-        case .light: return .light
-        case .unspecified: return .light
-        @unknown default: return .light
-        }
-    }
     let statusBarStyle: UIStatusBarStyle = .default
 
     let keyboardAppearance: UIKeyboardAppearance = .default

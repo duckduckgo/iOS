@@ -144,10 +144,10 @@ final class BrowsingMenuViewController: UIViewController {
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowRadius = 20
 
-        switch theme.currentImageSet {
+        switch view.traitCollection.userInterfaceStyle {
         case .dark:
             view.layer.shadowOpacity = 0.5
-        case .light:
+        default:
             view.layer.shadowOpacity = 0.25
         }
     }

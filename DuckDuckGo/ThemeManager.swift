@@ -65,6 +65,6 @@ class ThemeManager {
     }
 
     var currentInterfaceStyle: UIUserInterfaceStyle {
-        UIApplication.shared.firstKeyWindow?.traitCollection.userInterfaceStyle ?? UIUserInterfaceStyle(.light)
+        UIApplication.shared.firstKeyWindow?.traitCollection.userInterfaceStyle ?? .light
     }
 }

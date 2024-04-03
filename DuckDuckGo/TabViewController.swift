@@ -911,7 +911,6 @@ class TabViewController: UIViewController {
         let dontOpen = UserText.customUrlSchemeDontOpen
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.overrideUserInterfaceStyle()
         alert.addAction(UIAlertAction(title: dontOpen, style: .cancel, handler: { _ in
             if self.webView.url == nil {
                 self.delegate?.tabDidRequestClose(self)

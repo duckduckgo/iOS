@@ -524,7 +524,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let controller = NetworkProtectionTunnelController()
 
                 if await controller.isConnected {
-                    DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled)
+                    DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
+                        "reason": "thank-you-dialog"
+                    ])
                 }
 
                 await controller.stop()

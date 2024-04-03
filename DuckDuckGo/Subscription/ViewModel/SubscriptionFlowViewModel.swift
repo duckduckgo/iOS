@@ -235,7 +235,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
     
     private func backButtonForURL(currentURL: URL) -> Bool {
-        print(currentURL)
         return currentURL.forComparison() != URL.subscriptionBaseURL.forComparison() &&
         currentURL.forComparison() != URL.subscriptionActivateSuccess.forComparison() &&
         currentURL.forComparison() != URL.subscriptionPurchase.forComparison()
@@ -269,6 +268,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     // MARK: -
     
     func onAppear() {
+        self.state.selectedFeature = .none
         if webViewModel.url == nil {
             self.webViewModel.navigationCoordinator.navigateTo(url: self.purchaseURL)
         }
@@ -281,10 +281,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
         await self.setupTransactionObserver()
         await self .setupWebViewObservers()
         Pixel.fire(pixel: .privacyProOfferScreenImpression)
-    }
-        
-    func onFirstDisappear() async {
-        cleanUp()
     }
 
     @MainActor

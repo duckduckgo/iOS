@@ -81,14 +81,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         Task { await setupContent() }
     }
     
-    func onFirstDisappear() async {
-        cleanUp()
-    }
-    
-    private func cleanUp() {
-        cancellables.removeAll()
-    }
-    
     private func setupContent() async {
         if state.isAddingDevice {
             DispatchQueue.main.async {
@@ -200,6 +192,10 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     @MainActor
     func dismissView() {
         state.shouldDismissView = true
+    }
+    
+    deinit {
+        cancellables.removeAll()
     }
     
     

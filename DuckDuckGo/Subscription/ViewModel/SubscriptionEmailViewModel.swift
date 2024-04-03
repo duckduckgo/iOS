@@ -121,11 +121,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
             self.webViewModel.navigationCoordinator.navigateTo(url: self.emailURL)
         }
     }
-    
-    func onFirstDisappear() {
-        cancellables.removeAll()
-        canGoBackCancellable = nil
-    }
         
     private func setupObservers() {
         

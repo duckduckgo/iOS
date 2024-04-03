@@ -124,20 +124,11 @@ class TabSwitcherViewController: UIViewController {
         collectionView.backgroundView = view
     }
     
-    private func refreshDisplayModeButton(theme: Theme = ThemeManager.shared.currentTheme) {
-        switch theme.currentImageSet {
-        case .dark:
-            if tabSwitcherSettings.isGridViewEnabled {
-                displayModeButton.setImage(UIImage(named: "tabsToggleGrid-Dark"), for: .normal)
-            } else {
-                displayModeButton.setImage(UIImage(named: "tabsToggleList-Dark"), for: .normal)
-            }
-        case .light:
-            if tabSwitcherSettings.isGridViewEnabled {
-                displayModeButton.setImage(UIImage(named: "tabsToggleGrid-Light"), for: .normal)
-            } else {
-                displayModeButton.setImage(UIImage(named: "tabsToggleList-Light"), for: .normal)
-            }
+    private func refreshDisplayModeButton() {
+        if tabSwitcherSettings.isGridViewEnabled {
+            displayModeButton.setImage(UIImage(named: "tabsToggleGrid"), for: .normal)
+        } else {
+            displayModeButton.setImage(UIImage(named: "tabsToggleList"), for: .normal)
         }
     }
 
@@ -342,13 +333,6 @@ class TabSwitcherViewController: UIViewController {
         tabsModel.tabs.forEach { $0.removeObserver(self) }
         super.dismiss(animated: animated, completion: completion)
     }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            refreshDisplayModeButton()
-        }
-    }
 }
 
 extension TabSwitcherViewController: TabViewCellDelegate {
@@ -529,7 +513,7 @@ extension TabSwitcherViewController {
         let theme = ThemeManager.shared.currentTheme
         view.backgroundColor = theme.backgroundColor
         
-        refreshDisplayModeButton(theme: theme)
+        refreshDisplayModeButton()
         
         titleView.textColor = theme.barTintColor
         bookmarkAllButton.tintColor = theme.barTintColor

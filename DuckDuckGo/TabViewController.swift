@@ -127,6 +127,9 @@ class TabViewController: UIViewController {
 
     private var trackersInfoWorkItem: DispatchWorkItem?
     
+    private var tabURLInterceptor: TabURLInterceptor = TabURLInterceptorDefault()
+    private var currentlyLoadedURL: URL?
+    
 #if NETWORK_PROTECTION
     private let netPConnectionObserver = ConnectionStatusObserverThroughSession()
     private var netPConnectionObserverCancellable: AnyCancellable?
@@ -284,6 +287,8 @@ class TabViewController: UIViewController {
     }
 
     private let rulesCompilationMonitor = RulesCompilationMonitor.shared
+    
+    private var lastRenderedURL: URL?
 
     static func loadFromStoryboard(model: Tab,
                                    appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
@@ -1092,7 +1097,7 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-
+        
         let mimeType = MIMEType(from: navigationResponse.response.mimeType)
 
         let httpResponse = navigationResponse.response as? HTTPURLResponse
@@ -1154,6 +1159,7 @@ extension TabViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         lastError = nil
+        lastRenderedURL = webView.url
         cancelTrackerNetworksAnimation()
         shouldReloadOnError = false
         hideErrorMessage()
@@ -1165,7 +1171,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-
+        self.currentlyLoadedURL = webView.url
         adClickAttributionDetection.onDidFinishNavigation(url: webView.url)
         adClickAttributionLogic.onDidFinishNavigation(host: webView.url?.host)
         hideProgressIndicator()
@@ -1394,7 +1400,20 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-
+        
+        if let url = navigationAction.request.url {
+            if tabURLInterceptor.interceptURL(url: url) {
+                decisionHandler(.cancel)
+                // If there is history or a page loaded keep the tab open
+                if self.currentlyLoadedURL != nil {
+                    refresh()
+                } else {
+                    delegate?.tabDidRequestClose(self)
+                }
+                return
+            }
+        }
+        
         if let url = navigationAction.request.url,
            !url.isDuckDuckGoSearch,
            true == shouldWaitUntilContentBlockingIsLoaded({ [weak self, webView /* decision handler must be called */] in

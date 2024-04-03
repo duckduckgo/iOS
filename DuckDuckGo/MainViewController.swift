@@ -107,6 +107,7 @@ class MainViewController: UIViewController {
     private var syncFeatureFlagsCancellable: AnyCancellable?
     private var favoritesDisplayModeCancellable: AnyCancellable?
     private var emailCancellables = Set<AnyCancellable>()
+    private var urlInterceptorCancellables = Set<AnyCancellable>()
     
 #if NETWORK_PROTECTION
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
@@ -268,7 +269,8 @@ class MainViewController: UIViewController {
         previewsSource.prepare()
         addLaunchTabNotificationObserver()
         subscribeToEmailProtectionStatusNotifications()
-
+        subscribeToURLInterceptorNotifications()
+        
 #if NETWORK_PROTECTION && SUBSCRIPTION
         subscribeToNetworkProtectionEvents()
 #endif
@@ -1345,6 +1347,20 @@ class MainViewController: UIViewController {
                 self?.onDuckDuckGoEmailSignOut(notification)
             }
             .store(in: &emailCancellables)
+    }
+    
+    private func subscribeToURLInterceptorNotifications() {
+        NotificationCenter.default.publisher(for: .urlInterceptPrivacyPro)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                switch notification.name {
+                case .urlInterceptPrivacyPro:
+                    self?.launchSettings(deepLinkTarget: .subscriptionFlow)
+                default:
+                    return
+                }
+            }
+            .store(in: &urlInterceptorCancellables)
     }
 
 #if NETWORK_PROTECTION && SUBSCRIPTION

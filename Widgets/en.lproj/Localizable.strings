@@ -17,7 +17,7 @@
 "lock.screen.widget.fire.title" = "Fire Button";
 
 /* Description shown to the user when adding the Search Passwords lock screen widget */
-"lock.screen.widget.passwords.description" = "Instantly access your passwords with a tap.";
+"lock.screen.widget.passwords.description" = "Quickly search your saved DuckDuckGo passwords.";
 
 /* Title shown to the user when adding the Search Passwords lock screen widget */
 "lock.screen.widget.passwords.title" = "Search Passwords";
@@ -59,7 +59,7 @@
 "widget.no.favorites.message" = "Quickly visit your favorite sites.";
 
 /* Text in passwords widget */
-"widget.passwords" = "Search\nPasswords";
+"widget.passwords" = "Search Passwords";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Search DuckDuckGo";

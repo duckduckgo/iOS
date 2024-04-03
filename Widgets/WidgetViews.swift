@@ -257,7 +257,7 @@ struct PasswordsWidgetView: View {
                     .fill(Color(designSystemColor: .surface))
                     .accessibilityLabel(Text(UserText.passwords))
 
-            VStack(alignment: .center, spacing: 14) {
+            VStack(alignment: .center, spacing: 6) {
 
                 Image("WidgetPasswordIllustration")
                         .frame(width: 96, height: 72)
@@ -268,6 +268,7 @@ struct PasswordsWidgetView: View {
                         .daxSubheadRegular()
                         .foregroundColor(Color(designSystemColor: .textPrimary))
                         .multilineTextAlignment(.center)
+                        .padding(.horizontal, 8)
 
             }
             .accessibilityHidden(true)

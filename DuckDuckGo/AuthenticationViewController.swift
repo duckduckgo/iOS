@@ -103,12 +103,5 @@ extension AuthenticationViewController {
     private func decorate() {
         let theme = ThemeManager.shared.currentTheme
         view.backgroundColor = theme.backgroundColor
-        
-        switch theme.currentImageSet {
-        case .light:
-            logo?.image = UIImage(named: "LogoDarkText")
-        case .dark:
-            logo?.image = UIImage(named: "LogoLightText")
-        }
     }
 }

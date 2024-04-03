@@ -156,9 +156,6 @@ struct SubscriptionRestoreView: View {
                 viewModel.onAppear()
             }
 
-            .onFirstDisappear {
-                Task { await viewModel.onFirstDisappear() }
-           }
                 
     }
 

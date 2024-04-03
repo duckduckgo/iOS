@@ -42,8 +42,6 @@ struct SubscriptionITPView: View {
     @State private var isShowingActivityView = false
     
     enum Constants {
-        static let daxLogo = "Home"
-        static let daxLogoSize: CGFloat = 24.0
         static let empty = ""
         static let navButtonPadding: CGFloat = 20.0
         static let backButtonImage = "chevron.left"
@@ -59,13 +57,7 @@ struct SubscriptionITPView: View {
                 backButton
             }
             ToolbarItem(placement: .principal) {
-                HStack {
-                    Image(Constants.daxLogo)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
-                    Text(viewModel.viewTitle).daxBodyRegular()
-                }
+                DaxLogoNavbarTitle()
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 shareButton

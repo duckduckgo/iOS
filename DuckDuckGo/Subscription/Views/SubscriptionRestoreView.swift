@@ -151,6 +151,10 @@ struct SubscriptionRestoreView: View {
                 Task { await viewModel.onFirstAppear() }
                 setUpAppearances()
             }
+        
+            .onAppear {
+                viewModel.onAppear()
+            }
 
             .onFirstDisappear {
                 Task { await viewModel.onFirstDisappear() }

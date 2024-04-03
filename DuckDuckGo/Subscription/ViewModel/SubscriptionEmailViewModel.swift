@@ -105,6 +105,10 @@ final class SubscriptionEmailViewModel: ObservableObject {
     @MainActor
     func onFirstAppear() {
         setupObservers()
+    }
+    
+    func onAppear() {
+        state.shouldDismissView = false
         if accountManager.isUserAuthenticated {
             // If user is authenticated, we want to "Add or manage email" instead of activating
             emailURL = accountManager.email == nil ? URL.addEmailToSubscription : URL.manageSubscriptionEmail

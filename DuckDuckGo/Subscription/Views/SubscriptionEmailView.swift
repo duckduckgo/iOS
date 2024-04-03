@@ -40,8 +40,6 @@ struct SubscriptionEmailView: View {
     enum Constants {
         static let navButtonPadding: CGFloat = 20.0
         static let backButtonImage = "chevron.left"
-        static let daxLogo = "Home"
-        static let daxLogoSize: CGFloat = 24.0
     }
         
     var body: some View {
@@ -138,6 +136,10 @@ struct SubscriptionEmailView: View {
             viewModel.onFirstAppear()
         }
         
+        .onAppear {
+            viewModel.onAppear()
+        }
+        
     }
     
     // MARK: -
@@ -166,13 +168,7 @@ struct SubscriptionEmailView: View {
     @ViewBuilder
     private var daxLogoToolbarItem: some View {
         if viewModel.state.viewTitle == UserText.subscriptionTitle {
-            HStack {
-                Image(Constants.daxLogo)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
-                Text(viewModel.state.viewTitle).daxBodyRegular()
-            }
+            DaxLogoNavbarTitle()
         }
     }
     

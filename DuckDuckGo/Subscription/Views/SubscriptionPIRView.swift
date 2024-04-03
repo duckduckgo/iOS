@@ -33,8 +33,6 @@ struct SubscriptionPIRView: View {
     @State private var isShowingMacView = false
     
     enum Constants {
-        static let daxLogo = "Home"
-        static let daxLogoSize: CGFloat = 24.0
         static let empty = ""
         static let navButtonPadding: CGFloat = 20.0
         static let lightMask: [Color] = [Color.init(0xFFFFFF, alpha: 0), Color.init(0xFFFFFF, alpha: 0)]
@@ -62,13 +60,7 @@ struct SubscriptionPIRView: View {
         }
         .toolbar {
             ToolbarItem(placement: .principal) {
-                HStack {
-                    Image(Constants.daxLogo)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
-                    Text(viewModel.viewTitle).daxBodyRegular()
-                }
+                DaxLogoNavbarTitle()
             }
         }
         .onFirstAppear {

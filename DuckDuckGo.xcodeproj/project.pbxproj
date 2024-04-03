@@ -803,6 +803,7 @@
 		D61CDA162B7CF77300A0FBB9 /* Subscription in Frameworks */ = {isa = PBXBuildFile; productRef = D61CDA152B7CF77300A0FBB9 /* Subscription */; };
 		D61CDA182B7CF78300A0FBB9 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = D61CDA172B7CF78300A0FBB9 /* ZIPFoundation */; };
 		D63657192A7BAE7C001AF19D /* EmailManagerRequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63657182A7BAE7C001AF19D /* EmailManagerRequestDelegate.swift */; };
+		D63677F52BBDB1C300605BA5 /* DaxLogoNavbarTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63677F42BBDB1C300605BA5 /* DaxLogoNavbarTitle.swift */; };
 		D64648AD2B59936B0033090B /* SubscriptionEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64648AC2B59936B0033090B /* SubscriptionEmailView.swift */; };
 		D64648AF2B5993890033090B /* SubscriptionEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64648AE2B5993890033090B /* SubscriptionEmailViewModel.swift */; };
 		D652498E2B515A6A0056B0DE /* SubscriptionSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D652498D2B515A6A0056B0DE /* SubscriptionSettingsViewModel.swift */; };
@@ -2477,6 +2478,7 @@
 		D60170BB2BA32DD6001911B5 /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
 		D60B1F262B9DDE5A00AE4760 /* SubscriptionGoogleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionGoogleView.swift; sourceTree = "<group>"; };
 		D63657182A7BAE7C001AF19D /* EmailManagerRequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailManagerRequestDelegate.swift; sourceTree = "<group>"; };
+		D63677F42BBDB1C300605BA5 /* DaxLogoNavbarTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxLogoNavbarTitle.swift; sourceTree = "<group>"; };
 		D64648AC2B59936B0033090B /* SubscriptionEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionEmailView.swift; sourceTree = "<group>"; };
 		D64648AE2B5993890033090B /* SubscriptionEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionEmailViewModel.swift; sourceTree = "<group>"; };
 		D652498D2B515A6A0056B0DE /* SubscriptionSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionSettingsViewModel.swift; sourceTree = "<group>"; };
@@ -4677,6 +4679,7 @@
 				D6F93E3D2B50A8A0004C268D /* SubscriptionSettingsView.swift */,
 				D60B1F262B9DDE5A00AE4760 /* SubscriptionGoogleView.swift */,
 				D670E5BA2BB6A75200941A42 /* SubscriptionNavigationCoordinator.swift */,
+				D63677F42BBDB1C300605BA5 /* DaxLogoNavbarTitle.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -6653,6 +6656,7 @@
 				C1D21E2D293A5965006E5A05 /* AutofillLoginSession.swift in Sources */,
 				4B53648A26718D0E001AA041 /* EmailWaitlist.swift in Sources */,
 				027F48762A4B5FBE001A1C6C /* AppTPLinkButton.swift in Sources */,
+				D63677F52BBDB1C300605BA5 /* DaxLogoNavbarTitle.swift in Sources */,
 				8524CC98246D66E100E59D45 /* String+Markdown.swift in Sources */,
 				CBEFB9142AE0844700DEDE7B /* CriticalAlerts.swift in Sources */,
 				020108A329A561C300644F9D /* AppTPActivityView.swift in Sources */,

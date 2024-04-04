@@ -18,11 +18,17 @@
 //
 
 import Foundation
+import BrowserServicesKit
+import Common
+
+enum InterceptedURL: String {
+    case privacyPro
+}
 
 struct InterceptedURLInfo {
-    let url: URL
-    let cancelsNavigation: Bool
-    let action: ((URL) -> Void)?
+    let id: InterceptedURL
+    let TLD: String
+    let path: String
 }
 
 protocol TabURLInterceptor {
@@ -30,34 +36,49 @@ protocol TabURLInterceptor {
 }
 
 final class TabURLInterceptorDefault: TabURLInterceptor {
-    
-    static let interceptURLs: [String: InterceptedURLInfo] = [
-        "https://duckduckgo.com/pro": InterceptedURLInfo(
-            url: URL(string: "https://duckduckgo.com/pro")!,
-            cancelsNavigation: true,
-            action: { _ in
-                handlePrivacyProURL()
-            }
-        )
-    ]
-    
-    func interceptURL(url: URL) -> Bool {
-        guard let interceptedInfo = TabURLInterceptorDefault.interceptURLs[url.absoluteString] else {
-            return false // No interception occurred
-        }
+
+    private let tld = TLD()
+
+    static let interceptURLs: [InterceptedURLInfo] = [
         
-        interceptedInfo.action?(url)
-        return interceptedInfo.cancelsNavigation
+    ]
+
+    func interceptURL(url: URL) -> Bool {
+        for interceptedURL in TabURLInterceptorDefault.interceptURLs {
+            
+            guard let currentUrlComponents = normalizeScheme(url.absoluteString) else {
+                return false
+            }
+            print(currentUrlComponents)
+            
+        }
+        return false
+    }
+    
+    public func normalizeScheme(_ rawUrl: String) -> URLComponents? {
+        if !rawUrl.starts(with: URL.URLProtocol.https.scheme) &&
+           !rawUrl.starts(with: URL.URLProtocol.http.scheme) &&
+           rawUrl.contains("://") {
+            return nil
+        }
+        let noScheme = rawUrl.dropping(prefix: URL.URLProtocol.https.scheme).dropping(prefix: URL.URLProtocol.http.scheme)
+        return URLComponents(string: "\(URL.URLProtocol.https.scheme)\(noScheme)")
     }
 }
 
 extension TabURLInterceptorDefault {
-        
-    private static func handlePrivacyProURL() {
-        NotificationCenter.default.post(name: .urlInterceptPrivacyPro, object: nil)
+
+private static func handleURLInterception(url: InterceptedURL) -> Bool {
+    switch url {
+        case .privacyPro:
+        break
+            // NotificationCenter.default.post(name: .urlInterceptPrivacyPro, object: nil)
+        }
+    return false
     }
 }
 
 extension NSNotification.Name {
-    static let urlInterceptPrivacyPro: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.urlInterceptPrivacyPro")
+    static let urlInterceptPrivacyPro: NSNotification.Name = Notification.Name(
+    rawValue: "com.duckduckgo.notification.urlInterceptPrivacyPro")
 }

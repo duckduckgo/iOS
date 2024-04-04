@@ -306,8 +306,8 @@ class MainViewController: UIViewController {
 
         startOnboardingFlowIfNotSeenBefore()
         tabsBarController?.refresh(tabsModel: tabManager.model)
-        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
-        
+        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
+
         _ = AppWidthObserver.shared.willResize(toWidth: view.frame.width)
         applyWidth()
 
@@ -342,7 +342,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    func updatePreviewForCurrentTab() {
+    func updatePreviewForCurrentTab(completion: (() -> Void)? = nil) {
         assert(Thread.isMainThread)
         
         if !viewCoordinator.logoContainer.isHidden,
@@ -351,6 +351,7 @@ class MainViewController: UIViewController {
             // Home screen with logo
             if let image = viewCoordinator.logoContainer.createImageSnapshot(inBounds: viewCoordinator.contentContainer.frame) {
                 previewsSource.update(preview: image, forTab: tab)
+                completion?()
             }
 
         } else if let currentTab = self.tabManager.current(), currentTab.link != nil {
@@ -359,12 +360,16 @@ class MainViewController: UIViewController {
                 guard let image else { return }
                 self.previewsSource.update(preview: image,
                                            forTab: currentTab.tabModel)
+                completion?()
             })
         } else if let tab = self.tabManager.model.currentTab {
             // Favorites, etc
             if let image = viewCoordinator.contentContainer.createImageSnapshot() {
                 previewsSource.update(preview: image, forTab: tab)
+                completion?()
             }
+        } else {
+            completion?()
         }
     }
 
@@ -1159,7 +1164,7 @@ class MainViewController: UIViewController {
         viewCoordinator.toolbar.isHidden = false
         viewCoordinator.omniBar.enterPhoneState()
         
-        swipeTabsCoordinator?.isEnabled = featureFlagger.isFeatureOn(.swipeTabs)
+        swipeTabsCoordinator?.isEnabled = true
     }
 
     @discardableResult
@@ -1293,7 +1298,7 @@ class MainViewController: UIViewController {
         }
         attachHomeScreen()
         tabsBarController?.refresh(tabsModel: tabManager.model)
-        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
+        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
         homeController?.openedAsNewTab(allowingKeyboard: allowingKeyboard)
     }
     
@@ -2265,16 +2270,11 @@ extension MainViewController: TabSwitcherButtonDelegate {
         guard let currentTab = currentTab ?? tabManager?.current(createIfNeeded: true) else {
             fatalError("Unable to get current tab")
         }
-        
-        currentTab.preparePreview(completion: { image in
-            if let image = image {
-                self.previewsSource.update(preview: image,
-                                           forTab: currentTab.tabModel)
 
-            }
+        updatePreviewForCurrentTab {
             ViewHighlighter.hideAll()
             self.segueToTabSwitcher()
-        })
+        }
     }
 }
 

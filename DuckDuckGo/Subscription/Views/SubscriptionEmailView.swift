@@ -21,65 +21,149 @@
 import SwiftUI
 import Foundation
 import Core
+import Combine
 
 @available(iOS 15.0, *)
 struct SubscriptionEmailView: View {
         
-    @StateObject var viewModel = SubscriptionEmailViewModel()
+    @StateObject var viewModel: SubscriptionEmailViewModel
+    @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
     @Environment(\.dismiss) var dismiss
-    @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
-    @State private var isActive: Bool = false
-    @State var isAddingDevice = false
-    @State var shouldDisplayInactiveError = false
+        
+    @State var isPresentingInactiveError = false
+    @State var isPresentingNavigationError = false
+    @State var backButtonText = UserText.backButtonTitle
+    @State private var isShowingITR = false
+    @State private var isShowingDBP = false
+    @State private var isShowingNetP = false
     
+    enum Constants {
+        static let navButtonPadding: CGFloat = 20.0
+        static let backButtonImage = "chevron.left"
+    }
+        
     var body: some View {
+        // Hidden Navigation Links for Onboarding sections
+        NavigationLink(destination: NetworkProtectionRootView(inviteCompletion: {}).navigationViewStyle(.stack),
+                       isActive: $isShowingNetP,
+                       label: { EmptyView() })
+        NavigationLink(destination: SubscriptionITPView().navigationViewStyle(.stack),
+                       isActive: $isShowingITR,
+                       label: { EmptyView() })
+        NavigationLink(destination: SubscriptionPIRView().navigationViewStyle(.stack),
+                       isActive: $isShowingDBP,
+                       label: { EmptyView() })
+                        
+        baseView
+        
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarLeading) {
+                browserBackButton
+            }
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationViewStyle(.stack)
+        .navigationBarBackButtonHidden(true)
+        .tint(Color.init(designSystemColor: .textPrimary))
+        .accentColor(Color.init(designSystemColor: .textPrimary))
+        
+        .alert(isPresented: $isPresentingInactiveError) {
+            Alert(
+                title: Text(UserText.subscriptionRestoreEmailInactiveTitle),
+                message: Text(UserText.subscriptionRestoreEmailInactiveMessage),
+                dismissButton: .default(Text(UserText.actionOK)) {
+                    viewModel.dismissView()
+                }
+            )
+        }
+        
+        .alert(isPresented: $isPresentingNavigationError) {
+            Alert(
+                title: Text(UserText.subscriptionBackendErrorTitle),
+                message: Text(UserText.subscriptionBackendErrorMessage),
+                dismissButton: .cancel(Text(UserText.subscriptionBackendErrorButton)) {
+                    viewModel.dismissView()
+                })
+        }
+                
+        .onChange(of: viewModel.state.isPresentingInactiveError) { value in
+            isPresentingInactiveError = value
+        }
+        
+        .onChange(of: viewModel.state.shouldDisplaynavigationError) { value in
+            isPresentingNavigationError = value
+        }
+        
+        // Observe changes to shouldDismissView
+        .onChange(of: viewModel.state.shouldDismissView) { shouldDismiss in
+            if shouldDismiss {
+                dismiss()
+            }
+        }
+                
+        .onChange(of: viewModel.state.shouldPopToSubscriptionSettings) { shouldDismiss in
+            if shouldDismiss {
+                subscriptionNavigationCoordinator.shouldPopToSubscriptionSettings = true
+            }
+        }
+        
+        .onChange(of: viewModel.state.shouldPopToAppSettings) { shouldDismiss in
+            if shouldDismiss {
+                subscriptionNavigationCoordinator.shouldPopToAppSettings = true
+            }
+        }
+        
+        .onChange(of: viewModel.state.selectedFeature) { feature in
+            switch feature {
+            case .dbp:
+                self.isShowingDBP = true
+            case .itr:
+                self.isShowingITR = true
+            case .netP:
+                self.isShowingNetP = true
+            default:
+                break
+            }
+        }
+        
+        .navigationTitle(viewModel.viewTitle)
+        
+        .onFirstAppear {
+            setUpAppearances()
+            viewModel.onFirstAppear()
+        }
+        
+    }
+    
+    // MARK: -
+    
+    private var baseView: some View {
         ZStack {
             VStack {
                 AsyncHeadlessWebView(viewModel: viewModel.webViewModel)
                     .background()
             }
         }
-        
-        .alert(isPresented: $shouldDisplayInactiveError) {
-            Alert(
-                title: Text(UserText.subscriptionRestoreEmailInactiveTitle),
-                message: Text(UserText.subscriptionRestoreEmailInactiveMessage),
-                dismissButton: .default(Text(UserText.actionOK)) {
-                    dismiss()
-                }
-            )
-        }
-        
-        .alert(isPresented: $viewModel.navigationError) {
-            Alert(
-                title: Text(UserText.subscriptionBackendErrorTitle),
-                message: Text(UserText.subscriptionBackendErrorMessage),
-                dismissButton: .cancel(Text(UserText.subscriptionBackendErrorButton)) {
-                    dismiss()
-                })
-        }
-        
-        .onAppear {
-            viewModel.loadURL()
-        }
-        
-        
-        .onChange(of: viewModel.activateSubscription) { active in
-            if active {
-                // If updating email, just go back
-                if isAddingDevice {
-                    dismiss()
-                } else {
-                    // Pop to Root view
-                    self.rootPresentationMode.wrappedValue.dismiss()
-                }
+    }
+    
+    @ViewBuilder
+    private var browserBackButton: some View {
+        Button(action: {
+            Task { await viewModel.navigateBack() }
+        }, label: {
+            HStack(spacing: 0) {
+                Image(systemName: Constants.backButtonImage)
+                Text(viewModel.state.backButtonTitle).foregroundColor(Color(designSystemColor: .textPrimary))
             }
-        }
-        
-        .onChange(of: viewModel.shouldDisplayInactiveError) { _ in
-            shouldDisplayInactiveError = true
-        }
-        .navigationTitle(viewModel.viewTitle)
+        })
+    }
+    
+    private func setUpAppearances() {
+        let navAppearance = UINavigationBar.appearance()
+        navAppearance.backgroundColor = UIColor(designSystemColor: .surface)
+        navAppearance.barTintColor = UIColor(designSystemColor: .surface)
+        navAppearance.shadowImage = UIImage()
+        navAppearance.tintColor = UIColor(designSystemColor: .textPrimary)
     }
     
     

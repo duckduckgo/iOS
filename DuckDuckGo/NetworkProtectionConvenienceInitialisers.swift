@@ -60,12 +60,16 @@ extension ConnectionServerInfoObserverThroughSession {
 
 extension NetworkProtectionKeychainTokenStore {
     convenience init() {
-        let isSubscriptionEnabled = AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
-#if SUBSCRIPTION && ALPHA
-        let accessTokenProvider: () -> String? = { AccountManager().accessToken }
-#else
-        let accessTokenProvider: () -> String? = { nil }
+        let featureVisibility = DefaultNetworkProtectionVisibility.forTokenStore()
+        let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
+        let accessTokenProvider: () -> String? = {
+#if SUBSCRIPTION
+            if featureVisibility.shouldMonitorEntitlement() {
+                return { AccountManager().accessToken }
+            }
 #endif
+            return { nil }
+        }()
 
         self.init(keychainType: .dataProtection(.unspecified),
                   serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
@@ -83,23 +87,17 @@ extension NetworkProtectionCodeRedemptionCoordinator {
             tokenStore: NetworkProtectionKeychainTokenStore(),
             isManualCodeRedemptionFlow: isManualCodeRedemptionFlow,
             errorEvents: .networkProtectionAppDebugEvents,
-            isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
-        )
-    }
-}
-
-extension NetworkProtectionVPNNotificationsViewModel {
-    convenience init() {
-        self.init(
-            notificationsAuthorization: NotificationsAuthorizationController(),
-            settings: VPNSettings(defaults: .networkProtectionGroupDefaults)
+            isSubscriptionEnabled: DefaultNetworkProtectionVisibility().isPrivacyProLaunched()
         )
     }
 }
 
 extension NetworkProtectionVPNSettingsViewModel {
     convenience init() {
-        self.init(settings: VPNSettings(defaults: .networkProtectionGroupDefaults))
+        self.init(
+            notificationsAuthorization: NotificationsAuthorizationController(),
+            settings: VPNSettings(defaults: .networkProtectionGroupDefaults)
+        )
     }
 }
 
@@ -110,7 +108,7 @@ extension NetworkProtectionLocationListCompositeRepository {
             environment: settings.selectedEnvironment,
             tokenStore: NetworkProtectionKeychainTokenStore(),
             errorEvents: .networkProtectionAppDebugEvents,
-            isSubscriptionEnabled: AppDependencyProvider.shared.featureFlagger.isFeatureOn(.subscription)
+            isSubscriptionEnabled: DefaultNetworkProtectionVisibility().isPrivacyProLaunched()
         )
     }
 }

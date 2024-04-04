@@ -27,9 +27,9 @@ class PrivacyInfoContainerView: UIView {
     @IBOutlet var privacyIcon: PrivacyIconView!
     @IBOutlet var maskingView: UIView!
     
-    @IBOutlet var trackers1Animation: AnimationView!
-    @IBOutlet var trackers2Animation: AnimationView!
-    @IBOutlet var trackers3Animation: AnimationView!
+    @IBOutlet var trackers1Animation: LottieAnimationView!
+    @IBOutlet var trackers2Animation: LottieAnimationView!
+    @IBOutlet var trackers3Animation: LottieAnimationView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -41,24 +41,26 @@ class PrivacyInfoContainerView: UIView {
         [trackers1Animation, trackers2Animation, trackers3Animation].forEach { animationView in
             animationView.contentMode = .scaleAspectFill
             animationView.backgroundBehavior = .pauseAndRestore
+            // Trackers animation do not render properly using Lottie CoreAnimation. Running them on the CPU seems working fine.
+            animationView.configuration = LottieConfiguration(renderingEngine: .mainThread)
         }
         
         loadAnimations(for: ThemeManager.shared.currentTheme)
     }
     
-    private func loadAnimations(for theme: Theme, animationCache cache: AnimationCacheProvider = LRUAnimationCache.sharedCache) {
+    private func loadAnimations(for theme: Theme, animationCache cache: AnimationCacheProvider = DefaultAnimationCache.sharedCache) {
         let useLightStyle = theme.currentImageSet == .light
 
-        trackers1Animation.animation = Animation.named(useLightStyle ? "trackers-1" : "dark-trackers-1", animationCache: cache)
-        trackers2Animation.animation = Animation.named(useLightStyle ? "trackers-2" : "dark-trackers-2", animationCache: cache)
-        trackers3Animation.animation = Animation.named(useLightStyle ? "trackers-3" : "dark-trackers-3", animationCache: cache)
+        trackers1Animation.animation = LottieAnimation.named(useLightStyle ? "trackers-1" : "dark-trackers-1", animationCache: cache)
+        trackers2Animation.animation = LottieAnimation.named(useLightStyle ? "trackers-2" : "dark-trackers-2", animationCache: cache)
+        trackers3Animation.animation = LottieAnimation.named(useLightStyle ? "trackers-3" : "dark-trackers-3", animationCache: cache)
         
         privacyIcon.loadAnimations(for: theme, animationCache: cache)
         
         currentlyLoadedStyle = theme.currentImageSet
     }
     
-    func trackerAnimationView(for trackerCount: Int) -> AnimationView? {
+    func trackerAnimationView(for trackerCount: Int) -> LottieAnimationView? {
         switch trackerCount {
         case 0: return nil
         case 1: return trackers1Animation

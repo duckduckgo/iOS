@@ -21,12 +21,34 @@ import SwiftUI
 import UIKit
 import DesignResourcesKit
 
+
 struct SettingsView: View {
     
     @StateObject var viewModel: SettingsViewModel
     @Environment(\.presentationMode) var presentationMode
+    @State private var subscriptionNavigationCoordinator = SubscriptionNavigationCoordinator()
+    @State private var shouldDisplayDeepLinkSheet: Bool = false
+    @State private var shouldDisplayDeepLinkPush: Bool = false
+#if SUBSCRIPTION
+    @State var deepLinkTarget: SettingsViewModel.SettingsDeepLinkSection?
+#endif
     
     var body: some View {
+        
+        // Hidden navigationLink for programatic navigation
+        if #available(iOS 15.0, *) {
+            
+            #if SUBSCRIPTION
+            if let target = deepLinkTarget {
+                NavigationLink(destination: deepLinkDestinationView(for: target),
+                               isActive: $shouldDisplayDeepLinkPush) {
+                    EmptyView()
+                }
+            }
+            #endif
+        }
+        
+        // Settings Sections
         List {
             SettingsGeneralView()
             SettingsSyncView()
@@ -35,13 +57,14 @@ struct SettingsView: View {
             SettingsPrivacyView()
 #if SUBSCRIPTION
             if #available(iOS 15, *) {
-                SettingsSubscriptionView()
+                SettingsSubscriptionView().environmentObject(subscriptionNavigationCoordinator)
             }
 #endif
             SettingsCustomizeView()
             SettingsMoreView()
             SettingsAboutView()
             SettingsDebugView()
+            
         }
         .navigationBarTitle(UserText.settingsTitle, displayMode: .inline)
         .navigationBarItems(trailing: Button(UserText.navigationTitleDone) {
@@ -50,11 +73,84 @@ struct SettingsView: View {
         .accentColor(Color(designSystemColor: .textPrimary))
         .environmentObject(viewModel)
         .conditionalInsetGroupedListStyle()
+        
         .onAppear {
             viewModel.onAppear()
         }
+        
+        .onAppear {
+            viewModel.onDissapear()
+        }
+        
+#if SUBSCRIPTION
+        // MARK: Deeplink Modifiers
+        
+        .sheet(isPresented: $shouldDisplayDeepLinkSheet,
+               onDismiss: {
+                    viewModel.onAppear()
+                    shouldDisplayDeepLinkSheet = false
+                },
+               content: {
+                    if #available(iOS 15.0, *) {
+                        if let target = deepLinkTarget {
+                            deepLinkDestinationView(for: target)
+                        }
+                    }
+                })
+       
+        .onReceive(viewModel.$deepLinkTarget.removeDuplicates(), perform: { link in
+            guard let link, link != self.deepLinkTarget else {
+                return
+            }
+
+            self.deepLinkTarget = link
+
+            switch link.type {
+            case .sheet:
+                DispatchQueue.main.async {
+                    self.shouldDisplayDeepLinkSheet = true
+                }
+            case .navigationLink:
+                DispatchQueue.main.async {
+                    self.shouldDisplayDeepLinkPush = true
+                }
+            case.UIKitView:
+                DispatchQueue.main.async {
+                    triggerLegacyLink(link)
+                }
+            }
+        })
+#endif
+    }
+
+#if SUBSCRIPTION
+    // MARK: DeepLink Views
+    @available(iOS 15.0, *)
+    @ViewBuilder
+     func deepLinkDestinationView(for target: SettingsViewModel.SettingsDeepLinkSection) -> some View {
+        switch target {
+        case .dbp:
+            SubscriptionPIRView()
+        case .itr:
+            SubscriptionITPView()
+        case .subscriptionFlow:
+            SubscriptionContainerView(currentView: .subscribe).environmentObject(subscriptionNavigationCoordinator)
+        case .subscriptionRestoreFlow:
+            SubscriptionContainerView(currentView: .restore).environmentObject(subscriptionNavigationCoordinator)
+        default:
+            EmptyView()
+        }
     }
     
+    private func triggerLegacyLink(_ link: SettingsViewModel.SettingsDeepLinkSection) {
+        switch link {
+        case .netP:
+            viewModel.presentLegacyView(.netP)
+        default:
+            return
+        }
+    }
+#endif
 }
 
 struct InsetGroupedListStyleModifier: ViewModifier {
@@ -66,7 +162,7 @@ struct InsetGroupedListStyleModifier: ViewModifier {
         }
     }
 }
-        
+
 extension View {
     func conditionalInsetGroupedListStyle() -> some View {
         self.modifier(InsetGroupedListStyleModifier())

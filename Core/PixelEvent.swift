@@ -100,9 +100,14 @@ extension Pixel {
         case homeScreenEditFavorite
         case homeScreenDeleteFavorite
         
-        case autocompleteSelectedLocal
-        case autocompleteSelectedRemote
-        
+        case autocompleteEnabled
+        case autocompleteDisabled
+        case autocompleteClickPhrase
+        case autocompleteClickWebsite
+        case autocompleteClickBookmark
+        case autocompleteClickFavorite
+        case autocompleteClickHistory
+
         case feedbackPositive
         case feedbackNegativePrefix(category: String)
         
@@ -314,11 +319,6 @@ extension Pixel {
         case networkProtectionClientFailedToParseRedeemResponse
         case networkProtectionClientInvalidAuthToken
         
-        case networkProtectionServerListStoreFailedToEncodeServerList
-        case networkProtectionServerListStoreFailedToDecodeServerList
-        case networkProtectionServerListStoreFailedToWriteServerList
-        case networkProtectionServerListStoreFailedToReadServerList
-        
         case networkProtectionKeychainErrorFailedToCastKeychainValueToData
         case networkProtectionKeychainReadError
         case networkProtectionKeychainWriteError
@@ -408,7 +408,10 @@ extension Pixel {
         case webKitDidTerminate
         case webKitTerminationDidReloadCurrentTab
         case webKitDidTerminateDuringWarmup
-        
+
+        case webKitWarmupUnexpectedDidFinish
+        case webKitWarmupUnexpectedDidTerminate
+
         case backgroundTaskSubmissionFailed
         
         case blankOverlayNotDismissed
@@ -575,6 +578,7 @@ extension Pixel {
         case privacyProPurchaseFailureAccountNotCreated
         case privacyProPurchaseSuccess
         case privacyProRestorePurchaseOfferPageEntry
+        case privacyProRestorePurchaseClick
         case privacyProRestorePurchaseEmailStart
         case privacyProRestorePurchaseStoreStart
         case privacyProRestorePurchaseEmailSuccess
@@ -596,6 +600,20 @@ extension Pixel {
         case privacyProSubscriptionManagementEmail
         case privacyProSubscriptionManagementPlanBilling
         case privacyProSubscriptionManagementRemoval
+        case privacyProFeatureEnabled
+        case privacyProPromotionDialogShownVPN
+        case privacyProVPNAccessRevokedDialogShown
+        case privacyProVPNBetaStoppedWhenPrivacyProEnabled
+
+        // Full site address setting
+        case settingsShowFullSiteAddressEnabled
+        case settingsShowFullSiteAddressDisabled
+
+        // Web pixels
+        case privacyProOfferMonthlyPriceClick
+        case privacyProOfferYearlyPriceClick
+        case privacyProAddEmailSuccess
+        case privacyProWelcomeFAQClick
     }
     
 }
@@ -677,9 +695,14 @@ extension Pixel.Event {
         case .homeScreenEditFavorite: return "mh_ef"
         case .homeScreenDeleteFavorite: return "mh_df"
             
-        case .autocompleteSelectedLocal: return "m_au_l"
-        case .autocompleteSelectedRemote: return "m_au_r"
-            
+        case .autocompleteEnabled: return "m_autocomplete_toggled_on"
+        case .autocompleteDisabled: return "m_autocomplete_toggled_off"
+        case .autocompleteClickPhrase: return "m_autocomplete_click_phrase"
+        case .autocompleteClickWebsite: return "m_autocomplete_click_website"
+        case .autocompleteClickBookmark: return "m_autocomplete_click_bookmark"
+        case .autocompleteClickFavorite: return "m_autocomplete_click_favorite"
+        case .autocompleteClickHistory: return "m_autocomplete_click_history"
+
         case .feedbackPositive: return "mfbs_positive_submit"
         case .feedbackNegativePrefix(category: let category): return "mfbs_negative_\(category)"
             
@@ -861,7 +884,7 @@ extension Pixel.Event {
         case .networkProtectionTunnelFailureRecovered: return "m_netp_ev_tunnel_failure_recovered"
         case .networkProtectionLatency(let quality): return "m_netp_ev_\(quality.rawValue)_latency"
         case .networkProtectionLatencyError: return "m_netp_ev_latency_error_d"
-        case .networkProtectionRekeyAttempt: return "m_mac_netp_rekey_attempt"
+        case .networkProtectionRekeyAttempt: return "m_netp_rekey_attempt"
         case .networkProtectionRekeyCompleted: return "m_netp_rekey_completed"
         case .networkProtectionRekeyFailure: return "m_netp_rekey_failure"
         case .networkProtectionEnabledOnSearch: return "m_netp_ev_enabled_on_search"
@@ -886,10 +909,6 @@ extension Pixel.Event {
         case .networkProtectionClientFailedToRedeemInviteCode: return "m_netp_backend_api_error_failed_to_redeem_invite_code"
         case .networkProtectionClientFailedToParseRedeemResponse: return "m_netp_backend_api_error_parsing_redeem_response_failed"
         case .networkProtectionClientInvalidAuthToken: return "m_netp_backend_api_error_invalid_auth_token"
-        case .networkProtectionServerListStoreFailedToEncodeServerList: return "m_netp_storage_error_failed_to_encode_server_list"
-        case .networkProtectionServerListStoreFailedToDecodeServerList: return "m_netp_storage_error_failed_to_decode_server_list"
-        case .networkProtectionServerListStoreFailedToWriteServerList: return "m_netp_storage_error_server_list_file_system_write_failed"
-        case .networkProtectionServerListStoreFailedToReadServerList: return "m_netp_storage_error_server_list_file_system_read_failed"
         case .networkProtectionKeychainErrorFailedToCastKeychainValueToData: return "m_netp_keychain_error_failed_to_cast_keychain_value_to_data"
         case .networkProtectionKeychainReadError: return "m_netp_keychain_error_read_failed"
         case .networkProtectionKeychainWriteError: return "m_netp_keychain_error_write_failed"
@@ -975,7 +994,10 @@ extension Pixel.Event {
         case .webKitDidTerminate: return "m_d_wkt"
         case .webKitDidTerminateDuringWarmup: return "m_d_webkit-terminated-during-warmup"
         case .webKitTerminationDidReloadCurrentTab: return "m_d_wktct"
-            
+
+        case .webKitWarmupUnexpectedDidFinish: return "m_d_webkit-warmup-unexpected-did-finish"
+        case .webKitWarmupUnexpectedDidTerminate: return "m_d_webkit-warmup-unexpected-did-terminate"
+
         case .backgroundTaskSubmissionFailed: return "m_bt_rf"
             
         case .blankOverlayNotDismissed: return "m_d_ovs"
@@ -1133,7 +1155,7 @@ extension Pixel.Event {
         case .historyInsertVisitFailed: return "m_debug_history-insert-visit-failed"
         case .historyRemoveVisitsFailed: return "m_debug_history-remove-visits-failed"
 
-            // MARK: Privacy pro
+        // MARK: Privacy pro
         case .privacyProSubscriptionActive: return "m_privacy-pro_app_subscription_active"
         case .privacyProOfferScreenImpression: return "m_privacy-pro_offer_screen_impression"
         case .privacyProPurchaseAttempt: return "m_privacy-pro_terms-conditions_subscribe_click"
@@ -1143,6 +1165,7 @@ extension Pixel.Event {
         case .privacyProPurchaseFailureBackendError: return "m_privacy-pro_app_subscription-purchase_failure_account-creation"
         case .privacyProPurchaseSuccess: return "m_privacy-pro_app_subscription-purchase_success"
         case .privacyProRestorePurchaseOfferPageEntry: return "m_privacy-pro_offer_restore-purchase_click"
+        case .privacyProRestorePurchaseClick: return "m_privacy-pro_app-settings_restore-purchase_click"
         case .privacyProRestorePurchaseEmailStart: return "m_privacy-pro_activate-subscription_enter-email_click"
         case .privacyProRestorePurchaseStoreStart: return "m_privacy-pro_activate-subscription_restore-purchase_click"
         case .privacyProRestorePurchaseEmailSuccess: return "m_privacy-pro_app_subscription-restore-using-email_success"
@@ -1164,6 +1187,18 @@ extension Pixel.Event {
         case .privacyProSubscriptionManagementEmail: return "m_privacy-pro_manage-email_edit_click"
         case .privacyProSubscriptionManagementPlanBilling: return "m_privacy-pro_settings_change-plan-or-billing_click"
         case .privacyProSubscriptionManagementRemoval: return "m_privacy-pro_settings_remove-from-device_click"
+        case .settingsShowFullSiteAddressEnabled: return "m_settings_show_full_url_on"
+        case .settingsShowFullSiteAddressDisabled: return "m_settings_show_full_url_off"
+            // Launch
+        case .privacyProFeatureEnabled: return "m_privacy-pro_feature_enabled"
+        case .privacyProPromotionDialogShownVPN: return "m_privacy-pro_promotion-dialog_shown_vpn"
+        case .privacyProVPNAccessRevokedDialogShown: return "m_privacy-pro_vpn-access-revoked-dialog_shown"
+        case .privacyProVPNBetaStoppedWhenPrivacyProEnabled: return "m_privacy-pro_vpn-beta-stopped-when-privacy-pro-enabled"
+            // Web
+        case .privacyProOfferMonthlyPriceClick: return "m_privacy-pro_offer_monthly-price_click"
+        case .privacyProOfferYearlyPriceClick: return "m_privacy-pro_offer_yearly-price_click"
+        case .privacyProAddEmailSuccess: return "m_privacy-pro_app_add-email_success_u"
+        case .privacyProWelcomeFAQClick: return "m_privacy-pro_welcome_faq_click_u"
         }
     }
 }

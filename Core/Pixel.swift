@@ -150,7 +150,14 @@ public class Pixel {
         case atb
         case appVersion
     }
+    
+    
+    private enum Constant {
+        static let pixelStorageIdentifier = "com.duckduckgo.pixel.storage"
+    }
 
+    public static let storage = UserDefaults(suiteName: Constant.pixelStorageIdentifier)!
+    
     private init() {
     }
 
@@ -160,16 +167,28 @@ public class Pixel {
                             allowedQueryReservedCharacters: CharacterSet? = nil,
                             withHeaders headers: APIRequest.Headers = APIRequest.Headers(),
                             includedParameters: [QueryParameters] = [.atb, .appVersion],
-                            onComplete: @escaping (Error?) -> Void = { _ in }) {
-        fire(
-            pixelNamed: pixel.name,
-            forDeviceType: deviceType,
-            withAdditionalParameters: params,
-            allowedQueryReservedCharacters: allowedQueryReservedCharacters,
-            withHeaders: headers,
-            includedParameters: includedParameters,
-            onComplete: onComplete
-        )
+                            onComplete: @escaping (Error?) -> Void = { _ in },
+                            debounce: Int = 0) {
+        
+        let date = Date().addingTimeInterval(-TimeInterval(debounce))
+        if !pixel.hasBeenFiredSince(pixelStorage: storage, date: date) {
+            fire(
+                pixelNamed: pixel.name,
+                forDeviceType: deviceType,
+                withAdditionalParameters: params,
+                allowedQueryReservedCharacters: allowedQueryReservedCharacters,
+                withHeaders: headers,
+                includedParameters: includedParameters,
+                onComplete: onComplete
+            )
+            updatePixelLastFireDate(pixel: pixel)
+        } else {
+            onComplete(nil)
+        }
+    }
+    
+    private static func updatePixelLastFireDate(pixel: Pixel.Event) {
+        storage.set(Date(), forKey: pixel.name)
     }
 
     public static func fire(pixelNamed pixelName: String,
@@ -240,14 +259,16 @@ extension Pixel {
     }
 }
 
-/// NSError supports this through `NSUnderlyingError`, but there's no support for this for Swift's `Error`.  This protocol does that.
-///
-/// The reason why this protocol returns a code and a domain instead of just an `Error` or `NSError` is so that the error implementing
-/// this protocol has full control over these values, and is able to override them as it best sees fit.
-///
-protocol ErrorWithUnderlyingError: Error {
-    var underlyingErrorCode: Int { get }
-    var underlyingErrorDomain: String { get }
+private extension Pixel.Event {
+    
+    func hasBeenFiredSince(pixelStorage: UserDefaults, date: Date) -> Bool {
+        if let lastFireDate = pixelStorage.object(forKey: name) as? Date {
+            return lastFireDate >= date
+        }
+        return false
+    }
+    
+    
 }
 
 extension Dictionary where Key == String, Value == String {
@@ -257,10 +278,7 @@ extension Dictionary where Key == String, Value == String {
         self[PixelParameters.errorCode] = "\(nsError.code)"
         self[PixelParameters.errorDomain] = nsError.domain
 
-        if let underlyingError = error as? ErrorWithUnderlyingError {
-            self[PixelParameters.underlyingErrorCode] = "\(underlyingError.underlyingErrorCode)"
-            self[PixelParameters.underlyingErrorDomain] = underlyingError.underlyingErrorDomain
-        } else if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
+        if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
             self[PixelParameters.underlyingErrorCode] = "\(underlyingError.code)"
             self[PixelParameters.underlyingErrorDomain] = underlyingError.domain
         } else if let sqlErrorCode = nsError.userInfo["NSSQLiteErrorDomain"] as? NSNumber {

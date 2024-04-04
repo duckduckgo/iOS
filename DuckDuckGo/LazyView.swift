@@ -1,8 +1,8 @@
 //
-//  Debounce.swift
+//  LazyView.swift
 //  DuckDuckGo
 //
-//  Copyright © 2019 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,22 +18,15 @@
 //
 
 import Foundation
+import SwiftUI
 
-public class Debounce {
-
-    private let queue: DispatchQueue
-    private let interval: TimeInterval
-
-    private var currentWorkItem = DispatchWorkItem(block: {})
-
-    public init(queue: DispatchQueue, seconds: TimeInterval) {
-        self.queue = queue
-        self.interval = seconds
+// https://gist.github.com/chriseidhof/d2fcafb53843df343fe07f3c0dac41d5
+struct LazyView<Content: View>: View {
+    let build: () -> Content
+    init(_ build: @autoclosure @escaping () -> Content) {
+        self.build = build
     }
-
-    public func schedule(_ block: @escaping (() -> Void)) {
-        currentWorkItem.cancel()
-        currentWorkItem = DispatchWorkItem(block: { block() })
-        queue.asyncAfter(deadline: .now() + interval, execute: currentWorkItem)
+    var body: Content {
+        build()
     }
 }

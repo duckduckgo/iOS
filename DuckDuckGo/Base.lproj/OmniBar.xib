@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -93,13 +93,13 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7qa-DK-tfO" userLabel="Trackers Animation Wrapper">
                                                     <rect key="frame" x="-15" y="0.0" width="158" height="40"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xsT-yZ-wg7" customClass="AnimationView" customModule="Lottie">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xsT-yZ-wg7" customClass="LottieAnimationView" customModule="Lottie">
                                                             <rect key="frame" x="0.0" y="0.0" width="158" height="40"/>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jHJ-ya-QS7" customClass="AnimationView" customModule="Lottie">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jHJ-ya-QS7" customClass="LottieAnimationView" customModule="Lottie">
                                                             <rect key="frame" x="0.0" y="0.0" width="158" height="40"/>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E8n-8r-JML" customClass="AnimationView" customModule="Lottie">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E8n-8r-JML" customClass="LottieAnimationView" customModule="Lottie">
                                                             <rect key="frame" x="0.0" y="0.0" width="158" height="40"/>
                                                         </view>
                                                     </subviews>
@@ -133,16 +133,16 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TmK-n8-JJZ" userLabel="Shield Animations Wrapper">
                                                             <rect key="frame" x="-12" y="0.0" width="158" height="40"/>
                                                             <subviews>
-                                                                <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="jQy-me-Afa" customClass="AnimationView" customModule="Lottie">
+                                                                <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="jQy-me-Afa" customClass="LottieAnimationView" customModule="Lottie">
                                                                     <rect key="frame" x="0.0" y="0.0" width="158" height="40"/>
                                                                 </view>
-                                                                <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="KE6-Wh-7Yp" customClass="AnimationView" customModule="Lottie">
+                                                                <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="KE6-Wh-7Yp" customClass="LottieAnimationView" customModule="Lottie">
                                                                     <rect key="frame" x="0.0" y="0.0" width="158" height="40"/>
                                                                 </view>
-                                                                <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="dqb-pm-Da8" customClass="AnimationView" customModule="Lottie">
+                                                                <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="dqb-pm-Da8" customClass="LottieAnimationView" customModule="Lottie">
                                                                     <rect key="frame" x="0.0" y="0.0" width="158" height="40"/>
                                                                 </view>
-                                                                <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="D46-aN-352" customClass="AnimationView" customModule="Lottie">
+                                                                <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="D46-aN-352" customClass="LottieAnimationView" customModule="Lottie">
                                                                     <rect key="frame" x="0.0" y="0.0" width="158" height="40"/>
                                                                 </view>
                                                             </subviews>

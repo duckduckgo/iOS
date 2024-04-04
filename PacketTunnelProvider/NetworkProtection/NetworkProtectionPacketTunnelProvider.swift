@@ -52,6 +52,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             case .connecting:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptConnecting)
             case .success:
+                let versionStore = NetworkProtectionLastVersionRunStore(userDefaults: .networkProtectionGroupDefaults)
+                versionStore.lastExtensionVersionRun = AppVersion.shared.versionAndBuildNumber
+
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptSuccess)
             case .failure:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptFailure)
@@ -146,20 +149,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 pixelEvent = .networkProtectionClientInvalidAuthToken
             case .serverListInconsistency:
                 return
-            case .failedToEncodeServerList:
-                pixelEvent = .networkProtectionServerListStoreFailedToEncodeServerList
-            case .failedToDecodeServerList:
-                pixelEvent = .networkProtectionServerListStoreFailedToDecodeServerList
-            case .failedToWriteServerList(let eventError):
-                pixelEvent = .networkProtectionServerListStoreFailedToWriteServerList
-                pixelError = eventError
-            case .noServerListFound:
-                return
-            case .couldNotCreateServerListDirectory:
-                return
-            case .failedToReadServerList(let eventError):
-                pixelEvent = .networkProtectionServerListStoreFailedToReadServerList
-                pixelError = eventError
             case .failedToCastKeychainValueToData(let field):
                 pixelEvent = .networkProtectionKeychainErrorFailedToCastKeychainValueToData
                 params[PixelParameters.keychainFieldName] = field
@@ -234,23 +223,23 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
-#if SUBSCRIPTION && ALPHA
-        let isSubscriptionEnabled = true
-        let tokenStore = NetworkProtectionKeychainTokenStore(
-            keychainType: .dataProtection(.unspecified),
-            errorEvents: nil,
-            isSubscriptionEnabled: isSubscriptionEnabled,
-            accessTokenProvider: { AccountManager().accessToken }
-        )
-#else
-        let isSubscriptionEnabled = false
-        let tokenStore = NetworkProtectionKeychainTokenStore(
-            keychainType: .dataProtection(.unspecified),
-            errorEvents: nil,
-            isSubscriptionEnabled: isSubscriptionEnabled,
-            accessTokenProvider: { nil }
-        )
+        let featureVisibility = NetworkProtectionVisibilityForTunnelProvider()
+        let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
+        let accessTokenProvider: () -> String? = {
+#if SUBSCRIPTION
+            if featureVisibility.shouldMonitorEntitlement() {
+                return { AccountManager().accessToken }
+            }
 #endif
+            return { nil }
+        }()
+        let tokenStore = NetworkProtectionKeychainTokenStore(
+            keychainType: .dataProtection(.unspecified),
+            errorEvents: nil,
+            isSubscriptionEnabled: isSubscriptionEnabled,
+            accessTokenProvider: accessTokenProvider
+        )
+
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
@@ -318,11 +307,17 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     private static func entitlementCheck() async -> Result<Bool, Error> {
-#if SUBSCRIPTION && ALPHA
-        SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+#if SUBSCRIPTION
+        guard NetworkProtectionVisibilityForTunnelProvider().shouldMonitorEntitlement() else {
+            return .success(true)
+        }
+
+        if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {
+            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+        }
 
         let result = await AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
-            .hasEntitlement(for: .networkProtection, cachePolicy: .reloadIgnoringLocalCacheData)
+            .hasEntitlement(for: .networkProtection)
         switch result {
         case .success(let hasEntitlement):
             return .success(hasEntitlement)

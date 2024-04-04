@@ -45,47 +45,37 @@ struct SubscriptionPIRView: View {
         static let headerPadding = 5.0
         static let generalSpacing = 20.0
         static let cornerRadius = 10.0
-        static let windowsIcon = "Platform-Windows-16"
-        static let macOSIcon = "Platform-Apple-16"
+        static let windowsIcon = "Platform-Windows-16-subscriptions"
+        static let macOSIcon = "Platform-Apple-16-subscriptions"
     }
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                gradientBackground
-                ScrollView {
-                    VStack {
-                        header
-                            .padding(.top, Constants.headerPadding)
-                        baseView
-                            .frame(maxWidth: 600)
-                    }
+        ZStack {
+            gradientBackground
+            ScrollView {
+                VStack {
+                    baseView
+                        .frame(maxWidth: 600)
                 }
-                
             }
-            .edgesIgnoringSafeArea(.all)
-        }.onAppear(perform: {
-            viewModel.onAppear()
-        })
-    }
-    
-    private var header: some View {
-        GeometryReader { geometry in
-            HStack {
-                Spacer().frame(width: geometry.size.width / 3)
-                HStack(alignment: .center) {
+            
+        }
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                HStack {
                     Image(Constants.daxLogo)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
                     Text(viewModel.viewTitle).daxBodyRegular()
                 }
-                .frame(width: geometry.size.width / 3, alignment: .center)
-                dismissButton
-                    .frame(width: geometry.size.width / 3, alignment: .trailing)
             }
         }
+        .onFirstAppear {
+            viewModel.onFirstAppear()
+        }
     }
+        
     
     private var gradientBackground: some View {
         ZStack {

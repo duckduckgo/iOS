@@ -25,15 +25,20 @@ import Core
 
 @available(iOS 15.0, *)
 struct SubscriptionFlowView: View {
-    
+        
     @Environment(\.dismiss) var dismiss
-    @StateObject var viewModel = SubscriptionFlowViewModel()
-    @State private var shouldShowNavigationBar = false
-    @State private var isActive = false
-    @State private var transactionError: SubscriptionFlowViewModel.SubscriptionPurchaseError?
+    @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
+    @StateObject var viewModel: SubscriptionFlowViewModel
+    
+    @State private var isPurchaseInProgress = false
+    @State private var isShowingITR = false
+    @State private var isShowingDBP = false
+    @State private var isShowingNetP = false
+    @Binding var currentView: SubscriptionContainerView.CurrentView
+    
+    // Local View State
     @State private var errorMessage: SubscriptionErrorMessage = .general
-    @State private var shouldPresentError: Bool = false
-    @State private var isFirstOnAppear = true
+    @State private var isPresentingError: Bool = false
 
     enum Constants {
         static let daxLogo = "Home"
@@ -51,42 +56,43 @@ struct SubscriptionFlowView: View {
     }
     
     var body: some View {
-        NavigationView {
-            baseView
-                .toolbar {
-                    ToolbarItemGroup(placement: .navigationBarLeading) {
-                        backButton
-                    }
-                    ToolbarItem(placement: .principal) {
-                        HStack {
-                            Image(Constants.daxLogo)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
-                            Text(viewModel.viewTitle).daxBodyRegular()
-                        }
+        
+        // Hidden Navigation Links for Onboarding sections
+        NavigationLink(destination: NetworkProtectionRootView(inviteCompletion: {}).navigationViewStyle(.stack),
+                       isActive: $isShowingNetP,
+                       label: { EmptyView() })
+        NavigationLink(destination: SubscriptionITPView().navigationViewStyle(.stack),
+                       isActive: $isShowingITR,
+                       label: { EmptyView() })
+        NavigationLink(destination: SubscriptionPIRView().navigationViewStyle(.stack),
+                       isActive: $isShowingDBP,
+                       label: { EmptyView() })
+        
+        baseView
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    backButton
+                }
+                ToolbarItem(placement: .principal) {
+                    HStack {
+                        Image(Constants.daxLogo)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
+                        Text(viewModel.viewTitle).daxBodyRegular()
                     }
                 }
-                .edgesIgnoringSafeArea(.top)
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationBarHidden(!viewModel.shouldShowNavigationBar).animation(.easeOut)
-        }
-        .applyInsetGroupedListStyle()
-        .tint(Color(designSystemColor: .textPrimary))
-        .environment(\.rootPresentationMode, self.$isActive)
-    }
-
-    @ViewBuilder
-    private var dismissButton: some View {
-        Button(action: { viewModel.finalizeSubscriptionFlow() }, label: { Text(UserText.subscriptionCloseButton) })
-        .padding(Constants.navButtonPadding)
-        .contentShape(Rectangle())
-        .tint(Color(designSystemColor: .textPrimary))
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden(viewModel.state.canNavigateBack || viewModel.subFeature.transactionStatus != .idle)
+            .interactiveDismissDisabled(viewModel.subFeature.transactionStatus != .idle)
+            .edgesIgnoringSafeArea(.bottom)
+            .tint(Color(designSystemColor: .textPrimary))
     }
     
     @ViewBuilder
     private var backButton: some View {
-        if viewModel.canNavigateBack {
+        if viewModel.state.canNavigateBack {
             Button(action: {
                 Task { await viewModel.navigateBack() }
             }, label: {
@@ -100,7 +106,7 @@ struct SubscriptionFlowView: View {
     }
     
     private func getTransactionStatus() -> String {
-        switch viewModel.transactionStatus {
+        switch viewModel.state.transactionStatus {
         case .polling:
             return UserText.subscriptionCompletingPurchaseTitle
         case .purchasing:
@@ -117,33 +123,32 @@ struct SubscriptionFlowView: View {
     private var baseView: some View {
         ZStack(alignment: .top) {
             webView
-                        
-            // Show a dismiss button while the bar is not visible
-            // But it should be hidden while performing a transaction
-            if !shouldShowNavigationBar && viewModel.transactionStatus == .idle {
-                HStack {
-                    backButton.padding(.leading, Constants.navButtonPadding)
-                    Spacer()
-                    dismissButton
+        }
+        
+        .onChange(of: viewModel.state.selectedFeature) { feature in
+            switch feature {
+            case .dbp:
+                self.isShowingDBP = true
+            case .itr:
+                self.isShowingITR = true
+            case .netP:
+                self.isShowingNetP = true
+            default:
+                break
+            }
+        }
+        
+        .onChange(of: viewModel.state.shouldActivateSubscription) { result in
+            if result {
+                withAnimation {
+                    currentView = .restore
                 }
             }
         }
         
-        .onChange(of: viewModel.shouldDismissView) { result in
-            if result {
-                dismiss()
-                viewModel.shouldDismissView = false
-            }
-        }
-
-        .onChange(of: viewModel.userTappedRestoreButton) { _ in
-            isActive = true
-            viewModel.userTappedRestoreButton = false
-        }
-        
-        .onChange(of: viewModel.transactionError) { value in
+        .onChange(of: viewModel.state.transactionError) { value in
             
-            if !shouldPresentError {
+            if !isPresentingError {
                 let displayError: Bool = {
                     switch value {
                     case .hasActiveSubscription:
@@ -161,44 +166,29 @@ struct SubscriptionFlowView: View {
                 }()
                 
                 if displayError {
-                    shouldPresentError = true
+                    isPresentingError = true
                 }
             }
         }
         
-        .onAppear(perform: {
-
-            if isFirstOnAppear && !viewModel.activateSubscriptionOnLoad {
-                isFirstOnAppear = false
-                Pixel.fire(pixel: .privacyProOfferScreenImpression)
-            }
-
+        .onFirstAppear {
             setUpAppearances()
-            Task { await viewModel.initializeViewData() }
-            
-            // Display the Restore page on load if required (With no animation)
-            if viewModel.activateSubscriptionOnLoad {
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2) {
-                    var transaction = Transaction()
-                        transaction.disablesAnimations = true
-                    withTransaction(transaction) {
-                        isActive = true
-                        viewModel.activateSubscriptionOnLoad = false
-                    }
-                    
-                }
-            }
-        })
+            Task { await viewModel.onFirstAppear() }
+        }
+        
+        .onFirstDisappear {
+            Task { await viewModel.onFirstDisappear() }
+        }
+        
+        .onAppear {
+            Task { await viewModel.onFirstAppear() }
+        }
                 
-        .alert(isPresented: $shouldPresentError) {
+        .alert(isPresented: $isPresentingError) {
             getAlert(error: self.errorMessage)
             
         }
         
-        // The trailing close button should be hidden when a transaction is in progress
-        .navigationBarItems(trailing: viewModel.transactionStatus == .idle
-                            ? Button(UserText.subscriptionCloseButton) { viewModel.finalizeSubscriptionFlow() }
-                            : nil)
     }
         
     private func getAlert(error: SubscriptionErrorMessage) -> Alert {
@@ -209,8 +199,8 @@ struct SubscriptionFlowView: View {
                 title: Text(UserText.subscriptionFoundTitle),
                 message: Text(UserText.subscriptionFoundText),
                 primaryButton: .cancel(Text(UserText.subscriptionFoundCancel)) {
-                    viewModel.transactionError = nil
-                    viewModel.finalizeSubscriptionFlow()
+                     viewModel.clearTransactionError()
+                     dismiss()
                 },
                 secondaryButton: .default(Text(UserText.subscriptionFoundRestore)) {
                     viewModel.restoreAppstoreTransaction()
@@ -221,7 +211,8 @@ struct SubscriptionFlowView: View {
                 title: Text(UserText.subscriptionAppStoreErrorTitle),
                 message: Text(UserText.subscriptionAppStoreErrorMessage),
                 dismissButton: .cancel(Text(UserText.actionOK)) {
-                    Task { await viewModel.initializeViewData() }
+                    viewModel.clearTransactionError()
+                    dismiss()
                 }
             )
         case .backend, .general:
@@ -229,7 +220,7 @@ struct SubscriptionFlowView: View {
                 title: Text(UserText.subscriptionBackendErrorTitle),
                 message: Text(UserText.subscriptionBackendErrorMessage),
                 dismissButton: .cancel(Text(UserText.subscriptionBackendErrorButton)) {
-                    viewModel.finalizeSubscriptionFlow()
+                    viewModel.clearTransactionError()
                     dismiss()
                 }
             )
@@ -240,21 +231,11 @@ struct SubscriptionFlowView: View {
     private var webView: some View {
         
         ZStack(alignment: .top) {
-            
-            // Restore View Hidden Link           
-            let restoreView = SubscriptionRestoreView(
-                onDismissStack: {
-                    viewModel.finalizeSubscriptionFlow()
-                    dismiss()
-                })
-            NavigationLink(destination: restoreView, isActive: $isActive) {
-                EmptyView()
-            }.isDetailLink(false)
 
             AsyncHeadlessWebView(viewModel: viewModel.webViewModel)
                 .background()
             
-            if viewModel.transactionStatus != .idle {
+            if viewModel.state.transactionStatus != .idle {
                 PurchaseInProgressView(status: getTransactionStatus())
             }
         }

@@ -50,10 +50,10 @@ struct SubscriptionExternalLinkView: View {
             .navigationViewStyle(.stack)
             .navigationTitle(title ?? "")
             
-            .onAppear(perform: {
+            .onFirstAppear {
                 setUpAppearances()
-                viewModel.initializeView()
-            })
+                viewModel.onFirstAppear()
+            }
         }.tint(Color(designSystemColor: .textPrimary))
     }
     

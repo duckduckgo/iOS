@@ -24,7 +24,7 @@ import SwiftUI
 import Core
 import Waitlist
 
-@available(iOS 15.0, *)
+@available(iOS 15, *)
 final class VPNWaitlistTermsAndConditionsViewController: UIViewController {
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {

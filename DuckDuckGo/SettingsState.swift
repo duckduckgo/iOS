@@ -44,6 +44,7 @@ struct SettingsState {
         var enabled: Bool
         var canPurchase: Bool
         var hasActiveSubscription: Bool
+        var isSubscriptionPendingActivation: Bool
     }
     
     struct SyncSettings {
@@ -57,6 +58,7 @@ struct SettingsState {
     var fireButtonAnimation: FireButtonAnimationType
     var textSize: TextSize
     var addressbar: AddressBar
+    var showsFullURL: Bool
 
     // Privacy properties
     var sendDoNotSell: Bool
@@ -97,6 +99,7 @@ struct SettingsState {
             fireButtonAnimation: .fireRising,
             textSize: TextSize(enabled: false, size: 100),
             addressbar: AddressBar(enabled: false, position: .top),
+            showsFullURL: false,
             sendDoNotSell: true,
             autoconsentEnabled: false,
             autoclearDataEnabled: false,
@@ -111,8 +114,10 @@ struct SettingsState {
             speechRecognitionAvailable: false,
             loginsEnabled: false,
             networkProtection: NetworkProtection(enabled: false, status: ""),
-            subscription: Subscription(enabled: false, canPurchase: false,
-                                   hasActiveSubscription: false),
+            subscription: Subscription(enabled: false,
+                                       canPurchase: false,
+                                       hasActiveSubscription: false,
+                                       isSubscriptionPendingActivation: false),
             sync: SyncSettings(enabled: false, title: "")
         )
     }

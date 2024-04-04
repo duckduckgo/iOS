@@ -141,17 +141,7 @@ extension WebCacheManager {
         }
         let dataStore = WKWebsiteDataStore.default()
         let cookies = await dataStore.httpCookieStore.allCookies()
-        var types = WKWebsiteDataStore.allWebsiteDataTypes()
-        types.insert("_WKWebsiteDataTypeMediaKeys")
-        types.insert("_WKWebsiteDataTypeHSTSCache")
-        types.insert("_WKWebsiteDataTypeSearchFieldRecentSearches")
-        types.insert("_WKWebsiteDataTypeResourceLoadStatistics")
-        types.insert("_WKWebsiteDataTypeCredentials")
-        types.insert("_WKWebsiteDataTypeAdClickAttributions")
-        types.insert("_WKWebsiteDataTypePrivateClickMeasurements")
-        types.insert("_WKWebsiteDataTypeAlternativeServices")
-
-        await dataStore.removeData(ofTypes: types, modifiedSince: .distantPast)
+        await dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast)
         self.removeObservationsData()
         timeoutTask.cancel()
         return cookies

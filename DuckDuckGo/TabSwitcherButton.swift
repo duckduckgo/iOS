@@ -110,6 +110,9 @@ class TabSwitcherButton: UIView {
         
         anim.center = CGPoint(x: bounds.midX, y: bounds.midY)
         anim.layer.zPosition = -0.1
+
+        // Animation is not rendering properly when going back from background, hence the change here
+        anim.configuration = LottieConfiguration(renderingEngine: .mainThread)
     }
         
     override var tintColor: UIColor! {

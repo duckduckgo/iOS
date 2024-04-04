@@ -52,6 +52,14 @@ class PrivacyIconView: UIView {
         
         updateShieldImageView(for: icon)
         updateAccessibilityLabels(for: icon)
+
+        // Animations are not rendering properly when going back from background, hence the change.
+        [staticShieldAnimationView,
+         staticShieldDotAnimationView,
+         shieldAnimationView,
+         shieldDotAnimationView].forEach { animationView in
+            animationView?.configuration = LottieConfiguration(renderingEngine: .mainThread)
+        }
     }
     
     func loadAnimations(animationCache cache: AnimationCacheProvider = DefaultAnimationCache.sharedCache) {

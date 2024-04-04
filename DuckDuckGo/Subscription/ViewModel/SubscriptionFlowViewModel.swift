@@ -43,20 +43,20 @@ final class SubscriptionFlowViewModel: ObservableObject {
         static let navigationBarHideThreshold = 80.0
     }
     
-    
+    enum SelectedFeature {
+        case netP, dbp, itr, none
+    }
+        
     struct State {
         var hasActiveSubscription = false
         var transactionStatus: SubscriptionTransactionStatus = .idle
         var userTappedRestoreButton = false
-        var shouldDismissView = false
         var shouldActivateSubscription = false
-        var shouldShowNavigationBar: Bool = false
         var canNavigateBack: Bool = false
         var transactionError: SubscriptionPurchaseError?
+        var shouldHideBackButton = false
+        var selectedFeature: SelectedFeature = .none
     }
-
-    // Publish the currently selected feature
-    @Published var selectedFeature: SettingsViewModel.SettingsDeepLinkSection?
     
     // Read only View State - Should only be modified from the VM
     @Published private(set) var state = State()
@@ -67,14 +67,13 @@ final class SubscriptionFlowViewModel: ObservableObject {
                                                                 allowedDomains: allowedDomains,
                                                                 contentBlocking: false)
         
-    init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
-         subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
+    init(userScript: SubscriptionPagesUserScript,
+         subFeature: SubscriptionPagesUseSubscriptionFeature,
          purchaseManager: PurchaseManager = PurchaseManager.shared,
          selectedFeature: SettingsViewModel.SettingsDeepLinkSection? = nil) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.purchaseManager = purchaseManager
-        self.selectedFeature = selectedFeature
         self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,
                                                           subFeature: subFeature,
                                                           settings: webViewSettings)
@@ -100,9 +99,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
         
         subFeature.onActivateSubscription = {
             DispatchQueue.main.async {
-                self.state.shouldDismissView = true
                 self.state.shouldActivateSubscription = true
-                
             }
         }
         
@@ -111,15 +108,14 @@ final class SubscriptionFlowViewModel: ObservableObject {
                  switch feature {
                  case .netP:
                      UniquePixel.fire(pixel: .privacyProWelcomeVPN)
-                     self.selectedFeature = .netP
-                 case .itr:
-                     UniquePixel.fire(pixel: .privacyProWelcomePersonalInformationRemoval)
-                     self.selectedFeature = .itr
+                     self.state.selectedFeature = .netP
                  case .dbp:
+                     UniquePixel.fire(pixel: .privacyProWelcomePersonalInformationRemoval)
+                     self.state.selectedFeature = .dbp
+                 case .itr:
                      UniquePixel.fire(pixel: .privacyProWelcomeIdentityRestoration)
-                     self.selectedFeature = .dbp
+                     self.state.selectedFeature = .itr
                  }
-                 self.state.shouldDismissView = true
              }
          }
         
@@ -149,7 +145,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
             state.transactionError = .purchaseFailed
         case .missingEntitlements:
             isBackendError = true
-            state.shouldDismissView = true
             state.transactionError = .missingEntitlements
         case .failedToGetSubscriptionOptions:
             isStoreError = true
@@ -199,16 +194,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     // swiftlint:enable cyclomatic_complexity
     
     private func setupWebViewObservers() async {
-        webViewModel.$scrollPosition
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] value in
-                guard let strongSelf = self else { return }
-                DispatchQueue.main.async {
-                    strongSelf.state.shouldShowNavigationBar = value.y > Constants.navigationBarHideThreshold
-                }
-            }
-            .store(in: &cancellables)
-        
         webViewModel.$navigationError
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
@@ -235,9 +220,25 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
     
     private func backButtonForURL(currentURL: URL) -> Bool {
-        return currentURL != URL.subscriptionBaseURL.forComparison() &&
-            currentURL != URL.subscriptionActivateSuccess.forComparison() &&
-            currentURL != URL.subscriptionPurchase.forComparison()
+        print(currentURL)
+        return currentURL.forComparison() != URL.subscriptionBaseURL.forComparison() &&
+        currentURL.forComparison() != URL.subscriptionActivateSuccess.forComparison() &&
+        currentURL.forComparison() != URL.subscriptionPurchase.forComparison()
+    }
+    
+    private func cleanUp() {
+        canGoBackCancellable?.cancel()
+        subFeature.cleanup()
+        cancellables.removeAll()
+    }
+
+    @MainActor
+    func resetState() {
+        self.state = State()
+    }
+    
+    deinit {
+        cleanUp()
     }
     
     @MainActor
@@ -249,41 +250,23 @@ final class SubscriptionFlowViewModel: ObservableObject {
     private func backButtonEnabled(_ enabled: Bool) {
         state.canNavigateBack = enabled
     }
+
+    // MARK: -
     
-    @MainActor
-    func onAppear() async {
+    func onFirstAppear() async {
         DispatchQueue.main.async {
             self.resetState()
-            self.webViewModel.navigationCoordinator.navigateTo(url: self.purchaseURL )
         }
-        Pixel.fire(pixel: .privacyProOfferScreenImpression, debounce: 2)
         await self.setupTransactionObserver()
         await self .setupWebViewObservers()
+        if webViewModel.url == nil {
+            self.webViewModel.navigationCoordinator.navigateTo(url: self.purchaseURL)
+        }
+        Pixel.fire(pixel: .privacyProOfferScreenImpression)
     }
         
-    func onDisappear() {
-        DispatchQueue.main.async {
-            self.resetState()
-        }
-        canGoBackCancellable?.cancel()
-        cancellables.removeAll()
-    }
-    
-    @MainActor
-    private func resetState() {
-        self.state = State()
-    }
-    
-    @MainActor
-    func finalizeSubscriptionFlow() {
-        self.state.shouldDismissView = true
-    }
-    
-    deinit {
-        canGoBackCancellable?.cancel()
-        selectedFeature = nil
-        subFeature.cleanup()
-        cancellables.removeAll()
+    func onFirstDisappear() async {
+        cleanUp()
     }
 
     @MainActor
@@ -312,6 +295,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     func clearTransactionError() {
         state.transactionError = nil
     }
-       
+    
 }
 #endif

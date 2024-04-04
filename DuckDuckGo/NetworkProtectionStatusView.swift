@@ -199,7 +199,7 @@ struct NetworkProtectionStatusView: View {
     private func about() -> some View {
         Section {
             if statusModel.shouldShowFAQ {
-                NavigationLink(UserText.netPVPNSettingsFAQ, destination: NetworkProtectionFAQView())
+                NavigationLink(UserText.netPVPNSettingsFAQ, destination: LazyView(NetworkProtectionFAQView()))
                     .daxBodyRegular()
                     .foregroundColor(.init(designSystemColor: .textPrimary))
             }

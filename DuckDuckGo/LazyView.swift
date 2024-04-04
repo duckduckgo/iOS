@@ -1,5 +1,5 @@
 //
-//  SubscriptionPIRViewModel.swift
+//  LazyView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,16 +18,15 @@
 //
 
 import Foundation
-import Core
+import SwiftUI
 
-#if SUBSCRIPTION
-@available(iOS 15.0, *)
-final class SubscriptionPIRViewModel: ObservableObject {
-    
-    var viewTitle = UserText.settingsPProDBPTitle
-            
-    func onFirstAppear() {
-        Pixel.fire(pixel: .privacyProPersonalInformationRemovalSettings)
+// https://gist.github.com/chriseidhof/d2fcafb53843df343fe07f3c0dac41d5
+struct LazyView<Content: View>: View {
+    let build: () -> Content
+    init(_ build: @autoclosure @escaping () -> Content) {
+        self.build = build
+    }
+    var body: Content {
+        build()
     }
 }
-#endif

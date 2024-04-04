@@ -512,6 +512,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func stopTunnelAndShowThankYouMessagingIfNeeded() {
+        if AccountManager().isUserAuthenticated {
+            tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
+            return
+        }
+
         if vpnFeatureVisibility.shouldShowThankYouMessaging() && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
             presentVPNEarlyAccessOverAlert()
 
@@ -519,7 +524,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let controller = NetworkProtectionTunnelController()
 
                 if await controller.isConnected {
-                    DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled)
+                    DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
+                        "reason": "thank-you-dialog"
+                    ])
                 }
 
                 await controller.stop()

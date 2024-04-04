@@ -502,7 +502,6 @@ private struct CopyableCell: View {
                         }
                     }
                     .buttonStyle(.plain) // Prevent taps from being forwarded to the container view
-                    .background(BackgroundColor(isSelected: selectedCell == id).color)
                     .accessibilityLabel(buttonAccessibilityLabel)
                     .contentShape(Rectangle())
                     .frame(width: Constants.textFieldTapSize, height: Constants.textFieldTapSize)
@@ -528,7 +527,6 @@ private struct CopyableCell: View {
                             }
                         }
                         .buttonStyle(.plain) // Prevent taps from being forwarded to the container view
-                        .background(BackgroundColor(isSelected: selectedCell == id).color)
                         .accessibilityLabel(secondaryButtonAccessibilityLabel)
                         .contentShape(Rectangle())
                         .frame(width: Constants.textFieldTapSize, height: Constants.textFieldTapSize)

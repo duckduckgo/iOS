@@ -417,7 +417,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         onSetSubscription = nil
         onActivateSubscription = nil
         onBackToSettings = nil
-        
     }
     
 }

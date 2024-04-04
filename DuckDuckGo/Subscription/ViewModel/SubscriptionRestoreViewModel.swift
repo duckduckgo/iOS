@@ -69,28 +69,30 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         self.state.isAddingDevice = false
     }
     
-    func onFirstAppear() async {
+    func onAppear() {
         DispatchQueue.main.async {
             self.resetState()
         }
-        await setupContent()
-        await setupTransactionObserver()
+        Task { await setupContent() }
     }
-        
-    func onFirstDisappear() async {
-        cleanUp()
+    
+    func onFirstAppear() async {
+        Pixel.fire(pixel: .privacyProSettingsAddDevice)
+        await setupTransactionObserver()
     }
     
     private func cleanUp() {
+        subFeature.cleanup()
         cancellables.removeAll()
     }
+
     
     private func setupContent() async {
         if state.isAddingDevice {
             DispatchQueue.main.async {
                 self.state.isLoading = true
             }
-            Pixel.fire(pixel: .privacyProSettingsAddDevice)
+            
             guard let token = accountManager.accessToken else { return }
             switch await accountManager.fetchAccountDetails(with: token) {
             case .success(let details):
@@ -196,6 +198,10 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     @MainActor
     func dismissView() {
         state.shouldDismissView = true
+    }
+    
+    deinit {
+        cleanUp()
     }
     
     

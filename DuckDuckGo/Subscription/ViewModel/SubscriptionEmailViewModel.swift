@@ -34,7 +34,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
     private var canGoBackCancellable: AnyCancellable?
     
     var emailURL = URL.activateSubscriptionViaEmail
-    var viewTitle = UserText.subscriptionActivateEmailTitle
     var webViewModel: AsyncHeadlessWebViewViewModel
     
     enum SelectedFeature {
@@ -50,10 +49,12 @@ final class SubscriptionEmailViewModel: ObservableObject {
         var canNavigateBack: Bool = false
         var shouldDismissView: Bool = false
         var subscriptionActive: Bool = false
+        var isWelcomePageVisible: Bool = false
         var backButtonTitle: String = UserText.backButtonTitle
         var selectedFeature: SelectedFeature = .none
         var shouldPopToSubscriptionSettings: Bool = false
         var shouldPopToAppSettings: Bool = false
+        var viewTitle = UserText.subscriptionActivateEmailTitle
     }
     
     // Read only View State - Should only be modified from the VM
@@ -104,10 +105,20 @@ final class SubscriptionEmailViewModel: ObservableObject {
     @MainActor
     func onFirstAppear() {
         setupObservers()
+    }
+    
+    private func cleanUp() {
+        canGoBackCancellable?.cancel()
+        subFeature.cleanup()
+        cancellables.removeAll()
+    }
+    
+    func onAppear() {
+        state.shouldDismissView = false
         if accountManager.isUserAuthenticated {
             // If user is authenticated, we want to "Add or manage email" instead of activating
             emailURL = accountManager.email == nil ? URL.addEmailToSubscription : URL.manageSubscriptionEmail
-            viewTitle = accountManager.email == nil ?  UserText.subscriptionRestoreAddEmailTitle : UserText.subscriptionManageEmailTitle
+            state.viewTitle = accountManager.email == nil ?  UserText.subscriptionRestoreAddEmailTitle : UserText.subscriptionManageEmailTitle
             
             // Also we assume subscription requires managing, and not activation
             state.managingSubscriptionEmail = true
@@ -115,11 +126,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
         if webViewModel.url?.forComparison() != URL.subscriptionActivateSuccess {
             self.webViewModel.navigationCoordinator.navigateTo(url: self.emailURL)
         }
-    }
-    
-    func onFirstDisappear() {
-        cancellables.removeAll()
-        canGoBackCancellable = nil
     }
         
     private func setupObservers() {
@@ -129,6 +135,15 @@ final class SubscriptionEmailViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 self?.updateBackButton(canNavigateBack: value)
+            }
+        
+        // Webview navigation
+        canGoBackCancellable = webViewModel.$url
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] url in
+                if url?.forComparison() == URL.subscriptionPurchase.forComparison() {
+                    self?.state.viewTitle = UserText.subscriptionTitle
+                }
             }
         
         // Feature Callback
@@ -228,9 +243,8 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
     
     deinit {
-        cancellables.removeAll()
+        cleanUp()
         canGoBackCancellable = nil
-       
     }
 
 }

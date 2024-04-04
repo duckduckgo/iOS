@@ -41,8 +41,6 @@ extension AppDelegate {
             checkNetworkProtectionWaitlist()
         }
 #endif
-        checkWaitlistBackgroundTasks()
-
     }
 
 #if NETWORK_PROTECTION
@@ -65,20 +63,6 @@ extension AppDelegate {
         }
     }
 #endif
-
-    private func checkWaitlistBackgroundTasks() {
-        guard vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() else { return }
-
-        BGTaskScheduler.shared.getPendingTaskRequests { tasks in
-
-#if NETWORK_PROTECTION
-            let hasVPNWaitlistTask = tasks.contains { $0.identifier == VPNWaitlist.backgroundRefreshTaskIdentifier }
-            if !hasVPNWaitlistTask {
-                VPNWaitlist.shared.scheduleBackgroundRefreshTask()
-            }
-#endif
-        }
-    }
 
 #if NETWORK_PROTECTION
     func fetchVPNWaitlistAuthToken(inviteCode: String) {

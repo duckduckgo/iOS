@@ -303,12 +303,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
 
-#if NETWORK_PROTECTION
-        if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() {
-            VPNWaitlist.shared.registerBackgroundRefreshTaskHandler()
-        }
-#endif
-
         RemoteMessaging.registerBackgroundRefreshTaskHandler(
             bookmarksDatabase: bookmarksDatabase,
             favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode

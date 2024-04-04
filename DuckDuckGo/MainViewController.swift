@@ -85,7 +85,7 @@ class MainViewController: UIViewController {
     var suggestionTrayController: SuggestionTrayViewController?
     
     let tabManager: TabManager
-    let previewsSource = TabPreviewsSource()
+    let previewsSource: TabPreviewsSource
     let appSettings: AppSettings
     private var launchTabObserver: LaunchTabNotification.Observer?
     
@@ -176,6 +176,7 @@ class MainViewController: UIViewController {
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
         appSettings: AppSettings = AppUserDefaults(),
+        previewsSource: TabPreviewsSource,
         tabsModel: TabsModel
     ) {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
@@ -187,6 +188,7 @@ class MainViewController: UIViewController {
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         self.appSettings = appSettings
+        self.previewsSource = previewsSource
 
         self.tabManager = TabManager(model: tabsModel,
                                      previewsSource: previewsSource,
@@ -207,6 +209,7 @@ class MainViewController: UIViewController {
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
         appSettings: AppSettings,
+        previewsSource: TabPreviewsSource,
         tabsModel: TabsModel
     ) {
         self.bookmarksDatabase = bookmarksDatabase
@@ -217,6 +220,7 @@ class MainViewController: UIViewController {
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         self.appSettings = appSettings
+        self.previewsSource = previewsSource
 
         self.tabManager = TabManager(model: tabsModel,
                                      previewsSource: previewsSource,

@@ -266,8 +266,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 })
             }
 
+        let previewsSource = TabPreviewsSource()
         let historyManager = makeHistoryManager()
-        let tabsModel = prepareTabsModel()
+        let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
 #if APP_TRACKING_PROTECTION
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
@@ -277,6 +278,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
                                       appSettings: AppDependencyProvider.shared.appSettings,
+                                      previewsSource: previewsSource,
                                       tabsModel: tabsModel)
 #else
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
@@ -285,6 +287,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
                                       appSettings: AppDependencyProvider.shared.appSettings,
+                                      previewsSource: previewsSource,
                                       tabsModel: tabsModel)
 #endif
 
@@ -348,13 +351,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    private func prepareTabsModel(appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
+    private func prepareTabsModel(previewsSource: TabPreviewsSource = TabPreviewsSource(),
+                                  appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
                                   isDesktop: Bool = UIDevice.current.userInterfaceIdiom == .pad) -> TabsModel {
         let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
         let tabsModel: TabsModel
         if AutoClearSettingsModel(settings: appSettings) != nil {
             tabsModel = TabsModel(desktop: isPadDevice)
             tabsModel.save()
+            previewsSource.removeAllPreviews()
         } else {
             if let storedModel = TabsModel.get() {
                 // Save new model in case of migration

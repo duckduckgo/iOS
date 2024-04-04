@@ -52,12 +52,6 @@ class TabManager {
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.syncService = syncService
-        let index = model.currentIndex
-        let tab = model.tabs[index]
-        if tab.link != nil {
-            let controller = buildController(forTab: tab, inheritedAttribution: nil)
-            tabControllerCache.append(controller)
-        }
 
         registerForNotifications()
     }

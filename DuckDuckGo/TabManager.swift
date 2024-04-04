@@ -36,6 +36,8 @@ class TabManager {
     private let syncService: DDGSyncing
     private var previewsSource: TabPreviewsSource
 
+    weak var delegate: TabDelegate?
+
     @UserDefaultsWrapper(key: .faviconTabsCacheNeedsCleanup, defaultValue: true)
     var tabsCacheNeedsCleanup: Bool
 
@@ -77,6 +79,7 @@ class TabManager {
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
                                  consumeCookies: !model.hasActiveTabs)
+        controller.delegate = delegate
         controller.loadViewIfNeeded()
         return controller
     }
@@ -148,6 +151,7 @@ class TabManager {
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,
                                  loadingInitiatedByParentTab: true)
+        controller.delegate = delegate
         controller.loadViewIfNeeded()
         controller.applyInheritedAttribution(inheritedAttribution)
         tabControllerCache.append(controller)

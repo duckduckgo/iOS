@@ -74,7 +74,11 @@ class TabViewController: UIViewController {
         }
     }
     
-    weak var delegate: TabDelegate?
+    weak var delegate: TabDelegate? {
+        didSet {
+            assert(delegate != nil)
+        }
+    }
     weak var chromeDelegate: BrowserChromeDelegate?
 
     var findInPage: FindInPage? {

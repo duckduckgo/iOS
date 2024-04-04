@@ -197,7 +197,8 @@ class MainViewController: UIViewController {
                                      syncService: syncService)
 
         super.init(nibName: nil, bundle: nil)
-        
+
+        tabManager.delegate = self
         bindFavoritesDisplayMode()
         bindSyncService()
     }
@@ -231,7 +232,7 @@ class MainViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
         
-
+        tabManager.delegate = self
         bindSyncService()
     }
 #endif
@@ -986,7 +987,6 @@ class MainViewController: UIViewController {
         currentTab?.progressWorker.progressBar = nil
         currentTab?.chromeDelegate = nil
             
-        tab.delegate = self
         addToContentContainer(controller: tab)
 
         viewCoordinator.logoContainer.isHidden = true

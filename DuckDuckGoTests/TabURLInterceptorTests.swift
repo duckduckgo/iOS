@@ -27,6 +27,8 @@ class TabURLInterceptorDefaultTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
+        // Simulate purchase allowance
+        SubscriptionPurchaseEnvironment.canPurchase = true
         urlInterceptor = TabURLInterceptorDefault()
     }
     
@@ -50,9 +52,6 @@ class TabURLInterceptorDefaultTests: XCTestCase {
         
         let url = URL(string: "https://duckduckgo.com/pro")!
         let canNavigate = urlInterceptor.allowsNavigatingTo(url: url)
-        
-        // Simulate purchase allowance
-        SubscriptionPurchaseEnvironment.canPurchase = true
         
         // Fail if no note is posted
         XCTAssertFalse(canNavigate)

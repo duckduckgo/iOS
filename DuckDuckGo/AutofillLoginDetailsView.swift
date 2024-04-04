@@ -502,6 +502,8 @@ private struct CopyableCell: View {
                         }
                     }
                     .buttonStyle(.plain) // Prevent taps from being forwarded to the container view
+                    // can't use .clear here or else both button padded area and container both respond to tap events
+                    .background(BackgroundColor(isSelected: selectedCell == id).color.opacity(0))
                     .accessibilityLabel(buttonAccessibilityLabel)
                     .contentShape(Rectangle())
                     .frame(width: Constants.textFieldTapSize, height: Constants.textFieldTapSize)
@@ -527,6 +529,7 @@ private struct CopyableCell: View {
                             }
                         }
                         .buttonStyle(.plain) // Prevent taps from being forwarded to the container view
+                        .background(BackgroundColor(isSelected: selectedCell == id).color.opacity(0))
                         .accessibilityLabel(secondaryButtonAccessibilityLabel)
                         .contentShape(Rectangle())
                         .frame(width: Constants.textFieldTapSize, height: Constants.textFieldTapSize)
@@ -634,8 +637,8 @@ private struct Constants {
     static let verticalPadding: CGFloat = 4
     static let minRowHeight: CGFloat = 60
     static let textFieldImageOpacity: CGFloat = 0.84
-    static let textFieldImageSize: CGFloat = 20
-    static let textFieldTapSize: CGFloat = 32
+    static let textFieldImageSize: CGFloat = 24
+    static let textFieldTapSize: CGFloat = 36
     static let insets = EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
 }
 

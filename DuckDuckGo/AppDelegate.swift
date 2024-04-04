@@ -529,7 +529,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         if await controller.isConnected {
             DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
-                "reason": reason
+                "reason": reason,
+                "vpn-connected": "true"
+            ])
+        } else {
+            DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
+                "reason": reason,
+                "vpn-connected": "false"
             ])
         }
 

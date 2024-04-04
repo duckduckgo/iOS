@@ -32,12 +32,12 @@ final class SubscriptionFlowViewModel: ObservableObject {
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     let purchaseManager: PurchaseManager
     var webViewModel: AsyncHeadlessWebViewViewModel
-    
-    let viewTitle = UserText.settingsPProSection
+        
     var purchaseURL = URL.subscriptionPurchase
     
     private var cancellables = Set<AnyCancellable>()
     private var canGoBackCancellable: AnyCancellable?
+    private var urlCancellable: AnyCancellable?
     
     enum Constants {
         static let navigationBarHideThreshold = 80.0
@@ -56,6 +56,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
         var transactionError: SubscriptionPurchaseError?
         var shouldHideBackButton = false
         var selectedFeature: SelectedFeature = .none
+        var viewTitle: String = UserText.subscriptionTitle
     }
     
     // Read only View State - Should only be modified from the VM
@@ -217,10 +218,25 @@ final class SubscriptionFlowViewModel: ObservableObject {
                     }
                 }
             }
+        
+        urlCancellable = webViewModel.$url
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let strongSelf = self else { return }
+                strongSelf.state.canNavigateBack = false
+                guard let currentURL = self?.webViewModel.url else { return }
+                if currentURL.forComparison() == URL.addEmailToSubscription.forComparison() ||
+                    currentURL.forComparison() == URL.addEmailToSubscriptionSuccess.forComparison() ||
+                    currentURL.forComparison() == URL.addEmailToSubscriptionSuccess.forComparison() {
+                    strongSelf.state.viewTitle = UserText.subscriptionRestoreAddEmailTitle
+                } else {
+                    strongSelf.state.viewTitle = UserText.subscriptionTitle
+                }
+            }
+        
     }
     
     private func backButtonForURL(currentURL: URL) -> Bool {
-        print(currentURL)
         return currentURL.forComparison() != URL.subscriptionBaseURL.forComparison() &&
         currentURL.forComparison() != URL.subscriptionActivateSuccess.forComparison() &&
         currentURL.forComparison() != URL.subscriptionPurchase.forComparison()
@@ -228,6 +244,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     private func cleanUp() {
         canGoBackCancellable?.cancel()
+        urlCancellable?.cancel()
         subFeature.cleanup()
         cancellables.removeAll()
     }
@@ -239,6 +256,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     deinit {
         cleanUp()
+        canGoBackCancellable = nil
+        urlCancellable = nil
     }
     
     @MainActor
@@ -253,20 +272,20 @@ final class SubscriptionFlowViewModel: ObservableObject {
 
     // MARK: -
     
+    func onAppear() {
+        self.state.selectedFeature = .none
+    }
+    
     func onFirstAppear() async {
         DispatchQueue.main.async {
             self.resetState()
         }
-        await self.setupTransactionObserver()
-        await self .setupWebViewObservers()
-        if webViewModel.url == nil {
+        if webViewModel.url != URL.subscriptionPurchase.forComparison() {
             self.webViewModel.navigationCoordinator.navigateTo(url: self.purchaseURL)
         }
+        await self.setupTransactionObserver()
+        await self.setupWebViewObservers()
         Pixel.fire(pixel: .privacyProOfferScreenImpression)
-    }
-        
-    func onFirstDisappear() async {
-        cleanUp()
     }
 
     @MainActor
@@ -298,3 +317,16 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
 }
 #endif
+
+// TODO: Move to BSK later
+private extension URL {
+    
+    static var addEmailToSubscriptionSuccess: URL {
+        subscriptionBaseURL.appendingPathComponent("add-email/success")
+    }
+    
+    static var addEmailToSubscriptionOTP: URL {
+        subscriptionBaseURL.appendingPathComponent("add-email/otp")
+    }
+    
+}

@@ -1402,7 +1402,7 @@ extension TabViewController: WKNavigationDelegate {
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
         if let url = navigationAction.request.url {
-            if tabURLInterceptor.interceptURL(url: url) {
+            if !tabURLInterceptor.allowsNavigatingTo(url: url) {
                 decisionHandler(.cancel)
                 // If there is history or a page loaded keep the tab open
                 if self.currentlyLoadedURL != nil {

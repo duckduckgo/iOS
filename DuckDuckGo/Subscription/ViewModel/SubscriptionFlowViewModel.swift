@@ -317,3 +317,16 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
 }
 #endif
+
+// TODO: Move to BSK later
+extension URL {
+    
+    static var addEmailToSubscriptionSuccess: URL {
+        subscriptionBaseURL.appendingPathComponent("add-email/success")
+    }
+    
+    static var addEmailToSubscriptionOTP: URL {
+        subscriptionBaseURL.appendingPathComponent("add-email/otp")
+    }
+    
+}

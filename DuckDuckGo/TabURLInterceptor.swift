@@ -61,7 +61,6 @@ final class TabURLInterceptorDefault: TabURLInterceptor {
     }
 }
 
-
 extension TabURLInterceptorDefault {
     
     private func urlToIntercept(path: String) -> InterceptedURLInfo? {

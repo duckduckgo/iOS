@@ -28,7 +28,6 @@ enum InterceptedURL: String {
 
 struct InterceptedURLInfo {
     let id: InterceptedURL
-    let TLD: String
     let path: String
 }
 
@@ -37,20 +36,23 @@ protocol TabURLInterceptor {
 }
 
 final class TabURLInterceptorDefault: TabURLInterceptor {
-
-    private let tld = TLD()
+    
 
     static let interceptedURLs: [InterceptedURLInfo] = [
-        InterceptedURLInfo(id: .privacyPro, TLD: "duckduckgo.com", path: "/pro")
+        InterceptedURLInfo(id: .privacyPro, path: "/pro")
     ]
     
     func allowsNavigatingTo(url: URL) -> Bool {
-        guard let components = normalizeScheme(url.absoluteString), let
-                urlTLD = components.eTLDplus1(tld: tld) else {
+        
+        if !url.isPart(ofDomain: "duckduckgo.com") {
             return true
         }
         
-        guard let matchingURL = urlToIntercept(tld: urlTLD, path: components.path) else {
+        guard let components = normalizeScheme(url.absoluteString) else {
+            return true
+        }
+        
+        guard let matchingURL = urlToIntercept(path: components.path) else {
             return true
         }
         
@@ -62,8 +64,8 @@ final class TabURLInterceptorDefault: TabURLInterceptor {
 
 extension TabURLInterceptorDefault {
     
-    private func urlToIntercept(tld: String, path: String) -> InterceptedURLInfo? {
-        let results = Self.interceptedURLs.filter { $0.TLD == tld && $0.path == path }
+    private func urlToIntercept(path: String) -> InterceptedURLInfo? {
+        let results = Self.interceptedURLs.filter { $0.path == path }
         return results.first
     }
     

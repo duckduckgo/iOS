@@ -139,6 +139,11 @@ final class SubscriptionITPViewModel: ObservableObject {
         Pixel.fire(pixel: .privacyProIdentityRestorationSettings)
     }
     
+    private func cleanUp() {
+        canGoBackCancellable?.cancel()
+        cancellables.removeAll()
+    }
+    
     private func downloadAttachment(from url: URL) async {
         if let (temporaryURL, _) = try? await URLSession.shared.download(from: url) {
             let fileManager = FileManager.default
@@ -181,7 +186,8 @@ final class SubscriptionITPViewModel: ObservableObject {
     }
     
     deinit {
-        cancellables.removeAll()
+        cleanUp()
+        canGoBackCancellable = nil
         self.userScript = nil
         self.subFeature = nil
     }

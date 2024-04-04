@@ -60,6 +60,9 @@ struct SubscriptionEmailView: View {
             ToolbarItemGroup(placement: .navigationBarLeading) {
                 browserBackButton
             }
+            ToolbarItemGroup(placement: .principal) {
+                daxLogoToolbarItem
+            }
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationViewStyle(.stack)
@@ -126,11 +129,15 @@ struct SubscriptionEmailView: View {
             }
         }
         
-        .navigationTitle(viewModel.viewTitle)
+        .navigationTitle(viewModel.state.viewTitle)
         
         .onFirstAppear {
             setUpAppearances()
             viewModel.onFirstAppear()
+        }
+        
+        .onAppear {
+            viewModel.onAppear()
         }
         
     }
@@ -156,6 +163,13 @@ struct SubscriptionEmailView: View {
                 Text(viewModel.state.backButtonTitle).foregroundColor(Color(designSystemColor: .textPrimary))
             }
         })
+    }
+    
+    @ViewBuilder
+    private var daxLogoToolbarItem: some View {
+        if viewModel.state.viewTitle == UserText.subscriptionTitle {
+            DaxLogoNavbarTitle()
+        }
     }
     
     private func setUpAppearances() {

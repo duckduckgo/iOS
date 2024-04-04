@@ -41,8 +41,6 @@ struct SubscriptionFlowView: View {
     @State private var isPresentingError: Bool = false
 
     enum Constants {
-        static let daxLogo = "Home"
-        static let daxLogoSize: CGFloat = 24.0
         static let empty = ""
         static let navButtonPadding: CGFloat = 20.0
         static let backButtonImage = "chevron.left"
@@ -74,12 +72,10 @@ struct SubscriptionFlowView: View {
                     backButton
                 }
                 ToolbarItem(placement: .principal) {
-                    HStack {
-                        Image(Constants.daxLogo)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
-                        Text(viewModel.viewTitle).daxBodyRegular()
+                    if viewModel.state.viewTitle == UserText.subscriptionTitle {
+                        DaxLogoNavbarTitle()
+                    } else {
+                        Text(viewModel.state.viewTitle).bold()
                     }
                 }
             }
@@ -175,13 +171,9 @@ struct SubscriptionFlowView: View {
             setUpAppearances()
             Task { await viewModel.onFirstAppear() }
         }
-        
-        .onFirstDisappear {
-            Task { await viewModel.onFirstDisappear() }
-        }
-        
+                
         .onAppear {
-            Task { await viewModel.onFirstAppear() }
+            viewModel.onAppear()
         }
                 
         .alert(isPresented: $isPresentingError) {

@@ -142,7 +142,6 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
         let monitor = NWPathMonitor()
         monitor.start(queue: DispatchQueue(label: "VPNMetadataCollector.NWPathMonitor.paths"))
 
-        var path: Network.NWPath?
         let startTime = CFAbsoluteTimeGetCurrent()
 
         let dateFormatter = DateFormatter()
@@ -163,10 +162,10 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
 
         while true {
             if !monitor.currentPath.availableInterfaces.isEmpty {
-                path = monitor.currentPath
+                let path = monitor.currentPath
                 monitor.cancel()
 
-                return .init(currentPath: path.debugDescription,
+                return .init(currentPath: path.anonymousDescription,
                              lastPathChangeDate: lastPathChangeDate,
                              lastPathChange: lastPathChange,
                              secondsSincePathChange: secondsSincePathChange)
@@ -243,5 +242,26 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
             notifyStatusChangesEnabled: settings.notifyStatusChanges,
             selectedServer: settings.selectedServer.stringValue ?? "automatic"
         )
+    }
+}
+
+extension Network.NWPath {
+    /// A description that's safe from a privacy standpoint.
+    ///
+    /// Ref: https://app.asana.com/0/0/1206712493935053/1206712516729780/f
+    ///
+    var anonymousDescription: String {
+        var description = "NWPath("
+
+        description += "status: \(status), "
+
+        if #available(iOS 14.2, *), case .unsatisfied = status {
+            description += "unsatisfiedReason: \(unsatisfiedReason), "
+        }
+
+        description += "availableInterfaces: \(availableInterfaces)"
+        description += ")"
+
+        return description
     }
 }

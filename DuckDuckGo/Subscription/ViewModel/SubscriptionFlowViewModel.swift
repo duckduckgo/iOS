@@ -225,8 +225,10 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 guard let strongSelf = self else { return }
                 strongSelf.state.canNavigateBack = false
                 guard let currentURL = self?.webViewModel.url else { return }
-                if currentURL.forComparison() == URL.addEmailToSubscription {
-                    strongSelf.state.viewTitle = UserText.subscriptionAddEmail
+                if currentURL.forComparison() == URL.addEmailToSubscription.forComparison() ||
+                    currentURL.forComparison() == URL.addEmailToSubscriptionSuccess.forComparison() ||
+                    currentURL.forComparison() == URL.addEmailToSubscriptionSuccess.forComparison() {
+                    strongSelf.state.viewTitle = UserText.subscriptionRestoreAddEmailTitle
                 } else {
                     strongSelf.state.viewTitle = UserText.subscriptionTitle
                 }
@@ -242,6 +244,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     private func cleanUp() {
         canGoBackCancellable?.cancel()
+        urlCancellable?.cancel()
         subFeature.cleanup()
         cancellables.removeAll()
     }
@@ -253,6 +256,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     deinit {
         cleanUp()
+        canGoBackCancellable = nil
+        urlCancellable = nil
     }
     
     @MainActor
@@ -269,17 +274,17 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     func onAppear() {
         self.state.selectedFeature = .none
-        if webViewModel.url == nil {
-            self.webViewModel.navigationCoordinator.navigateTo(url: self.purchaseURL)
-        }
     }
     
     func onFirstAppear() async {
         DispatchQueue.main.async {
             self.resetState()
         }
+        if webViewModel.url != URL.subscriptionPurchase.forComparison() {
+            self.webViewModel.navigationCoordinator.navigateTo(url: self.purchaseURL)
+        }
         await self.setupTransactionObserver()
-        await self .setupWebViewObservers()
+        await self.setupWebViewObservers()
         Pixel.fire(pixel: .privacyProOfferScreenImpression)
     }
 

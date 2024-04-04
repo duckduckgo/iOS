@@ -69,17 +69,23 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         self.state.isAddingDevice = false
     }
     
-    func onFirstAppear() async {
-        Pixel.fire(pixel: .privacyProSettingsAddDevice)
-        await setupTransactionObserver()
-    }
-    
     func onAppear() {
         DispatchQueue.main.async {
             self.resetState()
         }
         Task { await setupContent() }
     }
+    
+    func onFirstAppear() async {
+        Pixel.fire(pixel: .privacyProSettingsAddDevice)
+        await setupTransactionObserver()
+    }
+    
+    private func cleanUp() {
+        subFeature.cleanup()
+        cancellables.removeAll()
+    }
+
     
     private func setupContent() async {
         if state.isAddingDevice {
@@ -195,7 +201,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     }
     
     deinit {
-        cancellables.removeAll()
+        cleanUp()
     }
     
     

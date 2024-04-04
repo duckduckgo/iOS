@@ -100,6 +100,8 @@ struct SettingsSubscriptionView: View {
                            isActive: $isShowingRestoreFlow,
                            label: { SettingsCellView(label: UserText.settingsPProIHaveASubscription ) })
         }
+
+        
     }
 
     @ViewBuilder

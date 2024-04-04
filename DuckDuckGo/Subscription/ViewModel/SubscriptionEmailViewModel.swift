@@ -110,7 +110,8 @@ final class SubscriptionEmailViewModel: ObservableObject {
     
     @MainActor
     func onFirstAppear() {
-        setupObservers()
+        setupWebObservers()
+        setupFeatureObservers()
     }
     
     private func cleanUp() {
@@ -135,24 +136,8 @@ final class SubscriptionEmailViewModel: ObservableObject {
             self.webViewModel.navigationCoordinator.navigateTo(url: self.emailURL)
         }
     }
-        
-    private func setupObservers() {
-        
-        // Webview navigation
-        canGoBackCancellable = webViewModel.$canGoBack
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] value in
-                self?.updateBackButton(canNavigateBack: value)
-            }
-        
-        // Webview navigation
-        urlCancellable = webViewModel.$url
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                if self?.isWelcomePageOrSuccessPage ?? false {
-                    self?.state.viewTitle = UserText.subscriptionTitle
-                }
-            }
+    
+    private func setupFeatureObservers() {
         
         // Feature Callback
         subFeature.onSetSubscription = {
@@ -195,7 +180,26 @@ final class SubscriptionEmailViewModel: ObservableObject {
                 }
             }
         .store(in: &cancellables)
-
+    }
+        
+    private func setupWebObservers() {
+        
+        // Webview navigation
+        canGoBackCancellable = webViewModel.$canGoBack
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.updateBackButton(canNavigateBack: value)
+            }
+        
+        // Webview navigation
+        urlCancellable = webViewModel.$url
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                if self?.isWelcomePageOrSuccessPage ?? false {
+                    self?.state.viewTitle = UserText.subscriptionTitle
+                }
+            }
+        
         webViewModel.$navigationError
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in

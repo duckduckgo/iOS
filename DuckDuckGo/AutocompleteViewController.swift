@@ -183,16 +183,7 @@ class AutocompleteViewController: UIViewController {
         selectedItem = -1
         tableView.reloadData()
 
-        loader = SuggestionLoader(dataSource: self, urlFactory: { phrase in
-            guard let url = URL(trimmedAddressBarString: phrase),
-                  let scheme = url.scheme,
-                  scheme.description.hasPrefix("http"),
-                  url.isValid else {
-                return nil
-            }
-
-            return url
-        })
+        loader = SuggestionLoader(dataSource: self, urlFactory: URL.makeURL(fromSuggestionPhrase:))
         pendingRequest = true
 
         loader?.getSuggestions(query: query) { [weak self] result, error in

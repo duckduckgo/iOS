@@ -526,6 +526,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func stopAndRemoveVPN(with reason: String) async {
         let controller = NetworkProtectionTunnelController()
+        guard await controller.isInstalled else {
+            return
+        }
 
         if await controller.isConnected {
             DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [

@@ -46,7 +46,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         switch event {
         case .userBecameActive:
             DailyPixel.fire(pixel: .networkProtectionActiveUser,
-                            withAdditionalParameters: ["cohort": UniquePixel.dateString(for: defaults.vpnFirstEnabled)])
+                            withAdditionalParameters: [PixelParameters.vpnCohort: UniquePixel.cohort(from: defaults.vpnFirstEnabled)])
         case .reportConnectionAttempt(attempt: let attempt):
             switch attempt {
             case .connecting:

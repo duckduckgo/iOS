@@ -40,6 +40,11 @@ public final class UniquePixel {
     }
 
     public static let storage = UserDefaults(suiteName: Constant.uniquePixelStorageIdentifier)!
+    private static let calendar: Calendar = {
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        return calendar
+    }()
 
     /// Sends a unique Pixel
     /// This requires the pixel name to end with `_u`
@@ -59,15 +64,15 @@ public final class UniquePixel {
         }
     }
 
-    public static func dateString(for date: Date?) -> String {
-        guard let date else { return "" }
+    public static func cohort(from date: Date?) -> String {
+        guard let date,
+              let referenceDate = calendar.date(from: .init(year: 2023, month: 1, day: 1)),
+              let weekOfYear = calendar.dateComponents([.weekOfYear], from: referenceDate, to: date).weekOfYear,
+              weekOfYear >= 0 else {
+            return ""
+        }
 
-        let dateFormatter = DateFormatter()
-        dateFormatter.calendar = Calendar.current
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-
-        return dateFormatter.string(from: date)
+        return "week-" + String(weekOfYear + 1)
     }
 }
 

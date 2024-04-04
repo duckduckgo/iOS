@@ -73,8 +73,6 @@ class SwipeTabsCoordinator: NSObject {
         collectionView.dataSource = self
         collectionView.decelerationRate = .fast
         collectionView.backgroundColor = .clear
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.showsVerticalScrollIndicator = false
 
         updateLayout()
     }
@@ -94,6 +92,7 @@ class SwipeTabsCoordinator: NSObject {
     
     private func updateLayout() {
         let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+        layout?.scrollDirection = .horizontal
         layout?.itemSize = CGSize(width: coordinator.superview.frame.size.width, height: coordinator.omniBar.frame.height)
         layout?.minimumLineSpacing = 0
         layout?.minimumInteritemSpacing = 0
@@ -102,6 +101,7 @@ class SwipeTabsCoordinator: NSObject {
     
     private func scrollToCurrent() {
         guard isEnabled else { return }
+        
         let targetOffset = collectionView.frame.width * CGFloat(tabsModel.currentIndex)
 
         guard targetOffset != collectionView.contentOffset.x else {
@@ -117,6 +117,12 @@ class SwipeTabsCoordinator: NSObject {
 
 // MARK: UICollectionViewDelegate
 extension SwipeTabsCoordinator: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        DispatchQueue.main.async {
+            self.scrollToCurrent()
+        }
+    }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
          
@@ -211,7 +217,7 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
         switch state {
         case .idle:
             state = .starting(scrollView.contentOffset)
-
+            
         default: break
         }
     }
@@ -305,8 +311,7 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
 
             if let url = tabsModel.safeGetTabAt(indexPath.row)?.link?.url {
                 cell.omniBar?.startBrowsing()
-                cell.omniBar?.refreshText(forUrl: url, forceFullURL: appSettings.showFullSiteAddress)
-                cell.omniBar?.resetPrivacyIcon(for: url)
+                cell.omniBar?.refreshText(forUrl: url)
             }
 
         }

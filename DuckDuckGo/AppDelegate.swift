@@ -642,9 +642,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func showKeyboardOnLaunch() {
         guard KeyboardSettings().onAppLaunch && showKeyboardIfSettingOn && shouldShowKeyboardOnLaunch() else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.mainViewController?.enterSearch()
-        }
+        self.mainViewController?.enterSearch()
         showKeyboardIfSettingOn = false
     }
     

@@ -107,6 +107,12 @@ final class SubscriptionEmailViewModel: ObservableObject {
         setupObservers()
     }
     
+    private func cleanUp() {
+        canGoBackCancellable?.cancel()
+        subFeature.cleanup()
+        cancellables.removeAll()
+    }
+    
     func onAppear() {
         state.shouldDismissView = false
         if accountManager.isUserAuthenticated {
@@ -237,9 +243,8 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
     
     deinit {
-        cancellables.removeAll()
+        cleanUp()
         canGoBackCancellable = nil
-       
     }
 
 }

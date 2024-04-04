@@ -74,6 +74,8 @@ struct SubscriptionFlowView: View {
                 ToolbarItem(placement: .principal) {
                     if viewModel.state.viewTitle == UserText.subscriptionTitle {
                         DaxLogoNavbarTitle()
+                    } else {
+                        Text(viewModel.state.viewTitle).bold()
                     }
                 }
             }
@@ -169,9 +171,9 @@ struct SubscriptionFlowView: View {
             setUpAppearances()
             Task { await viewModel.onFirstAppear() }
         }
-        
+                
         .onAppear {
-            Task { await viewModel.onAppear() }
+            viewModel.onAppear()
         }
                 
         .alert(isPresented: $isPresentingError) {

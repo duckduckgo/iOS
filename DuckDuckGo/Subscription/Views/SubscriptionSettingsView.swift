@@ -38,9 +38,9 @@ struct SubscriptionSettingsView: View {
     
     var body: some View {
         optionsView
-            .onAppear(perform: {
+            .onFirstAppear {
                 Pixel.fire(pixel: .privacyProSubscriptionSettings, debounce: 1)
-        })
+            }
         .navigationBarTitleDisplayMode(.inline)
     }
     

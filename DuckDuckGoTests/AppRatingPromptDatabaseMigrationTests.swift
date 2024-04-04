@@ -19,23 +19,42 @@
 
 import XCTest
 @testable import DuckDuckGo
+@testable import Core
 import CoreData
+import Persistence
 
+// If making future changes take a copy of the v2 momd and Database file like here and update / add tests as appropiate.
 class AppRatingPromptDatabaseMigrationTests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
+
+    func testExpectedNumberOfModelVersionsInLatestModel() throws {
+        guard let modelURL = Bundle.main.url(forResource: "AppRatingPrompt", withExtension: "momd") else {
+            XCTFail("Error loading model URL")
+            return
+        }
+        let modelVersions = try FileManager.default.contentsOfDirectory(at: modelURL, includingPropertiesForKeys: nil, options: [])
+            .filter { $0.lastPathComponent.hasSuffix(".mom") }
+        XCTAssertEqual(2, modelVersions.count)
     }
 
-    func testMigrationFromV1toV2() {
-        let oldModelURL = Bundle(for: type(of: self)).url(forResource: "AppRatingPrompt_v1", withExtension: "momd")!
-        let oldModel = NSManagedObjectModel(contentsOf: oldModelURL)!
+    func testMigrationFromV1toLatest() {
 
-        let newModelURL = Bundle(for: type(of: self)).url(forResource: "NewModel", withExtension: "momd")!
-        let newModel = NSManagedObjectModel(contentsOf: newModelURL)!
+        guard let baseURL = Bundle(for: (type(of: self))).url(forResource: "AppRatingPrompt_v1", withExtension: nil) else {
+            XCTFail("could not get base url")
+            return
+        }
 
-        let storeURL = Bundle(for: type(of: self)).url(forResource: "AppRatingPrompt_v1", withExtension: "sqlite")!
-        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: oldModel)
+        guard let v1Model = NSManagedObjectModel(contentsOf: baseURL.appendingPathComponent("AppRatingPrompt.momd")) else {
+            XCTFail("could not get v1 model")
+            return
+        }
+
+        guard let latestModel = CoreDataDatabase.loadModel(from: .main, named: "AppRatingPrompt") else {
+            XCTFail("could not load latest model")
+            return
+        }
+
+        let storeURL = baseURL.appendingPathComponent("Database.sqlite")
+        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: v1Model)
 
         do {
             let options = [NSMigratePersistentStoresAutomaticallyOption: true,
@@ -45,17 +64,17 @@ class AppRatingPromptDatabaseMigrationTests: XCTestCase {
                                                               at: storeURL,
                                                               options: options)
 
-            // Attempt to migrate to the new model
-            let newCoordinator = NSPersistentStoreCoordinator(managedObjectModel: newModel)
+            // Run the migration
+            let newCoordinator = NSPersistentStoreCoordinator(managedObjectModel: latestModel)
             let newStore = try newCoordinator.addPersistentStore(ofType: NSSQLiteStoreType,
                                                                  configurationName: nil,
                                                                  at: storeURL,
                                                                  options: options)
 
-            // Verify migration success (example: checking the count of a specific entity)
+            // Check the data exists
             let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
             context.persistentStoreCoordinator = newCoordinator
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "YourEntityName")
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "AppRatingPromptEntity")
             let count = try context.count(for: fetchRequest)
             XCTAssertGreaterThan(count, 0, "Migration failed, no entities found.")
 

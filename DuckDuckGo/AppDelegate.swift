@@ -530,17 +530,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
 
-        if await controller.isConnected {
-            DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
-                "reason": reason,
-                "vpn-connected": "true"
-            ])
-        } else {
-            DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
-                "reason": reason,
-                "vpn-connected": "false"
-            ])
-        }
+        let isConnected = await controller.isConnected
+
+        DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
+            "reason": reason,
+            "vpn-connected": String(isConnected)
+        ])
 
         await controller.stop()
         await controller.removeVPN()

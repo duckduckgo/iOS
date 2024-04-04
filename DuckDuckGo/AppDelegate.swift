@@ -515,18 +515,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             presentVPNEarlyAccessOverAlert()
 
             Task {
-                let controller = NetworkProtectionTunnelController()
-
-                if await controller.isConnected {
-                    DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
-                        "reason": "thank-you-dialog"
-                    ])
-                }
-
-                await controller.stop()
-                await controller.removeVPN()
+                await self.stopAndRemoveVPN(with: "thank-you-dialog")
+            }
+        } else if vpnFeatureVisibility.isPrivacyProLaunched() && !AccountManager().isUserAuthenticated {
+            Task {
+                await self.stopAndRemoveVPN(with: "subscription-check")
             }
         }
+    }
+
+    private func stopAndRemoveVPN(with reason: String) async {
+        let controller = NetworkProtectionTunnelController()
+        guard await controller.isInstalled else {
+            return
+        }
+
+        let isConnected = await controller.isConnected
+
+        DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
+            "reason": reason,
+            "vpn-connected": String(isConnected)
+        ])
+
+        await controller.stop()
+        await controller.removeVPN()
     }
 
     func updateSubscriptionStatus() {

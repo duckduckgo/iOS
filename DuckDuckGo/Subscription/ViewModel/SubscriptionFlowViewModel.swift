@@ -26,6 +26,7 @@ import Core
 #if SUBSCRIPTION
 import Subscription
 @available(iOS 15.0, *)
+// swiftlint:disable type_body_length
 final class SubscriptionFlowViewModel: ObservableObject {
     
     let userScript: SubscriptionPagesUserScript
@@ -360,3 +361,4 @@ private extension URL {
     }
     
 }
+// swiftlint:enable type_body_length

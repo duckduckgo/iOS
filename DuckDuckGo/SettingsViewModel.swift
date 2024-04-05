@@ -30,10 +30,6 @@ import SyncUI
 import Subscription
 #endif
 
-#if APP_TRACKING_PROTECTION
-import NetworkExtension
-#endif
-
 #if NETWORK_PROTECTION
 import NetworkProtection
 #endif

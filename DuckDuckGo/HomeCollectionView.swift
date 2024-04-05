@@ -52,10 +52,6 @@ class HomeCollectionView: UICollectionView {
                  forCellWithReuseIdentifier: "homeMessageCell")
         
         register(HomeMessageCollectionViewCell.self, forCellWithReuseIdentifier: "HomeMessageCell")
-
-#if APP_TRACKING_PROTECTION
-        register(AppTPCollectionViewCell.self, forCellWithReuseIdentifier: "AppTPHomeCell")
-#endif
         
         register(EmptyCollectionReusableView.self,
                  forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -73,7 +69,6 @@ class HomeCollectionView: UICollectionView {
     
     func configure(withController controller: HomeViewController,
                    favoritesViewModel: FavoritesListInteracting,
-                   appTPHomeViewModel: AnyObject?, // Set to AnyObject so that AppTP can be disabled easily
                    andTheme theme: Theme) {
         self.controller = controller
         renderers = HomeViewSectionRenderers(controller: controller, theme: theme)
@@ -96,17 +91,6 @@ class HomeCollectionView: UICollectionView {
 
             case .homeMessage:
                 renderers.install(renderer: HomeMessageViewSectionRenderer(homePageConfiguration: homePageConfiguration))
-
-            case .appTrackingProtection:
-#if APP_TRACKING_PROTECTION
-                if let viewModel = appTPHomeViewModel as? AppTPHomeViewModel {
-                    renderers.install(renderer: AppTPHomeViewSectionRenderer(appTPHomeViewModel: viewModel))
-                } else {
-                    fatalError("Failed to cast AppTP home view model to expected class")
-                }
-#else
-                break
-#endif
             }
 
         }

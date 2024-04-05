@@ -90,10 +90,6 @@ class MainViewController: UIViewController {
     private var launchTabObserver: LaunchTabNotification.Observer?
     
     var doRefreshAfterClear = true
-
-#if APP_TRACKING_PROTECTION
-    private let appTrackingProtectionDatabase: CoreDataDatabase
-#endif
     
     let bookmarksDatabase: CoreDataDatabase
     private weak var bookmarksDatabaseCleaner: BookmarkDatabaseCleaner?
@@ -167,43 +163,7 @@ class MainViewController: UIViewController {
     
     var historyManager: HistoryManager
     var viewCoordinator: MainViewCoordinator!
-    
-#if APP_TRACKING_PROTECTION
-    init(
-        bookmarksDatabase: CoreDataDatabase,
-        bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
-        appTrackingProtectionDatabase: CoreDataDatabase,
-        historyManager: HistoryManager,
-        syncService: DDGSyncing,
-        syncDataProviders: SyncDataProviders,
-        appSettings: AppSettings = AppUserDefaults(),
-        previewsSource: TabPreviewsSource,
-        tabsModel: TabsModel
-    ) {
-        self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
-        self.bookmarksDatabase = bookmarksDatabase
-        self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
-        self.historyManager = historyManager
-        self.syncService = syncService
-        self.syncDataProviders = syncDataProviders
-        self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
-        self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
-        self.appSettings = appSettings
-        self.previewsSource = previewsSource
 
-        self.tabManager = TabManager(model: tabsModel,
-                                     previewsSource: previewsSource,
-                                     bookmarksDatabase: bookmarksDatabase,
-                                     historyManager: historyManager,
-                                     syncService: syncService)
-
-        super.init(nibName: nil, bundle: nil)
-
-        tabManager.delegate = self
-        bindFavoritesDisplayMode()
-        bindSyncService()
-    }
-#else
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
@@ -236,7 +196,6 @@ class MainViewController: UIViewController {
         tabManager.delegate = self
         bindSyncService()
     }
-#endif
 
     func loadFindInPage() {
 
@@ -779,20 +738,11 @@ class MainViewController: UIViewController {
             fatalError("No tab model")
         }
 
-#if APP_TRACKING_PROTECTION
-        let controller = HomeViewController.loadFromStoryboard(model: tabModel,
-                                                               favoritesViewModel: favoritesViewModel,
-                                                               appSettings: appSettings,
-                                                               syncService: syncService,
-                                                               syncDataProviders: syncDataProviders,
-                                                               appTPDatabase: appTrackingProtectionDatabase)
-#else
         let controller = HomeViewController.loadFromStoryboard(model: tabModel,
                                                                favoritesViewModel: favoritesViewModel,
                                                                appSettings: appSettings,
                                                                syncService: syncService,
                                                                syncDataProviders: syncDataProviders)
-#endif
 
         homeController = controller
 

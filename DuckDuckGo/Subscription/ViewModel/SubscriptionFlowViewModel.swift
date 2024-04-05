@@ -101,6 +101,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
         subFeature.onActivateSubscription = {
             DispatchQueue.main.async {
                 self.state.shouldActivateSubscription = true
+                self.setTransactionStatus(.idle)
             }
         }
         
@@ -125,6 +126,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
             .removeDuplicates()
             .sink { [weak self] value in
                 guard let strongSelf = self else { return }
+                Task { await strongSelf.setTransactionStatus(.idle) }
                 if let value {
                     Task { await strongSelf.handleTransactionError(error: value) }
                 }
@@ -140,6 +142,9 @@ final class SubscriptionFlowViewModel: ObservableObject {
         var isStoreError = false
         var isBackendError = false
 
+        // Reset the transaction Status
+        self.setTransactionStatus(.idle)
+        
         switch error {
         case .purchaseFailed:
             isStoreError = true
@@ -201,6 +206,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 guard let strongSelf = self else { return }
                 DispatchQueue.main.async {
                     strongSelf.state.transactionError = error != nil ? .generalError : nil
+                    strongSelf.setTransactionStatus(.idle)
                 }
                 
             }
@@ -225,6 +231,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 guard let strongSelf = self else { return }
                 strongSelf.state.canNavigateBack = false
                 guard let currentURL = self?.webViewModel.url else { return }
+                Task { await strongSelf.setTransactionStatus(.idle) }
                 if currentURL.forComparison() == URL.addEmailToSubscription.forComparison() ||
                     currentURL.forComparison() == URL.addEmailToSubscriptionSuccess.forComparison() ||
                     currentURL.forComparison() == URL.addEmailToSubscriptionSuccess.forComparison() {
@@ -247,10 +254,14 @@ final class SubscriptionFlowViewModel: ObservableObject {
         urlCancellable?.cancel()
         subFeature.cleanup()
         cancellables.removeAll()
+        DispatchQueue.main.async {
+            self.setTransactionStatus(.idle)
+        }
     }
 
     @MainActor
     func resetState() {
+        self.setTransactionStatus(.idle)
         self.state = State()
     }
     
@@ -263,6 +274,18 @@ final class SubscriptionFlowViewModel: ObservableObject {
     @MainActor
     private func setTransactionStatus(_ status: SubscriptionTransactionStatus) {
         self.state.transactionStatus = status
+        if status != .idle {
+            
+            // Fire a pixel if status is not back to idle in 60s
+            // https://app.asana.com/0/1204099484721401/1207003487111848/f
+            DispatchQueue.main.asyncAfter(deadline: .now() + 60) {
+              [weak self] in
+              guard let strongSelf = self else { return }
+              if strongSelf.state.transactionStatus != .idle {
+                  Pixel.fire(pixel: .privacyProTransactionProgressNotHiddenAfter60s, error: nil)
+              }
+            }
+        }
     }
         
     @MainActor

@@ -604,6 +604,7 @@ extension Pixel {
         case privacyProPromotionDialogShownVPN
         case privacyProVPNAccessRevokedDialogShown
         case privacyProVPNBetaStoppedWhenPrivacyProEnabled
+        case privacyProTransactionProgressNotHiddenAfter60s
 
         // Full site address setting
         case settingsShowFullSiteAddressEnabled
@@ -1189,6 +1190,8 @@ extension Pixel.Event {
         case .privacyProSubscriptionManagementRemoval: return "m_privacy-pro_settings_remove-from-device_click"
         case .settingsShowFullSiteAddressEnabled: return "m_settings_show_full_url_on"
         case .settingsShowFullSiteAddressDisabled: return "m_settings_show_full_url_off"
+        case .privacyProTransactionProgressNotHiddenAfter60s: return "m_privacy-pro_progress_not_hidden_after_60s"
+            
             // Launch
         case .privacyProFeatureEnabled: return "m_privacy-pro_feature_enabled"
         case .privacyProPromotionDialogShownVPN: return "m_privacy-pro_promotion-dialog_shown_vpn"

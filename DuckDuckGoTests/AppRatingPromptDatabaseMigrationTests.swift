@@ -43,26 +43,16 @@ class AppRatingPromptDatabaseMigrationTests: XCTestCase {
             return
         }
 
-        guard let v1Model = NSManagedObjectModel(contentsOf: baseURL.appendingPathComponent("AppRatingPrompt.momd")) else {
-            XCTFail("could not get v1 model")
-            return
-        }
-
         guard let latestModel = CoreDataDatabase.loadModel(from: .main, named: "AppRatingPrompt") else {
             XCTFail("could not load latest model")
             return
         }
 
         let storeURL = baseURL.appendingPathComponent("Database.sqlite")
-        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: v1Model)
 
         do {
             let options = [NSMigratePersistentStoresAutomaticallyOption: true,
                            NSInferMappingModelAutomaticallyOption: true]
-            let oldStore = try coordinator.addPersistentStore(ofType: NSSQLiteStoreType,
-                                                              configurationName: nil,
-                                                              at: storeURL,
-                                                              options: options)
 
             // Run the migration
             let newCoordinator = NSPersistentStoreCoordinator(managedObjectModel: latestModel)

@@ -120,7 +120,7 @@ extension VPNWaitlistViewController: WaitlistViewModelDelegate {
     }
 
     func waitlistViewModelDidJoinQueueWithNotificationsAllowed(_ viewModel: WaitlistViewModel) {
-        VPNWaitlist.shared.scheduleBackgroundRefreshTask()
+        // no-op
     }
 
     func waitlistViewModel(_ viewModel: WaitlistViewModel, didTriggerCustomAction action: WaitlistViewModel.ViewCustomAction) {

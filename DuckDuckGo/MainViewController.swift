@@ -84,11 +84,13 @@ class MainViewController: UIViewController {
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
     
-    var tabManager: TabManager!
-    let previewsSource = TabPreviewsSource()
+    let tabManager: TabManager
+    let previewsSource: TabPreviewsSource
     let appSettings: AppSettings
     private var launchTabObserver: LaunchTabNotification.Observer?
     
+    var doRefreshAfterClear = true
+
 #if APP_TRACKING_PROTECTION
     private let appTrackingProtectionDatabase: CoreDataDatabase
 #endif
@@ -107,6 +109,7 @@ class MainViewController: UIViewController {
     private var syncFeatureFlagsCancellable: AnyCancellable?
     private var favoritesDisplayModeCancellable: AnyCancellable?
     private var emailCancellables = Set<AnyCancellable>()
+    private var urlInterceptorCancellables = Set<AnyCancellable>()
     
 #if NETWORK_PROTECTION
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
@@ -138,7 +141,7 @@ class MainViewController: UIViewController {
     
     lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
-        return tabManager?.current(createIfNeeded: false)
+        return tabManager.current(createIfNeeded: false)
     }
     
     var searchBarRect: CGRect {
@@ -173,7 +176,9 @@ class MainViewController: UIViewController {
         historyManager: HistoryManager,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
-        appSettings: AppSettings = AppUserDefaults()
+        appSettings: AppSettings = AppUserDefaults(),
+        previewsSource: TabPreviewsSource,
+        tabsModel: TabsModel
     ) {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.bookmarksDatabase = bookmarksDatabase
@@ -184,9 +189,17 @@ class MainViewController: UIViewController {
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         self.appSettings = appSettings
-        
+        self.previewsSource = previewsSource
+
+        self.tabManager = TabManager(model: tabsModel,
+                                     previewsSource: previewsSource,
+                                     bookmarksDatabase: bookmarksDatabase,
+                                     historyManager: historyManager,
+                                     syncService: syncService)
+
         super.init(nibName: nil, bundle: nil)
-        
+
+        tabManager.delegate = self
         bindFavoritesDisplayMode()
         bindSyncService()
     }
@@ -197,7 +210,9 @@ class MainViewController: UIViewController {
         historyManager: HistoryManager,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
-        appSettings: AppSettings
+        appSettings: AppSettings,
+        previewsSource: TabPreviewsSource,
+        tabsModel: TabsModel
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -207,9 +222,18 @@ class MainViewController: UIViewController {
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         self.appSettings = appSettings
-        
+        self.previewsSource = previewsSource
+
+        self.tabManager = TabManager(model: tabsModel,
+                                     previewsSource: previewsSource,
+                                     bookmarksDatabase: bookmarksDatabase,
+                                     historyManager: historyManager,
+                                     syncService: syncService)
+
+
         super.init(nibName: nil, bundle: nil)
         
+        tabManager.delegate = self
         bindSyncService()
     }
 #endif
@@ -263,12 +287,12 @@ class MainViewController: UIViewController {
         initTabButton()
         initMenuButton()
         initBookmarksButton()
-        configureTabManager()
         loadInitialView()
         previewsSource.prepare()
         addLaunchTabNotificationObserver()
         subscribeToEmailProtectionStatusNotifications()
-
+        subscribeToURLInterceptorNotifications()
+        
 #if NETWORK_PROTECTION && SUBSCRIPTION
         subscribeToNetworkProtectionEvents()
 #endif
@@ -304,8 +328,8 @@ class MainViewController: UIViewController {
 
         startOnboardingFlowIfNotSeenBefore()
         tabsBarController?.refresh(tabsModel: tabManager.model)
-        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
-        
+        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
+
         _ = AppWidthObserver.shared.willResize(toWidth: view.frame.width)
         applyWidth()
 
@@ -340,7 +364,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    func updatePreviewForCurrentTab() {
+    func updatePreviewForCurrentTab(completion: (() -> Void)? = nil) {
         assert(Thread.isMainThread)
         
         if !viewCoordinator.logoContainer.isHidden,
@@ -349,6 +373,7 @@ class MainViewController: UIViewController {
             // Home screen with logo
             if let image = viewCoordinator.logoContainer.createImageSnapshot(inBounds: viewCoordinator.contentContainer.frame) {
                 previewsSource.update(preview: image, forTab: tab)
+                completion?()
             }
 
         } else if let currentTab = self.tabManager.current(), currentTab.link != nil {
@@ -357,12 +382,16 @@ class MainViewController: UIViewController {
                 guard let image else { return }
                 self.previewsSource.update(preview: image,
                                            forTab: currentTab.tabModel)
+                completion?()
             })
         } else if let tab = self.tabManager.model.currentTab {
             // Favorites, etc
             if let image = viewCoordinator.contentContainer.createImageSnapshot() {
                 previewsSource.update(preview: image, forTab: tab)
+                completion?()
             }
+        } else {
+            completion?()
         }
     }
 
@@ -692,40 +721,6 @@ class MainViewController: UIViewController {
         dismissOmniBar()
     }
 
-    private func configureTabManager() {
-
-        let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
-
-        let tabsModel: TabsModel
-        if let settings = AutoClearSettingsModel(settings: appSettings) {
-            // This needs to be refactored so that tabs model is injected and cleared before view did load,
-            //  but for now, ensure this happens in the right order by clearing data here too, if needed.
-            tabsModel = TabsModel(desktop: isPadDevice)
-            tabsModel.save()
-            previewsSource.removeAllPreviews()
-
-            if settings.action.contains(.clearData) {
-                Task { @MainActor in
-                    await forgetData()
-                }
-            }
-        } else {
-            if let storedModel = TabsModel.get() {
-                // Save new model in case of migration
-                storedModel.save()
-                tabsModel = storedModel
-            } else {
-                tabsModel = TabsModel(desktop: isPadDevice)
-            }
-        }
-        tabManager = TabManager(model: tabsModel,
-                                previewsSource: previewsSource,
-                                bookmarksDatabase: bookmarksDatabase,
-                                historyManager: historyManager,
-                                syncService: syncService,
-                                delegate: self)
-    }
-
     private func addLaunchTabNotificationObserver() {
         launchTabObserver = LaunchTabNotification.addObserver(handler: { [weak self] urlString in
             guard let self = self else { return }
@@ -883,6 +878,7 @@ class MainViewController: UIViewController {
                 selectTab(existing)
                 return
             } else if reuseExisting, let existing = tabManager.firstHomeTab() {
+                doRefreshAfterClear = false
                 tabManager.selectTab(existing)
                 loadUrl(url, fromExternalLink: fromExternalLink)
             } else {
@@ -892,7 +888,7 @@ class MainViewController: UIViewController {
             refreshTabIcon()
             refreshControls()
             tabsBarController?.refresh(tabsModel: tabManager.model)
-            swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
+            swipeTabsCoordinator?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
         }
         
         if clearInProgress {
@@ -1157,7 +1153,7 @@ class MainViewController: UIViewController {
         viewCoordinator.toolbar.isHidden = false
         viewCoordinator.omniBar.enterPhoneState()
         
-        swipeTabsCoordinator?.isEnabled = featureFlagger.isFeatureOn(.swipeTabs)
+        swipeTabsCoordinator?.isEnabled = true
     }
 
     @discardableResult
@@ -1292,7 +1288,7 @@ class MainViewController: UIViewController {
         }
         attachHomeScreen()
         tabsBarController?.refresh(tabsModel: tabManager.model)
-        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
+        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
         homeController?.openedAsNewTab(allowingKeyboard: allowingKeyboard)
     }
     
@@ -1346,6 +1342,20 @@ class MainViewController: UIViewController {
                 self?.onDuckDuckGoEmailSignOut(notification)
             }
             .store(in: &emailCancellables)
+    }
+    
+    private func subscribeToURLInterceptorNotifications() {
+        NotificationCenter.default.publisher(for: .urlInterceptPrivacyPro)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                switch notification.name {
+                case .urlInterceptPrivacyPro:
+                    self?.launchSettings(deepLinkTarget: .subscriptionFlow)
+                default:
+                    return
+                }
+            }
+            .store(in: &urlInterceptorCancellables)
     }
 
 #if NETWORK_PROTECTION && SUBSCRIPTION
@@ -2000,7 +2010,7 @@ extension MainViewController: TabDelegate {
         if currentTab == tab {
             refreshControls()
         }
-        tabManager?.save()
+        tabManager.save()
         tabsBarController?.refresh(tabsModel: tabManager.model)
         // note: model in swipeTabsCoordinator doesn't need to be updated here
         // https://app.asana.com/0/414235014887631/1206847376910045/f
@@ -2247,19 +2257,14 @@ extension MainViewController: TabSwitcherButtonDelegate {
     }
 
     func showTabSwitcher() {
-        guard let currentTab = currentTab ?? tabManager?.current(createIfNeeded: true) else {
+        guard let currentTab = currentTab ?? tabManager.current(createIfNeeded: true) else {
             fatalError("Unable to get current tab")
         }
-        
-        currentTab.preparePreview(completion: { image in
-            if let image = image {
-                self.previewsSource.update(preview: image,
-                                           forTab: currentTab.tabModel)
 
-            }
+        updatePreviewForCurrentTab {
             ViewHighlighter.hideAll()
             self.segueToTabSwitcher()
-        })
+        }
     }
 }
 
@@ -2309,6 +2314,10 @@ extension MainViewController: AutoClearWorker {
     }
 
     func refreshUIAfterClear() {
+        guard doRefreshAfterClear else {
+            doRefreshAfterClear = true
+            return
+        }
         showBars()
         attachHomeScreen()
         tabsBarController?.refresh(tabsModel: tabManager.model)
@@ -2321,6 +2330,7 @@ extension MainViewController: AutoClearWorker {
         refreshUIAfterClear()
     }
 
+    @MainActor
     func forgetData() async {
         guard !clearInProgress else {
             assertionFailure("Shouldn't get called multiple times")

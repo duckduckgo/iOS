@@ -176,7 +176,7 @@ extension FavoriteHomeCell {
         super.traitCollectionDidChange(previousTraitCollection)
 
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection), let favorite {
-                updateFor(favorite: favorite)
+            updateFor(favorite: favorite)
         }
     }
 }

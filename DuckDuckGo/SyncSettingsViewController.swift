@@ -24,6 +24,7 @@ import SyncUI
 import DDGSync
 import Common
 
+// swiftlint:disable file_length
 @MainActor
 class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 

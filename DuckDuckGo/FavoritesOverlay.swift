@@ -40,8 +40,6 @@ class FavoritesOverlay: UIViewController {
     var collectionView: UICollectionView!
     private var renderer: FavoritesHomeViewSectionRenderer!
     private let appSettings: AppSettings
-
-    private var theme: Theme!
     
     weak var delegate: FavoritesOverlayDelegate?
 
@@ -176,7 +174,6 @@ extension FavoritesOverlay {
     
     private func decorate() {
         let theme = ThemeManager.shared.currentTheme
-        self.theme = theme
         view.backgroundColor = AppWidthObserver.shared.isLargeWidth ? .clear : theme.backgroundColor
     }
 

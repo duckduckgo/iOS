@@ -45,8 +45,6 @@ class FavoritesViewController: UIViewController {
     var collectionView: UICollectionView!
     private var renderer: FavoritesHomeViewSectionRenderer!
 
-    private var theme: Theme?
-
     weak var delegate: FavoritesViewControllerDelegate?
     
     private let bookmarksDatabase: CoreDataDatabase
@@ -90,7 +88,6 @@ class FavoritesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        theme = ThemeManager.shared.currentTheme
 
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
 
@@ -289,7 +286,6 @@ extension FavoritesViewController {
 
     private func decorate() {
         let theme = ThemeManager.shared.currentTheme
-        self.theme = theme
         view.backgroundColor = theme.backgroundColor
         collectionView.backgroundColor = .clear
         emptyStateContainer.backgroundColor = .clear

@@ -46,6 +46,8 @@ public final class UniquePixel {
         return calendar
     }()
 
+    private static let weeksToCoalesceCohort = 6
+
     /// Sends a unique Pixel
     /// This requires the pixel name to end with `_u`
     public static func fire(pixel: Pixel.Event,
@@ -64,15 +66,19 @@ public final class UniquePixel {
         }
     }
 
-    public static func cohort(from date: Date?) -> String {
-        guard let date,
-              let referenceDate = calendar.date(from: .init(year: 2023, month: 1, day: 1)),
-              let weekOfYear = calendar.dateComponents([.weekOfYear], from: referenceDate, to: date).weekOfYear,
-              weekOfYear >= 0 else {
+    public static func cohort(from cohortLocalDate: Date?) -> String {
+        guard let cohortLocalDate,
+              let baseDate = calendar.date(from: .init(year: 2023, month: 1, day: 1)),
+              let weeksSinceCohortAssigned = calendar.dateComponents([.weekOfYear], from: cohortLocalDate, to: Date()).weekOfYear,
+              let assignedCohort = calendar.dateComponents([.weekOfYear], from: baseDate, to: cohortLocalDate).weekOfYear else {
             return ""
         }
 
-        return "week-" + String(weekOfYear + 1)
+        if weeksSinceCohortAssigned > Self.weeksToCoalesceCohort {
+            return ""
+        } else {
+            return "week-" + String(assignedCohort + 1)
+        }
     }
 }
 

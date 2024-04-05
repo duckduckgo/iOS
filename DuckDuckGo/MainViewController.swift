@@ -888,7 +888,7 @@ class MainViewController: UIViewController {
             refreshTabIcon()
             refreshControls()
             tabsBarController?.refresh(tabsModel: tabManager.model)
-            swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
+            swipeTabsCoordinator?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
         }
         
         if clearInProgress {

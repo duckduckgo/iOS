@@ -38,6 +38,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var canGoBackCancellable: AnyCancellable?
     private var urlCancellable: AnyCancellable?
+    private var transactionStatusTimer: Timer?
     
     enum Constants {
         static let navigationBarHideThreshold = 80.0
@@ -250,13 +251,11 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
     
     private func cleanUp() {
+        transactionStatusTimer?.invalidate()
         canGoBackCancellable?.cancel()
         urlCancellable?.cancel()
         subFeature.cleanup()
         cancellables.removeAll()
-        DispatchQueue.main.async {
-            self.setTransactionStatus(.idle)
-        }
     }
 
     @MainActor
@@ -267,6 +266,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     deinit {
         cleanUp()
+        transactionStatusTimer = nil
         canGoBackCancellable = nil
         urlCancellable = nil
     }
@@ -278,12 +278,19 @@ final class SubscriptionFlowViewModel: ObservableObject {
         // Fire a temp pixel if status is not back to idle in 60s
         // Remove block when removing pixel
         // https://app.asana.com/0/1204099484721401/1207003487111848/f
+        
+        // Invalidate existing timer if any
+        transactionStatusTimer?.invalidate()
+        
         if status != .idle {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 60) { [weak self] in
-              guard let strongSelf = self else { return }
-              if strongSelf.state.transactionStatus != .idle {
-                  Pixel.fire(pixel: .privacyProTransactionProgressNotHiddenAfter60s, error: nil)
-              }
+            // Schedule a new timer
+            transactionStatusTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: false) { [weak self] _ in
+                guard let strongSelf = self else { return }
+                if strongSelf.state.transactionStatus != .idle {
+                    Pixel.fire(pixel: .privacyProTransactionProgressNotHiddenAfter60s, error: nil)
+                }
+                strongSelf.transactionStatusTimer?.invalidate()
+                strongSelf.transactionStatusTimer = nil
             }
         }
     }

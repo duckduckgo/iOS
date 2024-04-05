@@ -76,7 +76,7 @@ class BlankSnapshotViewController: UIViewController {
             viewCoordinator.lastToolbarButton.customView = menuButton
         }
 
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
     }
 
     // Need to do this at this phase to support split screen on iPad
@@ -200,9 +200,10 @@ extension BlankSnapshotViewController: TabSwitcherButtonDelegate {
     
 }
 
-extension BlankSnapshotViewController: Themable {
+extension BlankSnapshotViewController {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         setNeedsStatusBarAppearanceUpdate()
 
         if AppWidthObserver.shared.isLargeWidth {
@@ -216,14 +217,9 @@ extension BlankSnapshotViewController: Themable {
         viewCoordinator.navigationBarContainer.backgroundColor = theme.barBackgroundColor
         viewCoordinator.navigationBarContainer.tintColor = theme.barTintColor
 
-        viewCoordinator.omniBar.decorate(with: theme)
-
-        viewCoordinator.progress.decorate(with: theme)
-
         viewCoordinator.toolbar.barTintColor = theme.barBackgroundColor
         viewCoordinator.toolbar.tintColor = theme.barTintColor
 
-        tabSwitcherButton.decorate(with: theme)
         viewCoordinator.toolbarTabSwitcherButton.tintColor = theme.barTintColor
 
         viewCoordinator.logoText.tintColor = theme.ddgTextTintColor
@@ -231,9 +227,7 @@ extension BlankSnapshotViewController: Themable {
         if appSettings.currentAddressBarPosition == .bottom {
             viewCoordinator.statusBackground.backgroundColor = theme.backgroundColor
         }
-
-        menuButton.decorate(with: theme)
-
+        
      }
     
 }

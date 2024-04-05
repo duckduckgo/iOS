@@ -26,11 +26,14 @@ class BrowsingMenuEntryViewCell: UITableViewCell {
     @IBOutlet weak var entryLabel: UILabel!
     @IBOutlet weak var notificationDot: UIView!
     
-    func configure(image: UIImage, label: String, accessibilityLabel: String?, theme: Theme, showNotificationDot: Bool = false) {
+    func configure(image: UIImage, label: String, accessibilityLabel: String?, showNotificationDot: Bool = false) {
         entryImage.image = image
         entryLabel.setAttributedTextString(label)
         entryLabel.accessibilityLabel = accessibilityLabel
-        
+
+        let theme = ThemeManager.shared.currentTheme
+
+        decorate(with: theme)
         entryImage.tintColor = theme.browsingMenuIconsColor
         entryLabel.textColor = theme.browsingMenuTextColor
         backgroundColor = theme.browsingMenuBackgroundColor

@@ -72,11 +72,13 @@ class MenuButton: UIView {
         addSubview(pointerView)
         addSubview(anim)
         addSubview(bookmarksIconView)
-        
+
         configureAnimationView()
         configureBookmarksView()
         
         addInteraction(UIPointerInteraction(delegate: self))
+
+        decorate()
     }
 
     override func layoutSubviews() {
@@ -183,24 +185,34 @@ class MenuButton: UIView {
     }
 }
 
-extension MenuButton: Themable {
+extension MenuButton {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         tintColor = theme.barTintColor
 
-        switch theme.currentImageSet {
-        case .light:
-            anim.animation = LottieAnimation.named("menu_light")
+        updateAnimationForCurrentAppearance()
+    }
+
+    private func updateAnimationForCurrentAppearance() {
+        switch traitCollection.userInterfaceStyle {
         case .dark:
             anim.animation = LottieAnimation.named("menu_dark")
+        default:
+            anim.animation = LottieAnimation.named("menu_light")
         }
-        
+
         if currentState == State.closeImage {
             anim.currentProgress = 1.0
         }
+    }
 
-        addSubview(anim)
-        configureAnimationView()
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            updateAnimationForCurrentAppearance()
+        }
     }
 }
 

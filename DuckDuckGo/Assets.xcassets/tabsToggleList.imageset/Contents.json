@@ -3,6 +3,16 @@
     {
       "filename" : "tabsToggleList-Light.pdf",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "tabsToggleList-Dark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

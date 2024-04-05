@@ -39,3 +39,9 @@ extension UIApplication {
         return await self.open(url)
     }
 }
+
+extension UIApplication {
+    var firstKeyWindow: UIWindow? {
+        return UIApplication.shared.windows.first(where: \.isKeyWindow)
+    }
+}

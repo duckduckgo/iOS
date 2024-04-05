@@ -96,7 +96,7 @@ class AutocompleteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
 
         queryDebounceCancellable = $query
             .debounce(for: .milliseconds(Constants.debounceDelay), scheduler: RunLoop.main)
@@ -135,11 +135,6 @@ class AutocompleteViewController: UIViewController {
 
     private func resetNavigationBar() {
         navigationController?.hidesBarsOnSwipe = hidesBarsOnSwipeDefault
-    }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        tableView.reloadData()
     }
 
     func updateQuery(query: String) {
@@ -302,10 +297,10 @@ extension AutocompleteViewController: UIGestureRecognizerDelegate {
     }
 }
 
-extension AutocompleteViewController: Themable {
-    func decorate(with theme: Theme) {
+extension AutocompleteViewController {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         tableView.separatorColor = theme.tableCellSeparatorColor
-        tableView.reloadData()
     }
 }
 

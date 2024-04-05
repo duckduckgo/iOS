@@ -32,7 +32,7 @@ class PositiveFeedbackViewController: UIViewController {
         configureLabels()
         configureButtons()
 
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
     }
     
     private func configureLabels() {
@@ -62,12 +62,12 @@ class PositiveFeedbackViewController: UIViewController {
         
         feedbackForm.configureForPositiveSentiment()
     }
-    
 }
 
-extension PositiveFeedbackViewController: Themable {
+extension PositiveFeedbackViewController {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         view.backgroundColor = theme.backgroundColor
         
         headerText.textColor = theme.feedbackPrimaryTextColor
@@ -78,4 +78,11 @@ extension PositiveFeedbackViewController: Themable {
         doneButton.setTitleColor(theme.buttonTintColor, for: .normal)
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            leaveFeedbackButton.layer.borderColor = ThemeManager.shared.currentTheme.buttonTintColor.cgColor
+        }
+    }
 }

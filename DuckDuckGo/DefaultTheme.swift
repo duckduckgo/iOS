@@ -1,5 +1,5 @@
 //
-//  AutoupdatingTheme.swift
+//  DefaultTheme.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -22,7 +22,7 @@ import UIKit
 // If you add a new colour here:
 //  * and it uses the design system, please put it in Theme+DesignSystem instead
 //  * and it doesn't use the design, please only do so with designer approval
-struct AutoupdatingTheme: Theme {
+struct DefaultTheme: Theme {
     let name = ThemeName.systemDefault
 
     let statusBarStyle: UIStatusBarStyle = .default

@@ -38,7 +38,7 @@ class ThemeManager {
 
     private var appSettings: AppSettings
 
-    let currentTheme: Theme = AutoupdatingTheme()
+    let currentTheme: Theme = DefaultTheme()
 
     init(settings: AppSettings = AppUserDefaults()) {
         appSettings = settings

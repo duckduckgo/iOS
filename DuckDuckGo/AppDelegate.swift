@@ -1010,7 +1010,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
             if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist(), identifier == VPNWaitlist.notificationIdentifier {
                 presentNetworkProtectionWaitlistModal()
-                DailyPixel.fire(pixel: .networkProtectionWaitlistNotificationLaunched)
             }
 
 #endif

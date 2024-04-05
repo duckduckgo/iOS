@@ -40,16 +40,12 @@ final class VPNWaitlistTermsAndConditionsViewController: UIViewController {
 
         title = UserText.netPNavTitle
         addHostingControllerToViewHierarchy()
-
-        DailyPixel.fire(pixel: .networkProtectionWaitlistTermsDisplayed)
     }
 
     private func addHostingControllerToViewHierarchy() {
         let waitlistView = VPNWaitlistPrivacyPolicyView { _ in
             var termsAndConditionsStore = NetworkProtectionTermsAndConditionsUserDefaultsStore()
             termsAndConditionsStore.networkProtectionWaitlistTermsAndConditionsAccepted = true
-
-            DailyPixel.fire(pixel: .networkProtectionWaitlistTermsAccepted)
 
             self.navigationController?.popToRootViewController(animated: true)
             let networkProtectionViewController = NetworkProtectionRootViewController()

@@ -22,7 +22,6 @@ import Lottie
 
 class PrivacyInfoContainerView: UIView {
     
-    private var currentlyLoadedStyle: ThemeManager.ImageSet!
     
     @IBOutlet var privacyIcon: PrivacyIconView!
     @IBOutlet var maskingView: UIView!
@@ -45,21 +44,17 @@ class PrivacyInfoContainerView: UIView {
             animationView.configuration = LottieConfiguration(renderingEngine: .mainThread)
         }
         
-        loadAnimations(for: ThemeManager.shared.currentTheme)
+        decorate()
     }
-    
-    private func loadAnimations(for theme: Theme, animationCache cache: AnimationCacheProvider = DefaultAnimationCache.sharedCache) {
-        let useLightStyle = theme.currentImageSet == .light
 
-        trackers1Animation.animation = LottieAnimation.named(useLightStyle ? "trackers-1" : "dark-trackers-1", animationCache: cache)
-        trackers2Animation.animation = LottieAnimation.named(useLightStyle ? "trackers-2" : "dark-trackers-2", animationCache: cache)
-        trackers3Animation.animation = LottieAnimation.named(useLightStyle ? "trackers-3" : "dark-trackers-3", animationCache: cache)
-        
-        privacyIcon.loadAnimations(for: theme, animationCache: cache)
-        
-        currentlyLoadedStyle = theme.currentImageSet
+    private func loadAnimations(animationCache cache: AnimationCacheProvider = DefaultAnimationCache.sharedCache) {
+        let useDarkStyle = traitCollection.userInterfaceStyle == .dark
+
+        trackers1Animation.animation = LottieAnimation.named(useDarkStyle ? "dark-trackers-1" : "trackers-1", animationCache: cache)
+        trackers2Animation.animation = LottieAnimation.named(useDarkStyle ? "dark-trackers-2" : "trackers-2", animationCache: cache)
+        trackers3Animation.animation = LottieAnimation.named(useDarkStyle ? "dark-trackers-3" : "trackers-3", animationCache: cache)
     }
-    
+
     func trackerAnimationView(for trackerCount: Int) -> LottieAnimationView? {
         switch trackerCount {
         case 0: return nil
@@ -77,14 +72,21 @@ class PrivacyInfoContainerView: UIView {
     }
 }
 
-extension PrivacyInfoContainerView: Themable {
+extension PrivacyInfoContainerView {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         
         maskingView.backgroundColor = theme.searchBarBackgroundColor
         
-        if theme.currentImageSet != currentlyLoadedStyle {
-            loadAnimations(for: theme)
+        loadAnimations()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            loadAnimations()
         }
     }
 }

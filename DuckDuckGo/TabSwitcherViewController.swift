@@ -26,7 +26,6 @@ import Bookmarks
 import Persistence
 
 // swiftlint:disable file_length
-// swiftlint:disable:next type_body_length
 class TabSwitcherViewController: UIViewController {
     
     struct Constants {
@@ -94,7 +93,7 @@ class TabSwitcherViewController: UIViewController {
         refreshTitle()
         setupBackgroundView()
         currentSelection = tabsModel.currentIndex
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
         becomeFirstResponder()
         
         if !tabSwitcherSettings.hasSeenNewLayout {
@@ -124,20 +123,11 @@ class TabSwitcherViewController: UIViewController {
         collectionView.backgroundView = view
     }
     
-    private func refreshDisplayModeButton(theme: Theme = ThemeManager.shared.currentTheme) {
-        switch theme.currentImageSet {
-        case .dark:
-            if tabSwitcherSettings.isGridViewEnabled {
-                displayModeButton.setImage(UIImage(named: "tabsToggleGrid-Dark"), for: .normal)
-            } else {
-                displayModeButton.setImage(UIImage(named: "tabsToggleList-Dark"), for: .normal)
-            }
-        case .light:
-            if tabSwitcherSettings.isGridViewEnabled {
-                displayModeButton.setImage(UIImage(named: "tabsToggleGrid-Light"), for: .normal)
-            } else {
-                displayModeButton.setImage(UIImage(named: "tabsToggleList-Light"), for: .normal)
-            }
+    private func refreshDisplayModeButton() {
+        if tabSwitcherSettings.isGridViewEnabled {
+            displayModeButton.setImage(UIImage(named: "tabsToggleGrid"), for: .normal)
+        } else {
+            displayModeButton.setImage(UIImage(named: "tabsToggleList"), for: .normal)
         }
     }
 
@@ -244,7 +234,6 @@ class TabSwitcherViewController: UIViewController {
         let alert = UIAlertController(title: UserText.alertBookmarkAllTitle,
                                       message: UserText.alertBookmarkAllMessage,
                                       preferredStyle: .alert)
-        alert.overrideUserInterfaceStyle()
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         alert.addAction(title: UserText.actionBookmark, style: .default) {
             let model = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase, syncService: self.syncService)
@@ -516,12 +505,13 @@ extension TabSwitcherViewController: TabObserver {
     }
 }
 
-extension TabSwitcherViewController: Themable {
+extension TabSwitcherViewController {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         view.backgroundColor = theme.backgroundColor
         
-        refreshDisplayModeButton(theme: theme)
+        refreshDisplayModeButton()
         
         titleView.textColor = theme.barTintColor
         bookmarkAllButton.tintColor = theme.barTintColor

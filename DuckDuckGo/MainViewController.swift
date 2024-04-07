@@ -261,7 +261,7 @@ class MainViewController: UIViewController {
         registerForKeyboardNotifications()
         registerForSyncPausedNotifications()
 
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
 
         tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
         swipeTabsCoordinator?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
@@ -507,6 +507,7 @@ class MainViewController: UIViewController {
     @objc func onAddressBarPositionChanged() {
         viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
         refreshViewsBasedOnAddressBarPosition(appSettings.currentAddressBarPosition)
+        updateAddressBarPositionRelatedColors()
     }
 
     @objc private func onShowFullURLAddressChanged() {
@@ -530,8 +531,6 @@ class MainViewController: UIViewController {
             }
         }
 
-        let theme = ThemeManager.shared.currentTheme
-        self.decorate(with: theme)
     }
 
     @objc func onShowFullSiteAddressChanged() {
@@ -655,14 +654,6 @@ class MainViewController: UIViewController {
         
         Pixel.fire(pixel: .tabBarBookmarksLongPressed)
         currentTab?.saveAsBookmark(favorite: true, viewModel: menuBookmarksViewModel)
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            ThemeManager.shared.refreshSystemTheme()
-        }
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -838,7 +829,7 @@ class MainViewController: UIViewController {
             refreshTabIcon()
             refreshControls()
             tabsBarController?.refresh(tabsModel: tabManager.model)
-            swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
+            swipeTabsCoordinator?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
         }
         
         if clearInProgress {
@@ -1043,8 +1034,6 @@ class MainViewController: UIViewController {
             applySmallWidth()
         }
 
-        applyTheme(ThemeManager.shared.currentTheme)
-
         DispatchQueue.main.async {
             // Do this async otherwise the toolbar buttons skew to the right
             if self.viewCoordinator.constraints.navigationBarContainerTop.constant >= 0 {
@@ -1078,7 +1067,6 @@ class MainViewController: UIViewController {
             viewCoordinator.omniBar.menuButton.accessibilityLabel = UserText.menuButtonHint
         }
 
-        presentedMenuButton.decorate(with: ThemeManager.shared.currentTheme)
         presentedMenuButton.setState(expectedState, animated: false)
     }
 
@@ -2371,48 +2359,42 @@ extension MainViewController: AutoClearWorker {
     
 }
 
-extension MainViewController: Themable {
-    
-    func decorate(with theme: Theme) {
+extension MainViewController {
+
+    private func updateAddressBarPositionRelatedColors() {
+        let theme = ThemeManager.shared.currentTheme
+
+        if appSettings.currentAddressBarPosition == .bottom {
+            viewCoordinator.statusBackground.backgroundColor = theme.backgroundColor
+        } else {
+            if AppWidthObserver.shared.isLargeWidth {
+                viewCoordinator.statusBackground.backgroundColor = theme.tabsBarBackgroundColor
+            } else {
+                viewCoordinator.statusBackground.backgroundColor = theme.omniBarBackgroundColor
+            }
+        }
+    }
+
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
 
         setNeedsStatusBarAppearanceUpdate()
 
-        // Does not appear to get updated when setting changes.
-        tabsBarController?.decorate(with: theme)
-
-        if AppWidthObserver.shared.isLargeWidth {
-            viewCoordinator.statusBackground.backgroundColor = theme.tabsBarBackgroundColor
-        } else {
-            viewCoordinator.statusBackground.backgroundColor = theme.omniBarBackgroundColor
-        }
+        updateAddressBarPositionRelatedColors()
 
         view.backgroundColor = theme.mainViewBackgroundColor
 
         viewCoordinator.navigationBarContainer.backgroundColor = theme.barBackgroundColor
         viewCoordinator.navigationBarContainer.tintColor = theme.barTintColor
         
-        viewCoordinator.omniBar.decorate(with: theme)
-
-        viewCoordinator.progress.decorate(with: theme)
         
         viewCoordinator.toolbar.barTintColor = theme.barBackgroundColor
         viewCoordinator.toolbar.tintColor = theme.barTintColor
 
-        tabSwitcherButton.decorate(with: theme)
-        gestureBookmarksButton.decorate(with: theme)
         viewCoordinator.toolbarTabSwitcherButton.tintColor = theme.barTintColor
         
-        presentedMenuButton.decorate(with: theme)
-        
-        tabManager.decorate(with: theme)
-
-        findInPageView.decorate(with: theme)
         
         viewCoordinator.logoText.tintColor = theme.ddgTextTintColor
-
-        if appSettings.currentAddressBarPosition == .bottom {
-            viewCoordinator.statusBackground.backgroundColor = theme.backgroundColor
-        }
     }
 
 }

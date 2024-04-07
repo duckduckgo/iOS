@@ -34,19 +34,10 @@ extension UIViewController {
         return []
     }
 
-    func overrideUserInterfaceStyle() {
-        if ThemeManager.shared.currentTheme.currentImageSet == .dark {
-            overrideUserInterfaceStyle = .dark
-        } else {
-            overrideUserInterfaceStyle = .light
-        }
-    }
-
     public func presentShareSheet(withItems activityItems: [Any], fromButtonItem buttonItem: UIBarButtonItem, completion: UIActivityViewController.CompletionWithItemsHandler? = nil) {
         let activities = buildActivities()
         let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: activities)
         shareController.completionWithItemsHandler = completion
-        shareController.overrideUserInterfaceStyle()
         present(controller: shareController, fromButtonItem: buttonItem)
     }
 
@@ -56,8 +47,6 @@ extension UIViewController {
         shareController.completionWithItemsHandler = completion
         if let overrideInterfaceStyle {
             shareController.overrideUserInterfaceStyle = overrideInterfaceStyle
-        } else {
-            shareController.overrideUserInterfaceStyle()
         }
         shareController.excludedActivityTypes = [.markupAsPDF]
         present(controller: shareController, fromView: sourceView, atPoint: point)

@@ -101,6 +101,8 @@ class OmniBar: UIView {
         enableInteractionsWithPointer()
         
         privacyInfoContainer.isHidden = true
+
+        decorate()
     }
 
     private func configureSettingsLongPressButton() {
@@ -513,9 +515,10 @@ extension OmniBar: UITextFieldDelegate {
     }
 }
 
-extension OmniBar: Themable {
+extension OmniBar {
     
-    public func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         backgroundColor = theme.omniBarBackgroundColor
         tintColor = theme.barTintColor
         
@@ -524,7 +527,6 @@ extension OmniBar: Themable {
         editingBackground?.backgroundColor = theme.searchBarBackgroundColor
         editingBackground?.borderColor = theme.searchBarBackgroundColor
         
-        privacyInfoContainer.decorate(with: theme)
         privacyIconAndTrackersAnimator.resetImageProvider()
         
         searchStackContainer?.tintColor = theme.barTintColor
@@ -541,6 +543,14 @@ extension OmniBar: Themable {
         searchLoupe.tintColor = UIColor(designSystemColor: .icons)
         searchLoupe.alpha = 0.5
         cancelButton.setTitleColor(theme.barTintColor, for: .normal)
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            privacyIconAndTrackersAnimator.resetImageProvider()
+        }
     }
 }
 // swiftlint:enable file_length

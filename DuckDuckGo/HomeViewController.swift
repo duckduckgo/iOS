@@ -119,7 +119,7 @@ class HomeViewController: UIViewController {
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
 
         configureCollectionView()
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(remoteMessagesDidChange),
@@ -162,7 +162,7 @@ class HomeViewController: UIViewController {
     func configureCollectionView() {
         collectionView.configure(withController: self,
                                  favoritesViewModel: favoritesViewModel,
-                                 andTheme: ThemeManager.shared.currentTheme)
+                                 appTPHomeViewModel: nil)
     }
     
     func enableContentUnderflow() -> CGFloat {
@@ -337,10 +337,10 @@ extension HomeViewController: HomeMessageViewSectionRendererDelegate {
     }
 }
 
-extension HomeViewController: Themable {
+extension HomeViewController {
 
-    func decorate(with theme: Theme) {
-        collectionView.decorate(with: theme)
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         settingsButton.tintColor = theme.barTintColor
     }
 }

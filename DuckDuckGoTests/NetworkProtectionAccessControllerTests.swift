@@ -199,7 +199,7 @@ final class NetworkProtectionAccessControllerTests: XCTestCase {
         mockManager.privacyConfig = mockConfiguration(subfeatureEnabled: enabled)
 
         let internalUserDecider = DefaultInternalUserDecider(store: internalUserDeciderStore)
-        return DefaultFeatureFlagger(internalUserDecider: internalUserDecider, privacyConfig: mockManager.privacyConfig)
+        return DefaultFeatureFlagger(internalUserDecider: internalUserDecider, privacyConfigManager: mockManager)
     }
 
     private func mockConfiguration(subfeatureEnabled: Bool) -> PrivacyConfiguration {

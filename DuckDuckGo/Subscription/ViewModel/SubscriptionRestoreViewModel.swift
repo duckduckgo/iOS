@@ -95,7 +95,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     private func setupContent() async {
         if state.isAddingDevice {
-            
             DispatchQueue.main.async {
                 self.state.isLoading = true
             }

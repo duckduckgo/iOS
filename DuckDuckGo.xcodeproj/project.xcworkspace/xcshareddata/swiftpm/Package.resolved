@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sam/avoid-caching-privacy-config-in-feature-flagger",
-        "revision" : "a9e64d85bf3ebbf32da72488eadf3ea7075bd2d8"
+        "revision" : "5199a6964e183c3d001b188286bbabeca93c8849",
+        "version" : "132.0.2"
       }
     },
     {

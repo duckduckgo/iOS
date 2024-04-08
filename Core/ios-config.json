@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1712088935529,
+    "version": 1712340816780,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -1935,6 +1935,14 @@
                             {
                                 "selector": ".proper-dynamic-insertion",
                                 "type": "closest-empty"
+                            },
+                            {
+                                "selector": ".Page-header-leaderboardAd",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".SovrnAd",
+                                "type": "hide-empty"
                             }
                         ]
                     },
@@ -2381,6 +2389,23 @@
                         "rules": [
                             {
                                 "selector": ".es-ad-space-container",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "eurogamer.net",
+                        "rules": [
+                            {
+                                "selector": "#sticky_leaderboard",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".primis_wrapper",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": ".autoad",
                                 "type": "hide-empty"
                             }
                         ]
@@ -4242,7 +4267,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "5094a939eec2d7e518ff15d628eec23f"
+            "hash": "0e089327b42a773f8e625bdc7bf27ddc"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -4900,14 +4925,14 @@
                     "rollout": {
                         "steps": [
                             {
-                                "percent": 5
+                                "percent": 10
                             }
                         ]
                     }
                 }
             },
             "state": "enabled",
-            "hash": "f7cce63c16c142db4ff5764b542a6c52"
+            "hash": "b337f9c7cf15e7e4807ef232befaa999"
         },
         "privacyPro": {
             "state": "enabled",
@@ -5023,6 +5048,11 @@
             ],
             "state": "disabled",
             "hash": "5e792dd491428702bc0104240fbce0ce"
+        },
+        "sslCertificates": {
+            "state": "disabled",
+            "exceptions": [],
+            "hash": "c292bb627849854515cebbded288ef5a"
         },
         "sync": {
             "state": "enabled",
@@ -5907,6 +5937,12 @@
                                 ]
                             },
                             {
+                                "rule": "www3.doubleclick.net",
+                                "domains": [
+                                    "scrolller.com"
+                                ]
+                            },
+                            {
                                 "rule": "doubleclick.net",
                                 "domains": [
                                     "rocketnews24.com"
@@ -6309,6 +6345,12 @@
                                 "domains": [
                                     "<all>"
                                 ]
+                            },
+                            {
+                                "rule": "marketingplatform.google.com/about/enterprise",
+                                "domains": [
+                                    "scrolller.com"
+                                ]
                             }
                         ]
                     },
@@ -6317,18 +6359,7 @@
                             {
                                 "rule": "imasdk.googleapis.com/js/sdkloader/ima3.js",
                                 "domains": [
-                                    "arkadium.com",
-                                    "bloomberg.com",
-                                    "cbssports.com",
-                                    "gamak.tv",
-                                    "games.washingtonpost.com",
-                                    "metro.co.uk",
-                                    "nfl.com",
-                                    "pandora.com",
-                                    "paper-io.com",
-                                    "rawstory.com",
-                                    "usatoday.com",
-                                    "washingtonpost.com"
+                                    "<all>"
                                 ]
                             }
                         ]
@@ -6353,6 +6384,7 @@
                                     "daotranslate.com",
                                     "drakescans.com",
                                     "duden.de",
+                                    "edealinfo.com",
                                     "freetubetv.net",
                                     "hscprojects.com",
                                     "kits4beats.com",
@@ -7657,6 +7689,16 @@
                             }
                         ]
                     },
+                    "sundaysky.com": {
+                        "rules": [
+                            {
+                                "rule": "sundaysky.com",
+                                "domains": [
+                                    "bankofamerica.com"
+                                ]
+                            }
+                        ]
+                    },
                     "taboola.com": {
                         "rules": [
                             {
@@ -8089,7 +8131,7 @@
                     "domain": "sundancecatalog.com"
                 }
             ],
-            "hash": "7aae19055144405351a27ca946fa674d"
+            "hash": "cddd2317b22c5433c401af3a7a35c062"
         },
         "trackingCookies1p": {
             "settings": {

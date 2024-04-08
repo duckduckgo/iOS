@@ -35,10 +35,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ubS-NY-rcT" userLabel="Header Container">
-                                <rect key="frame" x="0.0" y="88.000000000000014" width="414" height="132.33333333333337"/>
+                                <rect key="frame" x="0.0" y="87.999999999999986" width="414" height="140.66666666666663"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Welcome to DuckDuckGo!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-MU-drX">
-                                        <rect key="frame" x="20" y="52.666666666666664" width="374" height="76.666666666666686"/>
+                                        <rect key="frame" x="20" y="61.000000000000007" width="374" height="76.666666666666686"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" staticText="YES" header="YES"/>
                                         </accessibility>
@@ -55,7 +55,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oPA-w3-V6b" userLabel="Subheader Container">
-                                <rect key="frame" x="0.0" y="220.33333333333334" width="414" height="88.333333333333343"/>
+                                <rect key="frame" x="0.0" y="228.66666666666663" width="414" height="94"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-Kx-QGf">
                                         <rect key="frame" x="20" y="3" width="374" height="22"/>
@@ -82,89 +82,45 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bos-sp-j80">
-                                <rect key="frame" x="30" y="308.66666666666674" width="354" height="441.33333333333326"/>
+                                <rect key="frame" x="30" y="322.66666666666674" width="354" height="469.33333333333326"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="276" id="poA-Sb-4vN"/>
                                 </constraints>
                             </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZEn-eD-MPB" userLabel="Continue Button" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="30" y="762" width="354" height="50"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-pA-ovS">
-                                        <rect key="frame" x="0.0" y="0.0" width="354" height="50"/>
-                                        <accessibility key="accessibilityConfiguration" identifier="Continue"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="Continue"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="titleLabel.textAlignment">
-                                                <integer key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="nextWithSender:" destination="X59-2u-JR5" eventType="touchUpInside" id="kTk-d2-pSU"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.40392156862745099" green="0.5607843137254902" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="pwY-iy-NUS">
+                                <rect key="frame" x="30" y="804" width="354" height="50"/>
                                 <constraints>
-                                    <constraint firstItem="ciS-pA-ovS" firstAttribute="centerX" secondItem="ZEn-eD-MPB" secondAttribute="centerX" id="CY6-lF-KZn"/>
-                                    <constraint firstAttribute="height" constant="50" id="ZTk-Ll-JZa"/>
-                                    <constraint firstItem="ciS-pA-ovS" firstAttribute="width" secondItem="ZEn-eD-MPB" secondAttribute="width" id="gpL-yi-tzk"/>
-                                    <constraint firstItem="ciS-pA-ovS" firstAttribute="centerY" secondItem="ZEn-eD-MPB" secondAttribute="centerY" id="iW9-BQ-e1H"/>
-                                    <constraint firstItem="ciS-pA-ovS" firstAttribute="height" secondItem="ZEn-eD-MPB" secondAttribute="height" id="wxs-qS-EGM"/>
+                                    <constraint firstAttribute="height" priority="250" constant="50" id="l85-P3-fSt"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <integer key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J1y-Qk-FSX">
-                                <rect key="frame" x="30" y="821" width="354" height="33"/>
-                                <accessibility key="accessibilityConfiguration" identifier="Skip"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="SKIP">
-                                    <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="nextWithSender:" destination="X59-2u-JR5" eventType="touchUpInside" id="FsS-4V-mDy"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="2Fp-cs-AKH"/>
                         <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="oPA-w3-V6b" firstAttribute="top" secondItem="ubS-NY-rcT" secondAttribute="bottom" id="6lE-HW-2zS"/>
+                            <constraint firstItem="pwY-iy-NUS" firstAttribute="top" secondItem="bos-sp-j80" secondAttribute="bottom" constant="12" id="88P-CI-bBR"/>
                             <constraint firstItem="2Fp-cs-AKH" firstAttribute="trailing" secondItem="oPA-w3-V6b" secondAttribute="trailing" id="Ajy-Uq-sd1"/>
-                            <constraint firstItem="J1y-Qk-FSX" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="E7x-g7-gBV"/>
                             <constraint firstItem="bos-sp-j80" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-60" id="EKI-h0-VR8"/>
-                            <constraint firstItem="2Fp-cs-AKH" firstAttribute="bottom" secondItem="ZEn-eD-MPB" secondAttribute="bottom" constant="50" id="IjJ-lD-c8z"/>
-                            <constraint firstItem="ciS-pA-ovS" firstAttribute="top" secondItem="bos-sp-j80" secondAttribute="bottom" constant="12" id="MxJ-BY-JmD"/>
+                            <constraint firstItem="2Fp-cs-AKH" firstAttribute="bottom" secondItem="pwY-iy-NUS" secondAttribute="bottom" constant="8" id="G29-M6-YaA"/>
+                            <constraint firstItem="pwY-iy-NUS" firstAttribute="trailing" secondItem="bos-sp-j80" secondAttribute="trailing" id="L4h-EY-EI4"/>
                             <constraint firstItem="2Fp-cs-AKH" firstAttribute="top" secondItem="ubS-NY-rcT" secondAttribute="top" id="OGs-ay-qep"/>
                             <constraint firstItem="2Fp-cs-AKH" firstAttribute="trailing" secondItem="ubS-NY-rcT" secondAttribute="trailing" id="bHq-2P-wAN"/>
                             <constraint firstItem="oPA-w3-V6b" firstAttribute="height" secondItem="ubS-NY-rcT" secondAttribute="height" multiplier="2/3" id="dBk-Am-1cX"/>
+                            <constraint firstItem="pwY-iy-NUS" firstAttribute="leading" secondItem="bos-sp-j80" secondAttribute="leading" id="eEn-Eg-w4g"/>
                             <constraint firstItem="2Fp-cs-AKH" firstAttribute="leading" secondItem="ubS-NY-rcT" secondAttribute="leading" id="flP-zb-FYM"/>
                             <constraint firstItem="bos-sp-j80" firstAttribute="top" secondItem="oPA-w3-V6b" secondAttribute="bottom" id="iPu-7U-BMh"/>
                             <constraint firstItem="oPA-w3-V6b" firstAttribute="leading" secondItem="2Fp-cs-AKH" secondAttribute="leading" id="jHz-Eb-9hb"/>
                             <constraint firstItem="bos-sp-j80" firstAttribute="height" secondItem="oPA-w3-V6b" secondAttribute="height" multiplier="5" id="kf8-bq-C9J"/>
-                            <constraint firstItem="J1y-Qk-FSX" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-60" id="piD-VT-cUm"/>
-                            <constraint firstItem="ZEn-eD-MPB" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="tQ7-Ks-K18"/>
-                            <constraint firstItem="2Fp-cs-AKH" firstAttribute="bottom" secondItem="J1y-Qk-FSX" secondAttribute="bottom" constant="8" id="tck-5q-i12"/>
-                            <constraint firstItem="ZEn-eD-MPB" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-60" id="v0N-37-UmX"/>
                             <constraint firstItem="bos-sp-j80" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="yd2-2T-gt7"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="4R1-zb-0aW"/>
                     <connections>
+                        <outlet property="buttonsContainer" destination="pwY-iy-NUS" id="9rX-gb-BYT"/>
                         <outlet property="contentContainer" destination="bos-sp-j80" id="5Aw-TP-cka"/>
                         <outlet property="contentWidth" destination="EKI-h0-VR8" id="4gz-Z4-U2l"/>
-                        <outlet property="continueButton" destination="ciS-pA-ovS" id="fli-79-bAt"/>
-                        <outlet property="continueButtonBackground" destination="ZEn-eD-MPB" id="Y7w-Xa-JvV"/>
                         <outlet property="header" destination="u7Q-MU-drX" id="sqo-IJ-qev"/>
                         <outlet property="headerContainer" destination="ubS-NY-rcT" id="KQM-mM-pVE"/>
-                        <outlet property="skipButton" destination="J1y-Qk-FSX" id="ScB-tm-3Uc"/>
                         <outlet property="subheader" destination="JgA-Kx-QGf" id="eGR-Va-uhA"/>
                         <outlet property="subheaderContainer" destination="oPA-w3-V6b" id="sXN-ME-vPf"/>
                     </connections>
@@ -263,7 +219,6 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="ctaPressed:" destination="ukC-qX-bpq" eventType="touchUpInside" id="Xet-T9-1ZD"/>
-                                    <action selector="nextWithSender:" destination="X59-2u-JR5" eventType="touchUpInside" id="BXv-7D-bfP"/>
                                 </connections>
                             </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="35M-WT-Fs5">

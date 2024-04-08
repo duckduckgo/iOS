@@ -1838,6 +1838,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings screen cell title for toggling full URL visibility in address bar */
 "settings.address.full.url" = "Show Full Site Address";
 
+/* Label describing a feature which is turned on always */
+"settings.always.on" = "Always On";
+
 /* Settings screen appearance section title */
 "settings.appearance" = "Appearance";
 
@@ -1943,6 +1946,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* The name of a settings category listing next steps */
 "settings.next.steps" = "Next Steps";
+
+/* Label describing a feature which is turned off */
+"settings.off" = "Off";
+
+/* Label describing a feature which is turned on */
+"settings.on" = "On";
 
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";

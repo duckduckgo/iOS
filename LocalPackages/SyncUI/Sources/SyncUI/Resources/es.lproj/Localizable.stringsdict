@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bookmarks.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Los marcadores de %2$@ y otro sitio más no se pueden sincronizar porque algunos de sus campos superan el límite de caracteres.</string>
+			<key>other</key>
+			<string>Los marcadores de %2$@ y %1$d otros sitios más no se pueden sincronizar porque algunos de sus campos superan el límite de caracteres.</string>
+			<key>zero</key>
+			<string>El marcador de %2$@ no se puede sincronizar porque uno de sus campos supera el límite de caracteres.</string>
+		</dict>
+	</dict>
+	<key>credentials.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Las contraseñas de %2$@ y otro sitio más no se pueden sincronizar porque algunos de sus campos superan el límite de caracteres.</string>
+			<key>other</key>
+			<string>Las contraseñas de %2$@ y %1$d otros sitios más no se pueden sincronizar porque algunos de sus campos superan el límite de caracteres.</string>
+			<key>zero</key>
+			<string>La contraseña de %2$@ no se puede sincronizar porque uno de sus campos supera el límite de caracteres.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

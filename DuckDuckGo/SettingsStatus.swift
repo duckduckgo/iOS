@@ -28,11 +28,11 @@ enum StatusIndicator: Equatable {
     var text: String {
         switch self {
         case .alwaysOn:
-            return "Always On"
+            return UserText.settingsAlwaysOn
         case .on:
-            return "On"
+            return UserText.settingsOn
         case .off:
-            return "Off"
+            return UserText.settingsOff
         }
     }
 }
@@ -52,6 +52,7 @@ struct StatusIndicatorView: View {
 
             Text(status.text)
                 .daxBodyRegular()
+                .lineLimit(1)
                 .foregroundColor(Color(designSystemColor: .textSecondary))
                 .animation(.easeInOut(duration: 0.3), value: status)
         }

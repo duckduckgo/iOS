@@ -150,7 +150,7 @@ struct SettingsCellView: View, Identifiable {
                 accesoryView()
                 
                 if let statusIndicator {
-                    statusIndicator
+                    statusIndicator.fixedSize()
                 }
                 if disclosureIndicator {
                     SettingsCellComponents.chevron

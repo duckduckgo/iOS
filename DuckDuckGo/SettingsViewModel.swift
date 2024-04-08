@@ -430,9 +430,6 @@ extension SettingsViewModel {
             // Account is active but there's not a valid subscription / entitlements
             if await PurchaseManager.hasActiveSubscription() {
                 state.subscription.isSubscriptionPendingActivation = true
-            } else {
-                // Sign out in case access token is present but no subscription and there is no active transaction on Apple ID
-                signOutUser()
             }
         }
         

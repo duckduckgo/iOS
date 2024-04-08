@@ -85,10 +85,16 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         subFeature.cleanup()
         cancellables.removeAll()
     }
-
+    
+    private func refreshToken() async {
+        await AppStoreAccountManagementFlow.refreshAuthTokenIfNeeded(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+    }
     
     private func setupContent() async {
         if state.isAddingDevice {
+            
+            await refreshToken()
+            
             DispatchQueue.main.async {
                 self.state.isLoading = true
             }

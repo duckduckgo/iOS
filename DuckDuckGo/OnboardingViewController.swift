@@ -35,9 +35,10 @@ class OnboardingViewController: UIViewController, Onboarding {
     @IBOutlet weak var contentContainer: UIView!
     @IBOutlet weak var buttonsContainer: UIView!
 
-    private var buttonsModel: OnboardingActions.Model = .init()
-
-    private lazy var buttonsController = UIHostingController(rootView: OnboardingActions(viewModel: buttonsModel))
+    private let buttonsController = UIHostingController(rootView: OnboardingActions(viewModel: .init()))
+    private var buttonsModel: OnboardingActions.Model {
+        self.buttonsController.rootView.viewModel
+    }
 
     var contentController: OnboardingContentViewController?
     

@@ -176,6 +176,12 @@ struct SubscriptionSettingsView: View {
             viewModel.displayFAQView(value)
         }
         
+        .onChange(of: isShowingRestoreView) { value in
+            if value {
+                viewModel.refreshToken()
+            }
+        }
+        
         .onReceive(subscriptionNavigationCoordinator.$shouldPopToSubscriptionSettings) { shouldDismiss in
             if shouldDismiss {
                 isShowingRestoreView = false

@@ -71,8 +71,12 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     func onFirstAppear() {
         fetchAndUpdateSubscriptionDetails()
-        // Refresh Token
+        refreshToken()
+    }
+    
+    func refreshToken() {
         Task { await AppStoreAccountManagementFlow.refreshAuthTokenIfNeeded(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)) }
+
     }
         
     private func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad) {

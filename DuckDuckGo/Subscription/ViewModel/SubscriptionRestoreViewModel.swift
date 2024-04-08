@@ -79,6 +79,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     func onFirstAppear() async {
         Pixel.fire(pixel: .privacyProSettingsAddDevice)
         await setupTransactionObserver()
+        await refreshToken()
     }
     
     private func cleanUp() {
@@ -87,13 +88,13 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     }
     
     private func refreshToken() async {
-        await AppStoreAccountManagementFlow.refreshAuthTokenIfNeeded(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+        if state.isAddingDevice {
+            await AppStoreAccountManagementFlow.refreshAuthTokenIfNeeded(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+        }
     }
     
     private func setupContent() async {
         if state.isAddingDevice {
-            
-            await refreshToken()
             
             DispatchQueue.main.async {
                 self.state.isLoading = true

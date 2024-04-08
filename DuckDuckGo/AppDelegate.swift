@@ -134,7 +134,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Configuration.setURLProvider(AppConfigurationURLProvider())
         }
 
-        crashCollection.start { pixelParameters, _, sendReport in
+        crashCollection.start { pixelParameters, payloads, sendReport in
             pixelParameters.forEach { params in
                 Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
             }
@@ -143,8 +143,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 guard let viewController = self.window?.rootViewController else {
                     return
                 }
+                let dataPayloads = payloads.map { $0.jsonRepresentation() }
                 let crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
-                crashReportUploaderOnboarding.presentOnboardingIfNeeded(from: viewController) { shouldSend in
+                crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: dataPayloads, from: viewController) { shouldSend in
                     if shouldSend {
                         sendReport()
                     }

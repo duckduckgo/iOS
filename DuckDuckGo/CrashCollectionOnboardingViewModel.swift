@@ -26,7 +26,17 @@ final class CrashCollectionOnboardingViewModel: ObservableObject {
     }
 
     let appSettings: AppSettings
-    var onDismiss: (Bool) -> Void = { _ in }
+    var onDismiss: (Bool?) -> Void = { _ in }
+    @Published var isShowingReport: Bool = false
+    private(set) var reportDetails: String?
+
+    func setReportDetails(with payloads: [Data]) {
+        guard let firstPayload = payloads.first else {
+            reportDetails = nil
+            return
+        }
+        reportDetails = String(data: firstPayload, encoding: .utf8)
+    }
 
     var sendCrashLogs: Bool? {
         get {

@@ -28,7 +28,7 @@ final class CrashCollectionOnboarding {
     }
 
     @MainActor
-    func presentOnboardingIfNeeded(from viewController: UIViewController, completion: @escaping (Bool) -> Void) {
+    func presentOnboardingIfNeeded(for payloads: [Data], from viewController: UIViewController, completion: @escaping (Bool) -> Void) {
         let isCurrentlyPresenting = viewController.presentedViewController != nil
         guard shouldPresentOnboarding, !isCurrentlyPresenting else {
             completion(appSettings.sendCrashLogs == true)
@@ -36,12 +36,13 @@ final class CrashCollectionOnboarding {
         }
 
         let controller = UIHostingController(rootView: CrashCollectionOnboardingView(model: viewModel))
-        if #available(iOS 16.0, *) {
-            controller.sheetPresentationController?.detents = [.custom(resolver: { _ in 462 })]
-        }
+        controller.isModalInPresentation = true
 
+        viewModel.setReportDetails(with: payloads)
         viewModel.onDismiss = { [weak viewController] shouldSend in
-            completion(shouldSend)
+            if let shouldSend {
+                completion(shouldSend)
+            }
             viewController?.dismiss(animated: true)
         }
 

@@ -26,45 +26,109 @@ struct CrashCollectionOnboardingView: View {
     @ObservedObject var model: CrashCollectionOnboardingViewModel
 
     var body: some View {
-        VStack(spacing: 0) {
+        NavigationView {
+            VStack(spacing: 0) {
+                ScrollView {
+                    VStack(spacing: 24) {
+                        Image("Breakage-128")
 
-            VStack(spacing: 24) {
-                Image("Breakage-128")
+                        Text(UserText.crashReportDialogTitle)
+                            .daxTitle1()
 
-                Text("Send crash report?")
-                    .daxTitle1()
+                        Text(UserText.crashReportDialogMessage)
+                            .multilineTextAlignment(.center)
+                            .daxBodyRegular()
 
-                Text("It looks like the app has crashed. Would you like to submit crash logs to DuckDuckGo? Crash logs help DuckDuckGo diagnose issues and improve our products. No personal information is sent with crash logs.")
-                    .multilineTextAlignment(.center)
-                    .daxBodyRegular()
-            }
-            .padding(.horizontal, 24)
-            .padding(.vertical, 20)
+                        if let reportDetails = model.reportDetails {
+                            VStack(spacing: 4) {
 
-            VStack(spacing: 8) {
-                Button {
-                    withAnimation {
-                        model.sendCrashLogs = true
-                        model.onDismiss(true)
+                                reportDetailsButton
+
+                                if model.isShowingReport, #available(iOS 16.0, *) {
+                                    ZStack {
+                                        Rectangle()
+                                            .foregroundColor(.gray10)
+                                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                            .cornerRadius(4.0)
+
+                                        ScrollView(.horizontal) {
+                                            Text(reportDetails)
+                                                .font(Font(uiFont: .monospacedSystemFont(ofSize: 13, weight: .regular)))
+                                                .secondaryTextStyle()
+                                                .padding(24)
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-                } label: {
-                    Text("Send Crash Logs")
+                    .padding(.horizontal, 24)
+                    .padding(.vertical, 20)
                 }
-                .buttonStyle(PrimaryButtonStyle())
-                .frame(maxWidth: 360)
 
-                Button {
-                    withAnimation {
-                        model.sendCrashLogs = false
-                        model.onDismiss(false)
+                VStack(spacing: 8) {
+                    Button {
+                        withAnimation {
+                            model.sendCrashLogs = true
+                            model.onDismiss(true)
+                        }
+                    } label: {
+                        Text(UserText.crashReportAlwaysSend)
                     }
-                } label: {
-                    Text("Don't Send Crash Logs")
+                    .buttonStyle(PrimaryButtonStyle())
+                    .frame(maxWidth: 360)
+
+                    Button {
+                        withAnimation {
+                            model.sendCrashLogs = false
+                            model.onDismiss(false)
+                        }
+                    } label: {
+                        Text(UserText.crashReportNeverSend)
+                    }
+                    .buttonStyle(SecondaryButtonStyle())
+                    .frame(maxWidth: 360)
                 }
-                .buttonStyle(SecondaryButtonStyle())
-                .frame(maxWidth: 360)
+                .padding(.init(top: 24, leading: 24, bottom: 0, trailing: 24))
             }
-            .padding(.init(top: 24, leading: 24, bottom: 0, trailing: 24))
+            .toolbar {
+                ToolbarItemGroup(placement: .topBarLeading) {
+                    Button {
+                        withAnimation {
+                            model.onDismiss(nil)
+                        }
+                    } label: {
+                        Text("Close")
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
         }
     }
+
+    var reportDetailsButton: some View {
+        Button {
+            withAnimation {
+                model.isShowingReport.toggle()
+            }
+        } label: {
+            HStack {
+                Text(model.isShowingReport ? UserText.crashReportHideDetails : UserText.crashReportShowDetails)
+                    .daxButton()
+
+                Image("DisclosureIndicator")
+                    .rotationEffect(model.isShowingReport ? .degrees(-90) : .degrees(90))
+                    .frame(width: 7, height: 12)
+            }
+        }
+        .buttonStyle(.plain)
+        .foregroundColor(Color(designSystemColor: .textSecondary))
+        .frame(height: 44)
+    }
+}
+
+#Preview {
+    let model = CrashCollectionOnboardingViewModel(appSettings: AppDependencyProvider.shared.appSettings)
+    model.setReportDetails(with: ["test report details test report details test report details test report details test report details\n\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details".data(using: .utf8)!])
+    return CrashCollectionOnboardingView(model: model)
 }

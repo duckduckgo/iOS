@@ -823,6 +823,24 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Import an HTML file of bookmarks from another browser, or export your existing bookmarks.";
 
+/* Crash Report always send button title */
+"crash.report.dialog.always.send" = "Always Send Crash Reports";
+
+/* Crash Report hide details button title */
+"crash.report.dialog.hide.details" = "Hide";
+
+/* Crash Report dialog message */
+"crash.report.dialog.message" = "Crash reports help DuckDuckGo diagnose issues and improve our products. They contain no personally identifiable information.";
+
+/* Crash Report never send button title */
+"crash.report.dialog.never.send" = "Never Send";
+
+/* Crash Report show details button title */
+"crash.report.dialog.show.details" = "See what's sent";
+
+/* Crash Report dialog title */
+"crash.report.dialog.title" = "Send crash reports?";
+
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Past month";
 
@@ -1903,11 +1921,11 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings title for the privacy section */
 "settings.privacy" = "Privacy";
 
-/* Settings cell for Send Crash Logs */
-"settings.send.crash.logs" = "Send Crash Logs";
+/* Settings cell for Send Crash Reports */
+"settings.send.crash.reports" = "Send Crash Reports";
 
-/* Settings section footer for Send Crash Logs */
-"settings.send.crash.logs.description" = "Enable to automatically send crash logs when detected. This helps us constantly improve stability of the app.";
+/* Explanation of Send Crash Reports settings option */
+"settings.send.crash.reports.description" = "Automatically send crash reports to DuckDuckGo.";
 
 /* Subscription activation pending description */
 "settings.subscription.activation.pending.description" = "This is taking longer than usual, please check back later.";

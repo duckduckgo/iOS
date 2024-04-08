@@ -46,6 +46,7 @@ class OnboardingViewController: UIViewController, Onboarding {
         loadInitialContent()
         updateForSmallerScreens()
         setUpNavigationBar()
+        decorate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -205,4 +206,14 @@ extension OnboardingViewController: OnboardingContentDelegate {
         continueButton.isEnabled = enabled
     }
     
+}
+
+extension OnboardingViewController {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
+
+        view.backgroundColor = theme.onboardingBackgroundColor
+        header.textColor = theme.onboardingHeaderColor
+        subheader.textColor = theme.onboardingSubheaderColor
+    }
 }

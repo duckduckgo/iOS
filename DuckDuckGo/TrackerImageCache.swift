@@ -28,9 +28,9 @@ final class TrackerImageCache {
     init() {
         resetCache()
     }
-    
-    private var trait: UITraitCollection { ThemeManager.shared.currentTheme.currentImageSet.trait }
-    
+
+    private var trait: UITraitCollection { .init(userInterfaceStyle: ThemeManager.shared.currentInterfaceStyle) }
+
     public func resetCache() {
         shadowTrackerImage = UIImage(named: "shadowtracker", in: nil, compatibleWith: trait)!.cgImage!
         blankTrackerImage = UIImage(named: "blanktracker", in: nil, compatibleWith: trait)!.cgImage!

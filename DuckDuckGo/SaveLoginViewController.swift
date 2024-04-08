@@ -143,7 +143,6 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
         let alertController = UIAlertController(title: UserText.autofillKeepEnabledAlertTitle,
                                                 message: UserText.autofillKeepEnabledAlertMessage,
                                                 preferredStyle: .alert)
-        alertController.overrideUserInterfaceStyle()
 
         let disableAction = UIAlertAction(title: UserText.autofillKeepEnabledAlertDisableAction, style: .cancel) { _ in
             Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptAutofillDisabled)

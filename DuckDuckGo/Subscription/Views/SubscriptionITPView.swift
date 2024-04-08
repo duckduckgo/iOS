@@ -42,8 +42,6 @@ struct SubscriptionITPView: View {
     @State private var isShowingActivityView = false
     
     enum Constants {
-        static let daxLogo = "Home"
-        static let daxLogoSize: CGFloat = 24.0
         static let empty = ""
         static let navButtonPadding: CGFloat = 20.0
         static let backButtonImage = "chevron.left"
@@ -51,40 +49,29 @@ struct SubscriptionITPView: View {
     }
     
     var body: some View {
-        NavigationView {
-            baseView
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarLeading) {
-                    backButton
-                }
-                ToolbarItem(placement: .principal) {
-                    HStack {
-                        Image(Constants.daxLogo)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
-                        Text(viewModel.viewTitle).daxBodyRegular()
-                    }
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    shareButton
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(UserText.subscriptionCloseButton) { dismiss() }
-                }
+        
+        baseView
+        
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarLeading) {
+                backButton
             }
-            .edgesIgnoringSafeArea(.all)
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarHidden(!viewModel.shouldShowNavigationBar && !viewModel.isDownloadableContent).animation(.snappy)
-            
-            .onAppear(perform: {
-                setUpAppearances()
-                viewModel.initializeView()
-            })
-            
+            ToolbarItem(placement: .principal) {
+                DaxLogoNavbarTitle()
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                shareButton
+            }
         }
+        .edgesIgnoringSafeArea(.bottom)
+        .navigationBarBackButtonHidden(viewModel.canNavigateBack)
+        .navigationBarTitleDisplayMode(.inline)
         .tint(Color(designSystemColor: .textPrimary))
         
+        .onFirstAppear {
+            viewModel.onFirstAppear()
+            setUpAppearances()
+        }
         
         .alert(isPresented: $viewModel.navigationError) {
             Alert(
@@ -109,17 +96,6 @@ struct SubscriptionITPView: View {
     private var baseView: some View {
         ZStack(alignment: .top) {
             webView
-            
-            // Show a dismiss button while the bar is not visible
-            // But it should be hidden while performing a transaction
-            if !shouldShowNavigationBar {
-                HStack {
-                    backButton.padding(.leading, Constants.navButtonPadding)
-                    Spacer()
-                    dismissButton
-                }
-            }
-        
         }
     }
 
@@ -156,15 +132,6 @@ struct SubscriptionITPView: View {
                 }
         }
     }
-    
-    @ViewBuilder
-    private var dismissButton: some View {
-        Button(action: { dismiss() }, label: { Text(UserText.subscriptionCloseButton) })
-        .padding(Constants.navButtonPadding)
-        .contentShape(Rectangle())
-        .tint(Color(designSystemColor: .textPrimary))
-    }
-    
     
     private func setUpAppearances() {
         let navAppearance = UINavigationBar.appearance()

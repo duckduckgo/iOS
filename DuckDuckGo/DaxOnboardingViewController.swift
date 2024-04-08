@@ -57,7 +57,6 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
 
         welcomeMessage.setAttributedTextString(UserText.launchscreenWelcomeMessage)
         daxDialog?.message = UserText.daxDialogOnboardingMessage
-        daxDialog?.theme = LightTheme()
         daxDialog?.reset()
         daxDialogContainerHeight.constant = daxDialog?.calculateHeight() ?? 0
         button.displayDropShadow()
@@ -69,7 +68,8 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
         guard !view.isHidden else { return }
         
         daxDialogContainerHeight.constant = daxDialog?.calculateHeight() ?? 0
-        
+        self.daxDialog?.reset()
+
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.animationDelay) {
             self.transitionFromOnboarding()
         }

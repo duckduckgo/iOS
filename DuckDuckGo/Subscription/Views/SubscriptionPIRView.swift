@@ -33,8 +33,6 @@ struct SubscriptionPIRView: View {
     @State private var isShowingMacView = false
     
     enum Constants {
-        static let daxLogo = "Home"
-        static let daxLogoSize: CGFloat = 24.0
         static let empty = ""
         static let navButtonPadding: CGFloat = 20.0
         static let lightMask: [Color] = [Color.init(0xFFFFFF, alpha: 0), Color.init(0xFFFFFF, alpha: 0)]
@@ -50,42 +48,26 @@ struct SubscriptionPIRView: View {
     }
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                gradientBackground
-                ScrollView {
-                    VStack {
-                        header
-                            .padding(.top, Constants.headerPadding)
-                        baseView
-                            .frame(maxWidth: 600)
-                    }
+        ZStack {
+            gradientBackground
+            ScrollView {
+                VStack {
+                    baseView
+                        .frame(maxWidth: 600)
                 }
-                
             }
-            .edgesIgnoringSafeArea(.all)
-        }.onAppear(perform: {
-            viewModel.onAppear()
-        })
-    }
-    
-    private var header: some View {
-        GeometryReader { geometry in
-            HStack {
-                Spacer().frame(width: geometry.size.width / 3)
-                HStack(alignment: .center) {
-                    Image(Constants.daxLogo)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: Constants.daxLogoSize, height: Constants.daxLogoSize)
-                    Text(viewModel.viewTitle).daxBodyRegular()
-                }
-                .frame(width: geometry.size.width / 3, alignment: .center)
-                dismissButton
-                    .frame(width: geometry.size.width / 3, alignment: .trailing)
+            
+        }
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                DaxLogoNavbarTitle()
             }
         }
+        .onFirstAppear {
+            viewModel.onFirstAppear()
+        }
     }
+        
     
     private var gradientBackground: some View {
         ZStack {

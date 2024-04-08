@@ -43,14 +43,12 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         var transactionStatus: SubscriptionTransactionStatus = .idle
         var activationResult: SubscriptionActivationResult = .unknown
         var subscriptionEmail: String?
-        var shouldShowWelcomePage = false
-        var shouldNavigateToActivationFlow = false
+        var isShowingWelcomePage = false
+        var isShowingActivationFlow = false
         var shouldShowPlans = false
         var shouldDismissView = false
-        
-        var viewTitle: String {
-            isAddingDevice ? UserText.subscriptionAddDeviceTitle : UserText.subscriptionActivate
-        }
+        var isLoading = false
+        var viewTitle: String = ""
     }
     
     // Publish the currently selected feature    
@@ -58,12 +56,9 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     // Read only View State - Should only be modified from the VM
     @Published private(set) var state = State()
-    
-    // Email View Model
-    var emailViewModel = SubscriptionEmailViewModel()
         
-    init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
-         subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
+    init(userScript: SubscriptionPagesUserScript,
+         subFeature: SubscriptionPagesUseSubscriptionFeature,
          purchaseManager: PurchaseManager = PurchaseManager.shared,
          accountManager: AccountManager = AccountManager(),
          isAddingDevice: Bool = false) {
@@ -74,36 +69,58 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         self.state.isAddingDevice = false
     }
     
-    func initializeView() {
-        Task { await setupTransactionObserver() }
+    func onAppear() {
+        DispatchQueue.main.async {
+            self.resetState()
+        }
+        Task { await setupContent() }
     }
     
-    @MainActor
-    func onAppear() {
-        resetState()
-        Task {
+    func onFirstAppear() async {
+        Pixel.fire(pixel: .privacyProSettingsAddDevice)
+        await setupTransactionObserver()
+    }
+    
+    private func cleanUp() {
+        subFeature.cleanup()
+        cancellables.removeAll()
+    }
+
+    
+    private func setupContent() async {
+        if state.isAddingDevice {
+            DispatchQueue.main.async {
+                self.state.isLoading = true
+            }
+            
             guard let token = accountManager.accessToken else { return }
-            if case .success(let details) = await accountManager.fetchAccountDetails(with: token) {
+            switch await accountManager.fetchAccountDetails(with: token) {
+            case .success(let details):
                 DispatchQueue.main.async {
                     self.state.subscriptionEmail = details.email
+                    self.state.isLoading = false
+                    self.state.viewTitle = UserText.subscriptionAddDeviceTitle
                 }
+            default:
+                state.isLoading = false
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.state.viewTitle = UserText.subscriptionActivate
             }
         }
-
     }
     
     @MainActor
     private func resetState() {
-        state.subscriptionEmail = accountManager.email
-        
         state.isAddingDevice = false
         if accountManager.isUserAuthenticated {
             state.isAddingDevice = true
         }
         
-        state.shouldNavigateToActivationFlow = false
+        state.isShowingActivationFlow = false
         state.shouldShowPlans = false
-        state.shouldShowWelcomePage = false
+        state.isShowingWelcomePage = false
         state.shouldDismissView = false
     }
     
@@ -169,19 +186,22 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     @MainActor
     func showActivationFlow(_ visible: Bool) {
         if visible != state.shouldDismissView {
-            self.state.shouldNavigateToActivationFlow = visible
+            self.state.isShowingActivationFlow = visible
         }
     }
     
     @MainActor
     func showPlans() {
         state.shouldShowPlans = true
-        state.shouldDismissView = true
     }
     
     @MainActor
     func dismissView() {
         state.shouldDismissView = true
+    }
+    
+    deinit {
+        cleanUp()
     }
     
     

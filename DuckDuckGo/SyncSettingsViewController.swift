@@ -24,6 +24,7 @@ import SyncUI
 import DDGSync
 import Common
 
+// swiftlint:disable file_length
 @MainActor
 class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
@@ -219,7 +220,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -393,6 +394,28 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
         if let appSettings = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
         }
+    }
+
+}
+
+extension SyncSettingsViewController {
+
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
+        view.backgroundColor = theme.backgroundColor
+
+        navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
+        navigationController?.navigationBar.tintColor = theme.navigationBarTintColor
+
+        if #available(iOS 15.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.shadowColor = .clear
+            appearance.backgroundColor = theme.backgroundColor
+
+            navigationController?.navigationBar.standardAppearance = appearance
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        }
+
     }
 
 }

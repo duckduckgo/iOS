@@ -49,7 +49,6 @@ class DownloadsListHostingController: UIHostingController<DownloadsList> {
     private func presentActivityView(for url: URL, from rect: CGRect) {
         // Required due to lack of SwuftUI support for detents
         let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-        activityViewController.overrideUserInterfaceStyle()
         
         if UIDevice.current.userInterfaceIdiom == .pad {
             activityViewController.popoverPresentationController?.sourceView = UIApplication.shared.windows.first

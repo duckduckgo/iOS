@@ -166,7 +166,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         setupCancellables()
         installSubviews()
         installConstraints()
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
         updateViewState()
         configureNotification()
         registerForKeyboardNotifications()
@@ -867,12 +867,10 @@ extension AutofillLoginSettingsListViewController: EnableAutofillSettingsTableVi
 
 // MARK: Themable
 
-extension AutofillLoginSettingsListViewController: Themable {
+extension AutofillLoginSettingsListViewController {
 
-    func decorate(with theme: Theme) {
-        emptyView.decorate(with: theme)
-        emptySearchView.decorate(with: theme)
-        noAuthAvailableView.decorate(with: theme)
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
 
         view.backgroundColor = theme.backgroundColor
         tableView.backgroundColor = theme.backgroundColor

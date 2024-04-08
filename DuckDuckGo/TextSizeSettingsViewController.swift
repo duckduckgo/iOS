@@ -47,8 +47,8 @@ class TextSizeSettingsViewController: UITableViewController {
         configureDescriptionLabel()
         configureSlider()
         updateTextSizeFooterLabel()
-        
-        applyTheme(ThemeManager.shared.currentTheme)
+
+        decorate()
     }
         
     override func viewDidAppear(_ animated: Bool) {
@@ -210,9 +210,10 @@ extension TextSizeSettingsViewController: UIAdaptivePresentationControllerDelega
     }
 }
 
-extension TextSizeSettingsViewController: Themable {
+extension TextSizeSettingsViewController {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         descriptionLabel.textColor = theme.tableCellTextColor
         smallerTextIcon.tintColor = theme.tableCellTextColor
         largerTextIcon.tintColor = theme.tableCellTextColor

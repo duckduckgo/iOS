@@ -1,6 +1,16 @@
 {
   "images" : [
     {
+      "filename" : "tabsToggleGrid-Light.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
       "filename" : "tabsToggleGrid-Dark.pdf",
       "idiom" : "universal"
     }

@@ -32,28 +32,34 @@ final class SubscriptionEmailViewModel: ObservableObject {
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     
     private var canGoBackCancellable: AnyCancellable?
+    private var urlCancellable: AnyCancellable?
     
     var emailURL = URL.activateSubscriptionViaEmail
-    var viewTitle = UserText.subscriptionActivateEmailTitle
     var webViewModel: AsyncHeadlessWebViewViewModel
+    
+    enum SelectedFeature {
+        case netP, dbp, itr, none
+    }
     
     struct State {
         var subscriptionEmail: String?
         var managingSubscriptionEmail = false
         var transactionError: SubscriptionRestoreError?
         var shouldDisplaynavigationError: Bool = false
-        var shouldDisplayInactiveError: Bool = false
+        var isPresentingInactiveError: Bool = false
         var canNavigateBack: Bool = false
         var shouldDismissView: Bool = false
-        var shouldDismissStack: Bool = false
         var subscriptionActive: Bool = false
+        var isWelcomePageVisible: Bool = false
+        var backButtonTitle: String = UserText.backButtonTitle
+        var selectedFeature: SelectedFeature = .none
+        var shouldPopToSubscriptionSettings: Bool = false
+        var shouldPopToAppSettings: Bool = false
+        var viewTitle = UserText.subscriptionActivateEmailTitle
     }
     
     // Read only View State - Should only be modified from the VM
     @Published private(set) var state = State()
-    
-    // Publish the currently selected feature
-    @Published var selectedFeature: SettingsViewModel.SettingsDeepLinkSection?
     
     private static let allowedDomains = [ "duckduckgo.com" ]
     
@@ -64,9 +70,14 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
 
     private var cancellables = Set<AnyCancellable>()
+    
+    private var isWelcomePageOrSuccessPage: Bool {
+        webViewModel.url?.forComparison() == URL.subscriptionActivateSuccess.forComparison() ||
+        webViewModel.url?.forComparison() == URL.subscriptionPurchase.forComparison()
+    }
 
-    init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
-         subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
+    init(userScript: SubscriptionPagesUserScript,
+         subFeature: SubscriptionPagesUseSubscriptionFeature,
          accountManager: AccountManager = AccountManager()) {
         self.userScript = userScript
         self.subFeature = subFeature
@@ -76,11 +87,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
                                                           settings: AsyncHeadlessWebViewSettings(bounces: false,
                                                                                                  allowedDomains: Self.allowedDomains,
                                                                                                  contentBlocking: false))
-        
-        Task {
-            await initializeView()
-        }
-        setupObservers()
     }
     
     @MainActor
@@ -88,7 +94,13 @@ final class SubscriptionEmailViewModel: ObservableObject {
         if state.canNavigateBack {
             await webViewModel.navigationCoordinator.goBack()
         } else {
-            state.shouldDismissView = true
+            // If not in the Welcome page, dismiss the view, otherwise, assume we
+            // came from Activation, so dismiss the entire stack
+            if webViewModel.url?.forComparison() != URL.subscriptionPurchase.forComparison() {
+                state.shouldDismissView = true
+            } else {
+                state.shouldPopToAppSettings = true
+            }
         }
     }
     
@@ -96,41 +108,37 @@ final class SubscriptionEmailViewModel: ObservableObject {
         state.shouldDismissView = false
     }
     
-    func onAppear() {
-        Task { await initializeView() }
-        Task { await setupSubscribers() }
-        webViewModel.navigationCoordinator.navigateTo(url: emailURL )
-    }
-    
-    func onDissappear() {
-        cancellables.removeAll()
-        canGoBackCancellable = nil
-    }
-    
     @MainActor
-    private func initializeView() {
-        if accountManager.isUserAuthenticated {
+    func onFirstAppear() {
+        setupWebObservers()
+        setupFeatureObservers()
+    }
+    
+    private func cleanUp() {
+        canGoBackCancellable?.cancel()
+        subFeature.cleanup()
+        cancellables.removeAll()
+    }
+    
+    func onAppear() {
+        state.shouldDismissView = false
+        // If the user is Authenticated & not in the Welcome page
+        if accountManager.isUserAuthenticated && !isWelcomePageOrSuccessPage {
             // If user is authenticated, we want to "Add or manage email" instead of activating
             emailURL = accountManager.email == nil ? URL.addEmailToSubscription : URL.manageSubscriptionEmail
-            viewTitle = accountManager.email == nil ?  UserText.subscriptionRestoreAddEmailTitle : UserText.subscriptionManageEmailTitle
+            state.viewTitle = accountManager.email == nil ?  UserText.subscriptionRestoreAddEmailTitle : UserText.subscriptionManageEmailTitle
             
             // Also we assume subscription requires managing, and not activation
             state.managingSubscriptionEmail = true
         }
+        // Load the Email Management URL unless the user has activated a subscription or is on the welcome page
+        if !isWelcomePageOrSuccessPage {
+            self.webViewModel.navigationCoordinator.navigateTo(url: self.emailURL)
+        }
     }
     
-    private func setupSubscribers() async {
-        canGoBackCancellable = webViewModel.$canGoBack
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] value in
-                self?.state.canNavigateBack = false
-                if self?.webViewModel.url != URL.activateSubscriptionViaEmail.forComparison() {
-                    self?.state.canNavigateBack = value
-                }
-            }
-    }
-    
-    private func setupObservers() {
+    private func setupFeatureObservers() {
+        
         // Feature Callback
         subFeature.onSetSubscription = {
             DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailSuccess)
@@ -138,10 +146,11 @@ final class SubscriptionEmailViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.state.subscriptionActive = true
             }
+            self.dismissStack()
         }
         
         subFeature.onBackToSettings = {
-            self.dismissView()
+            self.dismissStack()
         }
         
         subFeature.onFeatureSelected = { feature in
@@ -149,19 +158,13 @@ final class SubscriptionEmailViewModel: ObservableObject {
                 switch feature {
                 case .netP:
                     UniquePixel.fire(pixel: .privacyProWelcomeVPN)
-                    self.selectedFeature = .netP
+                    self.state.selectedFeature = .netP
                 case .itr:
                     UniquePixel.fire(pixel: .privacyProWelcomePersonalInformationRemoval)
-                    self.selectedFeature = .itr
+                    self.state.selectedFeature = .itr
                 case .dbp:
                     UniquePixel.fire(pixel: .privacyProWelcomeIdentityRestoration)
-                    self.selectedFeature = .dbp
-                }
-                self.state.shouldDismissStack = true
-                
-                // Reset shouldDismissStack after dismissal to ensure it can be triggered again
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.state.shouldDismissStack = false
+                    self.state.selectedFeature = .dbp
                 }
             }
             
@@ -177,6 +180,25 @@ final class SubscriptionEmailViewModel: ObservableObject {
                 }
             }
         .store(in: &cancellables)
+    }
+        
+    private func setupWebObservers() {
+        
+        // Webview navigation
+        canGoBackCancellable = webViewModel.$canGoBack
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.updateBackButton(canNavigateBack: value)
+            }
+        
+        // Webview navigation
+        urlCancellable = webViewModel.$url
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                if self?.isWelcomePageOrSuccessPage ?? false {
+                    self?.state.viewTitle = UserText.subscriptionTitle
+                }
+            }
         
         webViewModel.$navigationError
             .receive(on: DispatchQueue.main)
@@ -190,14 +212,18 @@ final class SubscriptionEmailViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func shouldDisplayBackButton() -> Bool {
-        // Hide the back button after activation
-        if state.subscriptionActive &&
-            (webViewModel.url == URL.subscriptionActivateSuccess.forComparison() ||
-             webViewModel.url == URL.subscriptionPurchase.forComparison()) {
-            return false
+    private func updateBackButton(canNavigateBack: Bool) {
+        
+        // If the view is not Activation Success, or Welcome page, allow WebView Back Navigation
+        if !isWelcomePageOrSuccessPage {
+            self.state.canNavigateBack = canNavigateBack
+            self.state.backButtonTitle = UserText.backButtonTitle
+        } else {
+            self.state.canNavigateBack = false
+            self.state.backButtonTitle = UserText.settingsTitle
         }
-        return true
+        
+        
     }
     
     // MARK: -
@@ -210,7 +236,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
         default:
             state.transactionError = .generalError
         }
-        state.shouldDisplayInactiveError = true
+        state.isPresentingInactiveError = true
     }
     
     func dismissView() {
@@ -219,10 +245,16 @@ final class SubscriptionEmailViewModel: ObservableObject {
         }
     }
     
+    func dismissStack() {
+        DispatchQueue.main.async {
+            self.state.shouldPopToSubscriptionSettings = true
+        }
+    }
+    
     deinit {
-        cancellables.removeAll()
+        cleanUp()
         canGoBackCancellable = nil
-       
+        
     }
 
 }

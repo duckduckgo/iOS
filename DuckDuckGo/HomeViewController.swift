@@ -174,7 +174,7 @@ class HomeViewController: UIViewController {
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
 
         configureCollectionView()
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(remoteMessagesDidChange),
@@ -218,13 +218,11 @@ class HomeViewController: UIViewController {
 #if APP_TRACKING_PROTECTION
         collectionView.configure(withController: self,
                                  favoritesViewModel: favoritesViewModel,
-                                 appTPHomeViewModel: appTPHomeViewModel,
-                                 andTheme: ThemeManager.shared.currentTheme)
+                                 appTPHomeViewModel: appTPHomeViewModel)
 #else
         collectionView.configure(withController: self,
                                  favoritesViewModel: favoritesViewModel,
-                                 appTPHomeViewModel: nil,
-                                 andTheme: ThemeManager.shared.currentTheme)
+                                 appTPHomeViewModel: nil)
 #endif
     }
     
@@ -400,10 +398,10 @@ extension HomeViewController: HomeMessageViewSectionRendererDelegate {
     }
 }
 
-extension HomeViewController: Themable {
+extension HomeViewController {
 
-    func decorate(with theme: Theme) {
-        collectionView.decorate(with: theme)
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         settingsButton.tintColor = theme.barTintColor
     }
 }

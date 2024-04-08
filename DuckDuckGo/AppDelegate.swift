@@ -283,7 +283,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 })
             }
 
+        let previewsSource = TabPreviewsSource()
         let historyManager = makeHistoryManager()
+        let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
 #if APP_TRACKING_PROTECTION
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
@@ -292,14 +294,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                       historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
-                                      appSettings: AppDependencyProvider.shared.appSettings)
+                                      appSettings: AppDependencyProvider.shared.appSettings,
+                                      previewsSource: previewsSource,
+                                      tabsModel: tabsModel)
 #else
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
-                                      appSettings: AppDependencyProvider.shared.appSettings)
+                                      appSettings: AppDependencyProvider.shared.appSettings,
+                                      previewsSource: previewsSource,
+                                      tabsModel: tabsModel)
 #endif
 
         main.loadViewIfNeeded()
@@ -319,12 +325,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
-
-#if NETWORK_PROTECTION
-        if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() {
-            VPNWaitlist.shared.registerBackgroundRefreshTaskHandler()
-        }
-#endif
 
         RemoteMessaging.registerBackgroundRefreshTaskHandler(
             bookmarksDatabase: bookmarksDatabase,
@@ -360,6 +360,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
         return true
+    }
+
+    private func prepareTabsModel(previewsSource: TabPreviewsSource = TabPreviewsSource(),
+                                  appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
+                                  isDesktop: Bool = UIDevice.current.userInterfaceIdiom == .pad) -> TabsModel {
+        let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
+        let tabsModel: TabsModel
+        if AutoClearSettingsModel(settings: appSettings) != nil {
+            tabsModel = TabsModel(desktop: isPadDevice)
+            tabsModel.save()
+            previewsSource.removeAllPreviews()
+        } else {
+            if let storedModel = TabsModel.get() {
+                // Save new model in case of migration
+                storedModel.save()
+                tabsModel = storedModel
+            } else {
+                tabsModel = TabsModel(desktop: isPadDevice)
+            }
+        }
+        return tabsModel
     }
 
     private func makeHistoryManager() -> HistoryManager {
@@ -529,20 +550,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func stopTunnelAndShowThankYouMessagingIfNeeded() {
+        if AccountManager().isUserAuthenticated {
+            tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
+            return
+        }
+
         if vpnFeatureVisibility.shouldShowThankYouMessaging() && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
             presentVPNEarlyAccessOverAlert()
 
             Task {
-                let controller = NetworkProtectionTunnelController()
-
-                if await controller.isConnected {
-                    DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled)
-                }
-
-                await controller.stop()
-                await controller.removeVPN()
+                await self.stopAndRemoveVPN(with: "thank-you-dialog")
+            }
+        } else if vpnFeatureVisibility.isPrivacyProLaunched() && !AccountManager().isUserAuthenticated {
+            Task {
+                await self.stopAndRemoveVPN(with: "subscription-check")
             }
         }
+    }
+
+    private func stopAndRemoveVPN(with reason: String) async {
+        let controller = NetworkProtectionTunnelController()
+        guard await controller.isInstalled else {
+            return
+        }
+
+        let isConnected = await controller.isConnected
+
+        DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
+            "reason": reason,
+            "vpn-connected": String(isConnected)
+        ])
+
+        await controller.stop()
+        await controller.removeVPN()
     }
 
     func updateSubscriptionStatus() {
@@ -652,7 +692,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func showKeyboardOnLaunch() {
         guard KeyboardSettings().onAppLaunch && showKeyboardIfSettingOn && shouldShowKeyboardOnLaunch() else { return }
-        self.mainViewController?.enterSearch()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.mainViewController?.enterSearch()
+        }
         showKeyboardIfSettingOn = false
     }
     
@@ -741,7 +783,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         Task { @MainActor in
-            await autoClear?.applicationWillMoveToForeground()
+            // Autoclear should have happened by now
             showKeyboardIfSettingOn = false
 
             if !handleAppDeepLink(app, mainViewController, url) {
@@ -985,7 +1027,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
             if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist(), identifier == VPNWaitlist.notificationIdentifier {
                 presentNetworkProtectionWaitlistModal()
-                DailyPixel.fire(pixel: .networkProtectionWaitlistNotificationLaunched)
             }
 
 #endif

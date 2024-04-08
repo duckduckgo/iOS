@@ -98,7 +98,7 @@ extension MainViewController {
         }
         bookmarks.delegate = self
 
-        let controller = ThemableNavigationController(rootViewController: bookmarks)
+        let controller = UINavigationController(rootViewController: bookmarks)
         controller.modalPresentationStyle = .automatic
         present(controller, animated: true) {
             completion?(bookmarks)
@@ -244,24 +244,25 @@ extension MainViewController {
         }
     }
     
-    private func launchSettings(completion: ((SettingsViewModel) -> Void)? = nil) {
+    func launchSettings(completion: ((SettingsViewModel) -> Void)? = nil,
+                        deepLinkTarget: SettingsViewModel.SettingsDeepLinkSection? = nil) {
         let legacyViewProvider = SettingsLegacyViewProvider(syncService: syncService,
                                                             syncDataProviders: syncDataProviders,
                                                             appSettings: appSettings,
                                                             bookmarksDatabase: bookmarksDatabase,
                                                             tabManager: tabManager)
 #if SUBSCRIPTION
-        let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider, accountManager: AccountManager())
+        let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider,
+                                                  accountManager: AccountManager(),
+                                                  deepLink: deepLinkTarget)
 #else
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider)
 #endif
 
         let settingsController = SettingsHostingController(viewModel: settingsViewModel, viewProvider: legacyViewProvider)
-        settingsController.applyTheme(ThemeManager.shared.currentTheme)
         
         // We are still presenting legacy views, so use a Navcontroller
         let navController = UINavigationController(rootViewController: settingsController)
-        navController.applyTheme(ThemeManager.shared.currentTheme)
         settingsController.modalPresentationStyle = UIModalPresentationStyle.automatic
         
         present(navController, animated: true) {
@@ -281,7 +282,7 @@ extension MainViewController {
                                     tabManager: self.tabManager)
         }
 
-        let controller = ThemableNavigationController(rootViewController: settings)
+        let controller = UINavigationController(rootViewController: settings)
         controller.modalPresentationStyle = .automatic
         present(controller, animated: true) {
             completion?(settings)

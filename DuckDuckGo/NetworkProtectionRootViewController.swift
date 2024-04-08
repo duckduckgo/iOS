@@ -31,7 +31,7 @@ final class NetworkProtectionRootViewController: UIHostingController<NetworkProt
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
     }
 
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
@@ -40,9 +40,10 @@ final class NetworkProtectionRootViewController: UIHostingController<NetworkProt
 }
 
 @available(iOS 15, *)
-extension NetworkProtectionRootViewController: Themable {
+extension NetworkProtectionRootViewController {
 
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         view.backgroundColor = theme.backgroundColor
 
         navigationController?.navigationBar.barTintColor = theme.barBackgroundColor

@@ -29,7 +29,6 @@ struct SaveToDownloadsAlert {
         let title = SaveToDownloadsAlert.makeTitle(downloadMetadata: downloadMetadata)
         let alert = UIAlertController(title: title, message: nil, preferredStyle: style)
         var completionCalled = false
-        alert.overrideUserInterfaceStyle()
 
         let saveToDownloadsAction = UIAlertAction(title: UserText.actionSaveToDownloads, style: .default) { _ in
             saveToDownloadsHandler()

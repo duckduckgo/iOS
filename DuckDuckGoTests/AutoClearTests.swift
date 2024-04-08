@@ -49,19 +49,20 @@ class AutoClearTests: XCTestCase {
     
     private var worker: MockWorker!
     private var logic: AutoClear!
+    private var appSettings: AppSettingsMock!
 
-    override func setUp() {
-        super.setUp()
-        
+    override func setUp() async throws {
+        try await super.setUp()
+
         worker = MockWorker()
-        logic = AutoClear(worker: worker)
+        appSettings = AppSettingsMock()
+        logic = AutoClear(worker: worker, appSettings: appSettings)
     }
 
     // Note: applicationDidLaunch based clearing has moved to "configureTabManager" function of
     //  MainViewController to ensure that tabs are removed before the data is cleared.
 
     func testWhenTimingIsSetToTerminationThenOnlyRestartClearsData() async {
-        let appSettings = AppUserDefaults()
         appSettings.autoClearAction = .clearData
         appSettings.autoClearTiming = .termination
         
@@ -70,10 +71,14 @@ class AutoClearTests: XCTestCase {
         
         XCTAssertEqual(worker.clearNavigationStackInvocationCount, 0)
         XCTAssertEqual(worker.forgetDataInvocationCount, 0)
+
+        await logic.applicationWillMoveToForeground()
+
+        XCTAssertEqual(worker.clearNavigationStackInvocationCount, 0)
+        XCTAssertEqual(worker.forgetDataInvocationCount, 0)
     }
     
     func testWhenDesiredTimingIsSetThenDataIsClearedOnceTimeHasElapsed() async {
-        let appSettings = AppUserDefaults()
         appSettings.autoClearAction = .clearData
         
         let cases: [AutoClearSettingsModel.Timing: TimeInterval] = [.delay5min: 5 * 60,

@@ -339,15 +339,6 @@ extension Pixel {
         
         case networkProtectionUnhandledError
         
-        case networkProtectionWaitlistUserActive
-        case networkProtectionSettingsRowDisplayed
-        case networkProtectionWaitlistIntroScreenDisplayed
-        case networkProtectionWaitlistTermsDisplayed
-        case networkProtectionWaitlistTermsAccepted
-        case networkProtectionWaitlistNotificationShown
-        case networkProtectionWaitlistNotificationLaunched
-        case networkProtectionWaitlistRetriedInviteCodeRedemption
-        
         case networkProtectionGeoswitchingOpened
         case networkProtectionGeoswitchingSetNearest
         case networkProtectionGeoswitchingSetCustom
@@ -572,6 +563,7 @@ extension Pixel {
         case privacyProPurchaseFailureAccountNotCreated
         case privacyProPurchaseSuccess
         case privacyProRestorePurchaseOfferPageEntry
+        case privacyProRestorePurchaseClick
         case privacyProRestorePurchaseEmailStart
         case privacyProRestorePurchaseStoreStart
         case privacyProRestorePurchaseEmailSuccess
@@ -957,15 +949,6 @@ extension Pixel.Event {
         case .networkProtectionMemoryCritical: return "m_netp_vpn_memory_critical"
         case .networkProtectionUnhandledError: return "m_netp_unhandled_error"
             
-        case .networkProtectionWaitlistUserActive: return "m_netp_waitlist_user_active"
-        case .networkProtectionSettingsRowDisplayed: return "m_netp_waitlist_settings_entry_viewed"
-        case .networkProtectionWaitlistIntroScreenDisplayed: return "m_netp_waitlist_intro_screen_viewed"
-        case .networkProtectionWaitlistTermsDisplayed: return "m_netp_waitlist_terms_viewed"
-        case .networkProtectionWaitlistTermsAccepted: return "m_netp_waitlist_terms_accepted"
-        case .networkProtectionWaitlistNotificationShown: return "m_netp_waitlist_notification_shown"
-        case .networkProtectionWaitlistNotificationLaunched: return "m_netp_waitlist_notification_launched"
-        case .networkProtectionWaitlistRetriedInviteCodeRedemption: return "m_netp_waitlist_retried_invite_code_redemption"
-            
         case .networkProtectionGeoswitchingOpened: return "m_netp_imp_geoswitching"
         case .networkProtectionGeoswitchingSetNearest: return "m_netp_ev_geoswitching_set_nearest"
         case .networkProtectionGeoswitchingSetCustom: return "m_netp_ev_geoswitching_set_custom"
@@ -1193,6 +1176,7 @@ extension Pixel.Event {
         case .privacyProPurchaseFailureBackendError: return "m_privacy-pro_app_subscription-purchase_failure_account-creation"
         case .privacyProPurchaseSuccess: return "m_privacy-pro_app_subscription-purchase_success"
         case .privacyProRestorePurchaseOfferPageEntry: return "m_privacy-pro_offer_restore-purchase_click"
+        case .privacyProRestorePurchaseClick: return "m_privacy-pro_app-settings_restore-purchase_click"
         case .privacyProRestorePurchaseEmailStart: return "m_privacy-pro_activate-subscription_enter-email_click"
         case .privacyProRestorePurchaseStoreStart: return "m_privacy-pro_activate-subscription_restore-purchase_click"
         case .privacyProRestorePurchaseEmailSuccess: return "m_privacy-pro_app_subscription-restore-using-email_success"

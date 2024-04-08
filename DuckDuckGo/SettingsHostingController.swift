@@ -55,6 +55,8 @@ class SettingsHostingController: UIHostingController<AnyView> {
         case .newSettings: settingsView = AnyView(SettingsRootView(viewModel: viewModel))
         }
         self.rootView = AnyView(settingsView)
+
+        decorate()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -73,9 +75,10 @@ class SettingsHostingController: UIHostingController<AnyView> {
     }
 }
 
-extension SettingsHostingController: Themable {
+extension SettingsHostingController {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         // Apply Theme
         navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
         navigationController?.navigationBar.tintColor = theme.navigationBarTintColor

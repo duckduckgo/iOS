@@ -35,6 +35,7 @@ class TabManager {
     private let historyManager: HistoryManager
     private let syncService: DDGSyncing
     private var previewsSource: TabPreviewsSource
+
     weak var delegate: TabDelegate?
 
     @UserDefaultsWrapper(key: .faviconTabsCacheNeedsCleanup, defaultValue: true)
@@ -45,20 +46,12 @@ class TabManager {
          previewsSource: TabPreviewsSource,
          bookmarksDatabase: CoreDataDatabase,
          historyManager: HistoryManager,
-         syncService: DDGSyncing,
-         delegate: TabDelegate) {
+         syncService: DDGSyncing) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.syncService = syncService
-        self.delegate = delegate
-        let index = model.currentIndex
-        let tab = model.tabs[index]
-        if tab.link != nil {
-            let controller = buildController(forTab: tab, inheritedAttribution: nil)
-            tabControllerCache.append(controller)
-        }
 
         registerForNotifications()
     }
@@ -302,15 +295,6 @@ class TabManager {
     }
 }
 
-extension TabManager: Themable {
-    
-    func decorate(with theme: Theme) {
-        for tabController in tabControllerCache {
-            tabController.decorate(with: theme)
-        }
-    }
-    
-}
 
 // MARK: - Debugging Pixels
 

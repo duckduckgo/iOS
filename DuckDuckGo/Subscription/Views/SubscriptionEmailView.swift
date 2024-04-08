@@ -21,18 +21,21 @@
 import SwiftUI
 import Foundation
 import Core
+import Combine
 
 @available(iOS 15.0, *)
 struct SubscriptionEmailView: View {
         
-    @StateObject var viewModel = SubscriptionEmailViewModel()
+    @StateObject var viewModel: SubscriptionEmailViewModel
+    @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
     @Environment(\.dismiss) var dismiss
-    
-    @State var shouldDisplayInactiveError = false
-    @State var shouldDisplayNavigationError = false
-    @State var isModal = true
-    
-    var onDismissStack: (() -> Void)?
+        
+    @State var isPresentingInactiveError = false
+    @State var isPresentingNavigationError = false
+    @State var backButtonText = UserText.backButtonTitle
+    @State private var isShowingITR = false
+    @State private var isShowingDBP = false
+    @State private var isShowingNetP = false
     
     enum Constants {
         static let navButtonPadding: CGFloat = 20.0
@@ -40,13 +43,25 @@ struct SubscriptionEmailView: View {
     }
         
     var body: some View {
+        // Hidden Navigation Links for Onboarding sections
+        NavigationLink(destination: NetworkProtectionRootView(inviteCompletion: {}).navigationViewStyle(.stack),
+                       isActive: $isShowingNetP,
+                       label: { EmptyView() })
+        NavigationLink(destination: SubscriptionITPView().navigationViewStyle(.stack),
+                       isActive: $isShowingITR,
+                       label: { EmptyView() })
+        NavigationLink(destination: SubscriptionPIRView().navigationViewStyle(.stack),
+                       isActive: $isShowingDBP,
+                       label: { EmptyView() })
+                        
         baseView
+        
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) {
                 browserBackButton
             }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                closeButton
+            ToolbarItemGroup(placement: .principal) {
+                daxLogoToolbarItem
             }
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -55,7 +70,7 @@ struct SubscriptionEmailView: View {
         .tint(Color.init(designSystemColor: .textPrimary))
         .accentColor(Color.init(designSystemColor: .textPrimary))
         
-        .alert(isPresented: $shouldDisplayInactiveError) {
+        .alert(isPresented: $isPresentingInactiveError) {
             Alert(
                 title: Text(UserText.subscriptionRestoreEmailInactiveTitle),
                 message: Text(UserText.subscriptionRestoreEmailInactiveMessage),
@@ -65,7 +80,7 @@ struct SubscriptionEmailView: View {
             )
         }
         
-        .alert(isPresented: $shouldDisplayNavigationError) {
+        .alert(isPresented: $isPresentingNavigationError) {
             Alert(
                 title: Text(UserText.subscriptionBackendErrorTitle),
                 message: Text(UserText.subscriptionBackendErrorMessage),
@@ -73,52 +88,61 @@ struct SubscriptionEmailView: View {
                     viewModel.dismissView()
                 })
         }
-        
-        .onAppear {
-            viewModel.onAppear()
-        }
                 
-        .onChange(of: viewModel.state.shouldDisplayInactiveError) { value in
-            shouldDisplayInactiveError = value
+        .onChange(of: viewModel.state.isPresentingInactiveError) { value in
+            isPresentingInactiveError = value
         }
         
         .onChange(of: viewModel.state.shouldDisplaynavigationError) { value in
-            shouldDisplayNavigationError = value
-        }
-        
-        .onChange(of: viewModel.state.shouldDismissStack) { _ in
-            onDismissStack?()
+            isPresentingNavigationError = value
         }
         
         // Observe changes to shouldDismissView
         .onChange(of: viewModel.state.shouldDismissView) { shouldDismiss in
             if shouldDismiss {
                 dismiss()
-
-                // Reset shouldDismissView after dismissal to ensure it can trigger again
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    viewModel.resetDismissalState()
-                }
+            }
+        }
+                
+        .onChange(of: viewModel.state.shouldPopToSubscriptionSettings) { shouldDismiss in
+            if shouldDismiss {
+                subscriptionNavigationCoordinator.shouldPopToSubscriptionSettings = true
             }
         }
         
-        .navigationTitle(viewModel.viewTitle)
+        .onChange(of: viewModel.state.shouldPopToAppSettings) { shouldDismiss in
+            if shouldDismiss {
+                subscriptionNavigationCoordinator.shouldPopToAppSettings = true
+            }
+        }
         
-        .onAppear(perform: {
+        .onChange(of: viewModel.state.selectedFeature) { feature in
+            switch feature {
+            case .dbp:
+                self.isShowingDBP = true
+            case .itr:
+                self.isShowingITR = true
+            case .netP:
+                self.isShowingNetP = true
+            default:
+                break
+            }
+        }
+        
+        .navigationTitle(viewModel.state.viewTitle)
+        
+        .onFirstAppear {
             setUpAppearances()
+            viewModel.onFirstAppear()
+        }
+        
+        .onAppear {
             viewModel.onAppear()
-        })
+        }
         
     }
     
     // MARK: -
-    
-    @ViewBuilder
-    private var closeButton: some View {
-        if isModal {
-            Button(UserText.subscriptionCloseButton) { onDismissStack?() }
-        }
-    }
     
     private var baseView: some View {
         ZStack {
@@ -131,15 +155,20 @@ struct SubscriptionEmailView: View {
     
     @ViewBuilder
     private var browserBackButton: some View {
-        if viewModel.shouldDisplayBackButton() {
-            Button(action: {
-                Task { await viewModel.navigateBack() }
-            }, label: {
-                HStack(spacing: 0) {
-                    Image(systemName: Constants.backButtonImage)
-                    Text(UserText.backButtonTitle).foregroundColor(Color(designSystemColor: .textPrimary))
-                }
-            })
+        Button(action: {
+            Task { await viewModel.navigateBack() }
+        }, label: {
+            HStack(spacing: 0) {
+                Image(systemName: Constants.backButtonImage)
+                Text(viewModel.state.backButtonTitle).foregroundColor(Color(designSystemColor: .textPrimary))
+            }
+        })
+    }
+    
+    @ViewBuilder
+    private var daxLogoToolbarItem: some View {
+        if viewModel.state.viewTitle == UserText.subscriptionTitle {
+            DaxLogoNavbarTitle()
         }
     }
     

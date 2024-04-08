@@ -127,6 +127,9 @@ class TabViewController: UIViewController {
 
     private var trackersInfoWorkItem: DispatchWorkItem?
     
+    private var tabURLInterceptor: TabURLInterceptor = TabURLInterceptorDefault()
+    private var currentlyLoadedURL: URL?
+    
 #if NETWORK_PROTECTION
     private let netPConnectionObserver = ConnectionStatusObserverThroughSession()
     private var netPConnectionObserverCancellable: AnyCancellable?
@@ -284,6 +287,8 @@ class TabViewController: UIViewController {
     }
 
     private let rulesCompilationMonitor = RulesCompilationMonitor.shared
+    
+    private var lastRenderedURL: URL?
 
     static func loadFromStoryboard(model: Tab,
                                    appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
@@ -333,7 +338,7 @@ class TabViewController: UIViewController {
         
         preserveLoginsWorker = PreserveLoginsWorker(controller: self)
         initAttributionLogic()
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
         addTextSizeObserver()
         subscribeToEmailProtectionSignOutNotification()
 
@@ -906,7 +911,6 @@ class TabViewController: UIViewController {
         let dontOpen = UserText.customUrlSchemeDontOpen
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.overrideUserInterfaceStyle()
         alert.addAction(UIAlertAction(title: dontOpen, style: .cancel, handler: { _ in
             if self.webView.url == nil {
                 self.delegate?.tabDidRequestClose(self)
@@ -1005,7 +1009,6 @@ class TabViewController: UIViewController {
         temporaryDownloadForPreviewedFile?.cancel()
         cleanUpBeforeClosing()
     }
-
 }
 
 // MARK: - LoginFormDetectionDelegate
@@ -1092,7 +1095,7 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-
+        
         let mimeType = MIMEType(from: navigationResponse.response.mimeType)
 
         let httpResponse = navigationResponse.response as? HTTPURLResponse
@@ -1154,6 +1157,7 @@ extension TabViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         lastError = nil
+        lastRenderedURL = webView.url
         cancelTrackerNetworksAnimation()
         shouldReloadOnError = false
         hideErrorMessage()
@@ -1165,7 +1169,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-
+        self.currentlyLoadedURL = webView.url
         adClickAttributionDetection.onDidFinishNavigation(url: webView.url)
         adClickAttributionLogic.onDidFinishNavigation(host: webView.url?.host)
         hideProgressIndicator()
@@ -1394,7 +1398,20 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-
+        
+        if let url = navigationAction.request.url {
+            if !tabURLInterceptor.allowsNavigatingTo(url: url) {
+                decisionHandler(.cancel)
+                // If there is history or a page loaded keep the tab open
+                if self.currentlyLoadedURL != nil {
+                    refresh()
+                } else {
+                    delegate?.tabDidRequestClose(self)
+                }
+                return
+            }
+        }
+        
         if let url = navigationAction.request.url,
            !url.isDuckDuckGoSearch,
            true == shouldWaitUntilContentBlockingIsLoaded({ [weak self, webView /* decision handler must be called */] in
@@ -2330,9 +2347,10 @@ extension TabViewController: AdClickAttributionLogicDelegate {
 }
 
 // MARK: - Themable
-extension TabViewController: Themable {
+extension TabViewController {
 
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         view.backgroundColor = theme.backgroundColor
         error?.backgroundColor = theme.backgroundColor
         errorHeader.textColor = theme.barTintColor
@@ -2341,13 +2359,6 @@ extension TabViewController: Themable {
         if let webView {
             webView.scrollView.refreshControl?.backgroundColor = theme.mainViewBackgroundColor
             webView.scrollView.refreshControl?.tintColor = .secondaryLabel
-        }
-        
-        switch theme.currentImageSet {
-        case .light:
-            errorInfoImage?.image = UIImage(named: "ErrorInfoLight")
-        case .dark:
-            errorInfoImage?.image = UIImage(named: "ErrorInfoDark")
         }
     }
     

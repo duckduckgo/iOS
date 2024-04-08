@@ -58,11 +58,15 @@ final class SettingsViewModel: ObservableObject {
     private var isPrivacyProEnabled: Bool {
         AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
     }
+    // Cache subscription state in memory to prevent UI glitches
+    private var cacheSubscriptionState: SettingsState.Subscription = SettingsState.Subscription(enabled: false,
+                                                                                                canPurchase: false,
+                                                                                                hasActiveSubscription: false,
+                                                                                                isSubscriptionPendingActivation: false)
         
     // Sheet Presentation & Navigation
     @Published var isRestoringSubscription: Bool = false
     @Published var shouldDisplayRestoreSubscriptionError: Bool = false
-    @Published var isLoadingSubscriptionState: Bool = false
     @Published var shouldShowNetP = false
     @Published var shouldShowDBP = false
     @Published var shouldShowITP = false
@@ -120,9 +124,7 @@ final class SettingsViewModel: ObservableObject {
             get: { self.state.appTheme },
             set: {
                 self.state.appTheme = $0
-                self.appSettings.currentThemeName = $0
                 ThemeManager.shared.enableTheme(with: $0)
-                ThemeManager.shared.updateUserInterfaceStyle()
                 Pixel.fire(pixel: .settingsThemeSelectorPressed, withAdditionalParameters: PixelExperiment.parameters)
             }
         )
@@ -441,8 +443,8 @@ extension SettingsViewModel {
     // other dependencies are observable (Such as AppIcon and netP)
     // and we can use subscribers (Currently called from the view onAppear)
     @MainActor
-    private func initState() async {
-        self.state = await SettingsState(
+    private func initState() {
+        self.state = SettingsState(
             appTheme: appSettings.currentThemeName,
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: appSettings.currentFireButtonAnimation,
@@ -463,11 +465,12 @@ extension SettingsViewModel {
             speechRecognitionAvailable: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
             loginsEnabled: featureFlagger.isFeatureOn(.autofillAccessCredentialManagement),
             networkProtection: getNetworkProtectionState(),
-            subscription: getSubscriptionState(),
+            subscription: cacheSubscriptionState,
             sync: getSyncState()
         )
         
         setupSubscribers()
+        Task { await refreshSubscriptionState() }
         
     }
     
@@ -479,6 +482,13 @@ extension SettingsViewModel {
             }
         #endif
         return SettingsState.NetworkProtection(enabled: enabled, status: "")
+    }
+    
+    private func refreshSubscriptionState() async {
+        let state = await self.getSubscriptionState()
+        DispatchQueue.main.async {
+            self.state.subscription = state
+        }
     }
        
     private func getSubscriptionState() async -> SettingsState.Subscription {
@@ -497,6 +507,12 @@ extension SettingsViewModel {
                 switch subscriptionResult {
                 case .success(let subscription):
                     hasActiveSubscription = subscription.isActive
+                                            
+                    cacheSubscriptionState = SettingsState.Subscription(enabled: enabled,
+                                                                        canPurchase: canPurchase,
+                                                                        hasActiveSubscription: hasActiveSubscription,
+                                                                        isSubscriptionPendingActivation: isSubscriptionPendingActivation)
+                    
                 case .failure:
                     if await PurchaseManager.hasActiveSubscription() {
                         isSubscriptionPendingActivation = true
@@ -551,8 +567,7 @@ extension SettingsViewModel {
             setupSubscriptionPurchaseOptions()
             return
         }
-        
-        isLoadingSubscriptionState = true
+                
         // Fetch available subscriptions from the backend (or sign out)
         switch await SubscriptionService.getSubscription(accessToken: token) {
         
@@ -593,7 +608,7 @@ extension SettingsViewModel {
                 signOutUser()
             }
         }
-        isLoadingSubscriptionState = false
+        
     }
     
     @available(iOS 15.0, *)
@@ -615,7 +630,7 @@ extension SettingsViewModel {
         signOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut, object: nil, queue: .main) { [weak self] _ in
             if #available(iOS 15.0, *) {
                 guard let strongSelf = self else { return }
-                Task { await strongSelf.setupSubscriptionEnvironment() }
+                Task { await strongSelf.refreshSubscriptionState() }
             }
         }
     }
@@ -865,11 +880,11 @@ extension SettingsViewModel {
             // Specify cases that require .push presentation
             // Example:
             // case .dbp:
-            //     return .push           
+            //     return .sheet
             case .netP:
                 return .UIKitView
             default:
-                return .sheet
+                return .navigationLink
             }
         }
     }
@@ -877,7 +892,7 @@ extension SettingsViewModel {
     // Define DeepLinkType outside the enum if not already defined
     enum DeepLinkType {
         case sheet
-        case navigation
+        case navigationLink
         case UIKitView
     }
             

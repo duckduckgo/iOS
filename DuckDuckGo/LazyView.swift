@@ -1,8 +1,8 @@
 //
-//  SettingsPrivacyProView.swift
+//  LazyView.swift
 //  DuckDuckGo
 //
-//  Copyright © 2023 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,20 +17,16 @@
 //  limitations under the License.
 //
 
+import Foundation
 import SwiftUI
-import UIKit
-import Core
 
-struct SettingsPrivacyProView: View {
-
-    @EnvironmentObject var viewModel: SettingsViewModel
-
-    var body: some View {
-#if SUBSCRIPTION
-        if #available(iOS 15, *) {
-            SettingsSubscriptionView()
-        }
-#endif
+// https://gist.github.com/chriseidhof/d2fcafb53843df343fe07f3c0dac41d5
+struct LazyView<Content: View>: View {
+    let build: () -> Content
+    init(_ build: @autoclosure @escaping () -> Content) {
+        self.build = build
     }
-
+    var body: Content {
+        build()
+    }
 }

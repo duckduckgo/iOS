@@ -358,8 +358,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
-        reportAdAttribution()
-
         return true
     }
 
@@ -499,6 +497,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.fireAppLaunchPixel()
             self.firePrivacyProFeatureEnabledPixel()
             self.fireAppTPActiveUserPixel()
+            self.reportAdAttribution()
         }
         
         if appIsLaunching {

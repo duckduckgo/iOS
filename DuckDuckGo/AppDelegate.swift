@@ -355,7 +355,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         AppDependencyProvider.shared.toggleProtectionsCounter.sendEventsIfNeeded()
+
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
+
+        reportAdAttribution()
 
         return true
     }
@@ -468,6 +471,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #endif
 
             SubscriptionPurchaseEnvironment.current = .appStore
+        }
+    }
+
+    private func reportAdAttribution() {
+        Task.detached(priority: .background) {
+            await AdAttributionPixelReporter.shared.reportAttributionIfNeeded()
         }
     }
 

@@ -676,6 +676,9 @@ extension Pixel {
         case privacyProOfferYearlyPriceClick
         case privacyProAddEmailSuccess
         case privacyProWelcomeFAQClick
+
+        // MARK: Apple Ad Attribution
+        case appleAdAttribution
     }
     
 }
@@ -1219,6 +1222,9 @@ extension Pixel.Event {
         case .toggleReportDismiss: return "m_toggle-report-dismiss"
 
         case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
+            
+        // MARK: - Apple Ad Attribution
+        case .appleAdAttribution: return "m_apple-ad-attribution"
 
             // MARK: - User behavior
         case .userBehaviorReloadTwice: return "m_reload-twice"

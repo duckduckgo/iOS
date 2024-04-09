@@ -69,6 +69,20 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                         action: #selector(addButtonPressed))
     }()
 
+    private lazy var moreButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "More-Apple-24"), for: .normal)
+        button.showsMenuAsPrimaryAction = true
+        button.menu = moreMenu
+        return button
+    }()
+
+    private lazy var moreBarButtonItem = UIBarButtonItem(customView: moreButton)
+
+    private lazy var moreMenu: UIMenu = {
+        return UIMenu(children: [editAction(), importAction()])
+    }()
+
     private lazy var deleteAllButtonItem: UIBarButtonItem = {
         let button = UIBarButtonItem(title: UserText.autofillLoginListToolbarDeleteAllButton,
                                      style: .plain,
@@ -353,6 +367,24 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         }
     }
     
+    private func editAction() -> UIAction {
+        return UIAction(title: UserText.actionGenericEdit) { [weak self] _ in
+            self?.setEditing(true, animated: true)
+        }
+    }
+
+    private func importAction() -> UIAction {
+        return UIAction(title: UserText.autofillEmptyViewButtonTitle) { [weak self] _ in
+            self?.segueToImport()
+        }
+    }
+
+    private func segueToImport() {
+        let importController = ImportPasswordsViewController()
+        importController.delegate = self
+        navigationController?.pushViewController(importController, animated: true)
+    }
+
     private func showSelectedAccountIfRequired() {
         if let account = selectedAccount {
             showAccountDetails(account)
@@ -522,21 +554,21 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                 navigationItem.rightBarButtonItems = [editButtonItem]
             } else {
                 if viewModel.isAutofillEnabledInSettings || (!viewModel.isAutofillEnabledInSettings && viewModel.hasAccountsSaved) {
-                    navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
+                    navigationItem.rightBarButtonItems = [moreBarButtonItem, addBarButtonItem]
                 } else {
                     navigationItem.rightBarButtonItems = [addBarButtonItem]
                 }
                 addBarButtonItem.isEnabled = true
+                moreBarButtonItem.isEnabled = true
             }
-            editButtonItem.isEnabled = true
         case .noAuthAvailable:
             navigationItem.rightBarButtonItems = [addBarButtonItem]
             addBarButtonItem.isEnabled = false
         case .authLocked:
             if viewModel.hasAccountsSaved {
-                navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
+                navigationItem.rightBarButtonItems = [moreBarButtonItem, addBarButtonItem]
                 addBarButtonItem.isEnabled = false
-                editButtonItem.isEnabled = false
+                moreBarButtonItem.isEnabled = false
             } else {
                 navigationItem.rightBarButtonItems = [addBarButtonItem]
                 addBarButtonItem.isEnabled = false

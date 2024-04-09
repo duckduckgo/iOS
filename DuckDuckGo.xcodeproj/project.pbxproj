@@ -112,6 +112,7 @@
 		1DDF40292BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDF40282BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift */; };
 		1DDF402B2BA05A65006850D9 /* Settings.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DDF402A2BA05A65006850D9 /* Settings.xcassets */; };
 		1DDF402D2BA09482006850D9 /* SettingsMainSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDF402C2BA09482006850D9 /* SettingsMainSettingsView.swift */; };
+		1DE384E42BC41E2500871AF6 /* PixelExperimentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE384E32BC41E2500871AF6 /* PixelExperimentTests.swift */; };
 		1DEAADE82BA38AA500E25A97 /* SettingsGeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADE72BA38AA500E25A97 /* SettingsGeneralView.swift */; };
 		1DEAADEA2BA4539800E25A97 /* SettingsAppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADE92BA4539800E25A97 /* SettingsAppearanceView.swift */; };
 		1DEAADEC2BA45B4500E25A97 /* SettingsAccessibilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAADEB2BA45B4400E25A97 /* SettingsAccessibilityView.swift */; };
@@ -1268,6 +1269,7 @@
 		1DDF40282BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPrivacyProtectionsView.swift; sourceTree = "<group>"; };
 		1DDF402A2BA05A65006850D9 /* Settings.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Settings.xcassets; sourceTree = "<group>"; };
 		1DDF402C2BA09482006850D9 /* SettingsMainSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsMainSettingsView.swift; sourceTree = "<group>"; };
+		1DE384E32BC41E2500871AF6 /* PixelExperimentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PixelExperimentTests.swift; sourceTree = "<group>"; };
 		1DEAADE72BA38AA500E25A97 /* SettingsGeneralView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsGeneralView.swift; sourceTree = "<group>"; };
 		1DEAADE92BA4539800E25A97 /* SettingsAppearanceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsAppearanceView.swift; sourceTree = "<group>"; };
 		1DEAADEB2BA45B4400E25A97 /* SettingsAccessibilityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsAccessibilityView.swift; sourceTree = "<group>"; };
@@ -5059,6 +5061,7 @@
 				853A717720F645FB00FE60BC /* PixelTests.swift */,
 				1E05D1D929C47B2B00BF9A1F /* DailyPixelTests.swift */,
 				83EDCC3F1F86B895005CDFCD /* StatisticsLoaderTests.swift */,
+				1DE384E32BC41E2500871AF6 /* PixelExperimentTests.swift */,
 				F1134ED31F40F12B00B73467 /* Store */,
 				85C11E4020904BBE00BFFEB4 /* VariantManagerTests.swift */,
 			);
@@ -7177,6 +7180,7 @@
 				1E722729292EB24D003B5F53 /* AppSettingsMock.swift in Sources */,
 				8536A1C8209AF2410050739E /* MockVariantManager.swift in Sources */,
 				C1B7B53428944EFA0098FD6A /* CoreDataTestUtilities.swift in Sources */,
+				1DE384E42BC41E2500871AF6 /* PixelExperimentTests.swift in Sources */,
 				CBDD5DE129A6741300832877 /* MockBundle.swift in Sources */,
 				C158AC7B297AB5DC0008723A /* MockSecureVault.swift in Sources */,
 				85C11E4120904BBE00BFFEB4 /* VariantManagerTests.swift in Sources */,

@@ -21,9 +21,15 @@ import Foundation
 
 public enum PixelExperiment: String, CaseIterable {
 
-    fileprivate static let logic = PixelExperimentLogic {
-        Pixel.fire(pixel: $0)
+    fileprivate static var logic: PixelExperimentLogic {
+        customLogic ?? defaultLogic
     }
+    fileprivate static let defaultLogic = PixelExperimentLogic {
+        Pixel.fire(pixel: $0,
+                   withAdditionalParameters: PixelExperiment.parameters)
+    }
+    // Custom logic for testing purposes
+    static var customLogic: PixelExperimentLogic?
 
     /// When `cohort` is accessed for the first time after the experiment is installed with `install()`,
     ///  allocate and return a cohort.  Subsequently, return the same cohort.
@@ -46,7 +52,7 @@ public enum PixelExperiment: String, CaseIterable {
     /// Enables this experiment for new users when called from the new installation path.
     public static func install() {
         // Disable the experiment until all other experiments are finished
-//        logic.install()
+        logic.install()
     }
 
     static func cleanup() {
@@ -80,6 +86,11 @@ final internal class PixelExperimentLogic {
     var cohort: PixelExperiment? {
         guard isInstalled else { return nil }
 
+        // Use the `defaultCohort` if it's set
+        if let customCohort = customCohort {
+            return customCohort
+        }
+
         // Check if a cohort is already allocated and valid
         if let allocatedCohort,
            let cohort = PixelExperiment(rawValue: allocatedCohort) {
@@ -111,22 +122,24 @@ final internal class PixelExperimentLogic {
     var allocatedCohort: String?
 
     private let fire: (Pixel.Event) -> Void
+    private let customCohort: PixelExperiment?
 
-    init(fire: @escaping (Pixel.Event) -> Void) {
+    init(fire: @escaping (Pixel.Event) -> Void,
+         customCohort: PixelExperiment? = nil) {
         self.fire = fire
+        self.customCohort = customCohort
     }
 
     func install() {
         isInstalled = true
     }
 
-    func fireEnrollmentPixel() {
+    private func fireEnrollmentPixel() {
         guard cohort != .noVariant else {
             return
         }
 
-        Pixel.fire(pixel: .pixelExperimentEnrollment,
-                   withAdditionalParameters: PixelExperiment.parameters)
+        fire(.pixelExperimentEnrollment)
     }
 
     func cleanup() {

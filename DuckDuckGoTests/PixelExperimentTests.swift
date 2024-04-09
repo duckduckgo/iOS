@@ -24,7 +24,9 @@ class PixelExperimentTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+
         PixelExperiment.cleanup()
+        PixelExperiment.customLogic = nil
         PixelExperiment.install()
     }
 

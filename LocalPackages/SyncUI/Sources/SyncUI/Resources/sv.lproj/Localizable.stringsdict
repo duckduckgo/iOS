@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bookmarks.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Dina bokmärken för %2$@ och 1 annan webbplats kan inte synkroniseras eftersom vissa av deras fält överskrider teckengränsen.</string>
+			<key>other</key>
+			<string>Dina bokmärken för %2$@ och %1$d andra webbplatser kan inte synkroniseras eftersom vissa av deras fält överskrider teckengränsen.</string>
+			<key>zero</key>
+			<string>Ditt bokmärke för %2$@ kan inte synkroniseras eftersom ett av dess fält överskrider teckengränsen.</string>
+		</dict>
+	</dict>
+	<key>credentials.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Dina lösenord för %2$@ och 1 annan webbplats kan inte synkroniseras eftersom vissa av deras fält överskrider teckengränsen.</string>
+			<key>other</key>
+			<string>Dina lösenord för %2$@ och %1$d andra webbplatser kan inte synkroniseras eftersom vissa av deras fält överskrider teckengränsen.</string>
+			<key>zero</key>
+			<string>Ditt lösenord för %2$@ kan inte synkroniseras eftersom ett av dess fält överskrider teckengränsen.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

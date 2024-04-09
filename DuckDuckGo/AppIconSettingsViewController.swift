@@ -43,6 +43,10 @@ class AppIconSettingsViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let appIcon = dataSource.appIcons[indexPath.row]
+
+        Pixel.fire(pixel: .settingsIconSelectorPressed,
+                   withAdditionalParameters: PixelExperiment.parameters)
+
         worker.changeAppIcon(appIcon) { success in
             if success {
                 self.initSelection()

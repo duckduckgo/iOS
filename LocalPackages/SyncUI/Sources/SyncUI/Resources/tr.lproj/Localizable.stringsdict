@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bookmarks.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>2$@ ve 1 diğer site için yer işaretleriniz, bazı alanları karakter sınırını aştığı için senkronize edilemiyor.</string>
+			<key>other</key>
+			<string>2$@ ve %1$d diğer site için yer işaretleriniz, bazı alanları karakter sınırını aştığı için senkronize edilemiyor.</string>
+			<key>zero</key>
+			<string>2$@ için yer işaretiniz, alanlarından biri karakter sınırını aştığı için senkronize edilemiyor.</string>
+		</dict>
+	</dict>
+	<key>credentials.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>2$@ ve 1 diğer site için parolalarınız, bazı alanları karakter sınırını aştığı için senkronize edilemiyor.</string>
+			<key>other</key>
+			<string>2$@ ve %1$d diğer site için parolalarınız, bazı alanları karakter sınırını aştığı için senkronize edilemiyor.</string>
+			<key>zero</key>
+			<string>%2$@ için şifreniz, alanlarından biri karakter sınırını aştığı için senkronize edilemiyor.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

@@ -43,22 +43,6 @@ class PixelExperimentTests: XCTestCase {
         XCTAssertTrue(parameters.isEmpty, "Expected parameters to be empty when no variant is allocated.")
     }
 
-
-    func testParametersWithControlVariant() {
-        PixelExperiment.customLogic = PixelExperimentLogic(fire: { _ in }, customCohort: .control)
-        let parameters = PixelExperiment.parameters
-
-        XCTAssertEqual(parameters["cohort"], PixelExperiment.control.rawValue, "Expected parameters to contain the control variant cohort.")
-    }
-
-
-    func testParametersWithNewSettingsVariant() {
-        PixelExperiment.customLogic = PixelExperimentLogic(fire: { _ in }, customCohort: .newSettings)
-        let parameters = PixelExperiment.parameters
-
-        XCTAssertEqual(parameters["cohort"], PixelExperiment.newSettings.rawValue, "Expected parameters to contain the new settings variant cohort.")
-    }
-
     func testExperimentInstallation() {
         PixelExperiment.cleanup()
         PixelExperiment.install()

@@ -40,7 +40,20 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     weak var delegate: AutofillLoginSettingsListViewControllerDelegate?
     weak var detailsViewController: AutofillLoginDetailsViewController?
     private let viewModel: AutofillLoginListViewModel
-    private lazy var emptyView = AutofillItemsEmptyView()
+    private lazy var emptyView: UIView = {
+        let emptyView = AutofillItemsEmptyView { [weak self] in
+            self?.segueToImport()
+        }
+
+        let hostingController = UIHostingController(rootView: emptyView)
+        hostingController.view.frame = CGRect(origin: .zero, size: hostingController.sizeThatFits(in: UIScreen.main.bounds.size))
+        hostingController.view.layoutIfNeeded()
+        hostingController.view.backgroundColor = .clear
+
+        self.tableView.tableFooterView?.frame.size.height = hostingController.view.frame.height
+
+        return hostingController.view
+    }()
     private let lockedView = AutofillItemsLockedView()
     private let enableAutofillFooterView = AutofillSettingsEnableFooterView()
     private let emptySearchView = AutofillEmptySearchView()
@@ -196,21 +209,11 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         }
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        guard viewModel.viewState == .empty else { return }
-        adjustEmptyViewFooterSize()
-    }
-
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
         coordinator.animate(alongsideTransition: { _ in
             self.updateConstraintConstants()
-            if self.viewModel.viewState == .empty {
-                self.emptyView.refreshConstraints()
-            }
             if self.view.subviews.contains(self.noAuthAvailableView) {
                 self.noAuthAvailableView.refreshConstraints()
             }
@@ -626,15 +629,6 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         } else {
             lockedViewBottomConstraint.constant = view.frame.height * 0.15
         }
-    }
-
-    // Adjust the footer size based on remaining space
-    private func adjustEmptyViewFooterSize() {
-        // Temporarily remove the footer
-        tableView.tableFooterView = nil
-        let remainingHeight = tableView.frame.height - tableView.contentSize.height - view.safeAreaInsets.bottom - view.safeAreaInsets.top
-        emptyView.adjustHeight(to: max(remainingHeight, 0))
-        tableView.tableFooterView = emptyView
     }
 
     // MARK: Cell Methods

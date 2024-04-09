@@ -86,7 +86,7 @@ final internal class PixelExperimentLogic {
     var cohort: PixelExperiment? {
         guard isInstalled else { return nil }
 
-        // Use the `defaultCohort` if it's set
+        // Use the `customCohort` if it's set
         if let customCohort = customCohort {
             return customCohort
         }

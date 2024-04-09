@@ -737,6 +737,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     public static let autofillEnableSettings = NSLocalizedString("autofill.logins.list.enable", value:"Save and autofill passwords", comment: "Title for a toggle that enables autofill")
     public static let autofillNeverSavedSettings = NSLocalizedString("autofill.logins.list.never.saved", value:"Reset Excluded Sites", comment: "Title for a button that allows a user to reset their list of never saved sites")
+    public static let autofillSettingsFooter = NSLocalizedString("autofill.logins.list.enable.footer", value:"Passwords are stored securely on your device.", comment: "Footer label displayed below table section with option to enable autofill")
     public static let autofillLoginListTitle = NSLocalizedString("autofill.logins.list.title", value:"Passwords", comment: "Title for screen listing autofill logins")
     public static let autofillLoginListSearchPlaceholder = NSLocalizedString("autofill.logins.list.search-placeholder", value:"Search passwords", comment: "Placeholder for search field on autofill login listing")
     public static let autofillLoginListSuggested = NSLocalizedString("autofill.logins.list.suggested", value:"Suggested", comment: "Section title for group of suggested saved logins")

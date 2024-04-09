@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "c0b0cb55e7ac2f69d10452e1a5c06713155d798e",
-        "version" : "133.0.0"
+        "branch" : "sam/remove-tzoffset",
+        "revision" : "3bad81e0ba757ddc0953139b5db819520bb533f1"
       }
     },
     {

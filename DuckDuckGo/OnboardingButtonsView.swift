@@ -42,7 +42,7 @@ struct OnboardingActions: View {
             }, label: {
                 Text(viewModel.secondaryButtonTitle)
             })
-            .buttonStyle(SecondaryButtonStyle())
+            .buttonStyle(GhostButtonStyle())
         }
     }
 }

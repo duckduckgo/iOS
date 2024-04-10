@@ -23,6 +23,8 @@ import CoreData
 
 protocol AppRatingPromptStorage {
     
+    var firstShown: Date? { get set }
+
     var lastAccess: Date? { get set }
     
     var uniqueAccessDays: Int? { get set }
@@ -35,11 +37,17 @@ class AppRatingPrompt {
 
     var storage: AppRatingPromptStorage
     
+    var uniqueAccessDays: Int {
+        storage.uniqueAccessDays ?? 0
+    }
+
     init(storage: AppRatingPromptStorage = AppRatingPromptCoreDataStorage()) {
         self.storage = storage
     }
     
     func registerUsage(onDate date: Date = Date()) {
+        guard storage.lastShown == nil else { return }
+
         if !date.isSameDay(storage.lastAccess), let currentUniqueAccessDays = storage.uniqueAccessDays {
             storage.uniqueAccessDays = currentUniqueAccessDays + 1
         }
@@ -47,17 +55,39 @@ class AppRatingPrompt {
     }
     
     func shouldPrompt(onDate date: Date = Date()) -> Bool {
-        return [3, 7].contains(storage.uniqueAccessDays) && !date.isSameDay(storage.lastShown)
+        // To keep the database migration "lightweight" we just need to check if lastShown has been set yet.
+        //  If it has then this user won't see any more prompts, which is preferable to seeing too many or too frequently.
+        if uniqueAccessDays >= 3 && storage.firstShown == nil && storage.lastShown == nil {
+            return true
+        } else if uniqueAccessDays >= 4 && storage.lastShown == nil {
+            return true
+        }
+        return false
     }
     
     func shown(onDate date: Date = Date()) {
-        storage.lastShown = date
+        if storage.firstShown == nil {
+            storage.firstShown = date
+            storage.uniqueAccessDays = 0
+        } else if storage.lastShown == nil {
+            storage.lastShown = date
+        }
     }
     
 }
 
 class AppRatingPromptCoreDataStorage: AppRatingPromptStorage {
     
+    var firstShown: Date? {
+        get {
+            return ratingPromptEntity()?.firstShown
+        }
+        set {
+            ratingPromptEntity()?.firstShown = newValue
+            try? context.save()
+        }
+    }
+
     var lastAccess: Date? {
         get {
             return ratingPromptEntity()?.lastAccess

@@ -28,7 +28,7 @@ struct OnboardingActions: View {
     var secondaryAction: (() -> Void)?
 
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 8) {
             Button(action: {
                 self.primaryAction?()
             }, label: {

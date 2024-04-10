@@ -898,6 +898,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [weak self] in
                     self?.mainViewController?.launchAutofillLogins(openSearch: true)
                 }
+                Pixel.fire(pixel: .autofillLoginsLaunchAppShortcut)
                 return
             }
 

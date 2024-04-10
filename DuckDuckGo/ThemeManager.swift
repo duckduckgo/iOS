@@ -19,18 +19,7 @@
 import UIKit
 import Core
 
-protocol RootControllersProvider {
-    var rootControllers: [UIViewController] { get }
-}
-
 class ThemeManager {
-    
-    class UIApplicationRootControllersProvider: RootControllersProvider {
-        var rootControllers: [UIViewController] {
-            return UIApplication.shared.windows.compactMap { $0.rootViewController }
-        }
-    }
-    
     enum ImageSet {
         case light
         case dark
@@ -48,63 +37,19 @@ class ThemeManager {
     public static let shared = ThemeManager()
 
     private var appSettings: AppSettings
-    
-    var rootControllersProvider: RootControllersProvider
-    private(set) var currentTheme: Theme {
-        didSet {
-            for controller in rootControllersProvider.rootControllers {
-                controller.applyTheme(currentTheme)
-            }
-        }
-    }
 
-    public static func makeTheme(name: ThemeName) -> Theme {
+    let currentTheme: Theme = DefaultTheme()
 
-        switch name {
-        case .systemDefault:
-            return obtainSystemTheme()
-        case .dark:
-            return DarkTheme()
-        case .light:
-            return LightTheme()
-        }
-    }
-    
-    private static func obtainSystemTheme() -> Theme {
-        switch UIScreen.main.traitCollection.userInterfaceStyle {
-        case .dark:
-            return DarkTheme()
-        case .light:
-            return LightTheme()
-        default:
-            return DarkTheme()
-        }
-    }
-    
-    init(settings: AppSettings = AppUserDefaults(),
-         rootProvider: RootControllersProvider = UIApplicationRootControllersProvider()) {
-        
+    init(settings: AppSettings = AppUserDefaults()) {
         appSettings = settings
-        currentTheme = ThemeManager.makeTheme(name: settings.currentThemeName)
-        rootControllersProvider = rootProvider
     }
     
     public func enableTheme(with name: ThemeName) {
         appSettings.currentThemeName = name
-        currentTheme = ThemeManager.makeTheme(name: name)
-    }
-    
-    public func refreshSystemTheme() {
-        guard appSettings.currentThemeName == .systemDefault else { return }
-        
-        let systemTheme = type(of: self).obtainSystemTheme()
-        
-        if systemTheme.name != currentTheme.name {
-            currentTheme = systemTheme
-        }
+        updateUserInterfaceStyle()
     }
 
-    func updateUserInterfaceStyle(window: UIWindow? = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first) {
+    func updateUserInterfaceStyle(window: UIWindow? = UIApplication.shared.firstKeyWindow) {
         switch appSettings.currentThemeName {
 
         case .dark:
@@ -119,4 +64,7 @@ class ThemeManager {
         }
     }
 
+    var currentInterfaceStyle: UIUserInterfaceStyle {
+        UIApplication.shared.firstKeyWindow?.traitCollection.userInterfaceStyle ?? .light
+    }
 }

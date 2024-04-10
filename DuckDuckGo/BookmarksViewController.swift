@@ -189,7 +189,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         configureTableView()
         configureBars()
 
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
 
         selectorControl.removeFromSuperview()
         if !isNested {
@@ -874,13 +874,13 @@ extension BookmarksViewController: UISearchResultsUpdating {
     }
 }
 
-extension BookmarksViewController: Themable {
+extension BookmarksViewController {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         decorateNavigationBar(with: theme)
         decorateToolbar(with: theme)
         
-        overrideSystemTheme(with: theme)
         searchController?.searchBar.searchTextField.textColor = theme.searchBarTextColor
 
         tableView.backgroundColor = theme.backgroundColor

@@ -42,8 +42,8 @@ class AutoClearSettingsViewController: UITableViewController {
         clearDataSettings = loadClearDataSettings()
         configureClearDataToggle()
         tableView.reloadData()
-        
-        applyTheme(ThemeManager.shared.currentTheme)
+
+        decorate()
     }
     
     private func loadClearDataSettings() -> AutoClearSettingsModel? {
@@ -145,18 +145,23 @@ class AutoClearSettingsViewController: UITableViewController {
         if sender.isOn {
             clearDataSettings = AutoClearSettingsModel()
             tableView.insertSections(.init(integersIn: Sections.action.rawValue...Sections.timing.rawValue), with: .fade)
+            Pixel.fire(pixel: .settingsAutomaticallyClearDataOn,
+                       withAdditionalParameters: PixelExperiment.parameters)
         } else {
             clearDataSettings = nil
             tableView.deleteSections(.init(integersIn: Sections.action.rawValue...Sections.timing.rawValue), with: .fade)
+                Pixel.fire(pixel: .settingsAutomaticallyClearDataOff,
+                           withAdditionalParameters: PixelExperiment.parameters)
         }
         
         storeSettingsIfChanged()
     }
 }
 
-extension AutoClearSettingsViewController: Themable {
+extension AutoClearSettingsViewController {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         
         for label in labels {
             label.textColor = theme.tableCellTextColor

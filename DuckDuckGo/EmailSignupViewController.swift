@@ -137,7 +137,7 @@ class EmailSignupViewController: UIViewController {
         setupWebView()
         setupNavigationBarTitle()
         addDuckDuckGoEmailObserver()
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
 
         isModalInPresentation = true
         navigationController?.presentationController?.delegate = self
@@ -450,9 +450,10 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
 
 // MARK: Themable
 
-extension EmailSignupViewController: Themable {
+extension EmailSignupViewController {
 
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         view.backgroundColor = theme.backgroundColor
 
         navigationController?.navigationBar.barTintColor = theme.barBackgroundColor

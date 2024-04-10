@@ -294,7 +294,6 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
             cell.omniBar = OmniBar.loadFromXib()
             cell.omniBar?.translatesAutoresizingMaskIntoConstraints = false
             cell.updateConstraints()
-            cell.omniBar?.decorate(with: ThemeManager.shared.currentTheme)
             
             cell.omniBar?.showSeparator()
             if self.appSettings.currentAddressBarPosition.isBottom {

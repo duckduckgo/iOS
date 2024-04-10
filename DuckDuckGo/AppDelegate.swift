@@ -224,6 +224,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DaxDialogs.shared.primeForUse()
         }
 
+        // Experiment installation will be uncommented once we decide to run the experiment
+//        PixelExperiment.install()
+
         // MARK: Sync initialisation
 
 #if DEBUG
@@ -1021,7 +1024,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
             if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist(), identifier == VPNWaitlist.notificationIdentifier {
                 presentNetworkProtectionWaitlistModal()
-                DailyPixel.fire(pixel: .networkProtectionWaitlistNotificationLaunched)
             }
 
 #endif

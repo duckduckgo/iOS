@@ -31,6 +31,12 @@
 /* Title shown to the user when adding the Fire Button lock screen widget */
 "lock.screen.widget.fire.title" = "Fire Button";
 
+/* Description shown to the user when adding the Search Passwords lock screen widget */
+"lock.screen.widget.passwords.description" = "Rychle prohledej svá hesla uložená na DuckDuckGo.";
+
+/* Title shown to the user when adding the Search Passwords lock screen widget */
+"lock.screen.widget.passwords.title" = "Prohledat hesla";
+
 /* Description shown to the user when adding the Search lock screen widget */
 "lock.screen.widget.search.description" = "Okamžitě spustí soukromé vyhledávání v DuckDuckGo.";
 
@@ -45,6 +51,12 @@
 
 /* No comment provided by engineer. */
 "VPN Not Configured" = "VPN Not Configured";
+
+/* Description of search passwords widget in widget gallery */
+"widget.gallery.passwords.description" = "Rychle hledej svá hesla uložená v DuckDuckGo.";
+
+/* Display name for search passwords widget in widget gallery */
+"widget.gallery.passwords.display.name" = "Prohledat hesla";
 
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Vyhledávejte nebo navštěvujte své oblíbené weby soukromě jediným klepnutím.";
@@ -63,6 +75,9 @@
 
 /* Message shown in the favorites widget empty state. */
 "widget.no.favorites.message" = "Rychle navštivte své oblíbené stránky.";
+
+/* Text in passwords widget */
+"widget.passwords" = "Prohledat hesla";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Vyhledat prostřednictvím DuckDuckGo";

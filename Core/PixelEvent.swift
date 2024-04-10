@@ -212,7 +212,11 @@ extension Pixel {
         case autofillLoginsPasswordGenerationPromptDisplayed
         case autofillLoginsPasswordGenerationPromptConfirmed
         case autofillLoginsPasswordGenerationPromptDismissed
-        
+
+        case autofillLoginsLaunchWidgetHome
+        case autofillLoginsLaunchWidgetLock
+        case autofillLoginsLaunchAppShortcut
+
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
         
         case secureVaultError
@@ -839,7 +843,11 @@ extension Pixel.Event {
         case .autofillLoginsPasswordGenerationPromptDisplayed: return "m_autofill_logins_password_generation_prompt_displayed"
         case .autofillLoginsPasswordGenerationPromptConfirmed: return "m_autofill_logins_password_generation_prompt_confirmed"
         case .autofillLoginsPasswordGenerationPromptDismissed: return "m_autofill_logins_password_generation_prompt_dismissed"
-            
+
+        case .autofillLoginsLaunchWidgetHome: return "m_autofill_logins_launch_widget_home"
+        case .autofillLoginsLaunchWidgetLock: return "m_autofill_logins_launch_widget_lock"
+        case .autofillLoginsLaunchAppShortcut: return "m_autofill_logins_launch_app_shortcut"
+
         case .autofillJSPixelFired(let pixel):
             return "m_ios_\(pixel.pixelName)"
             

@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "dominik/sentry-appstore",
-        "revision" : "bb3b1995012adfd3efdc604f4fe23e37ac2af287"
+        "revision" : "a6c1429c8b13a2f5243049aa6a385b7c47980a2b"
       }
     },
     {
@@ -68,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
       "state" : {
-        "revision" : "6493e296934bf09277c03df45f11f4619711cb24",
-        "version" : "10.2.0"
+        "revision" : "6053999d6af384a716ab0ce7205dbab5d70ed1b3",
+        "version" : "11.0.1"
       }
     },
     {

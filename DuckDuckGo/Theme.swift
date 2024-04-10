@@ -132,4 +132,7 @@ protocol Theme {
 
     var privacyDashboardWebviewBackgroundColor: UIColor { get }
 
+    var onboardingBackgroundColor: UIColor { get }
+    var onboardingHeaderColor: UIColor { get }
+    var onboardingSubheaderColor: UIColor { get }
 }

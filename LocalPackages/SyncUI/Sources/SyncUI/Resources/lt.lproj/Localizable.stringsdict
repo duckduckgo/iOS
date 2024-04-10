@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bookmarks.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%# @sites @</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Your bookmarks for %2$@ and %1$d other sites can't sync because some of their fields exceed the character limit.</string>
+			<key>many</key>
+			<string>Your bookmarks for %2$@ and %1$d other sites can't sync because some of their fields exceed the character limit.</string>
+			<key>one</key>
+			<string>Jūsų %2$@ ir 1 kitos svetainės žymės negali būti sinchronizuojamos, nes kai kurie jų laukai viršija simbolių limitą.</string>
+			<key>other</key>
+			<string>Jūsų %2$@ ir %1$d kitų svetainių žymės negali būti sinchronizuojamos, nes kai kurie jų laukai viršija simbolių limitą.</string>
+			<key>zero</key>
+			<string>Jūsų %2$@ žymė negali būti sinchronizuojama, nes vienas iš jos laukų viršija simbolių limitą.</string>
+		</dict>
+	</dict>
+	<key>credentials.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Your passwords for %2$@ and %1$d other sites can't sync because some of their fields exceed the character limit.</string>
+			<key>many</key>
+			<string>Your passwords for %2$@ and %1$d other sites can't sync because some of their fields exceed the character limit.</string>
+			<key>one</key>
+			<string>Jūsų %2$@ ir 1 kitos svetainės slaptažodžių negalima sinchronizuoti, nes kai kurie jų laukai viršija simbolių limitą.</string>
+			<key>other</key>
+			<string>Jūsų slaptažodžiai, skirti %2$@ ir %1$d kitoms svetainėms, negali būti sinchronizuojami, nes kai kurie jų laukai viršija simbolių limitą.</string>
+			<key>zero</key>
+			<string>Jūsų %2$@ slaptažodžio negalima sinchronizuoti, nes vienas iš jo laukų viršija simbolių limitą.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

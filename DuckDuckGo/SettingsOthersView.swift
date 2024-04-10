@@ -38,6 +38,12 @@ struct SettingsOthersView: View {
                              action: { viewModel.presentLegacyView(.feedback) },
                              isButton: true)
 
+            // Send Crash Reports
+            SettingsCellView(label: UserText.settingsSendCrashReports,
+                             subtitle: UserText.settingsSendCrashReportsDescription,
+                             image: Image("SettingsGeneral"),
+                             accesory: .toggle(isOn: viewModel.sendCrashLogsBinding))
+
             // DuckDuckGo on Other Platforms
             SettingsCellView(label: UserText.duckduckgoOnOtherPlatforms,
                              image: Image("SettingsOtherPlatforms"),

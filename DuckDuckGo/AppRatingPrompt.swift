@@ -46,6 +46,8 @@ class AppRatingPrompt {
     }
     
     func registerUsage(onDate date: Date = Date()) {
+        guard storage.lastShown == nil else { return }
+
         if !date.isSameDay(storage.lastAccess), let currentUniqueAccessDays = storage.uniqueAccessDays {
             storage.uniqueAccessDays = currentUniqueAccessDays + 1
         }

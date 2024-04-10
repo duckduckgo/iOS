@@ -65,6 +65,7 @@ struct CrashCollectionOnboardingView: View {
                     .padding(.horizontal, 24)
                     .padding(.vertical, 20)
                 }
+                .modifier(ScrollDisabledIfAvailable(isDisabled: !model.isShowingReport))
 
                 VStack(spacing: 8) {
                     Button {
@@ -108,9 +109,9 @@ struct CrashCollectionOnboardingView: View {
 
     var reportDetailsButton: some View {
         Button {
-            withAnimation {
+//            withAnimation {
                 model.isShowingReport.toggle()
-            }
+//            }
         } label: {
             HStack {
                 Text(model.isShowingReport ? UserText.crashReportHideDetails : UserText.crashReportShowDetails)
@@ -124,6 +125,18 @@ struct CrashCollectionOnboardingView: View {
         .buttonStyle(.plain)
         .foregroundColor(Color(designSystemColor: .textSecondary))
         .frame(height: 44)
+    }
+}
+
+
+private struct ScrollDisabledIfAvailable: ViewModifier {
+    let isDisabled: Bool
+
+    func body(content: Content) -> some View {
+        if #available(iOS 16.0, *) {
+            return content.scrollDisabled(isDisabled)
+        }
+        return content
     }
 }
 

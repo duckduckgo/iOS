@@ -17,14 +17,16 @@
 //  limitations under the License.
 //
 
+import Combine
 import Foundation
 import SwiftUI
 
-final class CrashCollectionOnboarding {
+final class CrashCollectionOnboarding: NSObject {
 
     init(appSettings: AppSettings) {
         self.appSettings = appSettings
         self.viewModel = CrashCollectionOnboardingViewModel(appSettings: appSettings)
+        super.init()
     }
 
     @MainActor
@@ -38,12 +40,34 @@ final class CrashCollectionOnboarding {
         let controller = UIHostingController(rootView: CrashCollectionOnboardingView(model: viewModel))
         controller.isModalInPresentation = true
 
+        if #available(iOS 16.0, *) {
+            let identifier = UISheetPresentationController.Detent.Identifier("crashReportHidden")
+            controller.sheetPresentationController?.detents = [.custom(identifier: identifier, resolver: { _ in return 540 }), .large()]
+            controller.sheetPresentationController?.delegate = self
+
+            detailsCancellable = viewModel.$isShowingReport
+                .dropFirst()
+                .removeDuplicates()
+                .sink { [weak controller] isShowingReport in
+                    guard let sheet = controller?.sheetPresentationController else {
+                        return
+                    }
+                    let newDetentIdentifier: UISheetPresentationController.Detent.Identifier = isShowingReport ? .large : identifier
+                    DispatchQueue.main.async {
+                        sheet.animateChanges {
+                            sheet.selectedDetentIdentifier = newDetentIdentifier
+                        }
+                    }
+                }
+        }
+
         viewModel.setReportDetails(with: payloads)
-        viewModel.onDismiss = { [weak viewController] shouldSend in
+        viewModel.onDismiss = { [weak self, weak viewController] shouldSend in
             if let shouldSend {
                 completion(shouldSend)
             }
             viewController?.dismiss(animated: true)
+            self?.detailsCancellable = nil
         }
 
         viewController.present(controller, animated: true)
@@ -55,4 +79,12 @@ final class CrashCollectionOnboarding {
 
     private let appSettings: AppSettings
     private let viewModel: CrashCollectionOnboardingViewModel
+    private var detailsCancellable: AnyCancellable?
+}
+
+@available(iOS 16.0, *)
+extension CrashCollectionOnboarding: UISheetPresentationControllerDelegate {
+    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
+        viewModel.isShowingReport = sheetPresentationController.selectedDetentIdentifier == .large
+    }
 }

@@ -89,6 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var isSyncInProgressCancellable: AnyCancellable?
 
     private let crashCollection = CrashCollection(platform: .iOS, log: .generalLog)
+    private var crashReportUploaderOnboarding: CrashCollectionOnboarding?
 
     // MARK: lifecycle
 
@@ -150,8 +151,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         sendReport()
                     }
                 }
+                self.crashReportUploaderOnboarding = crashReportUploaderOnboarding
             }
         }
+
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//            guard let viewController = self.window?.rootViewController else {
+//                return
+//            }
+//            let dataPayloads = ["test report details test report details test report details test report details test report details\n\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details".data(using: .utf8)!]
+//            let crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
+//            crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: dataPayloads, from: viewController) { shouldSend in
+//                if shouldSend {
+//                    print("sending")
+//                }
+//            }
+//            self.crashReportUploaderOnboarding = crashReportUploaderOnboarding
+//        }
 
         clearTmp()
 

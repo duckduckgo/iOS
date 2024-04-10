@@ -51,7 +51,7 @@ struct FavoriteView: View {
                             
                         } else if favorite.isDuckDuckGo {
                             
-                            Image("DuckDuckGo-Color-24")
+                            Image(.duckDuckGoColor24)
                                 .resizable()
                                 .frame(width: 45, height: 45, alignment: .center)
                             
@@ -90,7 +90,7 @@ struct LargeSearchFieldView: View {
 
                 HStack {
 
-                    Image("DuckDuckGo-Color-24")
+                    Image(.duckDuckGoColor24)
                         .frame(width: 24, height: 24, alignment: .leading)
 
                     Text(UserText.searchDuckDuckGo)
@@ -99,7 +99,7 @@ struct LargeSearchFieldView: View {
 
                     Spacer()
 
-                    Image("Find-Search-20")
+                    Image(.findSearch20)
                         .foregroundColor(Color(designSystemColor: .textPrimary).opacity(0.5))
 
                 }.padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
@@ -222,7 +222,7 @@ struct SearchWidgetView: View {
 
             VStack(alignment: .center, spacing: 15) {
 
-                Image("Logo")
+                Image(.logo)
                     .resizable()
                     .frame(width: 46, height: 46, alignment: .center)
                     .isHidden(false)
@@ -234,7 +234,7 @@ struct SearchWidgetView: View {
                         .fill(Color.widgetSearchFieldBackground)
                         .frame(width: 126, height: 46)
 
-                    Image("Find-Search-20")
+                    Image(.findSearch20)
                         .frame(width: 20, height: 20)
                         .padding(.leading)
                         .padding(.trailing, 13)
@@ -259,7 +259,7 @@ struct PasswordsWidgetView: View {
 
             VStack(alignment: .center, spacing: 6) {
 
-                Image("WidgetPasswordIllustration")
+                Image(.widgetPasswordIllustration)
                         .frame(width: 96, height: 72)
                         .isHidden(false)
                         .accessibilityHidden(true)

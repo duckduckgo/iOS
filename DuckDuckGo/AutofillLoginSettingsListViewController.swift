@@ -359,9 +359,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
     private func openSearchIfRequired() {
         // Don't auto open search if user has selected an account
-        if selectedAccount != nil {
-            return
-        }
+        guard selectedAccount == nil else { return }
 
         if openSearch {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {

@@ -548,7 +548,7 @@ class MainViewController: UIViewController {
     @objc func onAddressBarPositionChanged() {
         viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
         refreshViewsBasedOnAddressBarPosition(appSettings.currentAddressBarPosition)
-        updateAddressBarPositionRelatedColors()
+        updateStatusBarBackgroundColor()
     }
 
     @objc private func onShowFullURLAddressChanged() {
@@ -2411,13 +2411,19 @@ extension MainViewController: AutoClearWorker {
 
 extension MainViewController {
 
-    private func updateAddressBarPositionRelatedColors() {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        updateStatusBarBackgroundColor()
+    }
+
+    private func updateStatusBarBackgroundColor() {
         let theme = ThemeManager.shared.currentTheme
 
         if appSettings.currentAddressBarPosition == .bottom {
             viewCoordinator.statusBackground.backgroundColor = theme.backgroundColor
         } else {
-            if AppWidthObserver.shared.isLargeWidth {
+            if AppWidthObserver.shared.isPad && traitCollection.horizontalSizeClass == .regular {
                 viewCoordinator.statusBackground.backgroundColor = theme.tabsBarBackgroundColor
             } else {
                 viewCoordinator.statusBackground.backgroundColor = theme.omniBarBackgroundColor
@@ -2428,21 +2434,19 @@ extension MainViewController {
     private func decorate() {
         let theme = ThemeManager.shared.currentTheme
 
-        setNeedsStatusBarAppearanceUpdate()
+        updateStatusBarBackgroundColor()
 
-        updateAddressBarPositionRelatedColors()
+        setNeedsStatusBarAppearanceUpdate()
 
         view.backgroundColor = theme.mainViewBackgroundColor
 
         viewCoordinator.navigationBarContainer.backgroundColor = theme.barBackgroundColor
         viewCoordinator.navigationBarContainer.tintColor = theme.barTintColor
-        
-        
+
         viewCoordinator.toolbar.barTintColor = theme.barBackgroundColor
         viewCoordinator.toolbar.tintColor = theme.barTintColor
 
         viewCoordinator.toolbarTabSwitcherButton.tintColor = theme.barTintColor
-        
         
         viewCoordinator.logoText.tintColor = theme.ddgTextTintColor
     }

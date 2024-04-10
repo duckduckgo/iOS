@@ -31,11 +31,13 @@ public struct PrimaryButtonStyle: ButtonStyle {
     }
     
     public func makeBody(configuration: Configuration) -> some View {
-        let isLight = colorScheme == .light
-        let standardBackgroundColor = isLight ? Color.blueBase : Color.blue30
-        let disabledBackgroundColor = isLight ? Color.black.opacity(0.06) : Color.white.opacity(0.18)
-        let standardForegroundColor = isLight ? Color.white : Color.black.opacity(0.84)
-        let disabledForegroundColor = isLight ? Color.black.opacity(0.36) : Color.white.opacity(0.36)
+        let isDark = colorScheme == .dark
+        let standardBackgroundColor = isDark ? Color.blue30 : Color.blueBase
+        let pressedBackgroundColor = isDark ? Color.blueBase : Color.blue70
+        let disabledBackgroundColor = isDark ? Color.white.opacity(0.18) : Color.black.opacity(0.06)
+        let standardForegroundColor = isDark ? Color.black.opacity(0.84) : Color.white
+        let pressedForegroundColor = isDark ? Color.black.opacity(0.84) : Color.white
+        let disabledForegroundColor = isDark ? Color.white.opacity(0.36) : Color.black.opacity(0.36)
         let backgroundColor = disabled ? disabledBackgroundColor : standardBackgroundColor
         let foregroundColor = disabled ? disabledForegroundColor : standardForegroundColor
 
@@ -44,10 +46,10 @@ public struct PrimaryButtonStyle: ButtonStyle {
             .multilineTextAlignment(.center)
             .lineLimit(nil)
             .font(Font(UIFont.boldAppFont(ofSize: compact ? Consts.fontSize - 1 : Consts.fontSize)))
-            .foregroundColor(configuration.isPressed ? standardForegroundColor.opacity(Consts.pressedOpacity) : foregroundColor)
+            .foregroundColor(configuration.isPressed ? pressedForegroundColor : foregroundColor)
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity, maxHeight: compact ? Consts.height - 10 : Consts.height)
-            .background(configuration.isPressed ? standardBackgroundColor.opacity(Consts.pressedOpacity) : backgroundColor)
+            .background(configuration.isPressed ? pressedBackgroundColor : backgroundColor)
             .cornerRadius(Consts.cornerRadius)
     }
 }

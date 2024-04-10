@@ -103,6 +103,7 @@ public struct GhostButtonStyle: ButtonStyle {
             .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Consts.height)
             .background(backgroundColor(configuration.isPressed))
             .cornerRadius(Consts.cornerRadius)
+            .contentShape(Rectangle()) // Makes whole button area tappable, when there's no background
     }
     
     private func foregroundColor(_ isPressed: Bool) -> Color {

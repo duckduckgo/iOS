@@ -131,7 +131,7 @@ public struct GhostButtonStyle: ButtonStyle {
 }
 
 private enum Consts {
-    static let cornerRadius: CGFloat = 12
+    static let cornerRadius: CGFloat = 8
     static let height: CGFloat = 50
     static let fontSize: CGFloat = 16
     static let pressedOpacity: CGFloat = 0.7

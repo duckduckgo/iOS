@@ -90,20 +90,41 @@ public struct SecondaryButtonStyle: ButtonStyle {
 
 public struct GhostButtonStyle: ButtonStyle {
     @Environment(\.colorScheme) private var colorScheme
-
+    
     public init() {}
-    private var foregroundColor: Color {
-        colorScheme == .light ? .blueBase : .white
-    }
     
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(Font(UIFont.boldAppFont(ofSize: Consts.fontSize)))
-            .foregroundColor(configuration.isPressed ? foregroundColor.opacity(Consts.pressedOpacity) : foregroundColor.opacity(1))
+            .foregroundColor(foregroundColor(configuration.isPressed))
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Consts.height)
-            .background(Color.clear)
+            .background(backgroundColor(configuration.isPressed))
             .cornerRadius(Consts.cornerRadius)
+    }
+    
+    private func foregroundColor(_ isPressed: Bool) -> Color {
+        switch (colorScheme, isPressed) {
+        case (.dark, false):
+            return .blue30
+        case (.dark, true):
+            return .blue20
+        case (_, false):
+            return .blueBase
+        case (_, true):
+            return .blue70
+        }
+    }
+    
+    private func backgroundColor(_ isPressed: Bool) -> Color {
+        switch (colorScheme, isPressed) {
+        case (.light, true):
+            return .blueBase.opacity(0.2)
+        case (.dark, true):
+            return .blue30.opacity(0.2)
+        default:
+            return .clear
+        }
     }
 }
 

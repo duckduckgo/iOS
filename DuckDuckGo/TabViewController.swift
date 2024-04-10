@@ -1082,8 +1082,8 @@ extension TabViewController: WKNavigationDelegate {
         appRatingPrompt.registerUsage()
      
         if let scene = self.view.window?.windowScene,
-           appRatingPrompt.shouldPrompt(),
-           webView.url?.isDuckDuckGoSearch == true {
+           webView.url?.isDuckDuckGoSearch == true,
+           appRatingPrompt.shouldPrompt() {
             SKStoreReviewController.requestReview(in: scene)
             appRatingPrompt.shown()
         }

@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "graeme/fix-nearest-city-bug",
-        "revision" : "bd43122fe58c08b4c030b69ebfd555fef2ab1969"
+        "revision" : "ab1bdc3d99c8f1a660d558afb21eccb82da94dfc"
       }
     },
     {

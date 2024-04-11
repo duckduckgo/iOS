@@ -458,6 +458,21 @@ class MainViewController: UIViewController {
                                                selector: #selector(keyboardWillChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow),
+                                               name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide),
+                                               name: UIResponder.keyboardDidHideNotification, object: nil)
+    }
+
+    @objc
+    private func keyboardDidShow() {
+        Pixel.fire(pixel: .keyboardTriggeredOpen)
+    }
+
+    @objc
+    private func keyboardDidHide() {
+        Pixel.fire(pixel: .keyboardTriggeredClosed)
     }
 
     private func registerForSyncPausedNotifications() {

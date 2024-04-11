@@ -32,7 +32,10 @@ extension Pixel {
         case appLaunch
         case refreshPressed
         case pullToRefresh
-        
+
+        case keyboardTriggeredOpen
+        case keyboardTriggeredClosed
+
         case forgetAllPressedBrowsing
         case forgetAllPressedTabSwitching
         case forgetAllExecuted
@@ -661,7 +664,10 @@ extension Pixel.Event {
         case .appLaunch: return "ml"
         case .refreshPressed: return "m_r"
         case .pullToRefresh: return "m_pull-to-reload"
-            
+
+        case .keyboardTriggeredOpen: return "m_keyboard_triggered_open"
+        case .keyboardTriggeredClosed: return "m_keyboard_triggered_close"
+
         case .forgetAllPressedBrowsing: return "mf_bp"
         case .forgetAllPressedTabSwitching: return "mf_tp"
         case .forgetAllExecuted: return "mf"

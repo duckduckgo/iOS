@@ -1764,6 +1764,12 @@ extension MainViewController: OmniBarDelegate {
 
         if homeController != nil {
             Pixel.fire(pixel: .addressBarClickWhileOnNTP)
+        } else if let currentTab {
+            if currentTab.url?.isDuckDuckGoSearch == true {
+                Pixel.fire(pixel: .addressBarClickWhileOnSERP)
+            } else {
+                Pixel.fire(pixel: .addressBarClickWhileOnWebsite)
+            }
         }
 
         guard homeController == nil else { return }

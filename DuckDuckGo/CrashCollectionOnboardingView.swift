@@ -63,7 +63,7 @@ struct CrashCollectionOnboardingView: View {
                                         .cornerRadius(4.0)
 
                                     Text(reportDetails)
-                                        .font(Font(uiFont: .monospacedSystemFont(ofSize: 13, weight: .regular)))
+                                        .font(.crashReport)
                                         .secondaryTextStyle()
                                         .padding(24)
                                 }
@@ -108,7 +108,7 @@ struct CrashCollectionOnboardingView: View {
                         model.onDismiss(nil)
                     }
                 } label: {
-                    Text("Close")
+                    Text(UserText.keyCommandClose)
                 }
                 .buttonStyle(.plain)
             }
@@ -136,6 +136,12 @@ struct CrashCollectionOnboardingView: View {
     }
 }
 
+private extension Font {
+    static var crashReport: Font {
+        let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .caption2)
+        return Font(uiFont: .monospacedSystemFont(ofSize: descriptor.pointSize, weight: .regular))
+    }
+}
 
 private struct ScrollDisabledIfAvailable: ViewModifier {
     let isDisabled: Bool

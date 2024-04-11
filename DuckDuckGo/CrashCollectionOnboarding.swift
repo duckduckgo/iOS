@@ -21,6 +21,15 @@ import Combine
 import Foundation
 import SwiftUI
 
+final class CrashCollectionOnboardingViewController: UIHostingController<CrashCollectionOnboardingView> {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return .all
+        }
+        return .portrait
+    }
+}
+
 final class CrashCollectionOnboarding: NSObject {
 
     init(appSettings: AppSettings) {
@@ -37,7 +46,7 @@ final class CrashCollectionOnboarding: NSObject {
             return
         }
 
-        let controller = UIHostingController(rootView: CrashCollectionOnboardingView(model: viewModel))
+        let controller = CrashCollectionOnboardingViewController(rootView: CrashCollectionOnboardingView(model: viewModel))
         controller.isModalInPresentation = true
 
         if #available(iOS 16.0, *) {

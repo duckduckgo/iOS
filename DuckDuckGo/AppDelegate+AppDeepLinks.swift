@@ -60,6 +60,18 @@ extension AppDelegate {
             presentNetworkProtectionStatusSettingsModal()
 #endif
 
+        case .openPasswords:
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+                mainViewController.launchAutofillLogins(openSearch: true)
+            }
+            if let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+                let queryItems = components.queryItems,
+                let lsItem = queryItems.first(where: { $0.name == "ls" }) {
+                Pixel.fire(pixel: .autofillLoginsLaunchWidgetLock)
+            } else {
+                Pixel.fire(pixel: .autofillLoginsLaunchWidgetHome)
+            }
+
         default:
             guard app.applicationState == .active,
                   let currentTab = mainViewController.currentTab else {

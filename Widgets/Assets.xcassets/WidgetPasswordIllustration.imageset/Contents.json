@@ -1,6 +1,7 @@
 {
-  "colors" : [
+  "images" : [
     {
+      "filename" : "WidgetPasswordIllustration.svg",
       "idiom" : "universal"
     }
   ],

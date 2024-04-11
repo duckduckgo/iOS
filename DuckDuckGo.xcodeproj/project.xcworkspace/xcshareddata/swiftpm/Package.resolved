@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "dominik/sentry-appstore",
-        "revision" : "a6c1429c8b13a2f5243049aa6a385b7c47980a2b"
+        "revision" : "e55997d7e19741f8e393877893f3e4fe41a9c22b"
       }
     },
     {

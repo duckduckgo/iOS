@@ -1175,14 +1175,15 @@ class MainViewController: UIViewController {
         suggestionTrayController?.didHide()
     }
     
-    func launchAutofillLogins(with currentTabUrl: URL? = nil) {
+    func launchAutofillLogins(with currentTabUrl: URL? = nil, openSearch: Bool = false) {
         let appSettings = AppDependencyProvider.shared.appSettings
         let autofillSettingsViewController = AutofillLoginSettingsListViewController(
             appSettings: appSettings,
             currentTabUrl: currentTabUrl,
             syncService: syncService,
             syncDataProviders: syncDataProviders,
-            selectedAccount: nil
+            selectedAccount: nil,
+            openSearch: openSearch
         )
         autofillSettingsViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: autofillSettingsViewController)

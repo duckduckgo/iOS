@@ -36,6 +36,7 @@ struct OnboardingActions: View {
             })
             .buttonStyle(PrimaryButtonStyle())
             .disabled(!viewModel.isContinueEnabled)
+            .accessibilityIdentifier("Continue")
 
             Button(action: {
                 self.secondaryAction?()
@@ -43,6 +44,7 @@ struct OnboardingActions: View {
                 Text(viewModel.secondaryButtonTitle)
             })
             .buttonStyle(GhostButtonStyle())
+            .accessibilityIdentifier("Skip")
         }
     }
 }

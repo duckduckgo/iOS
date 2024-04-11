@@ -212,7 +212,11 @@ extension Pixel {
         case autofillLoginsPasswordGenerationPromptDisplayed
         case autofillLoginsPasswordGenerationPromptConfirmed
         case autofillLoginsPasswordGenerationPromptDismissed
-        
+
+        case autofillLoginsLaunchWidgetHome
+        case autofillLoginsLaunchWidgetLock
+        case autofillLoginsLaunchAppShortcut
+
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
         
         case secureVaultError
@@ -589,6 +593,7 @@ extension Pixel {
         case privacyProPromotionDialogShownVPN
         case privacyProVPNAccessRevokedDialogShown
         case privacyProVPNBetaStoppedWhenPrivacyProEnabled
+        case privacyProTransactionProgressNotHiddenAfter60s
 
         // MARK: Pixel Experiment
         case pixelExperimentEnrollment
@@ -839,7 +844,11 @@ extension Pixel.Event {
         case .autofillLoginsPasswordGenerationPromptDisplayed: return "m_autofill_logins_password_generation_prompt_displayed"
         case .autofillLoginsPasswordGenerationPromptConfirmed: return "m_autofill_logins_password_generation_prompt_confirmed"
         case .autofillLoginsPasswordGenerationPromptDismissed: return "m_autofill_logins_password_generation_prompt_dismissed"
-            
+
+        case .autofillLoginsLaunchWidgetHome: return "m_autofill_logins_launch_widget_home"
+        case .autofillLoginsLaunchWidgetLock: return "m_autofill_logins_launch_widget_lock"
+        case .autofillLoginsLaunchAppShortcut: return "m_autofill_logins_launch_app_shortcut"
+
         case .autofillJSPixelFired(let pixel):
             return "m_ios_\(pixel.pixelName)"
             
@@ -1198,6 +1207,7 @@ extension Pixel.Event {
         case .privacyProSubscriptionManagementEmail: return "m_privacy-pro_manage-email_edit_click"
         case .privacyProSubscriptionManagementPlanBilling: return "m_privacy-pro_settings_change-plan-or-billing_click"
         case .privacyProSubscriptionManagementRemoval: return "m_privacy-pro_settings_remove-from-device_click"
+        case .privacyProTransactionProgressNotHiddenAfter60s: return "m_privacy-pro_progress_not_hidden_after_60s"
 
         // MARK: Pixel Experiment
         case .pixelExperimentEnrollment: return "pixel_experiment_enrollment"

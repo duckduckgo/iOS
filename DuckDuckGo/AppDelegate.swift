@@ -156,20 +156,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-//            guard let viewController = self.window?.rootViewController else {
-//                return
-//            }
-//            let dataPayloads = ["test report details test report details test report details test report details test report details\n\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details".data(using: .utf8)!]
-//            let crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
-//            crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: dataPayloads, from: viewController) { shouldSend in
-//                if shouldSend {
-//                    print("sending")
-//                }
-//            }
-//            self.crashReportUploaderOnboarding = crashReportUploaderOnboarding
-//        }
-
         clearTmp()
 
         _ = DefaultUserAgentManager.shared

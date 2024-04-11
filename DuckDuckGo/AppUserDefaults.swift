@@ -71,6 +71,8 @@ public class AppUserDefaults: AppSettings {
         static let autofillIsNewInstallForOnByDefault = "com.duckduckgo.ios.autofillIsNewInstallForOnByDefault"
 
         static let favoritesDisplayMode = "com.duckduckgo.ios.favoritesDisplayMode"
+
+        static let crashCollectionOptInStatus = "com.duckduckgo.ios.crashCollectionOptInStatus"
     }
 
     private struct DebugKeys {
@@ -343,8 +345,17 @@ public class AppUserDefaults: AppSettings {
         }
     }
 
-    @UserDefaultsWrapper(key: .sendCrashLogs, defaultValue: nil)
-    var sendCrashLogs: Bool?
+    var crashCollectionOptInStatus: CrashCollectionOptInStatus {
+        get {
+            guard let string = userDefaults?.string(forKey: Keys.crashCollectionOptInStatus), let optInStatus = CrashCollectionOptInStatus(rawValue: string) else {
+                return .undetermined
+            }
+            return optInStatus
+        }
+        set {
+            userDefaults?.setValue(newValue.rawValue, forKey: Keys.crashCollectionOptInStatus)
+        }
+    }
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

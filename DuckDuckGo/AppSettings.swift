@@ -77,5 +77,5 @@ protocol AppSettings: AnyObject {
     var isSyncBookmarksPaused: Bool { get }
     var isSyncCredentialsPaused: Bool { get }
 
-    var sendCrashLogs: Bool? { get set }
+    var crashCollectionOptInStatus: CrashCollectionOptInStatus { get set }
 }

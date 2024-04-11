@@ -388,10 +388,10 @@ final class SettingsViewModel: ObservableObject {
         )
     }
 
-    var sendCrashLogsBinding: Binding<Bool> {
+    var crashCollectionOptInStatusBinding: Binding<Bool> {
         Binding<Bool>(
-            get: { self.state.sendCrashLogs ?? false },
-            set: { self.state.sendCrashLogs = $0 }
+            get: { self.state.crashCollectionOptInStatus == .optedIn },
+            set: { self.state.crashCollectionOptInStatus = $0 ? .optedIn : .optedOut }
         )
     }
 
@@ -467,7 +467,7 @@ extension SettingsViewModel {
             allowUniversalLinks: appSettings.allowUniversalLinks,
             activeWebsiteAccount: nil,
             version: versionProvider.versionAndBuildNumber,
-            sendCrashLogs: appSettings.sendCrashLogs,
+            crashCollectionOptInStatus: appSettings.crashCollectionOptInStatus,
             debugModeEnabled: featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild,
             voiceSearchEnabled: AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled,
             speechRecognitionAvailable: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,

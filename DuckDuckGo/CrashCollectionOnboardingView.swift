@@ -79,8 +79,8 @@ struct CrashCollectionOnboardingView: View {
             VStack(spacing: 8) {
                 Button {
                     withAnimation {
-                        model.sendCrashLogs = true
-                        model.onDismiss(true)
+                        model.crashCollectionOptInStatus = .optedIn
+                        model.onDismiss(.optedIn)
                     }
                 } label: {
                     Text(UserText.crashReportAlwaysSend)
@@ -90,8 +90,8 @@ struct CrashCollectionOnboardingView: View {
 
                 Button {
                     withAnimation {
-                        model.sendCrashLogs = false
-                        model.onDismiss(false)
+                        model.crashCollectionOptInStatus = .optedOut
+                        model.onDismiss(.optedOut)
                     }
                 } label: {
                     Text(UserText.crashReportNeverSend)
@@ -105,7 +105,7 @@ struct CrashCollectionOnboardingView: View {
             ToolbarItemGroup(placement: .topBarLeading) {
                 Button {
                     withAnimation {
-                        model.onDismiss(nil)
+                        model.onDismiss(.undetermined)
                     }
                 } label: {
                     Text(UserText.keyCommandClose)

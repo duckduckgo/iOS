@@ -147,11 +147,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                 let dataPayloads = payloads.map { $0.jsonRepresentation() }
                 let crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
-                crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: dataPayloads, from: viewController) { shouldSend in
-                    if shouldSend {
-                        sendReport()
-                    }
-                }
+                crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: dataPayloads, from: viewController, sendReport: sendReport)
                 self.crashReportUploaderOnboarding = crashReportUploaderOnboarding
             }
         }

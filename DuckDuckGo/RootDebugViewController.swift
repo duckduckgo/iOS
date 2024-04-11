@@ -145,7 +145,7 @@ class RootDebugViewController: UITableViewController {
             case .openVanillaBrowser:
                 openVanillaBrowser(nil)
             case .resetSendCrashLogs:
-                AppUserDefaults().sendCrashLogs = nil
+                AppUserDefaults().crashCollectionOptInStatus = .undetermined
             }
         }
     }

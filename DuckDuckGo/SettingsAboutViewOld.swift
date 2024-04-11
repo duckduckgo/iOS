@@ -41,7 +41,7 @@ struct SettingsAboutViewOld: View {
 
             SettingsCellView(label: UserText.settingsSendCrashReports,
                              subtitle: UserText.settingsSendCrashReportsDescription,
-                             accesory: .toggle(isOn: viewModel.sendCrashLogsBinding))
+                             accesory: .toggle(isOn: viewModel.crashCollectionOptInStatusBinding))
         }
 
     }

@@ -80,7 +80,7 @@ struct AboutViewVersion: View {
 
             // Send Crash Reports
             SettingsCellView(label: UserText.settingsSendCrashReports,
-                             accesory: .toggle(isOn: viewModel.sendCrashLogsBinding))
+                             accesory: .toggle(isOn: viewModel.crashCollectionOptInStatusBinding))
         }
     }
 }

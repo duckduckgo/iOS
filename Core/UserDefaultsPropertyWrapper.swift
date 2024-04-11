@@ -127,8 +127,6 @@ public struct UserDefaultsWrapper<T> {
         case didRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didRefreshTimestamp"
         case didBurnTimestamp = "com.duckduckgo.ios.userBehavior.didBurnTimestamp"
 
-        case sendCrashLogs = "com.duckduckgo.ios.sendCrashLogs"
-
         case pixelExperimentInstalled = "com.duckduckgo.ios.pixel.experiment.installed"
         case pixelExperimentCohort = "com.duckduckgo.ios.pixel.experiment.cohort"
         case pixelExperimentEnrollmentDate = "com.duckduckgo.ios.pixel.experiment.enrollment.date"

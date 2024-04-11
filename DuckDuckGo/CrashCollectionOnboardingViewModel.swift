@@ -27,7 +27,7 @@ final class CrashCollectionOnboardingViewModel: ObservableObject {
     }
 
     let appSettings: AppSettings
-    var onDismiss: (Bool?) -> Void = { _ in }
+    var onDismiss: (CrashCollectionOptInStatus) -> Void = { _ in }
 
     /// Used by the presenting controller. Follows `isShowingReport` but with a delay when setting that one to `true`.
     @Published var isViewExpanded: Bool = false
@@ -53,12 +53,12 @@ final class CrashCollectionOnboardingViewModel: ObservableObject {
         reportDetails = String(data: firstPayload, encoding: .utf8)
     }
 
-    var sendCrashLogs: Bool? {
+    var crashCollectionOptInStatus: CrashCollectionOptInStatus {
         get {
-            appSettings.sendCrashLogs
+            appSettings.crashCollectionOptInStatus
         }
         set {
-            appSettings.sendCrashLogs = newValue
+            appSettings.crashCollectionOptInStatus = newValue
         }
     }
 }

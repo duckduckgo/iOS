@@ -21,6 +21,10 @@ import Combine
 import Foundation
 import SwiftUI
 
+enum CrashCollectionOptInStatus: String {
+    case undetermined, optedIn, optedOut
+}
+
 final class CrashCollectionOnboardingViewController: UIHostingController<CrashCollectionOnboardingView> {
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .pad {
@@ -39,10 +43,12 @@ final class CrashCollectionOnboarding: NSObject {
     }
 
     @MainActor
-    func presentOnboardingIfNeeded(for payloads: [Data], from viewController: UIViewController, completion: @escaping (Bool) -> Void) {
+    func presentOnboardingIfNeeded(for payloads: [Data], from viewController: UIViewController, sendReport: @escaping () -> Void) {
         let isCurrentlyPresenting = viewController.presentedViewController != nil
         guard shouldPresentOnboarding, !isCurrentlyPresenting else {
-            completion(appSettings.sendCrashLogs == true)
+            if appSettings.crashCollectionOptInStatus == .optedIn {
+                sendReport()
+            }
             return
         }
 
@@ -71,9 +77,9 @@ final class CrashCollectionOnboarding: NSObject {
         }
 
         viewModel.setReportDetails(with: payloads)
-        viewModel.onDismiss = { [weak self, weak viewController] shouldSend in
-            if let shouldSend {
-                completion(shouldSend)
+        viewModel.onDismiss = { [weak self, weak viewController] optInStatus in
+            if optInStatus == .optedIn {
+                sendReport()
             }
             viewController?.dismiss(animated: true)
             self?.detailsCancellable = nil
@@ -83,7 +89,7 @@ final class CrashCollectionOnboarding: NSObject {
     }
 
     private var shouldPresentOnboarding: Bool {
-        appSettings.sendCrashLogs == nil
+        appSettings.crashCollectionOptInStatus == .undetermined
     }
 
     private let appSettings: AppSettings

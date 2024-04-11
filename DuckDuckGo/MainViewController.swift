@@ -1774,15 +1774,18 @@ extension MainViewController: OmniBarDelegate {
         }
     }
 
-    func onCancelPressed() {
-        fireControllerAwarePixel(ntp: .addressBarCancelPressedOnNTP,
-                                 serp: .addressBarCancelPressedOnSERP,
-                                 website: .addressBarCancelPressedOnWebsite)
-
+    func performCancel() {
         dismissOmniBar()
         hideSuggestionTray()
         homeController?.omniBarCancelPressed()
         self.showMenuHighlighterIfNeeded()
+    }
+
+    func onCancelPressed() {
+        fireControllerAwarePixel(ntp: .addressBarCancelPressedOnNTP,
+                                 serp: .addressBarCancelPressedOnSERP,
+                                 website: .addressBarCancelPressedOnWebsite)
+        performCancel()
     }
 
     func onClearPressed() {
@@ -1796,12 +1799,14 @@ extension MainViewController: OmniBarDelegate {
         return tabURL.isDuckDuckGoSearch
     }
     
-    func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
+    func onTextFieldWillBeginEditing(_ omniBar: OmniBar, tapped: Bool) {
         if let currentTab {
             viewCoordinator.omniBar.refreshText(forUrl: currentTab.url, forceFullURL: true)
         }
 
-        fireControllerAwarePixel(ntp: .addressBarClickOnNTP, serp: .addressBarClickOnSERP, website: .addressBarClickOnWebsite)
+        if tapped {
+            fireControllerAwarePixel(ntp: .addressBarClickOnNTP, serp: .addressBarClickOnSERP, website: .addressBarClickOnWebsite)
+        }
 
         guard homeController == nil else { return }
         
@@ -2207,7 +2212,7 @@ extension MainViewController: TabDelegate {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
         select(tabAt: index)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.onCancelPressed()
+            self.performCancel()
         }
     }
 
@@ -2278,6 +2283,7 @@ extension MainViewController: BookmarksDelegate {
 extension MainViewController: TabSwitcherButtonDelegate {
     
     func launchNewTab(_ button: TabSwitcherButton) {
+        Pixel.fire(pixel: .tabSwitchLongPressNewTab)
         newTab()
     }
 

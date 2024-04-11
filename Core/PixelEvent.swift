@@ -54,7 +54,12 @@ extension Pixel {
         case tabSwitcherNewLayoutSeen
         case tabSwitcherListEnabled
         case tabSwitcherGridEnabled
-        
+        case tabSwitcherNewTab
+        case tabSwitcherSwitchTabs
+        case tabSwitcherClickCloseTab
+        case tabSwitcherSwipeCloseTab
+        case tabSwitchLongPressNewTab
+
         case settingsDoNotSellShown
         case settingsDoNotSellOn
         case settingsDoNotSellOff
@@ -695,7 +700,12 @@ extension Pixel.Event {
         case .tabSwitcherNewLayoutSeen: return "m_ts_n"
         case .tabSwitcherListEnabled: return "m_ts_l"
         case .tabSwitcherGridEnabled: return "m_ts_g"
-            
+        case .tabSwitcherNewTab: return "m_tab_manager_new_tab_click"
+        case .tabSwitcherSwitchTabs: return "m_tab_manager_switch_tabs"
+        case .tabSwitcherClickCloseTab: return "m_tab_manager_close_tab_click"
+        case .tabSwitcherSwipeCloseTab: return "m_tab_manager_close_tab_swipe"
+        case .tabSwitchLongPressNewTab: return "m_tab_manager_long_press_new_tab"
+
         case .settingsDoNotSellShown: return "ms_dns"
         case .settingsDoNotSellOn: return "ms_dns_on"
         case .settingsDoNotSellOff: return "ms_dns_off"

@@ -174,8 +174,19 @@ class OmniBar: UIView {
             guard let range = field.selectedTextRange else { return }
             UIPasteboard.general.string = field.text(in: range)
         }
+
+        textField.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector( onTextFieldTapped )))
     }
     
+    var textFieldTapped = false
+
+    @objc
+    private func onTextFieldTapped() {
+        print(#function, "Pixel")
+        textFieldTapped = true
+        textField.becomeFirstResponder()
+    }
+
     private func configureSeparator() {
         separatorHeightConstraint.constant = 1.0 / UIScreen.main.scale
     }
@@ -488,9 +499,10 @@ extension OmniBar: UITextFieldDelegate {
         self.refreshState(self.state.onEditingStartedState)
         return true
     }
-    
+
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        omniDelegate?.onTextFieldWillBeginEditing(self)
+        omniDelegate?.onTextFieldWillBeginEditing(self, tapped: textFieldTapped)
+        textFieldTapped = false
         return true
     }
 

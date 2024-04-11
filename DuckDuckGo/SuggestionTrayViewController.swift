@@ -20,6 +20,9 @@
 import UIKit
 import Core
 import Bookmarks
+import Suggestions
+import Persistence
+import History
 
 class SuggestionTrayViewController: UIViewController {
     
@@ -41,8 +44,9 @@ class SuggestionTrayViewController: UIViewController {
     private var autocompleteController: AutocompleteViewController?
     private var favoritesOverlay: FavoritesOverlay?
     private var willRemoveAutocomplete = false
-    private let bookmarksSearch: BookmarksStringSearch
+    private let bookmarksDatabase: CoreDataDatabase
     private let favoritesModel: FavoritesListInteracting
+    private let historyCoordinator: HistoryCoordinating
 
     var selectedSuggestion: Suggestion? {
         autocompleteController?.selectedSuggestion
@@ -72,9 +76,10 @@ class SuggestionTrayViewController: UIViewController {
         }
     }
     
-    required init?(coder: NSCoder, favoritesViewModel: FavoritesListInteracting, bookmarksSearch: BookmarksStringSearch) {
+    required init?(coder: NSCoder, favoritesViewModel: FavoritesListInteracting, bookmarksDatabase: CoreDataDatabase, historyCoordinator: HistoryCoordinating) {
         self.favoritesModel = favoritesViewModel
-        self.bookmarksSearch = bookmarksSearch
+        self.bookmarksDatabase = bookmarksDatabase
+        self.historyCoordinator = historyCoordinator
         super.init(coder: coder)
     }
     
@@ -218,6 +223,7 @@ class SuggestionTrayViewController: UIViewController {
         controller.delegate = favoritesOverlayDelegate
         install(controller: controller, completion: onInstall)
         favoritesOverlay = controller
+        applyContentInset(contentInsets)
     }
     
     private func canDisplayAutocompleteSuggestions(forQuery query: String) -> Bool {
@@ -236,11 +242,12 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     private func installAutocompleteSuggestions() {
-        let controller = AutocompleteViewController.loadFromStoryboard(bookmarksSearch: bookmarksSearch)
+        let controller = AutocompleteViewController.loadFromStoryboard(bookmarksDatabase: bookmarksDatabase, historyCoordinator: historyCoordinator)
         install(controller: controller)
         controller.delegate = autocompleteDelegate
         controller.presentationDelegate = self
         autocompleteController = controller
+        applyContentInset(contentInsets)
     }
 
     private func removeAutocomplete() {
@@ -270,7 +277,9 @@ class SuggestionTrayViewController: UIViewController {
         })
     }
     
+    var contentInsets = UIEdgeInsets.zero
     func applyContentInset(_ inset: UIEdgeInsets) {
+        self.contentInsets = inset
         autocompleteController?.tableView.contentInset = inset
         favoritesOverlay?.collectionView.contentInset = inset
     }
@@ -292,10 +301,11 @@ extension SuggestionTrayViewController: AutocompleteViewControllerPresentationDe
     
 }
 
-extension SuggestionTrayViewController: Themable {
+extension SuggestionTrayViewController {
     
     // Only gets called if system theme changes while tray is open
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         // only update the color if one has been set
         if backgroundView.backgroundColor != nil {
             backgroundView.backgroundColor = theme.tableCellBackgroundColor

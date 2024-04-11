@@ -1,4 +1,3 @@
-
 DuckDuckGo-sovellus tarjoaa kattavimman yksityisyydensuojan verkossa napin painalluksella. Yhdellä latauksella saat uuden arkiselaimen, joka tarjoaa saumattoman suojan, kun haet ja selaat, ja seurantasuojaukset, kun vastaanotat sähköposteja. Monia näistä suojauksista ei tarjota oletusarvoisesti suosituimmissa selaimissa.
 
 OMINAISUUKSIEN KOHOKOHDAT 
@@ -16,8 +15,6 @@ JOKAPÄIVÄISTÄ YKSITYISYYDEN HALLINTAA
 • Napauta Fire Button-painiketta, Poista tiedot – Tyhjennä välilehdet ja selaustietosi Fire Button -painikkeella.
 
 • Ilmoita yksityisyysasetuksestasi Global Privacy Control (GPC) -toiminnolla – sovellukseemme sisäänrakennettu GPC auttaa sinua ilmaisemaan kieltäytymisoikeutesi automaattisesti käskemällä sivustoja olemaan myymättä tai jakamatta henkilötietojasi. Se, voidaanko sitä käyttää laillisten oikeuksiesi (esimerkiksi nykyisen tai tulevan CCPA:n tai yleisen tietosuoja-asetuksen vaatimusten) täytäntöönpanoon, riippuu oman lainkäyttöalueesi laeista. 
-
-Huomautus kolmannen osapuolen seurantalaitteiden lataussuojauksesta DuckDuckGo-mainosnapsautusten jälkeen: Kolmannen osapuolen seurantasuojauksemme ylittää sen, mitä saat suosituimmissa selaimissa oletusarvoisesti, mutta pyrimme jatkuvasti tekemään siitä kattavamman. Tällä hetkellä, jos mainostaja haluaa havaita yksityisten DuckDuckGo-hakumainosten konversioita omalla sivustollaan, kolmannen osapuolen seurantalaitteiden lataussuojaus ei estä bat.bing.com-pyyntöjen lataamista mainostajan verkkosivustolle DuckDuckGo-mainosklikkausten jälkeen, mutta pyynnöt pysäytetään kaikissa muissa yhteyksissä. Tämä johtuu siitä, että DuckDuckGon Private Search -haun mainonta tapahtuu yhteistyössä Microsoftin kanssa. Osana kumppanuutta, mainosten katselu DuckDuckGossa on nimetöntä, ja Microsoft on sitoutunut olemaan profiloimamatta käyttäjiemme mainosnapsautuksia.   
 
 Lue lisää tästä ja jäljityssuojastamme osoitteessa https://help.duckduckgo.com/privacy/web-tracking-protections/. 
 

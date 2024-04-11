@@ -31,6 +31,12 @@
 /* Title shown to the user when adding the Fire Button lock screen widget */
 "lock.screen.widget.fire.title" = "Fire Button";
 
+/* Description shown to the user when adding the Search Passwords lock screen widget */
+"lock.screen.widget.passwords.description" = "Kayıtlı DuckDuckGo şifrelerinizi hızlıca arayın.";
+
+/* Title shown to the user when adding the Search Passwords lock screen widget */
+"lock.screen.widget.passwords.title" = "Şifreleri ara";
+
 /* Description shown to the user when adding the Search lock screen widget */
 "lock.screen.widget.search.description" = "DuckDuckGo'da hemen özel bir arama yapın.";
 
@@ -45,6 +51,12 @@
 
 /* No comment provided by engineer. */
 "VPN Not Configured" = "VPN Not Configured";
+
+/* Description of search passwords widget in widget gallery */
+"widget.gallery.passwords.description" = "Kayıtlı DuckDuckGo şifrelerinizi hızlıca arayın.";
+
+/* Display name for search passwords widget in widget gallery */
+"widget.gallery.passwords.display.name" = "Şifreleri ara";
 
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Tek bir dokunuşla favori sitelerinizi gizlice arayın veya ziyaret edin.";
@@ -63,6 +75,9 @@
 
 /* Message shown in the favorites widget empty state. */
 "widget.no.favorites.message" = "En sevdiğiniz siteleri hızlıca ziyaret edin.";
+
+/* Text in passwords widget */
+"widget.passwords" = "Şifreleri ara";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "DuckDuckGo'da Ara";

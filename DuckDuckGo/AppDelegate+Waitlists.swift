@@ -22,6 +22,7 @@ import Core
 import BackgroundTasks
 import NetworkProtection
 import Waitlist
+import BrowserServicesKit
 
 extension AppDelegate {
 
@@ -36,45 +37,19 @@ extension AppDelegate {
     func checkWaitlists() {
 
 #if NETWORK_PROTECTION
-        checkNetworkProtectionWaitlist()
+        if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() {
+            checkNetworkProtectionWaitlist()
+        }
 #endif
-        checkWaitlistBackgroundTasks()
-
     }
 
 #if NETWORK_PROTECTION
     private func checkNetworkProtectionWaitlist() {
         let accessController = NetworkProtectionAccessController()
-        if accessController.isPotentialOrCurrentWaitlistUser {
-            DailyPixel.fire(pixel: .networkProtectionWaitlistUserActive)
-        }
 
         VPNWaitlist.shared.fetchInviteCodeIfAvailable { [weak self] error in
             guard error == nil else {
-#if !DEBUG
-                if error == .alreadyHasInviteCode, UIApplication.shared.applicationState == .active {
-                    // If the user already has an invite code but their auth token has gone missing, attempt to redeem it again.
-                    let tokenStore = NetworkProtectionKeychainTokenStore()
-                    let waitlistStorage = VPNWaitlist.shared.waitlistStorage
-                    if let inviteCode = waitlistStorage.getWaitlistInviteCode(), !tokenStore.isFeatureActivated {
-                        let pixel: Pixel.Event = .networkProtectionWaitlistRetriedInviteCodeRedemption
-
-                        do {
-                            if let token = try tokenStore.fetchToken() {
-                                DailyPixel.fireDailyAndCount(pixel: pixel, withAdditionalParameters: [ "tokenState": "found" ])
-                            } else {
-                                DailyPixel.fireDailyAndCount(pixel: pixel, withAdditionalParameters: [ "tokenState": "nil" ])
-                            }
-                        } catch {
-                            DailyPixel.fireDailyAndCount(pixel: pixel, error: error, withAdditionalParameters: [ "tokenState": "error" ])
-                        }
-
-                        self?.fetchVPNWaitlistAuthToken(inviteCode: inviteCode)
-                    }
-                }
-#endif
                 return
-
             }
 
             guard let inviteCode = VPNWaitlist.shared.waitlistStorage.getWaitlistInviteCode() else {
@@ -86,26 +61,12 @@ extension AppDelegate {
     }
 #endif
 
-    private func checkWaitlistBackgroundTasks() {
-        BGTaskScheduler.shared.getPendingTaskRequests { tasks in
-
-#if NETWORK_PROTECTION
-            let hasVPNWaitlistTask = tasks.contains { $0.identifier == VPNWaitlist.backgroundRefreshTaskIdentifier }
-            if !hasVPNWaitlistTask {
-                VPNWaitlist.shared.scheduleBackgroundRefreshTask()
-            }
-#endif
-        }
-    }
-
 #if NETWORK_PROTECTION
     func fetchVPNWaitlistAuthToken(inviteCode: String) {
         Task {
             do {
                 try await NetworkProtectionCodeRedemptionCoordinator().redeem(inviteCode)
                 VPNWaitlist.shared.sendInviteCodeAvailableNotification()
-
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionWaitlistNotificationShown)
             } catch {}
         }
     }

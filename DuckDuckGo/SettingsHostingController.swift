@@ -19,6 +19,7 @@
 
 import UIKit
 import SwiftUI
+import Core
 #if SUBSCRIPTION
 import Subscription
 #endif
@@ -48,8 +49,14 @@ class SettingsHostingController: UIHostingController<AnyView> {
             self?.navigationController?.dismiss(animated: true)
         }
 
-        let settingsView = SettingsView(viewModel: viewModel)
+        let settingsView: AnyView
+        switch PixelExperiment.cohort {
+        case .control, .noVariant, .none: settingsView = AnyView(SettingsView(viewModel: viewModel))
+        case .newSettings: settingsView = AnyView(SettingsRootView(viewModel: viewModel))
+        }
         self.rootView = AnyView(settingsView)
+
+        decorate()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -68,9 +75,10 @@ class SettingsHostingController: UIHostingController<AnyView> {
     }
 }
 
-extension SettingsHostingController: Themable {
+extension SettingsHostingController {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         // Apply Theme
         navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
         navigationController?.navigationBar.tintColor = theme.navigationBarTintColor

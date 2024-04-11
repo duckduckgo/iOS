@@ -30,10 +30,9 @@ final class SubscriptionITPViewModel: ObservableObject {
     var userScript: IdentityTheftRestorationPagesUserScript?
     var subFeature: IdentityTheftRestorationPagesFeature?
     var manageITPURL = URL.identityTheftRestoration
-    var viewTitle = UserText.subscriptionTitle
+    var viewTitle = UserText.settingsPProITRTitle
     
     enum Constants {
-        static let navigationBarHideThreshold = 15.0
         static let downloadableContent = ["application/pdf"]
         static let blankURL = "about:blank"
         static let externalSchemes =  ["tel", "sms", "facetime"]
@@ -41,11 +40,11 @@ final class SubscriptionITPViewModel: ObservableObject {
     
     // State variables
     var itpURL = URL.identityTheftRestoration
-    @Published var shouldShowNavigationBar: Bool = false
     @Published var canNavigateBack: Bool = false
     @Published var isDownloadableContent: Bool = false
     @Published var activityItems: [Any] = []
     @Published var attachmentURL: URL?
+    @Published var navigationError: Bool = false
     var webViewModel: AsyncHeadlessWebViewViewModel
     
     @Published var shouldNavigateToExternalURL: URL?
@@ -54,11 +53,7 @@ final class SubscriptionITPViewModel: ObservableObject {
     }
     
     private var currentURL: URL?
-    private static let allowedDomains = [
-        "duckduckgo.com",
-        "microsoftonline.com",
-        "duosecurity.com",
-    ]
+    private static let allowedDomains = [ "duckduckgo.com" ]
     
     private var externalLinksViewModel: SubscriptionExternalLinkViewModel?
     // Limit navigation to these external domains
@@ -80,15 +75,17 @@ final class SubscriptionITPViewModel: ObservableObject {
                                                           subFeature: subFeature,
                                                           settings: webViewSettings)
     }
-    
-    // Observe transaction status
+        
     private func setupSubscribers() async {
         
-        webViewModel.$scrollPosition
+        webViewModel.$navigationError
             .receive(on: DispatchQueue.main)
-            .throttle(for: .milliseconds(100), scheduler: DispatchQueue.main, latest: true)
-            .sink { [weak self] value in
-                self?.shouldShowNavigationBar = (value.y > Constants.navigationBarHideThreshold)
+            .sink { [weak self] error in
+                guard let strongSelf = self else { return }
+                DispatchQueue.main.async {
+                    strongSelf.navigationError = error != nil ? true : false
+                }
+                
             }
             .store(in: &cancellables)
         
@@ -134,10 +131,17 @@ final class SubscriptionITPViewModel: ObservableObject {
                 self?.canNavigateBack = value
             }
     }
+
     
-    func initializeView() {
+    func onFirstAppear() {
         webViewModel.navigationCoordinator.navigateTo(url: manageITPURL )
         Task { await setupSubscribers() }
+        Pixel.fire(pixel: .privacyProIdentityRestorationSettings)
+    }
+    
+    private func cleanUp() {
+        canGoBackCancellable?.cancel()
+        cancellables.removeAll()
     }
     
     private func downloadAttachment(from url: URL) async {
@@ -182,7 +186,8 @@ final class SubscriptionITPViewModel: ObservableObject {
     }
     
     deinit {
-        cancellables.removeAll()
+        cleanUp()
+        canGoBackCancellable = nil
         self.userScript = nil
         self.subFeature = nil
     }

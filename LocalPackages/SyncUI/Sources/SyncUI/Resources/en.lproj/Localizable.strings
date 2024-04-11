@@ -1,6 +1,12 @@
 /* Standard Buttons - Back Button */
 "back.button" = "Back";
 
+/* Do not translate - stringsdict entry */
+"bookmarks.invalid.objects.present.description" = "bookmarks.invalid.objects.present.description";
+
+/* Alert title for invalid bookmarks being filtered out of synced data */
+"bookmarks.invalid.objects.present.title" = "Some bookmarks are not syncing due to excessively long content in certain fields.";
+
 /* Sync Paused Errors - Bookmarks Limit Exceeded Action */
 "bookmarks.limit.exceeded.action" = "Manage Bookmarks";
 
@@ -39,6 +45,12 @@
 
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Sync and Back Up This Device";
+
+/* Do not translate - stringsdict entry */
+"credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
+
+/* Alert title for invalid logins being filtered out of synced data */
+"credentials.invalid.objects.present.title" = "Some logins are not syncing due to excessively long content in certain fields.";
 
 /* Sync Paused Errors - Credentials Limit Exceeded Action */
 "credentials.limit.exceeded.action" = "Manage Logins";

@@ -23,6 +23,7 @@ import DDGSync
 import WebKit
 import BrowserServicesKit
 import Persistence
+import History
 
 class TabManager {
 
@@ -31,8 +32,10 @@ class TabManager {
     private var tabControllerCache = [TabViewController]()
 
     private let bookmarksDatabase: CoreDataDatabase
+    private let historyManager: HistoryManager
     private let syncService: DDGSyncing
     private var previewsSource: TabPreviewsSource
+
     weak var delegate: TabDelegate?
 
     @UserDefaultsWrapper(key: .faviconTabsCacheNeedsCleanup, defaultValue: true)
@@ -42,19 +45,13 @@ class TabManager {
     init(model: TabsModel,
          previewsSource: TabPreviewsSource,
          bookmarksDatabase: CoreDataDatabase,
-         syncService: DDGSyncing,
-         delegate: TabDelegate) {
+         historyManager: HistoryManager,
+         syncService: DDGSyncing) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
+        self.historyManager = historyManager
         self.syncService = syncService
-        self.delegate = delegate
-        let index = model.currentIndex
-        let tab = model.tabs[index]
-        if tab.link != nil {
-            let controller = buildController(forTab: tab, inheritedAttribution: nil)
-            tabControllerCache.append(controller)
-        }
 
         registerForNotifications()
     }
@@ -68,7 +65,10 @@ class TabManager {
     @MainActor
     private func buildController(forTab tab: Tab, url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) -> TabViewController {
         let configuration =  WKWebViewConfiguration.persistent()
-        let controller = TabViewController.loadFromStoryboard(model: tab, bookmarksDatabase: bookmarksDatabase, syncService: syncService)
+        let controller = TabViewController.loadFromStoryboard(model: tab,
+                                                              bookmarksDatabase: bookmarksDatabase,
+                                                              historyManager: historyManager,
+                                                              syncService: syncService)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -137,7 +137,10 @@ class TabManager {
         model.insert(tab: tab, at: model.currentIndex + 1)
         model.select(tabAt: model.currentIndex + 1)
 
-        let controller = TabViewController.loadFromStoryboard(model: tab, bookmarksDatabase: bookmarksDatabase, syncService: syncService)
+        let controller = TabViewController.loadFromStoryboard(model: tab,
+                                                              bookmarksDatabase: bookmarksDatabase,
+                                                              historyManager: historyManager,
+                                                              syncService: syncService)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,
@@ -292,15 +295,6 @@ class TabManager {
     }
 }
 
-extension TabManager: Themable {
-    
-    func decorate(with theme: Theme) {
-        for tabController in tabControllerCache {
-            tabController.decorate(with: theme)
-        }
-    }
-    
-}
 
 // MARK: - Debugging Pixels
 

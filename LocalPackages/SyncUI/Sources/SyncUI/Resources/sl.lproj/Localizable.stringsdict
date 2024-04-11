@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bookmarks.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Your bookmarks for %2$@ and %1$d other sites can't sync because some of their fields exceed the character limit.</string>
+			<key>one</key>
+			<string>Vaših zaznamkov za %2$@ in eno drugo spletno mesto ni mogoče sinhronizirati, ker nekatera njihova polja presegajo omejitev števila znakov.</string>
+			<key>other</key>
+			<string>Vaših zaznamkov za %2$@ in druga spletna mesta (%1$d) ni mogoče sinhronizirati, ker nekatera njihova polja presegajo omejitev števila znakov.</string>
+			<key>two</key>
+			<string>Your bookmarks for %2$@ and %1$d other sites can't sync because some of their fields exceed the character limit.</string>
+			<key>zero</key>
+			<string>Vašega zaznamka za %2$@ ni mogoče sinhronizirati, ker eno od njegovih polj presega omejitev števila znakov.</string>
+		</dict>
+	</dict>
+	<key>credentials.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Your passwords for %2$@ and %1$d other sites can't sync because some of their fields exceed the character limit.</string>
+			<key>one</key>
+			<string>Vaših gesel za %2$@ in eno drugo spletno mesto ni mogoče sinhronizirati, ker nekatera njihova polja presegajo omejitev števila znakov.</string>
+			<key>other</key>
+			<string>Vaših gesel za %2$@ in druga spletna mesta (%1$d) ni mogoče sinhronizirati, ker nekatera njihova polja presegajo omejitev števila znakov.</string>
+			<key>two</key>
+			<string>Your passwords for %2$@ and %1$d other sites can't sync because some of their fields exceed the character limit.</string>
+			<key>zero</key>
+			<string>Vašega gesla za %2$@ ni mogoče sinhronizirati, ker eno od njegovih polj presega omejitev števila znakov.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

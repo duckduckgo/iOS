@@ -30,17 +30,17 @@ import Foundation
 /// In those scenarios a 'DailyPixelError' is returned denoting the reason.
 /// 
 public final class DailyPixel {
-    
+
     public enum Error: Swift.Error {
-        
+
         case alreadyFired
-        
+
     }
-    
+
     private enum Constant {
-        
+
         static let dailyPixelStorageIdentifier = "com.duckduckgo.daily.pixel.storage"
-        
+
     }
 
     private static let storage: UserDefaults = UserDefaults(suiteName: Constant.dailyPixelStorageIdentifier)!
@@ -53,6 +53,8 @@ public final class DailyPixel {
                             withAdditionalParameters params: [String: String] = [:],
                             includedParameters: [Pixel.QueryParameters] = [.atb, .appVersion],
                             onComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
+
+        if !pixel.hasBeenFiredToday(dailyPixelStorage: storage) {
         var key: String = pixel.name
 
         if let error = error {
@@ -106,17 +108,27 @@ public final class DailyPixel {
             onComplete: onCountComplete
         )
     }
-    
+
+    private static func updatePixelLastFireDate(pixel: Pixel.Event) {
+        storage.set(Date(), forKey: pixel.name)
+
     private static func updatePixelLastFireDate(forKey key: String) {
         storage.set(Date(), forKey: key)
     }
 
+}
+
+private extension Pixel.Event {
+
+    func hasBeenFiredToday(dailyPixelStorage: UserDefaults) -> Bool {
+        if let lastFireDate = dailyPixelStorage.object(forKey: name) as? Date {
     private static func hasBeenFiredToday(forKey key: String, dailyPixelStorage: UserDefaults) -> Bool {
         if let lastFireDate = dailyPixelStorage.object(forKey: key) as? Date {
             return Date().isSameDay(lastFireDate)
         }
         return false
     }
+
 
     private static func createSortedStringOfValues(from dict: [String: String], maxLength: Int = 50) -> String {
         let sortedKeys = dict.keys.sorted()

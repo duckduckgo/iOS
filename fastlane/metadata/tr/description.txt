@@ -1,4 +1,3 @@
-
 DuckDuckGo uygulaması, bir düğmeye basarak en kapsamlı çevrimiçi gizlilik korumasını sağlar. Tek bir indirme ile, arama yaparken ve tarayıcıda gezinirken sürekli bir koruma ve aldığınız e-postalar için izleme korumalarına erişim sağlar. Bu korumaların çoğu en popüler tarayıcılarda varsayılan olarak sunulmaz.
 
 ÖNE ÇIKAN ÖZELLİKLER 
@@ -20,8 +19,6 @@ GÜNLÜK GİZLİLİK KONTROLLERİ
 • Fire Düğmesine Dokunun, Verileri Silin - Fire Düğmemiz ile sekmelerinizi ve tarama verilerinizi temizleyin.
 
 • Küresel Gizlilik Kontrolü (GPC) ile Gizlilik Tercihinizi Belirtin - uygulamamızda yerleşik olarak bulunan GPC, web sitelerine kişisel bilgilerinizi satmamalarını veya paylaşmamalarını söyleyerek devre dışı bırakma haklarınızı otomatik olarak belirtmenize yardımcı olmayı amaçlamaktadır. Yasal haklarınızı uygulamak için kullanılıp kullanılamayacağı (örneğin, mevcut veya gelecekteki CCPA, GDPR gereklilikleri) yargı alanınızdaki yasalara bağlıdır. 
-
-DuckDuckGo reklam tıklamalarını takip eden Üçüncü Taraf İzleyici Yükleme Korumamız hakkında bilgi: Üçüncü Taraf İzleyici Korumamız, varsayılan olarak en popüler tarayıcılara göre çok daha fazlasını yapar; ancak bunu daha kapsamlı hale getirmek için sürekli olarak çalışmaya devam ediyoruz. Şu anda, bir reklam veren özel DuckDuckGo arama reklamlarımız için kendi web sitesinde dönüşümleri tespit etmek isterse, Üçüncü Taraf İzleyici Yükleme Korumamız, DuckDuckGo reklam tıklamalarını takiben bat.bing.com isteklerinin reklam verenin web sitesinde yüklenmesini durdurmaz; ancak bu istekler diğer tüm koşullarda durdurulur. Bunun nedeni, DuckDuckGo özel arama reklamlarının Microsoft ile ortak olmasıdır. Bu ortaklığın bir parçası olarak, DuckDuckGo'da reklamlar anonim olarak görüntülenir ve Microsoft, kullanıcılarımızın reklam tıklamaları için profil oluşturmamayı taahhüt etmiştir.   
 
 Bu konu ve İzlenme Korumalarımız hakkında daha fazla bilgi okumak için tıklayın: https://help.duckduckgo.com/privacy/web-tracking-protections/ 
 

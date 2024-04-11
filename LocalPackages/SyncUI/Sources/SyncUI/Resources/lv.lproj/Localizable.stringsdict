@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bookmarks.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Your bookmarks for %2$@ and 1 other site can't sync because some of their fields exceed the character limit.</string>
+			<key>other</key>
+			<string>Your bookmarks for %2$@ and %1$d other sites can't sync because some of their fields exceed the character limit.</string>
+			<key>zero</key>
+			<string>Your bookmark for %2$@ can't sync because one of its fields exceeds the character limit.</string>
+		</dict>
+	</dict>
+	<key>credentials.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Your passwords for %2$@ and 1 other site can't sync because some of their fields exceed the character limit.</string>
+			<key>other</key>
+			<string>Your passwords for %2$@ and %1$d other sites can't sync because some of their fields exceed the character limit.</string>
+			<key>zero</key>
+			<string>Your password for %2$@ can't sync because one of its fields exceeds the character limit.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

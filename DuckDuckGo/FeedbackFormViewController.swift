@@ -74,7 +74,7 @@ class FeedbackFormViewController: UIViewController {
         
         registerForKeyboardNotifications()
         
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
     }
     
     func configureForPositiveSentiment() {
@@ -288,9 +288,10 @@ extension FeedbackFormViewController: UITextViewDelegate {
     }
 }
 
-extension FeedbackFormViewController: Themable {
+extension FeedbackFormViewController {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         view.backgroundColor = theme.backgroundColor
         
         headerText.textColor = theme.feedbackPrimaryTextColor

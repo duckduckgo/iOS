@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-import Macros
 import XCTest
 
 @testable import Core
@@ -27,8 +26,8 @@ class TabTests: XCTestCase {
 
     struct Constants {
         static let title = "A title"
-        static let url = #URL("https://example.com")
-        static let differentUrl = #URL("https://aDifferentUrl.com")
+        static let url = URL(string: "https://example.com")!
+        static let differentUrl = URL(string: "https://aDifferentUrl.com")!
     }
 
     func testWhenDesktopPropertyChangesThenObserversNotified() {
@@ -147,7 +146,7 @@ class TabTests: XCTestCase {
     }
 
     private func link() -> Link {
-        return Link(title: "title", url: #URL("http://example.com"))
+        return Link(title: "title", url: URL(string: "http://example.com")!)
     }
 
 }

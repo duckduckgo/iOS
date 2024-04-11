@@ -47,7 +47,7 @@ class ProgressView: UIView, CAAnimationDelegate {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        decorate(with: ThemeManager.shared.currentTheme)
+        decorate()
         configureLayers()
     }
     
@@ -202,9 +202,10 @@ class ProgressView: UIView, CAAnimationDelegate {
     }
 }
 
-extension ProgressView: Themable {
+extension ProgressView {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         var colors = [CGColor]()
         for _ in 0...6 {
             colors.append(theme.progressBarGradientDarkColor.cgColor)
@@ -212,5 +213,13 @@ extension ProgressView: Themable {
         }
         
         progressLayer.colors = colors
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            decorate()
+        }
     }
 }

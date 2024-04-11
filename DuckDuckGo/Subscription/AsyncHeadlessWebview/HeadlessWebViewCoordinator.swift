@@ -30,6 +30,7 @@ final class HeadlessWebViewCoordinator: NSObject {
     var onCanGoBack: ((Bool) -> Void)?
     var onCanGoForward: ((Bool) -> Void)?
     var onContentType: ((String) -> Void)?
+    var onNavigationError: ((Error?) -> Void)?
     var settings: AsyncHeadlessWebViewSettings
     
     var size: CGSize = .zero
@@ -52,6 +53,7 @@ final class HeadlessWebViewCoordinator: NSObject {
          onCanGoBack: ((Bool) -> Void)?,
          onCanGoForward: ((Bool) -> Void)?,
          onContentType: ((String) -> Void)?,
+         onNavigationError: ((Error?) -> Void)?,
          allowedDomains: [String]? = nil,
          settings: AsyncHeadlessWebViewSettings = AsyncHeadlessWebViewSettings()) {
         self.parent = parent
@@ -60,6 +62,7 @@ final class HeadlessWebViewCoordinator: NSObject {
         self.onURLChange = onURLChange
         self.onCanGoBack = onCanGoBack
         self.onCanGoForward = onCanGoForward
+        self.onNavigationError = onNavigationError
         self.onContentType = onContentType
         self.settings = settings
     }
@@ -106,6 +109,7 @@ final class HeadlessWebViewCoordinator: NSObject {
         onCanGoBack = nil
         onCanGoForward = nil
         onContentType = nil
+        onNavigationError = nil
     }
   
 }
@@ -128,6 +132,7 @@ extension HeadlessWebViewCoordinator: WKNavigationDelegate {
        }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        onNavigationError?(nil)
         if let url = webView.url, url != lastURL {
             onURLChange?(url)
             lastURL = url
@@ -182,8 +187,23 @@ extension HeadlessWebViewCoordinator: WKNavigationDelegate {
         decisionHandler(.allow)
     }
     
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: any Error) {
+        handleWebViewError(error)
+                
+    }
+    
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        // NOOP
+        handleWebViewError(error)
+    }
+    
+    private func handleWebViewError(_ error: Error) {
+        let NSError = error as NSError
+        // Check for the specific NSURLErrorDomain and the cancelled error code -999 and ignore
+        if NSError.domain == NSURLErrorDomain && NSError.code == -999 {
+            return
+        } else {
+            onNavigationError?(error)
+        }
     }
     
     // Javascript Confirm dialogs Delegate

@@ -34,22 +34,27 @@ import Network
 import NetworkExtension
 import NetworkProtection
 
+#if SUBSCRIPTION
+import Subscription
+#endif
+
 // swiftlint:disable:next type_body_length
 final class NetworkProtectionDebugViewController: UITableViewController {
     private let titles = [
+        Sections.featureVisibility: "Feature Visibility",
         Sections.clearData: "Clear Data",
         Sections.debugFeature: "Debug Features",
         Sections.debugCommand: "Debug Commands",
         Sections.simulateFailure: "Simulate Failure",
         Sections.registrationKey: "Registration Key",
         Sections.networkPath: "Network Path",
-        Sections.lastDisconnectError: "Last Disconnect Error",
         Sections.connectionTest: "Connection Test",
-        Sections.vpnConfiguration: "VPN Configuration"
-
+        Sections.vpnConfiguration: "VPN Configuration",
+        Sections.vpnMetadata: "VPN Metadata",
     ]
 
     enum Sections: Int, CaseIterable {
+        case featureVisibility
         case clearData
         case debugFeature
         case debugCommand
@@ -57,15 +62,19 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case registrationKey
         case connectionTest
         case networkPath
-        case lastDisconnectError
         case vpnConfiguration
+        case vpnMetadata
+    }
+
+    enum FeatureVisibilityRows: Int, CaseIterable {
+        case toggleSelectedEnvironment
+        case updateSubscriptionOverride
+        case debugInfo
     }
 
     enum ClearDataRows: Int, CaseIterable {
-
         case clearAuthToken
         case clearAllVPNData
-
     }
 
     enum DebugFeatureRows: Int, CaseIterable {
@@ -89,14 +98,11 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case shutDown
         case showEntitlementMessaging
         case resetEntitlementMessaging
+        case resetThankYouMessaging
     }
 
     enum NetworkPathRows: Int, CaseIterable {
         case networkPath
-    }
-
-    enum LastDisconnectErrorRows: Int, CaseIterable {
-        case lastDisconnectError
     }
 
     enum ConnectionTestRows: Int, CaseIterable {
@@ -108,6 +114,11 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case fullProtocolConfigurationData
     }
 
+    enum MetadataRows: Int, CaseIterable {
+        case refreshMetadata
+        case metadataContents
+    }
+
     // MARK: Properties
 
     private let debugFeatures: NetworkProtectionDebugFeatures
@@ -115,9 +126,9 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     private let pathMonitor = NWPathMonitor()
 
     private var currentNetworkPath: String?
-    private var lastDisconnectError: String?
     private var baseConfigurationData: String?
     private var fullProtocolConfigurationData: String?
+    private var vpnMetadata: VPNMetadata?
 
     private struct ConnectionTestResult {
         let interface: String
@@ -148,9 +159,12 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadLastDisconnectError()
         loadConfigurationData()
         startPathMonitor()
+
+        Task {
+            await self.refreshMetadata()
+        }
     }
 
     // MARK: Table View
@@ -199,22 +213,26 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .networkPath:
             configure(cell, forNetworkPathRow: indexPath.row)
 
-        case .lastDisconnectError:
-            configure(cell, forLastDisconnectErrorRow: indexPath.row)
-
         case .connectionTest:
             configure(cell, forConnectionTestRow: indexPath.row)
 
         case .vpnConfiguration:
             configure(cell, forConfigurationRow: indexPath.row)
 
-        case.none:
+        case .vpnMetadata:
+            configure(cell, forMetadataRow: indexPath.row)
+
+        case .featureVisibility:
+            configure(cell, forVisibilityRow: indexPath.row)
+
+        case .none:
             break
         }
 
         return cell
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section) {
         case .clearData: return ClearDataRows.allCases.count
@@ -223,9 +241,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .simulateFailure: return SimulateFailureRows.allCases.count
         case .registrationKey: return RegistrationKeyRows.allCases.count
         case .networkPath: return NetworkPathRows.allCases.count
-        case .lastDisconnectError: return LastDisconnectErrorRows.allCases.count
         case .connectionTest: return ConnectionTestRows.allCases.count + connectionTestResults.count
         case .vpnConfiguration: return ConfigurationRows.allCases.count
+        case .vpnMetadata: return MetadataRows.allCases.count
+        case .featureVisibility: return FeatureVisibilityRows.allCases.count
         case .none: return 0
 
         }
@@ -250,8 +269,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             didSelectRegistrationKeyAction(at: indexPath)
         case .networkPath:
             break
-        case .lastDisconnectError:
-            break
         case .connectionTest:
             if indexPath.row == connectionTestResults.count {
                 Task {
@@ -260,6 +277,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             }
         case .vpnConfiguration:
             break
+        case .vpnMetadata:
+            didSelectVPNMetadataAction(at: indexPath)
+        case .featureVisibility:
+            didSelectFeatureVisibility(at: indexPath)
         case .none:
             break
         }
@@ -370,6 +391,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             cell.textLabel?.text = "Show Entitlement Messaging"
         case .resetEntitlementMessaging:
             cell.textLabel?.text = "Reset Entitlement Messaging"
+        case .resetThankYouMessaging:
+            cell.textLabel?.text = "Reset Thank You Messaging"
         case .none:
             break
         }
@@ -389,6 +412,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             UserDefaults.networkProtectionGroupDefaults.enableEntitlementMessaging()
         case .resetEntitlementMessaging:
             UserDefaults.networkProtectionGroupDefaults.resetEntitlementMessaging()
+        case .resetThankYouMessaging:
+            UserDefaults.networkProtectionGroupDefaults.resetThankYouMessaging()
         case .none:
             break
         }
@@ -423,20 +448,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         }
 
         pathMonitor.start(queue: .main)
-    }
-
-    // MARK: Last disconnect error
-
-    private func configure(_ cell: UITableViewCell, forLastDisconnectErrorRow row: Int) {
-        cell.textLabel?.font = .monospacedSystemFont(ofSize: 13.0, weight: .regular)
-        cell.textLabel?.text = lastDisconnectError ?? "Loading Last Disconnect Error..."
-    }
-
-    private func loadLastDisconnectError() {
-        Task { @MainActor in
-            lastDisconnectError = await DefaultVPNMetadataCollector().lastDisconnectError()
-            tableView.reloadData()
-        }
     }
 
     // MARK: Connection Test
@@ -548,7 +559,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .none:
             assertionFailure("Couldn't map configuration row")
         }
-
     }
 
     private func loadConfigurationData() {
@@ -583,6 +593,113 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             }
 
             self.tableView.reloadData()
+        }
+    }
+
+    // MARK: - VPN Metadata
+
+    private func configure(_ cell: UITableViewCell, forMetadataRow row: Int) {
+        cell.textLabel?.font = .systemFont(ofSize: 17)
+
+        switch MetadataRows(rawValue: row) {
+        case .refreshMetadata:
+            cell.textLabel?.text = "Refresh Metadata"
+        case .metadataContents:
+            cell.textLabel?.font = .monospacedSystemFont(ofSize: 13.0, weight: .regular)
+            cell.textLabel?.text = vpnMetadata?.toPrettyPrintedJSON() ?? "No Metadata"
+        case .none:
+            assertionFailure("Couldn't map configuration row")
+        }
+    }
+
+    private func didSelectVPNMetadataAction(at indexPath: IndexPath) {
+        switch MetadataRows(rawValue: indexPath.row) {
+        case .refreshMetadata:
+            Task {
+                await refreshMetadata()
+            }
+        case .metadataContents:
+            break
+        case .none:
+            break
+        }
+    }
+
+    // MARK: Feature Visibility
+
+    private func configure(_ cell: UITableViewCell, forVisibilityRow row: Int) {
+        switch FeatureVisibilityRows(rawValue: row) {
+        case .toggleSelectedEnvironment:
+            let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+            if settings.selectedEnvironment == .production {
+                cell.textLabel?.text = "Selected Environment: PRODUCTION"
+            } else {
+                cell.textLabel?.text = "Selected Environment: STAGING"
+            }
+        case .updateSubscriptionOverride:
+            let defaults = UserDefaults.networkProtectionGroupDefaults
+            if let subscriptionOverrideEnabled = defaults.subscriptionOverrideEnabled {
+                cell.textLabel?.text = subscriptionOverrideEnabled ? "Subscription Override: ENABLED" : "Subscription Override: DISABLED"
+            } else {
+                cell.textLabel?.text = "Subscription Override: N/A"
+            }
+        case .debugInfo:
+            let vpnVisibility = DefaultNetworkProtectionVisibility()
+
+            cell.textLabel?.font = .monospacedSystemFont(ofSize: 13.0, weight: .regular)
+            cell.textLabel?.text = """
+Endpoint: \(VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment.endpointURL.absoluteString)
+
+isPrivacyProLaunched: \(vpnVisibility.isPrivacyProLaunched() ? "YES" : "NO")
+isWaitlistBetaActive: \(vpnVisibility.isWaitlistBetaActive() ? "YES" : "NO")
+isWaitlistUser: \(vpnVisibility.isWaitlistUser() ? "YES" : "NO")
+
+shouldShowThankYouMessaging: \(vpnVisibility.shouldShowThankYouMessaging() ? "YES" : "NO")
+shouldKeepVPNAccessViaWaitlist: \(vpnVisibility.shouldKeepVPNAccessViaWaitlist() ? "YES" : "NO")
+shouldMonitorEntitlement: \(vpnVisibility.shouldMonitorEntitlement() ? "YES" : "NO")
+shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
+"""
+        case .none:
+            break
+        }
+    }
+
+    @MainActor
+    private func refreshMetadata() async {
+        let collector = DefaultVPNMetadataCollector()
+        self.vpnMetadata = await collector.collectMetadata()
+        self.tableView.reloadData()
+    }
+
+    private func didSelectFeatureVisibility(at indexPath: IndexPath) {
+        switch FeatureVisibilityRows(rawValue: indexPath.row) {
+        case .toggleSelectedEnvironment:
+            let vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+            if vpnSettings.selectedEnvironment == .production {
+                vpnSettings.selectedEnvironment = .staging
+            } else {
+                vpnSettings.selectedEnvironment = .production
+            }
+            vpnSettings.selectedServer = .automatic
+            NetworkProtectionLocationListCompositeRepository.clearCache()
+            tableView.reloadData()
+        case .updateSubscriptionOverride:
+            let defaults = UserDefaults.networkProtectionGroupDefaults
+            if let subscriptionOverrideEnabled = defaults.subscriptionOverrideEnabled {
+                if subscriptionOverrideEnabled {
+                    defaults.subscriptionOverrideEnabled = false
+#if SUBSCRIPTION
+                    AccountManager().signOut()
+#endif
+                } else {
+                    defaults.resetsubscriptionOverrideEnabled()
+                }
+            } else {
+                defaults.subscriptionOverrideEnabled = true
+            }
+            tableView.reloadData()
+        case .debugInfo, .none:
+            break
         }
     }
 

@@ -34,27 +34,27 @@ extension WKWebsiteDataStore {
 }
 
 extension HTTPCookie {
-    
+
     func matchesDomain(_ domain: String) -> Bool {
         return self.domain == domain || (self.domain.hasPrefix(".") && domain.hasSuffix(self.domain))
     }
-    
+
 }
 
 @MainActor
 public class WebCacheManager {
-    
+
     public static var shared = WebCacheManager()
-    
+
     private init() { }
-    
+
     /// We save cookies from the current container rather than copying them to a new container because
     ///  the container only persists cookies to disk when the web view is used.  If the user presses the fire button
     ///  twice then the fire proofed cookies will be lost and the user will be logged out any sites they're logged in to.
     public func consumeCookies(cookieStorage: CookieStorage = CookieStorage(),
                                httpCookieStore: WKHTTPCookieStore) async {
         guard !cookieStorage.isConsumed else { return }
-        
+
         let cookies = cookieStorage.cookies
         var consumedCookiesCount = 0
         for cookie in cookies {
@@ -63,10 +63,10 @@ public class WebCacheManager {
         }
         cookieStorage.isConsumed = true
     }
-    
+
     public func removeCookies(forDomains domains: [String],
                               dataStore: WKWebsiteDataStore) async {
-                        
+
         let timeoutTask = Task.detached {
             try? await Task.sleep(interval: 5.0)
             if !Task.isCancelled {
@@ -75,7 +75,7 @@ public class WebCacheManager {
                 ])
             }
         }
-        
+
         let cookieStore = dataStore.httpCookieStore
         let cookies = await cookieStore.allCookies()
         for cookie in cookies where domains.contains(where: { cookie.matchesDomain($0) }) {
@@ -83,7 +83,7 @@ public class WebCacheManager {
         }
         timeoutTask.cancel()
     }
-    
+
     public func clear(cookieStorage: CookieStorage = CookieStorage(),
                       logins: PreserveLogins = PreserveLogins.shared,
                       dataStoreIdManager: DataStoreIdManager = .shared) async {
@@ -92,17 +92,17 @@ public class WebCacheManager {
         if #available(iOS 17, *), dataStoreIdManager.hasId {
             cookiesToUpdate += await containerBasedClearing(storeIdManager: dataStoreIdManager) ?? []
         }
-        
+
         // Perform legacy clearing to migrate to new container
         cookiesToUpdate += await legacyDataClearing() ?? []
 
         cookieStorage.updateCookies(cookiesToUpdate, keepingPreservedLogins: logins)
     }
-  
+
 }
 
 extension WebCacheManager {
-    
+
     @available(iOS 17, *)
     private func checkForLeftBehindDataStores() async {
         let ids = await WKWebsiteDataStore.allDataStoreIdentifiers
@@ -119,17 +119,17 @@ extension WebCacheManager {
         var dataStore: WKWebsiteDataStore? = WKWebsiteDataStore(forIdentifier: containerId)
         let cookies = await dataStore?.httpCookieStore.allCookies()
         dataStore = nil
-        
+
         let uuids = await WKWebsiteDataStore.allDataStoreIdentifiers
         for uuid in uuids {
             try? await WKWebsiteDataStore.remove(forIdentifier: uuid)
         }
         await checkForLeftBehindDataStores()
-        
+
         storeIdManager.allocateNewContainerId()
         return cookies
     }
-    
+
     private func legacyDataClearing() async -> [HTTPCookie]? {
         let timeoutTask = Task.detached {
             try? await Task.sleep(interval: 5.0)
@@ -141,7 +141,17 @@ extension WebCacheManager {
         }
         let dataStore = WKWebsiteDataStore.default()
         let cookies = await dataStore.httpCookieStore.allCookies()
-        await dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast)
+        var types = WKWebsiteDataStore.allWebsiteDataTypes()
+        types.insert("_WKWebsiteDataTypeMediaKeys")
+        types.insert("_WKWebsiteDataTypeHSTSCache")
+        types.insert("_WKWebsiteDataTypeSearchFieldRecentSearches")
+        types.insert("_WKWebsiteDataTypeResourceLoadStatistics")
+        types.insert("_WKWebsiteDataTypeCredentials")
+        types.insert("_WKWebsiteDataTypeAdClickAttributions")
+        types.insert("_WKWebsiteDataTypePrivateClickMeasurements")
+        types.insert("_WKWebsiteDataTypeAlternativeServices")
+
+        await dataStore.removeData(ofTypes: types, modifiedSince: .distantPast)
         self.removeObservationsData()
         timeoutTask.cancel()
         return cookies

@@ -53,10 +53,14 @@ final class SubscriptionExternalLinkViewModel: ObservableObject {
             }
     }
     
-    func initializeView() {
+    func onFirstAppear() {
         Task { await setupSubscribers() }
         webViewModel.navigationCoordinator.navigateTo(url: url)
-        
+    }
+    
+    private func cleanUp() {
+        canGoBackCancellable?.cancel()
+        cancellables.removeAll()
     }
     
     @MainActor
@@ -65,7 +69,8 @@ final class SubscriptionExternalLinkViewModel: ObservableObject {
     }
     
     deinit {
-        cancellables.removeAll()
+        cleanUp()
+        canGoBackCancellable = nil
     }
     
 }

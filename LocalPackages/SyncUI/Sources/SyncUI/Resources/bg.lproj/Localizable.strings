@@ -1,6 +1,12 @@
 /* Standard Buttons - Back Button */
 "back.button" = "Обратно";
 
+/* Do not translate - stringsdict entry */
+"bookmarks.invalid.objects.present.description" = "bookmarks.invalid.objects.present.description";
+
+/* Alert title for invalid bookmarks being filtered out of synced data */
+"bookmarks.invalid.objects.present.title" = "Някои отметки не се синхронизират поради прекалено дълго съдържание в определени полета.";
+
 /* Sync Paused Errors - Bookmarks Limit Exceeded Action */
 "bookmarks.limit.exceeded.action" = "Управление на отметки";
 
@@ -42,6 +48,12 @@
 
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Синхронизиране и архивиране на това устройство";
+
+/* Do not translate - stringsdict entry */
+"credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
+
+/* Alert title for invalid logins being filtered out of synced data */
+"credentials.invalid.objects.present.title" = "Някои данни за вход не се синхронизират поради прекалено дълго съдържание в определени полета.";
 
 /* Sync Paused Errors - Credentials Limit Exceeded Action */
 "credentials.limit.exceeded.action" = "Управление на данните за вход";
@@ -185,10 +197,10 @@
 "scan.or.see.code.footer" = "Не можете да сканирате?";
 
 /* Scan or See Code View - Instruction */
-"scan.or.see.code.instruction" = "Влезте в Настройки › Синхронизиране и архивиране в браузъра DuckDuckGo на друго устройство и изберете „Синхронизиране с друго устройство“.";
+"scan.or.see.code.instruction" = "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”";
 
 /* Scan or See Code View - Instruction with syncMenuPath */
-"scan.or.see.code.instruction.attributed" = "Влезте в %@ в браузъра DuckDuckGo на друго устройство и изберете „Синхронизиране с друго устройство“.";
+"scan.or.see.code.instruction.attributed" = "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”.";
 
 /* Scan or See Code View - Manually Enter Code Link */
 "scan.or.see.code.manually.enter.code.link" = "Ръчно въвеждане на код";
@@ -200,7 +212,7 @@
 "scan.or.see.code.scan.code.instructions.title" = "От мобилно към мобилно устройство?";
 
 /* Scan or See Code View - Share Code Link */
-"scan.or.see.code.share.code.link" = "Споделяне на текстов код?";
+"scan.or.see.code.share.code.link" = "Share Text Code";
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Сканиране на QR код";
@@ -248,7 +260,7 @@
 "synced.devices.section.header" = "Синхронизирани устройства";
 
 /* Synced Devices - Sync with Another Device Label */
-"synced.devices.sync.with.another.device.label" = "Синхронизиране с друго устройство";
+"synced.devices.sync.with.another.device.label" = "Sync With Another Device";
 
 /* Synced Devices - This Device Label */
 "synced.devices.this.device.label" = "Това устройство";

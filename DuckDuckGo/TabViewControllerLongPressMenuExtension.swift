@@ -21,6 +21,9 @@ import UIKit
 import Core
 import SafariServices
 import WebKit
+import History
+import Common
+import Combine
 
 extension TabViewController {
 
@@ -99,9 +102,11 @@ extension TabViewController {
 
     fileprivate func buildOpenLinkPreview(for url: URL) -> UIViewController? {
         let tab = Tab(link: Link(title: nil, url: url))
-        let tabController = TabViewController.loadFromStoryboard(model: tab, bookmarksDatabase: bookmarksDatabase, syncService: syncService)
+        let tabController = TabViewController.loadFromStoryboard(model: tab,
+                                                                 bookmarksDatabase: bookmarksDatabase,
+                                                                 historyManager: historyManager,
+                                                                 syncService: syncService)
         tabController.isLinkPreview = true
-        tabController.decorate(with: ThemeManager.shared.currentTheme)
         let configuration = WKWebViewConfiguration.nonPersistent()
         tabController.attachWebView(configuration: configuration, andLoadRequest: URLRequest.userInitiated(url), consumeCookies: false)
         tabController.loadViewIfNeeded()

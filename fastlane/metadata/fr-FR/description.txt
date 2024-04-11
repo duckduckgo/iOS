@@ -16,8 +16,6 @@ CONTRÔLES QUOTIDIENS DE LA CONFIDENTIALITÉ
 
 • Signalez vos préférences en matière de confidentialité avec le Global Privacy Control (GPC) – intégré à notre application, le GPC vous aide à formuler automatiquement vos droits de refus en indiquant aux sites Web de ne pas vendre ou partager vos informations personnelles. Le fait qu'il puisse être utilisé pour faire valoir vos droits légaux (par exemple, CCPA actuel ou futur, conditions du RGPD) dépend des lois de votre juridiction. 
 
-Remarque à propos de notre « 3rd-Party Tracker Loading Protection » suivant les clics sur les publicités DuckDuckGo – notre protection contre les traqueurs tiers va bien au-delà de ce que vous proposent par défaut les navigateurs les plus populaires, mais nous nous efforçons constamment de l'enrichir. À l'heure actuelle, si un annonceur souhaite détecter les conversions sur son propre site Web pour nos publicités de recherche privée DuckDuckGo, notre protection contre le chargement de traqueurs tiers n'empêchera pas les requêtes bat.bing.com de se charger sur le site Web de l'annonceur après les clics sur les publicités DuckDuckGo, mais ces requêtes sont bloquées dans tous les autres contextes. Cela s'explique par le fait que la publicité de recherche privée DuckDuckGo a un partenariat avec Microsoft. Dans le cadre de ce partenariat, le visionnage des publicités sur DuckDuckGo est anonyme et Microsoft s'est engagé à ne pas profiler les clics sur les publicités de nos utilisateurs.   
-
 Découvrez-en plus à ce sujet et sur nos protections contre le suivi sur https://help.duckduckgo.com/privacy/web-tracking-protections/ 
 
 Inutile d'attendre pour reprendre le contrôle de votre vie privée. La confidentialité, simplifiée.  

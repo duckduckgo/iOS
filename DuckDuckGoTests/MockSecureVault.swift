@@ -20,7 +20,6 @@
 import BrowserServicesKit
 import Foundation
 import GRDB
-import Macros
 import SecureStorage
 
 // swiftlint:disable file_length
@@ -95,6 +94,12 @@ final class MockSecureVault<T: AutofillDatabaseProvider>: AutofillSecureVault {
         storedCredentials[accountID] = credentials
 
         return accountID
+    }
+
+    func updateLastUsedFor(accountId: Int64) throws {
+        if var account = storedAccounts.first(where: { $0.id == String(accountId) }) {
+            account.lastUsed = Date()
+        }
     }
 
     func deleteWebsiteCredentialsFor(accountId: Int64) throws {
@@ -205,6 +210,10 @@ final class MockSecureVault<T: AutofillDatabaseProvider>: AutofillSecureVault {
         []
     }
 
+    func accountTitlesForSyncableCredentials(modifiedBefore date: Date) throws -> [String] {
+        []
+    }
+
     func deleteSyncableCredentials(_ syncableCredentials: SecureVaultModels.SyncableCredentials, in database: Database) throws {
     }
 
@@ -224,7 +233,7 @@ final class MockSecureVault<T: AutofillDatabaseProvider>: AutofillSecureVault {
 // MARK: - Mock Providers
 
 private extension URL {
-    static let duckduckgo = #URL("https://duckduckgo.com/")
+    static let duckduckgo = URL(string: "https://duckduckgo.com/")!
 }
 
 class MockDatabaseProvider: AutofillDatabaseProvider {
@@ -248,7 +257,7 @@ class MockDatabaseProvider: AutofillDatabaseProvider {
 
     static func recreateDatabase(withKey key: Data) throws -> Self {
         // swiftlint:disable:next force_cast
-        return try MockDatabaseProvider(file: #URL("https://duck.com"), key: Data()) as! Self
+        return try MockDatabaseProvider(file: URL(string: "https://duck.com")!, key: Data()) as! Self
     }
 
     func storeWebsiteCredentials(_ credentials: SecureVaultModels.WebsiteCredentials) throws -> Int64 {
@@ -273,6 +282,12 @@ class MockDatabaseProvider: AutofillDatabaseProvider {
     func websiteAccountsForTopLevelDomain(_ eTLDplus1: String) throws -> [SecureVaultModels.WebsiteAccount] {
         self._forDomain.append(eTLDplus1)
         return _accounts
+    }
+
+    func updateLastUsedForAccountId(_ accountId: Int64) throws {
+        if var account = _accounts.first(where: { $0.id == String(accountId) }) {
+            account.lastUsed = Date()
+        }
     }
 
     func deleteWebsiteCredentialsForAccountId(_ accountId: Int64) throws {
@@ -389,6 +404,10 @@ class MockDatabaseProvider: AutofillDatabaseProvider {
     }
 
     func modifiedSyncableCredentials() throws -> [SecureVaultModels.SyncableCredentials] {
+        []
+    }
+
+    func modifiedSyncableCredentials(before date: Date) throws -> [SecureVaultModels.SyncableCredentials] {
         []
     }
 

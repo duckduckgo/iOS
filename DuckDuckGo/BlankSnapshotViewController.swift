@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import Suggestions
 
 protocol BlankSnapshotViewRecoveringDelegate: AnyObject {
     
@@ -75,7 +76,7 @@ class BlankSnapshotViewController: UIViewController {
             viewCoordinator.lastToolbarButton.customView = menuButton
         }
 
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
     }
 
     // Need to do this at this phase to support split screen on iPad
@@ -199,40 +200,44 @@ extension BlankSnapshotViewController: TabSwitcherButtonDelegate {
     
 }
 
-extension BlankSnapshotViewController: Themable {
+extension BlankSnapshotViewController {
     
-    func decorate(with theme: Theme) {
-        setNeedsStatusBarAppearanceUpdate()
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
 
-        if AppWidthObserver.shared.isLargeWidth {
-            viewCoordinator.statusBackground.backgroundColor = theme.tabsBarBackgroundColor
+        updateStatusBarBackgroundColor()
+    }
+
+    private func updateStatusBarBackgroundColor() {
+        let theme = ThemeManager.shared.currentTheme
+
+        if appSettings.currentAddressBarPosition == .bottom {
+            viewCoordinator.statusBackground.backgroundColor = theme.backgroundColor
         } else {
-            viewCoordinator.statusBackground.backgroundColor = theme.omniBarBackgroundColor
+            if AppWidthObserver.shared.isPad && traitCollection.horizontalSizeClass == .regular {
+                viewCoordinator.statusBackground.backgroundColor = theme.tabsBarBackgroundColor
+            } else {
+                viewCoordinator.statusBackground.backgroundColor = theme.omniBarBackgroundColor
+            }
         }
+    }
+
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
+
+        setNeedsStatusBarAppearanceUpdate()
 
         view.backgroundColor = theme.mainViewBackgroundColor
 
         viewCoordinator.navigationBarContainer.backgroundColor = theme.barBackgroundColor
         viewCoordinator.navigationBarContainer.tintColor = theme.barTintColor
 
-        viewCoordinator.omniBar.decorate(with: theme)
-
-        viewCoordinator.progress.decorate(with: theme)
-
         viewCoordinator.toolbar.barTintColor = theme.barBackgroundColor
         viewCoordinator.toolbar.tintColor = theme.barTintColor
 
-        tabSwitcherButton.decorate(with: theme)
         viewCoordinator.toolbarTabSwitcherButton.tintColor = theme.barTintColor
 
         viewCoordinator.logoText.tintColor = theme.ddgTextTintColor
-
-        if appSettings.currentAddressBarPosition == .bottom {
-            viewCoordinator.statusBackground.backgroundColor = theme.backgroundColor
-        }
-
-        menuButton.decorate(with: theme)
-
      }
     
 }

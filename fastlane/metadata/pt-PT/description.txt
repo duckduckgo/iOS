@@ -1,4 +1,3 @@
-
 A aplicação DuckDuckGo oferece-te a proteção de privacidade online mais abrangente com um toque num botão. Com uma transferência, obténs um novo navegador para o dia a dia que oferece proteção contínua enquanto pesquisas e navegas, e acesso a proteções contra rastreamento para os e-mails. Muitas dessas proteções não são oferecidas na maioria dos navegadores populares por predefinição.
 
 DESTAQUES DAS FUNCIONALIDADES 
@@ -16,8 +15,7 @@ CONTROLOS DE PRIVACIDADE PARA O DIA A DIA
 • Toca no Fire Button, limpa os dados – Fecha os separadores e limpa os dados de navegação com o Fire Button.
 
 • Sinaliza a tua preferência de privacidade com o Global Privacy Control (GPC) – O GPC está incorporado na nossa aplicação e ajuda-te a expressares os teus direitos de exclusão automaticamente ao indicar aos sites que não vendam nem partilhem as tuas informações pessoais. Dependendo das leis da tua jurisdição, pode ser possível utilizá-lo para fazer valer os teus direitos legais (por exemplo, os requisitos atuais e futuros da CCPA e do RGPD). 
-
-Nota sobre a nossa 3rd-Party Tracker Loading Protection após cliques em anúncios da DuckDuckGo: a nossa 3rd-Party Tracker Loading Protection vai muito além do que a maioria dos navegadores populares oferecem por predefinição, mas estamos sempre a tentar melhorá-la. Atualmente, se um anunciante quiser detetar conversões no respetivo site para os nossos anúncios de pesquisa privados do DuckDuckGo, a 3rd-Party Tracker Loading Protection não impedirá o carregamento dos pedidos a stop.bat.bing.com no site do anunciante após cliques em anúncios do DuckDuckGo, mas esses pedidos serão travados em todos os outros contextos. Tal acontece porque a publicidade de pesquisa privada do DuckDuckGo é uma parceria com a Microsoft. No âmbito dessa parceria, a visualização de anúncios no DuckDuckGo é anónima e a Microsoft comprometeu-se a não criar perfis com os cliques em anúncios dos nossos utilizadores.   
+   
 Obtém mais informações sobre estes anúncios e as nossas proteções contra o rastreamento em https://help.duckduckgo.com/privacy/web-tracking-protections/  
 
 Não precisa de esperar para recuperar a sua privacidade. Junte-se aos milhões de pessoas que usam o DuckDuckGo e proteja muitas das suas atividades online diárias com uma aplicação. É privacidade, simplificada.  

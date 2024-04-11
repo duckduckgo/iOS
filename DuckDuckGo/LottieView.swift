@@ -22,35 +22,71 @@ import Lottie
  
 struct LottieView: UIViewRepresentable {
     
+    struct LoopWithIntroTiming {
+        let skipIntro: Bool
+        let introStartFrame: AnimationFrameTime
+        let introEndFrame: AnimationFrameTime
+        let loopStartFrame: AnimationFrameTime
+        let loopEndFrame: AnimationFrameTime
+    }
+
+    enum LoopMode {
+        case mode(LottieLoopMode)
+        case withIntro(LoopWithIntroTiming)
+    }
+
     let lottieFile: String
     let delay: TimeInterval
     var isAnimating: Binding<Bool>
-        
-    let animationView = AnimationView()
-    
-    init(lottieFile: String, delay: TimeInterval = 0, isAnimating: Binding<Bool> = .constant(true)) {
+    private let loopMode: LoopMode
+
+    let animationView = LottieAnimationView()
+
+    init(lottieFile: String, delay: TimeInterval = 0, loopMode: LoopMode = .mode(.playOnce), isAnimating: Binding<Bool> = .constant(true)) {
         self.lottieFile = lottieFile
         self.delay = delay
         self.isAnimating = isAnimating
+        self.loopMode = loopMode
     }
 
-    func makeUIView(context: Context) -> some AnimationView {
-        animationView.animation = Animation.named(lottieFile)
+    func makeUIView(context: Context) -> some LottieAnimationView {
+        animationView.animation = LottieAnimation.named(lottieFile)
         animationView.contentMode = .scaleAspectFit
         animationView.clipsToBounds = false
-        
+
+        switch loopMode {
+        case .mode(let lottieLoopMode): animationView.loopMode = lottieLoopMode
+        case .withIntro: break
+        }
+
         return animationView
     }
  
     func updateUIView(_ uiView: UIViewType, context: Context) {
+        if uiView.isAnimationPlaying, !isAnimating.wrappedValue {
+            uiView.stop()
+            return
+        }
+
         guard isAnimating.wrappedValue, !uiView.isAnimationPlaying else { return }
         
         if uiView.loopMode == .playOnce && uiView.currentProgress == 1 { return }
                 
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            uiView.play(completion: { _ in
-                self.isAnimating.wrappedValue = false
-            })
+            switch loopMode {
+            case .mode:
+                uiView.play(completion: { _ in
+                    self.isAnimating.wrappedValue = false
+                })
+            case .withIntro(let timing):
+                if timing.skipIntro {
+                    uiView.play(fromFrame: timing.loopStartFrame, toFrame: timing.loopEndFrame, loopMode: .loop)
+                } else {
+                    uiView.play(fromFrame: timing.introStartFrame, toFrame: timing.introEndFrame, loopMode: .playOnce) { _ in
+                        uiView.play(fromFrame: timing.loopStartFrame, toFrame: timing.loopEndFrame, loopMode: .loop)
+                    }
+                }
+            }
         }
     }
 }

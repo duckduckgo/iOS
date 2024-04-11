@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "barebonesbrowser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/duckduckgo/BareBonesBrowser.git",
+      "state" : {
+        "revision" : "31e5bfedc3c2ca005640c4bf2b6959d69b0e18b9",
+        "version" : "0.1.0"
+      }
+    },
+    {
       "identity" : "bloom_cpp",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/bloom_cpp.git",
@@ -23,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "2181cdcd27be961f10d988fbb202431a6ec6d56d",
-        "version" : "118.0.0"
+        "revision" : "4699a5ff3d0669736e87f6da808884f245d80ede",
+        "version" : "133.1.0"
       }
     },
     {
@@ -41,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "59752eb7973d3e3b0c23255ff51359f48b343f15",
-        "version" : "5.2.0"
+        "revision" : "62d5dc3d02f6a8347dc5f0b52162a0107d38b74c",
+        "version" : "5.8.0"
       }
     },
     {
@@ -59,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
       "state" : {
-        "revision" : "03d3e3a959dd75afbe8c59b5a203ea676d37555d",
-        "version" : "10.1.0"
+        "revision" : "6053999d6af384a716ab0ce7205dbab5d70ed1b3",
+        "version" : "11.0.1"
       }
     },
     {
@@ -91,12 +100,12 @@
       }
     },
     {
-      "identity" : "lottie-ios",
+      "identity" : "lottie-spm",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/duckduckgo/lottie-ios.git",
+      "location" : "https://github.com/airbnb/lottie-spm.git",
       "state" : {
-        "revision" : "abf5510e261c85ffddd29de0bca9b72592ea2bdd",
-        "version" : "3.3.0"
+        "revision" : "3bd43e12d6fb54654366a61f7cfaca787318b8ce",
+        "version" : "4.4.1"
       }
     },
     {
@@ -113,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "revision" : "c67d268bf234760f49034a0fe7a6137a1b216b05",
-        "version" : "3.2.0"
+        "revision" : "620921fea14569eb00745cb5a44890d5890d99ec",
+        "version" : "3.4.0"
       }
     },
     {
@@ -131,8 +140,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser",
       "state" : {
-        "revision" : "c8ed701b513cf5177118a175d85fbbbcd707ab41",
-        "version" : "1.3.0"
+        "revision" : "46989693916f56d1186bd59ac15124caef896560",
+        "version" : "1.3.1"
       }
     },
     {
@@ -158,8 +167,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/scinfu/SwiftSoup",
       "state" : {
-        "revision" : "f83c097597094a04124eb6e0d1e894d24129af87",
-        "version" : "2.7.0"
+        "revision" : "1d39e56d364cba79ce43b341f9661b534cccb18d",
+        "version" : "2.7.1"
       }
     },
     {
@@ -185,8 +194,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/wireguard-apple",
       "state" : {
-        "revision" : "2d8172c11478ab11b0f5ad49bdb4f93f4b3d5e0d",
-        "version" : "1.1.1"
+        "revision" : "13fd026384b1af11048451061cc1b21434990668",
+        "version" : "1.1.3"
       }
     },
     {

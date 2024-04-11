@@ -49,9 +49,14 @@ final class NetworkProtectionTunnelController: TunnelController {
     /// Starts the VPN connection used for Network Protection
     ///
     func start() async {
+        Pixel.fire(pixel: .networkProtectionControllerStartAttempt)
+
         do {
             try await startWithError()
+            Pixel.fire(pixel: .networkProtectionControllerStartSuccess)
         } catch {
+            Pixel.fire(pixel: .networkProtectionControllerStartFailure, error: error)
+
             #if DEBUG
             errorStore.lastErrorMessage = error.localizedDescription
             #endif
@@ -79,6 +84,13 @@ final class NetworkProtectionTunnelController: TunnelController {
     }
 
     // MARK: - Connection Status Querying
+
+    var isInstalled: Bool {
+        get async {
+            let tunnelManager = await loadTunnelManager()
+            return tunnelManager != nil
+        }
+    }
 
     /// Queries Network Protection to know if its VPN is connected.
     ///
@@ -136,12 +148,14 @@ final class NetworkProtectionTunnelController: TunnelController {
 
         options["activationAttemptId"] = UUID().uuidString as NSString
         options["authToken"] = try tokenStore.fetchToken() as NSString?
+        options[NetworkProtectionOptionKey.selectedEnvironment] = VPNSettings(defaults: .networkProtectionGroupDefaults)
+            .selectedEnvironment.rawValue as NSString
 
         do {
             try tunnelManager.connection.startVPNTunnel(options: options)
             UniquePixel.fire(pixel: .networkProtectionNewUser) { error in
                 guard error != nil else { return }
-                VPNSettings(defaults: .networkProtectionGroupDefaults).vpnFirstEnabled = Pixel.Event.networkProtectionNewUser.lastFireDate(
+                UserDefaults.networkProtectionGroupDefaults.vpnFirstEnabled = Pixel.Event.networkProtectionNewUser.lastFireDate(
                     uniquePixelStorage: UniquePixel.storage
                 )
             }
@@ -215,7 +229,7 @@ final class NetworkProtectionTunnelController: TunnelController {
     /// Setups the tunnel manager if it's not set up already.
     ///
     private func setup(_ tunnelManager: NETunnelProviderManager) {
-        tunnelManager.localizedDescription = "DuckDuckGo Network Protection"
+        tunnelManager.localizedDescription = "DuckDuckGo VPN"
         tunnelManager.isEnabled = true
 
         tunnelManager.protocolConfiguration = {

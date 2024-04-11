@@ -56,7 +56,6 @@ class FavoriteHomeCell: UICollectionViewCell {
     var onRemove: (() -> Void)?
      
     var favorite: BookmarkEntity?
-    private var theme: Theme?
 
     override var isHighlighted: Bool {
         didSet {
@@ -73,6 +72,8 @@ class FavoriteHomeCell: UICollectionViewCell {
         FavoriteHomeCell.applyDropshadow(to: iconBackground)
         FavoriteHomeCell.applyDropshadow(to: deleteButton)
         layer.cornerRadius = 8
+
+        decorate()
     }
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
@@ -131,8 +132,7 @@ class FavoriteHomeCell: UICollectionViewCell {
 
         iconImage.contentMode = image.size.width < Constants.largeFaviconSize ? .center : .scaleAspectFit
 
-        guard let theme = theme else { return }
-        iconBackground.backgroundColor = theme.faviconBackgroundColor
+        iconBackground.backgroundColor = ThemeManager.shared.currentTheme.faviconBackgroundColor
     }
     
     class func applyDropshadow(to view: UIView) {
@@ -142,7 +142,6 @@ class FavoriteHomeCell: UICollectionViewCell {
         view.layer.shadowOpacity = 0.12
         view.layer.masksToBounds = false
     }
-    
 }
 
 private extension BookmarkEntity {
@@ -166,14 +165,18 @@ private extension BookmarkEntity {
 
 }
 
-extension FavoriteHomeCell: Themable {
+extension FavoriteHomeCell {
     
-    func decorate(with theme: Theme) {
-        self.theme = theme
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         titleLabel.textColor = theme.favoriteTextColor
-        if let favorite = favorite {
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection), let favorite {
             updateFor(favorite: favorite)
         }
     }
-
 }

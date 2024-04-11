@@ -101,6 +101,8 @@ class OmniBar: UIView {
         enableInteractionsWithPointer()
         
         privacyInfoContainer.isHidden = true
+
+        decorate()
     }
 
     private func configureSettingsLongPressButton() {
@@ -375,7 +377,7 @@ class OmniBar: UIView {
     }
 
     func refreshText(forUrl url: URL?, forceFullURL: Bool = false) {
-
+        guard !textField.isEditing else { return }
         guard let url = url else {
             textField.text = nil
             return
@@ -384,7 +386,7 @@ class OmniBar: UIView {
         if let query = url.searchQuery {
             textField.text = query
         } else {
-            textField.text = AddressDisplayHelper.addressForDisplay(url: url, showsFullURL: textField.isEditing || forceFullURL)
+            textField.attributedText = AddressDisplayHelper.addressForDisplay(url: url, showsFullURL: textField.isEditing || forceFullURL)
         }
     }
 
@@ -513,9 +515,10 @@ extension OmniBar: UITextFieldDelegate {
     }
 }
 
-extension OmniBar: Themable {
+extension OmniBar {
     
-    public func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         backgroundColor = theme.omniBarBackgroundColor
         tintColor = theme.barTintColor
         
@@ -524,13 +527,12 @@ extension OmniBar: Themable {
         editingBackground?.backgroundColor = theme.searchBarBackgroundColor
         editingBackground?.borderColor = theme.searchBarBackgroundColor
         
-        privacyInfoContainer.decorate(with: theme)
         privacyIconAndTrackersAnimator.resetImageProvider()
         
         searchStackContainer?.tintColor = theme.barTintColor
         
         if let url = textField.text.flatMap({ URL(trimmedAddressBarString: $0.trimmingWhitespace()) }) {
-            textField.text = AddressDisplayHelper.addressForDisplay(url: url, showsFullURL: textField.isEditing)
+            textField.attributedText = AddressDisplayHelper.addressForDisplay(url: url, showsFullURL: textField.isEditing)
         }
         textField.textColor = theme.searchBarTextColor
         textField.tintColor = UIColor(designSystemColor: .accent)
@@ -541,6 +543,14 @@ extension OmniBar: Themable {
         searchLoupe.tintColor = UIColor(designSystemColor: .icons)
         searchLoupe.alpha = 0.5
         cancelButton.setTitleColor(theme.barTintColor, for: .normal)
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            privacyIconAndTrackersAnimator.resetImageProvider()
+        }
     }
 }
 // swiftlint:enable file_length

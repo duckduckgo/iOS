@@ -70,15 +70,6 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
         return (regionCode ?? "US") == "US"
     }
 
-    var isPotentialOrCurrentWaitlistUser: Bool {
-        switch self.networkProtectionAccessType() {
-        case .none, .inviteCodeInvited:
-            return false
-        case .waitlistAvailable, .waitlistJoined, .waitlistInvitedPendingTermsAcceptance, .waitlistInvited:
-            return true
-        }
-    }
-
     init(
         networkProtectionActivation: NetworkProtectionFeatureActivation = NetworkProtectionKeychainTokenStore(),
         networkProtectionWaitlistStorage: WaitlistStorage = WaitlistKeychainStore(waitlistIdentifier: VPNWaitlist.identifier),
@@ -143,7 +134,6 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
     }
 
     func revokeNetworkProtectionAccess() {
-        networkProtectionWaitlistStorage.deleteWaitlistState()
         try? NetworkProtectionKeychainTokenStore().deleteToken()
 
         Task {

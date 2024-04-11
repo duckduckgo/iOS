@@ -31,6 +31,12 @@
 /* Title shown to the user when adding the Fire Button lock screen widget */
 "lock.screen.widget.fire.title" = "Mygtukas „Fire“";
 
+/* Description shown to the user when adding the Search Passwords lock screen widget */
+"lock.screen.widget.passwords.description" = "Greitai ieškokite išsaugotų „DuckDuckGo“ slaptažodžių.";
+
+/* Title shown to the user when adding the Search Passwords lock screen widget */
+"lock.screen.widget.passwords.title" = "Ieškoti slaptažodžių";
+
 /* Description shown to the user when adding the Search lock screen widget */
 "lock.screen.widget.search.description" = "Akimirksniu pradėkite privačią paiešką „DuckDuckGo“.";
 
@@ -45,6 +51,12 @@
 
 /* No comment provided by engineer. */
 "VPN Not Configured" = "VPN Not Configured";
+
+/* Description of search passwords widget in widget gallery */
+"widget.gallery.passwords.description" = "Greitai ieškokite išsaugotų „DuckDuckGo“ slaptažodžių.";
+
+/* Display name for search passwords widget in widget gallery */
+"widget.gallery.passwords.display.name" = "Ieškoti slaptažodžių";
 
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Ieškokite arba lankykitės savo mėgstamose svetainėse privačiai vienu bakstelėjimu.";
@@ -63,6 +75,9 @@
 
 /* Message shown in the favorites widget empty state. */
 "widget.no.favorites.message" = "Greitai apsilankykite savo mėgstamose svetainėse.";
+
+/* Text in passwords widget */
+"widget.passwords" = "Ieškoti slaptažodžių";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Ieškoti DuckDuckGo";

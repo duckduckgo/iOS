@@ -137,7 +137,7 @@ class EmailSignupViewController: UIViewController {
         setupWebView()
         setupNavigationBarTitle()
         addDuckDuckGoEmailObserver()
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
 
         isModalInPresentation = true
         navigationController?.presentationController?.delegate = self
@@ -380,13 +380,16 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
         // no-op
     }
 
+    // swiftlint:disable function_parameter_count
     func secureVaultManager(_: SecureVaultManager,
                             promptUserToAutofillCredentialsForDomain domain: String,
                             withAccounts accounts: [SecureVaultModels.WebsiteAccount],
                             withTrigger trigger: AutofillUserScript.GetTriggerType,
+                            onAccountSelected account: @escaping (SecureVaultModels.WebsiteAccount?) -> Void,
                             completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
         // no-op
     }
+    // swiftlint:enable function_parameter_count
 
     func secureVaultManager(_: SecureVaultManager,
                             promptUserWithGeneratedPassword password: String,
@@ -422,7 +425,16 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
     }
 
     func secureVaultManager(_: SecureVaultManager, didRequestRuntimeConfigurationForDomain domain: String, completionHandler: @escaping (String?) -> Void) {
-        completionHandler(nil)
+        let contentScopeProperties = ContentScopeProperties(gpcEnabled: AppDependencyProvider.shared.appSettings.sendDoNotSell,
+                                                            sessionKey: "",
+                                                            featureToggles: ContentScopeFeatureToggles.supportedFeaturesOniOS)
+
+        let runtimeConfig = DefaultAutofillSourceProvider.Builder(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                                                                  properties: contentScopeProperties)
+            .build()
+            .buildRuntimeConfigResponse()
+        
+        completionHandler(runtimeConfig)
     }
 
     func secureVaultManager(_: SecureVaultManager, didReceivePixel pixel: AutofillUserScript.JSPixel) {
@@ -438,9 +450,10 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
 
 // MARK: Themable
 
-extension EmailSignupViewController: Themable {
+extension EmailSignupViewController {
 
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         view.backgroundColor = theme.backgroundColor
 
         navigationController?.navigationBar.barTintColor = theme.barBackgroundColor

@@ -27,6 +27,7 @@ struct SubscriptionExternalLinkView: View {
         
     @Environment(\.dismiss) var dismiss
     @ObservedObject var viewModel: SubscriptionExternalLinkViewModel
+    @State var title: String?
         
     enum Constants {
         static let navButtonPadding: CGFloat = 20.0
@@ -47,11 +48,12 @@ struct SubscriptionExternalLinkView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationViewStyle(.stack)
+            .navigationTitle(title ?? "")
             
-            .onAppear(perform: {
+            .onFirstAppear {
                 setUpAppearances()
-                viewModel.initializeView()
-            })
+                viewModel.onFirstAppear()
+            }
         }.tint(Color(designSystemColor: .textPrimary))
     }
     

@@ -43,7 +43,7 @@ class AuthenticationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         hideUnlockInstructions()
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -98,16 +98,10 @@ class AuthenticationViewController: UIViewController {
     }
 }
 
-extension AuthenticationViewController: Themable {
+extension AuthenticationViewController {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         view.backgroundColor = theme.backgroundColor
-        
-        switch theme.currentImageSet {
-        case .light:
-            logo?.image = UIImage(named: "LogoDarkText")
-        case .dark:
-            logo?.image = UIImage(named: "LogoLightText")
-        }
     }
 }

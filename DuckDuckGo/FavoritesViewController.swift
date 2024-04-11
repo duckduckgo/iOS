@@ -45,8 +45,6 @@ class FavoritesViewController: UIViewController {
     var collectionView: UICollectionView!
     private var renderer: FavoritesHomeViewSectionRenderer!
 
-    private var theme: Theme?
-
     weak var delegate: FavoritesViewControllerDelegate?
     
     private let bookmarksDatabase: CoreDataDatabase
@@ -90,7 +88,6 @@ class FavoritesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        theme = ThemeManager.shared.currentTheme
 
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
 
@@ -133,7 +130,7 @@ class FavoritesViewController: UIViewController {
 
         updateHeroImage()
 
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
 
         bindSyncService()
     }
@@ -251,12 +248,7 @@ extension FavoritesViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = renderer.collectionView(collectionView, cellForItemAt: indexPath)
-        if let themable = cell as? Themable,
-            let theme = theme {
-            themable.decorate(with: theme)
-        }
-        return cell
+        return renderer.collectionView(collectionView, cellForItemAt: indexPath)
     }
 
     func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
@@ -290,10 +282,10 @@ extension FavoritesViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension FavoritesViewController: Themable {
+extension FavoritesViewController {
 
-    func decorate(with theme: Theme) {
-        self.theme = theme
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         view.backgroundColor = theme.backgroundColor
         collectionView.backgroundColor = .clear
         emptyStateContainer.backgroundColor = .clear

@@ -30,6 +30,7 @@ import Bookmarks
 import Persistence
 import PrivacyDashboard
 import Networking
+import Suggestions
 
 #if SUBSCRIPTION
 import Subscription
@@ -83,11 +84,13 @@ class MainViewController: UIViewController {
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
     
-    var tabManager: TabManager!
-    let previewsSource = TabPreviewsSource()
+    let tabManager: TabManager
+    let previewsSource: TabPreviewsSource
     let appSettings: AppSettings
     private var launchTabObserver: LaunchTabNotification.Observer?
     
+    var doRefreshAfterClear = true
+
 #if APP_TRACKING_PROTECTION
     private let appTrackingProtectionDatabase: CoreDataDatabase
 #endif
@@ -106,6 +109,7 @@ class MainViewController: UIViewController {
     private var syncFeatureFlagsCancellable: AnyCancellable?
     private var favoritesDisplayModeCancellable: AnyCancellable?
     private var emailCancellables = Set<AnyCancellable>()
+    private var urlInterceptorCancellables = Set<AnyCancellable>()
     
 #if NETWORK_PROTECTION
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
@@ -137,7 +141,7 @@ class MainViewController: UIViewController {
     
     lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
-        return tabManager?.current(createIfNeeded: false)
+        return tabManager.current(createIfNeeded: false)
     }
     
     var searchBarRect: CGRect {
@@ -161,6 +165,7 @@ class MainViewController: UIViewController {
         fatalError("Use init?(code:")
     }
     
+    var historyManager: HistoryManager
     var viewCoordinator: MainViewCoordinator!
     
 #if APP_TRACKING_PROTECTION
@@ -168,21 +173,33 @@ class MainViewController: UIViewController {
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
         appTrackingProtectionDatabase: CoreDataDatabase,
+        historyManager: HistoryManager,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
-        appSettings: AppSettings = AppUserDefaults()
+        appSettings: AppSettings = AppUserDefaults(),
+        previewsSource: TabPreviewsSource,
+        tabsModel: TabsModel
     ) {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
+        self.historyManager = historyManager
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         self.appSettings = appSettings
-        
+        self.previewsSource = previewsSource
+
+        self.tabManager = TabManager(model: tabsModel,
+                                     previewsSource: previewsSource,
+                                     bookmarksDatabase: bookmarksDatabase,
+                                     historyManager: historyManager,
+                                     syncService: syncService)
+
         super.init(nibName: nil, bundle: nil)
-        
+
+        tabManager.delegate = self
         bindFavoritesDisplayMode()
         bindSyncService()
     }
@@ -190,20 +207,33 @@ class MainViewController: UIViewController {
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
+        historyManager: HistoryManager,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
-        appSettings: AppSettings
+        appSettings: AppSettings,
+        previewsSource: TabPreviewsSource,
+        tabsModel: TabsModel
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
+        self.historyManager = historyManager
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         self.appSettings = appSettings
-        
+        self.previewsSource = previewsSource
+
+        self.tabManager = TabManager(model: tabsModel,
+                                     previewsSource: previewsSource,
+                                     bookmarksDatabase: bookmarksDatabase,
+                                     historyManager: historyManager,
+                                     syncService: syncService)
+
+
         super.init(nibName: nil, bundle: nil)
         
+        tabManager.delegate = self
         bindSyncService()
     }
 #endif
@@ -257,12 +287,12 @@ class MainViewController: UIViewController {
         initTabButton()
         initMenuButton()
         initBookmarksButton()
-        configureTabManager()
         loadInitialView()
         previewsSource.prepare()
         addLaunchTabNotificationObserver()
         subscribeToEmailProtectionStatusNotifications()
-
+        subscribeToURLInterceptorNotifications()
+        
 #if NETWORK_PROTECTION && SUBSCRIPTION
         subscribeToNetworkProtectionEvents()
 #endif
@@ -272,7 +302,7 @@ class MainViewController: UIViewController {
         registerForKeyboardNotifications()
         registerForSyncPausedNotifications()
 
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
 
         tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
         swipeTabsCoordinator?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
@@ -298,8 +328,8 @@ class MainViewController: UIViewController {
 
         startOnboardingFlowIfNotSeenBefore()
         tabsBarController?.refresh(tabsModel: tabManager.model)
-        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
-        
+        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
+
         _ = AppWidthObserver.shared.willResize(toWidth: view.frame.width)
         applyWidth()
 
@@ -334,7 +364,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    func updatePreviewForCurrentTab() {
+    func updatePreviewForCurrentTab(completion: (() -> Void)? = nil) {
         assert(Thread.isMainThread)
         
         if !viewCoordinator.logoContainer.isHidden,
@@ -343,6 +373,7 @@ class MainViewController: UIViewController {
             // Home screen with logo
             if let image = viewCoordinator.logoContainer.createImageSnapshot(inBounds: viewCoordinator.contentContainer.frame) {
                 previewsSource.update(preview: image, forTab: tab)
+                completion?()
             }
 
         } else if let currentTab = self.tabManager.current(), currentTab.link != nil {
@@ -351,12 +382,16 @@ class MainViewController: UIViewController {
                 guard let image else { return }
                 self.previewsSource.update(preview: image,
                                            forTab: currentTab.tabModel)
+                completion?()
             })
         } else if let tab = self.tabManager.model.currentTab {
             // Favorites, etc
             if let image = viewCoordinator.contentContainer.createImageSnapshot() {
                 previewsSource.update(preview: image, forTab: tab)
+                completion?()
             }
+        } else {
+            completion?()
         }
     }
 
@@ -366,7 +401,8 @@ class MainViewController: UIViewController {
         guard let controller = storyboard.instantiateInitialViewController(creator: { coder in
             SuggestionTrayViewController(coder: coder,
                                          favoritesViewModel: self.favoritesViewModel,
-                                         bookmarksSearch: self.bookmarksCachingSearch)
+                                         bookmarksDatabase: self.bookmarksDatabase,
+                                         historyCoordinator: self.historyManager.historyCoordinator)
         }) else {
             assertionFailure()
             return
@@ -503,11 +539,20 @@ class MainViewController: UIViewController {
                                                 #selector(onAddressBarPositionChanged),
                                                name: AppUserDefaults.Notifications.addressBarPositionChanged,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onShowFullURLAddressChanged),
+                                               name: AppUserDefaults.Notifications.showsFullURLAddressSettingChanged,
+                                               object: nil)
     }
 
     @objc func onAddressBarPositionChanged() {
         viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
         refreshViewsBasedOnAddressBarPosition(appSettings.currentAddressBarPosition)
+        updateStatusBarBackgroundColor()
+    }
+
+    @objc private func onShowFullURLAddressChanged() {
+        refreshOmniBar()
     }
 
     func refreshViewsBasedOnAddressBarPosition(_ position: AddressBarPosition) {
@@ -527,8 +572,6 @@ class MainViewController: UIViewController {
             }
         }
 
-        let theme = ThemeManager.shared.currentTheme
-        self.decorate(with: theme)
     }
 
     @objc func onShowFullSiteAddressChanged() {
@@ -560,12 +603,12 @@ class MainViewController: UIViewController {
 
         if let suggestionsTray = suggestionTrayController {
             let suggestionsFrameInView = suggestionsTray.view.convert(suggestionsTray.contentFrame, to: view)
-            
+
             let overflow = suggestionsFrameInView.size.height + suggestionsFrameInView.origin.y - keyboardFrameInView.origin.y + 10
             if overflow > 0 {
-                suggestionTrayController?.applyContentInset(UIEdgeInsets(top: 0, left: 0, bottom: overflow, right: 0))
+                suggestionsTray.applyContentInset(UIEdgeInsets(top: 0, left: 0, bottom: overflow, right: 0))
             } else {
-                suggestionTrayController?.applyContentInset(.zero)
+                suggestionsTray.applyContentInset(.zero)
             }
         }
 
@@ -654,14 +697,6 @@ class MainViewController: UIViewController {
         currentTab?.saveAsBookmark(favorite: true, viewModel: menuBookmarksViewModel)
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            ThemeManager.shared.refreshSystemTheme()
-        }
-    }
-    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if let presentedViewController {
             return presentedViewController.supportedInterfaceOrientations
@@ -675,39 +710,6 @@ class MainViewController: UIViewController {
         
     @objc func dismissSuggestionTray() {
         dismissOmniBar()
-    }
-
-    private func configureTabManager() {
-
-        let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
-
-        let tabsModel: TabsModel
-        if let settings = AutoClearSettingsModel(settings: appSettings) {
-            // This needs to be refactored so that tabs model is injected and cleared before view did load,
-            //  but for now, ensure this happens in the right order by clearing data here too, if needed.
-            tabsModel = TabsModel(desktop: isPadDevice)
-            tabsModel.save()
-            previewsSource.removeAllPreviews()
-
-            if settings.action.contains(.clearData) {
-                Task { @MainActor in
-                    await forgetData()
-                }
-            }
-        } else {
-            if let storedModel = TabsModel.get() {
-                // Save new model in case of migration
-                storedModel.save()
-                tabsModel = storedModel
-            } else {
-                tabsModel = TabsModel(desktop: isPadDevice)
-            }
-        }
-        tabManager = TabManager(model: tabsModel,
-                                previewsSource: previewsSource,
-                                bookmarksDatabase: bookmarksDatabase,
-                                syncService: syncService,
-                                delegate: self)
     }
 
     private func addLaunchTabNotificationObserver() {
@@ -858,7 +860,7 @@ class MainViewController: UIViewController {
         loadUrlInNewTab(url, reuseExisting: reuseExisting, inheritedAttribution: nil)
     }
 
-    func loadUrlInNewTab(_ url: URL, reuseExisting: Bool = false, inheritedAttribution: AdClickAttributionLogic.State?) {
+    func loadUrlInNewTab(_ url: URL, reuseExisting: Bool = false, inheritedAttribution: AdClickAttributionLogic.State?, fromExternalLink: Bool = false) {
         func worker() {
             allowContentUnderflow = false
             viewCoordinator.navigationBarContainer.alpha = 1
@@ -867,16 +869,17 @@ class MainViewController: UIViewController {
                 selectTab(existing)
                 return
             } else if reuseExisting, let existing = tabManager.firstHomeTab() {
+                doRefreshAfterClear = false
                 tabManager.selectTab(existing)
-                loadUrl(url)
+                loadUrl(url, fromExternalLink: fromExternalLink)
             } else {
-                addTab(url: url, inheritedAttribution: inheritedAttribution)
+                addTab(url: url, inheritedAttribution: inheritedAttribution, fromExternalLink: fromExternalLink)
             }
             refreshOmniBar()
             refreshTabIcon()
             refreshControls()
             tabsBarController?.refresh(tabsModel: tabManager.model)
-            swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
+            swipeTabsCoordinator?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
         }
         
         if clearInProgress {
@@ -905,9 +908,12 @@ class MainViewController: UIViewController {
         loadUrl(url)
     }
 
-    func loadUrl(_ url: URL) {
+    func loadUrl(_ url: URL, fromExternalLink: Bool = false) {
         prepareTabForRequest {
             self.currentTab?.load(url: url)
+            if fromExternalLink {
+                self.currentTab?.inferredOpenerContext = .external
+            }
         }
     }
 
@@ -940,8 +946,9 @@ class MainViewController: UIViewController {
         select(tab: tab)
     }
 
-    private func addTab(url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) {
+    private func addTab(url: URL?, inheritedAttribution: AdClickAttributionLogic.State?, fromExternalLink: Bool = false) {
         let tab = tabManager.add(url: url, inheritedAttribution: inheritedAttribution)
+        tab.inferredOpenerContext = .external
         dismissOmniBar()
         attachTab(tab: tab)
     }
@@ -1026,7 +1033,7 @@ class MainViewController: UIViewController {
             return
         }
 
-        viewCoordinator.omniBar.refreshText(forUrl: tab.url)
+        viewCoordinator.omniBar.refreshText(forUrl: tab.url, forceFullURL: appSettings.showFullSiteAddress)
 
         if tab.isError {
             viewCoordinator.omniBar.hidePrivacyIcon()
@@ -1077,8 +1084,6 @@ class MainViewController: UIViewController {
             applySmallWidth()
         }
 
-        applyTheme(ThemeManager.shared.currentTheme)
-
         DispatchQueue.main.async {
             // Do this async otherwise the toolbar buttons skew to the right
             if self.viewCoordinator.constraints.navigationBarContainerTop.constant >= 0 {
@@ -1112,7 +1117,6 @@ class MainViewController: UIViewController {
             viewCoordinator.omniBar.menuButton.accessibilityLabel = UserText.menuButtonHint
         }
 
-        presentedMenuButton.decorate(with: ThemeManager.shared.currentTheme)
         presentedMenuButton.setState(expectedState, animated: false)
     }
 
@@ -1137,7 +1141,7 @@ class MainViewController: UIViewController {
         viewCoordinator.toolbar.isHidden = false
         viewCoordinator.omniBar.enterPhoneState()
         
-        swipeTabsCoordinator?.isEnabled = featureFlagger.isFeatureOn(.swipeTabs)
+        swipeTabsCoordinator?.isEnabled = true
     }
 
     @discardableResult
@@ -1171,14 +1175,15 @@ class MainViewController: UIViewController {
         suggestionTrayController?.didHide()
     }
     
-    func launchAutofillLogins(with currentTabUrl: URL? = nil) {
+    func launchAutofillLogins(with currentTabUrl: URL? = nil, openSearch: Bool = false) {
         let appSettings = AppDependencyProvider.shared.appSettings
         let autofillSettingsViewController = AutofillLoginSettingsListViewController(
             appSettings: appSettings,
             currentTabUrl: currentTabUrl,
             syncService: syncService,
             syncDataProviders: syncDataProviders,
-            selectedAccount: nil
+            selectedAccount: nil,
+            openSearch: openSearch
         )
         autofillSettingsViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: autofillSettingsViewController)
@@ -1271,7 +1276,7 @@ class MainViewController: UIViewController {
         }
         attachHomeScreen()
         tabsBarController?.refresh(tabsModel: tabManager.model)
-        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
+        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
         homeController?.openedAsNewTab(allowingKeyboard: allowingKeyboard)
     }
     
@@ -1326,6 +1331,20 @@ class MainViewController: UIViewController {
             }
             .store(in: &emailCancellables)
     }
+    
+    private func subscribeToURLInterceptorNotifications() {
+        NotificationCenter.default.publisher(for: .urlInterceptPrivacyPro)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                switch notification.name {
+                case .urlInterceptPrivacyPro:
+                    self?.launchSettings(deepLinkTarget: .subscriptionFlow)
+                default:
+                    return
+                }
+            }
+            .store(in: &urlInterceptorCancellables)
+    }
 
 #if NETWORK_PROTECTION && SUBSCRIPTION
     private func subscribeToNetworkProtectionEvents() {
@@ -1333,6 +1352,18 @@ class MainViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] notification in
                 self?.onNetworkProtectionAccountSignIn(notification)
+            }
+            .store(in: &vpnCancellables)
+        NotificationCenter.default.publisher(for: .entitlementsDidChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                self?.onEntitlementsChange(notification)
+            }
+            .store(in: &vpnCancellables)
+        NotificationCenter.default.publisher(for: .accountDidSignOut)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                self?.onNetworkProtectionAccountSignOut(notification)
             }
             .store(in: &vpnCancellables)
 
@@ -1371,6 +1402,7 @@ class MainViewController: UIViewController {
         }
         dismiss(animated: true) {
             self.present(alertController, animated: true, completion: nil)
+            DailyPixel.fireDailyAndCount(pixel: .privacyProVPNAccessRevokedDialogShown)
             self.tunnelDefaults.showEntitlementAlert = false
         }
     }
@@ -1386,22 +1418,46 @@ class MainViewController: UIViewController {
 
     @objc
     private func onNetworkProtectionAccountSignIn(_ notification: Notification) {
-        guard let token = AccountManager().accessToken else {
-            assertionFailure("[NetP Subscription] AccountManager signed in but token could not be retrieved")
-            return
-        }
-
         tunnelDefaults.resetEntitlementMessaging()
-        print("[NetP Subscription] Reset expired entitlement messaging")
+        tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
+        os_log("[NetP Subscription] Reset expired entitlement messaging", log: .networkProtection, type: .info)
+    }
 
+    @objc
+    private func onEntitlementsChange(_ notification: Notification) {
         Task {
-            do {
-                // todo - https://app.asana.com/0/0/1206541966681608/f
-                try NetworkProtectionKeychainTokenStore().store(NetworkProtectionKeychainTokenStore.makeToken(from: token))
-                print("[NetP Subscription] Stored derived NetP auth token")
-            } catch {
-                print("[NetP Subscription] Failed to store derived NetP auth token: \(error)")
+            guard case .success(false) = await AccountManager().hasEntitlement(for: .networkProtection) else { return }
+
+            let controller = NetworkProtectionTunnelController()
+
+            if await controller.isInstalled {
+                tunnelDefaults.enableEntitlementMessaging()
             }
+
+            if await controller.isConnected {
+                DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
+                    "reason": "entitlement-change"
+                ])
+            }
+
+            await controller.stop()
+            await controller.removeVPN()
+        }
+    }
+
+    @objc
+    private func onNetworkProtectionAccountSignOut(_ notification: Notification) {
+        Task {
+            let controller = NetworkProtectionTunnelController()
+            
+            if await controller.isConnected {
+                DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
+                    "reason": "account-signed-out"
+                ])
+            }
+
+            await controller.stop()
+            await controller.removeVPN()
         }
     }
 #endif
@@ -1550,6 +1606,11 @@ extension MainViewController: BrowserChromeDelegate {
     // 1.0 - full size, 0.0 - hidden
     private func updateToolbarConstant(_ ratio: CGFloat) {
         var bottomHeight = toolbarHeight
+        if viewCoordinator.addressBarPosition.isBottom {
+            // When position is set to bottom, contentContainer is pinned to top
+            // of navigationBarContainer, hence the adjustment.
+            bottomHeight += viewCoordinator.navigationBarContainer.frame.height
+        }
         bottomHeight += view.safeAreaInsets.bottom
         let multiplier = viewCoordinator.toolbar.isHidden ? 1.0 : 1.0 - ratio
         viewCoordinator.constraints.toolbarBottom.constant = bottomHeight * multiplier
@@ -1777,42 +1838,72 @@ extension MainViewController: AutocompleteViewControllerDelegate {
     func autocomplete(selectedSuggestion suggestion: Suggestion) {
         homeController?.chromeDelegate = nil
         dismissOmniBar()
-        if let url = suggestion.url {
+        switch suggestion {
+        case .phrase(phrase: let phrase):
+            if let url = URL.makeSearchURL(text: phrase) {
+                loadUrl(url)
+            } else {
+                os_log("Couldn‘t form URL for suggestion “%s”", log: .lifecycleLog, type: .error, phrase)
+            }
+        case .website(url: let url):
             if url.isBookmarklet() {
                 executeBookmarklet(url)
             } else {
                 loadUrl(url)
             }
-        } else if let url = URL.makeSearchURL(text: suggestion.suggestion) {
+        case .bookmark(_, url: let url, _, _):
             loadUrl(url)
-        } else {
-            os_log("Couldn‘t form URL for suggestion “%s”", log: .lifecycleLog, type: .error, suggestion.suggestion)
-            return
+        case .historyEntry(_, url: let url, _):
+            loadUrl(url)
+        case .unknown(value: let value):
+            assertionFailure("Unknown suggestion: \(value)")
         }
+
         showHomeRowReminder()
     }
 
     func autocomplete(pressedPlusButtonForSuggestion suggestion: Suggestion) {
-        if let url = suggestion.url {
-            if url.isDuckDuckGoSearch {
-                viewCoordinator.omniBar.textField.text = suggestion.suggestion
+        switch suggestion {
+        case .phrase(phrase: let phrase):
+        viewCoordinator.omniBar.textField.text = phrase
+        case .website(url: let url):
+            if url.isDuckDuckGoSearch, let query = url.searchQuery {
+                viewCoordinator.omniBar.textField.text = query
             } else if !url.isBookmarklet() {
                 viewCoordinator.omniBar.textField.text = url.absoluteString
             }
-        } else {
-            viewCoordinator.omniBar.textField.text = suggestion.suggestion
+        case .bookmark(title: let title, _, _, _):
+            viewCoordinator.omniBar.textField.text = title
+        case .historyEntry(title: let title, _, _):
+            viewCoordinator.omniBar.textField.text = title
+        case .unknown(value: let value):
+            assertionFailure("Unknown suggestion: \(value)")
         }
+
         viewCoordinator.omniBar.textDidChange()
     }
     
     func autocomplete(highlighted suggestion: Suggestion, for query: String) {
-        if let url = suggestion.url {
-            viewCoordinator.omniBar.textField.text = url.absoluteString
-        } else {
-            viewCoordinator.omniBar.textField.text = suggestion.suggestion
-            if suggestion.suggestion.hasPrefix(query) {
+
+        switch suggestion {
+        case .phrase(phrase: let phrase):
+            viewCoordinator.omniBar.textField.text = phrase
+            if phrase.hasPrefix(query) {
                 viewCoordinator.omniBar.selectTextToEnd(query.count)
             }
+        case .website(url: let url):
+            viewCoordinator.omniBar.textField.text = url.absoluteString
+        case .bookmark(title: let title, _, _, _):
+            viewCoordinator.omniBar.textField.text = title
+            if title.hasPrefix(query) {
+                viewCoordinator.omniBar.selectTextToEnd(query.count)
+            }
+        case .historyEntry(title: let title, let url, _):
+            if (title ?? url.absoluteString).hasPrefix(query) {
+                viewCoordinator.omniBar.selectTextToEnd(query.count)
+            }
+        case .unknown(value: let value):
+            assertionFailure("Unknown suggestion: \(value)")
         }
     }
 
@@ -1907,9 +1998,10 @@ extension MainViewController: TabDelegate {
         if currentTab == tab {
             refreshControls()
         }
-        tabManager?.save()
+        tabManager.save()
         tabsBarController?.refresh(tabsModel: tabManager.model)
-        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
+        // note: model in swipeTabsCoordinator doesn't need to be updated here
+        // https://app.asana.com/0/414235014887631/1206847376910045/f
     }
     
     func tab(_ tab: TabViewController, didUpdatePreview preview: UIImage) {
@@ -1962,7 +2054,11 @@ extension MainViewController: TabDelegate {
     func tabDidRequestReportBrokenSite(tab: TabViewController) {
         segueToReportBrokenSite()
     }
-    
+
+    func tab(_ tab: TabViewController, didRequestToggleReportWithCompletionHandler completionHandler: @escaping (Bool) -> Void) {
+        segueToReportBrokenSite(mode: .toggleReport(completionHandler: completionHandler))
+    }
+
     func tabDidRequestBookmarks(tab: TabViewController) {
         Pixel.fire(pixel: .bookmarksButtonPressed,
                    withAdditionalParameters: [PixelParameters.originatedFromMenu: "1"])
@@ -2149,19 +2245,14 @@ extension MainViewController: TabSwitcherButtonDelegate {
     }
 
     func showTabSwitcher() {
-        guard let currentTab = currentTab ?? tabManager?.current(createIfNeeded: true) else {
+        guard let currentTab = currentTab ?? tabManager.current(createIfNeeded: true) else {
             fatalError("Unable to get current tab")
         }
-        
-        currentTab.preparePreview(completion: { image in
-            if let image = image {
-                self.previewsSource.update(preview: image,
-                                           forTab: currentTab.tabModel)
 
-            }
+        updatePreviewForCurrentTab {
             ViewHighlighter.hideAll()
             self.segueToTabSwitcher()
-        })
+        }
     }
 }
 
@@ -2211,6 +2302,10 @@ extension MainViewController: AutoClearWorker {
     }
 
     func refreshUIAfterClear() {
+        guard doRefreshAfterClear else {
+            doRefreshAfterClear = true
+            return
+        }
         showBars()
         attachHomeScreen()
         tabsBarController?.refresh(tabsModel: tabManager.model)
@@ -2223,6 +2318,7 @@ extension MainViewController: AutoClearWorker {
         refreshUIAfterClear()
     }
 
+    @MainActor
     func forgetData() async {
         guard !clearInProgress else {
             assertionFailure("Shouldn't get called multiple times")
@@ -2248,6 +2344,8 @@ extension MainViewController: AutoClearWorker {
         if self.syncService.authState == .inactive {
             self.bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
         }
+
+        await historyManager.removeAllHistory()
 
         self.clearInProgress = false
         
@@ -2312,48 +2410,46 @@ extension MainViewController: AutoClearWorker {
     
 }
 
-extension MainViewController: Themable {
-    
-    func decorate(with theme: Theme) {
+extension MainViewController {
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        updateStatusBarBackgroundColor()
+    }
+
+    private func updateStatusBarBackgroundColor() {
+        let theme = ThemeManager.shared.currentTheme
+
+        if appSettings.currentAddressBarPosition == .bottom {
+            viewCoordinator.statusBackground.backgroundColor = theme.backgroundColor
+        } else {
+            if AppWidthObserver.shared.isPad && traitCollection.horizontalSizeClass == .regular {
+                viewCoordinator.statusBackground.backgroundColor = theme.tabsBarBackgroundColor
+            } else {
+                viewCoordinator.statusBackground.backgroundColor = theme.omniBarBackgroundColor
+            }
+        }
+    }
+
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
+
+        updateStatusBarBackgroundColor()
 
         setNeedsStatusBarAppearanceUpdate()
-
-        // Does not appear to get updated when setting changes.
-        tabsBarController?.decorate(with: theme)
-
-        if AppWidthObserver.shared.isLargeWidth {
-            viewCoordinator.statusBackground.backgroundColor = theme.tabsBarBackgroundColor
-        } else {
-            viewCoordinator.statusBackground.backgroundColor = theme.omniBarBackgroundColor
-        }
 
         view.backgroundColor = theme.mainViewBackgroundColor
 
         viewCoordinator.navigationBarContainer.backgroundColor = theme.barBackgroundColor
         viewCoordinator.navigationBarContainer.tintColor = theme.barTintColor
-        
-        viewCoordinator.omniBar.decorate(with: theme)
 
-        viewCoordinator.progress.decorate(with: theme)
-        
         viewCoordinator.toolbar.barTintColor = theme.barBackgroundColor
         viewCoordinator.toolbar.tintColor = theme.barTintColor
 
-        tabSwitcherButton.decorate(with: theme)
-        gestureBookmarksButton.decorate(with: theme)
         viewCoordinator.toolbarTabSwitcherButton.tintColor = theme.barTintColor
         
-        presentedMenuButton.decorate(with: theme)
-        
-        tabManager.decorate(with: theme)
-
-        findInPageView.decorate(with: theme)
-        
         viewCoordinator.logoText.tintColor = theme.ddgTextTintColor
-
-        if appSettings.currentAddressBarPosition == .bottom {
-            viewCoordinator.statusBackground.backgroundColor = theme.backgroundColor
-        }
     }
 
 }

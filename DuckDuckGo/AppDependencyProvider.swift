@@ -22,6 +22,7 @@ import Core
 import BrowserServicesKit
 import DDGSync
 import Bookmarks
+import Subscription
 
 protocol DependencyProvider {
 
@@ -37,7 +38,9 @@ protocol DependencyProvider {
     var autofillLoginSession: AutofillLoginSession { get }
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager { get }
     var configurationManager: ConfigurationManager { get }
+    var toggleProtectionsCounter: ToggleProtectionsCounter { get }
     var userBehaviorMonitor: UserBehaviorMonitor { get }
+    var subscriptionFeatureAvailability: SubscriptionFeatureAvailability { get }
 
 }
 
@@ -51,8 +54,10 @@ class AppDependencyProvider: DependencyProvider {
     let variantManager: VariantManager = DefaultVariantManager()
     
     let internalUserDecider: InternalUserDecider = ContentBlocking.shared.privacyConfigurationManager.internalUserDecider
-    private lazy var privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
-    lazy var featureFlagger: FeatureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider, privacyConfig: privacyConfig)
+    lazy var featureFlagger: FeatureFlagger = DefaultFeatureFlagger(
+        internalUserDecider: internalUserDecider,
+        privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager
+    )
 
     let remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore()
     lazy var homePageConfiguration: HomePageConfiguration = HomePageConfiguration(variantManager: variantManager,
@@ -65,6 +70,11 @@ class AppDependencyProvider: DependencyProvider {
 
     let configurationManager = ConfigurationManager()
 
+    let toggleProtectionsCounter: ToggleProtectionsCounter = ContentBlocking.shared.privacyConfigurationManager.toggleProtectionsCounter
     let userBehaviorMonitor = UserBehaviorMonitor()
+    
+    let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
+        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+        purchasePlatform: .appStore)
 
 }

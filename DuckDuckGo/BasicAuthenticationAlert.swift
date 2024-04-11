@@ -43,7 +43,6 @@ class BasicAuthenticationAlert: UIAlertController {
         }
 
         self.init(title: UserText.authAlertTitle, message: message, preferredStyle: .alert)
-        overrideUserInterfaceStyle()
 
         self.cancelCompletion = cancelCompletion
 

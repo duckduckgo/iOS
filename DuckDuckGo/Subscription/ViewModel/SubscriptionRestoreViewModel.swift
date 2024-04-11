@@ -83,7 +83,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     }
     
     private func cleanUp() {
-        subFeature.cleanup()
         cancellables.removeAll()
     }
     

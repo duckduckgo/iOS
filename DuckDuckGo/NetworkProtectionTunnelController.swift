@@ -37,9 +37,24 @@ final class NetworkProtectionTunnelController: TunnelController {
 
     // MARK: - Starting & Stopping the VPN
 
-    enum StartError: LocalizedError {
-        case connectionStatusInvalid
+    enum StartError: LocalizedError, CustomNSError {
         case simulateControllerFailureError
+        case loadFromPreferencesFailed(Error)
+        case saveToPreferencesFailed(Error)
+        case startVPNFailed(Error)
+        case fetchAuthTokenFailed(Error)
+
+        public static let errorDomain = "com.duckduckgo.NetworkProtectionTunnelController.StartError.domain"
+
+        public var errorCode: Int {
+            switch self {
+            case .simulateControllerFailureError: 0
+            case .loadFromPreferencesFailed: 1
+            case .saveToPreferencesFailed: 2
+            case .startVPNFailed: 3
+            case .fetchAuthTokenFailed: 4
+            }
+        }
     }
 
     init() {
@@ -147,7 +162,11 @@ final class NetworkProtectionTunnelController: TunnelController {
         }
 
         options["activationAttemptId"] = UUID().uuidString as NSString
-        options["authToken"] = try tokenStore.fetchToken() as NSString?
+        do {
+            options["authToken"] = try tokenStore.fetchToken() as NSString?
+        } catch {
+            throw StartError.fetchAuthTokenFailed(error)
+        }
         options[NetworkProtectionOptionKey.selectedEnvironment] = VPNSettings(defaults: .networkProtectionGroupDefaults)
             .selectedEnvironment.rawValue as NSString
 
@@ -160,8 +179,9 @@ final class NetworkProtectionTunnelController: TunnelController {
                 )
             }
         } catch {
+            // Not this one
             Pixel.fire(pixel: .networkProtectionActivationRequestFailed, error: error)
-            throw error
+            throw StartError.startVPNFailed(error)
         }
     }
 
@@ -203,17 +223,16 @@ final class NetworkProtectionTunnelController: TunnelController {
 
     private func setupAndSave(_ tunnelManager: NETunnelProviderManager) async throws {
         setup(tunnelManager)
-        try await tunnelManager.saveToPreferences()
-        try await tunnelManager.loadFromPreferences()
-        try await tunnelManager.saveToPreferences()
+        try await saveToPreferences(tunnelManager)
+        try await loadFromPreferences(tunnelManager)
+        try await saveToPreferences(tunnelManager)
     }
 
     private func saveToPreferences(_ tunnelManager: NETunnelProviderManager) async throws {
         do {
             try await tunnelManager.saveToPreferences()
         } catch {
-            Pixel.fire(pixel: .networkProtectionFailedToSaveToPreferences, error: error)
-            throw error
+            throw StartError.saveToPreferencesFailed(error)
         }
     }
 
@@ -221,8 +240,7 @@ final class NetworkProtectionTunnelController: TunnelController {
         do {
             try await tunnelManager.loadFromPreferences()
         } catch {
-            Pixel.fire(pixel: .networkProtectionFailedToLoadFromPreferences, error: error)
-            throw error
+            throw StartError.loadFromPreferencesFailed(error)
         }
     }
 

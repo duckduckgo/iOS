@@ -1,8 +1,8 @@
-// swift-tools-version:5.7
-//  Package.swift
+//
+//  SwiftLintToolBundleConfiguration.xcconfig
 //  DuckDuckGo
 //
-//  Copyright © 2022 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,28 +17,13 @@
 //  limitations under the License.
 //
 
-import PackageDescription
+// The SwiftLintToolBundle is an empty macOS target dedicated to compiling the SwiftLintTool
+// project target dependency from the apple-toolbox Swift Package as a macOS CLI tool.
+// When the SwiftLintTool is used as a direct iOS target dependency, Xcode tries to compile
+// it as an iOS target.
 
-let package = Package(
-    name: "DuckUI",
-    platforms: [
-        .iOS(.v14)
-    ],
-    
-    products: [
-        .library(
-            name: "DuckUI",
-            targets: ["DuckUI"])
-    ],
-    dependencies: [
-    ],
-    targets: [
-        .target(
-            name: "DuckUI",
-            dependencies: [],
-            swiftSettings: [
-                .define("DEBUG", .when(configuration: .debug))
-            ]
-        )
-    ]
-)
+SDKROOT = macosx
+
+PROVISIONING_PROFILE_SPECIFIER =
+PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.swiftlinttool.bundle
+GENERATE_INFOPLIST_FILE = YES

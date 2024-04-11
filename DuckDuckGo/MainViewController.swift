@@ -357,6 +357,7 @@ class MainViewController: UIViewController {
             self?.select(tabAt: $0)
             
         } newTab: { [weak self] in
+            Pixel.fire(pixel: .swipeToOpenNewTab)
             self?.newTab()
         } onSwipeStarted: { [weak self] in
             self?.hideKeyboard()

@@ -509,7 +509,8 @@ extension Pixel {
 
         case swipeTabsUsed
         case swipeTabsUsedDaily
-        
+        case swipeToOpenNewTab
+
         case bookmarksCleanupFailed
         case bookmarksCleanupAttemptedWhileSyncWasEnabled
         case favoritesCleanupFailed
@@ -1120,7 +1121,8 @@ extension Pixel.Event {
 
         case .swipeTabsUsed: return "m_swipe-tabs-used"
         case .swipeTabsUsedDaily: return "m_swipe-tabs-used-daily"
-            
+        case .swipeToOpenNewTab: return "m_addressbar_swipe_new_tab"
+
         case .bookmarksCleanupFailed: return "m_d_bookmarks_cleanup_failed"
         case .bookmarksCleanupAttemptedWhileSyncWasEnabled: return "m_d_bookmarks_cleanup_attempted_while_sync_was_enabled"
         case .favoritesCleanupFailed: return "m_d_favorites_cleanup_failed"

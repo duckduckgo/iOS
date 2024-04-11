@@ -1775,6 +1775,10 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onCancelPressed() {
+        fireControllerAwarePixel(ntp: .addressBarCancelPressedOnNTP,
+                                 serp: .addressBarCancelPressedOnSERP,
+                                 website: .addressBarCancelPressedOnWebsite)
+
         dismissOmniBar()
         hideSuggestionTray()
         homeController?.omniBarCancelPressed()

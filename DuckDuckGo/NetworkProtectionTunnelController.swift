@@ -179,7 +179,6 @@ final class NetworkProtectionTunnelController: TunnelController {
                 )
             }
         } catch {
-            // Not this one
             Pixel.fire(pixel: .networkProtectionActivationRequestFailed, error: error)
             throw StartError.startVPNFailed(error)
         }

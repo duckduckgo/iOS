@@ -342,7 +342,7 @@ class MainViewController: UIViewController {
         assertionFailure()
         super.performSegue(withIdentifier: identifier, sender: sender)
     }
-    
+
     private func installSwipeTabs() {
         guard swipeTabsCoordinator == nil else { return }
         
@@ -459,6 +459,8 @@ class MainViewController: UIViewController {
                                                name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
 
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow),
                                                name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide),
@@ -471,6 +473,13 @@ class MainViewController: UIViewController {
     private func keyboardDidShow() {
         keyboardShowing = true
         Pixel.fire(pixel: .keyboardTriggeredOpen)
+    }
+
+    @objc
+    private func keyboardWillHide() {
+        if homeController?.collectionView.isDragging == true {
+            Pixel.fire(pixel: .addressBarGestureDismiss)
+        }
     }
 
     @objc
@@ -1082,6 +1091,8 @@ class MainViewController: UIViewController {
         viewCoordinator.omniBar.forwardButton.isEnabled = viewCoordinator.toolbarForwardButton.isEnabled
     }
   
+    var orientationPixelWorker: DispatchWorkItem?
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
@@ -1093,11 +1104,25 @@ class MainViewController: UIViewController {
         
         coordinator.animate { _ in
             self.swipeTabsCoordinator?.refresh(tabsModel: self.tabManager.model, scrollToSelected: true)
+
+            self.deferredFireOrientationPixel()
         } completion: { _ in
             ViewHighlighter.updatePositions()
         }
     }
-    
+
+    private func deferredFireOrientationPixel() {
+        orientationPixelWorker?.cancel()
+        orientationPixelWorker = nil
+        if UIDevice.current.orientation.isLandscape {
+            let worker = DispatchWorkItem {
+                Pixel.fire(pixel: .deviceOrientationLandscape)
+            }
+            DispatchQueue.global(qos: .default).asyncAfter(deadline: .now() + 3, execute: worker)
+            orientationPixelWorker = worker
+        }
+    }
+
     private func applyWidth() {
 
         if AppWidthObserver.shared.isLargeWidth {

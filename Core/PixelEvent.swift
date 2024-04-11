@@ -33,6 +33,8 @@ extension Pixel {
         case refreshPressed
         case pullToRefresh
 
+        case deviceOrientationLandscape
+
         case keyboardTriggeredOpen
         case keyboardTriggeredClosed
         case keyboardGoWhileOnNTP
@@ -97,6 +99,7 @@ extension Pixel {
         case addressBarClearPressedOnNTP
         case addressBarClearPressedOnWebsite
         case addressBarClearPressedOnSERP
+        case addressBarGestureDismiss
 
         case shareSheetResultSuccess
         case shareSheetResultFail
@@ -161,6 +164,7 @@ extension Pixel {
 
         case bookmarkLaunchList
         case bookmarkLaunchScored
+        case bookmarkAddFavorite
 
         case bookmarkImportSuccess
         case bookmarkImportFailure
@@ -685,6 +689,8 @@ extension Pixel.Event {
         case .refreshPressed: return "m_r"
         case .pullToRefresh: return "m_pull-to-reload"
 
+        case .deviceOrientationLandscape: return "m_device_orientation_landscape"
+
         case .keyboardTriggeredOpen: return "m_keyboard_triggered_open"
         case .keyboardTriggeredClosed: return "m_keyboard_triggered_close"
         case .keyboardGoWhileOnNTP: return "m_keyboard_go_click_ntp"
@@ -750,6 +756,7 @@ extension Pixel.Event {
         case .addressBarClearPressedOnNTP: return "m_addressbar_focus_clear_entry_ntp"
         case .addressBarClearPressedOnWebsite: return "m_addressbar_focus_clear_entry_website"
         case .addressBarClearPressedOnSERP: return "m_addressbar_focus_clear_entry_serp"
+        case .addressBarGestureDismiss: return "m_addressbar_focus_dismiss_gesture"
 
         case .shareSheetResultSuccess: return "m_sharesheet_result_success"
         case .shareSheetResultFail: return "m_sharesheet_result_fail"
@@ -769,6 +776,7 @@ extension Pixel.Event {
 
         case .bookmarkLaunchList: return "m_bookmark_launch_list"
         case .bookmarkLaunchScored: return "m_bookmark_launch_scored"
+        case .bookmarkAddFavorite: return "m_add_favorite_from_bookmark"
 
         case .homeScreenShown: return "mh"
         case .homeScreenEditFavorite: return "mh_ef"

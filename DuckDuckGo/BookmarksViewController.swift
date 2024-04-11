@@ -353,6 +353,10 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func toggleFavoriteAfterSwipe(_ bookmark: BookmarkEntity, _ indexPath: IndexPath) {
+        if !bookmark.isFavorite(on: viewModel.favoritesDisplayMode.displayedFolder) {
+            Pixel.fire(pixel: .bookmarkAddFavorite)
+        }
+
         self.viewModel.toggleFavorite(bookmark)
         WidgetCenter.shared.reloadAllTimelines()
 

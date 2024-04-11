@@ -49,6 +49,18 @@ struct UserText {
                                                   value: "Add Favorites",
                                                   comment: "CTA shown in the favorites widget empty state.")
 
+    static let passwordsWidgetGalleryDisplayName = NSLocalizedString("widget.gallery.passwords.display.name",
+                                                                  value: "Search Passwords",
+                                                                  comment: "Display name for search passwords widget in widget gallery")
+
+    static let passwordsWidgetGalleryDescription = NSLocalizedString("widget.gallery.passwords.description",
+                                                                  value: "Quickly search your saved DuckDuckGo passwords.",
+                                                                  comment: "Description of search passwords widget in widget gallery")
+
+    static let passwords = NSLocalizedString("widget.passwords",
+                                             value: "Search Passwords",
+                                             comment: "Text in passwords widget")
+
     static let lockScreenSearchTitle = NSLocalizedString(
         "lock.screen.widget.search.title",
         value: "Private Search",
@@ -98,4 +110,15 @@ struct UserText {
         "lock.screen.widget.fire.description",
         value: "Instantly delete your browsing history and start a new private search in DuckDuckGo.",
         comment: "Description shown to the user when adding the Fire Button lock screen widget")
+
+    static let lockScreenPasswordsTitle = NSLocalizedString(
+        "lock.screen.widget.passwords.title",
+        value: "Search Passwords",
+        comment: "Title shown to the user when adding the Search Passwords lock screen widget")
+
+    static let lockScreenPasswordsDescription = NSLocalizedString(
+        "lock.screen.widget.passwords.description",
+        value: "Quickly search your saved DuckDuckGo passwords.",
+        comment: "Description shown to the user when adding the Search Passwords lock screen widget")
+
 }

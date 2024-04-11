@@ -26,6 +26,7 @@ import Core
 #if SUBSCRIPTION
 import Subscription
 @available(iOS 15.0, *)
+// swiftlint:disable type_body_length
 final class SubscriptionFlowViewModel: ObservableObject {
     
     let userScript: SubscriptionPagesUserScript
@@ -38,6 +39,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var canGoBackCancellable: AnyCancellable?
     private var urlCancellable: AnyCancellable?
+    private var transactionStatusTimer: Timer?
     
     enum Constants {
         static let navigationBarHideThreshold = 80.0
@@ -101,6 +103,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
         subFeature.onActivateSubscription = {
             DispatchQueue.main.async {
                 self.state.shouldActivateSubscription = true
+                self.setTransactionStatus(.idle)
             }
         }
         
@@ -125,6 +128,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
             .removeDuplicates()
             .sink { [weak self] value in
                 guard let strongSelf = self else { return }
+                Task { await strongSelf.setTransactionStatus(.idle) }
                 if let value {
                     Task { await strongSelf.handleTransactionError(error: value) }
                 }
@@ -140,6 +144,9 @@ final class SubscriptionFlowViewModel: ObservableObject {
         var isStoreError = false
         var isBackendError = false
 
+        // Reset the transaction Status
+        self.setTransactionStatus(.idle)
+        
         switch error {
         case .purchaseFailed:
             isStoreError = true
@@ -201,6 +208,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 guard let strongSelf = self else { return }
                 DispatchQueue.main.async {
                     strongSelf.state.transactionError = error != nil ? .generalError : nil
+                    strongSelf.setTransactionStatus(.idle)
                 }
                 
             }
@@ -225,6 +233,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 guard let strongSelf = self else { return }
                 strongSelf.state.canNavigateBack = false
                 guard let currentURL = self?.webViewModel.url else { return }
+                Task { await strongSelf.setTransactionStatus(.idle) }
                 if currentURL.forComparison() == URL.addEmailToSubscription.forComparison() ||
                     currentURL.forComparison() == URL.addEmailToSubscriptionSuccess.forComparison() ||
                     currentURL.forComparison() == URL.addEmailToSubscriptionSuccess.forComparison() {
@@ -243,19 +252,21 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
     
     private func cleanUp() {
+        transactionStatusTimer?.invalidate()
         canGoBackCancellable?.cancel()
         urlCancellable?.cancel()
-        subFeature.cleanup()
         cancellables.removeAll()
     }
 
     @MainActor
     func resetState() {
+        self.setTransactionStatus(.idle)
         self.state = State()
     }
     
     deinit {
         cleanUp()
+        transactionStatusTimer = nil
         canGoBackCancellable = nil
         urlCancellable = nil
     }
@@ -263,6 +274,25 @@ final class SubscriptionFlowViewModel: ObservableObject {
     @MainActor
     private func setTransactionStatus(_ status: SubscriptionTransactionStatus) {
         self.state.transactionStatus = status
+        
+        // Fire a temp pixel if status is not back to idle in 60s
+        // Remove block when removing pixel
+        // https://app.asana.com/0/1204099484721401/1207003487111848/f
+        
+        // Invalidate existing timer if any
+        transactionStatusTimer?.invalidate()
+        
+        if status != .idle {
+            // Schedule a new timer
+            transactionStatusTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: false) { [weak self] _ in
+                guard let strongSelf = self else { return }
+                if strongSelf.state.transactionStatus != .idle {
+                    Pixel.fire(pixel: .privacyProTransactionProgressNotHiddenAfter60s, error: nil)
+                }
+                strongSelf.transactionStatusTimer?.invalidate()
+                strongSelf.transactionStatusTimer = nil
+            }
+        }
     }
         
     @MainActor
@@ -330,3 +360,4 @@ private extension URL {
     }
     
 }
+// swiftlint:enable type_body_length

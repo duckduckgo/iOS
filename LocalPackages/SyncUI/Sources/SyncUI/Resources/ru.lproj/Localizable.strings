@@ -1,6 +1,12 @@
 /* Standard Buttons - Back Button */
 "back.button" = "Назад";
 
+/* Do not translate - stringsdict entry */
+"bookmarks.invalid.objects.present.description" = "bookmarks.invalid.objects.present.description";
+
+/* Alert title for invalid bookmarks being filtered out of synced data */
+"bookmarks.invalid.objects.present.title" = "Некоторые закладки не синхронизируются из-за слишком длинных записей в отдельных полях.";
+
 /* Sync Paused Errors - Bookmarks Limit Exceeded Action */
 "bookmarks.limit.exceeded.action" = "Управление закладками";
 
@@ -42,6 +48,12 @@
 
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Синхронизация и резервное копирование устройства";
+
+/* Do not translate - stringsdict entry */
+"credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
+
+/* Alert title for invalid logins being filtered out of synced data */
+"credentials.invalid.objects.present.title" = "Некоторые логины не синхронизируются из-за слишком длинных записей в отдельных полях.";
 
 /* Sync Paused Errors - Credentials Limit Exceeded Action */
 "credentials.limit.exceeded.action" = "Управление логинами";
@@ -185,10 +197,10 @@
 "scan.or.see.code.footer" = "Нет возможности отсканировать код?";
 
 /* Scan or See Code View - Instruction */
-"scan.or.see.code.instruction" = "Откройте раздел «Настройки» > Синхронизация и резервное копирование» в браузере DuckDuckGo на другом устройстве и выберите опцию «Синхронизировать с другим устройством».";
+"scan.or.see.code.instruction" = "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”";
 
 /* Scan or See Code View - Instruction with syncMenuPath */
-"scan.or.see.code.instruction.attributed" = "Откройте раздел «%@» в браузере DuckDuckGo на другом устройстве и выберите вариант «Синхронизировать с другим устройством».";
+"scan.or.see.code.instruction.attributed" = "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”.";
 
 /* Scan or See Code View - Manually Enter Code Link */
 "scan.or.see.code.manually.enter.code.link" = "Ввести код вручную";
@@ -200,7 +212,7 @@
 "scan.or.see.code.scan.code.instructions.title" = "Мобильный с мобильным?";
 
 /* Scan or See Code View - Share Code Link */
-"scan.or.see.code.share.code.link" = "Поделиться текстовым кодом?";
+"scan.or.see.code.share.code.link" = "Share Text Code";
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Сканирование QR-кода";
@@ -248,7 +260,7 @@
 "synced.devices.section.header" = "Синхронизированные устройства";
 
 /* Synced Devices - Sync with Another Device Label */
-"synced.devices.sync.with.another.device.label" = "Синхронизировать с другим устройством";
+"synced.devices.sync.with.another.device.label" = "Sync With Another Device";
 
 /* Synced Devices - This Device Label */
 "synced.devices.this.device.label" = "Это устройство";

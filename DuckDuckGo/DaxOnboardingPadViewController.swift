@@ -27,6 +27,7 @@ class DaxOnboardingPadViewController: UIViewController, Onboarding {
         if let navController = segue.destination as? UINavigationController,
            let onboarding = navController.viewControllers.first as? OnboardingViewController {
             onboarding.delegate = delegate
+            self.view.backgroundColor = onboarding.view.backgroundColor
         }
     }
 

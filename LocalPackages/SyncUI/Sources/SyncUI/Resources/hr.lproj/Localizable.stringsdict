@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bookmarks.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Your bookmarks for %2$@ and %1$d other sites can't sync because some of their fields exceed the character limit.</string>
+			<key>one</key>
+			<string>Tvoje oznake za %2$@ i 1 drugo web-mjesto ne mogu se sinkronizirati jer neka njihova polja premašuju ograničenje znakova.</string>
+			<key>other</key>
+			<string>Tvoje oznake za %2$@ i %1$d drugih web-mjesta ne mogu se sinkronizirati jer neka njihova polja premašuju ograničenje znakova.</string>
+			<key>zero</key>
+			<string>Tvoja oznaka za %2$@ ne može se sinkronizirati jer jedno od njezinih polja premašuje ograničenje znakova.</string>
+		</dict>
+	</dict>
+	<key>credentials.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Your passwords for %2$@ and %1$d other sites can't sync because some of their fields exceed the character limit.</string>
+			<key>one</key>
+			<string>Tvoje lozinke za %2$@ i 1 drugo web-mjesto ne mogu se sinkronizirati jer neka njihova polja premašuju ograničenje znakova.</string>
+			<key>other</key>
+			<string>Tvoje lozinke za %2$@ i %1$d drugih web-mjesta ne mogu se sinkronizirati jer neka njihova polja premašuju ograničenje znakova.</string>
+			<key>zero</key>
+			<string>Vaša lozinka za %2$@ ne može se sinkronizirati jer jedno od njezinih polja premašuje ograničenje znakova.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

@@ -21,7 +21,7 @@ import UIKit
 import Core
 
 class OnboardingDefaultBroswerViewController: OnboardingContentViewController {
-    
+
     override var header: String {
         return UserText.onboardingDefaultBrowserTitle
     }

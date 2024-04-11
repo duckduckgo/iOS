@@ -54,6 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private struct ShortcutKey {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
+        static let passwords = "com.duckduckgo.mobile.ios.passwords"
 
 #if NETWORK_PROTECTION
         static let openVPNSettings = "com.duckduckgo.mobile.ios.vpn.open-settings"
@@ -223,6 +224,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DaxDialogs.shared.primeForUse()
         }
 
+        // Experiment installation will be uncommented once we decide to run the experiment
+//        PixelExperiment.install()
+
         // MARK: Sync initialisation
 
 #if DEBUG
@@ -266,7 +270,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 })
             }
 
+        let previewsSource = TabPreviewsSource()
         let historyManager = makeHistoryManager()
+        let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
 #if APP_TRACKING_PROTECTION
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
@@ -275,14 +281,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                       historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
-                                      appSettings: AppDependencyProvider.shared.appSettings)
+                                      appSettings: AppDependencyProvider.shared.appSettings,
+                                      previewsSource: previewsSource,
+                                      tabsModel: tabsModel)
 #else
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
-                                      appSettings: AppDependencyProvider.shared.appSettings)
+                                      appSettings: AppDependencyProvider.shared.appSettings,
+                                      previewsSource: previewsSource,
+                                      tabsModel: tabsModel)
 #endif
 
         main.loadViewIfNeeded()
@@ -337,6 +347,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
         return true
+    }
+
+    private func prepareTabsModel(previewsSource: TabPreviewsSource = TabPreviewsSource(),
+                                  appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
+                                  isDesktop: Bool = UIDevice.current.userInterfaceIdiom == .pad) -> TabsModel {
+        let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
+        let tabsModel: TabsModel
+        if AutoClearSettingsModel(settings: appSettings) != nil {
+            tabsModel = TabsModel(desktop: isPadDevice)
+            tabsModel.save()
+            previewsSource.removeAllPreviews()
+        } else {
+            if let storedModel = TabsModel.get() {
+                // Save new model in case of migration
+                storedModel.save()
+                tabsModel = storedModel
+            } else {
+                tabsModel = TabsModel(desktop: isPadDevice)
+            }
+        }
+        return tabsModel
     }
 
     private func makeHistoryManager() -> HistoryManager {
@@ -648,7 +679,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func showKeyboardOnLaunch() {
         guard KeyboardSettings().onAppLaunch && showKeyboardIfSettingOn && shouldShowKeyboardOnLaunch() else { return }
-        self.mainViewController?.enterSearch()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.mainViewController?.enterSearch()
+        }
         showKeyboardIfSettingOn = false
     }
     
@@ -737,7 +770,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         Task { @MainActor in
-            await autoClear?.applicationWillMoveToForeground()
+            // Autoclear should have happened by now
             showKeyboardIfSettingOn = false
 
             if !handleAppDeepLink(app, mainViewController, url) {
@@ -853,12 +886,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         os_log("Handling shortcut item: %s", log: .generalLog, type: .debug, shortcutItem.type)
 
         Task { @MainActor in
-            
+
             await autoClear?.applicationWillMoveToForeground()
 
             if shortcutItem.type == ShortcutKey.clipboard, let query = UIPasteboard.general.string {
                 mainViewController?.clearNavigationStack()
                 mainViewController?.loadQueryInNewTab(query)
+                return
+            }
+
+            if shortcutItem.type == ShortcutKey.passwords {
+                mainViewController?.clearNavigationStack()
+                // Give the `clearNavigationStack` call time to complete.
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [weak self] in
+                    self?.mainViewController?.launchAutofillLogins(openSearch: true)
+                }
+                Pixel.fire(pixel: .autofillLoginsLaunchAppShortcut)
                 return
             }
 
@@ -981,7 +1024,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
             if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist(), identifier == VPNWaitlist.notificationIdentifier {
                 presentNetworkProtectionWaitlistModal()
-                DailyPixel.fire(pixel: .networkProtectionWaitlistNotificationLaunched)
             }
 
 #endif

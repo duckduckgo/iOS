@@ -403,7 +403,6 @@ extension TabViewController {
     }
     
     private func onBrowsingSettingsAction() {
-        Pixel.fire(pixel: .browsingMenuSettings)
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.openSettings)
         delegate?.tabDidRequestSettings(tab: self)
     }

@@ -46,9 +46,6 @@ extension AppDelegate {
 #if NETWORK_PROTECTION
     private func checkNetworkProtectionWaitlist() {
         let accessController = NetworkProtectionAccessController()
-        if accessController.isPotentialOrCurrentWaitlistUser {
-            DailyPixel.fire(pixel: .networkProtectionWaitlistUserActive)
-        }
 
         VPNWaitlist.shared.fetchInviteCodeIfAvailable { [weak self] error in
             guard error == nil else {
@@ -70,8 +67,6 @@ extension AppDelegate {
             do {
                 try await NetworkProtectionCodeRedemptionCoordinator().redeem(inviteCode)
                 VPNWaitlist.shared.sendInviteCodeAvailableNotification()
-
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionWaitlistNotificationShown)
             } catch {}
         }
     }

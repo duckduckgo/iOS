@@ -35,6 +35,7 @@ class AppIconSettingsCell: UICollectionViewCell {
         super.init(coder: coder)
         isAccessibilityElement = true
         accessibilityTraits.insert(.button)
+        decorate()
     }
 
     override var isSelected: Bool {
@@ -42,13 +43,19 @@ class AppIconSettingsCell: UICollectionViewCell {
             layer.borderWidth = isSelected ? 2.0 : 0.0
         }
     }
-
 }
 
-extension AppIconSettingsCell: Themable {
-
-    func decorate(with theme: Theme) {
+extension AppIconSettingsCell {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         layer.borderColor = theme.iconCellBorderColor.cgColor
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            decorate()
+        }
+    }
 }

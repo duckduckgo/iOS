@@ -82,7 +82,7 @@ extension VoiceSearchFeedbackView {
             .padding(.bottom, voiceCircleVerticalPadding)
             .padding(.top, voiceCircleVerticalPadding)
             
-            Text(UserText.voiceSearchFooter)
+            Text(UserText.voiceSearchFooterOld)
                 .font(.footnote)
                 .multilineTextAlignment(.center)
                 .foregroundColor(Colors.footerText)

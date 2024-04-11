@@ -19,6 +19,7 @@
 
 import SwiftUI
 import UIKit
+import Core
 
 struct SettingsMoreView: View {
         
@@ -28,9 +29,13 @@ struct SettingsMoreView: View {
     var body: some View {
         Section(header: Text(UserText.settingsMoreSection)) {
             
-            SettingsCellView(label: UserText.settingsEmailProtection,
+            SettingsCellView(label: UserText.emailProtection,
                              subtitle: UserText.settingsEmailProtectionDescription,
-                             action: { viewModel.openEmailProtection() },
+                             action: {
+                viewModel.openEmailProtection()
+                Pixel.fire(pixel: .settingsEmailProtectionOpen,
+                           withAdditionalParameters: PixelExperiment.parameters)
+            },
                              disclosureIndicator: true,
                              isButton: true)
             

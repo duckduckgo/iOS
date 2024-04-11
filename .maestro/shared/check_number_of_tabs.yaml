@@ -1,0 +1,7 @@
+appId: com.duckduckgo.mobile.ios
+---
+
+- assertVisible: "Tab Switcher"
+- tapOn: "Tab Switcher"
+- assertVisible: ${TITLE}
+- tapOn: "Done"

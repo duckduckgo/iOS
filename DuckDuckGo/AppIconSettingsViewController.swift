@@ -29,7 +29,7 @@ class AppIconSettingsViewController: UICollectionViewController {
         super.viewDidLoad()
 
         collectionView.dataSource = dataSource
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
     }
 
     private func initSelection() {
@@ -43,6 +43,10 @@ class AppIconSettingsViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let appIcon = dataSource.appIcons[indexPath.row]
+
+        Pixel.fire(pixel: .settingsIconSelectorPressed,
+                   withAdditionalParameters: PixelExperiment.parameters)
+
         worker.changeAppIcon(appIcon) { success in
             if success {
                 self.initSelection()
@@ -66,7 +70,6 @@ class AppIconDataSource: NSObject, UICollectionViewDataSource {
             as? AppIconSettingsCell else {
                 fatalError("Expected IconSettingsCell")
         }
-        cell.decorate(with: ThemeManager.shared.currentTheme)
 
         let appIcon = appIcons[indexPath.row]
         cell.appIcon = appIcon
@@ -95,9 +98,10 @@ class AppIconWorker {
 
 }
 
-extension AppIconSettingsViewController: Themable {
+extension AppIconSettingsViewController {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         collectionView.backgroundColor = theme.backgroundColor
         collectionView.reloadData()
         initSelection()

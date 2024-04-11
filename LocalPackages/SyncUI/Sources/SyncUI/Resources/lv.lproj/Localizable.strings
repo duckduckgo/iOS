@@ -1,6 +1,12 @@
 /* Standard Buttons - Back Button */
 "back.button" = "Atpakaļ";
 
+/* Do not translate - stringsdict entry */
+"bookmarks.invalid.objects.present.description" = "bookmarks.invalid.objects.present.description";
+
+/* Alert title for invalid bookmarks being filtered out of synced data */
+"bookmarks.invalid.objects.present.title" = "Dažas grāmatzīmes netiek sinhronizētas, jo dažos laukos ir pārāk garš saturs.";
+
 /* Sync Paused Errors - Bookmarks Limit Exceeded Action */
 "bookmarks.limit.exceeded.action" = "Pārvaldīt grāmatzīmes";
 
@@ -42,6 +48,12 @@
 
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Šīs ierīces sinhronizācija un dublēšana";
+
+/* Do not translate - stringsdict entry */
+"credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
+
+/* Alert title for invalid logins being filtered out of synced data */
+"credentials.invalid.objects.present.title" = "Daži pieteikšanās dati netiek sinhronizēti, jo noteiktos laukos saturs ir pārāk garš.";
 
 /* Sync Paused Errors - Credentials Limit Exceeded Action */
 "credentials.limit.exceeded.action" = "Pārvaldīt pieteikšanās datus";
@@ -185,10 +197,10 @@
 "scan.or.see.code.footer" = "Nevari skenēt?";
 
 /* Scan or See Code View - Instruction */
-"scan.or.see.code.instruction" = "Dodies uz Iestatījumi › Sinhronizācija un dublēšana DuckDuckGo pārlūkprogrammā citā ierīcē un izvēlies \"Sinhronizēt ar citu ierīci\".";
+"scan.or.see.code.instruction" = "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”";
 
 /* Scan or See Code View - Instruction with syncMenuPath */
-"scan.or.see.code.instruction.attributed" = "Dodies uz %@ DuckDuckGo pārlūkā citā ierīcē un izvēlies \"Sinhronizēt ar citu ierīci.\".";
+"scan.or.see.code.instruction.attributed" = "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”.";
 
 /* Scan or See Code View - Manually Enter Code Link */
 "scan.or.see.code.manually.enter.code.link" = "Ievadīt kodu manuāli";
@@ -200,7 +212,7 @@
 "scan.or.see.code.scan.code.instructions.title" = "No mobilā uz mobilo?";
 
 /* Scan or See Code View - Share Code Link */
-"scan.or.see.code.share.code.link" = "Kopīgot teksta kodu?";
+"scan.or.see.code.share.code.link" = "Share Text Code";
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Kvadrātkoda skenēšana";
@@ -248,7 +260,7 @@
 "synced.devices.section.header" = "Sinhronizētās ierīces";
 
 /* Synced Devices - Sync with Another Device Label */
-"synced.devices.sync.with.another.device.label" = "Sinhronizācija ar citu ierīci";
+"synced.devices.sync.with.another.device.label" = "Sync With Another Device";
 
 /* Synced Devices - This Device Label */
 "synced.devices.this.device.label" = "Šī ierīce";

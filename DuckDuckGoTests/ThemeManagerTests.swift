@@ -18,38 +18,62 @@
 //
 
 import XCTest
+import UIKit
 @testable import Core
 @testable import DuckDuckGo
 
 class ThemeManagerTests: XCTestCase {
 
-    private class MockRootController: UIViewController, Themable {
+    private class MockRootController: UIViewController {
         var onDecorate: XCTestExpectation?
-        
-        func decorate(with theme: Theme) {
+
+        private func decorate() {
+            let theme = ThemeManager.shared.currentTheme
             onDecorate?.fulfill()
         }
     }
-    
-    private class MockRootControllersProvider: RootControllersProvider {
-        var rootControllers = [UIViewController]()
-    }
-    
-    func testWhenApplyingThemeOnThemeChangeThenControllerShouldBeUpdated() {
-        let expectDecoration = expectation(description: "Decorate called")
-        expectDecoration.expectedFulfillmentCount = 2
-        
-        let mockRootController = MockRootController()
-        mockRootController.onDecorate = expectDecoration
-        
-        let mockRootControllerProvider = MockRootControllersProvider()
-        mockRootControllerProvider.rootControllers = [mockRootController]
-        
-        let manager = ThemeManager(settings: AppUserDefaults(groupName: "com.duckduckgo.mobile.ios.Tests"),
-                                   rootProvider: mockRootControllerProvider)
+
+    func testEnablingLightThemeModifiesSettings() {
+        let defaults = AppUserDefaults(groupName: "com.duckduckgo.mobile.ios.Tests")
+        let manager = ThemeManager(settings: defaults)
+
         manager.enableTheme(with: .light)
+
+        XCTAssertEqual(defaults.currentThemeName, .light)
+    }
+
+    func testEnablingDarkThemeModifiesSettings() {
+        let defaults = AppUserDefaults(groupName: "com.duckduckgo.mobile.ios.Tests")
+        let manager = ThemeManager(settings: defaults)
+
         manager.enableTheme(with: .dark)
-        
-        waitForExpectations(timeout: 0.5, handler: nil)
+
+        XCTAssertEqual(defaults.currentThemeName, .dark)
+    }
+
+    func testEnablingSystemThemeModifiesSettings() {
+        let defaults = AppUserDefaults(groupName: "com.duckduckgo.mobile.ios.Tests")
+        let manager = ThemeManager(settings: defaults)
+
+        manager.enableTheme(with: .systemDefault)
+
+        XCTAssertEqual(defaults.currentThemeName, .systemDefault)
+    }
+
+    func testEnablingThemeOverridesUserInterfaceStyle() {
+        let window = UIWindow()
+        window.makeKeyAndVisible()
+
+        let defaults = AppUserDefaults(groupName: "com.duckduckgo.mobile.ios.Tests")
+        let manager = ThemeManager(settings: defaults)
+
+        manager.enableTheme(with: .dark)
+        XCTAssertEqual(window.traitCollection.userInterfaceStyle, .dark)
+
+        manager.enableTheme(with: .light)
+        XCTAssertEqual(window.traitCollection.userInterfaceStyle, .light)
+
+        manager.enableTheme(with: .systemDefault)
+        XCTAssertEqual(window.overrideUserInterfaceStyle, .unspecified)
     }
 }

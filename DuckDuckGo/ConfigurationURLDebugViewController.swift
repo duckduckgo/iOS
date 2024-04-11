@@ -125,7 +125,7 @@ final class ConfigurationURLDebugViewController: UITableViewController {
         }
         cell.title.text = row.title
         cell.subtitle.text = url(for: row)
-        cell.subtitle.textColor = customURL(for: row) != nil ? UIColor(designSystemColor: .accent) : .black
+        cell.subtitle.textColor = customURL(for: row) != nil ? UIColor(designSystemColor: .accent) : .label
         cell.ternary.text = lastConfigurationUpdateDate != nil ? dateFormatter.string(from: lastConfigurationUpdateDate!) : "-"
         cell.refresh.addAction(refreshAction, for: .primaryActionTriggered)
         return cell

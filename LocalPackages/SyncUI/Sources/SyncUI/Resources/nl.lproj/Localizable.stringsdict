@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bookmarks.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Your bookmarks for %2$@ and 1 other site can't sync because some of their fields exceed the character limit.</string>
+			<key>other</key>
+			<string>Je bladwijzers voor %2$@ en %1$d andere websites kunnen niet worden gesynchroniseerd omdat sommige velden de tekenlimiet overschrijden.</string>
+			<key>zero</key>
+			<string>Je bladwijzer voor %2$@ kan niet worden gesynchroniseerd omdat een van de velden de tekenlimiet overschrijdt.</string>
+		</dict>
+	</dict>
+	<key>credentials.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Je wachtwoorden voor %2$@ en één andere website kunnen niet worden gesynchroniseerd omdat sommige velden de tekenlimiet overschrijden.</string>
+			<key>other</key>
+			<string>Je wachtwoorden voor %2$@ en %1$d andere websites kunnen niet worden gesynchroniseerd omdat sommige velden de tekenlimiet overschrijden.</string>
+			<key>zero</key>
+			<string>Je wachtwoord voor %2$@ kan niet worden gesynchroniseerd omdat een van de velden de tekenlimiet overschrijdt.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

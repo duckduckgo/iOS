@@ -117,43 +117,6 @@ final class NetworkProtectionAccessControllerTests: XCTestCase {
         XCTAssertEqual(controller.networkProtectionAccessType(), .waitlistInvited)
     }
 
-    func testWhenUserHasWaitlistAccess_ThenWaitlistUserCheckIsTrue() {
-        let controller = createMockAccessController(
-            isInternalUser: true,
-            featureActivated: true,
-            termsAccepted: true,
-            featureFlagsEnabled: true,
-            hasJoinedWaitlist: true,
-            hasBeenInvited: true
-        )
-
-        XCTAssertTrue(controller.isPotentialOrCurrentWaitlistUser)
-    }
-
-    func testWhenUserDoesNotHaveWaitlistAccess_ThenWaitlistUserCheckIsFalse() {
-        let controller = createMockAccessController(
-            featureActivated: false,
-            termsAccepted: false,
-            featureFlagsEnabled: false,
-            hasJoinedWaitlist: false,
-            hasBeenInvited: false
-        )
-
-        XCTAssertFalse(controller.isPotentialOrCurrentWaitlistUser)
-    }
-
-    func testWhenUserIsInternal_ThenWaitlistUserCheckIsFalse() {
-        let controller = createMockAccessController(
-            featureActivated: true,
-            termsAccepted: false,
-            featureFlagsEnabled: false,
-            hasJoinedWaitlist: false,
-            hasBeenInvited: false
-        )
-
-        XCTAssertFalse(controller.isPotentialOrCurrentWaitlistUser)
-    }
-
     // MARK: - Mock Creation
 
     private func createMockAccessController(
@@ -199,7 +162,7 @@ final class NetworkProtectionAccessControllerTests: XCTestCase {
         mockManager.privacyConfig = mockConfiguration(subfeatureEnabled: enabled)
 
         let internalUserDecider = DefaultInternalUserDecider(store: internalUserDeciderStore)
-        return DefaultFeatureFlagger(internalUserDecider: internalUserDecider, privacyConfig: mockManager.privacyConfig)
+        return DefaultFeatureFlagger(internalUserDecider: internalUserDecider, privacyConfigManager: mockManager)
     }
 
     private func mockConfiguration(subfeatureEnabled: Bool) -> PrivacyConfiguration {

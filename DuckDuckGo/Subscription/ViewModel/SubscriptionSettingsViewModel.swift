@@ -84,11 +84,9 @@ final class SubscriptionSettingsViewModel: ObservableObject {
                                                 date: subscription.expiresOrRenewsAt,
                                                 product: subscription.productId,
                                                 billingPeriod: subscription.billingPeriod)
-            case .failure:
-                AccountManager().signOut()
-                DispatchQueue.main.async {
-                    self.state.shouldDismissView = true
-                }
+            default:
+                return
+                
             }
         }
     }

@@ -26,7 +26,6 @@ class ForgetDataAlert {
         let additionalDescription = ongoingDownloadsInProgress() ? UserText.fireButtonInterruptingDownloadsAlertDescription : nil
         
         let alert = UIAlertController(title: additionalDescription, message: nil, preferredStyle: .actionSheet)
-        alert.overrideUserInterfaceStyle()
 
         let forgetTabsAndDataAction = UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { _ in
             forgetTabsAndDataHandler()

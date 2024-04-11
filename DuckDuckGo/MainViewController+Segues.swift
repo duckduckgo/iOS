@@ -98,7 +98,7 @@ extension MainViewController {
         }
         bookmarks.delegate = self
 
-        let controller = ThemableNavigationController(rootViewController: bookmarks)
+        let controller = UINavigationController(rootViewController: bookmarks)
         controller.modalPresentationStyle = .automatic
         present(controller, animated: true) {
             completion?(bookmarks)
@@ -259,12 +259,12 @@ extension MainViewController {
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider)
 #endif
 
+        Pixel.fire(pixel: .settingsPresented,
+                   withAdditionalParameters: PixelExperiment.parameters)
         let settingsController = SettingsHostingController(viewModel: settingsViewModel, viewProvider: legacyViewProvider)
-        settingsController.applyTheme(ThemeManager.shared.currentTheme)
         
         // We are still presenting legacy views, so use a Navcontroller
         let navController = UINavigationController(rootViewController: settingsController)
-        navController.applyTheme(ThemeManager.shared.currentTheme)
         settingsController.modalPresentationStyle = UIModalPresentationStyle.automatic
         
         present(navController, animated: true) {
@@ -284,7 +284,7 @@ extension MainViewController {
                                     tabManager: self.tabManager)
         }
 
-        let controller = ThemableNavigationController(rootViewController: settings)
+        let controller = UINavigationController(rootViewController: settings)
         controller.modalPresentationStyle = .automatic
         present(controller, animated: true) {
             completion?(settings)

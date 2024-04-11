@@ -1,3 +1,4 @@
+- We added a new setting that lets you see full website addresses in the address bar.
 - Bug fixes and other improvements.
 
 Join our fully distributed team and help raise the standard of trust online! https://duckduckgo.com/hiring

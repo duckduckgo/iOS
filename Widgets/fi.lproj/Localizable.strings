@@ -31,6 +31,12 @@
 /* Title shown to the user when adding the Fire Button lock screen widget */
 "lock.screen.widget.fire.title" = "Fire-painike";
 
+/* Description shown to the user when adding the Search Passwords lock screen widget */
+"lock.screen.widget.passwords.description" = "Hae nopeasti DuckDuckGohon tallennettuja salasanojasi.";
+
+/* Title shown to the user when adding the Search Passwords lock screen widget */
+"lock.screen.widget.passwords.title" = "Etsi salasanoja";
+
 /* Description shown to the user when adding the Search lock screen widget */
 "lock.screen.widget.search.description" = "Aloita välittömästi yksityinen haku DuckDuckGossa.";
 
@@ -45,6 +51,12 @@
 
 /* No comment provided by engineer. */
 "VPN Not Configured" = "VPN Not Configured";
+
+/* Description of search passwords widget in widget gallery */
+"widget.gallery.passwords.description" = "Hae nopeasti DuckDuckGohon tallennettuja salasanojasi.";
+
+/* Display name for search passwords widget in widget gallery */
+"widget.gallery.passwords.display.name" = "Etsi salasanoja";
 
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Tee hakuja ja käy lempisivustoillasi yhdellä napautuksella.";
@@ -63,6 +75,9 @@
 
 /* Message shown in the favorites widget empty state. */
 "widget.no.favorites.message" = "Siirry nopeasti suosikkisivustoillesi.";
+
+/* Text in passwords widget */
+"widget.passwords" = "Etsi salasanoja";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Hae DuckDuckGo:sta";

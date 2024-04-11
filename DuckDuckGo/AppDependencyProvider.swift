@@ -54,8 +54,10 @@ class AppDependencyProvider: DependencyProvider {
     let variantManager: VariantManager = DefaultVariantManager()
     
     let internalUserDecider: InternalUserDecider = ContentBlocking.shared.privacyConfigurationManager.internalUserDecider
-    private lazy var privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
-    lazy var featureFlagger: FeatureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider, privacyConfig: privacyConfig)
+    lazy var featureFlagger: FeatureFlagger = DefaultFeatureFlagger(
+        internalUserDecider: internalUserDecider,
+        privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager
+    )
 
     let remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore()
     lazy var homePageConfiguration: HomePageConfiguration = HomePageConfiguration(variantManager: variantManager,

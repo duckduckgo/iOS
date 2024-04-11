@@ -266,6 +266,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     private func didSelectScoredBookmarkAtIndex(_ index: Int) {
         guard searchDataSource.results.indices.contains(index) else { return }
         dismiss()
+
+        Pixel.fire(pixel: .bookmarkLaunchScored)
         delegate?.bookmarksDidSelect(url: searchDataSource.results[index].url)
     }
 
@@ -826,6 +828,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     fileprivate func select(bookmark: BookmarkEntity) {
         guard let url = bookmark.urlObject else { return }
         dismiss()
+        Pixel.fire(pixel: .bookmarkLaunchList)
         delegate?.bookmarksDidSelect(url: url)
     }
 

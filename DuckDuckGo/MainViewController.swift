@@ -465,14 +465,20 @@ class MainViewController: UIViewController {
                                                name: UIResponder.keyboardDidHideNotification, object: nil)
     }
 
+    var keyboardShowing = false
+
     @objc
     private func keyboardDidShow() {
+        keyboardShowing = true
         Pixel.fire(pixel: .keyboardTriggeredOpen)
     }
 
     @objc
     private func keyboardDidHide() {
-        Pixel.fire(pixel: .keyboardTriggeredClosed)
+        if keyboardShowing {
+            Pixel.fire(pixel: .keyboardTriggeredClosed)
+        }
+        keyboardShowing = false
     }
 
     private func registerForSyncPausedNotifications() {
@@ -1866,7 +1872,7 @@ extension MainViewController: FavoritesOverlayDelegate {
     
     func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: BookmarkEntity) {
         guard let url = favorite.urlObject else { return }
-        Pixel.fire(pixel: .homeScreenFavouriteLaunched)
+        Pixel.fire(pixel: .favoriteLaunchedWebsite)
         homeController?.chromeDelegate = nil
         dismissOmniBar()
         Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .fireproof, fromCache: .tabs)
@@ -2271,6 +2277,7 @@ extension MainViewController: TabSwitcherDelegate {
 
 extension MainViewController: BookmarksDelegate {
     func bookmarksDidSelect(url: URL) {
+
         dismissOmniBar()
         if url.isBookmarklet() {
             executeBookmarklet(url)

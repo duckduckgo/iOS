@@ -115,10 +115,13 @@ extension Pixel {
         case tabBarTabSwitcherPressed
         
         case homeScreenShown
-        case homeScreenFavouriteLaunched
         case homeScreenEditFavorite
         case homeScreenDeleteFavorite
-        
+
+        case favoriteLaunchedNTP
+        case favoriteLaunchedWebsite
+        case favoriteLaunchedWidget
+
         case autocompleteClickPhrase
         case autocompleteClickWebsite
         case autocompleteClickBookmark
@@ -155,7 +158,10 @@ extension Pixel {
         case voiceSearchDone
         case openVoiceSearch
         case voiceSearchCancelled
-        
+
+        case bookmarkLaunchList
+        case bookmarkLaunchScored
+
         case bookmarkImportSuccess
         case bookmarkImportFailure
         case bookmarkImportFailureParsingDL
@@ -760,12 +766,18 @@ extension Pixel.Event {
         case .bookmarksButtonPressed: return "mt_bm"
         case .tabBarBookmarksLongPressed: return "mt_bl"
         case .tabBarTabSwitcherPressed: return "mt_tb"
-            
+
+        case .bookmarkLaunchList: return "m_bookmark_launch_list"
+        case .bookmarkLaunchScored: return "m_bookmark_launch_scored"
+
         case .homeScreenShown: return "mh"
-        case .homeScreenFavouriteLaunched: return "mh_fl"
         case .homeScreenEditFavorite: return "mh_ef"
         case .homeScreenDeleteFavorite: return "mh_df"
-            
+
+        case .favoriteLaunchedNTP: return "m_favorite_launched_ntp"
+        case .favoriteLaunchedWebsite: return "m_favorite_launched_website"
+        case .favoriteLaunchedWidget: return "m_favorite_launched_widget"
+
         case .autocompleteClickPhrase: return "m_autocomplete_click_phrase"
         case .autocompleteClickWebsite: return "m_autocomplete_click_website"
         case .autocompleteClickBookmark: return "m_autocomplete_click_bookmark"

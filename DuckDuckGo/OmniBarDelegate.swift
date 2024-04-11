@@ -40,6 +40,8 @@ protocol OmniBarDelegate: AnyObject {
 
     func onSettingsLongPressed()
 
+    func onClearPressed()
+
     func onCancelPressed()
     
     func onEnterPressed()

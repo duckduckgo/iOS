@@ -186,6 +186,10 @@ extension BlankSnapshotViewController: OmniBarDelegate {
     func onEnterPressed() {
         userInteractionDetected()
     }
+
+    func onClearPressed() {
+        // No-op
+    }
 }
 
 extension BlankSnapshotViewController: TabSwitcherButtonDelegate {

@@ -416,6 +416,7 @@ class OmniBar: UIView {
     }
     
     @IBAction func onClearButtonPressed(_ sender: Any) {
+        omniDelegate?.onClearPressed()
         refreshState(state.onTextClearedState)
     }
 

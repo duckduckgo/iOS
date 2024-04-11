@@ -35,6 +35,9 @@ extension Pixel {
 
         case keyboardTriggeredOpen
         case keyboardTriggeredClosed
+        case keyboardGoWhileOnNTP
+        case keyboardGoWhileOnWebsite
+        case keyboardGoWhileOnSERP
 
         case forgetAllPressedBrowsing
         case forgetAllPressedTabSwitching
@@ -80,9 +83,12 @@ extension Pixel {
         
         case addressBarShare
         case addressBarSettings
-        case addressBarClickWhileOnNTP
-        case addressBarClickWhileOnWebsite
-        case addressBarClickWhileOnSERP
+        case addressBarClickOnNTP
+        case addressBarClickOnWebsite
+        case addressBarClickOnSERP
+        case addressBarClearPressedOnNTP
+        case addressBarClearPressedOnWebsite
+        case addressBarClearPressedOnSERP
 
         case shareSheetResultSuccess
         case shareSheetResultFail
@@ -667,6 +673,9 @@ extension Pixel.Event {
 
         case .keyboardTriggeredOpen: return "m_keyboard_triggered_open"
         case .keyboardTriggeredClosed: return "m_keyboard_triggered_close"
+        case .keyboardGoWhileOnNTP: return "m_keyboard_go_click_ntp"
+        case .keyboardGoWhileOnWebsite: return "m_keyboard_go_click_website"
+        case .keyboardGoWhileOnSERP: return "m_keyboard_go_click_serp"
 
         case .forgetAllPressedBrowsing: return "mf_bp"
         case .forgetAllPressedTabSwitching: return "mf_tp"
@@ -710,12 +719,15 @@ extension Pixel.Event {
         case .browsingMenuAutofill: return "m_nav_autofill_menu_item_pressed"
             
         case .browsingMenuShare: return "m_browsingmenu_share"
-            
+
         case .addressBarShare: return "m_addressbar_share"
         case .addressBarSettings: return "m_addressbar_settings"
-        case .addressBarClickWhileOnNTP: return "m_addressbar_click_ntp"
-        case .addressBarClickWhileOnWebsite: return "m_addressbar_click_website"
-        case .addressBarClickWhileOnSERP: return "m_addressbar_click_serp"
+        case .addressBarClickOnNTP: return "m_addressbar_click_ntp"
+        case .addressBarClickOnWebsite: return "m_addressbar_click_website"
+        case .addressBarClickOnSERP: return "m_addressbar_click_serp"
+        case .addressBarClearPressedOnNTP: return "m_addressbar_focus_clear_entry_ntp"
+        case .addressBarClearPressedOnWebsite: return "m_addressbar_focus_clear_entry_website"
+        case .addressBarClearPressedOnSERP: return "m_addressbar_focus_clear_entry_serp"
 
         case .shareSheetResultSuccess: return "m_sharesheet_result_success"
         case .shareSheetResultFail: return "m_sharesheet_result_fail"

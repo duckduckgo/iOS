@@ -1736,9 +1736,23 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onEnterPressed() {
+        fireControllerAwarePixel(ntp: .keyboardGoWhileOnNTP, serp: .keyboardGoWhileOnSERP, website: .keyboardGoWhileOnWebsite)
+
         guard !viewCoordinator.suggestionTrayContainer.isHidden else { return }
         
         suggestionTrayController?.willDismiss(with: viewCoordinator.omniBar.textField.text ?? "")
+    }
+
+    func fireControllerAwarePixel(ntp: Pixel.Event, serp: Pixel.Event, website: Pixel.Event) {
+        if homeController != nil {
+            Pixel.fire(pixel: ntp)
+        } else if let currentTab {
+            if currentTab.url?.isDuckDuckGoSearch == true {
+                Pixel.fire(pixel: serp)
+            } else {
+                Pixel.fire(pixel: website)
+            }
+        }
     }
 
     func onDismissed() {
@@ -1766,7 +1780,13 @@ extension MainViewController: OmniBarDelegate {
         homeController?.omniBarCancelPressed()
         self.showMenuHighlighterIfNeeded()
     }
-    
+
+    func onClearPressed() {
+        fireControllerAwarePixel(ntp: .addressBarClearPressedOnNTP,
+                                 serp: .addressBarClearPressedOnSERP,
+                                 website: .addressBarClearPressedOnWebsite)
+    }
+
     private var isSERPPresented: Bool {
         guard let tabURL = currentTab?.url else { return false }
         return tabURL.isDuckDuckGoSearch
@@ -1777,15 +1797,7 @@ extension MainViewController: OmniBarDelegate {
             viewCoordinator.omniBar.refreshText(forUrl: currentTab.url, forceFullURL: true)
         }
 
-        if homeController != nil {
-            Pixel.fire(pixel: .addressBarClickWhileOnNTP)
-        } else if let currentTab {
-            if currentTab.url?.isDuckDuckGoSearch == true {
-                Pixel.fire(pixel: .addressBarClickWhileOnSERP)
-            } else {
-                Pixel.fire(pixel: .addressBarClickWhileOnWebsite)
-            }
-        }
+        fireControllerAwarePixel(ntp: .addressBarClickOnNTP, serp: .addressBarClickOnSERP, website: .addressBarClickOnWebsite)
 
         guard homeController == nil else { return }
         

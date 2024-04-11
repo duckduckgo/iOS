@@ -77,7 +77,8 @@ extension Pixel {
         
         case addressBarShare
         case addressBarSettings
-        
+        case addressBarClickWhileOnNTP
+
         case shareSheetResultSuccess
         case shareSheetResultFail
         case shareSheetActivityCopy
@@ -704,6 +705,8 @@ extension Pixel.Event {
             
         case .addressBarShare: return "m_addressbar_share"
         case .addressBarSettings: return "m_addressbar_settings"
+        case .addressBarClickWhileOnNTP: return "m_addressbar_click_ntp"
+
         case .shareSheetResultSuccess: return "m_sharesheet_result_success"
         case .shareSheetResultFail: return "m_sharesheet_result_fail"
         case .shareSheetActivityCopy: return "m_sharesheet_activity_copy"

@@ -1762,6 +1762,10 @@ extension MainViewController: OmniBarDelegate {
             viewCoordinator.omniBar.refreshText(forUrl: currentTab.url, forceFullURL: true)
         }
 
+        if homeController != nil {
+            Pixel.fire(pixel: .addressBarClickWhileOnNTP)
+        }
+
         guard homeController == nil else { return }
         
         if !skipSERPFlow, isSERPPresented, let query = omniBar.textField.text {

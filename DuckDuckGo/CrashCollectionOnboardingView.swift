@@ -26,92 +26,100 @@ struct CrashCollectionOnboardingView: View {
     @ObservedObject var model: CrashCollectionOnboardingViewModel
 
     var body: some View {
-        NavigationView {
-            VStack(spacing: 0) {
-                ScrollView {
-                    VStack(spacing: 24) {
-                        Image("Breakage-128")
+        if #available(iOS 16.0, *) {
+            NavigationStack {
+                contents
+            }
+        } else {
+            NavigationView {
+                contents
+            }
+        }
+    }
 
-                        Text(UserText.crashReportDialogTitle)
-                            .daxTitle1()
+    var contents: some View {
+        VStack(spacing: 0) {
+            ScrollView {
+                VStack(spacing: 24) {
+                    Image("Breakage-128")
 
-                        Text(UserText.crashReportDialogMessage)
-                            .multilineTextAlignment(.center)
-                            .daxBodyRegular()
+                    Text(UserText.crashReportDialogTitle)
+                        .daxTitle1()
 
-                        if let reportDetails = model.reportDetails {
-                            VStack(spacing: 4) {
+                    Text(UserText.crashReportDialogMessage)
+                        .multilineTextAlignment(.center)
+                        .daxBodyRegular()
 
-                                reportDetailsButton
+                    if let reportDetails = model.reportDetails {
+                        VStack(spacing: 4) {
 
-                                if model.isShowingReport, #available(iOS 16.0, *) {
-                                    ZStack {
-                                        Rectangle()
-                                            .foregroundColor(.gray10)
-                                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                            .cornerRadius(4.0)
+                            reportDetailsButton
 
-                                        ScrollView(.horizontal) {
-                                            Text(reportDetails)
-                                                .font(Font(uiFont: .monospacedSystemFont(ofSize: 13, weight: .regular)))
-                                                .secondaryTextStyle()
-                                                .padding(24)
-                                        }
-                                    }
+                            if model.isShowingReport, #available(iOS 16.0, *) {
+                                ZStack {
+                                    Rectangle()
+                                        .foregroundColor(Color.init(designSystemColor: .container))
+                                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                        .cornerRadius(4.0)
+
+                                    Text(reportDetails)
+                                        .font(Font(uiFont: .monospacedSystemFont(ofSize: 13, weight: .regular)))
+                                        .secondaryTextStyle()
+                                        .padding(24)
                                 }
                             }
                         }
                     }
-                    .padding(.horizontal, 24)
-                    .padding(.vertical, 20)
                 }
-                .modifier(ScrollDisabledIfAvailable(isDisabled: !model.isShowingReport))
-
-                VStack(spacing: 8) {
-                    Button {
-                        withAnimation {
-                            model.sendCrashLogs = true
-                            model.onDismiss(true)
-                        }
-                    } label: {
-                        Text(UserText.crashReportAlwaysSend)
-                    }
-                    .buttonStyle(PrimaryButtonStyle())
-                    .frame(maxWidth: 360)
-
-                    Button {
-                        withAnimation {
-                            model.sendCrashLogs = false
-                            model.onDismiss(false)
-                        }
-                    } label: {
-                        Text(UserText.crashReportNeverSend)
-                    }
-                    .buttonStyle(SecondaryButtonStyle())
-                    .frame(maxWidth: 360)
-                }
-                .padding(.init(top: 24, leading: 24, bottom: 0, trailing: 24))
+                .padding(.horizontal, 24)
+                .padding(.vertical, 20)
             }
-            .toolbar {
-                ToolbarItemGroup(placement: .topBarLeading) {
-                    Button {
-                        withAnimation {
-                            model.onDismiss(nil)
-                        }
-                    } label: {
-                        Text("Close")
+            .modifier(ScrollDisabledIfAvailable(isDisabled: !model.isShowingReport))
+
+            VStack(spacing: 8) {
+                Button {
+                    withAnimation {
+                        model.sendCrashLogs = true
+                        model.onDismiss(true)
                     }
-                    .buttonStyle(.plain)
+                } label: {
+                    Text(UserText.crashReportAlwaysSend)
                 }
+                .buttonStyle(PrimaryButtonStyle())
+                .frame(maxWidth: 360)
+
+                Button {
+                    withAnimation {
+                        model.sendCrashLogs = false
+                        model.onDismiss(false)
+                    }
+                } label: {
+                    Text(UserText.crashReportNeverSend)
+                }
+                .buttonStyle(SecondaryButtonStyle())
+                .frame(maxWidth: 360)
+            }
+            .padding(.init(top: 24, leading: 24, bottom: 0, trailing: 24))
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .topBarLeading) {
+                Button {
+                    withAnimation {
+                        model.onDismiss(nil)
+                    }
+                } label: {
+                    Text("Close")
+                }
+                .buttonStyle(.plain)
             }
         }
     }
 
     var reportDetailsButton: some View {
         Button {
-//            withAnimation {
+            withAnimation {
                 model.isShowingReport.toggle()
-//            }
+            }
         } label: {
             HStack {
                 Text(model.isShowingReport ? UserText.crashReportHideDetails : UserText.crashReportShowDetails)

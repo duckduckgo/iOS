@@ -42,10 +42,10 @@ final class CrashCollectionOnboarding: NSObject {
 
         if #available(iOS 16.0, *) {
             let identifier = UISheetPresentationController.Detent.Identifier("crashReportHidden")
-            controller.sheetPresentationController?.detents = [.custom(identifier: identifier, resolver: { _ in return 540 }), .large()]
+            controller.sheetPresentationController?.detents = [.custom(identifier: identifier, resolver: { _ in return 520 }), .large()]
             controller.sheetPresentationController?.delegate = self
 
-            detailsCancellable = viewModel.$isShowingReport
+            detailsCancellable = viewModel.$isViewExpanded
                 .dropFirst()
                 .removeDuplicates()
                 .sink { [weak controller] isShowingReport in
@@ -85,6 +85,14 @@ final class CrashCollectionOnboarding: NSObject {
 @available(iOS 16.0, *)
 extension CrashCollectionOnboarding: UISheetPresentationControllerDelegate {
     func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
-        viewModel.isShowingReport = sheetPresentationController.selectedDetentIdentifier == .large
+        if sheetPresentationController.selectedDetentIdentifier == .large {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                withAnimation {
+                    self.viewModel.isShowingReport = true
+                }
+            }
+        } else {
+            viewModel.isShowingReport = false
+        }
     }
 }

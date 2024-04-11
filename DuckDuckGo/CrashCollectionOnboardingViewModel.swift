@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 final class CrashCollectionOnboardingViewModel: ObservableObject {
 
@@ -27,7 +28,21 @@ final class CrashCollectionOnboardingViewModel: ObservableObject {
 
     let appSettings: AppSettings
     var onDismiss: (Bool?) -> Void = { _ in }
-    @Published var isShowingReport: Bool = false
+
+    /// Used by the presenting controller. Follows `isShowingReport` but with a delay when setting that one to `true`.
+    @Published var isViewExpanded: Bool = false
+
+    @Published var isShowingReport: Bool = false {
+        didSet {
+            if isShowingReport {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.isViewExpanded = true
+                }
+            } else {
+                isViewExpanded = false
+            }
+        }
+    }
     private(set) var reportDetails: String?
 
     func setReportDetails(with payloads: [Data]) {

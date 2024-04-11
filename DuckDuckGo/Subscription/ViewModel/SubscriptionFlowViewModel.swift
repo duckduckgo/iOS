@@ -255,6 +255,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
         transactionStatusTimer?.invalidate()
         canGoBackCancellable?.cancel()
         urlCancellable?.cancel()
+        subFeature.cleanup()
         cancellables.removeAll()
     }
 

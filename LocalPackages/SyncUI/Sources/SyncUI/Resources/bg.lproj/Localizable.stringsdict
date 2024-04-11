@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bookmarks.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Вашите отметки за %2$@ и 1 друг сайт не могат да се синхронизират, защото някои от техните полета надвишават ограничението за знаци.</string>
+			<key>other</key>
+			<string>Вашите отметки за %2$@ и %1$d други сайтове не могат да се синхронизират, защото някои от полетата им надвишават ограничението за символи.</string>
+			<key>zero</key>
+			<string>Вашата отметка за %2$@ не може да се синхронизира, защото едно от полетата надвишава ограничението за символи.</string>
+		</dict>
+	</dict>
+	<key>credentials.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Вашите пароли за %2$@ и 1 друг сайт не могат да се синхронизират, защото някои от техните полета надвишават ограничението за знаци.</string>
+			<key>other</key>
+			<string>Вашите пароли за %2$@ и %1$d други сайтове не могат да се синхронизират, защото някои от техните полета надвишават ограничението за знаци.</string>
+			<key>zero</key>
+			<string>Вашата парола за %2$@ не може да се синхронизира, защото едно от полетата надвишава ограничението за знаци.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

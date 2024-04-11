@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bookmarks.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Deine Lesezeichen für %2$@ und 1 andere Website können nicht synchronisiert werden, weil einige ihrer Felder das Zeichenlimit überschreiten.</string>
+			<key>other</key>
+			<string>Deine Lesezeichen für %2$@ und %1$d andere Websites können nicht synchronisiert werden, weil einige ihrer Felder das Zeichenlimit überschreiten.</string>
+			<key>zero</key>
+			<string>Dein Lesezeichen für %2$@ kann nicht synchronisiert werden, weil eines seiner Felder das Zeichenlimit überschreitet.</string>
+		</dict>
+	</dict>
+	<key>credentials.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Deine Passwörter für %2$@ und 1 andere Website können nicht synchronisiert werden, weil einige ihrer Felder das Zeichenlimit überschreiten.</string>
+			<key>other</key>
+			<string>Deine Passwörter für %2$@ und %1$d andere Websites können nicht synchronisiert werden, weil einige ihrer Felder das Zeichenlimit überschreiten.</string>
+			<key>zero</key>
+			<string>Dein Passwort für %2$@ kann nicht synchronisiert werden, weil eines der Felder das Zeichenlimit überschreitet.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

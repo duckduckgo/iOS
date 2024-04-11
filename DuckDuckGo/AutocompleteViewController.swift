@@ -27,6 +27,7 @@ import CoreData
 import Persistence
 import History
 import Combine
+import BrowserServicesKit
 
 class AutocompleteViewController: UIViewController {
     
@@ -54,8 +55,14 @@ class AutocompleteViewController: UIViewController {
     private var historyCoordinator: HistoryCoordinating!
     private var bookmarksDatabase: CoreDataDatabase!
     private var appSettings: AppSettings!
+    private var variantManager: VariantManager!
+
     private lazy var cachedBookmarks: CachedBookmarks = {
         CachedBookmarks(bookmarksDatabase)
+    }()
+
+    private lazy var cachedBookmarksSearch: BookmarksStringSearch = {
+        BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
     }()
 
     var backgroundColor: UIColor {
@@ -82,7 +89,8 @@ class AutocompleteViewController: UIViewController {
     
     static func loadFromStoryboard(bookmarksDatabase: CoreDataDatabase,
                                    historyCoordinator: HistoryCoordinating,
-                                   appSettings: AppSettings = AppDependencyProvider.shared.appSettings) -> AutocompleteViewController {
+                                   appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
+                                   variantManager: VariantManager = DefaultVariantManager()) -> AutocompleteViewController {
         let storyboard = UIStoryboard(name: "Autocomplete", bundle: nil)
         guard let controller = storyboard.instantiateInitialViewController() as? AutocompleteViewController else {
             fatalError("Failed to instatiate correct Autocomplete view controller")
@@ -90,13 +98,14 @@ class AutocompleteViewController: UIViewController {
         controller.bookmarksDatabase = bookmarksDatabase
         controller.historyCoordinator = historyCoordinator
         controller.appSettings = appSettings
+        controller.variantManager = variantManager
         return controller
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
 
         queryDebounceCancellable = $query
             .debounce(for: .milliseconds(Constants.debounceDelay), scheduler: RunLoop.main)
@@ -135,11 +144,6 @@ class AutocompleteViewController: UIViewController {
 
     private func resetNavigationBar() {
         navigationController?.hidesBarsOnSwipe = hidesBarsOnSwipeDefault
-    }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        tableView.reloadData()
     }
 
     func updateQuery(query: String) {
@@ -183,6 +187,16 @@ class AutocompleteViewController: UIViewController {
         selectedItem = -1
         tableView.reloadData()
 
+        let bookmarks: [Suggestion]
+
+        if variantManager.inSuggestionExperiment {
+            bookmarks = [] // We'll supply bookmarks elsewhere
+        } else {
+            bookmarks = cachedBookmarksSearch.search(query: query).prefix(2).map {
+                .bookmark(title: $0.title, url: $0.url, isFavorite: $0.isFavorite, allowedInTopHits: true)
+            }
+        }
+
         loader = SuggestionLoader(dataSource: self, urlFactory: { phrase in
             guard let url = URL(trimmedAddressBarString: phrase),
                   let scheme = url.scheme,
@@ -200,7 +214,10 @@ class AutocompleteViewController: UIViewController {
                 self?.pendingRequest = false
             }
             guard error == nil else { return }
-            self?.updateSuggestions(result?.all ?? [])
+            
+            let remoteResults = result?.all ?? []
+
+            self?.updateSuggestions(bookmarks + remoteResults)
         }
     }
 
@@ -302,10 +319,10 @@ extension AutocompleteViewController: UIGestureRecognizerDelegate {
     }
 }
 
-extension AutocompleteViewController: Themable {
-    func decorate(with theme: Theme) {
+extension AutocompleteViewController {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         tableView.separatorColor = theme.tableCellSeparatorColor
-        tableView.reloadData()
     }
 }
 
@@ -338,11 +355,11 @@ extension AutocompleteViewController {
 extension AutocompleteViewController: SuggestionLoadingDataSource {
     
     func history(for suggestionLoading: Suggestions.SuggestionLoading) -> [HistorySuggestion] {
-        return historyCoordinator.history ?? []
+        return variantManager.inSuggestionExperiment ? (historyCoordinator.history ?? []) : []
     }
 
     func bookmarks(for suggestionLoading: Suggestions.SuggestionLoading) -> [Suggestions.Bookmark] {
-        return cachedBookmarks.all
+        return variantManager.inSuggestionExperiment ? cachedBookmarks.all : []
     }
 
     func suggestionLoading(_ suggestionLoading: Suggestions.SuggestionLoading, suggestionDataFromUrl url: URL, withParameters parameters: [String: String], completion: @escaping (Data?, Error?) -> Void) {
@@ -365,6 +382,14 @@ extension HistoryEntry: HistorySuggestion {
 
     public var numberOfVisits: Int {
         return numberOfTotalVisits
+    }
+
+}
+
+extension VariantManager {
+
+    var inSuggestionExperiment: Bool {
+        isSupported(feature: .newSuggestionLogic) || isSupported(feature: .history)
     }
 
 }

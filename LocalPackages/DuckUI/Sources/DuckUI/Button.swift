@@ -31,11 +31,13 @@ public struct PrimaryButtonStyle: ButtonStyle {
     }
     
     public func makeBody(configuration: Configuration) -> some View {
-        let isLight = colorScheme == .light
-        let standardBackgroundColor = isLight ? Color.blueBase : Color.blue30
-        let disabledBackgroundColor = isLight ? Color.black.opacity(0.06) : Color.white.opacity(0.18)
-        let standardForegroundColor = isLight ? Color.white : Color.black.opacity(0.84)
-        let disabledForegroundColor = isLight ? Color.black.opacity(0.36) : Color.white.opacity(0.36)
+        let isDark = colorScheme == .dark
+        let standardBackgroundColor = isDark ? Color.blue30 : Color.blueBase
+        let pressedBackgroundColor = isDark ? Color.blueBase : Color.blue70
+        let disabledBackgroundColor = isDark ? Color.white.opacity(0.18) : Color.black.opacity(0.06)
+        let standardForegroundColor = isDark ? Color.black.opacity(0.84) : Color.white
+        let pressedForegroundColor = isDark ? Color.black.opacity(0.84) : Color.white
+        let disabledForegroundColor = isDark ? Color.white.opacity(0.36) : Color.black.opacity(0.36)
         let backgroundColor = disabled ? disabledBackgroundColor : standardBackgroundColor
         let foregroundColor = disabled ? disabledForegroundColor : standardForegroundColor
 
@@ -44,10 +46,10 @@ public struct PrimaryButtonStyle: ButtonStyle {
             .multilineTextAlignment(.center)
             .lineLimit(nil)
             .font(Font(UIFont.boldAppFont(ofSize: compact ? Consts.fontSize - 1 : Consts.fontSize)))
-            .foregroundColor(configuration.isPressed ? standardForegroundColor.opacity(Consts.pressedOpacity) : foregroundColor)
+            .foregroundColor(configuration.isPressed ? pressedForegroundColor : foregroundColor)
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity, maxHeight: compact ? Consts.height - 10 : Consts.height)
-            .background(configuration.isPressed ? standardBackgroundColor.opacity(Consts.pressedOpacity) : backgroundColor)
+            .background(configuration.isPressed ? pressedBackgroundColor : backgroundColor)
             .cornerRadius(Consts.cornerRadius)
     }
 }
@@ -90,25 +92,47 @@ public struct SecondaryButtonStyle: ButtonStyle {
 
 public struct GhostButtonStyle: ButtonStyle {
     @Environment(\.colorScheme) private var colorScheme
-
+    
     public init() {}
-    private var foregroundColor: Color {
-        colorScheme == .light ? .blueBase : .white
-    }
     
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(Font(UIFont.boldAppFont(ofSize: Consts.fontSize)))
-            .foregroundColor(configuration.isPressed ? foregroundColor.opacity(Consts.pressedOpacity) : foregroundColor.opacity(1))
+            .foregroundColor(foregroundColor(configuration.isPressed))
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Consts.height)
-            .background(Color.clear)
+            .background(backgroundColor(configuration.isPressed))
             .cornerRadius(Consts.cornerRadius)
+            .contentShape(Rectangle()) // Makes whole button area tappable, when there's no background
+    }
+    
+    private func foregroundColor(_ isPressed: Bool) -> Color {
+        switch (colorScheme, isPressed) {
+        case (.dark, false):
+            return .blue30
+        case (.dark, true):
+            return .blue20
+        case (_, false):
+            return .blueBase
+        case (_, true):
+            return .blue70
+        }
+    }
+    
+    private func backgroundColor(_ isPressed: Bool) -> Color {
+        switch (colorScheme, isPressed) {
+        case (.light, true):
+            return .blueBase.opacity(0.2)
+        case (.dark, true):
+            return .blue30.opacity(0.2)
+        default:
+            return .clear
+        }
     }
 }
 
 private enum Consts {
-    static let cornerRadius: CGFloat = 12
+    static let cornerRadius: CGFloat = 8
     static let height: CGFloat = 50
     static let fontSize: CGFloat = 16
     static let pressedOpacity: CGFloat = 0.7

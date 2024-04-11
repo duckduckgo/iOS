@@ -64,6 +64,7 @@ class AutofillEmptySearchView: UIView {
         super.init(frame: frame)
         installSubviews()
         installConstraints()
+        decorate()
     }
 
     required init?(coder: NSCoder) {
@@ -86,9 +87,10 @@ class AutofillEmptySearchView: UIView {
     }
 }
 
-extension AutofillEmptySearchView: Themable {
+extension AutofillEmptySearchView {
 
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         title.textColor = theme.autofillEmptySearchViewTextColor
         subtitle.textColor = theme.autofillEmptySearchViewTextColor
     }

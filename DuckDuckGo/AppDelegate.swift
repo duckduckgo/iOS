@@ -54,6 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private struct ShortcutKey {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
+        static let passwords = "com.duckduckgo.mobile.ios.passwords"
 
 #if NETWORK_PROTECTION
         static let openVPNSettings = "com.duckduckgo.mobile.ios.vpn.open-settings"
@@ -222,6 +223,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // MARK: perform first time launch logic here
             DaxDialogs.shared.primeForUse()
         }
+
+        // Experiment installation will be uncommented once we decide to run the experiment
+//        PixelExperiment.install()
 
         // MARK: Sync initialisation
 
@@ -882,12 +886,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         os_log("Handling shortcut item: %s", log: .generalLog, type: .debug, shortcutItem.type)
 
         Task { @MainActor in
-            
+
             await autoClear?.applicationWillMoveToForeground()
 
             if shortcutItem.type == ShortcutKey.clipboard, let query = UIPasteboard.general.string {
                 mainViewController?.clearNavigationStack()
                 mainViewController?.loadQueryInNewTab(query)
+                return
+            }
+
+            if shortcutItem.type == ShortcutKey.passwords {
+                mainViewController?.clearNavigationStack()
+                // Give the `clearNavigationStack` call time to complete.
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [weak self] in
+                    self?.mainViewController?.launchAutofillLogins(openSearch: true)
+                }
+                Pixel.fire(pixel: .autofillLoginsLaunchAppShortcut)
                 return
             }
 
@@ -1010,7 +1024,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
             if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist(), identifier == VPNWaitlist.notificationIdentifier {
                 presentNetworkProtectionWaitlistModal()
-                DailyPixel.fire(pixel: .networkProtectionWaitlistNotificationLaunched)
             }
 
 #endif

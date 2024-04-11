@@ -35,7 +35,7 @@ class KeyboardSettingsViewController: UITableViewController {
         newTabToggle.isOn = settings.onNewTab
         appLaunchToggle.isOn = settings.onAppLaunch
         
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -53,9 +53,10 @@ class KeyboardSettingsViewController: UITableViewController {
     
 }
 
-extension KeyboardSettingsViewController: Themable {
+extension KeyboardSettingsViewController {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         
         for label in labels {
             label.textColor = theme.tableCellTextColor

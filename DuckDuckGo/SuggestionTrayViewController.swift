@@ -301,10 +301,11 @@ extension SuggestionTrayViewController: AutocompleteViewControllerPresentationDe
     
 }
 
-extension SuggestionTrayViewController: Themable {
+extension SuggestionTrayViewController {
     
     // Only gets called if system theme changes while tray is open
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         // only update the color if one has been set
         if backgroundView.backgroundColor != nil {
             backgroundView.backgroundColor = theme.tableCellBackgroundColor

@@ -48,21 +48,30 @@ class PrivacyIconView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
   
-        loadAnimations(for: ThemeManager.shared.currentTheme)
+        loadAnimations()
         
         updateShieldImageView(for: icon)
         updateAccessibilityLabels(for: icon)
+
+        // Animations are not rendering properly when going back from background, hence the change.
+        [staticShieldAnimationView,
+         staticShieldDotAnimationView,
+         shieldAnimationView,
+         shieldDotAnimationView].forEach { animationView in
+            animationView?.configuration = LottieConfiguration(renderingEngine: .mainThread)
+        }
     }
     
-    func loadAnimations(for theme: Theme, animationCache cache: AnimationCacheProvider = DefaultAnimationCache.sharedCache) {
-        let useLightStyle = theme.currentImageSet == .light
-        
-        let shieldAnimation = LottieAnimation.named(useLightStyle ? "shield" : "dark-shield", animationCache: cache)
+    func loadAnimations(animationCache cache: AnimationCacheProvider = DefaultAnimationCache.sharedCache) {
+        let useDarkStyle = traitCollection.userInterfaceStyle == .dark
+
+        let shieldAnimation = LottieAnimation.named(useDarkStyle ? "dark-shield" : "shield", animationCache: cache)
+
         shieldAnimationView.animation = shieldAnimation
         staticShieldAnimationView.animation = shieldAnimation
         staticShieldAnimationView.currentProgress = 0.0
-        
-        let shieldWithDotAnimation = LottieAnimation.named(useLightStyle ? "shield-dot" : "dark-shield-dot", animationCache: cache)
+
+        let shieldWithDotAnimation = LottieAnimation.named(useDarkStyle ? "dark-shield-dot" : "shield-dot", animationCache: cache)
         shieldDotAnimationView.animation = shieldWithDotAnimation
         staticShieldDotAnimationView.animation = shieldWithDotAnimation
         staticShieldDotAnimationView.currentProgress = 1.0
@@ -143,6 +152,13 @@ class PrivacyIconView: UIView {
         shieldAnimationView.isAnimationPlaying || shieldDotAnimationView.isAnimationPlaying
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            loadAnimations()
+        }
+    }
 }
 
 extension PrivacyIconView: UIPointerInteractionDelegate {

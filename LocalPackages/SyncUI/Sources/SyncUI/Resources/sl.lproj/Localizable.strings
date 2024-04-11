@@ -1,6 +1,12 @@
 /* Standard Buttons - Back Button */
 "back.button" = "Nazaj";
 
+/* Do not translate - stringsdict entry */
+"bookmarks.invalid.objects.present.description" = "bookmarks.invalid.objects.present.description";
+
+/* Alert title for invalid bookmarks being filtered out of synced data */
+"bookmarks.invalid.objects.present.title" = "Nekateri zaznamki se ne sinhronizirajo zaradi predolge vsebine v nekaterih poljih.";
+
 /* Sync Paused Errors - Bookmarks Limit Exceeded Action */
 "bookmarks.limit.exceeded.action" = "Upravljanje zaznamkov";
 
@@ -42,6 +48,12 @@
 
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Sinhronizirajte in varnostno kopirajte to napravo";
+
+/* Do not translate - stringsdict entry */
+"credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
+
+/* Alert title for invalid logins being filtered out of synced data */
+"credentials.invalid.objects.present.title" = "Nekatere prijave se ne sinhronizirajo zaradi predolge vsebine v nekaterih poljih.";
 
 /* Sync Paused Errors - Credentials Limit Exceeded Action */
 "credentials.limit.exceeded.action" = "Upravljanje prijav";
@@ -185,10 +197,10 @@
 "scan.or.see.code.footer" = "Skeniranje ni mogoče?";
 
 /* Scan or See Code View - Instruction */
-"scan.or.see.code.instruction" = "V brskalniku DuckDuckGo v drugi napravi pojdite v Nastavitve › Sinhronizacija in varnostno kopiranje in izberite »Sinhroniziraj z drugo napravo«.";
+"scan.or.see.code.instruction" = "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”";
 
 /* Scan or See Code View - Instruction with syncMenuPath */
-"scan.or.see.code.instruction.attributed" = "V brskalniku DuckDuckGo v drugi napravi pojdite v %@ in izberite \"Sinhroniziraj z drugo napravo\".";
+"scan.or.see.code.instruction.attributed" = "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”.";
 
 /* Scan or See Code View - Manually Enter Code Link */
 "scan.or.see.code.manually.enter.code.link" = "Ročno vnesite kodo";
@@ -200,7 +212,7 @@
 "scan.or.see.code.scan.code.instructions.title" = "Sinhronizirate mobilni telefon z mobilnim telefonom?";
 
 /* Scan or See Code View - Share Code Link */
-"scan.or.see.code.share.code.link" = "Želite deliti besedilno kodo?";
+"scan.or.see.code.share.code.link" = "Share Text Code";
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Skeniranje kode QR";
@@ -248,7 +260,7 @@
 "synced.devices.section.header" = "Sinhronizirane naprave";
 
 /* Synced Devices - Sync with Another Device Label */
-"synced.devices.sync.with.another.device.label" = "Sinhronizacija z drugo napravo";
+"synced.devices.sync.with.another.device.label" = "Sync With Another Device";
 
 /* Synced Devices - This Device Label */
 "synced.devices.this.device.label" = "Ta naprava";

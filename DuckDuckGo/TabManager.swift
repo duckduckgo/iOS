@@ -295,15 +295,6 @@ class TabManager {
     }
 }
 
-extension TabManager: Themable {
-    
-    func decorate(with theme: Theme) {
-        for tabController in tabControllerCache {
-            tabController.decorate(with: theme)
-        }
-    }
-    
-}
 
 // MARK: - Debugging Pixels
 

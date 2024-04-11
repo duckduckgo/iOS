@@ -1,0 +1,38 @@
+{
+  "images" : [
+    {
+      "filename" : "light_portrait_logo.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "dark_portrait_logo.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "filename" : "updatedLogoGrayText2.pdf",
+      "height-class" : "compact",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "updatedLogoWhiteText2.pdf",
+      "height-class" : "compact",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

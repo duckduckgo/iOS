@@ -40,8 +40,6 @@ class FavoritesOverlay: UIViewController {
     var collectionView: UICollectionView!
     private var renderer: FavoritesHomeViewSectionRenderer!
     private let appSettings: AppSettings
-
-    private var theme: Theme!
     
     weak var delegate: FavoritesOverlayDelegate?
 
@@ -73,7 +71,7 @@ class FavoritesOverlay: UIViewController {
         
         registerForKeyboardNotifications()
         
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
     }
     
     override func viewDidLayoutSubviews() {
@@ -113,7 +111,6 @@ class FavoritesOverlay: UIViewController {
         collectionView.contentInset = .zero
         collectionView.scrollIndicatorInsets = .zero
     }
-
 }
 
 extension FavoritesOverlay: FavoritesHomeViewSectionRendererDelegate {
@@ -153,11 +150,7 @@ extension FavoritesOverlay: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = renderer.collectionView(collectionView, cellForItemAt: indexPath)
-        if let themable = cell as? Themable {
-            themable.decorate(with: theme)
-        }
-        return cell
+        return renderer.collectionView(collectionView, cellForItemAt: indexPath)
     }
 }
 
@@ -177,10 +170,16 @@ extension FavoritesOverlay: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension FavoritesOverlay: Themable {
+extension FavoritesOverlay {
     
-    func decorate(with theme: Theme) {
-        self.theme = theme
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         view.backgroundColor = AppWidthObserver.shared.isLargeWidth ? .clear : theme.backgroundColor
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        view.backgroundColor = AppWidthObserver.shared.isLargeWidth ? .clear : ThemeManager.shared.currentTheme.backgroundColor
     }
 }

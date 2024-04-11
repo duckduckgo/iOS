@@ -1,6 +1,12 @@
 /* Standard Buttons - Back Button */
 "back.button" = "Wstecz";
 
+/* Do not translate - stringsdict entry */
+"bookmarks.invalid.objects.present.description" = "bookmarks.invalid.objects.present.description";
+
+/* Alert title for invalid bookmarks being filtered out of synced data */
+"bookmarks.invalid.objects.present.title" = "Niektóre zakładki nie są synchronizowane ze względu na zbyt długą treść w określonych polach.";
+
 /* Sync Paused Errors - Bookmarks Limit Exceeded Action */
 "bookmarks.limit.exceeded.action" = "Zarządzaj zakładkami";
 
@@ -42,6 +48,12 @@
 
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Synchronizuj i twórz kopie zapasowe tego urządzenia";
+
+/* Do not translate - stringsdict entry */
+"credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
+
+/* Alert title for invalid logins being filtered out of synced data */
+"credentials.invalid.objects.present.title" = "Niektóre loginy nie są synchronizowane ze względu na zbyt długą treść w określonych polach.";
 
 /* Sync Paused Errors - Credentials Limit Exceeded Action */
 "credentials.limit.exceeded.action" = "Zarządzaj loginami";
@@ -185,10 +197,10 @@
 "scan.or.see.code.footer" = "Nie możesz skanować?";
 
 /* Scan or See Code View - Instruction */
-"scan.or.see.code.instruction" = "Wybierz kolejno Ustawienia › Synchronizacja i kopia zapasowa w przeglądarce DuckDuckGo na innym urządzeniu i wybierz opcję „Synchronizuj z innym urządzeniem”.";
+"scan.or.see.code.instruction" = "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”";
 
 /* Scan or See Code View - Instruction with syncMenuPath */
-"scan.or.see.code.instruction.attributed" = "Przejdź do %@ w przeglądarce DuckDuckGo na innym urządzeniu i wybierz opcję „Synchronizuj z innym urządzeniem”.";
+"scan.or.see.code.instruction.attributed" = "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”.";
 
 /* Scan or See Code View - Manually Enter Code Link */
 "scan.or.see.code.manually.enter.code.link" = "Wprowadź kod ręcznie";
@@ -200,7 +212,7 @@
 "scan.or.see.code.scan.code.instructions.title" = "Z telefonu komórkowego na telefon komórkowy?";
 
 /* Scan or See Code View - Share Code Link */
-"scan.or.see.code.share.code.link" = "Udostępnić kod tekstowy?";
+"scan.or.see.code.share.code.link" = "Share Text Code";
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Zeskanuj kod QR";
@@ -248,7 +260,7 @@
 "synced.devices.section.header" = "Zsynchronizowane urządzenia";
 
 /* Synced Devices - Sync with Another Device Label */
-"synced.devices.sync.with.another.device.label" = "Synchronizuj z innym urządzeniem";
+"synced.devices.sync.with.another.device.label" = "Sync With Another Device";
 
 /* Synced Devices - This Device Label */
 "synced.devices.this.device.label" = "To urządzenie";

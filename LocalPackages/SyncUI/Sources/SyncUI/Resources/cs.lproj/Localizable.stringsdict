@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bookmarks.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%# @sites @</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Your bookmarks for %2$@ and %1$d other sites can't sync because some of their fields exceed the character limit.</string>
+			<key>many</key>
+			<string>Your bookmarks for %2$@ and %1$d other sites can't sync because some of their fields exceed the character limit.</string>
+			<key>one</key>
+			<string>Tvoje záložky pro %2$@ a jeden další web nelze synchronizovat, protože některá jejich pole překračují maximální počet znaků.</string>
+			<key>other</key>
+			<string>Vaše záložky pro %2$@ a další weby (celkem: %1$d) nelze synchronizovat, protože některá z jejich polí překračují povolený počet znaků.</string>
+			<key>zero</key>
+			<string>Vaši záložku pro %2$@ nelze synchronizovat, protože jedno z jejích polí překračuje maximální počet znaků.</string>
+		</dict>
+	</dict>
+	<key>credentials.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Your passwords for %2$@ and %1$d other sites can't sync because some of their fields exceed the character limit.</string>
+			<key>many</key>
+			<string>Your passwords for %2$@ and %1$d other sites can't sync because some of their fields exceed the character limit.</string>
+			<key>one</key>
+			<string>Vaše hesla pro %2$@ a 1 další web nelze synchronizovat, protože některá jejich pole překračují maximální počet znaků.</string>
+			<key>other</key>
+			<string>Vaše hesla pro %2$@ a další weby (celkem: %1$d)  nelze synchronizovat, protože některá jejich pole přesahují maximální počet znaků.</string>
+			<key>zero</key>
+			<string>Vaše heslo pro %2$@ nelze synchronizovat, protože jedno z jeho polí překračuje maximální počet znaků.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

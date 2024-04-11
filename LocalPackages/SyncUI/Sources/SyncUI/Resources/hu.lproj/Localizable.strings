@@ -1,6 +1,12 @@
 /* Standard Buttons - Back Button */
 "back.button" = "Vissza";
 
+/* Do not translate - stringsdict entry */
+"bookmarks.invalid.objects.present.description" = "bookmarks.invalid.objects.present.description";
+
+/* Alert title for invalid bookmarks being filtered out of synced data */
+"bookmarks.invalid.objects.present.title" = "Egyes könyvjelzőket nem szinkronizál a rendszer bizonyos mezők túl hosszú tartalma miatt.";
+
 /* Sync Paused Errors - Bookmarks Limit Exceeded Action */
 "bookmarks.limit.exceeded.action" = "Könyvjelzők kezelése";
 
@@ -42,6 +48,12 @@
 
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Az eszköz szinkronizálása és biztonsági mentése";
+
+/* Do not translate - stringsdict entry */
+"credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
+
+/* Alert title for invalid logins being filtered out of synced data */
+"credentials.invalid.objects.present.title" = "Egyes bejelentkezési adatokat nem szinkronizál a rendszer bizonyos mezők túl hosszú tartalma miatt.";
 
 /* Sync Paused Errors - Credentials Limit Exceeded Action */
 "credentials.limit.exceeded.action" = "Bejelentkezések kezelése";
@@ -185,10 +197,10 @@
 "scan.or.see.code.footer" = "Nem lehet beolvasni?";
 
 /* Scan or See Code View - Instruction */
-"scan.or.see.code.instruction" = "Lépj a másik eszköz DuckDuckGo böngészőjében található Beállítások > Szinkronizálás és biztonsági mentés lehetőségre, és válaszd ki a „Szinkronizálás másik eszközzel” elemet.";
+"scan.or.see.code.instruction" = "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”";
 
 /* Scan or See Code View - Instruction with syncMenuPath */
-"scan.or.see.code.instruction.attributed" = "Lépj a másik eszköz DuckDuckGo böngészőjében található %@ lehetőségre, és válaszd ki a „Szinkronizálás és biztonsági mentés” elemet.";
+"scan.or.see.code.instruction.attributed" = "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”.";
 
 /* Scan or See Code View - Manually Enter Code Link */
 "scan.or.see.code.manually.enter.code.link" = "Kód manuális megadása";
@@ -200,7 +212,7 @@
 "scan.or.see.code.scan.code.instructions.title" = "Mobilról mobilra?";
 
 /* Scan or See Code View - Share Code Link */
-"scan.or.see.code.share.code.link" = "Szöveges kód megosztása?";
+"scan.or.see.code.share.code.link" = "Share Text Code";
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "QR-kód beolvasása";
@@ -248,7 +260,7 @@
 "synced.devices.section.header" = "Szinkronizált eszközök";
 
 /* Synced Devices - Sync with Another Device Label */
-"synced.devices.sync.with.another.device.label" = "Szinkronizálás másik eszközzel";
+"synced.devices.sync.with.another.device.label" = "Sync With Another Device";
 
 /* Synced Devices - This Device Label */
 "synced.devices.this.device.label" = "Ez az eszköz";

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bookmarks.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Οι σελιδοδείκτες σας για τον %2$@ και 1 ακόμα ιστότοπο δεν μπορούν να συγχρονιστούν επειδή ορισμένα από τα πεδία τους υπερβαίνουν το όριο χαρακτήρων.</string>
+			<key>other</key>
+			<string>Οι σελιδοδείκτες σας για τον %2$@ και %1$d ακόμα ιστότοπους δεν μπορούν να συγχρονιστούν επειδή ορισμένα από τα πεδία τους υπερβαίνουν το όριο χαρακτήρων.</string>
+			<key>zero</key>
+			<string>Ο σελιδοδείκτης σας για τον %2$@ δεν μπορεί να συγχρονιστεί επειδή ένα από τα πεδία του υπερβαίνει το όριο χαρακτήρων.</string>
+		</dict>
+	</dict>
+	<key>credentials.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Οι κωδικοί πρόσβασής σας για τον %2$@ και 1 ακόμα ιστότοπο δεν μπορούν να συγχρονιστούν επειδή ορισμένα από τα πεδία τους υπερβαίνουν το όριο χαρακτήρων.</string>
+			<key>other</key>
+			<string>Οι κωδικοί πρόσβασής σας για τον %2$@ και %1$d ακόμα ιστότοπους δεν μπορούν να συγχρονιστούν επειδή ορισμένα από τα πεδία τους υπερβαίνουν το όριο χαρακτήρων.</string>
+			<key>zero</key>
+			<string>Ο κωδικός πρόσβασής σας για τον %2$@ δεν μπορεί να συγχρονιστεί επειδή ένα από τα πεδία του υπερβαίνει το όριο χαρακτήρων.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

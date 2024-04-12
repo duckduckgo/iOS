@@ -24,10 +24,7 @@ import Bookmarks
 import BrowserServicesKit
 import SwiftUI
 import PrivacyDashboard
-
-#if SUBSCRIPTION
 import Subscription
-#endif
 
 extension MainViewController {
 
@@ -204,7 +201,6 @@ extension MainViewController {
         launchSettings()
     }
 
-#if SUBSCRIPTION
     func segueToPrivacyPro() {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
@@ -212,7 +208,6 @@ extension MainViewController {
             $0.triggerDeepLinkNavigation(to: .subscriptionFlow)
         }
     }
-#endif
 
     func segueToDebugSettings() {
         os_log(#function, log: .generalLog, type: .debug)
@@ -251,13 +246,10 @@ extension MainViewController {
                                                             appSettings: appSettings,
                                                             bookmarksDatabase: bookmarksDatabase,
                                                             tabManager: tabManager)
-#if SUBSCRIPTION
+
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider,
                                                   accountManager: AccountManager(),
                                                   deepLink: deepLinkTarget)
-#else
-        let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider)
-#endif
 
         Pixel.fire(pixel: .settingsPresented,
                    withAdditionalParameters: PixelExperiment.parameters)

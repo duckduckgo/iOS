@@ -33,10 +33,7 @@ import Configuration
 import Networking
 import DDGSync
 import SyncDataProviders
-
-#if SUBSCRIPTION
 import Subscription
-#endif
 
 #if NETWORK_PROTECTION
 import NetworkProtection
@@ -335,9 +332,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NetworkProtectionAccessController().refreshNetworkProtectionAccess()
 #endif
         
-#if SUBSCRIPTION
         setupSubscriptionsEnvironment()
-#endif
 
         if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() {
             clearDebugWaitlistState()
@@ -406,9 +401,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if NETWORK_PROTECTION
     private func presentExpiredEntitlementAlert() {
         let alertController = CriticalAlerts.makeExpiredEntitlementAlert { [weak self] in
-            #if SUBSCRIPTION
             self?.mainViewController?.segueToPrivacyPro()
-            #endif
         }
         window?.rootViewController?.present(alertController, animated: true) { [weak self] in
             DailyPixel.fireDailyAndCount(pixel: .privacyProVPNAccessRevokedDialogShown)
@@ -452,7 +445,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
-#if SUBSCRIPTION
     private func setupSubscriptionsEnvironment() {
         Task {
 #if DEBUG || ALPHA
@@ -470,7 +462,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             SubscriptionPurchaseEnvironment.current = .appStore
         }
     }
-#endif
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
@@ -573,7 +564,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func updateSubscriptionStatus() {
-#if SUBSCRIPTION
         Task {
             let accountManager = AccountManager()
 
@@ -588,7 +578,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             _ = await accountManager.fetchEntitlements(cachePolicy: .reloadIgnoringLocalCacheData)
         }
-#endif
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -627,7 +616,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func firePrivacyProFeatureEnabledPixel() {
-#if SUBSCRIPTION
         let subscriptionFeatureAvailability = AppDependencyProvider.shared.subscriptionFeatureAvailability
         guard subscriptionFeatureAvailability.isFeatureAvailable,
               subscriptionFeatureAvailability.isSubscriptionPurchaseAllowed else {
@@ -635,7 +623,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         DailyPixel.fire(pixel: .privacyProFeatureEnabled)
-#endif
     }
 
     private func fireAppTPActiveUserPixel() {

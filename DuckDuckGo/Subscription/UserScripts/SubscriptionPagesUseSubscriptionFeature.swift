@@ -19,7 +19,6 @@
 
 // swiftlint:disable file_length
 
-#if SUBSCRIPTION
 import BrowserServicesKit
 import Common
 import Foundation
@@ -410,7 +409,4 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
     
 }
-
-#endif
-
 // swiftlint:enable file_length

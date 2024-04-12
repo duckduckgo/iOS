@@ -21,10 +21,8 @@ import Foundation
 import UserScript
 import Combine
 import Core
-
-
-#if SUBSCRIPTION
 import Subscription
+
 @available(iOS 15.0, *)
 // swiftlint:disable type_body_length
 final class SubscriptionFlowViewModel: ObservableObject {
@@ -347,7 +345,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
     
 }
-#endif
 
 // TODO: Move to BSK later
 private extension URL {

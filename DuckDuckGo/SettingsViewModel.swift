@@ -25,10 +25,7 @@ import Common
 import Combine
 import SyncUI
 
-
-#if SUBSCRIPTION
 import Subscription
-#endif
 
 #if APP_TRACKING_PROTECTION
 import NetworkExtension
@@ -90,12 +87,10 @@ final class SettingsViewModel: ObservableObject {
     @Published var shouldShowEmailAlert: Bool = false
     var autocompleteSubtitle: String?
     
-#if SUBSCRIPTION
     // MARK: - Deep linking
     // Used to automatically navigate to a specific section
     // immediately after loading the Settings View
     @Published private(set) var deepLinkTarget: SettingsDeepLinkSection?
-#endif
     
     // MARK: Bindings
     
@@ -380,7 +375,6 @@ final class SettingsViewModel: ObservableObject {
         legacyViewProvider.syncService.authState != .inactive ? .on : .off
     }
     
-#if SUBSCRIPTION
     // MARK: Default Init
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
@@ -401,21 +395,6 @@ final class SettingsViewModel: ObservableObject {
     deinit {
         signOutObserver = nil
     }
-    
-#else
-    // MARK: Default Init
-    init(state: SettingsState? = nil,
-         legacyViewProvider: SettingsLegacyViewProvider,
-         variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
-         voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper) {
-        self.state = SettingsState.defaults
-        self.legacyViewProvider = legacyViewProvider
-        self.voiceSearchHelper = voiceSearchHelper
-        autocompleteSubtitle = variantManager.isSupported(feature: .history) ? UserText.settingsAutocompleteSubtitle : nil
-    }
-    
-#endif
-    
 }
 
 // MARK: Private methods
@@ -548,16 +527,12 @@ extension SettingsViewModel {
     func onAppear() {
         Task {
             await initState()
-#if SUBSCRIPTION
             triggerDeepLinkNavigation(to: self.deepLinkTarget)
-#endif
         }
     }
     
     func onDissapear() {
-#if SUBSCRIPTION
         self.deepLinkTarget = nil
-#endif
     }
     
     func setAsDefaultBrowser() {
@@ -693,7 +668,6 @@ extension SettingsViewModel: AutofillLoginSettingsListViewControllerDelegate {
 }
 
 // MARK: DeepLinks
-#if SUBSCRIPTION
 extension SettingsViewModel {
 
     enum SettingsDeepLinkSection: Identifiable {
@@ -750,12 +724,10 @@ extension SettingsViewModel {
         }
     }
 }
-#endif
 
 // MARK: Subscriptions
 extension SettingsViewModel {
 
-#if SUBSCRIPTION
     @MainActor
     private func setupSubscriptionEnvironment() async {
         
@@ -784,7 +756,7 @@ extension SettingsViewModel {
                 // Check entitlements and update state
                 let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
                 for entitlement in entitlements {
-                    if case let .success(result) = await AccountManager().hasEntitlement(for: entitlement) {
+                    if case .success = await AccountManager().hasEntitlement(for: entitlement) {
                         switch entitlement {
                         case .identityTheftRestoration:
                             self.state.subscription.entitlements.append(.identityTheftRestoration)
@@ -861,9 +833,6 @@ extension SettingsViewModel {
             }
         }
     }
-    
-    
-#endif
 }
 
 // swiftlint:enable file_length

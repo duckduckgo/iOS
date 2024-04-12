@@ -20,7 +20,6 @@
 import SwiftUI
 import UIKit
 
-#if SUBSCRIPTION
 import Subscription
 import Core
 @available(iOS 15.0, *)
@@ -196,4 +195,3 @@ struct SettingsSubscriptionView: View {
         }
     }
 }
-#endif

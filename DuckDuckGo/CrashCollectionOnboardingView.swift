@@ -58,13 +58,13 @@ struct CrashCollectionOnboardingView: View {
                             if model.isShowingReport, #available(iOS 16.0, *) {
                                 ZStack {
                                     Rectangle()
-                                        .foregroundColor(Color.init(designSystemColor: .container))
+                                        .foregroundColor(Color(designSystemColor: .container))
                                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                                         .cornerRadius(4.0)
 
                                     Text(reportDetails)
                                         .font(.crashReport)
-                                        .secondaryTextStyle()
+                                        .foregroundColor(Color(designSystemColor: .textSecondary))
                                         .padding(24)
                                 }
                             }
@@ -96,7 +96,7 @@ struct CrashCollectionOnboardingView: View {
                 } label: {
                     Text(UserText.crashReportNeverSend)
                 }
-                .buttonStyle(SecondaryButtonStyle())
+                .buttonStyle(GhostButtonStyle())
                 .frame(maxWidth: 360)
             }
             .padding(.init(top: 24, leading: 24, bottom: 0, trailing: 24))

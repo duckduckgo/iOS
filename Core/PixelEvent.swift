@@ -35,8 +35,6 @@ extension Pixel {
 
         case deviceOrientationLandscape
 
-        case keyboardTriggeredOpen
-        case keyboardTriggeredClosed
         case keyboardGoWhileOnNTP
         case keyboardGoWhileOnWebsite
         case keyboardGoWhileOnSERP
@@ -694,8 +692,6 @@ extension Pixel.Event {
 
         case .deviceOrientationLandscape: return "m_device_orientation_landscape"
 
-        case .keyboardTriggeredOpen: return "m_keyboard_triggered_open"
-        case .keyboardTriggeredClosed: return "m_keyboard_triggered_close"
         case .keyboardGoWhileOnNTP: return "m_keyboard_go_click_ntp"
         case .keyboardGoWhileOnWebsite: return "m_keyboard_go_click_website"
         case .keyboardGoWhileOnSERP: return "m_keyboard_go_click_serp"

@@ -53,6 +53,20 @@ final class NetworkProtectionTunnelController: TunnelController {
             case .fetchAuthTokenFailed: 4
             }
         }
+
+        public var errorUserInfo: [String: Any] {
+            switch self {
+            case
+                    .simulateControllerFailureError:
+                return [:]
+            case
+                    .loadFromPreferencesFailed(let error),
+                    .saveToPreferencesFailed(let error),
+                    .startVPNFailed(let error),
+                    .fetchAuthTokenFailed(let error):
+                return ["NSUnderlyingError": error]
+            }
+        }
     }
 
     init() {

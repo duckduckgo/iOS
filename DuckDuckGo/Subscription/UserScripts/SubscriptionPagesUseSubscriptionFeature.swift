@@ -153,14 +153,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
     // swiftlint:enable nesting
     
-    // Manage transaction in progress flag
-    private func withTransactionInProgress<T>(_ work: () async -> T) async -> T {
-        setTransactionStatus(transactionStatus)
-        defer {
-            setTransactionStatus(.idle)
-        }
-        return await work()
-    }
     
     private func resetSubscriptionFlow() {
         setTransactionError(nil)
@@ -182,94 +174,92 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
     
     func getSubscriptionOptions(params: Any, original: WKScriptMessage) async -> Encodable? {
-        
-        await withTransactionInProgress {
-            
-            setTransactionStatus(.purchasing)
-            resetSubscriptionFlow()
-                        
-            switch await AppStorePurchaseFlow.subscriptionOptions() {
-            case .success(let subscriptionOptions):
-                if AppDependencyProvider.shared.subscriptionFeatureAvailability.isSubscriptionPurchaseAllowed {
-                    return subscriptionOptions
-                } else {
-                    return SubscriptionOptions.empty
-                }
-            case .failure:
-                os_log("Failed to obtain subscription options", log: .subscription, type: .error)
-                setTransactionError(.failedToGetSubscriptionOptions)
-                return nil
+        resetSubscriptionFlow()
+                    
+        switch await AppStorePurchaseFlow.subscriptionOptions() {
+        case .success(let subscriptionOptions):
+            if AppDependencyProvider.shared.subscriptionFeatureAvailability.isSubscriptionPurchaseAllowed {
+                return subscriptionOptions
+            } else {
+                return SubscriptionOptions.empty
             }
+        case .failure:
+            os_log("Failed to obtain subscription options", log: .subscription, type: .error)
+            setTransactionError(.failedToGetSubscriptionOptions)
+            return nil
         }
     }
     
     // swiftlint:disable:next function_body_length
     func subscriptionSelected(params: Any, original: WKScriptMessage) async -> Encodable? {
+
+        DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseAttempt)
+        setTransactionError(nil)
+        setTransactionStatus(.purchasing)
+        resetSubscriptionFlow()
         
-        await withTransactionInProgress {
-            DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseAttempt)
-            setTransactionError(nil)
-            setTransactionStatus(.purchasing)
-            resetSubscriptionFlow()
-            
-            struct SubscriptionSelection: Decodable {
-                let id: String
-            }
-            
-            let message = original
-            guard let subscriptionSelection: SubscriptionSelection = DecodableHelper.decode(from: params) else {
-                assertionFailure("SubscriptionPagesUserScript: expected JSON representation of SubscriptionSelection")
-                return nil
-            }
-            
-            // Check for active subscriptions
-            if await PurchaseManager.hasActiveSubscription() {
-                setTransactionError(.hasActiveSubscription)
-                Pixel.fire(pixel: .privacyProRestoreAfterPurchaseAttempt)
-                return nil
-            }
-            
-            let emailAccessToken = try? EmailManager().getToken()
-            let purchaseTransactionJWS: String
-
-            switch await AppStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id,
-                                                                   emailAccessToken: emailAccessToken,
-                                                                   subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)) {
-            case .success(let transactionJWS):
-                purchaseTransactionJWS = transactionJWS
-
-            case .failure(let error):
-                
-                switch error {
-                case .cancelledByUser:
-                    setTransactionError(.cancelledByUser)
-                    await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate(type: "canceled"))
-                    return nil
-                case .accountCreationFailed:
-                    setTransactionError(.accountCreationFailed)
-                case .activeSubscriptionAlreadyPresent:
-                    setTransactionError(.hasActiveSubscription)
-                default:
-                    setTransactionError(.purchaseFailed)
-                }
-                originalMessage = original
-                setTransactionStatus(.idle)
-                return nil
-            }
-            
-            setTransactionStatus(.polling)
-            switch await AppStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS,
-                                                                           subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)) {
-            case .success(let purchaseUpdate):
-                DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess)
-                UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
-                await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
-            case .failure:
-                setTransactionError(.missingEntitlements)
-                await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate(type: "completed"))
-            }
+        struct SubscriptionSelection: Decodable {
+            let id: String
+        }
+        
+        let message = original
+        guard let subscriptionSelection: SubscriptionSelection = DecodableHelper.decode(from: params) else {
+            assertionFailure("SubscriptionPagesUserScript: expected JSON representation of SubscriptionSelection")
+            setTransactionStatus(.idle)
             return nil
         }
+        
+        // Check for active subscriptions
+        if await PurchaseManager.hasActiveSubscription() {
+            setTransactionError(.hasActiveSubscription)
+            Pixel.fire(pixel: .privacyProRestoreAfterPurchaseAttempt)
+            setTransactionStatus(.idle)
+            return nil
+        }
+        
+        let emailAccessToken = try? EmailManager().getToken()
+        let purchaseTransactionJWS: String
+
+        switch await AppStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id,
+                                                               emailAccessToken: emailAccessToken,
+                                                               subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)) {
+        case .success(let transactionJWS):
+            purchaseTransactionJWS = transactionJWS
+
+        case .failure(let error):
+            
+            switch error {
+            case .cancelledByUser:
+                setTransactionError(.cancelledByUser)
+                await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate(type: "canceled"))
+                return nil
+            case .accountCreationFailed:
+                setTransactionError(.accountCreationFailed)
+            case .activeSubscriptionAlreadyPresent:
+                setTransactionError(.hasActiveSubscription)
+            default:
+                setTransactionError(.purchaseFailed)
+            }
+            originalMessage = original
+            setTransactionStatus(.idle)
+            return nil
+        }
+        
+        setTransactionStatus(.polling)
+        switch await AppStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS,
+                                                                       subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)) {
+        case .success(let purchaseUpdate):
+            DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess)
+            UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
+            setTransactionStatus(.idle)
+            await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
+        case .failure:
+            setTransactionStatus(.idle)
+            setTransactionError(.missingEntitlements)
+            await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate(type: "completed"))
+        }
+        return nil
+        
     }
 
     func setSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {

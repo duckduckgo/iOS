@@ -44,8 +44,6 @@ final class NetworkProtectionTunnelController: TunnelController {
         case startVPNFailed(Error)
         case fetchAuthTokenFailed(Error)
 
-        public static let errorDomain = "com.duckduckgo.NetworkProtectionTunnelController.StartError.domain"
-
         public var errorCode: Int {
             switch self {
             case .simulateControllerFailureError: 0

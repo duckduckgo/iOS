@@ -64,7 +64,7 @@ final class NetworkProtectionTunnelController: TunnelController {
                     .saveToPreferencesFailed(let error),
                     .startVPNFailed(let error),
                     .fetchAuthTokenFailed(let error):
-                return ["NSUnderlyingError": error]
+                return [NSUnderlyingErrorKey: error]
             }
         }
     }

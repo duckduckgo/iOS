@@ -19,11 +19,6 @@
 
 import UIKit
 
-final class SubscriptionDebugViewController: UITableViewController {
-    // Just an empty VC
-}
-
-#else
 import Subscription
 
 @available(iOS 15.0, *)

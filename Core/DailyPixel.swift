@@ -53,8 +53,6 @@ public final class DailyPixel {
                             withAdditionalParameters params: [String: String] = [:],
                             includedParameters: [Pixel.QueryParameters] = [.atb, .appVersion],
                             onComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
-
-        if !pixel.hasBeenFiredToday(dailyPixelStorage: storage) {
         var key: String = pixel.name
 
         if let error = error {
@@ -109,26 +107,16 @@ public final class DailyPixel {
         )
     }
 
-    private static func updatePixelLastFireDate(pixel: Pixel.Event) {
-        storage.set(Date(), forKey: pixel.name)
-
     private static func updatePixelLastFireDate(forKey key: String) {
         storage.set(Date(), forKey: key)
     }
 
-}
-
-private extension Pixel.Event {
-
-    func hasBeenFiredToday(dailyPixelStorage: UserDefaults) -> Bool {
-        if let lastFireDate = dailyPixelStorage.object(forKey: name) as? Date {
     private static func hasBeenFiredToday(forKey key: String, dailyPixelStorage: UserDefaults) -> Bool {
         if let lastFireDate = dailyPixelStorage.object(forKey: key) as? Date {
             return Date().isSameDay(lastFireDate)
         }
         return false
     }
-
 
     private static func createSortedStringOfValues(from dict: [String: String], maxLength: Int = 50) -> String {
         let sortedKeys = dict.keys.sorted()

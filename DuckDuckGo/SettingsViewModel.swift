@@ -35,8 +35,9 @@ import NetworkExtension
 import NetworkProtection
 #endif
 
+// swiftlint:disable type_body_length
 final class SettingsViewModel: ObservableObject {
-// swiftlint:enable type_body_length
+
     
     // Dependencies
     private(set) lazy var appSettings = AppDependencyProvider.shared.appSettings
@@ -396,6 +397,7 @@ final class SettingsViewModel: ObservableObject {
         signOutObserver = nil
     }
 }
+// swiftlint:enable type_body_length
 
 // MARK: Private methods
 extension SettingsViewModel {

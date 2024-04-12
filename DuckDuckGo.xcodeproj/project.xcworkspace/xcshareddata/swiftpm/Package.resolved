@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "bc70d1a27263cc97a4060ac9e73ec10929c28a29",
-        "version" : "134.0.0"
+        "branch" : "anh/netp/screen-improvements",
+        "revision" : "3b354a70cdfff5d46d2c8f525748dee63a36ad88"
       }
     },
     {

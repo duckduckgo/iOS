@@ -243,6 +243,14 @@ final class NetworkProtectionTunnelController: TunnelController {
         do {
             try await tunnelManager.saveToPreferences()
         } catch {
+            let nsError = error as NSError
+            if nsError.code == NEVPNError.Code.configurationReadWriteFailed.rawValue,
+               nsError.localizedDescription == "permission denied" {
+                // This is a user denying the system permissions prompt to add the config
+                // Maybe we should fire another pixel here, but not a start failure as this is an imaginable scenario
+                // The code could be caused by a number of problems so I'm using the localizedDescription to catch that case
+                return
+            }
             throw StartError.saveToPreferencesFailed(error)
         }
     }

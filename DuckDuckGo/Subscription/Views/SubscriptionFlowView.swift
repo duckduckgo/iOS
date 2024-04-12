@@ -80,7 +80,7 @@ struct SubscriptionFlowView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarBackButtonHidden(viewModel.state.canNavigateBack || viewModel.subFeature.transactionStatus != .idle)
+            .navigationBarBackButtonHidden(true)
             .interactiveDismissDisabled(viewModel.subFeature.transactionStatus != .idle)
             .edgesIgnoringSafeArea(.bottom)
             .tint(Color(designSystemColor: .textPrimary))
@@ -94,7 +94,7 @@ struct SubscriptionFlowView: View {
             }, label: {
                 HStack(spacing: 0) {
                     Image(systemName: Constants.backButtonImage)
-                    Text(UserText.backButtonTitle)
+                    Text(viewModel.state.backButtonTitle)
                 }
                 
             })
@@ -165,6 +165,10 @@ struct SubscriptionFlowView: View {
                     isPresentingError = true
                 }
             }
+        }
+        
+        .onChange(of: viewModel.state.shouldDismissView) { _ in
+            dismiss()
         }
         
         .onFirstAppear {

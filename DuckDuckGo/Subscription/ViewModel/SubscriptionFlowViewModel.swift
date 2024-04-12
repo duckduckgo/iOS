@@ -56,9 +56,10 @@ final class SubscriptionFlowViewModel: ObservableObject {
         var shouldActivateSubscription = false
         var canNavigateBack: Bool = false
         var transactionError: SubscriptionPurchaseError?
-        var shouldHideBackButton = false
         var selectedFeature: SelectedFeature = .none
         var viewTitle: String = UserText.subscriptionTitle
+        var shouldDismissView: Bool = false
+        var backButtonTitle: String = UserText.settingsTitle
     }
     
     // Read only View State - Should only be modified from the VM
@@ -198,6 +199,11 @@ final class SubscriptionFlowViewModel: ObservableObject {
             // The observer of `transactionError` does the same calculation, if the error is anything else than .hasActiveSubscription then shows a "Something went wrong" alert
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailure)
         }
+        
+        // Reset Back Button
+        backButtonEnabled(true)
+        updateBackButtonTitle(forURL: self.webViewModel.url)
+        clearTransactionError()
     }
     // swiftlint:enable cyclomatic_complexity
     
@@ -223,6 +229,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 if strongSelf.backButtonForURL(currentURL: currentURL) {
                     DispatchQueue.main.async {
                         strongSelf.state.canNavigateBack = value
+                        strongSelf.updateBackButtonTitle(forURL: currentURL)
                     }
                 }
             }
@@ -246,9 +253,14 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
     
     private func backButtonForURL(currentURL: URL) -> Bool {
-        return currentURL.forComparison() != URL.subscriptionBaseURL.forComparison() &&
-        currentURL.forComparison() != URL.subscriptionActivateSuccess.forComparison() &&
+        return currentURL.forComparison() != URL.subscriptionActivateSuccess.forComparison() &&
         currentURL.forComparison() != URL.subscriptionPurchase.forComparison()
+    }
+    
+    private func updateBackButtonTitle(forURL url: URL?) {
+        guard let url else { return }
+        state.backButtonTitle = url.forComparison() == URL.subscriptionBaseURL.forComparison() ? UserText.settingsTitle : UserText.backButtonTitle
+        
     }
     
     private func cleanUp() {
@@ -274,6 +286,11 @@ final class SubscriptionFlowViewModel: ObservableObject {
     @MainActor
     private func setTransactionStatus(_ status: SubscriptionTransactionStatus) {
         self.state.transactionStatus = status
+        
+        // Hide Back button when processing a transaction
+        if status != .idle {
+            self.backButtonEnabled(false)
+        }
         
         // Fire a temp pixel if status is not back to idle in 60s
         // Remove block when removing pixel
@@ -337,7 +354,12 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     @MainActor
     func navigateBack() async {
-        await webViewModel.navigationCoordinator.goBack()
+        if webViewModel.url?.forComparison() != URL.subscriptionBaseURL.forComparison() &&
+            webViewModel.canGoBack {
+            await webViewModel.navigationCoordinator.goBack()
+        } else {
+            state.shouldDismissView = true
+        }
     }
     
     @MainActor

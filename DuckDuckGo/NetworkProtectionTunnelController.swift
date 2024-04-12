@@ -37,9 +37,36 @@ final class NetworkProtectionTunnelController: TunnelController {
 
     // MARK: - Starting & Stopping the VPN
 
-    enum StartError: LocalizedError {
-        case connectionStatusInvalid
+    enum StartError: LocalizedError, CustomNSError {
         case simulateControllerFailureError
+        case loadFromPreferencesFailed(Error)
+        case saveToPreferencesFailed(Error)
+        case startVPNFailed(Error)
+        case fetchAuthTokenFailed(Error)
+
+        public var errorCode: Int {
+            switch self {
+            case .simulateControllerFailureError: 0
+            case .loadFromPreferencesFailed: 1
+            case .saveToPreferencesFailed: 2
+            case .startVPNFailed: 3
+            case .fetchAuthTokenFailed: 4
+            }
+        }
+
+        public var errorUserInfo: [String: Any] {
+            switch self {
+            case
+                    .simulateControllerFailureError:
+                return [:]
+            case
+                    .loadFromPreferencesFailed(let error),
+                    .saveToPreferencesFailed(let error),
+                    .startVPNFailed(let error),
+                    .fetchAuthTokenFailed(let error):
+                return [NSUnderlyingErrorKey: error]
+            }
+        }
     }
 
     init() {
@@ -147,7 +174,11 @@ final class NetworkProtectionTunnelController: TunnelController {
         }
 
         options["activationAttemptId"] = UUID().uuidString as NSString
-        options["authToken"] = try tokenStore.fetchToken() as NSString?
+        do {
+            options["authToken"] = try tokenStore.fetchToken() as NSString?
+        } catch {
+            throw StartError.fetchAuthTokenFailed(error)
+        }
         options[NetworkProtectionOptionKey.selectedEnvironment] = VPNSettings(defaults: .networkProtectionGroupDefaults)
             .selectedEnvironment.rawValue as NSString
 
@@ -161,7 +192,7 @@ final class NetworkProtectionTunnelController: TunnelController {
             }
         } catch {
             Pixel.fire(pixel: .networkProtectionActivationRequestFailed, error: error)
-            throw error
+            throw StartError.startVPNFailed(error)
         }
     }
 
@@ -203,17 +234,24 @@ final class NetworkProtectionTunnelController: TunnelController {
 
     private func setupAndSave(_ tunnelManager: NETunnelProviderManager) async throws {
         setup(tunnelManager)
-        try await tunnelManager.saveToPreferences()
-        try await tunnelManager.loadFromPreferences()
-        try await tunnelManager.saveToPreferences()
+        try await saveToPreferences(tunnelManager)
+        try await loadFromPreferences(tunnelManager)
+        try await saveToPreferences(tunnelManager)
     }
 
     private func saveToPreferences(_ tunnelManager: NETunnelProviderManager) async throws {
         do {
             try await tunnelManager.saveToPreferences()
         } catch {
-            Pixel.fire(pixel: .networkProtectionFailedToSaveToPreferences, error: error)
-            throw error
+            let nsError = error as NSError
+            if nsError.code == NEVPNError.Code.configurationReadWriteFailed.rawValue,
+               nsError.localizedDescription == "permission denied" {
+                // This is a user denying the system permissions prompt to add the config
+                // Maybe we should fire another pixel here, but not a start failure as this is an imaginable scenario
+                // The code could be caused by a number of problems so I'm using the localizedDescription to catch that case
+                return
+            }
+            throw StartError.saveToPreferencesFailed(error)
         }
     }
 
@@ -221,8 +259,7 @@ final class NetworkProtectionTunnelController: TunnelController {
         do {
             try await tunnelManager.loadFromPreferences()
         } catch {
-            Pixel.fire(pixel: .networkProtectionFailedToLoadFromPreferences, error: error)
-            throw error
+            throw StartError.loadFromPreferencesFailed(error)
         }
     }
 

@@ -23,6 +23,7 @@ import Core
 import WidgetKit
 
 // swiftlint:disable file_length
+// swiftlint:disable:next type_body_length
 public class AppUserDefaults: AppSettings {
     
     public struct Notifications {
@@ -347,7 +348,9 @@ public class AppUserDefaults: AppSettings {
 
     var crashCollectionOptInStatus: CrashCollectionOptInStatus {
         get {
-            guard let string = userDefaults?.string(forKey: Keys.crashCollectionOptInStatus), let optInStatus = CrashCollectionOptInStatus(rawValue: string) else {
+            guard let string = userDefaults?.string(forKey: Keys.crashCollectionOptInStatus),
+                  let optInStatus = CrashCollectionOptInStatus(rawValue: string)
+            else {
                 return .undetermined
             }
             return optInStatus

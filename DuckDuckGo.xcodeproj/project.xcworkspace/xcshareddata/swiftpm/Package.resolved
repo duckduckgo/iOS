@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sabrina/ssl-error",
-        "revision" : "12858ab9d4ed6cfdc369094fb95fc66fb07c9d9a"
+        "revision" : "b0749d25996c0fa18be07b7851f02ebb3b9fab50",
+        "version" : "134.0.1"
       }
     },
     {

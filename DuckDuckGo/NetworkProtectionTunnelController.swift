@@ -43,6 +43,7 @@ final class NetworkProtectionTunnelController: TunnelController {
         case saveToPreferencesFailed(Error)
         case startVPNFailed(Error)
         case fetchAuthTokenFailed(Error)
+        case configSystemPermissionsDenied(Error)
 
         public var errorCode: Int {
             switch self {
@@ -51,6 +52,7 @@ final class NetworkProtectionTunnelController: TunnelController {
             case .saveToPreferencesFailed: 2
             case .startVPNFailed: 3
             case .fetchAuthTokenFailed: 4
+            case .configSystemPermissionsDenied: 5
             }
         }
 
@@ -63,7 +65,8 @@ final class NetworkProtectionTunnelController: TunnelController {
                     .loadFromPreferencesFailed(let error),
                     .saveToPreferencesFailed(let error),
                     .startVPNFailed(let error),
-                    .fetchAuthTokenFailed(let error):
+                    .fetchAuthTokenFailed(let error),
+                    .configSystemPermissionsDenied(let error):
                 return [NSUnderlyingErrorKey: error]
             }
         }
@@ -82,6 +85,9 @@ final class NetworkProtectionTunnelController: TunnelController {
             try await startWithError()
             Pixel.fire(pixel: .networkProtectionControllerStartSuccess)
         } catch {
+            if case StartError.configSystemPermissionsDenied = error {
+                return
+            }
             Pixel.fire(pixel: .networkProtectionControllerStartFailure, error: error)
 
             #if DEBUG
@@ -249,7 +255,7 @@ final class NetworkProtectionTunnelController: TunnelController {
                 // This is a user denying the system permissions prompt to add the config
                 // Maybe we should fire another pixel here, but not a start failure as this is an imaginable scenario
                 // The code could be caused by a number of problems so I'm using the localizedDescription to catch that case
-                return
+                throw StartError.configSystemPermissionsDenied(error)
             }
             throw StartError.saveToPreferencesFailed(error)
         }

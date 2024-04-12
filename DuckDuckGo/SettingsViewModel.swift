@@ -124,7 +124,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-    
+
     var addressBarPositionBinding: Binding<AddressBarPosition> {
         Binding<AddressBarPosition>(
             get: {
@@ -143,7 +143,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-    
+
     var addressBarShowsFullURL: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.showsFullURL },
@@ -160,7 +160,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-    
+
     var applicationLockBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.applicationLock },
@@ -170,7 +170,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-    
+
     var autocompleteBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.autocomplete },
@@ -187,7 +187,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-    
+
     // Remove after Settings experiment
     var autocompletePrivateSearchBinding: Binding<Bool> {
         Binding<Bool>(
@@ -205,7 +205,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-    
+
     // Remove after Settings experiment
     var autocompleteGeneralBinding: Binding<Bool> {
         Binding<Bool>(
@@ -223,7 +223,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-    
+
     var gpcBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.sendDoNotSell },
@@ -241,7 +241,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-    
+
     var autoconsentBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.autoconsentEnabled },
@@ -258,7 +258,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-    
+
     var voiceSearchEnabledBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.voiceSearchEnabled },
@@ -274,7 +274,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-    
+
     // Remove after Settings experiment
     var voiceSearchEnabledPrivateSearchBinding: Binding<Bool> {
         Binding<Bool>(
@@ -291,7 +291,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-    
+
     // Remove after Settings experiment
     var voiceSearchEnabledGeneralBinding: Binding<Bool> {
         Binding<Bool>(
@@ -308,7 +308,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-    
+
     // Remove after Settings experiment
     var voiceSearchEnabledAccessibilityBinding: Binding<Bool> {
         Binding<Bool>(
@@ -325,7 +325,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-    
+
     func setVoiceSearchEnabled(to value: Bool) {
         if value {
             enableVoiceSearch { [weak self] result in
@@ -343,7 +343,7 @@ final class SettingsViewModel: ObservableObject {
             state.voiceSearchEnabled = false
         }
     }
-    
+
     var longPressBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.longPressPreviews },
@@ -353,7 +353,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-    
+
     var universalLinksBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.allowUniversalLinks },
@@ -363,7 +363,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-    
+
     var cookiePopUpProtectionStatus: StatusIndicator {
         return appSettings.autoconsentEnabled ? .on : .off
     }

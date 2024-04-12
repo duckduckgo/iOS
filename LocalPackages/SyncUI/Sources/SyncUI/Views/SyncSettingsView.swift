@@ -29,6 +29,7 @@ public struct SyncSettingsView: View {
     @State var isSyncWithSetUpSheetVisible = false
     @State var isRecoverSyncedDataSheetVisible = false
     @State var isEnvironmentSwitcherInstructionsVisible = false
+    @State var isDeviceAuthenticationSetupAlertVisible = false
 
     public init(model: SyncSettingsViewModel) {
         self.model = model

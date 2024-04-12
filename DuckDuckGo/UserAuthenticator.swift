@@ -23,7 +23,7 @@ import LocalAuthentication
 import Core
 
 class UserAuthenticator {
-    enum AuthError: Equatable {
+    enum AuthError: Error, Equatable {
         case noAuthAvailable
         case failedToAuthenticate
     }

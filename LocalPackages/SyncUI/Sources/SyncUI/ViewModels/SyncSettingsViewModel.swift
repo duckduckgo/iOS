@@ -22,7 +22,7 @@ import UIKit
 
 public protocol SyncManagementViewModelDelegate: AnyObject {
 
-    func authenticateUser() async -> Bool
+    func authenticateUser() async throws
     func showRecoverData()
     func showSyncWithAnotherDevice()
     func showRecoveryPDF()
@@ -41,6 +41,11 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
 }
 
 public class SyncSettingsViewModel: ObservableObject {
+
+    public enum UserAuthenticationError: Error {
+        case authFailed
+        case authUnavailable
+    }
 
     public struct Device: Identifiable, Hashable {
 
@@ -93,6 +98,8 @@ public class SyncSettingsViewModel: ObservableObject {
     @Published public var isAccountRecoveryAvailable: Bool = true
     @Published public var isAppVersionNotSupported: Bool = false
 
+    @Published var shouldShowPasscodeRequiredAlert: Bool = false
+
     public weak var delegate: SyncManagementViewModelDelegate?
     private(set) var isOnDevEnvironment: Bool
     private(set) var switchToProdEnvironment: () -> Void = {}
@@ -105,8 +112,22 @@ public class SyncSettingsViewModel: ObservableObject {
         }
     }
 
-    func authenticateUser() async -> Bool {
-        await delegate?.authenticateUser() ?? false
+    @MainActor
+    func commonAuthenticate() async -> Bool {
+        do {
+            try await delegate?.authenticateUser()
+            return true
+        } catch {
+            if let error = error as? SyncSettingsViewModel.UserAuthenticationError {
+                switch error {
+                case .authFailed:
+                    break
+                case .authUnavailable:
+                    shouldShowPasscodeRequiredAlert = true
+                }
+            }
+            return false
+        }
     }
 
     func disableSync() {
@@ -138,7 +159,27 @@ public class SyncSettingsViewModel: ObservableObject {
     }
 
     func scanQRCode() {
-        delegate?.showSyncWithAnotherDevice()
+        Task { @MainActor in
+            if await commonAuthenticate() {
+                delegate?.showSyncWithAnotherDevice()
+            }
+        }
+    }
+
+    func syncAndBackupThisDevice() {
+        Task { @MainActor in
+            if await commonAuthenticate() {
+                delegate?.showSyncWithAnotherDevice()
+            }
+        }
+    }
+
+    func recoverSyncedData() {
+        Task { @MainActor in
+            if await commonAuthenticate() {
+                delegate?.showSyncWithAnotherDevice()
+            }
+        }
     }
 
     func createEditDeviceModel(_ device: Device) -> EditDeviceViewModel {

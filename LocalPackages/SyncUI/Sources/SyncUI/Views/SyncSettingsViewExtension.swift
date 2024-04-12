@@ -72,11 +72,17 @@ extension SyncSettingsView {
 
     @ViewBuilder
     func otherOptions() -> some View {
+        let alertBinding = Binding<Bool>(
+            get: { model.shouldShowPasscodeRequiredAlert },
+            set: { value in model.shouldShowPasscodeRequiredAlert = value }
+        )
+        
         Section {
-
             Button(UserText.syncAndBackUpThisDeviceLink) {
                 Task { @MainActor in
-                    isSyncWithSetUpSheetVisible = await model.authenticateUser()
+                    if await model.commonAuthenticate() {
+                        isSyncWithSetUpSheetVisible = true
+                    }
                 }
             }
             .sheet(isPresented: $isSyncWithSetUpSheetVisible, content: {
@@ -88,7 +94,9 @@ extension SyncSettingsView {
 
             Button(UserText.recoverSyncedDataLink) {
                 Task { @MainActor in
-                    isRecoverSyncedDataSheetVisible = await model.authenticateUser()
+                    if await model.commonAuthenticate() {
+                        isRecoverSyncedDataSheetVisible = true
+                    }
                 }
             }
             .sheet(isPresented: $isRecoverSyncedDataSheetVisible, content: {
@@ -97,6 +105,18 @@ extension SyncSettingsView {
                 })
             })
             .disabled(!model.isAccountRecoveryAvailable)
+            .alert(isPresented: alertBinding) {
+                Alert(
+                    title: Text("Secure Your Device to Use Sync & Backup"),
+                    message: Text("A device password is required to use Sync & Backup."),
+                    dismissButton: .default(Text("Go to Settings"), action: {
+                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!,
+                                                  options: [:],
+                                                  completionHandler: nil)
+                        model.shouldShowPasscodeRequiredAlert = false
+                    })
+                )
+            }
 
         } header: {
             Text(UserText.otherOptionsSectionHeader)

@@ -30,10 +30,12 @@ struct CrashCollectionOnboardingView: View {
             NavigationStack {
                 contents
             }
+            .background(Color(designSystemColor: .backgroundSheets))
         } else {
             NavigationView {
                 contents
             }
+            .background(Color(designSystemColor: .backgroundSheets))
         }
     }
 
@@ -45,10 +47,12 @@ struct CrashCollectionOnboardingView: View {
 
                     Text(UserText.crashReportDialogTitle)
                         .daxTitle1()
+                        .foregroundColor(Color(designSystemColor: .textPrimary))
 
                     Text(UserText.crashReportDialogMessage)
                         .multilineTextAlignment(.center)
                         .daxBodyRegular()
+                        .foregroundColor(Color(designSystemColor: .textPrimary))
 
                     if let reportDetails = model.reportDetails {
                         VStack(spacing: 4) {

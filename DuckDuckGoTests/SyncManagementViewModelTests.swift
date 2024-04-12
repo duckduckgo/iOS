@@ -135,8 +135,7 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
     }
     // MARK: Delegate functions
 
-    func authenticateUser() async -> Bool {
-        return true
+    func authenticateUser() async throws {
     }
 
     func showSyncWithAnotherDeviceEnterText() {

@@ -2405,8 +2405,8 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
     }
     
-    func secureVaultInitFailed(_ error: SecureStorageError) {
-        SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
+    func secureVaultError(_ error: SecureStorageError) {
+        SecureVaultErrorReporter.shared.secureVaultError(error)
     }
 
     func secureVaultManagerIsEnabledStatus(_ manager: SecureVaultManager, forType type: AutofillType?) -> Bool {

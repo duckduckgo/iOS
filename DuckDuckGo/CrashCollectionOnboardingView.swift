@@ -27,6 +27,7 @@ struct CrashCollectionOnboardingView: View {
 
     var body: some View {
         if #available(iOS 16.0, *) {
+            // Using NavigationStack here in order to fix presentation on the iPad, where `Navigation` would use Split Navigation view.
             NavigationStack {
                 contents
             }

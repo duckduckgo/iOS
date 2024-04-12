@@ -101,6 +101,8 @@ final class CrashCollectionOnboarding: NSObject {
 extension CrashCollectionOnboarding: UISheetPresentationControllerDelegate {
     func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
         if sheetPresentationController.selectedDetentIdentifier == .large {
+            // When the view is expanded manually, only show the report after a slight delay in order to avoid UI glitches
+            // See also `CrashCollectionOnboardingViewModel.isShowingReport`.
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 withAnimation {
                     self.viewModel.isShowingReport = true

@@ -141,6 +141,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
             }
 
+            // Async dispatch because rootViewController may otherwise be nil here
             DispatchQueue.main.async {
                 guard let viewController = self.window?.rootViewController else {
                     return

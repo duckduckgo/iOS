@@ -52,10 +52,6 @@ final class SettingsViewModel: ObservableObject {
     // Subscription Dependencies
     private var accountManager: AccountManager
     private var signOutObserver: Any?
-    private static let subscriptionCache = UserDefaultsCache<SettingsState.Subscription>(subscriptionAppGroup: nil,
-                                                                           key: UserDefaultsCacheKey.subscription,
-                                                                           settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
-    
     
 #if NETWORK_PROTECTION
     private let connectionObserver = ConnectionStatusObserverThroughSession()

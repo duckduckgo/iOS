@@ -74,7 +74,7 @@ struct AboutViewVersion: View {
     @EnvironmentObject var viewModel: SettingsViewModel
 
     var body: some View {
-        Section(header: Text("DuckDuckGo for iOS"), footer: Text(UserText.settingsSendCrashReportsDescription)) {
+        Section(header: Text("DuckDuckGo for iOS"), footer: Text(UserText.settingsSendCrashReportsDescriptionNew)) {
             SettingsCellView(label: UserText.settingsVersion,
                              accesory: .rightDetail(viewModel.state.version))
 

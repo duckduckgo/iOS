@@ -1993,7 +1993,10 @@ But if you *do* want a peek under the hood, you can find more information about 
 "settings.send.crash.reports" = "Send Crash Reports";
 
 /* Explanation of Send Crash Reports settings option */
-"settings.send.crash.reports.description" = "Automatically send crash reports to DuckDuckGo.";
+"settings.send.crash.reports.description" = "Automatically send crash reports to DuckDuckGo";
+
+/* Explanation of Send Crash Reports settings option */
+"settings.send.crash.reports.description2" = "Automatically send crash reports to DuckDuckGo.";
 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Set Your Address Bar Position";

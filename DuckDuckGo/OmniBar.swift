@@ -182,7 +182,6 @@ class OmniBar: UIView {
 
     @objc
     private func onTextFieldTapped() {
-        print(#function, "Pixel")
         textFieldTapped = true
         textField.becomeFirstResponder()
     }

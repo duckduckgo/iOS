@@ -28,15 +28,6 @@
       }
     },
     {
-      "identity" : "browserserviceskit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
-      "state" : {
-        "revision" : "bc70d1a27263cc97a4060ac9e73ec10929c28a29",
-        "version" : "134.0.0"
-      }
-    },
-    {
       "identity" : "cocoaasyncsocket",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/robbiehanson/CocoaAsyncSocket",
@@ -68,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
       "state" : {
-        "revision" : "6053999d6af384a716ab0ce7205dbab5d70ed1b3",
-        "version" : "11.0.1"
+        "revision" : "6493e296934bf09277c03df45f11f4619711cb24",
+        "version" : "10.2.0"
       }
     },
     {

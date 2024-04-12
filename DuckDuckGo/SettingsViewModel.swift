@@ -38,10 +38,9 @@ import NetworkExtension
 import NetworkProtection
 #endif
 
-// swiftlint:disable type_body_length
 final class SettingsViewModel: ObservableObject {
 // swiftlint:enable type_body_length
-
+    
     // Dependencies
     private(set) lazy var appSettings = AppDependencyProvider.shared.appSettings
     private(set) var privacyStore = PrivacyUserDefaults()
@@ -52,27 +51,9 @@ final class SettingsViewModel: ObservableObject {
     private let voiceSearchHelper: VoiceSearchHelperProtocol
     var emailManager: EmailManager { EmailManager() }
 
-#if SUBSCRIPTION
+    // Subscription Dependencies
     private var accountManager: AccountManager
     private var signOutObserver: Any?
-    private var isPrivacyProEnabled: Bool {
-        AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
-    }
-    // Cache subscription state in memory to prevent UI glitches
-    private var cacheSubscriptionState: SettingsState.Subscription = SettingsState.Subscription(enabled: false,
-                                                                                                canPurchase: false,
-                                                                                                hasActiveSubscription: false,
-                                                                                                isSubscriptionPendingActivation: false)
-        
-    // Sheet Presentation & Navigation
-    @Published var isRestoringSubscription: Bool = false
-    @Published var shouldDisplayRestoreSubscriptionError: Bool = false
-    @Published var shouldShowNetP = false
-    @Published var shouldShowDBP = false
-    @Published var shouldShowITP = false
-#endif
-    @UserDefaultsWrapper(key: .subscriptionIsActive, defaultValue: false)
-    static private var cachedHasActiveSubscription: Bool
     
     
 #if NETWORK_PROTECTION
@@ -108,15 +89,14 @@ final class SettingsViewModel: ObservableObject {
     var shouldShowNoMicrophonePermissionAlert: Bool = false
     @Published var shouldShowEmailAlert: Bool = false
     var autocompleteSubtitle: String?
-
+    
 #if SUBSCRIPTION
     // MARK: - Deep linking
-    
     // Used to automatically navigate to a specific section
     // immediately after loading the Settings View
     @Published private(set) var deepLinkTarget: SettingsDeepLinkSection?
 #endif
-
+    
     // MARK: Bindings
     
     var themeBinding: Binding<ThemeName> {
@@ -148,7 +128,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-
+    
     var addressBarPositionBinding: Binding<AddressBarPosition> {
         Binding<AddressBarPosition>(
             get: {
@@ -167,7 +147,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-
+    
     var addressBarShowsFullURL: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.showsFullURL },
@@ -184,7 +164,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-
+    
     var applicationLockBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.applicationLock },
@@ -194,7 +174,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-
+    
     var autocompleteBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.autocomplete },
@@ -211,7 +191,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-
+    
     // Remove after Settings experiment
     var autocompletePrivateSearchBinding: Binding<Bool> {
         Binding<Bool>(
@@ -229,7 +209,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-
+    
     // Remove after Settings experiment
     var autocompleteGeneralBinding: Binding<Bool> {
         Binding<Bool>(
@@ -247,7 +227,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-
+    
     var gpcBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.sendDoNotSell },
@@ -265,7 +245,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-
+    
     var autoconsentBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.autoconsentEnabled },
@@ -282,7 +262,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-
+    
     var voiceSearchEnabledBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.voiceSearchEnabled },
@@ -298,7 +278,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-
+    
     // Remove after Settings experiment
     var voiceSearchEnabledPrivateSearchBinding: Binding<Bool> {
         Binding<Bool>(
@@ -315,7 +295,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-
+    
     // Remove after Settings experiment
     var voiceSearchEnabledGeneralBinding: Binding<Bool> {
         Binding<Bool>(
@@ -332,7 +312,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-
+    
     // Remove after Settings experiment
     var voiceSearchEnabledAccessibilityBinding: Binding<Bool> {
         Binding<Bool>(
@@ -349,7 +329,7 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-
+    
     func setVoiceSearchEnabled(to value: Bool) {
         if value {
             enableVoiceSearch { [weak self] result in
@@ -367,7 +347,7 @@ final class SettingsViewModel: ObservableObject {
             state.voiceSearchEnabled = false
         }
     }
-
+    
     var longPressBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.longPressPreviews },
@@ -387,19 +367,19 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
-
+    
     var cookiePopUpProtectionStatus: StatusIndicator {
         return appSettings.autoconsentEnabled ? .on : .off
     }
-
+    
     var emailProtectionStatus: StatusIndicator {
         return emailManager.isSignedIn ? .on : .off
     }
-
+    
     var syncStatus: StatusIndicator {
         legacyViewProvider.syncService.authState != .inactive ? .on : .off
     }
-
+    
 #if SUBSCRIPTION
     // MARK: Default Init
     init(state: SettingsState? = nil,
@@ -433,9 +413,11 @@ final class SettingsViewModel: ObservableObject {
         self.voiceSearchHelper = voiceSearchHelper
         autocompleteSubtitle = variantManager.isSupported(feature: .history) ? UserText.settingsAutocompleteSubtitle : nil
     }
+    
 #endif
     
 }
+
 // MARK: Private methods
 extension SettingsViewModel {
     
@@ -465,83 +447,40 @@ extension SettingsViewModel {
             speechRecognitionAvailable: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
             loginsEnabled: featureFlagger.isFeatureOn(.autofillAccessCredentialManagement),
             networkProtection: getNetworkProtectionState(),
-            subscription: cacheSubscriptionState,
+            subscription: SettingsState.defaults.subscription,
             sync: getSyncState()
         )
         
         setupSubscribers()
-        Task { await refreshSubscriptionState() }
+        Task { await setupSubscriptionEnvironment() }
         
     }
     
     private func getNetworkProtectionState() -> SettingsState.NetworkProtection {
         var enabled = false
-        #if NETWORK_PROTECTION
-            if #available(iOS 15, *) {
-                enabled = DefaultNetworkProtectionVisibility().shouldKeepVPNAccessViaWaitlist()
-            }
-        #endif
+#if NETWORK_PROTECTION
+        if #available(iOS 15, *) {
+            enabled = DefaultNetworkProtectionVisibility().shouldKeepVPNAccessViaWaitlist()
+        }
+#endif
         return SettingsState.NetworkProtection(enabled: enabled, status: "")
     }
     
-    private func refreshSubscriptionState() async {
-        let state = await self.getSubscriptionState()
-        DispatchQueue.main.async {
-            self.state.subscription = state
-        }
-    }
-       
-    private func getSubscriptionState() async -> SettingsState.Subscription {
-            var enabled = false
-            var canPurchase = false
-            var hasActiveSubscription = false
-            var isSubscriptionPendingActivation = false
-
-    #if SUBSCRIPTION
-        if #available(iOS 15, *) {
-            enabled = isPrivacyProEnabled
-            canPurchase = SubscriptionPurchaseEnvironment.canPurchase
-            await setupSubscriptionEnvironment()
-            if let token = AccountManager().accessToken {
-                let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token)
-                switch subscriptionResult {
-                case .success(let subscription):
-                    hasActiveSubscription = subscription.isActive
-                                            
-                    cacheSubscriptionState = SettingsState.Subscription(enabled: enabled,
-                                                                        canPurchase: canPurchase,
-                                                                        hasActiveSubscription: hasActiveSubscription,
-                                                                        isSubscriptionPendingActivation: isSubscriptionPendingActivation)
-                    
-                case .failure:
-                    if await PurchaseManager.hasActiveSubscription() {
-                        isSubscriptionPendingActivation = true
-                    }
-                }
-            }
-        }
-    #endif
-        return SettingsState.Subscription(enabled: enabled,
-                                        canPurchase: canPurchase,
-                                        hasActiveSubscription: hasActiveSubscription,
-                                        isSubscriptionPendingActivation: isSubscriptionPendingActivation)
-        }
-    
     private func getSyncState() -> SettingsState.SyncSettings {
         SettingsState.SyncSettings(enabled: legacyViewProvider.syncService.featureFlags.contains(.userInterface),
-                                 title: {
-                                     let syncService = legacyViewProvider.syncService
-                                     let isDataSyncingDisabled = !syncService.featureFlags.contains(.dataSyncing)
-                                      && syncService.authState == .active
-                                     if SyncBookmarksAdapter.isSyncBookmarksPaused
-                                         || SyncCredentialsAdapter.isSyncCredentialsPaused
-                                         || isDataSyncingDisabled {
-                                         return "⚠️ \(UserText.settingsSync)"
-                                     }
-                                     return SyncUI.UserText.syncTitle
-                                 }())
+                                   title: {
+            let syncService = legacyViewProvider.syncService
+            let isDataSyncingDisabled = !syncService.featureFlags.contains(.dataSyncing)
+            && syncService.authState == .active
+            if SyncBookmarksAdapter.isSyncBookmarksPaused
+                || SyncCredentialsAdapter.isSyncCredentialsPaused
+                || isDataSyncingDisabled {
+                return "⚠️ \(UserText.settingsSync)"
+            }
+            return SyncUI.UserText.syncTitle
+        }())
     }
-        
+    
     private func firePixel(_ event: Pixel.Event,
                            withAdditionalParameters params: [String: String] = [:]) {
         Pixel.fire(pixel: event, withAdditionalParameters: params)
@@ -556,104 +495,9 @@ extension SettingsViewModel {
             completion(true)
         }
     }
-
-    #if SUBSCRIPTION
-    @available(iOS 15.0, *)
-    @MainActor
-    private func setupSubscriptionEnvironment() async {
-        
-        // Active subscription check
-        guard let token = accountManager.accessToken else {
-            setupSubscriptionPurchaseOptions()
-            return
-        }
-                
-        // Fetch available subscriptions from the backend (or sign out)
-        switch await SubscriptionService.getSubscription(accessToken: token) {
-        
-        case .success(let subscription):
-            if subscription.isActive {
-                state.subscription.hasActiveSubscription = true
-                state.subscription.isSubscriptionPendingActivation = false
-
-                // Check entitlements and update UI accordingly
-                let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
-                for entitlement in entitlements {
-                    if case let .success(result) = await AccountManager().hasEntitlement(for: entitlement) {
-                        switch entitlement {
-                        case .identityTheftRestoration:
-                            self.shouldShowITP = result
-                        case .dataBrokerProtection:
-                            self.shouldShowDBP = result
-                        case .networkProtection:
-                            self.shouldShowNetP = result
-                        case .unknown:
-                            return
-                        }
-                    }
-                }
-            } else {
-                // Sign out in case subscription is no longer active, reset the state
-                state.subscription.hasActiveSubscription = false
-                state.subscription.isSubscriptionPendingActivation = false
-                signOutUser()
-            }
-
-        case .failure:
-            // Account is active but there's not a valid subscription / entitlements
-            if await PurchaseManager.hasActiveSubscription() {
-                state.subscription.isSubscriptionPendingActivation = true
-            }
-        }
-        
-    }
     
-    @available(iOS 15.0, *)
-    private func signOutUser() {
-        AccountManager().signOut()
-        setupSubscriptionPurchaseOptions()
-    }
     
-    @available(iOS 15.0, *)
-    private func setupSubscriptionPurchaseOptions() {
-        PurchaseManager.shared.$availableProducts
-            .receive(on: RunLoop.main)
-            .sink { [weak self] products in
-                self?.state.subscription.canPurchase = !products.isEmpty
-            }.store(in: &cancellables)
-    }
-        
-    private func setupNotificationObservers() {
-        signOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut, object: nil, queue: .main) { [weak self] _ in
-            if #available(iOS 15.0, *) {
-                guard let strongSelf = self else { return }
-                Task { await strongSelf.refreshSubscriptionState() }
-            }
-        }
-    }
-    
-    @available(iOS 15.0, *)
-    func restoreAccountPurchase() async {
-        DispatchQueue.main.async { self.isRestoringSubscription = true }
-        let result = await AppStoreRestoreFlow.restoreAccountFromPastPurchase(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
-        switch result {
-        case .success:
-            DispatchQueue.main.async {
-                self.isRestoringSubscription = false
-            }
-            await self.setupSubscriptionEnvironment()
-            
-        case .failure:
-            DispatchQueue.main.async {
-                self.isRestoringSubscription = false
-                self.shouldDisplayRestoreSubscriptionError = true
-            }
-        }
-    }
-    
-#endif  // SUBSCRIPTION
-    
-    #if NETWORK_PROTECTION
+#if NETWORK_PROTECTION
     private func updateNetPStatus(connectionStatus: ConnectionStatus) {
         if DefaultNetworkProtectionVisibility().isPrivacyProLaunched() {
             switch connectionStatus {
@@ -676,7 +520,8 @@ extension SettingsViewModel {
             }
         }
     }
-    #endif
+#endif
+    
 }
 
 // MARK: Subscribers
@@ -906,4 +751,119 @@ extension SettingsViewModel {
     }
 }
 #endif
+
+// MARK: Subscriptions
+extension SettingsViewModel {
+
+#if SUBSCRIPTION
+    @MainActor
+    private func setupSubscriptionEnvironment() async {
+        
+        state.subscription.enabled = AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
+        state.subscription.canPurchase = SubscriptionPurchaseEnvironment.canPurchase
+        state.subscription.hasActiveSubscription = false
+        state.subscription.isSubscriptionPendingActivation = false
+        self.state.subscription.entitlements = []
+        
+        // Active subscription check
+        guard let token = accountManager.accessToken else {
+            if #available(iOS 15, *) {
+                setupSubscriptionPurchaseOptions()
+            }
+            return
+        }
+        
+        let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token)
+        switch subscriptionResult {
+            
+        case .success(let subscription):
+            if subscription.isActive {
+                state.subscription.hasActiveSubscription = true
+                state.subscription.isSubscriptionPendingActivation = false
+                
+                // Check entitlements and update state
+                let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
+                for entitlement in entitlements {
+                    if case let .success(result) = await AccountManager().hasEntitlement(for: entitlement) {
+                        switch entitlement {
+                        case .identityTheftRestoration:
+                            self.state.subscription.entitlements.append(.identityTheftRestoration)
+                        case .dataBrokerProtection:
+                            self.state.subscription.entitlements.append(.dataBrokerProtection)
+                        case .networkProtection:
+                            self.state.subscription.entitlements.append(.networkProtection)
+                        case .unknown:
+                            return
+                        }
+                    }
+                }
+            } else {
+                // Sign out in case subscription is no longer active, reset the state
+                state.subscription.hasActiveSubscription = false
+                state.subscription.isSubscriptionPendingActivation = false
+                if #available(iOS 15, *) {
+                    signOutUser()
+                }
+            }
+            
+        case .failure:
+            // Account is active but there's not a valid subscription / entitlements
+            if #available(iOS 15, *) {
+                if await PurchaseManager.hasActiveSubscription() {
+                    state.subscription.isSubscriptionPendingActivation = true
+                }
+            }
+            
+        }
+    }
+    
+    @available(iOS 15.0, *)
+    private func signOutUser() {
+        AccountManager().signOut()
+        setupSubscriptionPurchaseOptions()
+    }
+    
+    @available(iOS 15.0, *)
+    private func setupSubscriptionPurchaseOptions() {
+        PurchaseManager.shared.$availableProducts
+            .receive(on: RunLoop.main)
+            .sink { [weak self] products in
+                self?.state.subscription.canPurchase = !products.isEmpty
+            }.store(in: &cancellables)
+    }
+    
+    private func setupNotificationObservers() {
+        signOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut, object: nil, queue: .main) { [weak self] _ in
+            if #available(iOS 15.0, *) {
+                guard let strongSelf = self else { return }
+                Task { await strongSelf.setupSubscriptionEnvironment() }
+            }
+        }
+    }
+    
+    @available(iOS 15.0, *)
+    func restoreAccountPurchase() async {
+        DispatchQueue.main.async { self.state.subscription.isRestoring = true }
+        let result = await AppStoreRestoreFlow.restoreAccountFromPastPurchase(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+        switch result {
+        case .success:
+            DispatchQueue.main.async {
+                self.state.subscription.isRestoring = false
+            }
+            await self.setupSubscriptionEnvironment()
+            
+        case .failure:
+            DispatchQueue.main.async {
+                self.state.subscription.isRestoring = false
+                self.state.subscription.shouldDisplayRestoreSubscriptionError = true
+                self.state.subscription.shouldDisplayRestoreSubscriptionError = false
+                
+            }
+        }
+    }
+    
+    
+#endif
+}
+
 // swiftlint:enable file_length

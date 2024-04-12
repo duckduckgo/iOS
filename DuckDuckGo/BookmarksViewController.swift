@@ -354,7 +354,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     private func toggleFavoriteAfterSwipe(_ bookmark: BookmarkEntity, _ indexPath: IndexPath) {
         if !bookmark.isFavorite(on: viewModel.favoritesDisplayMode.displayedFolder) {
-            Pixel.fire(pixel: .bookmarkAddFavorite)
+            Pixel.fire(pixel: .bookmarkAddFavoriteBySwipe)
         }
 
         self.viewModel.toggleFavorite(bookmark)
@@ -933,6 +933,7 @@ extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
             assertionFailure()
             return
         }
+        Pixel.fire(pixel: .bookmarkDeletedFromBookmark)
         showBookmarkDeletedMessage(bookmark)
         viewModel.softDeleteBookmark(bookmark)
         refreshFooterView()

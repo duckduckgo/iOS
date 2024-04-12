@@ -164,7 +164,10 @@ extension Pixel {
 
         case bookmarkLaunchList
         case bookmarkLaunchScored
-        case bookmarkAddFavorite
+        case bookmarkAddFavoriteFromBookmark
+        case bookmarkRemoveFavoriteFromBookmark
+        case bookmarkAddFavoriteBySwipe
+        case bookmarkDeletedFromBookmark
 
         case bookmarkImportSuccess
         case bookmarkImportFailure
@@ -776,7 +779,10 @@ extension Pixel.Event {
 
         case .bookmarkLaunchList: return "m_bookmark_launch_list"
         case .bookmarkLaunchScored: return "m_bookmark_launch_scored"
-        case .bookmarkAddFavorite: return "m_add_favorite_from_bookmark"
+        case .bookmarkAddFavoriteFromBookmark: return "m_add_favorite_from_bookmark"
+        case .bookmarkRemoveFavoriteFromBookmark: return "m_remove_favorite_from_bookmark"
+        case .bookmarkAddFavoriteBySwipe: return "m_add_favorite_by_swipe"
+        case .bookmarkDeletedFromBookmark: return "m_bookmark_deleted_from_bookmark"
 
         case .homeScreenShown: return "mh"
         case .homeScreenEditFavorite: return "mh_ef"

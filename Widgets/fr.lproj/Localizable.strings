@@ -31,6 +31,12 @@
 /* Title shown to the user when adding the Fire Button lock screen widget */
 "lock.screen.widget.fire.title" = "Fire Button";
 
+/* Description shown to the user when adding the Search Passwords lock screen widget */
+"lock.screen.widget.passwords.description" = "Recherchez rapidement vos mots de passe DuckDuckGo enregistrés.";
+
+/* Title shown to the user when adding the Search Passwords lock screen widget */
+"lock.screen.widget.passwords.title" = "Rechercher un mot de passe";
+
 /* Description shown to the user when adding the Search lock screen widget */
 "lock.screen.widget.search.description" = "Lancez instantanément une recherche privée dans DuckDuckGo.";
 
@@ -45,6 +51,12 @@
 
 /* No comment provided by engineer. */
 "VPN Not Configured" = "VPN Not Configured";
+
+/* Description of search passwords widget in widget gallery */
+"widget.gallery.passwords.description" = "Recherchez rapidement vos mots de passe DuckDuckGo enregistrés.";
+
+/* Display name for search passwords widget in widget gallery */
+"widget.gallery.passwords.display.name" = "Rechercher un mot de passe";
 
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Recherchez ou visitez vos sites favoris en privé et d'un seul mouvement.";
@@ -63,6 +75,9 @@
 
 /* Message shown in the favorites widget empty state. */
 "widget.no.favorites.message" = "Consultez rapidement vos sites préférés.";
+
+/* Text in passwords widget */
+"widget.passwords" = "Rechercher un mot de passe";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Rechercher avec DuckDuckGo";

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bookmarks.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>A(z) %2$@ és 1 másik webhely könyvjelzői nem szinkronizálhatók, mert egyes mezőik meghaladják a karakterkorlátot.</string>
+			<key>other</key>
+			<string>A(z) %2$@ és %1$d másik webhely könyvjelzői nem szinkronizálhatók, mert egyes mezőik meghaladják a karakterkorlátot.</string>
+			<key>zero</key>
+			<string>A(z) %2$@ könyvjelzője nem szinkronizálható, mert az egyik mezője meghaladja a karakterkorlátot.</string>
+		</dict>
+	</dict>
+	<key>credentials.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>A(z) %2$@ és 1 másik webhely jelszavai nem szinkronizálhatók, mert egyes mezőik meghaladják a karakterkorlátot.</string>
+			<key>other</key>
+			<string>A(z) %2$@ és %1$d másik webhely jelszavai nem szinkronizálhatók, mert egyes mezőik meghaladják a karakterkorlátot.</string>
+			<key>zero</key>
+			<string>A(z) %2$@ jelszava nem szinkronizálható, mert az egyik mezője meghaladja a karakterkorlátot.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

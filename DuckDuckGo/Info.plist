@@ -199,6 +199,14 @@
 			<key>UIApplicationShortcutItemType</key>
 			<string>com.duckduckgo.mobile.ios.clipboard</string>
 		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>Key-24</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Search Passwords</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.duckduckgo.mobile.ios.passwords</string>
+		</dict>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

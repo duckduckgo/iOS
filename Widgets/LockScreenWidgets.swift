@@ -103,6 +103,22 @@ struct FireButtonLockScreenWidget: Widget {
     }
 }
 
+@available(iOSApplicationExtension 16.0, *)
+struct PasswordsLockScreenWidget: Widget {
+
+    let kind: String = "PasswordsLockScreenWidget"
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: Provider()) { _ in
+            return LockScreenWidgetView(imageNamed: "LockScreenPasswords")
+                .widgetURL(DeepLinks.openPasswords.appendingParameter(name: "ls", value: "1"))
+        }
+        .configurationDisplayName(UserText.lockScreenPasswordsTitle)
+        .description(UserText.lockScreenPasswordsDescription)
+        .supportedFamilies([ .accessoryCircular ])
+    }
+}
+
 struct LockScreenWidgetView: View {
 
     let imageNamed: String

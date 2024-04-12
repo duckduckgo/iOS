@@ -1,6 +1,12 @@
 /* Standard Buttons - Back Button */
 "back.button" = "Tagasi";
 
+/* Do not translate - stringsdict entry */
+"bookmarks.invalid.objects.present.description" = "bookmarks.invalid.objects.present.description";
+
+/* Alert title for invalid bookmarks being filtered out of synced data */
+"bookmarks.invalid.objects.present.title" = "Mõned järjehoidjad ei sünkroonita teatud väljade liiga pika sisu tõttu.";
+
 /* Sync Paused Errors - Bookmarks Limit Exceeded Action */
 "bookmarks.limit.exceeded.action" = "Halda järjehoidjaid";
 
@@ -42,6 +48,12 @@
 
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Selle seadme sünkroonimine ja varundamine";
+
+/* Do not translate - stringsdict entry */
+"credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
+
+/* Alert title for invalid logins being filtered out of synced data */
+"credentials.invalid.objects.present.title" = "Mõned sisselogimisandmed ei sünkroonita teatud väljade liiga pika sisu tõttu.";
 
 /* Sync Paused Errors - Credentials Limit Exceeded Action */
 "credentials.limit.exceeded.action" = "Halda sisselogimisandmeid";
@@ -185,10 +197,10 @@
 "scan.or.see.code.footer" = "Kas sa ei saa skannida?";
 
 /* Scan or See Code View - Instruction */
-"scan.or.see.code.instruction" = "Ava teises seadmes DuckDuckGo brauseris Seaded > Sünkroonimine ja varundus ning vali käsk „Sünkrooni teise seadmega“.";
+"scan.or.see.code.instruction" = "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”";
 
 /* Scan or See Code View - Instruction with syncMenuPath */
-"scan.or.see.code.instruction.attributed" = "Ava teises seadmes DuckDuckGo brauseris %@. Vali käsk Sünkrooni teise seadmega.";
+"scan.or.see.code.instruction.attributed" = "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”.";
 
 /* Scan or See Code View - Manually Enter Code Link */
 "scan.or.see.code.manually.enter.code.link" = "Sisesta kood käsitsi";
@@ -200,7 +212,7 @@
 "scan.or.see.code.scan.code.instructions.title" = "Mobiililt mobiilile?";
 
 /* Scan or See Code View - Share Code Link */
-"scan.or.see.code.share.code.link" = "Jaga tekstikoodi?";
+"scan.or.see.code.share.code.link" = "Share Text Code";
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "QR-koodi skannimine";
@@ -248,7 +260,7 @@
 "synced.devices.section.header" = "Sünkroonitud seadmed";
 
 /* Synced Devices - Sync with Another Device Label */
-"synced.devices.sync.with.another.device.label" = "Sünkrooni teise seadmega";
+"synced.devices.sync.with.another.device.label" = "Sync With Another Device";
 
 /* Synced Devices - This Device Label */
 "synced.devices.this.device.label" = "See seade";

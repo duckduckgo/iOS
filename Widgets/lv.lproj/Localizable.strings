@@ -31,6 +31,12 @@
 /* Title shown to the user when adding the Fire Button lock screen widget */
 "lock.screen.widget.fire.title" = "Fire Button";
 
+/* Description shown to the user when adding the Search Passwords lock screen widget */
+"lock.screen.widget.passwords.description" = "Ātri meklē savas saglabātās DuckDuckGo paroles.";
+
+/* Title shown to the user when adding the Search Passwords lock screen widget */
+"lock.screen.widget.passwords.title" = "Meklēt paroles";
+
 /* Description shown to the user when adding the Search lock screen widget */
 "lock.screen.widget.search.description" = "Nekavējoties sāc privātu meklēšanu pakalpojumā DuckDuckGo.";
 
@@ -45,6 +51,12 @@
 
 /* No comment provided by engineer. */
 "VPN Not Configured" = "VPN Not Configured";
+
+/* Description of search passwords widget in widget gallery */
+"widget.gallery.passwords.description" = "Ātri meklē savas saglabātās DuckDuckGo paroles.";
+
+/* Display name for search passwords widget in widget gallery */
+"widget.gallery.passwords.display.name" = "Meklēt paroles";
 
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Meklē vai atver savas iecienītākās vietnes konfidenciāli, veicot tikai vienu pieskārienu.";
@@ -63,6 +75,9 @@
 
 /* Message shown in the favorites widget empty state. */
 "widget.no.favorites.message" = "Ātri atver savas mīļākās vietnes.";
+
+/* Text in passwords widget */
+"widget.passwords" = "Meklēt paroles";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Meklēt DuckDuckGo";

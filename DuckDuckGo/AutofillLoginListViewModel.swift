@@ -70,6 +70,8 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
     }
     var authenticationNotRequired = false
+    var isCancelingSearch = false
+
     @Published private var accounts = [SecureVaultModels.WebsiteAccount]()
     private var accountsToSuggest = [SecureVaultModels.WebsiteAccount]()
     private var cancellables: Set<AnyCancellable> = []

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bookmarks.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Your bookmarks for %2$@ and %1$d other sites can't sync because some of their fields exceed the character limit.</string>
+			<key>one</key>
+			<string>Marcajele tale pentru %2$@ și încă un alt site nu se pot sincroniza deoarece unele dintre câmpurile lor depășesc limita de caractere.</string>
+			<key>other</key>
+			<string>Marcajele tale pentru %2$@ și încă alte %1$d site-uri nu se pot sincroniza deoarece unele dintre câmpurile lor depășesc limita de caractere.</string>
+			<key>zero</key>
+			<string>Marcajul tău pentru %2$@ nu se poate sincroniza deoarece unul dintre câmpurile sale depășește limita de caractere.</string>
+		</dict>
+	</dict>
+	<key>credentials.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Your passwords for %2$@ and %1$d other sites can't sync because some of their fields exceed the character limit.</string>
+			<key>one</key>
+			<string>Parolele tale pentru %2$@ și încă un alt site nu se pot sincroniza deoarece unele dintre câmpurile lor depășesc limita de caractere.</string>
+			<key>other</key>
+			<string>Parolele tale pentru %2$@ și încă alte %1$d site-uri nu se pot sincroniza deoarece unele dintre câmpurile lor depășesc limita de caractere.</string>
+			<key>zero</key>
+			<string>Parola ta pentru %2$@ nu se poate sincroniza deoarece unul dintre câmpurile sale depășește limita de caractere.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

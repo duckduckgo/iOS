@@ -259,6 +259,8 @@ extension MainViewController {
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider)
 #endif
 
+        Pixel.fire(pixel: .settingsPresented,
+                   withAdditionalParameters: PixelExperiment.parameters)
         let settingsController = SettingsHostingController(viewModel: settingsViewModel, viewProvider: legacyViewProvider)
         
         // We are still presenting legacy views, so use a Navcontroller

@@ -91,4 +91,7 @@ extension Theme {
     // No design system colour yet, so fall back to SDK colours
     var tableCellAccessoryTextColor: UIColor { .secondaryLabel }
 
+    var onboardingBackgroundColor: UIColor { UIColor(designSystemColor: .surface) }
+    var onboardingHeaderColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+    var onboardingSubheaderColor: UIColor { UIColor(designSystemColor: .textSecondary) }
 }

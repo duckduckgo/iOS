@@ -21,6 +21,8 @@ import DesignResourcesKit
 import DuckUI
 import SwiftUI
 
+// swiftlint:disable file_length
+
 extension SyncSettingsView {
 
     @ViewBuilder
@@ -413,3 +415,5 @@ extension View {
         closure(self)
     }
 }
+
+// swiftlint:enable file_length

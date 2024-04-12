@@ -52,6 +52,9 @@ final class SettingsViewModel: ObservableObject {
     // Subscription Dependencies
     private var accountManager: AccountManager
     private var signOutObserver: Any?
+    private static let subscriptionCache = UserDefaultsCache<SettingsState.Subscription>(subscriptionAppGroup: nil,
+                                                                           key: UserDefaultsCacheKey.subscription,
+                                                                           settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
     
     
 #if NETWORK_PROTECTION
@@ -733,6 +736,7 @@ extension SettingsViewModel {
     @MainActor
     private func setupSubscriptionEnvironment() async {
         
+        
         state.subscription.enabled = AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
         state.subscription.canPurchase = SubscriptionPurchaseEnvironment.canPurchase
         state.subscription.hasActiveSubscription = false
@@ -836,5 +840,4 @@ extension SettingsViewModel {
         }
     }
 }
-
 // swiftlint:enable file_length

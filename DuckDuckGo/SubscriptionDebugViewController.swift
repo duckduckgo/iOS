@@ -19,9 +19,6 @@
 
 import UIKit
 
-
-#if !SUBSCRIPTION
-
 final class SubscriptionDebugViewController: UITableViewController {
     // Just an empty VC
 }
@@ -250,5 +247,3 @@ final class SubscriptionDebugViewController: UITableViewController {
         }
     }
 }
-
-#endif

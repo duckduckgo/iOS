@@ -290,7 +290,7 @@ class MainViewController: UIViewController {
         subscribeToEmailProtectionStatusNotifications()
         subscribeToURLInterceptorNotifications()
         
-#if NETWORK_PROTECTION && SUBSCRIPTION
+#if NETWORK_PROTECTION
         subscribeToNetworkProtectionEvents()
 #endif
 
@@ -1343,7 +1343,7 @@ class MainViewController: UIViewController {
             .store(in: &urlInterceptorCancellables)
     }
 
-#if NETWORK_PROTECTION && SUBSCRIPTION
+#if NETWORK_PROTECTION
     private func subscribeToNetworkProtectionEvents() {
         NotificationCenter.default.publisher(for: .accountDidSignIn)
             .receive(on: DispatchQueue.main)

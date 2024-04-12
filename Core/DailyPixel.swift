@@ -121,7 +121,10 @@ public final class DailyPixel {
     private static func createSortedStringOfValues(from dict: [String: String], maxLength: Int = 50) -> String {
         let sortedKeys = dict.keys.sorted()
 
-        let uniqueString = sortedKeys.map { "\(dict[$0]!)" }.joined(separator: ";")
+        let uniqueString = sortedKeys.compactMap { key -> String? in
+            guard let value = dict[key] else { return nil }
+            return value
+        }.joined(separator: ";")
 
         if uniqueString.count > maxLength {
             return String(uniqueString.prefix(maxLength))

@@ -20,12 +20,6 @@
 import Foundation
 import Subscription
 
-public extension AccountManager {
-    convenience init() {
-        self.init(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
-    }
-}
-
 enum SubscriptionPurchaseError: Error {
     case purchaseFailed,
          missingEntitlements,

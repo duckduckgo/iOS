@@ -472,21 +472,17 @@ class MainViewController: UIViewController {
     @objc
     private func keyboardDidShow() {
         keyboardShowing = true
-        Pixel.fire(pixel: .keyboardTriggeredOpen)
     }
 
     @objc
     private func keyboardWillHide() {
-        if homeController?.collectionView.isDragging == true {
+        if homeController?.collectionView.isDragging == true, keyboardShowing {
             Pixel.fire(pixel: .addressBarGestureDismiss)
         }
     }
 
     @objc
     private func keyboardDidHide() {
-        if keyboardShowing {
-            Pixel.fire(pixel: .keyboardTriggeredClosed)
-        }
         keyboardShowing = false
     }
 

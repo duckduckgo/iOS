@@ -227,7 +227,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             purchaseTransactionJWS = transactionJWS
 
         case .failure(let error):
-            
+            setTransactionStatus(.idle)
             switch error {
             case .cancelledByUser:
                 setTransactionError(.cancelledByUser)
@@ -241,7 +241,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
                 setTransactionError(.purchaseFailed)
             }
             originalMessage = original
-            setTransactionStatus(.idle)
             return nil
         }
         

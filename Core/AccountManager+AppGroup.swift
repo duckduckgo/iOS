@@ -1,5 +1,5 @@
 //
-//  AccountManagerExtension.swift
+//  AccountManager+AppGroup.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-#if SUBSCRIPTION
-
 import Foundation
 import Subscription
 
@@ -27,5 +25,3 @@ public extension AccountManager {
         self.init(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
     }
 }
-
-#endif

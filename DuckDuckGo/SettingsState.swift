@@ -18,6 +18,7 @@
 //
 
 import BrowserServicesKit
+import Subscription
 
 struct SettingsState {
     
@@ -45,6 +46,9 @@ struct SettingsState {
         var canPurchase: Bool
         var hasActiveSubscription: Bool
         var isSubscriptionPendingActivation: Bool
+        var isRestoring: Bool
+        var shouldDisplayRestoreSubscriptionError: Bool
+        var entitlements: [Entitlement.ProductName]
     }
     
     struct SyncSettings {
@@ -117,7 +121,10 @@ struct SettingsState {
             subscription: Subscription(enabled: false,
                                        canPurchase: false,
                                        hasActiveSubscription: false,
-                                       isSubscriptionPendingActivation: false),
+                                       isSubscriptionPendingActivation: false,
+                                       isRestoring: false,
+                                       shouldDisplayRestoreSubscriptionError: false,
+                                       entitlements: []),
             sync: SyncSettings(enabled: false, title: "")
         )
     }

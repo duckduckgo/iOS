@@ -20,10 +20,7 @@
 #if NETWORK_PROTECTION
 
 import Foundation
-
-#if SUBSCRIPTION
 import Subscription
-#endif
 
 struct NetworkProtectionVisibilityForTunnelProvider: NetworkProtectionFeatureVisibility {
     func isWaitlistBetaActive() -> Bool {
@@ -35,11 +32,7 @@ struct NetworkProtectionVisibilityForTunnelProvider: NetworkProtectionFeatureVis
     }
     
     func isPrivacyProLaunched() -> Bool {
-#if SUBSCRIPTION
         AccountManager().isUserAuthenticated
-#else
-        false
-#endif
     }
     
     func shouldMonitorEntitlement() -> Bool {

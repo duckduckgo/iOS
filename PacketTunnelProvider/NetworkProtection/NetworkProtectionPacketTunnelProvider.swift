@@ -26,10 +26,7 @@ import Core
 import Networking
 import NetworkExtension
 import NetworkProtection
-
-#if SUBSCRIPTION
 import Subscription
-#endif
 
 // swiftlint:disable type_body_length
 
@@ -226,12 +223,10 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let featureVisibility = NetworkProtectionVisibilityForTunnelProvider()
         let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
         let accessTokenProvider: () -> String? = {
-#if SUBSCRIPTION
-            if featureVisibility.shouldMonitorEntitlement() {
-                return { AccountManager().accessToken }
-            }
-#endif
-            return { nil }
+        if featureVisibility.shouldMonitorEntitlement() {
+            return { AccountManager().accessToken }
+        }
+        return { nil }
         }()
         let tokenStore = NetworkProtectionKeychainTokenStore(
             keychainType: .dataProtection(.unspecified),
@@ -307,7 +302,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     private static func entitlementCheck() async -> Result<Bool, Error> {
-#if SUBSCRIPTION
         guard NetworkProtectionVisibilityForTunnelProvider().shouldMonitorEntitlement() else {
             return .success(true)
         }
@@ -324,9 +318,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         case .failure(let error):
             return .failure(error)
         }
-#else
-        return .success(true)
-#endif
     }
 }
 

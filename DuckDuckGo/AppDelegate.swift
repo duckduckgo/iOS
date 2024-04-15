@@ -1006,13 +1006,18 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
 #if NETWORK_PROTECTION
             if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
-                presentNetworkProtectionStatusSettingsModal()
+                Task {
+                    let accountManager = AccountManager()
+                    if case .success(let hasEntitlements) = await accountManager.hasEntitlement(for: .networkProtection),
+                        hasEntitlements {
+                        presentNetworkProtectionStatusSettingsModal()
+                    }
+                }
             }
 
             if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist(), identifier == VPNWaitlist.notificationIdentifier {
                 presentNetworkProtectionWaitlistModal()
             }
-
 #endif
         }
 

@@ -27,7 +27,7 @@ final class SecureVaultErrorReporter: SecureVaultErrorReporting {
     static let shared = SecureVaultErrorReporter()
     private init() {}
 
-    func secureVaultError(_ error: SecureStorageError) {
+    func secureVaultInitFailed(_ error: SecureStorageError) {
 #if DEBUG
         guard !ProcessInfo().arguments.contains("testing") else { return }
 #endif

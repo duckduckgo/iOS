@@ -361,8 +361,8 @@ extension EmailSignupViewController: EmailManagerRequestDelegate {
 
 extension EmailSignupViewController: SecureVaultManagerDelegate {
 
-    func secureVaultError(_ error: SecureStorageError) {
-        SecureVaultErrorReporter.shared.secureVaultError(error)
+    func secureVaultInitFailed(_ error: SecureStorageError) {
+        SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
     }
 
     func secureVaultManagerIsEnabledStatus(_ manager: SecureVaultManager, forType type: AutofillType?) -> Bool {

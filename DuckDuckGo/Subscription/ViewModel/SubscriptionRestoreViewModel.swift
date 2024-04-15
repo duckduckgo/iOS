@@ -82,7 +82,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     }
     
     private func cleanUp() {
-        subFeature.cleanup()
         cancellables.removeAll()
     }
     
@@ -107,11 +106,8 @@ final class SubscriptionRestoreViewModel: ObservableObject {
                     self.state.viewTitle = UserText.subscriptionAddDeviceTitle
                 }
             default:
-                state.isLoading = false
-            }
-        } else {
-            DispatchQueue.main.async {
                 self.state.viewTitle = UserText.subscriptionActivate
+                state.isLoading = false
             }
         }
     }

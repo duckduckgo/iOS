@@ -11,4 +11,4 @@ appId: com.duckduckgo.mobile.ios
     index: 0
 - assertVisible: "Make DuckDuckGo your default browser."
 - tapOn:
-    id: "Skip"
+    text: "Skip"

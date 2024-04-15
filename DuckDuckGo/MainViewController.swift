@@ -1559,12 +1559,12 @@ extension MainViewController: BrowserChromeDelegate {
         let updateBlock = {
             self.updateToolbarConstant(percent)
             self.updateNavBarConstant(percent)
-          
-            self.view.layoutIfNeeded()
-            
+
             self.viewCoordinator.navigationBarContainer.alpha = percent
             self.viewCoordinator.tabBarContainer.alpha = percent
             self.viewCoordinator.toolbar.alpha = percent
+
+            self.view.layoutIfNeeded()
         }
            
         if animated {

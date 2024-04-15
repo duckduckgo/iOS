@@ -215,6 +215,8 @@ struct SubscriptionRestoreView: View {
                         }
                     }
                 }
+            } else {
+                SwiftUI.ProgressView()
             }
         }
     }

@@ -115,7 +115,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
     
     private func cleanUp() {
         canGoBackCancellable?.cancel()
-        subFeature.cleanup()
         cancellables.removeAll()
     }
     

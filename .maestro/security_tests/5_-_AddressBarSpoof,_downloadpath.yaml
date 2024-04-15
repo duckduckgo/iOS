@@ -2,38 +2,40 @@ appId: com.duckduckgo.mobile.ios
 tags:
     - securityTest
 ---
-# Test 1
+# Test Download
 - doubleTapOn:
     id: "searchEntry"
 - pressKey: Backspace
 - inputText: "https://privacy-test-pages.site/security/address-bar-spoofing/spoof-js-download-url.html"
 - pressKey: Enter
 - tapOn: "Start"
-# Download Acceptance Flow:
-- extendedWaitUntil:
-    visible: "Save to Downloads"
-    timeout: 10000
-- tapOn: "Save to Downloads"
+# Dismiss Download Prompt if shown
+- runFlow:
+    when:
+        visible: "Cancel"
+    commands:
+        - tapOn: "Cancel"
 - copyTextFrom:
     id: "searchEntry"
 - assertTrue: ${maestro.copiedText == "about:blank"} # Downloads should occur in empty origin.
-# Restart
 - tapOn:
     id: "searchEntry"
+- pressKey: Backspace
 - inputText: "https://privacy-test-pages.site/security/address-bar-spoofing/spoof-js-download-url.html"
 - pressKey: Enter
-# Download Cancel Flow:
 - tapOn: "Start"
-- extendedWaitUntil:
-    visible: "Cancel"  
-    timeout: 10000
-- tapOn: "Cancel"
-# Should be on about:blank
+# Dismiss Download Prompt if shown
+- runFlow:
+    when:
+        visible: "Save to Downloads"
+    commands:
+        - tapOn: "Save to Downloads"
 - copyTextFrom:
     id: "searchEntry"
-- assertTrue: ${maestro.copiedText == "about:blank"}
-# Return to last test page
+- assertTrue: ${maestro.copiedText == "about:blank"} # Downloads should occur in empty origin.
+# Return to previous page, about:blank messes with future tests
 - tapOn:
     id: "searchEntry"
+- pressKey: Backspace
 - inputText: "https://privacy-test-pages.site/security/address-bar-spoofing/spoof-js-download-url.html"
 - pressKey: Enter

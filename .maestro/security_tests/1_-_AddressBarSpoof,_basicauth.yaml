@@ -12,7 +12,7 @@ tags:
 - assertVisible: "Example Domain"
 - copyTextFrom:
     id: "searchEntry"
-- assertTrue: ${maestro.copiedText.indexOf("https://www.google.com") != 0}
+- assertTrue: ${maestro.copiedText.indexOf("google.com") != 0}
 - tapOn:
     id: "searchEntry"
 # Test 2 - using \u2029 character
@@ -22,7 +22,7 @@ tags:
 - assertVisible: "Example Domain"
 - copyTextFrom:
     id: "searchEntry"
-- assertTrue: ${maestro.copiedText.indexOf("https://www.google.com") != 0}
+- assertTrue: ${maestro.copiedText.indexOf("google.com") != 0}
 - tapOn:
     id: "searchEntry"
 # Test 3 - using repeated " " space character
@@ -32,4 +32,4 @@ tags:
 - assertVisible: "Example Domain"
 - copyTextFrom:
     id: "searchEntry"
-- assertTrue: ${maestro.copiedText.indexOf("https://www.google.com") != 0}
+- assertTrue: ${maestro.copiedText.indexOf("google.com") != 0}

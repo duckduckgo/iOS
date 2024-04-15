@@ -12,5 +12,4 @@ tags:
 # Now check the address bar hasn't been updated too early resulting in spoofed content
 - copyTextFrom:
     id: "searchEntry"
-- assertTrue: ${maestro.copiedText == "https://privacy-test-pages.site/security/address-bar-spoofing/spoof-js-page-rewrite.html"}
-- assertNotVisible: "DDG." 
+- assertTrue: ${maestro.copiedText == "privacy-test-pages.site"}

@@ -12,5 +12,5 @@ tags:
 # Should navigate to duckduckgo.com without any spoofed HTML document content.
 - copyTextFrom:
     id: "searchEntry"
-- assertTrue: ${maestro.copiedText == "https://duckduckgo.com/"}
+- assertTrue: ${maestro.copiedText == "duckduckgo.com"}
 - assertNotVisible: "Not DDG."

@@ -65,6 +65,15 @@ jobs:
         workspace: .maestro
         include-tags: privacy
         ios-version: 17
+
+    - name: Security tests
+      uses: mobile-dev-inc/action-maestro-cloud@v1.8.0
+      with:
+        api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
+        app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+        workspace: .maestro
+        include-tags: security
+        ios-version: 17
     
     - name: Ad Click Detection Flow tests
       uses: mobile-dev-inc/action-maestro-cloud@v1.8.0

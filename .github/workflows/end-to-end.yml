@@ -49,6 +49,7 @@ jobs:
         | tee xcodebuild.log
 
     - name: Release tests
+      id: release-tests
       uses: mobile-dev-inc/action-maestro-cloud@v1.8.0
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
@@ -58,6 +59,7 @@ jobs:
         ios-version: 17
 
     - name: Privacy tests
+      id: privacy-tests
       uses: mobile-dev-inc/action-maestro-cloud@v1.8.0
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
@@ -67,6 +69,7 @@ jobs:
         ios-version: 17
     
     - name: Ad Click Detection Flow tests
+      id: ad-click-tests
       uses: mobile-dev-inc/action-maestro-cloud@v1.8.0
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
@@ -75,6 +78,19 @@ jobs:
         include-tags: adClick
         ios-version: 17
 
+    - name: Check For Errors
+      env:
+        MAESTRO_RELEASE_TESTS_FLOW_RESULTS: ${{ steps.release-tests.outputs.MAESTRO_CLOUD_FLOW_RESULTS }} 
+        MAESTRO_PRIVACY_TESTS_FLOW_RESULTS: ${{ steps.privacy-tests.outputs.MAESTRO_CLOUD_FLOW_RESULTS }}
+        MAESTRO_AD_CLICK_TESTS_FLOW_RESULTS: ${{ steps.ad-click-tests.outputs.MAESTRO_CLOUD_FLOW_RESULTS }}
+      run: |
+          if [[ "$MAESTRO_RELEASE_TESTS_FLOW_RESULTS" == *"ERROR"* || "$MAESTRO_RELEASE_TESTS_FLOW_RESULTS" == *"CANCELED"* ]] \
+          || [[ "$MAESTRO_PRIVACY_TESTS_FLOW_RESULTS" == *"ERROR"* || "$MAESTRO_PRIVACY_TESTS_FLOW_RESULTS" == *"CANCELED"* ]] \
+          || [[ "$MAESTRO_AD_CLICK_TESTS_FLOW_RESULTS" == *"ERROR"* || "$MAESTRO_AD_CLICK_TESTS_FLOW_RESULTS" == *"CANCELED"* ]]; then
+            echo "One or more tests failed or were canceled."
+            exit 1
+          fi
+      
     - name: Create Asana task when workflow failed
       if: ${{ failure() }}
       run: |

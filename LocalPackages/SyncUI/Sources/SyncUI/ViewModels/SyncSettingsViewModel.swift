@@ -155,7 +155,11 @@ public class SyncSettingsViewModel: ObservableObject {
     }
 
     func saveRecoveryPDF() {
-        delegate?.shareRecoveryPDF()
+        Task { @MainActor in
+            if await commonAuthenticate() {
+                delegate?.shareRecoveryPDF()
+            }
+        }
     }
 
     func scanQRCode() {
@@ -214,6 +218,10 @@ public class SyncSettingsViewModel: ObservableObject {
     }
 
     public func recoverSyncDataPressed() {
-        delegate?.showRecoverData()
+        Task { @MainActor in
+            if await commonAuthenticate() {
+                delegate?.showRecoverData()
+            }
+        }
     }
 }

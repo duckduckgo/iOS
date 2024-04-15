@@ -74,11 +74,6 @@ extension SyncSettingsView {
 
     @ViewBuilder
     func otherOptions() -> some View {
-        let alertBinding = Binding<Bool>(
-            get: { model.shouldShowPasscodeRequiredAlert },
-            set: { value in model.shouldShowPasscodeRequiredAlert = value }
-        )
-        
         Section {
             Button(UserText.syncAndBackUpThisDeviceLink) {
                 Task { @MainActor in
@@ -107,18 +102,6 @@ extension SyncSettingsView {
                 })
             })
             .disabled(!model.isAccountRecoveryAvailable)
-            .alert(isPresented: alertBinding) {
-                Alert(
-                    title: Text("Secure Your Device to Use Sync & Backup"),
-                    message: Text("A device password is required to use Sync & Backup."),
-                    dismissButton: .default(Text("Go to Settings"), action: {
-                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!,
-                                                  options: [:],
-                                                  completionHandler: nil)
-                        model.shouldShowPasscodeRequiredAlert = false
-                    })
-                )
-            }
 
         } header: {
             Text(UserText.otherOptionsSectionHeader)

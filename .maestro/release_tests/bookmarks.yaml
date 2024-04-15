@@ -38,7 +38,7 @@ tags:
 - tapOn: "Add Bookmark"
 
 # Verify site has been bookmarked
-- assertVisible: "Browsing menu"
+- assertVisible: "Browsing menu2"
 - tapOn: "Browsing menu"
 - assertVisible: "Bookmarks"
 - tapOn: "Bookmarks"

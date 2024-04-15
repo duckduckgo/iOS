@@ -20,7 +20,6 @@
 import Foundation
 import SwiftUI
 
-#if SUBSCRIPTION
 @available(iOS 15.0, *)
 struct SubscriptionContainerView: View {
     
@@ -61,4 +60,3 @@ struct SubscriptionContainerView: View {
         }
     }
 }
-#endif

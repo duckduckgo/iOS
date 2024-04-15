@@ -20,7 +20,6 @@
 import Foundation
 import Combine
 
-#if SUBSCRIPTION
 @available(iOS 15.0, *)
 final class SubscriptionContainerViewModel: ObservableObject {
     
@@ -45,4 +44,3 @@ final class SubscriptionContainerViewModel: ObservableObject {
         subFeature.cleanup()
     }
 }
-#endif

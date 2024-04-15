@@ -31,10 +31,7 @@ import Persistence
 import PrivacyDashboard
 import Networking
 import Suggestions
-
-#if SUBSCRIPTION
 import Subscription
-#endif
 
 #if NETWORK_PROTECTION
 import NetworkProtection
@@ -293,7 +290,7 @@ class MainViewController: UIViewController {
         subscribeToEmailProtectionStatusNotifications()
         subscribeToURLInterceptorNotifications()
         
-#if NETWORK_PROTECTION && SUBSCRIPTION
+#if NETWORK_PROTECTION
         subscribeToNetworkProtectionEvents()
 #endif
 
@@ -1346,7 +1343,7 @@ class MainViewController: UIViewController {
             .store(in: &urlInterceptorCancellables)
     }
 
-#if NETWORK_PROTECTION && SUBSCRIPTION
+#if NETWORK_PROTECTION
     private func subscribeToNetworkProtectionEvents() {
         NotificationCenter.default.publisher(for: .accountDidSignIn)
             .receive(on: DispatchQueue.main)

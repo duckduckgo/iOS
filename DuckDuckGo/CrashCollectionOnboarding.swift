@@ -63,11 +63,11 @@ final class CrashCollectionOnboarding: NSObject {
             detailsCancellable = viewModel.$isViewExpanded
                 .dropFirst()
                 .removeDuplicates()
-                .sink { [weak controller] isShowingReport in
+                .sink { [weak controller] isViewExpanded in
                     guard let sheet = controller?.sheetPresentationController else {
                         return
                     }
-                    let newDetentIdentifier: UISheetPresentationController.Detent.Identifier = isShowingReport ? .large : identifier
+                    let newDetentIdentifier: UISheetPresentationController.Detent.Identifier = isViewExpanded ? .large : identifier
                     DispatchQueue.main.async {
                         sheet.animateChanges {
                             sheet.selectedDetentIdentifier = newDetentIdentifier
@@ -102,14 +102,12 @@ extension CrashCollectionOnboarding: UISheetPresentationControllerDelegate {
     func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
         if sheetPresentationController.selectedDetentIdentifier == .large {
             // When the view is expanded manually, only show the report after a slight delay in order to avoid UI glitches
-            // See also `CrashCollectionOnboardingViewModel.isShowingReport`.
+            // See also `CrashCollectionOnboardingViewModel.isReportVisible`.
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                withAnimation {
-                    self.viewModel.isShowingReport = true
-                }
+                self.viewModel.showReport()
             }
         } else {
-            viewModel.isShowingReport = false
+            viewModel.hideReport(animated: false)
         }
     }
 }

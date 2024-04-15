@@ -60,7 +60,7 @@ struct CrashCollectionOnboardingView: View {
 
                             reportDetailsButton
 
-                            if model.isShowingReport, #available(iOS 16.0, *) {
+                            if model.isReportVisible {
                                 ZStack {
                                     Rectangle()
                                         .foregroundColor(Color(designSystemColor: .container))
@@ -68,6 +68,7 @@ struct CrashCollectionOnboardingView: View {
                                         .cornerRadius(4.0)
 
                                     Text(reportDetails)
+                                        .multilineTextAlignment(.leading)
                                         .font(.crashReport)
                                         .foregroundColor(Color(designSystemColor: .textSecondary))
                                         .padding(24)
@@ -79,7 +80,7 @@ struct CrashCollectionOnboardingView: View {
                 .padding(.horizontal, 24)
                 .padding(.vertical, 20)
             }
-            .modifier(ScrollDisabledIfAvailable(isDisabled: !model.isShowingReport))
+            .modifier(ScrollDisabledIfAvailable(isDisabled: !model.isReportVisible))
 
             VStack(spacing: 8) {
                 Button {
@@ -122,16 +123,16 @@ struct CrashCollectionOnboardingView: View {
 
     var reportDetailsButton: some View {
         Button {
-            withAnimation {
-                model.isShowingReport.toggle()
-            }
+            model.toggleReportVisible()
         } label: {
             HStack {
-                Text(model.isShowingReport ? UserText.crashReportHideDetails : UserText.crashReportShowDetails)
-                    .daxButton()
-
-                Image(model.isShowingReport ? "ChevronUp" : "ChevronDown")
-                    .frame(width: 7, height: 12)
+                if model.showReportButtonMode == .hideDetails {
+                    Text(UserText.crashReportHideDetails).daxButton()
+                    Image("ChevronUp").frame(width: 7, height: 12)
+                } else {
+                    Text(UserText.crashReportShowDetails).daxButton()
+                    Image("ChevronDown").frame(width: 7, height: 12)
+                }
             }
         }
         .buttonStyle(.plain)

@@ -34,6 +34,10 @@ import Networking
 import DDGSync
 import SyncDataProviders
 
+#if SUBSCRIPTION
+import Subscription
+#endif
+
 #if NETWORK_PROTECTION
 import NetworkProtection
 import WebKit
@@ -50,6 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private struct ShortcutKey {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
+        static let passwords = "com.duckduckgo.mobile.ios.passwords"
 
 #if NETWORK_PROTECTION
         static let openVPNSettings = "com.duckduckgo.mobile.ios.vpn.open-settings"
@@ -70,6 +75,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if NETWORK_PROTECTION
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
+    private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
+    lazy var vpnFeatureVisibility = DefaultNetworkProtectionVisibility()
 #endif
 
     private var autoClear: AutoClear?
@@ -89,6 +96,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+        // SKAD4 support
+        updateSKAd(conversionValue: 1)
 
 #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
@@ -214,6 +224,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DaxDialogs.shared.primeForUse()
         }
 
+        // Experiment installation will be uncommented once we decide to run the experiment
+//        PixelExperiment.install()
+
         // MARK: Sync initialisation
 
 #if DEBUG
@@ -257,19 +270,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 })
             }
 
+        let previewsSource = TabPreviewsSource()
+        let historyManager = makeHistoryManager()
+        let tabsModel = prepareTabsModel(previewsSource: previewsSource)
+
 #if APP_TRACKING_PROTECTION
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       appTrackingProtectionDatabase: appTrackingProtectionDatabase,
+                                      historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
-                                      appSettings: AppDependencyProvider.shared.appSettings)
+                                      appSettings: AppDependencyProvider.shared.appSettings,
+                                      previewsSource: previewsSource,
+                                      tabsModel: tabsModel)
 #else
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
+                                      historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
-                                      appSettings: AppDependencyProvider.shared.appSettings)
+                                      appSettings: AppDependencyProvider.shared.appSettings,
+                                      previewsSource: previewsSource,
+                                      tabsModel: tabsModel)
 #endif
 
         main.loadViewIfNeeded()
@@ -283,18 +306,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         autoClear = AutoClear(worker: main)
-        autoClear?.applicationDidLaunch()
         
         AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
 
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
-        WindowsBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
-
-#if NETWORK_PROTECTION
-        VPNWaitlist.shared.registerBackgroundRefreshTaskHandler()
-#endif
 
         RemoteMessaging.registerBackgroundRefreshTaskHandler(
             bookmarksDatabase: bookmarksDatabase,
@@ -322,7 +339,56 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupSubscriptionsEnvironment()
 #endif
 
+        if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() {
+            clearDebugWaitlistState()
+        }
+
+        AppDependencyProvider.shared.toggleProtectionsCounter.sendEventsIfNeeded()
+        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
+
         return true
+    }
+
+    private func prepareTabsModel(previewsSource: TabPreviewsSource = TabPreviewsSource(),
+                                  appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
+                                  isDesktop: Bool = UIDevice.current.userInterfaceIdiom == .pad) -> TabsModel {
+        let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
+        let tabsModel: TabsModel
+        if AutoClearSettingsModel(settings: appSettings) != nil {
+            tabsModel = TabsModel(desktop: isPadDevice)
+            tabsModel.save()
+            previewsSource.removeAllPreviews()
+        } else {
+            if let storedModel = TabsModel.get() {
+                // Save new model in case of migration
+                storedModel.save()
+                tabsModel = storedModel
+            } else {
+                tabsModel = TabsModel(desktop: isPadDevice)
+            }
+        }
+        return tabsModel
+    }
+
+    private func makeHistoryManager() -> HistoryManager {
+        let historyManager = HistoryManager(privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
+                              variantManager: DefaultVariantManager(),
+                              database: HistoryDatabase.make()) { error in
+            Pixel.fire(pixel: .historyStoreLoadFailed, error: error)
+            if error.isDiskFull {
+                self.presentInsufficientDiskSpaceAlert()
+            } else {
+                self.presentPreemptiveCrashAlert()
+            }
+        }
+
+        // This is a compromise to support hot reloading via privacy config.
+        //  * If the history is disabled this will do nothing. If it is subsequently enabled then it won't start collecting history
+        //     until the app cold launches at least once.
+        //  * If the history is enabled this loads the store sets up the history manager
+        //     correctly. If the history manager is subsequently disabled it will stop working immediately.
+        historyManager.loadStore()
+        return historyManager
     }
 
     private func presentPreemptiveCrashAlert() {
@@ -336,6 +402,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let alertController = CriticalAlerts.makeInsufficientDiskSpaceAlert()
         window?.rootViewController?.present(alertController, animated: true, completion: nil)
     }
+
+#if NETWORK_PROTECTION
+    private func presentExpiredEntitlementAlert() {
+        let alertController = CriticalAlerts.makeExpiredEntitlementAlert { [weak self] in
+            #if SUBSCRIPTION
+            self?.mainViewController?.segueToPrivacyPro()
+            #endif
+        }
+        window?.rootViewController?.present(alertController, animated: true) { [weak self] in
+            DailyPixel.fireDailyAndCount(pixel: .privacyProVPNAccessRevokedDialogShown)
+            self?.tunnelDefaults.showEntitlementAlert = false
+        }
+    }
+
+    private func presentExpiredEntitlementNotificationIfNeeded() {
+        let presenter = NetworkProtectionNotificationsPresenterTogglableDecorator(
+            settings: VPNSettings(defaults: .networkProtectionGroupDefaults),
+            defaults: .networkProtectionGroupDefaults,
+            wrappee: NetworkProtectionUNNotificationPresenter()
+        )
+        presenter.showEntitlementNotification()
+    }
+
+    private func presentVPNEarlyAccessOverAlert() {
+        let alertController = CriticalAlerts.makeVPNEarlyAccessOverAlert()
+        window?.rootViewController?.present(alertController, animated: true) { [weak self] in
+            DailyPixel.fireDailyAndCount(pixel: .privacyProPromotionDialogShownVPN)
+            self?.tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
+        }
+    }
+#endif
 
     private func cleanUpMacPromoExperiment2() {
         UserDefaults.standard.removeObject(forKey: "com.duckduckgo.ios.macPromoMay23.exp2.cohort")
@@ -357,8 +454,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if SUBSCRIPTION
     private func setupSubscriptionsEnvironment() {
-        Task {  SubscriptionPurchaseEnvironment.current = .appStore
-            await AccountManager().checkSubscriptionState()
+        Task {
+#if DEBUG || ALPHA
+            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+#else
+            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .production
+#endif
+
+#if NETWORK_PROTECTION
+            if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {
+                SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+            }
+#endif
+
+            SubscriptionPurchaseEnvironment.current = .appStore
         }
     }
 #endif
@@ -367,6 +476,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard !testing else { return }
 
         syncService.initializeIfNeeded()
+        if syncService.authState == .active &&
+            (InternalUserStore().isInternalUser == false && syncService.serverEnvironment == .development) {
+            UniquePixel.fire(pixel: .syncWrongEnvironment)
+        }
         syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: syncService)
 
         if !(overlayWindow?.rootViewController is AuthenticationViewController) {
@@ -376,6 +489,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         StatisticsLoader.shared.load {
             StatisticsLoader.shared.refreshAppRetentionAtb()
             self.fireAppLaunchPixel()
+            self.firePrivacyProFeatureEnabledPixel()
             self.fireAppTPActiveUserPixel()
         }
         
@@ -409,6 +523,71 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if NETWORK_PROTECTION
         widgetRefreshModel.refreshVPNWidget()
+
+        stopTunnelAndShowThankYouMessagingIfNeeded()
+
+        if tunnelDefaults.showEntitlementAlert {
+            presentExpiredEntitlementAlert()
+        }
+
+        presentExpiredEntitlementNotificationIfNeeded()
+#endif
+
+        updateSubscriptionStatus()
+    }
+
+    private func stopTunnelAndShowThankYouMessagingIfNeeded() {
+        if AccountManager().isUserAuthenticated {
+            tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
+            return
+        }
+
+        if vpnFeatureVisibility.shouldShowThankYouMessaging() && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
+            presentVPNEarlyAccessOverAlert()
+
+            Task {
+                await self.stopAndRemoveVPN(with: "thank-you-dialog")
+            }
+        } else if vpnFeatureVisibility.isPrivacyProLaunched() && !AccountManager().isUserAuthenticated {
+            Task {
+                await self.stopAndRemoveVPN(with: "subscription-check")
+            }
+        }
+    }
+
+    private func stopAndRemoveVPN(with reason: String) async {
+        let controller = NetworkProtectionTunnelController()
+        guard await controller.isInstalled else {
+            return
+        }
+
+        let isConnected = await controller.isConnected
+
+        DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
+            "reason": reason,
+            "vpn-connected": String(isConnected)
+        ])
+
+        await controller.stop()
+        await controller.removeVPN()
+    }
+
+    func updateSubscriptionStatus() {
+#if SUBSCRIPTION
+        Task {
+            let accountManager = AccountManager()
+
+            guard let token = accountManager.accessToken else { return }
+
+            if case .success(let subscription) = await SubscriptionService.getSubscription(accessToken: token,
+                                                                                           cachePolicy: .reloadIgnoringLocalCacheData) {
+                if subscription.isActive {
+                    DailyPixel.fire(pixel: .privacyProSubscriptionActive)
+                }
+            }
+
+            _ = await accountManager.fetchEntitlements(cachePolicy: .reloadIgnoringLocalCacheData)
+        }
 #endif
     }
 
@@ -445,6 +624,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
         }
+    }
+
+    private func firePrivacyProFeatureEnabledPixel() {
+#if SUBSCRIPTION
+        let subscriptionFeatureAvailability = AppDependencyProvider.shared.subscriptionFeatureAvailability
+        guard subscriptionFeatureAvailability.isFeatureAvailable,
+              subscriptionFeatureAvailability.isSubscriptionPurchaseAllowed else {
+            return
+        }
+
+        DailyPixel.fire(pixel: .privacyProFeatureEnabled)
+#endif
     }
 
     private func fireAppTPActiveUserPixel() {
@@ -488,7 +679,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func showKeyboardOnLaunch() {
         guard KeyboardSettings().onAppLaunch && showKeyboardIfSettingOn && shouldShowKeyboardOnLaunch() else { return }
-        self.mainViewController?.enterSearch()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.mainViewController?.enterSearch()
+        }
         showKeyboardIfSettingOn = false
     }
     
@@ -519,7 +712,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Task { @MainActor in
             await beginAuthentication()
-            autoClear?.applicationWillMoveToForeground()
+            await autoClear?.applicationWillMoveToForeground()
             showKeyboardIfSettingOn = true
             syncService.scheduler.resumeSyncQueue()
         }
@@ -576,11 +769,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainViewController?.clearNavigationStack()
         }
 
-        autoClear?.applicationWillMoveToForeground()
-        showKeyboardIfSettingOn = false
+        Task { @MainActor in
+            // Autoclear should have happened by now
+            showKeyboardIfSettingOn = false
 
-        if !handleAppDeepLink(app, mainViewController, url) {
-            mainViewController?.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil)
+            if !handleAppDeepLink(app, mainViewController, url) {
+                mainViewController?.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil, fromExternalLink: true)
+            }
         }
 
         return true
@@ -690,19 +885,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
         os_log("Handling shortcut item: %s", log: .generalLog, type: .debug, shortcutItem.type)
 
-        autoClear?.applicationWillMoveToForeground()
+        Task { @MainActor in
 
-        if shortcutItem.type == ShortcutKey.clipboard, let query = UIPasteboard.general.string {
-            mainViewController?.clearNavigationStack()
-            mainViewController?.loadQueryInNewTab(query)
-            return
-        }
+            await autoClear?.applicationWillMoveToForeground()
+
+            if shortcutItem.type == ShortcutKey.clipboard, let query = UIPasteboard.general.string {
+                mainViewController?.clearNavigationStack()
+                mainViewController?.loadQueryInNewTab(query)
+                return
+            }
+
+            if shortcutItem.type == ShortcutKey.passwords {
+                mainViewController?.clearNavigationStack()
+                // Give the `clearNavigationStack` call time to complete.
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [weak self] in
+                    self?.mainViewController?.launchAutofillLogins(openSearch: true)
+                }
+                Pixel.fire(pixel: .autofillLoginsLaunchAppShortcut)
+                return
+            }
 
 #if NETWORK_PROTECTION
-        if shortcutItem.type == ShortcutKey.openVPNSettings {
-            presentNetworkProtectionStatusSettingsModal()
-        }
+            if shortcutItem.type == ShortcutKey.openVPNSettings {
+                let visibility = DefaultNetworkProtectionVisibility()
+                if visibility.shouldShowVPNShortcut() {
+                    presentNetworkProtectionStatusSettingsModal()
+                }
+            }
 #endif
+
+        }
     }
 
     private func removeEmailWaitlistState() {
@@ -733,7 +945,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func refreshShortcuts() {
 #if NETWORK_PROTECTION
-        guard NetworkProtectionKeychainTokenStore().isFeatureActivated else {
+        guard vpnFeatureVisibility.shouldShowVPNShortcut() else {
+            UIApplication.shared.shortcutItems = nil
             return
         }
 
@@ -803,28 +1016,20 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
             let identifier = response.notification.request.identifier
-            if identifier == WindowsBrowserWaitlist.notificationIdentifier {
-                presentWindowsBrowserWaitlistSettingsModal()
-            }
 
 #if NETWORK_PROTECTION
             if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
                 presentNetworkProtectionStatusSettingsModal()
             }
 
-            if identifier == VPNWaitlist.notificationIdentifier {
+            if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist(), identifier == VPNWaitlist.notificationIdentifier {
                 presentNetworkProtectionWaitlistModal()
-                DailyPixel.fire(pixel: .networkProtectionWaitlistNotificationLaunched)
             }
+
 #endif
         }
 
         completionHandler()
-    }
-    
-    private func presentWindowsBrowserWaitlistSettingsModal() {
-        let waitlistViewController = WindowsWaitlistViewController(nibName: nil, bundle: nil)
-        presentSettings(with: waitlistViewController)
     }
 
 #if NETWORK_PROTECTION

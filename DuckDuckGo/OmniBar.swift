@@ -66,7 +66,6 @@ class OmniBar: UIView {
 
     weak var omniDelegate: OmniBarDelegate?
     fileprivate var state: OmniBarState = SmallOmniBarState.HomeNonEditingState()
-    private var safeAreaInsetsObservation: NSKeyValueObservation?
     
     private var privacyIconAndTrackersAnimator = PrivacyIconAndTrackersAnimator()
     private var notificationAnimator = OmniBarNotificationAnimator()
@@ -100,9 +99,10 @@ class OmniBar: UIView {
         configureEditingMenu()
         refreshState(state)
         enableInteractionsWithPointer()
-        observeSafeAreaInsets()
         
         privacyInfoContainer.isHidden = true
+
+        decorate()
     }
 
     private func configureSettingsLongPressButton() {
@@ -140,13 +140,7 @@ class OmniBar: UIView {
                                                name: .speechRecognizerDidChangeAvailability,
                                                object: nil)
     }
-    
-    private func observeSafeAreaInsets() {
-        safeAreaInsetsObservation = self.observe(\.safeAreaInsets, options: .new) { [weak self] (_, _) in
-            self?.updateOmniBarPadding()
-        }
-    }
-    
+        
     private func enableInteractionsWithPointer() {
         backButton.isPointerInteractionEnabled = true
         forwardButton.isPointerInteractionEnabled = true
@@ -346,8 +340,6 @@ class OmniBar: UIView {
         if state.showVoiceSearch && state.showClear {
             searchStackContainer.setCustomSpacing(13, after: voiceSearchButton)
         }
-        
-        updateOmniBarPadding()
 
         UIView.animate(withDuration: 0.0) {
             self.layoutIfNeeded()
@@ -355,9 +347,9 @@ class OmniBar: UIView {
         
     }
 
-    private func updateOmniBarPadding() {
-        omniBarLeadingConstraint.constant = (state.hasLargeWidth ? 24 : 8) + safeAreaInsets.left
-        omniBarTrailingConstraint.constant = (state.hasLargeWidth ? 24 : 14) + safeAreaInsets.right
+    func updateOmniBarPadding(left: CGFloat, right: CGFloat) {
+        omniBarLeadingConstraint.constant = (state.hasLargeWidth ? 24 : 8) + left
+        omniBarTrailingConstraint.constant = (state.hasLargeWidth ? 24 : 14) + right
     }
 
     /*
@@ -385,7 +377,7 @@ class OmniBar: UIView {
     }
 
     func refreshText(forUrl url: URL?, forceFullURL: Bool = false) {
-
+        guard !textField.isEditing else { return }
         guard let url = url else {
             textField.text = nil
             return
@@ -394,7 +386,7 @@ class OmniBar: UIView {
         if let query = url.searchQuery {
             textField.text = query
         } else {
-            textField.text = AddressDisplayHelper.addressForDisplay(url: url, showsFullURL: textField.isEditing || forceFullURL)
+            textField.attributedText = AddressDisplayHelper.addressForDisplay(url: url, showsFullURL: textField.isEditing || forceFullURL)
         }
     }
 
@@ -523,9 +515,10 @@ extension OmniBar: UITextFieldDelegate {
     }
 }
 
-extension OmniBar: Themable {
+extension OmniBar {
     
-    public func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         backgroundColor = theme.omniBarBackgroundColor
         tintColor = theme.barTintColor
         
@@ -534,13 +527,12 @@ extension OmniBar: Themable {
         editingBackground?.backgroundColor = theme.searchBarBackgroundColor
         editingBackground?.borderColor = theme.searchBarBackgroundColor
         
-        privacyInfoContainer.decorate(with: theme)
         privacyIconAndTrackersAnimator.resetImageProvider()
         
         searchStackContainer?.tintColor = theme.barTintColor
         
         if let url = textField.text.flatMap({ URL(trimmedAddressBarString: $0.trimmingWhitespace()) }) {
-            textField.text = AddressDisplayHelper.addressForDisplay(url: url, showsFullURL: textField.isEditing)
+            textField.attributedText = AddressDisplayHelper.addressForDisplay(url: url, showsFullURL: textField.isEditing)
         }
         textField.textColor = theme.searchBarTextColor
         textField.tintColor = UIColor(designSystemColor: .accent)
@@ -551,6 +543,14 @@ extension OmniBar: Themable {
         searchLoupe.tintColor = UIColor(designSystemColor: .icons)
         searchLoupe.alpha = 0.5
         cancelButton.setTitleColor(theme.barTintColor, for: .normal)
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            privacyIconAndTrackersAnimator.resetImageProvider()
+        }
     }
 }
 // swiftlint:enable file_length

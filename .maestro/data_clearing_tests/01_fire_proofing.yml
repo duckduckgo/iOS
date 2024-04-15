@@ -1,0 +1,79 @@
+appId: com.duckduckgo.mobile.ios
+tags:
+    - privacy
+
+---
+
+# Set up 
+- clearState
+- launchApp
+- runFlow: 
+    when: 
+      visible: 
+        text: "Let’s Do It!"
+        index: 0
+    file: ../shared/onboarding.yaml
+
+# Load Site
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://setcookie.net"
+- pressKey: Enter
+- runFlow:
+    file: ../shared/hide_daxdialogs.yaml
+
+# Set a cookie
+- assertVisible: "Cookie Test"
+- tapOn: "Cookie name"
+- inputText: "TestName"
+- tapOn: "Cookie value"
+- inputText: "TestValue"
+- tapOn: "Done"
+- scrollUntilVisible:
+    element:
+      text: "Submit"
+- tapOn: "Submit"
+
+# Fireproof the site
+- tapOn: "Browsing Menu"
+- tapOn: "Fireproof This Site"
+- tapOn: "Fireproof"
+- assertVisible: "setcookie.net is now Fireproof"
+
+# Fire Button - twice, just to be sure
+- tapOn: "Close Tabs and Clear Data"
+- tapOn:
+    id: "alert.forget-data.confirm"
+- assertVisible: "Cancel"
+- tapOn: "Cancel"
+- assertVisible:
+    id: "searchEntry"
+- tapOn: "Close Tabs and Clear Data"
+- tapOn:
+    id: "alert.forget-data.confirm"
+
+# Validate Cookie was retained
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://setcookie.net"
+- pressKey: Enter
+- assertVisible: "TestName = TestValue"
+
+# Remove fireproofing
+- tapOn: "Browsing Menu"
+- tapOn: "Remove Fireproofing"
+
+# Fire Button
+- tapOn: "Close Tabs and Clear Data"
+- tapOn:
+    id: "alert.forget-data.confirm"
+
+# Validate Cookie was removed
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://setcookie.net"
+- pressKey: Enter
+- assertVisible: "Cookie Test"
+- assertVisible: "Received no cookies."

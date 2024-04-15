@@ -23,6 +23,7 @@ import Combine
 import Core
 
 #if SUBSCRIPTION
+import Subscription
 @available(iOS 15.0, *)
 final class SubscriptionRestoreViewModel: ObservableObject {
     
@@ -30,19 +31,34 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     let purchaseManager: PurchaseManager
     let accountManager: AccountManager
-    var isAddingDevice: Bool
+    
+    private var cancellables = Set<AnyCancellable>()
     
     enum SubscriptionActivationResult {
-        case unknown, activated, notFound, error
+        case unknown, activated, expired, notFound, error
     }
     
-    @Published var transactionStatus: SubscriptionPagesUseSubscriptionFeature.TransactionStatus = .idle
-    @Published var activationResult: SubscriptionActivationResult = .unknown
-    @Published var subscriptionEmail: String?
-    @Published var isManagingEmailSubscription: Bool = false
+    struct State {
+        var isAddingDevice: Bool = false
+        var transactionStatus: SubscriptionTransactionStatus = .idle
+        var activationResult: SubscriptionActivationResult = .unknown
+        var subscriptionEmail: String?
+        var isShowingWelcomePage = false
+        var isShowingActivationFlow = false
+        var shouldShowPlans = false
+        var shouldDismissView = false
+        var isLoading = false
+        var viewTitle: String = ""
+    }
+    
+    // Publish the currently selected feature    
+    @Published var selectedFeature: SettingsViewModel.SettingsDeepLinkSection?
+    
+    // Read only View State - Should only be modified from the VM
+    @Published private(set) var state = State()
         
-    init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
-         subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
+    init(userScript: SubscriptionPagesUserScript,
+         subFeature: SubscriptionPagesUseSubscriptionFeature,
          purchaseManager: PurchaseManager = PurchaseManager.shared,
          accountManager: AccountManager = AccountManager(),
          isAddingDevice: Bool = false) {
@@ -50,39 +66,146 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         self.subFeature = subFeature
         self.purchaseManager = purchaseManager
         self.accountManager = accountManager
-        self.isAddingDevice = isAddingDevice
-        initializeView()
+        self.state.isAddingDevice = false
     }
     
-    func initializeView() {
-        subscriptionEmail = accountManager.email
-        if accountManager.isUserAuthenticated {
-            isAddingDevice = true
+    func onAppear() {
+        DispatchQueue.main.async {
+            self.resetState()
+        }
+        Task { await setupContent() }
+    }
+    
+    func onFirstAppear() async {
+        Pixel.fire(pixel: .privacyProSettingsAddDevice)
+        await setupTransactionObserver()
+        await refreshToken()
+    }
+    
+    private func cleanUp() {
+        cancellables.removeAll()
+    }
+    
+    private func refreshToken() async {
+        if state.isAddingDevice {
+            await AppStoreAccountManagementFlow.refreshAuthTokenIfNeeded(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+        }
+    }
+    
+    private func setupContent() async {
+        if state.isAddingDevice {
+            DispatchQueue.main.async {
+                self.state.isLoading = true
+            }
+            
+            guard let token = accountManager.accessToken else { return }
+            switch await accountManager.fetchAccountDetails(with: token) {
+            case .success(let details):
+                DispatchQueue.main.async {
+                    self.state.subscriptionEmail = details.email
+                    self.state.isLoading = false
+                    self.state.viewTitle = UserText.subscriptionAddDeviceTitle
+                }
+            default:
+                self.state.viewTitle = UserText.subscriptionActivate
+                state.isLoading = false
+            }
         }
     }
     
     @MainActor
-    private func setTransactionStatus(_ status: SubscriptionPagesUseSubscriptionFeature.TransactionStatus) {
-        self.transactionStatus = status
+    private func resetState() {
+        state.isAddingDevice = false
+        if accountManager.isUserAuthenticated {
+            state.isAddingDevice = true
+        }
+        
+        state.isShowingActivationFlow = false
+        state.shouldShowPlans = false
+        state.isShowingWelcomePage = false
+        state.shouldDismissView = false
+    }
+    
+    private func setupTransactionObserver() async {
+        
+        subFeature.$transactionStatus
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] status in
+                guard let strongSelf = self else { return }
+                Task {
+                    await strongSelf.setTransactionStatus(status)
+                }
+            }
+            .store(in: &cancellables)
+        
+    }
+    
+    @MainActor
+    private func handleRestoreError(error: SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError) {
+        switch error {
+        case .failedToRestorePastPurchase:
+            state.activationResult = .error
+        case .subscriptionExpired:
+            state.activationResult = .expired
+        case .subscriptionNotFound:
+            state.activationResult = .notFound
+        default:
+            state.activationResult = .error
+        }
+
+        if state.activationResult == .notFound {
+            DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreFailureNotFound)
+        } else {
+            DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreFailureOther)
+        }
+    }
+    
+    @MainActor
+    private func setTransactionStatus(_ status: SubscriptionTransactionStatus) {
+        self.state.transactionStatus = status
     }
     
     @MainActor
     func restoreAppstoreTransaction() {
+        DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreStart)
         Task {
-            transactionStatus = .restoring
-            activationResult = .unknown
-            if await subFeature.restoreAccountFromAppStorePurchase() {
-                activationResult = .activated
-            } else {
-                activationResult = .notFound
+            state.transactionStatus = .restoring
+            state.activationResult = .unknown
+            do {
+                try await subFeature.restoreAccountFromAppStorePurchase()
+                DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreSuccess)
+                state.activationResult = .activated
+                state.transactionStatus = .idle
+            } catch let error {
+                if let specificError = error as? SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError {
+                    handleRestoreError(error: specificError)
+                }
+                state.transactionStatus = .idle
             }
-            transactionStatus = .idle
         }
     }
     
-    func manageEmailSubscription() {
-        isManagingEmailSubscription = true
+    @MainActor
+    func showActivationFlow(_ visible: Bool) {
+        if visible != state.shouldDismissView {
+            self.state.isShowingActivationFlow = visible
+        }
     }
+    
+    @MainActor
+    func showPlans() {
+        state.shouldShowPlans = true
+    }
+    
+    @MainActor
+    func dismissView() {
+        state.shouldDismissView = true
+    }
+    
+    deinit {
+        cleanUp()
+    }
+    
     
 }
 #endif

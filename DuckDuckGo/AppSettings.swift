@@ -56,6 +56,7 @@ protocol AppSettings: AnyObject {
     
     var currentFireButtonAnimation: FireButtonAnimationType { get set }
     var currentAddressBarPosition: AddressBarPosition { get set }
+    var showFullSiteAddress: Bool { get set }
 
     var textSize: Int { get set }
 
@@ -71,7 +72,6 @@ protocol AppSettings: AnyObject {
 
     func isWidgetInstalled() async -> Bool
     
-    var autoconsentPromptSeen: Bool { get set }
     var autoconsentEnabled: Bool { get set }
 
     var isSyncBookmarksPaused: Bool { get }

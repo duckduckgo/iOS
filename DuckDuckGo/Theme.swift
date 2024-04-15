@@ -45,7 +45,6 @@ enum ThemeName: String, CaseIterable, Identifiable, CustomStringConvertible {
 protocol Theme {
     var name: ThemeName { get }
     
-    var currentImageSet: ThemeManager.ImageSet { get }
     var statusBarStyle: UIStatusBarStyle { get }
     var keyboardAppearance: UIKeyboardAppearance { get }
 
@@ -133,4 +132,7 @@ protocol Theme {
 
     var privacyDashboardWebviewBackgroundColor: UIColor { get }
 
+    var onboardingBackgroundColor: UIColor { get }
+    var onboardingHeaderColor: UIColor { get }
+    var onboardingSubheaderColor: UIColor { get }
 }

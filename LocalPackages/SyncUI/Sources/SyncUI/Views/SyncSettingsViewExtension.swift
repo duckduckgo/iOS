@@ -75,7 +75,9 @@ extension SyncSettingsView {
         Section {
 
             Button(UserText.syncAndBackUpThisDeviceLink) {
-                isSyncWithSetUpSheetVisible = true
+                Task { @MainActor in
+                    isSyncWithSetUpSheetVisible = await model.authenticateUser()
+                }
             }
             .sheet(isPresented: $isSyncWithSetUpSheetVisible, content: {
                 SyncWithServerView(model: model, onCancel: {
@@ -85,7 +87,9 @@ extension SyncSettingsView {
             .disabled(!model.isAccountCreationAvailable)
 
             Button(UserText.recoverSyncedDataLink) {
-                isRecoverSyncedDataSheetVisible = true
+                Task { @MainActor in
+                    isRecoverSyncedDataSheetVisible = await model.authenticateUser()
+                }
             }
             .sheet(isPresented: $isRecoverSyncedDataSheetVisible, content: {
                 RecoverSyncedDataView(model: model, onCancel: {
@@ -273,6 +277,53 @@ extension SyncSettingsView {
         }
 
         SyncWarningMessageView(title: UserText.syncLimitExceededTitle, message: explanation, buttonTitle: buttonTitle) {
+            switch itemType {
+            case .bookmarks:
+                model.manageBookmarks()
+            case .credentials:
+                model.manageLogins()
+            }
+        }
+    }
+
+    @ViewBuilder
+    func syncHasInvalidItems(for itemType: LimitedItemType) -> some View {
+        var title: String {
+            switch itemType {
+            case .bookmarks:
+                return UserText.invalidBookmarksPresentTitle
+            case .credentials:
+                return UserText.invalidCredentialsPresentTitle
+            }
+        }
+        var description: String {
+            switch itemType {
+            case .bookmarks:
+                assert(!model.invalidBookmarksTitles.isEmpty)
+                let firstInvalidBookmarkTitle = model.invalidBookmarksTitles.first ?? ""
+                return UserText.invalidBookmarksPresentDescription(
+                    firstInvalidBookmarkTitle,
+                    numberOfOtherInvalidItems: model.invalidBookmarksTitles.count - 1
+                )
+
+            case .credentials:
+                assert(!model.invalidCredentialsTitles.isEmpty)
+                let firstInvalidCredentialTitle = model.invalidCredentialsTitles.first ?? ""
+                return UserText.invalidCredentialsPresentDescription(
+                    firstInvalidCredentialTitle,
+                    numberOfOtherInvalidItems: model.invalidCredentialsTitles.count - 1
+                )
+            }
+        }
+        var actionTitle: String {
+            switch itemType {
+            case .bookmarks:
+                return UserText.bookmarksLimitExceededAction
+            case .credentials:
+                return UserText.credentialsLimitExceededAction
+            }
+        }
+        SyncWarningMessageView(title: title, message: description, buttonTitle: actionTitle) {
             switch itemType {
             case .bookmarks:
                 model.manageBookmarks()

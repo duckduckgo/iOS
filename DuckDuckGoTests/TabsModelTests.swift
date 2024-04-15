@@ -18,6 +18,7 @@
 //
 
 import XCTest
+
 @testable import DuckDuckGo
 @testable import Core
 

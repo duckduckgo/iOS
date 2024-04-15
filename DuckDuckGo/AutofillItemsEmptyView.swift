@@ -33,6 +33,7 @@ class AutofillItemsEmptyView: UIView {
         super.init(frame: frame)
         installSubviews()
         installConstraints()
+        decorate()
     }
     
     required init?(coder: NSCoder) {
@@ -115,9 +116,10 @@ class AutofillItemsEmptyView: UIView {
     }
 }
 
-extension AutofillItemsEmptyView: Themable {
+extension AutofillItemsEmptyView {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         title.textColor = theme.autofillDefaultTitleTextColor
     }
 }

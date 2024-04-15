@@ -1,1 +1,14 @@
-{"channel":"${MM_USER_HANDLE}","username":"GitHub Actions","text":"**iOS app has been successfully uploaded to ${DESTINATION}** :goose_honk_tada: | [:github: Workflow run summary](${WORKFLOW_URL})","icon_url":"https://duckduckgo.com/assets/logo_header.v108.svg"}
+{
+  "failure": {
+    "channel": "${MM_USER_HANDLE}",
+    "username": "GitHub Actions",
+    "text": ":warning: **iOS release job failed** :thisisfine: | [:github: Workflow run summary](${WORKFLOW_URL})",
+    "icon_url": "https://duckduckgo.com/assets/logo_header.v108.svg"
+  },
+  "success": {
+    "channel": "${MM_USER_HANDLE}",
+    "username": "GitHub Actions",
+    "text": "**iOS app has been successfully uploaded to ${DESTINATION}** :goose_honk_tada: | [:github: Workflow run summary](${WORKFLOW_URL})",
+    "icon_url": "https://duckduckgo.com/assets/logo_header.v108.svg"
+  }
+}

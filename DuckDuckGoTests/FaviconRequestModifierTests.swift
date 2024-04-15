@@ -17,8 +17,9 @@
 //  limitations under the License.
 //
 
-import XCTest
 import BrowserServicesKit
+import XCTest
+
 @testable import Core
 
 class MockEmbeddedDataProvider: EmbeddedDataProvider {

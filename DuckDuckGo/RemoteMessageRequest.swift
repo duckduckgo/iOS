@@ -17,12 +17,11 @@
 //  limitations under the License.
 //
 
-
-import Foundation
 import BrowserServicesKit
-import RemoteMessaging
 import Core
+import Foundation
 import Networking
+import RemoteMessaging
 
 public struct RemoteMessageRequest {
 

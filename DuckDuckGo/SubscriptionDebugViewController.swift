@@ -19,6 +19,7 @@
 
 import UIKit
 
+
 #if !SUBSCRIPTION
 
 final class SubscriptionDebugViewController: UITableViewController {
@@ -26,6 +27,7 @@ final class SubscriptionDebugViewController: UITableViewController {
 }
 
 #else
+import Subscription
 
 @available(iOS 15.0, *)
 final class SubscriptionDebugViewController: UITableViewController {
@@ -220,7 +222,7 @@ final class SubscriptionDebugViewController: UITableViewController {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
                 return
             }
-            switch await SubscriptionService.getSubscriptionDetails(token: token) {
+            switch await SubscriptionService.getSubscription(accessToken: token, cachePolicy: .reloadIgnoringLocalCacheData) {
             case .success(let response):
                 showAlert(title: "Subscription info", message: "\(response)")
             case .failure(let error):
@@ -232,15 +234,17 @@ final class SubscriptionDebugViewController: UITableViewController {
     private func getEntitlements() {
         Task {
             var results: [String] = []
-            guard let token = accountManager.accessToken else {
+            guard accountManager.accessToken != nil else {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
                 return
             }
-            for entitlementName in ["fake", "dummy1", "dummy2", "dummy3"] {
-                let result = await AccountManager().hasEntitlement(for: entitlementName)
-                let resultSummary = "Entitlement check for \(entitlementName): \(result)"
-                results.append(resultSummary)
-                print(resultSummary)
+            let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
+            for entitlement in entitlements {
+                if case let .success(result) = await AccountManager().hasEntitlement(for: entitlement, cachePolicy: .reloadIgnoringLocalCacheData) {
+                    let resultSummary = "Entitlement check for \(entitlement.rawValue): \(result)"
+                    results.append(resultSummary)
+                    print(resultSummary)
+                }
             }
             showAlert(title: "Available Entitlements", message: results.joined(separator: "\n"))
         }

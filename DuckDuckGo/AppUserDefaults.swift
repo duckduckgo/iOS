@@ -22,6 +22,7 @@ import Bookmarks
 import Core
 import WidgetKit
 
+// swiftlint:disable file_length
 public class AppUserDefaults: AppSettings {
     
     public struct Notifications {
@@ -35,6 +36,8 @@ public class AppUserDefaults: AppSettings {
         public static let didVerifyInternalUser = Notification.Name("com.duckduckgo.app.DidVerifyInternalUser")
         public static let inspectableWebViewsToggled = Notification.Name("com.duckduckgo.app.DidToggleInspectableWebViews")
         public static let addressBarPositionChanged = Notification.Name("com.duckduckgo.app.AddressBarPositionChanged")
+        public static let showsFullURLAddressSettingChanged = Notification.Name("com.duckduckgo.app.ShowsFullURLAddressSettingChanged")
+        public static let autofillDebugScriptToggled = Notification.Name("com.duckduckgo.app.DidToggleAutofillDebugScript")
     }
 
     private let groupName: String
@@ -72,6 +75,7 @@ public class AppUserDefaults: AppSettings {
 
     private struct DebugKeys {
         static let inspectableWebViewsEnabledKey = "com.duckduckgo.ios.debug.inspectableWebViewsEnabled"
+        static let autofillDebugScriptEnabledKey = "com.duckduckgo.ios.debug.autofillDebugScriptEnabled"
     }
 
     private var userDefaults: UserDefaults? {
@@ -202,6 +206,13 @@ public class AppUserDefaults: AppSettings {
         }
     }
 
+    @UserDefaultsWrapper(key: .showFullURLAddress, defaultValue: false)
+    var showFullSiteAddress: Bool {
+        didSet {
+            NotificationCenter.default.post(name: Notifications.showsFullURLAddressSettingChanged, object: showFullSiteAddress)
+        }
+    }
+
     @UserDefaultsWrapper(key: .textSize, defaultValue: 100)
     var textSize: Int
 
@@ -287,12 +298,30 @@ public class AppUserDefaults: AppSettings {
             }
         }
     }
-    
-    @UserDefaultsWrapper(key: .autoconsentPromptSeen, defaultValue: false)
-    var autoconsentPromptSeen: Bool
-    
+
+    var autoconsentEnabled: Bool {
+        get {
+            // Use settings value if present
+            if let isEnabled = autoconsentEnabledSetting {
+                return isEnabled
+            }
+
+            // Use onByDefault rollout otherwise
+            return featureFlagger.isFeatureOn(.autoconsentOnByDefault)
+        }
+
+        set {
+            autoconsentEnabledSetting = newValue
+        }
+    }
+
+    // Only for testing and `DebugViewController` purposes
+    func clearAutoconsentUserSetting() {
+        autoconsentEnabledSetting = nil
+    }
+
     @UserDefaultsWrapper(key: .autoconsentEnabled, defaultValue: false)
-    var autoconsentEnabled: Bool
+    private var autoconsentEnabledSetting: Bool?
 
     var inspectableWebViewEnabled: Bool {
         get {
@@ -303,6 +332,17 @@ public class AppUserDefaults: AppSettings {
             userDefaults?.set(newValue, forKey: DebugKeys.inspectableWebViewsEnabledKey)
         }
     }
+
+    var autofillDebugScriptEnabled: Bool {
+        get {
+            return userDefaults?.object(forKey: DebugKeys.autofillDebugScriptEnabledKey) as? Bool ?? false
+        }
+
+        set {
+            userDefaults?.set(newValue, forKey: DebugKeys.autofillDebugScriptEnabledKey)
+        }
+    }
+
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

@@ -20,16 +20,89 @@
 #if SUBSCRIPTION
 import SwiftUI
 import Foundation
+import DesignResourcesKit
+import Core
 
 @available(iOS 15.0, *)
 struct SubscriptionFlowView: View {
         
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var viewModel: SubscriptionFlowViewModel
-    @State private var isAlertVisible = false
+    @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
+    @StateObject var viewModel: SubscriptionFlowViewModel
+    
+    @State private var isPurchaseInProgress = false
+    @State private var isShowingITR = false
+    @State private var isShowingDBP = false
+    @State private var isShowingNetP = false
+    @Binding var currentView: SubscriptionContainerView.CurrentView
+    
+    // Local View State
+    @State private var errorMessage: SubscriptionErrorMessage = .general
+    @State private var isPresentingError: Bool = false
+
+    enum Constants {
+        static let empty = ""
+        static let navButtonPadding: CGFloat = 20.0
+        static let backButtonImage = "chevron.left"
+    }
+    
+    enum SubscriptionErrorMessage {
+        case activeSubscription
+        case appStore
+        case backend
+        case general
+    }
+    
+    var body: some View {
+        
+        // Hidden Navigation Links for Onboarding sections
+        NavigationLink(destination: NetworkProtectionRootView(inviteCompletion: {}).navigationViewStyle(.stack),
+                       isActive: $isShowingNetP,
+                       label: { EmptyView() })
+        NavigationLink(destination: SubscriptionITPView().navigationViewStyle(.stack),
+                       isActive: $isShowingITR,
+                       label: { EmptyView() })
+        NavigationLink(destination: SubscriptionPIRView().navigationViewStyle(.stack),
+                       isActive: $isShowingDBP,
+                       label: { EmptyView() })
+        
+        baseView
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    backButton
+                }
+                ToolbarItem(placement: .principal) {
+                    if viewModel.state.viewTitle == UserText.subscriptionTitle {
+                        DaxLogoNavbarTitle()
+                    } else {
+                        Text(viewModel.state.viewTitle).bold()
+                    }
+                }
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden(viewModel.state.canNavigateBack || viewModel.subFeature.transactionStatus != .idle)
+            .interactiveDismissDisabled(viewModel.subFeature.transactionStatus != .idle)
+            .edgesIgnoringSafeArea(.bottom)
+            .tint(Color(designSystemColor: .textPrimary))
+    }
+    
+    @ViewBuilder
+    private var backButton: some View {
+        if viewModel.state.canNavigateBack {
+            Button(action: {
+                Task { await viewModel.navigateBack() }
+            }, label: {
+                HStack(spacing: 0) {
+                    Image(systemName: Constants.backButtonImage)
+                    Text(UserText.backButtonTitle)
+                }
+                
+            })
+        }
+    }
     
     private func getTransactionStatus() -> String {
-        switch viewModel.transactionStatus {
+        switch viewModel.state.transactionStatus {
         case .polling:
             return UserText.subscriptionCompletingPurchaseTitle
         case .purchasing:
@@ -41,60 +114,141 @@ struct SubscriptionFlowView: View {
         }
     }
     
-    var body: some View {
-        ZStack {
-            AsyncHeadlessWebView(url: $viewModel.purchaseURL,
-                                 userScript: viewModel.userScript,
-                                 subFeature: viewModel.subFeature,
-                                 shouldReload: $viewModel.shouldReloadWebView).background()
-
-            // Overlay that appears when transaction is in progress
-            if viewModel.transactionStatus != .idle {
-                PurchaseInProgressView(status: getTransactionStatus())
-            }
-         
-            // Activation View
-            NavigationLink(destination: SubscriptionRestoreView(viewModel: SubscriptionRestoreViewModel(),
-                                                                isActivatingSubscription: $viewModel.activatingSubscription),
-                           isActive: $viewModel.activatingSubscription) {
-                EmptyView()
-            }
+    
+    @ViewBuilder
+    private var baseView: some View {
+        ZStack(alignment: .top) {
+            webView
         }
-        .onChange(of: viewModel.shouldReloadWebView) { shouldReload in
-            if shouldReload {
-                viewModel.shouldReloadWebView = false
-            }
-        }
-        .onChange(of: viewModel.hasActiveSubscription) { result in
-            if result {
-                isAlertVisible = true
-            }
-        }
-        .onChange(of: viewModel.shouldDismissView) { result in
-            if result {
-                dismiss()
+        
+        .onChange(of: viewModel.state.selectedFeature) { feature in
+            switch feature {
+            case .dbp:
+                self.isShowingDBP = true
+            case .itr:
+                self.isShowingITR = true
+            case .netP:
+                self.isShowingNetP = true
+            default:
+                break
             }
         }
         
-        .onAppear(perform: {
-            Task { await viewModel.initializeViewData() }
-        })
-        .navigationTitle(viewModel.viewTitle)
-        .navigationBarBackButtonHidden(viewModel.transactionStatus != .idle)
+        .onChange(of: viewModel.state.shouldActivateSubscription) { result in
+            if result {
+                withAnimation {
+                    currentView = .restore
+                }
+            }
+        }
         
-        // Active subscription found Alert
-        .alert(isPresented: $isAlertVisible) {
-            Alert(
+        .onChange(of: viewModel.state.transactionError) { value in
+            
+            if !isPresentingError {
+                let displayError: Bool = {
+                    switch value {
+                    case .hasActiveSubscription:
+                        errorMessage = .activeSubscription
+                        return true
+                    case .failedToRestorePastPurchase, .purchaseFailed:
+                        errorMessage = .appStore
+                        return true
+                    case .failedToGetSubscriptionOptions, .generalError:
+                        errorMessage = .backend
+                        return true
+                    default:
+                        return false
+                    }
+                }()
+                
+                if displayError {
+                    isPresentingError = true
+                }
+            }
+        }
+        
+        .onFirstAppear {
+            setUpAppearances()
+            Task { await viewModel.onFirstAppear() }
+        }
+                
+        .onAppear {
+            viewModel.onAppear()
+        }
+                
+        .alert(isPresented: $isPresentingError) {
+            getAlert(error: self.errorMessage)
+            
+        }
+        
+    }
+        
+    private func getAlert(error: SubscriptionErrorMessage) -> Alert {
+        
+        switch error {
+        case .activeSubscription:
+            return Alert(
                 title: Text(UserText.subscriptionFoundTitle),
                 message: Text(UserText.subscriptionFoundText),
                 primaryButton: .cancel(Text(UserText.subscriptionFoundCancel)) {
+                     viewModel.clearTransactionError()
+                     dismiss()
                 },
                 secondaryButton: .default(Text(UserText.subscriptionFoundRestore)) {
                     viewModel.restoreAppstoreTransaction()
                 }
             )
+        case .appStore:
+            return Alert(
+                title: Text(UserText.subscriptionAppStoreErrorTitle),
+                message: Text(UserText.subscriptionAppStoreErrorMessage),
+                dismissButton: .cancel(Text(UserText.actionOK)) {
+                    viewModel.clearTransactionError()
+                    dismiss()
+                }
+            )
+        case .backend, .general:
+            return Alert(
+                title: Text(UserText.subscriptionBackendErrorTitle),
+                message: Text(UserText.subscriptionBackendErrorMessage),
+                dismissButton: .cancel(Text(UserText.subscriptionBackendErrorButton)) {
+                    viewModel.clearTransactionError()
+                    dismiss()
+                }
+            )
         }
-        .navigationBarBackButtonHidden(viewModel.transactionStatus != .idle)
     }
+
+    @ViewBuilder
+    private var webView: some View {
+        
+        ZStack(alignment: .top) {
+
+            AsyncHeadlessWebView(viewModel: viewModel.webViewModel)
+                .background()
+            
+            if viewModel.state.transactionStatus != .idle {
+                PurchaseInProgressView(status: getTransactionStatus())
+            }
+        }
+    }
+
+    private func setUpAppearances() {
+        let navAppearance = UINavigationBar.appearance()
+        navAppearance.backgroundColor = UIColor(designSystemColor: .background)
+        navAppearance.barTintColor = UIColor(designSystemColor: .container)
+        navAppearance.shadowImage = UIImage()
+        navAppearance.tintColor = UIColor(designSystemColor: .textPrimary)
+    }
+
 }
+
+// Commented out because CI fails if a SwiftUI preview is enabled https://app.asana.com/0/414709148257752/1206774081310425/f
+// @available(iOS 15.0, *)
+// struct SubscriptionFlowView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SubscriptionFlowView()
+//    }
+// }
+
 #endif

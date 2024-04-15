@@ -1,0 +1,11 @@
+appId: com.duckduckgo.mobile.ios
+---
+
+- runFlow:
+    when:
+        visible: 
+            id: "DaxIcon"
+    commands:
+        - tapOn: "Hide"
+        - tapOn: "Hide Tips Forever"
+

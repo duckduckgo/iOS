@@ -92,7 +92,8 @@ class AddOrEditBookmarkViewController: UIViewController {
         updateTitle()
         updateSaveButton()
 
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorateNavigationBar()
+        decorateToolbar()
 
         viewModelCancellable = viewModel.externalUpdates.sink { [weak self] _ in
             self?.foldersViewController?.refresh()
@@ -189,14 +190,4 @@ extension AddOrEditBookmarkViewController: AddOrEditBookmarkViewControllerDelega
         self.delegate?.deleteBookmark(self, entityID: entityID)
     }
 
-}
-
-extension AddOrEditBookmarkViewController: Themable {
-    
-    func decorate(with theme: Theme) {
-        decorateNavigationBar(with: theme)
-        decorateToolbar(with: theme)
-        
-        overrideSystemTheme(with: theme)
-    }
 }

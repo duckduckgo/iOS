@@ -22,6 +22,7 @@ import UIKit
 
 public protocol SyncManagementViewModelDelegate: AnyObject {
 
+    func authenticateUser() async -> Bool
     func showRecoverData()
     func showSyncWithAnotherDevice()
     func showRecoveryPDF()
@@ -80,6 +81,8 @@ public class SyncSettingsViewModel: ObservableObject {
     @Published public var isSyncingDevices = false
     @Published public var isSyncBookmarksPaused = false
     @Published public var isSyncCredentialsPaused = false
+    @Published public var invalidBookmarksTitles: [String] = []
+    @Published public var invalidCredentialsTitles: [String] = []
 
     @Published var isBusy = false
     @Published var recoveryCode = ""
@@ -100,6 +103,10 @@ public class SyncSettingsViewModel: ObservableObject {
             switchToProdEnvironment()
             self?.isOnDevEnvironment = isOnDevEnvironment()
         }
+    }
+
+    func authenticateUser() async -> Bool {
+        await delegate?.authenticateUser() ?? false
     }
 
     func disableSync() {

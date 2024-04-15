@@ -36,7 +36,7 @@ class DoNotSellSettingsViewController: UITableViewController {
         doNotSellToggle.isOn = appSettings.sendDoNotSell
         infoTextView.backgroundColor = .clear
         
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
     }
     
     override func viewDidLayoutSubviews() {
@@ -63,11 +63,16 @@ class DoNotSellSettingsViewController: UITableViewController {
         appSettings.sendDoNotSell = doNotSellToggle.isOn
         Pixel.fire(pixel: doNotSellToggle.isOn ? .settingsDoNotSellOn : .settingsDoNotSellOff)
         NotificationCenter.default.post(name: AppUserDefaults.Notifications.doNotSellStatusChange, object: nil)
+        if appSettings.sendDoNotSell {
+            Pixel.fire(pixel: .settingsGpcOn, withAdditionalParameters: PixelExperiment.parameters)
+        } else {
+            Pixel.fire(pixel: .settingsGpcOff, withAdditionalParameters: PixelExperiment.parameters)
+        }
     }
     
 }
 
-extension DoNotSellSettingsViewController: Themable {
+extension DoNotSellSettingsViewController {
     
     /// Apply attributes for NSAtrtributedStrings for copy text
     func applyAtributes(theme: Theme) {
@@ -98,7 +103,8 @@ extension DoNotSellSettingsViewController: Themable {
         infoTextView.linkTextAttributes = linkAttributes
     }
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         
         for label in labels {
             label.textColor = theme.tableCellTextColor

@@ -32,10 +32,10 @@ public struct UserDefaultsWrapper<T> {
         case favorites = "com.duckduckgo.ios.home.favorites"
         case keyboardOnNewTab = "com.duckduckgo.ios.keyboard.newtab"
         case keyboardOnAppLaunch = "com.duckduckgo.ios.keyboard.applaunch"
-        
+
         case gridViewEnabled = "com.duckduckgo.ios.tabs.grid"
         case gridViewSeen = "com.duckduckgo.ios.tabs.seen"
-        
+
         case preserveLoginsAllowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains2"
         case preserveLoginsDetectionEnabled = "com.duckduckgo.ios.PreserveLogins.detectionEnabled"
         case preserveLoginsLegacyAllowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains"
@@ -55,7 +55,7 @@ public struct UserDefaultsWrapper<T> {
         case faviconTabsCacheNeedsCleanup = "com.duckduckgo.ios.favicons.tabsCacheNeedsCleanup"
 
         case legacyCovidInfo = "com.duckduckgo.ios.home.covidInfo"
-        
+
         case lastConfigurationRefreshDate = "com.duckduckgo.ios.lastConfigurationRefreshDate"
         case lastConfigurationUpdateDate = "com.duckduckgo.ios.lastConfigurationUpdateDate"
         case lastRemoteMessagingRefreshDate = "com.duckduckgo.ios.lastRemoteMessagingRefreshDate"
@@ -73,7 +73,7 @@ public struct UserDefaultsWrapper<T> {
 
         case emailWaitlistShouldReceiveNotifications = "com.duckduckgo.ios.showWaitlistNotification"
         case unseenDownloadsAvailable = "com.duckduckgo.app.unseenDownloadsAvailable"
-        
+
         case lastCompiledRules = "com.duckduckgo.app.lastCompiledRules"
 
         case autofillSaveModalRejectionCount = "com.duckduckgo.ios.autofillSaveModalRejectionCount"
@@ -83,11 +83,11 @@ public struct UserDefaultsWrapper<T> {
         case autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary =
                 "com.duckduckgo.ios.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary"
 
-        case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser"
-        
+        // .v2 suffix added to fix https://app.asana.com/0/547792610048271/1206524375402369/f
+        case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser.v2"
+
         case voiceSearchEnabled = "com.duckduckgo.app.voiceSearchEnabled"
-        
-        case autoconsentPromptSeen = "com.duckduckgo.ios.autoconsentPromptSeen"
+
         case autoconsentEnabled = "com.duckduckgo.ios.autoconsentEnabled"
 
         case shouldScheduleRulesCompilationOnAppLaunch = "com.duckduckgo.ios.shouldScheduleRulesCompilationOnAppLaunch"
@@ -113,16 +113,23 @@ public struct UserDefaultsWrapper<T> {
         case networkProtectionWaitlistTermsAndConditionsAccepted = "com.duckduckgo.ios.vpn.terms-and-conditions-accepted"
 
         case addressBarPosition = "com.duckduckgo.ios.addressbarposition"
-        case showFullSiteAddress = "com.duckduckgo.ios.showfullsiteaddress"
+        case showFullURLAddress = "com.duckduckgo.ios.showfullurladdress"
 
         case webContainerId = "com.duckduckgo.ios.webcontainer.id"
 
         case bookmarksLastGoodVersion = "com.duckduckgo.ios.bookmarksLastGoodVersion"
         case bookmarksMigrationVersion = "com.duckduckgo.ios.bookmarksMigrationVersion"
-        
+
         case privacyConfigCustomURL = "com.duckduckgo.ios.privacyConfigCustomURL"
-        
+
         case subscriptionIsActive = "com.duckduckgo.ios.subscruption.isActive"
+
+        case didRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didRefreshTimestamp"
+        case didBurnTimestamp = "com.duckduckgo.ios.userBehavior.didBurnTimestamp"
+
+        case pixelExperimentInstalled = "com.duckduckgo.ios.pixel.experiment.installed"
+        case pixelExperimentCohort = "com.duckduckgo.ios.pixel.experiment.cohort"
+        case pixelExperimentEnrollmentDate = "com.duckduckgo.ios.pixel.experiment.enrollment.date"
     }
 
     private let key: Key
@@ -142,11 +149,11 @@ public struct UserDefaultsWrapper<T> {
             if let storedValue = container.object(forKey: key.rawValue) as? T {
                 return storedValue
             }
-            
+
             if setIfEmpty {
                 container.set(defaultValue, forKey: key.rawValue)
             }
-            
+
             return defaultValue
         }
         set {
@@ -160,13 +167,13 @@ public struct UserDefaultsWrapper<T> {
 }
 
 private protocol AnyOptional {
-    
+
     var isNil: Bool { get }
-    
+
 }
 
 extension Optional: AnyOptional {
-    
+
     var isNil: Bool { self == nil }
-    
+
 }

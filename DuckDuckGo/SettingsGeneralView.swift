@@ -2,7 +2,7 @@
 //  SettingsGeneralView.swift
 //  DuckDuckGo
 //
-//  Copyright © 2023 DuckDuckGo. All rights reserved.
+//  Copyright © 2017 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,28 +17,74 @@
 //  limitations under the License.
 //
 
+import Core
 import SwiftUI
-import UIKit
+import DesignResourcesKit
 
 struct SettingsGeneralView: View {
-    
+
     @EnvironmentObject var viewModel: SettingsViewModel
-    
+    @State var shouldShowNoMicrophonePermissionAlert = false
+
     var body: some View {
-        Section {
-            SettingsCellView(label: UserText.settingsSetDefault,
-                             action: { viewModel.setAsDefaultBrowser() },
-                             isButton: true)
-            
-            SettingsCellView(label: UserText.settingsAddToDock,
-                             action: { viewModel.presentLegacyView(.addToDock) },
-                             isButton: true)
-            
-            NavigationLink(destination: WidgetEducationView()) {
-                SettingsCellView(label: UserText.settingsAddWidget)
+        List {
+            // Application Lock
+            Section(footer: Text(UserText.settingsAutoLockDescription)) {
+                SettingsCellView(label: UserText.settingsAutolock,
+                                 accesory: .toggle(isOn: viewModel.applicationLockBinding))
+
+            }
+
+            Section(header: Text(UserText.privateSearch),
+                    footer: Text(UserText.settingsAutocompleteSubtitle)) {
+                // Autocomplete Suggestions
+                SettingsCellView(label: UserText.settingsAutocomplete,
+                                 accesory: .toggle(isOn: viewModel.autocompleteGeneralBinding))
+            }
+
+            Section(footer: Text(UserText.voiceSearchFooter)) {
+                // Private Voice Search
+                if viewModel.state.speechRecognitionAvailable {
+                    SettingsCellView(label: UserText.settingsVoiceSearch,
+                                     accesory: .toggle(isOn: viewModel.voiceSearchEnabledGeneralBinding))
+                }
+            }
+            .alert(isPresented: $shouldShowNoMicrophonePermissionAlert) {
+                Alert(title: Text(UserText.noVoicePermissionAlertTitle),
+                      message: Text(UserText.noVoicePermissionAlertMessage),
+                      dismissButton: .default(Text(UserText.noVoicePermissionAlertOKbutton),
+                      action: {
+                        viewModel.shouldShowNoMicrophonePermissionAlert = false
+                    })
+                )
+            }
+            .onChange(of: viewModel.shouldShowNoMicrophonePermissionAlert) { value in
+                shouldShowNoMicrophonePermissionAlert = value
+            }
+
+            Section(header: Text(UserText.settingsCustomizeSection),
+                    footer: Text(UserText.settingsAssociatedAppsDescription)) {
+                // Keyboard
+                SettingsCellView(label: UserText.settingsKeyboard,
+                                 action: { viewModel.presentLegacyView(.keyboard) },
+                                 disclosureIndicator: true,
+                                 isButton: true)
+
+                // Long-Press Previews
+                SettingsCellView(label: UserText.settingsPreviews,
+                                 accesory: .toggle(isOn: viewModel.longPressBinding))
+
+                // Open Links in Associated Apps
+                SettingsCellView(label: UserText.settingsAssociatedApps,
+                                 accesory: .toggle(isOn: viewModel.universalLinksBinding))
             }
         }
-
+        .applySettingsListModifiers(title: UserText.general,
+                                    displayMode: .inline,
+                                    viewModel: viewModel)
+        .onForwardNavigationAppear {
+            Pixel.fire(pixel: .settingsGeneralOpen,
+                       withAdditionalParameters: PixelExperiment.parameters)
+        }
     }
- 
 }

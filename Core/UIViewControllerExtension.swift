@@ -21,11 +21,11 @@ import UIKit
 import Core
 
 extension UIViewController {
-    
+
     var isSmall: Bool {
         return view.frame.height <= 568
     }
-    
+
     var isPad: Bool {
         return UIDevice.current.userInterfaceIdiom == .pad
     }
@@ -34,19 +34,10 @@ extension UIViewController {
         return []
     }
 
-    func overrideUserInterfaceStyle() {
-        if ThemeManager.shared.currentTheme.currentImageSet == .dark {
-            overrideUserInterfaceStyle = .dark
-        } else {
-            overrideUserInterfaceStyle = .light
-        }
-    }
-
     public func presentShareSheet(withItems activityItems: [Any], fromButtonItem buttonItem: UIBarButtonItem, completion: UIActivityViewController.CompletionWithItemsHandler? = nil) {
         let activities = buildActivities()
         let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: activities)
         shareController.completionWithItemsHandler = completion
-        shareController.overrideUserInterfaceStyle()
         present(controller: shareController, fromButtonItem: buttonItem)
     }
 
@@ -56,8 +47,6 @@ extension UIViewController {
         shareController.completionWithItemsHandler = completion
         if let overrideInterfaceStyle {
             shareController.overrideUserInterfaceStyle = overrideInterfaceStyle
-        } else {
-            shareController.overrideUserInterfaceStyle()
         }
         shareController.excludedActivityTypes = [.markupAsPDF]
         present(controller: shareController, fromView: sourceView, atPoint: point)
@@ -77,7 +66,7 @@ extension UIViewController {
         }
         present(controller, animated: true, completion: nil)
     }
-    
+
     public func installChildViewController(_ childController: UIViewController) {
         addChild(childController)
         childController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -114,7 +103,7 @@ extension Core.Bookmark {
 
 // Unfortuntely required to make methods available to objc
 extension Core.BookmarkManagedObject: UIActivityItemSource {
-    
+
     @objc public func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
         (self as Bookmark).activityViewControllerPlaceholderItem(activityViewController)
     }
@@ -141,12 +130,12 @@ extension Core.Link: UIActivityItemSource {
 
     public func activityViewController(_ activityViewController: UIActivityViewController,
                                        itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
-        
+
         // We don't want to save localPath to favorites or bookmarks
         if let localFileURL = localFileURL,
            activityType != .saveBookmarkInDuckDuckGo,
            activityType != .saveFavoriteInDuckDuckGo {
-        
+
             return localFileURL
         }
         return url.removingInternalSearchParameters()

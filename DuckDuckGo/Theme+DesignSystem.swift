@@ -43,7 +43,7 @@ extension Theme {
 
     var ddgTextTintColor: UIColor { UIColor(designSystemColor: .textPrimary) }
 
-    var privacyDashboardWebviewBackgroundColor: UIColor { UIColor(designSystemColor: .surface) }
+    var privacyDashboardWebviewBackgroundColor: UIColor { UIColor(designSystemColor: .background) }
 
     var iconCellBorderColor: UIColor { UIColor(designSystemColor: .icons) }
 
@@ -77,7 +77,7 @@ extension Theme {
     var searchBarTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
 
     var navigationBarTitleColor: UIColor { UIColor(designSystemColor: .textPrimary) }
-    var tableHeaderTextColor: UIColor {UIColor(designSystemColor: .textSecondary) }
+    var tableHeaderTextColor: UIColor { UIColor(designSystemColor: .textSecondary) }
 
     var faviconBackgroundColor: UIColor { UIColor(designSystemColor: .surface) }
 
@@ -91,4 +91,7 @@ extension Theme {
     // No design system colour yet, so fall back to SDK colours
     var tableCellAccessoryTextColor: UIColor { .secondaryLabel }
 
+    var onboardingBackgroundColor: UIColor { UIColor(designSystemColor: .surface) }
+    var onboardingHeaderColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+    var onboardingSubheaderColor: UIColor { UIColor(designSystemColor: .textSecondary) }
 }

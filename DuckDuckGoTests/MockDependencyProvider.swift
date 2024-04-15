@@ -21,9 +21,11 @@ import Foundation
 import Core
 import BrowserServicesKit
 import DDGSync
+import Subscription
 @testable import DuckDuckGo
 
 class MockDependencyProvider: DependencyProvider {
+
     var appSettings: AppSettings
     var variantManager: VariantManager
     var featureFlagger: FeatureFlagger
@@ -36,6 +38,9 @@ class MockDependencyProvider: DependencyProvider {
     var autofillLoginSession: AutofillLoginSession
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager
     var configurationManager: ConfigurationManager
+    var userBehaviorMonitor: UserBehaviorMonitor
+    var toggleProtectionsCounter: ToggleProtectionsCounter
+    var subscriptionFeatureAvailability: SubscriptionFeatureAvailability
 
     init() {
         let defaultProvider = AppDependencyProvider()
@@ -51,5 +56,8 @@ class MockDependencyProvider: DependencyProvider {
         autofillLoginSession = defaultProvider.autofillLoginSession
         autofillNeverPromptWebsitesManager = defaultProvider.autofillNeverPromptWebsitesManager
         configurationManager = defaultProvider.configurationManager
+        userBehaviorMonitor = defaultProvider.userBehaviorMonitor
+        toggleProtectionsCounter = defaultProvider.toggleProtectionsCounter
+        subscriptionFeatureAvailability = defaultProvider.subscriptionFeatureAvailability
     }
 }

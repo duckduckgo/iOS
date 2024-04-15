@@ -27,22 +27,22 @@ public struct PixelParameters {
     public static let duration = "dur"
     static let test = "test"
     public static let appVersion = "appVersion"
-    
+
     public static let autocompleteBookmarkCapable = "bc"
     public static let autocompleteIncludedLocalResults = "sb"
-    
+
     public static let originatedFromMenu = "om"
-    
+
     public static let applicationState = "as"
     public static let dataAvailability = "dp"
-    
+
     static let errorCode = "e"
     static let errorDomain = "d"
     static let errorDescription = "de"
     static let errorCount = "c"
     static let underlyingErrorCode = "ue"
     static let underlyingErrorDomain = "ud"
-    
+
     static let coreDataErrorCode = "coreDataCode"
     static let coreDataErrorDomain = "coreDataDomain"
     static let coreDataErrorEntity = "coreDataEntity"
@@ -62,12 +62,12 @@ public struct PixelParameters {
     static let clearWebDataTimedOut = "cd"
 
     public static let tabPreviewCountDelta = "cd"
-    
+
     public static let etag = "et"
 
     public static let emailCohort = "cohort"
     public static let emailLastUsed = "duck_address_last_used"
-    
+
     // Cookie clearing
     public static let storeInitialCount = "store_initial_count"
     public static let storeProtectedCount = "store_protected_count"
@@ -78,27 +78,27 @@ public struct PixelParameters {
     public static let storageAfterDeletionCount = "storage_after_deletion_count"
     public static let storeAfterDeletionDiffCount = "store_after_deletion_diff_count"
     public static let storageAfterDeletionDiffCount = "storage_after_deletion_diff_count"
-    
+
     public static let tabsModelCount = "tabs_model_count"
     public static let tabControllerCacheCount = "tab_controller_cache_count"
-    
+
     public static let count = "count"
 
     public static let textSizeInitial = "text_size_initial"
     public static let textSizeUpdated = "text_size_updated"
-    
+
     public static let canAutoPreviewMIMEType = "can_auto_preview_mime_type"
     public static let mimeType = "mime_type"
     public static let fileSizeGreaterThan10MB = "file_size_greater_than_10mb"
     public static let downloadListCount = "download_list_count"
-    
+
     public static let bookmarkCount = "bco"
-    
+
     public static let isBackgrounded = "is_backgrounded"
     public static let isDataProtected = "is_data_protected"
-    
+
     public static let isInternalUser = "is_internal_user"
-    
+
     // Email manager
     public static let emailKeychainAccessType = "access_type"
     public static let emailKeychainError = "error"
@@ -122,11 +122,14 @@ public struct PixelParameters {
     public static let function = "function"
     public static let line = "line"
     public static let reason = "reason"
-  
+
     // Return user
     public static let returnUserErrorCode = "error_code"
     public static let returnUserOldATB = "old_atb"
     public static let returnUserNewATB = "new_atb"
+
+    // Pixel Experiment
+    public static let cohort = "cohort"
 }
 
 public struct PixelValues {
@@ -151,25 +154,44 @@ public class Pixel {
         case appVersion
     }
     
+    
+    private enum Constant {
+        static let pixelStorageIdentifier = "com.duckduckgo.pixel.storage"
+    }
+
+    public static let storage = UserDefaults(suiteName: Constant.pixelStorageIdentifier)!
+    
     private init() {
     }
-    
+
     public static func fire(pixel: Pixel.Event,
                             forDeviceType deviceType: UIUserInterfaceIdiom? = UIDevice.current.userInterfaceIdiom,
                             withAdditionalParameters params: [String: String] = [:],
                             allowedQueryReservedCharacters: CharacterSet? = nil,
                             withHeaders headers: APIRequest.Headers = APIRequest.Headers(),
-                            includedParameters: [QueryParameters] = [.appVersion],
-                            onComplete: @escaping (Error?) -> Void = { _ in }) {
-        fire(
-            pixelNamed: pixel.name,
-            forDeviceType: deviceType,
-            withAdditionalParameters: params,
-            allowedQueryReservedCharacters: allowedQueryReservedCharacters,
-            withHeaders: headers,
-            includedParameters: includedParameters,
-            onComplete: onComplete
-        )
+                            includedParameters: [QueryParameters] = [.atb, .appVersion],
+                            onComplete: @escaping (Error?) -> Void = { _ in },
+                            debounce: Int = 0) {
+        
+        let date = Date().addingTimeInterval(-TimeInterval(debounce))
+        if !pixel.hasBeenFiredSince(pixelStorage: storage, date: date) {
+            fire(
+                pixelNamed: pixel.name,
+                forDeviceType: deviceType,
+                withAdditionalParameters: params,
+                allowedQueryReservedCharacters: allowedQueryReservedCharacters,
+                withHeaders: headers,
+                includedParameters: includedParameters,
+                onComplete: onComplete
+            )
+            updatePixelLastFireDate(pixel: pixel)
+        } else {
+            onComplete(nil)
+        }
+    }
+    
+    private static func updatePixelLastFireDate(pixel: Pixel.Event) {
+        storage.set(Date(), forKey: pixel.name)
     }
 
     public static func fire(pixelNamed pixelName: String,
@@ -177,7 +199,7 @@ public class Pixel {
                             withAdditionalParameters params: [String: String] = [:],
                             allowedQueryReservedCharacters: CharacterSet? = nil,
                             withHeaders headers: APIRequest.Headers = APIRequest.Headers(),
-                            includedParameters: [QueryParameters] = [.appVersion],
+                            includedParameters: [QueryParameters] = [.atb, .appVersion],
                             onComplete: @escaping (Error?) -> Void = { _ in }) {
         var newParams = params
         if includedParameters.contains(.appVersion) {
@@ -222,11 +244,11 @@ public class Pixel {
             onComplete(error)
         }
     }
-    
+
 }
 
 extension Pixel {
-    
+
     public static func fire(pixel: Pixel.Event,
                             error: Error?,
                             includedParameters: [QueryParameters] = [.appVersion],
@@ -238,6 +260,18 @@ extension Pixel {
         }
         fire(pixel: pixel, withAdditionalParameters: newParams, includedParameters: includedParameters, onComplete: onComplete)
     }
+}
+
+private extension Pixel.Event {
+    
+    func hasBeenFiredSince(pixelStorage: UserDefaults, date: Date) -> Bool {
+        if let lastFireDate = pixelStorage.object(forKey: name) as? Date {
+            return lastFireDate >= date
+        }
+        return false
+    }
+    
+    
 }
 
 extension Dictionary where Key == String, Value == String {

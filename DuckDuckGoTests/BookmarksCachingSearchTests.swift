@@ -17,10 +17,10 @@
 //  limitations under the License.
 //
 
-import XCTest
-import CoreData
-import Combine
 import Bookmarks
+import Combine
+import CoreData
+import XCTest
 
 @testable import Core
 

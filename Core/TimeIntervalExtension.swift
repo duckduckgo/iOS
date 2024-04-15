@@ -20,7 +20,7 @@
 import Foundation
 
 extension TimeInterval {
-    
+
     // MARK: - Computed Type Properties
     internal static var secondsPerDay: Double { return 24 * 60 * 60 }
     internal static var secondsPerHour: Double { return 60 * 60 }

@@ -17,8 +17,10 @@
 //  limitations under the License.
 //
 
-import Foundation
 import BrowserServicesKit
+import Foundation
+
+// swiftlint:disable line_length
 
 public extension URL {
 
@@ -31,7 +33,12 @@ public extension URL {
     static let emailProtection = URL(string: "\(base)/email")!
     static let emailProtectionSignUp = URL(string: "\(base)/email/start-incontext")!
     static let emailProtectionQuickLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/email"))!
+    static let emailProtectionAccountLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/email/settings/account"))!
+    static let emailProtectionSupportLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/email/settings/support"))!
+    static let emailProtectionHelpPageLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/duckduckgo-help-pages/email-protection/what-is-duckduckgo-email-protection/"))!
     static let aboutLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/about"))!
+    static let apps = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/apps"))!
+    static let searchSettings = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/settings"))!
 
     static let surrogates = URL(string: "\(staticBase)/surrogates.txt")!
 
@@ -262,3 +269,5 @@ public final class StatisticsDependentURLFactory {
     }
 
 }
+
+// swiftlint:enable line_length

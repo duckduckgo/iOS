@@ -17,9 +17,10 @@
 //  limitations under the License.
 //
 
+import BrowserServicesKit
 import WebKit
 import XCTest
-import BrowserServicesKit
+
 @testable import Core
 
 // swiftlint:disable file_length type_body_length
@@ -64,11 +65,11 @@ final class UserAgentTests: XCTestCase {
     }
     
     private struct Constants {
-        static let url = URL(string: "http://example.com/index.html")
-        static let noAppUrl = URL(string: "http://cvs.com/index.html")
-        static let noAppSubdomainUrl = URL(string: "http://subdomain.cvs.com/index.html")
-        static let ddgFixedUrl = URL(string: "http://test2.com/index.html")
-        static let ddgDefaultUrl = URL(string: "http://test3.com/index.html")
+        static let url = URL(string: "http://example.com/index.html")!
+        static let noAppUrl = URL(string: "http://cvs.com/index.html")!
+        static let noAppSubdomainUrl = URL(string: "http://subdomain.cvs.com/index.html")!
+        static let ddgFixedUrl = URL(string: "http://test2.com/index.html")!
+        static let ddgDefaultUrl = URL(string: "http://test3.com/index.html")!
     }
     
     let testConfig = """

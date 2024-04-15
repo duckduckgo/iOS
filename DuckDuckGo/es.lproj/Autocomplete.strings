@@ -1,6 +1,9 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "5ag-a1-mlA"; */
 "5ag-a1-mlA.text" = "Etiqueta";
 
+/* Class = "UILabel"; text = "Label"; ObjectID = "eiv-Cq-E2r"; */
+"eiv-Cq-E2r.text" = "Etiqueta";
+
 /* Class = "UILabel"; text = "No Suggestions"; ObjectID = "gPe-Cv-14j"; */
 "gPe-Cv-14j.text" = "No hay sugerencias";
 

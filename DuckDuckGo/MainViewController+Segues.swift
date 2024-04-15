@@ -25,6 +25,10 @@ import BrowserServicesKit
 import SwiftUI
 import PrivacyDashboard
 
+#if SUBSCRIPTION
+import Subscription
+#endif
+
 extension MainViewController {
 
     func segueToDaxOnboarding() {
@@ -94,7 +98,7 @@ extension MainViewController {
         }
         bookmarks.delegate = self
 
-        let controller = ThemableNavigationController(rootViewController: bookmarks)
+        let controller = UINavigationController(rootViewController: bookmarks)
         controller.modalPresentationStyle = .automatic
         present(controller, animated: true) {
             completion?(bookmarks)
@@ -120,7 +124,7 @@ extension MainViewController {
         present(controller, animated: true)
     }
 
-    func segueToReportBrokenSite() {
+    func segueToReportBrokenSite(mode: PrivacyDashboardMode = .report) {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
 
@@ -134,9 +138,9 @@ extension MainViewController {
         let controller = storyboard.instantiateInitialViewController { coder in
             PrivacyDashboardViewController(coder: coder,
                                            privacyInfo: privacyInfo,
+                                           dashboardMode: mode,
                                            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                            contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
-                                           initMode: .reportBrokenSite,
                                            breakageAdditionalInfo: self.currentTab?.makeBreakageAdditionalInfo())
         }
         
@@ -200,6 +204,16 @@ extension MainViewController {
         launchSettings()
     }
 
+#if SUBSCRIPTION
+    func segueToPrivacyPro() {
+        os_log(#function, log: .generalLog, type: .debug)
+        hideAllHighlightsIfNeeded()
+        launchSettings {
+            $0.triggerDeepLinkNavigation(to: .subscriptionFlow)
+        }
+    }
+#endif
+
     func segueToDebugSettings() {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
@@ -230,22 +244,28 @@ extension MainViewController {
         }
     }
     
-    private func launchSettings(completion: ((SettingsViewModel) -> Void)? = nil) {
+    func launchSettings(completion: ((SettingsViewModel) -> Void)? = nil,
+                        deepLinkTarget: SettingsViewModel.SettingsDeepLinkSection? = nil) {
         let legacyViewProvider = SettingsLegacyViewProvider(syncService: syncService,
                                                             syncDataProviders: syncDataProviders,
                                                             appSettings: appSettings,
-                                                            bookmarksDatabase: bookmarksDatabase)
-                        
-        let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider, accountManager: AccountManager())
+                                                            bookmarksDatabase: bookmarksDatabase,
+                                                            tabManager: tabManager)
+#if SUBSCRIPTION
+        let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider,
+                                                  accountManager: AccountManager(),
+                                                  deepLink: deepLinkTarget)
+#else
+        let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider)
+#endif
+
+        Pixel.fire(pixel: .settingsPresented,
+                   withAdditionalParameters: PixelExperiment.parameters)
         let settingsController = SettingsHostingController(viewModel: settingsViewModel, viewProvider: legacyViewProvider)
-        settingsController.applyTheme(ThemeManager.shared.currentTheme)
         
         // We are still presenting legacy views, so use a Navcontroller
         let navController = UINavigationController(rootViewController: settingsController)
-        navController.applyTheme(ThemeManager.shared.currentTheme)
-        settingsController.modalPresentationStyle = .automatic
-
-        settingsController.isModalInPresentation = true
+        settingsController.modalPresentationStyle = UIModalPresentationStyle.automatic
         
         present(navController, animated: true) {
             completion?(settingsViewModel)
@@ -260,10 +280,11 @@ extension MainViewController {
             RootDebugViewController(coder: coder,
                                     sync: self.syncService,
                                     bookmarksDatabase: self.bookmarksDatabase,
-                                    internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+                                    internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
+                                    tabManager: self.tabManager)
         }
 
-        let controller = ThemableNavigationController(rootViewController: settings)
+        let controller = UINavigationController(rootViewController: settings)
         controller.modalPresentationStyle = .automatic
         present(controller, animated: true) {
             completion?(settings)

@@ -17,9 +17,9 @@
 //  limitations under the License.
 //
 
+import BrowserServicesKit
 import Foundation
 import WebKit
-import BrowserServicesKit
 
 class MockUserAgentManager: UserAgentManager {
 

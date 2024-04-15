@@ -54,7 +54,7 @@ class MenuButton: UIView {
     
     private let bookmarksIconView = UIImageView()
 
-    let anim = AnimationView(name: "menu_light")
+    let anim = LottieAnimationView(name: "menu_light")
     let pointerView: UIView = UIView(frame: CGRect(x: 0,
                                                    y: 0,
                                                    width: Constants.pointerViewWidth,
@@ -72,11 +72,13 @@ class MenuButton: UIView {
         addSubview(pointerView)
         addSubview(anim)
         addSubview(bookmarksIconView)
-        
+
         configureAnimationView()
         configureBookmarksView()
         
         addInteraction(UIPointerInteraction(delegate: self))
+
+        decorate()
     }
 
     override func layoutSubviews() {
@@ -183,24 +185,34 @@ class MenuButton: UIView {
     }
 }
 
-extension MenuButton: Themable {
+extension MenuButton {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         tintColor = theme.barTintColor
 
-        switch theme.currentImageSet {
-        case .light:
-            anim.animation = Animation.named("menu_light")
+        updateAnimationForCurrentAppearance()
+    }
+
+    private func updateAnimationForCurrentAppearance() {
+        switch traitCollection.userInterfaceStyle {
         case .dark:
-            anim.animation = Animation.named("menu_dark")
+            anim.animation = LottieAnimation.named("menu_dark")
+        default:
+            anim.animation = LottieAnimation.named("menu_light")
         }
-        
+
         if currentState == State.closeImage {
             anim.currentProgress = 1.0
         }
+    }
 
-        addSubview(anim)
-        configureAnimationView()
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            updateAnimationForCurrentAppearance()
+        }
     }
 }
 

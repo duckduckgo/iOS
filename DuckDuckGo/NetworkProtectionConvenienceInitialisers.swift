@@ -22,33 +22,60 @@
 import NetworkProtection
 import UIKit
 import Common
+import NetworkExtension
+
+#if SUBSCRIPTION
+import Subscription
+#endif
+
+private class DefaultTunnelSessionProvider: TunnelSessionProvider {
+    func activeSession() async -> NETunnelProviderSession? {
+        try? await ConnectionSessionUtilities.activeSession()
+    }
+}
 
 extension ConnectionStatusObserverThroughSession {
     convenience init() {
-        self.init(platformNotificationCenter: .default,
+        self.init(tunnelSessionProvider: DefaultTunnelSessionProvider(),
+                  platformNotificationCenter: .default,
                   platformDidWakeNotification: UIApplication.didBecomeActiveNotification)
     }
 }
 
 extension ConnectionErrorObserverThroughSession {
     convenience init() {
-        self.init(platformNotificationCenter: .default,
+        self.init(tunnelSessionProvider: DefaultTunnelSessionProvider(),
+                  platformNotificationCenter: .default,
                   platformDidWakeNotification: UIApplication.didBecomeActiveNotification)
     }
 }
 
 extension ConnectionServerInfoObserverThroughSession {
     convenience init() {
-        self.init(platformNotificationCenter: .default,
+        self.init(tunnelSessionProvider: DefaultTunnelSessionProvider(),
+                  platformNotificationCenter: .default,
                   platformDidWakeNotification: UIApplication.didBecomeActiveNotification)
     }
 }
 
 extension NetworkProtectionKeychainTokenStore {
     convenience init() {
+        let featureVisibility = DefaultNetworkProtectionVisibility.forTokenStore()
+        let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
+        let accessTokenProvider: () -> String? = {
+#if SUBSCRIPTION
+            if featureVisibility.shouldMonitorEntitlement() {
+                return { AccountManager().accessToken }
+            }
+#endif
+            return { nil }
+        }()
+
         self.init(keychainType: .dataProtection(.unspecified),
                   serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
-                  errorEvents: .networkProtectionAppDebugEvents)
+                  errorEvents: .networkProtectionAppDebugEvents,
+                  isSubscriptionEnabled: isSubscriptionEnabled,
+                  accessTokenProvider: accessTokenProvider)
     }
 }
 
@@ -59,23 +86,18 @@ extension NetworkProtectionCodeRedemptionCoordinator {
             environment: settings.selectedEnvironment,
             tokenStore: NetworkProtectionKeychainTokenStore(),
             isManualCodeRedemptionFlow: isManualCodeRedemptionFlow,
-            errorEvents: .networkProtectionAppDebugEvents
-        )
-    }
-}
-
-extension NetworkProtectionVPNNotificationsViewModel {
-    convenience init() {
-        self.init(
-            notificationsAuthorization: NotificationsAuthorizationController(),
-            settings: VPNSettings(defaults: .networkProtectionGroupDefaults)
+            errorEvents: .networkProtectionAppDebugEvents,
+            isSubscriptionEnabled: DefaultNetworkProtectionVisibility().isPrivacyProLaunched()
         )
     }
 }
 
 extension NetworkProtectionVPNSettingsViewModel {
     convenience init() {
-        self.init(settings: VPNSettings(defaults: .networkProtectionGroupDefaults))
+        self.init(
+            notificationsAuthorization: NotificationsAuthorizationController(),
+            settings: VPNSettings(defaults: .networkProtectionGroupDefaults)
+        )
     }
 }
 
@@ -85,7 +107,8 @@ extension NetworkProtectionLocationListCompositeRepository {
         self.init(
             environment: settings.selectedEnvironment,
             tokenStore: NetworkProtectionKeychainTokenStore(),
-            errorEvents: .networkProtectionAppDebugEvents
+            errorEvents: .networkProtectionAppDebugEvents,
+            isSubscriptionEnabled: DefaultNetworkProtectionVisibility().isPrivacyProLaunched()
         )
     }
 }

@@ -21,29 +21,49 @@ import Common
 import UIKit
 import Core
 import DesignResourcesKit
+import Suggestions
+import Networking
+import CoreData
+import Persistence
+import History
+import Combine
+import BrowserServicesKit
 
 class AutocompleteViewController: UIViewController {
     
+    private static let session = URLSession(configuration: .ephemeral)
+
     struct Constants {
-        static let debounceDelay: TimeInterval = 0.1
+        static let debounceDelay = 100 // millis
         static let minItems = 1
-        static let maxLocalItems = 2
     }
 
     weak var delegate: AutocompleteViewControllerDelegate?
     weak var presentationDelegate: AutocompleteViewControllerPresentationDelegate?
 
-    private var lastRequest: AutocompleteRequest?
+    private var task: URLSessionDataTask?
+    private var loader: SuggestionLoading?
     private var receivedResponse = false
     private var pendingRequest = false
     
-    fileprivate var query = ""
+    @Published fileprivate var query = ""
+    fileprivate var queryDebounceCancellable: AnyCancellable?
+
     fileprivate var suggestions = [Suggestion]()
     fileprivate var selectedItem = -1
     
-    private var bookmarksSearch: BookmarksStringSearch!
-
+    private var historyCoordinator: HistoryCoordinating!
+    private var bookmarksDatabase: CoreDataDatabase!
     private var appSettings: AppSettings!
+    private var variantManager: VariantManager!
+
+    private lazy var cachedBookmarks: CachedBookmarks = {
+        CachedBookmarks(bookmarksDatabase)
+    }()
+
+    private lazy var cachedBookmarksSearch: BookmarksStringSearch = {
+        BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
+    }()
 
     var backgroundColor: UIColor {
         appSettings.currentAddressBarPosition.isBottom ?
@@ -63,28 +83,35 @@ class AutocompleteViewController: UIViewController {
     }
 
     private var hidesBarsOnSwipeDefault = true
-    
-    private let debounce = Debounce(queue: .main, seconds: Constants.debounceDelay)
 
     @IBOutlet weak var tableView: UITableView!
     var shouldOffsetY = false
     
-    static func loadFromStoryboard(bookmarksSearch: BookmarksStringSearch,
-                                   appSettings: AppSettings = AppDependencyProvider.shared.appSettings) -> AutocompleteViewController {
+    static func loadFromStoryboard(bookmarksDatabase: CoreDataDatabase,
+                                   historyCoordinator: HistoryCoordinating,
+                                   appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
+                                   variantManager: VariantManager = DefaultVariantManager()) -> AutocompleteViewController {
         let storyboard = UIStoryboard(name: "Autocomplete", bundle: nil)
-
         guard let controller = storyboard.instantiateInitialViewController() as? AutocompleteViewController else {
             fatalError("Failed to instatiate correct Autocomplete view controller")
         }
-        controller.bookmarksSearch = bookmarksSearch
+        controller.bookmarksDatabase = bookmarksDatabase
+        controller.historyCoordinator = historyCoordinator
         controller.appSettings = appSettings
+        controller.variantManager = variantManager
         return controller
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
+
+        queryDebounceCancellable = $query
+            .debounce(for: .milliseconds(Constants.debounceDelay), scheduler: RunLoop.main)
+            .sink { [weak self] query in
+                self?.requestSuggestions(query: query)
+            }
     }
     
     private func configureTableView() {
@@ -119,30 +146,30 @@ class AutocompleteViewController: UIViewController {
         navigationController?.hidesBarsOnSwipe = hidesBarsOnSwipeDefault
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        tableView.reloadData()
-    }
-
     func updateQuery(query: String) {
-        self.query = query
         selectedItem = -1
         cancelInFlightRequests()
-        debounce.schedule { [weak self] in
-            self?.requestSuggestions(query: query)
-        }
+        self.query = query
     }
     
     func willDismiss(with query: String) {
-        guard selectedItem != -1, selectedItem < suggestions.count else { return }
-        
+        guard suggestions.indices.contains(selectedItem) else { return }
         let suggestion = suggestions[selectedItem]
-        if let url = suggestion.url {
-            if query == url.absoluteString {
-                firePixel(selectedSuggestion: suggestion)
-            }
-        } else if query == suggestion.suggestion {
-            firePixel(selectedSuggestion: suggestion)
+        firePixelForSelectedSuggestion(suggestion)
+    }
+
+    private func firePixelForSelectedSuggestion(_ suggestion: Suggestion) {
+        switch suggestion {
+        case .phrase:
+            Pixel.fire(pixel: .autocompleteClickPhrase)
+        case .website:
+            Pixel.fire(pixel: .autocompleteClickWebsite)
+        case .bookmark(_, _, isFavorite: let isFavorite, _):
+            Pixel.fire(pixel: isFavorite ? .autocompleteClickFavorite : .autocompleteClickBookmark)
+        case .historyEntry:
+            Pixel.fire(pixel: .autocompleteClickHistory)
+        case .unknown(value: let value):
+            assertionFailure("Unknown suggestion \(value)")
         }
     }
 
@@ -152,47 +179,45 @@ class AutocompleteViewController: UIViewController {
     }
 
     private func cancelInFlightRequests() {
-        if let inFlightRequest = lastRequest {
-            inFlightRequest.cancel()
-            lastRequest = nil
-        }
+        task?.cancel()
+        task = nil
     }
 
     private func requestSuggestions(query: String) {
         selectedItem = -1
         tableView.reloadData()
-        do {
-            lastRequest = try AutocompleteRequest(query: query)
-            pendingRequest = true
-        } catch {
-            os_log("Couldn‘t form AutocompleteRequest for query “%s”: %s", log: .lifecycleLog, type: .debug, query, error.localizedDescription)
-            lastRequest = nil
-            pendingRequest = false
-            return
+
+        let bookmarks: [Suggestion]
+
+        if variantManager.inSuggestionExperiment {
+            bookmarks = [] // We'll supply bookmarks elsewhere
+        } else {
+            bookmarks = cachedBookmarksSearch.search(query: query).prefix(2).map {
+                .bookmark(title: $0.title, url: $0.url, isFavorite: $0.isFavorite, allowedInTopHits: true)
+            }
         }
 
-        lastRequest!.execute { [weak self] (suggestions, error) in
-            guard let strongSelf = self else { return }
-
-            Task { @MainActor in
-                let matches = strongSelf.bookmarksSearch.search(query: query)
-                let notQueryMatches = matches.filter { $0.url.absoluteString != query }
-                let filteredMatches = notQueryMatches.prefix(Constants.maxLocalItems)
-                let localSuggestions = filteredMatches.map { Suggestion(source: .local,
-                                                                        suggestion: $0.title,
-                                                                        url: $0.url)
-                }
-
-                guard let suggestions = suggestions, error == nil else {
-                    os_log("%s", log: .generalLog, type: .debug, error?.localizedDescription ?? "Failed to retrieve suggestions")
-                    self?.updateSuggestions(localSuggestions)
-                    return
-                }
-
-                let combinedSuggestions = localSuggestions + suggestions
-                strongSelf.updateSuggestions(Array(combinedSuggestions))
-                strongSelf.pendingRequest = false
+        loader = SuggestionLoader(dataSource: self, urlFactory: { phrase in
+            guard let url = URL(trimmedAddressBarString: phrase),
+                  let scheme = url.scheme,
+                  scheme.description.hasPrefix("http"),
+                  url.isValid else {
+                return nil
             }
+
+            return url
+        })
+        pendingRequest = true
+
+        loader?.getSuggestions(query: query) { [weak self] result, error in
+            defer {
+                self?.pendingRequest = false
+            }
+            guard error == nil else { return }
+            
+            let remoteResults = result?.all ?? []
+
+            self?.updateSuggestions(bookmarks + remoteResults)
         }
     }
 
@@ -262,37 +287,29 @@ extension AutocompleteViewController: UITableViewDataSource {
         if appSettings.currentAddressBarPosition.isBottom && suggestions.isEmpty {
             return view.frame.height
         }
-        return 46
+
+        let defaultHeight: CGFloat = 46
+        guard suggestions.indices.contains(indexPath.row) else { return defaultHeight }
+
+        switch suggestions[indexPath.row] {
+        case .bookmark, .historyEntry:
+            return 60
+        default:
+            return defaultHeight
+        }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return receivedResponse ? max(Constants.minItems, suggestions.count) : 0
     }
-    
-    private func firePixel(selectedSuggestion: Suggestion) {
-        let resultsIncludeBookmarks: Bool
-        if let firstSuggestion = suggestions.first {
-            resultsIncludeBookmarks = firstSuggestion.source == .local
-        } else {
-            resultsIncludeBookmarks = false
-        }
-        
-        let params = [PixelParameters.autocompleteBookmarkCapable: bookmarksSearch.hasData ? "true" : "false",
-                      PixelParameters.autocompleteIncludedLocalResults: resultsIncludeBookmarks ? "true" : "false"]
-        
-        if selectedSuggestion.source == .local {
-            Pixel.fire(pixel: .autocompleteSelectedLocal, withAdditionalParameters: params)
-        } else {
-            Pixel.fire(pixel: .autocompleteSelectedRemote, withAdditionalParameters: params)
-        }
-    }
+
 }
 
 extension AutocompleteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let suggestion = suggestions[indexPath.row]
-        firePixel(selectedSuggestion: suggestion)
         delegate?.autocomplete(selectedSuggestion: suggestion)
+        firePixelForSelectedSuggestion(suggestion)
     }
 }
 
@@ -302,10 +319,10 @@ extension AutocompleteViewController: UIGestureRecognizerDelegate {
     }
 }
 
-extension AutocompleteViewController: Themable {
-    func decorate(with theme: Theme) {
+extension AutocompleteViewController {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         tableView.separatorColor = theme.tableCellSeparatorColor
-        tableView.reloadData()
     }
 }
 
@@ -331,6 +348,48 @@ extension AutocompleteViewController {
     
     private func itemCount() -> Int {
         return suggestions.count
+    }
+
+}
+
+extension AutocompleteViewController: SuggestionLoadingDataSource {
+    
+    func history(for suggestionLoading: Suggestions.SuggestionLoading) -> [HistorySuggestion] {
+        return variantManager.inSuggestionExperiment ? (historyCoordinator.history ?? []) : []
+    }
+
+    func bookmarks(for suggestionLoading: Suggestions.SuggestionLoading) -> [Suggestions.Bookmark] {
+        return variantManager.inSuggestionExperiment ? cachedBookmarks.all : []
+    }
+
+    func suggestionLoading(_ suggestionLoading: Suggestions.SuggestionLoading, suggestionDataFromUrl url: URL, withParameters parameters: [String: String], completion: @escaping (Data?, Error?) -> Void) {
+        var queryURL = url
+        parameters.forEach {
+            queryURL = queryURL.appendingParameter(name: $0.key, value: $0.value)
+        }
+
+        var request = URLRequest.developerInitiated(queryURL)
+        request.allHTTPHeaderFields = APIRequest.Headers().httpHeaders
+        task = Self.session.dataTask(with: request) { data, _, error in
+            completion(data, error)
+        }
+        task?.resume()
+    }
+
+}
+
+extension HistoryEntry: HistorySuggestion {
+
+    public var numberOfVisits: Int {
+        return numberOfTotalVisits
+    }
+
+}
+
+extension VariantManager {
+
+    var inSuggestionExperiment: Bool {
+        isSupported(feature: .newSuggestionLogic) || isSupported(feature: .history)
     }
 
 }

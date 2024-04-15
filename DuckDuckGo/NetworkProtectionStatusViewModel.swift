@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+// swiftlint:disable file_length
+
 #if NETWORK_PROTECTION
 
 import Foundation
@@ -24,11 +26,64 @@ import Combine
 import NetworkProtection
 import WidgetKit
 
+struct NetworkProtectionLocationStatusModel {
+    enum LocationIcon {
+        case defaultIcon
+        case emoji(String)
+    }
+
+    let title: String
+    let icon: LocationIcon
+    let isNearest: Bool
+
+    init(selectedLocation: VPNSettings.SelectedLocation) {
+        switch selectedLocation {
+        case .nearest:
+            title = UserText.netPPreferredLocationNearest
+            icon = .defaultIcon
+            isNearest = true
+        case .location(let location):
+            let countryLabelsModel = NetworkProtectionVPNCountryLabelsModel(country: location.country, useFullCountryName: true)
+            if let city = location.city {
+                title = UserText.netPVPNSettingsLocationSubtitleFormattedCityAndCountry(
+                    city: city,
+                    country: countryLabelsModel.title
+                )
+            } else {
+                title = "\(countryLabelsModel.emoji) \(countryLabelsModel.title)"
+            }
+            icon = .emoji(countryLabelsModel.emoji)
+            isNearest = false
+        }
+    }
+
+    static func formattedLocation(city: String, country: String) -> String {
+        let countryLabelsModel = NetworkProtectionVPNCountryLabelsModel(country: country, useFullCountryName: true)
+        let city = "\(countryLabelsModel.emoji) \(city)"
+
+        return UserText.netPVPNSettingsLocationSubtitleFormattedCityAndCountry(city: city, country: countryLabelsModel.title)
+    }
+}
+
+// swiftlint:disable:next type_body_length
 final class NetworkProtectionStatusViewModel: ObservableObject {
+
+    private enum Constants {
+        static let defaultDownloadVolume = "0 KB"
+        static let defaultUploadVolume = "0 KB"
+    }
+
     private static var dateFormatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.hour, .minute, .second]
         formatter.zeroFormattingBehavior = .pad
+        return formatter
+    }()
+
+    private let byteCountFormatter: ByteCountFormatter = {
+        let formatter = ByteCountFormatter()
+        formatter.allowsNonnumericFormatting = false
+        formatter.allowedUnits = [.useKB, .useMB, .useGB]
         return formatter
     }()
 
@@ -37,7 +92,6 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     private let serverInfoObserver: ConnectionServerInfoObserver
     private let errorObserver: ConnectionErrorObserver
     private var cancellables: Set<AnyCancellable> = []
-    private var delayedToggleReenableCancellable: Cancellable?
 
     // MARK: Error
 
@@ -54,27 +108,45 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @Published public var shouldShowError: Bool = false
 
     // MARK: Header
+
     @Published public var statusImageID: String
     @Published public var headerTitle: String
 
     // MARK: Toggle Item
+
     @Published public var isNetPEnabled = false
     @Published public var statusMessage: String
     @Published public var shouldDisableToggle: Bool = false
 
+    // MARK: Location
+
+    private let settings: VPNSettings
+    @Published public var preferredLocation: NetworkProtectionLocationStatusModel
+
     // MARK: Connection Details
+
     @Published public var shouldShowConnectionDetails: Bool = false
     @Published public var location: String?
     @Published public var ipAddress: String?
 
+    @Published public var uploadTotal: String = Constants.defaultUploadVolume
+    @Published public var downloadTotal: String = Constants.defaultDownloadVolume
+    private var throughputUpdateTimer: Timer?
+
+    var shouldShowFAQ: Bool {
+        AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
+    }
+
     @Published public var animationsOn: Bool = false
 
     public init(tunnelController: TunnelController = NetworkProtectionTunnelController(),
+                settings: VPNSettings = VPNSettings(defaults: .networkProtectionGroupDefaults),
                 statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
                 serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
                 errorObserver: ConnectionErrorObserver = ConnectionErrorObserverThroughSession(),
                 locationListRepository: NetworkProtectionLocationListRepository = NetworkProtectionLocationListCompositeRepository()) {
         self.tunnelController = tunnelController
+        self.settings = settings
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
         self.errorObserver = errorObserver
@@ -82,11 +154,15 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         self.headerTitle = Self.titleText(connected: statusObserver.recentValue.isConnected)
         self.statusImageID = Self.statusImageID(connected: statusObserver.recentValue.isConnected)
 
+        self.preferredLocation = NetworkProtectionLocationStatusModel(selectedLocation: settings.selectedLocation)
+
         setUpIsConnectedStatePublishers()
         setUpToggledStatePublisher()
         setUpStatusMessagePublishers()
         setUpDisableTogglePublisher()
         setUpServerInfoPublishers()
+        setUpLocationPublishers()
+        setUpThroughputRefreshTimer()
 
         // Prefetching this now for snappy load times on the locations screens
         Task {
@@ -106,6 +182,18 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         isConnectedPublisher
             .map(Self.statusImageID(connected:))
             .assign(to: \.statusImageID, onWeaklyHeld: self)
+            .store(in: &cancellables)
+        isConnectedPublisher
+            .sink { [weak self] isConnected in
+                if !isConnected {
+                    self?.uploadTotal = Constants.defaultUploadVolume
+                    self?.downloadTotal = Constants.defaultDownloadVolume
+                    self?.throughputUpdateTimer?.invalidate()
+                    self?.throughputUpdateTimer = nil
+                } else {
+                    self?.setUpThroughputRefreshTimer()
+                }
+            }
             .store(in: &cancellables)
     }
 
@@ -158,18 +246,26 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         // Each event cancels the previous delayed publisher
         $shouldDisableToggle
             .filter { $0 }
-            .map {
-                Just(!$0)
-                    .delay(for: 2.0, scheduler: DispatchQueue.main)
-                    .assign(to: \.shouldDisableToggle, onWeaklyHeld: self)
+            .map { _ -> AnyPublisher<Bool, Never> in
+                Just(false).delay(for: 2.0, scheduler: DispatchQueue.main).eraseToAnyPublisher()
             }
-            .assign(to: \.delayedToggleReenableCancellable, onWeaklyHeld: self)
+            .switchToLatest()
+            .assign(to: \.shouldDisableToggle, onWeaklyHeld: self)
             .store(in: &cancellables)
     }
 
     private func setUpServerInfoPublishers() {
         serverInfoObserver.publisher
-            .map(\.serverLocation)
+            .compactMap { serverInfo in
+                guard let attributes = serverInfo.serverLocation else {
+                    return nil
+                }
+
+                return NetworkProtectionLocationStatusModel.formattedLocation(
+                    city: attributes.city,
+                    country: attributes.country
+                )
+            }
             .receive(on: DispatchQueue.main)
             .assign(to: \.location, onWeaklyHeld: self)
             .store(in: &cancellables)
@@ -187,6 +283,60 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: \.shouldShowConnectionDetails, onWeaklyHeld: self)
             .store(in: &cancellables)
+    }
+
+    private func setUpLocationPublishers() {
+        settings.selectedLocationPublisher
+            .receive(on: DispatchQueue.main)
+            .map(NetworkProtectionLocationStatusModel.init(selectedLocation:))
+            .assign(to: \.preferredLocation, onWeaklyHeld: self)
+            .store(in: &cancellables)
+    }
+
+    private func setUpThroughputRefreshTimer() {
+        if let throughputUpdateTimer, throughputUpdateTimer.isValid {
+            // Prevent the timer from being set up multiple times
+            return
+        }
+
+        Task {
+            // Refresh as soon as the timer is set up, rather than waiting for 1 second:
+            await self.refreshDataVolumeTotals()
+        }
+
+        throughputUpdateTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            
+            Task {
+                await strongSelf.refreshDataVolumeTotals()
+            }
+        }
+    }
+
+    private func refreshDataVolumeTotals() async {
+        guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+            return
+        }
+
+        let data: ExtensionMessageString? = try? await activeSession.sendProviderMessage(.getConnectionThroughput)
+
+        guard let data else {
+            return
+        }
+
+        let bytes = data.value.components(separatedBy: ",")
+        guard let receivedString = bytes.first, let sentString = bytes.last,
+              let received = Int64(receivedString), let sent = Int64(sentString) else {
+            return
+        }
+
+        await updateBandwidthCounts(sent: sent, received: received)
+    }
+
+    @MainActor
+    private func updateBandwidthCounts(sent: Int64, received: Int64) {
+        self.uploadTotal = byteCountFormatter.string(fromByteCount: sent)
+        self.downloadTotal = byteCountFormatter.string(fromByteCount: received)
     }
 
     @MainActor
@@ -273,3 +423,5 @@ private extension ConnectionStatus {
 }
 
 #endif
+
+// swiftlint:enable file_length

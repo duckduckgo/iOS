@@ -1,0 +1,57 @@
+appId: com.duckduckgo.mobile.ios
+tags:
+    - privacy
+
+---
+
+# Set up 
+- clearKeychain
+- clearState
+- launchApp
+- runFlow:
+    when: 
+      visible: 
+        text: "Let’s Do It!"
+        index: 0
+    file: ../shared/onboarding.yaml
+
+# Load Site
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "privacy blogs"
+- pressKey: Enter
+
+# Dismiss Dax Dialogs if visible
+- runFlow:
+    when:
+        visible: "Phew!"
+    commands:
+        - tapOn: "Phew!"
+
+# Change settings
+- tapOn: "Safe search: moderate ▼"
+- tapOn: "Off"
+
+# Fire Button - twice, just to be sure
+- tapOn: "Close Tabs and Clear Data"
+- tapOn:
+    id: "alert.forget-data.confirm"
+- assertVisible:
+    id: "searchEntry"
+- runFlow:
+    when:
+        visible: "Cancel"
+    commands:
+        - tapOn: "Cancel"
+- tapOn: "Close Tabs and Clear Data"
+- tapOn:
+    id: "alert.forget-data.confirm"
+
+# Validate Cookie was retained
+- tapOn: 
+    id: "searchEntry"
+- inputText: "creepy trackers"
+- pressKey: Enter
+- assertVisible: "Safe search: off ▼"

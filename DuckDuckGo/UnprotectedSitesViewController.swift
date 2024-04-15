@@ -37,12 +37,11 @@ class UnprotectedSitesViewController: UITableViewController {
     private let rulesManager: ContentBlockerRulesManager = ContentBlocking.shared.contentBlockingManager
 
     var showBackButton = false
-    var enforceLightTheme = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        applyTheme(ThemeManager.shared.currentTheme)
-        
+        decorate()
+
         navigationController?.setToolbarHidden(false, animated: false)
         refreshToolbarItems(animated: false)
         
@@ -157,7 +156,6 @@ class UnprotectedSitesViewController: UITableViewController {
         let cancel = UserText.actionCancel
 
         let addSiteBox = UIAlertController(title: title, message: "", preferredStyle: .alert)
-        addSiteBox.overrideUserInterfaceStyle()
         addSiteBox.addTextField { (textField) in
             textField.placeholder = placeholder
             textField.keyboardAppearance = ThemeManager.shared.currentTheme.keyboardAppearance
@@ -220,7 +218,7 @@ class UnprotectedSitesViewController: UITableViewController {
             cell = createAllProtectedCell(forRowAt: indexPath)
         }
         
-        let theme = enforceLightTheme ? LightTheme() : ThemeManager.shared.currentTheme
+        let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
         
         return cell
@@ -231,7 +229,7 @@ class UnprotectedSitesViewController: UITableViewController {
             fatalError("Failed to dequeue NoSuggestionsTableViewCell using 'AllProtectedCell'")
         }
         
-        let theme = enforceLightTheme ? LightTheme() : ThemeManager.shared.currentTheme
+        let theme = ThemeManager.shared.currentTheme
         allProtectedCell.label.textColor = theme.tableCellTextColor
         
         return allProtectedCell
@@ -244,7 +242,7 @@ class UnprotectedSitesViewController: UITableViewController {
         
         unprotectedItemCell.domain = unprotectedDomains[indexPath.row]
         
-        let theme = enforceLightTheme ? LightTheme() : ThemeManager.shared.currentTheme
+        let theme = ThemeManager.shared.currentTheme
         unprotectedItemCell.domainLabel.textColor = theme.tableCellTextColor
         
         return unprotectedItemCell
@@ -267,11 +265,10 @@ class UnprotectedSitesItemCell: UITableViewCell {
 
 }
 
-extension UnprotectedSitesViewController: Themable {
+extension UnprotectedSitesViewController {
     
-    func decorate(with theme: Theme) {
-        let theme = enforceLightTheme ? LightTheme() : theme
-        
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         tableView.separatorColor = theme.tableCellSeparatorColor
         tableView.backgroundColor = theme.backgroundColor
         

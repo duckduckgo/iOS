@@ -21,77 +21,171 @@ import SwiftUI
 import UIKit
 
 #if SUBSCRIPTION
+import Subscription
+import Core
 @available(iOS 15.0, *)
 struct SettingsSubscriptionView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
+    @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
+    @State var isShowingDBP = false
+    @State var isShowingITP = false
+    @State var isShowingRestoreFlow = false
+    @State var isShowingSubscribeFlow = false
     
+    enum Constants {
+        static let purchaseDescriptionPadding = 5.0
+        static let topCellPadding = 3.0
+        static let noEntitlementsIconWidth = 20.0
+        static let navigationDelay = 0.3
+        static let infoIcon = "info-16"
+    }
+
     private var subscriptionDescriptionView: some View {
         VStack(alignment: .leading) {
             Text(UserText.settingsPProSubscribe).daxBodyRegular()
             Group {
-                Text(UserText.settingsPProDescription).daxFootnoteRegular().padding(.bottom, 5)
+                Text(UserText.settingsPProDescription).daxFootnoteRegular().padding(.bottom, Constants.purchaseDescriptionPadding)
                 Text(UserText.settingsPProFeatures).daxFootnoteRegular()
             }.foregroundColor(Color(designSystemColor: .textSecondary))
         }
     }
     
-    private var learnMoreView: some View {
-        Text(UserText.settingsPProLearnMore)
-            .daxBodyRegular()
-            .foregroundColor(Color.init(designSystemColor: .accent))
+    @ViewBuilder
+    private var restorePurchaseView: some View {
+        let text = !viewModel.isRestoringSubscription ? UserText.subscriptionActivateAppleIDButton : UserText.subscriptionRestoringTitle
+        SettingsCustomCell(content: {
+            Text(text)
+                .daxBodyRegular()
+                .foregroundColor(Color.init(designSystemColor: .accent)) },
+                           action: {
+                                Task { await viewModel.restoreAccountPurchase() }
+                            },
+                           isButton: !viewModel.isRestoringSubscription )
+        .alert(isPresented: $viewModel.shouldDisplayRestoreSubscriptionError) {
+            Alert(
+                title: Text(UserText.subscriptionAppStoreErrorTitle),
+                message: Text(UserText.subscriptionAppStoreErrorMessage),
+                dismissButton: .default(Text(UserText.actionOK)) {}
+            )
+        }
     }
     
     private var manageSubscriptionView: some View {
         Text(UserText.settingsPProManageSubscription)
             .daxBodyRegular()
-            .foregroundColor(Color.init(designSystemColor: .accent))
     }
-     
+    
+    @ViewBuilder
     private var purchaseSubscriptionView: some View {
-        return Group {
+
+        Group {
             SettingsCustomCell(content: { subscriptionDescriptionView })
-            let viewModel = SubscriptionFlowViewModel(onFeatureSelected: { value in
-                self.viewModel.onAppearNavigationTarget = value
+            
+            let subscribeView = SubscriptionContainerView(currentView: .subscribe)
+                .navigationViewStyle(.stack)
+                .environmentObject(subscriptionNavigationCoordinator)
+            let restoreView = SubscriptionContainerView(currentView: .restore)
+                .navigationViewStyle(.stack)
+                .environmentObject(subscriptionNavigationCoordinator)
+                .onFirstAppear {
+                    Pixel.fire(pixel: .privacyProRestorePurchaseClick)
+                }
+
+            NavigationLink(destination: subscribeView,
+                           isActive: $isShowingSubscribeFlow,
+                           label: { SettingsCellView(label: UserText.settingsPProLearnMore ) })
+            
+            NavigationLink(destination: restoreView,
+                           isActive: $isShowingRestoreFlow,
+                           label: { SettingsCellView(label: UserText.settingsPProIHaveASubscription ) })
+        }
+    }
+
+    @ViewBuilder
+    private var noEntitlementsAvailableView: some View {
+        Group {
+            SettingsCustomCell(content: {
+                HStack(alignment: .top) {
+                    Image(Constants.infoIcon)
+                        .frame(width: Constants.noEntitlementsIconWidth)
+                        .padding(.top, Constants.topCellPadding)
+                    VStack(alignment: .leading) {
+                        Text(UserText.settingsPProActivationPendingTitle).daxBodyRegular()
+                        Text(UserText.settingsPProActivationPendingDescription).daxFootnoteRegular()
+                            .padding(.bottom, Constants.purchaseDescriptionPadding)
+                    }.foregroundColor(Color(designSystemColor: .textSecondary))
+                }
             })
-            NavigationLink(destination: SubscriptionFlowView(viewModel: viewModel)) {
-                SettingsCustomCell(content: { learnMoreView })
-            }
+            restorePurchaseView
         }
     }
     
+    @ViewBuilder
     private var subscriptionDetailsView: some View {
-        return Group {
-            SettingsCellView(label: UserText.settingsPProVPNTitle,
-                             subtitle: viewModel.state.networkProtection.status != "" ? viewModel.state.networkProtection.status : nil,
-                             action: { viewModel.presentLegacyView(.netP) },
-                             disclosureIndicator: true,
-                             isButton: true)
-            
-            NavigationLink(destination: Text("Data Broker Protection"), isActive: $viewModel.shouldNavigateToDBP) {
-                SettingsCellView(label: UserText.settingsPProDBPTitle, subtitle: UserText.settingsPProDBPSubTitle)
+        
+            if viewModel.shouldShowNetP {
+                SettingsCellView(label: UserText.settingsPProVPNTitle,
+                                 subtitle: viewModel.state.networkProtection.status != "" ? viewModel.state.networkProtection.status : nil,
+                                 action: { viewModel.presentLegacyView(.netP) },
+                                 disclosureIndicator: true,
+                                 isButton: true)
             }
             
-            NavigationLink(destination: Text("Identity Theft Restoration"), isActive: $viewModel.shouldNavigateToITP) {
-                SettingsCellView(label: UserText.settingsPProITRTitle, subtitle: UserText.settingsPProITRSubTitle)
+            if viewModel.shouldShowDBP {
+                NavigationLink(destination: SubscriptionPIRView(),
+                               isActive: $isShowingDBP,
+                               label: {
+                    SettingsCellView(label: UserText.settingsPProDBPTitle,
+                                     subtitle: UserText.settingsPProDBPSubTitle)
+                })
+                
             }
-            
-            NavigationLink(destination: SubscriptionSettingsView(viewModel: SubscriptionSettingsViewModel())) {
+                    
+            if viewModel.shouldShowITP {
+                NavigationLink(destination: SubscriptionITPView(),
+                               isActive: $isShowingITP,
+                               label: {
+                    SettingsCellView(label: UserText.settingsPProITRTitle,
+                                     subtitle: UserText.settingsPProITRSubTitle)
+                })
+                
+            }
+
+        NavigationLink(destination: SubscriptionSettingsView().environmentObject(subscriptionNavigationCoordinator)) {
                 SettingsCustomCell(content: { manageSubscriptionView })
-            }
         }
+
     }
     
     var body: some View {
-        
-        if viewModel.state.subscription.enabled {
+        if viewModel.state.subscription.enabled && viewModel.state.subscription.canPurchase {
             Section(header: Text(UserText.settingsPProSection)) {
                 if viewModel.state.subscription.hasActiveSubscription {
-                    subscriptionDetailsView
+                        
+                    // Allow managing the subscription if we have some entitlements
+                    if viewModel.shouldShowDBP || viewModel.shouldShowITP || viewModel.shouldShowNetP {
+                        subscriptionDetailsView
+                        
+                        // If no entitlements it should mean the backend is still out of sync
+                    } else {
+                        noEntitlementsAvailableView
+                    }
+                    
+                } else if viewModel.state.subscription.isSubscriptionPendingActivation {
+                    noEntitlementsAvailableView
                 } else {
                     purchaseSubscriptionView
                 }
             }
+            
+            .onReceive(subscriptionNavigationCoordinator.$shouldPopToAppSettings) { shouldDismiss in
+                if shouldDismiss {
+                    isShowingRestoreFlow = false
+                    isShowingSubscribeFlow = false
+                }
+            }
+    
         }
     }
 }

@@ -21,59 +21,35 @@ import Foundation
 import Core
 import BackgroundTasks
 import NetworkProtection
+import Waitlist
+import BrowserServicesKit
 
 extension AppDelegate {
 
-    func checkWaitlists() {
-        checkWindowsWaitlist()
-
-#if NETWORK_PROTECTION
-        checkNetworkProtectionWaitlist()
-#endif
-        checkWaitlistBackgroundTasks()
-
+    func clearDebugWaitlistState() {
+        if let inviteCode = VPNWaitlist.shared.waitlistStorage.getWaitlistInviteCode(),
+           inviteCode == VPNWaitlistDebugViewController.Constants.mockInviteCode {
+            let store = WaitlistKeychainStore(waitlistIdentifier: VPNWaitlist.identifier)
+            store.delete(field: .inviteCode)
+        }
     }
 
-    private func checkWindowsWaitlist() {
-        WindowsBrowserWaitlist.shared.fetchInviteCodeIfAvailable { error in
-            guard error == nil else { return }
-            WindowsBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
+    func checkWaitlists() {
+
+#if NETWORK_PROTECTION
+        if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() {
+            checkNetworkProtectionWaitlist()
         }
+#endif
     }
 
 #if NETWORK_PROTECTION
     private func checkNetworkProtectionWaitlist() {
         let accessController = NetworkProtectionAccessController()
-        if accessController.isPotentialOrCurrentWaitlistUser {
-            DailyPixel.fire(pixel: .networkProtectionWaitlistUserActive)
-        }
 
         VPNWaitlist.shared.fetchInviteCodeIfAvailable { [weak self] error in
             guard error == nil else {
-#if !DEBUG
-                if error == .alreadyHasInviteCode, UIApplication.shared.applicationState == .active {
-                    // If the user already has an invite code but their auth token has gone missing, attempt to redeem it again.
-                    let tokenStore = NetworkProtectionKeychainTokenStore()
-                    let waitlistStorage = VPNWaitlist.shared.waitlistStorage
-                    if let inviteCode = waitlistStorage.getWaitlistInviteCode(), !tokenStore.isFeatureActivated {
-                        let pixel: Pixel.Event = .networkProtectionWaitlistRetriedInviteCodeRedemption
-
-                        do {
-                            if let token = try tokenStore.fetchToken() {
-                                DailyPixel.fireDailyAndCount(pixel: pixel, withAdditionalParameters: [ "tokenState": "found" ])
-                            } else {
-                                DailyPixel.fireDailyAndCount(pixel: pixel, withAdditionalParameters: [ "tokenState": "nil" ])
-                            }
-                        } catch {
-                            DailyPixel.fireDailyAndCount(pixel: pixel, error: error, withAdditionalParameters: [ "tokenState": "error" ])
-                        }
-
-                        self?.fetchVPNWaitlistAuthToken(inviteCode: inviteCode)
-                    }
-                }
-#endif
                 return
-
             }
 
             guard let inviteCode = VPNWaitlist.shared.waitlistStorage.getWaitlistInviteCode() else {
@@ -85,30 +61,12 @@ extension AppDelegate {
     }
 #endif
 
-    private func checkWaitlistBackgroundTasks() {
-        BGTaskScheduler.shared.getPendingTaskRequests { tasks in
-            let hasWindowsBrowserWaitlistTask = tasks.contains { $0.identifier == WindowsBrowserWaitlist.backgroundRefreshTaskIdentifier }
-            if !hasWindowsBrowserWaitlistTask {
-                WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
-            }
-
-#if NETWORK_PROTECTION
-            let hasVPNWaitlistTask = tasks.contains { $0.identifier == VPNWaitlist.backgroundRefreshTaskIdentifier }
-            if !hasVPNWaitlistTask {
-                VPNWaitlist.shared.scheduleBackgroundRefreshTask()
-            }
-#endif
-        }
-    }
-
 #if NETWORK_PROTECTION
     func fetchVPNWaitlistAuthToken(inviteCode: String) {
         Task {
             do {
                 try await NetworkProtectionCodeRedemptionCoordinator().redeem(inviteCode)
                 VPNWaitlist.shared.sendInviteCodeAvailableNotification()
-
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionWaitlistNotificationShown)
             } catch {}
         }
     }

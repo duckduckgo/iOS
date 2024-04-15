@@ -46,9 +46,9 @@ enum FireButtonAnimationType: String, CaseIterable, Identifiable, CustomStringCo
         }
     }
     
-    var composition: Animation? {
+    var composition: LottieAnimation? {
         guard let fileName = fileName else { return nil }
-        return Animation.named(fileName, animationCache: LRUAnimationCache.sharedCache)
+        return LottieAnimation.named(fileName, animationCache: DefaultAnimationCache.sharedCache)
     }
 
     var transition: Double {
@@ -98,8 +98,8 @@ enum FireButtonAnimationType: String, CaseIterable, Identifiable, CustomStringCo
 class FireButtonAnimator {
     
     private let appSettings: AppSettings
-    private var preLoadedComposition: Animation?
-    
+    private var preLoadedComposition: LottieAnimation?
+
     init(appSettings: AppSettings) {
         self.appSettings = appSettings
         reloadPreLoadedComposition()
@@ -110,26 +110,30 @@ class FireButtonAnimator {
                                                object: nil)
     }
         
-    func animate(onAnimationStart: @escaping () -> Void, onTransitionCompleted: @escaping () -> Void, completion: @escaping () -> Void) {
-        
+    func animate(onAnimationStart: @escaping () async -> Void, onTransitionCompleted: @escaping () async -> Void, completion: @escaping () async -> Void) {
+
         guard let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first,
               let snapshot = window.snapshotView(afterScreenUpdates: false) else {
-            onAnimationStart()
-            onTransitionCompleted()
-            completion()
+            Task { @MainActor in
+                await onAnimationStart()
+                await onTransitionCompleted()
+                await completion()
+            }
             return
         }
         
         guard let composition = preLoadedComposition else {
-            onAnimationStart()
-            onTransitionCompleted()
-            completion()
+            Task { @MainActor in
+                await onAnimationStart()
+                await onTransitionCompleted()
+                await completion()
+            }
             return
         }
         
         window.addSubview(snapshot)
         
-        let animationView = AnimationView(animation: composition)
+        let animationView = LottieAnimationView(animation: composition)
         let currentAnimation = appSettings.currentFireButtonAnimation
         let speed = currentAnimation.speed
         animationView.contentMode = .scaleAspectFill
@@ -141,16 +145,22 @@ class FireButtonAnimator {
         let delay = duration * currentAnimation.transition
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             snapshot.removeFromSuperview()
-            onTransitionCompleted()
+            Task { @MainActor in
+                await onTransitionCompleted()
+            }
         }
         
         animationView.play(fromProgress: 0, toProgress: 1) { [weak animationView] _ in
             animationView?.removeFromSuperview()
-            completion()
+            Task { @MainActor in
+                await completion()
+            }
         }
 
         DispatchQueue.main.async {
-            onAnimationStart()
+            Task { @MainActor in
+                await onAnimationStart()
+            }
         }
     }
     

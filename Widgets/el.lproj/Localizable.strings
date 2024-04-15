@@ -31,6 +31,12 @@
 /* Title shown to the user when adding the Fire Button lock screen widget */
 "lock.screen.widget.fire.title" = "Fire Button";
 
+/* Description shown to the user when adding the Search Passwords lock screen widget */
+"lock.screen.widget.passwords.description" = "Αναζητήστε γρήγορα τους αποθηκευμένους κωδικούς πρόσβασής σας στο DuckDuckGo.";
+
+/* Title shown to the user when adding the Search Passwords lock screen widget */
+"lock.screen.widget.passwords.title" = "Αναζήτηση κωδικών πρόσβασης";
+
 /* Description shown to the user when adding the Search lock screen widget */
 "lock.screen.widget.search.description" = "Αρχίστε αμέσως μια ιδιωτική αναζήτηση στο DuckDuckGo.";
 
@@ -45,6 +51,12 @@
 
 /* No comment provided by engineer. */
 "VPN Not Configured" = "VPN Not Configured";
+
+/* Description of search passwords widget in widget gallery */
+"widget.gallery.passwords.description" = "Αναζητήστε γρήγορα τους αποθηκευμένους κωδικούς πρόσβασής σας στο DuckDuckGo.";
+
+/* Display name for search passwords widget in widget gallery */
+"widget.gallery.passwords.display.name" = "Αναζήτηση κωδικών πρόσβασης";
 
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Κάντε αναζήτηση ή επισκεφτείτε τους αγαπημένους ιστότοπούς σας ιδιωτικά, με μόνο ένα πάτημα.";
@@ -63,6 +75,9 @@
 
 /* Message shown in the favorites widget empty state. */
 "widget.no.favorites.message" = "Επισκεφθείτε γρήγορα τους αγαπημένους σας ιστότοπους.";
+
+/* Text in passwords widget */
+"widget.passwords" = "Αναζήτηση κωδικών πρόσβασης";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Αναζήτηση DuckDuckGo";

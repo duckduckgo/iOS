@@ -17,11 +17,12 @@
 //  limitations under the License.
 //
 
-import XCTest
-@testable import Core
-import Kingfisher
-import CoreData
 import Bookmarks
+import CoreData
+import Kingfisher
+import XCTest
+
+@testable import Core
 
 class FaviconsTests: XCTestCase {
 
@@ -97,8 +98,8 @@ class FaviconsTests: XCTestCase {
         switch options?[4] {
         case .alternativeSources(let sources):
             XCTAssertEqual(2, sources.count)
-            XCTAssertEqual(sources[0].url, URL(string: "https://example.com/favicon.ico"))
-            XCTAssertEqual(sources[1].url, URL(string: "http://example.com/favicon.ico"))
+            XCTAssertEqual(sources[0].url, URL(string: "https://example.com/favicon.ico")!)
+            XCTAssertEqual(sources[1].url, URL(string: "http://example.com/favicon.ico")!)
 
         default:
             XCTFail("Unexpected option")

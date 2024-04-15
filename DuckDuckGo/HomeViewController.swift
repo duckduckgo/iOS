@@ -174,7 +174,7 @@ class HomeViewController: UIViewController {
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
 
         configureCollectionView()
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(remoteMessagesDidChange),
@@ -218,13 +218,11 @@ class HomeViewController: UIViewController {
 #if APP_TRACKING_PROTECTION
         collectionView.configure(withController: self,
                                  favoritesViewModel: favoritesViewModel,
-                                 appTPHomeViewModel: appTPHomeViewModel,
-                                 andTheme: ThemeManager.shared.currentTheme)
+                                 appTPHomeViewModel: appTPHomeViewModel)
 #else
         collectionView.configure(withController: self,
                                  favoritesViewModel: favoritesViewModel,
-                                 appTPHomeViewModel: nil,
-                                 andTheme: ThemeManager.shared.currentTheme)
+                                 appTPHomeViewModel: nil)
 #endif
     }
     
@@ -264,12 +262,14 @@ class HomeViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        if presentedViewController == nil { // prevents these being called when settings forces this controller to be reattached
-            showNextDaxDialog()
-        }
+
+        // If there's no tab switcher then this will be true, if there is a tabswitcher then only allow the
+        //  stuff below to happen if it's being dismissed
+        guard presentedViewController?.isBeingDismissed ?? true else { return }
 
         Pixel.fire(pixel: .homeScreenShown)
+        showNextDaxDialog()
+        
         collectionView.didAppear()
 
         viewHasAppeared = true
@@ -398,10 +398,10 @@ extension HomeViewController: HomeMessageViewSectionRendererDelegate {
     }
 }
 
-extension HomeViewController: Themable {
+extension HomeViewController {
 
-    func decorate(with theme: Theme) {
-        collectionView.decorate(with: theme)
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         settingsButton.tintColor = theme.barTintColor
     }
 }

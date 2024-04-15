@@ -44,7 +44,54 @@ final class FireButtonReferenceTests: XCTestCase {
         return url.host!
     }
 
-    func testCookieStorage() {
+    @MainActor
+    func testClearDataUsingLegacyContainer() async throws {
+        // Using WKWebsiteDataStore(forIdentifier:) doesn't persist cookies in a testable way, so use the legacy container here.
+        
+        let preservedLogins = PreserveLogins.shared
+        preservedLogins.clearAll()
+        
+        for site in testData.fireButtonFireproofing.fireproofedSites {
+            let sanitizedSite = sanitizedSite(site)
+            os_log("Adding %s to fireproofed sites", sanitizedSite)
+            preservedLogins.addToAllowed(domain: sanitizedSite)
+        }
+        
+        let referenceTests = testData.fireButtonFireproofing.tests.filter {
+            $0.exceptPlatforms.contains("ios-browser") == false
+        }
+                    
+        let cookieStorage = CookieStorage()
+        
+        let idManager = DataStoreIdManager()
+        XCTAssertFalse(idManager.hasId)
+        
+        for test in referenceTests {
+            let cookie = try XCTUnwrap(cookie(for: test))
+
+            let cookieStore = WKWebsiteDataStore.default().httpCookieStore
+            await cookieStore.setCookie(cookie)
+            
+            // Pretend the webview was loaded and the cookies were previously consumed
+            cookieStorage.isConsumed = true
+            
+            await WebCacheManager.shared.clear(cookieStorage: cookieStorage, logins: preservedLogins, dataStoreIdManager: idManager)
+            
+            let testCookie = cookieStorage.cookies.filter { $0.name == test.cookieName }.first
+
+            if test.expectCookieRemoved {
+                XCTAssertNil(testCookie, "Cookie should not exist for test: \(test.name)")
+            } else {
+                XCTAssertNotNil(testCookie, "Cookie should exist for test: \(test.name)")
+            }
+            
+            // Reset cache
+            cookieStorage.cookies = []
+        }
+
+    }
+    
+    func testCookieStorage() throws {
         let preservedLogins = PreserveLogins.shared
         preservedLogins.clearAll()
         
@@ -59,16 +106,18 @@ final class FireButtonReferenceTests: XCTestCase {
         }
             
         let cookieStorage = CookieStorage()
+        cookieStorage.isConsumed = true
         for test in referenceTests {
-            guard let cookie = cookie(for: test) else {
-                XCTFail("Cookie should exist for test \(test.name)")
-                return
-            }
+            let cookie = try XCTUnwrap(cookie(for: test))
             
+            // Pretend the webview was loaded and the cookies were previously consumed
+            cookieStorage.isConsumed = true
+
+            // This simulates loading the cookies from the current web view data stores and updating the storage
             cookieStorage.updateCookies([
                 cookie
             ], keepingPreservedLogins: preservedLogins)
-            
+
             let testCookie = cookieStorage.cookies.filter { $0.name == test.cookieName }.first
 
             if test.expectCookieRemoved {
@@ -79,6 +128,7 @@ final class FireButtonReferenceTests: XCTestCase {
             
             // Reset cache
             cookieStorage.cookies = []
+            cookieStorage.isConsumed = true
         }
     }
     

@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import SwiftUI
 
 class OnboardingViewController: UIViewController, Onboarding {
         
@@ -32,8 +33,12 @@ class OnboardingViewController: UIViewController, Onboarding {
     @IBOutlet weak var subheaderContainer: UIView!
     @IBOutlet weak var contentWidth: NSLayoutConstraint!
     @IBOutlet weak var contentContainer: UIView!
-    @IBOutlet weak var skipButton: UIButton!
-    @IBOutlet weak var continueButton: UIButton!
+    @IBOutlet weak var buttonsContainer: UIView!
+
+    private let buttonsController = UIHostingController(rootView: OnboardingActions(viewModel: .init()))
+    private var buttonsModel: OnboardingActions.Model {
+        self.buttonsController.rootView.viewModel
+    }
 
     var contentController: OnboardingContentViewController?
     
@@ -43,9 +48,11 @@ class OnboardingViewController: UIViewController, Onboarding {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpButtons()
         loadInitialContent()
         updateForSmallerScreens()
         setUpNavigationBar()
+        decorate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,7 +83,33 @@ class OnboardingViewController: UIViewController, Onboarding {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navigationController?.navigationBar.shadowImage = UIImage()
     }
-    
+
+    private func setUpButtons() {
+        
+        buttonsController.rootView.primaryAction = { [weak self] in
+            self?.next(on: .continue)
+        }
+
+        buttonsController.rootView.secondaryAction = { [weak self] in
+            self?.next(on: .skip)
+        }
+
+        buttonsController.view.backgroundColor = .clear
+
+        addChild(buttonsController)
+        buttonsContainer.addSubview(buttonsController.view)
+        buttonsController.didMove(toParent: self)
+
+        let buttonsView = buttonsController.view!
+        buttonsView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            buttonsView.leadingAnchor.constraint(equalTo: buttonsContainer.leadingAnchor),
+            buttonsView.trailingAnchor.constraint(equalTo: buttonsContainer.trailingAnchor),
+            buttonsView.topAnchor.constraint(equalTo: buttonsContainer.topAnchor),
+            buttonsView.bottomAnchor.constraint(equalTo: buttonsContainer.bottomAnchor),
+        ])
+    }
+
     private func adjustHeight(label: UILabel, toMaxHeight maxHeight: CGFloat) -> CGFloat {
         guard var fontSize = label.attributedText?.font?.pointSize else { return label.bounds.height }
         
@@ -107,33 +140,33 @@ class OnboardingViewController: UIViewController, Onboarding {
 
     private func updateContent(_ controller: OnboardingContentViewController) {
         controller.delegate = self
-        continueButton.isEnabled = controller.canContinue
+        buttonsModel.isContinueEnabled = controller.canContinue
         contentController = controller
         header.setAttributedTextString(controller.header)
         subheader.setAttributedTextString(controller.subtitle ?? "")
         UIAccessibility.post(notification: UIAccessibility.Notification.screenChanged, argument: header)
     }
-    
-    @IBAction func next(sender: UIButton) {
-        
+
+    private func next(on button: ActionButton) {
         let navigationHandler = {
             if let name = self.controllerNames.first,
-                let oldController = self.contentController,
-                let newController = self.storyboard?.instantiateViewController(withIdentifier: name) as? OnboardingContentViewController {
-                
+               let oldController = self.contentController,
+               let newController = self.storyboard?.instantiateViewController(withIdentifier: name) as? OnboardingContentViewController {
+
                 self.transition(from: oldController, to: newController)
             } else {
                 self.done()
             }
         }
 
-        if sender == continueButton {
+        switch button {
+        case .continue:
             contentController?.onContinuePressed(navigationHandler: navigationHandler)
-        } else {
+        case .skip:
             contentController?.onSkipPressed(navigationHandler: navigationHandler)
         }
     }
-    
+
     private func transition(from oldController: OnboardingContentViewController, to newController: OnboardingContentViewController) {
         let frame = oldController.view.frame
         
@@ -170,15 +203,11 @@ class OnboardingViewController: UIViewController, Onboarding {
     
     private func prepareFor(nextScreen: OnboardingContentViewController) {
         controllerNames = [String](controllerNames.dropFirst())
-        
-        let continueButtonTitle = nextScreen.continueButtonTitle
-        continueButton.setTitle(continueButtonTitle, for: .normal)
-        continueButton.setTitle(continueButtonTitle, for: .disabled)
-        continueButton.isEnabled = nextScreen.canContinue
-        
-        let skipButtonTitle = nextScreen.skipButtonTitle
-        skipButton.setTitle(skipButtonTitle, for: .normal)
-        skipButton.setTitle(skipButtonTitle, for: .disabled)
+
+        buttonsModel.primaryButtonTitle = nextScreen.continueButtonTitle
+        buttonsModel.isContinueEnabled = nextScreen.canContinue
+
+        buttonsModel.secondaryButtonTitle = nextScreen.skipButtonTitle
     }
     
     func done() {
@@ -202,7 +231,24 @@ class OnboardingViewController: UIViewController, Onboarding {
 extension OnboardingViewController: OnboardingContentDelegate {
     
     func setContinueEnabled(_ enabled: Bool) {
-        continueButton.isEnabled = enabled
+        buttonsModel.isContinueEnabled = enabled
     }
     
+}
+
+extension OnboardingViewController {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
+
+        view.backgroundColor = theme.onboardingBackgroundColor
+        header.textColor = theme.onboardingHeaderColor
+        subheader.textColor = theme.onboardingSubheaderColor
+    }
+}
+
+private extension OnboardingViewController {
+    enum ActionButton {
+        case `continue`
+        case skip
+    }
 }

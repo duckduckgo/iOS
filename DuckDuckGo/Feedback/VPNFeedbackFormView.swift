@@ -79,9 +79,8 @@ struct VPNFeedbackFormCategoryView: View {
 
 @available(iOS 15.0, *)
 struct VPNFeedbackFormView: View {
-    @ObservedObject var viewModel: VPNFeedbackFormViewModel
+    @StateObject var viewModel: VPNFeedbackFormViewModel
     @Environment(\.dismiss) private var dismiss
-    @State private var showsError = false
     @FocusState private var isTextEditorFocused: Bool
 
     var onDismiss: () -> Void
@@ -90,11 +89,6 @@ struct VPNFeedbackFormView: View {
         configuredForm()
         .applyBackground()
         .navigationTitle(UserText.netPStatusViewShareFeedback)
-        .alert(isPresented: $showsError) {
-            Alert(title: Text(UserText.vpnFeedbackFormErrorTitle),
-                  message: Text(UserText.vpnFeedbackFormErrorMessage),
-                  dismissButton: .default(Text(UserText.vpnFeedbackFormErrorAction)))
-        }
     }
 
     @ViewBuilder
@@ -204,14 +198,10 @@ struct VPNFeedbackFormView: View {
     private func submitButton() -> some View {
         Button {
             Task {
-                let success = await viewModel.process()
-                if success {
-                    dismiss()
-                    onDismiss()
-                } else {
-                    showsError = true
-                }
+                _ = await viewModel.process()
             }
+            dismiss()
+            onDismiss()
         } label: {
             Text(UserText.vpnFeedbackFormButtonSubmit)
                 .daxButton()

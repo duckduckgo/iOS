@@ -22,12 +22,12 @@ import BrowserServicesKit
 import TrackerRadarKit
 
 struct AppLastCompiledRules: LastCompiledRules, Codable {
-    
+
     var name: String
     var trackerData: TrackerData
     var etag: String
     var identifier: ContentBlockerRulesIdentifier
-    
+
 }
 
 protocol Storage {
@@ -36,7 +36,7 @@ protocol Storage {
 }
 
 struct LastCompiledRulesStorage: Storage {
-    
+
     private enum Const {
         static let filename = "LastCompiledRules"
         static let path = FileManager
@@ -44,7 +44,7 @@ struct LastCompiledRulesStorage: Storage {
             .containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)!
             .appendingPathComponent(filename)
     }
-    
+
     func persist(_ data: Data) -> Bool {
         do {
             try data.write(to: Const.path, options: .atomic)
@@ -53,7 +53,7 @@ struct LastCompiledRulesStorage: Storage {
             return false
         }
     }
-    
+
     var data: Data? {
         do {
             return try Data(contentsOf: Const.path)
@@ -61,17 +61,17 @@ struct LastCompiledRulesStorage: Storage {
             return nil
         }
     }
-    
+
 }
 
 final class AppLastCompiledRulesStore: LastCompiledRulesStore {
-    
+
     private var storage: Storage
 
     init(with storage: Storage = LastCompiledRulesStorage()) {
         self.storage = storage
     }
-    
+
     var rules: [LastCompiledRules] {
         guard
             let data = storage.data,
@@ -88,10 +88,10 @@ final class AppLastCompiledRulesStore: LastCompiledRulesStore {
                                  etag: rules.etag,
                                  identifier: rules.identifier)
         }
-        
+
         if !rules.isEmpty, let encodedRules = try? JSONEncoder().encode(rules) {
             _ = storage.persist(encodedRules)
         }
     }
-    
+
 }

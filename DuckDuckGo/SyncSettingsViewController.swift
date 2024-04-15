@@ -24,6 +24,7 @@ import SyncUI
 import DDGSync
 import Common
 
+// swiftlint:disable file_length
 @MainActor
 class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
@@ -31,7 +32,11 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
     let syncService: DDGSyncing
     let syncBookmarksAdapter: SyncBookmarksAdapter
+    let syncCredentialsAdapter: SyncCredentialsAdapter
     var connector: RemoteConnecting?
+
+    let userAuthenticator = UserAuthenticator(reason: UserText.syncUserUserAuthenticationReason)
+    let userSession = UserSession()
 
     var recoveryCode: String {
         guard let code = syncService.account?.recoveryCode else {
@@ -52,9 +57,15 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     var cancellables = Set<AnyCancellable>()
 
     // For some reason, on iOS 14, the viewDidLoad wasn't getting called so do some setup here
-    init(syncService: DDGSyncing, syncBookmarksAdapter: SyncBookmarksAdapter, appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
+    init(
+        syncService: DDGSyncing,
+        syncBookmarksAdapter: SyncBookmarksAdapter,
+        syncCredentialsAdapter: SyncCredentialsAdapter,
+        appSettings: AppSettings = AppDependencyProvider.shared.appSettings
+    ) {
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
+        self.syncCredentialsAdapter = syncCredentialsAdapter
 
         let viewModel = SyncSettingsViewModel(
             isOnDevEnvironment: { syncService.serverEnvironment == .development },
@@ -69,6 +80,9 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         setUpFaviconsFetcherSwitch(viewModel)
         setUpFavoritesDisplayModeSwitch(viewModel, appSettings)
         setUpSyncPaused(viewModel, appSettings)
+        if DDGSync.isFieldValidationEnabled {
+            setUpSyncInvalidObjectsInfo(viewModel)
+        }
         setUpSyncFeatureFlags(viewModel)
         refreshForState(syncService.authState)
 
@@ -86,6 +100,19 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func authenticateUser(completion: @escaping (UserAuthenticator.AuthError?) -> Void) {
+        if !userSession.isSessionValid {
+            userAuthenticator.logOut()
+        }
+
+        userAuthenticator.authenticate { [weak self] error in
+            if error == nil {
+                self?.userSession.startSession()
+            }
+            completion(error)
+        }
     }
 
     private func setUpSyncFeatureFlags(_ viewModel: SyncSettingsViewModel) {
@@ -170,9 +197,30 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
             .store(in: &cancellables)
     }
 
+    private func setUpSyncInvalidObjectsInfo(_ viewModel: SyncSettingsViewModel) {
+        syncService.isSyncInProgressPublisher
+            .removeDuplicates()
+            .filter { !$0 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updateInvalidObjects(viewModel)
+            }
+            .store(in: &cancellables)
+    }
+
+    private func updateInvalidObjects(_ viewModel: SyncSettingsViewModel) {
+        viewModel.invalidBookmarksTitles = syncBookmarksAdapter.provider?
+            .fetchDescriptionsForObjectsThatFailedValidation()
+            .map { $0.truncated(length: 15) } ?? []
+
+        let invalidCredentialsObjects: [String] = (try? syncCredentialsAdapter.provider?.fetchDescriptionsForObjectsThatFailedValidation()) ?? []
+        viewModel.invalidCredentialsTitles = invalidCredentialsObjects.map({ $0.truncated(length: 15) })
+    }
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -346,6 +394,28 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
         if let appSettings = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
         }
+    }
+
+}
+
+extension SyncSettingsViewController {
+
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
+        view.backgroundColor = theme.backgroundColor
+
+        navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
+        navigationController?.navigationBar.tintColor = theme.navigationBarTintColor
+
+        if #available(iOS 15.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.shadowColor = .clear
+            appearance.backgroundColor = theme.backgroundColor
+
+            navigationController?.navigationBar.standardAppearance = appearance
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        }
+
     }
 
 }

@@ -22,14 +22,13 @@ import Lottie
 
 class PrivacyInfoContainerView: UIView {
     
-    private var currentlyLoadedStyle: ThemeManager.ImageSet!
     
     @IBOutlet var privacyIcon: PrivacyIconView!
     @IBOutlet var maskingView: UIView!
     
-    @IBOutlet var trackers1Animation: AnimationView!
-    @IBOutlet var trackers2Animation: AnimationView!
-    @IBOutlet var trackers3Animation: AnimationView!
+    @IBOutlet var trackers1Animation: LottieAnimationView!
+    @IBOutlet var trackers2Animation: LottieAnimationView!
+    @IBOutlet var trackers3Animation: LottieAnimationView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -41,24 +40,22 @@ class PrivacyInfoContainerView: UIView {
         [trackers1Animation, trackers2Animation, trackers3Animation].forEach { animationView in
             animationView.contentMode = .scaleAspectFill
             animationView.backgroundBehavior = .pauseAndRestore
+            // Trackers animation do not render properly using Lottie CoreAnimation. Running them on the CPU seems working fine.
+            animationView.configuration = LottieConfiguration(renderingEngine: .mainThread)
         }
         
-        loadAnimations(for: ThemeManager.shared.currentTheme)
+        decorate()
     }
-    
-    private func loadAnimations(for theme: Theme, animationCache cache: AnimationCacheProvider = LRUAnimationCache.sharedCache) {
-        let useLightStyle = theme.currentImageSet == .light
 
-        trackers1Animation.animation = Animation.named(useLightStyle ? "trackers-1" : "dark-trackers-1", animationCache: cache)
-        trackers2Animation.animation = Animation.named(useLightStyle ? "trackers-2" : "dark-trackers-2", animationCache: cache)
-        trackers3Animation.animation = Animation.named(useLightStyle ? "trackers-3" : "dark-trackers-3", animationCache: cache)
-        
-        privacyIcon.loadAnimations(for: theme, animationCache: cache)
-        
-        currentlyLoadedStyle = theme.currentImageSet
+    private func loadAnimations(animationCache cache: AnimationCacheProvider = DefaultAnimationCache.sharedCache) {
+        let useDarkStyle = traitCollection.userInterfaceStyle == .dark
+
+        trackers1Animation.animation = LottieAnimation.named(useDarkStyle ? "dark-trackers-1" : "trackers-1", animationCache: cache)
+        trackers2Animation.animation = LottieAnimation.named(useDarkStyle ? "dark-trackers-2" : "trackers-2", animationCache: cache)
+        trackers3Animation.animation = LottieAnimation.named(useDarkStyle ? "dark-trackers-3" : "trackers-3", animationCache: cache)
     }
-    
-    func trackerAnimationView(for trackerCount: Int) -> AnimationView? {
+
+    func trackerAnimationView(for trackerCount: Int) -> LottieAnimationView? {
         switch trackerCount {
         case 0: return nil
         case 1: return trackers1Animation
@@ -75,14 +72,21 @@ class PrivacyInfoContainerView: UIView {
     }
 }
 
-extension PrivacyInfoContainerView: Themable {
+extension PrivacyInfoContainerView {
     
-    func decorate(with theme: Theme) {
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
         
         maskingView.backgroundColor = theme.searchBarBackgroundColor
         
-        if theme.currentImageSet != currentlyLoadedStyle {
-            loadAnimations(for: theme)
+        loadAnimations()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            loadAnimations()
         }
     }
 }

@@ -20,6 +20,12 @@
 import Common
 import Foundation
 
+/// Class for persisting cookies for fire proofed sites to work around a WKWebView / DataStore bug which does not let data get persisted until the webview has loaded.
+///
+/// Privacy information:
+/// * The Fire Button does not delete the user's DuckDuckGo search settings, which are saved as cookies. Removing these cookies would reset them and have undesired consequences, i.e. changing the theme, default language, etc.
+/// * The Fire Button also does not delete temporary cookies associated with 'surveys.duckduckgo.com'. When we launch surveys to help us understand issues that impact users over time, we use this cookie to temporarily store anonymous survey answers, before deleting the cookie. Cookie storage duration is communicated to users before they opt to submit survey answers.
+/// * These cookies are not stored in a personally identifiable way. For example, the large size setting is stored as 's=l.' More info in https://duckduckgo.com/privacy
 public class CookieStorage {
 
     struct Keys {
@@ -28,16 +34,16 @@ public class CookieStorage {
     }
 
     private var userDefaults: UserDefaults
-    
+
     var isConsumed: Bool {
         get {
-            userDefaults.bool(forKey: Keys.consumed, defaultValue: false)
+            return userDefaults.bool(forKey: Keys.consumed, defaultValue: false)
         }
         set {
             userDefaults.set(newValue, forKey: Keys.consumed)
         }
     }
-    
+
     /// Use the `updateCookies` function rather than the setter which is only visible for testing.
     var cookies: [HTTPCookie] {
         get {
@@ -48,17 +54,17 @@ public class CookieStorage {
                     cookieData.forEach({
                         properties[HTTPCookiePropertyKey(rawValue: $0.key)] = $0.value
                     })
-                    
+
                     if let cookie = HTTPCookie(properties: properties) {
                         os_log("read cookie %s %s %s", log: .generalLog, type: .debug, cookie.domain, cookie.name, cookie.value)
                         storedCookies.append(cookie)
                     }
                 }
             }
-            
+
             return storedCookies
         }
-        
+
         set {
             var cookies = [[String: Any?]]()
             newValue.forEach { cookie in
@@ -77,19 +83,24 @@ public class CookieStorage {
         self.userDefaults = userDefaults
     }
 
-    enum CookieDomainsOnUpdate {
+    /// Used when debugging (e.g. on the simulator).
+    enum CookieDomainsOnUpdateDiagnostic {
         case empty
         case match
         case missing
         case different
+        case notConsumed
     }
-    
+
+    /// Update ALL cookies. The absence of cookie domains here indicateds they have been removed by the website, so be sure to call this with all cookies that might need to be persisted even if those websites have not been visited yet.
     @discardableResult
-    func updateCookies(_ cookies: [HTTPCookie], keepingPreservedLogins preservedLogins: PreserveLogins) -> CookieDomainsOnUpdate {
+    func updateCookies(_ cookies: [HTTPCookie], keepingPreservedLogins preservedLogins: PreserveLogins) -> CookieDomainsOnUpdateDiagnostic {
+        guard isConsumed else { return .notConsumed }
+
         isConsumed = false
-        
+
         let persisted = self.cookies
-        
+
         func cookiesByDomain(_ cookies: [HTTPCookie]) -> [String: [HTTPCookie]] {
             var byDomain = [String: [HTTPCookie]]()
             cookies.forEach { cookie in
@@ -99,7 +110,7 @@ public class CookieStorage {
             }
             return byDomain
         }
-        
+
         let updatedCookiesByDomain = cookiesByDomain(cookies)
         var persistedCookiesByDomain = cookiesByDomain(persisted)
 
@@ -108,14 +119,16 @@ public class CookieStorage {
             updatedDomains: updatedCookiesByDomain.keys.sorted(),
             persistedDomains: persistedCookiesByDomain.keys.sorted()
         )
-        
-        updatedCookiesByDomain.keys.forEach {
+
+        let cookieDomains = Set(updatedCookiesByDomain.keys.map { $0 } + persistedCookiesByDomain.keys.map { $0 })
+
+        cookieDomains.forEach {
             persistedCookiesByDomain[$0] = updatedCookiesByDomain[$0]
         }
-        
+
         persistedCookiesByDomain.keys.forEach {
-            guard $0 != "duckduckgo.com" else { return } // DDG cookies are for SERP settings only
-            
+            guard !URL.isDuckDuckGo(domain: $0) else { return } // DDG cookies are for SERP settings only
+
             if !preservedLogins.isAllowed(cookieDomain: $0) {
                 persistedCookiesByDomain.removeValue(forKey: $0)
             }
@@ -124,11 +137,11 @@ public class CookieStorage {
         let now = Date()
         self.cookies = persistedCookiesByDomain.map { $0.value }.joined().compactMap { $0 }
             .filter { $0.expiresDate == nil || $0.expiresDate! > now }
-        
+
         return diagnosticResult
     }
-    
-    private func evaluateDomains(updatedDomains: [String], persistedDomains: [String]) -> CookieDomainsOnUpdate {
+
+    private func evaluateDomains(updatedDomains: [String], persistedDomains: [String]) -> CookieDomainsOnUpdateDiagnostic {
         if persistedDomains.isEmpty {
             return .empty
         } else if updatedDomains.count < persistedDomains.count {
@@ -139,5 +152,5 @@ public class CookieStorage {
             return .different
         }
     }
-     
+
 }

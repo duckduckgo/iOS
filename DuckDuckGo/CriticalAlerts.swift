@@ -27,7 +27,6 @@ struct CriticalAlerts {
         let alertController = UIAlertController(title: UserText.preemptiveCrashTitle,
                                                 message: UserText.preemptiveCrashBody,
                                                 preferredStyle: .alert)
-        alertController.overrideUserInterfaceStyle()
 
         let crashButton = UIAlertAction(title: UserText.preemptiveCrashAction, style: .default) { _ in
             fatalError("App is in unrecoverable state")
@@ -41,7 +40,6 @@ struct CriticalAlerts {
         let alertController = UIAlertController(title: UserText.insufficientDiskSpaceTitle,
                                                 message: UserText.insufficientDiskSpaceBody,
                                                 preferredStyle: .alert)
-        alertController.overrideUserInterfaceStyle()
 
         let openSettingsButton = UIAlertAction(title: UserText.insufficientDiskSpaceAction, style: .default) { _ in
             let url = URL(string: UIApplication.openSettingsURLString)!
@@ -58,7 +56,6 @@ struct CriticalAlerts {
         let alertController = UIAlertController(title: UserText.emailProtectionSignInTitle,
                                                 message: UserText.emailProtectionSignInBody,
                                                 preferredStyle: .alert)
-        alertController.overrideUserInterfaceStyle()
 
         let closeButton = UIAlertAction(title: UserText.keyCommandClose, style: .cancel)
         let signInButton = UIAlertAction(title: UserText.emailProtectionSignInAction, style: .default) { _ in
@@ -67,6 +64,33 @@ struct CriticalAlerts {
 
         alertController.addAction(closeButton)
         alertController.addAction(signInButton)
+        return alertController
+    }
+
+    static func makeExpiredEntitlementAlert(completion: @escaping () -> Void) -> UIAlertController {
+        let alertController = UIAlertController(title: UserText.vpnAccessRevokedAlertTitle,
+                                                message: UserText.vpnAccessRevokedAlertMessage,
+                                                preferredStyle: .alert)
+
+        let closeButton = UIAlertAction(title: UserText.vpnAccessRevokedAlertActionCancel, style: .cancel)
+        let subscribeButton = UIAlertAction(title: UserText.vpnAccessRevokedAlertActionSubscribe, style: .default) { _ in
+            completion()
+        }
+
+        alertController.addAction(closeButton)
+        alertController.addAction(subscribeButton)
+        alertController.preferredAction = subscribeButton
+        return alertController
+    }
+
+    static func makeVPNEarlyAccessOverAlert() -> UIAlertController {
+        let alertController = UIAlertController(title: UserText.vpnEarlyAccessOverAlertTitle,
+                                                message: UserText.vpnEarlyAccessOverAlertMessage,
+                                                preferredStyle: .alert)
+
+        let closeButton = UIAlertAction(title: UserText.vpnEarlyAccessOverAlertAction, style: .cancel)
+
+        alertController.addAction(closeButton)
         return alertController
     }
 

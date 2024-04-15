@@ -47,6 +47,7 @@ jobs:
           -destination "platform=iOS Simulator,name=iPhone 15,OS=17.2" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
+          -skipMacroValidation \
           | tee xcodebuild.log \
           | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
 
@@ -89,6 +90,7 @@ jobs:
           -destination "platform=iOS Simulator,name=iPhone 15,OS=17.2" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
+          -skipMacroValidation \
           | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
 
     - name: Publish unit tests report

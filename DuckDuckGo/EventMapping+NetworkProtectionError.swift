@@ -70,24 +70,19 @@ extension EventMapping where Event == NetworkProtectionError {
             params[PixelParameters.keychainErrorCode] = String(status)
         case .noAuthTokenFound:
             pixelEvent = .networkProtectionNoAuthTokenFoundError
-        case
-                .noServerRegistrationInfo,
+        case .vpnAccessRevoked:
+            return
+        case .noServerRegistrationInfo,
                 .couldNotSelectClosestServer,
                 .couldNotGetPeerPublicKey,
                 .couldNotGetPeerHostName,
                 .couldNotGetInterfaceAddressRange,
                 .failedToEncodeRegisterKeyRequest,
-                .noServerListFound,
                 .serverListInconsistency,
                 .failedToFetchRegisteredServers,
                 .failedToFetchServerList,
                 .failedToParseServerListResponse,
                 .failedToParseRegisteredServersResponse,
-                .failedToEncodeServerList,
-                .failedToDecodeServerList,
-                .failedToWriteServerList,
-                .couldNotCreateServerListDirectory,
-                .failedToReadServerList,
                 .wireGuardCannotLocateTunnelFileDescriptor,
                 .wireGuardInvalidState,
                 .wireGuardDnsResolution,

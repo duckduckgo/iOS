@@ -22,68 +22,16 @@ import Foundation
 import LocalAuthentication
 import Core
 
-final class AutofillLoginListAuthenticator {
-    enum AuthError: Equatable {
-        case noAuthAvailable
-        case failedToAuthenticate
-    }
-    
-    enum AuthenticationState {
-        case loggedIn, loggedOut, notAvailable
-    }
+final class AutofillLoginListAuthenticator: UserAuthenticator {
 
-    public struct Notifications {
-        public static let invalidateContext = Notification.Name("com.duckduckgo.app.AutofillLoginListAuthenticator.invalidateContext")
-    }
-    
-    private var context = LAContext()
-    @Published private(set) var state = AuthenticationState.loggedOut
-        
-    func logOut() {
-        state = .loggedOut
-    }
+    override func authenticate(completion: ((AuthError?) -> Void)? = nil) {
 
-    func canAuthenticate() -> Bool {
-        var error: NSError?
-        let canAuthenticate = LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
-        return canAuthenticate
-    }
-
-    func authenticate(completion: ((AuthError?) -> Void)? = nil) {
-       
-        if state == .loggedIn {
-            completion?(nil)
-            return
-        }
-
-        context = LAContext()
-        context.localizedCancelTitle = UserText.autofillLoginListAuthenticationCancelButton
-        let reason = UserText.autofillLoginListAuthenticationReason
-        context.localizedReason = reason
-        
-        if canAuthenticate() {
-            let reason = reason
-            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason ) { success, error in
-            
-                DispatchQueue.main.async {
-                    if success {
-                        self.state = .loggedIn
-                        completion?(nil)
-                    } else {
-                        os_log("Failed to authenticate: %s", log: .generalLog, type: .debug, error?.localizedDescription ?? "nil error")
-                        AppDependencyProvider.shared.autofillLoginSession.endSession()
-                        completion?(.failedToAuthenticate)
-                    }
-                }
+        super.authenticate { error in
+            if error != nil {
+                AppDependencyProvider.shared.autofillLoginSession.endSession()
             }
-        } else {
-            state = .notAvailable
-            AppDependencyProvider.shared.autofillLoginSession.endSession()
-            completion?(.noAuthAvailable)
-        }
-    }
 
-    func invalidateContext() {
-        context.invalidate()
+            completion?(error)
+        }
     }
 }

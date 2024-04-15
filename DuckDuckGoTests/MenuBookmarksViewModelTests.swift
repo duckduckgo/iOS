@@ -17,11 +17,11 @@
 //  limitations under the License.
 //
 
-import Foundation
-import XCTest
 import Bookmarks
-import Persistence
 import DuckDuckGo
+import Foundation
+import Persistence
+import XCTest
 
 private extension MenuBookmarksViewModel {
     

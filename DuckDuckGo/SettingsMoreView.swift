@@ -19,6 +19,7 @@
 
 import SwiftUI
 import UIKit
+import Core
 
 struct SettingsMoreView: View {
         
@@ -28,27 +29,29 @@ struct SettingsMoreView: View {
     var body: some View {
         Section(header: Text(UserText.settingsMoreSection)) {
             
-            SettingsCellView(label: UserText.settingsEmailProtection,
+            SettingsCellView(label: UserText.emailProtection,
                              subtitle: UserText.settingsEmailProtectionDescription,
-                             action: { viewModel.openEmailProtection() },
+                             action: {
+                viewModel.openEmailProtection()
+                Pixel.fire(pixel: .settingsEmailProtectionOpen,
+                           withAdditionalParameters: PixelExperiment.parameters)
+            },
                              disclosureIndicator: true,
                              isButton: true)
             
-            SettingsCellView(label: UserText.macBrowserTitle,
-                             subtitle: UserText.macWaitlistBrowsePrivately,
-                             action: { viewModel.presentLegacyView(.macApp) },
-                             disclosureIndicator: true,
-                             isButton: true)
+            NavigationLink(destination: DesktopDownloadView(viewModel: .init(platform: .mac))) {
+                SettingsCellView(label: UserText.macBrowserTitle,
+                                 subtitle: UserText.macWaitlistBrowsePrivately)
+            }
             
-            SettingsCellView(label: UserText.windowsWaitlistTitle,
-                             subtitle: UserText.windowsWaitlistBrowsePrivately,
-                             action: { viewModel.presentLegacyView(.windowsApp) },
-                             disclosureIndicator: true,
-                             isButton: true)
+            NavigationLink(destination: DesktopDownloadView(viewModel: .init(platform: .windows))) {
+                SettingsCellView(label: UserText.windowsWaitlistTitle,
+                                 subtitle: UserText.windowsWaitlistBrowsePrivately)
+            }
 
 #if NETWORK_PROTECTION
             if viewModel.state.networkProtection.enabled {
-                SettingsCellView(label: UserText.netPNavTitle,
+                SettingsCellView(label: UserText.netPSettingsTitle,
                                  subtitle: viewModel.state.networkProtection.status != "" ? viewModel.state.networkProtection.status : nil,
                                  action: { viewModel.presentLegacyView(.netP) },
                                  disclosureIndicator: true,

@@ -55,11 +55,39 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                         target: self,
                         action: #selector(addButtonPressed))
     }()
-    
+
+    private lazy var deleteAllButtonItem: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: UserText.autofillLoginListToolbarDeleteAllButton,
+                                     style: .plain,
+                                     target: self,
+                                     action: #selector(deleteAll))
+        button.tintColor = .systemRed
+        return button
+    }()
+
+    private lazy var accountsCountLabel: UILabel = {
+        let label = UILabel()
+        label.font = .daxCaption()
+        label.textColor = UIColor(designSystemColor: .textSecondary)
+        label.text = UserText.autofillLoginListToolbarPasswordsCount(viewModel.accountsCount)
+        return label
+    }()
+
+    private lazy var accountsCountButtonItem: UIBarButtonItem = {
+        let item = UIBarButtonItem(customView: accountsCountLabel)
+        return item
+    }()
+
+    private lazy var flexibleSpace: UIBarButtonItem = {
+        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        return space
+    }()
+
     private var cancellables: Set<AnyCancellable> = []
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = UserText.autofillLoginListSearchPlaceholder
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -78,8 +106,6 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         tableView.registerCell(ofType: AutofillListItemTableViewCell.self)
         tableView.registerCell(ofType: EnableAutofillSettingsTableViewCell.self)
         tableView.registerCell(ofType: AutofillNeverSavedTableViewCell.self)
-        // Have to set tableHeaderView height otherwise tableView content will jump when adding / removing searchController due to tableView insetGrouped style
-        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 24))
         return tableView
     }()
 
@@ -102,10 +128,16 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                            multiplier: 1,
                            constant: (tableView.frame.height / 2))
     }()
-    
-    var selectedAccount: SecureVaultModels.WebsiteAccount?
 
-    init(appSettings: AppSettings, currentTabUrl: URL? = nil, syncService: DDGSyncing, syncDataProviders: SyncDataProviders, selectedAccount: SecureVaultModels.WebsiteAccount?) {
+    var selectedAccount: SecureVaultModels.WebsiteAccount?
+    var openSearch: Bool
+
+    init(appSettings: AppSettings,
+         currentTabUrl: URL? = nil,
+         syncService: DDGSyncing,
+         syncDataProviders: SyncDataProviders,
+         selectedAccount: SecureVaultModels.WebsiteAccount?,
+         openSearch: Bool = false) {
         let secureVault = try? AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared)
         if secureVault == nil {
             os_log("Failed to make vault")
@@ -113,6 +145,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         self.viewModel = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: secureVault, currentTabUrl: currentTabUrl)
         self.syncService = syncService
         self.selectedAccount = selectedAccount
+        self.openSearch = openSearch
         super.init(nibName: nil, bundle: nil)
 
         syncUpdatesCancellable = syncDataProviders.credentialsAdapter.syncDidCompletePublisher
@@ -141,21 +174,23 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         setupCancellables()
         installSubviews()
         installConstraints()
-        applyTheme(ThemeManager.shared.currentTheme)
+        decorate()
         updateViewState()
         configureNotification()
         registerForKeyboardNotifications()
 
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         authenticate()
-
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        if isMovingFromParent {
+            navigationController?.isToolbarHidden = true
+        }
         if viewModel.authenticator.canAuthenticate() && viewModel.authenticator.state == .loggedIn {
             AppDependencyProvider.shared.autofillLoginSession.startSession()
         }
@@ -192,13 +227,19 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
         tableView.setEditing(editing, animated: animated)
 
+        // trigger re-build of table sections
+        viewModel.isEditing = editing
+        tableView.reloadData()
+
         updateNavigationBarButtons()
         updateSearchController()
+        updateToolbar()
     }
-    
+
     @objc
     func addButtonPressed() {
         let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator,
+                                                                   syncService: syncService,
                                                                    tld: tld,
                                                                    authenticationNotRequired: viewModel.authenticationNotRequired)
         detailsController.delegate = self
@@ -209,6 +250,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
     func makeAccountDetailsScreen(_ account: SecureVaultModels.WebsiteAccount) -> AutofillLoginDetailsViewController {
         let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator,
+                                                                   syncService: syncService,
                                                                    account: account,
                                                                    tld: tld,
                                                                    authenticationNotRequired: viewModel.authenticationNotRequired)
@@ -253,24 +295,31 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                 self?.tableView.reloadData()
             }
             .store(in: &cancellables)
+
+        viewModel.accountsCountPublisher
+             .receive(on: DispatchQueue.main)
+             .sink { [weak self] _ in
+                 self?.updateToolbarLabel()
+             }
+             .store(in: &cancellables)
+
     }
     
     private func configureNotification() {
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self,
-                                       selector: #selector(appWillMoveToForegroundCallback),
-                                       name: UIApplication.willEnterForegroundNotification, object: nil)
-        
-        notificationCenter.addObserver(self,
-                                       selector: #selector(appWillMoveToBackgroundCallback),
-                                       name: UIApplication.willResignActiveNotification, object: nil)
-
-        notificationCenter.addObserver(self,
-                                       selector: #selector(authenticatorInvalidateContext),
-                                       name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)
+        addObserver(for: UIApplication.didBecomeActiveNotification, selector: #selector(appDidBecomeActiveCallback))
+        addObserver(for: UIApplication.willResignActiveNotification, selector: #selector(appWillResignActiveCallback))
+        addObserver(for: AutofillLoginListAuthenticator.Notifications.invalidateContext, selector: #selector(authenticatorInvalidateContext))
     }
-    
-    @objc private func appWillMoveToForegroundCallback() {
+
+    private func addObserver(for notification: Notification.Name, selector: Selector) {
+        NotificationCenter.default.addObserver(self, selector: selector, name: notification, object: nil)
+    }
+
+    private func removeObserver(for notification: Notification.Name) {
+        NotificationCenter.default.removeObserver(self, name: notification, object: nil)
+    }
+
+    @objc private func appDidBecomeActiveCallback() {
         // AutofillLoginDetailsViewController will handle calling authenticate() if it is the top view controller
         guard navigationController?.topViewController is AutofillLoginDetailsViewController else {
             authenticate()
@@ -278,7 +327,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         }
     }
     
-    @objc private func appWillMoveToBackgroundCallback() {
+    @objc private func appWillResignActiveCallback() {
         viewModel.lockUI()
     }
 
@@ -295,6 +344,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                 }
             } else {
                 showSelectedAccountIfRequired()
+                openSearchIfRequired()
                 self.syncService.scheduler.requestSyncImmediately()
             }
         }
@@ -304,6 +354,18 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         if let account = selectedAccount {
             showAccountDetails(account)
             selectedAccount = nil
+        }
+    }
+
+    private func openSearchIfRequired() {
+        // Don't auto open search if user has selected an account
+        guard selectedAccount == nil else { return }
+
+        if openSearch {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                self.searchController.searchBar.searchTextField.becomeFirstResponder()
+            }
+            openSearch = false
         }
     }
 
@@ -324,7 +386,83 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                                             userInfo: [FireproofFaviconUpdater.UserInfoKeys.faviconDomain: domain])
         })
     }
-    
+
+    @objc private func deleteAll() {
+        let message = self.syncService.authState == .inactive ? UserText.autofillDeleteAllPasswordsActionMessage(for: viewModel.accountsCount)
+                                                              : UserText.autofillDeleteAllPasswordsSyncActionMessage(for: viewModel.accountsCount)
+        let alert = UIAlertController(title: UserText.autofillDeleteAllPasswordsActionTitle(for: viewModel.accountsCount),
+                                      message: message,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
+        let deleteAllAction = UIAlertAction(title: UserText.actionDelete, style: .destructive) {[weak self] _ in
+            self?.presentAuthConfirmationPrompt()
+        }
+        alert.addAction(deleteAllAction)
+        alert.preferredAction = deleteAllAction
+        present(controller: alert, fromView: tableView)
+    }
+
+    private func presentAuthConfirmationPrompt() {
+        let authConfirmationPromptViewController = AuthConfirmationPromptViewController(
+            didBeginAuthenticating: { [weak self] in
+                self?.configureObserversBasedOnAuthConfirmationPrompt(isAuthenticating: true)
+            }, authConfirmationCompletion: { [weak self] authenticated in
+                self?.configureObserversBasedOnAuthConfirmationPrompt(isAuthenticating: false)
+
+                if authenticated {
+                    let accountsCount = self?.viewModel.accountsCount ?? 0
+                    self?.viewModel.clearAllAccounts()
+                    self?.presentDeleteAllConfirmation(accountsCount)
+                }
+            }
+        )
+
+        if #available(iOS 15.0, *) {
+            if let presentationController = authConfirmationPromptViewController.presentationController as? UISheetPresentationController {
+                if #available(iOS 16.0, *) {
+                    presentationController.detents = [.custom(resolver: { _ in
+                        AutofillViews.deleteAllPromptMinHeight
+                    })]
+                } else {
+                    presentationController.detents = [.medium()]
+                }
+            }
+        }
+
+        present(authConfirmationPromptViewController, animated: true)
+    }
+
+    private func configureObserversBasedOnAuthConfirmationPrompt(isAuthenticating: Bool) {
+        if isAuthenticating {
+            addObserver(for: UIApplication.didEnterBackgroundNotification, selector: #selector(appWillResignActiveCallback))
+            removeObserver(for: UIApplication.willResignActiveNotification)
+        } else {
+            addObserver(for: UIApplication.willResignActiveNotification, selector: #selector(appWillResignActiveCallback))
+            removeObserver(for: UIApplication.didEnterBackgroundNotification)
+        }
+    }
+
+    private func presentDeleteAllConfirmation(_ numberOfAccounts: Int) {
+        var shouldDeleteAccounts = true
+
+        ActionMessageView.present(message: UserText.autofillAllPasswordsDeletedToastMessage(for: numberOfAccounts),
+                                  actionTitle: UserText.actionGenericUndo,
+                                  presentationLocation: .withoutBottomBar,
+                                  onAction: {
+                                      shouldDeleteAccounts = false
+                                  }, onDidDismiss: {
+            if shouldDeleteAccounts {
+                if self.viewModel.deleteAllCredentials() {
+                    self.syncService.scheduler.notifyDataChanged()
+                    self.viewModel.resetNeverPromptWebsites()
+                    self.viewModel.updateData()
+                }
+            } else {
+                self.viewModel.undoClearAllAccounts()
+            }
+        })
+    }
+
     // MARK: Subviews Setup
 
     private func updateViewState() {
@@ -370,6 +508,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         }
         updateNavigationBarButtons()
         updateSearchController()
+        updateToolbar()
         tableView.reloadData()
     }
 
@@ -422,6 +561,24 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         case .empty, .noAuthAvailable:
             navigationItem.searchController = nil
         }
+    }
+
+    private func updateToolbar() {
+        if tableView.isEditing && viewModel.viewState == .showItems {
+            updateToolbarLabel()
+            navigationController?.isToolbarHidden = false
+            toolbarItems = [deleteAllButtonItem, flexibleSpace, accountsCountButtonItem, flexibleSpace]
+        } else {
+            toolbarItems?.removeAll()
+            navigationController?.isToolbarHidden = true
+        }
+    }
+
+    private func updateToolbarLabel() {
+        guard tableView.isEditing else { return }
+
+        accountsCountLabel.text = UserText.autofillLoginListToolbarPasswordsCount(viewModel.accountsCount)
+        accountsCountLabel.sizeToFit()
     }
 
     private func installSubviews() {
@@ -718,9 +875,11 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
 extension AutofillLoginSettingsListViewController: EnableAutofillSettingsTableViewCellDelegate {
     func enableAutofillSettingsTableViewCell(_ cell: EnableAutofillSettingsTableViewCell, didChangeSettings value: Bool) {
         if value {
-            Pixel.fire(pixel: .autofillLoginsSettingsEnabled)
+            Pixel.fire(pixel: .autofillLoginsSettingsEnabled,
+                       withAdditionalParameters: PixelExperiment.parameters)
         } else {
-            Pixel.fire(pixel: .autofillLoginsSettingsDisabled)
+            Pixel.fire(pixel: .autofillLoginsSettingsDisabled,
+                       withAdditionalParameters: PixelExperiment.parameters)
         }
         
         viewModel.isAutofillEnabledInSettings = value
@@ -730,12 +889,10 @@ extension AutofillLoginSettingsListViewController: EnableAutofillSettingsTableVi
 
 // MARK: Themable
 
-extension AutofillLoginSettingsListViewController: Themable {
+extension AutofillLoginSettingsListViewController {
 
-    func decorate(with theme: Theme) {
-        emptyView.decorate(with: theme)
-        emptySearchView.decorate(with: theme)
-        noAuthAvailableView.decorate(with: theme)
+    private func decorate() {
+        let theme = ThemeManager.shared.currentTheme
 
         view.backgroundColor = theme.backgroundColor
         tableView.backgroundColor = theme.backgroundColor
@@ -764,11 +921,31 @@ extension AutofillLoginSettingsListViewController: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
         viewModel.isSearching = searchController.isActive
-        if let query = searchController.searchBar.text {
+
+        if viewModel.isSearching {
+            viewModel.isCancelingSearch = false
+        }
+
+        if !viewModel.isCancelingSearch, let query = searchController.searchBar.text {
             viewModel.filterData(with: query)
             emptySearchView.query = query
             tableView.reloadData()
         }
+    }
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        searchController.searchBar.resignFirstResponder()
+    }
+}
+
+extension AutofillLoginSettingsListViewController: UISearchBarDelegate {
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        viewModel.isCancelingSearch = true
+        viewModel.isSearching = false
+
+        viewModel.filterData(with: "")
+        tableView.reloadData()
     }
 }
 

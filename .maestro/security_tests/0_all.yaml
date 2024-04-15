@@ -1,6 +1,8 @@
 # all.yaml
 
 appId: com.duckduckgo.mobile.ios
+tags:
+    - security
 ---
 
 # Set up 

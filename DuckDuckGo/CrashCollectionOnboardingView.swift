@@ -130,8 +130,7 @@ struct CrashCollectionOnboardingView: View {
                 Text(model.isShowingReport ? UserText.crashReportHideDetails : UserText.crashReportShowDetails)
                     .daxButton()
 
-                Image("DisclosureIndicator")
-                    .rotationEffect(model.isShowingReport ? .degrees(-90) : .degrees(90))
+                Image(model.isShowingReport ? "ChevronUp" : "ChevronDown")
                     .frame(width: 7, height: 12)
             }
         }

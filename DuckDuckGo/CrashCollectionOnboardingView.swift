@@ -48,6 +48,7 @@ struct CrashCollectionOnboardingView: View {
 
                     Text(UserText.crashReportDialogTitle)
                         .daxTitle1()
+                        .multilineTextAlignment(.center)
                         .foregroundColor(Color(designSystemColor: .textPrimary))
 
                     Text(UserText.crashReportDialogMessage)

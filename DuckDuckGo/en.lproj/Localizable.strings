@@ -839,7 +839,7 @@
 "crash.report.dialog.show.details" = "See what's sent";
 
 /* Crash Report dialog title */
-"crash.report.dialog.title" = "Send crash reports?";
+"crash.report.dialog.title" = "Automatically send crash reports?";
 
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Past month";

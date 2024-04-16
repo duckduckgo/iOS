@@ -56,7 +56,7 @@ final class CrashCollectionOnboarding: NSObject {
 
         if #available(iOS 16.0, *) {
             let identifier = UISheetPresentationController.Detent.Identifier("crashReportHidden")
-            controller.sheetPresentationController?.detents = [.custom(identifier: identifier, resolver: { _ in return 520 }), .large()]
+            controller.sheetPresentationController?.detents = [.custom(identifier: identifier, resolver: { _ in return 560 }), .large()]
             controller.sheetPresentationController?.delegate = self
 
             detailsCancellable = viewModel.$isViewExpanded

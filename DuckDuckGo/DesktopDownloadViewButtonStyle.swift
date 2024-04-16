@@ -55,9 +55,9 @@ public struct DesktopDownloadViewButtonStyle: ButtonStyle {
         }
 
         return configuration.label
-            .daxHeadline()
-            .frame(maxWidth: .infinity)
-            .padding([.top, .bottom], 16)
+            .daxButton()
+            .padding(.vertical, 10)
+            .padding(.horizontal, 16)
             .background(backgroundColor)
             .foregroundColor(foregroundColor)
             .clipShape(RoundedRectangle(cornerRadius: 8))

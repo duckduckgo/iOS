@@ -31,23 +31,25 @@ struct DesktopDownloadView: View {
     var body: some View {
         GeometryReader { proxy in
             ScrollView {
-                VStack(alignment: .center, spacing: 8) {
+                VStack(alignment: .center, spacing: 6) {
                     headerView
 
-                    Text(viewModel.browserDetails.summary)
-                        .daxBodyRegular()
-                        .foregroundColor(.waitlistTextSecondary)
-                        .multilineTextAlignment(.center)
-                        .lineSpacing(6)
-                        .padding(.horizontal, padding)
+                    if !viewModel.browserDetails.summary.isEmpty {
+                        Text(viewModel.browserDetails.summary)
+                            .daxBodyRegular()
+                            .foregroundColor(.waitlistTextSecondary)
+                            .multilineTextAlignment(.center)
+                            .lineSpacing(6)
+                            .padding(.horizontal, padding)
+                            .padding(.bottom, 6)
+                    }
 
                     Text(viewModel.browserDetails.onYourString)
                         .daxBodyRegular()
                         .foregroundColor(.waitlistTextSecondary)
                         .multilineTextAlignment(.center)
-                        .lineSpacing(6)
-                        .padding(.top, 18)
-                    
+                        .padding(.top, 12)
+
                     menuView
                         .daxHeadline()
                         .foregroundColor(.waitlistBlue)
@@ -58,8 +60,8 @@ struct DesktopDownloadView: View {
                             self.isShareSheetVisible = true
                         }, label: {
                             HStack {
-                                Image("Share-16")
-                                Text(viewModel.browserDetails.downloadURL)
+                                Image(.share16)
+                                Text(viewModel.browserDetails.button)
                             }
                         }
                     )
@@ -100,10 +102,14 @@ struct DesktopDownloadView: View {
                     .padding(.bottom, 12)
                     .fixedSize(horizontal: false, vertical: true)
                 }
-                .padding([.leading, .trailing], 24)
-                .frame(minHeight: proxy.size.height)
+                .padding([.horizontal], 24)
+                .frame(maxWidth: .infinity, minHeight: proxy.size.height)
             }
             .navigationTitle(viewModel.browserDetails.viewTitle)
+            .background(Rectangle()
+                .foregroundColor(Color(designSystemColor: .background))
+                .ignoresSafeArea())
+
         }
     }
     
@@ -113,9 +119,8 @@ struct DesktopDownloadView: View {
                 Image(viewModel.browserDetails.imageName)
 
                 Text(viewModel.browserDetails.title)
-                    .daxTitle2()
+                    .daxTitle3()
                     .foregroundColor(.waitlistTextPrimary)
-                    .lineSpacing(6)
                     .multilineTextAlignment(.center)
                     .fixMultilineScrollableText()
             }
@@ -130,12 +135,12 @@ struct DesktopDownloadView: View {
         // updating when viewModel.browserDetails.downloadURL changes
         // so this is a hack to render another view
         if viewModel.browserDetails.platform == .mac {
-            Text(viewModel.browserDetails.downloadURL)
+            Text(viewModel.browserDetails.goToUrl)
                 .menuController(UserText.macWaitlistCopy) {
                     viewModel.copyLink()
                 }
         } else {
-            Text(viewModel.browserDetails.downloadURL)
+            Text(viewModel.browserDetails.goToUrl)
                 .menuController(UserText.macWaitlistCopy) {
                     viewModel.copyLink()
                 }

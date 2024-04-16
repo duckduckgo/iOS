@@ -1336,6 +1336,15 @@
 /* No comment provided by engineer. */
 "fireButtonAnimation.waterSwirl.name" = "Whirlpool";
 
+/* Description text above the Share Link button */
+"get.browser.on-your-desktop-go-to" = "On your computer, go to:";
+
+/* Title for the Share Download Link button */
+"get.browser.share-link" = "Share Download Link";
+
+/* Title for the get desktop browser feature */
+"get.browser.title" = "Get DuckDuckGo for Mac or Windows";
+
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Add DuckDuckGo to your home screen!";
 

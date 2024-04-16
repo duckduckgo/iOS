@@ -39,6 +39,7 @@ struct SettingsSubscriptionView: View {
         static let noEntitlementsIconWidth = 20.0
         static let navigationDelay = 0.3
         static let infoIcon = "info-16"
+        static let alertIcon = "Exclamation-Color-16"
     }
 
     private var subscriptionDescriptionView: some View {
@@ -103,6 +104,34 @@ struct SettingsSubscriptionView: View {
     }
 
     @ViewBuilder
+    private var subscriptionExpiredView: some View {
+        Group {
+            SettingsCustomCell(content: {
+                HStack(alignment: .top) {
+                    Image(Constants.alertIcon)
+                        .frame(width: Constants.noEntitlementsIconWidth)
+                        .padding(.top, Constants.topCellPadding)
+                    VStack(alignment: .leading) {
+                        Text(UserText.settingsPProSubscriptionExpiredTitle).daxBodyRegular()
+                        Text(UserText.settingsPProSubscriptionExpiredTitle).daxFootnoteRegular()
+                            .padding(.bottom, Constants.purchaseDescriptionPadding)
+                    }.foregroundColor(Color(designSystemColor: .textSecondary))
+                }
+            })
+            
+            let subscribeView = SubscriptionContainerView(currentView: .subscribe)
+                .navigationViewStyle(.stack)
+                .environmentObject(subscriptionNavigationCoordinator)
+            NavigationLink(destination: subscribeView,
+                           isActive: $isShowingSubscribeFlow,
+                           label: { SettingsCellView(label: "View Plans" ) })
+            NavigationLink(destination: SubscriptionSettingsView().environmentObject(subscriptionNavigationCoordinator)) {
+                    SettingsCustomCell(content: { manageSubscriptionView })
+            }
+        }
+    }
+    
+    @ViewBuilder
     private var noEntitlementsAvailableView: some View {
         Group {
             SettingsCustomCell(content: {
@@ -161,19 +190,25 @@ struct SettingsSubscriptionView: View {
     var body: some View {
         if viewModel.state.subscription.enabled && viewModel.state.subscription.canPurchase {
             Section(header: Text(UserText.settingsPProSection)) {
-                if viewModel.state.subscription.hasActiveSubscription {
-                        
-                    // Allow managing the subscription if we have some entitlements
-                    if !viewModel.state.subscription.entitlements.isEmpty {
+                
+                // User is signed in
+                if viewModel.state.subscription.isSignedIn {
+                
+                    // Subscription is Expired
+                    if !viewModel.state.subscription.hasActiveSubscription {
+                        subscriptionExpiredView
+                    }
+                    
+                    // We have valid entitlements
+                    else if !viewModel.state.subscription.entitlements.isEmpty {
                         subscriptionDetailsView
                         
-                        // If no entitlements it should mean the backend is still out of sync
+                    // We don't have valid entitlements
                     } else {
                         noEntitlementsAvailableView
                     }
                     
-                } else if viewModel.state.subscription.isSubscriptionPendingActivation {
-                    noEntitlementsAvailableView
+                // Show purchase options
                 } else {
                     purchaseSubscriptionView
                 }

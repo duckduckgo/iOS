@@ -77,7 +77,9 @@ final class SubscriptionSettingsViewModel: ObservableObject {
             let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
             switch subscriptionResult {
             case .success(let subscription):
-                state.subscriptionInfo = subscription
+                DispatchQueue.main.async {
+                    self.state.subscriptionInfo = subscription
+                }
                 await updateSubscriptionsStatusMessage(status: subscription.status,
                                                 date: subscription.expiresOrRenewsAt,
                                                 product: subscription.productId,

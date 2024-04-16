@@ -51,7 +51,7 @@ struct SubscriptionSettingsView: View {
     
     private var headerSection: some View {
         Section {
-            var active = viewModel.state.subscriptionInfo?.isActive ?? false
+            let active = viewModel.state.subscriptionInfo?.isActive ?? false
             VStack(alignment: .center, spacing: 7) {
                 Image("Privacy-Pro-96x96")
                 Text(UserText.subscriptionTitle).daxTitle2()
@@ -59,9 +59,7 @@ struct SubscriptionSettingsView: View {
                         Text(viewModel.state.subscriptionType).daxHeadline()
                 }
                 HStack {
-                    if !active {
-                        Image(Constants.alertIcon)
-                    }
+                    if !active { Image(Constants.alertIcon) }
                     Text(viewModel.state.subscriptionDetails)
                         .daxSubheadRegular()
                         .foregroundColor(Color(designSystemColor: .textSecondary))
@@ -76,9 +74,17 @@ struct SubscriptionSettingsView: View {
     private var manageSection: some View {
         Section(header: Text(UserText.subscriptionManageTitle)) {
             SettingsCustomCell(content: {
-                Text(UserText.subscriptionChangePlan)
-                    .daxBodyRegular()
-                    .foregroundColor(Color.init(designSystemColor: .accent))
+                let active = viewModel.state.subscriptionInfo?.isActive ?? false
+                
+                if active {
+                    Text(UserText.subscriptionChangePlan)
+                        .daxBodyRegular()
+                        .foregroundColor(Color.init(designSystemColor: .accent))
+                } else {
+                    Text(UserText.subscriptionRestoreNotFoundPlans)
+                        .daxBodyRegular()
+                        .foregroundColor(Color.init(designSystemColor: .accent))
+                }
             },
                                action: {
                 Pixel.fire(pixel: .privacyProSubscriptionManagementPlanBilling, debounce: 1)

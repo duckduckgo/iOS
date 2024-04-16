@@ -36,6 +36,8 @@ class SuggestionTableViewCell: UITableViewCell {
 
     func updateFor(query: String, suggestion: Suggestion, with theme: Theme, isAddressBarAtBottom: Bool) {
 
+        self.plusButton.setImage(nil, for: .normal)
+
         var text: String = ""
         switch suggestion {
         case .phrase(phrase: let phrase):
@@ -43,6 +45,14 @@ class SuggestionTableViewCell: UITableViewCell {
             typeImage.image = UIImage(named: "Find-Search-24")
             urlLabel.isHidden = true
             self.accessibilityValue = UserText.voiceoverSuggestionTypeSearch
+
+            self.plusButton.accessibilityLabel = UserText.voiceoverActionAutocomplete
+            self.plusButton.tintColor = UIColor(designSystemColor: .textSecondary)
+            if isAddressBarAtBottom {
+                self.plusButton.setImage(UIImage(named: "Arrow-Circle-Down-Left-16"), for: .normal)
+            } else {
+                self.plusButton.setImage(UIImage(named: "Arrow-Circle-Up-Left-16"), for: .normal)
+            }
 
         case .website(url: let url):
             text = url.absoluteString
@@ -70,13 +80,6 @@ class SuggestionTableViewCell: UITableViewCell {
 
         case .unknown(value: let value):
             assertionFailure("Unknown suggestion \(value)")
-        }
-
-        self.plusButton.accessibilityLabel = UserText.voiceoverActionAutocomplete
-        if isAddressBarAtBottom {
-            self.plusButton.setImage(UIImage(named: "Arrow-Down-Left-24"), for: .normal)
-        } else {
-            self.plusButton.setImage(UIImage(named: "Arrow-Top-Left-24"), for: .normal)
         }
 
         urlLabel.textColor = theme.tableCellTextColor

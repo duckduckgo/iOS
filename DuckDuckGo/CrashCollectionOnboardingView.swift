@@ -44,7 +44,7 @@ struct CrashCollectionOnboardingView: View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(spacing: 24) {
-                    Image("Breakage-128")
+                    Image(decorative: "Breakage-128")
 
                     Text(UserText.crashReportDialogTitle)
                         .daxTitle1()

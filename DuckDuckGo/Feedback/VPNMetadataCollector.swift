@@ -237,18 +237,29 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
                 tunnelManager.connection.fetchLastDisconnectError { error in
                     let message = {
                         if let error = error as? NSError {
-                            if error.domain == NEVPNConnectionErrorDomain, let code = NEDNSSettingsManagerError(rawValue: error.code) {
+                            if error.domain == NEVPNConnectionErrorDomain, 
+                                let code = NEVPNConnectionError(rawValue: error.code) {
                                 switch code {
-                                case .configurationCannotBeRemoved:
-                                    return "configurationCannotBeRemoved"
-                                case .configurationDisabled:
-                                    return "configurationDisabled"
-                                case .configurationInvalid:
-                                    return "configurationInvalid"
-                                case .configurationStale:
-                                    return "configurationStale"
-                                default:
-                                    return error.localizedDescription
+                                case .overslept: return "overslept"
+                                case .noNetworkAvailable: return "noNetworkAvailable"
+                                case .unrecoverableNetworkChange: return "unrecoverableNetworkChange"
+                                case .configurationFailed: return "configurationFailed"
+                                case .serverAddressResolutionFailed: return "serverAddressResolutionFailed"
+                                case .serverNotResponding: return "serverNotResponding"
+                                case .serverDead: return "serverDead"
+                                case .authenticationFailed: return "authenticationFailed"
+                                case .clientCertificateInvalid: return "clientCertificateInvalid"
+                                case .clientCertificateNotYetValid: return "clientCertificateNotYetValid"
+                                case .clientCertificateExpired: return "clientCertificateExpired"
+                                case .pluginFailed: return "pluginFailed"
+                                case .configurationNotFound: return "configurationNotFound"
+                                case .pluginDisabled: return "pluginDisabled"
+                                case .negotiationFailed: return "negotiationFailed"
+                                case .serverDisconnected: return "serverDisconnected"
+                                case .serverCertificateInvalid: return "serverCertificateInvalid"
+                                case .serverCertificateNotYetValid: return "serverCertificateNotYetValid"
+                                case .serverCertificateExpired: return "serverCertificateExpired"
+                                default: return error.localizedDescription
                                 }
                             } else {
                                 return error.localizedDescription

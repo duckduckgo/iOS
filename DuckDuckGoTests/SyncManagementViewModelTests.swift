@@ -106,11 +106,13 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
 
     func testWhenSaveRecoveryPDFPressed_recoveryMethodShown() {
         model.saveRecoveryPDF()
+        waitForInvocation()
 
         // You can either test one individual call was made x number of times or check for a whole number of calls
-        monitor.assert(#selector(shareRecoveryPDF).description, calls: 1)
+        // async functions selector description apparently contain 'WithCompletionHandler'
+        monitor.assert(#selector(authenticateUser).description.dropping(suffix: "WithCompletionHandler:"), calls: 1)
         monitor.assertCalls([
-            #selector(shareRecoveryPDF).description: 1
+            #selector(authenticateUser).description.dropping(suffix: "WithCompletionHandler:"): 1
         ])
     }
 
@@ -137,11 +139,13 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
 
     func testWhenRecoverSyncDataPressed_RecoverDataViewShown() {
         model.recoverSyncDataPressed()
+        waitForInvocation()
 
         // You can either test one individual call was made x number of times or check for a whole number of calls
-        monitor.assert(#selector(showRecoverData).description, calls: 1)
+        // async functions selector description apparently contain 'WithCompletionHandler'
+        monitor.assert(#selector(authenticateUser).description.dropping(suffix: "WithCompletionHandler:"), calls: 1)
         monitor.assertCalls([
-            #selector(showRecoverData).description: 1
+            #selector(authenticateUser).description.dropping(suffix: "WithCompletionHandler:"): 1
         ])
     }
     // MARK: Delegate functions

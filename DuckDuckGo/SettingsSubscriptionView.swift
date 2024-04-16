@@ -124,7 +124,7 @@ struct SettingsSubscriptionView: View {
                 .environmentObject(subscriptionNavigationCoordinator)
             NavigationLink(destination: subscribeView,
                            isActive: $isShowingSubscribeFlow,
-                           label: { SettingsCellView(label: "View Plans" ) })
+                           label: { SettingsCellView(label: UserText.subscriptionRestoreNotFoundPlans ) })
             NavigationLink(destination: SubscriptionSettingsView().environmentObject(subscriptionNavigationCoordinator)) {
                     SettingsCustomCell(content: { manageSubscriptionView })
             }
@@ -191,27 +191,26 @@ struct SettingsSubscriptionView: View {
         if viewModel.state.subscription.enabled && viewModel.state.subscription.canPurchase {
             Section(header: Text(UserText.settingsPProSection)) {
                 
-                // User is signed in
-                if viewModel.state.subscription.isSignedIn {
-                
-                    // Subscription is Expired
-                    if !viewModel.state.subscription.hasActiveSubscription {
+                switch (viewModel.state.subscription.isSignedIn,
+                        viewModel.state.subscription.hasActiveSubscription,
+                        viewModel.state.subscription.entitlements.isEmpty) {
+                    
+                    // Signed In, Subscription Expired
+                    case (true, false, _):
                         subscriptionExpiredView
-                    }
                     
-                    // We have valid entitlements
-                    else if !viewModel.state.subscription.entitlements.isEmpty {
-                        subscriptionDetailsView
-                        
-                    // We don't have valid entitlements
-                    } else {
-                        noEntitlementsAvailableView
-                    }
+                    // Signed in, Subscription Active, Valid entitlements
+                    case (true, true, false):
+                        subscriptionDetailsView // View for valid subscription details
                     
-                // Show purchase options
-                } else {
-                    purchaseSubscriptionView
-                }
+                    // Signed in, Subscription Active, Empty Entitlements
+                    case (true, true, true):
+                        noEntitlementsAvailableView // View for no entitlements
+                    
+                    // Signed out
+                    case (false, _, _):
+                        purchaseSubscriptionView // View for signing up or purchasing a subscription
+                    }
             }
             
             .onChange(of: viewModel.state.subscription.shouldDisplayRestoreSubscriptionError) { value in

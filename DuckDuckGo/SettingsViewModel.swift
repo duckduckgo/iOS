@@ -736,7 +736,6 @@ extension SettingsViewModel {
         state.subscription.canPurchase = SubscriptionPurchaseEnvironment.canPurchase
         state.subscription.isSignedIn = false
         state.subscription.hasActiveSubscription = false
-        state.subscription.isSubscriptionPendingActivation = false
         self.state.subscription.entitlements = []
         
         // Active subscription check
@@ -755,7 +754,6 @@ extension SettingsViewModel {
             
             if subscription.isActive {
                 state.subscription.hasActiveSubscription = true
-                state.subscription.isSubscriptionPendingActivation = false
                 
                 // Check entitlements and update state
                 let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
@@ -776,16 +774,10 @@ extension SettingsViewModel {
             } else {
                 // Mark the subscription as 'inactive' 
                 state.subscription.hasActiveSubscription = false
-                state.subscription.isSubscriptionPendingActivation = false
             }
             
         case .failure:
-            // Account is active but there's not a valid subscription / entitlements
-            if #available(iOS 15, *) {
-                if await PurchaseManager.hasActiveSubscription() {
-                    state.subscription.isSubscriptionPendingActivation = true
-                }
-            }
+            break
             
         }
     }

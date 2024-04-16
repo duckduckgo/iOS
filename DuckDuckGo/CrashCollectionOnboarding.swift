@@ -53,7 +53,6 @@ final class CrashCollectionOnboarding: NSObject {
         }
 
         let controller = CrashCollectionOnboardingViewController(rootView: CrashCollectionOnboardingView(model: viewModel))
-        controller.isModalInPresentation = true
 
         if #available(iOS 16.0, *) {
             let identifier = UISheetPresentationController.Detent.Identifier("crashReportHidden")

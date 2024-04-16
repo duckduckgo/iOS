@@ -852,7 +852,24 @@ But if you *do* want a peek under the hood, you can find more information about 
     static let autofillRemovedDuckAddressButton = NSLocalizedString("autofill.removed.duck.address.button", value: "Got it", comment: "Button text for the alert dialog telling the user an updated username is no longer a private email address")
     static let autofillDeactivate = NSLocalizedString("pm.deactivate", value: "Deactivate", comment: "Deactivate button")
     static let autofillActivate = NSLocalizedString("pm.activate", value: "Reactivate", comment: "Activate button")
-    
+
+    // Autofill Password Import
+    public static let autofillImportPasswordsTitle = NSLocalizedString("autofill.import.passwords.title", value:"How To Import Passwords", comment: "Title for screen to import passwords")
+    public static let autofillImportPasswordsSubtitle = NSLocalizedString("autofill.import.passwords.subtitle", value:"Import passwords in the desktop version of the DuckDuckGo browser, then sync across devices.", comment: "Subtitle for screen to import passwords")
+    public static let autofillImportPasswordsGetBrowserButton = NSLocalizedString("autofill.import.passwords.get-browser-button", value:"Get Desktop Browser", comment: "Button label to get link to download the desktop browser")
+    public static let autofillImportPasswordsSyncButton = NSLocalizedString("autofill.import.passwords.sync-button", value:"Sync With Desktop", comment: "Button label to sync passwords with desktop browser")
+    public static let autofillImportPasswordsInstructionsTitle = NSLocalizedString("autofill.import.passwords.instructions.title", value:"Instructions", comment: "Title for section with instructions to import passwords")
+    public static let autofillImportPasswordsInstructionsStep1 = NSLocalizedString("autofill.import.passwords.instructions.step1", value:"Open DuckDuckGo on Mac or Windows", comment: "Step 1 for instructions to import passwords")
+    public static let autofillImportPasswordsInstructionsStep2 = NSLocalizedString("autofill.import.passwords.instructions.step2", value:"Go to %@ > %@", comment: "Step 2 for instructions to import passwords. This reads as 'Go to Settings > Autofill'")
+    public static let autofillImportPasswordsInstructionsStep2Settings = NSLocalizedString("autofill.import.passwords.instructions.step2.settings", value:"Settings", comment: "first parameter for autofill.import.passwords.instructions.step2")
+    public static let autofillImportPasswordsInstructionsStep2Autofill = NSLocalizedString("autofill.import.passwords.instructions.step2.autofill", value:"Autofill", comment: "second parameter for autofill.import.passwords.instructions.step2")
+    public static let autofillImportPasswordsInstructionsStep3 = NSLocalizedString("autofill.import.passwords.instructions.step3", value:"Select %@ and follow the steps to import", comment: "Step 3 for instructions to import passwords. This reads as 'Select Import Passwords and follow the steps'")
+    public static let autofillImportPasswordsInstructionsStep3Import = NSLocalizedString("autofill.import.passwords.instructions.step3.import", value:"Import Passwords...", comment: "Parameter for autofill.import.passwords.instructions.step3")
+    public static let autofillImportPasswordsInstructionsStep4 = NSLocalizedString("autofill.import.passwords.instructions.step4", value:"Once imported on your computer you can set up sync on this %@", comment: "Step 4 for instructions to import passwords: Once imported on your computer you can set up sync on this iPhone|iPad|device")
+    public static let deviceTypeiPhone = NSLocalizedString("device.type.iphone", value:"iPhone", comment: "Device type is iPhone")
+    public static let deviceTypeiPad = NSLocalizedString("device.type.pad", value:"iPad", comment: "Device type is iPad")
+    public static let deviceTypeDefault = NSLocalizedString("device.type.default", value:"device", comment: "Default string used if users device is not iPhone or iPad")
+
     // Email Protection In-context Signup
     public static let emailProtection = NSLocalizedString("email-protection", value: "Email Protection", comment: "Email protection service offered by DuckDuckGo")
     public static let emailSignupPromptTitle = NSLocalizedString("email.signup-prompt.title", value:"Hide Your Email and\nBlock Trackers", comment: "Title for prompt to sign up for email protection")

@@ -896,6 +896,23 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
     }
 }
 
+// MARK: ImportPasswordsViewControllerDelegate
+
+extension AutofillLoginSettingsListViewController: ImportPasswordsViewControllerDelegate {
+
+    func importPasswordsViewControllerDidRequestOpenSync(_ viewController: ImportPasswordsViewController) {
+        if let settingsVC = self.navigationController?.children.first as? SettingsHostingController {
+            navigationController?.popToRootViewController(animated: false)
+            settingsVC.viewModel.presentLegacyView(.sync)
+        } else if let presentingViewController = self.presentingViewController as? MainViewController {
+            dismiss(animated: false) {
+                presentingViewController.segueToSettingsSync()
+            }
+        }
+    }
+
+}
+
 // MARK: EnableAutofillSettingsTableViewCellDelegate
 
 extension AutofillLoginSettingsListViewController: EnableAutofillSettingsTableViewCellDelegate {

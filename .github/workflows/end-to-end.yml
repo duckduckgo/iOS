@@ -87,7 +87,7 @@ jobs:
         MAESTRO_PRIVACY_TESTS_UPLOAD_RESULTS: ${{ steps.privacy-tests.outputs.MAESTRO_CLOUD_UPLOAD_STATUS }}
         MAESTRO_AD_CLICK_TESTS_UPLOAD_RESULTS: ${{ steps.ad-click-tests.outputs.MAESTRO_CLOUD_UPLOAD_STATUS }}
       run: |
-          echo "Release tests results: upload: $MAESTRO_RELEASE_TESTS_UPLOAD_RESULTS - flow: $MAESTRO_RELEASE_TESTS_FLOW_RESULTS"
+          echo "Release tests results: upload: ${{ steps.release-tests.outputs.MAESTRO_CLOUD_FLOW_RESULTS }}  - flow: $MAESTRO_RELEASE_TESTS_FLOW_RESULTS"
           echo "Privacy tests results: upload: $MAESTRO_PRIVACY_TESTS_UPLOAD_RESULTS - flow: $MAESTRO_PRIVACY_TESTS_FLOW_RESULTS"
           echo "Ad Click tests results: upload: $MAESTRO_AD_CLICK_TESTS_FLOW_RESULTS - flow: $MAESTRO_AD_CLICK_TESTS_UPLOAD_RESULTS"
           if [[ "$MAESTRO_RELEASE_TESTS_FLOW_RESULTS" == *"ERROR"* || "$MAESTRO_RELEASE_TESTS_FLOW_RESULTS" == *"CANCELED"* ]] \

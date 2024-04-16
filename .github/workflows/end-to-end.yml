@@ -83,10 +83,19 @@ jobs:
         MAESTRO_RELEASE_TESTS_FLOW_RESULTS: ${{ steps.release-tests.outputs.MAESTRO_CLOUD_FLOW_RESULTS }} 
         MAESTRO_PRIVACY_TESTS_FLOW_RESULTS: ${{ steps.privacy-tests.outputs.MAESTRO_CLOUD_FLOW_RESULTS }}
         MAESTRO_AD_CLICK_TESTS_FLOW_RESULTS: ${{ steps.ad-click-tests.outputs.MAESTRO_CLOUD_FLOW_RESULTS }}
+        MAESTRO_RELEASE_TESTS_UPLOAD_RESULTS: ${{ steps.release-tests.outputs.MAESTRO_CLOUD_UPLOAD_STATUS }}
+        MAESTRO_PRIVACY_TESTS_UPLOAD_RESULTS: ${{ steps.privacy-tests.outputs.MAESTRO_CLOUD_UPLOAD_STATUS }}
+        MAESTRO_AD_CLICK_TESTS_UPLOAD_RESULTS: ${{ steps.ad-click-tests.outputs.MAESTRO_CLOUD_UPLOAD_STATUS }}
       run: |
+          echo "Release tests results: upload: $MAESTRO_RELEASE_TESTS_UPLOAD_RESULTS - flow: $MAESTRO_RELEASE_TESTS_FLOW_RESULTS"
+          echo "Privacy tests results: upload: $MAESTRO_PRIVACY_TESTS_UPLOAD_RESULTS - flow: $MAESTRO_PRIVACY_TESTS_FLOW_RESULTS"
+          echo "Ad Click tests results: upload: $MAESTRO_AD_CLICK_TESTS_FLOW_RESULTS - flow: $MAESTRO_AD_CLICK_TESTS_UPLOAD_RESULTS"
           if [[ "$MAESTRO_RELEASE_TESTS_FLOW_RESULTS" == *"ERROR"* || "$MAESTRO_RELEASE_TESTS_FLOW_RESULTS" == *"CANCELED"* ]] \
           || [[ "$MAESTRO_PRIVACY_TESTS_FLOW_RESULTS" == *"ERROR"* || "$MAESTRO_PRIVACY_TESTS_FLOW_RESULTS" == *"CANCELED"* ]] \
-          || [[ "$MAESTRO_AD_CLICK_TESTS_FLOW_RESULTS" == *"ERROR"* || "$MAESTRO_AD_CLICK_TESTS_FLOW_RESULTS" == *"CANCELED"* ]]; then
+          || [[ "$MAESTRO_AD_CLICK_TESTS_FLOW_RESULTS" == *"ERROR"* || "$MAESTRO_AD_CLICK_TESTS_FLOW_RESULTS" == *"CANCELED"* ]] \
+          || [[ "$MAESTRO_RELEASE_TESTS_UPLOAD_RESULTS" != "SUCCESS" ]] \
+          || [[ "$MAESTRO_PRIVACY_TESTS_FLOW_RESULTS" != "SUCCESS" ]] \
+          || [[ "$MAESTRO_AD_CLICK_TESTS_FLOW_RESULTS" != "SUCCESS" ]]; then
             echo "One or more tests failed or were canceled."
             exit 1
           fi

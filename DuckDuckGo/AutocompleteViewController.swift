@@ -230,6 +230,7 @@ class AutocompleteViewController: UIViewController {
     }
 
     @IBAction func onAutocompleteDismissed(_ sender: Any) {
+        Pixel.fire(pixel: .addressBarGestureDismiss)
         delegate?.autocompleteWasDismissed()
     }
 }

@@ -128,7 +128,8 @@ class TabViewCell: UICollectionViewCell {
         }, completion: { _ in
             self.isHidden = true
             self.isDeleting = true
-            self.deleteTab()
+            Pixel.fire(pixel: .tabSwitcherSwipeCloseTab)
+            self.closeTab()
         })
     }
 
@@ -142,11 +143,15 @@ class TabViewCell: UICollectionViewCell {
                 preview: UIImage?,
                 reorderRecognizer: UIGestureRecognizer?) {}
     
-    @IBAction func deleteTab() {
+    func closeTab() {
         guard let tab = tab else { return }
         guard isNotReordering(with: collectionReorderRecognizer) else { return }
-
         self.delegate?.deleteTab(tab: tab)
+    }
+
+    @IBAction func deleteTab() {
+        Pixel.fire(pixel: .tabSwitcherClickCloseTab)
+        closeTab()
     }
 
     private func isNotReordering(with gestureRecognizer: UIGestureRecognizer?) -> Bool {

@@ -50,7 +50,7 @@ jobs:
 
     - name: Release tests
       id: release-tests
-      uses: mobile-dev-inc/action-maestro-cloud@v1.8.0
+      uses: mobile-dev-inc/action-maestro-cloud@v1.8.1
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
         app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
@@ -60,7 +60,7 @@ jobs:
 
     - name: Privacy tests
       id: privacy-tests
-      uses: mobile-dev-inc/action-maestro-cloud@v1.8.0
+      uses: mobile-dev-inc/action-maestro-cloud@v1.8.1
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
         app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
@@ -70,7 +70,7 @@ jobs:
     
     - name: Ad Click Detection Flow tests
       id: ad-click-tests
-      uses: mobile-dev-inc/action-maestro-cloud@v1.8.0
+      uses: mobile-dev-inc/action-maestro-cloud@v1.8.1
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
         app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app

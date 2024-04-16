@@ -29,7 +29,6 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     let accountManager: AccountManager
     private var subscriptionUpdateTimer: Timer?
     private var signOutObserver: Any?
-    private var subscriptionInfo: SubscriptionService.GetSubscriptionResponse?
     
     private var externalAllowedDomains = ["stripe.com"]
     
@@ -40,7 +39,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         var shouldDismissView: Bool = false
         var isShowingGoogleView: Bool = false
         var isShowingFAQView: Bool = false
-        
+        var subscriptionInfo: SubscriptionService.GetSubscriptionResponse?
         // Used to display stripe WebUI
         var stripeViewModel: SubscriptionExternalLinkViewModel?
         var isShowingStripeView: Bool = false
@@ -78,7 +77,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
             let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
             switch subscriptionResult {
             case .success(let subscription):
-                subscriptionInfo = subscription
+                state.subscriptionInfo = subscription
                 await updateSubscriptionsStatusMessage(status: subscription.status,
                                                 date: subscription.expiresOrRenewsAt,
                                                 product: subscription.productId,
@@ -91,7 +90,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     func manageSubscription() {
-        switch subscriptionInfo?.platform {
+        switch state.subscriptionInfo?.platform {
         case .apple:
             Task { await manageAppleSubscription() }
         case .google:
@@ -124,9 +123,15 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     @MainActor
     private func updateSubscriptionsStatusMessage(status: Subscription.Status, date: Date, product: String, billingPeriod: Subscription.BillingPeriod) {
-        let statusString = (status == .autoRenewable) ? UserText.subscriptionRenews : UserText.subscriptionExpires
-        state.subscriptionDetails = UserText.subscriptionInfo(status: statusString, expiration: dateFormatter.string(from: date))
-        state.subscriptionType = billingPeriod == .monthly ? UserText.subscriptionMonthly : UserText.subscriptionAnnual
+        let date = dateFormatter.string(from: date)
+        let expiredStates: [Subscription.Status] = [.expired, .inactive]
+        if expiredStates.contains(status) {
+            state.subscriptionDetails = UserText.expiredSubscriptionInfo(expiration: date)
+        } else {
+            let statusString = (status == .autoRenewable) ? UserText.subscriptionRenews : UserText.subscriptionExpires
+            state.subscriptionDetails = UserText.subscriptionInfo(status: statusString, expiration: date)
+            state.subscriptionType = billingPeriod == .monthly ? UserText.subscriptionMonthly : UserText.subscriptionAnnual
+        }
     }
     
     func removeSubscription() {

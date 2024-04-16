@@ -1117,6 +1117,13 @@ But if you *do* want a peek under the hood, you can find more information about 
         return String(format: localized, status, expiration)
     }
     
+    static func expiredSubscriptionInfo(expiration: String) -> String {
+        let localized = NSLocalizedString("subscription.subscription.expired.caption",
+                                          value: "Your subscription expired on %@",
+                                          comment: "Subscription Expired Data. This reads as 'Your subscription expired on (date)'")
+        return String(format: localized, expiration)
+    }
+    
     public static let subscriptionRenews = NSLocalizedString("subscription.renews", value: "renews", comment: "text for renewal string")
     public static let subscriptionExpires = NSLocalizedString("subscription.expires", value: "expires", comment: "text for expiration string")
     public static let subscriptionMonthly = NSLocalizedString("subscription.monthly", value: "Monthly Subscription", comment: "Subscription type")

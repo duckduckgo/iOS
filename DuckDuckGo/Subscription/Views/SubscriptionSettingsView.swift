@@ -35,6 +35,10 @@ struct SubscriptionSettingsView: View {
     @State var isShowingFAQView = false
     @State var isShowingRestoreView = false
     
+    enum Constants {
+        static let alertIcon = "Exclamation-Color-16"
+    }
+    
     var body: some View {
         optionsView
             .onFirstAppear {
@@ -47,13 +51,21 @@ struct SubscriptionSettingsView: View {
     
     private var headerSection: some View {
         Section {
+            var active = viewModel.state.subscriptionInfo?.isActive ?? false
             VStack(alignment: .center, spacing: 7) {
                 Image("Privacy-Pro-96x96")
                 Text(UserText.subscriptionTitle).daxTitle2()
-                Text(viewModel.state.subscriptionType).daxHeadline()
-                Text(viewModel.state.subscriptionDetails)
-                    .daxSubheadRegular()
-                    .foregroundColor(Color(designSystemColor: .textSecondary))
+                if active {
+                        Text(viewModel.state.subscriptionType).daxHeadline()
+                }
+                HStack {
+                    if !active {
+                        Image(Constants.alertIcon)
+                    }
+                    Text(viewModel.state.subscriptionDetails)
+                        .daxSubheadRegular()
+                        .foregroundColor(Color(designSystemColor: .textSecondary))
+                }
             }
         }
         .listRowBackground(Color.clear)

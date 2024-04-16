@@ -48,57 +48,21 @@ jobs:
           ONLY_ACTIVE_ARCH=NO \
         | tee xcodebuild.log
 
+    - name: Install Maestro
+      run: |
+        export MAESTRO_VERSION=1.36.0; curl -Ls "https://get.maestro.mobile.dev" | bash
+
     - name: Release tests
-      id: release-tests
-      uses: mobile-dev-inc/action-maestro-cloud@v1.8.1
-      with:
-        api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
-        app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
-        workspace: .maestro
-        include-tags: release
-        ios-version: 17
+      run: |
+        maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --ios-version=17 --include-tags=release DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
 
     - name: Privacy tests
-      id: privacy-tests
-      uses: mobile-dev-inc/action-maestro-cloud@v1.8.1
-      with:
-        api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
-        app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
-        workspace: .maestro
-        include-tags: privacy
-        ios-version: 17
+      run: |
+        maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --ios-version=17 --include-tags=privacy DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
     
     - name: Ad Click Detection Flow tests
-      id: ad-click-tests
-      uses: mobile-dev-inc/action-maestro-cloud@v1.8.1
-      with:
-        api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
-        app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
-        workspace: .maestro
-        include-tags: adClick
-        ios-version: 17
-
-    - name: Check For Errors
-      env:
-        MAESTRO_RELEASE_TESTS_FLOW_RESULTS: ${{ steps.release-tests.outputs.MAESTRO_CLOUD_FLOW_RESULTS }} 
-        MAESTRO_PRIVACY_TESTS_FLOW_RESULTS: ${{ steps.privacy-tests.outputs.MAESTRO_CLOUD_FLOW_RESULTS }}
-        MAESTRO_AD_CLICK_TESTS_FLOW_RESULTS: ${{ steps.ad-click-tests.outputs.MAESTRO_CLOUD_FLOW_RESULTS }}
-        MAESTRO_RELEASE_TESTS_UPLOAD_RESULTS: ${{ steps.release-tests.outputs.MAESTRO_CLOUD_UPLOAD_STATUS }}
-        MAESTRO_PRIVACY_TESTS_UPLOAD_RESULTS: ${{ steps.privacy-tests.outputs.MAESTRO_CLOUD_UPLOAD_STATUS }}
-        MAESTRO_AD_CLICK_TESTS_UPLOAD_RESULTS: ${{ steps.ad-click-tests.outputs.MAESTRO_CLOUD_UPLOAD_STATUS }}
       run: |
-          echo "Release tests results: upload: ${{ steps.release-tests.outputs.MAESTRO_CLOUD_FLOW_RESULTS }}  - flow: $MAESTRO_RELEASE_TESTS_FLOW_RESULTS"
-          echo "Privacy tests results: upload: $MAESTRO_PRIVACY_TESTS_UPLOAD_RESULTS - flow: $MAESTRO_PRIVACY_TESTS_FLOW_RESULTS"
-          echo "Ad Click tests results: upload: $MAESTRO_AD_CLICK_TESTS_FLOW_RESULTS - flow: $MAESTRO_AD_CLICK_TESTS_UPLOAD_RESULTS"
-          if [[ "$MAESTRO_RELEASE_TESTS_FLOW_RESULTS" == *"ERROR"* || "$MAESTRO_RELEASE_TESTS_FLOW_RESULTS" == *"CANCELED"* ]] \
-          || [[ "$MAESTRO_PRIVACY_TESTS_FLOW_RESULTS" == *"ERROR"* || "$MAESTRO_PRIVACY_TESTS_FLOW_RESULTS" == *"CANCELED"* ]] \
-          || [[ "$MAESTRO_AD_CLICK_TESTS_FLOW_RESULTS" == *"ERROR"* || "$MAESTRO_AD_CLICK_TESTS_FLOW_RESULTS" == *"CANCELED"* ]] \
-          || [[ "$MAESTRO_RELEASE_TESTS_UPLOAD_RESULTS" != "SUCCESS" ]] \
-          || [[ "$MAESTRO_PRIVACY_TESTS_FLOW_RESULTS" != "SUCCESS" ]] \
-          || [[ "$MAESTRO_AD_CLICK_TESTS_FLOW_RESULTS" != "SUCCESS" ]]; then
-            echo "One or more tests failed or were canceled."
-            exit 1
-          fi
+        maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --ios-version=17 --include-tags=adClick DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
       
     - name: Create Asana task when workflow failed
       if: ${{ failure() }}

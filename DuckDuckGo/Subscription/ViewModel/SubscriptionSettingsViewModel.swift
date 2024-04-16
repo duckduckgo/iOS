@@ -40,6 +40,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         var isShowingGoogleView: Bool = false
         var isShowingFAQView: Bool = false
         var subscriptionInfo: SubscriptionService.GetSubscriptionResponse?
+        var isLoadingSubscriptionInfo: Bool = false
+        
         // Used to display stripe WebUI
         var stripeViewModel: SubscriptionExternalLinkViewModel?
         var isShowingStripeView: Bool = false
@@ -68,7 +70,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }()
     
     func onFirstAppear() {
-        fetchAndUpdateSubscriptionDetails()
+        self.fetchAndUpdateSubscriptionDetails(cachePolicy: .returnCacheDataElseLoad)
     }
         
     private func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad) {
@@ -115,9 +117,9 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     // Re-fetch subscription from server ignoring cache
-    // This ensure that if the user changed something on the Apple view, state will be updated
+    // This ensure that if the user re-subscribed or changed plan on the Apple view, state is updated
     private func setupSubscriptionUpdater() {
-        subscriptionUpdateTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { [weak self] _ in
+        subscriptionUpdateTimer = Timer.scheduledTimer(withTimeInterval: 8.0, repeats: true) { [weak self] _ in
             guard let strongSelf = self else { return }
                 strongSelf.fetchAndUpdateSubscriptionDetails(cachePolicy: .reloadIgnoringLocalCacheData)
         }

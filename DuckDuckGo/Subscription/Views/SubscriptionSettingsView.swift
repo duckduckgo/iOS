@@ -198,7 +198,6 @@ struct SubscriptionSettingsView: View {
                 isShowingRestoreView = false
             }
         }
-
         
         // Remove subscription
         .alert(isPresented: $isShowingRemovalNotice) {
@@ -222,6 +221,7 @@ struct SubscriptionSettingsView: View {
         .onFirstAppear {
             viewModel.onFirstAppear()
         }
+            
     }
     
     @ViewBuilder

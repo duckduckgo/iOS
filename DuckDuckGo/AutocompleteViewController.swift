@@ -252,7 +252,7 @@ extension AutocompleteViewController: UITableViewDataSource {
                        isAddressBarAtBottom: appSettings.currentAddressBarPosition.isBottom)
         cell.plusButton.tag = indexPath.row
         
-        let baseBackgroundColor = isPad ? UIColor(designSystemColor: .panel) : UIColor(designSystemColor: .background)
+        let baseBackgroundColor = UIColor(designSystemColor: .surface)
         let backgroundColor = indexPath.row == selectedItem ? currentTheme.tableCellSelectedColor : baseBackgroundColor
 
         cell.backgroundColor = backgroundColor
@@ -268,9 +268,7 @@ extension AutocompleteViewController: UITableViewDataSource {
         }
         
         let currentTheme = ThemeManager.shared.currentTheme
-        cell.backgroundColor = appSettings.currentAddressBarPosition.isBottom ?
-            UIColor(designSystemColor: .background) :
-            UIColor(designSystemColor: .panel)
+        cell.backgroundColor = UIColor(designSystemColor: .surface)
 
         cell.tintColor = currentTheme.autocompleteCellAccessoryColor
         cell.label?.textColor = currentTheme.tableCellTextColor

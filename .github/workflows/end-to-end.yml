@@ -72,7 +72,7 @@ jobs:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
         app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
         workspace: .maestro
-        include-tags: security
+        include-tags: securityTest
         ios-version: 17
     
     - name: Ad Click Detection Flow tests

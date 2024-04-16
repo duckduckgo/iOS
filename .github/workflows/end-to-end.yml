@@ -65,21 +65,4 @@ jobs:
       run: |
         maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --ios-version=17 --include-tags=adClick DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
       
-    - name: Create Asana task when workflow failed
-      if: ${{ failure() }}
-      run: |
-        curl -s "https://app.asana.com/api/1.0/tasks" \
-          --header "Accept: application/json" \
-          --header "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
-          --header "Content-Type: application/json" \
-          --data ' { "data": { "name": "GH Workflow Failure - End to end tests", "workspace": "${{ vars.GH_ASANA_WORKSPACE_ID }}", "projects": [ "${{ vars.GH_ASANA_IOS_APP_PROJECT_ID }}" ], "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}. For instructions on how to handle the failure(s), check https://app.asana.com/0/0/1206423571874502/f" } }'
 
-    - name: Upload logs when workflow failed
-      uses: actions/upload-artifact@v4
-      if: failure()
-      with:
-        name: BuildLogs
-        path: |
-          xcodebuild.log
-          DerivedData/Logs/Test/*.xcresult
-        retention-days: 7

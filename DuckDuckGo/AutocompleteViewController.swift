@@ -65,15 +65,9 @@ class AutocompleteViewController: UIViewController {
         BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
     }()
 
-    var backgroundColor: UIColor {
-        appSettings.currentAddressBarPosition.isBottom ?
-            UIColor(designSystemColor: .background) :
-            UIColor.black.withAlphaComponent(0.2)
-    }
-
     var showBackground = true {
         didSet {
-            view.backgroundColor = showBackground ? backgroundColor : UIColor.clear
+            view.backgroundColor = showBackground ? UIColor(designSystemColor: .background) : UIColor.clear
         }
     }
 

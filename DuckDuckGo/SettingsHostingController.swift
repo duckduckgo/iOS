@@ -20,9 +20,7 @@
 import UIKit
 import SwiftUI
 import Core
-#if SUBSCRIPTION
 import Subscription
-#endif
 
 class SettingsHostingController: UIHostingController<AnyView> {
     var viewModel: SettingsViewModel

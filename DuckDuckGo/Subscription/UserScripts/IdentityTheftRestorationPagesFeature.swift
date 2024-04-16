@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-#if SUBSCRIPTION
 import BrowserServicesKit
 import Common
 import Foundation
@@ -80,4 +79,3 @@ final class IdentityTheftRestorationPagesFeature: Subfeature, ObservableObject {
     }
 
 }
-#endif

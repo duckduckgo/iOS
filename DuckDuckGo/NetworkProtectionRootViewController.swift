@@ -32,6 +32,7 @@ final class NetworkProtectionRootViewController: UIHostingController<NetworkProt
     override func viewDidLoad() {
         super.viewDidLoad()
         decorate()
+        self.title = UserText.netPNavTitle
     }
 
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {

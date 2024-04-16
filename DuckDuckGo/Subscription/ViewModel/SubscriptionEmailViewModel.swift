@@ -21,9 +21,8 @@ import Foundation
 import UserScript
 import Combine
 import Core
-
-#if SUBSCRIPTION
 import Subscription
+
 @available(iOS 15.0, *)
 final class SubscriptionEmailViewModel: ObservableObject {
     
@@ -116,7 +115,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
     
     private func cleanUp() {
         canGoBackCancellable?.cancel()
-        subFeature.cleanup()
         cancellables.removeAll()
     }
     
@@ -258,4 +256,3 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
 
 }
-#endif

@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-#if SUBSCRIPTION
 import SwiftUI
 import Foundation
 import DesignResourcesKit
@@ -188,5 +187,3 @@ struct SubscriptionPIRView: View {
 //        SubscriptionPIRView()
 //    }
 // }
-
-#endif

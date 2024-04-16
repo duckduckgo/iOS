@@ -21,6 +21,8 @@ import DesignResourcesKit
 import DuckUI
 import SwiftUI
 
+// swiftlint:disable file_length
+
 extension SyncSettingsView {
 
     @ViewBuilder
@@ -73,10 +75,11 @@ extension SyncSettingsView {
     @ViewBuilder
     func otherOptions() -> some View {
         Section {
-
             Button(UserText.syncAndBackUpThisDeviceLink) {
                 Task { @MainActor in
-                    isSyncWithSetUpSheetVisible = await model.authenticateUser()
+                    if await model.commonAuthenticate() {
+                        isSyncWithSetUpSheetVisible = true
+                    }
                 }
             }
             .sheet(isPresented: $isSyncWithSetUpSheetVisible, content: {
@@ -88,7 +91,9 @@ extension SyncSettingsView {
 
             Button(UserText.recoverSyncedDataLink) {
                 Task { @MainActor in
-                    isRecoverSyncedDataSheetVisible = await model.authenticateUser()
+                    if await model.commonAuthenticate() {
+                        isRecoverSyncedDataSheetVisible = true
+                    }
                 }
             }
             .sheet(isPresented: $isRecoverSyncedDataSheetVisible, content: {
@@ -393,3 +398,5 @@ extension View {
         closure(self)
     }
 }
+
+// swiftlint:enable file_length

@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-#if SUBSCRIPTION
-
 import BrowserServicesKit
 import Common
 import Combine
@@ -69,5 +67,3 @@ extension SubscriptionPagesUserScript: WKScriptMessageHandler {
         os_log("SubscriptionPagesUserScript sent an unsupported message: %s", log: .generalLog, type: .fault, message.messageName)
     }
 }
-
-#endif

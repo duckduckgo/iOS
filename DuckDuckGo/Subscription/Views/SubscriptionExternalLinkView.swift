@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-#if SUBSCRIPTION
 import SwiftUI
 import Foundation
 import DesignResourcesKit
@@ -95,4 +94,3 @@ struct SubscriptionExternalLinkView: View {
         navAppearance.tintColor = UIColor(designSystemColor: .textPrimary)
     }
 }
-#endif

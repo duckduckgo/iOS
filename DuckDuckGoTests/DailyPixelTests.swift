@@ -23,6 +23,8 @@ import OHHTTPStubsSwift
 import Networking
 @testable import Core
 
+// swiftlint:disable type_body_length
+
 final class DailyPixelTests: XCTestCase {
     
     let host = "improving.duckduckgo.com"
@@ -98,6 +100,91 @@ final class DailyPixelTests: XCTestCase {
             expectation.fulfill()
         }
         
+        wait(for: [expectation], timeout: 3.0)
+    }
+
+    func testThatDailyPixelWithSameErrorFiresForTheFirstTimeButNotForTheSecond() {
+        let expectation = XCTestExpectation()
+        expectation.expectedFulfillmentCount = 2
+
+        stub(condition: isHost(host)) { _ -> HTTPStubsResponse in
+            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+        }
+
+        let error = NSError(domain: "test", code: 0, userInfo: nil)
+
+        DailyPixel.fire(pixel: .forgetAllPressedBrowsing, error: error) { error in
+            XCTAssertNil(error)
+            expectation.fulfill()
+        }
+
+        DailyPixel.fire(pixel: .forgetAllPressedBrowsing, error: error) { error in
+            XCTAssertNotNil(error)
+            XCTAssertEqual(error as? DailyPixel.Error, .alreadyFired)
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 3.0)
+    }
+
+    func testThatDailyPixelWithTwoDifferentErrorsBothFireFirstTime() {
+        let expectation = XCTestExpectation()
+        expectation.expectedFulfillmentCount = 2
+
+        stub(condition: isHost(host)) { _ -> HTTPStubsResponse in
+            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+        }
+
+        let error1 = NSError(domain: "test1", code: 1, userInfo: nil)
+        let error2 = NSError(domain: "test2", code: 2, userInfo: nil)
+
+        DailyPixel.fire(pixel: .forgetAllPressedBrowsing, error: error1) { error in
+            XCTAssertNil(error)
+            expectation.fulfill()
+        }
+
+        DailyPixel.fire(pixel: .forgetAllPressedBrowsing, error: error2) { error in
+            XCTAssertNil(error)
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 3.0)
+    }
+
+
+    func testThatDailyPixelWithTwoDifferentErrorsBothFireFirstTimeButNotForTheSecond() {
+        let expectation = XCTestExpectation()
+        expectation.expectedFulfillmentCount = 4
+
+        stub(condition: isHost(host)) { _ -> HTTPStubsResponse in
+            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+        }
+
+        let error1 = NSError(domain: "test1", code: 1, userInfo: nil)
+        let error2 = NSError(domain: "test1", code: 2, userInfo: nil)
+
+        DailyPixel.fire(pixel: .forgetAllPressedBrowsing, error: error1) { error in
+            XCTAssertNil(error)
+            expectation.fulfill()
+        }
+
+        DailyPixel.fire(pixel: .forgetAllPressedBrowsing, error: error2) { error in
+            XCTAssertNil(error)
+            expectation.fulfill()
+        }
+
+        DailyPixel.fire(pixel: .forgetAllPressedBrowsing, error: error1) { error in
+            XCTAssertNotNil(error)
+            XCTAssertEqual(error as? DailyPixel.Error, .alreadyFired)
+            expectation.fulfill()
+        }
+
+        DailyPixel.fire(pixel: .forgetAllPressedBrowsing, error: error2) { error in
+            XCTAssertNotNil(error)
+            XCTAssertEqual(error as? DailyPixel.Error, .alreadyFired)
+            expectation.fulfill()
+        }
+
         wait(for: [expectation], timeout: 3.0)
     }
 
@@ -276,3 +363,5 @@ final class DailyPixelTests: XCTestCase {
         case testError
     }
 }
+
+// swiftlint:enable type_body_length

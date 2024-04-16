@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-#if SUBSCRIPTION
 import SwiftUI
 import Foundation
 import Core
@@ -190,5 +189,3 @@ struct SubscriptionEmailView: View {
 //        SubscriptionEmailView()
 //    }
 // }
-
-#endif

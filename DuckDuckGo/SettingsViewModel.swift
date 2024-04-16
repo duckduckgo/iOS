@@ -366,7 +366,10 @@ final class SettingsViewModel: ObservableObject {
     var crashCollectionOptInStatusBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.crashCollectionOptInStatus == .optedIn },
-            set: { self.state.crashCollectionOptInStatus = $0 ? .optedIn : .optedOut }
+            set: {
+                self.appSettings.crashCollectionOptInStatus = $0 ? .optedIn : .optedOut
+                self.state.crashCollectionOptInStatus = $0 ? .optedIn : .optedOut
+            }
         )
     }
 

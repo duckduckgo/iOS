@@ -40,13 +40,13 @@ class SuggestionTableViewCell: UITableViewCell {
         switch suggestion {
         case .phrase(phrase: let phrase):
             text = phrase
-            typeImage.image = UIImage(named: "Find-Search-20")
+            typeImage.image = UIImage(named: "Find-Search-24")
             urlLabel.isHidden = true
             self.accessibilityValue = UserText.voiceoverSuggestionTypeSearch
 
         case .website(url: let url):
             text = url.absoluteString
-            typeImage.image = UIImage(named: "Globe-20")
+            typeImage.image = UIImage(named: "Globe-24")
             urlLabel.isHidden = true
             self.accessibilityValue = UserText.voiceoverSuggestionTypeSearch
 
@@ -54,7 +54,7 @@ class SuggestionTableViewCell: UITableViewCell {
             text = title
             urlLabel.isHidden = url.isBookmarklet()
             urlLabel.text = url.formattedForSuggestion()
-            typeImage.image = UIImage(named: "Bookmark-20")
+            typeImage.image = UIImage(named: "Bookmark-24")
             self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
 
         case .historyEntry(title: let title, url: let url, _):
@@ -65,7 +65,7 @@ class SuggestionTableViewCell: UITableViewCell {
             }
             urlLabel.isHidden = false
             urlLabel.text = url.formattedForSuggestion()
-            typeImage.image = UIImage(named: "History-20")
+            typeImage.image = UIImage(named: "History-24")
             self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
 
         case .unknown(value: let value):

@@ -64,6 +64,7 @@ final class SecureVaultReporter: SecureVaultReporting {
 
             }
         }
+    }
 
     func secureVaultKeyStoreEvent(_ event: SecureStorageKeyStoreEvent) {
         switch event {

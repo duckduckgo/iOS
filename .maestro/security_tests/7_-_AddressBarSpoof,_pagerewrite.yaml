@@ -2,12 +2,33 @@ appId: com.duckduckgo.mobile.ios
 tags:
     - securityTest
 ---
-# Test 1
-- doubleTapOn:
+# Set up 
+- clearState
+- launchApp
+- runFlow: 
+    when: 
+      visible: 
+        text: "Let’s Do It!"
+        index: 0
+    file: ../shared/onboarding.yaml
+
+# Load Site
+- assertVisible:
     id: "searchEntry"
-- pressKey: Backspace
+- tapOn: 
+    id: "searchEntry"
 - inputText: "https://privacy-test-pages.site/security/address-bar-spoofing/spoof-js-page-rewrite.html"
 - pressKey: Enter
+
+# Manage onboarding
+- runFlow:
+    when:
+      visible:
+        text: "Got It"
+        index: 0
+    file: ../shared/onboarding_browsing.yaml
+
+# Test
 - tapOn: "Start"
 # Now check the address bar hasn't been updated too early resulting in spoofed content
 - copyTextFrom:

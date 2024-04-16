@@ -34,6 +34,15 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
     var createAccountAndStartSyncingCalled = false
     var capturedOptionModel: SyncSettingsViewModel?
 
+    func waitForInvocation() {
+        let expectation = expectation(description: "Inv")
+        let cancellable = monitor.$functionCalls.dropFirst().sink { val in
+            print(val)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 5)
+    }
+
     func testWhenSingleDeviceSetUpPressed_ThenManagerBecomesBusy_AndAccounCreationRequested() {
         model.startSyncPressed()
         XCTAssertTrue(model.isBusy)
@@ -54,11 +63,13 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
 
     func testWhenScanQRCodePressed_ThenSyncWithAnotherDeviceViewIsShown() {
         model.scanQRCode()
+        waitForInvocation()
 
         // You can either test one individual call was made x number of times or check for a whole number of calls
-        monitor.assert(#selector(showSyncWithAnotherDevice).description, calls: 1)
+        // async functions selector description apparently contain 'WithCompletionHandler'
+        monitor.assert(#selector(authenticateUser).description.dropping(suffix: "WithCompletionHandler:"), calls: 1)
         monitor.assertCalls([
-            #selector(showSyncWithAnotherDevice).description: 1
+            #selector(authenticateUser).description.dropping(suffix: "WithCompletionHandler:"): 1
         ])
     }
 
@@ -95,11 +106,13 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
 
     func testWhenSaveRecoveryPDFPressed_recoveryMethodShown() {
         model.saveRecoveryPDF()
+        waitForInvocation()
 
         // You can either test one individual call was made x number of times or check for a whole number of calls
-        monitor.assert(#selector(shareRecoveryPDF).description, calls: 1)
+        // async functions selector description apparently contain 'WithCompletionHandler'
+        monitor.assert(#selector(authenticateUser).description.dropping(suffix: "WithCompletionHandler:"), calls: 1)
         monitor.assertCalls([
-            #selector(shareRecoveryPDF).description: 1
+            #selector(authenticateUser).description.dropping(suffix: "WithCompletionHandler:"): 1
         ])
     }
 
@@ -126,17 +139,19 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
 
     func testWhenRecoverSyncDataPressed_RecoverDataViewShown() {
         model.recoverSyncDataPressed()
+        waitForInvocation()
 
         // You can either test one individual call was made x number of times or check for a whole number of calls
-        monitor.assert(#selector(showRecoverData).description, calls: 1)
+        // async functions selector description apparently contain 'WithCompletionHandler'
+        monitor.assert(#selector(authenticateUser).description.dropping(suffix: "WithCompletionHandler:"), calls: 1)
         monitor.assertCalls([
-            #selector(showRecoverData).description: 1
+            #selector(authenticateUser).description.dropping(suffix: "WithCompletionHandler:"): 1
         ])
     }
     // MARK: Delegate functions
 
-    func authenticateUser() async -> Bool {
-        return true
+    func authenticateUser() async throws {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
     }
 
     func showSyncWithAnotherDeviceEnterText() {
@@ -217,7 +232,7 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
 
 private class Monitor<T> {
 
-    var functionCalls = [String: Int]()
+    @Published var functionCalls = [String: Int]()
 
     /// Whatever is passed as function is used as the key, the same key should be used for assertions.
     ///  Use `String.cleaningFunctionName()` with `#function` but be aware that overloaded function names will not be tracked accurately.

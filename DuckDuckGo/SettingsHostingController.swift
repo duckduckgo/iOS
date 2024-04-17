@@ -64,7 +64,7 @@ class SettingsHostingController: UIHostingController<AnyView> {
 
         // If this is not called, settings navigation bar (UIKIt) is going wild with colors after reopening settings (?!)
         // Root cause will be investigated later as part of https://app.asana.com/0/414235014887631/1207098219526666/f
-        self.decorate()
+        decorate()
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -127,7 +127,7 @@ class ImageCacheDebugViewController: UITableViewController {
 
     private func loadAllLogins() {
         do {
-            let secureVault = try AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+            let secureVault = try AutofillSecureVaultFactory.makeVault(reporter: SecureVaultErrorReporter.shared)
             let accounts = try secureVault.accounts()
             for account in accounts {
                 if let imageResource = Favicons.shared.defaultResource(forDomain: account.domain) {

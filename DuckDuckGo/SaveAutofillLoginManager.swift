@@ -146,7 +146,7 @@ final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
     
     static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: AutofillVaultFactory) throws -> Int64 {
         do {
-            return try AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared).storeWebsiteCredentials(credentials)
+            return try AutofillSecureVaultFactory.makeVault(reporter: SecureVaultErrorReporter.shared).storeWebsiteCredentials(credentials)
         } catch {
             throw error
         }

@@ -23,7 +23,7 @@ import Core
 import Common
 import SecureStorage
 
-final class SecureVaultErrorReporter: SecureVaultErrorReporting {
+final class SecureVaultErrorReporter: SecureVaultReporting {
     static let shared = SecureVaultErrorReporter()
     private init() {}
 
@@ -32,7 +32,7 @@ final class SecureVaultErrorReporter: SecureVaultErrorReporting {
         return UIApplication.shared.applicationState == .background
     }
 
-    func secureVaultInitFailed(_ error: SecureStorageError) {
+    func secureVaultError(_ error: SecureStorageError) {
         #if DEBUG
         guard !ProcessInfo().arguments.contains("testing") else { return }
         #endif

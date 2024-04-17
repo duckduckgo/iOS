@@ -251,7 +251,7 @@
 		31C138A827A3E9C900FFD4B2 /* URLDownloadSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C138A727A3E9C900FFD4B2 /* URLDownloadSession.swift */; };
 		31C138AC27A403CB00FFD4B2 /* DownloadManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C138AB27A403CB00FFD4B2 /* DownloadManagerTests.swift */; };
 		31C138B227A4097800FFD4B2 /* DownloadTestsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C138B127A4097800FFD4B2 /* DownloadTestsHelper.swift */; };
-		31C70B5528045E3500FB6AD1 /* SecureVaultErrorReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C70B5428045E3500FB6AD1 /* SecureVaultErrorReporter.swift */; };
+		31C70B5528045E3500FB6AD1 /* SecureVaultReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C70B5428045E3500FB6AD1 /* SecureVaultReporter.swift */; };
 		31C70B5B2804C61000FB6AD1 /* SaveAutofillLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C70B5A2804C61000FB6AD1 /* SaveAutofillLoginManager.swift */; };
 		31C7D71C27515A6300A95D0A /* MockVoiceSearchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7D71B27515A6300A95D0A /* MockVoiceSearchHelper.swift */; };
 		31CB4251273AF50700FA0F3F /* SpeechRecognizerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CB4250273AF50700FA0F3F /* SpeechRecognizerProtocol.swift */; };
@@ -1405,7 +1405,7 @@
 		31C138A727A3E9C900FFD4B2 /* URLDownloadSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLDownloadSession.swift; sourceTree = "<group>"; };
 		31C138AB27A403CB00FFD4B2 /* DownloadManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManagerTests.swift; sourceTree = "<group>"; };
 		31C138B127A4097800FFD4B2 /* DownloadTestsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTestsHelper.swift; sourceTree = "<group>"; };
-		31C70B5428045E3500FB6AD1 /* SecureVaultErrorReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureVaultErrorReporter.swift; sourceTree = "<group>"; };
+		31C70B5428045E3500FB6AD1 /* SecureVaultReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureVaultReporter.swift; sourceTree = "<group>"; };
 		31C70B5A2804C61000FB6AD1 /* SaveAutofillLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveAutofillLoginManager.swift; sourceTree = "<group>"; };
 		31C7D71B27515A6300A95D0A /* MockVoiceSearchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockVoiceSearchHelper.swift; sourceTree = "<group>"; };
 		31CB4250273AF50700FA0F3F /* SpeechRecognizerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizerProtocol.swift; sourceTree = "<group>"; };
@@ -5745,7 +5745,7 @@
 				C1CDA3152AFB9C7F006D1476 /* AutofillNeverPromptWebsitesManager.swift */,
 				C13B32D12A0E750700A59236 /* AutofillSettingStatus.swift */,
 				319A370F28299A850079FBCE /* PasswordHider.swift */,
-				31C70B5428045E3500FB6AD1 /* SecureVaultErrorReporter.swift */,
+				31C70B5428045E3500FB6AD1 /* SecureVaultReporter.swift */,
 				C1AFFC4B2B8773060060448E /* AuthConfirmation */,
 				F407605328131910006B1E0B /* AutofillLoginUI */,
 				310C4B4A281B69BC00BA79A9 /* Management */,
@@ -6911,7 +6911,7 @@
 				4BBBBA8D2B031B4200D965DA /* VPNWaitlistDebugViewController.swift in Sources */,
 				C160544129D6044D00B715A1 /* AutofillInterfaceUsernameTruncator.swift in Sources */,
 				02A54A9A2A094A17000C8FED /* AppTPHomeView.swift in Sources */,
-				31C70B5528045E3500FB6AD1 /* SecureVaultErrorReporter.swift in Sources */,
+				31C70B5528045E3500FB6AD1 /* SecureVaultReporter.swift in Sources */,
 				F4CE6D1B257EA33C00D0A6AA /* FireButtonAnimator.swift in Sources */,
 				85582E0029D7409700E9AE35 /* SyncSettingsViewController+PDFRendering.swift in Sources */,
 				EE0153EF2A70021E002A8B26 /* NetworkProtectionInviteView.swift in Sources */,

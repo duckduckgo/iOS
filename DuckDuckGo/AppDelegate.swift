@@ -241,7 +241,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         syncDataProviders = SyncDataProviders(
             bookmarksDatabase: bookmarksDatabase,
-            secureVaultErrorReporter: SecureVaultErrorReporter.shared,
+            secureVaultErrorReporter: SecureVaultReporter.shared,
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
         )

@@ -2406,7 +2406,7 @@ extension TabViewController: SecureVaultManagerDelegate {
     }
     
     func secureVaultError(_ error: SecureStorageError) {
-        SecureVaultErrorReporter.shared.secureVaultError(error)
+        SecureVaultReporter.shared.secureVaultError(error)
     }
 
     func secureVaultManagerIsEnabledStatus(_ manager: SecureVaultManager, forType type: AutofillType?) -> Bool {
@@ -2637,7 +2637,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
 
     private func confirmSavedCredentialsFor(credentialID: Int64, message: String) {
         do {
-            let vault = try AutofillSecureVaultFactory.makeVault(reporter: SecureVaultErrorReporter.shared)
+            let vault = try AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter.shared)
             
             if let newCredential = try vault.websiteCredentialsFor(accountId: credentialID) {
                 DispatchQueue.main.async {

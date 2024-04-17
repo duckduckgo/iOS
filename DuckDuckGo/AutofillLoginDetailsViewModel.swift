@@ -272,7 +272,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     private func setupPassword(with account: SecureVaultModels.WebsiteAccount) {
         do {
             if let accountID = account.id, let accountIdInt = Int64(accountID) {
-                let vault = try AutofillSecureVaultFactory.makeVault(reporter: SecureVaultErrorReporter.shared)
+                let vault = try AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter.shared)
                 
                 if let credential = try
                     vault.websiteCredentialsFor(accountId: accountIdInt) {
@@ -286,7 +286,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
 
     // swiftlint:disable:next cyclomatic_complexity
     func save() {
-        guard let vault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultErrorReporter.shared) else {
+        guard let vault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter.shared) else {
             return
         }
 

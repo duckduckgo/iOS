@@ -27,7 +27,7 @@ class AutofillNeverPromptWebsitesManager {
 
     private let secureVault: (any AutofillSecureVault)?
 
-    public init(secureVault: (any AutofillSecureVault)? = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultErrorReporter.shared)) {
+    public init(secureVault: (any AutofillSecureVault)? = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter.shared)) {
         self.secureVault = secureVault
 
         fetchNeverPromptWebsites()

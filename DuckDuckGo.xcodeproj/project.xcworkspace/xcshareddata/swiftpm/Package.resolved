@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "dominik/userscripts-memory-leaks",
-        "revision" : "280242c93084cb7b859a717ea604a1228061fe80"
+        "revision" : "4b5a3bb837c54b48bd731bc32db5407c66e962bc",
+        "version" : "134.1.0-2"
       }
     },
     {

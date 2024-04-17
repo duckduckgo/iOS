@@ -10177,8 +10177,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "dominik/userscripts-memory-leaks";
-				kind = branch;
+				kind = exactVersion;
+				version = "134.1.0-2";
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

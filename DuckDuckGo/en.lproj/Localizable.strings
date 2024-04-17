@@ -1992,6 +1992,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* I have a Subscription button text for privacy pro */
 "settings.subscription.existing.subscription" = "I Have a Subscription";
 
+/* Subscription expired description */
+"settings.subscription.expired.comment" = "Subscribe again to continue using Privacy Pro";
+
+/* Subscription expired tittle message */
+"settings.subscription.expired.title" = "Your Privacy Pro subscription expired";
+
 /* Privacy pro features list */
 "settings.subscription.features" = " • VPN
  • Personal Information Removal

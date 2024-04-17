@@ -44,8 +44,8 @@ struct SettingsState {
     struct Subscription {
         var enabled: Bool
         var canPurchase: Bool
+        var isSignedIn: Bool
         var hasActiveSubscription: Bool
-        var isSubscriptionPendingActivation: Bool
         var isRestoring: Bool
         var shouldDisplayRestoreSubscriptionError: Bool
         var entitlements: [Entitlement.ProductName]
@@ -120,8 +120,8 @@ struct SettingsState {
             networkProtection: NetworkProtection(enabled: false, status: ""),
             subscription: Subscription(enabled: false,
                                        canPurchase: false,
+                                       isSignedIn: false,
                                        hasActiveSubscription: false,
-                                       isSubscriptionPendingActivation: false,
                                        isRestoring: false,
                                        shouldDisplayRestoreSubscriptionError: false,
                                        entitlements: []),

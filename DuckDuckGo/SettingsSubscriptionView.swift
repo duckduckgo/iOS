@@ -39,6 +39,7 @@ struct SettingsSubscriptionView: View {
         static let noEntitlementsIconWidth = 20.0
         static let navigationDelay = 0.3
         static let infoIcon = "info-16"
+        static let alertIcon = "Exclamation-Color-16"
     }
 
     private var subscriptionDescriptionView: some View {
@@ -103,6 +104,34 @@ struct SettingsSubscriptionView: View {
     }
 
     @ViewBuilder
+    private var subscriptionExpiredView: some View {
+        Group {
+            SettingsCustomCell(content: {
+                HStack(alignment: .top) {
+                    Image(Constants.alertIcon)
+                        .frame(width: Constants.noEntitlementsIconWidth)
+                        .padding(.top, Constants.topCellPadding)
+                    VStack(alignment: .leading) {
+                        Text(UserText.settingsPProSubscriptionExpiredTitle).daxBodyRegular()
+                        Text(UserText.settingsPProSubscribeAgain).daxFootnoteRegular()
+                            .padding(.bottom, Constants.purchaseDescriptionPadding)
+                    }.foregroundColor(Color(designSystemColor: .textSecondary))
+                }
+            })
+            
+            let subscribeView = SubscriptionContainerView(currentView: .subscribe)
+                .navigationViewStyle(.stack)
+                .environmentObject(subscriptionNavigationCoordinator)
+            NavigationLink(destination: subscribeView,
+                           isActive: $isShowingSubscribeFlow,
+                           label: { SettingsCellView(label: UserText.subscriptionRestoreNotFoundPlans ) })
+            NavigationLink(destination: SubscriptionSettingsView().environmentObject(subscriptionNavigationCoordinator)) {
+                    SettingsCustomCell(content: { manageSubscriptionView })
+            }
+        }
+    }
+    
+    @ViewBuilder
     private var noEntitlementsAvailableView: some View {
         Group {
             SettingsCustomCell(content: {
@@ -161,22 +190,27 @@ struct SettingsSubscriptionView: View {
     var body: some View {
         if viewModel.state.subscription.enabled && viewModel.state.subscription.canPurchase {
             Section(header: Text(UserText.settingsPProSection)) {
-                if viewModel.state.subscription.hasActiveSubscription {
-                        
-                    // Allow managing the subscription if we have some entitlements
-                    if !viewModel.state.subscription.entitlements.isEmpty {
-                        subscriptionDetailsView
-                        
-                        // If no entitlements it should mean the backend is still out of sync
-                    } else {
-                        noEntitlementsAvailableView
-                    }
+                
+                switch (viewModel.state.subscription.isSignedIn,
+                        viewModel.state.subscription.hasActiveSubscription,
+                        viewModel.state.subscription.entitlements.isEmpty) {
                     
-                } else if viewModel.state.subscription.isSubscriptionPendingActivation {
-                    noEntitlementsAvailableView
-                } else {
-                    purchaseSubscriptionView
-                }
+                    // Signed In, Subscription Expired
+                    case (true, false, _):
+                        subscriptionExpiredView
+                    
+                    // Signed in, Subscription Active, Valid entitlements
+                    case (true, true, false):
+                        subscriptionDetailsView // View for valid subscription details
+                    
+                    // Signed in, Subscription Active, Empty Entitlements
+                    case (true, true, true):
+                        noEntitlementsAvailableView // View for no entitlements
+                    
+                    // Signed out
+                    case (false, _, _):
+                        purchaseSubscriptionView // View for signing up or purchasing a subscription
+                    }
             }
             
             .onChange(of: viewModel.state.subscription.shouldDisplayRestoreSubscriptionError) { value in

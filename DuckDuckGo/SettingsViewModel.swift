@@ -732,11 +732,10 @@ extension SettingsViewModel {
     @MainActor
     private func setupSubscriptionEnvironment() async {
         
-        
         state.subscription.enabled = AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
         state.subscription.canPurchase = SubscriptionPurchaseEnvironment.canPurchase
+        state.subscription.isSignedIn = false
         state.subscription.hasActiveSubscription = false
-        state.subscription.isSubscriptionPendingActivation = false
         self.state.subscription.entitlements = []
         
         // Active subscription check
@@ -751,9 +750,10 @@ extension SettingsViewModel {
         switch subscriptionResult {
             
         case .success(let subscription):
+            state.subscription.isSignedIn = true
+            
             if subscription.isActive {
                 state.subscription.hasActiveSubscription = true
-                state.subscription.isSubscriptionPendingActivation = false
                 
                 // Check entitlements and update state
                 let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
@@ -772,21 +772,12 @@ extension SettingsViewModel {
                     }
                 }
             } else {
-                // Sign out in case subscription is no longer active, reset the state
+                // Mark the subscription as 'inactive' 
                 state.subscription.hasActiveSubscription = false
-                state.subscription.isSubscriptionPendingActivation = false
-                if #available(iOS 15, *) {
-                    signOutUser()
-                }
             }
             
         case .failure:
-            // Account is active but there's not a valid subscription / entitlements
-            if #available(iOS 15, *) {
-                if await PurchaseManager.hasActiveSubscription() {
-                    state.subscription.isSubscriptionPendingActivation = true
-                }
-            }
+            break
             
         }
     }

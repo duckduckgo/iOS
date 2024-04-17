@@ -59,6 +59,14 @@ class SettingsHostingController: UIHostingController<AnyView> {
         decorate()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        // If this is not called, settings navigation bar (UIKIt) is going wild with colors after reopening settings (?!)
+        // Root cause will be investigated later as part of https://app.asana.com/0/414235014887631/1207098219526666/f
+        self.decorate()
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -78,19 +86,7 @@ class SettingsHostingController: UIHostingController<AnyView> {
 extension SettingsHostingController {
     
     private func decorate() {
-        let theme = ThemeManager.shared.currentTheme
-        // Apply Theme
-        navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
-        navigationController?.navigationBar.tintColor = theme.navigationBarTintColor
-
-        if #available(iOS 15.0, *) {
-            let appearance = UINavigationBarAppearance()
-            appearance.shadowColor = .clear
-            appearance.backgroundColor = theme.backgroundColor
-
-            navigationController?.navigationBar.standardAppearance = appearance
-            navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        }
+        decorateNavigationBar()
     }
-    
+
 }

@@ -91,7 +91,9 @@ struct SubscriptionSettingsView: View {
                 Pixel.fire(pixel: .privacyProSubscriptionManagementPlanBilling, debounce: 1)
                 Task {
                     viewModel.manageSubscription()
-                    viewPlans?()
+                    if viewModel.state.subscriptionInfo?.platform == .apple {
+                        viewPlans?()
+                    }
                 }
                                 },
                                isButton: true)

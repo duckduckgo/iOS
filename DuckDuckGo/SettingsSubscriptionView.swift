@@ -124,7 +124,11 @@ struct SettingsSubscriptionView: View {
             subscriptionManageCell
             
             // Manage Subscription (Expired)
-            let settingsView = SubscriptionSettingsView(viewPlans: { isShowingSubscribeFlow = true })
+            let settingsView = SubscriptionSettingsView(viewPlans: {
+                if viewModel.state.subscription.platform == .apple {
+                    isShowingSubscribeFlow = true
+                }
+            })
                 .environmentObject(subscriptionNavigationCoordinator)
             NavigationLink(destination: settingsView) {
                 SettingsCustomCell(content: { manageSubscriptionView })

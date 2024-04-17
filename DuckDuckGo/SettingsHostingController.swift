@@ -27,7 +27,7 @@ import Subscription
 class SettingsHostingController: UIHostingController<AnyView> {
     var viewModel: SettingsViewModel
     var viewProvider: SettingsLegacyViewProvider
-    
+
     init(viewModel: SettingsViewModel, viewProvider: SettingsLegacyViewProvider) {
         self.viewModel = viewModel
         self.viewProvider = viewProvider
@@ -36,15 +36,15 @@ class SettingsHostingController: UIHostingController<AnyView> {
         viewModel.onRequestPushLegacyView = { [weak self] vc in
             self?.pushLegacyViewController(vc)
         }
-        
+
         viewModel.onRequestPresentLegacyView = { [weak self] vc, modal in
             self?.presentLegacyViewController(vc, modal: modal)
         }
-        
+
         viewModel.onRequestPopLegacyView = { [weak self] in
             self?.navigationController?.popViewController(animated: true)
         }
-        
+
         viewModel.onRequestDismissSettings = { [weak self] in
             self?.navigationController?.dismiss(animated: true)
         }
@@ -56,7 +56,15 @@ class SettingsHostingController: UIHostingController<AnyView> {
         }
         self.rootView = AnyView(settingsView)
 
-        decorate()
+        decorateNavigationBar()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        // If this is not called, settings navigation bar (UIKIt) is going wild with colors after reopening settings (?!)
+        // Root cause will be investigated later as part of https://app.asana.com/0/414235014887631/1207098219526666/f
+        decorateNavigationBar()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -66,31 +74,11 @@ class SettingsHostingController: UIHostingController<AnyView> {
     func pushLegacyViewController(_ vc: UIViewController) {
         navigationController?.pushViewController(vc, animated: true)
     }
-    
+
     func presentLegacyViewController(_ vc: UIViewController, modal: Bool = false) {
         if modal {
             vc.modalPresentationStyle = .fullScreen
         }
         navigationController?.present(vc, animated: true)
     }
-}
-
-extension SettingsHostingController {
-    
-    private func decorate() {
-        let theme = ThemeManager.shared.currentTheme
-        // Apply Theme
-        navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
-        navigationController?.navigationBar.tintColor = theme.navigationBarTintColor
-
-        if #available(iOS 15.0, *) {
-            let appearance = UINavigationBarAppearance()
-            appearance.shadowColor = .clear
-            appearance.backgroundColor = theme.backgroundColor
-
-            navigationController?.navigationBar.standardAppearance = appearance
-            navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        }
-    }
-    
 }

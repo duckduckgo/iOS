@@ -51,19 +51,18 @@ jobs:
     - name: Install Maestro
       run: |
         export MAESTRO_VERSION=1.36.0; curl -Ls "https://get.maestro.mobile.dev" | bash
-        export PATH="$PATH":"$HOME/.maestro/bin"
 
     - name: Release tests
       run: |
-        maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --ios-version=17 --include-tags=release DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
+        export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --ios-version=17 --include-tags=release DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
 
     - name: Privacy tests
       run: |
-        maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --ios-version=17 --include-tags=privacy DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
+        export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --ios-version=17 --include-tags=privacy DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
     
     - name: Ad Click Detection Flow tests
       run: |
-        maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --ios-version=17 --include-tags=adClick DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
+        export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --ios-version=17 --include-tags=adClick DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
       
     - name: Create Asana task when workflow failed
       if: ${{ failure() }}

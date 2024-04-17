@@ -23,9 +23,31 @@ import Core
 import Common
 import SecureStorage
 
+final class SecureVaultKeyStoreEventMapper: EventMapping<SecureStorageKeyStoreEvent> {
+     public init() {
+         super.init { event, _, _, _ in
+             switch event {
+             case .l1KeyMigration:
+                 Pixel.fire(pixel: .secureVaultL1KeyMigration)
+             case .l2KeyMigration:
+                 Pixel.fire(pixel: .secureVaultL2KeyMigration)
+             case .l2KeyPasswordMigration:
+                 Pixel.fire(pixel: .secureVaultL2KeyPasswordMigration)
+             }
+         }
+     }
+
+     override init(mapping: @escaping EventMapping<SecureStorageKeyStoreEvent>.Mapping) {
+         fatalError("Use init()")
+     }
+ }
+
 final class SecureVaultReporter: SecureVaultReporting {
     static let shared = SecureVaultReporter()
-    private init() {}
+    private var keyStoreMapper: SecureVaultKeyStoreEventMapper
+    private init(keyStoreMapper: SecureVaultKeyStoreEventMapper = SecureVaultKeyStoreEventMapper()) {
+        self.keyStoreMapper = keyStoreMapper
+    }
 
     @MainActor
     func isAppBackgrounded() -> Bool {
@@ -63,5 +85,9 @@ final class SecureVaultReporter: SecureVaultReporting {
 
             }
         }
+    }
+
+    func secureVaultKeyStoreEvent(_ event: SecureStorageKeyStoreEvent) {
+        keyStoreMapper.fire(event)
     }
 }

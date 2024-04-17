@@ -555,11 +555,11 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             } else {
                 if viewModel.isAutofillEnabledInSettings || (!viewModel.isAutofillEnabledInSettings && viewModel.hasAccountsSaved) {
                     navigationItem.rightBarButtonItems = [moreBarButtonItem, addBarButtonItem]
+                    moreBarButtonItem.isEnabled = true
                 } else {
                     navigationItem.rightBarButtonItems = [addBarButtonItem]
                 }
                 addBarButtonItem.isEnabled = true
-                moreBarButtonItem.isEnabled = true
             }
         case .noAuthAvailable:
             navigationItem.rightBarButtonItems = [addBarButtonItem]
@@ -904,9 +904,9 @@ extension AutofillLoginSettingsListViewController: ImportPasswordsViewController
         if let settingsVC = self.navigationController?.children.first as? SettingsHostingController {
             navigationController?.popToRootViewController(animated: false)
             settingsVC.viewModel.presentLegacyView(.sync)
-        } else if let presentingViewController = self.presentingViewController as? MainViewController {
-            dismiss(animated: false) {
-                presentingViewController.segueToSettingsSync()
+        } else if let mainVC = self.presentingViewController as? MainViewController {
+            dismiss(animated: true) {
+                mainVC.segueToSettingsSync()
             }
         }
     }

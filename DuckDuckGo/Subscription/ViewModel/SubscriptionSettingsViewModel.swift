@@ -172,15 +172,17 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     // MARK: -
     
     @MainActor private func manageAppleSubscription() async {
-        let url = URL.manageSubscriptionsInAppStoreAppURL
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-           do {
-               try await AppStore.showManageSubscriptions(in: windowScene)
-           } catch {
-               self.openURL(url)
-           }
-        } else {
-            self.openURL(url)
+        if state.subscriptionInfo?.isActive ?? false {
+            let url = URL.manageSubscriptionsInAppStoreAppURL
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                do {
+                    try await AppStore.showManageSubscriptions(in: windowScene)
+                } catch {
+                    self.openURL(url)
+                }
+            } else {
+                self.openURL(url)
+            }
         }
     }
          

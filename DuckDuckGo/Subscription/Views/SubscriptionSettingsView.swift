@@ -28,6 +28,7 @@ struct SubscriptionSettingsView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = SubscriptionSettingsViewModel()
     @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
+    var viewPlans: (() -> Void)?
     
     @State var isShowingStripeView = false
     @State var isShowingGoogleView = false
@@ -88,7 +89,10 @@ struct SubscriptionSettingsView: View {
             },
                                action: {
                 Pixel.fire(pixel: .privacyProSubscriptionManagementPlanBilling, debounce: 1)
-                Task { viewModel.manageSubscription() }
+                Task {
+                    viewModel.manageSubscription()
+                    viewPlans?()
+                }
                                 },
                                isButton: true)
                 .sheet(isPresented: $isShowingStripeView) {

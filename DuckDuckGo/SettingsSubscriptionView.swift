@@ -125,7 +125,10 @@ struct SettingsSubscriptionView: View {
             NavigationLink(destination: subscribeView,
                            isActive: $isShowingSubscribeFlow,
                            label: { SettingsCellView(label: UserText.subscriptionRestoreNotFoundPlans ) })
-            NavigationLink(destination: SubscriptionSettingsView().environmentObject(subscriptionNavigationCoordinator)) {
+            
+            let settingsView = SubscriptionSettingsView(viewPlans: { isShowingSubscribeFlow = true })
+                .environmentObject(subscriptionNavigationCoordinator)
+            NavigationLink(destination: settingsView) {
                     SettingsCustomCell(content: { manageSubscriptionView })
             }
         }

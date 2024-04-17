@@ -17,11 +17,11 @@
 //  limitations under the License.
 //
 
+import Core
+import Subscription
 import SwiftUI
 import UIKit
 
-import Subscription
-import Core
 @available(iOS 15.0, *)
 struct SettingsSubscriptionView: View {
     
@@ -31,6 +31,8 @@ struct SettingsSubscriptionView: View {
     @State var isShowingITP = false
     @State var isShowingRestoreFlow = false
     @State var isShowingSubscribeFlow = false
+    @State var isShowingGoogleView = false
+    @State var isShowingStripeView = false
     @State var isShowingSubscriptionError = false
     
     enum Constants {
@@ -119,17 +121,50 @@ struct SettingsSubscriptionView: View {
                 }
             })
             
-            let subscribeView = SubscriptionContainerView(currentView: .subscribe)
-                .navigationViewStyle(.stack)
-                .environmentObject(subscriptionNavigationCoordinator)
-            NavigationLink(destination: subscribeView,
-                           isActive: $isShowingSubscribeFlow,
-                           label: { SettingsCellView(label: UserText.subscriptionRestoreNotFoundPlans ) })
+            subscriptionManageCell
             
+            // Manage Subscription (Expired)
             let settingsView = SubscriptionSettingsView(viewPlans: { isShowingSubscribeFlow = true })
                 .environmentObject(subscriptionNavigationCoordinator)
             NavigationLink(destination: settingsView) {
-                    SettingsCustomCell(content: { manageSubscriptionView })
+                SettingsCustomCell(content: { manageSubscriptionView })
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var subscriptionManageCell: some View {
+        Group {
+            switch viewModel.state.subscription.platform {
+            case .apple:
+                
+                let subscribeView = SubscriptionContainerView(currentView: .subscribe)
+                    .navigationViewStyle(.stack)
+                    .environmentObject(subscriptionNavigationCoordinator)
+                NavigationLink(
+                    destination: subscribeView,
+                    isActive: $isShowingSubscribeFlow,
+                    label: { SettingsCellView(label: UserText.subscriptionRestoreNotFoundPlans) })
+            
+            case .google:
+                NavigationLink(
+                    destination: SubscriptionGoogleView(),
+                    isActive: $isShowingGoogleView,
+                    label: { SettingsCellView(label: UserText.subscriptionRestoreNotFoundPlans) })
+                
+            case .stripe:
+                SettingsCustomCell(content: { Text(UserText.subscriptionRestoreNotFoundPlans) },
+                                   action: { Task { await viewModel.manageStripeSubscription() } },
+                                   isButton: true).foregroundColor(Color(designSystemColor: .accent))
+                    .sheet(isPresented: $isShowingStripeView, content: {
+                        if let stripeViewModel = viewModel.state.subscription.stripeViewModel {
+                            SubscriptionExternalLinkView(viewModel: stripeViewModel, title: UserText.subscriptionManagePlan)
+                        }
+                    })
+                    
+            
+            default:
+                EmptyView()
             }
         }
     }
@@ -156,64 +191,82 @@ struct SettingsSubscriptionView: View {
     @ViewBuilder
     private var subscriptionDetailsView: some View {
         
-            if viewModel.state.subscription.entitlements.contains(.networkProtection) {
-                SettingsCellView(label: UserText.settingsPProVPNTitle,
-                                 subtitle: viewModel.state.networkProtection.status != "" ? viewModel.state.networkProtection.status : nil,
-                                 action: { viewModel.presentLegacyView(.netP) },
-                                 disclosureIndicator: true,
-                                 isButton: true)
-            }
-            
-            if viewModel.state.subscription.entitlements.contains(.dataBrokerProtection) {
-                NavigationLink(destination: SubscriptionPIRView(),
-                               isActive: $isShowingDBP,
-                               label: {
-                    SettingsCellView(label: UserText.settingsPProDBPTitle,
-                                     subtitle: UserText.settingsPProDBPSubTitle)
-                })
-                
-            }
-                    
-            if viewModel.state.subscription.entitlements.contains(.identityTheftRestoration) {
-                NavigationLink(destination: SubscriptionITPView(),
-                               isActive: $isShowingITP,
-                               label: {
-                    SettingsCellView(label: UserText.settingsPProITRTitle,
-                                     subtitle: UserText.settingsPProITRSubTitle)
-                })
-                
-            }
-
-        NavigationLink(destination: SubscriptionSettingsView().environmentObject(subscriptionNavigationCoordinator)) {
-                SettingsCustomCell(content: { manageSubscriptionView })
+        if viewModel.state.subscription.entitlements.contains(.networkProtection) {
+            SettingsCellView(
+                label: UserText.settingsPProVPNTitle,
+                subtitle: viewModel.state.networkProtection.status != ""
+                ? viewModel.state.networkProtection.status : nil,
+                action: { viewModel.presentLegacyView(.netP) },
+                disclosureIndicator: true,
+                isButton: true)
         }
-
+        
+        if viewModel.state.subscription.entitlements.contains(.dataBrokerProtection) {
+            NavigationLink(
+                destination: SubscriptionPIRView(),
+                isActive: $isShowingDBP,
+                label: {
+                    SettingsCellView(
+                        label: UserText.settingsPProDBPTitle,
+                        subtitle: UserText.settingsPProDBPSubTitle)
+                })
+            
+        }
+        
+        if viewModel.state.subscription.entitlements.contains(.identityTheftRestoration) {
+            NavigationLink(
+                destination: SubscriptionITPView(),
+                isActive: $isShowingITP,
+                label: {
+                    SettingsCellView(
+                        label: UserText.settingsPProITRTitle,
+                        subtitle: UserText.settingsPProITRSubTitle)
+                })
+            
+        }
+        
+        NavigationLink(
+            destination: SubscriptionSettingsView().environmentObject(subscriptionNavigationCoordinator)
+        ) {
+            SettingsCustomCell(content: { manageSubscriptionView })
+        }
+        
+    }
+    
+    
+    @ViewBuilder
+    private var stripeView: some View {
+        if let stripeViewModel = viewModel.state.subscription.stripeViewModel {
+            SubscriptionExternalLinkView(viewModel: stripeViewModel)
+        }
     }
     
     var body: some View {
         if viewModel.state.subscription.enabled && viewModel.state.subscription.canPurchase {
             Section(header: Text(UserText.settingsPProSection)) {
                 
-                switch (viewModel.state.subscription.isSignedIn,
-                        viewModel.state.subscription.hasActiveSubscription,
-                        viewModel.state.subscription.entitlements.isEmpty) {
+                switch (
+                    viewModel.state.subscription.isSignedIn,
+                    viewModel.state.subscription.hasActiveSubscription,
+                    viewModel.state.subscription.entitlements.isEmpty
+                ) {
                     
                     // Signed In, Subscription Expired
-                    case (true, false, _):
-                        subscriptionExpiredView
+                case (true, false, _):
+                    subscriptionExpiredView
                     
                     // Signed in, Subscription Active, Valid entitlements
-                    case (true, true, false):
-                        subscriptionDetailsView // View for valid subscription details
+                case (true, true, false):
+                    subscriptionDetailsView  // View for valid subscription details
                     
                     // Signed in, Subscription Active, Empty Entitlements
-                    case (true, true, true):
-                        noEntitlementsAvailableView // View for no entitlements
+                case (true, true, true):
+                    noEntitlementsAvailableView  // View for no entitlements
                     
                     // Signed out
-                    case (false, _, _):
-                        purchaseSubscriptionView // View for signing up or purchasing a subscription
-                    }
+                case (false, _, _):
+                    purchaseSubscriptionView  // View for signing up or purchasing a subscription
+                }
             }
             
             .onChange(of: viewModel.state.subscription.shouldDisplayRestoreSubscriptionError) { value in
@@ -222,13 +275,21 @@ struct SettingsSubscriptionView: View {
                 }
             }
             
+            // Stripe Binding
+            .onChange(of: viewModel.state.subscription.isShowingStripeView) { value in
+                isShowingStripeView = value
+            }
+            .onChange(of: isShowingStripeView) { value in
+                viewModel.displayStripeView(value)
+            }
+            
             .onReceive(subscriptionNavigationCoordinator.$shouldPopToAppSettings) { shouldDismiss in
                 if shouldDismiss {
                     isShowingRestoreFlow = false
                     isShowingSubscribeFlow = false
                 }
             }
-    
+            
         }
     }
 }

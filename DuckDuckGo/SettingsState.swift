@@ -40,7 +40,7 @@ struct SettingsState {
         var enabled: Bool
         var status: String
     }
-    
+            
     struct Subscription {
         var enabled: Bool
         var canPurchase: Bool
@@ -49,6 +49,9 @@ struct SettingsState {
         var isRestoring: Bool
         var shouldDisplayRestoreSubscriptionError: Bool
         var entitlements: [Entitlement.ProductName]
+        var platform: DDGSubscription.Platform
+        var stripeViewModel: SubscriptionExternalLinkViewModel?
+        var isShowingStripeView: Bool
     }
     
     struct SyncSettings {
@@ -95,7 +98,7 @@ struct SettingsState {
     
     // Sync Properties
     var sync: SyncSettings
-
+    
     static var defaults: SettingsState {
         return SettingsState(
             appTheme: .systemDefault,
@@ -124,7 +127,9 @@ struct SettingsState {
                                        hasActiveSubscription: false,
                                        isRestoring: false,
                                        shouldDisplayRestoreSubscriptionError: false,
-                                       entitlements: []),
+                                       entitlements: [],
+                                       platform: .unknown,
+                                       isShowingStripeView: false),
             sync: SyncSettings(enabled: false, title: "")
         )
     }

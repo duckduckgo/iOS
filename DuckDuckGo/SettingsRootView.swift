@@ -67,7 +67,7 @@ struct SettingsRootView: View {
         }
 
         .onAppear {
-            viewModel.onDissapear()
+            viewModel.onDisappear()
         }
 
         // MARK: Deeplink Modifiers

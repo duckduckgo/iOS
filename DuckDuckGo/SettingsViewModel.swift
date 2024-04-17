@@ -532,7 +532,7 @@ extension SettingsViewModel {
         }
     }
     
-    func onDissapear() {
+    func onDisappear() {
         self.deepLinkTarget = nil
     }
     
@@ -751,6 +751,8 @@ extension SettingsViewModel {
             
         case .success(let subscription):
             state.subscription.isSignedIn = true
+            state.subscription.platform = subscription.platform
+            // state.subscription.platform = .stripe
             
             if subscription.isActive {
                 state.subscription.hasActiveSubscription = true
@@ -795,6 +797,33 @@ extension SettingsViewModel {
             .sink { [weak self] products in
                 self?.state.subscription.canPurchase = !products.isEmpty
             }.store(in: &cancellables)
+    }
+    
+    @available(iOS 15.0, *)
+    func manageStripeSubscription() async {
+        guard let token = accountManager.accessToken, let externalID = accountManager.externalID else { return }
+        let serviceResponse = await  SubscriptionService.getCustomerPortalURL(accessToken: token, externalID: externalID)
+        
+        // Get Stripe Customer Portal URL and update the model
+        if case .success(let response) = serviceResponse {
+            guard let url = URL(string: response.customerPortalUrl) else { return }
+            if let existingModel = state.subscription.stripeViewModel {
+                existingModel.url = url
+            } else {
+                let model = SubscriptionExternalLinkViewModel(url: url)
+                DispatchQueue.main.async {
+                    self.state.subscription.stripeViewModel = model
+                }
+            }
+        }
+        await displayStripeView(true)
+    }
+    
+    @MainActor
+    func displayStripeView(_ value: Bool) {
+        if value != state.subscription.isShowingStripeView {
+            state.subscription.isShowingStripeView = value
+        }
     }
     
     private func setupNotificationObservers() {

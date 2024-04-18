@@ -122,6 +122,7 @@ public struct PixelParameters {
     public static let function = "function"
     public static let line = "line"
     public static let reason = "reason"
+    public static let vpnCohort = "cohort"
 
     // Return user
     public static let returnUserErrorCode = "error_code"

@@ -52,12 +52,8 @@ public extension NetworkProtectionFeatureVisibility {
 
     func shouldShowVPNShortcut() -> Bool {
         if isPrivacyProLaunched() {
-#if SUBSCRIPTION
             let accountManager = AccountManager()
             return accountManager.isUserAuthenticated
-#else
-            return false
-#endif
         } else {
             return shouldKeepVPNAccessViaWaitlist()
         }

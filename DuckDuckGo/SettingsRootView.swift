@@ -29,32 +29,26 @@ struct SettingsRootView: View {
     @State private var subscriptionNavigationCoordinator = SubscriptionNavigationCoordinator()
     @State private var shouldDisplayDeepLinkSheet: Bool = false
     @State private var shouldDisplayDeepLinkPush: Bool = false
-#if SUBSCRIPTION
     @State var deepLinkTarget: SettingsViewModel.SettingsDeepLinkSection?
-#endif
 
     var body: some View {
 
         // Hidden navigationLink for programatic navigation
         if #available(iOS 15.0, *) {
-
-            #if SUBSCRIPTION
+            
             if let target = deepLinkTarget {
                 NavigationLink(destination: deepLinkDestinationView(for: target),
                                isActive: $shouldDisplayDeepLinkPush) {
                     EmptyView()
                 }
             }
-            #endif
         }
 
         List {
             SettingsPrivacyProtectionsView()
-#if SUBSCRIPTION
             if #available(iOS 15, *) {
                 SettingsSubscriptionView().environmentObject(subscriptionNavigationCoordinator)
             }
-#endif
             SettingsMainSettingsView()
             SettingsNextStepsView()
             SettingsOthersView()
@@ -76,7 +70,6 @@ struct SettingsRootView: View {
             viewModel.onDissapear()
         }
 
-#if SUBSCRIPTION
         // MARK: Deeplink Modifiers
 
         .sheet(isPresented: $shouldDisplayDeepLinkSheet,
@@ -111,10 +104,8 @@ struct SettingsRootView: View {
                 }
             }
         })
-#endif
     }
 
-#if SUBSCRIPTION
     // MARK: DeepLink Views
     @available(iOS 15.0, *)
     @ViewBuilder
@@ -141,7 +132,6 @@ struct SettingsRootView: View {
             return
         }
     }
-#endif
 }
 
 struct InsetGroupedListStyleModifier: ViewModifier {

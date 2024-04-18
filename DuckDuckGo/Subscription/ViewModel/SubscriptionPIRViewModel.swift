@@ -20,7 +20,6 @@
 import Foundation
 import Core
 
-#if SUBSCRIPTION
 @available(iOS 15.0, *)
 final class SubscriptionPIRViewModel: ObservableObject {
     
@@ -30,4 +29,3 @@ final class SubscriptionPIRViewModel: ObservableObject {
         Pixel.fire(pixel: .privacyProPersonalInformationRemovalSettings)
     }
 }
-#endif

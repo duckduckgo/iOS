@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Subscription
 
 enum SubscriptionPurchaseError: Error {
     case purchaseFailed,

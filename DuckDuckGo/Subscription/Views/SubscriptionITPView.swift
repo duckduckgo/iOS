@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-#if SUBSCRIPTION
 import SwiftUI
 import Foundation
 import DesignResourcesKit
@@ -149,5 +148,3 @@ struct SubscriptionITPView: View {
 //        SubscriptionITPView()
 //    }
 // }
-
-#endif

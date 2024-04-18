@@ -266,6 +266,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     private func didSelectScoredBookmarkAtIndex(_ index: Int) {
         guard searchDataSource.results.indices.contains(index) else { return }
         dismiss()
+
+        Pixel.fire(pixel: .bookmarkLaunchScored)
         delegate?.bookmarksDidSelect(url: searchDataSource.results[index].url)
     }
 
@@ -351,6 +353,10 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func toggleFavoriteAfterSwipe(_ bookmark: BookmarkEntity, _ indexPath: IndexPath) {
+        if !bookmark.isFavorite(on: viewModel.favoritesDisplayMode.displayedFolder) {
+            Pixel.fire(pixel: .bookmarkAddFavoriteBySwipe)
+        }
+
         self.viewModel.toggleFavorite(bookmark)
         WidgetCenter.shared.reloadAllTimelines()
 
@@ -826,6 +832,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     fileprivate func select(bookmark: BookmarkEntity) {
         guard let url = bookmark.urlObject else { return }
         dismiss()
+        Pixel.fire(pixel: .bookmarkLaunchList)
         delegate?.bookmarksDidSelect(url: url)
     }
 
@@ -926,6 +933,7 @@ extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
             assertionFailure()
             return
         }
+        Pixel.fire(pixel: .bookmarkDeletedFromBookmark)
         showBookmarkDeletedMessage(bookmark)
         viewModel.softDeleteBookmark(bookmark)
         refreshFooterView()

@@ -43,7 +43,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         switch event {
         case .userBecameActive:
             DailyPixel.fire(pixel: .networkProtectionActiveUser,
-                            withAdditionalParameters: [PixelParameters.vpnCohort: UniquePixel.cohort(from: defaults.vpnFirstEnabled)])
+                            withAdditionalParameters: [PixelParameters.vpnCohort: UniquePixel.cohort(from: defaults.vpnFirstEnabled)],
+                            includedParameters: [.appVersion, .atb])
         case .reportConnectionAttempt(attempt: let attempt):
             switch attempt {
             case .connecting:
@@ -59,16 +60,16 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         case .reportTunnelFailure(result: let result):
             switch result {
             case .failureDetected:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelFailureDetected)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelFailureDetected, includedParameters: [.appVersion, .atb])
             case .failureRecovered:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelFailureRecovered)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelFailureRecovered, includedParameters: [.appVersion, .atb])
             case .networkPathChanged(let newPath):
                 defaults.updateNetworkPath(with: newPath)
             }
         case .reportLatency(result: let result):
             switch result {
             case .error:
-                DailyPixel.fire(pixel: .networkProtectionLatencyError)
+                DailyPixel.fire(pixel: .networkProtectionLatencyError, includedParameters: [.appVersion, .atb])
             case .quality(let quality):
                 guard quality != .unknown else { return }
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionLatency(quality: quality))

@@ -48,14 +48,17 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         case .reportConnectionAttempt(attempt: let attempt):
             switch attempt {
             case .connecting:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptConnecting)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptConnecting,
+                                             includedParameters: [.appVersion, .atb])
             case .success:
                 let versionStore = NetworkProtectionLastVersionRunStore(userDefaults: .networkProtectionGroupDefaults)
                 versionStore.lastExtensionVersionRun = AppVersion.shared.versionAndBuildNumber
 
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptSuccess)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptSuccess,
+                                             includedParameters: [.appVersion, .atb])
             case .failure:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptFailure)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptFailure,
+                                             includedParameters: [.appVersion, .atb])
             }
         case .reportTunnelFailure(result: let result):
             switch result {
@@ -72,7 +75,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 DailyPixel.fire(pixel: .networkProtectionLatencyError, includedParameters: [.appVersion, .atb])
             case .quality(let quality):
                 guard quality != .unknown else { return }
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionLatency(quality: quality))
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionLatency(quality: quality), includedParameters: [.appVersion, .atb])
             }
         case .rekeyAttempt(let step):
             switch step {

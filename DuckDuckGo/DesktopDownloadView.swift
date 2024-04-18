@@ -19,6 +19,7 @@
 
 import Foundation
 import SwiftUI
+import LinkPresentation
 
 struct DesktopDownloadView: View {
 
@@ -26,8 +27,28 @@ struct DesktopDownloadView: View {
     @State private var shareButtonFrame: CGRect = .zero
     @State private var isShareSheetVisible = false
 
+    private struct ShareItem: Identifiable {
+        var id: String {
+            value
+        }
+
+        var item: Any {
+            if let url = URL(string: value), let title = title, let message {
+                return DesktopDownloadShareItemSource(url: url, title: title, message: message)
+            } else {
+                return value
+            }
+        }
+
+        let value: String
+        let title: String?
+        let message: String?
+    }
+
     let padding = UIDevice.current.localizedModel == "iPad" ? 100.0 : 0.0
 
+    @State private var activityItem: ShareItem?
+    
     var body: some View {
         GeometryReader { proxy in
             ScrollView {
@@ -57,7 +78,13 @@ struct DesktopDownloadView: View {
                     
                     Button(
                         action: {
-                            self.isShareSheetVisible = true
+                            if viewModel.browserDetails.platform == .desktop {
+                                activityItem = ShareItem(value: viewModel.downloadURL.absoluteString,
+                                                         title: viewModel.browserDetails.shareTitle,
+                                                         message: viewModel.browserDetails.shareMessage)
+                            } else {
+                                activityItem = ShareItem(value: viewModel.downloadURL.absoluteString, title: nil, message: nil)
+                            }
                         }, label: {
                             HStack {
                                 Image(.share16)
@@ -80,8 +107,9 @@ struct DesktopDownloadView: View {
                             self.shareButtonFrame = newFrame
                         }
                     }
-                    .sheet(isPresented: $isShareSheetVisible) {
-                        DesktopDownloadShareSheet(items: [viewModel.downloadURL])
+                    .sheet(item: $activityItem) { activityItem in
+                        ActivityViewController(activityItems: [activityItem.item])
+                            .modifier(ActivityViewPresentationModifier())
                     }
 
                     Spacer(minLength: 24)
@@ -153,12 +181,37 @@ private struct ShareButtonFramePreferenceKey: PreferenceKey {
     static func reduce(value: inout CGRect, nextValue: () -> CGRect) {}
 }
 
-struct DesktopDownloadShareSheet: UIViewControllerRepresentable {
-    var items: [Any]
+private class DesktopDownloadShareItemSource: NSObject, UIActivityItemSource {
+    var url: URL
+    var title: String
+    var message: String
 
-    func makeUIViewController(context: Context) -> UIActivityViewController {
-        UIActivityViewController(activityItems: items, applicationActivities: nil)
+    init(url: URL, title: String, message: String) {
+        self.url = url
+        self.title = title
+        self.message = message
     }
 
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
+    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        return url
+    }
+
+    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        if activityType == .mail {
+            return "\(message)\n\n\(url.absoluteString)"
+        }
+        return url
+    }
+
+    func activityViewController(_ activityViewController: UIActivityViewController, subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
+        return title
+    }
+
+    func activityViewControllerLinkMetadata(_ activityViewController: UIActivityViewController) -> LPLinkMetadata? {
+        let metadata = LPLinkMetadata()
+        metadata.title = title
+        metadata.url = url
+        return metadata
+    }
+
 }

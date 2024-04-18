@@ -1342,6 +1342,12 @@
 /* Title for the Share Download Link button */
 "get.browser.share-link" = "Share Download Link";
 
+/* Message displayed in the share action when sharing via email */
+"get.browser.share-link.message" = "Search privately and block trackers with the DuckDuckGo desktop browser. Visit this link on your computer to download today.";
+
+/* Title displayed in the share action */
+"get.browser.share-link.title" = "Get DuckDuckGo Browser for Mac or Windows";
+
 /* Title for the get desktop browser feature */
 "get.browser.title" = "Get DuckDuckGo for Mac or Windows";
 

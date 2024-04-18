@@ -68,10 +68,10 @@ struct DesktopDownloadPlatformConstants {
     }
     var goToUrl: String {
         switch platform {
-        case .windows, .mac:
-            return downloadURL
         case .desktop:
             return "duckduckgo.com/browser"
+        default:
+            return downloadURL
         }
     }
     var downloadURL: String {
@@ -92,6 +92,22 @@ struct DesktopDownloadPlatformConstants {
             return downloadURL
         case .desktop:
             return UserText.getBrowserShareLink
+        }
+    }
+    var shareTitle: String? {
+        switch platform {
+        case .desktop:
+            return UserText.getBrowserShareLinkTitle
+        default:
+            return nil
+        }
+    }
+    var shareMessage: String? {
+        switch platform {
+        case .desktop:
+            return UserText.getBrowserShareLinkMessage
+        default:
+            return nil
         }
     }
     var otherPlatformText: String {

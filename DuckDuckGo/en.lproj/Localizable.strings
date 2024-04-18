@@ -491,7 +491,7 @@
 "autofill.import.passwords.instructions.step4" = "Once imported on your computer you can set up sync on this %@";
 
 /* Title for section with instructions to import passwords */
-"autofill.import.passwords.instructions.title" = "Instructions";
+"autofill.import.passwords.instructions.title" = "Import from the desktop browser:";
 
 /* Subtitle for screen to import passwords */
 "autofill.import.passwords.subtitle" = "Import passwords in the desktop version of the DuckDuckGo browser, then sync across devices.";

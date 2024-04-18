@@ -19,6 +19,7 @@
 
 import SwiftUI
 import DesignResourcesKit
+import DuckUI
 
 struct AutofillItemsEmptyView: View {
 
@@ -39,7 +40,7 @@ struct AutofillItemsEmptyView: View {
                 .lineLimit(nil)
 
             Text(UserText.autofillEmptyViewSubtitle)
-                .daxBodyRegular()
+                .daxFootnoteRegular()
                 .foregroundColor(Color.init(designSystemColor: .textSecondary))
                 .multilineTextAlignment(.center)
                 .padding(.top, 8)
@@ -49,14 +50,8 @@ struct AutofillItemsEmptyView: View {
                 importButtonAction?()
             } label: {
                 Text(UserText.autofillEmptyViewButtonTitle)
-                    .daxButton()
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 16)
-                    .foregroundColor(Color(.buttonText))
-                    .background(Color(designSystemColor: .accent))
-                    .cornerRadius(8)
-                    .fixedSize(horizontal: false, vertical: true)
             }
+            .buttonStyle(PrimaryButtonStyle(fullWidth: false))
             .padding(.top, 24)
 
         }

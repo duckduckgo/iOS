@@ -106,7 +106,7 @@ final class ImportPasswordsViewModel {
 private extension String {
 
     func width() -> CGFloat {
-        let font = UIFont.daxButton()
+        let font = UIFont.boldAppFont(ofSize: 16)
         let attributes = [NSAttributedString.Key.font: font]
         let size = (self as NSString).size(withAttributes: attributes)
         return size.width

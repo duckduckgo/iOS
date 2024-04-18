@@ -19,6 +19,8 @@
 
 import SwiftUI
 import DesignResourcesKit
+import Core
+import DuckUI
 
 struct ImportPasswordsView: View {
 
@@ -27,7 +29,7 @@ struct ImportPasswordsView: View {
     var body: some View {
 
         ScrollView {
-            VStack {
+            VStack(spacing: 0) {
                 ImportOverview(viewModel: viewModel)
                     .padding(.horizontal, 16)
 
@@ -67,35 +69,25 @@ struct ImportPasswordsView: View {
                 .daxBodyRegular()
                 .foregroundColor(Color(designSystemColor: .textSecondary))
                 .multilineTextAlignment(.center)
-                .padding(.top, 16)
-
+                .padding(.top, 8)
 
             Button {
                 self.navigate = true
             } label: {
                 Text(viewModel.getBrowserButtonTitle)
-                    .daxButton()
                     .frame(width: viewModel.maxButtonWidth())
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 16)
-                    .foregroundColor(Color(.buttonText))
-                    .background(Color(designSystemColor: .accent))
-                    .cornerRadius(8)
             }
-            .padding(.top, 16)
+            .buttonStyle(PrimaryButtonStyle(fullWidth: false))
+            .padding(.top, 24)
 
             Button {
                 viewModel.openSync()
             } label: {
                 Text(viewModel.syncButtonTitle)
-                    .daxButton()
                     .frame(width: viewModel.maxButtonWidth())
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 16)
-                    .foregroundColor(Color(designSystemColor: .textPrimary))
-                    .background(Color(designSystemColor: .container))
-                    .cornerRadius(8)
             }
+            .buttonStyle(SecondaryFillButtonStyle(fullWidth: false))
+            .padding(.top, 8)
 
             NavigationLink(destination: DesktopDownloadView(viewModel: .init(platform: .desktop)), isActive: $navigate) {
                 EmptyView()
@@ -144,12 +136,11 @@ struct ImportPasswordsView: View {
                 instructionText
                     .daxBodyRegular()
                     .foregroundColor(Color(designSystemColor: .textSecondary))
-                    .padding(.top, 8)
+                    .padding(.top, 6)
             }
 
         }
     }
-
 
 }
 

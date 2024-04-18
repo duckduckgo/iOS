@@ -20,6 +20,7 @@
 import Foundation
 import SwiftUI
 import LinkPresentation
+import DuckUI
 
 struct DesktopDownloadView: View {
 
@@ -87,13 +88,12 @@ struct DesktopDownloadView: View {
                             }
                         }, label: {
                             HStack {
-                                Image(.share16)
+                                Image(.share24)
                                 Text(viewModel.browserDetails.button)
                             }
                         }
                     )
-                    // XAI: Move all strings to a Constants enum at the top
-                    .buttonStyle(DesktopDownloadViewButtonStyle(enabled: true))
+                    .buttonStyle(PrimaryButtonStyle(fullWidth: false))
                     .padding(.horizontal, padding)
                     .padding(.top, 24)
                     .background(

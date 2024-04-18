@@ -54,15 +54,15 @@ jobs:
 
     - name: Release tests
       run: |
-        export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --ios-version=17 --include-tags=release DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
+        export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --fail-on-timeout=true --ios-version=17 --include-tags=release DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
 
     - name: Privacy tests
       run: |
-        export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --ios-version=17 --include-tags=privacy DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
+        export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --fail-on-timeout=true --ios-version=17 --include-tags=privacy DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
     
     - name: Ad Click Detection Flow tests
       run: |
-        export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --ios-version=17 --include-tags=adClick DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
+        export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --fail-on-timeout=true --ios-version=17 --include-tags=adClick DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
       
     - name: Create Asana task when workflow failed
       if: ${{ failure() }}

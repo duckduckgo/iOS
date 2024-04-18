@@ -433,14 +433,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
         presenter.showEntitlementNotification()
     }
-
-    private func presentVPNEarlyAccessOverAlert() {
-        let alertController = CriticalAlerts.makeVPNEarlyAccessOverAlert()
-        window?.rootViewController?.present(alertController, animated: true) { [weak self] in
-            DailyPixel.fireDailyAndCount(pixel: .privacyProPromotionDialogShownVPN)
-            self?.tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
-        }
-    }
 #endif
 
     private func cleanUpMacPromoExperiment2() {
@@ -550,8 +542,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         if vpnFeatureVisibility.shouldShowThankYouMessaging() && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
-            presentVPNEarlyAccessOverAlert()
-
             Task {
                 await self.stopAndRemoveVPN(with: "thank-you-dialog")
             }

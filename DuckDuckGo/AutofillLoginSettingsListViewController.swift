@@ -902,7 +902,7 @@ extension AutofillLoginSettingsListViewController: ImportPasswordsViewController
 
     func importPasswordsViewControllerDidRequestOpenSync(_ viewController: ImportPasswordsViewController) {
         if let settingsVC = self.navigationController?.children.first as? SettingsHostingController {
-            navigationController?.popToRootViewController(animated: false)
+            navigationController?.popToRootViewController(animated: true)
             settingsVC.viewModel.presentLegacyView(.sync)
         } else if let mainVC = self.presentingViewController as? MainViewController {
             dismiss(animated: true) {

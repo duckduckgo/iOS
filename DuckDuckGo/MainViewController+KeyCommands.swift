@@ -162,7 +162,7 @@ extension MainViewController {
         guard tabSwitcherController == nil else { return }
         findInPageView.done()
         hideSuggestionTray()
-        onCancelPressed()
+        performCancel()
     }
     
     @objc func keyboardNewTab() {
@@ -188,7 +188,7 @@ extension MainViewController {
         guard let tab = currentTab else { return }
         guard let index = tabManager.model.indexOf(tab: tab.tabModel) else { return }
         let targetTabIndex = index + 1 >= tabManager.model.count ? 0 : index + 1
-        onCancelPressed()
+        performCancel()
         select(tabAt: targetTabIndex)
     }
     
@@ -198,14 +198,14 @@ extension MainViewController {
         guard let tab = currentTab else { return }
         guard let index = tabManager.model.indexOf(tab: tab.tabModel) else { return }
         let targetTabIndex = index - 1 < 0 ? tabManager.model.count - 1 : index - 1
-        onCancelPressed()
+        performCancel()
         select(tabAt: targetTabIndex)
     }
     
     @objc func keyboardShowAllTabs() {
         guard tabSwitcherController == nil else { return }
         
-        onCancelPressed()
+        performCancel()
         showTabSwitcher()
     }
     

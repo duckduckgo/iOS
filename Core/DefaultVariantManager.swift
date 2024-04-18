@@ -26,8 +26,8 @@ extension FeatureName {
     // Define your feature e.g.:
     // public static let experimentalFeature = FeatureName(rawValue: "experimentalFeature")
 
-    // Experiment coming soon
     public static let history = FeatureName(rawValue: "history")
+    public static let newSuggestionLogic = FeatureName(rawValue: "newSuggestionLogic")
 }
 
 public struct VariantIOS: Variant {
@@ -63,7 +63,7 @@ public struct VariantIOS: Variant {
         VariantIOS(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "se", weight: doNotAllocate, isIncluded: When.always, features: []),
 
-        VariantIOS(name: "mc", weight: 1, isIncluded: When.inEnglish, features: []),
+        VariantIOS(name: "mc", weight: 1, isIncluded: When.inEnglish, features: [.newSuggestionLogic]),
         VariantIOS(name: "md", weight: 1, isIncluded: When.inEnglish, features: [.history]),
 
         returningUser

@@ -20,7 +20,6 @@
 import Foundation
 import SwiftUI
 
-#if SUBSCRIPTION
 @available(iOS 15.0, *)
 struct SubscriptionContainerView: View {
     
@@ -31,18 +30,20 @@ struct SubscriptionContainerView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
     @State private var currentViewState: CurrentView
+    private let viewModel: SubscriptionContainerViewModel
     private let flowViewModel: SubscriptionFlowViewModel
     private let restoreViewModel: SubscriptionRestoreViewModel
     private let emailViewModel: SubscriptionEmailViewModel
-    
-    init(currentView: CurrentView) {
-        _currentViewState = State(initialValue: currentView)
         
-        let userScript = SubscriptionPagesUserScript()
-        let subFeature = SubscriptionPagesUseSubscriptionFeature()
-        flowViewModel = SubscriptionFlowViewModel(userScript: userScript, subFeature: subFeature)
-        restoreViewModel = SubscriptionRestoreViewModel(userScript: userScript, subFeature: subFeature)
-        emailViewModel = SubscriptionEmailViewModel(userScript: userScript, subFeature: subFeature)
+    init(currentView: CurrentView,
+         viewModel: SubscriptionContainerViewModel = SubscriptionContainerViewModel()) {
+        _currentViewState = State(initialValue: currentView)
+        self.viewModel = viewModel
+        let userScript = viewModel.userScript
+        let subFeature = viewModel.subFeature
+        flowViewModel = viewModel.flow
+        restoreViewModel = viewModel.restore
+        emailViewModel = viewModel.email
     }
     
     var body: some View {
@@ -59,4 +60,3 @@ struct SubscriptionContainerView: View {
         }
     }
 }
-#endif

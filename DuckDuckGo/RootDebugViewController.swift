@@ -37,6 +37,7 @@ class RootDebugViewController: UITableViewController {
         case toggleInspectableWebViews = 668
         case toggleInternalUserState = 669
         case openVanillaBrowser = 670
+        case refreshConfig = 671
     }
 
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -51,6 +52,9 @@ class RootDebugViewController: UITableViewController {
     private var sync: DDGSyncing?
     private var internalUserDecider: DefaultInternalUserDecider?
     var tabManager: TabManager?
+
+    @UserDefaultsWrapper(key: .lastConfigurationRefreshDate, defaultValue: .distantPast)
+    private var lastConfigurationRefreshDate: Date
 
     init?(coder: NSCoder,
           sync: DDGSyncing,
@@ -143,6 +147,26 @@ class RootDebugViewController: UITableViewController {
                 NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.inspectableWebViewsToggled))
             case .openVanillaBrowser:
                 openVanillaBrowser(nil)
+            case .refreshConfig:
+                fetchAssets()
+            }
+        }
+    }
+
+    func fetchAssets() {
+        self.lastConfigurationRefreshDate = Date.distantPast
+        AppConfigurationFetch().start(isDebug: true) { [weak tableView] result in
+            switch result {
+            case .assetsUpdated(let protectionsUpdated):
+                if protectionsUpdated {
+                    ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+                }
+                DispatchQueue.main.async {
+                    tableView?.reloadData()
+                }
+
+            case .noData:
+                break
             }
         }
     }

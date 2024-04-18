@@ -29,6 +29,7 @@ public struct SyncSettingsView: View {
     @State var isSyncWithSetUpSheetVisible = false
     @State var isRecoverSyncedDataSheetVisible = false
     @State var isEnvironmentSwitcherInstructionsVisible = false
+    @State var isDeviceAuthenticationSetupAlertVisible = false
 
     public init(model: SyncSettingsViewModel) {
         self.model = model
@@ -87,6 +88,18 @@ public struct SyncSettingsView: View {
             .navigationTitle(UserText.syncTitle)
             .applyListStyle()
             .environmentObject(model)
+            .alert(isPresented: $model.shouldShowPasscodeRequiredAlert) {
+                Alert(
+                    title: Text("Secure Your Device to Use Sync & Backup"),
+                    message: Text("A device password is required to use Sync & Backup."),
+                    dismissButton: .default(Text("Go to Settings"), action: {
+                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!,
+                                                  options: [:],
+                                                  completionHandler: nil)
+                        model.shouldShowPasscodeRequiredAlert = false
+                    })
+                )
+            }
         }
 
     }

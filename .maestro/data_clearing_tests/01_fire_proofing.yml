@@ -21,6 +21,8 @@ tags:
     id: "searchEntry"
 - inputText: "https://setcookie.net"
 - pressKey: Enter
+- runFlow:
+    file: ../shared/hide_daxdialogs.yaml
 
 # Set a cookie
 - assertVisible: "Cookie Test"
@@ -44,6 +46,8 @@ tags:
 - tapOn: "Close Tabs and Clear Data"
 - tapOn:
     id: "alert.forget-data.confirm"
+- assertVisible: "Cancel"
+- tapOn: "Cancel"
 - assertVisible:
     id: "searchEntry"
 - tapOn: "Close Tabs and Clear Data"

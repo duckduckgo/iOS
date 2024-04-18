@@ -123,12 +123,13 @@ class TabViewCell: UICollectionViewCell {
     }
 
     private func startRemoveAnimation() {
+        self.isDeleting = true
+        Pixel.fire(pixel: .tabSwitcherSwipeCloseTab)
+        self.deleteTab()
         UIView.animate(withDuration: 0.2, animations: {
             self.transform = CGAffineTransform.identity.translatedBy(x: -self.frame.width, y: 0)
         }, completion: { _ in
             self.isHidden = true
-            self.isDeleting = true
-            self.deleteTab()
         })
     }
 
@@ -142,11 +143,15 @@ class TabViewCell: UICollectionViewCell {
                 preview: UIImage?,
                 reorderRecognizer: UIGestureRecognizer?) {}
     
-    @IBAction func deleteTab() {
+    func closeTab() {
         guard let tab = tab else { return }
         guard isNotReordering(with: collectionReorderRecognizer) else { return }
-
         self.delegate?.deleteTab(tab: tab)
+    }
+
+    @IBAction func deleteTab() {
+        Pixel.fire(pixel: .tabSwitcherClickCloseTab)
+        closeTab()
     }
 
     private func isNotReordering(with gestureRecognizer: UIGestureRecognizer?) -> Bool {

@@ -26,13 +26,18 @@ import AVFoundation
 
 extension SyncSettingsViewController: SyncManagementViewModelDelegate {
 
-    func authenticateUser() async -> Bool {
-        return await withCheckedContinuation { continuation in
+    func authenticateUser() async throws {
+        return try await withCheckedThrowingContinuation { continuation in
             authenticateUser { error in
-                if error == nil {
-                    continuation.resume(returning: true)
+                if let error {
+                    switch error {
+                    case .failedToAuthenticate:
+                        continuation.resume(throwing: SyncSettingsViewModel.UserAuthenticationError.authFailed)
+                    case .noAuthAvailable:
+                        continuation.resume(throwing: SyncSettingsViewModel.UserAuthenticationError.authUnavailable)
+                    }
                 } else {
-                    continuation.resume(returning: false)
+                    continuation.resume()
                 }
             }
         }
@@ -117,12 +122,9 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         }
     }
 
+    @MainActor
     func showSyncWithAnotherDevice() {
-        authenticateUser { [weak self] error in
-            guard error == nil, let self else { return }
-
-            self.collectCode(showConnectMode: true)
-        }
+        collectCode(showConnectMode: true)
     }
 
     func showRecoverData() {

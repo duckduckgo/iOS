@@ -38,6 +38,7 @@ class RootDebugViewController: UITableViewController {
         case toggleInternalUserState = 669
         case openVanillaBrowser = 670
         case resetSendCrashLogs = 671
+        case refreshConfig = 672
     }
 
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -52,6 +53,9 @@ class RootDebugViewController: UITableViewController {
     private var sync: DDGSyncing?
     private var internalUserDecider: DefaultInternalUserDecider?
     var tabManager: TabManager?
+
+    @UserDefaultsWrapper(key: .lastConfigurationRefreshDate, defaultValue: .distantPast)
+    private var lastConfigurationRefreshDate: Date
 
     init?(coder: NSCoder,
           sync: DDGSyncing,
@@ -146,6 +150,26 @@ class RootDebugViewController: UITableViewController {
                 openVanillaBrowser(nil)
             case .resetSendCrashLogs:
                 AppUserDefaults().crashCollectionOptInStatus = .undetermined
+            case .refreshConfig:
+                fetchAssets()
+            }
+        }
+    }
+
+    func fetchAssets() {
+        self.lastConfigurationRefreshDate = Date.distantPast
+        AppConfigurationFetch().start(isDebug: true) { [weak tableView] result in
+            switch result {
+            case .assetsUpdated(let protectionsUpdated):
+                if protectionsUpdated {
+                    ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+                }
+                DispatchQueue.main.async {
+                    tableView?.reloadData()
+                }
+
+            case .noData:
+                break
             }
         }
     }

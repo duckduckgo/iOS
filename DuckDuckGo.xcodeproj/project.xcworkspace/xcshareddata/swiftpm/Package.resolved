@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "dominik/sentry-appstore",
-        "revision" : "f2beb83770d30b5d18425ce0776b3fe26fc8dd21"
+        "revision" : "4ce049682cb47a9fb510237070666e5e8bf1e07b",
+        "version" : "137.0.0"
       }
     },
     {

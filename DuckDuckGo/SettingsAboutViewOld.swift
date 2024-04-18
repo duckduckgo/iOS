@@ -25,8 +25,8 @@ struct SettingsAboutViewOld: View {
     @EnvironmentObject var viewModel: SettingsViewModel
     
     var body: some View {
-        Section(header: Text(UserText.settingsAboutSection)) {
-            
+        Section(header: Text(UserText.settingsAboutSection), footer: Text(UserText.settingsSendCrashReportsDescription)) {
+
             SettingsCellView(label: UserText.settingsAboutDDG,
                              action: { viewModel.presentLegacyView(.about) },
                              disclosureIndicator: true,
@@ -38,7 +38,9 @@ struct SettingsAboutViewOld: View {
             SettingsCellView(label: UserText.settingsFeedback,
                              action: { viewModel.presentLegacyView(.feedback) },
                              isButton: true)
-                        
+
+            SettingsCellView(label: UserText.settingsSendCrashReports,
+                             accesory: .toggle(isOn: viewModel.crashCollectionOptInStatusBinding))
         }
 
     }

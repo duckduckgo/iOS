@@ -70,4 +70,6 @@ class AppSettingsMock: AppSettings {
     }
     
     var autoconsentEnabled = true
+
+    var crashCollectionOptInStatus: CrashCollectionOptInStatus = .undetermined
 }

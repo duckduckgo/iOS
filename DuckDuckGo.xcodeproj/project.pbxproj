@@ -2417,7 +2417,7 @@
 		B6BA95C428894A28004ABA20 /* BrowsingMenuViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BrowsingMenuViewController.storyboard; sourceTree = "<group>"; };
 		B6BA95E728924730004ABA20 /* JSAlertController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = JSAlertController.storyboard; sourceTree = "<group>"; };
 		B6CB93E4286445AB0090FEB4 /* Base64DownloadSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base64DownloadSession.swift; sourceTree = "<group>"; };
-		B6DFE6CF2BC7E47500A9CE59 /* .bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = .bundle; path = SwiftLintTool.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6DFE6CF2BC7E47500A9CE59 /* SwiftLintTool.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftLintTool.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6DFE6D92BC7E61B00A9CE59 /* SwiftLintToolBundleConfiguration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SwiftLintToolBundleConfiguration.xcconfig; sourceTree = "<group>"; };
 		BD15DB842B959CFD00821457 /* BundleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtension.swift; sourceTree = "<group>"; };
 		BD862E022B30DA170073E2EE /* VPNFeedbackFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNFeedbackFormViewModel.swift; sourceTree = "<group>"; };
@@ -3927,7 +3927,7 @@
 				85D33FCB25C97B6E002B91A6 /* IntegrationTests.xctest */,
 				9825F9D7293F2DE900F220F2 /* PerformanceTests.xctest */,
 				02025662298818B100E694E7 /* PacketTunnelProvider.appex */,
-				B6DFE6CF2BC7E47500A9CE59 /* .bundle */,
+				B6DFE6CF2BC7E47500A9CE59 /* SwiftLintTool.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6078,7 +6078,7 @@
 			);
 			name = SwiftLintToolBundle;
 			productName = SwiftLintToolBundle;
-			productReference = B6DFE6CF2BC7E47500A9CE59 /* .bundle */;
+			productReference = B6DFE6CF2BC7E47500A9CE59 /* SwiftLintTool.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		F143C2E31E4A4CD400CFDE3A /* Core */ = {

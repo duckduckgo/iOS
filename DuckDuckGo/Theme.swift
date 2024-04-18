@@ -78,6 +78,7 @@ protocol Theme {
     
     var autocompleteSuggestionTextColor: UIColor { get }
     var autocompleteCellAccessoryColor: UIColor { get }
+    var autocompleteCellPlusButtonColor: UIColor { get }
 
     var tableCellBackgroundColor: UIColor { get }
     var tableCellSelectedColor: UIColor { get }

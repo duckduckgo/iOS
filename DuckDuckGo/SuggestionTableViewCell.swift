@@ -36,7 +36,7 @@ class SuggestionTableViewCell: UITableViewCell {
 
     func updateFor(query: String, suggestion: Suggestion, with theme: Theme, isAddressBarAtBottom: Bool) {
 
-        self.plusButton.setImage(nil, for: .normal)
+        self.plusButton.isHidden = true
 
         var text: String = ""
         switch suggestion {
@@ -46,8 +46,9 @@ class SuggestionTableViewCell: UITableViewCell {
             urlLabel.isHidden = true
             self.accessibilityValue = UserText.voiceoverSuggestionTypeSearch
 
+            self.plusButton.isHidden = false
             self.plusButton.accessibilityLabel = UserText.voiceoverActionAutocomplete
-            self.plusButton.tintColor = UIColor(designSystemColor: .textSecondary)
+            self.plusButton.tintColor = theme.autocompleteCellPlusButtonColor
             if isAddressBarAtBottom {
                 self.plusButton.setImage(UIImage(named: "Arrow-Circle-Down-Left-16"), for: .normal)
             } else {

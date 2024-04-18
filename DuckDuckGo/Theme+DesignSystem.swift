@@ -19,6 +19,7 @@
 
 import UIKit
 import DesignResourcesKit
+import DuckUI
 
 // Once all colours are from the design system we can consider removing having multiple themes.
 extension Theme {
@@ -35,6 +36,7 @@ extension Theme {
 
     // New:
     var autocompleteCellAccessoryColor: UIColor { UIColor(designSystemColor: .icons) }
+    var autocompleteCellPlusButtonColor: UIColor { UIColor(lightColor: .shade(0.6), darkColor: .tint(0.6)) }
 
     var autofillDefaultTitleTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
     var autofillDefaultSubtitleTextColor: UIColor { UIColor(designSystemColor: .textSecondary) }

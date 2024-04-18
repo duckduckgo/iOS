@@ -121,7 +121,14 @@ struct SettingsSubscriptionView: View {
                 }
             })
             
-            subscriptionManageCell
+            // subscriptionManageCell
+            let subscribeView = SubscriptionContainerView(currentView: .subscribe)
+                .navigationViewStyle(.stack)
+                .environmentObject(subscriptionNavigationCoordinator)
+            NavigationLink(
+                destination: subscribeView,
+                isActive: $isShowingSubscribeFlow,
+                label: { SettingsCellView(label: UserText.subscriptionRestoreNotFoundPlans) })
             
             // Manage Subscription (Expired)
             let settingsView = SubscriptionSettingsView(viewPlans: {

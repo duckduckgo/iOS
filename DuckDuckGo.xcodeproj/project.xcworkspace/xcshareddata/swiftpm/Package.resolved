@@ -5,7 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/apple-toolbox.git",
       "state" : {
-        "revision" : "3c4e94b43a587decdf5d0862c224161298b4bc27"
+        "revision" : "ab53ca41e9044a20eab7e53249526fadcf9acc9f",
+        "version" : "3.1.1"
       }
     },
     {
@@ -31,7 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "94c7c307d4d51806d9b62db35c4f9dee9346c5ab"
+        "revision" : "7eab61a08c9535b1a8e59c622fe57d33a310a2fc",
+        "version" : "136.0.0"
       }
     },
     {
@@ -48,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "62d5dc3d02f6a8347dc5f0b52162a0107d38b74c",
-        "version" : "5.8.0"
+        "revision" : "1bb3bc5eb565735051f342a87b5405d4374876c7",
+        "version" : "5.12.0"
       }
     },
     {
@@ -120,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "revision" : "620921fea14569eb00745cb5a44890d5890d99ec",
-        "version" : "3.4.0"
+        "revision" : "14b13d0c3db38f471ce4ba1ecb502ee1986c84d7",
+        "version" : "3.5.0"
       }
     },
     {
@@ -183,8 +185,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/TrackerRadarKit",
       "state" : {
-        "revision" : "a6b7ba151d9dc6684484f3785293875ec01cc1ff",
-        "version" : "1.2.2"
+        "revision" : "6c84fd19139414fc0edbf9673ade06e532a564f0",
+        "version" : "2.0.0"
       }
     },
     {
@@ -194,15 +196,6 @@
       "state" : {
         "revision" : "13fd026384b1af11048451061cc1b21434990668",
         "version" : "1.1.3"
-      }
-    },
-    {
-      "identity" : "xcodeeditor",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/appsquickly/XcodeEditor.git",
-      "state" : {
-        "branch" : "master",
-        "revision" : "f3234db7fc40d8e917e169bc937ed03ca76ba885"
       }
     },
     {

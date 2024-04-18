@@ -826,6 +826,24 @@
 /* No comment provided by engineer. */
 "bucket: %@" = "zbiralnik: %@";
 
+/* Crash Report always send button title */
+"crash.report.dialog.always.send" = "Vedno pošlji poročila o zrušitvah";
+
+/* Crash Report hide details button title */
+"crash.report.dialog.hide.details" = "Skrij se";
+
+/* Crash Report dialog message */
+"crash.report.dialog.message" = "Poročila o zrušitvah pomagajo DuckDuckGo pri diagnosticiranju težav in izboljševanju naših izdelkov. Ne vsebujejo nobenih osebnih podatkov.";
+
+/* Crash Report never send button title */
+"crash.report.dialog.never.send" = "Nikoli ne pošilji";
+
+/* Crash Report show details button title */
+"crash.report.dialog.show.details" = "Oglejte si, kaj je poslano";
+
+/* Crash Report dialog title */
+"crash.report.dialog.title" = "Želite samodejno pošiljati poročila o zrušitvah?";
+
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Pretekli mesec";
 
@@ -1979,6 +1997,12 @@
 
 /* Header of settings related to search */
 "settings.search.settings" = "Nastavitve iskanja";
+
+/* Settings cell for Send Crash Reports */
+"settings.send.crash.reports" = "Pošljite poročila o zrušitvah";
+
+/* Explanation of Send Crash Reports settings option */
+"settings.send.crash.reports.description" = "Poročila o zrušitvi samodejno pošljite DuckDuckGo.";
 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Nastavitev položaja naslovne vrstice";

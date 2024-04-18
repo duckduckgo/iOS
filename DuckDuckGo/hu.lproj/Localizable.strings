@@ -826,6 +826,24 @@
 /* No comment provided by engineer. */
 "bucket: %@" = "gyűjtő: %@";
 
+/* Crash Report always send button title */
+"crash.report.dialog.always.send" = "Mindig küldjön hibajelentést";
+
+/* Crash Report hide details button title */
+"crash.report.dialog.hide.details" = "Elrejtés";
+
+/* Crash Report dialog message */
+"crash.report.dialog.message" = "A hibajelentések segítséget nyújtanak ahhoz, hogy a DuckDuckGo diagnosztizálhassa a problémákat, és tökéletesíthesse termékeit. A jelentések nem tartalmaznak személyes azonosításra alkalmas adatokat.";
+
+/* Crash Report never send button title */
+"crash.report.dialog.never.send" = "Soha ne küldjön";
+
+/* Crash Report show details button title */
+"crash.report.dialog.show.details" = "Elküldött adatok megtekintése";
+
+/* Crash Report dialog title */
+"crash.report.dialog.title" = "Hibajelentések automatikus küldése?";
+
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Elmúlt hónapban";
 
@@ -1979,6 +1997,12 @@
 
 /* Header of settings related to search */
 "settings.search.settings" = "Keresési beállítások";
+
+/* Settings cell for Send Crash Reports */
+"settings.send.crash.reports" = "Hibajelentések küldése";
+
+/* Explanation of Send Crash Reports settings option */
+"settings.send.crash.reports.description" = "Hibajelentések automatikus küldése a DuckDuckGo részére.";
 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Állítsd be a címsor elhelyezkedését";

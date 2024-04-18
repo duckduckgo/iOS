@@ -826,6 +826,24 @@
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: % @";
 
+/* Crash Report always send button title */
+"crash.report.dialog.always.send" = "Vždycky odesílat hlášení o selhání";
+
+/* Crash Report hide details button title */
+"crash.report.dialog.hide.details" = "Skrýt";
+
+/* Crash Report dialog message */
+"crash.report.dialog.message" = "Hlášení o selháních pomáhají DuckDuckGo diagnostikovat problémy a zlepšovat služby. Neobsahují žádné osobní údaje umožňující identifikaci.";
+
+/* Crash Report never send button title */
+"crash.report.dialog.never.send" = "Nikdy neodesílat";
+
+/* Crash Report show details button title */
+"crash.report.dialog.show.details" = "Podívej se, co se odesílá";
+
+/* Crash Report dialog title */
+"crash.report.dialog.title" = "Automaticky odesílat hlášení o selháních?";
+
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Minulý měsíc";
 
@@ -1979,6 +1997,12 @@
 
 /* Header of settings related to search */
 "settings.search.settings" = "Nastavení vyhledávání";
+
+/* Settings cell for Send Crash Reports */
+"settings.send.crash.reports" = "Odesílat hlášení o selháních";
+
+/* Explanation of Send Crash Reports settings option */
+"settings.send.crash.reports.description" = "Automaticky DuckDuckGo odesílat hlášení o selháních.";
 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Nastavte pozici adresního řádku";

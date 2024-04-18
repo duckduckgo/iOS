@@ -1093,7 +1093,18 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     public static let settingsAboutDDG = NSLocalizedString("settings.about.ddg", value: "About DuckDuckGo", comment: "Settings cell for About DDG")
     public static let settingsVersion = NSLocalizedString("settings.version", value: "Version", comment: "Settings cell for Version")
-    
+    public static let settingsSendCrashReports = NSLocalizedString("settings.send.crash.reports", value: "Send Crash Reports", comment: "Settings cell for Send Crash Reports")
+    public static let settingsSendCrashReportsDescription = NSLocalizedString("settings.send.crash.reports.description", value: "Automatically send crash reports to DuckDuckGo.", comment: "Explanation of Send Crash Reports settings option")
+
+    // MARK: Crash Reporting
+
+    public static let crashReportDialogTitle = NSLocalizedString("crash.report.dialog.title", value: "Automatically send crash reports?", comment: "Crash Report dialog title")
+    public static let crashReportDialogMessage = NSLocalizedString("crash.report.dialog.message", value: "Crash reports help DuckDuckGo diagnose issues and improve our products. They contain no personally identifiable information.", comment: "Crash Report dialog message")
+    public static let crashReportShowDetails = NSLocalizedString("crash.report.dialog.show.details", value: "See what's sent", comment: "Crash Report show details button title")
+    public static let crashReportHideDetails = NSLocalizedString("crash.report.dialog.hide.details", value: "Hide", comment: "Crash Report hide details button title")
+    public static let crashReportAlwaysSend = NSLocalizedString("crash.report.dialog.always.send", value: "Always Send Crash Reports", comment: "Crash Report always send button title")
+    public static let crashReportNeverSend = NSLocalizedString("crash.report.dialog.never.send", value: "Never Send", comment: "Crash Report never send button title")
+
     // MARK: Subscriptions
     
     // Loaders

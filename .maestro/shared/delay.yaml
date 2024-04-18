@@ -8,5 +8,6 @@ appId: com.duckduckgo.mobile.ios
       visible:
         text: "This is just a text that will be never matched so this invocation will cause 5s delay"
         index: 0
-    file: onboarding_browsing.yaml
+    commands:
+        - stopApp
 

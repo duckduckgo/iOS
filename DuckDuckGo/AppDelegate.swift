@@ -599,7 +599,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     PixelParameters.widgetError: "1",
                     PixelParameters.widgetErrorCode: "\((error as NSError).code)",
                     PixelParameters.widgetErrorDomain: (error as NSError).domain
-                ])
+                ], includedParameters: [.appVersion, .atb])
                 
             case .success(let widgetInfo):
                 let params = widgetInfo.reduce([String: String]()) {
@@ -609,7 +609,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     }
                     return result
                 }
-                Pixel.fire(pixel: .appLaunch, withAdditionalParameters: params)
+                Pixel.fire(pixel: .appLaunch, withAdditionalParameters: params, includedParameters: [.appVersion, .atb])
             }
             
         }

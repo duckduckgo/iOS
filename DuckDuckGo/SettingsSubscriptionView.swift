@@ -20,7 +20,6 @@
 import SwiftUI
 import UIKit
 
-#if SUBSCRIPTION
 import Subscription
 import Core
 @available(iOS 15.0, *)
@@ -32,6 +31,7 @@ struct SettingsSubscriptionView: View {
     @State var isShowingITP = false
     @State var isShowingRestoreFlow = false
     @State var isShowingSubscribeFlow = false
+    @State var isShowingSubscriptionError = false
     
     enum Constants {
         static let purchaseDescriptionPadding = 5.0
@@ -53,7 +53,7 @@ struct SettingsSubscriptionView: View {
     
     @ViewBuilder
     private var restorePurchaseView: some View {
-        let text = !viewModel.isRestoringSubscription ? UserText.subscriptionActivateAppleIDButton : UserText.subscriptionRestoringTitle
+        let text = !viewModel.state.subscription.isRestoring ? UserText.subscriptionActivateAppleIDButton : UserText.subscriptionRestoringTitle
         SettingsCustomCell(content: {
             Text(text)
                 .daxBodyRegular()
@@ -61,8 +61,8 @@ struct SettingsSubscriptionView: View {
                            action: {
                                 Task { await viewModel.restoreAccountPurchase() }
                             },
-                           isButton: !viewModel.isRestoringSubscription )
-        .alert(isPresented: $viewModel.shouldDisplayRestoreSubscriptionError) {
+                           isButton: !viewModel.state.subscription.isRestoring )
+        .alert(isPresented: $isShowingSubscriptionError) {
             Alert(
                 title: Text(UserText.subscriptionAppStoreErrorTitle),
                 message: Text(UserText.subscriptionAppStoreErrorMessage),
@@ -124,7 +124,7 @@ struct SettingsSubscriptionView: View {
     @ViewBuilder
     private var subscriptionDetailsView: some View {
         
-            if viewModel.shouldShowNetP {
+            if viewModel.state.subscription.entitlements.contains(.networkProtection) {
                 SettingsCellView(label: UserText.settingsPProVPNTitle,
                                  subtitle: viewModel.state.networkProtection.status != "" ? viewModel.state.networkProtection.status : nil,
                                  action: { viewModel.presentLegacyView(.netP) },
@@ -132,7 +132,7 @@ struct SettingsSubscriptionView: View {
                                  isButton: true)
             }
             
-            if viewModel.shouldShowDBP {
+            if viewModel.state.subscription.entitlements.contains(.dataBrokerProtection) {
                 NavigationLink(destination: SubscriptionPIRView(),
                                isActive: $isShowingDBP,
                                label: {
@@ -142,7 +142,7 @@ struct SettingsSubscriptionView: View {
                 
             }
                     
-            if viewModel.shouldShowITP {
+            if viewModel.state.subscription.entitlements.contains(.identityTheftRestoration) {
                 NavigationLink(destination: SubscriptionITPView(),
                                isActive: $isShowingITP,
                                label: {
@@ -164,7 +164,7 @@ struct SettingsSubscriptionView: View {
                 if viewModel.state.subscription.hasActiveSubscription {
                         
                     // Allow managing the subscription if we have some entitlements
-                    if viewModel.shouldShowDBP || viewModel.shouldShowITP || viewModel.shouldShowNetP {
+                    if !viewModel.state.subscription.entitlements.isEmpty {
                         subscriptionDetailsView
                         
                         // If no entitlements it should mean the backend is still out of sync
@@ -179,6 +179,12 @@ struct SettingsSubscriptionView: View {
                 }
             }
             
+            .onChange(of: viewModel.state.subscription.shouldDisplayRestoreSubscriptionError) { value in
+                if value {
+                    isShowingSubscriptionError = true
+                }
+            }
+            
             .onReceive(subscriptionNavigationCoordinator.$shouldPopToAppSettings) { shouldDismiss in
                 if shouldDismiss {
                     isShowingRestoreFlow = false
@@ -189,4 +195,3 @@ struct SettingsSubscriptionView: View {
         }
     }
 }
-#endif

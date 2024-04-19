@@ -23,10 +23,8 @@ import NetworkProtection
 import UIKit
 import Common
 import NetworkExtension
-
-#if SUBSCRIPTION
 import Subscription
-#endif
+
 
 private class DefaultTunnelSessionProvider: TunnelSessionProvider {
     func activeSession() async -> NETunnelProviderSession? {
@@ -63,13 +61,11 @@ extension NetworkProtectionKeychainTokenStore {
         let featureVisibility = DefaultNetworkProtectionVisibility.forTokenStore()
         let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
         let accessTokenProvider: () -> String? = {
-#if SUBSCRIPTION
-            if featureVisibility.shouldMonitorEntitlement() {
-                return { AccountManager().accessToken }
-            }
-#endif
-            return { nil }
-        }()
+        if featureVisibility.shouldMonitorEntitlement() {
+            return { AccountManager().accessToken }
+        }
+        return { nil }
+    }()
 
         self.init(keychainType: .dataProtection(.unspecified),
                   serviceName: "\(Bundle.main.bundleIdentifier!).authToken",

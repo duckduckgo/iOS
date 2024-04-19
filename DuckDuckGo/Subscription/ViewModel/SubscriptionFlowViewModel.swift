@@ -346,17 +346,4 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
     
 }
-
-// TODO: Move to BSK later
-private extension URL {
-    
-    static var addEmailToSubscriptionSuccess: URL {
-        subscriptionBaseURL.appendingPathComponent("add-email/success")
-    }
-    
-    static var addEmailToSubscriptionOTP: URL {
-        subscriptionBaseURL.appendingPathComponent("add-email/otp")
-    }
-    
-}
 // swiftlint:enable type_body_length

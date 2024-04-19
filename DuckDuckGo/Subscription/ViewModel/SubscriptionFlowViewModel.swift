@@ -57,6 +57,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
         var shouldHideBackButton = false
         var selectedFeature: SelectedFeature = .none
         var viewTitle: String = UserText.subscriptionTitle
+        var shouldGoBackToSettings: Bool = false
     }
     
     // Read only View State - Should only be modified from the VM
@@ -95,7 +96,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
         
         
         subFeature.onBackToSettings = {
-            self.webViewModel.navigationCoordinator.navigateTo(url: URL.subscriptionPurchase)
+            self.state.shouldGoBackToSettings = true
         }
         
         subFeature.onActivateSubscription = {
@@ -302,6 +303,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     func onAppear() {
         self.state.selectedFeature = .none
+        self.state.shouldGoBackToSettings = false
     }
     
     func onFirstAppear() async {

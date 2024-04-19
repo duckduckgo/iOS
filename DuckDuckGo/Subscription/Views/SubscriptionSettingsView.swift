@@ -74,8 +74,8 @@ struct SubscriptionSettingsView: View {
     
     private var manageSection: some View {
         Section(header: Text(UserText.subscriptionManageTitle)) {
+            let active = viewModel.state.subscriptionInfo?.isActive ?? false
             SettingsCustomCell(content: {
-                let active = viewModel.state.subscriptionInfo?.isActive ?? false
                 
                 if active {
                     Text(UserText.subscriptionChangePlan)
@@ -88,20 +88,21 @@ struct SubscriptionSettingsView: View {
                 }
             },
                                action: {
-                Pixel.fire(pixel: .privacyProSubscriptionManagementPlanBilling, debounce: 1)
                 Task {
-                    viewModel.manageSubscription()
-                    if viewModel.state.subscriptionInfo?.platform == .apple {
+                    if active {
+                        viewModel.manageSubscription()
+                        Pixel.fire(pixel: .privacyProSubscriptionManagementPlanBilling, debounce: 1)
+                    } else {
                         viewPlans?()
                     }
                 }
-                                },
+            },
                                isButton: true)
-                .sheet(isPresented: $isShowingStripeView) {
-                    if let stripeViewModel = viewModel.state.stripeViewModel {
-                        SubscriptionExternalLinkView(viewModel: stripeViewModel, title: UserText.subscriptionManagePlan)
-                    }
+            .sheet(isPresented: $isShowingStripeView) {
+                if let stripeViewModel = viewModel.state.stripeViewModel {
+                    SubscriptionExternalLinkView(viewModel: stripeViewModel, title: UserText.subscriptionManagePlan)
                 }
+            }
         }
     }
     

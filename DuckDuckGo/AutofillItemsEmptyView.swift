@@ -40,7 +40,7 @@ struct AutofillItemsEmptyView: View {
                 .lineLimit(nil)
 
             Text(UserText.autofillEmptyViewSubtitle)
-                .daxFootnoteRegular()
+                .daxBodyRegular()
                 .foregroundColor(Color.init(designSystemColor: .textSecondary))
                 .multilineTextAlignment(.center)
                 .padding(.top, 8)

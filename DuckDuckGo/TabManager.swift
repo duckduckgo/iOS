@@ -35,7 +35,6 @@ class TabManager {
     private let historyManager: HistoryManager
     private let syncService: DDGSyncing
     private var previewsSource: TabPreviewsSource
-
     weak var delegate: TabDelegate?
 
     @UserDefaultsWrapper(key: .faviconTabsCacheNeedsCleanup, defaultValue: true)

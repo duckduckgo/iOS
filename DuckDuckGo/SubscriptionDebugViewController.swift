@@ -20,6 +20,7 @@
 import UIKit
 
 import Subscription
+import Core
 
 @available(iOS 15.0, *)
 final class SubscriptionDebugViewController: UITableViewController {
@@ -27,16 +28,21 @@ final class SubscriptionDebugViewController: UITableViewController {
     private let accountManager = AccountManager()
     fileprivate var purchaseManager: PurchaseManager = PurchaseManager.shared
     
+    @UserDefaultsWrapper(key: .privacyProEnvironment, defaultValue: SubscriptionPurchaseEnvironment.ServiceEnvironment.default.description)
+    private var privacyProEnvironment: String
+    
     private let titles = [
         Sections.authorization: "Authentication",
         Sections.subscription: "Subscription",
         Sections.appstore: "App Store",
+        Sections.environment: "Environment",
     ]
 
     enum Sections: Int, CaseIterable {
         case authorization
         case subscription
         case appstore
+        case environment
     }
 
     enum AuthorizationRows: Int, CaseIterable {
@@ -55,6 +61,11 @@ final class SubscriptionDebugViewController: UITableViewController {
         case syncAppStoreAccount
     }
     
+    enum EnvironmentRows: Int, CaseIterable {
+        case staging
+        case production
+    }
+    
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return Sections.allCases.count
@@ -70,6 +81,7 @@ final class SubscriptionDebugViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
         cell.detailTextLabel?.text = nil
+        cell.accessoryType = .none
 
         switch Sections(rawValue: indexPath.section) {
 
@@ -107,6 +119,22 @@ final class SubscriptionDebugViewController: UITableViewController {
             case .none:
                 break
             }
+        
+        case .environment:
+            let environment = SubscriptionPurchaseEnvironment.ServiceEnvironment(rawValue: privacyProEnvironment)
+            SubscriptionPurchaseEnvironment.currentServiceEnvironment = environment ?? SubscriptionPurchaseEnvironment.ServiceEnvironment.default
+            let staging = SubscriptionPurchaseEnvironment.ServiceEnvironment.staging.description
+            let prod = SubscriptionPurchaseEnvironment.ServiceEnvironment.production.description
+            switch EnvironmentRows(rawValue: indexPath.row) {
+            case .staging:
+                cell.textLabel?.text = "Staging"
+                cell.accessoryType = privacyProEnvironment == staging ? .checkmark : .none
+            case .production:
+                cell.textLabel?.text = "Production"
+                cell.accessoryType = privacyProEnvironment == prod ? .checkmark : .none
+            case .none:
+                break
+            }
         }
         return cell
     }
@@ -117,6 +145,7 @@ final class SubscriptionDebugViewController: UITableViewController {
         case .authorization: return AuthorizationRows.allCases.count
         case .subscription: return SubscriptionRows.allCases.count
         case .appstore: return AppStoreRows.allCases.count
+        case .environment: return EnvironmentRows.allCases.count
         case .none: return 0
 
         }
@@ -142,6 +171,12 @@ final class SubscriptionDebugViewController: UITableViewController {
             case .validateToken: validateToken()
             case .getSubscription: getSubscription()
             case .getEntitlements: getEntitlements()
+            default: break
+            }
+        case .environment:
+            switch EnvironmentRows(rawValue: indexPath.row) {
+            case .staging: setEnvironment(.staging)
+            case .production: setEnvironment(.production)
             default: break
             }
         case .none:
@@ -176,9 +211,11 @@ final class SubscriptionDebugViewController: UITableViewController {
     
     private func showAccountDetails() {
         let title = accountManager.isUserAuthenticated ? "Authenticated" : "Not Authenticated"
-        let message = accountManager.isUserAuthenticated ? ["AuthToken: \(accountManager.authToken ?? "")",
-                                                   "AccessToken: \(accountManager.accessToken ?? "")",
-                                                   "Email: \(accountManager.email ?? "")"].joined(separator: "\n") : nil
+        let message = accountManager.isUserAuthenticated ?
+            ["Service Environment: \(SubscriptionPurchaseEnvironment.currentServiceEnvironment.description)",
+            "AuthToken: \(accountManager.authToken ?? "")",
+            "AccessToken: \(accountManager.accessToken ?? "")",
+            "Email: \(accountManager.email ?? "")"].joined(separator: "\n") : nil
         showAlert(title: title, message: message)
     }
             
@@ -240,5 +277,16 @@ final class SubscriptionDebugViewController: UITableViewController {
             }
             showAlert(title: "Available Entitlements", message: results.joined(separator: "\n"))
         }
+    }
+    
+    private func setEnvironment(_ environment: SubscriptionPurchaseEnvironment.ServiceEnvironment) {
+        if environment.description != SubscriptionPurchaseEnvironment.currentServiceEnvironment.description {
+            AccountManager().signOut()
+            privacyProEnvironment = environment.description
+            SubscriptionPurchaseEnvironment.currentServiceEnvironment = environment
+            
+            tableView.reloadData()
+        }
+        
     }
 }

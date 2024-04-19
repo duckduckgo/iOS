@@ -90,6 +90,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
     private var privacyConfigCustomURL: String?
+    
+    @UserDefaultsWrapper(key: .privacyProEnvironment, defaultValue: SubscriptionPurchaseEnvironment.ServiceEnvironment.default.description)
+    private var privacyProEnvironment: String
 
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -447,11 +450,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func setupSubscriptionsEnvironment() {
         Task {
-#if DEBUG || ALPHA
-            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
-#else
-            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .production
-#endif
+            let environment = SubscriptionPurchaseEnvironment.ServiceEnvironment(rawValue: privacyProEnvironment)
+            SubscriptionPurchaseEnvironment.currentServiceEnvironment = environment ?? SubscriptionPurchaseEnvironment.ServiceEnvironment.default
 
 #if NETWORK_PROTECTION
             if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {

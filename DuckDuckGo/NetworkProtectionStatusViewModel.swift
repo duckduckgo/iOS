@@ -318,7 +318,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             return
         }
 
-        let data: ExtensionMessageString? = try? await activeSession.sendProviderMessage(.getConnectionThroughput)
+        let data: ExtensionMessageString? = try? await activeSession.sendProviderMessage(.getDataVolume)
 
         guard let data else {
             return

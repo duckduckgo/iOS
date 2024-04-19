@@ -744,8 +744,7 @@ class MainViewController: UIViewController {
                                 previewsSource: previewsSource,
                                 bookmarksDatabase: bookmarksDatabase,
                                 historyManager: historyManager,
-                                syncService: syncService,
-                                delegate: self)
+                                syncService: syncService)
     }
 
     private func addLaunchTabNotificationObserver() {

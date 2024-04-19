@@ -33,10 +33,8 @@ import Common
 import Network
 import NetworkExtension
 import NetworkProtection
-
-#if SUBSCRIPTION
 import Subscription
-#endif
+
 
 // swiftlint:disable:next type_body_length
 final class NetworkProtectionDebugViewController: UITableViewController {
@@ -688,9 +686,7 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
             if let subscriptionOverrideEnabled = defaults.subscriptionOverrideEnabled {
                 if subscriptionOverrideEnabled {
                     defaults.subscriptionOverrideEnabled = false
-#if SUBSCRIPTION
                     AccountManager().signOut()
-#endif
                 } else {
                     defaults.resetsubscriptionOverrideEnabled()
                 }

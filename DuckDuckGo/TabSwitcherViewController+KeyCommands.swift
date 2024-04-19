@@ -54,6 +54,7 @@ extension TabSwitcherViewController {
     }
     
     @objc func keyboardNewTab() {
+        guard !isProcessingUpdates else { return }
         delegate?.tabSwitcherDidRequestNewTab(tabSwitcher: self)
         dismiss()
     }

@@ -18,6 +18,7 @@
 //
 
 import BrowserServicesKit
+import Subscription
 
 struct SettingsState {
     
@@ -45,6 +46,9 @@ struct SettingsState {
         var canPurchase: Bool
         var hasActiveSubscription: Bool
         var isSubscriptionPendingActivation: Bool
+        var isRestoring: Bool
+        var shouldDisplayRestoreSubscriptionError: Bool
+        var entitlements: [Entitlement.ProductName]
     }
     
     struct SyncSettings {
@@ -76,7 +80,8 @@ struct SettingsState {
 
     // About properties
     var version: String
-        
+    var crashCollectionOptInStatus: CrashCollectionOptInStatus
+
     // Features
     var debugModeEnabled: Bool
     var voiceSearchEnabled: Bool
@@ -109,6 +114,7 @@ struct SettingsState {
             allowUniversalLinks: true,
             activeWebsiteAccount: nil,
             version: "0.0.0.0",
+            crashCollectionOptInStatus: .undetermined,
             debugModeEnabled: false,
             voiceSearchEnabled: false,
             speechRecognitionAvailable: false,
@@ -117,7 +123,10 @@ struct SettingsState {
             subscription: Subscription(enabled: false,
                                        canPurchase: false,
                                        hasActiveSubscription: false,
-                                       isSubscriptionPendingActivation: false),
+                                       isSubscriptionPendingActivation: false,
+                                       isRestoring: false,
+                                       shouldDisplayRestoreSubscriptionError: false,
+                                       entitlements: []),
             sync: SyncSettings(enabled: false, title: "")
         )
     }

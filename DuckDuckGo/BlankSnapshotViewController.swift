@@ -175,6 +175,10 @@ extension BlankSnapshotViewController: OmniBarDelegate {
         userInteractionDetected()
     }
 
+    func onTextFieldWillBeginEditing(_ omniBar: OmniBar, tapped: Bool) {
+        // No-op
+    }
+
     func onTextFieldDidBeginEditing(_ omniBar: OmniBar) -> Bool {
         DispatchQueue.main.async {
             self.viewCoordinator.omniBar.resignFirstResponder()
@@ -185,6 +189,10 @@ extension BlankSnapshotViewController: OmniBarDelegate {
     
     func onEnterPressed() {
         userInteractionDetected()
+    }
+
+    func onClearPressed() {
+        // No-op
     }
 }
 

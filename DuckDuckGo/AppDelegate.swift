@@ -33,10 +33,7 @@ import Configuration
 import Networking
 import DDGSync
 import SyncDataProviders
-
-#if SUBSCRIPTION
 import Subscription
-#endif
 
 #if NETWORK_PROTECTION
 import NetworkProtection
@@ -89,6 +86,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var syncStateCancellable: AnyCancellable?
     private var isSyncInProgressCancellable: AnyCancellable?
 
+    private let crashCollection = CrashCollection(platform: .iOS, log: .generalLog)
+    private var crashReportUploaderOnboarding: CrashCollectionOnboarding?
+
     // MARK: lifecycle
 
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
@@ -133,8 +133,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Configuration.setURLProvider(AppConfigurationURLProvider())
         }
 
-        CrashCollection.start {
-            Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [])
+        crashCollection.start { pixelParameters, payloads, sendReport in
+            pixelParameters.forEach { params in
+                Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
+            }
+
+            // Async dispatch because rootViewController may otherwise be nil here
+            DispatchQueue.main.async {
+                guard let viewController = self.window?.rootViewController else {
+                    return
+                }
+                let dataPayloads = payloads.map { $0.jsonRepresentation() }
+                let crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
+                crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: dataPayloads, from: viewController, sendReport: sendReport)
+                self.crashReportUploaderOnboarding = crashReportUploaderOnboarding
+            }
         }
 
         clearTmp()
@@ -335,9 +348,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NetworkProtectionAccessController().refreshNetworkProtectionAccess()
 #endif
         
-#if SUBSCRIPTION
         setupSubscriptionsEnvironment()
-#endif
 
         if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() {
             clearDebugWaitlistState()
@@ -406,9 +417,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if NETWORK_PROTECTION
     private func presentExpiredEntitlementAlert() {
         let alertController = CriticalAlerts.makeExpiredEntitlementAlert { [weak self] in
-            #if SUBSCRIPTION
             self?.mainViewController?.segueToPrivacyPro()
-            #endif
         }
         window?.rootViewController?.present(alertController, animated: true) { [weak self] in
             DailyPixel.fireDailyAndCount(pixel: .privacyProVPNAccessRevokedDialogShown)
@@ -423,14 +432,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             wrappee: NetworkProtectionUNNotificationPresenter()
         )
         presenter.showEntitlementNotification()
-    }
-
-    private func presentVPNEarlyAccessOverAlert() {
-        let alertController = CriticalAlerts.makeVPNEarlyAccessOverAlert()
-        window?.rootViewController?.present(alertController, animated: true) { [weak self] in
-            DailyPixel.fireDailyAndCount(pixel: .privacyProPromotionDialogShownVPN)
-            self?.tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
-        }
     }
 #endif
 
@@ -452,7 +453,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
-#if SUBSCRIPTION
     private func setupSubscriptionsEnvironment() {
         Task {
 #if DEBUG || ALPHA
@@ -470,7 +470,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             SubscriptionPurchaseEnvironment.current = .appStore
         }
     }
-#endif
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
@@ -543,8 +542,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         if vpnFeatureVisibility.shouldShowThankYouMessaging() && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
-            presentVPNEarlyAccessOverAlert()
-
             Task {
                 await self.stopAndRemoveVPN(with: "thank-you-dialog")
             }
@@ -573,7 +570,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func updateSubscriptionStatus() {
-#if SUBSCRIPTION
         Task {
             let accountManager = AccountManager()
 
@@ -588,7 +584,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             _ = await accountManager.fetchEntitlements(cachePolicy: .reloadIgnoringLocalCacheData)
         }
-#endif
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -627,7 +622,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func firePrivacyProFeatureEnabledPixel() {
-#if SUBSCRIPTION
         let subscriptionFeatureAvailability = AppDependencyProvider.shared.subscriptionFeatureAvailability
         guard subscriptionFeatureAvailability.isFeatureAvailable,
               subscriptionFeatureAvailability.isSubscriptionPurchaseAllowed else {
@@ -635,7 +629,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         DailyPixel.fire(pixel: .privacyProFeatureEnabled)
-#endif
     }
 
     private func fireAppTPActiveUserPixel() {

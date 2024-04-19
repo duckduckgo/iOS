@@ -826,6 +826,24 @@
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: %@";
 
+/* Crash Report always send button title */
+"crash.report.dialog.always.send" = "Uvijek šalji izvješća o padu programa";
+
+/* Crash Report hide details button title */
+"crash.report.dialog.hide.details" = "Sakrij";
+
+/* Crash Report dialog message */
+"crash.report.dialog.message" = "Izvješća o padovima pomažu DuckDuckGou u dijagnosticiranju problema i poboljšanju naših proizvoda. Oni ne sadrže nikakve osobne podatke koji bi omogućilitvoju  identifikaciju.";
+
+/* Crash Report never send button title */
+"crash.report.dialog.never.send" = "Nikada ne šalji";
+
+/* Crash Report show details button title */
+"crash.report.dialog.show.details" = "Pogledaj što je poslano";
+
+/* Crash Report dialog title */
+"crash.report.dialog.title" = "Automatski slati izvješća o padu?";
+
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Prošli mjesec";
 
@@ -1979,6 +1997,12 @@
 
 /* Header of settings related to search */
 "settings.search.settings" = "Postavke pretraživanja";
+
+/* Settings cell for Send Crash Reports */
+"settings.send.crash.reports" = "Šalji izvješća o padu";
+
+/* Explanation of Send Crash Reports settings option */
+"settings.send.crash.reports.description" = "Automatski šalji izvješća o padu DuckDuckGou.";
 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Postavi položaj adresne trake";

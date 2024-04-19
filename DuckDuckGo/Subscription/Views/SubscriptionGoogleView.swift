@@ -19,9 +19,9 @@
 
 import Foundation
 import SwiftUI
-#if SUBSCRIPTION
-@available(iOS 15.0, *)
 
+
+@available(iOS 15.0, *)
 struct SubscriptionGoogleView: View {
         
     enum Constants {
@@ -50,10 +50,9 @@ struct SubscriptionGoogleView: View {
     }
         
 }
-#endif
 
 
-#if SUBSCRIPTION && DEBUG
+#if DEBUG
 @available(iOS 15.0, *)
 
 struct SubscriptionGoogleView_Previews: PreviewProvider {

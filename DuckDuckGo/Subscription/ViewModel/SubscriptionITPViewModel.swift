@@ -21,9 +21,8 @@ import Foundation
 import UserScript
 import Combine
 import Core
-
-#if SUBSCRIPTION
 import Subscription
+
 @available(iOS 15.0, *)
 final class SubscriptionITPViewModel: ObservableObject {
     
@@ -193,4 +192,3 @@ final class SubscriptionITPViewModel: ObservableObject {
     }
     
 }
-#endif

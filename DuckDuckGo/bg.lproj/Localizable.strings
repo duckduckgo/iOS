@@ -826,6 +826,24 @@
 /* No comment provided by engineer. */
 "bucket: %@" = "контейнер: %@";
 
+/* Crash Report always send button title */
+"crash.report.dialog.always.send" = "Винаги да се изпращат доклади за сривове";
+
+/* Crash Report hide details button title */
+"crash.report.dialog.hide.details" = "Скрий";
+
+/* Crash Report dialog message */
+"crash.report.dialog.message" = "Докладите за сривове помагат на DuckDuckGo да диагностицира проблеми и да подобрява продуктите си. Те не съдържат никаква лична информация.";
+
+/* Crash Report never send button title */
+"crash.report.dialog.never.send" = "Никога да не се изпращат";
+
+/* Crash Report show details button title */
+"crash.report.dialog.show.details" = "Вижте какво е изпратено";
+
+/* Crash Report dialog title */
+"crash.report.dialog.title" = "Автоматично изпращане на доклади за сривове?";
+
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Миналия месец";
 
@@ -1979,6 +1997,12 @@
 
 /* Header of settings related to search */
 "settings.search.settings" = "Настройки за търсене";
+
+/* Settings cell for Send Crash Reports */
+"settings.send.crash.reports" = "Изпращане на доклади за сривове";
+
+/* Explanation of Send Crash Reports settings option */
+"settings.send.crash.reports.description" = "Автоматично изпращане на доклади за сривове до DuckDuckGo.";
 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Задайте позицията на адресната лента";

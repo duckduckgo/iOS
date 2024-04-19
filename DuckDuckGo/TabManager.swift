@@ -35,7 +35,6 @@ class TabManager {
     private let historyManager: HistoryManager
     private let syncService: DDGSyncing
     private var previewsSource: TabPreviewsSource
-
     weak var delegate: TabDelegate?
 
     @UserDefaultsWrapper(key: .faviconTabsCacheNeedsCleanup, defaultValue: true)
@@ -46,7 +45,8 @@ class TabManager {
          previewsSource: TabPreviewsSource,
          bookmarksDatabase: CoreDataDatabase,
          historyManager: HistoryManager,
-         syncService: DDGSyncing) {
+         syncService: DDGSyncing,
+         delegate: TabDelegate) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase

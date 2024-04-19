@@ -145,7 +145,12 @@ struct ImportPasswordsView: View {
 }
 
 struct NumberBadge: View {
+    @Environment(\.colorScheme) var colorScheme
+
     var number: Int
+
+    let lightBulletColor = Color(0xCCDAFF, alpha: 0.5)
+    let darkBulletColor = Color(0x3969EF, alpha: 0.12)
 
     var body: some View {
         Text("\(number)")
@@ -153,7 +158,7 @@ struct NumberBadge: View {
             .padding(10)
             .background(
                 Circle()
-                    .fill(Color(.bulletListBackground))
+                    .fill(colorScheme == .dark ? darkBulletColor : lightBulletColor)
             )
             .foregroundColor(Color(designSystemColor: .accent))
             .fixedSize()

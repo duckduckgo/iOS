@@ -826,6 +826,24 @@
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: %@";
 
+/* Crash Report always send button title */
+"crash.report.dialog.always.send" = "Send alltid krasjrapporter";
+
+/* Crash Report hide details button title */
+"crash.report.dialog.hide.details" = "Skjul";
+
+/* Crash Report dialog message */
+"crash.report.dialog.message" = "Krasjrapporter hjelper DuckDuckGo med å diagnostisere problemer og forbedre produktene våre. De inneholder ingen personlig identifiserbar informasjon.";
+
+/* Crash Report never send button title */
+"crash.report.dialog.never.send" = "Aldri send";
+
+/* Crash Report show details button title */
+"crash.report.dialog.show.details" = "Se hva som er sendt";
+
+/* Crash Report dialog title */
+"crash.report.dialog.title" = "Sende krasjrapporter automatisk?";
+
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Foregående måned";
 
@@ -1979,6 +1997,12 @@
 
 /* Header of settings related to search */
 "settings.search.settings" = "Søkeinnstillinger";
+
+/* Settings cell for Send Crash Reports */
+"settings.send.crash.reports" = "Send krasjrapporter";
+
+/* Explanation of Send Crash Reports settings option */
+"settings.send.crash.reports.description" = "Send krasjrapporter automatisk til DuckDuckGo.";
 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Angi plassering av adressefeltet";

@@ -826,6 +826,24 @@
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: %@";
 
+/* Crash Report always send button title */
+"crash.report.dialog.always.send" = "Trimite întotdeauna rapoarte de cădere";
+
+/* Crash Report hide details button title */
+"crash.report.dialog.hide.details" = "Ascunde";
+
+/* Crash Report dialog message */
+"crash.report.dialog.message" = "Rapoartele de cădere ajută DuckDuckGo să diagnosticheze problemele și să îmbunătățească produsele noastre. Acestea nu conțin informații de identificare personală.";
+
+/* Crash Report never send button title */
+"crash.report.dialog.never.send" = "Nu trimite niciodată";
+
+/* Crash Report show details button title */
+"crash.report.dialog.show.details" = "Vezi ce se trimite";
+
+/* Crash Report dialog title */
+"crash.report.dialog.title" = "Trimite automat rapoarte de cădere?";
+
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Ultima lună";
 
@@ -1979,6 +1997,12 @@
 
 /* Header of settings related to search */
 "settings.search.settings" = "Setări de căutare";
+
+/* Settings cell for Send Crash Reports */
+"settings.send.crash.reports" = "Trimite rapoarte de cădere";
+
+/* Explanation of Send Crash Reports settings option */
+"settings.send.crash.reports.description" = "Trimite automat rapoarte de cădere către DuckDuckGo.";
 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Setează poziția barei de adrese";

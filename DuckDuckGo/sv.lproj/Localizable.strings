@@ -826,6 +826,24 @@
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: %@";
 
+/* Crash Report always send button title */
+"crash.report.dialog.always.send" = "Skicka alltid kraschrapporter";
+
+/* Crash Report hide details button title */
+"crash.report.dialog.hide.details" = "Dölj";
+
+/* Crash Report dialog message */
+"crash.report.dialog.message" = "Kraschrapporter hjälper DuckDuckGo att diagnostisera problem och förbättra sina produkter. De innehåller ingen personligt identifierbar information.";
+
+/* Crash Report never send button title */
+"crash.report.dialog.never.send" = "Skicka aldrig";
+
+/* Crash Report show details button title */
+"crash.report.dialog.show.details" = "Se vad som skickats";
+
+/* Crash Report dialog title */
+"crash.report.dialog.title" = "Skicka kraschrapporter automatiskt?";
+
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Senaste månaden";
 
@@ -1979,6 +1997,12 @@
 
 /* Header of settings related to search */
 "settings.search.settings" = "Sökinställningar";
+
+/* Settings cell for Send Crash Reports */
+"settings.send.crash.reports" = "Skicka kraschrapporter";
+
+/* Explanation of Send Crash Reports settings option */
+"settings.send.crash.reports.description" = "Skicka kraschrapporter automatiskt till DuckDuckGo.";
 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Ange din adressfältsposition";

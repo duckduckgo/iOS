@@ -86,6 +86,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var syncStateCancellable: AnyCancellable?
     private var isSyncInProgressCancellable: AnyCancellable?
 
+    private let crashCollection = CrashCollection(platform: .iOS, log: .generalLog)
+    private var crashReportUploaderOnboarding: CrashCollectionOnboarding?
+
     // MARK: lifecycle
 
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
@@ -130,8 +133,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Configuration.setURLProvider(AppConfigurationURLProvider())
         }
 
-        CrashCollection.start {
-            Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [])
+        crashCollection.start { pixelParameters, payloads, sendReport in
+            pixelParameters.forEach { params in
+                Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
+            }
+
+            // Async dispatch because rootViewController may otherwise be nil here
+            DispatchQueue.main.async {
+                guard let viewController = self.window?.rootViewController else {
+                    return
+                }
+                let dataPayloads = payloads.map { $0.jsonRepresentation() }
+                let crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
+                crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: dataPayloads, from: viewController, sendReport: sendReport)
+                self.crashReportUploaderOnboarding = crashReportUploaderOnboarding
+            }
         }
 
         clearTmp()
@@ -417,14 +433,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
         presenter.showEntitlementNotification()
     }
-
-    private func presentVPNEarlyAccessOverAlert() {
-        let alertController = CriticalAlerts.makeVPNEarlyAccessOverAlert()
-        window?.rootViewController?.present(alertController, animated: true) { [weak self] in
-            DailyPixel.fireDailyAndCount(pixel: .privacyProPromotionDialogShownVPN)
-            self?.tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
-        }
-    }
 #endif
 
     private func cleanUpMacPromoExperiment2() {
@@ -534,8 +542,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         if vpnFeatureVisibility.shouldShowThankYouMessaging() && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
-            presentVPNEarlyAccessOverAlert()
-
             Task {
                 await self.stopAndRemoveVPN(with: "thank-you-dialog")
             }

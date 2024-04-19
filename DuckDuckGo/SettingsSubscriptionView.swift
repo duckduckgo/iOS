@@ -120,8 +120,7 @@ struct SettingsSubscriptionView: View {
                     }.foregroundColor(Color(designSystemColor: .textSecondary))
                 }
             })
-            
-            // subscriptionManageCell
+                        
             let subscribeView = SubscriptionContainerView(currentView: .subscribe)
                 .navigationViewStyle(.stack)
                 .environmentObject(subscriptionNavigationCoordinator)
@@ -130,11 +129,9 @@ struct SettingsSubscriptionView: View {
                 isActive: $isShowingSubscribeFlow,
                 label: { SettingsCellView(label: UserText.subscriptionRestoreNotFoundPlans) })
             
-            // Manage Subscription (Expired)
+            // Renew Subscription (Expired)
             let settingsView = SubscriptionSettingsView(viewPlans: {
-                if viewModel.state.subscription.platform == .apple {
                     isShowingSubscribeFlow = true
-                }
             })
                 .environmentObject(subscriptionNavigationCoordinator)
             NavigationLink(destination: settingsView) {

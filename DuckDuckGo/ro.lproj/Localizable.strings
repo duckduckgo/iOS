@@ -1,9 +1,6 @@
 /* No comment provided by engineer. */
 "%@" = "%@";
 
-/* No comment provided by engineer. */
-"%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Editați";
 
@@ -15,6 +12,9 @@
 
 /* Button label for managing favorites */
 "action.manage.favorites" = "Gestionează";
+
+/* Button label for OK action */
+"action.ok" = "OK";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Adăugați";
@@ -38,7 +38,7 @@
 "action.title.copy.message" = "URL copiat";
 
 /* Delete action - button shown in alert */
-"action.title.delete" = "Ștergere";
+"action.title.delete" = "Delete";
 
 /* Disable protection action */
 "action.title.disable.protection" = "Dezactivează protecția confidențialității";
@@ -176,7 +176,7 @@
 "alert.unable-to-delete-data-description" = "Nu se pot șterge datele de pe server.";
 
 /* Description for unable to merge two accounts error */
-"alert.unable-to-merge-two-accounts-description" = "Pentru a asocia aceste dispozitive, dezactivează Sincronizare și backup pe un dispozitiv, apoi atinge „Sincronizează cu un alt dispozitiv” pe celălalt dispozitiv.";
+"alert.unable-to-merge-two-accounts-description" = "To pair these devices, turn off Sync & Backup on one device then tap \"Sync With Another Device\" on the other device.";
 
 /* Description for unable to remove device error */
 "alert.unable-to-remove-device-description" = "Nu se poate elimina acest dispozitiv din Sincronizare și backup.";
@@ -826,6 +826,24 @@
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: %@";
 
+/* Crash Report always send button title */
+"crash.report.dialog.always.send" = "Trimite întotdeauna rapoarte de cădere";
+
+/* Crash Report hide details button title */
+"crash.report.dialog.hide.details" = "Ascunde";
+
+/* Crash Report dialog message */
+"crash.report.dialog.message" = "Rapoartele de cădere ajută DuckDuckGo să diagnosticheze problemele și să îmbunătățească produsele noastre. Acestea nu conțin informații de identificare personală.";
+
+/* Crash Report never send button title */
+"crash.report.dialog.never.send" = "Nu trimite niciodată";
+
+/* Crash Report show details button title */
+"crash.report.dialog.show.details" = "Vezi ce se trimite";
+
+/* Crash Report dialog title */
+"crash.report.dialog.title" = "Trimite automat rapoarte de cădere?";
+
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Ultima lună";
 
@@ -837,18 +855,6 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Ieri";
-
-/* Button title accepting to enable feature to automatically manage cookie popups */
-"dax.cookie-consent.button.accept" = "Gestionare pop-up-uri pentru module cookie";
-
-/* Button title rejecting to enable feature to automatically manage cookie popups */
-"dax.cookie-consent.button.reject" = "Nu, mulțumesc";
-
-/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
-"dax.cookie-consent.first" = "Se pare că acest site are o fereastră pop-up de solicitare a consimțământului cu privire la modulele cookie👇";
-
-/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
-"dax.cookie-consent.second" = "Vrei să mă ocup de asta pentru tine? Pot să încerc să minimizez numărul de module cookie, să maximizez confidențialitatea și să ascund ferestrele pop-up precum aceasta.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Ascunde sfaturile definitiv";
@@ -987,6 +993,9 @@
 
 /* No comment provided by engineer. */
 "Duck Address" = "Duck Address";
+
+/* No comment provided by engineer. */
+"DuckDuckGo for iOS" = "DuckDuckGo pentru iOS";
 
 /* Email protection service offered by DuckDuckGo */
 "email-protection" = "Protecția comunicațiilor prin e-mail";
@@ -1423,9 +1432,6 @@
 /* Title for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Obține DuckDuckGo pentru Mac!";
 
-/* Disclaimer for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.windows" = "Va fi disponibil în curând și pentru Windows!";
-
 /* Title for the macOS waitlist button redirecting to Windows waitlist */
 "mac-waitlist.join-waitlist-screen.windows-waitlist" = "Cauți versiunea pentru Windows?";
 
@@ -1462,8 +1468,11 @@
 /* String indicating NetP is disconnected when viewed from the settings screen */
 "netP.cell.disconnected" = "Not connected";
 
-/* Title for the Network Protection feature */
-"netP.title" = "Network Protection";
+/* Title for the DuckDuckGo VPN feature in settings */
+"netP.settings.title" = "VPN";
+
+/* Title for the DuckDuckGo VPN feature */
+"netP.title" = "DuckDuckGo VPN";
 
 /* Privacy Policy title for Network Protection */
 "network-protection.privacy-policy.title" = "Politica de confidențialitate";
@@ -1472,7 +1481,7 @@
 "network-protection.waitlist.agree-and-continue" = "De acord și continuă";
 
 /* Availability disclaimer for Network Protection join waitlist screen */
-"network-protection.waitlist.availability-disclaimer" = "Protecția rețelei poate fi utilizată gratuit în timpul accesului timpuriu.";
+"network-protection.waitlist.availability-disclaimer" = "DuckDuckGo VPN se poate utiliza gratuit în perioada de acces anticipat.";
 
 /* Agree and Continue button for Network Protection join waitlist screen */
 "network-protection.waitlist.button.agree-and-continue" = "De acord și continuă";
@@ -1511,7 +1520,7 @@
 "network-protection.waitlist.invited.subtitle" = "Obține un nivel suplimentar de protecție online cu VPN-ul creat pentru viteză și simplitate. Criptează conexiunea la internet pe întregul dispozitiv și ascunde-ți locația și adresa IP de pe site-urile pe care le accesezi.";
 
 /* Title for Network Protection invited screen */
-"network-protection.waitlist.invited.title" = "Ești invitat să încerci\naccesul timpuriu la Network Protection!";
+"network-protection.waitlist.invited.title" = "Te invităm să încerci\naccesul anticipat la DuckDuckGo VPN!";
 
 /* First subtitle for Network Protection join waitlist screen */
 "network-protection.waitlist.join.subtitle.1" = "Obține o conexiune sigură oricând și oriunde cu Network Protection, VPN-ul de la DuckDuckGo.";
@@ -1520,7 +1529,7 @@
 "network-protection.waitlist.join.subtitle.2" = "Alătură-te listei de așteptare și te vom anunța când îți vine rândul.";
 
 /* Title for Network Protection join waitlist screen */
-"network-protection.waitlist.join.title" = "Network Protection Early Access";
+"network-protection.waitlist.join.title" = "Acces anticipat VPN";
 
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "Ești pe listă!";
@@ -1532,7 +1541,7 @@
 "network-protection.waitlist.joined.with-notifications.subtitle.2" = "Te vom anunța când invitația ta este gata.";
 
 /* Body text for the alert to enable notifications */
-"network-protection.waitlist.notification-alert.description" = "Îți vom trimite o notificare atunci când invitația de a testa Network Protection este gata.";
+"network-protection.waitlist.notification-alert.description" = "Îți vom trimite o notificare când invitația ta de a testa DuckDuckGo VPN este gata.";
 
 /* Subtitle for the alert to confirm enabling notifications */
 "network-protection.waitlist.notification-prompt-description" = "Primești o notificare atunci când copia ta pentru acces timpuriu la Network Protection este gata.";
@@ -1544,7 +1553,7 @@
 "network-protection.waitlist.notification.text" = "Deschide invitația ta";
 
 /* Title for Network Protection waitlist notification */
-"network-protection.waitlist.notification.title" = "Network Protection este gata!";
+"network-protection.waitlist.notification.title" = "DuckDuckGo VPN este gata!";
 
 /* Subtitle text for the Network Protection settings row */
 "network-protection.waitlist.settings-subtitle.joined-and-invited" = "Invitația ta este gata!";
@@ -1555,11 +1564,23 @@
 /* Subtitle text for the Network Protection settings row */
 "network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Alătură-te listei de așteptare private";
 
+/* The body of the notification when Privacy Pro subscription expired */
+"network.protection.entitlement.expired.notification.body" = "VPN disconnected due to expired subscription. Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
+
+/* The body of the notification shown when Network Protection fails to reconnect */
+"network.protection.failure.notification.body" = "Network Protection nu a reușit să se conecteze. Încearcă din nou mai târziu.";
+
+/* Title for the VPN FAQ screen. */
+"network.protection.faq.title" = "Întrebări frecvente despre DuckDuckGo VPN";
+
+/* The body of the notification shown when Network Protection's connection is interrupted */
+"network.protection.interrupted.notification.body" = "Network Protection a fost întreruptă. Se încearcă reconectarea acum...";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "Ești invitat(ă) să încerci Network Protection";
+"network.protection.invite.dialog.title" = "Te invităm să încerci DuckDuckGo VPN";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
@@ -1570,11 +1591,14 @@
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
 
+/* The title of the notifications shown from Network Protection */
+"network.protection.notification.title" = "DuckDuckGo";
+
 /* Title text for an iOS quick action that opens VPN settings */
 "network.protection.quick-action.open-vpn" = "Deschide VPN";
 
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
-"network.protection.status.connected.format" = "Connected - %@";
+"network.protection.status.connected.format" = "Conectat · %@";
 
 /* The label for the NetP VPN when connecting */
 "network.protection.status.connecting" = "Connecting...";
@@ -1585,14 +1609,17 @@
 /* The label for the NetP VPN when disconnecting */
 "network.protection.status.disconnecting" = "Disconnecting...";
 
-/* Message label text for the netP status view */
-"network.protection.status.header.message" = "DuckDuckGo's VPN secures all of your device's Internet traffic anytime, anywhere.";
+/* Message label text for the status view when VPN is disconnected */
+"network.protection.status.header.message.off" = "Conectează-te pentru a securiza traficul pe internet\n pentru toate dispozitivele tale.";
 
-/* Header title label text for the status view when netP is disconnected */
-"network.protection.status.header.title.off" = "Network Protection is Off";
+/* Message label text for the status view when VPN is disconnected */
+"network.protection.status.header.message.on" = "Tot traficul de internet al dispozitivelor este securizat\nprin VPN.";
 
-/* Header title label text for the status view when netP is connected */
-"network.protection.status.header.title.on" = "Network Protection is On";
+/* Header title label text for the status view when VPN is disconnected */
+"network.protection.status.header.title.off" = "DuckDuckGo VPN este oprit";
+
+/* Header title label text for the status view when VPN is connected */
+"network.protection.status.header.title.on" = "DuckDuckGo VPN este pornit";
 
 /* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
@@ -1616,7 +1643,13 @@
 "network.protection.status.view.settings.section.title" = "Gestionează";
 
 /* Title label text for the status view when netP is disconnected */
-"network.protection.status.view.title" = "Network Protection";
+"network.protection.status.view.title" = "VPN";
+
+/* The body of the notification shown when Network Protection reconnects successfully */
+"network.protection.success.notification.body" = "Network Protection este activată. Locația și activitatea ta online sunt protejate.";
+
+/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
+"network.protection.success.notification.subtitle.including.serverLocation" = "Dirijarea traficului dispozitivului prin %@.";
 
 /* Title for the button to link to the iOS app settings and enable notifications app-wide. */
 "network.protection.turn.on.notifications.button.title" = "Activează Notificările";
@@ -1624,11 +1657,17 @@
 /* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
 "network.protection.turn.on.notifications.section.footer" = "Permite ca DuckDuckGo să te înștiințeze dacă conexiunea ta devine mai slabă sau dacă starea VPN-ului se schimbă.";
 
+/* Title of the About section in the VPN status screen */
+"network.protection.vpn.about" = "Despre";
+
 /* List section footer for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.section.footer" = "Primește o notificare dacă conexiunea ta devine mai slabă sau dacă starea VPN-ului se schimbă.";
 
 /* Title for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.title" = "Alerte VPN";
+
+/* Title for the data volume section in the VPN status screen */
+"network.protection.vpn.data-volume" = "Volum de date";
 
 /* Footer text for the Exclude Local Networks setting item. */
 "network.protection.vpn.exclude.local.networks.setting.footer" = "Lasă traficul local să ocolească VPN-ul și să se conecteze la dispozitivele din rețeaua locală, cum ar fi o imprimantă.";
@@ -1639,17 +1678,23 @@
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
 
+/* Description of the location type in the VPN status screen */
+"network.protection.vpn.location.connected" = "Locație conectată";
+
 /* Subtitle of countries item when there are multiple cities, example : */
 "network.protection.vpn.location.country.item.formatted.cities.count" = "%d orașe";
 
-/* Title for the VPN Location screen's Nearest Available selection item. */
-"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+/* Description of the location type in the VPN status screen */
+"network.protection.vpn.location.nearest" = "(Cea mai apropiată)";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
 "network.protection.vpn.location.recommended.section.footer" = "Conectează-te automat la cel mai apropiat server pe care îl putem găsi.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Description of the location type in the VPN status screen */
+"network.protection.vpn.location.selected" = "Locație selectată";
 
 /* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
 "network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
@@ -1661,13 +1706,19 @@
 "network.protection.vpn.notifications.title" = "Notificări VPN";
 
 /* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
-"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+"network.protection.vpn.preferred.location.nearest" = "Cea mai apropiată locație";
 
 /* Title for the Preferred Location VPN Settings item. */
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
 "network.protection.vpn.secure.dns.setting.footer" = "VPN-ul nostru utilizează DNS securizat pentru a-ți păstra activitatea online privată, astfel încât furnizorul tău de internet să nu poată vedea ce site-uri web accesezi.";
+
+/* Title for the FAQ row in the VPN status screen. */
+"network.protection.vpn.settings.faq" = "Întrebări frecvente";
+
+/* Title for the feedback row in the VPN status screen. */
+"network.protection.vpn.settings.share-feedback" = "Oferă feedback despre VPN";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Setări VPN";
@@ -1765,6 +1816,9 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
+/* No comment provided by engineer. */
+"Privacy Protections" = "Măsuri de protecție a confidențialității";
+
 /* Privacy Icon accessibility title */
 "privacy.icon.dax" = "Logoul DuckDuckGo";
 
@@ -1804,14 +1858,18 @@
 /* about page */
 "settings.about.text" = "DuckDuckGo este o companie independentă înființată în 2008, care oferă confidențialitate pe internet tuturor celor care s-au săturat să fie urmăriți online și își doresc o soluție simplă. Suntem dovada că protecția confidențialității online fără compromisuri este reală.\n\nBrowserul DuckDuckGo oferă funcțiile pe care le aștepți de la browserul predilect, cum ar fi marcajele, filele, parolele și multe altele, plus peste [o duzină de instrumente puternice de protecție a confidențialității](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) care nu sunt oferite implicit de majoritatea browserelor populare. Acest set unic și cuprinzător de măsuri de protecție a confidențialității te ajută să îți protejezi activitățile online, de la căutări la navigare, e-mailuri și multe altele.\n\nMăsurile noastre robuste de protecție a confidențialității funcționează fără a necesita cunoștințe tehnice din partea ta și fără a fi nevoie să faci setări complicate. Tot ce trebuie să faci este să folosești browserul DuckDuckGo pe toate dispozitivele și vei beneficia implicit de confidențialitate.\n\nDar dacă *chiar dorești* să consulți detaliile mai tehnice, poți găsi mai multe informații despre modul în care funcționează instrumentele DuckDuckGo de protecție a confidențialității în [paginile noastre de asistență](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
+/* Settings screen accessibility section title */
+"settings.accessibility" = "Accesibilitate";
+
 /* Settings screen cell text for adding the app to the dock */
 "settings.add.to.dock" = "Adaugă aplicația la secțiunea ta fixă";
 
 /* Settings screen cell text for add widget to the home screen */
 "settings.add.widget" = "Adaugă un widget la ecranul de întâmpinare";
 
-/* Settings screen cell text for addess bar position */
-"settings.address.bar" = "Poziția barei de adrese";
+/* Name of the settings subsection related to the address bar
+   Settings screen cell text for addess bar position */
+"settings.address.bar" = "Bara de adrese";
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
 "settings.address.full.url" = "Afișați adresa completă a site-ului";
@@ -1832,10 +1890,16 @@
 "settings.autolock" = "Blocarea aplicației";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Dacă este setat Touch ID, Face ID sau o parolă de sistem, ți se va solicita să deblochezi aplicația la deschidere.";
+"settings.autolock.description" = "Dacă identificatorul tactil, identificatorul facial sau parola de sistem sunt activate, ți se va solicita să deblochezi aplicația la deschidere.";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Șterge automat datele";
+
+/* The name of Settings category in Privacy Features related to configuration of the privacy feature related to cookie pop-ups */
+"settings.cookie.pop-up-protection.protection" = "Protecție pentru ferestre pop-up aferente modulelor cookie";
+
+/* Explanation in Settings how the cookie pop up protection feature works */
+"settings.cookie.pop.up.protection.explanation" = "DuckDuckGo va încerca să selecteze cele mai private setări disponibile și să ascundă aceste ferestre pop-up pentru tine.\n[Află mai multe](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#cookie-pop-up-management)";
 
 /* Settings screen cell text for Cookie popups */
 "settings.cookie.popups" = "Gestionare pop-up-uri pentru module cookie";
@@ -1843,14 +1907,33 @@
 /* Settings title for the customize section */
 "settings.customize" = "Personalizare";
 
-/* Settings screen cell text for setting the app as default browser */
-"settings.default.browser" = "Setare ca browser implicit";
+/* The name of a settings subsection related to the data clearing */
+"settings.data.clearing" = "Ștergerea datelor";
 
-/* Settings cell for Email Protection */
-"settings.emailProtection" = "Protecția comunicațiilor prin e-mail";
+/* Settings screen cell text for setting the app as default browser
+   The name of Settings category in Privacy Features related to configuration of the default browser */
+"settings.default.browser" = "Browser implicit";
+
+/* Label of a button disabling email protection */
+"settings.disable.email.protection.autofill" = "Dezactivează completarea automată în Email Protection";
+
+/* Settings cell to link users to other products by DuckDuckGo */
+"settings.duckduckgo.on.other.platforms" = "DuckDuckGo pe alte platforme";
+
+/* Explanation in Settings how the email protection feature works */
+"settings.email.protection.explanation" = "Blochează tehnologiile de urmărire prin e-mail și ascunde-ți adresa fără a schimba furnizorul de servicii de e-mail.\n[Află mai multe](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/email-protection/what-is-duckduckgo-email-protection/)";
+
+/* Alert presented to user after clicking on 'Sign out' in Email Protection Settings */
+"settings.email.protection.signing.out.alert" = "Deconectarea din cont tău Email Protection va dezactiva completarea automată a Duck Address în acest browser. Poți utiliza în continuare aceste adrese și poți primi e-mailuri redirecționate ca de obicei.";
 
 /* Settings cell for Email Protection */
 "settings.emailProtection.description" = "Blochează tehnologiile de urmărire prin e-mail și ascunde-ți adresa";
+
+/* Label of a button enabling the email protection feature */
+"settings.enable.email.protection" = "Activează Email Protection";
+
+/* Settings screen cell text for enabling voice search */
+"settings.enable.voice.search" = "Activează căutarea vocală";
 
 /* Settings cell for Feedback */
 "settings.feedback" = "Partajează feedback";
@@ -1861,6 +1944,9 @@
 /* Settings screen cell text for Fireproof Sites */
 "settings.fireproof.sites" = "Site-uri cu ștergerea activității și istoricului din browser la ieșire";
 
+/* The name of the settings subsection containing general settings */
+"settings.general" = "Generale";
+
 /* Settings screen cell text for GPC */
 "settings.gpc" = "Global Privacy Control (GPC)";
 
@@ -1870,11 +1956,29 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Tastatură";
 
+/* Switch button label. */
+"settings.let.duckduckgo.manage.cookie.consent.popups" = "Lasă DuckDuckGo să gestioneze ferestrele pop-up de solicitare a consimțământului cu privire la modulele cookie";
+
 /* Settings screen cell text for passwords */
 "settings.logins" = "Parole";
 
+/* The name of the settings section containing main settings */
+"settings.main.settings" = "Setări principale";
+
+/* Label of a button managing email protection account */
+"settings.manage.account" = "Gestionează contul";
+
 /* Settings title for the 'More' section */
 "settings.more" = "Mai multe de la DuckDuckGo";
+
+/* Button navigating to other settings related to search */
+"settings.more.search.settings" = "Mai multe setări de căutare";
+
+/* Subtitle of the 'More Search Settings' button */
+"settings.more.search.settings.explanation" = "Personalizează limba, regiunea și multe altele";
+
+/* The name of a settings category listing next steps */
+"settings.next.steps" = "Pașii următori";
 
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
@@ -1884,6 +1988,66 @@
 
 /* Settings title for the privacy section */
 "settings.privacy" = "Confidențialitate";
+
+/* The name of Settings category in Privacy Features related to configuration of the search */
+"settings.private.search" = "Căutare Confidențială";
+
+/* Explanation in Settings how the private search feature works */
+"settings.private.search.explanation" = "DuckDuckGo Private Search este motorul tău de căutare implicit, astfel încât poți căuta pe web fără a fi urmărit(ă).";
+
+/* Header of settings related to search */
+"settings.search.settings" = "Setări de căutare";
+
+/* Settings cell for Send Crash Reports */
+"settings.send.crash.reports" = "Trimite rapoarte de cădere";
+
+/* Explanation of Send Crash Reports settings option */
+"settings.send.crash.reports.description" = "Trimite automat rapoarte de cădere către DuckDuckGo.";
+
+/* Settings screen cell text for setting address bar position */
+"settings.set.your.address.bar.position" = "Setează poziția barei de adrese";
+
+/* Subscription activation pending description */
+"settings.subscription.activation.pending.description" = "This is taking longer than usual, please check back later.";
+
+/* Subscription activation pending title */
+"settings.subscription.activation.pending.title" = "Your Subscription is Being Activated";
+
+/* Data Broker protection cell subtitle for privacy pro */
+"settings.subscription.DBP.subtitle" = "Remove your info from sites that sell it";
+
+/* Data Broker protection cell title for privacy pro */
+"settings.subscription.DBP.title" = "Personal Information Removal";
+
+/* Privacy pro description subtext */
+"settings.subscription.description" = "More seamless privacy with three new protections, including:";
+
+/* I have a Subscription button text for privacy pro */
+"settings.subscription.existing.subscription" = "I Have a Subscription";
+
+/* Privacy pro features list */
+"settings.subscription.features" = " • VPN\n • Personal Information Removal\n • Identity Theft Restoration";
+
+/* Identity theft restoration cell subtitle for privacy pro */
+"settings.subscription.ITR.subtitle" = "If your identity is stolen, we'll help restore it";
+
+/* Identity theft restoration cell title for privacy pro */
+"settings.subscription.ITR.title" = "Identity Theft Restoration";
+
+/* Get Privacy Pro button text for privacy pro */
+"settings.subscription.learn.more" = "Get Privacy Pro";
+
+/* Subscription Settings button text for privacy pro */
+"settings.subscription.manage" = "Subscription Settings";
+
+/* Call to action title for Privacy Pro */
+"settings.subscription.subscribe" = "Subscribe to Privacy Pro";
+
+/* VPN cell title for privacy pro */
+"settings.subscription.VPN.title" = "VPN";
+
+/* Label of a button navigating to the Support page */
+"settings.support" = "Asistență";
 
 /* Settings screen cell text for sync and backup */
 "settings.sync" = "Sincronizare și copiere de rezervă";
@@ -1906,6 +2070,12 @@
 /* Settings screen cell for voice search */
 "settings.voice.search" = "Căutare vocală privată";
 
+/* The name of Settings category in Privacy Features related to configuration of the web tracking protection feature */
+"settings.web.tracking.protection" = "Protecție împotriva urmăririi pe web";
+
+/* Explanation in Settings how the web tracking protection feature works */
+"settings.web.tracking.protection.explanation" = "DuckDuckGo blochează automat tehnologiile de urmărire ascunse în timp ce navighezi pe web.\n[Află mai multe](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
+
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Trimite raportul";
 
@@ -1923,6 +2093,243 @@
 
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Ce site este defect?";
+
+/* Subscription Activation Window Title */
+"subscription.activate" = "Activate Subscription";
+
+/* Subscription Activation Info */
+"subscription.activate..header.description" = "Access your Privacy Pro subscription on this device via Apple ID or an email address.";
+
+/* Restore button title for Email */
+"subscription.activate.add.email.button" = "Add Email";
+
+/* Apple ID option for activation */
+"subscription.activate.appleid" = "Apple ID";
+
+/* Button text for restoring purchase via Apple ID */
+"subscription.activate.appleid.button" = "Restore Purchase";
+
+/* Description for Apple ID activation */
+"subscription.activate.appleid.description" = "Restore your purchase to activate your subscription on this device.";
+
+/* Subscription Activation Info */
+"subscription.activate.description" = "Your subscription is automatically available in DuckDuckGo on any device signed in to your Apple ID.";
+
+/* Email option for activation */
+"subscription.activate.email" = "Email";
+
+/* Restore button title for Email */
+"subscription.activate.email.button" = "Enter Email";
+
+/* Description for Email activation */
+"subscription.activate.email.description" = "Use your email to activate your subscription on this device.";
+
+/* Activate subscription title */
+"subscription.activate.email.title" = "Activează abonamentul";
+
+/* Restore button title for Managing Email */
+"subscription.activate.manage.email.button" = "Manage";
+
+/* Button title for cancelling email deletion */
+"subscription.activate.manage.email.cancel" = "Cancel";
+
+/* Button title for confirming email deletion */
+"subscription.activate.manage.email.OK" = "OK";
+
+/* View Title for managing your email account */
+"subscription.activate.manage.email.title" = "Manage Email";
+
+/* Restore button title for AppleID */
+"subscription.activate.restore.apple" = "Restore Purchase";
+
+/* Subscription Activation Title */
+"subscription.activate.title" = "Activate your subscription on this device";
+
+/* Add to another device button */
+"subscription.add.device.button" = "Add to Another Device";
+
+/* Subscription Add device Info */
+"subscription.add.device.description" = "Accesează-ți abonamentul Privacy Pro dintr-o adresă de e-mail.";
+
+/* Add subscription to other device title */
+"subscription.add.device.header.title" = "Utilizează-ți abonamentul pe alte dispozitive";
+
+/* Resend activation instructions button */
+"subscription.add.device.resend.instructions" = "Resend Instructions";
+
+/* Add to another device view title */
+"subscription.add.device.title" = "Add Device";
+
+/* Add email to an existing subscription */
+"subscription.add.email" = "Add an email address to activate your subscription on your other devices. We’ll only use this address to verify your subscription.";
+
+/* Button title for adding email to subscription */
+"subscription.add.email.button" = "Add Email";
+
+/* View title for adding email to subscription */
+"subscription.add.email.title" = "Add Email";
+
+/* Description for Email adding */
+"subscription.addDevice.email.description" = "Add an email address to access your subscription in DuckDuckGo on other devices. We’ll only use this address to verify your subscription.";
+
+/* Title for Alert messages */
+"subscription.alert.title" = "subscription.alert.title";
+
+/* Subscription type */
+"subscription.annual" = "Annual Subscription";
+
+/* Subscription availability message on Apple devices */
+"subscription.available.apple" = "Privacy Pro is available on any device signed in to the same Apple ID.";
+
+/* Text for the manage billing page */
+"subscription.billing.google.text" = "Abonamentul tău a fost achiziționat prin Magazinul Google Play. Pentru a-ți reînnoi abonamentul, deschide setările abonamentului din Magazinului Google Play pe un dispozitiv conectat la același cont Google folosit pentru achiziționarea inițială a abonamentului.";
+
+/* Title for the manage billing page */
+"subscription.billing.google.title" = "Tipuri de abonament";
+
+/* Subscription Removal confirmation message */
+"subscription.cancel.message" = "Your subscription has been removed from this device.";
+
+/* Change plan or billing title */
+"subscription.change.plan" = "Change Plan or Billing";
+
+/* Navigation Button for closing subscription view */
+"subscription.close" = "Close";
+
+/* Title for Confirm messages */
+"subscription.confirm.title" = "Are you sure?";
+
+/* Alert content for not found subscription */
+"subscription.email.inactive.alert.message" = "The subscription associated with this email is no longer active.";
+
+/* Alert title for not found subscription */
+"subscription.email.inactive.alert.title" = "Subscription Not Found";
+
+/* Alert content for not found subscription */
+"subscription.expired.alert.message" = "The subscription associated with this Apple ID is no longer active.";
+
+/* text for expiration string */
+"subscription.expires" = "expires";
+
+/* FAQ Button */
+"subscription.faq" = "Privacy Pro FAQ";
+
+/* FAQ Description */
+"subscription.faq.description" = "Get answers to frequently asked questions about Privacy Pro in our help pages.";
+
+/* Cancel action for the existing subscription dialog */
+"subscription.found.cancel" = "Cancel";
+
+/* Restore action for the existing subscription dialog */
+"subscription.found.restore" = "Restore";
+
+/* Message for the existing subscription dialog */
+"subscription.found.text" = "We found a subscription associated with this Apple ID.";
+
+/* Title for the existing subscription dialog */
+"subscription.found.title" = "Subscription Found";
+
+/* Help and support Section header */
+"subscription.help" = "Help and support";
+
+/* Header for the device management section */
+"subscription.manage.devices" = "Manage Devices";
+
+/* Description for Email Management options */
+"subscription.manage.email.description" = "You can use this email to activate your subscription from browser settings in the DuckDuckGo app on your other devices.";
+
+/* Manage Plan header */
+"subscription.manage.plan" = "Manage Plan";
+
+/* Header for the subscription section */
+"subscription.manage.title" = "Subscription";
+
+/* Subscription type */
+"subscription.monthly" = "Monthly Subscription";
+
+/* Alert content for not found subscription */
+"subscription.notFound.alert.message" = "There is no subscription associated with this Apple ID.";
+
+/* Alert title for not found subscription */
+"subscription.notFound.alert.title" = "Subscription Not Found";
+
+/* View plans button text */
+"subscription.notFound.view.plans" = "View Plans";
+
+/* Hero Text for Personal information removal */
+"subscription.pir.hero" = "Activate Privacy Pro on desktop to set up Personal Information Removal";
+
+/* Description on how to use Personal information removal in desktop. The first placeholder references a location in the Desktop application. <i.e: Settings > Privacy Pro>, and the second, the menu entry. i.e. <I have a Subscription> */
+"subscription.pir.heroText" = "In the DuckDuckGo browser for desktop, go to %1$@ and click %2$@ to get started.";
+
+/* Settings references a menu in the Desktop app, Privacy Pro, references our product name */
+"subscription.pir.heroTextLocation" = "Settings > Privacy Pro";
+
+/* Menu item for enabling Personal Information Removal on Desktop */
+"subscription.pir.heroTextMenyEntry" = "I have a subscription";
+
+/* Text for the 'macOS' button */
+"subscription.pir.macos" = "macOS";
+
+/* Text for the 'Windows' button */
+"subscription.pir.windows" = "Windows";
+
+/* Progress view title when completing the purchase */
+"subscription.progress.view.completing.purchase" = "Completing purchase...";
+
+/* Progress view title when starting the purchase */
+"subscription.progress.view.purchasing.subscription" = "Purchase in progress...";
+
+/* Progress view title when restoring past subscription purchase */
+"subscription.progress.view.restoring.subscription" = "Restoring subscription...";
+
+/* Remove from this device button */
+"subscription.remove.from.device.button" = "Remove From This Device";
+
+/* Remove from device confirmation dialog text */
+"subscription.remove.from.device.text" = "You will no longer be able to access your Privacy Pro subscription on this device. This will not cancel your subscription, and it will remain active on your other devices.";
+
+/* Remove from device confirmation dialog title */
+"subscription.remove.from.device.title" = "Remove from this device?";
+
+/* Remove subscription button text */
+"subscription.remove.subscription" = "Remove Subscription";
+
+/* Remove subscription cancel button text */
+"subscription.remove.subscription.cancel" = "Cancel";
+
+/* text for renewal string */
+"subscription.renews" = "renews";
+
+/* Button text for general error message */
+"subscription.restore.backend.error.button" = "Înapoi la Setări";
+
+/* Alert for general error message */
+"subscription.restore.backend.error.message" = "Întâmpinăm probleme la conectare. Încearcă din nou mai târziu.";
+
+/* Alert for general error title */
+"subscription.restore.backend.error.title" = "Ceva nu a funcționat corect";
+
+/* Alert for general error message */
+"subscription.restore.general.error.message" = "The App Store was unable to process your purchase. Please try again later.";
+
+/* Alert for general error title */
+"subscription.restore.general.error.title" = "Something Went Wrong";
+
+/* Alert button text for restored purchase alert */
+"subscription.restore.success.alert.button" = "OK";
+
+/* Alert message for restored purchase */
+"subscription.restore.success.alert.message" = "Your purchases have been restored.";
+
+/* Alert title for restored purchase */
+"subscription.restore.success.alert.title" = "You’re all set.";
+
+/* Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)' */
+"subscription.subscription.active.caption" = "Your subscription %1$@ on %2$@";
+
+/* Navigation bar Title for subscriptions */
+"subscription.title" = "Privacy Pro";
 
 /* Message confirming that recovery code was copied to clipboard */
 "sync.code.copied" = "Codul de recuperare a fost copiat în clipboard";
@@ -1953,6 +2360,9 @@
 
 /* Title of the dialog to confirm turning off Sync */
 "sync.turn.off.confirm.title" = "Oprești sincronizarea?";
+
+/* Reason for auth when setting up Sync */
+"sync.user.auth.reason" = "Unlock device to set up Sync & Backup";
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "Ne pare rău, dar Sincronizarea și copierea de rezervă nu este disponibilă momentan. Încearcă din nou mai târziu.";
@@ -2006,6 +2416,9 @@
 "toast.protection.disabled" = "Protecția confidențialității este dezactivată pentru %@";
 
 /* Confirmation of an action - populated with a domain name */
+"toast.protection.disabled.and.toggle.report.sent" = "Protecțiile confidențialității sunt dezactivate pentru %@ și raportul a fost trimis.";
+
+/* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Protecția confidențialității este activată pentru %@";
 
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
@@ -2036,7 +2449,100 @@
 "voiceSearch.cancel" = "Renunță";
 
 /* Voice-search footer note with on-device privacy warning */
-"voiceSearch.footer.note" = "Componenta audio este prelucrată pe dispozitiv. Nu este stocată sau distribuită nimănui, nici DuckDuckGo.";
+"voiceSearch.footer.note" = "Adaugă opțiunea de Căutare vocală privată în bara de adrese.Sunetul nu este stocat sau partajat cu nimeni, inclusiv cu DuckDuckGo.";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note.old" = "Componenta audio este prelucrată pe dispozitiv. Nu este stocată sau distribuită nimănui, nici DuckDuckGo.";
+
+/* Cancel action for the alert when the subscription expires */
+"vpn.access-revoked.alert.action.cancel" = "Dismiss";
+
+/* Primary action for the alert when the subscription expires */
+"vpn.access-revoked.alert.action.subscribe" = "Subscribe";
+
+/* Alert message for the alert when the Privacy Pro subscription expiress */
+"vpn.access-revoked.alert.message" = "Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
+
+/* Alert title for the alert when the Privacy Pro subscription expires */
+"vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
+
+/* Alert action for the alert when the early access period is over */
+"vpn.early-access.over.alert.action" = "OK";
+
+/* Alert message for the alert when the early access period is over */
+"vpn.early-access.over.alert.message" = "Mulțumim că ai testat programul! Pentru a continua să utilizezi VPN-ul, abonează-te la DuckDuckGo Privacy Pro și obține 40% reducere cu codul promoțional THANKYOU.\n\nOferta poate fi valorificată pe o perioadă limitată, în versiunea pentru desktop a browserului DuckDuckGo de către utilizatorii din SUA care o instalează de la adresa duckduckgo.com/app";
+
+/* Alert title for the alert when the early access period is over */
+"vpn.early-access.over.alert.title" = "Accesul anticipat la DuckDuckGo VPN a luat sfârșit";
+
+/* Title for the Cancel button of the VPN feedback form */
+"vpn.feedback-form.button.cancel" = "Cancel";
+
+/* Title for the Done button of the VPN feedback form */
+"vpn.feedback-form.button.done" = "Done";
+
+/* Title for the Submit button of the VPN feedback form */
+"vpn.feedback-form.button.submit" = "Submit";
+
+/* Title for the Submitting state of the VPN feedback form */
+"vpn.feedback-form.button.submitting" = "Submitting…";
+
+/* Title for the browser crash/freeze category of the VPN feedback form */
+"vpn.feedback-form.category.browser-crash-or-freeze" = "VPN causes browser to crash or freeze";
+
+/* Title for the 'VPN fails to connect' category of the VPN feedback form */
+"vpn.feedback-form.category.fails-to-connect" = "VPN fails to connect";
+
+/* Title for the 'VPN feature request' category of the VPN feedback form */
+"vpn.feedback-form.category.feature-request" = "VPN feature request";
+
+/* Title for the category 'VPN causes issues with other apps or websites' category of the VPN feedback form */
+"vpn.feedback-form.category.issues-with-apps" = "VPN causes issues with other apps or websites";
+
+/* Title for the local device connectivity category of the VPN feedback form */
+"vpn.feedback-form.category.local-device-connectivity" = "VPN won't let me connect to local device";
+
+/* Title for the 'other VPN feedback' category of the VPN feedback form */
+"vpn.feedback-form.category.other" = "Other VPN feedback";
+
+/* Title for the category selection state of the VPN feedback form */
+"vpn.feedback-form.category.select-category" = "Select a category";
+
+/* Title for the 'VPN is too slow' category of the VPN feedback form */
+"vpn.feedback-form.category.too-slow" = "VPN connection is too slow";
+
+/* Title for the 'unable to install' category of the VPN feedback form */
+"vpn.feedback-form.category.unable-to-install" = "Unable to install VPN";
+
+/* Title for the feedback sent view description of the VPN feedback form */
+"vpn.feedback-form.sending-confirmation.description" = "Your feedback will help us improve the\nDuckDuckGo VPN.";
+
+/* Title for the feedback sending error text of the VPN feedback form */
+"vpn.feedback-form.sending-confirmation.error" = "We couldn't send your feedback right now, please try again.";
+
+/* Title for the feedback sent view title of the VPN feedback form */
+"vpn.feedback-form.sending-confirmation.title" = "Thank you!";
+
+/* Toast message when the VPN feedback form is submitted successfully */
+"vpn.feedback-form.submitted.message" = "Thank You! Feedback submitted.";
+
+/* Text for the body of the VPN feedback form */
+"vpn.feedback-form.text-1" = "Please describe what's happening, what you expected to happen, and the steps that led to the issue:";
+
+/* Text for the body of the VPN feedback form */
+"vpn.feedback-form.text-2" = "In addition to the details entered into this form, your app issue report will contain:";
+
+/* Bullet text for the body of the VPN feedback form */
+"vpn.feedback-form.text-3" = "• Whether specific DuckDuckGo features are enabled";
+
+/* Bullet text for the body of the VPN feedback form */
+"vpn.feedback-form.text-4" = "• Aggregate DuckDuckGo app diagnostics";
+
+/* Text for the body of the VPN feedback form */
+"vpn.feedback-form.text-5" = "By tapping \"Submit\" I agree that DuckDuckGo may use the information in this report for purposes of improving the app's features.";
+
+/* Title for each screen of the VPN feedback form */
+"vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
 
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Permite notificările";
@@ -2116,38 +2622,11 @@
 /* No comment provided by engineer. */
 "Welcome to the Duck Side!" = "Welcome to the Duck Side!";
 
-/* Title for the Windows waitlist notification */
-"windows-waitlist.available.notification.title" = "Încearcă DuckDuckGo pentru Windows!";
-
-/* Description on the invite screen */
-"windows-waitlist.invite-screen.step-1.description" = "Accesează această adresă URL pe dispozitivul tău Windows pentru a descărca:";
-
-/* Description on the invite screen */
-"windows-waitlist.invite-screen.step-2.description" = "Deschide programul de instalare DuckDuckGo în Descărcări, selectează Instalează, apoi completează codul de invitație.";
-
-/* Subtitle for the Windows Waitlist Invite screen */
-"windows-waitlist.invite-screen.subtitle" = "Ești gata să folosești DuckDuckGo pe Windows?";
-
 /* Title for the Windows waitlist button redirecting to Mac waitlist */
 "windows-waitlist.join-waitlist-screen.mac-waitlist" = "Cauți versiunea pentru Mac?";
 
-/* Title for the Join Windows Waitlist screen */
-"windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Beneficiază de acces timpuriu pentru a încerca DuckDuckGo pentru Windows!";
-
-/* Message for the alert to confirm enabling notifications */
-"windows-waitlist.joined.no-notification.get-notification-confirmation-message" = "Îți vom trimite o notificare atunci când copia ta DuckDuckGo pentru Windows este gata pentru descărcare. ";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"windows-waitlist.joined.notifications-declined" = "Invitația ta de a încerca DuckDuckGo pentru Windows va sosi aici. Revino în curând sau îți putem trimite o notificare când este rândul tău.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"windows-waitlist.joined.notifications-enabled" = "Îți vom trimite o notificare atunci când copia ta DuckDuckGo pentru Windows este gata pentru descărcare.";
-
 /* Title for the settings subtitle */
 "windows-waitlist.settings.browse-privately" = "Navighează în mod privat cu aplicația noastră pentru Windows";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"windows-waitlist.share-sheet.invite-code-message" = "Ești invitat!\n\nEști gata să folosești DuckDuckGo pe Windows?\n\nPasul 1\nAccesează această adresă URL pe dispozitivul tău Windows pentru a descărca:\nhttps://duckduckgo.com/windows\n\nPasul 2\nDeschide programul de instalare DuckDuckGo în Descărcări, selectează Instalează, apoi completează codul de invitație.\n\nCod de invitație: %@";
 
 /* Message used when sharing to iMessage */
 "windows-waitlist.share-sheet.message" = "Ești gata să începi să navighezi în mod privat folosind Windows?\n\nVizitează această adresă URL pe computerul tău Windows pentru a descărca:\nhttps://duckduckgo.com/windows";

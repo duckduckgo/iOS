@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bookmarks.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Sivuston %2$@ ja 1 muun kirjanmerkkejä ei voi synkronoida, koska jotkin niiden kentät ylittävät merkkirajoituksen.</string>
+			<key>other</key>
+			<string>Sivuston %2$@ ja 1 muun kirjanmerkkejä ei voi synkronoida, koska jotkin niiden kentät ylittävät merkkirajoituksen.</string>
+			<key>zero</key>
+			<string>Sivuston %2$@ kirjanmerkkiä ei voi synkronoida, koska yksi sen kenttä ylittää merkkirajoituksen.</string>
+		</dict>
+	</dict>
+	<key>credentials.invalid.objects.present.description</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@sites@</string>
+		<key>sites</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Sivuston %2$@ ja 1 muun salasanoja ei voi synkronoida, koska jotkin niiden kentät ylittävät merkkirajoituksen.</string>
+			<key>other</key>
+			<string>Sivuston %2$@ ja %1$d muun salasanoja ei voi synkronoida, koska jotkin niiden kentät ylittävät merkkirajoituksen.</string>
+			<key>zero</key>
+			<string>Sivuston %2$@ salasanaa ei voi synkronoida, koska yksi sen kenttä ylittää merkkirajoituksen.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

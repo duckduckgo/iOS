@@ -1,6 +1,12 @@
 /* Standard Buttons - Back Button */
 "back.button" = "Zpět";
 
+/* Do not translate - stringsdict entry */
+"bookmarks.invalid.objects.present.description" = "bookmarks.invalid.objects.present.description";
+
+/* Alert title for invalid bookmarks being filtered out of synced data */
+"bookmarks.invalid.objects.present.title" = "Některé záložky se nesynchronizují kvůli příliš dlouhému obsahu v určitých polích.";
+
 /* Sync Paused Errors - Bookmarks Limit Exceeded Action */
 "bookmarks.limit.exceeded.action" = "Spravovat záložky";
 
@@ -42,6 +48,12 @@
 
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Synchronizace a záloha tohoto zařízení";
+
+/* Do not translate - stringsdict entry */
+"credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
+
+/* Alert title for invalid logins being filtered out of synced data */
+"credentials.invalid.objects.present.title" = "Některá přihlášení se nesynchronizují kvůli příliš dlouhému obsahu v určitých polích.";
 
 /* Sync Paused Errors - Credentials Limit Exceeded Action */
 "credentials.limit.exceeded.action" = "Spravovat přihlašovací údaje";
@@ -185,10 +197,10 @@
 "scan.or.see.code.footer" = "Nemůžeš skenovat?";
 
 /* Scan or See Code View - Instruction */
-"scan.or.see.code.instruction" = "Přejdi na jiném zařízení v prohlížeči DuckDuckGo do Nastavení › Synchronizace a zálohování a vyber možnost Synchronizace s jiným zařízením.";
+"scan.or.see.code.instruction" = "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”";
 
 /* Scan or See Code View - Instruction with syncMenuPath */
-"scan.or.see.code.instruction.attributed" = "Přejdi na jiném zařízení v prohlížeči DuckDuckGo do %@ a vyber možnost Synchronizace s jiným zařízením.";
+"scan.or.see.code.instruction.attributed" = "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”.";
 
 /* Scan or See Code View - Manually Enter Code Link */
 "scan.or.see.code.manually.enter.code.link" = "Ruční zadání kódu";
@@ -200,7 +212,7 @@
 "scan.or.see.code.scan.code.instructions.title" = "Z mobilu na mobil?";
 
 /* Scan or See Code View - Share Code Link */
-"scan.or.see.code.share.code.link" = "Sdílet textový kód?";
+"scan.or.see.code.share.code.link" = "Share Text Code";
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Skenování QR kódu";
@@ -248,7 +260,7 @@
 "synced.devices.section.header" = "Synchronizovaná zařízení";
 
 /* Synced Devices - Sync with Another Device Label */
-"synced.devices.sync.with.another.device.label" = "Synchronizace s jiným zařízením";
+"synced.devices.sync.with.another.device.label" = "Sync With Another Device";
 
 /* Synced Devices - This Device Label */
 "synced.devices.this.device.label" = "Tohle zařízení";

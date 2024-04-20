@@ -22,8 +22,6 @@ import SwiftUI
 import DesignResourcesKit
 import Core
 
-
-#if SUBSCRIPTION
 @available(iOS 15.0, *)
 // swiftlint:disable type_body_length
 struct SubscriptionRestoreView: View {
@@ -217,6 +215,8 @@ struct SubscriptionRestoreView: View {
                         }
                     }
                 }
+            } else {
+                SwiftUI.ProgressView()
             }
         }
     }
@@ -337,4 +337,3 @@ struct SubscriptionRestoreView: View {
     
 }
 // swiftlint:enable type_body_length
-#endif

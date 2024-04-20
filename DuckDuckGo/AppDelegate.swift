@@ -33,10 +33,7 @@ import Configuration
 import Networking
 import DDGSync
 import SyncDataProviders
-
-#if SUBSCRIPTION
 import Subscription
-#endif
 
 #if NETWORK_PROTECTION
 import NetworkProtection
@@ -54,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private struct ShortcutKey {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
+        static let passwords = "com.duckduckgo.mobile.ios.passwords"
 
 #if NETWORK_PROTECTION
         static let openVPNSettings = "com.duckduckgo.mobile.ios.vpn.open-settings"
@@ -67,6 +65,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private lazy var privacyStore = PrivacyUserDefaults()
     private var bookmarksDatabase: CoreDataDatabase = BookmarksDatabase.make()
+
+#if APP_TRACKING_PROTECTION
+    private var appTrackingProtectionDatabase: CoreDataDatabase = AppTrackingProtectionDatabase.make()
+#endif
 
 #if NETWORK_PROTECTION
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
@@ -83,6 +85,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var syncDidFinishCancellable: AnyCancellable?
     private var syncStateCancellable: AnyCancellable?
     private var isSyncInProgressCancellable: AnyCancellable?
+
+    private let crashCollection = CrashCollection(platform: .iOS, log: .generalLog)
+    private var crashReportUploaderOnboarding: CrashCollectionOnboarding?
 
     // MARK: lifecycle
 
@@ -128,8 +133,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Configuration.setURLProvider(AppConfigurationURLProvider())
         }
 
-        CrashCollection.start {
-            Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [])
+        crashCollection.start { pixelParameters, payloads, sendReport in
+            pixelParameters.forEach { params in
+                Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
+            }
+
+            // Async dispatch because rootViewController may otherwise be nil here
+            DispatchQueue.main.async {
+                guard let viewController = self.window?.rootViewController else {
+                    return
+                }
+                let dataPayloads = payloads.map { $0.jsonRepresentation() }
+                let crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
+                crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: dataPayloads, from: viewController, sendReport: sendReport)
+                self.crashReportUploaderOnboarding = crashReportUploaderOnboarding
+            }
         }
 
         clearTmp()
@@ -186,6 +204,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         WidgetCenter.shared.reloadAllTimelines()
 
+#if APP_TRACKING_PROTECTION
+        appTrackingProtectionDatabase.loadStore { context, error in
+            guard context != nil else {
+                if let error = error {
+                    Pixel.fire(pixel: .appTPCouldNotLoadDatabase, error: error)
+                } else {
+                    Pixel.fire(pixel: .appTPCouldNotLoadDatabase)
+                }
+
+                if shouldPresentInsufficientDiskSpaceAlertAndCrash {
+                    return
+                } else {
+                    Thread.sleep(forTimeInterval: 1)
+                    fatalError("Could not create AppTP database stack: \(error?.localizedDescription ?? "err")")
+                }
+            }
+        }
+#endif
+
         Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
             WidgetCenter.shared.reloadAllTimelines()
         }
@@ -199,6 +236,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // MARK: perform first time launch logic here
             DaxDialogs.shared.primeForUse()
         }
+
+        // Experiment installation will be uncommented once we decide to run the experiment
+//        PixelExperiment.install()
 
         // MARK: Sync initialisation
 
@@ -243,18 +283,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 })
             }
 
-        let previewsSource = TabPreviewsSource()
         let historyManager = makeHistoryManager()
-        let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
+#if APP_TRACKING_PROTECTION
+        let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
+                                      bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
+                                      appTrackingProtectionDatabase: appTrackingProtectionDatabase,
+                                      historyManager: historyManager,
+                                      syncService: syncService,
+                                      syncDataProviders: syncDataProviders,
+                                      appSettings: AppDependencyProvider.shared.appSettings)
+#else
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
-                                      appSettings: AppDependencyProvider.shared.appSettings,
-                                      previewsSource: previewsSource,
-                                      tabsModel: tabsModel)
+                                      appSettings: AppDependencyProvider.shared.appSettings)
+#endif
 
         main.loadViewIfNeeded()
 
@@ -296,9 +342,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NetworkProtectionAccessController().refreshNetworkProtectionAccess()
 #endif
         
-#if SUBSCRIPTION
         setupSubscriptionsEnvironment()
-#endif
 
         if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() {
             clearDebugWaitlistState()
@@ -308,27 +352,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
         return true
-    }
-
-    private func prepareTabsModel(previewsSource: TabPreviewsSource = TabPreviewsSource(),
-                                  appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
-                                  isDesktop: Bool = UIDevice.current.userInterfaceIdiom == .pad) -> TabsModel {
-        let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
-        let tabsModel: TabsModel
-        if AutoClearSettingsModel(settings: appSettings) != nil {
-            tabsModel = TabsModel(desktop: isPadDevice)
-            tabsModel.save()
-            previewsSource.removeAllPreviews()
-        } else {
-            if let storedModel = TabsModel.get() {
-                // Save new model in case of migration
-                storedModel.save()
-                tabsModel = storedModel
-            } else {
-                tabsModel = TabsModel(desktop: isPadDevice)
-            }
-        }
-        return tabsModel
     }
 
     private func makeHistoryManager() -> HistoryManager {
@@ -367,9 +390,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if NETWORK_PROTECTION
     private func presentExpiredEntitlementAlert() {
         let alertController = CriticalAlerts.makeExpiredEntitlementAlert { [weak self] in
-            #if SUBSCRIPTION
             self?.mainViewController?.segueToPrivacyPro()
-            #endif
         }
         window?.rootViewController?.present(alertController, animated: true) { [weak self] in
             DailyPixel.fireDailyAndCount(pixel: .privacyProVPNAccessRevokedDialogShown)
@@ -384,14 +405,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             wrappee: NetworkProtectionUNNotificationPresenter()
         )
         presenter.showEntitlementNotification()
-    }
-
-    private func presentVPNEarlyAccessOverAlert() {
-        let alertController = CriticalAlerts.makeVPNEarlyAccessOverAlert()
-        window?.rootViewController?.present(alertController, animated: true) { [weak self] in
-            DailyPixel.fireDailyAndCount(pixel: .privacyProPromotionDialogShownVPN)
-            self?.tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
-        }
     }
 #endif
 
@@ -413,7 +426,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
-#if SUBSCRIPTION
     private func setupSubscriptionsEnvironment() {
         Task {
 #if DEBUG || ALPHA
@@ -431,7 +443,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             SubscriptionPurchaseEnvironment.current = .appStore
         }
     }
-#endif
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
@@ -451,6 +462,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             StatisticsLoader.shared.refreshAppRetentionAtb()
             self.fireAppLaunchPixel()
             self.firePrivacyProFeatureEnabledPixel()
+            self.fireAppTPActiveUserPixel()
         }
         
         if appIsLaunching {
@@ -503,8 +515,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         if vpnFeatureVisibility.shouldShowThankYouMessaging() && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
-            presentVPNEarlyAccessOverAlert()
-
             Task {
                 await self.stopAndRemoveVPN(with: "thank-you-dialog")
             }
@@ -533,7 +543,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func updateSubscriptionStatus() {
-#if SUBSCRIPTION
         Task {
             let accountManager = AccountManager()
 
@@ -548,7 +557,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             _ = await accountManager.fetchEntitlements(cachePolicy: .reloadIgnoringLocalCacheData)
         }
-#endif
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -587,7 +595,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func firePrivacyProFeatureEnabledPixel() {
-#if SUBSCRIPTION
         let subscriptionFeatureAvailability = AppDependencyProvider.shared.subscriptionFeatureAvailability
         guard subscriptionFeatureAvailability.isFeatureAvailable,
               subscriptionFeatureAvailability.isSubscriptionPurchaseAllowed else {
@@ -595,6 +602,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         DailyPixel.fire(pixel: .privacyProFeatureEnabled)
+    }
+
+    private func fireAppTPActiveUserPixel() {
+#if APP_TRACKING_PROTECTION
+        guard AppDependencyProvider.shared.featureFlagger.isFeatureOn(.appTrackingProtection) else {
+            return
+        }
+        
+        let manager = FirewallManager()
+
+        Task {
+            await manager.refreshManager()
+            let date = Date()
+            let key = "appTPActivePixelFired"
+
+            // Make sure we don't fire this pixel multiple times a day
+            let dayStart = Calendar.current.startOfDay(for: date)
+            let fireDate = UserDefaults.standard.object(forKey: key) as? Date
+            if fireDate == nil || fireDate! < dayStart, manager.status() == .connected {
+                Pixel.fire(pixel: .appTPActiveUser)
+                UserDefaults.standard.set(date, forKey: key)
+            }
+        }
 #endif
     }
 
@@ -706,7 +736,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         Task { @MainActor in
-            // Autoclear should have happened by now
+            await autoClear?.applicationWillMoveToForeground()
             showKeyboardIfSettingOn = false
 
             if !handleAppDeepLink(app, mainViewController, url) {
@@ -822,12 +852,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         os_log("Handling shortcut item: %s", log: .generalLog, type: .debug, shortcutItem.type)
 
         Task { @MainActor in
-            
+
             await autoClear?.applicationWillMoveToForeground()
 
             if shortcutItem.type == ShortcutKey.clipboard, let query = UIPasteboard.general.string {
                 mainViewController?.clearNavigationStack()
                 mainViewController?.loadQueryInNewTab(query)
+                return
+            }
+
+            if shortcutItem.type == ShortcutKey.passwords {
+                mainViewController?.clearNavigationStack()
+                // Give the `clearNavigationStack` call time to complete.
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [weak self] in
+                    self?.mainViewController?.launchAutofillLogins(openSearch: true)
+                }
+                Pixel.fire(pixel: .autofillLoginsLaunchAppShortcut)
                 return
             }
 

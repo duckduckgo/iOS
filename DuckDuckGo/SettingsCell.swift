@@ -26,6 +26,11 @@ struct SettingsCellComponents {
             .font(Font.system(.footnote).weight(.bold))
             .foregroundColor(Color(UIColor.tertiaryLabel))
     }
+    static var link: some View {
+        Image("SettingsLink")
+            .font(Font.system(.footnote).weight(.bold))
+            .foregroundColor(Color(UIColor.tertiaryLabel))
+    }
 }
 
 /// Encapsulates a View representing a Cell with different configurations
@@ -45,7 +50,9 @@ struct SettingsCellView: View, Identifiable {
     var action: () -> Void = {}
     var enabled: Bool = true
     var accesory: Accessory
+    var statusIndicator: StatusIndicatorView?
     var disclosureIndicator: Bool
+    var webLinkIndicator: Bool
     var id: UUID = UUID()
     var isButton: Bool
     
@@ -60,15 +67,18 @@ struct SettingsCellView: View, Identifiable {
     ///   - accesory: The type of cell to display. Excludes the custom cell type.
     ///   - enabled: A Boolean value that determines whether the cell is enabled.
     ///   - disclosureIndicator: Forces Adds a disclosure indicator on the right (chevron)
+    ///   - webLinkIndicator: Adds a link indicator on the right
     ///   - isButton: Disables the tap actions on the cell if true
-    init(label: String, subtitle: String? = nil, image: Image? = nil, action: @escaping () -> Void = {}, accesory: Accessory = .none, enabled: Bool = true, disclosureIndicator: Bool = false, isButton: Bool = false) {
+    init(label: String, subtitle: String? = nil, image: Image? = nil, action: @escaping () -> Void = {}, accesory: Accessory = .none, enabled: Bool = true, statusIndicator: StatusIndicatorView? = nil, disclosureIndicator: Bool = false, webLinkIndicator: Bool = false, isButton: Bool = false) {
         self.label = label
         self.subtitle = subtitle
         self.image = image
         self.action = action
         self.enabled = enabled
         self.accesory = accesory
+        self.statusIndicator = statusIndicator
         self.disclosureIndicator = disclosureIndicator
+        self.webLinkIndicator = webLinkIndicator
         self.isButton = isButton
     }
 
@@ -86,6 +96,7 @@ struct SettingsCellView: View, Identifiable {
         self.enabled = enabled
         self.accesory = .custom(customView())
         self.disclosureIndicator = false
+        self.webLinkIndicator = false
         self.isButton = false
     }
     
@@ -138,8 +149,14 @@ struct SettingsCellView: View, Identifiable {
                 
                 accesoryView()
                 
+                if let statusIndicator {
+                    statusIndicator.fixedSize()
+                }
                 if disclosureIndicator {
                     SettingsCellComponents.chevron
+                }
+                if webLinkIndicator {
+                    SettingsCellComponents.link
                 }
             }.padding(EdgeInsets(top: 2, leading: 0, bottom: 2, trailing: 0))
         }.contentShape(Rectangle())

@@ -21,9 +21,8 @@ import Foundation
 import UserScript
 import Combine
 import Core
-
-#if SUBSCRIPTION
 import Subscription
+
 @available(iOS 15.0, *)
 final class SubscriptionRestoreViewModel: ObservableObject {
     
@@ -79,13 +78,18 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     func onFirstAppear() async {
         Pixel.fire(pixel: .privacyProSettingsAddDevice)
         await setupTransactionObserver()
+        await refreshToken()
     }
     
     private func cleanUp() {
-        subFeature.cleanup()
         cancellables.removeAll()
     }
-
+    
+    private func refreshToken() async {
+        if state.isAddingDevice {
+            await AppStoreAccountManagementFlow.refreshAuthTokenIfNeeded(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+        }
+    }
     
     private func setupContent() async {
         if state.isAddingDevice {
@@ -102,11 +106,8 @@ final class SubscriptionRestoreViewModel: ObservableObject {
                     self.state.viewTitle = UserText.subscriptionAddDeviceTitle
                 }
             default:
-                state.isLoading = false
-            }
-        } else {
-            DispatchQueue.main.async {
                 self.state.viewTitle = UserText.subscriptionActivate
+                state.isLoading = false
             }
         }
     }
@@ -206,4 +207,3 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     
 }
-#endif

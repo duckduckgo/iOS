@@ -71,7 +71,7 @@ class TabSwitcherViewController: UIViewController {
     var currentSelection: Int?
     
     private var tabSwitcherSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
-    private var isProcessingUpdates = false
+    private(set) var isProcessingUpdates = false
     private var canUpdateCollection = true
 
     let favicons = Favicons.shared
@@ -278,6 +278,9 @@ class TabSwitcherViewController: UIViewController {
     }
 
     @IBAction func onAddPressed(_ sender: UIBarButtonItem) {
+        guard !isProcessingUpdates else { return }
+
+        Pixel.fire(pixel: .tabSwitcherNewTab)
         delegate.tabSwitcherDidRequestNewTab(tabSwitcher: self)
         dismiss()
     }
@@ -416,6 +419,7 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
 extension TabSwitcherViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        Pixel.fire(pixel: .tabSwitcherSwitchTabs)
         currentSelection = indexPath.row
         markCurrentAsViewedAndDismiss()
     }

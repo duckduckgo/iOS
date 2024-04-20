@@ -1,9 +1,6 @@
 /* No comment provided by engineer. */
 "%@" = "%@";
 
-/* No comment provided by engineer. */
-"%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Редактировать";
 
@@ -15,6 +12,9 @@
 
 /* Button label for managing favorites */
 "action.manage.favorites" = "Настроить";
+
+/* Button label for OK action */
+"action.ok" = "Хорошо";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Добавить";
@@ -38,7 +38,7 @@
 "action.title.copy.message" = "Адрес скопирован";
 
 /* Delete action - button shown in alert */
-"action.title.delete" = "Удалить";
+"action.title.delete" = "Delete";
 
 /* Disable protection action */
 "action.title.disable.protection" = "Отключить защиту конфиденциальности";
@@ -176,7 +176,7 @@
 "alert.unable-to-delete-data-description" = "Не удалось удалить данные с сервера.";
 
 /* Description for unable to merge two accounts error */
-"alert.unable-to-merge-two-accounts-description" = "Чтобы выполнить сопряжение этих устройств, отключите функцию «Синхронизация и резервное копирование» на одном из них и нажмите кнопку «Синхронизировать с другим устройством» на другом.";
+"alert.unable-to-merge-two-accounts-description" = "To pair these devices, turn off Sync & Backup on one device then tap \"Sync With Another Device\" on the other device.";
 
 /* Description for unable to remove device error */
 "alert.unable-to-remove-device-description" = "Не удалось удалить устройство из списка синхронизации и резервного копирования.";
@@ -826,6 +826,24 @@
 /* No comment provided by engineer. */
 "bucket: %@" = "контейнер: %@";
 
+/* Crash Report always send button title */
+"crash.report.dialog.always.send" = "Всегда отправлять отчеты о сбоях";
+
+/* Crash Report hide details button title */
+"crash.report.dialog.hide.details" = "Скрыть";
+
+/* Crash Report dialog message */
+"crash.report.dialog.message" = "Отчеты о сбоях помогают нам диагностировать проблемы и совершенствовать продукты. Они не содержат информации, по которой можно установить вашу личность.";
+
+/* Crash Report never send button title */
+"crash.report.dialog.never.send" = "Не отправлять";
+
+/* Crash Report show details button title */
+"crash.report.dialog.show.details" = "Что было отправлено";
+
+/* Crash Report dialog title */
+"crash.report.dialog.title" = "Автоматически отправлять отчеты о сбоях?";
+
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "За последний месяц";
 
@@ -837,18 +855,6 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Вчера";
-
-/* Button title accepting to enable feature to automatically manage cookie popups */
-"dax.cookie-consent.button.accept" = "Управление окнами выбора куки-файлов";
-
-/* Button title rejecting to enable feature to automatically manage cookie popups */
-"dax.cookie-consent.button.reject" = "Нет, спасибо";
-
-/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
-"dax.cookie-consent.first" = "Похоже, на этом сайте есть всплывающее окно выбора куки-файлов👇";
-
-/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
-"dax.cookie-consent.second" = "Хотите, чтобы такие окна закрывались автоматически? Мы можем попытаться минимизировать выбор куки-файлов для большей безопасности ваших данных и автоматически закрывать такие окна.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Скрыть подсказки навсегда";
@@ -987,6 +993,9 @@
 
 /* No comment provided by engineer. */
 "Duck Address" = "Duck Address";
+
+/* No comment provided by engineer. */
+"DuckDuckGo for iOS" = "DuckDuckGo для iOS";
 
 /* Email protection service offered by DuckDuckGo */
 "email-protection" = "Защита электронной почты";
@@ -1423,9 +1432,6 @@
 /* Title for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "DuckDuckGo для Mac!";
 
-/* Disclaimer for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.windows" = "Скоро — для Windows!";
-
 /* Title for the macOS waitlist button redirecting to Windows waitlist */
 "mac-waitlist.join-waitlist-screen.windows-waitlist" = "Ищете версию для Windows?";
 
@@ -1462,8 +1468,11 @@
 /* String indicating NetP is disconnected when viewed from the settings screen */
 "netP.cell.disconnected" = "Not connected";
 
-/* Title for the Network Protection feature */
-"netP.title" = "Network Protection";
+/* Title for the DuckDuckGo VPN feature in settings */
+"netP.settings.title" = "VPN";
+
+/* Title for the DuckDuckGo VPN feature */
+"netP.title" = "DuckDuckGo VPN";
 
 /* Privacy Policy title for Network Protection */
 "network-protection.privacy-policy.title" = "Политика конфиденциальности";
@@ -1472,7 +1481,7 @@
 "network-protection.waitlist.agree-and-continue" = "Принять и продолжить";
 
 /* Availability disclaimer for Network Protection join waitlist screen */
-"network-protection.waitlist.availability-disclaimer" = "Функцией защиты сети (Network Protection) можно пользоваться бесплатно по раннему доступу.";
+"network-protection.waitlist.availability-disclaimer" = "В период раннего доступа сервис DuckDuckGo VPN предоставляется бесплатно.";
 
 /* Agree and Continue button for Network Protection join waitlist screen */
 "network-protection.waitlist.button.agree-and-continue" = "Принять и продолжить";
@@ -1511,7 +1520,7 @@
 "network-protection.waitlist.invited.subtitle" = "Быстрый и простой VPN — дополнительный уровень защиты онлайн. Позволяет зашифровать все подключения к интернету на устройстве и скрывает ваше местоположение и IP-адрес от посещаемых сайтов.";
 
 /* Title for Network Protection invited screen */
-"network-protection.waitlist.invited.title" = "Функция Network Protection\n по раннему доступу";
+"network-protection.waitlist.invited.title" = "Ранний доступ\nк DuckDuckGo VPN";
 
 /* First subtitle for Network Protection join waitlist screen */
 "network-protection.waitlist.join.subtitle.1" = "Функция Network Protection — VPN от DuckDuckGo — защитит ваше соединение независимо от места и времени.";
@@ -1520,7 +1529,7 @@
 "network-protection.waitlist.join.subtitle.2" = "Записывайтесь в очередь, и мы будем держать вас в курсе.";
 
 /* Title for Network Protection join waitlist screen */
-"network-protection.waitlist.join.title" = "Network Protection Early Access";
+"network-protection.waitlist.join.title" = "VPN по раннему доступу";
 
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "Вы в списке!";
@@ -1532,7 +1541,7 @@
 "network-protection.waitlist.joined.with-notifications.subtitle.2" = "Мы сообщим вам, когда придет ваш черед.";
 
 /* Body text for the alert to enable notifications */
-"network-protection.waitlist.notification-alert.description" = "Когда приглашение протестировать функцию Network Protection будет готово, мы отправим вам уведомление.";
+"network-protection.waitlist.notification-alert.description" = "Когда подойдет ваша очередь протестировать DuckDuckGo VPN, мы отправим вам уведомление.";
 
 /* Subtitle for the alert to confirm enabling notifications */
 "network-protection.waitlist.notification-prompt-description" = "Когда вам откроется ранний доступ к функции Network Protection, вы получите уведомление.";
@@ -1544,7 +1553,7 @@
 "network-protection.waitlist.notification.text" = "Откройте приглашение";
 
 /* Title for Network Protection waitlist notification */
-"network-protection.waitlist.notification.title" = "Защита сети к вашим услугам!";
+"network-protection.waitlist.notification.title" = "Сервис DuckDuckGo VPN готов!";
 
 /* Subtitle text for the Network Protection settings row */
 "network-protection.waitlist.settings-subtitle.joined-and-invited" = "Ваше приглашение готово!";
@@ -1555,11 +1564,23 @@
 /* Subtitle text for the Network Protection settings row */
 "network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Приглашаем встать в очередь";
 
+/* The body of the notification when Privacy Pro subscription expired */
+"network.protection.entitlement.expired.notification.body" = "VPN disconnected due to expired subscription. Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
+
+/* The body of the notification shown when Network Protection fails to reconnect */
+"network.protection.failure.notification.body" = "Функции защиты сети (Network Protection) не удалось установить соединение. Повторите попытку позже.";
+
+/* Title for the VPN FAQ screen. */
+"network.protection.faq.title" = "Часто задаваемые вопросы по DuckDuckGo VPN";
+
+/* The body of the notification shown when Network Protection's connection is interrupted */
+"network.protection.interrupted.notification.body" = "Прервана работа функции защиты сети (Network Protection). Выполняется попытка повторного подключения...";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 
 /* Title for the network protection invite screen */
-"network.protection.invite.dialog.title" = "Приглашаем испытать функцию Network Protection";
+"network.protection.invite.dialog.title" = "Приглашаем вас оценить сервис DuckDuckGo VPN";
 
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
@@ -1570,11 +1591,14 @@
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
 
+/* The title of the notifications shown from Network Protection */
+"network.protection.notification.title" = "DuckDuckGo";
+
 /* Title text for an iOS quick action that opens VPN settings */
 "network.protection.quick-action.open-vpn" = "Открыть настройки VPN";
 
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
-"network.protection.status.connected.format" = "Connected - %@";
+"network.protection.status.connected.format" = "Подключен · %@";
 
 /* The label for the NetP VPN when connecting */
 "network.protection.status.connecting" = "Connecting...";
@@ -1585,14 +1609,17 @@
 /* The label for the NetP VPN when disconnecting */
 "network.protection.status.disconnecting" = "Disconnecting...";
 
-/* Message label text for the netP status view */
-"network.protection.status.header.message" = "DuckDuckGo's VPN secures all of your device's Internet traffic anytime, anywhere.";
+/* Message label text for the status view when VPN is disconnected */
+"network.protection.status.header.message.off" = "Выполните подключение для защиты\nтрафика всех устройств.";
 
-/* Header title label text for the status view when netP is disconnected */
-"network.protection.status.header.title.off" = "Network Protection is Off";
+/* Message label text for the status view when VPN is disconnected */
+"network.protection.status.header.message.on" = "Трафик всех устройств \nзащищен по VPN.";
 
-/* Header title label text for the status view when netP is connected */
-"network.protection.status.header.title.on" = "Network Protection is On";
+/* Header title label text for the status view when VPN is disconnected */
+"network.protection.status.header.title.off" = "DuckDuckGo VPN отключен";
+
+/* Header title label text for the status view when VPN is connected */
+"network.protection.status.header.title.on" = "DuckDuckGo VPN включен";
 
 /* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
@@ -1616,7 +1643,13 @@
 "network.protection.status.view.settings.section.title" = "Настроить";
 
 /* Title label text for the status view when netP is disconnected */
-"network.protection.status.view.title" = "Network Protection";
+"network.protection.status.view.title" = "VPN";
+
+/* The body of the notification shown when Network Protection reconnects successfully */
+"network.protection.success.notification.body" = "Защита сети (Network Protection) включена. Ваши геопозиция и онлайн-активность скрыты от посторонних глаз.";
+
+/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
+"network.protection.success.notification.subtitle.including.serverLocation" = "Трафик устройства направляется через: %@";
 
 /* Title for the button to link to the iOS app settings and enable notifications app-wide. */
 "network.protection.turn.on.notifications.button.title" = "Включить уведомления";
@@ -1624,11 +1657,17 @@
 /* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
 "network.protection.turn.on.notifications.section.footer" = "Разрешить DuckDuckGo уведомлять вас о разрыве соединения или изменении состояния VPN.";
 
+/* Title of the About section in the VPN status screen */
+"network.protection.vpn.about" = "О нас";
+
 /* List section footer for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.section.footer" = "DuckDuckGo оповестит вас о разрыве соединения или изменении состояния VPN.";
 
 /* Title for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.title" = "Оповещения о VPN";
+
+/* Title for the data volume section in the VPN status screen */
+"network.protection.vpn.data-volume" = "Объем трафика";
 
 /* Footer text for the Exclude Local Networks setting item. */
 "network.protection.vpn.exclude.local.networks.setting.footer" = "Настройте локальный трафик так, чтобы он поступал в обход VPN на устройства локальной сети, например, на принтер.";
@@ -1639,17 +1678,23 @@
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
 
+/* Description of the location type in the VPN status screen */
+"network.protection.vpn.location.connected" = "Место подключения";
+
 /* Subtitle of countries item when there are multiple cities, example : */
 "network.protection.vpn.location.country.item.formatted.cities.count" = "Городов: %d";
 
-/* Title for the VPN Location screen's Nearest Available selection item. */
-"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+/* Description of the location type in the VPN status screen */
+"network.protection.vpn.location.nearest" = "(Ближайшее)";
 
 /* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
 "network.protection.vpn.location.recommended.section.footer" = "Автоматически подключаться к ближайшему найденному серверу.";
 
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Description of the location type in the VPN status screen */
+"network.protection.vpn.location.selected" = "Выбранное место";
 
 /* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
 "network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
@@ -1661,13 +1706,19 @@
 "network.protection.vpn.notifications.title" = "Уведомления о VPN";
 
 /* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
-"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+"network.protection.vpn.preferred.location.nearest" = "Ближайшее место";
 
 /* Title for the Preferred Location VPN Settings item. */
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
 "network.protection.vpn.secure.dns.setting.footer" = "Для скрытия вашей активности онлайн VPN использует безопасный DNS. Так ваш провайдер не узнает, какие сайты вы посещаете.";
+
+/* Title for the FAQ row in the VPN status screen. */
+"network.protection.vpn.settings.faq" = "Часто задаваемые вопросы";
+
+/* Title for the feedback row in the VPN status screen. */
+"network.protection.vpn.settings.share-feedback" = "Отзыв о VPN-сервисе";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Настройки VPN";
@@ -1765,6 +1816,9 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Хорошо";
 
+/* No comment provided by engineer. */
+"Privacy Protections" = "Защита конфиденциальности";
+
 /* Privacy Icon accessibility title */
 "privacy.icon.dax" = "Логотип DuckDuckGo";
 
@@ -1804,14 +1858,18 @@
 /* about page */
 "settings.about.text" = "DuckDuckGo — независимая компания, которая c 2008 года предоставляет услуги защиты личных данных в интернете. Мы предлагаем простое решение для тех, кому надоело отслеживание онлайн. Своим примером DuckDuckGo показывает, что защита конфиденциальности в Сети не требует компромиссов.\n\nВ универсальном браузере DuckDuckGo вы найдете все те же привычные функции — вкладки, закладки, пароли, — а также более [десятка мощных средств защиты личной информации](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/), которых нет в стандартных пакетах других популярных веб-обозревателей. Наш всесторонний набор инструментов скроет от посторонних глаз всю вашу онлайн-активность, включая поиск, просмотр сайтов и чтение почты.\n\nСервисы DuckDuckGo не требуют особых технических познаний или работы со сложными настройками. Достаточно сменить свой браузер на DuckDuckGo на всех устройствах, и конфиденциальность онлайн станет вашим спутником по умолчанию.\n\nЕсли же вас интересует наша «кухня», вы можете почитать о том, как устроены инструменты защиты DuckDuckGo, на [страницах нашего справочного центра](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
+/* Settings screen accessibility section title */
+"settings.accessibility" = "Универсальный доступ";
+
 /* Settings screen cell text for adding the app to the dock */
 "settings.add.to.dock" = "Добавьте приложение на док-панель";
 
 /* Settings screen cell text for add widget to the home screen */
 "settings.add.widget" = "Добавьте виджет на домашний экран";
 
-/* Settings screen cell text for addess bar position */
-"settings.address.bar" = "Положение адресной строки";
+/* Name of the settings subsection related to the address bar
+   Settings screen cell text for addess bar position */
+"settings.address.bar" = "Адресная строка";
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
 "settings.address.full.url" = "Показывать полный адрес сайта";
@@ -1832,10 +1890,16 @@
 "settings.autolock" = "Блокировка";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Если система защищена технологией Touch ID или Face ID либо кодом доступа, при запуске вам придется разблокировать приложение.";
+"settings.autolock.description" = "Если в системе работает технология Touch ID, Face ID или код-пароль, при запуске вам придется разблокировать приложение.";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Автоудаление данных";
+
+/* The name of Settings category in Privacy Features related to configuration of the privacy feature related to cookie pop-ups */
+"settings.cookie.pop-up-protection.protection" = "Защита от всплывающих окон куки";
+
+/* Explanation in Settings how the cookie pop up protection feature works */
+"settings.cookie.pop.up.protection.explanation" = "DuckDuckGo по возможности откажется от куки-файлов и скроет подобные окна.\n[Подробнее...](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#cookie-pop-up-management)";
 
 /* Settings screen cell text for Cookie popups */
 "settings.cookie.popups" = "Управление окнами выбора куки-файлов";
@@ -1843,14 +1907,33 @@
 /* Settings title for the customize section */
 "settings.customize" = "Собственная настройка";
 
-/* Settings screen cell text for setting the app as default browser */
-"settings.default.browser" = "Сделать браузером по умолчанию";
+/* The name of a settings subsection related to the data clearing */
+"settings.data.clearing" = "Очистка данных";
 
-/* Settings cell for Email Protection */
-"settings.emailProtection" = "Защита электронной почты";
+/* Settings screen cell text for setting the app as default browser
+   The name of Settings category in Privacy Features related to configuration of the default browser */
+"settings.default.browser" = "Браузер по умолчанию";
+
+/* Label of a button disabling email protection */
+"settings.disable.email.protection.autofill" = "Отключить автозаполнение в рамках защиты почты";
+
+/* Settings cell to link users to other products by DuckDuckGo */
+"settings.duckduckgo.on.other.platforms" = "DuckDuckGo для других платформ";
+
+/* Explanation in Settings how the email protection feature works */
+"settings.email.protection.explanation" = "Оказывается, чтобы избавиться от трекеров и скрыть свой адрес, вовсе не нужно менять почтовый сервис.\n[Подробнее...](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/email-protection/what-is-duckduckgo-email-protection/)";
+
+/* Alert presented to user after clicking on 'Sign out' in Email Protection Settings */
+"settings.email.protection.signing.out.alert" = "При выходе из учетной записи Email Protection будет отключено автозаполнение адресов Duck Address в этом браузере. Вы по-прежнему сможете пользоваться этими адресами и получать пересылаемую почту как обычно.";
 
 /* Settings cell for Email Protection */
 "settings.emailProtection.description" = "Блокировка почтовых трекеров и скрытие адреса";
+
+/* Label of a button enabling the email protection feature */
+"settings.enable.email.protection" = "Включите защиту электронной почты";
+
+/* Settings screen cell text for enabling voice search */
+"settings.enable.voice.search" = "Включить голосовой поиск";
 
 /* Settings cell for Feedback */
 "settings.feedback" = "Оставьте нам отзыв";
@@ -1861,6 +1944,9 @@
 /* Settings screen cell text for Fireproof Sites */
 "settings.fireproof.sites" = "Огнеупорные сайты";
 
+/* The name of the settings subsection containing general settings */
+"settings.general" = "Основные";
+
 /* Settings screen cell text for GPC */
 "settings.gpc" = "Глобальный контроль конфиденциальности (GPC)";
 
@@ -1870,11 +1956,29 @@
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Клавиатура";
 
+/* Switch button label. */
+"settings.let.duckduckgo.manage.cookie.consent.popups" = "Разрешить DuckDuckGo управлять окнами выбора куки-файлов";
+
 /* Settings screen cell text for passwords */
 "settings.logins" = "Пароли";
 
+/* The name of the settings section containing main settings */
+"settings.main.settings" = "Основные настройки";
+
+/* Label of a button managing email protection account */
+"settings.manage.account" = "Управление учетной записью";
+
 /* Settings title for the 'More' section */
 "settings.more" = "DuckDuckGo также предлагает...";
+
+/* Button navigating to other settings related to search */
+"settings.more.search.settings" = "Дополнительные настройки поиска";
+
+/* Subtitle of the 'More Search Settings' button */
+"settings.more.search.settings.explanation" = "Выбор языка, региона и так далее";
+
+/* The name of a settings category listing next steps */
+"settings.next.steps" = "Дальнейшие шаги";
 
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
@@ -1884,6 +1988,66 @@
 
 /* Settings title for the privacy section */
 "settings.privacy" = "Настройки конфиденциальности";
+
+/* The name of Settings category in Privacy Features related to configuration of the search */
+"settings.private.search" = "Частный поиск";
+
+/* Explanation in Settings how the private search feature works */
+"settings.private.search.explanation" = "DuckDuckGo Private Search — ваша поисковая система по умолчанию. Вы можете пользоваться поиском в интернете, не опасаясь слежки.";
+
+/* Header of settings related to search */
+"settings.search.settings" = "Настройки поиска";
+
+/* Settings cell for Send Crash Reports */
+"settings.send.crash.reports" = "Отправлять отчеты о сбоях";
+
+/* Explanation of Send Crash Reports settings option */
+"settings.send.crash.reports.description" = "Автоматически отправлять отчеты о сбоях в DuckDuckGo.";
+
+/* Settings screen cell text for setting address bar position */
+"settings.set.your.address.bar.position" = "Настроить положение адресной строки";
+
+/* Subscription activation pending description */
+"settings.subscription.activation.pending.description" = "This is taking longer than usual, please check back later.";
+
+/* Subscription activation pending title */
+"settings.subscription.activation.pending.title" = "Your Subscription is Being Activated";
+
+/* Data Broker protection cell subtitle for privacy pro */
+"settings.subscription.DBP.subtitle" = "Remove your info from sites that sell it";
+
+/* Data Broker protection cell title for privacy pro */
+"settings.subscription.DBP.title" = "Personal Information Removal";
+
+/* Privacy pro description subtext */
+"settings.subscription.description" = "More seamless privacy with three new protections, including:";
+
+/* I have a Subscription button text for privacy pro */
+"settings.subscription.existing.subscription" = "I Have a Subscription";
+
+/* Privacy pro features list */
+"settings.subscription.features" = " • VPN\n • Personal Information Removal\n • Identity Theft Restoration";
+
+/* Identity theft restoration cell subtitle for privacy pro */
+"settings.subscription.ITR.subtitle" = "If your identity is stolen, we'll help restore it";
+
+/* Identity theft restoration cell title for privacy pro */
+"settings.subscription.ITR.title" = "Identity Theft Restoration";
+
+/* Get Privacy Pro button text for privacy pro */
+"settings.subscription.learn.more" = "Get Privacy Pro";
+
+/* Subscription Settings button text for privacy pro */
+"settings.subscription.manage" = "Subscription Settings";
+
+/* Call to action title for Privacy Pro */
+"settings.subscription.subscribe" = "Subscribe to Privacy Pro";
+
+/* VPN cell title for privacy pro */
+"settings.subscription.VPN.title" = "VPN";
+
+/* Label of a button navigating to the Support page */
+"settings.support" = "Поддержка";
 
 /* Settings screen cell text for sync and backup */
 "settings.sync" = "Синхронизация и резервное копирование";
@@ -1906,6 +2070,12 @@
 /* Settings screen cell for voice search */
 "settings.voice.search" = "Конфиденциальный голосовой поиск";
 
+/* The name of Settings category in Privacy Features related to configuration of the web tracking protection feature */
+"settings.web.tracking.protection" = "Защита от отслеживания онлайн";
+
+/* Explanation in Settings how the web tracking protection feature works */
+"settings.web.tracking.protection.explanation" = "DuckDuckGo автоматически блокирует скрытые трекеры, пока вы посещаете сайты.\n[Подробнее...](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
+
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Отправить жалобу";
 
@@ -1923,6 +2093,243 @@
 
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "На каком сайте возникает проблема?";
+
+/* Subscription Activation Window Title */
+"subscription.activate" = "Activate Subscription";
+
+/* Subscription Activation Info */
+"subscription.activate..header.description" = "Access your Privacy Pro subscription on this device via Apple ID or an email address.";
+
+/* Restore button title for Email */
+"subscription.activate.add.email.button" = "Add Email";
+
+/* Apple ID option for activation */
+"subscription.activate.appleid" = "Apple ID";
+
+/* Button text for restoring purchase via Apple ID */
+"subscription.activate.appleid.button" = "Restore Purchase";
+
+/* Description for Apple ID activation */
+"subscription.activate.appleid.description" = "Restore your purchase to activate your subscription on this device.";
+
+/* Subscription Activation Info */
+"subscription.activate.description" = "Your subscription is automatically available in DuckDuckGo on any device signed in to your Apple ID.";
+
+/* Email option for activation */
+"subscription.activate.email" = "Email";
+
+/* Restore button title for Email */
+"subscription.activate.email.button" = "Enter Email";
+
+/* Description for Email activation */
+"subscription.activate.email.description" = "Use your email to activate your subscription on this device.";
+
+/* Activate subscription title */
+"subscription.activate.email.title" = "Активация подписки";
+
+/* Restore button title for Managing Email */
+"subscription.activate.manage.email.button" = "Manage";
+
+/* Button title for cancelling email deletion */
+"subscription.activate.manage.email.cancel" = "Cancel";
+
+/* Button title for confirming email deletion */
+"subscription.activate.manage.email.OK" = "OK";
+
+/* View Title for managing your email account */
+"subscription.activate.manage.email.title" = "Manage Email";
+
+/* Restore button title for AppleID */
+"subscription.activate.restore.apple" = "Restore Purchase";
+
+/* Subscription Activation Title */
+"subscription.activate.title" = "Activate your subscription on this device";
+
+/* Add to another device button */
+"subscription.add.device.button" = "Add to Another Device";
+
+/* Subscription Add device Info */
+"subscription.add.device.description" = "Подписку на услуги Privacy Pro можно активировать по электронной почте.";
+
+/* Add subscription to other device title */
+"subscription.add.device.header.title" = "Использование подписки на других устройствах";
+
+/* Resend activation instructions button */
+"subscription.add.device.resend.instructions" = "Resend Instructions";
+
+/* Add to another device view title */
+"subscription.add.device.title" = "Add Device";
+
+/* Add email to an existing subscription */
+"subscription.add.email" = "Add an email address to activate your subscription on your other devices. We’ll only use this address to verify your subscription.";
+
+/* Button title for adding email to subscription */
+"subscription.add.email.button" = "Add Email";
+
+/* View title for adding email to subscription */
+"subscription.add.email.title" = "Add Email";
+
+/* Description for Email adding */
+"subscription.addDevice.email.description" = "Add an email address to access your subscription in DuckDuckGo on other devices. We’ll only use this address to verify your subscription.";
+
+/* Title for Alert messages */
+"subscription.alert.title" = "subscription.alert.title";
+
+/* Subscription type */
+"subscription.annual" = "Annual Subscription";
+
+/* Subscription availability message on Apple devices */
+"subscription.available.apple" = "Privacy Pro is available on any device signed in to the same Apple ID.";
+
+/* Text for the manage billing page */
+"subscription.billing.google.text" = "Ваша подписка приобретена в магазине приложений Google Play Store. Чтобы продлить ее, откройте настройки подписок в Google Play Store на устройстве, где выполнен вход в ту же учетную запись Google, через которую была изначально оформлена подписка.";
+
+/* Title for the manage billing page */
+"subscription.billing.google.title" = "Тарифные планы";
+
+/* Subscription Removal confirmation message */
+"subscription.cancel.message" = "Your subscription has been removed from this device.";
+
+/* Change plan or billing title */
+"subscription.change.plan" = "Change Plan or Billing";
+
+/* Navigation Button for closing subscription view */
+"subscription.close" = "Close";
+
+/* Title for Confirm messages */
+"subscription.confirm.title" = "Are you sure?";
+
+/* Alert content for not found subscription */
+"subscription.email.inactive.alert.message" = "The subscription associated with this email is no longer active.";
+
+/* Alert title for not found subscription */
+"subscription.email.inactive.alert.title" = "Subscription Not Found";
+
+/* Alert content for not found subscription */
+"subscription.expired.alert.message" = "The subscription associated with this Apple ID is no longer active.";
+
+/* text for expiration string */
+"subscription.expires" = "expires";
+
+/* FAQ Button */
+"subscription.faq" = "Privacy Pro FAQ";
+
+/* FAQ Description */
+"subscription.faq.description" = "Get answers to frequently asked questions about Privacy Pro in our help pages.";
+
+/* Cancel action for the existing subscription dialog */
+"subscription.found.cancel" = "Cancel";
+
+/* Restore action for the existing subscription dialog */
+"subscription.found.restore" = "Restore";
+
+/* Message for the existing subscription dialog */
+"subscription.found.text" = "We found a subscription associated with this Apple ID.";
+
+/* Title for the existing subscription dialog */
+"subscription.found.title" = "Subscription Found";
+
+/* Help and support Section header */
+"subscription.help" = "Help and support";
+
+/* Header for the device management section */
+"subscription.manage.devices" = "Manage Devices";
+
+/* Description for Email Management options */
+"subscription.manage.email.description" = "You can use this email to activate your subscription from browser settings in the DuckDuckGo app on your other devices.";
+
+/* Manage Plan header */
+"subscription.manage.plan" = "Manage Plan";
+
+/* Header for the subscription section */
+"subscription.manage.title" = "Subscription";
+
+/* Subscription type */
+"subscription.monthly" = "Monthly Subscription";
+
+/* Alert content for not found subscription */
+"subscription.notFound.alert.message" = "There is no subscription associated with this Apple ID.";
+
+/* Alert title for not found subscription */
+"subscription.notFound.alert.title" = "Subscription Not Found";
+
+/* View plans button text */
+"subscription.notFound.view.plans" = "View Plans";
+
+/* Hero Text for Personal information removal */
+"subscription.pir.hero" = "Activate Privacy Pro on desktop to set up Personal Information Removal";
+
+/* Description on how to use Personal information removal in desktop. The first placeholder references a location in the Desktop application. <i.e: Settings > Privacy Pro>, and the second, the menu entry. i.e. <I have a Subscription> */
+"subscription.pir.heroText" = "In the DuckDuckGo browser for desktop, go to %1$@ and click %2$@ to get started.";
+
+/* Settings references a menu in the Desktop app, Privacy Pro, references our product name */
+"subscription.pir.heroTextLocation" = "Settings > Privacy Pro";
+
+/* Menu item for enabling Personal Information Removal on Desktop */
+"subscription.pir.heroTextMenyEntry" = "I have a subscription";
+
+/* Text for the 'macOS' button */
+"subscription.pir.macos" = "macOS";
+
+/* Text for the 'Windows' button */
+"subscription.pir.windows" = "Windows";
+
+/* Progress view title when completing the purchase */
+"subscription.progress.view.completing.purchase" = "Completing purchase...";
+
+/* Progress view title when starting the purchase */
+"subscription.progress.view.purchasing.subscription" = "Purchase in progress...";
+
+/* Progress view title when restoring past subscription purchase */
+"subscription.progress.view.restoring.subscription" = "Restoring subscription...";
+
+/* Remove from this device button */
+"subscription.remove.from.device.button" = "Remove From This Device";
+
+/* Remove from device confirmation dialog text */
+"subscription.remove.from.device.text" = "You will no longer be able to access your Privacy Pro subscription on this device. This will not cancel your subscription, and it will remain active on your other devices.";
+
+/* Remove from device confirmation dialog title */
+"subscription.remove.from.device.title" = "Remove from this device?";
+
+/* Remove subscription button text */
+"subscription.remove.subscription" = "Remove Subscription";
+
+/* Remove subscription cancel button text */
+"subscription.remove.subscription.cancel" = "Cancel";
+
+/* text for renewal string */
+"subscription.renews" = "renews";
+
+/* Button text for general error message */
+"subscription.restore.backend.error.button" = "Назад к настройкам";
+
+/* Alert for general error message */
+"subscription.restore.backend.error.message" = "Возникли проблемы с подключением. Повторите попытку позже.";
+
+/* Alert for general error title */
+"subscription.restore.backend.error.title" = "Что-то пошло не так";
+
+/* Alert for general error message */
+"subscription.restore.general.error.message" = "The App Store was unable to process your purchase. Please try again later.";
+
+/* Alert for general error title */
+"subscription.restore.general.error.title" = "Something Went Wrong";
+
+/* Alert button text for restored purchase alert */
+"subscription.restore.success.alert.button" = "OK";
+
+/* Alert message for restored purchase */
+"subscription.restore.success.alert.message" = "Your purchases have been restored.";
+
+/* Alert title for restored purchase */
+"subscription.restore.success.alert.title" = "You’re all set.";
+
+/* Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)' */
+"subscription.subscription.active.caption" = "Your subscription %1$@ on %2$@";
+
+/* Navigation bar Title for subscriptions */
+"subscription.title" = "Privacy Pro";
 
 /* Message confirming that recovery code was copied to clipboard */
 "sync.code.copied" = "Код восстановления скопирован в буфер обмена";
@@ -1953,6 +2360,9 @@
 
 /* Title of the dialog to confirm turning off Sync */
 "sync.turn.off.confirm.title" = "Отключить синхронизацию?";
+
+/* Reason for auth when setting up Sync */
+"sync.user.auth.reason" = "Unlock device to set up Sync & Backup";
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "Синхронизация и резервное копирование сейчас недоступны. Повторите попытку позже.";
@@ -2006,6 +2416,9 @@
 "toast.protection.disabled" = "Защита конфиденциальности на %@ отключена";
 
 /* Confirmation of an action - populated with a domain name */
+"toast.protection.disabled.and.toggle.report.sent" = "Защита конфиденциальности на сайте %@ отключена, отчет отправлен.";
+
+/* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Защита конфиденциальности на %@ включена";
 
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
@@ -2036,7 +2449,100 @@
 "voiceSearch.cancel" = "Отменить";
 
 /* Voice-search footer note with on-device privacy warning */
-"voiceSearch.footer.note" = "Аудио обрабатывается непосредственно на устройстве, не хранится и не передается никому, даже DuckDuckGo.";
+"voiceSearch.footer.note" = "Добавить опцию «Частный голосовой поиск» в адресную строку. Ваш голосовой запрос не сохраняется и никуда не передается, даже в DuckDuckGo.";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note.old" = "Аудио обрабатывается непосредственно на устройстве, не хранится и не передается никому, даже DuckDuckGo.";
+
+/* Cancel action for the alert when the subscription expires */
+"vpn.access-revoked.alert.action.cancel" = "Dismiss";
+
+/* Primary action for the alert when the subscription expires */
+"vpn.access-revoked.alert.action.subscribe" = "Subscribe";
+
+/* Alert message for the alert when the Privacy Pro subscription expiress */
+"vpn.access-revoked.alert.message" = "Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
+
+/* Alert title for the alert when the Privacy Pro subscription expires */
+"vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
+
+/* Alert action for the alert when the early access period is over */
+"vpn.early-access.over.alert.action" = "Хорошо";
+
+/* Alert message for the alert when the early access period is over */
+"vpn.early-access.over.alert.message" = "Благодарим вас за участие в тестировании! Чтобы пользоваться сервисом VPN в дальнейшем, оформите подписку на тариф DuckDuckGo Privacy Pro — со скидкой 40% по промокоду THANKYOU.\n\nСрок действия акции ограничен. Скидка распространяется только на настольную версию браузера DuckDuckGo и предоставляется исключительно участникам тестирования, проживающим на территории США и установившим приложение с сайта duckduckgo.com/app.";
+
+/* Alert title for the alert when the early access period is over */
+"vpn.early-access.over.alert.title" = "Период раннего доступа к DuckDuckGo VPN окончен";
+
+/* Title for the Cancel button of the VPN feedback form */
+"vpn.feedback-form.button.cancel" = "Cancel";
+
+/* Title for the Done button of the VPN feedback form */
+"vpn.feedback-form.button.done" = "Done";
+
+/* Title for the Submit button of the VPN feedback form */
+"vpn.feedback-form.button.submit" = "Submit";
+
+/* Title for the Submitting state of the VPN feedback form */
+"vpn.feedback-form.button.submitting" = "Submitting…";
+
+/* Title for the browser crash/freeze category of the VPN feedback form */
+"vpn.feedback-form.category.browser-crash-or-freeze" = "VPN causes browser to crash or freeze";
+
+/* Title for the 'VPN fails to connect' category of the VPN feedback form */
+"vpn.feedback-form.category.fails-to-connect" = "VPN fails to connect";
+
+/* Title for the 'VPN feature request' category of the VPN feedback form */
+"vpn.feedback-form.category.feature-request" = "VPN feature request";
+
+/* Title for the category 'VPN causes issues with other apps or websites' category of the VPN feedback form */
+"vpn.feedback-form.category.issues-with-apps" = "VPN causes issues with other apps or websites";
+
+/* Title for the local device connectivity category of the VPN feedback form */
+"vpn.feedback-form.category.local-device-connectivity" = "VPN won't let me connect to local device";
+
+/* Title for the 'other VPN feedback' category of the VPN feedback form */
+"vpn.feedback-form.category.other" = "Other VPN feedback";
+
+/* Title for the category selection state of the VPN feedback form */
+"vpn.feedback-form.category.select-category" = "Select a category";
+
+/* Title for the 'VPN is too slow' category of the VPN feedback form */
+"vpn.feedback-form.category.too-slow" = "VPN connection is too slow";
+
+/* Title for the 'unable to install' category of the VPN feedback form */
+"vpn.feedback-form.category.unable-to-install" = "Unable to install VPN";
+
+/* Title for the feedback sent view description of the VPN feedback form */
+"vpn.feedback-form.sending-confirmation.description" = "Your feedback will help us improve the\nDuckDuckGo VPN.";
+
+/* Title for the feedback sending error text of the VPN feedback form */
+"vpn.feedback-form.sending-confirmation.error" = "We couldn't send your feedback right now, please try again.";
+
+/* Title for the feedback sent view title of the VPN feedback form */
+"vpn.feedback-form.sending-confirmation.title" = "Thank you!";
+
+/* Toast message when the VPN feedback form is submitted successfully */
+"vpn.feedback-form.submitted.message" = "Thank You! Feedback submitted.";
+
+/* Text for the body of the VPN feedback form */
+"vpn.feedback-form.text-1" = "Please describe what's happening, what you expected to happen, and the steps that led to the issue:";
+
+/* Text for the body of the VPN feedback form */
+"vpn.feedback-form.text-2" = "In addition to the details entered into this form, your app issue report will contain:";
+
+/* Bullet text for the body of the VPN feedback form */
+"vpn.feedback-form.text-3" = "• Whether specific DuckDuckGo features are enabled";
+
+/* Bullet text for the body of the VPN feedback form */
+"vpn.feedback-form.text-4" = "• Aggregate DuckDuckGo app diagnostics";
+
+/* Text for the body of the VPN feedback form */
+"vpn.feedback-form.text-5" = "By tapping \"Submit\" I agree that DuckDuckGo may use the information in this report for purposes of improving the app's features.";
+
+/* Title for each screen of the VPN feedback form */
+"vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
 
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Разрешить уведомления";
@@ -2116,38 +2622,11 @@
 /* No comment provided by engineer. */
 "Welcome to the Duck Side!" = "Добро пожаловать на Утиную сторону!";
 
-/* Title for the Windows waitlist notification */
-"windows-waitlist.available.notification.title" = "DuckDuckGo для Windows!";
-
-/* Description on the invite screen */
-"windows-waitlist.invite-screen.step-1.description" = "Чтобы загрузить DuckDuckGo для Windows, откройте эту ссылку:";
-
-/* Description on the invite screen */
-"windows-waitlist.invite-screen.step-2.description" = "Откройте установщик DuckDuckGo в «Загрузках», выберите «Установить» и введите пригласительный код.";
-
-/* Subtitle for the Windows Waitlist Invite screen */
-"windows-waitlist.invite-screen.subtitle" = "Хотите использовать DuckDuckGo на Windows?";
-
 /* Title for the Windows waitlist button redirecting to Mac waitlist */
 "windows-waitlist.join-waitlist-screen.mac-waitlist" = "Ищете версию для Mac?";
 
-/* Title for the Join Windows Waitlist screen */
-"windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Ранний доступ к DuckDuckGo для Windows";
-
-/* Message for the alert to confirm enabling notifications */
-"windows-waitlist.joined.no-notification.get-notification-confirmation-message" = "Когда ваш экземпляр будет готов к загрузке, мы отправим вам уведомление. ";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"windows-waitlist.joined.notifications-declined" = "Приглашение протестировать DuckDuckGo для Windows отобразится здесь. Зайдите сюда позже. Мы также можем отправить вам уведомление, когда придет ваша очередь.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"windows-waitlist.joined.notifications-enabled" = "Когда ваша копия будет готова к загрузке, мы отправим вам уведомление.";
-
 /* Title for the settings subtitle */
 "windows-waitlist.settings.browse-privately" = "Полная конфиденциальность в Интернете, благодаря нашему приложению для Windows";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"windows-waitlist.share-sheet.invite-code-message" = "Вас пригласили!\n\nХотите использовать DuckDuckGo на Windows?\n\nШаг 1\nЗагрузите файл, посетив эту страницу на устройстве Windows:\nhttps://duckduckgo.com/windows\n\nШаг 2\nОткройте установщик DuckDuckGo в «Загрузках», выберите «Установить» и введите пригласительный код.\n\nКод приглашения: %@";
 
 /* Message used when sharing to iMessage */
 "windows-waitlist.share-sheet.message" = "Конфиденциальность в интернете на Windows? Легко!\n\nЗагрузите наше приложение по ссылке:\nhttps://duckduckgo.com/windows";

@@ -315,7 +315,7 @@ extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {
     
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect favorite: BookmarkEntity) {
         guard let url = favorite.urlObject else { return }
-        Pixel.fire(pixel: .homeScreenFavouriteLaunched)
+        Pixel.fire(pixel: .favoriteLaunchedNTP)
         Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .fireproof, fromCache: .tabs)
         delegate?.home(self, didRequestUrl: url)
     }

@@ -31,6 +31,12 @@
 /* Title shown to the user when adding the Fire Button lock screen widget */
 "lock.screen.widget.fire.title" = "Fire Button";
 
+/* Description shown to the user when adding the Search Passwords lock screen widget */
+"lock.screen.widget.passwords.description" = "Brzo pretraži svoje spremljene DuckDuckGo lozinke.";
+
+/* Title shown to the user when adding the Search Passwords lock screen widget */
+"lock.screen.widget.passwords.title" = "Pretraživanje lozinki";
+
 /* Description shown to the user when adding the Search lock screen widget */
 "lock.screen.widget.search.description" = "U trenu pokreni privatno pretraživanje u DuckDuckGou.";
 
@@ -45,6 +51,12 @@
 
 /* No comment provided by engineer. */
 "VPN Not Configured" = "VPN Not Configured";
+
+/* Description of search passwords widget in widget gallery */
+"widget.gallery.passwords.description" = "Brzo pretraži svoje spremljene DuckDuckGo lozinke.";
+
+/* Display name for search passwords widget in widget gallery */
+"widget.gallery.passwords.display.name" = "Pretraživanje lozinki";
 
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Pretraži ili posjeti svoja omiljena web-mjesta privatno jednim dodirom.";
@@ -63,6 +75,9 @@
 
 /* Message shown in the favorites widget empty state. */
 "widget.no.favorites.message" = "Brzo posjeti svoja omiljena web-mjesta.";
+
+/* Text in passwords widget */
+"widget.passwords" = "Pretraživanje lozinki";
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Pretraži DuckDuckGo";

@@ -175,6 +175,10 @@ extension BlankSnapshotViewController: OmniBarDelegate {
         userInteractionDetected()
     }
 
+    func onTextFieldWillBeginEditing(_ omniBar: OmniBar, tapped: Bool) {
+        // No-op
+    }
+
     func onTextFieldDidBeginEditing(_ omniBar: OmniBar) -> Bool {
         DispatchQueue.main.async {
             self.viewCoordinator.omniBar.resignFirstResponder()
@@ -185,6 +189,10 @@ extension BlankSnapshotViewController: OmniBarDelegate {
     
     func onEnterPressed() {
         userInteractionDetected()
+    }
+
+    func onClearPressed() {
+        // No-op
     }
 }
 
@@ -202,15 +210,30 @@ extension BlankSnapshotViewController: TabSwitcherButtonDelegate {
 
 extension BlankSnapshotViewController {
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        updateStatusBarBackgroundColor()
+    }
+
+    private func updateStatusBarBackgroundColor() {
+        let theme = ThemeManager.shared.currentTheme
+
+        if appSettings.currentAddressBarPosition == .bottom {
+            viewCoordinator.statusBackground.backgroundColor = theme.backgroundColor
+        } else {
+            if AppWidthObserver.shared.isPad && traitCollection.horizontalSizeClass == .regular {
+                viewCoordinator.statusBackground.backgroundColor = theme.tabsBarBackgroundColor
+            } else {
+                viewCoordinator.statusBackground.backgroundColor = theme.omniBarBackgroundColor
+            }
+        }
+    }
+
     private func decorate() {
         let theme = ThemeManager.shared.currentTheme
-        setNeedsStatusBarAppearanceUpdate()
 
-        if AppWidthObserver.shared.isLargeWidth {
-            viewCoordinator.statusBackground.backgroundColor = theme.tabsBarBackgroundColor
-        } else {
-            viewCoordinator.statusBackground.backgroundColor = theme.omniBarBackgroundColor
-        }
+        setNeedsStatusBarAppearanceUpdate()
 
         view.backgroundColor = theme.mainViewBackgroundColor
 
@@ -223,11 +246,6 @@ extension BlankSnapshotViewController {
         viewCoordinator.toolbarTabSwitcherButton.tintColor = theme.barTintColor
 
         viewCoordinator.logoText.tintColor = theme.ddgTextTintColor
-
-        if appSettings.currentAddressBarPosition == .bottom {
-            viewCoordinator.statusBackground.backgroundColor = theme.backgroundColor
-        }
-        
      }
     
 }

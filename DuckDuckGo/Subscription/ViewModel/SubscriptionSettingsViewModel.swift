@@ -20,10 +20,9 @@
 import Foundation
 import SwiftUI
 import StoreKit
-
-#if SUBSCRIPTION
 import Subscription
 import Core
+
 @available(iOS 15.0, *)
 final class SubscriptionSettingsViewModel: ObservableObject {
     
@@ -84,11 +83,9 @@ final class SubscriptionSettingsViewModel: ObservableObject {
                                                 date: subscription.expiresOrRenewsAt,
                                                 product: subscription.productId,
                                                 billingPeriod: subscription.billingPeriod)
-            case .failure:
-                AccountManager().signOut()
-                DispatchQueue.main.async {
-                    self.state.shouldDismissView = true
-                }
+            default:
+                return
+                
             }
         }
     }
@@ -211,4 +208,3 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         signOutObserver = nil
     }
 }
-#endif

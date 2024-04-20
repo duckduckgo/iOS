@@ -327,7 +327,8 @@ public struct UserText {
     public static let noVoicePermissionAlertMessage = NSLocalizedString("voiceSearch.alert.no-permission.message", value: "Please allow Microphone access in iOS System Settings for DuckDuckGo to use voice features.", comment: "Message for alert warning the user about missing microphone permission")
     public static let noVoicePermissionActionSettings = NSLocalizedString("voiceSearch.alert.no-permission.action.settings", value: "Settings", comment: "No microphone permission alert action button to open the settings app")
     public static let voiceSearchCancelButton = NSLocalizedString("voiceSearch.cancel", value: "Cancel", comment: "Cancel button for voice search")
-    public static let voiceSearchFooter = NSLocalizedString("voiceSearch.footer.note", value: "Audio is processed on-device. It's not stored or shared with anyone, including DuckDuckGo.", comment: "Voice-search footer note with on-device privacy warning")
+    public static let voiceSearchFooterOld = NSLocalizedString("voiceSearch.footer.note.old", value: "Audio is processed on-device. It's not stored or shared with anyone, including DuckDuckGo.", comment: "Voice-search footer note with on-device privacy warning")
+    public static let voiceSearchFooter = NSLocalizedString("voiceSearch.footer.note", value: "Add Private Voice Search option to the address bar. Audio is not stored or shared with anyone, including DuckDuckGo.", comment: "Voice-search footer note with on-device privacy warning")
     public static let textSizeDescription = NSLocalizedString("textSize.description", value: "Choose your preferred text size. Websites you view in DuckDuckGo will adjust to it.", comment: "Description text for the text size adjustment setting")
     public static func textSizeFooter(for percentage: String) -> String {
         let message = NSLocalizedString("textSize.footer", value: "Text Size - %@", comment: "Replacement string is a current percent value e.g. '120%'")
@@ -563,10 +564,6 @@ public struct UserText {
     static let vpnAccessRevokedAlertMessage = NSLocalizedString("vpn.access-revoked.alert.message", value: "Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.", comment: "Alert message for the alert when the Privacy Pro subscription expiress")
     static let vpnAccessRevokedAlertActionSubscribe = NSLocalizedString("vpn.access-revoked.alert.action.subscribe", value: "Subscribe", comment: "Primary action for the alert when the subscription expires")
     static let vpnAccessRevokedAlertActionCancel = NSLocalizedString("vpn.access-revoked.alert.action.cancel", value: "Dismiss", comment: "Cancel action for the alert when the subscription expires")
-
-    static let vpnEarlyAccessOverAlertTitle = NSLocalizedString("vpn.early-access.over.alert.title", value: "DuckDuckGo VPN early access is over", comment: "Alert title for the alert when the early access period is over")
-    static let vpnEarlyAccessOverAlertMessage = NSLocalizedString("vpn.early-access.over.alert.message", value: "Thank you for being a tester! To continue using the VPN, subscribe to DuckDuckGo Privacy Pro and get 40% off with promo code THANKYOU\n\nOffer redeemable for a limited time only in the desktop version of the DuckDuckGo browser by U.S. testers  who install from duckduckgo.com/app", comment: "Alert message for the alert when the early access period is over")
-    static let vpnEarlyAccessOverAlertAction = NSLocalizedString("vpn.early-access.over.alert.action", value: "OK", comment: "Alert action for the alert when the early access period is over")
 
     // MARK: Notifications
     
@@ -871,16 +868,58 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     // MARK: Settings Screeen
     public static let settingsTitle = NSLocalizedString("settings.title", value: "Settings", comment: "Title for the Settings View")
+    public static let settingsOn = NSLocalizedString("settings.on", value: "On", comment: "Label describing a feature which is turned on")
+    public static let settingsOff = NSLocalizedString("settings.off", value: "Off", comment: "Label describing a feature which is turned off")
+    public static let settingsAlwaysOn = NSLocalizedString("settings.always.on", value: "Always On", comment: "Label describing a feature which is turned on always")
+
+    // Privacy Protections
+    public static let privateSearchExplanation = NSLocalizedString("settings.private.search.explanation", value: "DuckDuckGo Private Search is your default search engine, so you can search the web without being tracked.", comment: "Explanation in Settings how the private search feature works")
+    public static let webTrackingProtectionExplanation = NSLocalizedString("settings.web.tracking.protection.explanation", value: "DuckDuckGo automatically blocks hidden trackers as you browse the web.\n[Learn More](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)", comment: "Explanation in Settings how the web tracking protection feature works")
+    public static let cookiePopUpProtectionExplanation = NSLocalizedString("settings.cookie.pop.up.protection.explanation", value: "DuckDuckGo will try to select the most private settings available and hide these pop-ups for you.\n[Learn More](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#cookie-pop-up-management)", comment: "Explanation in Settings how the cookie pop up protection feature works")
+    public static let emailProtectionExplanation = NSLocalizedString("settings.email.protection.explanation", value: "Block email trackers and hide your address without switching your email provider.\n[Learn More](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/email-protection/what-is-duckduckgo-email-protection/)", comment: "Explanation in Settings how the email protection feature works")
+    public static let emailProtectionSigningOutAlert = NSLocalizedString("settings.email.protection.signing.out.alert", value: "Signing out of your Email Protection account will disable Duck Address autofill in this browser. You can still use these addresses and receive forwarded email as usual.", comment: "Alert presented to user after clicking on 'Sign out' in Email Protection Settings")
+    public static let defaultBrowser = NSLocalizedString("settings.default.browser", value: "Default Browser", comment: "The name of Settings category in Privacy Features related to configuration of the default browser")
+    public static let privateSearch = NSLocalizedString("settings.private.search", value: "Private Search", comment: "The name of Settings category in Privacy Features related to configuration of the search")
+    public static let searchSettings = NSLocalizedString("settings.search.settings", value: "Search Settings", comment: "Header of settings related to search")
+    public static let moreSearchSettings = NSLocalizedString("settings.more.search.settings", value: "More Search Settings", comment: "Button navigating to other settings related to search")
+    public static let moreSearchSettingsExplanation = NSLocalizedString("settings.more.search.settings.explanation", value: "Customize your language, region, and more", comment: "Subtitle of the 'More Search Settings' button")
+
+    public static let webTrackingProtection = NSLocalizedString("settings.web.tracking.protection", value: "Web Tracking Protection", comment: "The name of Settings category in Privacy Features related to configuration of the web tracking protection feature")
+    public static let cookiePopUpProtection = NSLocalizedString("settings.cookie.pop-up-protection.protection", value: "Cookie Pop-Up Protection", comment: "The name of Settings category in Privacy Features related to configuration of the privacy feature related to cookie pop-ups")
+    public static let letDuckDuckGoManageCookieConsentPopups = NSLocalizedString("settings.let.duckduckgo.manage.cookie.consent.popups", value: "Let DuckDuckGo manage cookie consent pop-ups", comment: "Switch button label.")
+
+    public static let disableEmailProtectionAutofill = NSLocalizedString("settings.disable.email.protection.autofill", value: "Disable Email Protection Autofill", comment: "Label of a button disabling email protection")
+    public static let manageAccount = NSLocalizedString("settings.manage.account", value: "Manage Account", comment: "Label of a button managing email protection account")
+    public static let support = NSLocalizedString("settings.support", value: "Support", comment: "Label of a button navigating to the Support page")
+    public static let enableEmailProtection = NSLocalizedString("settings.enable.email.protection", value: "Enable Email Protection", comment: "Label of a button enabling the email protection feature")
+
+    // Main Settings
+
+    public static let mainSettings = NSLocalizedString("settings.main.settings", value: "Main Settings", comment: "The name of the settings section containing main settings")
+    public static let general = NSLocalizedString("settings.general", value: "General", comment: "The name of the settings subsection containing general settings")
+    public static let settingsAppearanceSection = NSLocalizedString("settings.appearance", value: "Appearance", comment: "Settings screen appearance section title")
+    public static let accessibility = NSLocalizedString("settings.accessibility", value: "Accessibility", comment: "Settings screen accessibility section title")
+    public static let dataClearing = NSLocalizedString("settings.data.clearing", value: "Data Clearing", comment: "The name of a settings subsection related to the data clearing")
+    public static let addressBar = NSLocalizedString("settings.address.bar", value: "Address Bar", comment: "Name of the settings subsection related to the address bar")
+
+    // Next Steps
+    public static let nextSteps = NSLocalizedString("settings.next.steps", value: "Next Steps", comment: "The name of a settings category listing next steps")
+    public static let settingsAddToDock = NSLocalizedString("settings.add.to.dock", value: "Add App to Your Dock", comment: "Settings screen cell text for adding the app to the dock")
+    public static let settingsAddWidget = NSLocalizedString("settings.add.widget", value: "Add Widget to Home Screen", comment: "Settings screen cell text for add widget to the home screen")
+    public static let setYourAddressBarPosition = NSLocalizedString("settings.set.your.address.bar.position", value: "Set Your Address Bar Position", comment: "Settings screen cell text for setting address bar position")
+    public static let enableVoiceSearch = NSLocalizedString("settings.enable.voice.search", value: "Enable Voice Search", comment: "Settings screen cell text for enabling voice search")
+
+    // Others
+    public static let settingsAboutSection = NSLocalizedString("settings.about.section", value: "About", comment: "Settings section title for About DuckDuckGo")
+    public static let settingsFeedback = NSLocalizedString("settings.feedback", value: "Share Feedback", comment: "Settings cell for Feedback")
+    public static let duckduckgoOnOtherPlatforms = NSLocalizedString("settings.duckduckgo.on.other.platforms", value: "DuckDuckGo on Other Platforms", comment: "Settings cell to link users to other products by DuckDuckGo")
 
     // General Section
     public static let settingsSetDefault = NSLocalizedString("settings.default.browser", value: "Set as Default Browser", comment: "Settings screen cell text for setting the app as default browser")
-    public static let settingsAddToDock = NSLocalizedString("settings.add.to.dock", value: "Add App to Your Dock", comment: "Settings screen cell text for adding the app to the dock")
-    public static let settingsAddWidget = NSLocalizedString("settings.add.widget", value: "Add Widget to Home Screen", comment: "Settings screen cell text for add widget to the home screen")
     public static let settingsSync = NSLocalizedString("settings.sync", value: "Sync & Backup", comment: "Settings screen cell text for sync and backup")
     public static let settingsLogins = NSLocalizedString("settings.logins", value: "Passwords", comment: "Settings screen cell text for passwords")
     
     // Appeareance Section
-    public static let settingsAppearanceSection = NSLocalizedString("settings.appearance", value: "Appearance", comment: "Settings screen appearance section title")
     public static let settingsTheme = NSLocalizedString("settings.theme", value: "Theme", comment: "Settings screen cell text for theme")
     public static let settingsIcon = NSLocalizedString("settings.icon", value: "App Icon", comment: "Settings screen cell text for app icon selection")
     public static let settingsFirebutton = NSLocalizedString("settings.firebutton", value: "Fire Button Animation", comment: "Settings screen cell text for fire button animation")
@@ -896,7 +935,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsFireproofSites = NSLocalizedString("settings.fireproof.sites", value: "Fireproof Sites", comment: "Settings screen cell text for Fireproof Sites")
     public static let settingsClearData = NSLocalizedString("settings.clear.data", value: "Automatically Clear Data", comment: "Settings screen cell text for Automatically Clearing Data")
     public static let settingsAutolock = NSLocalizedString("settings.autolock", value: "Application Lock", comment: "Settings screen cell text for Application Lock")
-    public static let settingsAutoLockDescription = NSLocalizedString("settings.autolock.description", value: "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening.", comment: "Section footer Autolock description")
+    public static let settingsAutoLockDescription = NSLocalizedString("settings.autolock.description", value: "If Touch ID, Face ID, or a system passcode is enabled, you'll be asked to unlock the app when opening it.", comment: "Section footer Autolock description")
     
     // Subscription Section
     public static let settingsPProSection = NSLocalizedString("settings.ppro", value: "Privacy Pro", comment: "Product name for the subscription bundle")
@@ -922,7 +961,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     
     public static let settingsPProActivationPendingTitle = NSLocalizedString("settings.subscription.activation.pending.title", value: "Your Subscription is Being Activated", comment: "Subscription activation pending title")
     public static let settingsPProActivationPendingDescription = NSLocalizedString("settings.subscription.activation.pending.description", value: "This is taking longer than usual, please check back later.", comment: "Subscription activation pending description")
-    
+
     // Customize Section
     public static let settingsCustomizeSection = NSLocalizedString("settings.customize", value: "Customize", comment: "Settings title for the customize section")
     public static let settingsKeyboard = NSLocalizedString("settings.keyboard", value: "Keyboard", comment: "Settings screen cell for Keyboard")
@@ -937,15 +976,22 @@ But if you *do* want a peek under the hood, you can find more information about 
     
     // More Section
     public static let settingsMoreSection = NSLocalizedString("settings.more", value: "More from DuckDuckGo", comment: "Settings title for the 'More' section")
-    public static let settingsEmailProtection = NSLocalizedString("settings.emailProtection", value: "Email Protection", comment: "Settings cell for Email Protection")
     public static let settingsEmailProtectionDescription = NSLocalizedString("settings.emailProtection.description", value: "Block email trackers and hide your address", comment: "Settings cell for Email Protection")
-    
-    
-    public static let settingsAboutSection = NSLocalizedString("settings.about.section", value: "About", comment: "Settings section title for About DuckDuckGo")
+
     public static let settingsAboutDDG = NSLocalizedString("settings.about.ddg", value: "About DuckDuckGo", comment: "Settings cell for About DDG")
     public static let settingsVersion = NSLocalizedString("settings.version", value: "Version", comment: "Settings cell for Version")
-    public static let settingsFeedback = NSLocalizedString("settings.feedback", value: "Share Feedback", comment: "Settings cell for Feedback")
-    
+    public static let settingsSendCrashReports = NSLocalizedString("settings.send.crash.reports", value: "Send Crash Reports", comment: "Settings cell for Send Crash Reports")
+    public static let settingsSendCrashReportsDescription = NSLocalizedString("settings.send.crash.reports.description", value: "Automatically send crash reports to DuckDuckGo.", comment: "Explanation of Send Crash Reports settings option")
+
+    // MARK: Crash Reporting
+
+    public static let crashReportDialogTitle = NSLocalizedString("crash.report.dialog.title", value: "Automatically send crash reports?", comment: "Crash Report dialog title")
+    public static let crashReportDialogMessage = NSLocalizedString("crash.report.dialog.message", value: "Crash reports help DuckDuckGo diagnose issues and improve our products. They contain no personally identifiable information.", comment: "Crash Report dialog message")
+    public static let crashReportShowDetails = NSLocalizedString("crash.report.dialog.show.details", value: "See what's sent", comment: "Crash Report show details button title")
+    public static let crashReportHideDetails = NSLocalizedString("crash.report.dialog.hide.details", value: "Hide", comment: "Crash Report hide details button title")
+    public static let crashReportAlwaysSend = NSLocalizedString("crash.report.dialog.always.send", value: "Always Send Crash Reports", comment: "Crash Report always send button title")
+    public static let crashReportNeverSend = NSLocalizedString("crash.report.dialog.never.send", value: "Never Send", comment: "Crash Report never send button title")
+
     // MARK: Subscriptions
     
     // Loaders

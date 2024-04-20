@@ -160,9 +160,7 @@ class HomeViewController: UIViewController {
     }
 
     func configureCollectionView() {
-        collectionView.configure(withController: self,
-                                 favoritesViewModel: favoritesViewModel,
-                                 appTPHomeViewModel: nil)
+        collectionView.configure(withController: self, favoritesViewModel: favoritesViewModel)
     }
     
     func enableContentUnderflow() -> CGFloat {

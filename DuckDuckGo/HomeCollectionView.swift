@@ -67,10 +67,7 @@ class HomeCollectionView: UICollectionView {
         UIMenuController.shared.hideMenu()
     }
     
-    func configure(withController controller: HomeViewController,
-                   favoritesViewModel: FavoritesListInteracting,
-                   appTPHomeViewModel: AnyObject? // Set to AnyObject so that AppTP can be disabled easily
-    ) {
+    func configure(withController controller: HomeViewController, favoritesViewModel: FavoritesListInteracting) {
         self.controller = controller
         renderers = HomeViewSectionRenderers(controller: controller)
 

@@ -66,10 +66,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var privacyStore = PrivacyUserDefaults()
     private var bookmarksDatabase: CoreDataDatabase = BookmarksDatabase.make()
 
-#if APP_TRACKING_PROTECTION
-    private var appTrackingProtectionDatabase: CoreDataDatabase = AppTrackingProtectionDatabase.make()
-#endif
-
 #if NETWORK_PROTECTION
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
@@ -204,25 +200,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         WidgetCenter.shared.reloadAllTimelines()
 
-#if APP_TRACKING_PROTECTION
-        appTrackingProtectionDatabase.loadStore { context, error in
-            guard context != nil else {
-                if let error = error {
-                    Pixel.fire(pixel: .appTPCouldNotLoadDatabase, error: error)
-                } else {
-                    Pixel.fire(pixel: .appTPCouldNotLoadDatabase)
-                }
-
-                if shouldPresentInsufficientDiskSpaceAlertAndCrash {
-                    return
-                } else {
-                    Thread.sleep(forTimeInterval: 1)
-                    fatalError("Could not create AppTP database stack: \(error?.localizedDescription ?? "err")")
-                }
-            }
-        }
-#endif
-
         Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
             WidgetCenter.shared.reloadAllTimelines()
         }
@@ -285,22 +262,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let historyManager = makeHistoryManager()
 
-#if APP_TRACKING_PROTECTION
-        let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
-                                      bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
-                                      appTrackingProtectionDatabase: appTrackingProtectionDatabase,
-                                      historyManager: historyManager,
-                                      syncService: syncService,
-                                      syncDataProviders: syncDataProviders,
-                                      appSettings: AppDependencyProvider.shared.appSettings)
-#else
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
                                       appSettings: AppDependencyProvider.shared.appSettings)
-#endif
 
         main.loadViewIfNeeded()
 
@@ -462,7 +429,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             StatisticsLoader.shared.refreshAppRetentionAtb()
             self.fireAppLaunchPixel()
             self.firePrivacyProFeatureEnabledPixel()
-            self.fireAppTPActiveUserPixel()
         }
         
         if appIsLaunching {
@@ -602,30 +568,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         DailyPixel.fire(pixel: .privacyProFeatureEnabled)
-    }
-
-    private func fireAppTPActiveUserPixel() {
-#if APP_TRACKING_PROTECTION
-        guard AppDependencyProvider.shared.featureFlagger.isFeatureOn(.appTrackingProtection) else {
-            return
-        }
-        
-        let manager = FirewallManager()
-
-        Task {
-            await manager.refreshManager()
-            let date = Date()
-            let key = "appTPActivePixelFired"
-
-            // Make sure we don't fire this pixel multiple times a day
-            let dayStart = Calendar.current.startOfDay(for: date)
-            let fireDate = UserDefaults.standard.object(forKey: key) as? Date
-            if fireDate == nil || fireDate! < dayStart, manager.status() == .connected {
-                Pixel.fire(pixel: .appTPActiveUser)
-                UserDefaults.standard.set(date, forKey: key)
-            }
-        }
-#endif
     }
 
     private func fireFailedCompilationsPixelIfNeeded() {

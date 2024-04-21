@@ -83,6 +83,7 @@ struct VPNMetadata: Encodable {
     let vpnState: VPNState
     let vpnSettingsState: VPNSettingsState
     let privacyProInfo: PrivacyProInfo
+    let tunnelMetadata: VPNTunnelMetadata?
 
     func toPrettyPrintedJSON() -> String? {
         let encoder = JSONEncoder()
@@ -142,6 +143,7 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
         let vpnState = await collectVPNState()
         let vpnSettingsState = collectVPNSettingsState()
         let privacyProInfo = collectPrivacyProInfo()
+        let vpnTunnelMetadata = await collectVPNTunnelMetadata()
 
         return VPNMetadata(
             appInfo: appInfoMetadata,
@@ -149,7 +151,8 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
             networkInfo: networkInfoMetadata,
             vpnState: vpnState,
             vpnSettingsState: vpnSettingsState,
-            privacyProInfo: privacyProInfo
+            privacyProInfo: privacyProInfo,
+            tunnelMetadata: vpnTunnelMetadata
         )
     }
 
@@ -294,6 +297,25 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
             subscriptionActive: AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)).isUserAuthenticated
         )
     }
+
+    func collectVPNTunnelMetadata() async -> VPNTunnelMetadata? {
+        guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+            return nil
+        }
+
+        guard let jsonString: ExtensionMessageString = try? await activeSession.sendProviderMessage(.getTunnelMetadata) else {
+            return nil
+        }
+
+        let decoder = JSONDecoder()
+
+        guard let decoded = try? decoder.decode(VPNTunnelMetadata.self, from: jsonString.rawValue) else {
+            return nil
+        }
+
+        return decoded
+    }
+
 }
 
 extension VPNMetadata.PrivacyProInfo.Source {

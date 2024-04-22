@@ -472,11 +472,11 @@
 /* Step 1 for instructions to import passwords */
 "autofill.import.passwords.instructions.step1" = "Open DuckDuckGo on Mac or Windows";
 
-/* Step 2 for instructions to import passwords. This reads as 'Go to Settings > Autofill' */
+/* Step 2 for instructions to import passwords. This reads as 'Go to Settings > Passwords' */
 "autofill.import.passwords.instructions.step2" = "Go to %1$@ > %2$@";
 
 /* second parameter for autofill.import.passwords.instructions.step2 */
-"autofill.import.passwords.instructions.step2.autofill" = "Autofill";
+"autofill.import.passwords.instructions.step2.passwords" = "Passwords";
 
 /* first parameter for autofill.import.passwords.instructions.step2 */
 "autofill.import.passwords.instructions.step2.settings" = "Settings";

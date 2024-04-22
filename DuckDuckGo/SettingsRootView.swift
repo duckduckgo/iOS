@@ -66,7 +66,7 @@ struct SettingsRootView: View {
             viewModel.onAppear()
         }
 
-        .onAppear {
+        .onDisappear {
             viewModel.onDisappear()
         }
 

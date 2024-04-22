@@ -571,13 +571,12 @@ extension Pixel {
         case toggleReportDoNotSend
         case toggleReportDismiss
 
-        case userBehaviorReloadTwice
-        case userBehaviorReloadAndRestart
-        case userBehaviorReloadAndFireButton
-        case userBehaviorReloadAndOpenSettings
-        case userBehaviorReloadAndTogglePrivacyControls
-        case userBehaviorFireButtonAndRestart
-        case userBehaviorFireButtonAndTogglePrivacyControls
+        case userBehaviorReloadTwiceWithin12Seconds
+        case userBehaviorReloadTwiceWithin24Seconds
+        case userBehaviorReloadAndRestartWithin30Seconds
+        case userBehaviorReloadAndRestartWithin50Seconds
+        case userBehaviorReloadThreeTimesWithin20Seconds
+        case userBehaviorReloadThreeTimesWithin40Seconds
 
         // MARK: History
         case historyStoreLoadFailed
@@ -1221,14 +1220,15 @@ extension Pixel.Event {
 
         case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
 
-            // MARK: - User behavior
-        case .userBehaviorReloadTwice: return "m_reload-twice"
-        case .userBehaviorReloadAndRestart: return "m_reload-and-restart"
-        case .userBehaviorReloadAndFireButton: return "m_reload-and-fire-button"
-        case .userBehaviorReloadAndOpenSettings: return "m_reload-and-open-settings"
-        case .userBehaviorReloadAndTogglePrivacyControls: return "m_reload-and-toggle-privacy-controls"
-        case .userBehaviorFireButtonAndRestart: return "m_fire-button-and-restart"
-        case .userBehaviorFireButtonAndTogglePrivacyControls: return "m_fire-button-and-toggle-privacy-controls"
+        // MARK: - User behavior
+        case .userBehaviorReloadTwiceWithin12Seconds: return "m_reload-twice-within-12-seconds"
+        case .userBehaviorReloadTwiceWithin24Seconds: return "m_reload-twice-within-24-seconds"
+
+        case .userBehaviorReloadAndRestartWithin30Seconds: return "m_reload-and-restart-within-30-seconds"
+        case .userBehaviorReloadAndRestartWithin50Seconds: return "m_reload-and-restart-within-50-seconds"
+
+        case .userBehaviorReloadThreeTimesWithin20Seconds: return "m_reload-three-times-within-20-seconds"
+        case .userBehaviorReloadThreeTimesWithin40Seconds: return "m_reload-three-times-within-40-seconds"
 
         // MARK: - History debug
         case .historyStoreLoadFailed: return "m_debug_history-store-load-failed"

@@ -133,7 +133,6 @@ final class PrivacyDashboardViewController: UIViewController {
         }
         
         contentBlockingManager.scheduleCompilation()
-        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.toggleProtections)
     }
     
     private func privacyDashboardCloseHandler() {

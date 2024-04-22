@@ -21,12 +21,13 @@ import Foundation
 
 public enum UserBehaviorEvent {
 
-    case reloadTwice
-    case reloadAndRestart
-    case reloadAndFireButton
-    case reloadAndOpenSettings
-    case reloadAndTogglePrivacyControls
-    case fireButtonAndRestart
-    case fireButtonAndTogglePrivacyControls
+    case reloadTwiceWithin12Seconds
+    case reloadTwiceWithin24Seconds
+    
+    case reloadAndRestartWithin30Seconds
+    case reloadAndRestartWithin50Seconds
+
+    case reloadThreeTimesWithin20Seconds
+    case reloadThreeTimesWithin40Seconds
 
 }

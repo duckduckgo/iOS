@@ -24,7 +24,8 @@ import Core
 protocol UserBehaviorStoring {
 
     var didRefreshTimestamp: Date? { get set }
-    var didBurnTimestamp: Date? { get set }
+    var didDoubleRefreshTimestamp: Date? { get set }
+    var didRefreshCounter: Int { get set }
 
 }
 
@@ -32,9 +33,12 @@ final class UserBehaviorStore: UserBehaviorStoring {
 
     @UserDefaultsWrapper(key: .didRefreshTimestamp, defaultValue: .distantPast)
     var didRefreshTimestamp: Date?
-    
-    @UserDefaultsWrapper(key: .didBurnTimestamp, defaultValue: .distantPast)
-    var didBurnTimestamp: Date?
+
+    @UserDefaultsWrapper(key: .didDoubleRefreshTimestamp, defaultValue: .distantPast)
+    var didDoubleRefreshTimestamp: Date?
+
+    @UserDefaultsWrapper(key: .didRefreshCounter, defaultValue: 0)
+    var didRefreshCounter: Int
 
 }
 
@@ -43,10 +47,7 @@ final class UserBehaviorMonitor {
     enum Action: Equatable {
 
         case refresh
-        case burn
         case reopenApp
-        case openSettings
-        case toggleProtections
 
     }
 
@@ -64,30 +65,38 @@ final class UserBehaviorMonitor {
         set { store.didRefreshTimestamp = newValue }
     }
 
-    var didBurnTimestamp: Date? {
-        get { store.didBurnTimestamp }
-        set { store.didBurnTimestamp = newValue }
+    var didDoubleRefreshTimestamp: Date? {
+        get { store.didDoubleRefreshTimestamp }
+        set { store.didDoubleRefreshTimestamp = newValue }
+    }
+
+    var didRefreshCounter: Int {
+        get { store.didRefreshCounter }
+        set { store.didRefreshCounter = newValue }
     }
 
     func handleAction(_ action: Action, date: Date = Date()) {
         switch action {
         case .refresh:
-            fireEventIfActionOccurredRecently(since: didRefreshTimestamp, eventToFire: .reloadTwice, within: 10.0)
+            fireEventIfActionOccurredRecently(within: 12.0, since: didRefreshTimestamp, eventToFire: .reloadTwiceWithin12Seconds)
+            fireEventIfActionOccurredRecently(within: 24.0, since: didRefreshTimestamp, eventToFire: .reloadTwiceWithin24Seconds)
             didRefreshTimestamp = date
-        case .burn:
-            fireEventIfActionOccurredRecently(since: didRefreshTimestamp, eventToFire: .reloadAndFireButton)
-            didBurnTimestamp = date
+            
+            if didRefreshCounter == 0 {
+                didDoubleRefreshTimestamp = date
+            }
+            didRefreshCounter += 1
+            if didRefreshCounter == 3 {
+                fireEventIfActionOccurredRecently(within: 20.0, since: didDoubleRefreshTimestamp, eventToFire: .reloadThreeTimesWithin20Seconds)
+                fireEventIfActionOccurredRecently(within: 40.0, since: didDoubleRefreshTimestamp, eventToFire: .reloadThreeTimesWithin40Seconds)
+                didRefreshCounter = 0
+            }
         case .reopenApp:
-            fireEventIfActionOccurredRecently(since: didRefreshTimestamp, eventToFire: .reloadAndRestart)
-            fireEventIfActionOccurredRecently(since: didBurnTimestamp, eventToFire: .fireButtonAndRestart)
-        case .openSettings:
-            fireEventIfActionOccurredRecently(since: didRefreshTimestamp, eventToFire: .reloadAndOpenSettings)
-        case .toggleProtections:
-            fireEventIfActionOccurredRecently(since: didRefreshTimestamp, eventToFire: .reloadAndTogglePrivacyControls)
-            fireEventIfActionOccurredRecently(since: didBurnTimestamp, eventToFire: .fireButtonAndTogglePrivacyControls)
+            fireEventIfActionOccurredRecently(within: 30.0, since: didRefreshTimestamp, eventToFire: .reloadAndRestartWithin30Seconds)
+            fireEventIfActionOccurredRecently(within: 50.0, since: didRefreshTimestamp, eventToFire: .reloadAndRestartWithin50Seconds)
         }
 
-        func fireEventIfActionOccurredRecently(since timestamp: Date?, eventToFire: UserBehaviorEvent, within interval: Double = 30.0) {
+        func fireEventIfActionOccurredRecently(within interval: Double = 30.0, since timestamp: Date?, eventToFire: UserBehaviorEvent) {
             if let timestamp = timestamp, date.timeIntervalSince(timestamp) < interval {
                 eventMapping.fire(eventToFire)
             }
@@ -101,13 +110,12 @@ final class AppUserBehaviorMonitor {
     static let eventMapping = EventMapping<UserBehaviorEvent> { event, _, _, _ in
         let domainEvent: Pixel.Event
         switch event {
-        case .reloadTwice: domainEvent = .userBehaviorReloadTwice
-        case .reloadAndRestart: domainEvent = .userBehaviorReloadAndRestart
-        case .reloadAndFireButton: domainEvent = .userBehaviorReloadAndFireButton
-        case .reloadAndOpenSettings: domainEvent = .userBehaviorReloadAndOpenSettings
-        case .reloadAndTogglePrivacyControls: domainEvent = .userBehaviorReloadAndTogglePrivacyControls
-        case .fireButtonAndRestart: domainEvent = .userBehaviorFireButtonAndRestart
-        case .fireButtonAndTogglePrivacyControls: domainEvent = .userBehaviorFireButtonAndTogglePrivacyControls
+        case .reloadTwiceWithin12Seconds: domainEvent = .userBehaviorReloadTwiceWithin12Seconds
+        case .reloadTwiceWithin24Seconds: domainEvent = .userBehaviorReloadTwiceWithin24Seconds
+        case .reloadAndRestartWithin30Seconds: domainEvent = .userBehaviorReloadAndRestartWithin30Seconds
+        case .reloadAndRestartWithin50Seconds: domainEvent = .userBehaviorReloadAndRestartWithin50Seconds
+        case .reloadThreeTimesWithin20Seconds: domainEvent = .userBehaviorReloadThreeTimesWithin20Seconds
+        case .reloadThreeTimesWithin40Seconds: domainEvent = .userBehaviorReloadThreeTimesWithin40Seconds
         }
         Pixel.fire(pixel: domainEvent)
     }

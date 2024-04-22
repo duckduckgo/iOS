@@ -431,7 +431,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func setupSubscriptionsEnvironment() {
         Task {
-            let environment = SubscriptionPurchaseEnvironment.ServiceEnvironment(rawValue: privacyProEnvironment) ?? SubscriptionPurchaseEnvironment.ServiceEnvironment.default
+            let environment = SubscriptionPurchaseEnvironment.ServiceEnvironment(rawValue: privacyProEnvironment) ??
+                SubscriptionPurchaseEnvironment.ServiceEnvironment.default
             SubscriptionPurchaseEnvironment.currentServiceEnvironment = environment
             VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment = (environment == .production) ? .production : .staging
             SubscriptionPurchaseEnvironment.current = .appStore

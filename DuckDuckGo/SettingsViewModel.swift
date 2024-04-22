@@ -52,7 +52,6 @@ final class SettingsViewModel: ObservableObject {
     // Subscription Dependencies
     private var subscriptionAccountManager: AccountManager
     private var subscriptionSignOutObserver: Any?
-    private(set) var subscriptionStripeViewModel: SubscriptionExternalLinkViewModel?
     
     // Used to cache the lasts subscription state for up to a week
     private var subscriptionStateCache = UserDefaultsCache<SettingsState.Subscription>(key: UserDefaultsCacheKey.subscriptionState,
@@ -806,33 +805,6 @@ extension SettingsViewModel {
         
         // Sync Cache
         subscriptionStateCache.set(state.subscription)
-    }
-    
-    @available(iOS 15.0, *)
-    func manageStripeSubscription() async {
-        guard let token = subscriptionAccountManager.accessToken, let externalID = subscriptionAccountManager.externalID else { return }
-        let serviceResponse = await  SubscriptionService.getCustomerPortalURL(accessToken: token, externalID: externalID)
-        
-        // Get Stripe Customer Portal URL and update the model
-        if case .success(let response) = serviceResponse {
-            guard let url = URL(string: response.customerPortalUrl) else { return }
-            if let existingModel = subscriptionStripeViewModel {
-                existingModel.url = url
-            } else {
-                let model = SubscriptionExternalLinkViewModel(url: url)
-                DispatchQueue.main.async {
-                    self.subscriptionStripeViewModel = model
-                }
-            }
-        }
-        await displayStripeView(true)
-    }
-    
-    @MainActor
-    func displayStripeView(_ value: Bool) {
-        if value != state.subscription.isShowingStripeView {
-            state.subscription.isShowingStripeView = value
-        }
     }
     
     private func setupNotificationObservers() {

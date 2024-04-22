@@ -42,17 +42,23 @@ class AutocompleteViewController: UIViewController {
     weak var delegate: AutocompleteViewControllerDelegate?
     weak var presentationDelegate: AutocompleteViewControllerPresentationDelegate?
 
+    @IBOutlet weak var tableView: UITableView!
+
+    var selectedSuggestion: Suggestion? {
+        model.suggestion(for: selectedItemIndex)
+    }
+
     private var task: URLSessionDataTask?
     private var loader: SuggestionLoading?
     private var receivedResponse = false
     private var pendingRequest = false
-    
-    @Published fileprivate var query = ""
-    fileprivate var queryDebounceCancellable: AnyCancellable?
 
-    fileprivate var suggestions = [Suggestion]()
-    fileprivate var selectedItem = -1
-    
+    @Published private var query = ""
+    private var queryDebounceCancellable: AnyCancellable?
+
+    private var model = AutocompleteSuggestionsModel(suggestionsResult: .empty)
+    private var selectedItemIndex: Int = -1
+
     private var historyCoordinator: HistoryCoordinating!
     private var bookmarksDatabase: CoreDataDatabase!
     private var appSettings: AppSettings!
@@ -66,22 +72,9 @@ class AutocompleteViewController: UIViewController {
         BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
     }()
 
-    var showBackground = true {
-        didSet {
-            view.backgroundColor = showBackground ? UIColor(designSystemColor: .background) : UIColor.clear
-        }
-    }
-
-    var selectedSuggestion: Suggestion? {
-        let state = (suggestions: self.suggestions, selectedIndex: self.selectedItem)
-        return state.suggestions.indices.contains(state.selectedIndex) ? state.suggestions[state.selectedIndex] : nil
-    }
-
     private var hidesBarsOnSwipeDefault = true
+    private var shouldOffsetY = false
 
-    @IBOutlet weak var tableView: UITableView!
-    var shouldOffsetY = false
-    
     static func loadFromStoryboard(bookmarksDatabase: CoreDataDatabase,
                                    historyCoordinator: HistoryCoordinating,
                                    appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
@@ -144,15 +137,15 @@ class AutocompleteViewController: UIViewController {
     }
 
     func updateQuery(query: String) {
-        selectedItem = -1
+        selectedItemIndex = -1
         cancelInFlightRequests()
         self.query = query
     }
     
     func willDismiss(with query: String) {
-        guard suggestions.indices.contains(selectedItem) else { return }
-        let suggestion = suggestions[selectedItem]
-        firePixelForSelectedSuggestion(suggestion)
+        guard let selectedSuggestion else { return }
+
+        firePixelForSelectedSuggestion(selectedSuggestion)
     }
 
     private func firePixelForSelectedSuggestion(_ suggestion: Suggestion) {
@@ -171,7 +164,7 @@ class AutocompleteViewController: UIViewController {
     }
 
     @IBAction func onPlusButtonPressed(_ button: UIButton) {
-        let suggestion = suggestions[button.tag]
+        guard let suggestion = model.suggestion(for: button.tag) else { return }
         delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestion)
     }
 
@@ -181,7 +174,7 @@ class AutocompleteViewController: UIViewController {
     }
 
     private func requestSuggestions(query: String) {
-        selectedItem = -1
+        selectedItemIndex = -1
         tableView.reloadData()
 
         let bookmarks: [Suggestion]
@@ -210,17 +203,28 @@ class AutocompleteViewController: UIViewController {
             defer {
                 self?.pendingRequest = false
             }
-            guard error == nil else { return }
-            
-            let remoteResults = result?.all ?? []
 
-            self?.updateSuggestions(bookmarks + remoteResults)
+            guard let self, error == nil else { return }
+
+            let finalResult: SuggestionResult
+            if let result {
+                finalResult = SuggestionResult(
+                    topHits: bookmarks + result.topHits,
+                    duckduckgoSuggestions: result.duckduckgoSuggestions,
+                    historyAndBookmarks: result.historyAndBookmarks
+                )
+            } else {
+                finalResult = .empty
+            }
+
+            self.updateSuggestions(finalResult)
         }
     }
 
-    private func updateSuggestions(_ newSuggestions: [Suggestion]) {
+    private func updateSuggestions(_ newSuggestions: SuggestionResult) {
         receivedResponse = true
-        suggestions = newSuggestions
+        model = .init(suggestionsResult: newSuggestions)
+
         tableView.contentOffset = .zero
         tableView.reloadData()
 
@@ -238,7 +242,7 @@ class AutocompleteViewController: UIViewController {
 extension AutocompleteViewController: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if suggestions.isEmpty {
+        if model.isEmpty {
             return noSuggestionsCell(forIndexPath: indexPath)
         }
         return suggestionsCell(forIndexPath: indexPath)
@@ -253,13 +257,13 @@ extension AutocompleteViewController: UITableViewDataSource {
         let currentTheme = ThemeManager.shared.currentTheme
         
         cell.updateFor(query: query,
-                       suggestion: suggestions[indexPath.row],
+                       suggestion: model.suggestion(for: indexPath)!,
                        with: currentTheme,
                        isAddressBarAtBottom: appSettings.currentAddressBarPosition.isBottom)
-        cell.plusButton.tag = indexPath.row
+        cell.plusButton.tag = model.index(for: indexPath) ?? -1
         
         let baseBackgroundColor = UIColor(designSystemColor: .surface)
-        let backgroundColor = indexPath.row == selectedItem ? currentTheme.tableCellSelectedColor : baseBackgroundColor
+        let backgroundColor = model.indexPath(for: selectedItemIndex) == indexPath ? currentTheme.tableCellSelectedColor : baseBackgroundColor
 
         cell.backgroundColor = backgroundColor
         cell.tintColor = currentTheme.autocompleteCellAccessoryColor
@@ -283,14 +287,14 @@ extension AutocompleteViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if appSettings.currentAddressBarPosition.isBottom && suggestions.isEmpty {
+        if appSettings.currentAddressBarPosition.isBottom && model.isEmpty {
             return view.frame.height
         }
 
         let defaultHeight: CGFloat = 46
-        guard suggestions.indices.contains(indexPath.row) else { return defaultHeight }
+        guard let suggestion = model.suggestion(for: indexPath) else { return defaultHeight }
 
-        switch suggestions[indexPath.row] {
+        switch suggestion {
         case .bookmark, .historyEntry:
             return 60
         default:
@@ -299,14 +303,25 @@ extension AutocompleteViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return receivedResponse ? max(Constants.minItems, suggestions.count) : 0
+        guard receivedResponse else { return 0 }
+        guard model.count > Constants.minItems else { return Constants.minItems }
+
+        return model.numberOfRows(in: section)
     }
 
+    func numberOfSections(in tableView: UITableView) -> Int {
+        guard receivedResponse, model.numberOfSections > 0 else { return 1 }
+
+        return model.numberOfSections
+    }
 }
 
 extension AutocompleteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let suggestion = suggestions[indexPath.row]
+        guard let suggestion = model.suggestion(for: indexPath) else {
+            assertionFailure("Data inconsistency in table view")
+            return
+        }
         delegate?.autocomplete(selectedSuggestion: suggestion)
         firePixelForSelectedSuggestion(suggestion)
     }
@@ -329,27 +344,41 @@ extension AutocompleteViewController {
 extension AutocompleteViewController {
  
     func keyboardMoveSelectionDown() {
-        guard !pendingRequest, !suggestions.isEmpty else { return }
-        selectedItem = (selectedItem + 1 >= itemCount()) ? 0 : selectedItem + 1
-        delegate?.autocomplete(highlighted: suggestions[selectedItem], for: query)
-        tableView.reloadData()
+        guard !pendingRequest, !model.isEmpty else { return }
+
+        let previousIndex = selectedItemIndex
+        selectedItemIndex = model.indexAfter(selectedItemIndex)
+        updateSelection(previousIndex: previousIndex, currentIndex: selectedItemIndex)
     }
 
     func keyboardMoveSelectionUp() {
-        guard !pendingRequest, !suggestions.isEmpty else { return }
-        selectedItem = (selectedItem - 1 < 0) ? itemCount() - 1 : selectedItem - 1
-        delegate?.autocomplete(highlighted: suggestions[selectedItem], for: query)
-        tableView.reloadData()
+        guard !pendingRequest, !model.isEmpty else { return }
+
+        let previousIndex = selectedItemIndex
+        selectedItemIndex = model.indexBefore(selectedItemIndex)
+        updateSelection(previousIndex: previousIndex, currentIndex: selectedItemIndex)
     }
-    
+
     func keyboardEscape() {
         delegate?.autocompleteWasDismissed()
     }
-    
-    private func itemCount() -> Int {
-        return suggestions.count
+
+    private func updateSelection(previousIndex: Int, currentIndex: Int) {
+        if let suggestion = model.suggestion(for: selectedItemIndex) {
+            delegate?.autocomplete(highlighted: suggestion, for: query)
+        }
+
+        let indexPathsToReload = [previousIndex, currentIndex].compactMap { model.indexPath(for: $0) }
+
+        tableView.reloadRows(at: indexPathsToReload, with: .none)
+        scrollToSelectedItem()
     }
 
+    private func scrollToSelectedItem(animated: Bool = false) {
+        guard let selectedIndexPath = model.indexPath(for: selectedItemIndex) else { return }
+
+        tableView.scrollToRow(at: selectedIndexPath, at: .none, animated: animated)
+    }
 }
 
 extension AutocompleteViewController: SuggestionLoadingDataSource {
@@ -392,4 +421,8 @@ extension VariantManager {
         isSupported(feature: .newSuggestionLogic) || isSupported(feature: .history)
     }
 
+}
+
+private extension SuggestionResult {
+    static let empty = SuggestionResult(topHits: [], duckduckgoSuggestions: [], historyAndBookmarks: [])
 }

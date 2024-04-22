@@ -36,6 +36,7 @@ class AutocompleteViewController: UIViewController {
     struct Constants {
         static let debounceDelay = 100 // millis
         static let minItems = 1
+        static let topTableMargin = 16
     }
 
     weak var delegate: AutocompleteViewControllerDelegate?
@@ -109,8 +110,10 @@ class AutocompleteViewController: UIViewController {
     }
     
     private func configureTableView() {
+        // Setting header with non-zero height prevents having somewhat arbitrary spacing on top
+        tableView.tableHeaderView = UIView(frame: .init(x: 0, y: 0, width: 0, height: Constants.topTableMargin))
+
         tableView.backgroundColor = UIColor.clear
-        tableView.tableFooterView = UIView()
         tableView.sectionFooterHeight = 1.0 / UIScreen.main.scale
     }
 
@@ -220,6 +223,9 @@ class AutocompleteViewController: UIViewController {
         suggestions = newSuggestions
         tableView.contentOffset = .zero
         tableView.reloadData()
+
+        // Required here to get valid content size with autoresizing cells
+        tableView.layoutIfNeeded()
         presentationDelegate?.autocompleteDidChangeContentHeight(height: tableView.contentSize.height)
     }
 
@@ -316,6 +322,7 @@ extension AutocompleteViewController {
     private func decorate() {
         let theme = ThemeManager.shared.currentTheme
         tableView.separatorColor = theme.tableCellSeparatorColor
+        view.backgroundColor = UIColor(designSystemColor: .background)
     }
 }
 

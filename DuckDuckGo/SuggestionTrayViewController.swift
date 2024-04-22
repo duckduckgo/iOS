@@ -153,8 +153,7 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     func float(withWidth width: CGFloat) {
-        autocompleteController?.showBackground = false
-        
+
         containerView.layer.cornerRadius = 16
         containerView.layer.masksToBounds = true
  
@@ -170,7 +169,7 @@ class SuggestionTrayViewController: UIViewController {
         
         let isFirstPresentation = fullHeightConstraint.isActive
         if isFirstPresentation {
-            variableHeightConstraint.constant = SuggestionTableViewCell.Constants.cellHeight * 6
+            variableHeightConstraint.constant = Constant.suggestionTrayInitialHeight
         }
         
         variableWidthConstraint.constant = width
@@ -179,8 +178,6 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     func fill() {
-        autocompleteController?.showBackground = true
-
         containerView.layer.shadowColor = UIColor.clear.cgColor
         containerView.layer.cornerRadius = 0
 
@@ -294,7 +291,7 @@ extension SuggestionTrayViewController: AutocompleteViewControllerPresentationDe
         
         guard !fullHeightConstraint.isActive else { return }
         
-        if height > variableHeightConstraint.constant {
+        if height > Constant.suggestionTrayInitialHeight {
             variableHeightConstraint.constant = height
         }
     }
@@ -312,4 +309,10 @@ extension SuggestionTrayViewController {
         }
     }
     
+}
+
+private extension SuggestionTrayViewController {
+    enum Constant {
+        static let suggestionTrayInitialHeight = SuggestionTableViewCell.Constants.cellHeight * 6
+    }
 }

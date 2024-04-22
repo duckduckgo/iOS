@@ -149,13 +149,6 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.state.showsFullURL = $0
                 self.appSettings.showFullSiteAddress = $0
-                if $0 {
-                    Pixel.fire(pixel: .settingsShowFullSiteAddressEnabled,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                } else {
-                    Pixel.fire(pixel: .settingsShowFullSiteAddressDisabled,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                }
             }
         )
     }

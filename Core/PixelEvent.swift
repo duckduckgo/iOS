@@ -668,8 +668,6 @@ extension Pixel {
         case settingsAutomaticallyClearDataOff
         case settingsNextStepsAddAppToDock
         case settingsNextStepsAddWidget
-        case settingsShowFullSiteAddressEnabled
-        case settingsShowFullSiteAddressDisabled
 
         // Web pixels
         case privacyProOfferMonthlyPriceClick
@@ -1315,8 +1313,6 @@ extension Pixel.Event {
         case .settingsAutomaticallyClearDataOff: return "m_settings_automatically_clear_data_off"
         case .settingsNextStepsAddAppToDock: return "m_settings_next_steps_add_app_to_dock"
         case .settingsNextStepsAddWidget: return "m_settings_next_steps_add_widget"
-        case .settingsShowFullSiteAddressEnabled: return "m_settings_show_full_url_on"
-        case .settingsShowFullSiteAddressDisabled: return "m_settings_show_full_url_off"
 
         // Launch
         case .privacyProFeatureEnabled: return "m_privacy-pro_feature_enabled"

@@ -86,6 +86,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var syncStateCancellable: AnyCancellable?
     private var isSyncInProgressCancellable: AnyCancellable?
 
+    private let crashCollection = CrashCollection(platform: .iOS, log: .generalLog)
+    private var crashReportUploaderOnboarding: CrashCollectionOnboarding?
+
     // MARK: lifecycle
 
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
@@ -130,8 +133,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Configuration.setURLProvider(AppConfigurationURLProvider())
         }
 
-        CrashCollection.start {
-            Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [])
+        crashCollection.start { pixelParameters, payloads, sendReport in
+            pixelParameters.forEach { params in
+                Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
+            }
+
+            // Async dispatch because rootViewController may otherwise be nil here
+            DispatchQueue.main.async {
+                guard let viewController = self.window?.rootViewController else {
+                    return
+                }
+                let dataPayloads = payloads.map { $0.jsonRepresentation() }
+                let crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
+                crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: dataPayloads, from: viewController, sendReport: sendReport)
+                self.crashReportUploaderOnboarding = crashReportUploaderOnboarding
+            }
         }
 
         clearTmp()
@@ -267,9 +283,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 })
             }
 
-        let previewsSource = TabPreviewsSource()
         let historyManager = makeHistoryManager()
-        let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
 #if APP_TRACKING_PROTECTION
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
@@ -278,18 +292,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                       historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
-                                      appSettings: AppDependencyProvider.shared.appSettings,
-                                      previewsSource: previewsSource,
-                                      tabsModel: tabsModel)
+                                      appSettings: AppDependencyProvider.shared.appSettings)
 #else
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
-                                      appSettings: AppDependencyProvider.shared.appSettings,
-                                      previewsSource: previewsSource,
-                                      tabsModel: tabsModel)
+                                      appSettings: AppDependencyProvider.shared.appSettings)
 #endif
 
         main.loadViewIfNeeded()
@@ -344,27 +354,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    private func prepareTabsModel(previewsSource: TabPreviewsSource = TabPreviewsSource(),
-                                  appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
-                                  isDesktop: Bool = UIDevice.current.userInterfaceIdiom == .pad) -> TabsModel {
-        let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
-        let tabsModel: TabsModel
-        if AutoClearSettingsModel(settings: appSettings) != nil {
-            tabsModel = TabsModel(desktop: isPadDevice)
-            tabsModel.save()
-            previewsSource.removeAllPreviews()
-        } else {
-            if let storedModel = TabsModel.get() {
-                // Save new model in case of migration
-                storedModel.save()
-                tabsModel = storedModel
-            } else {
-                tabsModel = TabsModel(desktop: isPadDevice)
-            }
-        }
-        return tabsModel
-    }
-
     private func makeHistoryManager() -> HistoryManager {
         let historyManager = HistoryManager(privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
                               variantManager: DefaultVariantManager(),
@@ -416,14 +405,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             wrappee: NetworkProtectionUNNotificationPresenter()
         )
         presenter.showEntitlementNotification()
-    }
-
-    private func presentVPNEarlyAccessOverAlert() {
-        let alertController = CriticalAlerts.makeVPNEarlyAccessOverAlert()
-        window?.rootViewController?.present(alertController, animated: true) { [weak self] in
-            DailyPixel.fireDailyAndCount(pixel: .privacyProPromotionDialogShownVPN)
-            self?.tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
-        }
     }
 #endif
 
@@ -534,8 +515,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         if vpnFeatureVisibility.shouldShowThankYouMessaging() && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
-            presentVPNEarlyAccessOverAlert()
-
             Task {
                 await self.stopAndRemoveVPN(with: "thank-you-dialog")
             }
@@ -757,7 +736,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         Task { @MainActor in
-            // Autoclear should have happened by now
+            await autoClear?.applicationWillMoveToForeground()
             showKeyboardIfSettingOn = false
 
             if !handleAppDeepLink(app, mainViewController, url) {

@@ -108,6 +108,16 @@ jobs:
             --form "file=@${asana_dsyms_path};type=application/zip"
         fi
 
+    - name: Upload debug symbols to S3
+      if: always()
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ vars.AWS_DEFAULT_REGION }}
+        DSYM_S3_PATH: s3://${{ vars.DSYM_BUCKET_NAME }}/${{ vars.DSYM_BUCKET_PREFIX }}/
+      run: |
+        aws s3 cp "${{ github.workspace }}/DuckDuckGo-${{ env.app_version }}-dSYM.zip" ${{ env.DSYM_S3_PATH }}
+
     - name: Send Mattermost message
       if: ${{ success() || failure() }} # Don't execute when cancelled
       env:

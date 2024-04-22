@@ -826,6 +826,24 @@
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: %@";
 
+/* Crash Report always send button title */
+"crash.report.dialog.always.send" = "Vienmēr sūtīt avārijas ziņojumus";
+
+/* Crash Report hide details button title */
+"crash.report.dialog.hide.details" = "Paslēpt";
+
+/* Crash Report dialog message */
+"crash.report.dialog.message" = "Ziņojumi par avārijām palīdz DuckDuckGo diagnosticēt problēmas un uzlabot mūsu produktus. Tie nesatur nekādu personu identificējošu informāciju.";
+
+/* Crash Report never send button title */
+"crash.report.dialog.never.send" = "Nekad nesūtīt";
+
+/* Crash Report show details button title */
+"crash.report.dialog.show.details" = "Skatīt, kas tiek nosūtīts";
+
+/* Crash Report dialog title */
+"crash.report.dialog.title" = "Vai automātiski nosūtīt avārijas ziņojumus?";
+
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Iepriekšējais mēnesis";
 
@@ -1979,6 +1997,12 @@
 
 /* Header of settings related to search */
 "settings.search.settings" = "Meklēšanas iestatījumi";
+
+/* Settings cell for Send Crash Reports */
+"settings.send.crash.reports" = "Nosūtīt avārijas ziņojumus";
+
+/* Explanation of Send Crash Reports settings option */
+"settings.send.crash.reports.description" = "Automātiski nosūtīt avārijas ziņojumus DuckDuckGo.";
 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Iestati adreses joslas pozīciju";

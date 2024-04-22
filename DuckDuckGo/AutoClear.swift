@@ -33,15 +33,14 @@ class AutoClear {
     private let worker: AutoClearWorker
     private var timestamp: TimeInterval?
     
-    private let appSettings: AppSettings
-
+    private lazy var appSettings = AppDependencyProvider.shared.appSettings
+    
     var isClearingEnabled: Bool {
         return AutoClearSettingsModel(settings: appSettings) != nil
     }
     
-    init(worker: AutoClearWorker, appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
+    init(worker: AutoClearWorker) {
         self.worker = worker
-        self.appSettings = appSettings
     }
     
     @MainActor
@@ -87,8 +86,8 @@ class AutoClear {
             let timestamp = timestamp,
             shouldClearData(elapsedTime: Date().timeIntervalSince1970 - timestamp) else { return }
         
-        self.timestamp = nil
         worker.clearNavigationStack()
         await clearData()
+        self.timestamp = nil
     }
 }

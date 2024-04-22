@@ -83,15 +83,4 @@ struct CriticalAlerts {
         return alertController
     }
 
-    static func makeVPNEarlyAccessOverAlert() -> UIAlertController {
-        let alertController = UIAlertController(title: UserText.vpnEarlyAccessOverAlertTitle,
-                                                message: UserText.vpnEarlyAccessOverAlertMessage,
-                                                preferredStyle: .alert)
-
-        let closeButton = UIAlertAction(title: UserText.vpnEarlyAccessOverAlertAction, style: .cancel)
-
-        alertController.addAction(closeButton)
-        return alertController
-    }
-
 }

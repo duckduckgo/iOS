@@ -2329,7 +2329,7 @@ extension MainViewController: TabSwitcherButtonDelegate {
     }
 
     func showTabSwitcher() {
-        guard currentTab ?? tabManager.current(createIfNeeded: true) != nil else {
+        guard let currentTab = currentTab ?? tabManager?.current(createIfNeeded: true) else {
             fatalError("Unable to get current tab")
         }
 

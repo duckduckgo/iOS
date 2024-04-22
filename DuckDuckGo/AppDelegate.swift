@@ -431,15 +431,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func setupSubscriptionsEnvironment() {
         Task {
-            let environment = SubscriptionPurchaseEnvironment.ServiceEnvironment(rawValue: privacyProEnvironment)
-            SubscriptionPurchaseEnvironment.currentServiceEnvironment = environment ?? SubscriptionPurchaseEnvironment.ServiceEnvironment.default
-
-#if NETWORK_PROTECTION
-            if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {
-                SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
-            }
-#endif
-
+            let environment = SubscriptionPurchaseEnvironment.ServiceEnvironment(rawValue: privacyProEnvironment) ?? SubscriptionPurchaseEnvironment.ServiceEnvironment.default
+            SubscriptionPurchaseEnvironment.currentServiceEnvironment = environment
+            VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment = (environment == .production) ? .production : .staging
             SubscriptionPurchaseEnvironment.current = .appStore
         }
     }

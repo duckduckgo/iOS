@@ -22,6 +22,10 @@ import UIKit
 import Subscription
 import Core
 
+#if NETWORK_PROTECTION
+import NetworkProtection
+#endif
+
 @available(iOS 15.0, *)
 final class SubscriptionDebugViewController: UITableViewController {
     
@@ -121,10 +125,8 @@ final class SubscriptionDebugViewController: UITableViewController {
             }
         
         case .environment:
-            let environment = SubscriptionPurchaseEnvironment.ServiceEnvironment(rawValue: privacyProEnvironment)
-            SubscriptionPurchaseEnvironment.currentServiceEnvironment = environment ?? SubscriptionPurchaseEnvironment.ServiceEnvironment.default
-            let staging = SubscriptionPurchaseEnvironment.ServiceEnvironment.staging.description
-            let prod = SubscriptionPurchaseEnvironment.ServiceEnvironment.production.description
+            let staging = SubscriptionPurchaseEnvironment.ServiceEnvironment.staging.rawValue
+            let prod = SubscriptionPurchaseEnvironment.ServiceEnvironment.production.rawValue
             switch EnvironmentRows(rawValue: indexPath.row) {
             case .staging:
                 cell.textLabel?.text = "Staging"
@@ -280,10 +282,19 @@ final class SubscriptionDebugViewController: UITableViewController {
     }
     
     private func setEnvironment(_ environment: SubscriptionPurchaseEnvironment.ServiceEnvironment) {
-        if environment.description != SubscriptionPurchaseEnvironment.currentServiceEnvironment.description {
+        if environment.description != privacyProEnvironment {
+            
             AccountManager().signOut()
-            privacyProEnvironment = environment.description
+            
+            // Update Subscription environment
+            privacyProEnvironment = environment.rawValue
             SubscriptionPurchaseEnvironment.currentServiceEnvironment = environment
+            
+            // Update VPN Environment
+            VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment = environment == .production
+                ? .production
+                : .staging
+            NetworkProtectionLocationListCompositeRepository.clearCache()
             
             tableView.reloadData()
         }

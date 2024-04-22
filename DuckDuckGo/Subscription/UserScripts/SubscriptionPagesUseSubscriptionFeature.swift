@@ -168,9 +168,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     // MARK: Broker Methods (Called from WebView via UserScripts)
     func getSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
-        // let authToken = AccountManager().authToken ?? Constants.empty
-        // return [Constants.token: authToken]
-        return [Constants.token: ""]
+        let authToken = AccountManager().authToken ?? Constants.empty
+        return [Constants.token: authToken]
     }
     
     func getSubscriptionOptions(params: Any, original: WKScriptMessage) async -> Encodable? {

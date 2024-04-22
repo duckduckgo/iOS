@@ -237,7 +237,7 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
                 tunnelManager.connection.fetchLastDisconnectError { error in
                     let message = {
                         if let error = error as? NSError {
-                            if error.domain == NEVPNConnectionErrorDomain, 
+                            if error.domain == NEVPNConnectionErrorDomain,
                                 let code = NEVPNConnectionError(rawValue: error.code) {
                                 switch code {
                                 case .overslept: return "overslept"

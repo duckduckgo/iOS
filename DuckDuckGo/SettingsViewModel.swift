@@ -847,7 +847,9 @@ extension SettingsViewModel {
     }
     
     private func setupNotificationObservers() {
-        subscriptionSignOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut, object: nil, queue: .main) { [weak self] _ in
+        subscriptionSignOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut,
+                                                                             object: nil,
+                                                                             queue: .main) { [weak self] _ in
             if #available(iOS 15.0, *) {
                 guard let strongSelf = self else { return }
                 Task { await strongSelf.setupSubscriptionEnvironment() }

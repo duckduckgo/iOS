@@ -41,7 +41,7 @@ struct SettingsState {
         var status: String
     }
             
-    struct Subscription {
+    struct Subscription: Codable {
         var enabled: Bool
         var canPurchase: Bool
         var isSignedIn: Bool
@@ -50,7 +50,6 @@ struct SettingsState {
         var shouldDisplayRestoreSubscriptionError: Bool
         var entitlements: [Entitlement.ProductName]
         var platform: DDGSubscription.Platform
-        var stripeViewModel: SubscriptionExternalLinkViewModel?
         var isShowingStripeView: Bool
     }
     

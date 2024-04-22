@@ -50,8 +50,13 @@ final class SettingsViewModel: ObservableObject {
     var emailManager: EmailManager { EmailManager() }
 
     // Subscription Dependencies
-    private var accountManager: AccountManager
-    private var signOutObserver: Any?
+    private var subscriptionAccountManager: AccountManager
+    private var subscriptionSignOutObserver: Any?
+    private(set) var subscriptionStripeViewModel: SubscriptionExternalLinkViewModel?
+    
+    // Used to cache the lasts subscription state for up to a week
+    private var subscriptionStateCache = UserDefaultsCache<SettingsState.Subscription>(key: UserDefaultsCacheKey.subscriptionState,
+                                                                         settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(86400)))
     
 #if NETWORK_PROTECTION
     private let connectionObserver = ConnectionStatusObserverThroughSession()
@@ -394,7 +399,7 @@ final class SettingsViewModel: ObservableObject {
          deepLink: SettingsDeepLinkSection? = nil) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
-        self.accountManager = accountManager
+        self.subscriptionAccountManager = accountManager
         self.voiceSearchHelper = voiceSearchHelper
         self.deepLinkTarget = deepLink
         
@@ -403,7 +408,7 @@ final class SettingsViewModel: ObservableObject {
     }
     
     deinit {
-        signOutObserver = nil
+        subscriptionSignOutObserver = nil
     }
 }
 // swiftlint:enable type_body_length
@@ -743,14 +748,16 @@ extension SettingsViewModel {
     @MainActor
     private func setupSubscriptionEnvironment() async {
         
+        // Fetch last subscription state from Cache or Returns defaults
+        let cachedSubscription = subscriptionStateCache.get() ?? SettingsState.defaults.subscription
+        state.subscription = cachedSubscription
+        
+        // Update availability
         state.subscription.enabled = AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
         state.subscription.canPurchase = SubscriptionPurchaseEnvironment.canPurchase
-        state.subscription.isSignedIn = false
-        state.subscription.hasActiveSubscription = false
-        self.state.subscription.entitlements = []
         
         // Active subscription check
-        guard let token = accountManager.accessToken else {
+        guard let token = subscriptionAccountManager.accessToken else {
             if #available(iOS 15, *) {
                 setupSubscriptionPurchaseOptions()
             }
@@ -763,7 +770,6 @@ extension SettingsViewModel {
         case .success(let subscription):
             state.subscription.isSignedIn = true
             state.subscription.platform = subscription.platform
-            // state.subscription.platform = .stripe
             
             if subscription.isActive {
                 state.subscription.hasActiveSubscription = true
@@ -789,6 +795,9 @@ extension SettingsViewModel {
                 state.subscription.hasActiveSubscription = false
             }
             
+            // Update subscription Cache
+            subscriptionStateCache.set(state.subscription)
+            
         case .failure:
             break
             
@@ -812,18 +821,18 @@ extension SettingsViewModel {
     
     @available(iOS 15.0, *)
     func manageStripeSubscription() async {
-        guard let token = accountManager.accessToken, let externalID = accountManager.externalID else { return }
+        guard let token = subscriptionAccountManager.accessToken, let externalID = subscriptionAccountManager.externalID else { return }
         let serviceResponse = await  SubscriptionService.getCustomerPortalURL(accessToken: token, externalID: externalID)
         
         // Get Stripe Customer Portal URL and update the model
         if case .success(let response) = serviceResponse {
             guard let url = URL(string: response.customerPortalUrl) else { return }
-            if let existingModel = state.subscription.stripeViewModel {
+            if let existingModel = subscriptionStripeViewModel {
                 existingModel.url = url
             } else {
                 let model = SubscriptionExternalLinkViewModel(url: url)
                 DispatchQueue.main.async {
-                    self.state.subscription.stripeViewModel = model
+                    self.subscriptionStripeViewModel = model
                 }
             }
         }
@@ -838,7 +847,7 @@ extension SettingsViewModel {
     }
     
     private func setupNotificationObservers() {
-        signOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut, object: nil, queue: .main) { [weak self] _ in
+        subscriptionSignOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut, object: nil, queue: .main) { [weak self] _ in
             if #available(iOS 15.0, *) {
                 guard let strongSelf = self else { return }
                 Task { await strongSelf.setupSubscriptionEnvironment() }
@@ -866,5 +875,6 @@ extension SettingsViewModel {
             }
         }
     }
+    
 }
 // swiftlint:enable file_length

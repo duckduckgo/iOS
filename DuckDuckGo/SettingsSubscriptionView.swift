@@ -165,7 +165,7 @@ struct SettingsSubscriptionView: View {
                                    action: { Task { await viewModel.manageStripeSubscription() } },
                                    isButton: true).foregroundColor(Color(designSystemColor: .accent))
                     .sheet(isPresented: $isShowingStripeView, content: {
-                        if let stripeViewModel = viewModel.state.subscription.stripeViewModel {
+                        if let stripeViewModel = viewModel.subscriptionStripeViewModel {
                             SubscriptionExternalLinkView(viewModel: stripeViewModel, title: UserText.subscriptionManagePlan)
                         }
                     })
@@ -244,15 +244,16 @@ struct SettingsSubscriptionView: View {
     
     @ViewBuilder
     private var stripeView: some View {
-        if let stripeViewModel = viewModel.state.subscription.stripeViewModel {
+        if let stripeViewModel = viewModel.subscriptionStripeViewModel {
             SubscriptionExternalLinkView(viewModel: stripeViewModel)
         }
     }
     
     var body: some View {
         if viewModel.state.subscription.enabled && viewModel.state.subscription.canPurchase {
+            
             Section(header: Text(UserText.settingsPProSection)) {
-                
+                                
                 switch (
                     viewModel.state.subscription.isSignedIn,
                     viewModel.state.subscription.hasActiveSubscription,

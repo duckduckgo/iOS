@@ -56,7 +56,7 @@ final class SettingsViewModel: ObservableObject {
     
     // Used to cache the lasts subscription state for up to a week
     private var subscriptionStateCache = UserDefaultsCache<SettingsState.Subscription>(key: UserDefaultsCacheKey.subscriptionState,
-                                                                         settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(86400)))
+                                                                         settings: UserDefaultsCacheSettings(defaultExpirationInterval: .days(7)))
     
 #if NETWORK_PROTECTION
     private let connectionObserver = ConnectionStatusObserverThroughSession()
@@ -852,7 +852,10 @@ extension SettingsViewModel {
                                                                              queue: .main) { [weak self] _ in
             if #available(iOS 15.0, *) {
                 guard let strongSelf = self else { return }
-                Task { await strongSelf.setupSubscriptionEnvironment() }
+                Task {
+                    strongSelf.subscriptionStateCache.reset()
+                    await strongSelf.setupSubscriptionEnvironment()
+                }
             }
         }
     }

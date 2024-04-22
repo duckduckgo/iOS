@@ -672,7 +672,7 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
     private func showSubscriptionEnvAlert() {
             let alertController = UIAlertController(title: "Use Subscription Environment", message: nil, preferredStyle: .alert)
 
-            alertController.message = "VPN environment is now managed by the subscription environment.  Go to Debug > Subscription > Environment to update it"
+            alertController.message = "Go to Debug > Subscription > Environment to change the environment."
         
             // Add a "Cancel" action
         let cancelAction = UIAlertAction(title: "OK", style: .default, handler: nil)

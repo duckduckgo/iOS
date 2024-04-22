@@ -141,43 +141,6 @@ struct SettingsSubscriptionView: View {
     }
     
     @ViewBuilder
-    private var subscriptionManageCell: some View {
-        Group {
-            switch viewModel.state.subscription.platform {
-            case .apple:
-                
-                let subscribeView = SubscriptionContainerView(currentView: .subscribe)
-                    .navigationViewStyle(.stack)
-                    .environmentObject(subscriptionNavigationCoordinator)
-                NavigationLink(
-                    destination: subscribeView,
-                    isActive: $isShowingSubscribeFlow,
-                    label: { SettingsCellView(label: UserText.subscriptionRestoreNotFoundPlans) })
-            
-            case .google:
-                NavigationLink(
-                    destination: SubscriptionGoogleView(),
-                    isActive: $isShowingGoogleView,
-                    label: { SettingsCellView(label: UserText.subscriptionRestoreNotFoundPlans) })
-                
-            case .stripe:
-                SettingsCustomCell(content: { Text(UserText.subscriptionRestoreNotFoundPlans) },
-                                   action: { Task { await viewModel.manageStripeSubscription() } },
-                                   isButton: true).foregroundColor(Color(designSystemColor: .accent))
-                    .sheet(isPresented: $isShowingStripeView, content: {
-                        if let stripeViewModel = viewModel.subscriptionStripeViewModel {
-                            SubscriptionExternalLinkView(viewModel: stripeViewModel, title: UserText.subscriptionManagePlan)
-                        }
-                    })
-                    
-            
-            default:
-                EmptyView()
-            }
-        }
-    }
-    
-    @ViewBuilder
     private var noEntitlementsAvailableView: some View {
         Group {
             SettingsCustomCell(content: {
@@ -240,15 +203,7 @@ struct SettingsSubscriptionView: View {
         }
         
     }
-    
-    
-    @ViewBuilder
-    private var stripeView: some View {
-        if let stripeViewModel = viewModel.subscriptionStripeViewModel {
-            SubscriptionExternalLinkView(viewModel: stripeViewModel)
-        }
-    }
-    
+        
     var body: some View {
         if viewModel.state.subscription.enabled && viewModel.state.subscription.canPurchase {
             
@@ -282,14 +237,6 @@ struct SettingsSubscriptionView: View {
                 if value {
                     isShowingSubscriptionError = true
                 }
-            }
-            
-            // Stripe Binding
-            .onChange(of: viewModel.state.subscription.isShowingStripeView) { value in
-                isShowingStripeView = value
-            }
-            .onChange(of: isShowingStripeView) { value in
-                viewModel.displayStripeView(value)
             }
             
             .onReceive(subscriptionNavigationCoordinator.$shouldPopToAppSettings) { shouldDismiss in

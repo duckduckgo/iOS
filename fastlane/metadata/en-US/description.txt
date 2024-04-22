@@ -1,6 +1,7 @@
 DuckDuckGo is a free browser that provides the most comprehensive online privacy protection in one app. Unlike most popular browsers, it has powerful privacy protections by default, including our search engine that doesn’t track your history and over a dozen other built-in protections. Millions of people use DuckDuckGo as their go-to browser to protect their everyday online activities, from searching to browsing, emailing, and more.
 
 FEATURE HIGHLIGHTS
+
 • Search Privately by Default: DuckDuckGo Private Search comes built-in, so you can easily search online without being tracked.
 
 • Block Most Trackers Before They Load: Our 3rd-Party Tracker Loading Protection exceeds what most popular browsers offer by default, stopping hidden tracking scripts from loading and collecting your personal data.
@@ -14,18 +15,28 @@ FEATURE HIGHLIGHTS
 • Sync and Backup: Securely sync bookmarks and passwords across your devices.
 
 We feature many protections not available on most browsers, even in private browsing mode, including protection from link tracking, AMP tracking, and more.
-
+ 
 
 EVERYDAY PRIVACY CONTROLS
+
 • Clear your tabs and browsing data in a flash with the Fire Button.
 
 • Banish cookie pop-ups and automatically set your preferences to minimize cookies and maximize privacy.  
 
 • Signal Your Privacy Preference with Global Privacy Control (GPC) built into our app. GPC intends to help you express your opt-out rights automatically by telling websites not to sell or share your personal info. Whether it can be used to enforce your legal rights depends on the laws in your jurisdiction.
 
+PRIVACY PRO 
+Subscribe to Privacy Pro for: 
+
+• Our VPN: Secure your connection on up to 5 devices. 
+
+• Identity Theft Restoration: If your identity is stolen, we’ll help restore it. 
+
+Sync across DuckDuckGo apps: Activate your subscription in other DuckDuckGo apps. For example, you can access Personal Information Removal in DuckDuckGo for Mac.
+ 
 Privacy Pro Pricing & Terms 
 
-Payment will be charged automatically to your iTunes account until you cancel, which you can do in app settings. You have the option to provide an email address to activate your subscription on other devices, and we will only use that email address to verify your subscription. For terms of service and privacy policy, visit https://duckduckgo.com/pro/privacy-terms
+Payment will be charged automatically to your iTunes account until you cancel, which you can do in app settings. Your personal info is not required to subscribe. You have the option to provide an email address to activate your subscription on other devices, and we will only use that email address to verify your subscription. For terms of service and privacy policy, visit https://duckduckgo.com/pro/privacy-terms
 
 You don't need to wait to take back your privacy. Join the millions of people using DuckDuckGo and protect many of your everyday online activities with one app. It's privacy, simplified.
 

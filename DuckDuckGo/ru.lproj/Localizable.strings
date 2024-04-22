@@ -826,6 +826,24 @@
 /* No comment provided by engineer. */
 "bucket: %@" = "контейнер: %@";
 
+/* Crash Report always send button title */
+"crash.report.dialog.always.send" = "Всегда отправлять отчеты о сбоях";
+
+/* Crash Report hide details button title */
+"crash.report.dialog.hide.details" = "Скрыть";
+
+/* Crash Report dialog message */
+"crash.report.dialog.message" = "Отчеты о сбоях помогают нам диагностировать проблемы и совершенствовать продукты. Они не содержат информации, по которой можно установить вашу личность.";
+
+/* Crash Report never send button title */
+"crash.report.dialog.never.send" = "Не отправлять";
+
+/* Crash Report show details button title */
+"crash.report.dialog.show.details" = "Что было отправлено";
+
+/* Crash Report dialog title */
+"crash.report.dialog.title" = "Автоматически отправлять отчеты о сбоях?";
+
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "За последний месяц";
 
@@ -1979,6 +1997,12 @@
 
 /* Header of settings related to search */
 "settings.search.settings" = "Настройки поиска";
+
+/* Settings cell for Send Crash Reports */
+"settings.send.crash.reports" = "Отправлять отчеты о сбоях";
+
+/* Explanation of Send Crash Reports settings option */
+"settings.send.crash.reports.description" = "Автоматически отправлять отчеты о сбоях в DuckDuckGo.";
 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Настроить положение адресной строки";

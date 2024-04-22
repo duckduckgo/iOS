@@ -826,6 +826,24 @@
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: %@";
 
+/* Crash Report always send button title */
+"crash.report.dialog.always.send" = "Crashrapporten altijd verzenden";
+
+/* Crash Report hide details button title */
+"crash.report.dialog.hide.details" = "Verbergen";
+
+/* Crash Report dialog message */
+"crash.report.dialog.message" = "Crashrapporten helpen DuckDuckGo om problemen vast te stellen en onze producten te verbeteren. Ze bevatten geen persoonlijk identificeerbare informatie.";
+
+/* Crash Report never send button title */
+"crash.report.dialog.never.send" = "Nooit verzenden";
+
+/* Crash Report show details button title */
+"crash.report.dialog.show.details" = "Bekijk wat er is verzonden";
+
+/* Crash Report dialog title */
+"crash.report.dialog.title" = "Automatisch crashrapporten verzenden?";
+
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Afgelopen maand";
 
@@ -1979,6 +1997,12 @@
 
 /* Header of settings related to search */
 "settings.search.settings" = "Zoekinstellingen";
+
+/* Settings cell for Send Crash Reports */
+"settings.send.crash.reports" = "Crashrapporten verzenden";
+
+/* Explanation of Send Crash Reports settings option */
+"settings.send.crash.reports.description" = "Verzend automatisch crashrapporten naar DuckDuckGo.";
 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Positie van adresbalk instellen";

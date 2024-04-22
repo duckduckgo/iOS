@@ -363,6 +363,16 @@ final class SettingsViewModel: ObservableObject {
         )
     }
 
+    var crashCollectionOptInStatusBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.crashCollectionOptInStatus == .optedIn },
+            set: {
+                self.appSettings.crashCollectionOptInStatus = $0 ? .optedIn : .optedOut
+                self.state.crashCollectionOptInStatus = $0 ? .optedIn : .optedOut
+            }
+        )
+    }
+
     var cookiePopUpProtectionStatus: StatusIndicator {
         return appSettings.autoconsentEnabled ? .on : .off
     }
@@ -422,6 +432,7 @@ extension SettingsViewModel {
             allowUniversalLinks: appSettings.allowUniversalLinks,
             activeWebsiteAccount: nil,
             version: versionProvider.versionAndBuildNumber,
+            crashCollectionOptInStatus: appSettings.crashCollectionOptInStatus,
             debugModeEnabled: featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild,
             voiceSearchEnabled: AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled,
             speechRecognitionAvailable: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,

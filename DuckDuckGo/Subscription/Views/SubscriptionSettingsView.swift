@@ -35,6 +35,8 @@ struct SubscriptionSettingsView: View {
     @State var isShowingRemovalNotice = false
     @State var isShowingFAQView = false
     @State var isShowingRestoreView = false
+    @State var isShowingConnectionError = false
+    @State var isLoading = false
     
     enum Constants {
         static let alertIcon = "Exclamation-Color-16"
@@ -56,14 +58,18 @@ struct SubscriptionSettingsView: View {
             VStack(alignment: .center, spacing: 7) {
                 Image("Privacy-Pro-96x96")
                 Text(UserText.subscriptionTitle).daxTitle2()
-                if active {
+                if !viewModel.state.isLoadingSubscriptionInfo {
+                    if active {
                         Text(viewModel.state.subscriptionType).daxHeadline()
-                }
-                HStack {
-                    if !active { Image(Constants.alertIcon) }
-                    Text(viewModel.state.subscriptionDetails)
-                        .daxSubheadRegular()
-                        .foregroundColor(Color(designSystemColor: .textSecondary))
+                    }
+                    HStack {
+                        if !active { Image(Constants.alertIcon) }
+                        Text(viewModel.state.subscriptionDetails)
+                            .daxSubheadRegular()
+                            .foregroundColor(Color(designSystemColor: .textSecondary))
+                    }
+                } else {
+                    SwiftUI.ProgressView()
                 }
             }
         }
@@ -77,23 +83,29 @@ struct SubscriptionSettingsView: View {
             let active = viewModel.state.subscriptionInfo?.isActive ?? false
             SettingsCustomCell(content: {
                 
-                if active {
-                    Text(UserText.subscriptionChangePlan)
-                        .daxBodyRegular()
-                        .foregroundColor(Color.init(designSystemColor: .accent))
+                if !viewModel.state.isLoadingSubscriptionInfo {
+                    if active {
+                        Text(UserText.subscriptionChangePlan)
+                            .daxBodyRegular()
+                            .foregroundColor(Color.init(designSystemColor: .accent))
+                    } else {
+                        Text(UserText.subscriptionRestoreNotFoundPlans)
+                            .daxBodyRegular()
+                            .foregroundColor(Color.init(designSystemColor: .accent))
+                    }
                 } else {
-                    Text(UserText.subscriptionRestoreNotFoundPlans)
-                        .daxBodyRegular()
-                        .foregroundColor(Color.init(designSystemColor: .accent))
+                    SwiftUI.ProgressView()
                 }
             },
                                action: {
-                Task {
-                    if active {
-                        viewModel.manageSubscription()
-                        Pixel.fire(pixel: .privacyProSubscriptionManagementPlanBilling, debounce: 1)
-                    } else {
-                        viewPlans?()
+                if !viewModel.state.isLoadingSubscriptionInfo {
+                    Task {
+                        if active {
+                            viewModel.manageSubscription()
+                            Pixel.fire(pixel: .privacyProSubscriptionManagementPlanBilling, debounce: 1)
+                        } else {
+                            viewPlans?()
+                        }
                     }
                 }
             },
@@ -156,6 +168,19 @@ struct SubscriptionSettingsView: View {
             headerSection
             manageSection
             devicesSection
+                .alert(isPresented: $isShowingRemovalNotice) {
+                    Alert(
+                        title: Text(UserText.subscriptionRemoveFromDeviceConfirmTitle),
+                        message: Text(UserText.subscriptionRemoveFromDeviceConfirmText),
+                        primaryButton: .cancel(Text(UserText.subscriptionRemoveCancel)) {
+                        },
+                        secondaryButton: .destructive(Text(UserText.subscriptionRemove)) {
+                            Pixel.fire(pixel: .privacyProSubscriptionManagementRemoval)
+                            viewModel.removeSubscription()
+                            dismiss()
+                        }
+                    )
+                }
             helpSection
             
         }
@@ -200,22 +225,26 @@ struct SubscriptionSettingsView: View {
             viewModel.displayFAQView(value)
         }
         
+        // Connection Error
+        .onChange(of: viewModel.state.isShowingConnectionError) { value in
+            isShowingConnectionError = value
+        }
+        .onChange(of: isShowingConnectionError) { value in
+            viewModel.showConnectionError(value)
+        }
+       
+        
         .onReceive(subscriptionNavigationCoordinator.$shouldPopToSubscriptionSettings) { shouldDismiss in
             if shouldDismiss {
                 isShowingRestoreView = false
             }
         }
         
-        // Remove subscription
-        .alert(isPresented: $isShowingRemovalNotice) {
+        .alert(isPresented: $isShowingConnectionError) {
             Alert(
-                title: Text(UserText.subscriptionRemoveFromDeviceConfirmTitle),
-                message: Text(UserText.subscriptionRemoveFromDeviceConfirmText),
-                primaryButton: .cancel(Text(UserText.subscriptionRemoveCancel)) {
-                },
-                secondaryButton: .destructive(Text(UserText.subscriptionRemove)) {
-                    Pixel.fire(pixel: .privacyProSubscriptionManagementRemoval)
-                    viewModel.removeSubscription()
+                title: Text(UserText.subscriptionBackendErrorTitle),
+                message: Text(UserText.subscriptionBackendErrorMessage),
+                dismissButton: .cancel(Text(UserText.subscriptionBackendErrorButton)) {
                     dismiss()
                 }
             )

@@ -748,19 +748,22 @@ extension SettingsViewModel {
     @MainActor
     private func setupSubscriptionEnvironment() async {
         
-        // Fetch last subscription state from Cache or Returns defaults
-        let cachedSubscription = subscriptionStateCache.get() ?? SettingsState.defaults.subscription
-        state.subscription = cachedSubscription
+        // If there's cached data use it by default
+        if let cachedSubscription = subscriptionStateCache.get() {
+            state.subscription = cachedSubscription
+            
+        // Otherwise use defaults and setup purchase availability
+        } else {
+            state.subscription = SettingsState.defaults.subscription
+            state.subscription.canPurchase = SubscriptionPurchaseEnvironment.canPurchase
+        }
         
-        // Update availability
+        // Update visibility based on Feature flag
         state.subscription.enabled = AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
-        state.subscription.canPurchase = SubscriptionPurchaseEnvironment.canPurchase
         
         // Active subscription check
         guard let token = subscriptionAccountManager.accessToken else {
-            if #available(iOS 15, *) {
-                setupSubscriptionPurchaseOptions()
-            }
+            subscriptionStateCache.set(state.subscription) // Sync cache
             return
         }
         
@@ -768,6 +771,7 @@ extension SettingsViewModel {
         switch subscriptionResult {
             
         case .success(let subscription):
+            
             state.subscription.isSignedIn = true
             state.subscription.platform = subscription.platform
             
@@ -795,28 +799,13 @@ extension SettingsViewModel {
                 state.subscription.hasActiveSubscription = false
             }
             
-            // Update subscription Cache
-            subscriptionStateCache.set(state.subscription)
-            
         case .failure:
             break
             
         }
-    }
-    
-    @available(iOS 15.0, *)
-    private func signOutUser() {
-        AccountManager().signOut()
-        setupSubscriptionPurchaseOptions()
-    }
-    
-    @available(iOS 15.0, *)
-    private func setupSubscriptionPurchaseOptions() {
-        PurchaseManager.shared.$availableProducts
-            .receive(on: RunLoop.main)
-            .sink { [weak self] products in
-                self?.state.subscription.canPurchase = !products.isEmpty
-            }.store(in: &cancellables)
+        
+        // Sync Cache
+        subscriptionStateCache.set(state.subscription)
     }
     
     @available(iOS 15.0, *)

@@ -826,6 +826,24 @@
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: %@";
 
+/* Crash Report always send button title */
+"crash.report.dialog.always.send" = "Lähetä aina virheraportit";
+
+/* Crash Report hide details button title */
+"crash.report.dialog.hide.details" = "Piilota";
+
+/* Crash Report dialog message */
+"crash.report.dialog.message" = "Virheraportit auttavat DuckDuckGota diagnosoimaan ongelmia ja parantamaan tuotteitamme. Ne eivät sisällä henkilön tunnistamisen mahdollistavia tietoja.";
+
+/* Crash Report never send button title */
+"crash.report.dialog.never.send" = "Älä lähetä koskaan";
+
+/* Crash Report show details button title */
+"crash.report.dialog.show.details" = "Katso, mitä on lähetetty";
+
+/* Crash Report dialog title */
+"crash.report.dialog.title" = "Lähetetäänkö virheraportit automaattisesti?";
+
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Viime kuukausi";
 
@@ -1979,6 +1997,12 @@
 
 /* Header of settings related to search */
 "settings.search.settings" = "Hakuasetukset";
+
+/* Settings cell for Send Crash Reports */
+"settings.send.crash.reports" = "Lähetä virheraportit";
+
+/* Explanation of Send Crash Reports settings option */
+"settings.send.crash.reports.description" = "Lähetä virheraportit automaattisesti DuckDuckGolle.";
 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Aseta osoitekentän sijainti";

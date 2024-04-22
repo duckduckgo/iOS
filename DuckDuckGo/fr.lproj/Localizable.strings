@@ -826,6 +826,24 @@
 /* No comment provided by engineer. */
 "bucket: %@" = "case : %@";
 
+/* Crash Report always send button title */
+"crash.report.dialog.always.send" = "Toujours envoyer des rapports de plantage";
+
+/* Crash Report hide details button title */
+"crash.report.dialog.hide.details" = "Masquer";
+
+/* Crash Report dialog message */
+"crash.report.dialog.message" = "Les rapports de plantage aident DuckDuckGo à diagnostiquer les problèmes et à améliorer ses produits. Ils ne contiennent aucune information susceptible de vous identifier personnellement.";
+
+/* Crash Report never send button title */
+"crash.report.dialog.never.send" = "Ne jamais envoyer";
+
+/* Crash Report show details button title */
+"crash.report.dialog.show.details" = "Voir ce qui est envoyé";
+
+/* Crash Report dialog title */
+"crash.report.dialog.title" = "Envoyer automatiquement des rapports de plantage ?";
+
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Le mois dernier";
 
@@ -1979,6 +1997,12 @@
 
 /* Header of settings related to search */
 "settings.search.settings" = "Paramètres de recherche";
+
+/* Settings cell for Send Crash Reports */
+"settings.send.crash.reports" = "Envoyer les rapports de plantage";
+
+/* Explanation of Send Crash Reports settings option */
+"settings.send.crash.reports.description" = "Envoyez automatiquement des rapports de plantage à DuckDuckGo.";
 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Définissez la position de votre barre d'adresse";

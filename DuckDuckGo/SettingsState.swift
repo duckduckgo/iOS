@@ -80,7 +80,8 @@ struct SettingsState {
 
     // About properties
     var version: String
-        
+    var crashCollectionOptInStatus: CrashCollectionOptInStatus
+
     // Features
     var debugModeEnabled: Bool
     var voiceSearchEnabled: Bool
@@ -113,6 +114,7 @@ struct SettingsState {
             allowUniversalLinks: true,
             activeWebsiteAccount: nil,
             version: "0.0.0.0",
+            crashCollectionOptInStatus: .undetermined,
             debugModeEnabled: false,
             voiceSearchEnabled: false,
             speechRecognitionAvailable: false,

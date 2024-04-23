@@ -43,6 +43,7 @@ extension URL {
 
     public static func webUrl(from text: String) -> URL? {
         guard var url = URL(string: text) else { return nil }
+        guard !url.absoluteString.isValidEmail else { return nil }
 
         switch url.scheme {
         case URLProtocol.http.rawValue, URLProtocol.https.rawValue:

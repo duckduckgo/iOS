@@ -117,6 +117,12 @@ class URLExtensionTests: XCTestCase {
         XCTAssertTrue(URL.isWebUrl("https://m.facebook.com/?refsrc=https%3A%2F%2Fwww.facebook.com%2F&_rdr"))
     }
 
+    func testWhenURLIsValidEmailThenIsWebUrlIsFalse() {
+        XCTAssertFalse(URL.isWebUrl("dax.the.duck@duck.ddg.com"))
+        XCTAssertFalse(URL.isWebUrl("dax@duckduckgo.com"))
+        XCTAssertFalse(URL.isWebUrl("dax67_theduck@duckduckgo.com"))
+    }
+
     func testWhenGivenSimpleStringThenIsWebUrlIsFalse() {
         XCTAssertFalse(URL.isWebUrl("randomtext"))
     }

@@ -278,7 +278,9 @@ class SuggestionTrayViewController: UIViewController {
     func applyContentInset(_ inset: UIEdgeInsets) {
         self.contentInsets = inset
         autocompleteController?.tableView.contentInset = inset
+        autocompleteController?.tableView.scrollIndicatorInsets = inset
         favoritesOverlay?.collectionView.contentInset = inset
+        favoritesOverlay?.collectionView.scrollIndicatorInsets = inset
     }
 }
 

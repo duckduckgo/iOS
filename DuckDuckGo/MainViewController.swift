@@ -606,8 +606,8 @@ class MainViewController: UIViewController {
         if let suggestionsTray = suggestionTrayController {
             let suggestionsFrameInView = suggestionsTray.view.convert(suggestionsTray.contentFrame, to: view)
 
-            let overflow = suggestionsFrameInView.size.height + suggestionsFrameInView.origin.y - keyboardFrameInView.origin.y + 10
-            if overflow > 0 {
+            let overflow = suggestionsFrameInView.intersection(keyboardFrameInView).height
+            if overflow > 0 && !appSettings.currentAddressBarPosition.isBottom {
                 suggestionsTray.applyContentInset(UIEdgeInsets(top: 0, left: 0, bottom: overflow, right: 0))
             } else {
                 suggestionsTray.applyContentInset(.zero)

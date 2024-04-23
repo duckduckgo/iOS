@@ -179,7 +179,8 @@ class AutocompleteViewController: UIViewController {
 
         let bookmarks: [Suggestion]
 
-        if variantManager.inSuggestionExperiment {
+        let inSuggestionExperiment = variantManager.inSuggestionExperiment
+        if inSuggestionExperiment {
             bookmarks = [] // We'll supply bookmarks elsewhere
         } else {
             bookmarks = cachedBookmarksSearch.search(query: query).prefix(2).map {
@@ -208,11 +209,17 @@ class AutocompleteViewController: UIViewController {
 
             let finalResult: SuggestionResult
             if let result {
-                finalResult = SuggestionResult(
-                    topHits: bookmarks + result.topHits,
-                    duckduckgoSuggestions: result.duckduckgoSuggestions,
-                    historyAndBookmarks: result.historyAndBookmarks
-                )
+                if inSuggestionExperiment {
+                    finalResult = result
+                } else {
+                    // Flatten the list when not in suggestion experiment,
+                    // otherwise we can end up with >2 top hits section
+                    finalResult = SuggestionResult(
+                        topHits: [],
+                        duckduckgoSuggestions: bookmarks + result.all,
+                        historyAndBookmarks: []
+                    )
+                }
             } else {
                 finalResult = .empty
             }

@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "graeme/vpn-server-failure-recovery-pixels",
-        "revision" : "7bade22f87abc94ac7dd9a163ae27cd3756afacc"
+        "revision" : "f448f67d4f5b4c52afc5560752cf7f9d5bfa1afd"
       }
     },
     {

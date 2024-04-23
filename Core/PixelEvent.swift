@@ -378,7 +378,12 @@ extension Pixel {
         case networkProtectionGeoswitchingSetNearest
         case networkProtectionGeoswitchingSetCustom
         case networkProtectionGeoswitchingNoLocations
-        
+
+        case networkProtectionFailureRecoveryStarted
+        case networkProtectionFailureRecoveryFailed
+        case networkProtectionFailureRecoveryCompletedHealthy
+        case networkProtectionFailureRecoveryCompletedUnhealthy
+
         // MARK: remote messaging pixels
         
         case remoteMessageShown

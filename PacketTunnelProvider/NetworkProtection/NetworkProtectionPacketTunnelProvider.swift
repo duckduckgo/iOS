@@ -100,6 +100,17 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             case .success:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelUpdateSuccess)
             }
+        case .failureRecoveryAttempt(let step):
+            switch step {
+            case .started:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailureRecoveryStarted)
+            case .completed(.healthy):
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailureRecoveryCompletedHealthy)
+            case .completed(.unhealthy):
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailureRecoveryCompletedUnhealthy)
+            case .failed(let error):
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailureRecoveryFailed, error: error)
+            }
         }
     }
 

@@ -116,7 +116,9 @@ jobs:
         AWS_DEFAULT_REGION: ${{ vars.AWS_DEFAULT_REGION }}
         DSYM_S3_PATH: s3://${{ vars.DSYM_BUCKET_NAME }}/${{ vars.DSYM_BUCKET_PREFIX }}/
       run: |
-        aws s3 cp "${{ github.workspace }}/DuckDuckGo-${{ env.app_version }}-dSYM.zip" ${{ env.DSYM_S3_PATH }}
+        if [[ -f ${{ env.dsyms_path }} ]]; then
+          aws s3 cp "${{ env.dsyms_path }}" ${{ env.DSYM_S3_PATH }}
+        fi
 
     - name: Send Mattermost message
       if: ${{ success() || failure() }} # Don't execute when cancelled

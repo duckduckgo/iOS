@@ -125,15 +125,15 @@ final class SubscriptionDebugViewController: UITableViewController {
             }
         
         case .environment:
-            let staging = SubscriptionPurchaseEnvironment.ServiceEnvironment.staging.rawValue
-            let prod = SubscriptionPurchaseEnvironment.ServiceEnvironment.production.rawValue
+            let staging = SubscriptionPurchaseEnvironment.ServiceEnvironment.staging
+            let prod = SubscriptionPurchaseEnvironment.ServiceEnvironment.production
             switch EnvironmentRows(rawValue: indexPath.row) {
             case .staging:
                 cell.textLabel?.text = "Staging"
-                cell.accessoryType = privacyProEnvironment == staging ? .checkmark : .none
+                cell.accessoryType = SubscriptionPurchaseEnvironment.currentServiceEnvironment == staging ? .checkmark : .none
             case .production:
                 cell.textLabel?.text = "Production"
-                cell.accessoryType = privacyProEnvironment == prod ? .checkmark : .none
+                cell.accessoryType = SubscriptionPurchaseEnvironment.currentServiceEnvironment == prod ? .checkmark : .none
             case .none:
                 break
             }

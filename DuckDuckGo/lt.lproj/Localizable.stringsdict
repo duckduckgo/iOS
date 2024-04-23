@@ -158,38 +158,6 @@ Užblokavau juos!
 			<string>%1$d privačiu skirtukų</string>
 		</dict>
 	</dict>
-	<key>appTP.home.blockedCount</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@attempts@</string>
-		<key>attempts</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>%d tracking attempts</string>
-			<key>one</key>
-			<string>%d tracking attempt</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-		</dict>
-	</dict>
-	<key>appTP.trackingattempts</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@attempts@</string>
-		<key>attempts</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>%d tracking attempts</string>
-			<key>one</key>
-			<string>%d tracking attempt</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-		</dict>
-	</dict>
 	<key>autofill.number.of.passwords</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -198,8 +166,8 @@ Užblokavau juos!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>%1$d slaptažodžis</string>
 			<key>few</key>
@@ -218,8 +186,8 @@ Užblokavau juos!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>Ar tikrai norite ištrinti %1$d slaptažodį?</string>
 			<key>few</key>
@@ -230,41 +198,41 @@ Užblokavau juos!
 			<string>Ar tikrai norite ištrinti %1$d slaptažodžių?</string>
 		</dict>
 	</dict>
-    <key>autofill.delete.all.passwords.confirmation.body</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%1$#@passwords@</string>
-        <key>passwords</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>Jūsų slaptažodžiai bus ištrinti iš šio įrenginio. Įsitikinkite, kad vis dar turite galimybę pasiekti savo %2$#@accounts@.</string>
-            <key>few</key>
-            <string>Jūsų slaptažodžiai bus ištrinti iš šio įrenginio. Įsitikinkite, kad vis dar turite galimybę pasiekti savo %2$#@accounts@.</string>
-            <key>many</key>
-            <string>Jūsų slaptažodžiai bus ištrinti iš šio įrenginio. Įsitikinkite, kad vis dar turite galimybę pasiekti savo %2$#@accounts@.</string>
-            <key>other</key>
-            <string>Jūsų slaptažodžiai bus ištrinti iš šio įrenginio. Įsitikinkite, kad vis dar turite galimybę pasiekti savo %2$#@accounts@.</string>
-        </dict>
-        <key>accounts</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>sąskaita</string>
-            <key>few</key>
-            <string>sąskaitos</string>
-            <key>many</key>
-            <string>sąskaitos</string>
-            <key>other</key>
-            <string>sąskaitų</string>
-        </dict>
-    </dict>
+	<key>autofill.delete.all.passwords.confirmation.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Jūsų slaptažodžiai bus ištrinti iš šio įrenginio. Įsitikinkite, kad vis dar turite galimybę pasiekti savo %2$#@accounts@.</string>
+			<key>few</key>
+			<string>Jūsų slaptažodžiai bus ištrinti iš šio įrenginio. Įsitikinkite, kad vis dar turite galimybę pasiekti savo %2$#@accounts@.</string>
+			<key>many</key>
+			<string>Jūsų slaptažodžiai bus ištrinti iš šio įrenginio. Įsitikinkite, kad vis dar turite galimybę pasiekti savo %2$#@accounts@.</string>
+			<key>other</key>
+			<string>Jūsų slaptažodžiai bus ištrinti iš šio įrenginio. Įsitikinkite, kad vis dar turite galimybę pasiekti savo %2$#@accounts@.</string>
+		</dict>
+		<key>accounts</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>sąskaita</string>
+			<key>few</key>
+			<string>sąskaitos</string>
+			<key>many</key>
+			<string>sąskaitos</string>
+			<key>other</key>
+			<string>sąskaitų</string>
+		</dict>
+	</dict>
 	<key>autofill.delete.all.passwords.sync.confirmation.body</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -273,8 +241,8 @@ Užblokavau juos!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>Jūsų slaptažodžiai bus ištrinti iš visų sinchronizuojamų įrenginių. Įsitikinkite, kad vis dar turite būdą, kaip pasiekti %2$#@accounts@ paskyrą.</string>
 			<key>few</key>
@@ -288,8 +256,8 @@ Užblokavau juos!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>sąskaita</string>
 			<key>few</key>
@@ -308,8 +276,8 @@ Užblokavau juos!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>%1$d slaptažodis ištrintas</string>
 			<key>few</key>

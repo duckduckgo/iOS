@@ -158,38 +158,6 @@ Blokiral sem jih!
 			<string>%1$d zasebnih zavihkov</string>
 		</dict>
 	</dict>
-	<key>appTP.home.blockedCount</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@attempts@</string>
-		<key>attempts</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>%d tracking attempts</string>
-			<key>one</key>
-			<string>%d tracking attempt</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-		</dict>
-	</dict>
-	<key>appTP.trackingattempts</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@attempts@</string>
-		<key>attempts</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>%d tracking attempts</string>
-			<key>one</key>
-			<string>%d tracking attempt</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-		</dict>
-	</dict>
 	<key>autofill.number.of.passwords</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -198,8 +166,8 @@ Blokiral sem jih!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>%1$d geslo</string>
 			<key>two</key>
@@ -218,8 +186,8 @@ Blokiral sem jih!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>Ali ste prepričani, da želite izbrisati %1$d geslo?</string>
 			<key>two</key>
@@ -230,41 +198,41 @@ Blokiral sem jih!
 			<string>Ali ste prepričani, da želite izbrisati %1$d gesel?</string>
 		</dict>
 	</dict>
-    <key>autofill.delete.all.passwords.confirmation.body</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%1$#@passwords@</string>
-        <key>passwords</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>Vaša gesla bodo izbrisana iz te naprave. Prepričajte se, da še vedno lahko dostopate do svojega %2$#@accounts@.</string>
-            <key>two</key>
-            <string>Vaša gesla bodo izbrisana iz te naprave. Prepričajte se, da še vedno lahko dostopate do svojih %2$#@accounts@.</string>
-            <key>few</key>
-            <string>Vaša gesla bodo izbrisana iz te naprave. Prepričajte se, da še vedno lahko dostopate do svojih %2$#@accounts@.</string>
-            <key>other</key>
-            <string>Vaša gesla bodo izbrisana iz te naprave. Prepričajte se, da še vedno lahko dostopate do svojih %2$#@accounts@.</string>
-        </dict>
-        <key>accounts</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>račun</string>
-            <key>two</key>
-            <string>računa</string>
-            <key>few</key>
-            <string>računi</string>
-            <key>other</key>
-            <string>računov</string>
-        </dict>
-    </dict>
+	<key>autofill.delete.all.passwords.confirmation.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Vaša gesla bodo izbrisana iz te naprave. Prepričajte se, da še vedno lahko dostopate do svojega %2$#@accounts@.</string>
+			<key>two</key>
+			<string>Vaša gesla bodo izbrisana iz te naprave. Prepričajte se, da še vedno lahko dostopate do svojih %2$#@accounts@.</string>
+			<key>few</key>
+			<string>Vaša gesla bodo izbrisana iz te naprave. Prepričajte se, da še vedno lahko dostopate do svojih %2$#@accounts@.</string>
+			<key>other</key>
+			<string>Vaša gesla bodo izbrisana iz te naprave. Prepričajte se, da še vedno lahko dostopate do svojih %2$#@accounts@.</string>
+		</dict>
+		<key>accounts</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>račun</string>
+			<key>two</key>
+			<string>računa</string>
+			<key>few</key>
+			<string>računi</string>
+			<key>other</key>
+			<string>računov</string>
+		</dict>
+	</dict>
 	<key>autofill.delete.all.passwords.sync.confirmation.body</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -273,8 +241,8 @@ Blokiral sem jih!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>Gesla bodo izbrisana iz vseh sinhroniziranih naprav. Prepričajte se, da imate še vedno način za dostop do svojega %2$#@accounts@.</string>
 			<key>two</key>
@@ -288,8 +256,8 @@ Blokiral sem jih!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>račun</string>
 			<key>two</key>
@@ -308,8 +276,8 @@ Blokiral sem jih!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>%1$d geslo je bilo izbrisano</string>
 			<key>two</key>

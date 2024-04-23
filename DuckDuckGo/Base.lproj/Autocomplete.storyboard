@@ -92,30 +92,50 @@
                                             <outlet property="urlLabel" destination="eiv-Cq-E2r" id="6nb-Qf-BpQ"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NoSuggestionsTableViewCell" id="O6P-GP-haK" userLabel="Empty" customClass="NoSuggestionsTableViewCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoSuggestionsTableViewCell" id="7pQ-op-9UO" userLabel="Suggestion" customClass="NoSuggestionsTableViewCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="16" y="101.5" width="343" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="O6P-GP-haK" id="snf-ah-e6i">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7pQ-op-9UO" id="u9t-NS-gyK">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="46"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Suggestions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gPe-Cv-14j">
-                                                    <rect key="frame" x="32" y="13.5" width="279" height="19.5"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                                    <color key="textColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="251" image="SuggestLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="oj2-Bs-Qct">
+                                                    <rect key="frame" x="16" y="11" width="24" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="24" id="5zS-jx-Tnn"/>
+                                                        <constraint firstAttribute="height" constant="24" id="Er4-jh-0xU"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="O8u-en-Mtu">
+                                                    <rect key="frame" x="48" y="13.5" width="39.5" height="19.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mMa-G6-Ppd">
+                                                            <rect key="frame" x="0.0" y="0.0" width="39.5" height="19.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                            <color key="textColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="gPe-Cv-14j" secondAttribute="trailing" constant="16" id="9qm-SN-smP"/>
-                                                <constraint firstItem="gPe-Cv-14j" firstAttribute="centerY" secondItem="snf-ah-e6i" secondAttribute="centerY" id="FMX-qm-AGD"/>
-                                                <constraint firstItem="gPe-Cv-14j" firstAttribute="leading" secondItem="snf-ah-e6i" secondAttribute="leadingMargin" constant="16" id="sDn-CZ-bgQ"/>
+                                                <constraint firstItem="O8u-en-Mtu" firstAttribute="leading" secondItem="oj2-Bs-Qct" secondAttribute="trailing" constant="8" symbolic="YES" id="0aC-uh-3dO"/>
+                                                <constraint firstItem="O8u-en-Mtu" firstAttribute="centerY" secondItem="u9t-NS-gyK" secondAttribute="centerY" id="Hbp-cT-9fn"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="O8u-en-Mtu" secondAttribute="bottom" constant="4" id="Lwp-X4-5eq"/>
+                                                <constraint firstItem="O8u-en-Mtu" firstAttribute="top" relation="greaterThanOrEqual" secondItem="u9t-NS-gyK" secondAttribute="top" constant="4" id="cob-Mv-XyS"/>
+                                                <constraint firstItem="oj2-Bs-Qct" firstAttribute="leading" secondItem="u9t-NS-gyK" secondAttribute="leading" constant="16" id="wGc-5V-GJu"/>
+                                                <constraint firstItem="oj2-Bs-Qct" firstAttribute="centerY" secondItem="u9t-NS-gyK" secondAttribute="centerY" id="xRx-sp-jdC"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" button="YES"/>
+                                        </accessibility>
                                         <connections>
-                                            <outlet property="label" destination="gPe-Cv-14j" id="9rw-Vl-yVW"/>
+                                            <outlet property="label" destination="mMa-G6-Ppd" id="AZn-1l-4Z3"/>
+                                            <outlet property="typeImageView" destination="oj2-Bs-Qct" id="BA2-1r-mAC"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

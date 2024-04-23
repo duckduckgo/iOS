@@ -294,14 +294,11 @@ extension AutocompleteViewController: UITableViewDataSource {
             return view.frame.height
         }
 
-        let defaultHeight: CGFloat = 46
-        guard let suggestion = model.suggestion(for: indexPath) else { return defaultHeight }
-
-        switch suggestion {
+        switch model.suggestion(for: indexPath) {
         case .bookmark, .historyEntry:
-            return 60
+            return SuggestionTableViewCell.Constants.multipleLineCellHeight
         default:
-            return defaultHeight
+            return SuggestionTableViewCell.Constants.defaultCellHeight
         }
     }
 

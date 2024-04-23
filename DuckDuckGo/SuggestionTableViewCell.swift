@@ -24,7 +24,8 @@ import Suggestions
 class SuggestionTableViewCell: UITableViewCell {
     
     struct Constants {
-        static let cellHeight: CGFloat = 46.0
+        static let defaultCellHeight: CGFloat = 44.0
+        static let multipleLineCellHeight: CGFloat = 60.0
     }
 
     static let reuseIdentifier = "SuggestionTableViewCell"

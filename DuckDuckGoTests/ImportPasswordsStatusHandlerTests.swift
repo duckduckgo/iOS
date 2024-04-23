@@ -38,6 +38,80 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
         syncService = nil
     }
 
+    func testWhenAuthStateInactiveThenSetImportViaSyncStartDate() {
+        appSettings.autofillImportViaSyncStart = nil
+        syncService.authState = .inactive
+
+        let importPasswordsStatusHandler = ImportPasswordsStatusHandler(appSettings: appSettings, syncService: syncService)
+        let expectation = XCTestExpectation(description: "CheckSyncSuccessStatus completes")
+
+        importPasswordsStatusHandler.setImportViaSyncStartDateIfRequired()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+              expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 2.0)
+
+        XCTAssertNotNil(appSettings.autofillImportViaSyncStart)
+    }
+
+    func testWhenAuthStateActiveAndHasNotSyncedDesktopDeviceThenSetImportViaSyncStartDate() {
+        appSettings.autofillImportViaSyncStart = nil
+        syncService.authState = .active
+        syncService.registeredDevices = []
+
+        let importPasswordsStatusHandler = ImportPasswordsStatusHandler(appSettings: appSettings, syncService: syncService)
+        
+        let expectation = XCTestExpectation(description: "CheckSyncSuccessStatus completes")
+
+        importPasswordsStatusHandler.setImportViaSyncStartDateIfRequired()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+              expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 2.0)
+
+        XCTAssertNotNil(appSettings.autofillImportViaSyncStart)
+    }
+
+    func testWhenAuthStateActiveAndHasSyncedDesktopDeviceThenDoNotSetImportViaSyncStartDate() {
+        appSettings.autofillImportViaSyncStart = nil
+        syncService.authState = .active
+        syncService.registeredDevices = [RegisteredDevice(id: "1", name: "Device 1", type: "desktop")]
+
+        let importPasswordsStatusHandler = ImportPasswordsStatusHandler(appSettings: appSettings, syncService: syncService)
+
+        let expectation = XCTestExpectation(description: "CheckSyncSuccessStatus completes")
+        
+        importPasswordsStatusHandler.setImportViaSyncStartDateIfRequired()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+              expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 2.0)
+
+        XCTAssertNil(appSettings.autofillImportViaSyncStart)
+    }
+
+    func testWhenNeverStartedImportThenNoPixelFired() {
+
+        let importPasswordsStatusHandler = TestImportPasswordsStatusHandler.init(appSettings: appSettings, syncService: syncService)
+        let expectation = XCTestExpectation(description: "CheckSyncSuccessStatus completes")
+
+        importPasswordsStatusHandler.checkSyncSuccessStatus()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+              expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 2.0)
+
+        XCTAssertNil(importPasswordsStatusHandler.lastFiredPixel)
+    }
+
     func testWhenRecentlyStartedImportAndSyncAuthStateIsActiveAndHasSyncedDesktopDeviceThenSuccessPixelFired() {
 
         appSettings.autofillImportViaSyncStart = Date()
@@ -59,6 +133,108 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
         XCTAssertNil(appSettings.autofillImportViaSyncStart)
     }
 
+    func testWhenRecentlyStartedImportAndSyncAuthStateIsActiveAndHasNotSyncedDesktopDeviceThenNoPixelFired() {
+
+        appSettings.autofillImportViaSyncStart = Date()
+        syncService.authState = .active
+        syncService.registeredDevices = []
+
+        let importPasswordsStatusHandler = TestImportPasswordsStatusHandler.init(appSettings: appSettings, syncService: syncService)
+        let expectation = XCTestExpectation(description: "CheckSyncSuccessStatus completes")
+
+        importPasswordsStatusHandler.checkSyncSuccessStatus()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+              expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 2.0)
+
+        XCTAssertNil(importPasswordsStatusHandler.lastFiredPixel)
+        XCTAssertNotNil(appSettings.autofillImportViaSyncStart)
+    }
+
+    func testWhenRecentlyStartedImportAndSyncAuthStateIsInactiveThenNoPixelFired() {
+
+        appSettings.autofillImportViaSyncStart = Date()
+        syncService.authState = .inactive
+
+        let importPasswordsStatusHandler = TestImportPasswordsStatusHandler.init(appSettings: appSettings, syncService: syncService)
+        let expectation = XCTestExpectation(description: "CheckSyncSuccessStatus completes")
+
+        importPasswordsStatusHandler.checkSyncSuccessStatus()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+              expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 2.0)
+
+        XCTAssertNil(importPasswordsStatusHandler.lastFiredPixel)
+        XCTAssertNotNil(appSettings.autofillImportViaSyncStart)
+    }
+
+    func testWhenImportStartedMoreThan48HoursAgoAndSyncAuthStateIsActiveAndHasSyncedDesktopDeviceThenSuccessPixelFired() {
+
+        appSettings.autofillImportViaSyncStart = Date().addingTimeInterval(-60 * 60 * 49)
+        syncService.authState = .active
+        syncService.registeredDevices = [RegisteredDevice(id: "1", name: "Device 1", type: "desktop")]
+
+        let importPasswordsStatusHandler = TestImportPasswordsStatusHandler.init(appSettings: appSettings, syncService: syncService)
+        let expectation = XCTestExpectation(description: "CheckSyncSuccessStatus completes")
+
+        importPasswordsStatusHandler.checkSyncSuccessStatus()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+              expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 2.0)
+
+        XCTAssertEqual(importPasswordsStatusHandler.lastFiredPixel, .autofillLoginsImportSuccess)
+        XCTAssertNil(appSettings.autofillImportViaSyncStart)
+    }
+
+    func testWhenImportStartedMoreThan48HoursAgoAndSyncAuthStateIsActiveAndHasNotSyncedDesktopDeviceThenFailurePixelFired() {
+
+        appSettings.autofillImportViaSyncStart = Date().addingTimeInterval(-60 * 60 * 49)
+        syncService.authState = .active
+        syncService.registeredDevices = []
+
+        let importPasswordsStatusHandler = TestImportPasswordsStatusHandler.init(appSettings: appSettings, syncService: syncService)
+        let expectation = XCTestExpectation(description: "CheckSyncSuccessStatus completes")
+
+        importPasswordsStatusHandler.checkSyncSuccessStatus()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+              expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 2.0)
+
+        XCTAssertEqual(importPasswordsStatusHandler.lastFiredPixel, .autofillLoginsImportFailure)
+        XCTAssertNil(appSettings.autofillImportViaSyncStart)
+    }
+
+    func testWhenImportStartedMoreThan48HoursAgoAndSyncAuthStateIsInactiveThenFailurePixelFired() {
+
+        appSettings.autofillImportViaSyncStart = Date().addingTimeInterval(-60 * 60 * 49)
+        syncService.authState = .inactive
+
+        let importPasswordsStatusHandler = TestImportPasswordsStatusHandler.init(appSettings: appSettings, syncService: syncService)
+        let expectation = XCTestExpectation(description: "CheckSyncSuccessStatus completes")
+
+        importPasswordsStatusHandler.checkSyncSuccessStatus()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+              expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 2.0)
+
+        XCTAssertEqual(importPasswordsStatusHandler.lastFiredPixel, .autofillLoginsImportFailure)
+        XCTAssertNil(appSettings.autofillImportViaSyncStart)
+    }
 }
 
 

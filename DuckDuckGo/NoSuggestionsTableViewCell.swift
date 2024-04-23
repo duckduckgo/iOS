@@ -18,10 +18,31 @@
 //
 
 import UIKit
+import DesignResourcesKit
 
 class NoSuggestionsTableViewCell: UITableViewCell {
 
     static let reuseIdentifier = "NoSuggestionsTableViewCell"
 
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet private weak var label: UILabel!
+    @IBOutlet private weak var typeImageView: UIImageView!
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        let theme = ThemeManager.shared.currentTheme
+
+        label.font = UIFont.appFont(ofSize: 16)
+        label.textColor = theme.tableCellTextColor
+
+        typeImageView.image = UIImage(named: "Find-Search-24")
+
+        accessibilityValue = UserText.voiceoverSuggestionTypeSearch
+        tintColor = theme.autocompleteCellAccessoryColor
+        backgroundColor = UIColor(designSystemColor: .surface)
+    }
+
+    func update(with query: String) {
+        label.text = query
+    }
 }

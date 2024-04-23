@@ -276,12 +276,8 @@ extension AutocompleteViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: type, for: indexPath) as? NoSuggestionsTableViewCell else {
             fatalError("Failed to dequeue \(type) as NoSuggestionTableViewCell")
         }
-        
-        let currentTheme = ThemeManager.shared.currentTheme
-        cell.backgroundColor = UIColor(designSystemColor: .surface)
 
-        cell.tintColor = currentTheme.autocompleteCellAccessoryColor
-        cell.label?.textColor = currentTheme.tableCellTextColor
+        cell.update(with: query)
 
         return cell
     }

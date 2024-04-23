@@ -92,7 +92,7 @@
                                             <outlet property="urlLabel" destination="eiv-Cq-E2r" id="6nb-Qf-BpQ"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoSuggestionsTableViewCell" id="7pQ-op-9UO" userLabel="Suggestion" customClass="NoSuggestionsTableViewCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoSuggestionsTableViewCell" id="7pQ-op-9UO" userLabel="Empty" customClass="NoSuggestionsTableViewCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="16" y="101.5" width="343" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7pQ-op-9UO" id="u9t-NS-gyK">
@@ -107,10 +107,10 @@
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="O8u-en-Mtu">
-                                                    <rect key="frame" x="48" y="13.5" width="39.5" height="19.5"/>
+                                                    <rect key="frame" x="48" y="13.5" width="279" height="19.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mMa-G6-Ppd">
-                                                            <rect key="frame" x="0.0" y="0.0" width="39.5" height="19.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="279" height="19.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <color key="textColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -121,6 +121,7 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="O8u-en-Mtu" firstAttribute="leading" secondItem="oj2-Bs-Qct" secondAttribute="trailing" constant="8" symbolic="YES" id="0aC-uh-3dO"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="O8u-en-Mtu" secondAttribute="trailing" id="Elb-0R-BpI"/>
                                                 <constraint firstItem="O8u-en-Mtu" firstAttribute="centerY" secondItem="u9t-NS-gyK" secondAttribute="centerY" id="Hbp-cT-9fn"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="O8u-en-Mtu" secondAttribute="bottom" constant="4" id="Lwp-X4-5eq"/>
                                                 <constraint firstItem="O8u-en-Mtu" firstAttribute="top" relation="greaterThanOrEqual" secondItem="u9t-NS-gyK" secondAttribute="top" constant="4" id="cob-Mv-XyS"/>

@@ -75,8 +75,17 @@ class FromWebViewTransition: WebViewTransition {
         
         guard let webView = mainViewController.currentTab?.webView,
               let tab = mainViewController.tabManager.model.currentTab,
-              let rowIndex = tabSwitcherViewController.tabsModel.indexOf(tab: tab),
-              let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: IndexPath(row: rowIndex, section: 0)),
+              let rowIndex = tabSwitcherViewController.tabsModel.indexOf(tab: tab)
+        else {
+            tabSwitcherViewController.view.alpha = 1
+            transitionContext.completeTransition(true)
+            return
+        }
+
+        let indexPath = IndexPath(row: rowIndex, section: 0)
+        tabSwitcherViewController.collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: false)
+
+        guard let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: indexPath),
               let preview = tabSwitcherViewController.previewsSource.preview(for: tab)
         else {
             tabSwitcherViewController.view.alpha = 1

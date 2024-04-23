@@ -763,9 +763,12 @@
 		C1641EAF2BC2F5140012607A /* ImportPasswordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1641EAE2BC2F5140012607A /* ImportPasswordsViewController.swift */; };
 		C1641EB12BC2F52B0012607A /* ImportPasswordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1641EB02BC2F52B0012607A /* ImportPasswordsView.swift */; };
 		C1641EB32BC2F53C0012607A /* ImportPasswordsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1641EB22BC2F53C0012607A /* ImportPasswordsViewModel.swift */; };
+		C174CE602BD6A6CE00AED2EA /* MockDDGSyncing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C185ED652BD43A5500BAE9DC /* MockDDGSyncing.swift */; };
 		C17B59592A03AAD30055F2D1 /* PasswordGenerationPromptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17B59562A03AAD30055F2D1 /* PasswordGenerationPromptViewModel.swift */; };
 		C17B595A2A03AAD30055F2D1 /* PasswordGenerationPromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17B59572A03AAD30055F2D1 /* PasswordGenerationPromptViewController.swift */; };
 		C17B595B2A03AAD30055F2D1 /* PasswordGenerationPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17B59582A03AAD30055F2D1 /* PasswordGenerationPromptView.swift */; };
+		C185ED612BD4329700BAE9DC /* ImportPasswordsStatusHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C185ED602BD4329700BAE9DC /* ImportPasswordsStatusHandler.swift */; };
+		C185ED672BD43DA100BAE9DC /* ImportPasswordsStatusHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C185ED632BD438AF00BAE9DC /* ImportPasswordsStatusHandlerTests.swift */; };
 		C18ED43A2AB6F77600BF3805 /* AutofillSettingsEnableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18ED4392AB6F77600BF3805 /* AutofillSettingsEnableFooterView.swift */; };
 		C18ED43C2AB8364400BF3805 /* FileTextPreviewDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18ED43B2AB8364400BF3805 /* FileTextPreviewDebugViewController.swift */; };
 		C1963863283794A000298D4D /* BookmarksCachingSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1963862283794A000298D4D /* BookmarksCachingSearch.swift */; };
@@ -2463,6 +2466,9 @@
 		C17B59562A03AAD30055F2D1 /* PasswordGenerationPromptViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordGenerationPromptViewModel.swift; sourceTree = "<group>"; };
 		C17B59572A03AAD30055F2D1 /* PasswordGenerationPromptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordGenerationPromptViewController.swift; sourceTree = "<group>"; };
 		C17B59582A03AAD30055F2D1 /* PasswordGenerationPromptView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordGenerationPromptView.swift; sourceTree = "<group>"; };
+		C185ED602BD4329700BAE9DC /* ImportPasswordsStatusHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportPasswordsStatusHandler.swift; sourceTree = "<group>"; };
+		C185ED632BD438AF00BAE9DC /* ImportPasswordsStatusHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportPasswordsStatusHandlerTests.swift; sourceTree = "<group>"; };
+		C185ED652BD43A5500BAE9DC /* MockDDGSyncing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDDGSyncing.swift; sourceTree = "<group>"; };
 		C18ED4392AB6F77600BF3805 /* AutofillSettingsEnableFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillSettingsEnableFooterView.swift; sourceTree = "<group>"; };
 		C18ED43B2AB8364400BF3805 /* FileTextPreviewDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileTextPreviewDebugViewController.swift; sourceTree = "<group>"; };
 		C1963862283794A000298D4D /* BookmarksCachingSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksCachingSearch.swift; sourceTree = "<group>"; };
@@ -4654,6 +4660,7 @@
 				C1641EAE2BC2F5140012607A /* ImportPasswordsViewController.swift */,
 				C1641EB02BC2F52B0012607A /* ImportPasswordsView.swift */,
 				C1641EB22BC2F53C0012607A /* ImportPasswordsViewModel.swift */,
+				C185ED602BD4329700BAE9DC /* ImportPasswordsStatusHandler.swift */,
 			);
 			name = Import;
 			sourceTree = "<group>";
@@ -4666,6 +4673,14 @@
 				C17B59562A03AAD30055F2D1 /* PasswordGenerationPromptViewModel.swift */,
 			);
 			name = PasswordGeneration;
+			sourceTree = "<group>";
+		};
+		C185ED622BD4388F00BAE9DC /* Import */ = {
+			isa = PBXGroup;
+			children = (
+				C185ED632BD438AF00BAE9DC /* ImportPasswordsStatusHandlerTests.swift */,
+			);
+			name = Import;
 			sourceTree = "<group>";
 		};
 		C1AFFC4B2B8773060060448E /* AuthConfirmation */ = {
@@ -5436,6 +5451,7 @@
 				31C7D71B27515A6300A95D0A /* MockVoiceSearchHelper.swift */,
 				CBDD5DE029A6741300832877 /* MockBundle.swift */,
 				C1B0F6412AB08BE9001EAF05 /* MockPrivacyConfiguration.swift */,
+				C185ED652BD43A5500BAE9DC /* MockDDGSyncing.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -5773,6 +5789,7 @@
 		F40F843228C92B1C0081AE75 /* Autofill */ = {
 			isa = PBXGroup;
 			children = (
+				C185ED622BD4388F00BAE9DC /* Import */,
 				C1BF0BA629B63E0400482B73 /* AutofillLoginUI */,
 				F40F843528C938370081AE75 /* AutofillLoginListViewModelTests.swift */,
 				C1D21E2E293A599C006E5A05 /* AutofillLoginSessionTests.swift */,
@@ -6878,6 +6895,7 @@
 				310ECFDD282A8BB0005029B3 /* EnableAutofillSettingsTableViewCell.swift in Sources */,
 				1E908BF329827C480008C8F3 /* AutoconsentManagement.swift in Sources */,
 				D6D95CE32B6D9F8800960317 /* AsyncHeadlessWebViewModel.swift in Sources */,
+				C185ED612BD4329700BAE9DC /* ImportPasswordsStatusHandler.swift in Sources */,
 				CB9B8739278C8E72001F4906 /* WidgetEducationViewController.swift in Sources */,
 				F4D9C4FA25117A0F00814B71 /* HomeMessageStorage.swift in Sources */,
 				D69FBF762B28BE3600B505F1 /* SettingsSubscriptionView.swift in Sources */,
@@ -7345,8 +7363,10 @@
 				4BCD146D2B05DB09000B1E4C /* NetworkProtectionAccessControllerTests.swift in Sources */,
 				EE3B226B29DE0F110082298A /* MockInternalUserStoring.swift in Sources */,
 				987130C8294AAB9F00AB05E0 /* BookmarksTestHelpers.swift in Sources */,
+				C185ED672BD43DA100BAE9DC /* ImportPasswordsStatusHandlerTests.swift in Sources */,
 				F198D7981E3A45D90088DA8A /* WKWebViewConfigurationExtensionTests.swift in Sources */,
 				C14E2F7729DE14EA002AC515 /* AutofillInterfaceUsernameTruncatorTests.swift in Sources */,
+				C174CE602BD6A6CE00AED2EA /* MockDDGSyncing.swift in Sources */,
 				8521FDE6238D414B00A44CC3 /* FileStoreTests.swift in Sources */,
 				F14E491F1E391CE900DC037C /* URLExtensionTests.swift in Sources */,
 				85D2187424BF25CD004373D2 /* FaviconsTests.swift in Sources */,

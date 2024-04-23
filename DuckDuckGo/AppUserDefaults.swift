@@ -286,6 +286,13 @@ public class AppUserDefaults: AppSettings {
         autofillIsNewInstallForOnByDefault = StatisticsUserDefaults().installDate == nil
     }
 
+    @UserDefaultsWrapper(key: .autofillImportViaSyncStart, defaultValue: nil)
+    var autofillImportViaSyncStart: Date?
+
+    func clearAutofillImportViaSyncStart() {
+        autofillImportViaSyncStart = nil
+    }
+
     @UserDefaultsWrapper(key: .voiceSearchEnabled, defaultValue: false)
     var voiceSearchEnabled: Bool
 

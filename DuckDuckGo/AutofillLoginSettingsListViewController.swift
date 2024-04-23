@@ -43,6 +43,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private lazy var emptyView: UIView = {
         let emptyView = AutofillItemsEmptyView { [weak self] in
             self?.segueToImport()
+            Pixel.fire(pixel: .autofillLoginsImportNoPasswords)
         }
 
         let hostingController = UIHostingController(rootView: emptyView)
@@ -376,11 +377,12 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private func importAction() -> UIAction {
         return UIAction(title: UserText.autofillEmptyViewButtonTitle) { [weak self] _ in
             self?.segueToImport()
+            Pixel.fire(pixel: .autofillLoginsImport)
         }
     }
 
     private func segueToImport() {
-        let importController = ImportPasswordsViewController()
+        let importController = ImportPasswordsViewController(syncService: syncService)
         importController.delegate = self
         navigationController?.pushViewController(importController, animated: true)
     }

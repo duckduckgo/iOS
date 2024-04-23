@@ -19,6 +19,8 @@
 
 import UIKit
 import SwiftUI
+import Core
+import DDGSync
 
 protocol ImportPasswordsViewControllerDelegate: AnyObject {
     func importPasswordsViewControllerDidRequestOpenSync(_ viewController: ImportPasswordsViewController)
@@ -28,14 +30,34 @@ final class ImportPasswordsViewController: UIViewController {
 
     weak var delegate: ImportPasswordsViewControllerDelegate?
 
+    private let viewModel = ImportPasswordsViewModel()
+
+    init(syncService: DDGSyncing) {
+        let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)
+        importPasswordsStatusHandler.setImportViaSyncStartDateIfRequired()
+
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupView()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        if isMovingFromParent && !viewModel.buttonWasPressed {
+            Pixel.fire(pixel: .autofillLoginsImportNoAction)
+        }
+    }
+
     private func setupView() {
-        let viewModel = ImportPasswordsViewModel()
         viewModel.delegate = self
         let controller = UIHostingController(rootView: ImportPasswordsView(viewModel: viewModel))
         controller.view.backgroundColor = .clear

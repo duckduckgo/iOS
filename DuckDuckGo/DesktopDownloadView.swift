@@ -21,6 +21,7 @@ import Foundation
 import SwiftUI
 import LinkPresentation
 import DuckUI
+import Core
 
 struct DesktopDownloadView: View {
 
@@ -83,6 +84,7 @@ struct DesktopDownloadView: View {
                                 activityItem = ShareItem(value: viewModel.downloadURL.absoluteString,
                                                          title: viewModel.browserDetails.shareTitle,
                                                          message: viewModel.browserDetails.shareMessage)
+                                Pixel.fire(pixel: .getDesktopShare)
                             } else {
                                 activityItem = ShareItem(value: viewModel.downloadURL.absoluteString, title: nil, message: nil)
                             }
@@ -171,6 +173,9 @@ struct DesktopDownloadView: View {
             Text(viewModel.browserDetails.goToUrl)
                 .menuController(UserText.macWaitlistCopy) {
                     viewModel.copyLink()
+                    if viewModel.browserDetails.platform == .desktop {
+                        Pixel.fire(pixel: .getDesktopCopy)
+                    }
                 }
         }
     }

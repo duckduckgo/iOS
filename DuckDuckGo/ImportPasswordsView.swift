@@ -72,18 +72,19 @@ struct ImportPasswordsView: View {
                 .padding(.top, 8)
 
             Button {
+                viewModel.buttonPressed(.getBrowser)
                 self.navigate = true
             } label: {
-                Text(viewModel.getBrowserButtonTitle)
+                Text(ImportPasswordsViewModel.ButtonType.getBrowser.title)
                     .frame(width: viewModel.maxButtonWidth())
             }
             .buttonStyle(PrimaryButtonStyle(fullWidth: false))
             .padding(.top, 24)
 
             Button {
-                viewModel.openSync()
+                viewModel.buttonPressed(.sync)
             } label: {
-                Text(viewModel.syncButtonTitle)
+                Text(ImportPasswordsViewModel.ButtonType.sync.title)
                     .frame(width: viewModel.maxButtonWidth())
             }
             .buttonStyle(SecondaryFillButtonStyle(fullWidth: false))

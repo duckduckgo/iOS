@@ -19,12 +19,27 @@
 
 import Foundation
 import SwiftUI
+import Core
 
 protocol ImportPasswordsViewModelDelegate: AnyObject {
     func importPasswordsViewModelDidRequestOpenSync(_ viewModel: ImportPasswordsViewModel)
 }
 
 final class ImportPasswordsViewModel {
+
+    enum ButtonType: String {
+        case getBrowser
+        case sync
+
+        var title: String {
+            switch self {
+            case .getBrowser:
+                return UserText.autofillImportPasswordsGetBrowserButton
+            case .sync:
+                return UserText.autofillImportPasswordsSyncButton
+            }
+        }
+    }
 
     enum InstructionStep: Int, CaseIterable {
         case step1 = 1
@@ -62,12 +77,25 @@ final class ImportPasswordsViewModel {
 
     weak var delegate: ImportPasswordsViewModelDelegate?
 
-    var getBrowserButtonTitle: String = UserText.autofillImportPasswordsGetBrowserButton
-
-    var syncButtonTitle: String = UserText.autofillImportPasswordsSyncButton
+    /// Keeping track on whether or not either button was pressed on this screen
+    /// so that a pixel can be fired if the user navigates away without taking any action
+    var buttonWasPressed: Bool = false
 
     func maxButtonWidth() -> CGFloat {
-        return maxButtonWidthFor(title1: getBrowserButtonTitle, title2: syncButtonTitle)
+        let maxWidth = maxWidthFor(title1: ButtonType.getBrowser.title, title2: ButtonType.sync.title)
+        return min(maxWidth, 300)
+    }
+
+    func buttonPressed(_ type: ButtonType) {
+        buttonWasPressed = true
+
+        switch type {
+        case .getBrowser:
+            Pixel.fire(pixel: .autofillLoginsImportGetDesktop)
+        case .sync:
+            openSync()
+            Pixel.fire(pixel: .autofillLoginsImportSync)
+        }
     }
 
     func instructionsForStep(_ step: InstructionStep) -> String {
@@ -92,12 +120,11 @@ final class ImportPasswordsViewModel {
         return attributedString
     }
 
-
-    func openSync() {
+    private func openSync() {
         delegate?.importPasswordsViewModelDidRequestOpenSync(self)
     }
 
-    private func maxButtonWidthFor(title1: String, title2: String) -> CGFloat {
+    private func maxWidthFor(title1: String, title2: String) -> CGFloat {
         return max(title1.width(), title2.width())
     }
 

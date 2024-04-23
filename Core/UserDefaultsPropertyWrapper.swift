@@ -82,6 +82,7 @@ public struct UserDefaultsWrapper<T> {
         case autofillCredentialsSavePromptShowAtLeastOnce = "com.duckduckgo.ios.autofillCredentialsSavePromptShowAtLeastOnce"
         case autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary =
                 "com.duckduckgo.ios.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary"
+        case autofillImportViaSyncStart = "com.duckduckgo.ios.autofillImportViaSyncStart"
 
         // .v2 suffix added to fix https://app.asana.com/0/547792610048271/1206524375402369/f
         case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser.v2"

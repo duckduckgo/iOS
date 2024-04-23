@@ -351,6 +351,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDependencyProvider.shared.toggleProtectionsCounter.sendEventsIfNeeded()
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
+        let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)
+        importPasswordsStatusHandler.checkSyncSuccessStatus()
+
         return true
     }
 

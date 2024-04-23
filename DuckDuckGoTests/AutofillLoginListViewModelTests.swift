@@ -31,7 +31,7 @@ class AutofillLoginListViewModelTests: XCTestCase {
 
     private let tld = TLD()
     private let appSettings = AppUserDefaults()
-    private let vault = (try? MockSecureVaultFactory.makeVault(errorReporter: nil))!
+    private let vault = (try? MockSecureVaultFactory.makeVault(reporter: nil))!
     private var manager: AutofillNeverPromptWebsitesManager!
     private var cancellables: Set<AnyCancellable> = []
 

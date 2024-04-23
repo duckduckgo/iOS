@@ -122,7 +122,7 @@ public struct UserDefaultsWrapper<T> {
 
         case privacyConfigCustomURL = "com.duckduckgo.ios.privacyConfigCustomURL"
 
-        case subscriptionIsActive = "com.duckduckgo.ios.subscruption.isActive"
+        case privacyProEnvironment = "com.duckduckgo.ios.privacyPro.environment"
 
         case didRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didRefreshTimestamp"
         case didBurnTimestamp = "com.duckduckgo.ios.userBehavior.didBurnTimestamp"

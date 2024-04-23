@@ -668,19 +668,25 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
         self.vpnMetadata = await collector.collectMetadata()
         self.tableView.reloadData()
     }
+    
+    private func showSubscriptionEnvAlert() {
+            let alertController = UIAlertController(title: "Use Subscription Environment", message: nil, preferredStyle: .alert)
+
+            alertController.message = "Go to Debug > Subscription > Environment to change the environment."
+        
+            // Add a "Cancel" action
+        let cancelAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(cancelAction)
+
+            // Present the alert
+            present(alertController, animated: true, completion: nil)
+            
+    }
 
     private func didSelectFeatureVisibility(at indexPath: IndexPath) {
         switch FeatureVisibilityRows(rawValue: indexPath.row) {
         case .toggleSelectedEnvironment:
-            let vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
-            if vpnSettings.selectedEnvironment == .production {
-                vpnSettings.selectedEnvironment = .staging
-            } else {
-                vpnSettings.selectedEnvironment = .production
-            }
-            vpnSettings.selectedServer = .automatic
-            NetworkProtectionLocationListCompositeRepository.clearCache()
-            tableView.reloadData()
+            showSubscriptionEnvAlert()
         case .updateSubscriptionOverride:
             let defaults = UserDefaults.networkProtectionGroupDefaults
             if let subscriptionOverrideEnabled = defaults.subscriptionOverrideEnabled {

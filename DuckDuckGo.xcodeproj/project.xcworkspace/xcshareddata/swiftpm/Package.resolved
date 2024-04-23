@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "b8f0e5db431c63943b509d522c157f870ef03ae0",
-        "version" : "138.0.0"
+        "branch" : "graeme/vpn-server-failure-recovery-pixels",
+        "revision" : "7bade22f87abc94ac7dd9a163ae27cd3756afacc"
       }
     },
     {
@@ -183,7 +183,7 @@
     {
       "identity" : "trackerradarkit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/duckduckgo/TrackerRadarKit",
+      "location" : "https://github.com/duckduckgo/TrackerRadarKit.git",
       "state" : {
         "revision" : "6c84fd19139414fc0edbf9673ade06e532a564f0",
         "version" : "2.0.0"

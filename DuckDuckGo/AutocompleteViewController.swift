@@ -290,10 +290,6 @@ extension AutocompleteViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if appSettings.currentAddressBarPosition.isBottom && model.isEmpty {
-            return view.frame.height
-        }
-
         switch model.suggestion(for: indexPath) {
         case .bookmark, .historyEntry:
             return SuggestionTableViewCell.Constants.multipleLineCellHeight

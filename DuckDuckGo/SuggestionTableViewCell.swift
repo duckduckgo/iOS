@@ -66,7 +66,7 @@ class SuggestionTableViewCell: UITableViewCell {
             text = title
             urlLabel.isHidden = url.isBookmarklet()
             urlLabel.text = url.formattedForSuggestion()
-            typeImage.image = isFavorite ? UIImage(named: "Favorite-24") : UIImage(named: "Bookmark-24")
+            typeImage.image = isFavorite ? UIImage(named: "Bookmark-Fav-24") : UIImage(named: "Bookmark-24")
             self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
 
         case .historyEntry(title: let title, url: let url, _):

@@ -41,6 +41,7 @@ protocol OmniBarState {
     var showVoiceSearch: Bool { get }
     var name: String { get }
     var onEditingStoppedState: OmniBarState { get }
+    var onEditingSuspendedState: OmniBarState { get }
     var onEditingStartedState: OmniBarState { get }
     var onTextClearedState: OmniBarState { get }
     var onTextEnteredState: OmniBarState { get }
@@ -49,4 +50,10 @@ protocol OmniBarState {
     var onEnterPhoneState: OmniBarState { get }
     var onEnterPadState: OmniBarState { get }
     var onReloadState: OmniBarState { get }
+}
+
+extension OmniBarState {
+    var onEditingSuspendedState: OmniBarState {
+        UniversalOmniBarState.EditingSuspendedState(baseState: self.onEditingStartedState)
+    }
 }

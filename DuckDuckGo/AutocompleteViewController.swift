@@ -109,6 +109,7 @@ class AutocompleteViewController: UIViewController {
 
         tableView.backgroundColor = UIColor.clear
         tableView.sectionFooterHeight = 1.0 / UIScreen.main.scale
+        tableView.keyboardDismissMode = .onDrag
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -139,6 +140,9 @@ class AutocompleteViewController: UIViewController {
 
     func updateQuery(query: String) {
         selectedItemIndex = -1
+
+        guard self.query != query else { return }
+
         cancelInFlightRequests()
         self.query = query
     }

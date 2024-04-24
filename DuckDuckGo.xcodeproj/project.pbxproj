@@ -784,6 +784,7 @@
 		C1F341C72A6924100032057B /* EmailAddressPromptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F341C62A6924100032057B /* EmailAddressPromptViewModel.swift */; };
 		C1F341C92A6926920032057B /* EmailAddressPromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F341C82A6926920032057B /* EmailAddressPromptViewController.swift */; };
 		CB1143DE2AF6D4B600C1CCD3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CB1143DC2AF6D4B600C1CCD3 /* InfoPlist.strings */; };
+		CB2283F32BD79FC20057DD0A /* BrokenSitePromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2283F22BD79FC20057DD0A /* BrokenSitePromptView.swift */; };
 		CB258D1229A4F24900DEBA24 /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB258D0F29A4D0FD00DEBA24 /* ConfigurationManager.swift */; };
 		CB258D1329A4F24E00DEBA24 /* ConfigurationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84C7C029A3F0280088A5B8 /* ConfigurationStore.swift */; };
 		CB258D1D29A52AF900DEBA24 /* EtagStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9896632322C56716007BE4FE /* EtagStorage.swift */; };
@@ -795,6 +796,7 @@
 		CB48D3322B90CE9F00631D8B /* UserBehaviorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB48D3302B90CE9F00631D8B /* UserBehaviorEvent.swift */; };
 		CB48D3332B90CE9F00631D8B /* UserBehaviorMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB48D3312B90CE9F00631D8B /* UserBehaviorMonitor.swift */; };
 		CB48D3372B90DF2000631D8B /* UserBehaviorMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB48D3352B90CECD00631D8B /* UserBehaviorMonitorTests.swift */; };
+		CB5418632BD90CD000C2CD26 /* BrokenSitePromptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5418622BD90CD000C2CD26 /* BrokenSitePromptViewModel.swift */; };
 		CB5516D0286500290079B175 /* TrackerRadarIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85519124247468580010FDD0 /* TrackerRadarIntegrationTests.swift */; };
 		CB5516D1286500290079B175 /* ContentBlockingRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CA904C24FD2DB000D41DDF /* ContentBlockingRulesTests.swift */; };
 		CB5516D2286500290079B175 /* AtbServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F21DBD21121147002631A6 /* AtbServerTests.swift */; };
@@ -2473,6 +2475,8 @@
 		CB18F2712AF6D4E400A0F8FE /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CB1AEFB02799AA940031AE3D /* SwiftUICollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUICollectionViewCell.swift; sourceTree = "<group>"; };
 		CB1FAE472AF6D59B003F452F /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CB2283F22BD79FC20057DD0A /* BrokenSitePromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokenSitePromptView.swift; sourceTree = "<group>"; };
+		CB2283F62BD8512C0057DD0A /* BrowserServicesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BrowserServicesKit; path = ../BrowserServicesKit; sourceTree = "<group>"; };
 		CB24F70E29A3EB15006DCC58 /* AppConfigurationURLProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppConfigurationURLProvider.swift; path = ../Core/AppConfigurationURLProvider.swift; sourceTree = "<group>"; };
 		CB258D0C29A4CD0500DEBA24 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		CB258D0F29A4D0FD00DEBA24 /* ConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationManager.swift; sourceTree = "<group>"; };
@@ -2486,6 +2490,7 @@
 		CB48D3312B90CE9F00631D8B /* UserBehaviorMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserBehaviorMonitor.swift; sourceTree = "<group>"; };
 		CB48D3352B90CECD00631D8B /* UserBehaviorMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBehaviorMonitorTests.swift; sourceTree = "<group>"; };
 		CB5038622AF6D563007FD69F /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CB5418622BD90CD000C2CD26 /* BrokenSitePromptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokenSitePromptViewModel.swift; sourceTree = "<group>"; };
 		CB6ABD002AF6D52B004A8224 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CB6CE65B2AF6D4EE00119848 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CB7407BC2AF6D56D0090A41C /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -3871,6 +3876,7 @@
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
+				CB2283F62BD8512C0057DD0A /* BrowserServicesKit */,
 				EE3B98EB2A963515002F63A0 /* WidgetsExtensionAlpha.entitlements */,
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				EEB8FDB92A990AEE00EBEDCF /* Configuration-Alpha.xcconfig */,
@@ -4686,6 +4692,15 @@
 				CB9B873B278C8FEA001F4906 /* WidgetEducationView.swift */,
 			);
 			name = WidgetEducation;
+			sourceTree = "<group>";
+		};
+		CB2283F12BD79D7B0057DD0A /* BrokenSitePrompt */ = {
+			isa = PBXGroup;
+			children = (
+				CB2283F22BD79FC20057DD0A /* BrokenSitePromptView.swift */,
+				CB5418622BD90CD000C2CD26 /* BrokenSitePromptViewModel.swift */,
+			);
+			name = BrokenSitePrompt;
 			sourceTree = "<group>";
 		};
 		CB258D1129A4F1BB00DEBA24 /* Configuration */ = {
@@ -5565,6 +5580,7 @@
 		F1C5ECFA1E37B15B00C599A4 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				CB2283F12BD79D7B0057DD0A /* BrokenSitePrompt */,
 				310742A52848CD780012660B /* BackForwardMenuHistoryItem.swift */,
 				6AC6DAB228804F97002723C0 /* BarsAnimator.swift */,
 				8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */,
@@ -6735,6 +6751,7 @@
 				1EA513782866039400493C6A /* TrackerAnimationLogic.swift in Sources */,
 				854A01332A558B3A00FCC628 /* UIView+Constraints.swift in Sources */,
 				C12726EE2A5FF88C00215B02 /* EmailSignupPromptView.swift in Sources */,
+				CB2283F32BD79FC20057DD0A /* BrokenSitePromptView.swift in Sources */,
 				83134D7D20E2D725006CE65D /* FeedbackSender.swift in Sources */,
 				D6E83C382B1F2236006C8AFB /* SettingsGeneralViewOld.swift in Sources */,
 				B652DF12287C336E00C12A9C /* ContentBlockingUpdating.swift in Sources */,
@@ -6979,6 +6996,7 @@
 				3132FA2C27A07A1B00DD7A12 /* FilePreview.swift in Sources */,
 				85C861E628FF1B5F00189466 /* HomeViewSectionRenderersExtension.swift in Sources */,
 				1DDF40292BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift in Sources */,
+				CB5418632BD90CD000C2CD26 /* BrokenSitePromptViewModel.swift in Sources */,
 				F1D477C61F2126CC0031ED49 /* OmniBarState.swift in Sources */,
 				85F2FFCD2211F615006BB258 /* MainViewController+KeyCommands.swift in Sources */,
 				D6E83C412B1FC285006C8AFB /* SettingsAppeareanceViewOld.swift in Sources */,

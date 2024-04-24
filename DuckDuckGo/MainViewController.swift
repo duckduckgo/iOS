@@ -32,6 +32,7 @@ import PrivacyDashboard
 import Networking
 import Suggestions
 import Subscription
+import SwiftUI
 
 #if NETWORK_PROTECTION
 import NetworkProtection
@@ -56,8 +57,8 @@ class MainViewController: UIViewController {
     weak var findInPageHeightLayoutConstraint: NSLayoutConstraint!
     weak var findInPageBottomLayoutConstraint: NSLayoutConstraint!
     
-    weak var notificationView: NotificationView?
-    
+    weak var notificationView: UIView?
+
     var chromeManager: BrowserChromeManager!
     
     var allowContentUnderflow = false {
@@ -1250,10 +1251,10 @@ class MainViewController: UIViewController {
         ViewHighlighter.updatePositions()
     }
 
-    func showNotification(title: String, message: String, dismissHandler: @escaping NotificationView.DismissHandler) {
+    private func showNotification(title: String, message: String, dismissHandler: @escaping NotificationView.DismissHandler) {
+        guard notificationView == nil else { return }
 
         let notificationView = NotificationView.loadFromNib(dismissHandler: dismissHandler)
-
         notificationView.setTitle(text: title)
         notificationView.setMessage(text: message)
         viewCoordinator.notificationBarContainer.addSubview(notificationView)
@@ -1265,34 +1266,74 @@ class MainViewController: UIViewController {
                 self.view.layoutIfNeeded()
             }
         }
-
     }
 
-    func hideNotification() {
-
+    private func hideNotification() {
         viewCoordinator.constraints.notificationContainerHeight.constant = 0
+        self.host!.willMove(toParent: nil)
         UIView.animate(withDuration: 0.5, animations: {
             if let frame = self.notificationView?.frame {
                 self.notificationView?.frame = frame.offsetBy(dx: 0, dy: -frame.height)
             }
             self.view.layoutSubviews()
         }, completion: { _ in
-            self.notificationView?.removeFromSuperview()
+            self.host!.view.removeFromSuperview()
+            self.host!.removeFromParent()
+//
+//            self.notificationView?.removeFromSuperview()
+//            self.notificationView = nil
         })
-
     }
 
     func showHomeRowReminder() {
         let feature = HomeRowReminder()
-        if feature.showNow() {
-            showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
-                if tapped {
-                    self.segueToHomeRow()
-                }
-                self.hideNotification()
+        showBrokenSitePrompt()
+//        if feature.showNow() {
+//            showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
+//                if tapped {
+//                    self.segueToHomeRow()
+//                }
+//                self.hideNotification()
+//            }
+//            feature.setShown()
+//        }
+    }
+
+    private var host: UIHostingController<BrokenSitePromptView>?
+
+    func showBrokenSitePrompt() {
+        guard notificationView == nil else { return }
+
+        host = makeBrokenSitePromptViewHostingController()
+        host!.view.translatesAutoresizingMaskIntoConstraints = false
+        addChild(host!)
+        viewCoordinator.notificationBarContainer.addSubview(host!.view)
+
+        host!.view.bottomAnchor.constraint(equalTo: viewCoordinator.notificationBarContainer.bottomAnchor).isActive = true
+        host!.view.centerXAnchor.constraint(equalTo: viewCoordinator.notificationBarContainer.centerXAnchor).isActive = true
+        host!.view.widthAnchor.constraint(equalTo: viewCoordinator.notificationBarContainer.widthAnchor).isActive = true
+
+        notificationView = host!.view
+
+        host!.didMove(toParent: self)
+        host!.view.layoutIfNeeded()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.viewCoordinator.constraints.notificationContainerHeight.constant = self.host?.view.frame.height ?? 0.0
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
             }
-            feature.setShown()
         }
+
+    }
+
+    private func makeBrokenSitePromptViewHostingController() -> UIHostingController<BrokenSitePromptView> {
+        let viewModel = BrokenSitePromptViewModel(onDidDismiss: { [weak self] in
+            self?.hideNotification()
+        }, onDidSubmit: { [weak self] in
+            self?.hideNotification()
+        })
+        return UIHostingController(rootView: BrokenSitePromptView(viewModel: viewModel))
     }
 
     func animateBackgroundTab() {

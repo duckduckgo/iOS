@@ -1268,35 +1268,35 @@ class MainViewController: UIViewController {
         }
     }
 
-    private func hideNotification() {
+    private func hideNotification(animated: Bool = true) {
         viewCoordinator.constraints.notificationContainerHeight.constant = 0
-        self.host!.willMove(toParent: nil)
-        UIView.animate(withDuration: 0.5, animations: {
-            if let frame = self.notificationView?.frame {
-                self.notificationView?.frame = frame.offsetBy(dx: 0, dy: -frame.height)
-            }
-            self.view.layoutSubviews()
-        }, completion: { _ in
-            self.host!.view.removeFromSuperview()
-            self.host!.removeFromParent()
-//
-//            self.notificationView?.removeFromSuperview()
-//            self.notificationView = nil
-        })
+        if animated {
+            UIView.animate(withDuration: 0.5, animations: {
+                if let frame = self.notificationView?.frame {
+                    self.notificationView?.frame = frame.offsetBy(dx: 0, dy: -frame.height)
+                }
+                self.view.layoutSubviews()
+            }, completion: { _ in
+                self.notificationView?.removeFromSuperview()
+                self.notificationView = nil
+            })
+        } else {
+            self.notificationView?.removeFromSuperview()
+            self.notificationView = nil
+        }
     }
 
     func showHomeRowReminder() {
         let feature = HomeRowReminder()
-        showBrokenSitePrompt()
-//        if feature.showNow() {
-//            showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
-//                if tapped {
-//                    self.segueToHomeRow()
-//                }
-//                self.hideNotification()
-//            }
-//            feature.setShown()
-//        }
+        if feature.showNow() {
+            showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
+                if tapped {
+                    self.segueToHomeRow()
+                }
+                self.hideNotification()
+            }
+            feature.setShown()
+        }
     }
 
     private var host: UIHostingController<BrokenSitePromptView>?
@@ -1304,36 +1304,42 @@ class MainViewController: UIViewController {
     func showBrokenSitePrompt() {
         guard notificationView == nil else { return }
 
-        host = makeBrokenSitePromptViewHostingController()
-        host!.view.translatesAutoresizingMaskIntoConstraints = false
-        addChild(host!)
-        viewCoordinator.notificationBarContainer.addSubview(host!.view)
+        let host = makeBrokenSitePromptViewHostingController()
+        self.host = host
 
-        host!.view.bottomAnchor.constraint(equalTo: viewCoordinator.notificationBarContainer.bottomAnchor).isActive = true
-        host!.view.centerXAnchor.constraint(equalTo: viewCoordinator.notificationBarContainer.centerXAnchor).isActive = true
-        host!.view.widthAnchor.constraint(equalTo: viewCoordinator.notificationBarContainer.widthAnchor).isActive = true
+        addChild(host)
+        viewCoordinator.notificationBarContainer.addSubview(host.view)
 
-        notificationView = host!.view
+        host.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            host.view.leadingAnchor.constraint(equalTo: viewCoordinator.notificationBarContainer.leadingAnchor),
+            host.view.trailingAnchor.constraint(equalTo: viewCoordinator.notificationBarContainer.trailingAnchor),
+            host.view.bottomAnchor.constraint(equalTo: viewCoordinator.notificationBarContainer.bottomAnchor)
+        ])
 
-        host!.didMove(toParent: self)
-        host!.view.layoutIfNeeded()
+        notificationView = host.view
+        host.view.layoutIfNeeded()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.viewCoordinator.constraints.notificationContainerHeight.constant = self.host?.view.frame.height ?? 0.0
-            UIView.animate(withDuration: 0.3) {
-                self.view.layoutIfNeeded()
-            }
-        }
+        host.didMove(toParent: self)
+        view.layoutIfNeeded()
 
+        viewCoordinator.constraints.notificationContainerHeight.constant = host.view.frame.height
     }
 
     private func makeBrokenSitePromptViewHostingController() -> UIHostingController<BrokenSitePromptView> {
         let viewModel = BrokenSitePromptViewModel(onDidDismiss: { [weak self] in
-            self?.hideNotification()
+            self?.hideBrokenSitePrompt()
         }, onDidSubmit: { [weak self] in
-            self?.hideNotification()
+            self?.hideBrokenSitePrompt()
         })
         return UIHostingController(rootView: BrokenSitePromptView(viewModel: viewModel))
+    }
+
+    private func hideBrokenSitePrompt() {
+        host?.willMove(toParent: nil)
+        host?.view.removeFromSuperview()
+        host?.removeFromParent()
+        hideNotification(animated: false)
     }
 
     func animateBackgroundTab() {

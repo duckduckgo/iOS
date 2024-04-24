@@ -69,7 +69,11 @@ class MainViewController: UIViewController {
     var contentUnderflow: CGFloat {
         return 3 + (allowContentUnderflow ? -viewCoordinator.navigationBarContainer.frame.size.height : 0)
     }
-    
+
+    var isShowingAutocompleteSuggestions: Bool {
+        suggestionTrayController?.isShowingAutocompleteSuggestions == true
+    }
+
     lazy var emailManager: EmailManager = {
         let emailManager = EmailManager()
         emailManager.aliasPermissionDelegate = self
@@ -711,6 +715,7 @@ class MainViewController: UIViewController {
     }
         
     @objc func dismissSuggestionTray() {
+        omniBar.cancel()
         dismissOmniBar()
     }
 
@@ -1790,8 +1795,13 @@ extension MainViewController: OmniBarDelegate {
         }
     }
 
-    func onDismissed() {
-        dismissOmniBar()
+    func onEditingEnd() -> OmniBarEditingEndResult {
+        if isShowingAutocompleteSuggestions {
+            return .suspended
+        } else {
+            dismissOmniBar()
+            return .dismissed
+        }
     }
 
     func onSettingsPressed() {
@@ -1835,6 +1845,9 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar, tapped: Bool) {
+        // We don't want any action here if we're still in autocomplete context
+        guard !isShowingAutocompleteSuggestions else { return }
+
         if let currentTab {
             viewCoordinator.omniBar.refreshText(forUrl: currentTab.url, forceFullURL: true)
         }

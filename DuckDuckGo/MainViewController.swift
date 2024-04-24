@@ -1288,6 +1288,7 @@ class MainViewController: UIViewController {
 
     func showHomeRowReminder() {
         let feature = HomeRowReminder()
+        showBrokenSitePrompt()
         if feature.showNow() {
             showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
                 if tapped {
@@ -1330,6 +1331,7 @@ class MainViewController: UIViewController {
         let viewModel = BrokenSitePromptViewModel(onDidDismiss: { [weak self] in
             self?.hideBrokenSitePrompt()
         }, onDidSubmit: { [weak self] in
+            self?.segueToReportBrokenSite()
             self?.hideBrokenSitePrompt()
         })
         return UIHostingController(rootView: BrokenSitePromptView(viewModel: viewModel))

@@ -127,10 +127,12 @@ public struct UserDefaultsWrapper<T> {
         case didRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didRefreshTimestamp"
         case didDoubleRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didDoubleRefreshTimestamp"
         case didRefreshCounter = "com.duckduckgo.ios.userBehavior.didRefreshCounter"
+        case userDidInteractWithBrokenSitePrompt = "com.duckduckgo.ios.userBehavior.userDidInteractWithBrokenSitePrompt"
 
         case pixelExperimentInstalled = "com.duckduckgo.ios.pixel.experiment.installed"
         case pixelExperimentCohort = "com.duckduckgo.ios.pixel.experiment.cohort"
         case pixelExperimentEnrollmentDate = "com.duckduckgo.ios.pixel.experiment.enrollment.date"
+
     }
 
     private let key: Key

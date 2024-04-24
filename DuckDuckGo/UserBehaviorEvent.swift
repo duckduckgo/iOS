@@ -18,8 +18,15 @@
 //
 
 import Foundation
+import Core
 
 public enum UserBehaviorEvent: String {
+
+    public enum Key {
+
+        static let event = "com.duckduckgo.com.userBehaviorEvent.key"
+
+    }
 
     case reloadTwiceWithin12Seconds = "reload-twice-within-12-seconds"
     case reloadTwiceWithin24Seconds = "reload-twice-within-24-seconds"
@@ -29,5 +36,20 @@ public enum UserBehaviorEvent: String {
 
     case reloadThreeTimesWithin20Seconds = "reload-three-times-within-20-seconds"
     case reloadThreeTimesWithin40Seconds = "reload-three-times-within-40-seconds"
+
+}
+
+extension UserBehaviorEvent {
+
+    var matchingPixelExperimentVariant: PixelExperiment {
+        switch self {
+        case .reloadTwiceWithin12Seconds: return .reloadTwiceWithin12SecondsShowsPrompt
+        case .reloadTwiceWithin24Seconds: return .reloadTwiceWithin24SecondsShowsPrompt
+        case .reloadAndRestartWithin30Seconds: return .reloadAndRestartWithin30SecondsShowsPrompt
+        case .reloadAndRestartWithin50Seconds: return .reloadAndRestartWithin50SecondsShowsPrompt
+        case .reloadThreeTimesWithin20Seconds: return .reloadThreeTimesWithin20SecondsShowsPrompt
+        case .reloadThreeTimesWithin40Seconds: return .reloadThreeTimesWithin40SecondsShowsPrompt
+        }
+    }
 
 }

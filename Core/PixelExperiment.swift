@@ -66,6 +66,16 @@ public enum PixelExperiment: String, CaseIterable {
 
     // Internal state for users not included in any variant
     case noVariant
+
+    case reloadTwiceWithin12SecondsShowsPrompt
+    case reloadTwiceWithin24SecondsShowsPrompt
+
+    case reloadAndRestartWithin30SecondsShowsPrompt
+    case reloadAndRestartWithin50SecondsShowsPrompt
+
+    case reloadThreeTimesWithin20SecondsShowsPrompt
+    case reloadThreeTimesWithin40SecondsShowsPrompt
+
 }
 
 extension PixelExperiment {
@@ -82,6 +92,15 @@ extension PixelExperiment {
 }
 
 final internal class PixelExperimentLogic {
+
+    private let promptCohorts: [PixelExperiment] = [
+        .reloadTwiceWithin12SecondsShowsPrompt,
+        .reloadTwiceWithin24SecondsShowsPrompt,
+        .reloadAndRestartWithin30SecondsShowsPrompt,
+        .reloadAndRestartWithin50SecondsShowsPrompt,
+        .reloadThreeTimesWithin20SecondsShowsPrompt,
+        .reloadThreeTimesWithin40SecondsShowsPrompt
+    ]
 
     var cohort: PixelExperiment? {
         guard isInstalled else { return nil }
@@ -106,7 +125,9 @@ final internal class PixelExperimentLogic {
         } else if randomNumber < 10 {
             cohort = .newSettings
         } else {
-            cohort = .noVariant
+            // Calculate the bucket index for the remaining 90%
+            let bucketIndex = (randomNumber - 10) / (90 / 6)
+            cohort = promptCohorts[bucketIndex]
         }
 
         // Store and use the selected cohort

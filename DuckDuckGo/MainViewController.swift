@@ -99,7 +99,10 @@ class MainViewController: UIViewController {
     
     @UserDefaultsWrapper(key: .syncDidShowSyncPausedByFeatureFlagAlert, defaultValue: false)
     private var syncDidShowSyncPausedByFeatureFlagAlert: Bool
-    
+
+    @UserDefaultsWrapper(key: .userDidInteractWithBrokenSitePrompt, defaultValue: false)
+    private var userDidInteractWithBrokenSitePrompt: Bool
+
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
     private var syncFeatureFlagsCancellable: AnyCancellable?
@@ -277,6 +280,7 @@ class MainViewController: UIViewController {
         findInPageBottomLayoutConstraint.constant = 0
         registerForKeyboardNotifications()
         registerForSyncPausedNotifications()
+        registerForUserBehaviorEvents()
 
         decorate()
 
@@ -488,6 +492,14 @@ class MainViewController: UIViewController {
                     self.syncDidShowSyncPausedByFeatureFlagAlert = true
                 }
             }
+    }
+
+    private func registerForUserBehaviorEvents() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(attemptToShowBrokenSitePrompt(_:)),
+            name: .userBehaviorDidMatchExperimentVariant,
+            object: nil)
     }
 
     @objc private func showSyncPausedError(_ notification: Notification) {
@@ -1313,9 +1325,16 @@ class MainViewController: UIViewController {
 
     private var host: UIHostingController<BrokenSitePromptView>?
 
-    func showBrokenSitePrompt(after event: UserBehaviorEvent) {
-        guard notificationView == nil, !isPad else { return } // site ddg, etc.
+    @objc func attemptToShowBrokenSitePrompt(_ notification: Notification) {
+        guard !userDidInteractWithBrokenSitePrompt,
+              let event = notification.userInfo?[UserBehaviorEvent.Key.event] as? UserBehaviorEvent,
+              let url = currentTab?.url, !url.isDuckDuckGo,
+              notificationView == nil,
+              !isPad  else { return }
+        showBrokenSitePrompt(after: event)
+    }
 
+    private func showBrokenSitePrompt(after event: UserBehaviorEvent) {
         let host = makeBrokenSitePromptViewHostingController(event: event)
         self.host = host
 
@@ -1339,14 +1358,15 @@ class MainViewController: UIViewController {
     }
 
     private func makeBrokenSitePromptViewHostingController(event: UserBehaviorEvent) -> UIHostingController<BrokenSitePromptView> {
-        let parameters = ["variant": event.rawValue]
+        let parameters = [UserBehaviorEvent.Key.event: event.rawValue]
         let viewModel = BrokenSitePromptViewModel(onDidDismiss: { [weak self] in
             self?.hideBrokenSitePrompt()
+            self?.userDidInteractWithBrokenSitePrompt = true
             Pixel.fire(pixel: .siteNotWorkingDismiss, withAdditionalParameters: parameters)
-            //save that info + ipad + ddg + etc.
         }, onDidSubmit: { [weak self] in
             self?.segueToReportBrokenSite(mode: .prompt(event.rawValue))
             self?.hideBrokenSitePrompt()
+            self?.userDidInteractWithBrokenSitePrompt = true
             Pixel.fire(pixel: .siteNotWorkingWebsiteIsBroken, withAdditionalParameters: parameters)
         })
         return UIHostingController(rootView: BrokenSitePromptView(viewModel: viewModel))

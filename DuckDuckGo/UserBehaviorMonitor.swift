@@ -21,6 +21,12 @@ import Foundation
 import Common
 import Core
 
+public extension Notification.Name {
+
+    static let userBehaviorDidMatchExperimentVariant = Notification.Name("com.duckduckgo.app.userBehaviorDidMatchExperimentVariant")
+
+}
+
 protocol UserBehaviorStoring {
 
     var didRefreshTimestamp: Date? { get set }
@@ -99,7 +105,12 @@ final class UserBehaviorMonitor {
         func fireEventIfActionOccurredRecently(within interval: Double = 30.0, since timestamp: Date?, eventToFire: UserBehaviorEvent) {
             if let timestamp = timestamp, date.timeIntervalSince(timestamp) < interval {
                 eventMapping.fire(eventToFire)
-                // install variant here
+                PixelExperiment.install() // Do we have better place to install it?
+                if PixelExperiment.cohort == eventToFire.matchingPixelExperimentVariant {
+                    NotificationCenter.default.post(name: .userBehaviorDidMatchExperimentVariant, 
+                                                    object: self, 
+                                                    userInfo: [UserBehaviorEvent.Key.event: eventToFire])
+                }
             }
         }
     }

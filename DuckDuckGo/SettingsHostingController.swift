@@ -48,9 +48,10 @@ class SettingsHostingController: UIHostingController<AnyView> {
         }
 
         let settingsView: AnyView
-        switch PixelExperiment.cohort {
-        case .control, .noVariant, .none: settingsView = AnyView(SettingsView(viewModel: viewModel))
-        case .newSettings: settingsView = AnyView(SettingsRootView(viewModel: viewModel))
+        if PixelExperiment.cohort == .newSettings {
+            settingsView = AnyView(SettingsRootView(viewModel: viewModel))
+        } else {
+            settingsView = AnyView(SettingsView(viewModel: viewModel))
         }
         self.rootView = AnyView(settingsView)
 

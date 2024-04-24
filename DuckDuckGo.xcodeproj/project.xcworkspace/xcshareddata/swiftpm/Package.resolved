@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "jacek/fix-errors-encoding",
-        "revision" : "0831f8975098e2c8fb1829ee9e136c81379b01af"
+        "revision" : "b1501e60d245625d4a5d42a61b329364134f0879",
+        "version" : "140.0.1"
       }
     },
     {

@@ -123,13 +123,13 @@ class TabViewCell: UICollectionViewCell {
     }
 
     private func startRemoveAnimation() {
+        self.isDeleting = true
+        Pixel.fire(pixel: .tabSwitcherSwipeCloseTab)
+        self.deleteTab()
         UIView.animate(withDuration: 0.2, animations: {
             self.transform = CGAffineTransform.identity.translatedBy(x: -self.frame.width, y: 0)
         }, completion: { _ in
             self.isHidden = true
-            self.isDeleting = true
-            Pixel.fire(pixel: .tabSwitcherSwipeCloseTab)
-            self.closeTab()
         })
     }
 

@@ -175,7 +175,7 @@ update_marketing_version() {
 	"$script_dir/set_version.sh" "${version}"
 	git add "${base_dir}/Configuration/Version.xcconfig" \
 		"${base_dir}/DuckDuckGo/Settings.bundle/Root.plist"
-	eval git commit -m \"Update version number\" "$mute"
+	eval git commit --allow-empty -m \"Update version number\" "$mute"
 	echo "✅"
 }
 
@@ -184,7 +184,7 @@ update_build_version() {
 	(cd "$base_dir" && bundle exec fastlane increment_build_number_for_version version:"${version}")
 	git add "${base_dir}/DuckDuckGo.xcodeproj/project.pbxproj"
 	if [[ "$(git diff --cached)" ]]; then
-		eval git commit -m \"Update build number\" "$mute"
+		eval git commit --allow-empty -m \"Update build number\" "$mute"
 		echo "Setting build version ... ✅"
 	else
 		printf "\nNo changes to build number ✅\n"

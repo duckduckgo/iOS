@@ -1,0 +1,13 @@
+# delay.yaml
+
+appId: com.duckduckgo.mobile.ios
+---
+
+- runFlow:
+    when:
+      visible:
+        text: "This is just a text that will be never matched so this invocation will cause 5s delay"
+        index: 0
+    commands:
+        - stopApp
+

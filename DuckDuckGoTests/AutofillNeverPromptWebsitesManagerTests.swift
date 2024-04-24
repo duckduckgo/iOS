@@ -25,7 +25,7 @@ import BrowserServicesKit
 final class AutofillNeverPromptWebsitesManagerTests: XCTestCase {
 
     private var manager: AutofillNeverPromptWebsitesManager!
-    private let vault = (try? MockSecureVaultFactory.makeVault(errorReporter: nil))!
+    private let vault = (try? MockSecureVaultFactory.makeVault(reporter: nil))!
 
     override func setUpWithError() throws {
         try super.setUpWithError()

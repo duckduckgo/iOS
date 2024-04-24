@@ -15,8 +15,8 @@ let package = Package(
             targets: ["Waitlist", "WaitlistMocks"])
     ],
     dependencies: [
-        .package(url: "https://github.com/duckduckgo/DesignResourcesKit", exact: "2.0.0"),
-        .package(url: "https://github.com/duckduckgo/apple-toolbox.git", exact: "2.0.0"),
+        .package(url: "https://github.com/duckduckgo/DesignResourcesKit", exact: "3.0.0"),
+        .package(url: "https://github.com/duckduckgo/apple-toolbox.git", exact: "3.1.1"),
     ],
     targets: [
         .target(
@@ -26,21 +26,18 @@ let package = Package(
             ],
             swiftSettings: [
                 .define("DEBUG", .when(configuration: .debug))
-            ],
-            plugins: [.plugin(name: "SwiftLintPlugin", package: "apple-toolbox")]
+            ]
         ),
         .target(
             name: "WaitlistMocks",
             dependencies: ["Waitlist"],
             swiftSettings: [
                 .define("DEBUG", .when(configuration: .debug))
-            ],
-            plugins: [.plugin(name: "SwiftLintPlugin", package: "apple-toolbox")]
+            ]
         ),
         .testTarget(
             name: "WaitlistTests",
-            dependencies: ["Waitlist", "WaitlistMocks"],
-            plugins: [.plugin(name: "SwiftLintPlugin", package: "apple-toolbox")]
+            dependencies: ["Waitlist", "WaitlistMocks"]
         )
     ]
 )

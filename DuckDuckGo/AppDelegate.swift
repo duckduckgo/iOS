@@ -86,10 +86,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var syncStateCancellable: AnyCancellable?
     private var isSyncInProgressCancellable: AnyCancellable?
 
+    private let crashCollection = CrashCollection(platform: .iOS, log: .generalLog)
+    private var crashReportUploaderOnboarding: CrashCollectionOnboarding?
+
     // MARK: lifecycle
 
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
     private var privacyConfigCustomURL: String?
+    
+    @UserDefaultsWrapper(key: .privacyProEnvironment, defaultValue: SubscriptionPurchaseEnvironment.ServiceEnvironment.default.description)
+    private var privacyProEnvironment: String
 
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -130,8 +136,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Configuration.setURLProvider(AppConfigurationURLProvider())
         }
 
-        CrashCollection.start {
-            Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [])
+        crashCollection.start { pixelParameters, payloads, sendReport in
+            pixelParameters.forEach { params in
+                Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
+            }
+
+            // Async dispatch because rootViewController may otherwise be nil here
+            DispatchQueue.main.async {
+                guard let viewController = self.window?.rootViewController else {
+                    return
+                }
+                let dataPayloads = payloads.map { $0.jsonRepresentation() }
+                let crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
+                crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: dataPayloads, from: viewController, sendReport: sendReport)
+                self.crashReportUploaderOnboarding = crashReportUploaderOnboarding
+            }
         }
 
         clearTmp()
@@ -241,7 +260,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         syncDataProviders = SyncDataProviders(
             bookmarksDatabase: bookmarksDatabase,
-            secureVaultErrorReporter: SecureVaultErrorReporter.shared,
+            secureVaultErrorReporter: SecureVaultReporter.shared,
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
         )
@@ -267,9 +286,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 })
             }
 
-        let previewsSource = TabPreviewsSource()
         let historyManager = makeHistoryManager()
-        let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
 #if APP_TRACKING_PROTECTION
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
@@ -278,18 +295,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                       historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
-                                      appSettings: AppDependencyProvider.shared.appSettings,
-                                      previewsSource: previewsSource,
-                                      tabsModel: tabsModel)
+                                      appSettings: AppDependencyProvider.shared.appSettings)
 #else
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
-                                      appSettings: AppDependencyProvider.shared.appSettings,
-                                      previewsSource: previewsSource,
-                                      tabsModel: tabsModel)
+                                      appSettings: AppDependencyProvider.shared.appSettings)
 #endif
 
         main.loadViewIfNeeded()
@@ -344,27 +357,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    private func prepareTabsModel(previewsSource: TabPreviewsSource = TabPreviewsSource(),
-                                  appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
-                                  isDesktop: Bool = UIDevice.current.userInterfaceIdiom == .pad) -> TabsModel {
-        let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
-        let tabsModel: TabsModel
-        if AutoClearSettingsModel(settings: appSettings) != nil {
-            tabsModel = TabsModel(desktop: isPadDevice)
-            tabsModel.save()
-            previewsSource.removeAllPreviews()
-        } else {
-            if let storedModel = TabsModel.get() {
-                // Save new model in case of migration
-                storedModel.save()
-                tabsModel = storedModel
-            } else {
-                tabsModel = TabsModel(desktop: isPadDevice)
-            }
-        }
-        return tabsModel
-    }
-
     private func makeHistoryManager() -> HistoryManager {
         let historyManager = HistoryManager(privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
                               variantManager: DefaultVariantManager(),
@@ -417,14 +409,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
         presenter.showEntitlementNotification()
     }
-
-    private func presentVPNEarlyAccessOverAlert() {
-        let alertController = CriticalAlerts.makeVPNEarlyAccessOverAlert()
-        window?.rootViewController?.present(alertController, animated: true) { [weak self] in
-            DailyPixel.fireDailyAndCount(pixel: .privacyProPromotionDialogShownVPN)
-            self?.tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
-        }
-    }
 #endif
 
     private func cleanUpMacPromoExperiment2() {
@@ -447,18 +431,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func setupSubscriptionsEnvironment() {
         Task {
-#if DEBUG || ALPHA
-            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
-#else
-            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .production
-#endif
-
-#if NETWORK_PROTECTION
-            if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {
-                SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
-            }
-#endif
-
+            #if ALPHA || DEBUG
+                let defaultEnvironment = SubscriptionPurchaseEnvironment.ServiceEnvironment.staging
+            #else
+                let defaultEnvironment = SubscriptionPurchaseEnvironment.ServiceEnvironment.production
+            #endif
+            let environment = SubscriptionPurchaseEnvironment.ServiceEnvironment(rawValue: privacyProEnvironment) ?? defaultEnvironment
+            SubscriptionPurchaseEnvironment.currentServiceEnvironment = environment
+            VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment = (environment == .production) ? .production : .staging
             SubscriptionPurchaseEnvironment.current = .appStore
         }
     }
@@ -534,8 +514,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         if vpnFeatureVisibility.shouldShowThankYouMessaging() && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
-            presentVPNEarlyAccessOverAlert()
-
             Task {
                 await self.stopAndRemoveVPN(with: "thank-you-dialog")
             }
@@ -757,7 +735,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         Task { @MainActor in
-            // Autoclear should have happened by now
+            await autoClear?.applicationWillMoveToForeground()
             showKeyboardIfSettingOn = false
 
             if !handleAppDeepLink(app, mainViewController, url) {

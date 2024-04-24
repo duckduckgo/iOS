@@ -1,5 +1,5 @@
 //
-//  SecureVaultErrorReporter.swift
+//  SecureVaultReporter.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -23,16 +23,38 @@ import Core
 import Common
 import SecureStorage
 
-final class SecureVaultErrorReporter: SecureVaultErrorReporting {
-    static let shared = SecureVaultErrorReporter()
-    private init() {}
+final class SecureVaultKeyStoreEventMapper: EventMapping<SecureStorageKeyStoreEvent> {
+     public init() {
+         super.init { event, _, _, _ in
+             switch event {
+             case .l1KeyMigration:
+                 Pixel.fire(pixel: .secureVaultL1KeyMigration)
+             case .l2KeyMigration:
+                 Pixel.fire(pixel: .secureVaultL2KeyMigration)
+             case .l2KeyPasswordMigration:
+                 Pixel.fire(pixel: .secureVaultL2KeyPasswordMigration)
+             }
+         }
+     }
+
+     override init(mapping: @escaping EventMapping<SecureStorageKeyStoreEvent>.Mapping) {
+         fatalError("Use init()")
+     }
+ }
+
+final class SecureVaultReporter: SecureVaultReporting {
+    static let shared = SecureVaultReporter()
+    private var keyStoreMapper: SecureVaultKeyStoreEventMapper
+    private init(keyStoreMapper: SecureVaultKeyStoreEventMapper = SecureVaultKeyStoreEventMapper()) {
+        self.keyStoreMapper = keyStoreMapper
+    }
 
     @MainActor
     func isAppBackgrounded() -> Bool {
         return UIApplication.shared.applicationState == .background
     }
 
-    func secureVaultInitFailed(_ error: SecureStorageError) {
+    func secureVaultError(_ error: SecureStorageError) {
         #if DEBUG
         guard !ProcessInfo().arguments.contains("testing") else { return }
         #endif
@@ -63,5 +85,9 @@ final class SecureVaultErrorReporter: SecureVaultErrorReporting {
 
             }
         }
+    }
+
+    func secureVaultKeyStoreEvent(_ event: SecureStorageKeyStoreEvent) {
+        keyStoreMapper.fire(event)
     }
 }

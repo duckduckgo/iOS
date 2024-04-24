@@ -29,6 +29,7 @@ import History
 import Combine
 import BrowserServicesKit
 
+// swiftlint:disable file_length
 class AutocompleteViewController: UIViewController {
     
     private static let session = URLSession(configuration: .ephemeral)

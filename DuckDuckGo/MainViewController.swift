@@ -1917,6 +1917,13 @@ extension MainViewController: FavoritesOverlayDelegate {
 
 extension MainViewController: AutocompleteViewControllerDelegate {
 
+    func autocompleteDidEndWithUserQuery() {
+        if let query = omniBar.textField.text {
+            onOmniQuerySubmitted(query
+            )
+        }
+    }
+
     func autocomplete(selectedSuggestion suggestion: Suggestion) {
         homeController?.chromeDelegate = nil
         dismissOmniBar()

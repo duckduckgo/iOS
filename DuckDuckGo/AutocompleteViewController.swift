@@ -318,6 +318,12 @@ extension AutocompleteViewController: UITableViewDataSource {
 
 extension AutocompleteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard !model.isEmpty else {
+            // Selected row with user's query
+            delegate?.autocompleteDidEndWithUserQuery()
+            return
+        }
+        
         guard let suggestion = model.suggestion(for: indexPath) else {
             assertionFailure("Data inconsistency in table view")
             return

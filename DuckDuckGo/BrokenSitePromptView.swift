@@ -39,6 +39,7 @@ struct BrokenSitePromptView: View {
                     .fixedSize()
             }
         }
+        .background(Color(designSystemColor: .background))
         .padding()
     }
 

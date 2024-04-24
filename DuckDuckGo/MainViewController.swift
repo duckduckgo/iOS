@@ -1288,7 +1288,7 @@ class MainViewController: UIViewController {
 
     func showHomeRowReminder() {
         let feature = HomeRowReminder()
-        showBrokenSitePrompt()
+        showBrokenSitePrompt(after: .reloadAndRestartWithin30Seconds) // e.g. // TODO!
         if feature.showNow() {
             showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
                 if tapped {
@@ -1302,10 +1302,10 @@ class MainViewController: UIViewController {
 
     private var host: UIHostingController<BrokenSitePromptView>?
 
-    func showBrokenSitePrompt() {
-        guard notificationView == nil else { return }
+    func showBrokenSitePrompt(after event: UserBehaviorEvent) {
+        guard notificationView == nil, !isPad else { return } // site ddg, etc.
 
-        let host = makeBrokenSitePromptViewHostingController()
+        let host = makeBrokenSitePromptViewHostingController(event: event)
         self.host = host
 
         addChild(host)
@@ -1327,12 +1327,16 @@ class MainViewController: UIViewController {
         viewCoordinator.constraints.notificationContainerHeight.constant = host.view.frame.height
     }
 
-    private func makeBrokenSitePromptViewHostingController() -> UIHostingController<BrokenSitePromptView> {
+    private func makeBrokenSitePromptViewHostingController(event: UserBehaviorEvent) -> UIHostingController<BrokenSitePromptView> {
+        let parameters = ["variant": event.rawValue]
         let viewModel = BrokenSitePromptViewModel(onDidDismiss: { [weak self] in
             self?.hideBrokenSitePrompt()
+            Pixel.fire(pixel: .siteNotWorkingDismiss, withAdditionalParameters: parameters)
+            //save that info + ipad + ddg + etc.
         }, onDidSubmit: { [weak self] in
-            self?.segueToReportBrokenSite()
+            self?.segueToReportBrokenSite(mode: .prompt(event.rawValue))
             self?.hideBrokenSitePrompt()
+            Pixel.fire(pixel: .siteNotWorkingWebsiteIsBroken, withAdditionalParameters: parameters)
         })
         return UIHostingController(rootView: BrokenSitePromptView(viewModel: viewModel))
     }

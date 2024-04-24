@@ -19,15 +19,15 @@
 
 import Foundation
 
-public enum UserBehaviorEvent {
+public enum UserBehaviorEvent: String {
 
-    case reloadTwiceWithin12Seconds
-    case reloadTwiceWithin24Seconds
-    
-    case reloadAndRestartWithin30Seconds
-    case reloadAndRestartWithin50Seconds
+    case reloadTwiceWithin12Seconds = "reload-twice-within-12-seconds"
+    case reloadTwiceWithin24Seconds = "reload-twice-within-24-seconds"
 
-    case reloadThreeTimesWithin20Seconds
-    case reloadThreeTimesWithin40Seconds
+    case reloadAndRestartWithin30Seconds = "reload-and-restart-within-30-seconds"
+    case reloadAndRestartWithin50Seconds = "reload-and-restart-within-50-seconds"
+
+    case reloadThreeTimesWithin20Seconds = "reload-three-times-within-20-seconds"
+    case reloadThreeTimesWithin40Seconds = "reload-three-times-within-40-seconds"
 
 }

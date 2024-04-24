@@ -578,6 +578,9 @@ extension Pixel {
         case userBehaviorReloadThreeTimesWithin20Seconds
         case userBehaviorReloadThreeTimesWithin40Seconds
 
+        case siteNotWorkingDismiss
+        case siteNotWorkingWebsiteIsBroken
+
         // MARK: History
         case historyStoreLoadFailed
         case historyRemoveFailed
@@ -1229,6 +1232,9 @@ extension Pixel.Event {
 
         case .userBehaviorReloadThreeTimesWithin20Seconds: return "m_reload-three-times-within-20-seconds"
         case .userBehaviorReloadThreeTimesWithin40Seconds: return "m_reload-three-times-within-40-seconds"
+
+        case .siteNotWorkingDismiss: return "m_site-not-working_dismiss"
+        case .siteNotWorkingWebsiteIsBroken: return "m_site-not-working_website-is-broken"
 
         // MARK: - History debug
         case .historyStoreLoadFailed: return "m_debug_history-store-load-failed"

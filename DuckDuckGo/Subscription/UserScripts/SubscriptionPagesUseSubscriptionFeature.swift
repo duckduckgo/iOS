@@ -155,6 +155,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     private func resetSubscriptionFlow() {
         setTransactionError(nil)
+
     }
         
     private func setTransactionError(_ error: UseSubscriptionError?) {
@@ -168,8 +169,20 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     // MARK: Broker Methods (Called from WebView via UserScripts)
     func getSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
-        let authToken = AccountManager().authToken ?? Constants.empty
-        return [Constants.token: authToken]
+        guard let accessToken = AccountManager().accessToken,
+              let authToken = AccountManager().authToken
+        else { return [Constants.token: Constants.empty] }
+
+        let token: String
+
+        if case .success(let subscription) = await SubscriptionService.getSubscription(accessToken: accessToken),
+           subscription.isActive {
+            token = authToken
+        } else {
+            token = Constants.empty
+        }
+
+        return [Constants.token: token]
     }
     
     func getSubscriptionOptions(params: Any, original: WKScriptMessage) async -> Encodable? {

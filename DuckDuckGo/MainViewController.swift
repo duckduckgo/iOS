@@ -1372,9 +1372,10 @@ class MainViewController: UIViewController {
     }
 
     private func hideBrokenSitePrompt() {
-        host?.willMove(toParent: nil)
-        host?.view.removeFromSuperview()
-        host?.removeFromParent()
+        guard let host else { return }
+        host.willMove(toParent: nil)
+        host.view.removeFromSuperview()
+        host.removeFromParent()
         hideNotification(animated: false)
     }
 
@@ -1785,6 +1786,7 @@ extension MainViewController: OmniBarDelegate {
         }
         loadQuery(query)
         hideSuggestionTray()
+        hideBrokenSitePrompt()
         showHomeRowReminder()
     }
 

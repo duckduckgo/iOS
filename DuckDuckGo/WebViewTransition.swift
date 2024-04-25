@@ -103,7 +103,7 @@ class FromWebViewTransition: WebViewTransition {
         imageView.frame = imageContainer.bounds
         imageView.image = preview
 
-        UIView.animateKeyframes(withDuration: TabSwitcherTransition.Constants.duration, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animateKeyframes(withDuration: TabSwitcherTransition.Constants.duration, delay: 0, options: .calculationModeLinear, animations: {
 
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1.0) {
                 let containerFrame = self.tabSwitcherCellFrame(for: layoutAttr)
@@ -173,7 +173,7 @@ class ToWebViewTransition: WebViewTransition {
         
         scrollIfOutsideViewport(collectionView: tabSwitcherViewController.collectionView, rowIndex: rowIndex, attributes: layoutAttr)
         
-        UIView.animate(withDuration: TabSwitcherTransition.Constants.duration, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: TabSwitcherTransition.Constants.duration, animations: {
             self.imageContainer.frame = mainViewController.viewCoordinator.contentContainer.frame
             self.imageContainer.layer.cornerRadius = 0
 
@@ -203,22 +203,4 @@ class ToWebViewTransition: WebViewTransition {
         return targetFrame
     }
 
-}
-
-extension UIView.KeyframeAnimationOptions {
-    static var curveLinear: UIView.KeyframeAnimationOptions =
-        UIView.KeyframeAnimationOptions(rawValue:UIView.AnimationOptions.curveLinear.rawValue)
-
-    static var curveEaseInOut: UIView.KeyframeAnimationOptions =
-        UIView.KeyframeAnimationOptions(rawValue:UIView.AnimationOptions.curveEaseInOut.rawValue)
-
-    static var curveEaseIn: UIView.KeyframeAnimationOptions =
-        UIView.KeyframeAnimationOptions(rawValue:UIView.AnimationOptions.curveEaseIn.rawValue)
-
-    static var curveEaseOut: UIView.KeyframeAnimationOptions =
-        UIView.KeyframeAnimationOptions(rawValue:UIView.AnimationOptions.curveEaseOut.rawValue)
-
-    init(animationOptions: UIView.AnimationOptions) {
-        self.init(rawValue: animationOptions.rawValue)
-    }
 }

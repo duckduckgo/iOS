@@ -2489,7 +2489,6 @@
 		CB1AEFB02799AA940031AE3D /* SwiftUICollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUICollectionViewCell.swift; sourceTree = "<group>"; };
 		CB1FAE472AF6D59B003F452F /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CB2283F22BD79FC20057DD0A /* BrokenSitePromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokenSitePromptView.swift; sourceTree = "<group>"; };
-		CB2283F62BD8512C0057DD0A /* BrowserServicesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BrowserServicesKit; path = ../BrowserServicesKit; sourceTree = "<group>"; };
 		CB24F70E29A3EB15006DCC58 /* AppConfigurationURLProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppConfigurationURLProvider.swift; path = ../Core/AppConfigurationURLProvider.swift; sourceTree = "<group>"; };
 		CB258D0C29A4CD0500DEBA24 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		CB258D0F29A4D0FD00DEBA24 /* ConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationManager.swift; sourceTree = "<group>"; };
@@ -3906,7 +3905,6 @@
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
-				CB2283F62BD8512C0057DD0A /* BrowserServicesKit */,
 				EE3B98EB2A963515002F63A0 /* WidgetsExtensionAlpha.entitlements */,
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				EEB8FDB92A990AEE00EBEDCF /* Configuration-Alpha.xcconfig */,
@@ -10278,8 +10276,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = exactVersion;
-				version = 139.0.0;
+				branch = "jacek/behavior-report";
+				kind = branch;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

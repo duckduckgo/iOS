@@ -191,7 +191,7 @@ final class UserBehaviorMonitorTests: XCTestCase {
         monitor.handleAction(.refresh, date: date)
         monitor.handleAction(.refresh, date: date + 10) // 10 seconds after the first event
         events.removeAll { $0 == .reloadTwiceWithin12Seconds || $0 == .reloadTwiceWithin24Seconds } // remove events that are not being tested
-        XCTAssertEqual(events.count, 2) // because other (two times refresh) events are being triggered
+        XCTAssertEqual(events.count, 2)
         XCTAssertEqual(events[0], .reloadThreeTimesWithin20Seconds)
         XCTAssertEqual(events[1], .reloadThreeTimesWithin40Seconds)
     }

@@ -220,6 +220,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
+        let defaults = UserDefaults.networkProtectionGroupDefaults
+        NetworkProtectionLastVersionRunStore(userDefaults: defaults).lastExtensionVersionRun = AppVersion.shared.versionAndBuildNumber
+
         let featureVisibility = NetworkProtectionVisibilityForTunnelProvider()
         let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
         let accessTokenProvider: () -> String? = {
@@ -252,7 +255,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,
-                   defaults: .networkProtectionGroupDefaults,
+                   defaults: defaults,
                    isSubscriptionEnabled: isSubscriptionEnabled,
                    entitlementCheck: Self.entitlementCheck)
         startMonitoringMemoryPressureEvents()

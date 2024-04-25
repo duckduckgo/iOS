@@ -43,7 +43,7 @@ struct BrokenSitePromptView: View {
             }
         }
         .padding(EdgeInsets(top: 12, leading: 16, bottom: 8, trailing: 16))
-        .background(Color(designSystemColor: .background))
+        .background(Color(designSystemColor: .panel))
     }
 
 }

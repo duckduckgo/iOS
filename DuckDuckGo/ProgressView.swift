@@ -41,6 +41,7 @@ class ProgressView: UIView, CAAnimationDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        decorate()
         configureLayers()
     }
     

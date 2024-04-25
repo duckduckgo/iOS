@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Za uporabo funkcije Sync & Backup (Sinhronizacija in varnostno kopiranje) je potrebno geslo naprave.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Nazaj";
 
@@ -93,6 +96,9 @@
 
 /* Options - Fetch Favicons Title */
 "fetch.favicons.option.title" = "Ikone za samodejno nalaganje";
+
+/* No comment provided by engineer. */
+"Go to Settings" = "Odprite Nastavitve";
 
 /* No comment provided by engineer. */
 "Keep Development" = "Ohranite razvoj";
@@ -216,6 +222,9 @@
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Skeniranje kode QR";
+
+/* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Za uporabo funkcije Sync & Backup (Sinhronizacija in varnostno kopiranje) zavarujte svojo napravo";
 
 /* No comment provided by engineer. */
 "Switch to Production" = "Preklopite na splošno razpoložljivost";

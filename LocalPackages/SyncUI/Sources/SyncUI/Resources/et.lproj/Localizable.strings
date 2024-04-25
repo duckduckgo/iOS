@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Funktsiooni Sync & Backup kasutamiseks on vaja seadme parooli.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Tagasi";
 
@@ -93,6 +96,9 @@
 
 /* Options - Fetch Favicons Title */
 "fetch.favicons.option.title" = "Ikoonide automaatne allalaadimine";
+
+/* No comment provided by engineer. */
+"Go to Settings" = "Ava Sätted";
 
 /* No comment provided by engineer. */
 "Keep Development" = "Säilita arendus";
@@ -216,6 +222,9 @@
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "QR-koodi skannimine";
+
+/* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Funktsiooni Sync & Backup kasutamiseks kindlusta oma seade";
 
 /* No comment provided by engineer. */
 "Switch to Production" = "Lülitu töökeskkonnale";

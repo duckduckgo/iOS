@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "En adgangskode til enheden er påkrævet for at bruge Sync & Backup.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Tilbage";
 
@@ -93,6 +96,9 @@
 
 /* Options - Fetch Favicons Title */
 "fetch.favicons.option.title" = "Download automatisk ikoner";
+
+/* No comment provided by engineer. */
+"Go to Settings" = "Gå til Indstillinger";
 
 /* No comment provided by engineer. */
 "Keep Development" = "Behold udvikling";
@@ -216,6 +222,9 @@
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Scan QR-kode";
+
+/* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Beskyt din enhed for at bruge synkronisering og sikkerhedskopiering";
 
 /* No comment provided by engineer. */
 "Switch to Production" = "Skift til produktion";

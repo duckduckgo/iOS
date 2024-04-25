@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Lai izmantotu Sync & Backup, nepieciešama ierīces parole.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Atpakaļ";
 
@@ -93,6 +96,9 @@
 
 /* Options - Fetch Favicons Title */
 "fetch.favicons.option.title" = "Automātiski lejupielādēt ikonas";
+
+/* No comment provided by engineer. */
+"Go to Settings" = "Doties uz Iestatījumiem";
 
 /* No comment provided by engineer. */
 "Keep Development" = "Paturēt izstrādi";
@@ -216,6 +222,9 @@
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Kvadrātkoda skenēšana";
+
+/* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Aizsargā savu ierīci, lai izmantotu Sync & Backup";
 
 /* No comment provided by engineer. */
 "Switch to Production" = "Pārslēgties uz ražošanu";

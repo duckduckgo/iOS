@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Este necesară o parolă pentru dispozitiv pentru a utiliza Sync & Backup.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Înapoi";
 
@@ -93,6 +96,9 @@
 
 /* Options - Fetch Favicons Title */
 "fetch.favicons.option.title" = "Descărcare automată a pictogramelor";
+
+/* No comment provided by engineer. */
+"Go to Settings" = "Mergi la Setări";
 
 /* No comment provided by engineer. */
 "Keep Development" = "Continuă dezvoltarea";
@@ -216,6 +222,9 @@
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Scanează codul QR";
+
+/* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Securizează-ți dispozitivul pentru a utiliza Sync & Backup";
 
 /* No comment provided by engineer. */
 "Switch to Production" = "Treci la producție";

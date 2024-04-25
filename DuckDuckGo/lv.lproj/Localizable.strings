@@ -826,24 +826,6 @@
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: %@";
 
-/* Crash Report always send button title */
-"crash.report.dialog.always.send" = "Vienmēr sūtīt avārijas ziņojumus";
-
-/* Crash Report hide details button title */
-"crash.report.dialog.hide.details" = "Paslēpt";
-
-/* Crash Report dialog message */
-"crash.report.dialog.message" = "Ziņojumi par avārijām palīdz DuckDuckGo diagnosticēt problēmas un uzlabot mūsu produktus. Tie nesatur nekādu personu identificējošu informāciju.";
-
-/* Crash Report never send button title */
-"crash.report.dialog.never.send" = "Nekad nesūtīt";
-
-/* Crash Report show details button title */
-"crash.report.dialog.show.details" = "Skatīt, kas tiek nosūtīts";
-
-/* Crash Report dialog title */
-"crash.report.dialog.title" = "Vai automātiski nosūtīt avārijas ziņojumus?";
-
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Iepriekšējais mēnesis";
 
@@ -1874,6 +1856,9 @@
 /* Settings screen cell title for toggling full URL visibility in address bar */
 "settings.address.full.url" = "Rādīt pilnu vietnes adresi";
 
+/* Label describing a feature which is turned on always */
+"settings.always.on" = "Always On";
+
 /* Settings screen appearance section title */
 "settings.appearance" = "Parādas";
 
@@ -1980,6 +1965,12 @@
 /* The name of a settings category listing next steps */
 "settings.next.steps" = "Nākamie soļi";
 
+/* Label describing a feature which is turned off */
+"settings.off" = "Off";
+
+/* Label describing a feature which is turned on */
+"settings.on" = "On";
+
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
@@ -1997,12 +1988,6 @@
 
 /* Header of settings related to search */
 "settings.search.settings" = "Meklēšanas iestatījumi";
-
-/* Settings cell for Send Crash Reports */
-"settings.send.crash.reports" = "Nosūtīt avārijas ziņojumus";
-
-/* Explanation of Send Crash Reports settings option */
-"settings.send.crash.reports.description" = "Automātiski nosūtīt avārijas ziņojumus DuckDuckGo.";
 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Iestati adreses joslas pozīciju";
@@ -2075,6 +2060,21 @@
 
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo automātiski bloķē slēptos izsekotājus, kad tu pārlūko tīmekli.\n[Uzzini vairāk](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
+
+/* Description on a report broken site page. */
+"site.not.working.description" = "Izvēlies atbilstošāko problēmas raksturojumu.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Nerādīt";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Tas mums palīdz uzlabot pārlūkprogrammu.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Vai vietne nedarbojas? Informē DuckDuckGo.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Vietne ir bojāta";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Iesniegt ziņojumu";
@@ -2465,15 +2465,6 @@
 
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
-
-/* Alert action for the alert when the early access period is over */
-"vpn.early-access.over.alert.action" = "Labi";
-
-/* Alert message for the alert when the early access period is over */
-"vpn.early-access.over.alert.message" = "Paldies, ka esi testētājs! Lai turpinātu izmantot VPN, abonē DuckDuckGo Privacy Pro un saņem 40% atlaidi ar kodu THANKYOU\n\nPiedāvājums ir pieejams tikai ierobežotu laiku, un to var izmantot tikai DuckDuckGo pārlūkprogrammas galddatora versijas ASV testētāji, kas instalē no duckduckgo.com/app";
-
-/* Alert title for the alert when the early access period is over */
-"vpn.early-access.over.alert.title" = "DuckDuckGo VPN agrīnā piekļuve ir beigusies";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";

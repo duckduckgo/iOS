@@ -826,24 +826,6 @@
 /* No comment provided by engineer. */
 "bucket: %@" = "gyűjtő: %@";
 
-/* Crash Report always send button title */
-"crash.report.dialog.always.send" = "Mindig küldjön hibajelentést";
-
-/* Crash Report hide details button title */
-"crash.report.dialog.hide.details" = "Elrejtés";
-
-/* Crash Report dialog message */
-"crash.report.dialog.message" = "A hibajelentések segítséget nyújtanak ahhoz, hogy a DuckDuckGo diagnosztizálhassa a problémákat, és tökéletesíthesse termékeit. A jelentések nem tartalmaznak személyes azonosításra alkalmas adatokat.";
-
-/* Crash Report never send button title */
-"crash.report.dialog.never.send" = "Soha ne küldjön";
-
-/* Crash Report show details button title */
-"crash.report.dialog.show.details" = "Elküldött adatok megtekintése";
-
-/* Crash Report dialog title */
-"crash.report.dialog.title" = "Hibajelentések automatikus küldése?";
-
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Elmúlt hónapban";
 
@@ -1874,6 +1856,9 @@
 /* Settings screen cell title for toggling full URL visibility in address bar */
 "settings.address.full.url" = "Teljes webhelycím megjelenítése";
 
+/* Label describing a feature which is turned on always */
+"settings.always.on" = "Always On";
+
 /* Settings screen appearance section title */
 "settings.appearance" = "Megjelenés";
 
@@ -1980,6 +1965,12 @@
 /* The name of a settings category listing next steps */
 "settings.next.steps" = "Következő lépések";
 
+/* Label describing a feature which is turned off */
+"settings.off" = "Off";
+
+/* Label describing a feature which is turned on */
+"settings.on" = "On";
+
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
@@ -1997,12 +1988,6 @@
 
 /* Header of settings related to search */
 "settings.search.settings" = "Keresési beállítások";
-
-/* Settings cell for Send Crash Reports */
-"settings.send.crash.reports" = "Hibajelentések küldése";
-
-/* Explanation of Send Crash Reports settings option */
-"settings.send.crash.reports.description" = "Hibajelentések automatikus küldése a DuckDuckGo részére.";
 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Állítsd be a címsor elhelyezkedését";
@@ -2075,6 +2060,21 @@
 
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "A DuckDuckGo böngészés közben automatikusan blokkolja a rejtett nyomkövetőket.\n[További információ](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
+
+/* Description on a report broken site page. */
+"site.not.working.description" = "Válaszd ki azt a lehetőséget, amelyik a legjobban leírja a tapasztalt problémát.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Elutasítás";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Ez segít minket a böngésző tökéletesítésében.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Nem működik a webhely? Jelezd a DuckDuckGo felé.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Nem működik a webhely";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Jelentés beküldése";
@@ -2465,15 +2465,6 @@
 
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
-
-/* Alert action for the alert when the early access period is over */
-"vpn.early-access.over.alert.action" = "OK";
-
-/* Alert message for the alert when the early access period is over */
-"vpn.early-access.over.alert.message" = "Köszönjük, hogy tesztelő voltál! A VPN további használatához fizess elő a DuckDuckGo Privacy Pro csomagra, és a THANKYOU kóddal 40%-os kedvezményt kapsz.\n\nAz ajánlat csak a DuckDuckGo böngésző asztali verziójában váltható be korlátozott ideig, azon amerikai tesztelők számára, akik a duckduckgo.com/app címről végezték a telepítést.";
-
-/* Alert title for the alert when the early access period is over */
-"vpn.early-access.over.alert.title" = "A DuckDuckGo VPN korai hozzáférése véget ért";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";

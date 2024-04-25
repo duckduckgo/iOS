@@ -826,24 +826,6 @@
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: % @";
 
-/* Crash Report always send button title */
-"crash.report.dialog.always.send" = "Vždycky odesílat hlášení o selhání";
-
-/* Crash Report hide details button title */
-"crash.report.dialog.hide.details" = "Skrýt";
-
-/* Crash Report dialog message */
-"crash.report.dialog.message" = "Hlášení o selháních pomáhají DuckDuckGo diagnostikovat problémy a zlepšovat služby. Neobsahují žádné osobní údaje umožňující identifikaci.";
-
-/* Crash Report never send button title */
-"crash.report.dialog.never.send" = "Nikdy neodesílat";
-
-/* Crash Report show details button title */
-"crash.report.dialog.show.details" = "Podívej se, co se odesílá";
-
-/* Crash Report dialog title */
-"crash.report.dialog.title" = "Automaticky odesílat hlášení o selháních?";
-
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Minulý měsíc";
 
@@ -1874,6 +1856,9 @@
 /* Settings screen cell title for toggling full URL visibility in address bar */
 "settings.address.full.url" = "Zobrazovat celou adresu webu";
 
+/* Label describing a feature which is turned on always */
+"settings.always.on" = "Always On";
+
 /* Settings screen appearance section title */
 "settings.appearance" = "Vzhled";
 
@@ -1980,6 +1965,12 @@
 /* The name of a settings category listing next steps */
 "settings.next.steps" = "Další kroky";
 
+/* Label describing a feature which is turned off */
+"settings.off" = "Off";
+
+/* Label describing a feature which is turned on */
+"settings.on" = "On";
+
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
@@ -1997,12 +1988,6 @@
 
 /* Header of settings related to search */
 "settings.search.settings" = "Nastavení vyhledávání";
-
-/* Settings cell for Send Crash Reports */
-"settings.send.crash.reports" = "Odesílat hlášení o selháních";
-
-/* Explanation of Send Crash Reports settings option */
-"settings.send.crash.reports.description" = "Automaticky DuckDuckGo odesílat hlášení o selháních.";
 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Nastavte pozici adresního řádku";
@@ -2075,6 +2060,21 @@
 
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo automaticky blokuje skryté trackery při procházení webu.\n[Více informací](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
+
+/* Description on a report broken site page. */
+"site.not.working.description" = "Vyber možnost, která nejlíp popisuje tvůj problém.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Odmítnout";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Pomáhá nám to vylepšovat prohlížeč.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Stránka nefunguje? Dej DuckDuckGo vědět.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Web nefunguje";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Odešlete zprávu";
@@ -2465,15 +2465,6 @@
 
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
-
-/* Alert action for the alert when the early access period is over */
-"vpn.early-access.over.alert.action" = "DOBŘE";
-
-/* Alert message for the alert when the early access period is over */
-"vpn.early-access.over.alert.message" = "Děkujeme za ochotu pomoct nám s testováním! Pokud chceš používat VPN i nadále, předplať si službu DuckDuckGo Privacy Pro. S akčním kódem THANKYOU získáš 40% slevu.\n\nTesteři z USA, kteří instalují z webu duckduckgo.com/app, můžou nabídku uplatnit omezenou dobu pouze ve verzi prohlížeče DuckDuckGo pro počítače.";
-
-/* Alert title for the alert when the early access period is over */
-"vpn.early-access.over.alert.title" = "Předběžný přístup k VPN DuckDuckGo skončil";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";

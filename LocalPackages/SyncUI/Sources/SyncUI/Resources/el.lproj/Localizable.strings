@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Απαιτείται κωδικός πρόσβασης συσκευής για χρήση του Sync & Backup.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Πίσω";
 
@@ -93,6 +96,9 @@
 
 /* Options - Fetch Favicons Title */
 "fetch.favicons.option.title" = "Αυτόματη λήψη εικονιδίων";
+
+/* No comment provided by engineer. */
+"Go to Settings" = "Μεταβείτε στις Ρυθμίσεις";
 
 /* No comment provided by engineer. */
 "Keep Development" = "Συνεχίστε την ανάπτυξη";
@@ -216,6 +222,9 @@
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Σάρωση κώδικα QR";
+
+/* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Ασφαλίστε τη συσκευή σας για να χρησιμοποιείτε τη λειτουργία Sync & Backup";
 
 /* No comment provided by engineer. */
 "Switch to Production" = "Μετάβαση στην παραγωγή";

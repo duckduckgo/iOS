@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "За да използвате Sync & Backup, е необходима парола на устройството.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Обратно";
 
@@ -93,6 +96,9 @@
 
 /* Options - Fetch Favicons Title */
 "fetch.favicons.option.title" = "Автоматично изтегляне на икони";
+
+/* No comment provided by engineer. */
+"Go to Settings" = "Влезте в Настройки";
 
 /* No comment provided by engineer. */
 "Keep Development" = "Продължаване на разработката";
@@ -216,6 +222,9 @@
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Сканиране на QR код";
+
+/* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Защитете устройството си, за да използвате Sync & Backup";
 
 /* No comment provided by engineer. */
 "Switch to Production" = "Превключване към производство";

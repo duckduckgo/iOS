@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Sync & Backup -ominaisuuden käyttäminen edellyttää laitteen salasanaa.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Takaisin";
 
@@ -93,6 +96,9 @@
 
 /* Options - Fetch Favicons Title */
 "fetch.favicons.option.title" = "Automaattisesti ladattavat kuvakkeet";
+
+/* No comment provided by engineer. */
+"Go to Settings" = "Siirry kohtaan Asetukset";
 
 /* No comment provided by engineer. */
 "Keep Development" = "Säilytä kehitys";
@@ -216,6 +222,9 @@
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Skannaa QR-koodi";
+
+/* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Suojaa laitteesi käyttääksesi Sync & Backup -ominaisuutta";
 
 /* No comment provided by engineer. */
 "Switch to Production" = "Siirry tuotantoon";

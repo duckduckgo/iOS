@@ -826,24 +826,6 @@
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: %@";
 
-/* Crash Report always send button title */
-"crash.report.dialog.always.send" = "Send alltid krasjrapporter";
-
-/* Crash Report hide details button title */
-"crash.report.dialog.hide.details" = "Skjul";
-
-/* Crash Report dialog message */
-"crash.report.dialog.message" = "Krasjrapporter hjelper DuckDuckGo med å diagnostisere problemer og forbedre produktene våre. De inneholder ingen personlig identifiserbar informasjon.";
-
-/* Crash Report never send button title */
-"crash.report.dialog.never.send" = "Aldri send";
-
-/* Crash Report show details button title */
-"crash.report.dialog.show.details" = "Se hva som er sendt";
-
-/* Crash Report dialog title */
-"crash.report.dialog.title" = "Sende krasjrapporter automatisk?";
-
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Foregående måned";
 
@@ -1874,6 +1856,9 @@
 /* Settings screen cell title for toggling full URL visibility in address bar */
 "settings.address.full.url" = "Vis fullstendig nettstedsadresse";
 
+/* Label describing a feature which is turned on always */
+"settings.always.on" = "Always On";
+
 /* Settings screen appearance section title */
 "settings.appearance" = "Utseende";
 
@@ -1980,6 +1965,12 @@
 /* The name of a settings category listing next steps */
 "settings.next.steps" = "Neste trinn";
 
+/* Label describing a feature which is turned off */
+"settings.off" = "Off";
+
+/* Label describing a feature which is turned on */
+"settings.on" = "On";
+
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
@@ -1997,12 +1988,6 @@
 
 /* Header of settings related to search */
 "settings.search.settings" = "Søkeinnstillinger";
-
-/* Settings cell for Send Crash Reports */
-"settings.send.crash.reports" = "Send krasjrapporter";
-
-/* Explanation of Send Crash Reports settings option */
-"settings.send.crash.reports.description" = "Send krasjrapporter automatisk til DuckDuckGo.";
 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Angi plassering av adressefeltet";
@@ -2075,6 +2060,21 @@
 
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo blokkerer automatisk skjulte sporere når du surfer på nettet.\n[Finn ut mer](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
+
+/* Description on a report broken site page. */
+"site.not.working.description" = "Velg alternativet som best beskriver problemet du opplevde.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Avvis";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Dette hjelper oss med å forbedre nettleseren.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Fungerer ikke nettstedet? Gi beskjed til DuckDuckGo.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Nettstedet fungerer ikke";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Send inn rapport";
@@ -2465,15 +2465,6 @@
 
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
-
-/* Alert action for the alert when the early access period is over */
-"vpn.early-access.over.alert.action" = "OK";
-
-/* Alert message for the alert when the early access period is over */
-"vpn.early-access.over.alert.message" = "Takk for at du stiller opp som tester! Hvis du vil fortsette å bruke VPN-tjenesten, kan du abonnere på DuckDuckGo Privacy Pro og få 40 % rabatt med kampanjekoden THANKYOU.\n\nTilbudet kan kun innløses i en begrenset periode i skrivebordsversjonen av DuckDuckGo-nettleseren av amerikanske testere som installerer på duckduckgo.com/app.";
-
-/* Alert title for the alert when the early access period is over */
-"vpn.early-access.over.alert.title" = "Tidlig tilgang til DuckDuckGo VPN er over";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";

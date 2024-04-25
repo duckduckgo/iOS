@@ -826,24 +826,6 @@
 /* No comment provided by engineer. */
 "bucket: %@" = "talpykla: %@";
 
-/* Crash Report always send button title */
-"crash.report.dialog.always.send" = "Visada siųsti strigčių ataskaitas";
-
-/* Crash Report hide details button title */
-"crash.report.dialog.hide.details" = "Slėpti";
-
-/* Crash Report dialog message */
-"crash.report.dialog.message" = "Strigčių ataskaitos padeda „DuckDuckGo“ diagnozuoti problemas ir tobulinti mūsų produktus. Jose nėra jokios asmenį identifikuojančios informacijos.";
-
-/* Crash Report never send button title */
-"crash.report.dialog.never.send" = "Niekada nesiųsti";
-
-/* Crash Report show details button title */
-"crash.report.dialog.show.details" = "Žiūrėti, kas išsiųsta";
-
-/* Crash Report dialog title */
-"crash.report.dialog.title" = "Automatiškai siųsti pranešimus apie strigtis?";
-
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Praėjęs mėnuo";
 
@@ -1874,6 +1856,9 @@
 /* Settings screen cell title for toggling full URL visibility in address bar */
 "settings.address.full.url" = "Rodyti visą svetainės adresą";
 
+/* Label describing a feature which is turned on always */
+"settings.always.on" = "Always On";
+
 /* Settings screen appearance section title */
 "settings.appearance" = "Išvaizda";
 
@@ -1980,6 +1965,12 @@
 /* The name of a settings category listing next steps */
 "settings.next.steps" = "Tolesni veiksmai";
 
+/* Label describing a feature which is turned off */
+"settings.off" = "Off";
+
+/* Label describing a feature which is turned on */
+"settings.on" = "On";
+
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
@@ -1997,12 +1988,6 @@
 
 /* Header of settings related to search */
 "settings.search.settings" = "Paieškos nustatymai";
-
-/* Settings cell for Send Crash Reports */
-"settings.send.crash.reports" = "Siųsti strigčių ataskaitas";
-
-/* Explanation of Send Crash Reports settings option */
-"settings.send.crash.reports.description" = "Automatiškai siųskite strigčių ataskaitas „DuckDuckGo“.";
 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Nustatykite adreso juostos padėtį";
@@ -2075,6 +2060,21 @@
 
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "„DuckDuckGo“ automatiškai blokuoja paslėptas stebėjimo priemones naršant internete.\n[Sužinokite daugiau](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
+
+/* Description on a report broken site page. */
+"site.not.working.description" = "Pasirinkite parinktį, kuri geriausiai apibūdina iškilusią problemą.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Atmesti";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Tai padeda mums tobulinti naršyklę.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Svetainė neveikia? Praneškite „DuckDuckGo“.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Svetainė neveikia";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pateikti ataskaitą";
@@ -2465,15 +2465,6 @@
 
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
-
-/* Alert action for the alert when the early access period is over */
-"vpn.early-access.over.alert.action" = "GERAI";
-
-/* Alert message for the alert when the early access period is over */
-"vpn.early-access.over.alert.message" = "Dėkojame, kad esate bandytojas! Jei norite toliau naudoti VPN, užsiprenumeruokite „DuckDuckGo Privacy Pro“ ir gaukite 40 % nuolaidą panaudodami akcijos kodą THANKYOU\n\nPasiūlymu ribotą laiką gali pasinaudoti tik JAV bandytojai, įsidiegę naršyklės „DuckDuckGo“ stalinio kompiuterio versiją iš duckduckgo.com/app.";
-
-/* Alert title for the alert when the early access period is over */
-"vpn.early-access.over.alert.title" = "„DuckDuckGo“ VPN ankstyvosios prieigos laikotarpis baigėsi";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";

@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Er is een apparaatwachtwoord vereist om 'Synchronisatie  en back-up' te kunnen gebruiken.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Terug";
 
@@ -93,6 +96,9 @@
 
 /* Options - Fetch Favicons Title */
 "fetch.favicons.option.title" = "Pictogrammen automatisch downloaden";
+
+/* No comment provided by engineer. */
+"Go to Settings" = "Ga naar Instellingen";
 
 /* No comment provided by engineer. */
 "Keep Development" = "In ontwikkelen houden";
@@ -216,6 +222,9 @@
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "QR-code scannen";
+
+/* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Beveilig je apparaat om 'Synchronisatie en back-up' te gebruiken";
 
 /* No comment provided by engineer. */
 "Switch to Production" = "Overschakelen naar productie";

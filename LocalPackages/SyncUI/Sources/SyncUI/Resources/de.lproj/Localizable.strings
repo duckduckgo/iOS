@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Für die Nutzung von Sync & Backup ist ein Gerätepasswort erforderlich.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Zurück";
 
@@ -93,6 +96,9 @@
 
 /* Options - Fetch Favicons Title */
 "fetch.favicons.option.title" = "Symbole automatisch herunterladen";
+
+/* No comment provided by engineer. */
+"Go to Settings" = "Gehe zu Einstellungen";
 
 /* No comment provided by engineer. */
 "Keep Development" = "Entwicklung beibehalten";
@@ -216,6 +222,9 @@
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "QR-Code scannen";
+
+/* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Sichere dein Gerät, um Sync & Backup zu nutzen";
 
 /* No comment provided by engineer. */
 "Switch to Production" = "Zu Produktion wechseln";

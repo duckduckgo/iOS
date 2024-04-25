@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Pro použití funkce Sync & Backup se vyžaduje heslo k zařízení.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Zpět";
 
@@ -93,6 +96,9 @@
 
 /* Options - Fetch Favicons Title */
 "fetch.favicons.option.title" = "Automatické stahování ikon";
+
+/* No comment provided by engineer. */
+"Go to Settings" = "Přejdi do Nastavení";
 
 /* No comment provided by engineer. */
 "Keep Development" = "Nechat vývojovou verzi";
@@ -216,6 +222,9 @@
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Skenování QR kódu";
+
+/* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Zabezpeč své zařízení, ať můžeš používat funkci Sync & Backup";
 
 /* No comment provided by engineer. */
 "Switch to Production" = "Přepnout na produkční verzi";

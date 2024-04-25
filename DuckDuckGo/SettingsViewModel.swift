@@ -750,16 +750,17 @@ extension SettingsViewModel {
         // If there's cached data use it by default
         if let cachedSubscription = subscriptionStateCache.get() {
             state.subscription = cachedSubscription
-            
         // Otherwise use defaults and setup purchase availability
         } else {
             state.subscription = SettingsState.defaults.subscription
-            state.subscription.canPurchase = SubscriptionPurchaseEnvironment.canPurchase
         }
-        
+
         // Update visibility based on Feature flag
         state.subscription.enabled = AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
-        
+
+        // Update if can purchase based on App Store product availability
+        state.subscription.canPurchase = SubscriptionPurchaseEnvironment.canPurchase
+
         // Active subscription check
         guard let token = subscriptionAccountManager.accessToken else {
             subscriptionStateCache.set(state.subscription) // Sync cache

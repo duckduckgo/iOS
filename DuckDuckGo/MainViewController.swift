@@ -1322,7 +1322,7 @@ class MainViewController: UIViewController {
         }
     }
 
-    private var host: UIHostingController<BrokenSitePromptView>?
+    private var brokenSitePromptViewHostingController: UIHostingController<BrokenSitePromptView>?
 
     @objc func attemptToShowBrokenSitePrompt(_ notification: Notification) {
         guard !userDidInteractWithBrokenSitePrompt,
@@ -1335,7 +1335,7 @@ class MainViewController: UIViewController {
 
     private func showBrokenSitePrompt(after event: UserBehaviorEvent) {
         let host = makeBrokenSitePromptViewHostingController(event: event)
-        self.host = host
+        self.brokenSitePromptViewHostingController = host
 
         addChild(host)
         viewCoordinator.notificationBarContainer.addSubview(host.view)
@@ -1372,7 +1372,7 @@ class MainViewController: UIViewController {
     }
 
     private func hideBrokenSitePrompt() {
-        guard let host else { return }
+        guard let host = brokenSitePromptViewHostingController else { return }
         host.willMove(toParent: nil)
         host.view.removeFromSuperview()
         host.removeFromParent()

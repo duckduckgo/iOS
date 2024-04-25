@@ -92,7 +92,7 @@ final class UserBehaviorMonitor {
                 didDoubleRefreshTimestamp = date
             }
             didRefreshCounter += 1
-            if didRefreshCounter == 3 {
+            if didRefreshCounter > 2 {
                 fireEventIfActionOccurredRecently(within: 20.0, since: didDoubleRefreshTimestamp, eventToFire: .reloadThreeTimesWithin20Seconds)
                 fireEventIfActionOccurredRecently(within: 40.0, since: didDoubleRefreshTimestamp, eventToFire: .reloadThreeTimesWithin40Seconds)
                 didRefreshCounter = 0

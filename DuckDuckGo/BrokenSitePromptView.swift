@@ -26,20 +26,23 @@ struct BrokenSitePromptView: View {
     let viewModel: BrokenSitePromptViewModel
 
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(UserText.siteNotWorkingTitle).bold()
-            Text(UserText.siteNotWorkingSubtitle)
+        VStack(alignment: .leading, spacing: 8) {
+                Text(UserText.siteNotWorkingTitle)
+                    .font(Font(uiFont: .daxSubheadSemibold()))
+                + Text("\n")
+                + Text(UserText.siteNotWorkingSubtitle)
+                    .font(Font(uiFont: .daxSubheadRegular()))
             HStack {
                 Spacer()
                 Button(UserText.siteNotWorkingDismiss, action: viewModel.onDidDismiss)
                     .buttonStyle(GhostButtonStyle())
                     .fixedSize()
                 Button(UserText.siteNotWorkingWebsiteIsBroken, action: viewModel.onDidSubmit)
-                    .buttonStyle(PrimaryButtonStyle())
+                    .buttonStyle(PrimaryButtonStyle(compact: true))
                     .fixedSize()
             }
         }
-        .padding()
+        .padding(EdgeInsets(top: 12, leading: 16, bottom: 8, trailing: 16))
         .background(Color(designSystemColor: .background))
     }
 

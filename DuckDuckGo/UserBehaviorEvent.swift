@@ -28,6 +28,12 @@ public enum UserBehaviorEvent: String {
 
     }
 
+    public enum Parameter {
+
+        static let event = "event"
+
+    }
+
     case reloadTwiceWithin12Seconds = "reload-twice-within-12-seconds"
     case reloadTwiceWithin24Seconds = "reload-twice-within-24-seconds"
 

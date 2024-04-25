@@ -1311,7 +1311,6 @@ class MainViewController: UIViewController {
 
     func showHomeRowReminder() {
         let feature = HomeRowReminder()
-        showBrokenSitePrompt(after: .reloadAndRestartWithin30Seconds) // e.g. // TODO!
         if feature.showNow() {
             showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
                 if tapped {
@@ -1358,7 +1357,7 @@ class MainViewController: UIViewController {
     }
 
     private func makeBrokenSitePromptViewHostingController(event: UserBehaviorEvent) -> UIHostingController<BrokenSitePromptView> {
-        let parameters = [UserBehaviorEvent.Key.event: event.rawValue]
+        let parameters = [UserBehaviorEvent.Parameter.event: event.rawValue]
         let viewModel = BrokenSitePromptViewModel(onDidDismiss: { [weak self] in
             self?.hideBrokenSitePrompt()
             self?.userDidInteractWithBrokenSitePrompt = true

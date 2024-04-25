@@ -1562,6 +1562,13 @@ extension TabViewController: WKNavigationDelegate {
                                  allowPolicy: allowPolicy,
                                  completion: completion)
 
+        case .system(let linkRequired):
+            if linkRequired == .notRequired || navigationAction.navigationType == .linkActivated {
+                completion(allowPolicy)
+            } else {
+                completion(.cancel)
+            }
+
         case .external(let action):
             performExternalNavigationFor(url: url, action: action)
             completion(.cancel)
@@ -1575,6 +1582,9 @@ extension TabViewController: WKNavigationDelegate {
             } else {
                 presentOpenInExternalAppAlert(url: url)
             }
+            completion(.cancel)
+
+        case .unsupported:
             completion(.cancel)
         }
     }

@@ -2076,6 +2076,21 @@
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "A DuckDuckGo böngészés közben automatikusan blokkolja a rejtett nyomkövetőket.\n[További információ](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
 
+/* Description on a report broken site page. */
+"site.not.working.description" = "Válaszd ki azt a lehetőséget, amelyik a legjobban leírja a tapasztalt problémát.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Elutasítás";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Ez segít minket a böngésző tökéletesítésében.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Nem működik a webhely? Jelezd a DuckDuckGo felé.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Nem működik a webhely";
+
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Jelentés beküldése";
 

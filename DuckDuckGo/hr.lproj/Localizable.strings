@@ -2076,6 +2076,21 @@
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo automatski blokira skrivene alate za praćenje dok pregledavaš web.\n[Saznaj više](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
 
+/* Description on a report broken site page. */
+"site.not.working.description" = "Odaberi opciju koja najbolje opisuje nastali problem.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Odbaci";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Ovo nam pomaže da poboljšamo preglednik.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Web-mjesto ne funkcionira? Javi DuckDuckGou.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Web-mjesto nije ispravno";
+
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pošalji izvješće";
 

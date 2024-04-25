@@ -2076,6 +2076,21 @@
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "„DuckDuckGo“ automatiškai blokuoja paslėptas stebėjimo priemones naršant internete.\n[Sužinokite daugiau](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
 
+/* Description on a report broken site page. */
+"site.not.working.description" = "Pasirinkite parinktį, kuri geriausiai apibūdina iškilusią problemą.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Atmesti";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Tai padeda mums tobulinti naršyklę.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Svetainė neveikia? Praneškite „DuckDuckGo“.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Svetainė neveikia";
+
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pateikti ataskaitą";
 

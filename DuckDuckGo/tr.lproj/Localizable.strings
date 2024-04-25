@@ -2076,6 +2076,21 @@
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo, web'de gezinirken gizli izleyicileri otomatik olarak engeller.\n[Daha Fazla Bilgi](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
 
+/* Description on a report broken site page. */
+"site.not.working.description" = "Karşılaştığınız sorunu en iyi tanımlayan seçeneği seçin.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Reddet";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Bu gibi bildirimler tarayıcıyı geliştirmemize yardımcı olur.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Site çalışmıyor mu? DuckDuckGo'ya bildirin.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Web Sitesi Bozuk";
+
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Rapor Gönder";
 

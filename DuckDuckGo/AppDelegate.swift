@@ -263,14 +263,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 })
             }
 
+        let previewsSource = TabPreviewsSource()
         let historyManager = makeHistoryManager()
+        let tabsModel = prepareTabsModel(previewsSource: previewsSource)
+
 
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
-                                      appSettings: AppDependencyProvider.shared.appSettings)
+                                      appSettings: AppDependencyProvider.shared.appSettings,
+                                      previewsSource: previewsSource,
+                                      tabsModel: tabsModel)
 
         main.loadViewIfNeeded()
 
@@ -322,6 +327,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
         return true
+    }
+
+    private func prepareTabsModel(previewsSource: TabPreviewsSource = TabPreviewsSource(),
+                                  appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
+                                  isDesktop: Bool = UIDevice.current.userInterfaceIdiom == .pad) -> TabsModel {
+        let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
+        let tabsModel: TabsModel
+        if AutoClearSettingsModel(settings: appSettings) != nil {
+            tabsModel = TabsModel(desktop: isPadDevice)
+            tabsModel.save()
+            previewsSource.removeAllPreviews()
+        } else {
+            if let storedModel = TabsModel.get() {
+                // Save new model in case of migration
+                storedModel.save()
+                tabsModel = storedModel
+            } else {
+                tabsModel = TabsModel(desktop: isPadDevice)
+            }
+        }
+        return tabsModel
     }
 
     private func makeHistoryManager() -> HistoryManager {
@@ -677,7 +703,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         Task { @MainActor in
-            await autoClear?.applicationWillMoveToForeground()
+            // Autoclear should have happened by now
             showKeyboardIfSettingOn = false
 
             if !handleAppDeepLink(app, mainViewController, url) {

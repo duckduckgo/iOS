@@ -74,9 +74,10 @@ class SuggestionTableViewCell: UITableViewCell {
                 text = searchQuery
             } else {
                 text = title ?? url.absoluteString
+                urlLabel.isHidden = false
+                urlLabel.text = url.formattedForSuggestion()
             }
-            urlLabel.isHidden = false
-            urlLabel.text = url.formattedForSuggestion()
+
             typeImage.image = UIImage(named: "History-24")
             self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
 

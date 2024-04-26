@@ -27,11 +27,12 @@ struct BrokenSitePromptView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading) {
                 Text(UserText.siteNotWorkingTitle)
                     .font(Font(uiFont: .daxSubheadSemibold()))
-                + Text("\n")
-                + Text(UserText.siteNotWorkingSubtitle)
+                Text(UserText.siteNotWorkingSubtitle)
                     .font(Font(uiFont: .daxSubheadRegular()))
+            }
             HStack {
                 Spacer()
                 Button(UserText.siteNotWorkingDismiss, action: viewModel.onDidDismiss)

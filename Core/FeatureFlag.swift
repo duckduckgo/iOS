@@ -30,7 +30,6 @@ public enum FeatureFlag: String {
     case autofillPasswordGeneration
     case autofillOnByDefault
     case incontextSignup
-    case appTrackingProtection
     case networkProtection
     case networkProtectionWaitlistAccess
     case networkProtectionWaitlistActive
@@ -41,7 +40,7 @@ public enum FeatureFlag: String {
 extension FeatureFlag: FeatureFlagSourceProviding {
     public var source: FeatureFlagSource {
         switch self {
-        case .debugMenu, .appTrackingProtection:
+        case .debugMenu:
             return .internalOnly
         case .sync:
             return .remoteReleasable(.subfeature(SyncSubfeature.level0ShowSync))

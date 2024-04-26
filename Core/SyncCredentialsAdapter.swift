@@ -43,7 +43,7 @@ public final class SyncCredentialsAdapter {
     @UserDefaultsWrapper(key: .syncCredentialsPausedErrorDisplayed, defaultValue: false)
     static private var didShowCredentialsSyncPausedError: Bool
 
-    public init(secureVaultFactory: AutofillVaultFactory = AutofillSecureVaultFactory, secureVaultErrorReporter: SecureVaultErrorReporting) {
+    public init(secureVaultFactory: AutofillVaultFactory = AutofillSecureVaultFactory, secureVaultErrorReporter: SecureVaultReporting) {
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
         self.secureVaultErrorReporter = secureVaultErrorReporter
         databaseCleaner = CredentialsDatabaseCleaner(
@@ -134,5 +134,5 @@ public final class SyncCredentialsAdapter {
 
     private var syncDidCompleteSubject = PassthroughSubject<Void, Never>()
     private var syncErrorCancellable: AnyCancellable?
-    private let secureVaultErrorReporter: SecureVaultErrorReporting
+    private let secureVaultErrorReporter: SecureVaultReporting
 }

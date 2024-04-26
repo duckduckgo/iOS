@@ -1897,7 +1897,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             loadUrl(url)
         case .historyEntry(_, url: let url, _):
             loadUrl(url)
-        case .unknown(value: let value):
+        case .unknown(value: let value), .internalPage(title: let value, url: _):
             assertionFailure("Unknown suggestion: \(value)")
         }
 
@@ -1918,7 +1918,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             viewCoordinator.omniBar.textField.text = title
         case .historyEntry(title: let title, _, _):
             viewCoordinator.omniBar.textField.text = title
-        case .unknown(value: let value):
+        case .unknown(value: let value), .internalPage(title: let value, url: _):
             assertionFailure("Unknown suggestion: \(value)")
         }
 
@@ -1944,7 +1944,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             if (title ?? url.absoluteString).hasPrefix(query) {
                 viewCoordinator.omniBar.selectTextToEnd(query.count)
             }
-        case .unknown(value: let value):
+        case .unknown(value: let value), .internalPage(title: let value, url: _):
             assertionFailure("Unknown suggestion: \(value)")
         }
     }
@@ -2289,7 +2289,7 @@ extension MainViewController: TabSwitcherButtonDelegate {
     }
 
     func showTabSwitcher() {
-        guard let currentTab = currentTab ?? tabManager?.current(createIfNeeded: true) else {
+        guard currentTab ?? tabManager?.current(createIfNeeded: true) != nil else {
             fatalError("Unable to get current tab")
         }
 

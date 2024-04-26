@@ -282,9 +282,17 @@ extension Pixel {
         case networkProtectionTunnelStartSuccess
         case networkProtectionTunnelStartFailure
 
+        case networkProtectionTunnelStopAttempt
+        case networkProtectionTunnelStopSuccess
+        case networkProtectionTunnelStopFailure
+
         case networkProtectionTunnelUpdateAttempt
         case networkProtectionTunnelUpdateSuccess
         case networkProtectionTunnelUpdateFailure
+
+        case networkProtectionTunnelWakeAttempt
+        case networkProtectionTunnelWakeSuccess
+        case networkProtectionTunnelWakeFailure
 
         case networkProtectionEnableAttemptConnecting
         case networkProtectionEnableAttemptSuccess
@@ -923,9 +931,15 @@ extension Pixel.Event {
         case .networkProtectionTunnelStartAttempt: return "m_netp_tunnel_start_attempt"
         case .networkProtectionTunnelStartSuccess: return "m_netp_tunnel_start_success"
         case .networkProtectionTunnelStartFailure: return "m_netp_tunnel_start_failure"
+        case .networkProtectionTunnelStopAttempt: return "m_netp_tunnel_stop_attempt"
+        case .networkProtectionTunnelStopSuccess: return "m_netp_tunnel_stop_success"
+        case .networkProtectionTunnelStopFailure: return "m_netp_tunnel_stop_failure"
         case .networkProtectionTunnelUpdateAttempt: return "m_netp_tunnel_update_attempt"
         case .networkProtectionTunnelUpdateSuccess: return "m_netp_tunnel_update_success"
         case .networkProtectionTunnelUpdateFailure: return "m_netp_tunnel_update_failure"
+        case .networkProtectionTunnelWakeAttempt: return "m_netp_tunnel_wake_attempt"
+        case .networkProtectionTunnelWakeSuccess: return "m_netp_tunnel_wake_success"
+        case .networkProtectionTunnelWakeFailure: return "m_netp_tunnel_wake_failure"
         case .networkProtectionEnableAttemptConnecting: return "m_netp_ev_enable_attempt"
         case .networkProtectionEnableAttemptSuccess: return "m_netp_ev_enable_attempt_success"
         case .networkProtectionEnableAttemptFailure: return "m_netp_ev_enable_attempt_failure"

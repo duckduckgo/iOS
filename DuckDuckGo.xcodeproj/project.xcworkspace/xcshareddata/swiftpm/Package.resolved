@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "9ebcfd17a2dd1422407a24e9e4331a46c3b7733a",
-        "version" : "141.1.1"
+        "branch" : "sam/disable-on-demand-when-user-initiates-shutdown",
+        "revision" : "7149df917b7237721160d528f0389eba874a912b"
       }
     },
     {

@@ -76,7 +76,7 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
         }
 
         // Check for users who have activated the VPN via an invite code:
-        if networkProtectionActivation.isFeatureActivated && !networkProtectionWaitlistStorage.isInvited {
+        if networkProtectionActivation.isFeatureActivated {
             return .inviteCodeInvited
         }
 

@@ -49,26 +49,6 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
     static func forTokenStore() -> DefaultNetworkProtectionVisibility {
         DefaultNetworkProtectionVisibility(networkProtectionTokenStore: nil, networkProtectionAccessManager: nil)
     }
-    
-    func isWaitlistUser() -> Bool {
-        guard let networkProtectionTokenStore, let networkProtectionAccessManager else {
-            preconditionFailure("networkProtectionTokenStore and networkProtectionAccessManager must be non-nil")
-        }
-
-        let hasLegacyAuthToken = {
-            guard let authToken = try? networkProtectionTokenStore.fetchToken(),
-                  !authToken.hasPrefix(NetworkProtectionKeychainTokenStore.authTokenPrefix) else {
-                return false
-            }
-            return true
-        }()
-        let hasBeenInvited = {
-            let vpnAccessType = networkProtectionAccessManager.networkProtectionAccessType()
-            return vpnAccessType == .inviteCodeInvited
-        }()
-
-        return hasLegacyAuthToken || hasBeenInvited
-    }
 
     func isPrivacyProLaunched() -> Bool {
         if let subscriptionOverrideEnabled = userDefaults.subscriptionOverrideEnabled {

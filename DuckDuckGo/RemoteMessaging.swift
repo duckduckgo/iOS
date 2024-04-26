@@ -162,7 +162,6 @@ struct RemoteMessaging {
             let isVPNActivated = NetworkProtectionKeychainTokenStore().isFeatureActivated
             let activationDateStore = DefaultVPNActivationDateStore()
 
-            isNetworkProtectionWaitlistUser = (accessType == .waitlistInvited) && isVPNActivated
             daysSinceNetworkProtectionEnabled = activationDateStore.daysSinceActivation() ?? -1
 #else
             isNetworkProtectionWaitlistUser = false
@@ -179,7 +178,6 @@ struct RemoteMessaging {
                                                            favoritesCount: favoritesCount,
                                                            appTheme: AppUserDefaults().currentThemeName.rawValue,
                                                            isWidgetInstalled: isWidgetInstalled,
-                                                           isNetPWaitlistUser: isNetworkProtectionWaitlistUser,
                                                            daysSinceNetPEnabled: daysSinceNetworkProtectionEnabled),
                 dismissedMessageIds: remoteMessagingStore.fetchDismissedRemoteMessageIds()
             )

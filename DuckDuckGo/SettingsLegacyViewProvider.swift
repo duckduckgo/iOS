@@ -82,9 +82,6 @@ class SettingsLegacyViewProvider: ObservableObject {
     var about: UIViewController { AboutViewControllerOld() }
 
     @available(iOS 15, *)
-    var netPWaitlist: UIViewController { VPNWaitlistViewController(nibName: nil, bundle: nil) }
-    
-    @available(iOS 15, *)
     var netP: UIViewController { NetworkProtectionRootViewController() }
     
     @MainActor

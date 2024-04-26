@@ -84,7 +84,7 @@ class SuggestionTableViewCell: UITableViewCell {
             assertionFailure("Unknown suggestion \(value)")
         }
 
-        urlLabel.textColor = theme.tableCellTextColor
+        urlLabel.textColor = theme.tableCellSecondaryTextColor
         styleText(query: query,
                   text: text,
                   regularColor: theme.tableCellTextColor,

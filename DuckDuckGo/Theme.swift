@@ -84,6 +84,7 @@ protocol Theme {
     var tableCellSelectedColor: UIColor { get }
     var tableCellSeparatorColor: UIColor { get }
     var tableCellTextColor: UIColor { get }
+    var tableCellSecondaryTextColor: UIColor { get }
     var tableCellAccessoryTextColor: UIColor { get }
     var tableCellAccessoryColor: UIColor { get }
     var tableCellHighlightedBackgroundColor: UIColor { get }

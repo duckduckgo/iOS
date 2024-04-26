@@ -88,6 +88,7 @@ extension Theme {
     var autocompleteSuggestionTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
 
     var tableCellTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+    var tableCellSecondaryTextColor: UIColor { UIColor(designSystemColor: .textSecondary) }
     var tableCellSeparatorColor: UIColor { UIColor(designSystemColor: .lines) }
 
     // No design system colour yet, so fall back to SDK colours

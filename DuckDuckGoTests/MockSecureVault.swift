@@ -29,7 +29,7 @@ typealias MockVaultFactory = SecureVaultFactory<MockSecureVault<MockDatabaseProv
 let MockSecureVaultFactory = SecureVaultFactory<MockSecureVault>(
     makeCryptoProvider: {
         return MockCryptoProvider()
-    }, makeKeyStoreProvider: {
+    }, makeKeyStoreProvider: { _ in
         let provider = MockKeyStoreProvider()
         provider._l1Key = "key".data(using: .utf8)
         return provider

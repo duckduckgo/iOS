@@ -158,38 +158,6 @@ Ja sam ih blokirao!
 			<string>%1$d Privatnih kartica</string>
 		</dict>
 	</dict>
-	<key>appTP.home.blockedCount</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@attempts@</string>
-		<key>attempts</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>%d tracking attempts</string>
-			<key>one</key>
-			<string>%d tracking attempt</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-		</dict>
-	</dict>
-	<key>appTP.trackingattempts</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@attempts@</string>
-		<key>attempts</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>%d tracking attempts</string>
-			<key>one</key>
-			<string>%d tracking attempt</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-		</dict>
-	</dict>
 	<key>autofill.number.of.passwords</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -198,8 +166,8 @@ Ja sam ih blokirao!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>%1$d lozinka</string>
 			<key>few</key>
@@ -218,8 +186,8 @@ Ja sam ih blokirao!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>Sigurno želiš izbrisati %1$d lozinku?</string>
 			<key>few</key>
@@ -230,41 +198,41 @@ Ja sam ih blokirao!
 			<string>Sigurno želiš izbrisati %1$d lozinki?</string>
 		</dict>
 	</dict>
-    <key>autofill.delete.all.passwords.confirmation.body</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%1$#@passwords@</string>
-        <key>passwords</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>Tvoja lozinka bit će izbrisana s ovog uređaja. Provjeri imaš li još uvijek način pristupa svom %2$#@accounts@.</string>
-            <key>few</key>
-            <string>Tvoje lozinke bit će izbrisane s ovog uređaja. Provjeri imaš li još uvijek način pristupa svom %2$#@accounts@.</string>
-            <key>many</key>
-            <string>Tvoje lozinke bit će izbrisane s ovog uređaja. Provjeri imaš li još uvijek način pristupa svom %2$#@accounts@.</string>
-            <key>other</key>
-            <string>Tvoje lozinke bit će izbrisane s ovog uređaja. Provjeri imaš li još uvijek način pristupa svom  %2$#@accounts@.</string>
-        </dict>
-        <key>accounts</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>račun</string>
-            <key>few</key>
-            <string>računa</string>
-            <key>many</key>
-            <string>računa</string>
-            <key>other</key>
-            <string>računa</string>
-        </dict>
-    </dict>
+	<key>autofill.delete.all.passwords.confirmation.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Tvoja lozinka bit će izbrisana s ovog uređaja. Provjeri imaš li još uvijek način pristupa svom %2$#@accounts@.</string>
+			<key>few</key>
+			<string>Tvoje lozinke bit će izbrisane s ovog uređaja. Provjeri imaš li još uvijek način pristupa svom %2$#@accounts@.</string>
+			<key>many</key>
+			<string>Tvoje lozinke bit će izbrisane s ovog uređaja. Provjeri imaš li još uvijek način pristupa svom %2$#@accounts@.</string>
+			<key>other</key>
+			<string>Tvoje lozinke bit će izbrisane s ovog uređaja. Provjeri imaš li još uvijek način pristupa svom  %2$#@accounts@.</string>
+		</dict>
+		<key>accounts</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>račun</string>
+			<key>few</key>
+			<string>računa</string>
+			<key>many</key>
+			<string>računa</string>
+			<key>other</key>
+			<string>računa</string>
+		</dict>
+	</dict>
 	<key>autofill.delete.all.passwords.sync.confirmation.body</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -273,8 +241,8 @@ Ja sam ih blokirao!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>Tvoja lozinka bit će izbrisana sa svih sinkroniziranih uređaja. Uvjeri se da i dalje imaš način pristupa %2$#@accounts@</string>
 			<key>few</key>
@@ -288,8 +256,8 @@ Ja sam ih blokirao!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>računu</string>
 			<key>few</key>
@@ -308,8 +276,8 @@ Ja sam ih blokirao!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>Izbrisana je %1$d lozinka</string>
 			<key>few</key>

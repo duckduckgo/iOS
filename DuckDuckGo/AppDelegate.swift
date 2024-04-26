@@ -314,10 +314,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         setupSubscriptionsEnvironment()
 
-        if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() {
-            clearDebugWaitlistState()
-        }
-
         AppDependencyProvider.shared.toggleProtectionsCounter.sendEventsIfNeeded()
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
@@ -453,7 +449,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        checkWaitlists()
         syncService.scheduler.notifyAppLifecycleEvent()
         fireFailedCompilationsPixelIfNeeded()
         refreshShortcuts()
@@ -475,15 +470,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func stopTunnelAndShowThankYouMessagingIfNeeded() {
         if AccountManager().isUserAuthenticated {
-            tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
             return
         }
 
-        if vpnFeatureVisibility.shouldShowThankYouMessaging() && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
-            Task {
-                await self.stopAndRemoveVPN(with: "thank-you-dialog")
-            }
-        } else if vpnFeatureVisibility.isPrivacyProLaunched() && !AccountManager().isUserAuthenticated {
+        if vpnFeatureVisibility.isPrivacyProLaunched() && !AccountManager().isUserAuthenticated {
             Task {
                 await self.stopAndRemoveVPN(with: "subscription-check")
             }
@@ -934,10 +924,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                     }
                 }
             }
-
-            if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist(), identifier == VPNWaitlist.notificationIdentifier {
-                presentNetworkProtectionWaitlistModal()
-            }
 #endif
         }
 
@@ -945,13 +931,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
 #if NETWORK_PROTECTION
-    private func presentNetworkProtectionWaitlistModal() {
-        if #available(iOS 15, *) {
-            let networkProtectionRoot = VPNWaitlistViewController(nibName: nil, bundle: nil)
-            presentSettings(with: networkProtectionRoot)
-        }
-    }
-
     func presentNetworkProtectionStatusSettingsModal() {
         if #available(iOS 15, *) {
             let networkProtectionRoot = NetworkProtectionRootViewController()

@@ -49,10 +49,6 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
     static func forTokenStore() -> DefaultNetworkProtectionVisibility {
         DefaultNetworkProtectionVisibility(networkProtectionTokenStore: nil, networkProtectionAccessManager: nil)
     }
-
-    func isWaitlistBetaActive() -> Bool {
-        privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlistBetaActive)
-    }
     
     func isWaitlistUser() -> Bool {
         guard let networkProtectionTokenStore, let networkProtectionAccessManager else {
@@ -68,7 +64,7 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
         }()
         let hasBeenInvited = {
             let vpnAccessType = networkProtectionAccessManager.networkProtectionAccessType()
-            return vpnAccessType == .waitlistInvited || vpnAccessType == .inviteCodeInvited
+            return vpnAccessType == .inviteCodeInvited
         }()
 
         return hasLegacyAuthToken || hasBeenInvited

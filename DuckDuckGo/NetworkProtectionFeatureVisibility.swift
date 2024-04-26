@@ -21,12 +21,7 @@ import Foundation
 import Subscription
 
 public protocol NetworkProtectionFeatureVisibility {
-    func isWaitlistBetaActive() -> Bool
-    func isWaitlistUser() -> Bool
     func isPrivacyProLaunched() -> Bool
-
-    /// Whether to show the thank-you messaging for current waitlist users
-    func shouldShowThankYouMessaging() -> Bool
 
     /// Whether to let the user continues to use the VPN via the waitlist
     /// This should only before 100% roll out
@@ -42,20 +37,12 @@ public protocol NetworkProtectionFeatureVisibility {
 }
 
 public extension NetworkProtectionFeatureVisibility {
-    func shouldShowThankYouMessaging() -> Bool {
-        isPrivacyProLaunched() && isWaitlistUser()
-    }
-
-    func shouldKeepVPNAccessViaWaitlist() -> Bool {
-        !isPrivacyProLaunched() && isWaitlistBetaActive() && isWaitlistUser()
-    }
-
     func shouldShowVPNShortcut() -> Bool {
-        if isPrivacyProLaunched() {
-            let accountManager = AccountManager()
-            return accountManager.isUserAuthenticated
-        } else {
-            return shouldKeepVPNAccessViaWaitlist()
+        guard isPrivacyProLaunched() else {
+            return false
         }
+
+        let accountManager = AccountManager()
+        return accountManager.isUserAuthenticated
     }
 }

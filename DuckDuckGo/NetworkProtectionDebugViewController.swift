@@ -649,10 +649,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 Endpoint: \(VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment.endpointURL.absoluteString)
 
 isPrivacyProLaunched: \(vpnVisibility.isPrivacyProLaunched() ? "YES" : "NO")
-isWaitlistBetaActive: \(vpnVisibility.isWaitlistBetaActive() ? "YES" : "NO")
-isWaitlistUser: \(vpnVisibility.isWaitlistUser() ? "YES" : "NO")
 
-shouldShowThankYouMessaging: \(vpnVisibility.shouldShowThankYouMessaging() ? "YES" : "NO")
 shouldKeepVPNAccessViaWaitlist: \(vpnVisibility.shouldKeepVPNAccessViaWaitlist() ? "YES" : "NO")
 shouldMonitorEntitlement: \(vpnVisibility.shouldMonitorEntitlement() ? "YES" : "NO")
 shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")

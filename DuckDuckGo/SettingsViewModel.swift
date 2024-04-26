@@ -495,9 +495,9 @@ extension SettingsViewModel {
             }
         } else {
             switch NetworkProtectionAccessController().networkProtectionAccessType() {
-            case .none, .waitlistAvailable, .waitlistJoined, .waitlistInvitedPendingTermsAcceptance:
-                self.state.networkProtection.status = VPNWaitlist.shared.settingsSubtitle
-            case .waitlistInvited, .inviteCodeInvited:
+            case .none:
+                self.state.networkProtection.status = ""
+            case .inviteCodeInvited:
                 switch connectionStatus {
                 case .connected:
                     self.state.networkProtection.status = UserText.netPCellConnected

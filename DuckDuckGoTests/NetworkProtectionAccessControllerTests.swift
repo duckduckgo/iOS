@@ -69,54 +69,6 @@ final class NetworkProtectionAccessControllerTests: XCTestCase {
         XCTAssertEqual(controller.networkProtectionAccessType(), .inviteCodeInvited)
     }
 
-    func testWhenFeatureFlagsAreEnabled_AndTheUserHasNotSignedUp_ThenNetworkProtectionIsAccessible() {
-        let controller = createMockAccessController(
-            featureActivated: false,
-            termsAccepted: false,
-            featureFlagsEnabled: true,
-            hasJoinedWaitlist: false,
-            hasBeenInvited: false
-        )
-
-        XCTAssertEqual(controller.networkProtectionAccessType(), .waitlistAvailable)
-    }
-
-    func testWhenFeatureFlagsAreEnabled_AndTheUserHasSignedUp_ThenNetworkProtectionIsAccessible() {
-        let controller = createMockAccessController(
-            featureActivated: false,
-            termsAccepted: false,
-            featureFlagsEnabled: true,
-            hasJoinedWaitlist: true,
-            hasBeenInvited: false
-        )
-
-        XCTAssertEqual(controller.networkProtectionAccessType(), .waitlistJoined)
-    }
-
-    func testWhenFeatureFlagsAreEnabled_AndTheUserHasBeenInvited_ThenNetworkProtectionIsAccessible() {
-        let controller = createMockAccessController(
-            featureActivated: true,
-            termsAccepted: false,
-            featureFlagsEnabled: true,
-            hasJoinedWaitlist: true,
-            hasBeenInvited: true
-        )
-
-        XCTAssertEqual(controller.networkProtectionAccessType(), .waitlistInvitedPendingTermsAcceptance)
-    }
-
-    func testWhenFeatureFlagsAreEnabled_AndTheUserHasAcceptedTerms_ThenNetworkProtectionIsAccessible() {
-        let controller = createMockAccessController(
-            featureActivated: true,
-            termsAccepted: true,
-            featureFlagsEnabled: true,
-            hasJoinedWaitlist: true,
-            hasBeenInvited: true
-        )
-
-        XCTAssertEqual(controller.networkProtectionAccessType(), .waitlistInvited)
-    }
-
     // MARK: - Mock Creation
 
     private func createMockAccessController(

@@ -72,7 +72,6 @@ struct VPNMetadata: Encodable {
         // swiftlint:enable nesting
 
         let enableSource: Source
-        let betaParticipant: Bool
         let hasToken: Bool
         let subscriptionActive: Bool
     }
@@ -300,7 +299,6 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
 
         return .init(
             enableSource: .init(from: accessManager.networkProtectionAccessType()),
-            betaParticipant: accessType == .waitlistInvited,
             hasToken: hasToken,
             subscriptionActive: AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)).isUserAuthenticated
         )
@@ -312,8 +310,6 @@ extension VPNMetadata.PrivacyProInfo.Source {
         switch accessType {
         case .inviteCodeInvited:
             self = .internal
-        case .waitlistInvited:
-            self = .waitlist
         default:
             self = .other
         }

@@ -92,9 +92,6 @@ public struct UserDefaultsWrapper<T> {
 
         case shouldScheduleRulesCompilationOnAppLaunch = "com.duckduckgo.ios.shouldScheduleRulesCompilationOnAppLaunch"
 
-        case lastAppTrackingProtectionHistoryFetchTimestamp = "com.duckduckgo.ios.appTrackingProtection.lastTrackerHistoryFetchTimestamp"
-        case appTPUsed = "com.duckduckgo.ios.appTrackingProtection.appTPUsed"
-
         case defaultBrowserUsageLastSeen = "com.duckduckgo.ios.default-browser-usage-last-seen"
 
         case syncEnvironment = "com.duckduckgo.ios.sync-environment"

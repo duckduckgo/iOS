@@ -256,7 +256,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     private func setUpServerInfoPublishers() {
         serverInfoObserver.publisher
-            .compactMap { serverInfo in
+            .map { serverInfo in
                 guard let attributes = serverInfo.serverLocation else {
                     return nil
                 }

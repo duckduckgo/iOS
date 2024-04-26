@@ -32,16 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "fa4ade40bc72129171123689d2f6b5d4e3266f61"
-      }
-    },
-    {
-      "identity" : "cocoaasyncsocket",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/robbiehanson/CocoaAsyncSocket",
-      "state" : {
-        "revision" : "dbdc00669c1ced63b27c3c5f052ee4d28f10150c",
-        "version" : "7.6.5"
+        "revision" : "b1501e60d245625d4a5d42a61b329364134f0879",
+        "version" : "140.0.1"
       }
     },
     {
@@ -103,8 +95,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/airbnb/lottie-spm.git",
       "state" : {
-        "revision" : "4d0c11c85f5a9ec3d1b0daf2dc6daebc0e2df897",
-        "version" : "4.4.2"
+        "revision" : "1d29eccc24cc8b75bff9f6804155112c0ffc9605",
+        "version" : "4.4.3"
       }
     },
     {

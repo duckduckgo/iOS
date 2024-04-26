@@ -23,10 +23,6 @@ import Subscription
 public protocol NetworkProtectionFeatureVisibility {
     func isPrivacyProLaunched() -> Bool
 
-    /// Whether to let the user continues to use the VPN via the waitlist
-    /// This should only before 100% roll out
-    func shouldKeepVPNAccessViaWaitlist() -> Bool
-
     /// Whether to enforce entitlement check and show entitlement-related messaging
     /// This should always happen after 100% roll out
     /// N.B. Backend will independently check for valid entitlement regardless of this value

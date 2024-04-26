@@ -160,7 +160,7 @@ struct RemoteMessaging {
             let vpnAccess = NetworkProtectionAccessController()
             let accessType = vpnAccess.networkProtectionAccessType()
             let isVPNActivated = NetworkProtectionKeychainTokenStore().isFeatureActivated
-            let activationDateStore = DefaultVPNWaitlistActivationDateStore()
+            let activationDateStore = DefaultVPNActivationDateStore()
 
             isNetworkProtectionWaitlistUser = (accessType == .waitlistInvited) && isVPNActivated
             daysSinceNetworkProtectionEnabled = activationDateStore.daysSinceActivation() ?? -1

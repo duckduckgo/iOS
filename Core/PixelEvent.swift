@@ -269,31 +269,6 @@ extension Pixel {
         case serpRequerySame
         case serpRequeryNew
         
-        // MARK: AppTP
-        case appTPBreakageReport
-        
-        case appTPFailedToCreateProxyServer
-        case appTPFailedToSetTunnelNetworkSettings
-        case appTPFailedToAccessPreferences
-        case appTPFailedToAccessPreferencesDuringSetup
-        case appTPFailedToStartTunnel
-        
-        case appTPVPNDisconnect
-        case appTPVPNMemoryWarning
-        case appTPVPNMemoryCritical
-        
-        case appTPBlocklistParseFailed
-        case appTPActiveUser
-        
-        case appTPDBLocationFailed
-        case appTPDBStoreLoadFailure
-        case appTPDBPersistentStoreLoadFailure
-        case appTPDBHistoryFailure
-        case appTPDBHistoryFetchFailure
-        case appTPDBFeedbackTrackerFetchFailed
-        case appTPDBTrackerStoreFailure
-        case appTPCouldNotLoadDatabase
-        
         // MARK: Network Protection
         
         case networkProtectionActiveUser
@@ -937,29 +912,6 @@ extension Pixel.Event {
             
         case .serpRequerySame: return "rq_0"
         case .serpRequeryNew: return "rq_1"
-            
-            // MARK: AppTP pixels
-            
-        case .appTPBreakageReport: return "m_apptp_breakage_report"
-        case .appTPFailedToCreateProxyServer: return "m_apptp_failed_to_create_proxy_server"
-        case .appTPFailedToSetTunnelNetworkSettings: return "m_apptp_failed_to_set_tunnel_network_settings"
-        case .appTPFailedToAccessPreferences: return "m_apptp_failed_to_access_preferences"
-        case .appTPFailedToAccessPreferencesDuringSetup: return "m_apptp_failed_to_access_preferences_during_setup"
-        case .appTPFailedToStartTunnel: return "m_apptp_failed_to_start_tunnel"
-        case .appTPVPNDisconnect: return "m_apptp_vpn_disconnect"
-        case .appTPVPNMemoryWarning: return "m_apptp_vpn_memory_warning"
-        case .appTPVPNMemoryCritical: return "m_apptp_vpn_memory_critical"
-            
-        case .appTPBlocklistParseFailed: return "m_apptp_blocklist_parse_failed"
-        case .appTPActiveUser: return "m_apptp_active_user"
-        case .appTPDBLocationFailed: return "m_apptp_db_location_not_found"
-        case .appTPDBStoreLoadFailure: return "m_apptp_db_store_load_failure"
-        case .appTPDBPersistentStoreLoadFailure: return "m_apptp_db_persistent_store_load_failure"
-        case .appTPDBHistoryFailure: return "m_apptp_db_history_failure"
-        case .appTPDBHistoryFetchFailure: return "m_apptp_db_history_fetch_failure"
-        case .appTPDBFeedbackTrackerFetchFailed: return "m_apptp_db_feedback_tracker_fetch_failed"
-        case .appTPDBTrackerStoreFailure: return "m_apptp_db_tracker_store_failure"
-        case .appTPCouldNotLoadDatabase: return "m_apptp_could_not_load_database"
             
             // MARK: Network Protection pixels
             

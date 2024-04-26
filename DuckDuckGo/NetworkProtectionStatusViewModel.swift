@@ -45,10 +45,12 @@ struct NetworkProtectionLocationStatusModel {
         case .location(let location):
             let countryLabelsModel = NetworkProtectionVPNCountryLabelsModel(country: location.country, useFullCountryName: true)
             if let city = location.city {
-                title = UserText.netPVPNSettingsLocationSubtitleFormattedCityAndCountry(
+                let formattedCityAndCountry = UserText.netPVPNSettingsLocationSubtitleFormattedCityAndCountry(
                     city: city,
                     country: countryLabelsModel.title
                 )
+
+                title = "\(countryLabelsModel.emoji) \(formattedCityAndCountry)"
             } else {
                 title = "\(countryLabelsModel.emoji) \(countryLabelsModel.title)"
             }

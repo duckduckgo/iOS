@@ -26,6 +26,8 @@ protocol PixelFiring {
 
 final class AdAttributionPixelReporter {
 
+    static let isAdAttributionReportingEnabled = false
+
     static var shared = AdAttributionPixelReporter()
 
     private var fetcherStorage: AdAttributionReporterStorage

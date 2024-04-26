@@ -651,8 +651,13 @@ extension Pixel {
         case privacyProOfferYearlyPriceClick
         case privacyProAddEmailSuccess
         case privacyProWelcomeFAQClick
+
+        // MARK: Secure Vault
+        case secureVaultL1KeyMigration
+        case secureVaultL2KeyMigration
+        case secureVaultL2KeyPasswordMigration
     }
-    
+
 }
 
 extension Pixel.Event: Equatable {}
@@ -1280,6 +1285,11 @@ extension Pixel.Event {
         case .privacyProOfferYearlyPriceClick: return "m_privacy-pro_offer_yearly-price_click"
         case .privacyProAddEmailSuccess: return "m_privacy-pro_app_add-email_success_u"
         case .privacyProWelcomeFAQClick: return "m_privacy-pro_welcome_faq_click_u"
+            
+            // MARK: Secure Vault
+        case .secureVaultL1KeyMigration: return "m_secure-vault_keystore_event_l1-key-migration"
+        case .secureVaultL2KeyMigration: return "m_secure-vault_keystore_event_l2-key-migration"
+        case .secureVaultL2KeyPasswordMigration: return "m_secure-vault_keystore_event_l2-key-password-migration"
         }
     }
 }

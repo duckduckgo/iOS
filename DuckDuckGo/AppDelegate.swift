@@ -89,6 +89,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
     private var privacyConfigCustomURL: String?
+    
+    @UserDefaultsWrapper(key: .privacyProEnvironment, defaultValue: SubscriptionPurchaseEnvironment.ServiceEnvironment.default.description)
+    private var privacyProEnvironment: String
 
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -234,7 +237,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         syncDataProviders = SyncDataProviders(
             bookmarksDatabase: bookmarksDatabase,
-            secureVaultErrorReporter: SecureVaultErrorReporter.shared,
+            secureVaultErrorReporter: SecureVaultReporter.shared,
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
         )
@@ -395,18 +398,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func setupSubscriptionsEnvironment() {
         Task {
-#if DEBUG || ALPHA
-            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
-#else
-            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .production
-#endif
-
-#if NETWORK_PROTECTION
-            if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {
-                SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
-            }
-#endif
-
+            #if ALPHA || DEBUG
+                let defaultEnvironment = SubscriptionPurchaseEnvironment.ServiceEnvironment.staging
+            #else
+                let defaultEnvironment = SubscriptionPurchaseEnvironment.ServiceEnvironment.production
+            #endif
+            let environment = SubscriptionPurchaseEnvironment.ServiceEnvironment(rawValue: privacyProEnvironment) ?? defaultEnvironment
+            SubscriptionPurchaseEnvironment.currentServiceEnvironment = environment
+            VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment = (environment == .production) ? .production : .staging
             SubscriptionPurchaseEnvironment.current = .appStore
         }
     }
@@ -927,13 +926,18 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
 #if NETWORK_PROTECTION
             if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
-                presentNetworkProtectionStatusSettingsModal()
+                Task {
+                    let accountManager = AccountManager()
+                    if case .success(let hasEntitlements) = await accountManager.hasEntitlement(for: .networkProtection),
+                        hasEntitlements {
+                        presentNetworkProtectionStatusSettingsModal()
+                    }
+                }
             }
 
             if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist(), identifier == VPNWaitlist.notificationIdentifier {
                 presentNetworkProtectionWaitlistModal()
             }
-
 #endif
         }
 

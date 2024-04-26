@@ -45,7 +45,7 @@ class AutoClear {
     }
     
     @MainActor
-    private func clearData() async {
+    func clearDataIfEnabled() async {
         guard let settings = AutoClearSettingsModel(settings: appSettings) else { return }
         
         if settings.action.contains(.clearTabs) {
@@ -60,7 +60,7 @@ class AutoClear {
     }
     
     /// Note: function is parametrised because of tests.
-    func applicationDidEnterBackground(_ time: TimeInterval = Date().timeIntervalSince1970) {
+    func startClearingTimer(_ time: TimeInterval = Date().timeIntervalSince1970) {
         timestamp = time
     }
     
@@ -82,13 +82,13 @@ class AutoClear {
     }
     
     @MainActor
-    func applicationWillMoveToForeground() async {
+    func clearDataIfEnabledAndTimeExpired() async {
         guard isClearingEnabled,
             let timestamp = timestamp,
             shouldClearData(elapsedTime: Date().timeIntervalSince1970 - timestamp) else { return }
         
         self.timestamp = nil
         worker.clearNavigationStack()
-        await clearData()
+        await clearDataIfEnabled()
     }
 }

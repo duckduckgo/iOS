@@ -267,7 +267,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let historyManager = makeHistoryManager()
         let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
-
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       historyManager: historyManager,
@@ -288,7 +287,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         autoClear = AutoClear(worker: main)
-        
+        Task {
+            await autoClear?.clearDataIfEnabled()
+        }
+
         AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
 
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
@@ -645,7 +647,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Task { @MainActor in
             await beginAuthentication()
-            await autoClear?.applicationWillMoveToForeground()
+            await autoClear?.clearDataIfEnabledAndTimeExpired()
             showKeyboardIfSettingOn = true
             syncService.scheduler.resumeSyncQueue()
         }
@@ -653,7 +655,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         displayBlankSnapshotWindow()
-        autoClear?.applicationDidEnterBackground()
+        autoClear?.startClearingTimer()
         lastBackgroundDate = Date()
         AppDependencyProvider.shared.autofillLoginSession.endSession()
         suspendSync()
@@ -820,7 +822,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Task { @MainActor in
 
-            await autoClear?.applicationWillMoveToForeground()
+            if appIsLaunching {
+                await autoClear?.clearDataIfEnabled()
+            } else {
+                await autoClear?.clearDataIfEnabledAndTimeExpired()
+            }
 
             if shortcutItem.type == ShortcutKey.clipboard, let query = UIPasteboard.general.string {
                 mainViewController?.clearNavigationStack()

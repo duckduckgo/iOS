@@ -122,38 +122,6 @@ Bloqueei-os!
 			<string>%1$d Separadores privados</string>
 		</dict>
 	</dict>
-	<key>appTP.home.blockedCount</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@attempts@</string>
-		<key>attempts</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>%d tracking attempts</string>
-			<key>one</key>
-			<string>%d tracking attempt</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-		</dict>
-	</dict>
-	<key>appTP.trackingattempts</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@attempts@</string>
-		<key>attempts</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>%d tracking attempts</string>
-			<key>one</key>
-			<string>%d tracking attempt</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-		</dict>
-	</dict>
 	<key>autofill.number.of.passwords</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -162,8 +130,8 @@ Bloqueei-os!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>%1$d palavra-passe</string>
 			<key>other</key>
@@ -178,41 +146,41 @@ Bloqueei-os!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>Tens a certeza de que pretendes eliminar %1$d palavra-passe?</string>
 			<key>other</key>
 			<string>Tens a certeza de que pretendes eliminar %1$d palavras-passe?</string>
 		</dict>
 	</dict>
-    <key>autofill.delete.all.passwords.confirmation.body</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%1$#@passwords@</string>
-        <key>passwords</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>A tua palavra-passe será eliminada deste dispositivo. Confirma que ainda tens uma forma de aceder à %2$#@accounts@.</string>
-            <key>other</key>
-            <string>As tuas palavras-passe serão eliminadas deste dispositivo. Confirma que ainda tens uma forma de aceder às %2$#@accounts@.</string>
-        </dict>
-        <key>accounts</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>account</string>
-            <key>other</key>
-            <string>contas</string>
-        </dict>
-    </dict>
+	<key>autofill.delete.all.passwords.confirmation.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>A tua palavra-passe será eliminada deste dispositivo. Confirma que ainda tens uma forma de aceder à %2$#@accounts@.</string>
+			<key>other</key>
+			<string>As tuas palavras-passe serão eliminadas deste dispositivo. Confirma que ainda tens uma forma de aceder às %2$#@accounts@.</string>
+		</dict>
+		<key>accounts</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>account</string>
+			<key>other</key>
+			<string>contas</string>
+		</dict>
+	</dict>
 	<key>autofill.delete.all.passwords.sync.confirmation.body</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -221,8 +189,8 @@ Bloqueei-os!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>A tua palavra-passe será eliminada de todos os dispositivos sincronizados. Confirma que ainda tens uma forma de aceder à %2$#@accounts@.</string>
 			<key>other</key>
@@ -232,8 +200,8 @@ Bloqueei-os!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>account</string>
 			<key>other</key>
@@ -248,8 +216,8 @@ Bloqueei-os!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>%1$d palavra-passe eliminada</string>
 			<key>other</key>

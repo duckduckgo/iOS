@@ -122,38 +122,6 @@
 			<string>%1$d ιδιωτικές καρτέλες</string>
 		</dict>
 	</dict>
-	<key>appTP.home.blockedCount</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@attempts@</string>
-		<key>attempts</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>%d tracking attempts</string>
-			<key>one</key>
-			<string>%d tracking attempt</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-		</dict>
-	</dict>
-	<key>appTP.trackingattempts</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@attempts@</string>
-		<key>attempts</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>%d tracking attempts</string>
-			<key>one</key>
-			<string>%d tracking attempt</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-		</dict>
-	</dict>
 	<key>autofill.number.of.passwords</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -162,8 +130,8 @@
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>%1$d κωδικός πρόσβασης</string>
 			<key>other</key>
@@ -178,41 +146,41 @@
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>Θέλετε σίγουρα να διαγράψετε %1$d κωδικούς πρόσβασης;</string>
 			<key>other</key>
 			<string>Θέλετε σίγουρα να διαγράψετε %1$d κωδικούς πρόσβασης;</string>
 		</dict>
 	</dict>
-    <key>autofill.delete.all.passwords.confirmation.body</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%1$#@passwords@</string>
-        <key>passwords</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>Ο κωδικός πρόσβασής σας θα διαγραφεί από αυτήν τη συσκευή. Βεβαιωθείτε ότι εξακολουθείτε να έχετε έναν τρόπο πρόσβασης στο %2$#@accounts@.</string>
-            <key>other</key>
-            <string>Οι κωδικοί πρόσβασής σας θα διαγραφούν από αυτή τη συσκευή. Βεβαιωθείτε ότι εξακολουθείτε να έχετε έναν τρόπο πρόσβασης στο %2$#@accounts@.</string>
-        </dict>
-        <key>accounts</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>λογαριασμό</string>
-            <key>other</key>
-            <string>λογαριασμούς</string>
-        </dict>
-    </dict>
+	<key>autofill.delete.all.passwords.confirmation.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Ο κωδικός πρόσβασής σας θα διαγραφεί από αυτήν τη συσκευή. Βεβαιωθείτε ότι εξακολουθείτε να έχετε έναν τρόπο πρόσβασης στο %2$#@accounts@.</string>
+			<key>other</key>
+			<string>Οι κωδικοί πρόσβασής σας θα διαγραφούν από αυτή τη συσκευή. Βεβαιωθείτε ότι εξακολουθείτε να έχετε έναν τρόπο πρόσβασης στο %2$#@accounts@.</string>
+		</dict>
+		<key>accounts</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>λογαριασμό</string>
+			<key>other</key>
+			<string>λογαριασμούς</string>
+		</dict>
+	</dict>
 	<key>autofill.delete.all.passwords.sync.confirmation.body</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -221,8 +189,8 @@
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>Ο κωδικός πρόσβασής σας θα διαγραφεί από όλες τις συγχρονισμένες συσκευές. Βεβαιωθείτε ότι έχετε ακόμα τρόπο πρόσβασης στους %2$#@accounts@ σας.</string>
 			<key>other</key>
@@ -232,8 +200,8 @@
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>λογαριασμό</string>
 			<key>other</key>
@@ -248,8 +216,8 @@
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>%1$d κωδικός πρόσβασης διαγράφηκε</string>
 			<key>other</key>

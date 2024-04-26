@@ -97,7 +97,7 @@ public class SyncDataProviders: DataProvidersSource {
     public init(
         bookmarksDatabase: CoreDataDatabase,
         secureVaultFactory: AutofillVaultFactory = AutofillSecureVaultFactory,
-        secureVaultErrorReporter: SecureVaultErrorReporting,
+        secureVaultErrorReporter: SecureVaultReporting,
         settingHandlers: [SettingSyncHandler],
         favoritesDisplayModeStorage: FavoritesDisplayModeStoring
     ) {
@@ -139,5 +139,5 @@ public class SyncDataProviders: DataProvidersSource {
     private let syncMetadataDatabase: CoreDataDatabase = SyncMetadataDatabase.make()
     private let bookmarksDatabase: CoreDataDatabase
     private let secureVaultFactory: AutofillVaultFactory
-    private let secureVaultErrorReporter: SecureVaultErrorReporting
+    private let secureVaultErrorReporter: SecureVaultReporting
 }

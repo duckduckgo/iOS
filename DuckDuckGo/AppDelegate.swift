@@ -66,10 +66,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var privacyStore = PrivacyUserDefaults()
     private var bookmarksDatabase: CoreDataDatabase = BookmarksDatabase.make()
 
-#if APP_TRACKING_PROTECTION
-    private var appTrackingProtectionDatabase: CoreDataDatabase = AppTrackingProtectionDatabase.make()
-#endif
-
 #if NETWORK_PROTECTION
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
@@ -93,6 +89,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
     private var privacyConfigCustomURL: String?
+    
+    @UserDefaultsWrapper(key: .privacyProEnvironment, defaultValue: SubscriptionPurchaseEnvironment.ServiceEnvironment.default.description)
+    private var privacyProEnvironment: String
 
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -204,25 +203,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         WidgetCenter.shared.reloadAllTimelines()
 
-#if APP_TRACKING_PROTECTION
-        appTrackingProtectionDatabase.loadStore { context, error in
-            guard context != nil else {
-                if let error = error {
-                    Pixel.fire(pixel: .appTPCouldNotLoadDatabase, error: error)
-                } else {
-                    Pixel.fire(pixel: .appTPCouldNotLoadDatabase)
-                }
-
-                if shouldPresentInsufficientDiskSpaceAlertAndCrash {
-                    return
-                } else {
-                    Thread.sleep(forTimeInterval: 1)
-                    fatalError("Could not create AppTP database stack: \(error?.localizedDescription ?? "err")")
-                }
-            }
-        }
-#endif
-
         Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
             WidgetCenter.shared.reloadAllTimelines()
         }
@@ -257,7 +237,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         syncDataProviders = SyncDataProviders(
             bookmarksDatabase: bookmarksDatabase,
-            secureVaultErrorReporter: SecureVaultErrorReporter.shared,
+            secureVaultErrorReporter: SecureVaultReporter.shared,
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
         )
@@ -283,30 +263,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 })
             }
 
-        let previewsSource = TabPreviewsSource()
         let historyManager = makeHistoryManager()
-        let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
-#if APP_TRACKING_PROTECTION
-        let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
-                                      bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
-                                      appTrackingProtectionDatabase: appTrackingProtectionDatabase,
-                                      historyManager: historyManager,
-                                      syncService: syncService,
-                                      syncDataProviders: syncDataProviders,
-                                      appSettings: AppDependencyProvider.shared.appSettings,
-                                      previewsSource: previewsSource,
-                                      tabsModel: tabsModel)
-#else
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
-                                      appSettings: AppDependencyProvider.shared.appSettings,
-                                      previewsSource: previewsSource,
-                                      tabsModel: tabsModel)
-#endif
+                                      appSettings: AppDependencyProvider.shared.appSettings)
 
         main.loadViewIfNeeded()
 
@@ -359,27 +323,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
         return true
-    }
-
-    private func prepareTabsModel(previewsSource: TabPreviewsSource = TabPreviewsSource(),
-                                  appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
-                                  isDesktop: Bool = UIDevice.current.userInterfaceIdiom == .pad) -> TabsModel {
-        let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
-        let tabsModel: TabsModel
-        if AutoClearSettingsModel(settings: appSettings) != nil {
-            tabsModel = TabsModel(desktop: isPadDevice)
-            tabsModel.save()
-            previewsSource.removeAllPreviews()
-        } else {
-            if let storedModel = TabsModel.get() {
-                // Save new model in case of migration
-                storedModel.save()
-                tabsModel = storedModel
-            } else {
-                tabsModel = TabsModel(desktop: isPadDevice)
-            }
-        }
-        return tabsModel
     }
 
     private func makeHistoryManager() -> HistoryManager {
@@ -456,18 +399,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func setupSubscriptionsEnvironment() {
         Task {
-#if DEBUG || ALPHA
-            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
-#else
-            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .production
-#endif
-
-#if NETWORK_PROTECTION
-            if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {
-                SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
-            }
-#endif
-
+            #if ALPHA || DEBUG
+                let defaultEnvironment = SubscriptionPurchaseEnvironment.ServiceEnvironment.staging
+            #else
+                let defaultEnvironment = SubscriptionPurchaseEnvironment.ServiceEnvironment.production
+            #endif
+            let environment = SubscriptionPurchaseEnvironment.ServiceEnvironment(rawValue: privacyProEnvironment) ?? defaultEnvironment
+            SubscriptionPurchaseEnvironment.currentServiceEnvironment = environment
+            VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment = (environment == .production) ? .production : .staging
             SubscriptionPurchaseEnvironment.current = .appStore
         }
     }
@@ -496,7 +435,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             StatisticsLoader.shared.refreshAppRetentionAtb()
             self.fireAppLaunchPixel()
             self.firePrivacyProFeatureEnabledPixel()
-            self.fireAppTPActiveUserPixel()
             self.reportAdAttribution()
         }
         
@@ -639,30 +577,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DailyPixel.fire(pixel: .privacyProFeatureEnabled)
     }
 
-    private func fireAppTPActiveUserPixel() {
-#if APP_TRACKING_PROTECTION
-        guard AppDependencyProvider.shared.featureFlagger.isFeatureOn(.appTrackingProtection) else {
-            return
-        }
-        
-        let manager = FirewallManager()
-
-        Task {
-            await manager.refreshManager()
-            let date = Date()
-            let key = "appTPActivePixelFired"
-
-            // Make sure we don't fire this pixel multiple times a day
-            let dayStart = Calendar.current.startOfDay(for: date)
-            let fireDate = UserDefaults.standard.object(forKey: key) as? Date
-            if fireDate == nil || fireDate! < dayStart, manager.status() == .connected {
-                Pixel.fire(pixel: .appTPActiveUser)
-                UserDefaults.standard.set(date, forKey: key)
-            }
-        }
-#endif
-    }
-
     private func fireFailedCompilationsPixelIfNeeded() {
         let store = FailedCompilationsStore()
         if store.hasAnyFailures {
@@ -771,7 +685,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         Task { @MainActor in
-            // Autoclear should have happened by now
+            await autoClear?.applicationWillMoveToForeground()
             showKeyboardIfSettingOn = false
 
             if !handleAppDeepLink(app, mainViewController, url) {
@@ -1020,13 +934,18 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
 #if NETWORK_PROTECTION
             if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
-                presentNetworkProtectionStatusSettingsModal()
+                Task {
+                    let accountManager = AccountManager()
+                    if case .success(let hasEntitlements) = await accountManager.hasEntitlement(for: .networkProtection),
+                        hasEntitlements {
+                        presentNetworkProtectionStatusSettingsModal()
+                    }
+                }
             }
 
             if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist(), identifier == VPNWaitlist.notificationIdentifier {
                 presentNetworkProtectionWaitlistModal()
             }
-
 #endif
         }
 

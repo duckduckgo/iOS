@@ -214,17 +214,11 @@ class AutocompleteViewController: UIViewController {
 
             let finalResult: SuggestionResult
             if let result {
-                if inSuggestionExperiment {
-                    finalResult = result
-                } else {
-                    // Flatten the list when not in suggestion experiment,
-                    // otherwise we can end up with >2 top hits section
-                    finalResult = SuggestionResult(
-                        topHits: [],
-                        duckduckgoSuggestions: bookmarks + result.all,
-                        historyAndBookmarks: []
-                    )
-                }
+                finalResult = SuggestionResult(
+                    topHits: bookmarks + result.topHits,
+                    duckduckgoSuggestions: result.duckduckgoSuggestions,
+                    historyAndBookmarks: result.historyAndBookmarks
+                )
             } else {
                 finalResult = .empty
             }

@@ -27,6 +27,10 @@ import NetworkProtectionTestUtils
 import WaitlistMocks
 @testable import DuckDuckGo
 
+final class MockNetworkProtectionFeatureActivation: NetworkProtectionFeatureActivation {
+    var isFeatureActivated: Bool = false
+}
+
 final class NetworkProtectionAccessControllerTests: XCTestCase {
 
     var internalUserDeciderStore: MockInternalUserStoring!
@@ -102,7 +106,6 @@ final class NetworkProtectionAccessControllerTests: XCTestCase {
 
         return NetworkProtectionAccessController(
             networkProtectionActivation: mockActivation,
-            networkProtectionWaitlistStorage: mockWaitlistStorage,
             networkProtectionTermsAndConditionsStore: mockTermsAndConditionsStore,
             featureFlagger: mockFeatureFlagger,
             internalUserDecider: internalUserDecider

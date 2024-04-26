@@ -288,7 +288,6 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     }
 
     func collectPrivacyProInfo() -> VPNMetadata.PrivacyProInfo {
-        let accessType = accessManager.networkProtectionAccessType()
         var hasToken: Bool {
             guard let token = try? tokenStore.fetchToken(),
                   !token.hasPrefix(NetworkProtectionKeychainTokenStore.authTokenPrefix) else {

@@ -248,6 +248,17 @@ extension Pixel {
         case autofillLoginsLaunchWidgetLock
         case autofillLoginsLaunchAppShortcut
 
+        case autofillLoginsImport
+        case autofillLoginsImportNoPasswords
+        case autofillLoginsImportGetDesktop
+        case autofillLoginsImportSync
+        case autofillLoginsImportNoAction
+        case autofillLoginsImportSuccess
+        case autofillLoginsImportFailure
+
+        case getDesktopCopy
+        case getDesktopShare
+        
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
         
         case secureVaultError
@@ -282,9 +293,17 @@ extension Pixel {
         case networkProtectionTunnelStartSuccess
         case networkProtectionTunnelStartFailure
 
+        case networkProtectionTunnelStopAttempt
+        case networkProtectionTunnelStopSuccess
+        case networkProtectionTunnelStopFailure
+
         case networkProtectionTunnelUpdateAttempt
         case networkProtectionTunnelUpdateSuccess
         case networkProtectionTunnelUpdateFailure
+
+        case networkProtectionTunnelWakeAttempt
+        case networkProtectionTunnelWakeSuccess
+        case networkProtectionTunnelWakeFailure
 
         case networkProtectionEnableAttemptConnecting
         case networkProtectionEnableAttemptSuccess
@@ -652,10 +671,14 @@ extension Pixel {
         case privacyProAddEmailSuccess
         case privacyProWelcomeFAQClick
 
+        // MARK: Apple Ad Attribution
+        case appleAdAttribution
+
         // MARK: Secure Vault
         case secureVaultL1KeyMigration
         case secureVaultL2KeyMigration
         case secureVaultL2KeyPasswordMigration
+
     }
 
 }
@@ -892,6 +915,17 @@ extension Pixel.Event {
         case .autofillLoginsLaunchWidgetLock: return "m_autofill_logins_launch_widget_lock"
         case .autofillLoginsLaunchAppShortcut: return "m_autofill_logins_launch_app_shortcut"
 
+        case .autofillLoginsImport: return "m_autofill_logins_import"
+        case .autofillLoginsImportNoPasswords: return "m_autofill_logins_import_no_passwords"
+        case .autofillLoginsImportGetDesktop: return "m_autofill_logins_import_get_desktop"
+        case .autofillLoginsImportSync: return "m_autofill_logins_import_sync"
+        case .autofillLoginsImportNoAction: return "m_autofill_logins_import_no-action"
+        case .autofillLoginsImportSuccess: return "m_autofill_logins_import_success"
+        case .autofillLoginsImportFailure: return "m_autofill_logins_import_failure"
+
+        case .getDesktopCopy: return "m_get_desktop_copy"
+        case .getDesktopShare: return "m_get_desktop_share"
+
         case .autofillJSPixelFired(let pixel):
             return "m_ios_\(pixel.pixelName)"
             
@@ -923,9 +957,15 @@ extension Pixel.Event {
         case .networkProtectionTunnelStartAttempt: return "m_netp_tunnel_start_attempt"
         case .networkProtectionTunnelStartSuccess: return "m_netp_tunnel_start_success"
         case .networkProtectionTunnelStartFailure: return "m_netp_tunnel_start_failure"
+        case .networkProtectionTunnelStopAttempt: return "m_netp_tunnel_stop_attempt"
+        case .networkProtectionTunnelStopSuccess: return "m_netp_tunnel_stop_success"
+        case .networkProtectionTunnelStopFailure: return "m_netp_tunnel_stop_failure"
         case .networkProtectionTunnelUpdateAttempt: return "m_netp_tunnel_update_attempt"
         case .networkProtectionTunnelUpdateSuccess: return "m_netp_tunnel_update_success"
         case .networkProtectionTunnelUpdateFailure: return "m_netp_tunnel_update_failure"
+        case .networkProtectionTunnelWakeAttempt: return "m_netp_tunnel_wake_attempt"
+        case .networkProtectionTunnelWakeSuccess: return "m_netp_tunnel_wake_success"
+        case .networkProtectionTunnelWakeFailure: return "m_netp_tunnel_wake_failure"
         case .networkProtectionEnableAttemptConnecting: return "m_netp_ev_enable_attempt"
         case .networkProtectionEnableAttemptSuccess: return "m_netp_ev_enable_attempt_success"
         case .networkProtectionEnableAttemptFailure: return "m_netp_ev_enable_attempt_failure"
@@ -1176,6 +1216,9 @@ extension Pixel.Event {
         case .toggleReportDismiss: return "m_toggle-report-dismiss"
 
         case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
+            
+        // MARK: - Apple Ad Attribution
+        case .appleAdAttribution: return "m_apple-ad-attribution"
 
             // MARK: - User behavior
         case .userBehaviorReloadTwice: return "m_reload-twice"

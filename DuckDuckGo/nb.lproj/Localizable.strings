@@ -247,6 +247,42 @@
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Skjul passord";
 
+/* Button label to get link to download the desktop browser */
+"autofill.import.passwords.get-browser-button" = "Skaff deg nettleseren for datamaskin";
+
+/* Step 1 for instructions to import passwords */
+"autofill.import.passwords.instructions.step1" = "Åpne DuckDuckGo på Mac eller Windows";
+
+/* Step 2 for instructions to import passwords. This reads as 'Go to Settings > Passwords' */
+"autofill.import.passwords.instructions.step2" = "Gå til %1$@ > %2$@";
+
+/* second parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.passwords" = "Passord";
+
+/* first parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.settings" = "Innstillinger";
+
+/* Step 3 for instructions to import passwords. This reads as 'Select Import Passwords and follow the steps' */
+"autofill.import.passwords.instructions.step3" = "Velg %@ og følg trinnene for å importere";
+
+/* Parameter for autofill.import.passwords.instructions.step3 */
+"autofill.import.passwords.instructions.step3.import" = "Importer passord ...";
+
+/* Step 4 for instructions to import passwords: Once imported on your computer you can set up sync on this iPhone|iPad|device */
+"autofill.import.passwords.instructions.step4" = "Når de er importert til datamaskinen, kan du sette opp synkronisering på denne %@";
+
+/* Title for section with instructions to import passwords */
+"autofill.import.passwords.instructions.title" = "Importer fra datamaskinnettleseren:";
+
+/* Subtitle for screen to import passwords */
+"autofill.import.passwords.subtitle" = "Importer passord i datamaskinversjonen av DuckDuckGo-nettleseren, og så kan du synkronisere mellom enheter.";
+
+/* Button label to sync passwords with desktop browser */
+"autofill.import.passwords.sync-button" = "Synkroniser med datamaskinen";
+
+/* Title for screen to import passwords */
+"autofill.import.passwords.title" = "Slik importerer du passord";
+
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Slå av";
 
@@ -349,8 +385,11 @@
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Brukernavn";
 
-/* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Passord lagres på enheten din på en sikker måte.";
+/* Title for button to Import Passwords when autofill has no items */
+"autofill.logins.empty-view.button.title" = "Importer passord";
+
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle" = "Passord fra andre nettlesere eller apper kan importeres med skrivebordsversjonen av DuckDuckGo-nettleseren.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Ingen passord er lagret ennå";
@@ -369,6 +408,9 @@
 
 /* Title for a toggle that enables autofill */
 "autofill.logins.list.enable" = "Lagre og fyll ut passord automatisk";
+
+/* Footer label displayed below table section with option to enable autofill */
+"autofill.logins.list.enable.footer" = "Passord lagres på enheten din på en sikker måte.";
 
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Passordet for %@ er slettet";
@@ -711,6 +753,15 @@
 
 /* No comment provided by engineer. */
 "Debug" = "Debug";
+
+/* Default string used if users device is not iPhone or iPad */
+"device.type.default" = "enhet";
+
+/* Device type is iPhone */
+"device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"device.type.pad" = "iPad";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Deaktivert";
@@ -1098,6 +1149,21 @@
 
 /* No comment provided by engineer. */
 "fireButtonAnimation.waterSwirl.name" = "Malstrøm";
+
+/* Description text above the Share Link button */
+"get.browser.on-your-desktop-go-to" = "På datamaskinen går du til:";
+
+/* Title for the Share Download Link button */
+"get.browser.share-link" = "Del nedlastingslenke";
+
+/* Message displayed in the share action when sharing via email */
+"get.browser.share-link.message" = "Søk privat og blokker sporere med DuckDuckGo-nettleseren for datamaskin. Gå til denne lenken på datamaskinen for å laste ned i dag.";
+
+/* Title displayed in the share action */
+"get.browser.share-link.title" = "Skaff deg DuckDuckGo-nettleseren for Mac eller Windows";
+
+/* Title for the get desktop browser feature */
+"get.browser.title" = "Skaff deg DuckDuckGo for Mac eller Windows";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Legg til DuckDuckGo på startskjermen!";

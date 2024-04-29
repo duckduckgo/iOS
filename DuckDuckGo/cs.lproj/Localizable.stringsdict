@@ -158,58 +158,26 @@ Zablokovali jsme je.
 			<string>%1$d soukromých karet</string>
 		</dict>
 	</dict>
-	<key>appTP.home.blockedCount</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@attempts@</string>
-		<key>attempts</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>%d tracking attempts</string>
-			<key>one</key>
-			<string>%d tracking attempt</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-		</dict>
-	</dict>
-	<key>appTP.trackingattempts</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@attempts@</string>
-		<key>attempts</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>%d tracking attempts</string>
-			<key>one</key>
-			<string>%d tracking attempt</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-		</dict>
-	</dict>
 	<key>autofill.number.of.passwords</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%#@passwords@</string>
-        <key>passwords</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-            <key>one</key>
-            <string>%1$d heslo</string>
-            <key>few</key>
-            <string>%1$d hesla</string>
-            <key>many</key>
-            <string>%1$d hesla</string>
-            <key>other</key>
-            <string>%1$d hesel</string>
-        </dict>
-    </dict>
+			<key>one</key>
+			<string>%1$d heslo</string>
+			<key>few</key>
+			<string>%1$d hesla</string>
+			<key>many</key>
+			<string>%1$d hesla</string>
+			<key>other</key>
+			<string>%1$d hesel</string>
+		</dict>
+	</dict>
 	<key>autofill.delete.all.passwords.confirmation.title</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -230,41 +198,41 @@ Zablokovali jsme je.
 			<string>Opravdu chceš smazat %1$d hesel?</string>
 		</dict>
 	</dict>
-    <key>autofill.delete.all.passwords.confirmation.body</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%1$#@passwords@</string>
-        <key>passwords</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>Tvoje heslo se z tohohle zařízení smaže. Zkontroluj si předtím, že se k %2$#@accounts@ i tak dostaneš.</string>
-            <key>few</key>
-            <string>Tvoje hesla se z tohohle zařízení smažou. Zkontroluj si předtím, že se k %2$#@accounts@ i tak dostaneš.</string>
-            <key>many</key>
-            <string>Tvoje hesla se z tohohle zařízení smažou. Zkontroluj si předtím, že se k %2$#@accounts@ i tak dostaneš.</string>
-            <key>other</key>
-            <string>Tvoje hesla se z tohohle zařízení smažou. Zkontroluj si předtím, že se k %2$#@accounts@ i tak dostaneš.</string>
-        </dict>
-        <key>accounts</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>účtu</string>
-            <key>few</key>
-            <string>účtům</string>
-            <key>many</key>
-            <string>účtům</string>
-            <key>other</key>
-            <string>účtům</string>
-        </dict>
-    </dict>
+	<key>autofill.delete.all.passwords.confirmation.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Tvoje heslo se z tohohle zařízení smaže. Zkontroluj si předtím, že se k %2$#@accounts@ i tak dostaneš.</string>
+			<key>few</key>
+			<string>Tvoje hesla se z tohohle zařízení smažou. Zkontroluj si předtím, že se k %2$#@accounts@ i tak dostaneš.</string>
+			<key>many</key>
+			<string>Tvoje hesla se z tohohle zařízení smažou. Zkontroluj si předtím, že se k %2$#@accounts@ i tak dostaneš.</string>
+			<key>other</key>
+			<string>Tvoje hesla se z tohohle zařízení smažou. Zkontroluj si předtím, že se k %2$#@accounts@ i tak dostaneš.</string>
+		</dict>
+		<key>accounts</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>účtu</string>
+			<key>few</key>
+			<string>účtům</string>
+			<key>many</key>
+			<string>účtům</string>
+			<key>other</key>
+			<string>účtům</string>
+		</dict>
+	</dict>
 	<key>autofill.delete.all.passwords.sync.confirmation.body</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -273,8 +241,8 @@ Zablokovali jsme je.
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>Tvoje heslo se smaže ze všech synchronizovaných zařízení. Zkontroluj si předtím, že se k %2$#@accounts@ i tak dostaneš.</string>
 			<key>few</key>
@@ -288,8 +256,8 @@ Zablokovali jsme je.
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>účtu</string>
 			<key>few</key>
@@ -308,8 +276,8 @@ Zablokovali jsme je.
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>%1$d smazané heslo</string>
 			<key>few</key>

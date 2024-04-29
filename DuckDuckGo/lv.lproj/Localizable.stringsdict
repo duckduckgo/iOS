@@ -140,38 +140,6 @@ Es tos nobloķēju!
 			<string>%1$d privātās cilnes</string>
 		</dict>
 	</dict>
-	<key>appTP.home.blockedCount</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@attempts@</string>
-		<key>attempts</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>%d tracking attempts</string>
-			<key>one</key>
-			<string>%d tracking attempt</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-		</dict>
-	</dict>
-	<key>appTP.trackingattempts</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@attempts@</string>
-		<key>attempts</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>%d tracking attempts</string>
-			<key>one</key>
-			<string>%d tracking attempt</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-		</dict>
-	</dict>
 	<key>autofill.number.of.passwords</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -180,8 +148,8 @@ Es tos nobloķēju!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>zero</key>
 			<string>%1$d paroles</string>
 			<key>one</key>
@@ -198,8 +166,8 @@ Es tos nobloķēju!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>zero</key>
 			<string>Vai tiešām vēlies dzēst %1$d paroles?</string>
 			<key>one</key>
@@ -208,37 +176,37 @@ Es tos nobloķēju!
 			<string>Vai tiešām vēlies dzēst %1$d paroles?</string>
 		</dict>
 	</dict>
-    <key>autofill.delete.all.passwords.confirmation.body</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%1$#@passwords@</string>
-        <key>passwords</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>zero</key>
-            <string>Tavas paroles tiks dzēstas no šīs ierīces. Pārliecinies, ka joprojām vari piekļūt saviem %2$#@accounts@ kontiem.</string>
-            <key>one</key>
-            <string>Tavas paroles tiks dzēstas no šīs ierīces. Pārliecinies, ka joprojām vari piekļūt savam %2$#@accounts@ kontam.</string>
-            <key>other</key>
-            <string>Tavas paroles tiks dzēstas no šīs ierīces. Pārliecinies, ka joprojām vari piekļūt saviem %2$#@accounts@ kontiem.</string>
-        </dict>
-        <key>accounts</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>zero</key>
-            <string>konti</string>
-            <key>one</key>
-            <string>konts</string>
-            <key>other</key>
-            <string>konti</string>
-        </dict>
-    </dict>
+	<key>autofill.delete.all.passwords.confirmation.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>Tavas paroles tiks dzēstas no šīs ierīces. Pārliecinies, ka joprojām vari piekļūt saviem %2$#@accounts@ kontiem.</string>
+			<key>one</key>
+			<string>Tavas paroles tiks dzēstas no šīs ierīces. Pārliecinies, ka joprojām vari piekļūt savam %2$#@accounts@ kontam.</string>
+			<key>other</key>
+			<string>Tavas paroles tiks dzēstas no šīs ierīces. Pārliecinies, ka joprojām vari piekļūt saviem %2$#@accounts@ kontiem.</string>
+		</dict>
+		<key>accounts</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>konti</string>
+			<key>one</key>
+			<string>konts</string>
+			<key>other</key>
+			<string>konti</string>
+		</dict>
+	</dict>
 	<key>autofill.delete.all.passwords.sync.confirmation.body</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -247,8 +215,8 @@ Es tos nobloķēju!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>zero</key>
 			<string>Tavas paroles tiks dzēstas no visām sinhronizētajām ierīcēm. Pārliecinies, vai joprojām varēsi piekļūt saviem %2$#@accounts@ kontiem.</string>
 			<key>one</key>
@@ -260,8 +228,8 @@ Es tos nobloķēju!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>zero</key>
 			<string>konti</string>
 			<key>one</key>
@@ -278,8 +246,8 @@ Es tos nobloķēju!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>zero</key>
 			<string>%1$d paroles izdzēstas</string>
 			<key>one</key>

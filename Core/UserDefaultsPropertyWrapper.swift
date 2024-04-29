@@ -92,9 +92,6 @@ public struct UserDefaultsWrapper<T> {
 
         case shouldScheduleRulesCompilationOnAppLaunch = "com.duckduckgo.ios.shouldScheduleRulesCompilationOnAppLaunch"
 
-        case lastAppTrackingProtectionHistoryFetchTimestamp = "com.duckduckgo.ios.appTrackingProtection.lastTrackerHistoryFetchTimestamp"
-        case appTPUsed = "com.duckduckgo.ios.appTrackingProtection.appTPUsed"
-
         case defaultBrowserUsageLastSeen = "com.duckduckgo.ios.default-browser-usage-last-seen"
 
         case syncEnvironment = "com.duckduckgo.ios.sync-environment"
@@ -124,12 +121,15 @@ public struct UserDefaultsWrapper<T> {
 
         case privacyProEnvironment = "com.duckduckgo.ios.privacyPro.environment"
 
+        case appleAdAttributionReportCompleted = "com.duckduckgo.ios.appleAdAttributionReport.completed"
+
         case didRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didRefreshTimestamp"
         case didBurnTimestamp = "com.duckduckgo.ios.userBehavior.didBurnTimestamp"
 
         case pixelExperimentInstalled = "com.duckduckgo.ios.pixel.experiment.installed"
         case pixelExperimentCohort = "com.duckduckgo.ios.pixel.experiment.cohort"
         case pixelExperimentEnrollmentDate = "com.duckduckgo.ios.pixel.experiment.enrollment.date"
+
     }
 
     private let key: Key

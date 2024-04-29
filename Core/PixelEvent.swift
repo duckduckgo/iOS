@@ -269,31 +269,6 @@ extension Pixel {
         case serpRequerySame
         case serpRequeryNew
         
-        // MARK: AppTP
-        case appTPBreakageReport
-        
-        case appTPFailedToCreateProxyServer
-        case appTPFailedToSetTunnelNetworkSettings
-        case appTPFailedToAccessPreferences
-        case appTPFailedToAccessPreferencesDuringSetup
-        case appTPFailedToStartTunnel
-        
-        case appTPVPNDisconnect
-        case appTPVPNMemoryWarning
-        case appTPVPNMemoryCritical
-        
-        case appTPBlocklistParseFailed
-        case appTPActiveUser
-        
-        case appTPDBLocationFailed
-        case appTPDBStoreLoadFailure
-        case appTPDBPersistentStoreLoadFailure
-        case appTPDBHistoryFailure
-        case appTPDBHistoryFetchFailure
-        case appTPDBFeedbackTrackerFetchFailed
-        case appTPDBTrackerStoreFailure
-        case appTPCouldNotLoadDatabase
-        
         // MARK: Network Protection
         
         case networkProtectionActiveUser
@@ -307,9 +282,17 @@ extension Pixel {
         case networkProtectionTunnelStartSuccess
         case networkProtectionTunnelStartFailure
 
+        case networkProtectionTunnelStopAttempt
+        case networkProtectionTunnelStopSuccess
+        case networkProtectionTunnelStopFailure
+
         case networkProtectionTunnelUpdateAttempt
         case networkProtectionTunnelUpdateSuccess
         case networkProtectionTunnelUpdateFailure
+
+        case networkProtectionTunnelWakeAttempt
+        case networkProtectionTunnelWakeSuccess
+        case networkProtectionTunnelWakeFailure
 
         case networkProtectionEnableAttemptConnecting
         case networkProtectionEnableAttemptSuccess
@@ -677,10 +660,14 @@ extension Pixel {
         case privacyProAddEmailSuccess
         case privacyProWelcomeFAQClick
 
+        // MARK: Apple Ad Attribution
+        case appleAdAttribution
+
         // MARK: Secure Vault
         case secureVaultL1KeyMigration
         case secureVaultL2KeyMigration
         case secureVaultL2KeyPasswordMigration
+
     }
 
 }
@@ -938,29 +925,6 @@ extension Pixel.Event {
         case .serpRequerySame: return "rq_0"
         case .serpRequeryNew: return "rq_1"
             
-            // MARK: AppTP pixels
-            
-        case .appTPBreakageReport: return "m_apptp_breakage_report"
-        case .appTPFailedToCreateProxyServer: return "m_apptp_failed_to_create_proxy_server"
-        case .appTPFailedToSetTunnelNetworkSettings: return "m_apptp_failed_to_set_tunnel_network_settings"
-        case .appTPFailedToAccessPreferences: return "m_apptp_failed_to_access_preferences"
-        case .appTPFailedToAccessPreferencesDuringSetup: return "m_apptp_failed_to_access_preferences_during_setup"
-        case .appTPFailedToStartTunnel: return "m_apptp_failed_to_start_tunnel"
-        case .appTPVPNDisconnect: return "m_apptp_vpn_disconnect"
-        case .appTPVPNMemoryWarning: return "m_apptp_vpn_memory_warning"
-        case .appTPVPNMemoryCritical: return "m_apptp_vpn_memory_critical"
-            
-        case .appTPBlocklistParseFailed: return "m_apptp_blocklist_parse_failed"
-        case .appTPActiveUser: return "m_apptp_active_user"
-        case .appTPDBLocationFailed: return "m_apptp_db_location_not_found"
-        case .appTPDBStoreLoadFailure: return "m_apptp_db_store_load_failure"
-        case .appTPDBPersistentStoreLoadFailure: return "m_apptp_db_persistent_store_load_failure"
-        case .appTPDBHistoryFailure: return "m_apptp_db_history_failure"
-        case .appTPDBHistoryFetchFailure: return "m_apptp_db_history_fetch_failure"
-        case .appTPDBFeedbackTrackerFetchFailed: return "m_apptp_db_feedback_tracker_fetch_failed"
-        case .appTPDBTrackerStoreFailure: return "m_apptp_db_tracker_store_failure"
-        case .appTPCouldNotLoadDatabase: return "m_apptp_could_not_load_database"
-            
             // MARK: Network Protection pixels
             
         case .networkProtectionActiveUser: return "m_netp_daily_active_d"
@@ -971,9 +935,15 @@ extension Pixel.Event {
         case .networkProtectionTunnelStartAttempt: return "m_netp_tunnel_start_attempt"
         case .networkProtectionTunnelStartSuccess: return "m_netp_tunnel_start_success"
         case .networkProtectionTunnelStartFailure: return "m_netp_tunnel_start_failure"
+        case .networkProtectionTunnelStopAttempt: return "m_netp_tunnel_stop_attempt"
+        case .networkProtectionTunnelStopSuccess: return "m_netp_tunnel_stop_success"
+        case .networkProtectionTunnelStopFailure: return "m_netp_tunnel_stop_failure"
         case .networkProtectionTunnelUpdateAttempt: return "m_netp_tunnel_update_attempt"
         case .networkProtectionTunnelUpdateSuccess: return "m_netp_tunnel_update_success"
         case .networkProtectionTunnelUpdateFailure: return "m_netp_tunnel_update_failure"
+        case .networkProtectionTunnelWakeAttempt: return "m_netp_tunnel_wake_attempt"
+        case .networkProtectionTunnelWakeSuccess: return "m_netp_tunnel_wake_success"
+        case .networkProtectionTunnelWakeFailure: return "m_netp_tunnel_wake_failure"
         case .networkProtectionEnableAttemptConnecting: return "m_netp_ev_enable_attempt"
         case .networkProtectionEnableAttemptSuccess: return "m_netp_ev_enable_attempt_success"
         case .networkProtectionEnableAttemptFailure: return "m_netp_ev_enable_attempt_failure"
@@ -1224,6 +1194,9 @@ extension Pixel.Event {
         case .toggleReportDismiss: return "m_toggle-report-dismiss"
 
         case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
+            
+        // MARK: - Apple Ad Attribution
+        case .appleAdAttribution: return "m_apple-ad-attribution"
 
             // MARK: - User behavior
         case .userBehaviorReloadTwice: return "m_reload-twice"

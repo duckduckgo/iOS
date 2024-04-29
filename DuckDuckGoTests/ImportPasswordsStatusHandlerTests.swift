@@ -174,7 +174,7 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
         XCTAssertNotNil(appSettings.autofillImportViaSyncStart)
     }
 
-    func testWhenImportStartedMoreThan48HoursAgoAndSyncAuthStateIsActiveAndHasSyncedDesktopDeviceThenSuccessPixelFired() {
+    func testWhenImportStartedMoreThan48HoursAgoAndSyncAuthStateIsActiveAndHasSyncedDesktopDeviceThenNoPixelFired() {
 
         appSettings.autofillImportViaSyncStart = Date().addingTimeInterval(-60 * 60 * 49)
         syncService.authState = .active
@@ -191,7 +191,7 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
 
         wait(for: [expectation], timeout: 2.0)
 
-        XCTAssertEqual(importPasswordsStatusHandler.lastFiredPixel, .autofillLoginsImportSuccess)
+        XCTAssertNil(importPasswordsStatusHandler.lastFiredPixel)
         XCTAssertNil(appSettings.autofillImportViaSyncStart)
     }
 

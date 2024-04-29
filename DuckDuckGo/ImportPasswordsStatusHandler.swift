@@ -67,7 +67,7 @@ class ImportPasswordsStatusHandler {
 
             Task {
                 if await hasSyncedDesktopDevice(syncService: syncService) {
-                    clearSettingAndFirePixel(.autofillLoginsImportSuccess)
+                    appSettings.clearAutofillImportViaSyncStart()
                 } else {
                     clearSettingAndFirePixel(.autofillLoginsImportFailure)
                 }

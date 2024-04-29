@@ -329,9 +329,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
-        let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)
-        importPasswordsStatusHandler.checkSyncSuccessStatus()
-
         return true
     }
 
@@ -512,6 +509,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #endif
 
         updateSubscriptionStatus()
+
+        let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)
+        importPasswordsStatusHandler.checkSyncSuccessStatus()
     }
 
     private func stopTunnelAndShowThankYouMessagingIfNeeded() {

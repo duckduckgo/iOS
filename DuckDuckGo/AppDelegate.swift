@@ -326,6 +326,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         AppDependencyProvider.shared.toggleProtectionsCounter.sendEventsIfNeeded()
+
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
         return true
@@ -438,6 +439,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+    private func reportAdAttribution() {
+        guard AdAttributionPixelReporter.isAdAttributionReportingEnabled else { return }
+
+        Task.detached(priority: .background) {
+            await AdAttributionPixelReporter.shared.reportAttributionIfNeeded()
+        }
+    }
+
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
@@ -456,6 +465,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             StatisticsLoader.shared.refreshAppRetentionAtb()
             self.fireAppLaunchPixel()
             self.firePrivacyProFeatureEnabledPixel()
+            self.reportAdAttribution()
         }
         
         if appIsLaunching {

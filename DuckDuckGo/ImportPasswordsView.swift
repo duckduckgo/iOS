@@ -63,6 +63,7 @@ struct ImportPasswordsView: View {
             Text(UserText.autofillImportPasswordsTitle)
                 .daxTitle2()
                 .foregroundColor(Color(designSystemColor: .textPrimary))
+                .multilineTextAlignment(.center)
                 .padding(.top, 16)
 
             Text(UserText.autofillImportPasswordsSubtitle)

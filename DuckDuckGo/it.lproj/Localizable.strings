@@ -247,6 +247,42 @@
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Nascondi password";
 
+/* Button label to get link to download the desktop browser */
+"autofill.import.passwords.get-browser-button" = "Scarica il browser per desktop";
+
+/* Step 1 for instructions to import passwords */
+"autofill.import.passwords.instructions.step1" = "Apri DuckDuckGo su Mac o Windows";
+
+/* Step 2 for instructions to import passwords. This reads as 'Go to Settings > Passwords' */
+"autofill.import.passwords.instructions.step2" = "Vai su %1$@ > %2$@";
+
+/* second parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.passwords" = "Password";
+
+/* first parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.settings" = "Impostazioni";
+
+/* Step 3 for instructions to import passwords. This reads as 'Select Import Passwords and follow the steps' */
+"autofill.import.passwords.instructions.step3" = "Seleziona %@ e segui i passaggi per l'importazione";
+
+/* Parameter for autofill.import.passwords.instructions.step3 */
+"autofill.import.passwords.instructions.step3.import" = "Importa password...";
+
+/* Step 4 for instructions to import passwords: Once imported on your computer you can set up sync on this iPhone|iPad|device */
+"autofill.import.passwords.instructions.step4" = "Una volta importate sul tuo computer, puoi impostare la sincronizzazione su questo %@";
+
+/* Title for section with instructions to import passwords */
+"autofill.import.passwords.instructions.title" = "Importa dal browser desktop:";
+
+/* Subtitle for screen to import passwords */
+"autofill.import.passwords.subtitle" = "Importa le password nella versione desktop del browser DuckDuckGo, quindi sincronizza su tutti i dispositivi.";
+
+/* Button label to sync passwords with desktop browser */
+"autofill.import.passwords.sync-button" = "Sincronizzazione con il desktop";
+
+/* Title for screen to import passwords */
+"autofill.import.passwords.title" = "Come importare le password";
+
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Disabilita";
 
@@ -349,8 +385,11 @@
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Nome utente";
 
-/* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Le password sono archiviate in modo sicuro sul tuo dispositivo.";
+/* Title for button to Import Passwords when autofill has no items */
+"autofill.logins.empty-view.button.title" = "Importa password";
+
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle" = "Le password di altri browser o app possono essere importate utilizzando la versione desktop del browser DuckDuckGo.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Nessuna password ancora salvata";
@@ -369,6 +408,9 @@
 
 /* Title for a toggle that enables autofill */
 "autofill.logins.list.enable" = "Salva e compila automaticamente le password";
+
+/* Footer label displayed below table section with option to enable autofill */
+"autofill.logins.list.enable.footer" = "Le password sono archiviate in modo sicuro sul tuo dispositivo.";
 
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Password per %@ eliminata";
@@ -711,6 +753,15 @@
 
 /* No comment provided by engineer. */
 "Debug" = "Debug";
+
+/* Default string used if users device is not iPhone or iPad */
+"device.type.default" = "dispositivo";
+
+/* Device type is iPhone */
+"device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"device.type.pad" = "iPad";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Disattivato";
@@ -1098,6 +1149,21 @@
 
 /* No comment provided by engineer. */
 "fireButtonAnimation.waterSwirl.name" = "Mulinello";
+
+/* Description text above the Share Link button */
+"get.browser.on-your-desktop-go-to" = "Sul tuo computer, visita:";
+
+/* Title for the Share Download Link button */
+"get.browser.share-link" = "Condividi link per il download";
+
+/* Message displayed in the share action when sharing via email */
+"get.browser.share-link.message" = "Cerca privatamente e blocca i sistemi di tracciamento con il browser per desktop DuckDuckGo. Visita questo link dal tuo computer per scaricarlo oggi stesso.";
+
+/* Title displayed in the share action */
+"get.browser.share-link.title" = "Scarica il browser DuckDuckGo per Mac o Windows";
+
+/* Title for the get desktop browser feature */
+"get.browser.title" = "Scarica DuckDuckGo per Mac o Windows";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Aggiungi DuckDuckGo alla tua schermata iniziale!";

@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "graeme/vpn-server-failure-detection-recovery",
-        "revision" : "5766031bb2cb7f1bbdf6bc1b6f51e3bd1139e66d"
+        "revision" : "e0a145685b49652f79b7f930b11b7d4cb078867b"
       }
     },
     {

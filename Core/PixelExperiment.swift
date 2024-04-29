@@ -51,7 +51,6 @@ public enum PixelExperiment: String, CaseIterable {
 
     /// Enables this experiment for new users when called from the new installation path.
     public static func install() {
-        // Disable the experiment until all other experiments are finished
         logic.install()
     }
 

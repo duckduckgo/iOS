@@ -19,6 +19,9 @@
 
 import Foundation
 import SwiftUI
+import LinkPresentation
+import DuckUI
+import Core
 
 struct DesktopDownloadView: View {
 
@@ -26,28 +29,50 @@ struct DesktopDownloadView: View {
     @State private var shareButtonFrame: CGRect = .zero
     @State private var isShareSheetVisible = false
 
+    private struct ShareItem: Identifiable {
+        var id: String {
+            value
+        }
+
+        var item: Any {
+            if let url = URL(string: value), let title = title, let message {
+                return DesktopDownloadShareItemSource(url: url, title: title, message: message)
+            } else {
+                return value
+            }
+        }
+
+        let value: String
+        let title: String?
+        let message: String?
+    }
+
     let padding = UIDevice.current.localizedModel == "iPad" ? 100.0 : 0.0
 
+    @State private var activityItem: ShareItem?
+    
     var body: some View {
         GeometryReader { proxy in
             ScrollView {
-                VStack(alignment: .center, spacing: 8) {
+                VStack(alignment: .center, spacing: 6) {
                     headerView
 
-                    Text(viewModel.browserDetails.summary)
-                        .daxBodyRegular()
-                        .foregroundColor(.waitlistTextSecondary)
-                        .multilineTextAlignment(.center)
-                        .lineSpacing(6)
-                        .padding(.horizontal, padding)
+                    if !viewModel.browserDetails.summary.isEmpty {
+                        Text(viewModel.browserDetails.summary)
+                            .daxBodyRegular()
+                            .foregroundColor(.waitlistTextSecondary)
+                            .multilineTextAlignment(.center)
+                            .lineSpacing(6)
+                            .padding(.horizontal, padding)
+                            .padding(.bottom, 6)
+                    }
 
                     Text(viewModel.browserDetails.onYourString)
                         .daxBodyRegular()
                         .foregroundColor(.waitlistTextSecondary)
                         .multilineTextAlignment(.center)
-                        .lineSpacing(6)
-                        .padding(.top, 18)
-                    
+                        .padding(.top, 12)
+
                     menuView
                         .daxHeadline()
                         .foregroundColor(.waitlistBlue)
@@ -55,16 +80,22 @@ struct DesktopDownloadView: View {
                     
                     Button(
                         action: {
-                            self.isShareSheetVisible = true
+                            if viewModel.browserDetails.platform == .desktop {
+                                activityItem = ShareItem(value: viewModel.downloadURL.absoluteString,
+                                                         title: viewModel.browserDetails.shareTitle,
+                                                         message: viewModel.browserDetails.shareMessage)
+                                Pixel.fire(pixel: .getDesktopShare)
+                            } else {
+                                activityItem = ShareItem(value: viewModel.downloadURL.absoluteString, title: nil, message: nil)
+                            }
                         }, label: {
                             HStack {
-                                Image("Share-16")
-                                Text(viewModel.browserDetails.downloadURL)
+                                Image(.share24)
+                                Text(viewModel.browserDetails.button)
                             }
                         }
                     )
-                    // XAI: Move all strings to a Constants enum at the top
-                    .buttonStyle(DesktopDownloadViewButtonStyle(enabled: true))
+                    .buttonStyle(PrimaryButtonStyle(fullWidth: false))
                     .padding(.horizontal, padding)
                     .padding(.top, 24)
                     .background(
@@ -78,8 +109,9 @@ struct DesktopDownloadView: View {
                             self.shareButtonFrame = newFrame
                         }
                     }
-                    .sheet(isPresented: $isShareSheetVisible) {
-                        DesktopDownloadShareSheet(items: [viewModel.downloadURL])
+                    .sheet(item: $activityItem) { activityItem in
+                        ActivityViewController(activityItems: [activityItem.item])
+                            .modifier(ActivityViewPresentationModifier())
                     }
 
                     Spacer(minLength: 24)
@@ -100,10 +132,14 @@ struct DesktopDownloadView: View {
                     .padding(.bottom, 12)
                     .fixedSize(horizontal: false, vertical: true)
                 }
-                .padding([.leading, .trailing], 24)
-                .frame(minHeight: proxy.size.height)
+                .padding([.horizontal], 24)
+                .frame(maxWidth: .infinity, minHeight: proxy.size.height)
             }
             .navigationTitle(viewModel.browserDetails.viewTitle)
+            .background(Rectangle()
+                .foregroundColor(Color(designSystemColor: .background))
+                .ignoresSafeArea())
+
         }
     }
     
@@ -113,9 +149,8 @@ struct DesktopDownloadView: View {
                 Image(viewModel.browserDetails.imageName)
 
                 Text(viewModel.browserDetails.title)
-                    .daxTitle2()
+                    .daxTitle3()
                     .foregroundColor(.waitlistTextPrimary)
-                    .lineSpacing(6)
                     .multilineTextAlignment(.center)
                     .fixMultilineScrollableText()
             }
@@ -130,14 +165,17 @@ struct DesktopDownloadView: View {
         // updating when viewModel.browserDetails.downloadURL changes
         // so this is a hack to render another view
         if viewModel.browserDetails.platform == .mac {
-            Text(viewModel.browserDetails.downloadURL)
+            Text(viewModel.browserDetails.goToUrl)
                 .menuController(UserText.macWaitlistCopy) {
                     viewModel.copyLink()
                 }
         } else {
-            Text(viewModel.browserDetails.downloadURL)
+            Text(viewModel.browserDetails.goToUrl)
                 .menuController(UserText.macWaitlistCopy) {
                     viewModel.copyLink()
+                    if viewModel.browserDetails.platform == .desktop {
+                        Pixel.fire(pixel: .getDesktopCopy)
+                    }
                 }
         }
     }
@@ -148,12 +186,37 @@ private struct ShareButtonFramePreferenceKey: PreferenceKey {
     static func reduce(value: inout CGRect, nextValue: () -> CGRect) {}
 }
 
-struct DesktopDownloadShareSheet: UIViewControllerRepresentable {
-    var items: [Any]
+private class DesktopDownloadShareItemSource: NSObject, UIActivityItemSource {
+    var url: URL
+    var title: String
+    var message: String
 
-    func makeUIViewController(context: Context) -> UIActivityViewController {
-        UIActivityViewController(activityItems: items, applicationActivities: nil)
+    init(url: URL, title: String, message: String) {
+        self.url = url
+        self.title = title
+        self.message = message
     }
 
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
+    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        return url
+    }
+
+    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        if activityType == .mail {
+            return "\(message)\n\n\(url.absoluteString)"
+        }
+        return url
+    }
+
+    func activityViewController(_ activityViewController: UIActivityViewController, subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
+        return title
+    }
+
+    func activityViewControllerLinkMetadata(_ activityViewController: UIActivityViewController) -> LPLinkMetadata? {
+        let metadata = LPLinkMetadata()
+        metadata.title = title
+        metadata.url = url
+        return metadata
+    }
+
 }

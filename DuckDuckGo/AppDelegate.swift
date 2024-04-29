@@ -509,6 +509,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #endif
 
         updateSubscriptionStatus()
+
+        let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)
+        importPasswordsStatusHandler.checkSyncSuccessStatus()
     }
 
     private func stopTunnelAndShowThankYouMessagingIfNeeded() {

@@ -43,7 +43,7 @@ class AutofillSettingsEnableFooterView: UIView {
         label.textAlignment = .left
         label.lineBreakMode = .byWordWrapping
         label.textColor = UIColor(designSystemColor: .textSecondary)
-        label.text = UserText.autofillEmptyViewSubtitle
+        label.text = UserText.autofillSettingsFooter
 
         return label
     }()

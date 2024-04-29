@@ -248,6 +248,17 @@ extension Pixel {
         case autofillLoginsLaunchWidgetLock
         case autofillLoginsLaunchAppShortcut
 
+        case autofillLoginsImport
+        case autofillLoginsImportNoPasswords
+        case autofillLoginsImportGetDesktop
+        case autofillLoginsImportSync
+        case autofillLoginsImportNoAction
+        case autofillLoginsImportSuccess
+        case autofillLoginsImportFailure
+
+        case getDesktopCopy
+        case getDesktopShare
+        
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
         
         case secureVaultError
@@ -903,6 +914,17 @@ extension Pixel.Event {
         case .autofillLoginsLaunchWidgetHome: return "m_autofill_logins_launch_widget_home"
         case .autofillLoginsLaunchWidgetLock: return "m_autofill_logins_launch_widget_lock"
         case .autofillLoginsLaunchAppShortcut: return "m_autofill_logins_launch_app_shortcut"
+
+        case .autofillLoginsImport: return "m_autofill_logins_import"
+        case .autofillLoginsImportNoPasswords: return "m_autofill_logins_import_no_passwords"
+        case .autofillLoginsImportGetDesktop: return "m_autofill_logins_import_get_desktop"
+        case .autofillLoginsImportSync: return "m_autofill_logins_import_sync"
+        case .autofillLoginsImportNoAction: return "m_autofill_logins_import_no-action"
+        case .autofillLoginsImportSuccess: return "m_autofill_logins_import_success"
+        case .autofillLoginsImportFailure: return "m_autofill_logins_import_failure"
+
+        case .getDesktopCopy: return "m_get_desktop_copy"
+        case .getDesktopShare: return "m_get_desktop_share"
 
         case .autofillJSPixelFired(let pixel):
             return "m_ios_\(pixel.pixelName)"

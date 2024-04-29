@@ -217,7 +217,7 @@ class AutocompleteViewController: UIViewController {
                 finalResult = SuggestionResult(
                     topHits: bookmarks + result.topHits,
                     duckduckgoSuggestions: result.duckduckgoSuggestions,
-                    historyAndBookmarks: result.historyAndBookmarks
+                    localSuggestions: result.localSuggestions
                 )
             } else {
                 finalResult = .empty
@@ -429,5 +429,5 @@ extension VariantManager {
 }
 
 private extension SuggestionResult {
-    static let empty = SuggestionResult(topHits: [], duckduckgoSuggestions: [], historyAndBookmarks: [])
+    static let empty = SuggestionResult(topHits: [], duckduckgoSuggestions: [], localSuggestions: [])
 }

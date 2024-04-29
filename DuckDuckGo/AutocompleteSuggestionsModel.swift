@@ -112,7 +112,7 @@ private extension AutocompleteSuggestionsModel {
             return IndexedSuggestion(index: index, suggestion: $0)
         }
 
-        auxResults = suggestionResult.historyAndBookmarks.map {
+        auxResults = suggestionResult.localSuggestions.map {
             index += 1
             return IndexedSuggestion(index: index, suggestion: $0)
         }

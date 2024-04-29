@@ -40,7 +40,21 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     weak var delegate: AutofillLoginSettingsListViewControllerDelegate?
     weak var detailsViewController: AutofillLoginDetailsViewController?
     private let viewModel: AutofillLoginListViewModel
-    private lazy var emptyView = AutofillItemsEmptyView()
+    private lazy var emptyView: UIView = {
+        let emptyView = AutofillItemsEmptyView { [weak self] in
+            self?.segueToImport()
+            Pixel.fire(pixel: .autofillLoginsImportNoPasswords)
+        }
+
+        let hostingController = UIHostingController(rootView: emptyView)
+        hostingController.view.frame = CGRect(origin: .zero, size: hostingController.sizeThatFits(in: UIScreen.main.bounds.size))
+        hostingController.view.layoutIfNeeded()
+        hostingController.view.backgroundColor = .clear
+
+        self.tableView.tableFooterView?.frame.size.height = hostingController.view.frame.height
+
+        return hostingController.view
+    }()
     private let lockedView = AutofillItemsLockedView()
     private let enableAutofillFooterView = AutofillSettingsEnableFooterView()
     private let emptySearchView = AutofillEmptySearchView()
@@ -54,6 +68,20 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                         style: .plain,
                         target: self,
                         action: #selector(addButtonPressed))
+    }()
+
+    private lazy var moreButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "More-Apple-24"), for: .normal)
+        button.showsMenuAsPrimaryAction = true
+        button.menu = moreMenu
+        return button
+    }()
+
+    private lazy var moreBarButtonItem = UIBarButtonItem(customView: moreButton)
+
+    private lazy var moreMenu: UIMenu = {
+        return UIMenu(children: [editAction(), importAction()])
     }()
 
     private lazy var deleteAllButtonItem: UIBarButtonItem = {
@@ -138,7 +166,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
          syncDataProviders: SyncDataProviders,
          selectedAccount: SecureVaultModels.WebsiteAccount?,
          openSearch: Bool = false) {
-        let secureVault = try? AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+        let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter.shared)
         if secureVault == nil {
             os_log("Failed to make vault")
         }
@@ -196,21 +224,11 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         }
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        guard viewModel.viewState == .empty else { return }
-        adjustEmptyViewFooterSize()
-    }
-
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
         coordinator.animate(alongsideTransition: { _ in
             self.updateConstraintConstants()
-            if self.viewModel.viewState == .empty {
-                self.emptyView.refreshConstraints()
-            }
             if self.view.subviews.contains(self.noAuthAvailableView) {
                 self.noAuthAvailableView.refreshConstraints()
             }
@@ -350,6 +368,25 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         }
     }
     
+    private func editAction() -> UIAction {
+        return UIAction(title: UserText.actionGenericEdit) { [weak self] _ in
+            self?.setEditing(true, animated: true)
+        }
+    }
+
+    private func importAction() -> UIAction {
+        return UIAction(title: UserText.autofillEmptyViewButtonTitle) { [weak self] _ in
+            self?.segueToImport()
+            Pixel.fire(pixel: .autofillLoginsImport)
+        }
+    }
+
+    private func segueToImport() {
+        let importController = ImportPasswordsViewController(syncService: syncService)
+        importController.delegate = self
+        navigationController?.pushViewController(importController, animated: true)
+    }
+
     private func showSelectedAccountIfRequired() {
         if let account = selectedAccount {
             showAccountDetails(account)
@@ -519,21 +556,21 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                 navigationItem.rightBarButtonItems = [editButtonItem]
             } else {
                 if viewModel.isAutofillEnabledInSettings || (!viewModel.isAutofillEnabledInSettings && viewModel.hasAccountsSaved) {
-                    navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
+                    navigationItem.rightBarButtonItems = [moreBarButtonItem, addBarButtonItem]
+                    moreBarButtonItem.isEnabled = true
                 } else {
                     navigationItem.rightBarButtonItems = [addBarButtonItem]
                 }
                 addBarButtonItem.isEnabled = true
             }
-            editButtonItem.isEnabled = true
         case .noAuthAvailable:
             navigationItem.rightBarButtonItems = [addBarButtonItem]
             addBarButtonItem.isEnabled = false
         case .authLocked:
             if viewModel.hasAccountsSaved {
-                navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
+                navigationItem.rightBarButtonItems = [moreBarButtonItem, addBarButtonItem]
                 addBarButtonItem.isEnabled = false
-                editButtonItem.isEnabled = false
+                moreBarButtonItem.isEnabled = false
             } else {
                 navigationItem.rightBarButtonItems = [addBarButtonItem]
                 addBarButtonItem.isEnabled = false
@@ -626,15 +663,6 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         } else {
             lockedViewBottomConstraint.constant = view.frame.height * 0.15
         }
-    }
-
-    // Adjust the footer size based on remaining space
-    private func adjustEmptyViewFooterSize() {
-        // Temporarily remove the footer
-        tableView.tableFooterView = nil
-        let remainingHeight = tableView.frame.height - tableView.contentSize.height - view.safeAreaInsets.bottom - view.safeAreaInsets.top
-        emptyView.adjustHeight(to: max(remainingHeight, 0))
-        tableView.tableFooterView = emptyView
     }
 
     // MARK: Cell Methods
@@ -868,6 +896,23 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
             presentDeleteConfirmation(for: title, domain: account.domain ?? "")
         }
     }
+}
+
+// MARK: ImportPasswordsViewControllerDelegate
+
+extension AutofillLoginSettingsListViewController: ImportPasswordsViewControllerDelegate {
+
+    func importPasswordsViewControllerDidRequestOpenSync(_ viewController: ImportPasswordsViewController) {
+        if let settingsVC = self.navigationController?.children.first as? SettingsHostingController {
+            navigationController?.popToRootViewController(animated: true)
+            settingsVC.viewModel.presentLegacyView(.sync)
+        } else if let mainVC = self.presentingViewController as? MainViewController {
+            dismiss(animated: true) {
+                mainVC.segueToSettingsSync()
+            }
+        }
+    }
+
 }
 
 // MARK: EnableAutofillSettingsTableViewCellDelegate

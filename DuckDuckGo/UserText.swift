@@ -459,116 +459,14 @@ public struct UserText {
     public static let windowsWaitlistTryDuckDuckGoForWindowsDownload = NSLocalizedString("windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows", value: "Get DuckDuckGo for Windows!", comment: "Title for the Windows browser download link page")
         public static let windowsWaitlistMac = NSLocalizedString("windows-waitlist.join-waitlist-screen.mac-waitlist", value: "Looking for the Mac version?", comment: "Title for the Windows waitlist button redirecting to Mac waitlist")
     public static let windowsWaitlistBrowsePrivately = NSLocalizedString("windows-waitlist.settings.browse-privately", value: "Browse privately with our app for Windows", comment: "Title for the settings subtitle")
-    
-    // MARK: App Tracking Protection
-    
-    public static let appTPOnboardingTitle1 = NSLocalizedString("appTP.onboarding.title1", value: "One easy step for better app privacy!", comment: "Title for first AppTP onboarding page")
-    public static let appTPOnboardingPage1Info1 = NSLocalizedString("appTP.onboarding.page1Info1", value: "Over 85% of free iOS apps", comment: "First part of info on the first AppTP onboarding page")
-    public static let appTPOnboardingPage1Info2 = NSLocalizedString("appTP.onboarding.page1Info2", value: " we’ve tested allow other companies to track your personal information, even when you’re sleeping.", comment: "Second part of info on the first AppTP onboarding page (note the leading space)")
-    public static let appTPOnboardingPage1Info3 = NSLocalizedString("appTP.onboarding.page1Info3", value: "See who we catch trying to track you in your apps and take back control.", comment: "Third part of info on the first AppTP onboarding page")
-    
-    public static let appTPOnboardingTitle2 = NSLocalizedString("appTP.onboarding.title2", value: "How does it work?", comment: "Title for second AppTP onboarding page")
-    public static let appTPOnboardingPage2Info1 = NSLocalizedString("appTP.onboarding.page2Info1", value: "App Tracking Protection ", comment: "First part of info on the second AppTP onboarding page (note the trailing space)")
-    public static let appTPOnboardingPage2Info2 = NSLocalizedString("appTP.onboarding.page2Info2", value: "detects and blocks app trackers from other companies,", comment: "Second part of info on the second AppTP onboarding page")
-    public static let appTPOnboardingPage2Info3 = NSLocalizedString("appTP.onboarding.page2Info3", value: " like when Google attempts to track you in a health app.", comment: "Third part of info on the second AppTP onboarding page (note the leading space)")
-    public static let appTPOnboardingPage2Info4 = NSLocalizedString("appTP.onboarding.page2Info4", value: "It’s free,", comment: "Fourth part of info on the second AppTP onboarding page")
-    public static let appTPOnboardingPage2Info5 = NSLocalizedString("appTP.onboarding.page2Info5", value: " and you can enjoy your apps as you normally would. Working in the background, it helps ", comment: "Fifth part of info on the second AppTP onboarding page (note the leading and trailing space)")
-    public static let appTPOnboardingPage2Info6 = NSLocalizedString("appTP.onboarding.page2Info6", value: "protect you night and day.", comment: "Sixth part of info on the second AppTP onboarding page")
-    
-    public static let appTPOnboardingTitle3 = NSLocalizedString("appTP.onboarding.title3", value: "Who sees your data?", comment: "Title for third AppTP onboarding page")
-    public static let appTPOnboardingPage3Info1 = NSLocalizedString("appTP.onboarding.page3Info1", value: "App Tracking Protection is not a VPN.", comment: "First part of info on the third AppTP onboarding page")
-    public static let appTPOnboardingPage3Info2 = NSLocalizedString("appTP.onboarding.page3Info2", value: " However, your device will recognize it as one. This is because it uses a local VPN connection to work.", comment: "Second part of info on the third AppTP onboarding page (note the leading space)")
-    public static let appTPOnboardingPage3Info3 = NSLocalizedString("appTP.onboarding.page3Info3", value: "App Tracking Protection is different. ", comment: "Third part of info on the third AppTP onboarding page (note the trailing space)")
-    public static let appTPOnboardingPage3Info4 = NSLocalizedString("appTP.onboarding.page3Info4", value: "It never routes app data through an external server.", comment: "Fourth part of info on the third AppTP onboarding page")
-    
-    public static let appTPOnboardingLearnMoreButton = NSLocalizedString("appTP.onboarding.learnMoreButton", value: "Learn More", comment: "Button title for AppTP onboarding to learn more about AppTP")
-    public static let appTPOnboardingContinueButton = NSLocalizedString("appTP.onboarding.continueButton", value: "Continue", comment: "Button title for AppTP onboarding")
-    public static let appTPOnboardingEnableButton = NSLocalizedString("appTP.onboarding.enableeButton", value: "Enable App Tracking Protection", comment: "Button title for AppTP onboarding to enable AppTP")
-    
-    public static let appTPAboutNavTitle = NSLocalizedString("appTP.about.navTitle", value: "About App Trackers", comment: "Navigation Title for AppTP about page")
-    public static let appTPAboutTitle = NSLocalizedString("appTP.about.title", value: "What Are App Trackers?", comment: "Title for AppTP about page")
-    public static let appTPAboutContent1 = NSLocalizedString("appTP.about.content1", value: "You’ve probably heard about companies like Google and Facebook tracking you behind the scenes on third-party websites. But did you know they also track your personal information through apps on your device?\n\nIn 2022, DuckDuckGo found that ", comment: "First part of about page content (note the trailing space)")
-    public static let appTPAboutContent2 = NSLocalizedString("appTP.about.content2", value: "over 85% of free iOS apps tested contained hidden trackers from other companies.", comment: "Second part of about page content (note the trailing space)")
-    public static let appTPAboutContent3 = NSLocalizedString("appTP.about.content3", value: " Of the 395 apps tested, 60% sent data to Google. This happens even while you’re not using your device.\n\nTrackers in apps may have access to a lot more information than their website tracker cousins, such as your location down to which floor of a building you're on, how often you play games while at work, and when and how long you sleep each day. Even if you haven’t given apps explicit permission to collect data, they can still take it without your knowledge.\n\nTracking networks like Facebook and Google use these little pieces of information to build a digital profile about you. With it, tracking networks can manipulate what you see online and allow advertisers to bid on access to you based on your data.\n\nTrackers in apps is a BIG problem for privacy. But DuckDuckGo has a solution that can help.\n\nWhen enabled in the DuckDuckGo Privacy Browser app, App Tracking Protection blocks many trackers in other apps, not just the trackers we find on websites when you browse. These dual layers of protection reduce what companies know about you overall, so you can use your apps with more peace of mind, knowing you’re more protected.", comment: "Third part of about page content (note the leading space)")
-    
-    public static let appTPFAQTitle = NSLocalizedString("appTP.faq.title", value: "App Tracking Protection FAQ", comment: "Title for AppTP FAQ page")
-    public static let appTPFAQQuestion1 = NSLocalizedString("appTP.faq.question1", value: "How does App Tracking Protection work?", comment: "First question for AppTP FAQ page")
-    public static let appTPFAQQuestion2 = NSLocalizedString("appTP.faq.question2", value: "Does App Tracking Protection block trackers in all apps on my device?", comment: "Second question for AppTP FAQ page")
-    public static let appTPFAQQuestion3 = NSLocalizedString("appTP.faq.question3", value: "Does App Tracking Protection block all app trackers?", comment: "Third question for AppTP FAQ page")
-    public static let appTPFAQQuestion4 = NSLocalizedString("appTP.faq.question4", value: "Why does App Tracking Protection use a VPN connection?", comment: "Fourth question for AppTP FAQ page")
-    public static let appTPFAQQuestion5 = NSLocalizedString("appTP.faq.question5", value: "Will App Tracking Protection work if I also use a VPN app?", comment: "Fifth question for AppTP FAQ page")
-    public static let appTPFAQQuestion6 = NSLocalizedString("appTP.faq.question6", value: "How is App Tracking Protection different from a VPN?", comment: "Sixth question for AppTP FAQ page")
-    public static let appTPFAQQuestion7 = NSLocalizedString("appTP.faq.question7", value: "Is my data private?", comment: "Seventh question for AppTP FAQ page")
-    
-    public static let appTPFAQAnswer1 = NSLocalizedString("appTP.faq.answer1", value: "App Tracking Protection blocks app trackers from other companies, like when Facebook tries to track you in a banking app. Companies may still track you in apps they own.", comment: "First answer for AppTP FAQ page")
-    public static let appTPFAQAnswer2 = NSLocalizedString("appTP.faq.answer2", value: "Yes! App Tracking Protection works across all apps on your device to block the most common hidden trackers we find trying to collect your personal info.", comment: "Second answer for AppTP FAQ page")
-    public static let appTPFAQAnswer3 = NSLocalizedString("appTP.faq.answer3", value: "We currently only block the most common trackers that we find on iOS. This helps us to comprehensively test App Tracking Protection and lower frequency of app breakage, while blocking up to 70% of all tracking requests.", comment: "Third answer for AppTP FAQ page")
-    public static let appTPFAQAnswer4 = NSLocalizedString("appTP.faq.answer4", value: "You’ll be asked to set up a virtual private network (VPN) connection, but you don't need to install a VPN app for App Tracking Protection to work.\n\nThis permission, which works only on your device, allows App Tracking Protection to monitor network traffic so that it can block known trackers.", comment: "Fourth answer for AppTP FAQ page")
-    public static let appTPFAQAnswer5 = NSLocalizedString("appTP.faq.answer5", value: "You can use App Tracking Protection at the same time as using an IKEv2 protocol VPN app on an iOS device. You won’t be able to use App Tracking Protection on an iOS device if you’re using a VPN app that uses a different type of protocol, like WireGuard or OpenVPN type VPNs.", comment: "Fifth answer for AppTP FAQ page")
-    public static let appTPFAQAnswer6 = NSLocalizedString("appTP.faq.answer6", value: "A VPN sends your data from the device to its own server, where it secures and anonymizes your data from prying eyes. However, this allows the VPN company to see your network traffic.\n\nApp Tracking Protection is different. Instead of sending your data to a VPN server, App Tracking Protection works only on your device, sitting between your apps and the servers they talk to.\n\nWhenever App Tracking Protection recognizes a known tracker, it blocks the tracker from sending personal information (such as your IP address, activity, and device details) off your device. All other traffic reaches its destination, so your apps work normally.", comment: "Sixth answer for AppTP FAQ page")
-    public static let appTPFAQAnswer7 = NSLocalizedString("appTP.faq.answer7", value: "App Tracking Protection works only on your device and doesn’t send your data off your device to DuckDuckGo. We don’t collect or store any data from your apps.", comment: "Seventh answer for AppTP FAQ page")
-    
-    public static let appTPNavTitle = NSLocalizedString("appTP.title", value: "App Tracking Protection", comment: "Title for the App Tracking Protection feature")
-    public static let appTPCellDetail = NSLocalizedString("appTP.cell.detail", value: "Block app trackers on your device", comment: "Detail string describing what AppTP is")
-    public static let appTPCellEnabled = NSLocalizedString("appTP.cell.enabled", value: "Enabled", comment: "String indicating AppTP is enabled when viewed from the settings screen")
-    public static let appTPCellDisabled = NSLocalizedString("appTP.cell.disabled", value: "Disabled", comment: "String indicating AppTP is disabled when viewed from the settings screen")
-    
-    public static let appTPEmptyHeading = NSLocalizedString("appTP.empty.enabled.heading", value: "We’re blocking hidden trackers", comment: "Info string informing the user we're looking for trackers in other apps.")
-    public static let appTPEmptyDisabledInfo = NSLocalizedString("appTP.empty.disabled.info", value: "Enable App Tracking Protection so we can block pesky trackers in other apps.", comment: "Info string informing the user what App Tracking Protection does.")
-    public static let appTPEmptyEnabledInfo = NSLocalizedString("appTP.empty.enabled.info", value: "Come back soon to see a list of all the app trackers we’ve blocked.", comment: "Info string informing the user we're looking for trackers in other apps.")
-    
-    public static func appTPTrackingAttempts(count: Int32) -> String {
-        let message = NSLocalizedString("appTP.trackingattempts", comment: "Do not translate. StringsDict entry -- Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts")
-        return message.format(arguments: count)
-    }
-    
-    public static func appTPTrackerBlockedTimestamp(timeString: String) -> String {
-        let message = NSLocalizedString("appTP.trackerBlockedTimestamp", value: "Last attempt blocked %@", comment: "Text indicating when the tracker was last blocked. Example: Last attempt blocked (timeString)")
-        return message.format(arguments: timeString)
-    }
-    
-    public static func appTPTrackerAllowedTimestamp(timeString: String) -> String {
-        let message = NSLocalizedString("appTP.trackerAllowedTimestamp", value: "Last attempt allowed %@", comment: "Text indicating when the tracker was last allowed. Example: Last attempt allowed (timeString)")
-        return message.format(arguments: timeString)
-    }
-    
-    public static let appTPJustNow = NSLocalizedString("appTP.justNow", value: "just now", comment: "Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now'")
-    public static let appTPRestoreDefaults = NSLocalizedString("appTP.restoreDefualts", value: "Restore Defaults", comment: "Button to restore the blocklist to its default state.")
-    public static let appTPRestoreDefaultsToast = NSLocalizedString("appTP.restoreDefaultsToast", value: "Default settings restored", comment: "Toast notification diplayed after restoring the blocklist to default settings")
-    public static let appTPManageTrackers = NSLocalizedString("appTP.manageTrackers", value: "Manage Trackers", comment: "View to manage trackers for AppTP. Allows the user to turn trackers on or off.")
-    public static let appTPBlockTracker = NSLocalizedString("appTP.blockTrackerText", value: "Block this Tracker", comment: "Text label for switch that turns blocking on or off for a tracker")
-    
-    public static let appTPReportIssueButton = NSLocalizedString("appTP.activityView.reportIssue", value: "Report Issue", comment: "Title for 'Report an Issue' button in the activity view.")
-    public static let appTPReportAlertTitle = NSLocalizedString("appTP.reportAlert.title", value: "Report Issue?", comment: "Title for 'Report an Issue' alert.")
-    public static let appTPReportAlertMessage = NSLocalizedString("appTP.reportAlert.message", value: "Let us know if you disabled App Tracking Protection for this specific tracker because it caused app issues. Your feedback helps us improve!", comment: "Message for 'Report an Issue' alert.")
-    public static let appTPReportAlertConfirm = NSLocalizedString("appTP.reportAlert.confirm", value: "Report Issue", comment: "Confirm button for 'Report an Issue' alert.")
-    public static let appTPReportAlertCancel = NSLocalizedString("appTP.reportAlert.cancel", value: "Not Now", comment: "Cancel button for 'Report an Issue' alert.")
-    
-    public static let appTPReportTitle = NSLocalizedString("appTP.report.title", value: "Report Issue", comment: "Breakage report form title")
-    public static let appTPReportCommentPlaceholder = NSLocalizedString("appTP.report.commentPlaceholder", value: "Add additional details", comment: "Breakage report comment placeholder")
-    public static let appTPReportCommentLabel = NSLocalizedString("appTP.report.commentLabel", value: "Comments", comment: "Breakage report comment label")
-    public static let appTPReportToast = NSLocalizedString("appTP.report.toast", value: "Thank you! Feedback submitted.", comment: "Breakage report succcess message")
-    public static let appTPReportAppLabel = NSLocalizedString("appTP.report.appLabel", value: "Which app is having issues?", comment: "Breakage report app name label")
-    public static let appTPReportAppPlaceholder = NSLocalizedString("appTP.report.appPlaceholder", value: "App name", comment: "Breakage report app name placeholder")
-    public static let appTPReportCategoryLabel = NSLocalizedString("appTP.report.categoryLabel", value: "What’s happening?", comment: "Breakage report category label")
-    public static let appTPReportFooter = NSLocalizedString("appTP.report.footer", value: """
-In addition to the details entered into this form, your app issue report will contain:
-• A list of trackers blocked in the last 10 min
-• Whether App Tracking Protection is enabled
-• Aggregate DuckDuckGo app diagnostics
-""", comment: "Breakage report footer explaining what is collected in the breakage report")
-    public static let appTPReportSubmit = NSLocalizedString("appTP.report.submit", value: "Submit", comment: "Breakage report submit button")
-    
-    public static let appTPHomeBlockedPrefix = NSLocalizedString("appTP.home.blockedPrefix", value: "App Tracking Protection blocked ", comment: "Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the trailing space)")
-    public static let appTPHomeBlockedSuffix = NSLocalizedString("appTP.home.blockedSuffix", value: " in your apps today.", comment: "Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the leading space)")
-    public static func appTPHomeBlockedCount(countString: Int32) -> String {
-        let message = NSLocalizedString("appTP.home.blockedCount", comment: "Do not translate. StringsDict entry -- Count part of string 'App Tracking Protection blocked x tracking attempts today'")
-        return message.format(arguments: countString)
-    }
-    
-    public static let appTPHomeDisabledPrefix = NSLocalizedString("appTP.home.disabledPrefix", value: "App Tracking Protection disabled. ", comment: "Prefix of string 'App Tracking Protection disabled. Tap to re-enable.' (note the trailing space)")
-    public static let appTPHomeDisabledSuffix = NSLocalizedString("appTP.home.disabledSuffix", value: "Tap to continue blocking tracking attempts across your apps.", comment: "Suffix of string 'App Tracking Protection disabled. Tap to re-enable.'")
-    
+
+    //MARK: - Get Desktop Browser
+    public static let getBrowserTitle = NSLocalizedString("get.browser.title", value: "Get DuckDuckGo for Mac or Windows", comment: "Title for the get desktop browser feature")
+    public static let getBrowserOnYourDesktopGoTo = NSLocalizedString("get.browser.on-your-desktop-go-to", value: "On your computer, go to:", comment: "Description text above the Share Link button")
+    public static let getBrowserShareLink = NSLocalizedString("get.browser.share-link", value: "Share Download Link", comment: "Title for the Share Download Link button")
+    public static let getBrowserShareLinkTitle = NSLocalizedString("get.browser.share-link.title", value: "Get DuckDuckGo Browser for Mac or Windows", comment: "Title displayed in the share action")
+    public static let getBrowserShareLinkMessage = NSLocalizedString("get.browser.share-link.message", value: "Search privately and block trackers with the DuckDuckGo desktop browser. Visit this link on your computer to download today.", comment: "Message displayed in the share action when sharing via email")
+
     // MARK: Network Protection
     
     public static let netPSettingsTitle = NSLocalizedString("netP.settings.title", value: "VPN", comment: "Title for the DuckDuckGo VPN feature in settings")
@@ -712,7 +610,9 @@ In addition to the details entered into this form, your app issue report will co
     public static let autofillLoginDetailsAddress = NSLocalizedString("autofill.logins.details.address", value:"Website URL", comment: "Address label for login details on autofill")
     public static let autofillLoginDetailsNotes = NSLocalizedString("autofill.logins.details.notes", value:"Notes", comment: "Notes label for login details on autofill")
     public static let autofillEmptyViewTitle = NSLocalizedString("autofill.logins.empty-view.title", value:"No passwords saved yet", comment: "Title for view displayed when autofill has no items")
-    public static let autofillEmptyViewSubtitle = NSLocalizedString("autofill.logins.empty-view.subtitle", value:"Passwords are stored securely on your device.", comment: "Subtitle for view displayed when autofill has no items")
+    public static let autofillEmptyViewSubtitle = NSLocalizedString("autofill.logins.empty-view.subtitle", value:"Passwords from other browsers or apps can be imported using the desktop version of the DuckDuckGo browser.", comment: "Subtitle for view displayed when no autofill passwords have been saved")
+    public static let autofillEmptyViewButtonTitle = NSLocalizedString("autofill.logins.empty-view.button.title", value:"Import Passwords", comment: "Title for button to Import Passwords when autofill has no items")
+
     public static let autofillSearchNoResultTitle = NSLocalizedString("autofill.logins.search.no-results.title", value:"No Results", comment: "Title displayed when there are no results on Autofill search")
     public static func autofillSearchNoResultSubtitle(for query: String) -> String {
         let message = NSLocalizedString("autofill.logins.search.no-results.subtitle", value: "for '%@'", comment: "Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle)")
@@ -731,6 +631,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     public static let autofillEnableSettings = NSLocalizedString("autofill.logins.list.enable", value:"Save and autofill passwords", comment: "Title for a toggle that enables autofill")
     public static let autofillNeverSavedSettings = NSLocalizedString("autofill.logins.list.never.saved", value:"Reset Excluded Sites", comment: "Title for a button that allows a user to reset their list of never saved sites")
+    public static let autofillSettingsFooter = NSLocalizedString("autofill.logins.list.enable.footer", value:"Passwords are stored securely on your device.", comment: "Footer label displayed below table section with option to enable autofill")
     public static let autofillLoginListTitle = NSLocalizedString("autofill.logins.list.title", value:"Passwords", comment: "Title for screen listing autofill logins")
     public static let autofillLoginListSearchPlaceholder = NSLocalizedString("autofill.logins.list.search-placeholder", value:"Search passwords", comment: "Placeholder for search field on autofill login listing")
     public static let autofillLoginListSuggested = NSLocalizedString("autofill.logins.list.suggested", value:"Suggested", comment: "Section title for group of suggested saved logins")
@@ -845,7 +746,24 @@ But if you *do* want a peek under the hood, you can find more information about 
     static let autofillRemovedDuckAddressButton = NSLocalizedString("autofill.removed.duck.address.button", value: "Got it", comment: "Button text for the alert dialog telling the user an updated username is no longer a private email address")
     static let autofillDeactivate = NSLocalizedString("pm.deactivate", value: "Deactivate", comment: "Deactivate button")
     static let autofillActivate = NSLocalizedString("pm.activate", value: "Reactivate", comment: "Activate button")
-    
+
+    // Autofill Password Import
+    public static let autofillImportPasswordsTitle = NSLocalizedString("autofill.import.passwords.title", value:"How To Import Passwords", comment: "Title for screen to import passwords")
+    public static let autofillImportPasswordsSubtitle = NSLocalizedString("autofill.import.passwords.subtitle", value:"Import passwords in the desktop version of the DuckDuckGo browser, then sync across devices.", comment: "Subtitle for screen to import passwords")
+    public static let autofillImportPasswordsGetBrowserButton = NSLocalizedString("autofill.import.passwords.get-browser-button", value:"Get Desktop Browser", comment: "Button label to get link to download the desktop browser")
+    public static let autofillImportPasswordsSyncButton = NSLocalizedString("autofill.import.passwords.sync-button", value:"Sync With Desktop", comment: "Button label to sync passwords with desktop browser")
+    public static let autofillImportPasswordsInstructionsTitle = NSLocalizedString("autofill.import.passwords.instructions.title", value:"Import from the desktop browser:", comment: "Title for section with instructions to import passwords")
+    public static let autofillImportPasswordsInstructionsStep1 = NSLocalizedString("autofill.import.passwords.instructions.step1", value:"Open DuckDuckGo on Mac or Windows", comment: "Step 1 for instructions to import passwords")
+    public static let autofillImportPasswordsInstructionsStep2 = NSLocalizedString("autofill.import.passwords.instructions.step2", value:"Go to %@ > %@", comment: "Step 2 for instructions to import passwords. This reads as 'Go to Settings > Passwords'")
+    public static let autofillImportPasswordsInstructionsStep2Settings = NSLocalizedString("autofill.import.passwords.instructions.step2.settings", value:"Settings", comment: "first parameter for autofill.import.passwords.instructions.step2")
+    public static let autofillImportPasswordsInstructionsStep2Autofill = NSLocalizedString("autofill.import.passwords.instructions.step2.passwords", value:"Passwords", comment: "second parameter for autofill.import.passwords.instructions.step2")
+    public static let autofillImportPasswordsInstructionsStep3 = NSLocalizedString("autofill.import.passwords.instructions.step3", value:"Select %@ and follow the steps to import", comment: "Step 3 for instructions to import passwords. This reads as 'Select Import Passwords and follow the steps'")
+    public static let autofillImportPasswordsInstructionsStep3Import = NSLocalizedString("autofill.import.passwords.instructions.step3.import", value:"Import Passwords...", comment: "Parameter for autofill.import.passwords.instructions.step3")
+    public static let autofillImportPasswordsInstructionsStep4 = NSLocalizedString("autofill.import.passwords.instructions.step4", value:"Once imported on your computer you can set up sync on this %@", comment: "Step 4 for instructions to import passwords: Once imported on your computer you can set up sync on this iPhone|iPad|device")
+    public static let deviceTypeiPhone = NSLocalizedString("device.type.iphone", value:"iPhone", comment: "Device type is iPhone")
+    public static let deviceTypeiPad = NSLocalizedString("device.type.pad", value:"iPad", comment: "Device type is iPad")
+    public static let deviceTypeDefault = NSLocalizedString("device.type.default", value:"device", comment: "Default string used if users device is not iPhone or iPad")
+
     // Email Protection In-context Signup
     public static let emailProtection = NSLocalizedString("email-protection", value: "Email Protection", comment: "Email protection service offered by DuckDuckGo")
     public static let emailSignupPromptTitle = NSLocalizedString("email.signup-prompt.title", value:"Hide Your Email and\nBlock Trackers", comment: "Title for prompt to sign up for email protection")

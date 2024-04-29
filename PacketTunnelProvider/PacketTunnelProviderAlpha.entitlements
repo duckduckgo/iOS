@@ -8,7 +8,6 @@
 	</array>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.duckduckgo.alpha.apptp</string>
 		<string>group.com.duckduckgo.alpha.netp</string>
 	</array>
 	<key>keychain-access-groups</key>

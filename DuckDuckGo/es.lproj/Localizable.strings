@@ -196,225 +196,6 @@
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Desbloquear DuckDuckGo.";
 
-/* First part of about page content (note the trailing space) */
-"appTP.about.content1" = "You’ve probably heard about companies like Google and Facebook tracking you behind the scenes on third-party websites. But did you know they also track your personal information through apps on your device?\n\nIn 2022, DuckDuckGo found that ";
-
-/* Second part of about page content (note the trailing space) */
-"appTP.about.content2" = "over 85% of free iOS apps tested contained hidden trackers from other companies.";
-
-/* Third part of about page content (note the leading space) */
-"appTP.about.content3" = " Of the 395 apps tested, 60% sent data to Google. This happens even while you’re not using your device.\n\nTrackers in apps may have access to a lot more information than their website tracker cousins, such as your location down to which floor of a building you're on, how often you play games while at work, and when and how long you sleep each day. Even if you haven’t given apps explicit permission to collect data, they can still take it without your knowledge.\n\nTracking networks like Facebook and Google use these little pieces of information to build a digital profile about you. With it, tracking networks can manipulate what you see online and allow advertisers to bid on access to you based on your data.\n\nTrackers in apps is a BIG problem for privacy. But DuckDuckGo has a solution that can help.\n\nWhen enabled in the DuckDuckGo Privacy Browser app, App Tracking Protection blocks many trackers in other apps, not just the trackers we find on websites when you browse. These dual layers of protection reduce what companies know about you overall, so you can use your apps with more peace of mind, knowing you’re more protected.";
-
-/* Navigation Title for AppTP about page */
-"appTP.about.navTitle" = "About App Trackers";
-
-/* Title for AppTP about page */
-"appTP.about.title" = "What Are App Trackers?";
-
-/* Title for 'Report an Issue' button in the activity view. */
-"appTP.activityView.reportIssue" = "Report Issue";
-
-/* Text label for switch that turns blocking on or off for a tracker */
-"appTP.blockTrackerText" = "Block this Tracker";
-
-/* Detail string describing what AppTP is */
-"appTP.cell.detail" = "Bloquea los rastreadores de aplicaciones en tu dispositivo";
-
-/* String indicating AppTP is disabled when viewed from the settings screen */
-"appTP.cell.disabled" = "Desactivado";
-
-/* String indicating AppTP is enabled when viewed from the settings screen */
-"appTP.cell.enabled" = "Activado";
-
-/* Info string informing the user what App Tracking Protection does. */
-"appTP.empty.disabled.info" = "Habilita App Tracking Protection para que podamos bloquear rastreadores molestos en otras aplicaciones.";
-
-/* Info string informing the user we're looking for trackers in other apps. */
-"appTP.empty.enabled.heading" = "We’re blocking hidden trackers";
-
-/* Info string informing the user we're looking for trackers in other apps. */
-"appTP.empty.enabled.info" = "Come back soon to see a list of all the app trackers we’ve blocked.";
-
-/* First answer for AppTP FAQ page */
-"appTP.faq.answer1" = "App Tracking Protection blocks app trackers from other companies, like when Facebook tries to track you in a banking app. Companies may still track you in apps they own.";
-
-/* Second answer for AppTP FAQ page */
-"appTP.faq.answer2" = "Yes! App Tracking Protection works across all apps on your device to block the most common hidden trackers we find trying to collect your personal info.";
-
-/* Third answer for AppTP FAQ page */
-"appTP.faq.answer3" = "We currently only block the most common trackers that we find on iOS. This helps us to comprehensively test App Tracking Protection and lower frequency of app breakage, while blocking up to 70% of all tracking requests.";
-
-/* Fourth answer for AppTP FAQ page */
-"appTP.faq.answer4" = "You’ll be asked to set up a virtual private network (VPN) connection, but you don't need to install a VPN app for App Tracking Protection to work.\n\nThis permission, which works only on your device, allows App Tracking Protection to monitor network traffic so that it can block known trackers.";
-
-/* Fifth answer for AppTP FAQ page */
-"appTP.faq.answer5" = "You can use App Tracking Protection at the same time as using an IKEv2 protocol VPN app on an iOS device. You won’t be able to use App Tracking Protection on an iOS device if you’re using a VPN app that uses a different type of protocol, like WireGuard or OpenVPN type VPNs.";
-
-/* Sixth answer for AppTP FAQ page */
-"appTP.faq.answer6" = "A VPN sends your data from the device to its own server, where it secures and anonymizes your data from prying eyes. However, this allows the VPN company to see your network traffic.\n\nApp Tracking Protection is different. Instead of sending your data to a VPN server, App Tracking Protection works only on your device, sitting between your apps and the servers they talk to.\n\nWhenever App Tracking Protection recognizes a known tracker, it blocks the tracker from sending personal information (such as your IP address, activity, and device details) off your device. All other traffic reaches its destination, so your apps work normally.";
-
-/* Seventh answer for AppTP FAQ page */
-"appTP.faq.answer7" = "App Tracking Protection works only on your device and doesn’t send your data off your device to DuckDuckGo. We don’t collect or store any data from your apps.";
-
-/* First question for AppTP FAQ page */
-"appTP.faq.question1" = "How does App Tracking Protection work?";
-
-/* Second question for AppTP FAQ page */
-"appTP.faq.question2" = "Does App Tracking Protection block trackers in all apps on my device?";
-
-/* Third question for AppTP FAQ page */
-"appTP.faq.question3" = "Does App Tracking Protection block all app trackers?";
-
-/* Fourth question for AppTP FAQ page */
-"appTP.faq.question4" = "Why does App Tracking Protection use a VPN connection?";
-
-/* Fifth question for AppTP FAQ page */
-"appTP.faq.question5" = "Will App Tracking Protection work if I also use a VPN app?";
-
-/* Sixth question for AppTP FAQ page */
-"appTP.faq.question6" = "How is App Tracking Protection different from a VPN?";
-
-/* Seventh question for AppTP FAQ page */
-"appTP.faq.question7" = "Is my data private?";
-
-/* Title for AppTP FAQ page */
-"appTP.faq.title" = "App Tracking Protection FAQ";
-
-/* Do not translate. StringsDict entry -- Count part of string 'App Tracking Protection blocked x tracking attempts today' */
-"appTP.home.blockedCount" = "appTP.home.blockedCount";
-
-/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the trailing space) */
-"appTP.home.blockedPrefix" = "App Tracking Protection ha bloqueado ";
-
-/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the leading space) */
-"appTP.home.blockedSuffix" = " en tus aplicaciones hoy.";
-
-/* Prefix of string 'App Tracking Protection disabled. Tap to re-enable.' (note the trailing space) */
-"appTP.home.disabledPrefix" = "App Tracking Protection disabled. ";
-
-/* Suffix of string 'App Tracking Protection disabled. Tap to re-enable.' */
-"appTP.home.disabledSuffix" = "Tap to continue blocking tracking attempts across your apps.";
-
-/* Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now' */
-"appTP.justNow" = "Justo ahora";
-
-/* View to manage trackers for AppTP. Allows the user to turn trackers on or off. */
-"appTP.manageTrackers" = "Gestionar rastreadores";
-
-/* Button title for AppTP onboarding */
-"appTP.onboarding.continueButton" = "Continue";
-
-/* Button title for AppTP onboarding to enable AppTP */
-"appTP.onboarding.enableeButton" = "Enable App Tracking Protection";
-
-/* Button title for AppTP onboarding to learn more about AppTP */
-"appTP.onboarding.learnMoreButton" = "Learn More";
-
-/* First part of info on the first AppTP onboarding page */
-"appTP.onboarding.page1Info1" = "Over 85% of free iOS apps";
-
-/* Second part of info on the first AppTP onboarding page (note the leading space) */
-"appTP.onboarding.page1Info2" = " we’ve tested allow other companies to track your personal information, even when you’re sleeping.";
-
-/* Third part of info on the first AppTP onboarding page */
-"appTP.onboarding.page1Info3" = "See who we catch trying to track you in your apps and take back control.";
-
-/* First part of info on the second AppTP onboarding page (note the trailing space) */
-"appTP.onboarding.page2Info1" = "App Tracking Protection ";
-
-/* Second part of info on the second AppTP onboarding page */
-"appTP.onboarding.page2Info2" = "detects and blocks app trackers from other companies,";
-
-/* Third part of info on the second AppTP onboarding page (note the leading space) */
-"appTP.onboarding.page2Info3" = " like when Google attempts to track you in a health app.";
-
-/* Fourth part of info on the second AppTP onboarding page */
-"appTP.onboarding.page2Info4" = "It’s free,";
-
-/* Fifth part of info on the second AppTP onboarding page (note the leading and trailing space) */
-"appTP.onboarding.page2Info5" = " and you can enjoy your apps as you normally would. Working in the background, it helps ";
-
-/* Sixth part of info on the second AppTP onboarding page */
-"appTP.onboarding.page2Info6" = "protect you night and day.";
-
-/* First part of info on the third AppTP onboarding page */
-"appTP.onboarding.page3Info1" = "App Tracking Protection is not a VPN.";
-
-/* Second part of info on the third AppTP onboarding page (note the leading space) */
-"appTP.onboarding.page3Info2" = " However, your device will recognize it as one. This is because it uses a local VPN connection to work.";
-
-/* Third part of info on the third AppTP onboarding page (note the trailing space) */
-"appTP.onboarding.page3Info3" = "App Tracking Protection is different. ";
-
-/* Fourth part of info on the third AppTP onboarding page */
-"appTP.onboarding.page3Info4" = "It never routes app data through an external server.";
-
-/* Title for first AppTP onboarding page */
-"appTP.onboarding.title1" = "One easy step for better app privacy!";
-
-/* Title for second AppTP onboarding page */
-"appTP.onboarding.title2" = "How does it work?";
-
-/* Title for third AppTP onboarding page */
-"appTP.onboarding.title3" = "Who sees your data?";
-
-/* Breakage report app name label */
-"appTP.report.appLabel" = "Which app is having issues?";
-
-/* Breakage report app name placeholder */
-"appTP.report.appPlaceholder" = "App name";
-
-/* Breakage report category label */
-"appTP.report.categoryLabel" = "¿Qué pasa?";
-
-/* Breakage report comment label */
-"appTP.report.commentLabel" = "Comments";
-
-/* Breakage report comment placeholder */
-"appTP.report.commentPlaceholder" = "Add additional details";
-
-/* Breakage report footer explaining what is collected in the breakage report */
-"appTP.report.footer" = "In addition to the details entered into this form, your app issue report will contain:\n• A list of trackers blocked in the last 10 min\n• Whether App Tracking Protection is enabled\n• Aggregate DuckDuckGo app diagnostics";
-
-/* Breakage report submit button */
-"appTP.report.submit" = "Enviar";
-
-/* Breakage report form title */
-"appTP.report.title" = "Report Issue";
-
-/* Breakage report succcess message */
-"appTP.report.toast" = "Gracias, se han enviado tus opiniones.";
-
-/* Cancel button for 'Report an Issue' alert. */
-"appTP.reportAlert.cancel" = "Ahora no";
-
-/* Confirm button for 'Report an Issue' alert. */
-"appTP.reportAlert.confirm" = "Informar de un problema";
-
-/* Message for 'Report an Issue' alert. */
-"appTP.reportAlert.message" = "Let us know if you disabled App Tracking Protection for this specific tracker because it caused app issues. Your feedback helps us improve!";
-
-/* Title for 'Report an Issue' alert. */
-"appTP.reportAlert.title" = "Report Issue?";
-
-/* Toast notification diplayed after restoring the blocklist to default settings */
-"appTP.restoreDefaultsToast" = "Default settings restored";
-
-/* Button to restore the blocklist to its default state. */
-"appTP.restoreDefualts" = "Restaurar valores predeterminados";
-
-/* Title for the App Tracking Protection feature */
-"appTP.title" = "Protección frente al rastreo de aplicaciones";
-
-/* Text indicating when the tracker was last allowed. Example: Last attempt allowed (timeString) */
-"appTP.trackerAllowedTimestamp" = "Último intento permitido % @";
-
-/* Text indicating when the tracker was last blocked. Example: Last attempt blocked (timeString) */
-"appTP.trackerBlockedTimestamp" = "Último intento bloqueado %@";
-
-/* Do not translate. StringsDict entry -- Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts */
-"appTP.trackingattempts" = "appTP.trackingattempts";
-
 /* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Iniciar sesión";
 
@@ -465,6 +246,42 @@
 
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Ocultar contraseña";
+
+/* Button label to get link to download the desktop browser */
+"autofill.import.passwords.get-browser-button" = "Obtén el navegador de escritorio";
+
+/* Step 1 for instructions to import passwords */
+"autofill.import.passwords.instructions.step1" = "Abre DuckDuckGo en Mac o Windows";
+
+/* Step 2 for instructions to import passwords. This reads as 'Go to Settings > Passwords' */
+"autofill.import.passwords.instructions.step2" = "Ir a %1$@ > %2$@";
+
+/* second parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.passwords" = "Contraseñas";
+
+/* first parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.settings" = "Ajustes";
+
+/* Step 3 for instructions to import passwords. This reads as 'Select Import Passwords and follow the steps' */
+"autofill.import.passwords.instructions.step3" = "Selecciona %@ y sigue los pasos para importar";
+
+/* Parameter for autofill.import.passwords.instructions.step3 */
+"autofill.import.passwords.instructions.step3.import" = "Importar contraseñas...";
+
+/* Step 4 for instructions to import passwords: Once imported on your computer you can set up sync on this iPhone|iPad|device */
+"autofill.import.passwords.instructions.step4" = "Una vez importado a tu ordenador, puedes configurar la sincronización en este %@";
+
+/* Title for section with instructions to import passwords */
+"autofill.import.passwords.instructions.title" = "Importar desde el navegador de escritorio:";
+
+/* Subtitle for screen to import passwords */
+"autofill.import.passwords.subtitle" = "Importa contraseñas en la versión de escritorio del navegador DuckDuckGo y, a continuación, sincronízalas entre dispositivos.";
+
+/* Button label to sync passwords with desktop browser */
+"autofill.import.passwords.sync-button" = "Sincronizar con el escritorio";
+
+/* Title for screen to import passwords */
+"autofill.import.passwords.title" = "Cómo importar contraseñas";
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Deshabilitar";
@@ -568,8 +385,11 @@
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Nombre de usuario";
 
-/* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Las contraseñas se almacenan de forma segura en tu dispositivo.";
+/* Title for button to Import Passwords when autofill has no items */
+"autofill.logins.empty-view.button.title" = "Importar contraseñas";
+
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle" = "Las contraseñas de otros navegadores o aplicaciones se pueden importar utilizando la versión de escritorio del navegador DuckDuckGo.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Aún no hay contraseñas guardadas";
@@ -588,6 +408,9 @@
 
 /* Title for a toggle that enables autofill */
 "autofill.logins.list.enable" = "Guardar y autocompletar contraseñas";
+
+/* Footer label displayed below table section with option to enable autofill */
+"autofill.logins.list.enable.footer" = "Las contraseñas se almacenan de forma segura en tu dispositivo.";
 
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Contraseña para %@ borrada";
@@ -930,6 +753,15 @@
 
 /* No comment provided by engineer. */
 "Debug" = "Debug";
+
+/* Default string used if users device is not iPhone or iPad */
+"device.type.default" = "dispositivo";
+
+/* Device type is iPhone */
+"device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"device.type.pad" = "iPad";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Desactivado";
@@ -1317,6 +1149,21 @@
 
 /* No comment provided by engineer. */
 "fireButtonAnimation.waterSwirl.name" = "Remolino";
+
+/* Description text above the Share Link button */
+"get.browser.on-your-desktop-go-to" = "En tu ordenador, ve a:";
+
+/* Title for the Share Download Link button */
+"get.browser.share-link" = "Compartir enlace de descarga";
+
+/* Message displayed in the share action when sharing via email */
+"get.browser.share-link.message" = "Busca de forma privada y bloquea los rastreadores con el navegador de escritorio DuckDuckGo. Visita este enlace en tu ordenador para descargarlo hoy mismo.";
+
+/* Title displayed in the share action */
+"get.browser.share-link.title" = "Consigue el navegador DuckDuckGo para Mac o Windows";
+
+/* Title for the get desktop browser feature */
+"get.browser.title" = "Consigue DuckDuckGo para Mac o Windows";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Añade DuckDuckGo a tu pantalla de inicio.";
@@ -2465,15 +2312,6 @@
 
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
-
-/* Alert action for the alert when the early access period is over */
-"vpn.early-access.over.alert.action" = "De acuerdo";
-
-/* Alert message for the alert when the early access period is over */
-"vpn.early-access.over.alert.message" = "¡Gracias por ser probador/a! Para seguir utilizando la VPN, suscríbete a DuckDuckGo Privacy Pro y consigue un 40 % de descuento con el código promocional THANKYOU\n\nOferta canjeable por tiempo limitado solo en la versión de escritorio del navegador DuckDuckGo para los probadores de EE. UU. que la instalen desde duckduckgo.com/app";
-
-/* Alert title for the alert when the early access period is over */
-"vpn.early-access.over.alert.title" = "Se ha acabado el acceso anticipado a DuckDuckGo VPN";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";

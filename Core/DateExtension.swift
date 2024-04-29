@@ -26,6 +26,6 @@ extension Date {
     }
 
     public func isLessThan48HoursAgo() -> Bool {
-        return self > Date().addingTimeInterval(-48 * 60 * 60)
+        self > Date().addingTimeInterval(-48 * 60 * 60)
     }
 }

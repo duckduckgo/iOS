@@ -79,7 +79,7 @@ final class ImportPasswordsViewModel {
 
     /// Keeping track on whether or not either button was pressed on this screen
     /// so that a pixel can be fired if the user navigates away without taking any action
-    var buttonWasPressed: Bool = false
+    private (set) var buttonWasPressed: Bool = false
 
     func maxButtonWidth() -> CGFloat {
         let maxWidth = maxWidthFor(title1: ButtonType.getBrowser.title, title2: ButtonType.sync.title)

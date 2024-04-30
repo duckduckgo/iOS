@@ -9710,7 +9710,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "graeme/vpn-server-failure-detection-recovery";
+				branch = 142.0.0;
 				kind = branch;
 			};
 		};

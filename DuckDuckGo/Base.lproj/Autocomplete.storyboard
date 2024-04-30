@@ -42,12 +42,30 @@
                                                                 <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="999" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="L3L-RT-TDk" userLabel="LabelsStackView">
                                                                     <rect key="frame" x="32" y="0.0" width="247" height="38"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ag-a1-mlA">
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yT5-QM-JaN">
                                                                             <rect key="frame" x="0.0" y="0.0" width="247" height="19"/>
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                                            <color key="textColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            <nil key="highlightedColor"/>
-                                                                        </label>
+                                                                            <subviews>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ag-a1-mlA">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="39.5" height="19.5"/>
+                                                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                                    <color key="textColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                </label>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text=" - Search DuckDuckGo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n0l-XO-m9E">
+                                                                                    <rect key="frame" x="39.5" y="0.0" width="166" height="19.5"/>
+                                                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                                    <color key="textColor" name="accent"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                </label>
+                                                                            </subviews>
+                                                                            <constraints>
+                                                                                <constraint firstItem="5ag-a1-mlA" firstAttribute="trailing" secondItem="n0l-XO-m9E" secondAttribute="leading" id="DqU-Qd-drh"/>
+                                                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="n0l-XO-m9E" secondAttribute="trailing" id="GP7-0m-9zV"/>
+                                                                                <constraint firstItem="5ag-a1-mlA" firstAttribute="leading" secondItem="yT5-QM-JaN" secondAttribute="leading" id="Ls3-Nh-WAC"/>
+                                                                                <constraint firstItem="5ag-a1-mlA" firstAttribute="centerY" secondItem="yT5-QM-JaN" secondAttribute="centerY" id="Xsl-Ib-zP0"/>
+                                                                                <constraint firstItem="n0l-XO-m9E" firstAttribute="centerY" secondItem="yT5-QM-JaN" secondAttribute="centerY" id="erZ-U3-3KY"/>
+                                                                            </constraints>
+                                                                        </view>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eiv-Cq-E2r">
                                                                             <rect key="frame" x="0.0" y="19" width="247" height="19"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -94,6 +112,8 @@
                                             <accessibilityTraits key="traits" button="YES"/>
                                         </accessibility>
                                         <connections>
+                                            <outlet property="ddgSearchConstraint" destination="DqU-Qd-drh" id="Dw3-27-Aya"/>
+                                            <outlet property="ddgSearchLabel" destination="n0l-XO-m9E" id="bb8-in-9YF"/>
                                             <outlet property="label" destination="5ag-a1-mlA" id="jTa-51-N4b"/>
                                             <outlet property="plusButton" destination="N97-eI-Lps" id="2NX-0l-oBk"/>
                                             <outlet property="typeImage" destination="Dnd-CT-WA4" id="p0g-6n-9j3"/>
@@ -183,6 +203,9 @@
     <resources>
         <image name="Arrow-Top-Left-24" width="24" height="24"/>
         <image name="SuggestLoupe" width="24" height="24"/>
+        <namedColor name="accent">
+            <color red="0.22352941176470589" green="0.41176470588235292" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="surface">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

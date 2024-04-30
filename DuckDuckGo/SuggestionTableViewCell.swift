@@ -34,10 +34,14 @@ class SuggestionTableViewCell: UITableViewCell {
     @IBOutlet weak var urlLabel: UILabel!
     @IBOutlet weak var typeImage: UIImageView!
     @IBOutlet weak var plusButton: UIButton!
+    @IBOutlet weak var ddgSearchLabel: UIView!
+    @IBOutlet var ddgSearchConstraint: NSLayoutConstraint!
 
     func updateFor(query: String, suggestion: Suggestion, with theme: Theme, isAddressBarAtBottom: Bool) {
 
         self.plusButton.isHidden = true
+        self.ddgSearchLabel.isHidden = true
+        self.ddgSearchConstraint.isActive = false
 
         var text: String = ""
         switch suggestion {
@@ -70,12 +74,20 @@ class SuggestionTableViewCell: UITableViewCell {
             self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
 
         case .historyEntry(title: let title, url: let url, _):
-            text = title ?? url.absoluteString
-            urlLabel.isHidden = false
-            urlLabel.text = url.formattedForSuggestion()
+            if url.isDuckDuckGoSearch {
+                text = url.searchQuery ?? ""
+                ddgSearchLabel.isHidden = false
+                ddgSearchConstraint.isActive = true
+                urlLabel.isHidden = true
+                self.accessibilityValue = UserText.voiceoverSuggestionTypeSearch
+            } else {
+                text = title ?? url.absoluteString
+                urlLabel.isHidden = false
+                urlLabel.text = url.formattedForSuggestion()
+            }
 
             typeImage.image = UIImage(named: "History-24")
-            self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
+            self.accessibilityValue = UserText.voiceoverSuggestionTypeWebsite
 
         case .unknown(value: let value), .internalPage(title: let value, url: _):
             assertionFailure("Unknown suggestion \(value)")

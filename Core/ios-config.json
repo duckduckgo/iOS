@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1713140318814,
+    "version": 1714380838297,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -134,6 +134,9 @@
                 },
                 {
                     "domain": "ksta.de"
+                },
+                {
+                    "domain": "larazon.es"
                 },
                 {
                     "domain": "motherdenim.com"
@@ -280,6 +283,18 @@
                     "domain": "condell-ltd.com"
                 },
                 {
+                    "domain": "leefgemeenschapzilt.nl"
+                },
+                {
+                    "domain": "healthline.com"
+                },
+                {
+                    "domain": "sporthoj.com"
+                },
+                {
+                    "domain": "www.michelinman.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -293,9 +308,7 @@
                 "disabledCMPs": [
                     "generic-cosmetic",
                     "termsfeed3",
-                    "strato.de",
-                    "healthline-media",
-                    "tarteaucitron.js"
+                    "healthline-media"
                 ]
             },
             "state": "enabled",
@@ -318,7 +331,7 @@
                     }
                 }
             },
-            "hash": "7bcdcdd586eee1580d67eb5da90d7b1a"
+            "hash": "d8b00554567fbee5603e8d141e57b091"
         },
         "autofill": {
             "exceptions": [
@@ -2859,6 +2872,27 @@
                         ]
                     },
                     {
+                        "domain": "independent.co.uk",
+                        "rules": [
+                            {
+                                "selector": "#partners",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": "#top-banner-wrapper",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": "[data-mpu1=true]",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": "#stickyFooterRoot",
+                                "type": "hide"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "indiatimes.com",
                         "rules": [
                             {
@@ -4242,11 +4276,20 @@
                                 "type": "override"
                             }
                         ]
+                    },
+                    {
+                        "domain": "wideopencountry.com",
+                        "rules": [
+                            {
+                                "selector": ".entry-ad",
+                                "type": "hide-empty"
+                            }
+                        ]
                     }
                 ]
             },
             "state": "enabled",
-            "hash": "a84d50f4d13c41abd29a6467ce772fe6"
+            "hash": "81163c0a36336ae398f48239b7ac5b4c"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -4259,6 +4302,11 @@
             ],
             "state": "disabled",
             "hash": "dc1b4fa301193a03ddcd4bdf7ee3e610"
+        },
+        "extendedOnboarding": {
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
         "fingerprintingAudio": {
             "state": "disabled",
@@ -4819,18 +4867,11 @@
                     }
                 },
                 "toggleReports": {
-                    "state": "enabled",
-                    "rollout": {
-                        "steps": [
-                            {
-                                "percent": 10
-                            }
-                        ]
-                    }
+                    "state": "enabled"
                 }
             },
             "state": "enabled",
-            "hash": "b337f9c7cf15e7e4807ef232befaa999"
+            "hash": "66968d9b69520975185476473cc11824"
         },
         "privacyPro": {
             "state": "enabled",
@@ -5112,7 +5153,8 @@
                             {
                                 "rule": "static.adsafeprotected.com/iasPET.1.js",
                                 "domains": [
-                                    "corriere.it"
+                                    "corriere.it",
+                                    "independent.co.uk"
                                 ]
                             },
                             {
@@ -5834,6 +5876,12 @@
                                 "rule": "doubleclick.net/pixel",
                                 "domains": [
                                     "sbs.com.au"
+                                ]
+                            },
+                            {
+                                "rule": "https://googleads.g.doubleclick.net/ads/preferences/naioptout",
+                                "domains": [
+                                    "zojirushi.com"
                                 ]
                             },
                             {
@@ -6728,6 +6776,7 @@
                             {
                                 "rule": "a.klaviyo.com/media/js/onsite/onsite.js",
                                 "domains": [
+                                    "bonescoffee.com",
                                     "tanglefree.com"
                                 ]
                             },
@@ -6736,7 +6785,8 @@
                                 "domains": [
                                     "andieswim.com",
                                     "footweartruth.com",
-                                    "kmail-lists.com"
+                                    "kmail-lists.com",
+                                    "usafacts.org"
                                 ]
                             }
                         ]
@@ -6939,7 +6989,8 @@
                             {
                                 "rule": "connect.nosto.com/script/shopify/nosto.js",
                                 "domains": [
-                                    "oneill.com"
+                                    "oneill.com",
+                                    "thefryecompany.com"
                                 ]
                             }
                         ]
@@ -6949,7 +7000,8 @@
                             {
                                 "rule": "npttech.com/advertising.js",
                                 "domains": [
-                                    "blick.ch"
+                                    "blick.ch",
+                                    "independent.co.uk"
                                 ]
                             }
                         ]
@@ -7034,6 +7086,7 @@
                                     "abc.net.au",
                                     "emol.com",
                                     "oufc.co.uk",
+                                    "the-afc.com",
                                     "theposh.com"
                                 ]
                             }
@@ -7051,6 +7104,12 @@
                                 "rule": "cdn.optimizely.com/js/24096340716.js",
                                 "domains": [
                                     "hgtv.com"
+                                ]
+                            },
+                            {
+                                "rule": "https://cdn.optimizely.com/js/271989291.js",
+                                "domains": [
+                                    "my.zipcar.com"
                                 ]
                             }
                         ]
@@ -7136,10 +7195,23 @@
                     "primis.tech": {
                         "rules": [
                             {
-                                "rule": "live.primis.tech/live/liveView.php",
+                                "rule": "video.primis.tech/",
+                                "domains": [
+                                    "wideopencountry.com"
+                                ]
+                            },
+                            {
+                                "rule": "live.primis.tech/content/omid/static/",
+                                "domains": [
+                                    "wideopencountry.com"
+                                ]
+                            },
+                            {
+                                "rule": "live.primis.tech/live/",
                                 "domains": [
                                     "belfastlive.co.uk",
-                                    "cornwalllive.com"
+                                    "cornwalllive.com",
+                                    "wideopencountry.com"
                                 ]
                             }
                         ]
@@ -7511,6 +7583,16 @@
                                 "rule": "cdn.shortpixel.ai/assets/js/bundles/spai-lib-bg",
                                 "domains": [
                                     "<all>"
+                                ]
+                            }
+                        ]
+                    },
+                    "skimresources.com": {
+                        "rules": [
+                            {
+                                "rule": "go.skimresources.com/",
+                                "domains": [
+                                    "www.lotustalk.com"
                                 ]
                             }
                         ]
@@ -8037,7 +8119,7 @@
                     "domain": "sundancecatalog.com"
                 }
             ],
-            "hash": "e9203e2a0820e7ed14993b6586ff999c"
+            "hash": "da10a46e71d682e23ef44fca926c9541"
         },
         "trackingCookies1p": {
             "settings": {

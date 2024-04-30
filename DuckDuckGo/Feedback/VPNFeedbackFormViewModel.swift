@@ -66,7 +66,7 @@ final class VPNFeedbackFormViewModel: ObservableObject {
     }
 
     @MainActor
-    func process() async -> Bool {
+    func sendFeedback() async -> Bool {
         viewState = .feedbackSending
 
         do {

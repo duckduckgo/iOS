@@ -131,6 +131,15 @@ public struct PixelParameters {
 
     // Pixel Experiment
     public static let cohort = "cohort"
+
+    // Ad Attribution
+    public static let adAttributionOrgID = "org_id"
+    public static let adAttributionCampaignID = "campaign_id"
+    public static let adAttributionConversionType = "conversion_type"
+    public static let adAttributionAdGroupID = "ad_group_id"
+    public static let adAttributionCountryOrRegion = "country_or_region"
+    public static let adAttributionKeywordID = "keyword_id"
+    public static let adAttributionAdID = "ad_id"
 }
 
 public struct PixelValues {

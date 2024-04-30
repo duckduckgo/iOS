@@ -66,7 +66,7 @@ extension AppDelegate {
             }
             if let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
                 let queryItems = components.queryItems,
-                let lsItem = queryItems.first(where: { $0.name == "ls" }) {
+                queryItems.first(where: { $0.name == "ls" }) != nil {
                 Pixel.fire(pixel: .autofillLoginsLaunchWidgetLock)
             } else {
                 Pixel.fire(pixel: .autofillLoginsLaunchWidgetHome)

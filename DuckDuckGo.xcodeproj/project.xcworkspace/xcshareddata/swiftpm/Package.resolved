@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/apple-toolbox.git",
       "state" : {
-        "revision" : "d51beaf1736013b530576ace13a16d6d1a63742c",
-        "version" : "2.0.0"
+        "revision" : "ab53ca41e9044a20eab7e53249526fadcf9acc9f",
+        "version" : "3.1.1"
       }
     },
     {
@@ -32,17 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "5821f7094190dbb5bd4f75758c4560f72518056b",
-        "version" : "135.0.0"
-      }
-    },
-    {
-      "identity" : "cocoaasyncsocket",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/robbiehanson/CocoaAsyncSocket",
-      "state" : {
-        "revision" : "dbdc00669c1ced63b27c3c5f052ee4d28f10150c",
-        "version" : "7.6.5"
+        "revision" : "f8c73292d4d6724ec81f98bd29dbb2061f1a8cf6",
+        "version" : "141.1.2"
       }
     },
     {
@@ -59,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/DesignResourcesKit",
       "state" : {
-        "revision" : "d7ea2561ec7624c224f52e1c9b349075ddf1c782",
-        "version" : "2.0.0"
+        "revision" : "ae83941bb277a2750abc2d6697fa278f8c8c5f5e",
+        "version" : "3.0.0"
       }
     },
     {
@@ -104,8 +95,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/airbnb/lottie-spm.git",
       "state" : {
-        "revision" : "4d0c11c85f5a9ec3d1b0daf2dc6daebc0e2df897",
-        "version" : "4.4.2"
+        "revision" : "1d29eccc24cc8b75bff9f6804155112c0ffc9605",
+        "version" : "4.4.3"
       }
     },
     {
@@ -133,6 +124,15 @@
       "state" : {
         "revision" : "4356ec54e073741449640d3d50a1fd24fd1e1b8b",
         "version" : "2.1.0"
+      }
+    },
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser",
+      "state" : {
+        "revision" : "46989693916f56d1186bd59ac15124caef896560",
+        "version" : "1.3.1"
       }
     },
     {

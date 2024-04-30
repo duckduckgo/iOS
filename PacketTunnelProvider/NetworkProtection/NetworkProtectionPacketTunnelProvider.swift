@@ -95,6 +95,15 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             case .success:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartSuccess)
             }
+        case .tunnelStopAttempt(let step):
+            switch step {
+            case .begin:
+                Pixel.fire(pixel: .networkProtectionTunnelStopAttempt)
+            case .failure(let error):
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStopFailure, error: error)
+            case .success:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStopSuccess)
+            }
         case .tunnelUpdateAttempt(let step):
             switch step {
             case .begin:
@@ -103,6 +112,15 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelUpdateFailure, error: error)
             case .success:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelUpdateSuccess)
+            }
+        case .tunnelWakeAttempt(let step):
+            switch step {
+            case .begin:
+                Pixel.fire(pixel: .networkProtectionTunnelWakeAttempt)
+            case .failure(let error):
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelWakeFailure, error: error)
+            case .success:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelWakeSuccess)
             }
         }
     }

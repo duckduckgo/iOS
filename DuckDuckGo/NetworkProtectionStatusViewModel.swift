@@ -165,6 +165,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         setUpServerInfoPublishers()
         setUpLocationPublishers()
         setUpThroughputRefreshTimer()
+        setUpErrorPublishers()
 
         // Prefetching this now for snappy load times on the locations screens
         Task {
@@ -284,6 +285,20 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             }
             .receive(on: DispatchQueue.main)
             .assign(to: \.shouldShowConnectionDetails, onWeaklyHeld: self)
+            .store(in: &cancellables)
+    }
+
+    private func setUpErrorPublishers() {
+        errorObserver.publisher
+            .map { errorMessage in
+                guard let errorMessage else {
+                    return nil
+                }
+
+                return ErrorItem(title: "Error", message: errorMessage)
+            }
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.error, onWeaklyHeld: self)
             .store(in: &cancellables)
     }
 

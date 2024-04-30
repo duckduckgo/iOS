@@ -49,7 +49,7 @@ struct VPNMetadata: Encodable {
     struct VPNState: Encodable {
         let connectionState: String
         let lastDisconnectError: LastDisconnectError?
-        let underlyingErrors: [LastDisconnectError]
+        let underlyingErrors: [LastDisconnectError]?
         let connectedServer: String
         let connectedServerIP: String
     }
@@ -231,7 +231,7 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
 
         return .init(connectionState: connectionState,
                      lastDisconnectError: lastDisconnectError?.error,
-                     underlyingErrors: lastDisconnectError?.underlyingErrors ?? [],
+                     underlyingErrors: lastDisconnectError?.underlyingErrors,
                      connectedServer: connectedServer,
                      connectedServerIP: connectedServerIP)
     }

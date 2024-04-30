@@ -92,7 +92,9 @@ public protocol VariantRNG {
 public class DefaultVariantManager: VariantManager {
 
     public var currentVariant: Variant? {
-        let variantName = ProcessInfo.processInfo.environment["VARIANT", default: storage.variant ?? "" ]
+        #warning("do not merge")
+        // let variantName = ProcessInfo.processInfo.environment["VARIANT", default: storage.variant ?? "" ]
+        let variantName = "md"
         return variants.first(where: { $0.name == variantName })
     }
 

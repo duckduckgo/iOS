@@ -48,7 +48,8 @@ struct VPNMetadata: Encodable {
 
     struct VPNState: Encodable {
         let connectionState: String
-        let lastDisconnectError: String
+        let lastDisconnectError: LastDisconnectError?
+        let underlyingErrors: [LastDisconnectError]
         let connectedServer: String
         let connectedServerIP: String
     }
@@ -75,6 +76,12 @@ struct VPNMetadata: Encodable {
         let betaParticipant: Bool
         let hasToken: Bool
         let subscriptionActive: Bool
+    }
+
+    struct LastDisconnectError: Encodable {
+        let domain: String
+        let code: Int
+        let description: String
     }
 
     let appInfo: AppInfo
@@ -220,61 +227,30 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
         let connectionState = String(describing: statusObserver.recentValue)
         let connectedServer = serverInfoObserver.recentValue.serverLocation?.serverLocation ?? "none"
         let connectedServerIP = serverInfoObserver.recentValue.serverAddress ?? "none"
+        let lastDisconnectError = await lastDisconnectError()
 
         return .init(connectionState: connectionState,
-                     lastDisconnectError: await lastDisconnectError(),
+                     lastDisconnectError: lastDisconnectError?.error,
+                     underlyingErrors: lastDisconnectError?.underlyingErrors ?? [],
                      connectedServer: connectedServer,
                      connectedServerIP: connectedServerIP)
     }
 
-    public func lastDisconnectError() async -> String {
+    public func lastDisconnectError() async -> (error: VPNMetadata.LastDisconnectError, underlyingErrors: [VPNMetadata.LastDisconnectError])? {
         if #available(iOS 16, *) {
             guard let tunnelManager = try? await NETunnelProviderManager.loadAllFromPreferences().first else {
-                return "none"
+                return nil
             }
 
-            return await withCheckedContinuation { continuation in
-                tunnelManager.connection.fetchLastDisconnectError { error in
-                    let message = {
-                        if let error = error as? NSError {
-                            if error.domain == NEVPNConnectionErrorDomain,
-                                let code = NEVPNConnectionError(rawValue: error.code) {
-                                switch code {
-                                case .overslept: return "overslept"
-                                case .noNetworkAvailable: return "noNetworkAvailable"
-                                case .unrecoverableNetworkChange: return "unrecoverableNetworkChange"
-                                case .configurationFailed: return "configurationFailed"
-                                case .serverAddressResolutionFailed: return "serverAddressResolutionFailed"
-                                case .serverNotResponding: return "serverNotResponding"
-                                case .serverDead: return "serverDead"
-                                case .authenticationFailed: return "authenticationFailed"
-                                case .clientCertificateInvalid: return "clientCertificateInvalid"
-                                case .clientCertificateNotYetValid: return "clientCertificateNotYetValid"
-                                case .clientCertificateExpired: return "clientCertificateExpired"
-                                case .pluginFailed: return "pluginFailed"
-                                case .configurationNotFound: return "configurationNotFound"
-                                case .pluginDisabled: return "pluginDisabled"
-                                case .negotiationFailed: return "negotiationFailed"
-                                case .serverDisconnected: return "serverDisconnected"
-                                case .serverCertificateInvalid: return "serverCertificateInvalid"
-                                case .serverCertificateNotYetValid: return "serverCertificateNotYetValid"
-                                case .serverCertificateExpired: return "serverCertificateExpired"
-                                default: return error.localizedDescription
-                                }
-                            } else {
-                                return error.localizedDescription
-                            }
-                        }
-
-                        return "none"
-                    }()
-
-                    continuation.resume(returning: message)
-                }
+            do {
+                try await tunnelManager.connection.fetchLastDisconnectError()
+                return nil
+            } catch {
+                return (error as NSError).toMetadataError()
             }
         }
 
-        return "none"
+        return nil
     }
 
     func collectVPNSettingsState() -> VPNMetadata.VPNSettingsState {
@@ -318,4 +294,24 @@ extension VPNMetadata.PrivacyProInfo.Source {
             self = .other
         }
     }
+}
+
+private extension NSError {
+
+    @available(iOS 16.0, *)
+    func toMetadataError() -> (error: VPNMetadata.LastDisconnectError, underlyingErrors: [VPNMetadata.LastDisconnectError]) {
+        let metadataError = VPNMetadata.LastDisconnectError(domain: self.domain, code: self.code, description: self.localizedDescription)
+
+        let underlyingErrors = self.underlyingErrors.compactMap { underlyingError in
+            let underlyingNSError = underlyingError as NSError
+            return VPNMetadata.LastDisconnectError(
+                domain: underlyingNSError.domain,
+                code: underlyingNSError.code,
+                description: underlyingNSError.localizedDescription
+            )
+        }
+
+        return (metadataError, underlyingErrors)
+    }
+
 }

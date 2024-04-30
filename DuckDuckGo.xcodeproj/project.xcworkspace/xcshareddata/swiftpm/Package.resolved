@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "f8c73292d4d6724ec81f98bd29dbb2061f1a8cf6",
-        "version" : "141.1.2"
+        "branch" : "sam/remove-subscription-bsk-dependency",
+        "revision" : "0c569fa98de345b8f6d8411512ffdeeb148d248e"
       }
     },
     {

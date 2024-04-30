@@ -247,6 +247,42 @@
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Piilota salasana";
 
+/* Button label to get link to download the desktop browser */
+"autofill.import.passwords.get-browser-button" = "Hanki pöytäkoneselain";
+
+/* Step 1 for instructions to import passwords */
+"autofill.import.passwords.instructions.step1" = "Avaa DuckDuckGo Macissa tai Windowsissa";
+
+/* Step 2 for instructions to import passwords. This reads as 'Go to Settings > Passwords' */
+"autofill.import.passwords.instructions.step2" = "Siirry kohtaan %1$@ > %2$@";
+
+/* second parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.passwords" = "Salasanat";
+
+/* first parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.settings" = "Asetukset";
+
+/* Step 3 for instructions to import passwords. This reads as 'Select Import Passwords and follow the steps' */
+"autofill.import.passwords.instructions.step3" = "Valitse %@ ja noudata tuontia koskevia ohjeita";
+
+/* Parameter for autofill.import.passwords.instructions.step3 */
+"autofill.import.passwords.instructions.step3.import" = "Tuo salasanat...";
+
+/* Step 4 for instructions to import passwords: Once imported on your computer you can set up sync on this iPhone|iPad|device */
+"autofill.import.passwords.instructions.step4" = "Kun suorittanut tuonnin tietokoneellesi, voit määrittää synkronoinnin tälle %@";
+
+/* Title for section with instructions to import passwords */
+"autofill.import.passwords.instructions.title" = "Tuo pöytäkoneselaimesta:";
+
+/* Subtitle for screen to import passwords */
+"autofill.import.passwords.subtitle" = "Tuo DuckDuckGo-selaimen pöytäkoneversiossa olevat salasanat ja synkronoi eri laitteiden kanssa.";
+
+/* Button label to sync passwords with desktop browser */
+"autofill.import.passwords.sync-button" = "Synkronointi pöytäkoneen kanssa";
+
+/* Title for screen to import passwords */
+"autofill.import.passwords.title" = "Näin tuot salasanat";
+
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Poista Käytöstä";
 
@@ -349,8 +385,11 @@
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Käyttäjätunnus";
 
-/* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Salasanat tallennetaan laitteellesi turvallisesti.";
+/* Title for button to Import Passwords when autofill has no items */
+"autofill.logins.empty-view.button.title" = "Tuo salasanat";
+
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle" = "Muiden selainten tai sovellusten salasanat voidaan tuoda DuckDuckGo-selaimen tietokoneversiolla.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Salasanoja ei ole vielä tallennettu";
@@ -369,6 +408,9 @@
 
 /* Title for a toggle that enables autofill */
 "autofill.logins.list.enable" = "Tallenna ja täytä salasanat automaattisesti";
+
+/* Footer label displayed below table section with option to enable autofill */
+"autofill.logins.list.enable.footer" = "Salasanat tallennetaan laitteellesi turvallisesti.";
 
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Kohteen %@ salasana poistettu";
@@ -711,6 +753,15 @@
 
 /* No comment provided by engineer. */
 "Debug" = "Debug";
+
+/* Default string used if users device is not iPhone or iPad */
+"device.type.default" = "laitteelle";
+
+/* Device type is iPhone */
+"device.type.iphone" = "iPhonelle";
+
+/* Device type is iPad */
+"device.type.pad" = "iPadille";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Pois käytöstä";
@@ -1098,6 +1149,21 @@
 
 /* No comment provided by engineer. */
 "fireButtonAnimation.waterSwirl.name" = "Pyörre";
+
+/* Description text above the Share Link button */
+"get.browser.on-your-desktop-go-to" = "Siirry tietokoneellasi kohtaan:";
+
+/* Title for the Share Download Link button */
+"get.browser.share-link" = "Jaa latauslinkki";
+
+/* Message displayed in the share action when sharing via email */
+"get.browser.share-link.message" = "Tee yksityisiä hakuja ja estä seuranta DuckDuckGo-selaimen tietokoneversiolla. Mene tietokoneella tähän linkkiin ja lataa selain jo tänään.";
+
+/* Title displayed in the share action */
+"get.browser.share-link.title" = "Hanki DuckDuckGo-selain Macille tai Windowsille";
+
+/* Title for the get desktop browser feature */
+"get.browser.title" = "Hanki DuckDuckGo Macille tai Windowsille";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Lisää DuckDuckGo koti-valikkoon!";

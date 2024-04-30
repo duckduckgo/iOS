@@ -20,6 +20,7 @@
 enum DesktopDownloadPlatform {
     case windows
     case mac
+    case desktop
 }
 
 struct DesktopDownloadPlatformConstants {
@@ -31,6 +32,8 @@ struct DesktopDownloadPlatformConstants {
             return "WindowsWaitlistJoinWaitlist"
         case .mac:
             return "WaitlistMacComputer"
+        case .desktop:
+            return "App-Download-128"
         }
     }
     var title: String {
@@ -39,6 +42,8 @@ struct DesktopDownloadPlatformConstants {
             return UserText.windowsWaitlistTryDuckDuckGoForWindowsDownload
         case .mac:
             return UserText.macWaitlistTryDuckDuckGoForMac
+        case .desktop:
+            return UserText.getBrowserTitle
         }
     }
     var summary: String {
@@ -47,6 +52,8 @@ struct DesktopDownloadPlatformConstants {
             return UserText.windowsWaitlistSummary
         case .mac:
             return UserText.macWaitlistSummary
+        case .desktop:
+            return ""
         }
     }
     var onYourString: String {
@@ -55,6 +62,16 @@ struct DesktopDownloadPlatformConstants {
             return UserText.windowsWaitlistOnYourComputerGoTo
         case .mac:
             return UserText.macWaitlistOnYourMacGoTo
+        case .desktop:
+            return UserText.getBrowserOnYourDesktopGoTo
+        }
+    }
+    var goToUrl: String {
+        switch platform {
+        case .desktop:
+            return "duckduckgo.com/browser"
+        default:
+            return downloadURL
         }
     }
     var downloadURL: String {
@@ -63,6 +80,34 @@ struct DesktopDownloadPlatformConstants {
             return "duckduckgo.com/windows"
         case .mac:
             return "duckduckgo.com/mac"
+        case .desktop:
+            return "duckduckgo.com/browser?origin=funnel_browser_ios_sync"
+        }
+    }
+    var button: String {
+        switch platform {
+        case .windows:
+            return downloadURL
+        case .mac:
+            return downloadURL
+        case .desktop:
+            return UserText.getBrowserShareLink
+        }
+    }
+    var shareTitle: String? {
+        switch platform {
+        case .desktop:
+            return UserText.getBrowserShareLinkTitle
+        default:
+            return nil
+        }
+    }
+    var shareMessage: String? {
+        switch platform {
+        case .desktop:
+            return UserText.getBrowserShareLinkMessage
+        default:
+            return nil
         }
     }
     var otherPlatformText: String {
@@ -71,6 +116,8 @@ struct DesktopDownloadPlatformConstants {
             return UserText.windowsWaitlistMac
         case .mac:
             return UserText.macWaitlistWindows
+        case .desktop:
+            return ""
         }
     }
     var viewTitle: String {
@@ -79,6 +126,8 @@ struct DesktopDownloadPlatformConstants {
             return UserText.windowsWaitlistTitle
         case .mac:
             return UserText.macBrowserTitle
+        case .desktop:
+            return ""
         }
     }
 }

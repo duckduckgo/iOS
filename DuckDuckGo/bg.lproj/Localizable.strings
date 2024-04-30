@@ -247,6 +247,42 @@
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Скриване на паролата";
 
+/* Button label to get link to download the desktop browser */
+"autofill.import.passwords.get-browser-button" = "Вземете браузъра за работен плот";
+
+/* Step 1 for instructions to import passwords */
+"autofill.import.passwords.instructions.step1" = "Отворете DuckDuckGo на Mac или Windows";
+
+/* Step 2 for instructions to import passwords. This reads as 'Go to Settings > Passwords' */
+"autofill.import.passwords.instructions.step2" = "Отидете на „%1$@ > %2$@“";
+
+/* second parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.passwords" = "Пароли";
+
+/* first parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.settings" = "Настройки";
+
+/* Step 3 for instructions to import passwords. This reads as 'Select Import Passwords and follow the steps' */
+"autofill.import.passwords.instructions.step3" = "Изберете „%@“ и следвайте стъпките за импортиране";
+
+/* Parameter for autofill.import.passwords.instructions.step3 */
+"autofill.import.passwords.instructions.step3.import" = "Импортиране на пароли...";
+
+/* Step 4 for instructions to import passwords: Once imported on your computer you can set up sync on this iPhone|iPad|device */
+"autofill.import.passwords.instructions.step4" = "След като бъдат импортирани на вашия компютър, можете да настроите синхронизирането на %@";
+
+/* Title for section with instructions to import passwords */
+"autofill.import.passwords.instructions.title" = "Импортиране от браузъра на работния плот:";
+
+/* Subtitle for screen to import passwords */
+"autofill.import.passwords.subtitle" = "Импортирайте пароли в десктоп версията на браузъра DuckDuckGo, след което ги синхронизирайте с различни устройства.";
+
+/* Button label to sync passwords with desktop browser */
+"autofill.import.passwords.sync-button" = "Синхронизиране с браузъра на работния плот";
+
+/* Title for screen to import passwords */
+"autofill.import.passwords.title" = "Как се импортират пароли";
+
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Забрани";
 
@@ -349,8 +385,11 @@
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Потребителско име";
 
-/* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Паролите се съхраняват сигурно на Вашето устройство.";
+/* Title for button to Import Passwords when autofill has no items */
+"autofill.logins.empty-view.button.title" = "Импортиране на пароли";
+
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle" = "Паролите от други браузъри или приложения могат да бъдат импортирани чрез версията за работен плот на браузъра DuckDuckGo.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Все още няма запазени пароли";
@@ -369,6 +408,9 @@
 
 /* Title for a toggle that enables autofill */
 "autofill.logins.list.enable" = "Запазване и автоматично попълване на паролите";
+
+/* Footer label displayed below table section with option to enable autofill */
+"autofill.logins.list.enable.footer" = "Паролите се съхраняват сигурно на Вашето устройство.";
 
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Паролата за %@ е изтрита";
@@ -711,6 +753,15 @@
 
 /* No comment provided by engineer. */
 "Debug" = "Debug";
+
+/* Default string used if users device is not iPhone or iPad */
+"device.type.default" = "устройство";
+
+/* Device type is iPhone */
+"device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"device.type.pad" = "iPad";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Деактивирано";
@@ -1098,6 +1149,21 @@
 
 /* No comment provided by engineer. */
 "fireButtonAnimation.waterSwirl.name" = "Водовъртеж";
+
+/* Description text above the Share Link button */
+"get.browser.on-your-desktop-go-to" = "На компютъра си отидете на:";
+
+/* Title for the Share Download Link button */
+"get.browser.share-link" = "Споделяне на връзка за изтегляне";
+
+/* Message displayed in the share action when sharing via email */
+"get.browser.share-link.message" = "Търсете поверително и блокирайте тракерите с браузъра за работен плот DuckDuckGo. Посетете тази връзка на своя компютър, за да го изтеглите още днес.";
+
+/* Title displayed in the share action */
+"get.browser.share-link.title" = "Вземете браузъра DuckDuckGo за Mac или Windows";
+
+/* Title for the get desktop browser feature */
+"get.browser.title" = "Вземете DuckDuckGo за Mac или Windows";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Добавете DuckDuckGo към началния си екран!";

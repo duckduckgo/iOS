@@ -9710,7 +9710,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = 142.0.0;
+				branch = "dominik/sync-enable-field-validation";
 				kind = branch;
 			};
 		};

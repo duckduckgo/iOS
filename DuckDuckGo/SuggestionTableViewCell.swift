@@ -70,13 +70,9 @@ class SuggestionTableViewCell: UITableViewCell {
             self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
 
         case .historyEntry(title: let title, url: let url, _):
-            if url.isDuckDuckGoSearch, let searchQuery = url.searchQuery {
-                text = searchQuery
-            } else {
-                text = title ?? url.absoluteString
-                urlLabel.isHidden = false
-                urlLabel.text = url.formattedForSuggestion()
-            }
+            text = title ?? url.absoluteString
+            urlLabel.isHidden = false
+            urlLabel.text = url.formattedForSuggestion()
 
             typeImage.image = UIImage(named: "History-24")
             self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark

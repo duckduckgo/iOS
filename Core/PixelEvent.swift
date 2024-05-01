@@ -372,7 +372,12 @@ extension Pixel {
         case networkProtectionGeoswitchingSetNearest
         case networkProtectionGeoswitchingSetCustom
         case networkProtectionGeoswitchingNoLocations
-        
+
+        case networkProtectionFailureRecoveryStarted
+        case networkProtectionFailureRecoveryFailed
+        case networkProtectionFailureRecoveryCompletedHealthy
+        case networkProtectionFailureRecoveryCompletedUnhealthy
+
         // MARK: remote messaging pixels
         
         case remoteMessageShown
@@ -1328,6 +1333,10 @@ extension Pixel.Event {
         case .privacyProOfferYearlyPriceClick: return "m_privacy-pro_offer_yearly-price_click"
         case .privacyProAddEmailSuccess: return "m_privacy-pro_app_add-email_success_u"
         case .privacyProWelcomeFAQClick: return "m_privacy-pro_welcome_faq_click_u"
+        case .networkProtectionFailureRecoveryStarted: return "m_netp_ev_failure_recovery_started"
+        case .networkProtectionFailureRecoveryFailed: return "m_netp_ev_failure_recovery_failed"
+        case .networkProtectionFailureRecoveryCompletedHealthy: return "m_netp_ev_failure_recovery_completed_server_healthy"
+        case .networkProtectionFailureRecoveryCompletedUnhealthy: return "m_netp_ev_failure_recovery_completed_server_unhealthy"
             
             // MARK: Secure Vault
         case .secureVaultL1KeyMigration: return "m_secure-vault_keystore_event_l1-key-migration"

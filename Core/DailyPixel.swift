@@ -51,7 +51,7 @@ public final class DailyPixel {
     public static func fire(pixel: Pixel.Event,
                             error: Swift.Error? = nil,
                             withAdditionalParameters params: [String: String] = [:],
-                            includedParameters: [Pixel.QueryParameters] = [.atb, .appVersion],
+                            includedParameters: [Pixel.QueryParameters] = [.appVersion],
                             onComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
         var key: String = pixel.name
 
@@ -79,7 +79,7 @@ public final class DailyPixel {
     public static func fireDailyAndCount(pixel: Pixel.Event,
                                          error: Swift.Error? = nil,
                                          withAdditionalParameters params: [String: String] = [:],
-                                         includedParameters: [Pixel.QueryParameters] = [.atb, .appVersion],
+                                         includedParameters: [Pixel.QueryParameters] = [.appVersion],
                                          onDailyComplete: @escaping (Swift.Error?) -> Void = { _ in },
                                          onCountComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
         let key: String = pixel.name

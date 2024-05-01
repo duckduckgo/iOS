@@ -106,7 +106,7 @@ struct HomeMessageViewModel {
                 HomeMessageButtonViewModel(title: secondaryActionText,
                                            actionStyle: secondaryAction.actionStyle(isSecondaryAction: true),
                                            action: mapActionToViewModel(remoteAction: secondaryAction, buttonAction:
-                                                .secondaryAction(isShare: primaryAction.isShare), onDidClose: onDidClose)),
+                                                .secondaryAction(isShare: secondaryAction.isShare), onDidClose: onDidClose)),
 
                 HomeMessageButtonViewModel(title: primaryActionText,
                                            actionStyle: primaryAction.actionStyle(),

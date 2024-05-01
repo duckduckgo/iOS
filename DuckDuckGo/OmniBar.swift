@@ -497,7 +497,6 @@ extension OmniBar: UITextFieldDelegate {
 
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         omniDelegate?.onTextFieldWillBeginEditing(self, tapped: textFieldTapped)
-        textFieldTapped = false
         return true
     }
 

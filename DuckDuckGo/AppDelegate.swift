@@ -287,7 +287,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         autoClear = AutoClear(worker: main)
         Task {
-            await autoClear?.clearDataIfEnabled()
+            await autoClear?.clearDataIfEnabled(launching: true)
         }
 
         AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()

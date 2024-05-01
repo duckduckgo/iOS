@@ -1,3 +1,5 @@
-- Bug fixes and other improvements.
+- Keep your passwords in easy reach with new widgets for your Home Screen and Lock Screen.
+- Wondering how to import passwords from our desktop browser and other apps? We added instructions in Settings > Passwords > Import Passwords.
+- Bug fixes and improvements.
 
 Join our fully distributed team and help raise the standard of trust online! https://duckduckgo.com/hiring

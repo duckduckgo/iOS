@@ -217,8 +217,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DaxDialogs.shared.primeForUse()
         }
 
-        // Experiment installation will be uncommented once we decide to run the experiment
-//        PixelExperiment.install()
+        PixelExperiment.install()
 
         // MARK: Sync initialisation
 

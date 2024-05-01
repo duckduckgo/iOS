@@ -45,7 +45,7 @@ class AutoClear {
     }
     
     @MainActor
-    func clearDataIfEnabled() async {
+    func clearDataIfEnabled(launching: Bool = false) async {
         guard let settings = AutoClearSettingsModel(settings: appSettings) else { return }
         
         if settings.action.contains(.clearTabs) {
@@ -56,7 +56,9 @@ class AutoClear {
             await worker.forgetData()
         }
 
-        worker.clearDataFinished(self)
+        if !launching {
+            worker.clearDataFinished(self)
+        }
     }
     
     /// Note: function is parametrised because of tests.

@@ -103,15 +103,15 @@ struct HomeMessageViewModel {
             ]
         case .bigTwoAction(_, _, _, let primaryActionText, let primaryAction, let secondaryActionText, let secondaryAction):
             return [
-                HomeMessageButtonViewModel(title: primaryActionText,
-                                           actionStyle: primaryAction.actionStyle(),
-                                           action: mapActionToViewModel(remoteAction: primaryAction, buttonAction:
-                                                .primaryAction(isShare: primaryAction.isShare), onDidClose: onDidClose)),
-
                 HomeMessageButtonViewModel(title: secondaryActionText,
                                            actionStyle: secondaryAction.actionStyle(isSecondaryAction: true),
                                            action: mapActionToViewModel(remoteAction: secondaryAction, buttonAction:
-                                                .secondaryAction(isShare: primaryAction.isShare), onDidClose: onDidClose))
+                                                .secondaryAction(isShare: primaryAction.isShare), onDidClose: onDidClose)),
+
+                HomeMessageButtonViewModel(title: primaryActionText,
+                                           actionStyle: primaryAction.actionStyle(),
+                                           action: mapActionToViewModel(remoteAction: primaryAction, buttonAction:
+                                           .primaryAction(isShare: primaryAction.isShare), onDidClose: onDidClose))
             ]
         case .promoSingleAction(_, _, _, let actionText, let action):
             return [

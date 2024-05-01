@@ -97,26 +97,26 @@ struct HomeMessageViewModel {
         case .bigSingleAction(_, _, _, let primaryActionText, let primaryAction):
             return [
                 HomeMessageButtonViewModel(title: primaryActionText,
-                                           actionStyle: primaryAction.actionStyle,
+                                           actionStyle: primaryAction.actionStyle(),
                                            action: mapActionToViewModel(remoteAction: primaryAction, buttonAction:
                                                 .primaryAction(isShare: primaryAction.isShare), onDidClose: onDidClose))
             ]
         case .bigTwoAction(_, _, _, let primaryActionText, let primaryAction, let secondaryActionText, let secondaryAction):
             return [
                 HomeMessageButtonViewModel(title: primaryActionText,
-                                           actionStyle: primaryAction.actionStyle,
+                                           actionStyle: primaryAction.actionStyle(),
                                            action: mapActionToViewModel(remoteAction: primaryAction, buttonAction:
                                                 .primaryAction(isShare: primaryAction.isShare), onDidClose: onDidClose)),
 
                 HomeMessageButtonViewModel(title: secondaryActionText,
-                                           actionStyle: secondaryAction.actionStyle,
+                                           actionStyle: secondaryAction.actionStyle(isSecondaryAction: true),
                                            action: mapActionToViewModel(remoteAction: secondaryAction, buttonAction:
                                                 .secondaryAction(isShare: primaryAction.isShare), onDidClose: onDidClose))
             ]
         case .promoSingleAction(_, _, _, let actionText, let action):
             return [
                 HomeMessageButtonViewModel(title: actionText,
-                                           actionStyle: action.actionStyle,
+                                           actionStyle: action.actionStyle(),
                                            action: mapActionToViewModel(remoteAction: action, buttonAction:
                                                 .action(isShare: action.isShare), onDidClose: onDidClose))]
         }

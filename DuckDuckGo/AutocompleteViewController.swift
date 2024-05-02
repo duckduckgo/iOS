@@ -380,35 +380,7 @@ private struct SuggestionListItem: View {
         self.indicator = indicator
         self.onTapIndicator = onTapIndicator
     }
-
-    @available(iOS 15, *)
-    var titleWithQuery: AttributedString {
-        guard let query, title.hasPrefix(query) else {
-            return AttributedString(title)
-        }
-
-        let regularAttributes = [
-            NSAttributedString.Key.font: UIFont.daxBodyRegular(),
-            NSAttributedString.Key.foregroundColor: UIColor(designSystemColor: .textPrimary)
-        ]
-
-        let boldAttributes = [
-            NSAttributedString.Key.font: UIFont.daxBodyBold(),
-            NSAttributedString.Key.foregroundColor: UIColor(designSystemColor: .textPrimary)
-        ]
-
-        let newText = NSMutableAttributedString(string: title)
-
-        let queryLength = query.length()
-        if queryLength < newText.length, title.hasPrefix(query) {
-            newText.addAttributes(regularAttributes, range: NSRange(location: 0, length: queryLength))
-            newText.addAttributes(boldAttributes, range: NSRange(location: queryLength, length: newText.length - queryLength))
-        } else {
-            newText.addAttributes(regularAttributes, range: NSRange(location: 0, length: newText.length))
-        }
-        return AttributedString(newText)
-    }
-
+    
     var body: some View {
 
         HStack {
@@ -419,15 +391,19 @@ private struct SuggestionListItem: View {
             VStack(alignment: .leading) {
 
                 Group {
-                    if #available(iOS 15, *), query != nil {
-                        Text(titleWithQuery)
+                    if let query, title.hasPrefix(query) {
+                        Text(query)
+                            .font(Font(uiFont: UIFont.daxBodyRegular()))
+                        +
+                        Text(title.dropping(prefix: query))
+                            .font(Font(uiFont: UIFont.daxBodyBold()))
                     } else {
                         Text(title)
+                            .font(Font(uiFont: UIFont.daxBodyRegular()))
                     }
                 }
-                    .daxBodyRegular()
-                    .foregroundColor(Color(designSystemColor: .textPrimary))
-                    .lineLimit(1)
+                .foregroundColor(Color(designSystemColor: .textPrimary))
+                .lineLimit(1)
 
                 if let subtitle {
                     Text(subtitle)

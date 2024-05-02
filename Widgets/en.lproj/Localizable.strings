@@ -70,6 +70,12 @@
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Search DuckDuckGo";
 
+/* VPN connect button text */
+"widget.vpn.button.connect" = "Connect";
+
+/* VPN disconnect button text */
+"widget.vpn.button.disconnect" = "Disconnect";
+
 /* Message describing VPN connected status */
 "widget.vpn.status.connected" = "VPN is ON";
 

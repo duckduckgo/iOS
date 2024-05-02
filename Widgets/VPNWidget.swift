@@ -173,7 +173,7 @@ struct VPNStatusView: View {
                 switch status {
                 case .connected, .connecting, .reasserting:
                     Button(intent: DisableVPNIntent()) {
-                        Text("Disconnect")
+                        Text(UserText.vpnWidgetDisconnectButton)
                             .font(.system(size: 15, weight: .medium))
                             .fontWeight(.semibold)
                     }
@@ -185,7 +185,7 @@ struct VPNStatusView: View {
                     .padding(.bottom, 16)
                 case .disconnected, .disconnecting:
                     Button(intent: EnableVPNIntent()) {
-                        Text("Connect")
+                        Text(UserText.vpnWidgetConnectButton)
                             .font(.system(size: 15, weight: .medium))
                             .fontWeight(.semibold)
                     }

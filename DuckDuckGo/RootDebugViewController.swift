@@ -27,6 +27,7 @@ import Common
 import Configuration
 import Persistence
 import DDGSync
+import NetworkProtection
 
 class RootDebugViewController: UITableViewController {
 

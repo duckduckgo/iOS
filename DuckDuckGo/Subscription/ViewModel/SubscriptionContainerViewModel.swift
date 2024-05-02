@@ -19,25 +19,24 @@
 
 import Foundation
 import Combine
+import Subscription
 
 @available(iOS 15.0, *)
 final class SubscriptionContainerViewModel: ObservableObject {
     
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
-    
+
     let flow: SubscriptionFlowViewModel
     let restore: SubscriptionRestoreViewModel
     let email: SubscriptionEmailViewModel
-    
-    
-    init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
-         subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature()) {
-        self.userScript = userScript
-        self.subFeature = subFeature
+
+    init(accountManager: AccountManaging) {
+        self.userScript = SubscriptionPagesUserScript()
+        self.subFeature = SubscriptionPagesUseSubscriptionFeature(accountManager: accountManager)
         self.flow = SubscriptionFlowViewModel(userScript: userScript, subFeature: subFeature)
-        self.restore = SubscriptionRestoreViewModel(userScript: userScript, subFeature: subFeature)
-        self.email = SubscriptionEmailViewModel(userScript: userScript, subFeature: subFeature)
+        self.restore = SubscriptionRestoreViewModel(userScript: userScript, subFeature: subFeature, accountManager: accountManager)
+        self.email = SubscriptionEmailViewModel(userScript: userScript, subFeature: subFeature, accountManager: accountManager)
     }
     
     deinit {

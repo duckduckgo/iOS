@@ -46,7 +46,7 @@ final class SettingsViewModel: ObservableObject {
     var emailManager: EmailManager { EmailManager() }
 
     // Subscription Dependencies
-    private var accountManager: AccountManager
+    private var accountManager: AccountManaging
     private var signOutObserver: Any?
     
 #if NETWORK_PROTECTION
@@ -384,7 +384,7 @@ final class SettingsViewModel: ObservableObject {
     // MARK: Default Init
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
-         accountManager: AccountManager,
+         accountManager: AccountManaging,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil) {
@@ -447,7 +447,7 @@ extension SettingsViewModel {
         var enabled = false
 #if NETWORK_PROTECTION
         if #available(iOS 15, *) {
-            enabled = DefaultNetworkProtectionVisibility().shouldKeepVPNAccessViaWaitlist()
+            enabled = DefaultNetworkProtectionVisibility(accountManager: accountManager).shouldKeepVPNAccessViaWaitlist()
         }
 #endif
         return SettingsState.NetworkProtection(enabled: enabled, status: "")
@@ -486,7 +486,7 @@ extension SettingsViewModel {
     
 #if NETWORK_PROTECTION
     private func updateNetPStatus(connectionStatus: ConnectionStatus) {
-        if DefaultNetworkProtectionVisibility().isPrivacyProLaunched() {
+        if DefaultNetworkProtectionVisibility(accountManager: accountManager).isPrivacyProLaunched() {
             switch connectionStatus {
             case .connected:
                 self.state.networkProtection.status = UserText.netPCellConnected
@@ -765,7 +765,7 @@ extension SettingsViewModel {
                 // Check entitlements and update state
                 let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
                 for entitlement in entitlements {
-                    if case .success = await AccountManager().hasEntitlement(for: entitlement) {
+                    if case .success = await accountManager.hasEntitlement(for: entitlement) {
                         switch entitlement {
                         case .identityTheftRestoration:
                             self.state.subscription.entitlements.append(.identityTheftRestoration)
@@ -800,7 +800,7 @@ extension SettingsViewModel {
     
     @available(iOS 15.0, *)
     private func signOutUser() {
-        AccountManager().signOut()
+        accountManager.signOut()
         setupSubscriptionPurchaseOptions()
     }
     
@@ -825,7 +825,8 @@ extension SettingsViewModel {
     @available(iOS 15.0, *)
     func restoreAccountPurchase() async {
         DispatchQueue.main.async { self.state.subscription.isRestoring = true }
-        let result = await AppStoreRestoreFlow.restoreAccountFromPastPurchase(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+        let appStoreRestoreFlow = AppStoreRestoreFlow(accountManager: accountManager)
+        let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase()
         switch result {
         case .success:
             DispatchQueue.main.async {

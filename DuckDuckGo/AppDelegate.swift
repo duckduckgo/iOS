@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if NETWORK_PROTECTION
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
-    lazy var vpnFeatureVisibility = DefaultNetworkProtectionVisibility()
+    lazy var vpnFeatureVisibility = DefaultNetworkProtectionVisibility(accountManager: AppDelegate.accountManager)
 #endif
 
     private var autoClear: AutoClear?
@@ -92,6 +92,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     @UserDefaultsWrapper(key: .privacyProEnvironment, defaultValue: SubscriptionPurchaseEnvironment.ServiceEnvironment.default.description)
     private var privacyProEnvironment: String
+
+    public static let accountManager = AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
 
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -514,7 +516,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func stopTunnelAndShowThankYouMessagingIfNeeded() {
-        if AccountManager().isUserAuthenticated {
+        if AppDelegate.accountManager.isUserAuthenticated {
             tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
             return
         }
@@ -523,7 +525,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Task {
                 await self.stopAndRemoveVPN(with: "thank-you-dialog")
             }
-        } else if vpnFeatureVisibility.isPrivacyProLaunched() && !AccountManager().isUserAuthenticated {
+        } else if vpnFeatureVisibility.isPrivacyProLaunched() && !AppDelegate.accountManager.isUserAuthenticated {
             Task {
                 await self.stopAndRemoveVPN(with: "subscription-check")
             }
@@ -549,9 +551,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func updateSubscriptionStatus() {
         Task {
-            let accountManager = AccountManager()
-
-            guard let token = accountManager.accessToken else { return }
+            guard let token = AppDelegate.accountManager.accessToken else { return }
 
             if case .success(let subscription) = await SubscriptionService.getSubscription(accessToken: token,
                                                                                            cachePolicy: .reloadIgnoringLocalCacheData) {
@@ -560,7 +560,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
 
-            _ = await accountManager.fetchEntitlements(cachePolicy: .reloadIgnoringLocalCacheData)
+            _ = await AppDelegate.accountManager.fetchEntitlements(cachePolicy: .reloadIgnoringLocalCacheData)
         }
     }
 
@@ -858,7 +858,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if NETWORK_PROTECTION
             if shortcutItem.type == ShortcutKey.openVPNSettings {
-                let visibility = DefaultNetworkProtectionVisibility()
+                let visibility = DefaultNetworkProtectionVisibility(accountManager: AppDelegate.accountManager)
                 if visibility.shouldShowVPNShortcut() {
                     presentNetworkProtectionStatusSettingsModal()
                 }
@@ -971,8 +971,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 #if NETWORK_PROTECTION
             if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
                 Task {
-                    let accountManager = AccountManager()
-                    if case .success(let hasEntitlements) = await accountManager.hasEntitlement(for: .networkProtection),
+                    if case .success(let hasEntitlements) = await AppDelegate.accountManager.hasEntitlement(for: .networkProtection),
                         hasEntitlements {
                         presentNetworkProtectionStatusSettingsModal()
                     }

@@ -29,7 +29,7 @@ import NetworkProtection
 @available(iOS 15.0, *)
 final class SubscriptionDebugViewController: UITableViewController {
     
-    private let accountManager = AccountManager()
+    private let accountManager: AccountManaging = AppDelegate.accountManager
     fileprivate var purchaseManager: PurchaseManager = PurchaseManager.shared
     
     @UserDefaultsWrapper(key: .privacyProEnvironment, defaultValue: SubscriptionPurchaseEnvironment.ServiceEnvironment.default.description)
@@ -271,7 +271,7 @@ final class SubscriptionDebugViewController: UITableViewController {
             }
             let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
             for entitlement in entitlements {
-                if case let .success(result) = await AccountManager().hasEntitlement(for: entitlement, cachePolicy: .reloadIgnoringLocalCacheData) {
+                if case let .success(result) = await accountManager.hasEntitlement(for: entitlement, cachePolicy: .reloadIgnoringLocalCacheData) {
                     let resultSummary = "Entitlement check for \(entitlement.rawValue): \(result)"
                     results.append(resultSummary)
                     print(resultSummary)
@@ -284,7 +284,7 @@ final class SubscriptionDebugViewController: UITableViewController {
     private func setEnvironment(_ environment: SubscriptionPurchaseEnvironment.ServiceEnvironment) {
         if environment.description != privacyProEnvironment {
             
-            AccountManager().signOut()
+            accountManager.signOut()
             
             // Update Subscription environment
             privacyProEnvironment = environment.rawValue

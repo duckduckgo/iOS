@@ -34,6 +34,7 @@ import Subscription
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
     private var cancellables = Set<AnyCancellable>()
+    private static let accountManager: AccountManaging = AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
 
     // MARK: - PacketTunnelProvider.Event reporting
 
@@ -253,13 +254,13 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
-        let featureVisibility = NetworkProtectionVisibilityForTunnelProvider()
+        let featureVisibility = NetworkProtectionVisibilityForTunnelProvider(accountManager: NetworkProtectionPacketTunnelProvider.accountManager)
         let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
         let accessTokenProvider: () -> String? = {
-        if featureVisibility.shouldMonitorEntitlement() {
-            return { AccountManager().accessToken }
-        }
-        return { nil }
+            if featureVisibility.shouldMonitorEntitlement() {
+                return { NetworkProtectionPacketTunnelProvider.accountManager.accessToken }
+            }
+            return { nil }
         }()
         let tokenStore = NetworkProtectionKeychainTokenStore(
             keychainType: .dataProtection(.unspecified),
@@ -335,7 +336,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     private static func entitlementCheck() async -> Result<Bool, Error> {
-        guard NetworkProtectionVisibilityForTunnelProvider().shouldMonitorEntitlement() else {
+        let accountManager = NetworkProtectionPacketTunnelProvider.accountManager
+        guard NetworkProtectionVisibilityForTunnelProvider(accountManager: accountManager).shouldMonitorEntitlement() else {
             return .success(true)
         }
 
@@ -343,8 +345,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
         }
 
-        let result = await AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
-            .hasEntitlement(for: .networkProtection)
+        let result = await accountManager.hasEntitlement(for: .networkProtection)
         switch result {
         case .success(let hasEntitlement):
             return .success(hasEntitlement)

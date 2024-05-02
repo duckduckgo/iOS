@@ -26,7 +26,7 @@ import Subscription
 @available(iOS 15.0, *)
 final class SubscriptionEmailViewModel: ObservableObject {
     
-    let accountManager: AccountManager
+    let accountManager: AccountManaging
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     
@@ -77,7 +77,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
 
     init(userScript: SubscriptionPagesUserScript,
          subFeature: SubscriptionPagesUseSubscriptionFeature,
-         accountManager: AccountManager = AccountManager()) {
+         accountManager: AccountManaging) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.accountManager = accountManager

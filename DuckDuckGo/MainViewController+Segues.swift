@@ -248,7 +248,7 @@ extension MainViewController {
                                                             tabManager: tabManager)
 
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider,
-                                                  accountManager: AccountManager(),
+                                                  accountManager: AppDelegate.accountManager,
                                                   deepLink: deepLinkTarget)
 
         Pixel.fire(pixel: .settingsPresented,

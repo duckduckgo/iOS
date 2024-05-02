@@ -60,12 +60,11 @@ final class SubscriptionITPViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
     private var canGoBackCancellable: AnyCancellable?
-    
-    init(userScript: IdentityTheftRestorationPagesUserScript = IdentityTheftRestorationPagesUserScript(),
-         subFeature: IdentityTheftRestorationPagesFeature = IdentityTheftRestorationPagesFeature()) {
-        self.userScript = userScript
-        self.subFeature = subFeature
-        
+
+    init(accountManager: AccountManager) {
+        self.userScript = IdentityTheftRestorationPagesUserScript()
+        self.subFeature = IdentityTheftRestorationPagesFeature(accountManager: accountManager)
+
         let webViewSettings = AsyncHeadlessWebViewSettings(bounces: false,
                                                            allowedDomains: Self.allowedDomains,
                                                            contentBlocking: false)

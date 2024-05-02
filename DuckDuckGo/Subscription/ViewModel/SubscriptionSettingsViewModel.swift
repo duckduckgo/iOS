@@ -26,7 +26,7 @@ import Core
 @available(iOS 15.0, *)
 final class SubscriptionSettingsViewModel: ObservableObject {
     
-    let accountManager: AccountManager
+    let accountManager: AccountManaging
     private var subscriptionUpdateTimer: Timer?
     private var signOutObserver: Any?
     private var subscriptionInfo: SubscriptionService.GetSubscriptionResponse?
@@ -56,7 +56,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     @Published private(set) var state = State()
     
     
-    init(accountManager: AccountManager = AccountManager()) {
+    init(accountManager: AccountManaging) {
         self.accountManager = accountManager
         setupSubscriptionUpdater()
         setupNotificationObservers()
@@ -130,7 +130,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     func removeSubscription() {
-        AccountManager().signOut()
+        accountManager.signOut()
         _ = ActionMessageView()
         ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation,
                                   presentationLocation: .withoutBottomBar)

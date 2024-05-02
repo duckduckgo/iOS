@@ -26,7 +26,7 @@ import Core
 struct SubscriptionSettingsView: View {
         
     @Environment(\.dismiss) var dismiss
-    @StateObject var viewModel = SubscriptionSettingsViewModel()
+    @StateObject var viewModel = SubscriptionSettingsViewModel(accountManager: AppDelegate.accountManager)
     @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
     
     @State var isShowingStripeView = false

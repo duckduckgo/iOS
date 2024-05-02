@@ -57,12 +57,13 @@ extension ConnectionServerInfoObserverThroughSession {
 }
 
 extension NetworkProtectionKeychainTokenStore {
+    
     convenience init() {
         let featureVisibility = DefaultNetworkProtectionVisibility.forTokenStore()
         let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
         let accessTokenProvider: () -> String? = {
         if featureVisibility.shouldMonitorEntitlement() {
-            return { AccountManager().accessToken }
+            return { AppDelegate.accountManager.accessToken }
         }
         return { nil }
     }()
@@ -83,7 +84,7 @@ extension NetworkProtectionCodeRedemptionCoordinator {
             tokenStore: NetworkProtectionKeychainTokenStore(),
             isManualCodeRedemptionFlow: isManualCodeRedemptionFlow,
             errorEvents: .networkProtectionAppDebugEvents,
-            isSubscriptionEnabled: DefaultNetworkProtectionVisibility().isPrivacyProLaunched()
+            isSubscriptionEnabled: DefaultNetworkProtectionVisibility(accountManager: AppDelegate.accountManager).isPrivacyProLaunched()
         )
     }
 }
@@ -104,7 +105,7 @@ extension NetworkProtectionLocationListCompositeRepository {
             environment: settings.selectedEnvironment,
             tokenStore: NetworkProtectionKeychainTokenStore(),
             errorEvents: .networkProtectionAppDebugEvents,
-            isSubscriptionEnabled: DefaultNetworkProtectionVisibility().isPrivacyProLaunched()
+            isSubscriptionEnabled: DefaultNetworkProtectionVisibility(accountManager: AppDelegate.accountManager).isPrivacyProLaunched()
         )
     }
 }

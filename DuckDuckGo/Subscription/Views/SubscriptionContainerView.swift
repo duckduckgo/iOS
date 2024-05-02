@@ -35,12 +35,11 @@ struct SubscriptionContainerView: View {
     private let restoreViewModel: SubscriptionRestoreViewModel
     private let emailViewModel: SubscriptionEmailViewModel
         
-    init(currentView: CurrentView,
-         viewModel: SubscriptionContainerViewModel = SubscriptionContainerViewModel()) {
+    init(currentView: CurrentView) {
         _currentViewState = State(initialValue: currentView)
-        self.viewModel = viewModel
-        let userScript = viewModel.userScript
-        let subFeature = viewModel.subFeature
+        self.viewModel = SubscriptionContainerViewModel(accountManager: AppDelegate.accountManager)
+//        let userScript = viewModel.userScript
+//        let subFeature = viewModel.subFeature
         flowViewModel = viewModel.flow
         restoreViewModel = viewModel.restore
         emailViewModel = viewModel.email

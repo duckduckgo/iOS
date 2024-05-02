@@ -35,7 +35,6 @@ import NetworkExtension
 import NetworkProtection
 import Subscription
 
-
 // swiftlint:disable:next type_body_length
 final class NetworkProtectionDebugViewController: UITableViewController {
     private let titles = [
@@ -138,21 +137,24 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     private var connectionTestResults: [ConnectionTestResult] = []
     private var connectionTestResultError: String?
     private let connectionTestQueue = DispatchQueue(label: "com.duckduckgo.ios.vpnDebugConnectionTestQueue")
+    private let accountManager: AccountManaging
 
     // MARK: Lifecycle
 
-    init?(coder: NSCoder,
-          tokenStore: NetworkProtectionTokenStore,
-          debugFeatures: NetworkProtectionDebugFeatures = NetworkProtectionDebugFeatures()) {
-
+    required init?(coder: NSCoder,
+                   tokenStore: NetworkProtectionTokenStore,
+                   debugFeatures: NetworkProtectionDebugFeatures = NetworkProtectionDebugFeatures(),
+                   accountManager: AccountManaging) {
+        
         self.debugFeatures = debugFeatures
         self.tokenStore = tokenStore
+        self.accountManager = accountManager
 
         super.init(coder: coder)
     }
 
     required convenience init?(coder: NSCoder) {
-        self.init(coder: coder, tokenStore: NetworkProtectionKeychainTokenStore())
+        self.init(coder: coder, tokenStore: NetworkProtectionKeychainTokenStore(), accountManager: AppDelegate.accountManager)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -642,7 +644,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
                 cell.textLabel?.text = "Subscription Override: N/A"
             }
         case .debugInfo:
-            let vpnVisibility = DefaultNetworkProtectionVisibility()
+            let vpnVisibility = DefaultNetworkProtectionVisibility(accountManager: accountManager)
 
             cell.textLabel?.font = .monospacedSystemFont(ofSize: 13.0, weight: .regular)
             cell.textLabel?.text = """
@@ -692,7 +694,7 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
             if let subscriptionOverrideEnabled = defaults.subscriptionOverrideEnabled {
                 if subscriptionOverrideEnabled {
                     defaults.subscriptionOverrideEnabled = false
-                    AccountManager().signOut()
+                    accountManager.signOut()
                 } else {
                     defaults.resetsubscriptionOverrideEnabled()
                 }

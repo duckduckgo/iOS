@@ -77,6 +77,10 @@ struct UserText {
                                                                value: "VPN is OFF",
                                                                comment: "Message describing VPN disconnected status")
 
+    static let vpnWidgetDisconnectedSubtitle = NSLocalizedString("widget.vpn.subtitle.disconnected",
+                                                                 value: "Not connected",
+                                                                 comment: "Subtitle describing VPN disconnected status")
+
 
     static let lockScreenSearchTitle = NSLocalizedString(
         "lock.screen.widget.search.title",

@@ -165,7 +165,7 @@ struct VPNStatusView: View {
                     .fontWeight(.semibold)
                     .foregroundStyle(status.isConnected ? Color.white : Color.black)
 
-                Text(status.isConnected ? entry.location : "VPN is Off")
+                Text(status.isConnected ? entry.location : UserText.vpnWidgetDisconnectedSubtitle)
                     .font(.system(size: 12, weight: .medium))
                     .foregroundStyle(status.isConnected ? Color.white : Color.black)
                     .opacity(status.isConnected ? 0.8 : 0.6)

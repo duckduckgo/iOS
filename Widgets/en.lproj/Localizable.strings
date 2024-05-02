@@ -76,3 +76,6 @@
 /* Message describing VPN disconnected status */
 "widget.vpn.status.disconnected" = "VPN is OFF";
 
+/* Subtitle describing VPN disconnected status */
+"widget.vpn.subtitle.disconnected" = "Not connected";
+

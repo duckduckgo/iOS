@@ -242,8 +242,6 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     private func installAutocompleteSuggestions() {
-//        let controller = AutocompleteViewController.loadFromStoryboard(bookmarksDatabase: bookmarksDatabase, historyCoordinator: historyCoordinator)
-
         let controller = AutocompleteViewController(historyCoordinator: historyCoordinator,
                                                     bookmarksDatabase: bookmarksDatabase,
                                                     appSettings: appSettings)

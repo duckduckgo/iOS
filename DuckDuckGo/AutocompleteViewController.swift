@@ -32,7 +32,7 @@ import SwiftUI
 
 class AutocompleteViewController: UIHostingController<AutocompleteView> {
 
-    private static let debounceDelayMS = 300
+    private static let debounceDelayMS = 100
     private static let session = URLSession(configuration: .ephemeral)
 
     var selectedSuggestion: Suggestion?

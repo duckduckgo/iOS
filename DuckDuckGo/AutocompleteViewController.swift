@@ -66,7 +66,7 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
         self.historyCoordinator = historyCoordinator
         self.bookmarksDatabase = bookmarksDatabase
         self.appSettings = appSettings
-        self.model = AutocompleteViewModel()
+        self.model = AutocompleteViewModel(isAddressBarAtBottom: appSettings.currentAddressBarPosition == .bottom)
         super.init(rootView: AutocompleteView(model: model))
     }
     
@@ -265,14 +265,14 @@ private struct SuggestionView: View {
             case .phrase(let phrase):
                 SuggestionListItem(icon: Image("Find-Search-24"), title: phrase, query: query)
             case .website(let url):
-                SuggestionListItem(icon: Image("Globe-24"), title: url.absoluteString)
+                SuggestionListItem(icon: Image("Globe-24"), title: url.formattedForSuggestion())
             case .bookmark(let title, let url, let isFavorite, _):
-                SuggestionListItem(icon: Image(isFavorite ? "Bookmark-Fav-24" :"Bookmark-24"), title: title, subtitle: url.absoluteString)
+                SuggestionListItem(icon: Image(isFavorite ? "Bookmark-Fav-24" :"Bookmark-24"), title: title, subtitle: url.formattedForSuggestion())
             case .historyEntry(let title, let url, _):
                 if url.isDuckDuckGoSearch {
                     HStack {
-                        SuggestionListItem(icon: Image("History-24"), title: url.searchQuery ?? url.absoluteString)
-                        
+                        SuggestionListItem(icon: Image("History-24"), title: url.searchQuery ?? url.formattedForSuggestion())
+
                         Text("— Search DuckDuckGo")
                             .lineLimit(1)
                             .layoutPriority(1)
@@ -280,7 +280,7 @@ private struct SuggestionView: View {
 
                     }
                 } else {
-                    SuggestionListItem(icon: Image("History-24"), title: title ?? "", subtitle: url.absoluteString)
+                    SuggestionListItem(icon: Image("History-24"), title: title ?? "", subtitle: url.formattedForSuggestion())
                 }
             case .internalPage, .unknown:
                 FailedAssertionView("Unknown or unsupported suggestion type")
@@ -397,6 +397,12 @@ class AutocompleteViewModel: ObservableObject {
 
     weak var delegate: AutocompleteViewControllerDelegate?
 
+    let isAddressBarAtBottom: Bool
+
+    init(isAddressBarAtBottom: Bool) {
+        self.isAddressBarAtBottom = isAddressBarAtBottom
+    }
+
     var emptySuggestion: SuggestionModel {
         SuggestionModel(suggestion: .phrase(phrase: query ?? ""))
     }
@@ -428,6 +434,17 @@ extension HistoryEntry: HistorySuggestion {
 
     public var numberOfVisits: Int {
         return numberOfTotalVisits
+    }
+
+}
+
+private extension URL {
+
+    func formattedForSuggestion() -> String {
+        let string = absoluteString
+            .dropping(prefix: "https://")
+            .dropping(prefix: "http://")
+        return pathComponents.isEmpty ? string : string.dropping(suffix: "/")
     }
 
 }

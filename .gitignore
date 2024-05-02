@@ -76,3 +76,4 @@ Configuration/ExternalDeveloper.xcconfig
 scripts/assets
 
 DuckDuckGoTests/NetworkProtectionVPNLocationViewModelTests.swift*.plist
+*.profraw

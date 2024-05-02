@@ -144,7 +144,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.state.subscriptionActive = true
             }
-            self.dismissStack()
         }
         
         subFeature.onBackToSettings = {

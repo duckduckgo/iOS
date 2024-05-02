@@ -28,10 +28,57 @@ import Persistence
 import History
 import Combine
 import BrowserServicesKit
+import SwiftUI
 
+class AutocompleteViewController: UIHostingController<AutocompleteView> {
+
+    private var historyCoordinator: HistoryCoordinating
+    private var bookmarksDatabase: CoreDataDatabase
+    private var appSettings: AppSettings
+
+    var selectedSuggestion: Suggestion?
+
+    weak var delegate: AutocompleteViewControllerDelegate?
+    weak var presentationDelegate: AutocompleteViewControllerPresentationDelegate?
+
+    init(historyCoordinator: HistoryCoordinating,
+         bookmarksDatabase: CoreDataDatabase,
+         appSettings: AppSettings ) {
+        self.historyCoordinator = historyCoordinator
+        self.bookmarksDatabase = bookmarksDatabase
+        self.appSettings = appSettings
+        super.init(rootView: AutocompleteView())
+    }
+    
+    @MainActor required dynamic init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func willDismiss(with query: String) {
+    }
+
+    func keyboardMoveSelectionDown() {
+    }
+
+    func keyboardMoveSelectionUp() {
+    }
+    
+    func updateQuery(_ query: String) {
+    }
+}
+
+struct AutocompleteView: View {
+
+    var body: some View {
+        Text("AutocompleteView")
+    }
+
+}
+
+/*
 // swiftlint:disable file_length
 class AutocompleteViewController: UIViewController {
-    
+
     private static let session = URLSession(configuration: .ephemeral)
 
     struct Constants {
@@ -431,3 +478,4 @@ extension VariantManager {
 private extension SuggestionResult {
     static let empty = SuggestionResult(topHits: [], duckduckgoSuggestions: [], localSuggestions: [])
 }
+*/

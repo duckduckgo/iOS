@@ -238,11 +238,16 @@ class SuggestionTrayViewController: UIViewController {
         if autocompleteController == nil {
             installAutocompleteSuggestions()
         }
-        autocompleteController?.updateQuery(query: query)
+        autocompleteController?.updateQuery(query)
     }
     
     private func installAutocompleteSuggestions() {
-        let controller = AutocompleteViewController.loadFromStoryboard(bookmarksDatabase: bookmarksDatabase, historyCoordinator: historyCoordinator)
+//        let controller = AutocompleteViewController.loadFromStoryboard(bookmarksDatabase: bookmarksDatabase, historyCoordinator: historyCoordinator)
+
+        let controller = AutocompleteViewController(historyCoordinator: historyCoordinator, 
+                                                    bookmarksDatabase: bookmarksDatabase,
+                                                    appSettings: appSettings)
+
         install(controller: controller)
         controller.delegate = autocompleteDelegate
         controller.presentationDelegate = self
@@ -280,8 +285,8 @@ class SuggestionTrayViewController: UIViewController {
     var contentInsets = UIEdgeInsets.zero
     func applyContentInset(_ inset: UIEdgeInsets) {
         self.contentInsets = inset
-        autocompleteController?.tableView.contentInset = inset
-        autocompleteController?.tableView.scrollIndicatorInsets = inset
+//        autocompleteController?.tableView.contentInset = inset
+//        autocompleteController?.tableView.scrollIndicatorInsets = inset
         favoritesOverlay?.collectionView.contentInset = inset
         favoritesOverlay?.collectionView.scrollIndicatorInsets = inset
     }

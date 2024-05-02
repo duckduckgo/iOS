@@ -37,7 +37,11 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
 
     var selectedSuggestion: Suggestion?
 
-    weak var delegate: AutocompleteViewControllerDelegate?
+    weak var delegate: AutocompleteViewControllerDelegate? {
+        didSet {
+            model.delegate = delegate
+        }
+    }
     weak var presentationDelegate: AutocompleteViewControllerPresentationDelegate?
 
     private var historyCoordinator: HistoryCoordinating
@@ -73,11 +77,18 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = UIColor(designSystemColor: .background)
+
         queryDebounceCancellable = $query
             .debounce(for: .milliseconds(Self.debounceDelayMS), scheduler: RunLoop.main)
             .sink { [weak self] query in
                 self?.requestSuggestions(query: query)
             }
+    }
+    
+    @IBAction func onAutocompleteDismissed(_ sender: Any) {
+        Pixel.fire(pixel: .addressBarGestureDismiss)
+        delegate?.autocompleteWasDismissed()
     }
 
     func willDismiss(with query: String) {
@@ -93,10 +104,17 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
     }
     
     func updateQuery(_ query: String) {
+        print("***", #function, query)
         model.selectedItemIndex = -1
         guard self.query != query else { return }
         cancelInFlightRequests()
         self.query = query
+        model.query = query
+    }
+
+    func applyTableViewInset(_ inset: UIEdgeInsets) {
+        // TODO
+        print("***", #function, inset)
     }
 
     private func cancelInFlightRequests() {
@@ -120,8 +138,7 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
 
         loader?.getSuggestions(query: query) { [weak self] result, error in
             guard let self, error == nil else { return }
-            model.suggestions = result ?? .empty
-            model.query = query
+            model.updateSuggestions(result ?? .empty)
         }
 
     }
@@ -164,64 +181,87 @@ struct AutocompleteView: View {
     @ObservedObject var model: AutocompleteViewModel
 
     var body: some View {
-        if model.suggestions == nil {
-            EmptyView()
-        } else if model.suggestions == .empty {
-            Text("No suggestions")
-        } else {
-            SuggestionsView(suggestions: model.suggestions!, query: model.query)
-        }
-    }
-
-}
-
-struct SuggestionsView: View {
-
-    let suggestions: SuggestionResult
-    let query: String?
-
-    var body: some View {
 
         List {
-            SuggestionsSection(suggestions: suggestions.topHits, query: query)
-            SuggestionsSection(suggestions: suggestions.duckduckgoSuggestions, query: query)
-            SuggestionsSection(suggestions: suggestions.localSuggestions, query: query)
+            if model.isEmpty {
+                SuggestionsSection(suggestions: [model.emptySuggestion],
+                                   query: model.query,
+                                   onSuggestionSelected: model.onSuggestionSelected)
+            }
+
+            SuggestionsSection(suggestions: model.topHits,
+                               query: model.query,
+                               onSuggestionSelected: model.onSuggestionSelected)
+
+            SuggestionsSection(suggestions: model.ddgSuggestions,
+                               query: model.query,
+                               onSuggestionSelected: model.onSuggestionSelected)
+
+            SuggestionsSection(suggestions: model.localResults,
+                               query: model.query,
+                               onSuggestionSelected: model.onSuggestionSelected)
         }
+        .modifier(HideScrollContentBackground())
+        .modifier(CompactSectionSpacing())
 
     }
 
 }
 
-struct SuggestionsSection: View {
+private struct CompactSectionSpacing: ViewModifier {
 
-    let suggestions: [Suggestion]
+    func body(content: Content) -> some View {
+        if #available(iOS 17, *) {
+            content.listSectionSpacing(.compact)
+        }
+    }
+
+}
+
+private struct HideScrollContentBackground: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 16, *) {
+            content
+                .scrollContentBackground(.hidden)
+        }
+    }
+}
+
+private struct SuggestionsSection: View {
+
+    let suggestions: [AutocompleteViewModel.SuggestionModel]
     let query: String?
+    var onSuggestionSelected: (AutocompleteViewModel.SuggestionModel) -> Void
 
     var body: some View {
         Section {
             ForEach(suggestions.indices, id: \.self) { index in
                 Button {
-                    print("index \(suggestions[index])")
+                    onSuggestionSelected(suggestions[index])
                 } label: {
-                    SuggestionView(suggestion: suggestions[index], query: query)
+                    SuggestionView(model: suggestions[index], query: query)
                 }
                 .buttonStyle(.plain)
             }
+        } header: {
+            EmptyView()
+        } footer: {
+            EmptyView()
         }
     }
 
 }
 
-struct SuggestionView: View {
+private struct SuggestionView: View {
 
-    let suggestion: Suggestion
+    let model: AutocompleteViewModel.SuggestionModel
     let query: String?
 
     @State var rowBackground: Color?
 
     var body: some View {
         Group {
-            switch suggestion {
+            switch model.suggestion {
             case .phrase(let phrase):
                 SuggestionListItem(icon: Image("Find-Search-24"), title: phrase, query: query)
             case .website(let url):
@@ -256,7 +296,7 @@ struct SuggestionView: View {
 
 }
 
-struct SuggestionListItem: View {
+private struct SuggestionListItem: View {
 
     let icon: Image
     let title: String
@@ -282,21 +322,30 @@ struct SuggestionListItem: View {
 
     @available(iOS 15, *)
     var titleWithQuery: AttributedString {
-        guard let query, var prefix = String(title.utf16.prefix(upTo: query.endIndex)) else {
+        guard let query, title.hasPrefix(query) else {
             return AttributedString(title)
         }
-        var suffix = title.dropping(prefix: prefix)
 
-        // White space doesn't markdown properly
-        while suffix.hasPrefix(" ") {
-            prefix += " "
-            
-            suffix = suffix.dropping(prefix: " ")
+        let regularAttributes = [
+            NSAttributedString.Key.font: UIFont.daxBodyRegular(),
+            NSAttributedString.Key.foregroundColor: UIColor(designSystemColor: .textPrimary)
+        ]
+
+        let boldAttributes = [
+            NSAttributedString.Key.font: UIFont.daxBodyBold(),
+            NSAttributedString.Key.foregroundColor: UIColor(designSystemColor: .textPrimary)
+        ]
+
+        let newText = NSMutableAttributedString(string: title)
+
+        let queryLength = query.length()
+        if queryLength < newText.length, title.hasPrefix(query) {
+            newText.addAttributes(regularAttributes, range: NSRange(location: 0, length: queryLength))
+            newText.addAttributes(boldAttributes, range: NSRange(location: queryLength, length: newText.length - queryLength))
+        } else {
+            newText.addAttributes(regularAttributes, range: NSRange(location: 0, length: newText.length))
         }
-
-        return (try? AttributedString(markdown: "\(prefix)**\(suffix)**",
-                                      options: .init(interpretedSyntax: .inlineOnly) ))
-        ?? AttributedString(title)
+        return AttributedString(newText)
     }
 
     var body: some View {
@@ -340,8 +389,34 @@ struct SuggestionListItem: View {
 class AutocompleteViewModel: ObservableObject {
 
     @Published var selectedItemIndex = -1
-    @Published var suggestions: SuggestionResult?
+    @Published var topHits = [SuggestionModel]()
+    @Published var ddgSuggestions = [SuggestionModel]()
+    @Published var localResults = [SuggestionModel]()
     @Published var query: String?
+    @Published var isEmpty = true
+
+    weak var delegate: AutocompleteViewControllerDelegate?
+
+    var emptySuggestion: SuggestionModel {
+        SuggestionModel(suggestion: .phrase(phrase: query ?? ""))
+    }
+
+    func onSuggestionSelected(_ model: SuggestionModel) {
+        print("***", #function, model)
+        delegate?.autocomplete(selectedSuggestion: model.suggestion)
+    }
+
+    func updateSuggestions(_ suggestions: SuggestionResult) {
+        topHits = suggestions.topHits.map { SuggestionModel(suggestion: $0) }
+        ddgSuggestions = suggestions.duckduckgoSuggestions.map { SuggestionModel(suggestion: $0) }
+        localResults = suggestions.localSuggestions.map { SuggestionModel(suggestion: $0) }
+        isEmpty = topHits.isEmpty && ddgSuggestions.isEmpty && localResults.isEmpty
+    }
+
+    struct SuggestionModel: Identifiable {
+        let id = UUID()
+        let suggestion: Suggestion
+    }
 
 }
 

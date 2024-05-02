@@ -203,6 +203,7 @@ struct AutocompleteView: View {
         }
         .modifier(HideScrollContentBackground())
         .modifier(CompactSectionSpacing())
+        .environmentObject(model)
 
     }
 
@@ -254,6 +255,8 @@ private struct SuggestionsSection: View {
 
 private struct SuggestionView: View {
 
+    @EnvironmentObject var autocompleteModel: AutocompleteViewModel
+
     let model: AutocompleteViewModel.SuggestionModel
     let query: String?
 
@@ -263,15 +266,28 @@ private struct SuggestionView: View {
         Group {
             switch model.suggestion {
             case .phrase(let phrase):
-                SuggestionListItem(icon: Image("Find-Search-24"), title: phrase, query: query)
+                SuggestionListItem(icon: Image("Find-Search-24"),
+                                   title: phrase,
+                                   query: query,
+                                   indicator: Image(autocompleteModel.isAddressBarAtBottom ?
+                                                    "Arrow-Circle-Down-Left-16" : "Arrow-Circle-Up-Left-16")) {
+                    autocompleteModel.onCompleteTapped(model)
+                }
+
             case .website(let url):
-                SuggestionListItem(icon: Image("Globe-24"), title: url.formattedForSuggestion())
+                SuggestionListItem(icon: Image("Globe-24"),
+                                   title: url.formattedForSuggestion())
+
             case .bookmark(let title, let url, let isFavorite, _):
-                SuggestionListItem(icon: Image(isFavorite ? "Bookmark-Fav-24" :"Bookmark-24"), title: title, subtitle: url.formattedForSuggestion())
+                SuggestionListItem(icon: Image(isFavorite ? "Bookmark-Fav-24" :"Bookmark-24"),
+                                   title: title,
+                                   subtitle: url.formattedForSuggestion())
+
             case .historyEntry(let title, let url, _):
                 if url.isDuckDuckGoSearch {
                     HStack {
-                        SuggestionListItem(icon: Image("History-24"), title: url.searchQuery ?? url.formattedForSuggestion())
+                        SuggestionListItem(icon: Image("History-24"),
+                                           title: url.searchQuery ?? url.formattedForSuggestion())
 
                         Text("— Search DuckDuckGo")
                             .lineLimit(1)
@@ -280,7 +296,9 @@ private struct SuggestionView: View {
 
                     }
                 } else {
-                    SuggestionListItem(icon: Image("History-24"), title: title ?? "", subtitle: url.formattedForSuggestion())
+                    SuggestionListItem(icon: Image("History-24"),
+                                       title: title ?? "",
+                                       subtitle: url.formattedForSuggestion())
                 }
             case .internalPage, .unknown:
                 FailedAssertionView("Unknown or unsupported suggestion type")
@@ -379,6 +397,10 @@ private struct SuggestionListItem: View {
             if let indicator {
                 Spacer()
                 indicator
+                    .highPriorityGesture(TapGesture().onEnded {
+                        print("*** tap")
+                        onTapIndicator?()
+                    })
             }
         }
 
@@ -417,6 +439,11 @@ class AutocompleteViewModel: ObservableObject {
         ddgSuggestions = suggestions.duckduckgoSuggestions.map { SuggestionModel(suggestion: $0) }
         localResults = suggestions.localSuggestions.map { SuggestionModel(suggestion: $0) }
         isEmpty = topHits.isEmpty && ddgSuggestions.isEmpty && localResults.isEmpty
+    }
+
+    func onCompleteTapped(_ model: SuggestionModel) {
+        print("***", #function, model)
+        delegate?.autocomplete(pressedPlusButtonForSuggestion: model.suggestion)
     }
 
     struct SuggestionModel: Identifiable {

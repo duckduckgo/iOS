@@ -158,7 +158,7 @@ class MainViewController: UIViewController {
     
     var historyManager: HistoryManager
     var viewCoordinator: MainViewCoordinator!
-    
+
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
@@ -2603,3 +2603,27 @@ extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
 }
 
 // swiftlint:enable file_length
+
+extension MainViewController: AlertPresenter {
+    func showSyncPausedAlert(title: String, informative: String) {
+        Task {
+            await MainActor.run {
+                if self.presentedViewController is SyncSettingsViewController {
+                    return
+                }
+                self.presentedViewController?.dismiss(animated: true)
+                let alert = UIAlertController(title: title,
+                                              message: informative,
+                                              preferredStyle: .alert)
+                let learnMoreAction = UIAlertAction(title: UserText.syncPausedAlertLearnMoreButton, style: .default) { _ in
+                    self.segueToSettingsSync()
+                }
+                let okAction = UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .cancel)
+                alert.addAction(learnMoreAction)
+                alert.addAction(okAction)
+                self.present(alert, animated: true)
+            }
+        }
+    }
+
+}

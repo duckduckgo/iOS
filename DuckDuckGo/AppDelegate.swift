@@ -235,11 +235,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ).wrappedValue
         ) ?? defaultEnvironment
 
+        let syncErrorHandler = SyncErrorHandler()
+
         syncDataProviders = SyncDataProviders(
             bookmarksDatabase: bookmarksDatabase,
             secureVaultErrorReporter: SecureVaultReporter.shared,
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
-            favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
+            favoritesDisplayModeStorage: FavoritesDisplayModeStorage(), 
+            syncAdapterErrorHandler: syncErrorHandler
         )
 
         let syncService = DDGSync(

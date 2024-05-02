@@ -213,8 +213,8 @@ struct VPNStatusView: View {
 
     private func title(with status: NEVPNStatus) -> String {
         switch status {
-        case .connecting, .connected, .reasserting: return "Protected"
-        case .disconnecting, .disconnected: return "Unprotected"
+        case .connecting, .connected, .reasserting: return UserText.vpnWidgetConnectedStatus
+        case .disconnecting, .disconnected: return UserText.vpnWidgetDisconnectedStatus
         case .invalid: return "Invalid"
         @unknown default: return "Unknown"
         }

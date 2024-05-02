@@ -70,3 +70,9 @@
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Search DuckDuckGo";
 
+/* Message describing VPN connected status */
+"widget.vpn.status.connected" = "VPN is ON";
+
+/* Message describing VPN disconnected status */
+"widget.vpn.status.disconnected" = "VPN is OFF";
+

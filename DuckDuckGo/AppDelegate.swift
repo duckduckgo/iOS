@@ -217,8 +217,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DaxDialogs.shared.primeForUse()
         }
 
-        // Experiment installation will be uncommented once we decide to run the experiment
-//        PixelExperiment.install()
+        PixelExperiment.install()
 
         // MARK: Sync initialisation
 
@@ -266,14 +265,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 })
             }
 
+        let previewsSource = TabPreviewsSource()
         let historyManager = makeHistoryManager()
+        let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       historyManager: historyManager,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
-                                      appSettings: AppDependencyProvider.shared.appSettings)
+                                      appSettings: AppDependencyProvider.shared.appSettings,
+                                      previewsSource: previewsSource,
+                                      tabsModel: tabsModel)
 
         main.loadViewIfNeeded()
 
@@ -286,7 +289,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         autoClear = AutoClear(worker: main)
-        
+        Task {
+            await autoClear?.clearDataIfEnabled(launching: true)
+        }
+
         AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
 
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
@@ -322,9 +328,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         AppDependencyProvider.shared.toggleProtectionsCounter.sendEventsIfNeeded()
+
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
         return true
+    }
+
+    private func prepareTabsModel(previewsSource: TabPreviewsSource = TabPreviewsSource(),
+                                  appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
+                                  isDesktop: Bool = UIDevice.current.userInterfaceIdiom == .pad) -> TabsModel {
+        let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
+        let tabsModel: TabsModel
+        if AutoClearSettingsModel(settings: appSettings) != nil {
+            tabsModel = TabsModel(desktop: isPadDevice)
+            tabsModel.save()
+            previewsSource.removeAllPreviews()
+        } else {
+            if let storedModel = TabsModel.get() {
+                // Save new model in case of migration
+                storedModel.save()
+                tabsModel = storedModel
+            } else {
+                tabsModel = TabsModel(desktop: isPadDevice)
+            }
+        }
+        return tabsModel
     }
 
     private func makeHistoryManager() -> HistoryManager {
@@ -413,6 +441,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+    private func reportAdAttribution() {
+        guard AdAttributionPixelReporter.isAdAttributionReportingEnabled else { return }
+
+        Task.detached(priority: .background) {
+            await AdAttributionPixelReporter.shared.reportAttributionIfNeeded()
+        }
+    }
+
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
@@ -431,6 +467,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             StatisticsLoader.shared.refreshAppRetentionAtb()
             self.fireAppLaunchPixel()
             self.firePrivacyProFeatureEnabledPixel()
+            self.reportAdAttribution()
         }
         
         if appIsLaunching {
@@ -474,6 +511,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #endif
 
         updateSubscriptionStatus()
+
+        let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)
+        importPasswordsStatusHandler.checkSyncSuccessStatus()
     }
 
     private func stopTunnelAndShowThankYouMessagingIfNeeded() {
@@ -546,7 +586,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     PixelParameters.widgetError: "1",
                     PixelParameters.widgetErrorCode: "\((error as NSError).code)",
                     PixelParameters.widgetErrorDomain: (error as NSError).domain
-                ])
+                ], includedParameters: [.appVersion, .atb])
                 
             case .success(let widgetInfo):
                 let params = widgetInfo.reduce([String: String]()) {
@@ -556,7 +596,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     }
                     return result
                 }
-                Pixel.fire(pixel: .appLaunch, withAdditionalParameters: params)
+                Pixel.fire(pixel: .appLaunch, withAdditionalParameters: params, includedParameters: [.appVersion, .atb])
             }
             
         }
@@ -622,7 +662,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Task { @MainActor in
             await beginAuthentication()
-            await autoClear?.applicationWillMoveToForeground()
+            await autoClear?.clearDataIfEnabledAndTimeExpired()
             showKeyboardIfSettingOn = true
             syncService.scheduler.resumeSyncQueue()
         }
@@ -630,7 +670,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         displayBlankSnapshotWindow()
-        autoClear?.applicationDidEnterBackground()
+        autoClear?.startClearingTimer()
         lastBackgroundDate = Date()
         AppDependencyProvider.shared.autofillLoginSession.endSession()
         suspendSync()
@@ -680,7 +720,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         Task { @MainActor in
-            await autoClear?.applicationWillMoveToForeground()
+            // Autoclear should have happened by now
             showKeyboardIfSettingOn = false
 
             if !handleAppDeepLink(app, mainViewController, url) {
@@ -797,7 +837,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Task { @MainActor in
 
-            await autoClear?.applicationWillMoveToForeground()
+            if appIsLaunching {
+                await autoClear?.clearDataIfEnabled()
+            } else {
+                await autoClear?.clearDataIfEnabledAndTimeExpired()
+            }
 
             if shortcutItem.type == ShortcutKey.clipboard, let query = UIPasteboard.general.string {
                 mainViewController?.clearNavigationStack()

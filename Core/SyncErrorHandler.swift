@@ -234,6 +234,34 @@ extension SyncErrorHandler {
         }
     }
 
+    private var syncPausedTitle: String? {
+        guard let error = currentSyncAllPausedError else { return nil }
+        switch error {
+        case .invalidLoginCredentials:
+            return "UserText.syncPausedTitle"
+        case .tooManyRequests, .badRequest:
+            return "UserText.syncErrorTitle"
+        default:
+            assertionFailure("Sync Paused error should be one of those listes")
+            return nil
+        }
+    }
+
+    private var syncPausedMessage: String? {
+        guard let error = currentSyncAllPausedError else { return nil }
+        switch error {
+        case .invalidLoginCredentials:
+            return "UserText.invalidLoginCredentialErrorDescription"
+        case .tooManyRequests:
+            return "UserText.tooManyRequestsErrorDescription"
+        case .badRequest:
+            return "UserText.badRequestErrorDescription"
+        default:
+            assertionFailure("Sync Paused error should be one of those listes")
+            return nil
+        }
+    }
+
     private enum ModelType {
         case bookmarks
         case credentials
@@ -250,6 +278,7 @@ extension SyncErrorHandler {
     }
 }
 
+// MARK: - SyncAdapterErrorHandler
 extension SyncErrorHandler: SyncAdapterErrorHandler {
     public func handleBookmarkError(_ error: Error) {
         handleError(error, modelType: .bookmarks)
@@ -268,8 +297,40 @@ extension SyncErrorHandler: SyncAdapterErrorHandler {
         lastSyncSuccessTime = Date()
         resetCredentialsErrors()
     }
-    
+}
 
+// MARK: - SyncSettingsErrorHandler
+extension SyncErrorHandler: SyncSettingsErrorHandler {
+    var syncPausedMetadata: SyncPausedErrorMetadata? {
+        guard let syncPausedMessage else { return nil }
+        guard let syncPausedTitle else { return nil }
+        return SyncPausedErrorMetadata(syncPausedTitle: syncPausedTitle,
+                                       syncPausedMessage: syncPausedMessage,
+                                       syncPausedButtonTitle: "")
+    }
+
+    @MainActor
+    var syncBookmarksPausedMetadata: SyncPausedErrorMetadata {
+        return SyncPausedErrorMetadata(syncPausedTitle: "UserText.syncLimitExceededTitle",
+                                       syncPausedMessage: "UserText.bookmarksLimitExceededDescription",
+                                       syncPausedButtonTitle: "UserText.bookmarksLimitExceededAction")
+    }
+
+    @MainActor
+    var syncCredentialsPausedMetadata: SyncPausedErrorMetadata {
+        return SyncPausedErrorMetadata(syncPausedTitle: "UserText.syncLimitExceededTitle",
+                                       syncPausedMessage: "UserText.credentialsLimitExceededDescription",
+                                       syncPausedButtonTitle: "UserText.credentialsLimitExceededAction")
+    }
+
+    var syncPausedChangedPublisher: AnyPublisher<Void, Never> {
+        isSyncPausedChangedPublisher.eraseToAnyPublisher()
+    }
+
+    func syncDidTurnOff() {
+        resetBookmarksErrors()
+        resetCredentialsErrors()
+    }
 }
 
 public protocol SyncAdapterErrorHandler {
@@ -279,6 +340,25 @@ public protocol SyncAdapterErrorHandler {
     func syncCredentialsSucceded()
 }
 
+protocol SyncSettingsErrorHandler: ObservableObject {
+    var isSyncPaused: Bool { get }
+    var isSyncBookmarksPaused: Bool { get }
+    var isSyncCredentialsPaused: Bool { get }
+    var syncPausedChangedPublisher: AnyPublisher<Void, Never> { get }
+    var syncPausedMetadata: SyncPausedErrorMetadata? { get }
+    var syncBookmarksPausedMetadata: SyncPausedErrorMetadata { get }
+    var syncCredentialsPausedMetadata: SyncPausedErrorMetadata { get }
+
+    func syncDidTurnOff()
+}
+
 public protocol AlertPresenter {
     func showSyncPausedAlert(title: String, informative: String)
 }
+
+struct SyncPausedErrorMetadata {
+    let syncPausedTitle: String
+    let syncPausedMessage: String
+    let syncPausedButtonTitle: String
+}
+

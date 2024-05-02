@@ -247,6 +247,42 @@
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Peida parool";
 
+/* Button label to get link to download the desktop browser */
+"autofill.import.passwords.get-browser-button" = "Hangi töölaua brauser";
+
+/* Step 1 for instructions to import passwords */
+"autofill.import.passwords.instructions.step1" = "Ava DuckDuckGo Macis või Windowsis";
+
+/* Step 2 for instructions to import passwords. This reads as 'Go to Settings > Passwords' */
+"autofill.import.passwords.instructions.step2" = "Mine %1$@ > %2$@";
+
+/* second parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.passwords" = "Paroolid";
+
+/* first parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.settings" = "Seaded";
+
+/* Step 3 for instructions to import passwords. This reads as 'Select Import Passwords and follow the steps' */
+"autofill.import.passwords.instructions.step3" = "Vali %@ ja järgi importimiseks juhiseid";
+
+/* Parameter for autofill.import.passwords.instructions.step3 */
+"autofill.import.passwords.instructions.step3.import" = "Impordi paroolid...";
+
+/* Step 4 for instructions to import passwords: Once imported on your computer you can set up sync on this iPhone|iPad|device */
+"autofill.import.passwords.instructions.step4" = "Kui oled oma arvutisse importinud, saad seadistada selle %@ sünkroonimise";
+
+/* Title for section with instructions to import passwords */
+"autofill.import.passwords.instructions.title" = "Impordi töölaua brauserist:";
+
+/* Subtitle for screen to import passwords */
+"autofill.import.passwords.subtitle" = "Impordi paroolid DuckDuckGo brauseri töölauaversiooni, seejärel sünkrooni need kõigis seadmetes.";
+
+/* Button label to sync passwords with desktop browser */
+"autofill.import.passwords.sync-button" = "Sünkrooni töölauaga";
+
+/* Title for screen to import passwords */
+"autofill.import.passwords.title" = "Kuidas importida paroole";
+
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Keela";
 
@@ -349,8 +385,11 @@
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Kasutajanimi";
 
-/* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Paroolid salvestatakse turvaliselt sinu seadmesse.";
+/* Title for button to Import Passwords when autofill has no items */
+"autofill.logins.empty-view.button.title" = "Impordi paroolid";
+
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle" = "Teiste brauserite või rakenduste paroole saab importida DuckDuckGo brauseri töölauaversiooni abil.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Paroole ei ole veel salvestatud";
@@ -369,6 +408,9 @@
 
 /* Title for a toggle that enables autofill */
 "autofill.logins.list.enable" = "Paroolide salvestamine ja automaatne sisestamine";
+
+/* Footer label displayed below table section with option to enable autofill */
+"autofill.logins.list.enable.footer" = "Paroolid salvestatakse turvaliselt sinu seadmesse.";
 
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Parool (%@) on kustutatud";
@@ -711,6 +753,15 @@
 
 /* No comment provided by engineer. */
 "Debug" = "Debug";
+
+/* Default string used if users device is not iPhone or iPad */
+"device.type.default" = "seade";
+
+/* Device type is iPhone */
+"device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"device.type.pad" = "iPad";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Keelatud";
@@ -1098,6 +1149,21 @@
 
 /* No comment provided by engineer. */
 "fireButtonAnimation.waterSwirl.name" = "Whirlpool";
+
+/* Description text above the Share Link button */
+"get.browser.on-your-desktop-go-to" = "Ava oma arvutis:";
+
+/* Title for the Share Download Link button */
+"get.browser.share-link" = "Jaga allalaadimise linki";
+
+/* Message displayed in the share action when sharing via email */
+"get.browser.share-link.message" = "Otsi privaatselt ja blokeeri jälgurid DuckDuckGo töölaua brauseriga. Külasta oma arvutis seda linki, et laadida see alla juba täna.";
+
+/* Title displayed in the share action */
+"get.browser.share-link.title" = "Hangi DuckDuckGo brauser Maci või Windowsi jaoks";
+
+/* Title for the get desktop browser feature */
+"get.browser.title" = "Hangi DuckDuckGo Maci või Windowsi jaoks";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Lisa DuckDuckGo oma avaekraanile!";

@@ -24,10 +24,12 @@ public struct PrimaryButtonStyle: ButtonStyle {
 
     let disabled: Bool
     let compact: Bool
+    let fullWidth: Bool
 
-    public init(disabled: Bool = false, compact: Bool = false) {
+    public init(disabled: Bool = false, compact: Bool = false, fullWidth: Bool = true) {
         self.disabled = disabled
         self.compact = compact
+        self.fullWidth = fullWidth
     }
     
     public func makeBody(configuration: Configuration) -> some View {
@@ -47,8 +49,9 @@ public struct PrimaryButtonStyle: ButtonStyle {
             .lineLimit(nil)
             .font(Font(UIFont.boldAppFont(ofSize: compact ? Consts.fontSize - 1 : Consts.fontSize)))
             .foregroundColor(configuration.isPressed ? pressedForegroundColor : foregroundColor)
-            .padding()
-            .frame(minWidth: 0, maxWidth: .infinity, maxHeight: compact ? Consts.height - 10 : Consts.height)
+            .padding(.vertical)
+            .padding(.horizontal, fullWidth ? nil : 24)
+            .frame(minWidth: 0, maxWidth: fullWidth ? .infinity : nil, maxHeight: compact ? Consts.height - 10 : Consts.height)
             .background(configuration.isPressed ? pressedBackgroundColor : backgroundColor)
             .cornerRadius(Consts.cornerRadius)
     }
@@ -86,6 +89,43 @@ public struct SecondaryButtonStyle: ButtonStyle {
             .foregroundColor(configuration.isPressed ? foregroundColor.opacity(Consts.pressedOpacity) : foregroundColor.opacity(1))
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity, maxHeight: compact ? Consts.height - 10 : Consts.height)
+            .cornerRadius(Consts.cornerRadius)
+    }
+}
+
+public struct SecondaryFillButtonStyle: ButtonStyle {
+    @Environment(\.colorScheme) private var colorScheme
+
+    let disabled: Bool
+    let compact: Bool
+    let fullWidth: Bool
+
+    public init(disabled: Bool = false, compact: Bool = false, fullWidth: Bool = true) {
+        self.disabled = disabled
+        self.compact = compact
+        self.fullWidth = fullWidth
+    }
+
+    public func makeBody(configuration: Configuration) -> some View {
+        let isDark = colorScheme == .dark
+        let standardBackgroundColor = isDark ? Color.white.opacity(0.18) : Color.black.opacity(0.06)
+        let pressedBackgroundColor = isDark ? Color.white.opacity(0.3) : Color.black.opacity(0.18)
+        let disabledBackgroundColor = isDark ? Color.white.opacity(0.06) : Color.black.opacity(0.06)
+        let defaultForegroundColor = isDark ? Color.white : Color.black.opacity(0.84)
+        let disabledForegroundColor = isDark ? Color.white.opacity(0.36) : Color.black.opacity(0.36)
+        let backgroundColor = disabled ? disabledBackgroundColor : standardBackgroundColor
+        let foregroundColor = disabled ? disabledForegroundColor : defaultForegroundColor
+
+        configuration.label
+            .fixedSize(horizontal: false, vertical: true)
+            .multilineTextAlignment(.center)
+            .lineLimit(nil)
+            .font(Font(UIFont.boldAppFont(ofSize: compact ? Consts.fontSize - 1 : Consts.fontSize)))
+            .foregroundColor(configuration.isPressed ? defaultForegroundColor : foregroundColor)
+            .padding(.vertical)
+            .padding(.horizontal, fullWidth ? nil : 24)
+            .frame(minWidth: 0, maxWidth: fullWidth ? .infinity : nil, maxHeight: compact ? Consts.height - 10 : Consts.height)
+            .background(configuration.isPressed ? pressedBackgroundColor : backgroundColor)
             .cornerRadius(Consts.cornerRadius)
     }
 }

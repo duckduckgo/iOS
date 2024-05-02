@@ -18,6 +18,7 @@
 //
 
 import Bookmarks
+import Foundation
 
 enum AddressBarPosition: String, CaseIterable, CustomStringConvertible {
     case top
@@ -67,6 +68,8 @@ protocol AppSettings: AnyObject {
     var autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary: Bool { get set }
     var autofillIsNewInstallForOnByDefault: Bool? { get set }
     func setAutofillIsNewInstallForOnByDefault()
+    var autofillImportViaSyncStart: Date? { get set }
+    func clearAutofillImportViaSyncStart()
 
     var voiceSearchEnabled: Bool { get set }
 

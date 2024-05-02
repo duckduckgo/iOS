@@ -61,6 +61,15 @@ struct UserText {
                                              value: "Search Passwords",
                                              comment: "Text in passwords widget")
 
+    static let vpnWidgetGalleryDisplayName = NSLocalizedString("widget.gallery.vpn.display.name",
+                                                               value: "VPN",
+                                                               comment: "Display name for VPN widget in widget gallery")
+
+    static let vpnWidgetGalleryDescription = NSLocalizedString("widget.gallery.vpn.description",
+                                                               value: "View and manage the VPN connection",
+                                                               comment: "Description of VPN widget in widget gallery")
+
+
     static let lockScreenSearchTitle = NSLocalizedString(
         "lock.screen.widget.search.title",
         value: "Private Search",

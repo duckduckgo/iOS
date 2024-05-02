@@ -52,6 +52,12 @@
 /* Display name for search only widget in widget gallery */
 "widget.gallery.search.display.name" = "Search";
 
+/* Description of VPN widget in widget gallery */
+"widget.gallery.vpn.description" = "View and manage the VPN connection";
+
+/* Display name for VPN widget in widget gallery */
+"widget.gallery.vpn.display.name" = "VPN";
+
 /* CTA shown in the favorites widget empty state. */
 "widget.no.favorites.cta" = "Add Favorites";
 

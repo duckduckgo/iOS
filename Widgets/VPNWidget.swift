@@ -230,8 +230,8 @@ struct VPNStatusWidget: Widget {
         StaticConfiguration(kind: kind, provider: VPNStatusTimelineProvider()) { entry in
             VPNStatusView(entry: entry).widgetURL(DeepLinks.openVPN)
         }
-        .configurationDisplayName("VPN Status")
-        .description("View and manage the VPN connection")
+        .configurationDisplayName(UserText.vpnWidgetGalleryDisplayName)
+        .description(UserText.vpnWidgetGalleryDescription)
         .supportedFamilies([.systemSmall])
         .contentMarginsDisabled()
     }

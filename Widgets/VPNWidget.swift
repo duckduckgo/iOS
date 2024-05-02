@@ -155,10 +155,6 @@ struct VPNStatusView: View {
         HStack {
             VStack(alignment: .leading, spacing: 0) {
                 Image(headerImageName(with: status))
-                    .frame(width: 50, height: 54)
-                    .padding(.top, 15)
-
-                Spacer()
 
                 Text(title(with: status))
                     .font(.system(size: 16, weight: .semibold))

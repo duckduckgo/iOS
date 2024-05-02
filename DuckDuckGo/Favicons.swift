@@ -441,7 +441,7 @@ public class Favicons {
         return image
     }
 
-    public func defaultResource(forDomain domain: String?) -> Kingfisher.ImageResource? {
+    public func defaultResource(forDomain domain: String?) -> KF.ImageResource? {
         return FaviconsHelper.defaultResource(forDomain: domain, sourcesProvider: sourcesProvider)
     }
 

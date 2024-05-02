@@ -24,11 +24,11 @@ struct FaviconsHelper {
 
     // this function is now static and outside of Favicons, otherwise there is a circular dependency between
     // Favicons and NotFoundCachingDownloader
-    public static func defaultResource(forDomain domain: String?, sourcesProvider: FaviconSourcesProvider) -> Kingfisher.ImageResource? {
+    public static func defaultResource(forDomain domain: String?, sourcesProvider: FaviconSourcesProvider) -> KF.ImageResource? {
         guard let domain = domain,
               let source = sourcesProvider.mainSource(forDomain: domain) else { return nil }
 
         let key = Favicons.createHash(ofDomain: domain)
-        return ImageResource(downloadURL: source, cacheKey: key)
+        return KF.ImageResource(downloadURL: source, cacheKey: key)
     }
 }

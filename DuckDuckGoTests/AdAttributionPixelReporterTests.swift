@@ -86,6 +86,17 @@ final class AdAttributionPixelReporterTests: XCTestCase {
         XCTAssertEqual(pixelAttributes["ad_id"], "5")
     }
 
+    func testPixelAdditionalParameters() async throws {
+        let sut = createSUT()
+        attributionFetcher.fetchResponse = AdServicesAttributionResponse(attribution: true)
+
+        await sut.reportAttributionIfNeeded()
+
+        let pixelAttributes = try XCTUnwrap(PixelFiringMock.lastIncludedParams)
+
+        XCTAssertEqual(pixelAttributes, [.appVersion, .atb])
+    }
+
     func testPixelAttributes_WhenPartialAttributionData() async throws {
         let sut = createSUT()
         attributionFetcher.fetchResponse = AdServicesAttributionResponse(
@@ -172,9 +183,13 @@ final actor PixelFiringMock: PixelFiring {
 
     static var lastParams: [String: String]?
     static var lastPixel: Pixel.Event?
-    static func fire(pixel: Pixel.Event, withAdditionalParameters params: [String: String]) async throws {
+    static var lastIncludedParams: [Pixel.QueryParameters]?
+    static func fire(pixel: Pixel.Event,
+                     withAdditionalParameters params: [String: String],
+                     includedParameters: [Pixel.QueryParameters]) async throws {
         lastParams = params
         lastPixel = pixel
+        lastIncludedParams = includedParameters
 
         if let expectedFireError {
             throw expectedFireError
@@ -184,6 +199,7 @@ final actor PixelFiringMock: PixelFiring {
     static func tearDown() {
         lastParams = nil
         lastPixel = nil
+        lastIncludedParams = nil
         expectedFireError = nil
     }
 

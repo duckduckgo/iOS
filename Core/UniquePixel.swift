@@ -52,6 +52,7 @@ public final class UniquePixel {
     /// This requires the pixel name to end with `_u`
     public static func fire(pixel: Pixel.Event,
                             withAdditionalParameters params: [String: String] = [:],
+                            includedParameters: [Pixel.QueryParameters] = [.appVersion],
                             onComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
         guard pixel.name.hasSuffix("_u") else {
             assertionFailure("Unique pixel: must end with _u")
@@ -59,7 +60,7 @@ public final class UniquePixel {
         }
 
         if !pixel.hasBeenFiredEver(uniquePixelStorage: storage) {
-            Pixel.fire(pixel: pixel, withAdditionalParameters: params, onComplete: onComplete)
+            Pixel.fire(pixel: pixel, withAdditionalParameters: params, includedParameters: includedParameters, onComplete: onComplete)
             storage.set(Date(), forKey: pixel.name)
         } else {
             onComplete(Error.alreadyFired)

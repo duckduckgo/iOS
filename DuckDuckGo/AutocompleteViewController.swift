@@ -32,14 +32,29 @@ import SwiftUI
 
 class AutocompleteViewController: UIHostingController<AutocompleteView> {
 
-    private var historyCoordinator: HistoryCoordinating
-    private var bookmarksDatabase: CoreDataDatabase
-    private var appSettings: AppSettings
+    private static let debounceDelayMS = 300
+    private static let session = URLSession(configuration: .ephemeral)
 
     var selectedSuggestion: Suggestion?
 
     weak var delegate: AutocompleteViewControllerDelegate?
     weak var presentationDelegate: AutocompleteViewControllerPresentationDelegate?
+
+    private var historyCoordinator: HistoryCoordinating
+    private var bookmarksDatabase: CoreDataDatabase
+    private var appSettings: AppSettings
+    private var model: AutocompleteViewModel
+
+    private var task: URLSessionDataTask?
+
+    @Published private var query = ""
+    private var queryDebounceCancellable: AnyCancellable?
+
+    private lazy var cachedBookmarks: CachedBookmarks = {
+        CachedBookmarks(bookmarksDatabase)
+    }()
+
+    private var loader: SuggestionLoader?
 
     init(historyCoordinator: HistoryCoordinating,
          bookmarksDatabase: CoreDataDatabase,
@@ -47,30 +62,297 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
         self.historyCoordinator = historyCoordinator
         self.bookmarksDatabase = bookmarksDatabase
         self.appSettings = appSettings
-        super.init(rootView: AutocompleteView())
+        self.model = AutocompleteViewModel()
+        super.init(rootView: AutocompleteView(model: model))
     }
     
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        queryDebounceCancellable = $query
+            .debounce(for: .milliseconds(Self.debounceDelayMS), scheduler: RunLoop.main)
+            .sink { [weak self] query in
+                self?.requestSuggestions(query: query)
+            }
+    }
+
     func willDismiss(with query: String) {
+        print("***", #function, query)
     }
 
     func keyboardMoveSelectionDown() {
+        print("***", #function, query)
     }
 
     func keyboardMoveSelectionUp() {
+        print("***", #function, query)
     }
     
     func updateQuery(_ query: String) {
+        model.selectedItemIndex = -1
+        guard self.query != query else { return }
+        cancelInFlightRequests()
+        self.query = query
     }
+
+    private func cancelInFlightRequests() {
+        task?.cancel()
+        task = nil
+    }
+
+    private func requestSuggestions(query: String) {
+        model.selectedItemIndex = -1
+
+        loader = SuggestionLoader(dataSource: self, urlFactory: { phrase in
+            guard let url = URL(trimmedAddressBarString: phrase),
+                  let scheme = url.scheme,
+                  scheme.description.hasPrefix("http"),
+                  url.isValid else {
+                return nil
+            }
+
+            return url
+        })
+
+        loader?.getSuggestions(query: query) { [weak self] result, error in
+            guard let self, error == nil else { return }
+            model.suggestions = result ?? .empty
+            model.query = query
+        }
+
+    }
+
+}
+
+extension AutocompleteViewController: SuggestionLoadingDataSource {
+
+    func history(for suggestionLoading: Suggestions.SuggestionLoading) -> [HistorySuggestion] {
+        // TODO consolidate this array type if we edit BSK
+        return historyCoordinator.history ?? []
+    }
+
+    func bookmarks(for suggestionLoading: Suggestions.SuggestionLoading) -> [Suggestions.Bookmark] {
+        return cachedBookmarks.all
+    }
+
+    func internalPages(for suggestionLoading: Suggestions.SuggestionLoading) -> [Suggestions.InternalPage] {
+        return []
+    }
+
+    func suggestionLoading(_ suggestionLoading: Suggestions.SuggestionLoading, suggestionDataFromUrl url: URL, withParameters parameters: [String: String], completion: @escaping (Data?, Error?) -> Void) {
+        var queryURL = url
+        parameters.forEach {
+            queryURL = queryURL.appendingParameter(name: $0.key, value: $0.value)
+        }
+
+        var request = URLRequest.developerInitiated(queryURL)
+        request.allHTTPHeaderFields = APIRequest.Headers().httpHeaders
+        task = Self.session.dataTask(with: request) { data, _, error in
+            completion(data, error)
+        }
+        task?.resume()
+    }
+
 }
 
 struct AutocompleteView: View {
 
+    @ObservedObject var model: AutocompleteViewModel
+
     var body: some View {
-        Text("AutocompleteView")
+        if model.suggestions == nil {
+            EmptyView()
+        } else if model.suggestions == .empty {
+            Text("No suggestions")
+        } else {
+            SuggestionsView(suggestions: model.suggestions!, query: model.query)
+        }
+    }
+
+}
+
+struct SuggestionsView: View {
+
+    let suggestions: SuggestionResult
+    let query: String?
+
+    var body: some View {
+
+        List {
+            SuggestionsSection(suggestions: suggestions.topHits, query: query)
+            SuggestionsSection(suggestions: suggestions.duckduckgoSuggestions, query: query)
+            SuggestionsSection(suggestions: suggestions.localSuggestions, query: query)
+        }
+
+    }
+
+}
+
+struct SuggestionsSection: View {
+
+    let suggestions: [Suggestion]
+    let query: String?
+
+    var body: some View {
+        Section {
+            ForEach(suggestions.indices, id: \.self) { index in
+                Button {
+                    print("index \(suggestions[index])")
+                } label: {
+                    SuggestionView(suggestion: suggestions[index], query: query)
+                }
+                .buttonStyle(.plain)
+            }
+        }
+    }
+
+}
+
+struct SuggestionView: View {
+
+    let suggestion: Suggestion
+    let query: String?
+
+    @State var rowBackground: Color?
+
+    var body: some View {
+        Group {
+            switch suggestion {
+            case .phrase(let phrase):
+                SuggestionListItem(icon: Image("Find-Search-24"), title: phrase, query: query)
+            case .website(let url):
+                SuggestionListItem(icon: Image("Globe-24"), title: url.absoluteString)
+            case .bookmark(let title, let url, let isFavorite, _):
+                SuggestionListItem(icon: Image(isFavorite ? "Bookmark-Fav-24" :"Bookmark-24"), title: title, subtitle: url.absoluteString)
+            case .historyEntry(let title, let url, _):
+                if url.isDuckDuckGoSearch {
+                    HStack {
+                        SuggestionListItem(icon: Image("History-24"), title: url.searchQuery ?? url.absoluteString)
+                        
+                        Text("— Search DuckDuckGo")
+                            .lineLimit(1)
+                            .layoutPriority(1)
+                            .foregroundColor(Color(designSystemColor: .accent))
+
+                    }
+                } else {
+                    SuggestionListItem(icon: Image("History-24"), title: title ?? "", subtitle: url.absoluteString)
+                }
+            case .internalPage, .unknown:
+                FailedAssertionView("Unknown or unsupported suggestion type")
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(rowBackground ?? Color.white.opacity(0.001))
+
+        // TODO use correct color when the item is selected using arrow
+        .listRowBackground(rowBackground)
+
+    }
+
+}
+
+struct SuggestionListItem: View {
+
+    let icon: Image
+    let title: String
+    let subtitle: String?
+    let query: String?
+    let indicator: Image?
+    let onTapIndicator: (() -> Void)?
+
+    init(icon: Image,
+         title: String,
+         subtitle: String? = nil,
+         query: String? = nil,
+         indicator: Image? = nil,
+         onTapIndicator: ( () -> Void)? = nil) {
+
+        self.icon = icon
+        self.title = title
+        self.subtitle = subtitle
+        self.query = query
+        self.indicator = indicator
+        self.onTapIndicator = onTapIndicator
+    }
+
+    @available(iOS 15, *)
+    var titleWithQuery: AttributedString {
+        guard let query, var prefix = String(title.utf16.prefix(upTo: query.endIndex)) else {
+            return AttributedString(title)
+        }
+        var suffix = title.dropping(prefix: prefix)
+
+        // White space doesn't markdown properly
+        while suffix.hasPrefix(" ") {
+            prefix += " "
+            
+            suffix = suffix.dropping(prefix: " ")
+        }
+
+        return (try? AttributedString(markdown: "\(prefix)**\(suffix)**",
+                                      options: .init(interpretedSyntax: .inlineOnly) ))
+        ?? AttributedString(title)
+    }
+
+    var body: some View {
+
+        HStack {
+            icon
+                .resizable()
+                .frame(width: 24, height: 24)
+
+            VStack(alignment: .leading) {
+
+                Group {
+                    if #available(iOS 15, *), query != nil {
+                        Text(titleWithQuery)
+                    } else {
+                        Text(title)
+                    }
+                }
+                    .daxBodyRegular()
+                    .foregroundColor(Color(designSystemColor: .textPrimary))
+                    .lineLimit(1)
+
+                if let subtitle {
+                    Text(subtitle)
+                        .daxFootnoteRegular()
+                        .foregroundColor(Color(designSystemColor: .textSecondary))
+                        .lineLimit(1)
+                }
+            }
+
+            if let indicator {
+                Spacer()
+                indicator
+            }
+        }
+
+    }
+
+}
+
+class AutocompleteViewModel: ObservableObject {
+
+    @Published var selectedItemIndex = -1
+    @Published var suggestions: SuggestionResult?
+    @Published var query: String?
+
+}
+
+private extension SuggestionResult {
+    static let empty = SuggestionResult(topHits: [], duckduckgoSuggestions: [], localSuggestions: [])
+}
+
+extension HistoryEntry: HistorySuggestion {
+
+    public var numberOfVisits: Int {
+        return numberOfTotalVisits
     }
 
 }
@@ -475,7 +757,4 @@ extension VariantManager {
 
 }
 
-private extension SuggestionResult {
-    static let empty = SuggestionResult(topHits: [], duckduckgoSuggestions: [], localSuggestions: [])
-}
 */

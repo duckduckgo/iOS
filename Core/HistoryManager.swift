@@ -74,7 +74,8 @@ public class HistoryManager: HistoryManaging {
     }
 
     func isHistoryFeatureEnabled() -> Bool {
-        return privacyConfigManager.privacyConfig.isEnabled(featureKey: .history) && variantManager.isSupported(feature: .history)
+        // TODO handle roll out 
+        return privacyConfigManager.privacyConfig.isEnabled(featureKey: .history)
     }
 
     public func removeAllHistory() async {

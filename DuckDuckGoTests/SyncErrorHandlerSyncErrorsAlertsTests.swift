@@ -28,6 +28,7 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
     let userDefaults = UserDefaults.standard
 
     override func setUpWithError() throws {
+        clearDefaults()
         UserDefaultsWrapper<Any>.clearAll()
         alertPresenter = CapturingAlertPresenter()
         handler = SyncErrorHandler()
@@ -37,6 +38,7 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
     override func tearDownWithError() throws {
         alertPresenter = nil
         handler = nil
+        UserDefaultsWrapper<Any>.clearAll()
     }
 
     func test_WhenHandleCredentialsError400ForTheFirstTime_ThenNoAlertShown() async {
@@ -182,5 +184,14 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
         
         XCTAssertTrue(alertPresenter.showAlertCalled)
         XCTAssertEqual(alertPresenter.showAlertCount, 2)
+    }
+
+    private func clearDefaults() {
+        userDefaults.set(nil, forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
+        userDefaults.set(false, forKey: UserDefaultsWrapper<Bool>.Key.syncBookmarksPausedErrorDisplayed.rawValue)
+        userDefaults.set(false, forKey: UserDefaultsWrapper<Bool>.Key.syncCredentialsPausedErrorDisplayed.rawValue)
+        userDefaults.set(false, forKey: UserDefaultsWrapper<Bool>.Key.syncInvalidLoginPausedErrorDisplayed.rawValue)
+        userDefaults.set(nil, forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
+        userDefaults.set(0, forKey: UserDefaultsWrapper<Int>.Key.syncLastNonActionableErrorCount.rawValue)
     }
 }

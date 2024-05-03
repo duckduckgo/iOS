@@ -245,7 +245,7 @@ extension MainViewController {
                                                             syncDataProviders: syncDataProviders,
                                                             appSettings: appSettings,
                                                             bookmarksDatabase: bookmarksDatabase,
-                                                            tabManager: tabManager, 
+                                                            tabManager: tabManager,
                                                             syncSettingsErrorHandler: syncSettingErrorHandler)
 
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider,

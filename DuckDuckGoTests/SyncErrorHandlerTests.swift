@@ -28,10 +28,10 @@ final class SyncErrorHandlerTests: XCTestCase {
     var cancellables: Set<AnyCancellable>!
     var handler: SyncErrorHandler!
     var alertPresenter: CapturingAlertPresenter!
-    let userDefaults = UserDefaults(suiteName: "\(Bundle.main.bundleIdentifier!)")!
+    let userDefaults = UserDefaults.standard
 
     override func setUpWithError() throws {
-        userDefaults.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+        clearDefaults()
         UserDefaultsWrapper<Any>.clearAll()
         userDefaults.synchronize()
         cancellables = []
@@ -41,6 +41,7 @@ final class SyncErrorHandlerTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
+        UserDefaultsWrapper<Any>.clearAll()
         cancellables = nil
         alertPresenter = nil
         handler = nil
@@ -260,5 +261,14 @@ final class SyncErrorHandlerTests: XCTestCase {
         XCTAssertFalse(userDefaults.bool(forKey: UserDefaultsWrapper<Bool>.Key.syncInvalidLoginPausedErrorDisplayed.rawValue))
         XCTAssertNil(userDefaults.value(forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue))
         XCTAssertEqual(userDefaults.integer(forKey: UserDefaultsWrapper<Int>.Key.syncLastNonActionableErrorCount.rawValue), 0)
+    }
+
+    private func clearDefaults() {
+        userDefaults.set(nil, forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
+        userDefaults.set(false, forKey: UserDefaultsWrapper<Bool>.Key.syncBookmarksPausedErrorDisplayed.rawValue)
+        userDefaults.set(false, forKey: UserDefaultsWrapper<Bool>.Key.syncCredentialsPausedErrorDisplayed.rawValue)
+        userDefaults.set(false, forKey: UserDefaultsWrapper<Bool>.Key.syncInvalidLoginPausedErrorDisplayed.rawValue)
+        userDefaults.set(nil, forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
+        userDefaults.set(0, forKey: UserDefaultsWrapper<Int>.Key.syncLastNonActionableErrorCount.rawValue)
     }
 }

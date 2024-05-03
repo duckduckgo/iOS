@@ -30,6 +30,7 @@ final class SyncErrorHandlerSyncPaysedAlertsTests: XCTestCase {
     let userDefaults = UserDefaults.standard
 
     override func setUpWithError() throws {
+        clearDefaults()
         UserDefaultsWrapper<Any>.clearAll()
         alertPresenter = CapturingAlertPresenter()
         handler = SyncErrorHandler()
@@ -37,6 +38,7 @@ final class SyncErrorHandlerSyncPaysedAlertsTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
+        UserDefaultsWrapper<Any>.clearAll()
         alertPresenter = nil
         handler = nil
     }
@@ -158,6 +160,15 @@ final class SyncErrorHandlerSyncPaysedAlertsTests: XCTestCase {
         handler.handleBookmarkError(_:)(error)
 
         XCTAssertEqual(alertPresenter.showAlertCount, 1)
+    }
+
+    private func clearDefaults() {
+        userDefaults.set(nil, forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
+        userDefaults.set(false, forKey: UserDefaultsWrapper<Bool>.Key.syncBookmarksPausedErrorDisplayed.rawValue)
+        userDefaults.set(false, forKey: UserDefaultsWrapper<Bool>.Key.syncCredentialsPausedErrorDisplayed.rawValue)
+        userDefaults.set(false, forKey: UserDefaultsWrapper<Bool>.Key.syncInvalidLoginPausedErrorDisplayed.rawValue)
+        userDefaults.set(nil, forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
+        userDefaults.set(0, forKey: UserDefaultsWrapper<Int>.Key.syncLastNonActionableErrorCount.rawValue)
     }
 
 }

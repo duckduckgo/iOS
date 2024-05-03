@@ -455,7 +455,7 @@ extension SettingsViewModel {
 #endif
         return SettingsState.NetworkProtection(enabled: enabled, status: "")
     }
-    
+
     private func getSyncState() -> SettingsState.SyncSettings {
         SettingsState.SyncSettings(enabled: legacyViewProvider.syncService.featureFlags.contains(.userInterface),
                                    title: {
@@ -465,13 +465,13 @@ extension SettingsViewModel {
             if isDataSyncingDisabled
                 || syncSettingsErrorHandler.isSyncPaused
                 || syncSettingsErrorHandler.isSyncBookmarksPaused
-                || syncSettingsErrorHandler.isSyncCredentialsPaused{
+                || syncSettingsErrorHandler.isSyncCredentialsPaused {
                 return "⚠️ \(UserText.settingsSync)"
             }
             return SyncUI.UserText.syncTitle
         }())
     }
-    
+
     private func firePixel(_ event: Pixel.Event,
                            withAdditionalParameters params: [String: String] = [:]) {
         Pixel.fire(pixel: event, withAdditionalParameters: params)

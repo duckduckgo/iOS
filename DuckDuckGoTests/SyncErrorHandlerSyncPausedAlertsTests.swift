@@ -1,5 +1,5 @@
 //
-//  SyncErrorHandlerSyncPaysedAlertsTests.swift
+//  SyncErrorHandlerSyncPausedAlertsTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -23,7 +23,7 @@ import Combine
 import DuckDuckGo
 @testable import Core
 
-final class SyncErrorHandlerSyncPaysedAlertsTests: XCTestCase {
+final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
 
     var handler: SyncErrorHandler!
     var alertPresenter: CapturingAlertPresenter!

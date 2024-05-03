@@ -72,6 +72,9 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
             handler.handleCredentialError(_:)(error)
         }
 
+        let expectation = XCTestExpectation()
+        await fulfillment(of: [expectation], timeout: 1.0)
+
         XCTAssertFalse(alertPresenter.showAlertCalled)
     }
 
@@ -81,6 +84,9 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
         for _ in 0...10 {
             handler.handleCredentialError(_:)(error)
         }
+
+        let expectation = XCTestExpectation()
+        await fulfillment(of: [expectation], timeout: 1.0)
 
         let currentTime = Date()
         let actualTime = userDefaults.value(forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue) as? Date
@@ -95,6 +101,9 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
         for _ in 0...20 {
             handler.handleCredentialError(_:)(error)
         }
+
+        let expectation = XCTestExpectation()
+        await fulfillment(of: [expectation], timeout: 1.0)
 
         XCTAssertEqual(alertPresenter.showAlertCount, 1)
     }

@@ -250,6 +250,10 @@ final class SyncErrorHandlerTests: XCTestCase {
         userDefaults.set(6, forKey: UserDefaultsWrapper<Int>.Key.syncLastNonActionableErrorCount.rawValue)
 
         handler.syncDidTurnOff()
+        UserDefaults.standard.synchronize()
+
+        let expectation = XCTestExpectation()
+        wait(for: [expectation], timeout: 1)
 
         XCTAssertFalse(handler.isSyncBookmarksPaused)
         XCTAssertFalse(handler.isSyncCredentialsPaused)

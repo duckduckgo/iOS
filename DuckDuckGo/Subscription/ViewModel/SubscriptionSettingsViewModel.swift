@@ -29,7 +29,6 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     let accountManager: AccountManaging
     private var subscriptionUpdateTimer: Timer?
     private var signOutObserver: Any?
-    private var subscriptionInfo: SubscriptionService.GetSubscriptionResponse?
     
     private var externalAllowedDomains = ["stripe.com"]
     
@@ -40,10 +39,15 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         var shouldDismissView: Bool = false
         var isShowingGoogleView: Bool = false
         var isShowingFAQView: Bool = false
+        var subscriptionInfo: SubscriptionService.GetSubscriptionResponse?
+        var isLoadingSubscriptionInfo: Bool = false
         
         // Used to display stripe WebUI
         var stripeViewModel: SubscriptionExternalLinkViewModel?
         var isShowingStripeView: Bool = false
+        
+        // Display error
+        var isShowingConnectionError: Bool = false
         
         // Used to display the FAQ WebUI
         var FAQViewModel: SubscriptionExternalLinkViewModel = SubscriptionExternalLinkViewModel(url: URL.subscriptionFAQ)
@@ -69,29 +73,43 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }()
     
     func onFirstAppear() {
-        fetchAndUpdateSubscriptionDetails()
+        self.fetchAndUpdateSubscriptionDetails(cachePolicy: .returnCacheDataElseLoad)
     }
         
-    private func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad) {
+    private func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad, loadingIndicator: Bool = true) {
         Task {
+            if loadingIndicator { displayLoader(true) }
             guard let token = self.accountManager.accessToken else { return }
             let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
             switch subscriptionResult {
             case .success(let subscription):
-                subscriptionInfo = subscription
+                DispatchQueue.main.async {
+                    self.state.subscriptionInfo = subscription
+                    if loadingIndicator { self.displayLoader(false) }
+                }
                 await updateSubscriptionsStatusMessage(status: subscription.status,
                                                 date: subscription.expiresOrRenewsAt,
                                                 product: subscription.productId,
                                                 billingPeriod: subscription.billingPeriod)
             default:
-                return
+                DispatchQueue.main.async {
+                    if loadingIndicator { self.displayLoader(true) }
+                    self.showConnectionError(true)
+                }
                 
+                subscriptionUpdateTimer?.invalidate()
             }
         }
     }
     
+    private func displayLoader(_ show: Bool) {
+        DispatchQueue.main.async {
+            self.state.isLoadingSubscriptionInfo = show
+        }
+    }
+    
     func manageSubscription() {
-        switch subscriptionInfo?.platform {
+        switch state.subscriptionInfo?.platform {
         case .apple:
             Task { await manageAppleSubscription() }
         case .google:
@@ -114,19 +132,25 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     // Re-fetch subscription from server ignoring cache
-    // This ensure that if the user changed something on the Apple view, state will be updated
+    // This ensure that if the user re-subscribed or changed plan on the Apple view, state is updated
     private func setupSubscriptionUpdater() {
-        subscriptionUpdateTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { [weak self] _ in
+        subscriptionUpdateTimer = Timer.scheduledTimer(withTimeInterval: 8.0, repeats: true) { [weak self] _ in
             guard let strongSelf = self else { return }
-                strongSelf.fetchAndUpdateSubscriptionDetails(cachePolicy: .reloadIgnoringLocalCacheData)
+                strongSelf.fetchAndUpdateSubscriptionDetails(cachePolicy: .reloadIgnoringLocalCacheData, loadingIndicator: false)
         }
     }
     
     @MainActor
     private func updateSubscriptionsStatusMessage(status: Subscription.Status, date: Date, product: String, billingPeriod: Subscription.BillingPeriod) {
-        let statusString = (status == .autoRenewable) ? UserText.subscriptionRenews : UserText.subscriptionExpires
-        state.subscriptionDetails = UserText.subscriptionInfo(status: statusString, expiration: dateFormatter.string(from: date))
-        state.subscriptionType = billingPeriod == .monthly ? UserText.subscriptionMonthly : UserText.subscriptionAnnual
+        let date = dateFormatter.string(from: date)
+        let expiredStates: [Subscription.Status] = [.expired, .inactive]
+        if expiredStates.contains(status) {
+            state.subscriptionDetails = UserText.expiredSubscriptionInfo(expiration: date)
+        } else {
+            let statusString = (status == .autoRenewable) ? UserText.subscriptionRenews : UserText.subscriptionExpires
+            state.subscriptionDetails = UserText.subscriptionInfo(status: statusString, expiration: date)
+            state.subscriptionType = billingPeriod == .monthly ? UserText.subscriptionMonthly : UserText.subscriptionAnnual
+        }
     }
     
     func removeSubscription() {
@@ -160,18 +184,28 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         }
     }
     
+    func showConnectionError(_ value: Bool) {
+        if value != state.isShowingConnectionError {
+            DispatchQueue.main.async {
+                self.state.isShowingConnectionError = value
+            }
+        }
+    }
+    
     // MARK: -
     
     @MainActor private func manageAppleSubscription() async {
-        let url = URL.manageSubscriptionsInAppStoreAppURL
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-           do {
-               try await AppStore.showManageSubscriptions(in: windowScene)
-           } catch {
-               self.openURL(url)
-           }
-        } else {
-            self.openURL(url)
+        if state.subscriptionInfo?.isActive ?? false {
+            let url = URL.manageSubscriptionsInAppStoreAppURL
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                do {
+                    try await AppStore.showManageSubscriptions(in: windowScene)
+                } catch {
+                    self.openURL(url)
+                }
+            } else {
+                self.openURL(url)
+            }
         }
     }
          

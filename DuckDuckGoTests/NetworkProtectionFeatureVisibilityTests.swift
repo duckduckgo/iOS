@@ -19,6 +19,7 @@
 
 import XCTest
 @testable import DuckDuckGo
+import Subscription
 
 /// Test all permutations according to https://app.asana.com/0/0/1206812323779606/f
 final class NetworkProtectionFeatureVisibilityTests: XCTestCase {
@@ -86,6 +87,25 @@ final class NetworkProtectionFeatureVisibilityTests: XCTestCase {
 }
 
 struct NetworkProtectionFeatureVisibilityMocks: NetworkProtectionFeatureVisibility {
+    
+    let accountManager = AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+
+    func shouldShowThankYouMessaging() -> Bool {
+        isPrivacyProLaunched() && isWaitlistUser()
+    }
+
+    func shouldKeepVPNAccessViaWaitlist() -> Bool {
+        !isPrivacyProLaunched() && isWaitlistBetaActive() && isWaitlistUser()
+    }
+
+    func shouldShowVPNShortcut() -> Bool {
+        if isPrivacyProLaunched() {
+            return accountManager.isUserAuthenticated
+        } else {
+            return shouldKeepVPNAccessViaWaitlist()
+        }
+    }
+
     struct Options: OptionSet {
         let rawValue: Int
 

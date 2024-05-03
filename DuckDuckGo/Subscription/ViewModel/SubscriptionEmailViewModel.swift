@@ -144,11 +144,14 @@ final class SubscriptionEmailViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.state.subscriptionActive = true
             }
-            self.dismissStack()
         }
         
         subFeature.onBackToSettings = {
-            self.dismissStack()
+            if self.state.managingSubscriptionEmail {
+                self.backToSubscriptionSettings()
+            } else {
+                self.backToAppSettings()
+            }
         }
         
         subFeature.onFeatureSelected = { feature in
@@ -243,9 +246,15 @@ final class SubscriptionEmailViewModel: ObservableObject {
         }
     }
     
-    func dismissStack() {
+    func backToSubscriptionSettings() {
         DispatchQueue.main.async {
             self.state.shouldPopToSubscriptionSettings = true
+        }
+    }
+    
+    func backToAppSettings() {
+        DispatchQueue.main.async {
+            self.state.shouldPopToAppSettings = true
         }
     }
     

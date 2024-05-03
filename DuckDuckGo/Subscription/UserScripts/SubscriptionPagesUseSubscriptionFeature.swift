@@ -62,6 +62,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         static let subscriptionsUnknownPriceClicked = "subscriptionsUnknownPriceClicked"
         static let subscriptionsAddEmailSuccess = "subscriptionsAddEmailSuccess"
         static let subscriptionsWelcomeFaqClicked = "subscriptionsWelcomeFaqClicked"
+        static let getAccessToken = "getAccessToken"
     }
     
     struct ProductIDs {
@@ -144,6 +145,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         case Handlers.subscriptionsUnknownPriceClicked: return subscriptionsUnknownPriceClicked
         case Handlers.subscriptionsAddEmailSuccess: return subscriptionsAddEmailSuccess
         case Handlers.subscriptionsWelcomeFaqClicked: return subscriptionsWelcomeFaqClicked
+        case Handlers.getAccessToken: return getAccessToken
         default:
             os_log("Unhandled web message: %s", log: .subscription, type: .error, methodName)
             return nil
@@ -163,6 +165,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     private func resetSubscriptionFlow() {
         setTransactionError(nil)
+
     }
         
     private func setTransactionError(_ error: UseSubscriptionError?) {
@@ -279,6 +282,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             accountManager.storeAuthToken(token: authToken)
             accountManager.storeAccount(token: accessToken, email: accountDetails.email, externalID: accountDetails.externalID)
             onSetSubscription?()
+            
         } else {
             os_log("Failed to obtain subscription options", log: .subscription, type: .error)
             setTransactionError(.failedToSetSubscription)
@@ -329,6 +333,14 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             setTransactionError(.generalError)
         }
         return nil
+    }
+    
+    func getAccessToken(params: Any, original: WKScriptMessage) async throws -> Encodable? {
+        if let accessToken = AccountManager().accessToken {
+            return [Constants.token: accessToken]
+        } else {
+            return [String: String]()
+        }
     }
 
     // MARK: Pixel related actions

@@ -28,7 +28,18 @@ extension Font {
 }
 
 struct WidgetEducationView: View {
-    
+    let navBarTitle: String
+    let thirdParagraphText: String
+    let widgetExampleImage: Image
+
+    init(navBarTitle: String = UserText.settingsAddWidget,
+         thirdParagraphText: String = UserText.addWidgetSettingsThirdParagraph,
+         widgetExampleImage: Image = .widgetExample) {
+        self.navBarTitle = navBarTitle
+        self.thirdParagraphText = thirdParagraphText
+        self.widgetExampleImage = widgetExampleImage
+    }
+
     var body: some View {
         ZStack {
             Color.background
@@ -41,13 +52,13 @@ struct WidgetEducationView: View {
                                       text: secondParagraphText,
                                       image: Image.homeScreen)
                     NumberedParagraph(number: 3,
-                                      text: Text(UserText.addWidgetSettingsThirdParagraph),
-                                      image: Image.widgetExample)
+                                      text: Text(thirdParagraphText),
+                                      image: widgetExampleImage)
                 }
                 .padding(.horizontal)
                 .padding(.top, Const.Padding.top)
             }
-        }.navigationBarTitle(UserText.settingsAddWidget, displayMode: .inline)
+        }.navigationBarTitle(navBarTitle, displayMode: .inline)
             .onForwardNavigationAppear {
                 Pixel.fire(pixel: .settingsNextStepsAddWidget,
                            withAdditionalParameters: PixelExperiment.parameters)

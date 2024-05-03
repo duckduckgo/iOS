@@ -2303,6 +2303,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
 
+/* No comment provided by engineer. */
+"vpn.addWidget.settings.title" = "Find and select DuckDuckGo. Then select the VPN widget.";
+
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";
 
@@ -2371,6 +2374,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
+
+/* VPN settings screen cell text for adding the VPN widget to the home screen */
+"vpn.settings.add.widget" = "Add VPN Widget to Home Screen";
 
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Allow Notifications";

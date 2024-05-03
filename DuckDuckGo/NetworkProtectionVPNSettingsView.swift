@@ -29,6 +29,16 @@ struct NetworkProtectionVPNSettingsView: View {
     var body: some View {
         VStack {
             List {
+                // Widget only available for iOS 17 and up
+                if #available(iOS 17.0, *) {
+                    NavigationLink(UserText.vpnSettingsAddWidget) {
+                        WidgetEducationView(
+                            navBarTitle: UserText.vpnSettingsAddWidget,
+                            thirdParagraphText: UserText.addVPNWidgetSettingsThirdParagraph
+                        )
+                    }
+                }
+
                 switch viewModel.viewKind {
                 case .loading: EmptyView()
                 case .unauthorized: notificationsUnauthorizedView

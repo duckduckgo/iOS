@@ -231,13 +231,6 @@ public final class SyncBookmarksAdapter {
         }
     }
 
-//    static private func notifyBookmarksSyncLimitReached() {
-//        if !Self.didShowBookmarksSyncPausedError {
-//            NotificationCenter.default.post(name: Self.bookmarksSyncLimitReached, object: nil)
-//            Self.didShowBookmarksSyncPausedError = true
-//        }
-//    }
-
     private var syncDidCompleteSubject = PassthroughSubject<Void, Never>()
     private var syncErrorCancellable: AnyCancellable?
 

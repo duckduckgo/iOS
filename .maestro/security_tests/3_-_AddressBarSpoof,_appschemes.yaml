@@ -2,19 +2,40 @@ appId: com.duckduckgo.mobile.ios
 tags:
     - securityTest
 ---
-# Test 1
-- tapOn:
+# Set up 
+- clearState
+- launchApp
+- runFlow: 
+    when: 
+      visible: 
+        text: "Let’s Do It!"
+        index: 0
+    file: ../shared/onboarding.yaml
+
+# Load Site
+- assertVisible:
     id: "searchEntry"
-- pressKey: Backspace
+- tapOn: 
+    id: "searchEntry"
 - inputText: "https://privacy-test-pages.site/security/address-bar-spoofing/spoof-application-scheme.html"
 - pressKey: Enter
+
+# Manage onboarding
+- runFlow:
+    when:
+      visible:
+        text: "Got It"
+        index: 0
+    file: ../shared/onboarding_browsing.yaml
+
+# Test
 - tapOn: "Start"
 # This will try to open another app
 - assertVisible: "Cancel"
 - tapOn: "Cancel"
 - copyTextFrom:
     id: "searchEntry"
-- assertTrue: ${maestro.copiedText == "https://duckduckgo.com/"} # Should navigate directly here.
+- assertTrue: ${maestro.copiedText == "spreadprivacy.com"} # Should navigate directly here.
 - assertNotVisible: "Not DDG." # HTML content shouldn't be spoofed.
 - tapOn:
     id: "searchEntry"
@@ -27,4 +48,4 @@ tags:
 - tapOn: "Cancel"
 - copyTextFrom:
     id: "searchEntry"
-- assertTrue: ${maestro.copiedText == "https://privacy-test-pages.site/security/address-bar-spoofing/spoof-unsupported-scheme.html"}
+- assertTrue: ${maestro.copiedText == "privacy-test-pages.site"}

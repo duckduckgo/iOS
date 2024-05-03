@@ -17,113 +17,49 @@
 //  limitations under the License.
 //
 
-import UIKit
+import SwiftUI
+import DesignResourcesKit
 import DuckUI
 
-class AutofillItemsEmptyView: UIView {
-    
-    private enum Constants {
-        static let imageHeight: CGFloat = 170.0
-        static let imageWidth: CGFloat = 220.0
-        static let maxWidth: CGFloat = 250.0
-        static let topPadding: CGFloat = -64
-    }
+struct AutofillItemsEmptyView: View {
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        installSubviews()
-        installConstraints()
-        decorate()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private lazy var title: UILabel = {
-        let label = UILabel(frame: CGRect.zero)
+    var importButtonAction: (() -> Void)?
 
-        let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title3)
-        label.font = UIFont.systemFont(ofSize: descriptor.pointSize, weight: .semibold)
-        
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.lineBreakMode = .byWordWrapping
-        label.textColor = .gray90
-        label.text = UserText.autofillEmptyViewTitle
-        
-        return label
-    }()
+    var body: some View {
+        VStack(spacing: 0) {
+            Image(.passwordsAdd96X96)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 96, height: 96)
 
-    private lazy var imageView: UIImageView = {
-        let imageView = UIImageView(image: .autofillKey)
-        imageView.contentMode = .scaleAspectFit
-        imageView.frame = CGRect(x: 0, y: 0, width: Constants.imageWidth, height: Constants.imageHeight)
+            Text(UserText.autofillEmptyViewTitle)
+                .daxTitle3()
+                .foregroundColor(Color(designSystemColor: .textPrimary))
+                .padding(.top, 16)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
 
-        return imageView
-    }()
-    
-    private lazy var stackContentView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [imageView, title])
-        stackView.axis = .vertical
-        return stackView
-    }()
+            Text(UserText.autofillEmptyViewSubtitle)
+                .daxBodyRegular()
+                .foregroundColor(Color.init(designSystemColor: .textSecondary))
+                .multilineTextAlignment(.center)
+                .padding(.top, 8)
+                .lineLimit(nil)
 
-    private lazy var centerYConstraint: NSLayoutConstraint = {
-        NSLayoutConstraint(item: self,
-                           attribute: .centerY,
-                           relatedBy: .equal,
-                           toItem: stackContentView,
-                           attribute: .centerY,
-                           multiplier: 1.1,
-                           constant: 0)
-    }()
+            Button {
+                importButtonAction?()
+            } label: {
+                Text(UserText.autofillEmptyViewButtonTitle)
+            }
+            .buttonStyle(PrimaryButtonStyle(fullWidth: false))
+            .padding(.top, 24)
 
-    private lazy var topConstraintIPhonePortrait: NSLayoutConstraint = {
-        NSLayoutConstraint(item: self,
-                           attribute: .top,
-                           relatedBy: .equal,
-                           toItem: stackContentView,
-                           attribute: .top,
-                           multiplier: 1,
-                           constant: Constants.topPadding)
-    }()
-
-    private func installSubviews() {
-        addSubview(stackContentView)
-    }
-
-    private func installConstraints() {
-        stackContentView.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            stackContentView.widthAnchor.constraint(equalToConstant: Constants.maxWidth),
-            stackContentView.centerXAnchor.constraint(equalTo: centerXAnchor),
-        ])
-
-        refreshConstraints()
-    }
-
-    func refreshConstraints() {
-        let isIPhonePortrait = traitCollection.verticalSizeClass == .regular && traitCollection.horizontalSizeClass == .compact
-
-        centerYConstraint.isActive = !isIPhonePortrait
-        topConstraintIPhonePortrait.isActive = isIPhonePortrait
-    }
-
-    func adjustHeight(to newHeight: CGFloat) {
-        frame.size.height = newHeight
+        }
+        .frame(maxWidth: 300.0)
+        .padding(.top, 16)
     }
 }
 
-extension AutofillItemsEmptyView {
-    
-    private func decorate() {
-        let theme = ThemeManager.shared.currentTheme
-        title.textColor = theme.autofillDefaultTitleTextColor
-    }
-}
-
-private extension UIImage {
-    static let autofillKey = UIImage(named: "AutofillKey")
+#Preview {
+    AutofillItemsEmptyView()
 }

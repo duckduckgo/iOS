@@ -12,7 +12,6 @@
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.duckduckgo.alpha.apptp</string>
 		<string>group.com.duckduckgo.alpha.bookmarks</string>
 		<string>group.com.duckduckgo.alpha.contentblocker</string>
 		<string>group.com.duckduckgo.alpha.database</string>

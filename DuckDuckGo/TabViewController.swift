@@ -1186,7 +1186,7 @@ extension TabViewController: WKNavigationDelegate {
 
 #if NETWORK_PROTECTION
         if webView.url?.isDuckDuckGoSearch == true, case .connected = netPConnectionStatus {
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnabledOnSearch)
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnabledOnSearch, includedParameters: [.appVersion, .atb])
         }
 #endif
     }

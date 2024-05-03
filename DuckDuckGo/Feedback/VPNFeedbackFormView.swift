@@ -108,6 +108,7 @@ struct VPNFeedbackFormView: View {
                             }
                         }
                     submitButton()
+                        .disabled(!viewModel.submitButtonEnabled)
                 }
             }
         }
@@ -198,24 +199,35 @@ struct VPNFeedbackFormView: View {
     private func submitButton() -> some View {
         Button {
             Task {
-                _ = await viewModel.process()
+                _ = await viewModel.sendFeedback()
             }
             dismiss()
             onDismiss()
         } label: {
             Text(UserText.vpnFeedbackFormButtonSubmit)
-                .daxButton()
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .frame(height: 50)
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(Color(designSystemColor: .accent))
-                )
-                .padding(.horizontal, 16)
         }
-        .padding(.vertical, 16)
+        .buttonStyle(VPNFeedbackFormButtonStyle())
+        .padding(16)
     }
+}
+
+private struct VPNFeedbackFormButtonStyle: ButtonStyle {
+
+    @Environment(\.isEnabled) private var isEnabled: Bool
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundColor(Color.white)
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal)
+            .frame(height: 50)
+            .background(Color(designSystemColor: .accent))
+            .cornerRadius(8)
+            .daxButton()
+            .opacity(isEnabled ? 1.0 : 0.4)
+
+    }
+
 }
 
 #endif

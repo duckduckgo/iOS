@@ -204,7 +204,7 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
 extension RemoteAction {
 
     var isShare: Bool {
-        if case .share = self.actionStyle {
+        if case .share = self.actionStyle() {
             return true
         }
         return false

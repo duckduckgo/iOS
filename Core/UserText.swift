@@ -19,8 +19,7 @@
 
 import Foundation
 
-import Foundation
-
+// swiftlint:disable line_length
 public struct UserText {
 
     // Sync Errors
@@ -45,3 +44,4 @@ public struct UserText {
     static let syncCredentialsPausedAlertDescription = NSLocalizedString("alert.sync-credentials-paused-description", value: "You've reached the maximum number of passwords. Please delete some passwords to resume sync.", comment: "Description for alert shown when sync credentials paused for too many items")
     static let syncPausedTitle = NSLocalizedString("alert.sync.warning.sync-paused", value: "Sync & Backup is Paused", comment: "Title of the warning message")
 }
+// swiftlint:enable line_length

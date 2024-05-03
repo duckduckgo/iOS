@@ -45,9 +45,18 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
                                     readOnly: true,
                                     options: [:])
         let ddgSyncing = MockDDGSyncing(authState: .active, isSyncInProgress: false)
-        let bookmarksAdapter = SyncBookmarksAdapter(database: database, favoritesDisplayModeStorage: MockFavoritesDisplayModeStoring(), syncAdapterErrorHandler: CapturingAdapterErrorHandler())
-        let credentialsAdapter = SyncCredentialsAdapter(secureVaultErrorReporter: MockSecureVaultReporting(), syncAdapterErrorHandler: CapturingAdapterErrorHandler())
-        vc = SyncSettingsViewController(syncService: ddgSyncing, syncBookmarksAdapter: bookmarksAdapter, syncCredentialsAdapter: credentialsAdapter, syncSettingsErrorHandler: errorHandler)
+        let bookmarksAdapter = SyncBookmarksAdapter(
+            database: database,
+            favoritesDisplayModeStorage: MockFavoritesDisplayModeStoring(),
+            syncAdapterErrorHandler: CapturingAdapterErrorHandler())
+        let credentialsAdapter = SyncCredentialsAdapter(
+            secureVaultErrorReporter: MockSecureVaultReporting(),
+            syncAdapterErrorHandler: CapturingAdapterErrorHandler())
+        vc = SyncSettingsViewController(
+            syncService: ddgSyncing,
+            syncBookmarksAdapter: bookmarksAdapter,
+            syncCredentialsAdapter: credentialsAdapter,
+            syncSettingsErrorHandler: errorHandler)
     }
 
     override func tearDownWithError() throws {

@@ -237,7 +237,7 @@ final class SyncErrorHandlerTests: XCTestCase {
         XCTAssertTrue(abs(timeDifference) <= 10)
     }
 
-    func test_whenSyncTurnedOff_errorsAreReset() {
+    func test_whenSyncTurnedOff_errorsAreReset() async {
         handler.handleCredentialError(_:)(SyncError.unexpectedStatusCode(409))
         handler.handleBookmarkError(_:)(SyncError.unexpectedStatusCode(409))
         handler.handleBookmarkError(_:)(SyncError.unexpectedStatusCode(401))
@@ -252,8 +252,7 @@ final class SyncErrorHandlerTests: XCTestCase {
         handler.syncDidTurnOff()
         UserDefaults.standard.synchronize()
 
-        let expectation = XCTestExpectation()
-        wait(for: [expectation], timeout: 1)
+        try? await Task.sleep(nanoseconds: 1_000_000_000)
 
         XCTAssertFalse(handler.isSyncBookmarksPaused)
         XCTAssertFalse(handler.isSyncCredentialsPaused)

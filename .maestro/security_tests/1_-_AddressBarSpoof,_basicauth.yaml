@@ -2,17 +2,38 @@ appId: com.duckduckgo.mobile.ios
 tags:
     - securityTest
 ---
-- doubleTapOn:
+# Set up 
+- clearState
+- launchApp
+- runFlow: 
+    when: 
+      visible: 
+        text: "Let’s Do It!"
+        index: 0
+    file: ../shared/onboarding.yaml
+
+# Load Site
+- assertVisible:
     id: "searchEntry"
-- pressKey: Backspace
-# Test 1 - using \u2028 character
+- tapOn: 
+    id: "searchEntry"
 - inputText: "https://privacy-test-pages.site/security/address-bar-spoofing/spoof-basicauth-2028.html"
 - pressKey: Enter
+
+# Manage onboarding
+- runFlow:
+    when:
+      visible:
+        text: "Got It"
+        index: 0
+    file: ../shared/onboarding_browsing.yaml
+
+# Test
 - tapOn: "run"
 - assertVisible: "Example Domain"
 - copyTextFrom:
     id: "searchEntry"
-- assertTrue: ${maestro.copiedText.indexOf("https://www.google.com") != 0}
+- assertTrue: ${maestro.copiedText.indexOf("google.com") != 0}
 - tapOn:
     id: "searchEntry"
 # Test 2 - using \u2029 character
@@ -22,7 +43,7 @@ tags:
 - assertVisible: "Example Domain"
 - copyTextFrom:
     id: "searchEntry"
-- assertTrue: ${maestro.copiedText.indexOf("https://www.google.com") != 0}
+- assertTrue: ${maestro.copiedText.indexOf("google.com") != 0}
 - tapOn:
     id: "searchEntry"
 # Test 3 - using repeated " " space character
@@ -32,4 +53,4 @@ tags:
 - assertVisible: "Example Domain"
 - copyTextFrom:
     id: "searchEntry"
-- assertTrue: ${maestro.copiedText.indexOf("https://www.google.com") != 0}
+- assertTrue: ${maestro.copiedText.indexOf("google.com") != 0}

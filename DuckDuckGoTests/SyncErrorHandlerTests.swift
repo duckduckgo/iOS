@@ -28,12 +28,12 @@ final class SyncErrorHandlerTests: XCTestCase {
     var cancellables: Set<AnyCancellable>!
     var handler: SyncErrorHandler!
     var alertPresenter: CapturingAlertPresenter!
-    let userDefaults = UserDefaults.standard
+    let userDefaults = UserDefaults(suiteName: "\(Bundle.main.bundleIdentifier!)")!
 
     override func setUpWithError() throws {
         userDefaults.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
-        userDefaults.synchronize()
         UserDefaultsWrapper<Any>.clearAll()
+        userDefaults.synchronize()
         cancellables = []
         alertPresenter = CapturingAlertPresenter()
         handler = SyncErrorHandler()

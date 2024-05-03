@@ -112,6 +112,7 @@ extension NEVPNStatus {
 @available(iOSApplicationExtension 17.0, *)
 struct VPNStatusView: View {
     @Environment(\.widgetFamily) var family: WidgetFamily
+    @Environment(\.colorScheme) private var colorScheme
     var entry: VPNStatusTimelineProvider.Entry
 
     @ViewBuilder
@@ -121,8 +122,8 @@ struct VPNStatusView: View {
             case .status(let status):
                 HStack {
                     connectionView(with: status)
-                        .padding([.leading, .trailing], 16)
-
+                        .padding(.horizontal, 14)
+                        .padding(.top, 16)
                     Spacer()
                 }
             case .error:
@@ -135,19 +136,7 @@ struct VPNStatusView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .containerBackground(for: .widget) {
-            switch entry.status {
-            case .status(let status):
-                switch status {
-                case .connecting, .connected, .reasserting:
-                    Color.vpnWidgetBackgroundColor
-                case .disconnecting, .disconnected, .invalid:
-                    Color.white
-                @unknown default:
-                    Color.white
-                }
-            case .error, .notConfigured:
-                Color.white
-            }
+            Color(designSystemColor: .backgroundSheets)
         }
     }
 
@@ -159,43 +148,61 @@ struct VPNStatusView: View {
                 Text(title(with: status))
                     .font(.system(size: 16, weight: .semibold))
                     .fontWeight(.semibold)
-                    .foregroundStyle(status.isConnected ? Color.white : Color.black)
+                    .foregroundStyle(Color(designSystemColor: .textPrimary))
 
-                Text(status.isConnected ? entry.location : UserText.vpnWidgetDisconnectedSubtitle)
+                Text(status == .connected ? entry.location : UserText.vpnWidgetDisconnectedSubtitle)
                     .font(.system(size: 12, weight: .medium))
-                    .foregroundStyle(status.isConnected ? Color.white : Color.black)
+                    .foregroundStyle(Color(designSystemColor: .textSecondary))
                     .opacity(status.isConnected ? 0.8 : 0.6)
 
                 switch status {
                 case .connected, .connecting, .reasserting:
-                    Button(intent: DisableVPNIntent()) {
-                        Text(UserText.vpnWidgetDisconnectButton)
-                            .font(.system(size: 15, weight: .medium))
-                            .fontWeight(.semibold)
-                    }
-                    .foregroundStyle(Color.vpnWidgetBackgroundColor)
-                    .buttonStyle(.borderedProminent)
-                    .tint(.white)
-                    .disabled(status != .connected)
-                    .padding(.top, 6)
-                    .padding(.bottom, 16)
+                    Button(UserText.vpnWidgetDisconnectButton, intent: DisableVPNIntent())
+                        .daxButton()
+                        .foregroundStyle(disconnectButtonForegroundColor(isDisabled: status != .connected))
+                        .buttonStyle(.borderedProminent)
+                        .buttonBorderShape(.roundedRectangle(radius: 8))
+                        .tint(disconnectButtonBackgroundColor(isDisabled: status != .connected))
+                        .disabled(status != .connected)
+                        .padding(.top, 6)
+                        .padding(.bottom, 16)
                 case .disconnected, .disconnecting:
-                    Button(intent: EnableVPNIntent()) {
-                        Text(UserText.vpnWidgetConnectButton)
-                            .font(.system(size: 15, weight: .medium))
-                            .fontWeight(.semibold)
-                    }
-                    .foregroundStyle(.white)
-                    .buttonStyle(.borderedProminent)
-                    .tint(Color.vpnWidgetBackgroundColor)
-                    .disabled(status != .disconnected)
-                    .padding(.top, 6)
-                    .padding(.bottom, 16)
+                    Button(UserText.vpnWidgetConnectButton, intent: EnableVPNIntent())
+                        .daxButton()
+                        .foregroundStyle(connectButtonForegroundColor(isDisabled: status != .disconnected))
+                        .buttonStyle(.borderedProminent)
+                        .buttonBorderShape(.roundedRectangle(radius: 8))
+                        .tint(Color(designSystemColor: .accent))
+                        .disabled(status != .disconnected)
+                        .padding(.top, 6)
+                        .padding(.bottom, 16)
                 default:
                     Spacer()
                 }
             }
         }
+    }
+
+    private func connectButtonForegroundColor(isDisabled: Bool) -> Color {
+        let isDark = colorScheme == .dark
+        let standardForegroundColor = isDark ? Color.black.opacity(0.84) : Color.white
+        let pressedForegroundColor = isDark ? Color.black.opacity(0.84) : Color.white
+        let disabledForegroundColor = isDark ? Color.white.opacity(0.36) : Color.black.opacity(0.36)
+        return isDisabled ? disabledForegroundColor : standardForegroundColor
+    }
+
+    private func disconnectButtonBackgroundColor(isDisabled: Bool) -> Color {
+        let isDark = colorScheme == .dark
+        let standardBackgroundColor = isDark ? Color.white.opacity(0.18) : Color.black.opacity(0.06)
+        let disabledBackgroundColor = isDark ? Color.white.opacity(0.06) : Color.black.opacity(0.06)
+        return isDisabled ? disabledBackgroundColor : standardBackgroundColor
+    }
+
+    private func disconnectButtonForegroundColor(isDisabled: Bool) -> Color {
+        let isDark = colorScheme == .dark
+        let defaultForegroundColor = isDark ? Color.white : Color.black.opacity(0.84)
+        let disabledForegroundColor = isDark ? Color.white.opacity(0.36) : Color.black.opacity(0.36)
+        return isDisabled ? disabledForegroundColor : defaultForegroundColor
     }
 
     private func headerImageName(with status: NEVPNStatus) -> String {
@@ -280,15 +287,6 @@ struct VPNStatusView_Previews: PreviewProvider {
         } else {
             Text("iOS 17 required")
         }
-    }
-
-}
-
-extension Color {
-
-    static var vpnWidgetBackgroundColor: Color {
-        let color = UIColor(designSystemColor: .accent).resolvedColor(with: UITraitCollection(userInterfaceStyle: .light))
-        return Color(color)
     }
 
 }

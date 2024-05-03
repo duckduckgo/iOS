@@ -25,25 +25,18 @@ import DuckDuckGo
 
 final class SyncErrorHandlerSyncPaysedAlertsTests: XCTestCase {
 
-    var cancellables: Set<AnyCancellable>!
     var handler: SyncErrorHandler!
     var alertPresenter: CapturingAlertPresenter!
-    var expectation: XCTestExpectation!
-    var expectation2: XCTestExpectation!
     let userDefaults = UserDefaults.standard
 
     override func setUpWithError() throws {
-        expectation = XCTestExpectation(description: "Error handled")
-        expectation2 = XCTestExpectation(description: "Secons Error handled")
         UserDefaultsWrapper<Any>.clearAll()
-        cancellables = []
         alertPresenter = CapturingAlertPresenter()
         handler = SyncErrorHandler()
         handler.alertPresenter = alertPresenter
     }
 
     override func tearDownWithError() throws {
-        cancellables = nil
         alertPresenter = nil
         handler = nil
     }
@@ -51,180 +44,119 @@ final class SyncErrorHandlerSyncPaysedAlertsTests: XCTestCase {
     func test_WhenHandleBookmarksError409ForTheFirstTime_ThenAlertShown() async {
         let error = SyncError.unexpectedStatusCode(409)
 
-        Task {
-            handler.handleBookmarkError(error)
-            expectation.fulfill()
-        }
+        handler.handleBookmarkError(error)
 
-        await self.fulfillment(of: [expectation], timeout: 4.0)
         XCTAssertTrue(alertPresenter.showAlertCalled)
     }
 
     func test_WhenHandleBookmarksError409ForTheSecondTime_ThenAlertNotShown() async {
         let error = SyncError.unexpectedStatusCode(409)
 
-        Task {
-            handler.handleBookmarkError(error)
-            expectation.fulfill()
-        }
+        handler.handleBookmarkError(error)
+
 
         handler = SyncErrorHandler()
         handler.alertPresenter = alertPresenter
 
-        Task {
-            handler.handleBookmarkError(error)
-            expectation2.fulfill()
-        }
+        handler.handleBookmarkError(error)
 
-        await self.fulfillment(of: [expectation, expectation2], timeout: 4.0)
         XCTAssertEqual(alertPresenter.showAlertCount, 1)
     }
 
     func test_WhenHandleCredentialsError409ForTheFirstTime_ThenAlertShown() async {
         let error = SyncError.unexpectedStatusCode(409)
 
-        Task {
-            handler.handleCredentialError(_:)(error)
-            expectation.fulfill()
-        }
+        handler.handleCredentialError(_:)(error)
 
-        await self.fulfillment(of: [expectation], timeout: 4.0)
         XCTAssertTrue(alertPresenter.showAlertCalled)
     }
 
     func test_WhenHandleCredentialsError409ForTheSecondTime_ThenAlertNotShown() async {
         let error = SyncError.unexpectedStatusCode(409)
 
-        Task {
-            handler.handleCredentialError(error)
-            expectation.fulfill()
-        }
+        handler.handleCredentialError(error)
 
         handler = SyncErrorHandler()
         handler.alertPresenter = alertPresenter
 
-        Task {
-            handler.handleCredentialError(error)
-            expectation2.fulfill()
-        }
+        handler.handleCredentialError(error)
 
-        await self.fulfillment(of: [expectation, expectation2], timeout: 4.0)
         XCTAssertEqual(alertPresenter.showAlertCount, 1)
     }
 
     func test_WhenHandleBookmarksError413ForTheFirstTime_ThenAlertShown() async {
         let error = SyncError.unexpectedStatusCode(413)
 
-        Task {
-            handler.handleBookmarkError(error)
-            expectation.fulfill()
-        }
+        handler.handleBookmarkError(error)
 
-        await self.fulfillment(of: [expectation], timeout: 4.0)
         XCTAssertTrue(alertPresenter.showAlertCalled)
     }
 
     func test_WhenHandleBookmarksError413ForTheSecondTime_ThenAlertNotShown() async {
         let error = SyncError.unexpectedStatusCode(413)
 
-        Task {
-            handler.handleBookmarkError(error)
-            expectation.fulfill()
-        }
+        handler.handleBookmarkError(error)
 
         handler = SyncErrorHandler()
         handler.alertPresenter = alertPresenter
 
-        Task {
-            handler.handleBookmarkError(error)
-            expectation2.fulfill()
-        }
+        handler.handleBookmarkError(error)
 
-        await self.fulfillment(of: [expectation, expectation2], timeout: 4.0)
         XCTAssertEqual(alertPresenter.showAlertCount, 1)
     }
 
     func test_WhenHandleCredentialsError413ForTheFirstTime_ThenAlertShown() async {
         let error = SyncError.unexpectedStatusCode(413)
 
-        Task {
-            handler.handleCredentialError(_:)(error)
-            expectation.fulfill()
-        }
+        handler.handleCredentialError(_:)(error)
 
-        await self.fulfillment(of: [expectation], timeout: 4.0)
         XCTAssertTrue(alertPresenter.showAlertCalled)
     }
 
     func test_WhenHandleCredentialsError413ForTheSecondTime_ThenAlertNotShown() async {
         let error = SyncError.unexpectedStatusCode(413)
 
-        Task {
-            handler.handleCredentialError(error)
-            expectation.fulfill()
-        }
+        handler.handleCredentialError(error)
 
         handler = SyncErrorHandler()
         handler.alertPresenter = alertPresenter
 
-        Task {
-            handler.handleCredentialError(error)
-            expectation2.fulfill()
-        }
+        handler.handleCredentialError(error)
 
-        await self.fulfillment(of: [expectation, expectation2], timeout: 4.0)
         XCTAssertEqual(alertPresenter.showAlertCount, 1)
     }
 
     func test_WhenHandleCredentialsError413_AndThenHandleBookmarksError413_ThenAlertShownTwice() async {
         let error = SyncError.unexpectedStatusCode(413)
 
-        Task {
-            handler.handleCredentialError(error)
-            expectation.fulfill()
-        }
+        handler.handleCredentialError(error)
 
         handler = SyncErrorHandler()
         handler.alertPresenter = alertPresenter
 
-        Task {
-            handler.handleBookmarkError(_:)(error)
-            expectation2.fulfill()
-        }
+        handler.handleBookmarkError(_:)(error)
 
-        await self.fulfillment(of: [expectation, expectation2], timeout: 4.0)
         XCTAssertEqual(alertPresenter.showAlertCount, 2)
     }
 
     func test_WhenHandleCredentialsError401ForTheFirstTime_ThenAlertShown() async {
         let error = SyncError.unexpectedStatusCode(401)
 
-        Task {
-            handler.handleCredentialError(_:)(error)
-            expectation.fulfill()
-        }
+        handler.handleCredentialError(_:)(error)
 
-        await self.fulfillment(of: [expectation], timeout: 4.0)
         XCTAssertTrue(alertPresenter.showAlertCalled)
     }
 
     func test_WhenHandleBookmarksError401ForTheSecondTime_ThenNoAlertShown() async {
         let error = SyncError.unexpectedStatusCode(401)
 
-        Task {
-            handler.handleBookmarkError(_:)(error)
-            expectation.fulfill()
-        }
+        handler.handleBookmarkError(_:)(error)
 
         handler = SyncErrorHandler()
         handler.alertPresenter = alertPresenter
 
-        Task {
-            handler.handleBookmarkError(_:)(error)
-            expectation2.fulfill()
-        }
+        handler.handleBookmarkError(_:)(error)
 
-        await self.fulfillment(of: [expectation, expectation2], timeout: 4.0)
         XCTAssertEqual(alertPresenter.showAlertCount, 1)
     }
 

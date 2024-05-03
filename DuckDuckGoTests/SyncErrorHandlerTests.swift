@@ -31,6 +31,8 @@ final class SyncErrorHandlerTests: XCTestCase {
     let userDefaults = UserDefaults.standard
 
     override func setUpWithError() throws {
+        userDefaults.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+        userDefaults.synchronize()
         UserDefaultsWrapper<Any>.clearAll()
         cancellables = []
         alertPresenter = CapturingAlertPresenter()

@@ -205,42 +205,39 @@ extension SyncErrorHandler {
     }
 
     private func showSyncPausedAlertIfNeeded(for errorType: AsyncErrorType) {
-        Task {
-            await MainActor.run {
-                switch errorType {
-                case .bookmarksCountLimitExceeded, .bookmarksRequestSizeLimitExceeded:
-                    guard !didShowBookmarksSyncPausedError else { return }
-                    alertPresenter?.showSyncPausedAlert(
-                        title: UserText.syncBookmarkPausedAlertTitle,
-                        informative: UserText.syncBookmarkPausedAlertDescription)
-                    didShowBookmarksSyncPausedError = true
-                case .credentialsCountLimitExceeded, .credentialsRequestSizeLimitExceeded:
-                    guard !didShowCredentialsSyncPausedError else { return }
-                    alertPresenter?.showSyncPausedAlert(
-                        title: UserText.syncCredentialsPausedAlertTitle,
-                        informative: UserText.syncCredentialsPausedAlertDescription)
-                    didShowCredentialsSyncPausedError = true
-                case .invalidLoginCredentials:
-                    guard !didShowInvalidLoginSyncPausedError else { return }
-                    alertPresenter?.showSyncPausedAlert(
-                        title: UserText.syncPausedAlertTitle,
-                        informative: UserText.syncInvalidLoginAlertDescription)
-                    didShowInvalidLoginSyncPausedError = true
-                case .tooManyRequests:
-                    guard shouldShowAlertForNonActionableError() == true else { return }
-                    alertPresenter?.showSyncPausedAlert(
-                        title: UserText.syncErrorAlertTitle,
-                        informative: UserText.syncTooManyRequestsAlertDescription)
-                    lastErrorNotificationTime = Date()
-                case .badRequest:
-                    guard shouldShowAlertForNonActionableError() == true else { return }
-                    alertPresenter?.showSyncPausedAlert(
-                        title: UserText.syncErrorAlertTitle,
-                        informative: UserText.syncBadRequestAlertDescription)
-                    lastErrorNotificationTime = Date()
-                }
-            }
+        switch errorType {
+        case .bookmarksCountLimitExceeded, .bookmarksRequestSizeLimitExceeded:
+            guard !didShowBookmarksSyncPausedError else { return }
+            alertPresenter?.showSyncPausedAlert(
+                title: UserText.syncBookmarkPausedAlertTitle,
+                informative: UserText.syncBookmarkPausedAlertDescription)
+            didShowBookmarksSyncPausedError = true
+        case .credentialsCountLimitExceeded, .credentialsRequestSizeLimitExceeded:
+            guard !didShowCredentialsSyncPausedError else { return }
+            alertPresenter?.showSyncPausedAlert(
+                title: UserText.syncCredentialsPausedAlertTitle,
+                informative: UserText.syncCredentialsPausedAlertDescription)
+            didShowCredentialsSyncPausedError = true
+        case .invalidLoginCredentials:
+            guard !didShowInvalidLoginSyncPausedError else { return }
+            alertPresenter?.showSyncPausedAlert(
+                title: UserText.syncPausedAlertTitle,
+                informative: UserText.syncInvalidLoginAlertDescription)
+            didShowInvalidLoginSyncPausedError = true
+        case .tooManyRequests:
+            guard shouldShowAlertForNonActionableError() == true else { return }
+            alertPresenter?.showSyncPausedAlert(
+                title: UserText.syncErrorAlertTitle,
+                informative: UserText.syncTooManyRequestsAlertDescription)
+            lastErrorNotificationTime = Date()
+        case .badRequest:
+            guard shouldShowAlertForNonActionableError() == true else { return }
+            alertPresenter?.showSyncPausedAlert(
+                title: UserText.syncErrorAlertTitle,
+                informative: UserText.syncBadRequestAlertDescription)
+            lastErrorNotificationTime = Date()
         }
+
     }
 
     private var syncPausedTitle: String? {

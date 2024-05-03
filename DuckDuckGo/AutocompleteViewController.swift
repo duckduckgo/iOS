@@ -154,12 +154,20 @@ class AutocompleteViewModel: ObservableObject {
     @Published var query: String?
     @Published var isEmpty = true
 
+    @Published var messageModel: HomeMessageViewModel?
+
     weak var delegate: AutocompleteViewControllerDelegate?
 
     let isAddressBarAtBottom: Bool
 
     init(isAddressBarAtBottom: Bool) {
         self.isAddressBarAtBottom = isAddressBarAtBottom
+        messageModel = HomeMessageViewModel(messageId: "in-app.history-message",
+                                            modelType: .medium(titleText: UserText.autocompleteHistoryWarningTitle,
+                                                               descriptionText: UserText.autocompleteHistoryWarningDescription,
+                                                               placeholder: .announce),
+                                            onDidClose: onDidCloseMessage,
+                                            onDidAppear: {})
     }
 
     var emptySuggestion: SuggestionModel {
@@ -181,6 +189,13 @@ class AutocompleteViewModel: ObservableObject {
     func onCompleteTapped(_ model: SuggestionModel) {
         print("***", #function, model)
         delegate?.autocomplete(pressedPlusButtonForSuggestion: model.suggestion)
+    }
+
+    func onDidCloseMessage(ignored: Any) {
+        print("***", #function)
+        withAnimation {
+            messageModel = nil
+        }
     }
 
     struct SuggestionModel: Identifiable {
@@ -227,6 +242,13 @@ struct AutocompleteView: View {
 
     var body: some View {
         List {
+
+            if let messageModel = model.messageModel {
+                HomeMessageView(viewModel: messageModel, backgroundDisabled: true)
+                    .padding()
+                    .buttonStyle(.plain)
+            }
+
             if model.isEmpty {
                 SuggestionsSection(suggestions: [model.emptySuggestion],
                                    query: model.query,
@@ -244,11 +266,27 @@ struct AutocompleteView: View {
             SuggestionsSection(suggestions: model.localResults,
                                query: model.query,
                                onSuggestionSelected: model.onSuggestionSelected)
+
         }
+        .offset(x: 0, y: -20)
+        .padding(.bottom, -20)
         .modifier(HideScrollContentBackground())
         .modifier(CompactSectionSpacing())
+        .modifier(DisableSelection())
         .environmentObject(model)
    }
+
+}
+
+private struct DisableSelection: ViewModifier {
+
+    func body(content: Content) -> some View {
+        if #available(iOS 17, *) {
+            content.selectionDisabled()
+        } else {
+            content
+        }
+    }
 
 }
 
@@ -257,6 +295,8 @@ private struct CompactSectionSpacing: ViewModifier {
     func body(content: Content) -> some View {
         if #available(iOS 17, *) {
             content.listSectionSpacing(.compact)
+        } else {
+            content
         }
     }
 
@@ -265,8 +305,9 @@ private struct CompactSectionSpacing: ViewModifier {
 private struct HideScrollContentBackground: ViewModifier {
     func body(content: Content) -> some View {
         if #available(iOS 16, *) {
+            content.scrollContentBackground(.hidden)
+        } else {
             content
-                .scrollContentBackground(.hidden)
         }
     }
 }
@@ -280,17 +321,12 @@ private struct SuggestionsSection: View {
     var body: some View {
         Section {
             ForEach(suggestions.indices, id: \.self) { index in
-                Button {
-                    onSuggestionSelected(suggestions[index])
-                } label: {
+                 Button {
+                     onSuggestionSelected(suggestions[index])
+                 } label: {
                     SuggestionView(model: suggestions[index], query: query)
-                }
-                .buttonStyle(.plain)
+                 }.buttonStyle(.plain)
             }
-        } header: {
-            EmptyView()
-        } footer: {
-            EmptyView()
         }
     }
 
@@ -307,6 +343,7 @@ private struct SuggestionView: View {
 
     var body: some View {
         Group {
+
             switch model.suggestion {
             case .phrase(let phrase):
                 SuggestionListItem(icon: Image("Find-Search-24"),

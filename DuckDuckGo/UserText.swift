@@ -1131,5 +1131,9 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionPIRHeroDesktopMenuItem = NSLocalizedString("subscription.pir.heroTextMenyEntry", value: "I have a subscription", comment: "Menu item for enabling Personal Information Removal on Desktop")
     public static let subscriptionPIRWindows = NSLocalizedString("subscription.pir.windows", value: "Windows", comment: "Text for the 'Windows' button")
     public static let subscriptionPIRMacOS = NSLocalizedString("subscription.pir.macos", value: "macOS", comment: "Text for the 'macOS' button")
-    
+
+    // Autocomplete
+    public static let autocompleteHistoryWarningTitle = "Better Search Results"
+    public static let autocompleteHistoryWarningDescription = "To help speed up your searches, search suggestions now include recently visited sites. Use the Fire Button 🔥 anytime to delete."
+
 }

@@ -19,6 +19,7 @@
 
 import Foundation
 import UIKit
+import Combine
 
 public protocol SyncManagementViewModelDelegate: AnyObject {
 
@@ -38,6 +39,15 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
     func updateOptions()
     func launchBookmarksViewController()
     func launchAutofillViewController()
+
+    var syncBookmarksPausedTitle: String { get }
+    var syncCredentialsPausedTitle: String { get }
+    var syncPausedTitle: String? { get }
+    var syncBookmarksPausedDescription: String { get }
+    var syncCredentialsPausedDescription: String { get }
+    var syncPausedDescription: String? { get }
+    var syncBookmarksPausedButtonTitle: String { get }
+    var syncCredentialsPausedButtonTitle: String { get }
 }
 
 public class SyncSettingsViewModel: ObservableObject {
@@ -84,6 +94,7 @@ public class SyncSettingsViewModel: ObservableObject {
     @Published public var isFaviconsFetchingEnabled = false
     @Published public var isUnifiedFavoritesEnabled = true
     @Published public var isSyncingDevices = false
+    @Published public var isSyncPaused = false
     @Published public var isSyncBookmarksPaused = false
     @Published public var isSyncCredentialsPaused = false
     @Published public var invalidBookmarksTitles: [String] = []
@@ -103,14 +114,17 @@ public class SyncSettingsViewModel: ObservableObject {
     public weak var delegate: SyncManagementViewModelDelegate?
     private(set) var isOnDevEnvironment: Bool
     private(set) var switchToProdEnvironment: () -> Void = {}
+    private var cancellables = Set<AnyCancellable>()
 
-    public init(isOnDevEnvironment: @escaping () -> Bool, switchToProdEnvironment: @escaping () -> Void) {
-        self.isOnDevEnvironment = isOnDevEnvironment()
-        self.switchToProdEnvironment = { [weak self] in
-            switchToProdEnvironment()
-            self?.isOnDevEnvironment = isOnDevEnvironment()
+    public init(
+        isOnDevEnvironment: @escaping () -> Bool,
+        switchToProdEnvironment: @escaping () -> Void) {
+            self.isOnDevEnvironment = isOnDevEnvironment()
+            self.switchToProdEnvironment = { [weak self] in
+                switchToProdEnvironment()
+                self?.isOnDevEnvironment = isOnDevEnvironment()
+            }
         }
-    }
 
     @MainActor
     func commonAuthenticate() async -> Bool {
@@ -224,4 +238,30 @@ public class SyncSettingsViewModel: ObservableObject {
             }
         }
     }
+
+    public var syncBookmarksPausedTitle: String? {
+        return delegate?.syncBookmarksPausedTitle
+    }
+    public var syncCredentialsPausedTitle: String? {
+        delegate?.syncCredentialsPausedTitle
+    }
+    public var syncPausedTitle: String? {
+        delegate?.syncPausedTitle
+    }
+    public var syncBookmarksPausedDescription: String? {
+        delegate?.syncBookmarksPausedDescription
+    }
+    public var syncCredentialsPausedDescription: String? {
+        delegate?.syncCredentialsPausedDescription
+    }
+    public var syncPausedDescription: String? {
+        delegate?.syncPausedDescription
+    }
+    public var syncBookmarksPausedButtonTitle: String? {
+        delegate?.syncBookmarksPausedButtonTitle
+    }
+    public var syncCredentialsPausedButtonTitle: String? {
+        delegate?.syncCredentialsPausedButtonTitle
+    }
+
 }

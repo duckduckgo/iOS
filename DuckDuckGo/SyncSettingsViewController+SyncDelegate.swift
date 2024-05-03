@@ -25,6 +25,38 @@ import DDGSync
 import AVFoundation
 
 extension SyncSettingsViewController: SyncManagementViewModelDelegate {
+    var syncBookmarksPausedTitle: String {
+        syncSettingsErrorHandler.syncBookmarksPausedMetadata.syncPausedTitle
+    }
+    
+    var syncCredentialsPausedTitle: String {
+        syncSettingsErrorHandler.syncCredentialsPausedMetadata.syncPausedTitle
+    }
+    
+    var syncPausedTitle: String? {
+        syncSettingsErrorHandler.syncPausedMetadata?.syncPausedTitle
+    }
+    
+    var syncBookmarksPausedDescription: String {
+        syncSettingsErrorHandler.syncBookmarksPausedMetadata.syncPausedMessage
+    }
+    
+    var syncCredentialsPausedDescription: String {
+        syncSettingsErrorHandler.syncCredentialsPausedMetadata.syncPausedMessage
+    }
+    
+    var syncPausedDescription: String? {
+        syncSettingsErrorHandler.syncPausedMetadata?.syncPausedMessage
+    }
+    
+    var syncBookmarksPausedButtonTitle: String {
+        syncSettingsErrorHandler.syncBookmarksPausedMetadata.syncPausedButtonTitle
+    }
+    
+    var syncCredentialsPausedButtonTitle: String {
+        syncSettingsErrorHandler.syncCredentialsPausedMetadata.syncPausedButtonTitle
+    }
+    
 
     func authenticateUser() async throws {
         return try await withCheckedThrowingContinuation { continuation in
@@ -207,23 +239,28 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             let alert = UIAlertController(title: UserText.syncTurnOffConfirmTitle,
                                           message: UserText.syncTurnOffConfirmMessage,
                                           preferredStyle: .alert)
-            alert.addAction(title: UserText.actionCancel, style: .cancel) {
+            self.onConfirmSyncDisable = {
+                   Task { @MainActor in
+                       do {
+                           try await self.syncService.disconnect()
+                           self.rootView.model.isSyncEnabled = false
+                           self.syncSettingsErrorHandler.syncDidTurnOff()
+                           continuation.resume(returning: true)
+                       } catch {
+                           self.handleError(SyncErrorMessage.unableToTurnSyncOff, error: error, event: .syncLogoutError)
+                           continuation.resume(returning: false)
+                       }
+                   }
+               }
+            let cancelAction = UIAlertAction(title: UserText.actionCancel, style: .cancel) { _ in
                 continuation.resume(returning: false)
             }
-            alert.addAction(title: UserText.syncTurnOffConfirmAction, style: .destructive) {
-                Task { @MainActor in
-                    do {
-                        try await self.syncService.disconnect()
-                        self.rootView.model.isSyncEnabled = false
-                        AppUserDefaults().isSyncBookmarksPaused = false
-                        AppUserDefaults().isSyncCredentialsPaused = false
-                        continuation.resume(returning: true)
-                    } catch {
-                        self.handleError(SyncErrorMessage.unableToTurnSyncOff, error: error, event: .syncLogoutError)
-                        continuation.resume(returning: false)
-                    }
-                }
+            let confirmAction = UIAlertAction(title: UserText.syncTurnOffConfirmAction, style: .destructive) { _ in
+                self.onConfirmSyncDisable?()
+                continuation.resume(returning: true)
             }
+            alert.addAction(cancelAction)
+            alert.addAction(confirmAction)
             self.present(alert, animated: true)
         }
     }
@@ -236,19 +273,22 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             alert.addAction(title: UserText.actionCancel, style: .cancel) {
                 continuation.resume(returning: false)
             }
-            alert.addAction(title: UserText.syncDeleteAllConfirmAction, style: .destructive) {
+            self.onConfirmAndDeleteAllData = {
                 Task { @MainActor in
                     do {
                         try await self.syncService.deleteAccount()
                         self.rootView.model.isSyncEnabled = false
-                        AppUserDefaults().isSyncBookmarksPaused = false
-                        AppUserDefaults().isSyncCredentialsPaused = false
+                        self.syncSettingsErrorHandler.syncDidTurnOff()
                         continuation.resume(returning: true)
                     } catch {
                         self.handleError(SyncErrorMessage.unableToDeleteData, error: error, event: .syncDeleteAccountError)
                         continuation.resume(returning: false)
                     }
                 }
+            }
+            alert.addAction(title: UserText.syncDeleteAllConfirmAction, style: .destructive) {
+                self.onConfirmAndDeleteAllData?()
+                continuation.resume(returning: true)
             }
             self.present(alert, animated: true)
         }

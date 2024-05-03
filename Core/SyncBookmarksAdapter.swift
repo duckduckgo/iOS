@@ -66,16 +66,6 @@ public final class SyncBookmarksAdapter {
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
     let syncAdapterErrorHandler: SyncAdapterErrorHandler
 
-//    @UserDefaultsWrapper(key: .syncBookmarksPaused, defaultValue: false)
-//    static public var isSyncBookmarksPaused: Bool {
-//        didSet {
-//            NotificationCenter.default.post(name: syncBookmarksPausedStateChanged, object: nil)
-//        }
-//    }
-//
-//    @UserDefaultsWrapper(key: .syncBookmarksPausedErrorDisplayed, defaultValue: false)
-//    static private var didShowBookmarksSyncPausedError: Bool
-
     @UserDefaultsWrapper(key: .syncDidMigrateToImprovedListsHandling, defaultValue: false)
     private var didMigrateToImprovedListsHandling: Bool
 
@@ -141,8 +131,6 @@ public final class SyncBookmarksAdapter {
             syncDidUpdateData: { [weak self] in
                 self?.syncDidCompleteSubject.send()
                 self?.syncAdapterErrorHandler.syncBookmarksSucceded()
-//                Self.isSyncBookmarksPaused = false
-//                Self.didShowBookmarksSyncPausedError = false
             },
             syncDidFinish: { [weak self] faviconsFetcherInput in
                 if let faviconsFetcher, self?.isFaviconsFetchingEnabled == true {
@@ -194,32 +182,6 @@ public final class SyncBookmarksAdapter {
         syncErrorCancellable = provider.syncErrorPublisher
             .sink { [weak self] error in
                 self?.syncAdapterErrorHandler.handleBookmarkError(error)
-//                switch error {
-//                case let syncError as SyncError:
-//                    Pixel.fire(pixel: .syncBookmarksFailed, error: syncError)
-//                    switch syncError {
-//                    case .unexpectedStatusCode(409):
-//                        // If bookmarks count limit has been exceeded
-//                        Self.isSyncBookmarksPaused = true
-//                        DailyPixel.fire(pixel: .syncBookmarksCountLimitExceededDaily)
-//                        Self.notifyBookmarksSyncLimitReached()
-//                    case .unexpectedStatusCode(413):
-//                        // If bookmarks request size limit has been exceeded
-//                        Self.isSyncBookmarksPaused = true
-//                        DailyPixel.fire(pixel: .syncBookmarksRequestSizeLimitExceededDaily)
-//                        Self.notifyBookmarksSyncLimitReached()
-//                    default:
-//                        break
-//                    }
-//                default:
-//                    let nsError = error as NSError
-//                    if nsError.domain != NSURLErrorDomain {
-//                        let processedErrors = CoreDataErrorsParser.parse(error: error as NSError)
-//                        let params = processedErrors.errorPixelParameters
-//                        Pixel.fire(pixel: .syncBookmarksFailed, error: error, withAdditionalParameters: params)
-//                    }
-//                }
-//                os_log(.error, log: OSLog.syncLog, "Bookmarks Sync error: %{public}s", String(reflecting: error))
             }
     }
 

@@ -276,9 +276,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                       syncDataProviders: syncDataProviders,
                                       appSettings: AppDependencyProvider.shared.appSettings,
                                       previewsSource: previewsSource,
-                                      tabsModel: tabsModel)
+                                      tabsModel: tabsModel,
+                                      syncSettingsErrorHandler: syncErrorHandler)
 
         main.loadViewIfNeeded()
+        syncErrorHandler.alertPresenter = main
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = main

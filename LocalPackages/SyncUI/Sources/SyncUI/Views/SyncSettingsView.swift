@@ -53,6 +53,9 @@ public struct SyncSettingsView: View {
                     turnOffSync()
                     
                     // Sync Paused Errors
+                    if $model.isSyncPaused.wrappedValue {
+                        syncPaused()
+                    }
                     if $model.isSyncBookmarksPaused.wrappedValue {
                         syncPaused(for: .bookmarks)
                     }

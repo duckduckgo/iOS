@@ -20,7 +20,6 @@
 import Foundation
 
 // swiftlint:disable line_length
-// Localise these later, when feature is closer to exernal release
 public struct UserText {
 
     // Sync Title
@@ -42,16 +41,11 @@ public struct UserText {
     // Turn Sync Off
     static let turnSyncOff = NSLocalizedString("turn.sync.off", bundle: Bundle.module, value: "Turn Off Sync & Backup...", comment: "Turn Sync Off - Button")
     static let turnSyncOffSectionHeader = NSLocalizedString("turn.sync.off.section.header", bundle: Bundle.module, value: "Sync Enabled", comment: "Turn Sync Off - Section Header")
-    // Sync Paused Errors
-    static let syncLimitExceededTitle = NSLocalizedString("sync.limit.exceeded.title", bundle: Bundle.module, value: "Sync Paused", comment: "Sync Paused Errors - Title")
-    static let bookmarksLimitExceededDescription = NSLocalizedString("bookmarks.limit.exceeded.description", bundle: Bundle.module, value: "Bookmark limit exceeded. Delete some to resume syncing.", comment: "Sync Paused Errors - Bookmarks Limit Exceeded Description")
-    static let credentialsLimitExceededDescription = NSLocalizedString("credentials.limit.exceeded.description", bundle: Bundle.module, value: "Logins limit exceeded. Delete some to resume syncing.", comment: "Sync Paused Errors - Credentials Limit Exceeded Description")
-    static let bookmarksLimitExceededAction = NSLocalizedString("bookmarks.limit.exceeded.action", bundle: Bundle.module, value: "Manage Bookmarks", comment: "Sync Paused Errors - Bookmarks Limit Exceeded Action")
-    static let credentialsLimitExceededAction = NSLocalizedString("credentials.limit.exceeded.action", bundle: Bundle.module, value: "Manage Logins", comment: "Sync Paused Errors - Credentials Limit Exceeded Action")
     // Sync Filtered Items Errors
     static let invalidBookmarksPresentTitle = NSLocalizedString("bookmarks.invalid.objects.present.title", bundle: Bundle.module, value: "Some bookmarks are not syncing due to excessively long content in certain fields.", comment: "Alert title for invalid bookmarks being filtered out of synced data")
     static let invalidCredentialsPresentTitle = NSLocalizedString("credentials.invalid.objects.present.title", bundle: Bundle.module, value: "Some logins are not syncing due to excessively long content in certain fields.", comment: "Alert title for invalid logins being filtered out of synced data")
-
+    static let bookmarksLimitExceededAction = NSLocalizedString("prefrences.sync.bookmarks-limit-exceeded-action", value: "Manage Bookmarks", comment: "Button title for sync bookmarks limits exceeded warning to go to manage bookmarks")
+    static let credentialsLimitExceededAction = NSLocalizedString("prefrences.sync.credentials-limit-exceeded-action", value: "Manage passwords…", comment: "Button title for sync credentials limits exceeded warning to go to manage passwords")
     static func invalidBookmarksPresentDescription(_ invalidItemTitle: String, numberOfOtherInvalidItems: Int) -> String {
         let message = NSLocalizedString("bookmarks.invalid.objects.present.description", bundle: Bundle.module, comment: "Do not translate - stringsdict entry")
         return String(format: message, numberOfOtherInvalidItems, invalidItemTitle)
@@ -175,7 +169,6 @@ public struct UserText {
 
     // Sync Feature Flags
     static let syncUnavailableTitle = NSLocalizedString("sync.warning.sync.unavailable", bundle: Bundle.module, value: "Sync & Backup is Unavailable", comment: "Title of the warning message")
-    static let syncPausedTitle = NSLocalizedString("sync.warning.sync.paused", bundle: Bundle.module, value: "Sync & Backup is Paused", comment: "Title of the warning message")
     static let syncUnavailableMessage = NSLocalizedString("sync.warning.data.syncing.disabled", bundle: Bundle.module, value: "Sorry, but Sync & Backup is currently unavailable. Please try again later.", comment: "Data syncing unavailable warning message")
     static let syncUnavailableMessageUpgradeRequired = NSLocalizedString("sync.warning.data.syncing.disabled.upgrade.required", bundle: Bundle.module, value: "Sorry, but Sync & Backup is no longer available in this app version. Please update DuckDuckGo to the latest version to continue.", comment: "Data syncing unavailable warning message")
 

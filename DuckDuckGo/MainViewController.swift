@@ -93,7 +93,8 @@ class MainViewController: UIViewController {
     private var favoritesViewModel: FavoritesListInteracting
     let syncService: DDGSyncing
     let syncDataProviders: SyncDataProviders
-    
+    let syncSettingErrorHandler: any SyncSettingsErrorHandler
+
     @UserDefaultsWrapper(key: .syncDidShowSyncPausedByFeatureFlagAlert, defaultValue: false)
     private var syncDidShowSyncPausedByFeatureFlagAlert: Bool
     
@@ -169,7 +170,8 @@ class MainViewController: UIViewController {
         syncDataProviders: SyncDataProviders,
         appSettings: AppSettings,
         previewsSource: TabPreviewsSource,
-        tabsModel: TabsModel
+        tabsModel: TabsModel,
+        syncSettingsErrorHandler: any SyncSettingsErrorHandler
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -187,6 +189,7 @@ class MainViewController: UIViewController {
                                      bookmarksDatabase: bookmarksDatabase,
                                      historyManager: historyManager,
                                      syncService: syncService)
+        self.syncSettingErrorHandler = syncSettingsErrorHandler
 
 
         super.init(nibName: nil, bundle: nil)
@@ -257,7 +260,7 @@ class MainViewController: UIViewController {
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
         registerForKeyboardNotifications()
-        registerForSyncPausedNotifications()
+        registerForSynFeatureFlags()
 
         decorate()
 
@@ -443,17 +446,7 @@ class MainViewController: UIViewController {
         keyboardShowing = false
     }
 
-    private func registerForSyncPausedNotifications() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(showSyncPausedError),
-            name: SyncBookmarksAdapter.bookmarksSyncLimitReached,
-            object: nil)
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(showSyncPausedError),
-            name: SyncCredentialsAdapter.credentialsSyncLimitReached,
-            object: nil)
+    private func registerForSynFeatureFlags() {
         syncFeatureFlagsCancellable = syncService.featureFlagsPublisher
             .dropFirst()
             .map { $0.contains(.dataSyncing) }
@@ -469,33 +462,6 @@ class MainViewController: UIViewController {
                     self.syncDidShowSyncPausedByFeatureFlagAlert = true
                 }
             }
-    }
-
-    @objc private func showSyncPausedError(_ notification: Notification) {
-        Task {
-            await MainActor.run {
-                var title = UserText.syncBookmarkPausedAlertTitle
-                var description = UserText.syncBookmarkPausedAlertDescription
-                if notification.name == SyncCredentialsAdapter.credentialsSyncLimitReached {
-                    title = UserText.syncCredentialsPausedAlertTitle
-                    description = UserText.syncCredentialsPausedAlertDescription
-                }
-                if self.presentedViewController is SyncSettingsViewController {
-                    return
-                }
-                self.presentedViewController?.dismiss(animated: true)
-                let alert = UIAlertController(title: title,
-                                              message: description,
-                                              preferredStyle: .alert)
-                let learnMoreAction = UIAlertAction(title: UserText.syncPausedAlertLearnMoreButton, style: .default) { _ in
-                    self.segueToSettingsSync()
-                }
-                let okAction = UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .cancel)
-                alert.addAction(learnMoreAction)
-                alert.addAction(okAction)
-                self.present(alert, animated: true)
-            }
-        }
     }
 
     private func showSyncPausedByFeatureFlagAlert(upgradeRequired: Bool = false) {
@@ -2587,8 +2553,6 @@ extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
     }
 }
 
-// swiftlint:enable file_length
-
 extension MainViewController: AlertPresenter {
     func showSyncPausedAlert(title: String, informative: String) {
         Task {
@@ -2612,3 +2576,5 @@ extension MainViewController: AlertPresenter {
     }
 
 }
+
+// swiftlint:enable file_length

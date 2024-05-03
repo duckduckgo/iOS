@@ -43,6 +43,7 @@ final class SettingsViewModel: ObservableObject {
     private var legacyViewProvider: SettingsLegacyViewProvider
     private lazy var versionProvider: AppVersion = AppVersion.shared
     private let voiceSearchHelper: VoiceSearchHelperProtocol
+    private let syncSettingsErrorHandler: any SyncSettingsErrorHandler
     var emailManager: EmailManager { EmailManager() }
 
     // Subscription Dependencies
@@ -387,13 +388,15 @@ final class SettingsViewModel: ObservableObject {
          accountManager: AccountManager,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
-         deepLink: SettingsDeepLinkSection? = nil) {
+         deepLink: SettingsDeepLinkSection? = nil,
+         syncSettingsErrorHandler: any SyncSettingsErrorHandler) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
         self.accountManager = accountManager
         self.voiceSearchHelper = voiceSearchHelper
         self.deepLinkTarget = deepLink
-        
+        self.syncSettingsErrorHandler = syncSettingsErrorHandler
+
         setupNotificationObservers()
         autocompleteSubtitle = variantManager.isSupported(feature: .history) ? UserText.settingsAutocompleteSubtitle : nil
     }
@@ -459,9 +462,10 @@ extension SettingsViewModel {
             let syncService = legacyViewProvider.syncService
             let isDataSyncingDisabled = !syncService.featureFlags.contains(.dataSyncing)
             && syncService.authState == .active
-            if SyncBookmarksAdapter.isSyncBookmarksPaused
-                || SyncCredentialsAdapter.isSyncCredentialsPaused
-                || isDataSyncingDisabled {
+            if isDataSyncingDisabled
+                || syncSettingsErrorHandler.isSyncPaused
+                || syncSettingsErrorHandler.isSyncBookmarksPaused
+                || syncSettingsErrorHandler.isSyncCredentialsPaused{
                 return "⚠️ \(UserText.settingsSync)"
             }
             return SyncUI.UserText.syncTitle

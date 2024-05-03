@@ -77,8 +77,5 @@ protocol AppSettings: AnyObject {
     
     var autoconsentEnabled: Bool { get set }
 
-    var isSyncBookmarksPaused: Bool { get }
-    var isSyncCredentialsPaused: Bool { get }
-
     var crashCollectionOptInStatus: CrashCollectionOptInStatus { get set }
 }

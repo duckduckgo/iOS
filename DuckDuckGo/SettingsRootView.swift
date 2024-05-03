@@ -66,10 +66,6 @@ struct SettingsRootView: View {
             viewModel.onAppear()
         }
 
-        .onDisappear {
-            viewModel.onDissapear()
-        }
-
         // MARK: Deeplink Modifiers
 
         .sheet(isPresented: $shouldDisplayDeepLinkSheet,

@@ -120,18 +120,9 @@ struct VPNStatusView: View {
         Group {
             switch entry.status {
             case .status(let status):
-                HStack {
-                    connectionView(with: status)
-                        .padding(.horizontal, 14)
-                        .padding(.top, 16)
-                    Spacer()
-                }
-            case .error:
-                Text("Error")
-                    .foregroundStyle(Color.black)
-            case .notConfigured:
-                Text("VPN Not Configured")
-                    .foregroundStyle(Color.black)
+                connectionView(with: status)
+            case .error, .notConfigured:
+                connectionView(with: .disconnected)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -180,6 +171,9 @@ struct VPNStatusView: View {
                     Spacer()
                 }
             }
+            .padding(.horizontal, 14)
+            .padding(.top, 16)
+            Spacer()
         }
     }
 

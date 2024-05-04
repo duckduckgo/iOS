@@ -27,7 +27,7 @@ final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
 
     var handler: SyncErrorHandler!
     var alertPresenter: CapturingAlertPresenter!
-    let userDefaults = UserDefaults.standard
+    let userDefaults = UserDefaults.app
 
     override func setUpWithError() throws {
         clearDefaults()

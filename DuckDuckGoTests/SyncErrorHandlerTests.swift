@@ -28,7 +28,7 @@ final class SyncErrorHandlerTests: XCTestCase {
     var cancellables: Set<AnyCancellable>!
     var handler: SyncErrorHandler!
     var alertPresenter: CapturingAlertPresenter!
-    let userDefaults = UserDefaults.standard
+    let userDefaults = UserDefaults.app
 
     override func setUpWithError() throws {
         clearDefaults()
@@ -217,21 +217,25 @@ final class SyncErrorHandlerTests: XCTestCase {
         XCTAssertTrue(handler.isSyncPaused)
     }
 
-    func test_whenSyncBookmarksSucced_ThenDateSaved() {
+    func test_whenSyncBookmarksSucced_ThenDateSaved() async {
         handler.syncBookmarksSucceded()
         let actualTime =  userDefaults.value(forKey: UserDefaultsWrapper<Date>.Key.syncLastSuccesfullTime.rawValue) as? Date
         let currentTime = Date()
         let timeDifference = currentTime.timeIntervalSince(actualTime ?? Date(timeIntervalSince1970: 0))
 
+        try? await Task.sleep(nanoseconds: 1_000_000_000)
+
         XCTAssertNotNil(actualTime)
         XCTAssertTrue(abs(timeDifference) <= 10)
     }
 
-    func test_whenCredentialsSucced_ThenDateSaved() {
+    func test_whenCredentialsSucced_ThenDateSaved() async {
         handler.syncCredentialsSucceded()
         let actualTime =  userDefaults.value(forKey: UserDefaultsWrapper<Date>.Key.syncLastSuccesfullTime.rawValue) as? Date
         let currentTime = Date()
         let timeDifference = currentTime.timeIntervalSince(actualTime ?? Date(timeIntervalSince1970: 0))
+
+        try? await Task.sleep(nanoseconds: 1_000_000_000)
 
         XCTAssertNotNil(actualTime)
         XCTAssertTrue(abs(timeDifference) <= 10)

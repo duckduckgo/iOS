@@ -25,7 +25,7 @@ import Combine
 final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
     var handler: SyncErrorHandler!
     var alertPresenter: CapturingAlertPresenter!
-    let userDefaults = UserDefaults.standard
+    let userDefaults = UserDefaults.app
 
     override func setUpWithError() throws {
         clearDefaults()
@@ -76,6 +76,7 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
         XCTAssertFalse(alertPresenter.showAlertCalled)
     }
 
+    //THIS
     func test_When400ErrorFired10Times_ThenAlertShown() async {
         let error = SyncError.unexpectedStatusCode(400)
 
@@ -146,6 +147,7 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
         XCTAssertEqual(alertPresenter.showAlertCount, 2)
     }
 
+    //THIS
     func test_When400ErrorFiredAfter12HoursFromLastSuccessfulSync_ThenAlertShown() async {
         let error = SyncError.unexpectedStatusCode(400)
         let thirteenHoursAgo = Calendar.current.date(byAdding: .hour, value: -13, to: Date())!
@@ -169,6 +171,7 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
         XCTAssertFalse(alertPresenter.showAlertCalled)
     }
 
+    //THIS
     func test_When400ErrorFired10Times_AndAfter24H_400ErrorFired10TimesAgain_ThenAlertShownTwice() async {
         let error = SyncError.unexpectedStatusCode(400)
         

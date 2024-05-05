@@ -270,6 +270,9 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             return nil
         }
 
+        // Clear subscription Cache
+        SubscriptionService.signOut()
+        
         let authToken = subscriptionValues.token
         let accountManager = AccountManager()
         if case let .success(accessToken) = await accountManager.exchangeAuthTokenToAccessToken(authToken),

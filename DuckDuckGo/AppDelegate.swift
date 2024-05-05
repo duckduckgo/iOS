@@ -217,8 +217,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DaxDialogs.shared.primeForUse()
         }
 
-        // Experiment installation will be uncommented once we decide to run the experiment
-//        PixelExperiment.install()
+        PixelExperiment.install()
 
         // MARK: Sync initialisation
 
@@ -288,7 +287,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         autoClear = AutoClear(worker: main)
         Task {
-            await autoClear?.clearDataIfEnabled()
+            await autoClear?.clearDataIfEnabled(launching: true)
         }
 
         AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
@@ -584,7 +583,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     PixelParameters.widgetError: "1",
                     PixelParameters.widgetErrorCode: "\((error as NSError).code)",
                     PixelParameters.widgetErrorDomain: (error as NSError).domain
-                ])
+                ], includedParameters: [.appVersion, .atb])
                 
             case .success(let widgetInfo):
                 let params = widgetInfo.reduce([String: String]()) {
@@ -594,7 +593,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     }
                     return result
                 }
-                Pixel.fire(pixel: .appLaunch, withAdditionalParameters: params)
+                Pixel.fire(pixel: .appLaunch, withAdditionalParameters: params, includedParameters: [.appVersion, .atb])
             }
             
         }

@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "dominik/sync-enable-field-validation",
-        "revision" : "b117aa5db149dcb6c1b2b7a76a42c2f39e095ef3"
+        "revision" : "08e37ae558bfd5ecde79db121b53cf47a659230a"
       }
     },
     {

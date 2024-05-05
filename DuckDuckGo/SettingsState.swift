@@ -40,15 +40,17 @@ struct SettingsState {
         var enabled: Bool
         var status: String
     }
-    
-    struct Subscription {
+            
+    struct Subscription: Codable {
         var enabled: Bool
         var canPurchase: Bool
+        var isSignedIn: Bool
         var hasActiveSubscription: Bool
-        var isSubscriptionPendingActivation: Bool
         var isRestoring: Bool
         var shouldDisplayRestoreSubscriptionError: Bool
         var entitlements: [Entitlement.ProductName]
+        var platform: DDGSubscription.Platform
+        var isShowingStripeView: Bool
     }
     
     struct SyncSettings {
@@ -96,7 +98,7 @@ struct SettingsState {
     
     // Sync Properties
     var sync: SyncSettings
-
+    
     static var defaults: SettingsState {
         return SettingsState(
             appTheme: .systemDefault,
@@ -122,11 +124,13 @@ struct SettingsState {
             networkProtection: NetworkProtection(enabled: false, status: ""),
             subscription: Subscription(enabled: false,
                                        canPurchase: false,
+                                       isSignedIn: false,
                                        hasActiveSubscription: false,
-                                       isSubscriptionPendingActivation: false,
                                        isRestoring: false,
                                        shouldDisplayRestoreSubscriptionError: false,
-                                       entitlements: []),
+                                       entitlements: [],
+                                       platform: .unknown,
+                                       isShowingStripeView: false),
             sync: SyncSettings(enabled: false, title: "")
         )
     }

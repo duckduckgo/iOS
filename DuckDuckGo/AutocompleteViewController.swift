@@ -245,7 +245,6 @@ struct AutocompleteView: View {
 
             if let messageModel = model.messageModel {
                 HomeMessageView(viewModel: messageModel, backgroundDisabled: true)
-                    .padding()
                     .buttonStyle(.plain)
             }
 

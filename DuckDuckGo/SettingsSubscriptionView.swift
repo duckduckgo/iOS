@@ -34,6 +34,7 @@ struct SettingsSubscriptionView: View {
     @State var isShowingGoogleView = false
     @State var isShowingStripeView = false
     @State var isShowingSubscriptionError = false
+    @State var isShowingPrivacyPro = false
     
     enum Constants {
         static let purchaseDescriptionPadding = 5.0
@@ -205,47 +206,53 @@ struct SettingsSubscriptionView: View {
     }
         
     var body: some View {
-        if viewModel.state.subscription.enabled && viewModel.state.subscription.canPurchase {
-            
-            Section(header: Text(UserText.settingsPProSection)) {
-                                
-                switch (
-                    viewModel.state.subscription.isSignedIn,
-                    viewModel.state.subscription.hasActiveSubscription,
-                    viewModel.state.subscription.entitlements.isEmpty
-                ) {
-                    
-                    // Signed In, Subscription Expired
-                case (true, false, _):
-                    subscriptionExpiredView
-                    
-                    // Signed in, Subscription Active, Valid entitlements
-                case (true, true, false):
-                    subscriptionDetailsView  // View for valid subscription details
-                    
-                    // Signed in, Subscription Active, Empty Entitlements
-                case (true, true, true):
-                    noEntitlementsAvailableView  // View for no entitlements
-                    
-                    // Signed out
-                case (false, _, _):
-                    purchaseSubscriptionView  // View for signing up or purchasing a subscription
+        Group {
+            if isShowingPrivacyPro {
+                
+                Section(header: Text(UserText.settingsPProSection)) {
+                                    
+                    switch (
+                        viewModel.state.subscription.isSignedIn,
+                        viewModel.state.subscription.hasActiveSubscription,
+                        viewModel.state.subscription.entitlements.isEmpty
+                    ) {
+                        
+                        // Signed In, Subscription Expired
+                    case (true, false, _):
+                        subscriptionExpiredView
+                        
+                        // Signed in, Subscription Active, Valid entitlements
+                    case (true, true, false):
+                        subscriptionDetailsView  // View for valid subscription details
+                        
+                        // Signed in, Subscription Active, Empty Entitlements
+                    case (true, true, true):
+                        noEntitlementsAvailableView  // View for no entitlements
+                        
+                        // Signed out
+                    case (false, _, _):
+                        purchaseSubscriptionView  // View for signing up or purchasing a subscription
+                    }
                 }
-            }
-            
-            .onChange(of: viewModel.state.subscription.shouldDisplayRestoreSubscriptionError) { value in
-                if value {
-                    isShowingSubscriptionError = true
+                
+                .onChange(of: viewModel.state.subscription.shouldDisplayRestoreSubscriptionError) { value in
+                    if value {
+                        isShowingSubscriptionError = true
+                    }
                 }
-            }
-            
-            .onReceive(subscriptionNavigationCoordinator.$shouldPopToAppSettings) { shouldDismiss in
-                if shouldDismiss {
-                    isShowingRestoreFlow = false
-                    isShowingSubscribeFlow = false
+                
+                .onReceive(subscriptionNavigationCoordinator.$shouldPopToAppSettings) { shouldDismiss in
+                    if shouldDismiss {
+                        isShowingRestoreFlow = false
+                        isShowingSubscribeFlow = false
+                    }
                 }
+                
             }
-            
+        }.onReceive(viewModel.$state) { state in
+            if state.subscription.enabled && state.subscription.canPurchase {
+                isShowingPrivacyPro = true
+            }
         }
     }
 }

@@ -300,7 +300,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
                     return nil
                 }
 
-                return ErrorItem(title: "Error", message: errorMessage)
+                return ErrorItem(title: "Failed to Connect", message: errorMessage)
             }
             .receive(on: DispatchQueue.main)
             .assign(to: \.error, onWeaklyHeld: self)

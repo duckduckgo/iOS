@@ -25,19 +25,20 @@ import Combine
 final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
     var handler: SyncErrorHandler!
     var alertPresenter: CapturingAlertPresenter!
-    let userDefaults = UserDefaults.app
+    var dateProvider: MockDateProveder!
 
     override func setUp() {
         super.setUp()
-        clearDefaults()
         UserDefaultsWrapper<Any>.clearAll()
+        dateProvider = MockDateProveder()
         alertPresenter = CapturingAlertPresenter()
-        handler = SyncErrorHandler()
+        handler = SyncErrorHandler(dateProvider: dateProvider)
         handler.alertPresenter = alertPresenter
     }
 
     override func tearDown() {
         alertPresenter = nil
+        dateProvider = nil
         handler = nil
         UserDefaultsWrapper<Any>.clearAll()
         super.tearDown()
@@ -85,9 +86,8 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
             handler.handleCredentialError(_:)(error)
         }
 
-
         let currentTime = Date()
-        let actualTime = userDefaults.value(forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue) as? Date
+        let actualTime = handler.lastErrorNotificationTime
         let timeDifference = currentTime.timeIntervalSince(actualTime ?? Date(timeIntervalSince1970: 0))
         XCTAssertTrue(alertPresenter.showAlertCalled)
         XCTAssertTrue(abs(timeDifference) <= 5)
@@ -151,10 +151,11 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
     func test_When400ErrorFiredAfter12HoursFromLastSuccessfulSync_ThenAlertShown() async {
         let error = SyncError.unexpectedStatusCode(400)
         let thirteenHoursAgo = Calendar.current.date(byAdding: .hour, value: -13, to: Date())!
+        dateProvider.currentDate = thirteenHoursAgo
+        handler.syncCredentialsSucceded()
         handler.handleCredentialError(_:)(error)
 
-        userDefaults.set(thirteenHoursAgo, forKey: UserDefaultsWrapper<Date>.Key.syncLastSuccesfullTime.rawValue)
-
+        dateProvider.currentDate = Date()
         handler.handleCredentialError(_:)(error)
 
         XCTAssertTrue(alertPresenter.showAlertCalled)
@@ -164,8 +165,10 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
     func test_When400ErrorFiredAfter12HoursFromLastSuccessfulSync_ButNoErrorRegisteredBefore_ThenNoAlertShown() async {
         let error = SyncError.unexpectedStatusCode(400)
         let thirteenHoursAgo = Calendar.current.date(byAdding: .hour, value: -13, to: Date())!
-        userDefaults.set(thirteenHoursAgo, forKey: UserDefaultsWrapper<Date>.Key.syncLastSuccesfullTime.rawValue)
+        dateProvider.currentDate = thirteenHoursAgo
+        handler.syncBookmarksSucceded()
 
+        dateProvider.currentDate = Date()
         handler.handleCredentialError(_:)(error)
 
         XCTAssertFalse(alertPresenter.showAlertCalled)
@@ -173,15 +176,16 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
 
     func test_When400ErrorFired10Times_AndAfter24H_400ErrorFired10TimesAgain_ThenAlertShownTwice() async {
         let error = SyncError.unexpectedStatusCode(400)
-        
+        let oneDayAgo = Calendar.current.date(byAdding: .hour, value: -25, to: Date())!
+        dateProvider.currentDate = oneDayAgo
+
         for _ in 0...9 {
             handler.handleCredentialError(_:)(error)
         }
         
         XCTAssertTrue(alertPresenter.showAlertCalled)
-        let oneDayAgo = Calendar.current.date(byAdding: .hour, value: -25, to: Date())!
-        userDefaults.set(oneDayAgo, forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
-        
+        dateProvider.currentDate = Date()
+
         for _ in 0...9 {
             handler.handleCredentialError(_:)(error)
         }
@@ -189,13 +193,8 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
         XCTAssertTrue(alertPresenter.showAlertCalled)
         XCTAssertEqual(alertPresenter.showAlertCount, 2)
     }
+}
 
-    private func clearDefaults() {
-        userDefaults.removeObject(forKey: UserDefaultsWrapper<Date>.Key.syncLastSuccesfullTime.rawValue)
-        userDefaults.removeObject(forKey: UserDefaultsWrapper<Bool>.Key.syncBookmarksPausedErrorDisplayed.rawValue)
-        userDefaults.removeObject(forKey: UserDefaultsWrapper<Bool>.Key.syncCredentialsPausedErrorDisplayed.rawValue)
-        userDefaults.removeObject(forKey: UserDefaultsWrapper<Bool>.Key.syncInvalidLoginPausedErrorDisplayed.rawValue)
-        userDefaults.removeObject(forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
-        userDefaults.removeObject(forKey: UserDefaultsWrapper<Int>.Key.syncLastNonActionableErrorCount.rawValue)
-    }
+class MockDateProveder: DateProvider {
+    var currentDate: Date = Date()
 }

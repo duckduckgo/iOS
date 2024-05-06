@@ -48,30 +48,32 @@ public class SyncErrorHandler: EventMapping<SyncError> {
     }
 
     @UserDefaultsWrapper(key: .syncBookmarksPausedErrorDisplayed, defaultValue: false)
-    private var didShowBookmarksSyncPausedError: Bool
+    var didShowBookmarksSyncPausedError: Bool
 
     @UserDefaultsWrapper(key: .syncCredentialsPausedErrorDisplayed, defaultValue: false)
-    private var didShowCredentialsSyncPausedError: Bool
+    var didShowCredentialsSyncPausedError: Bool
 
     @UserDefaultsWrapper(key: .syncInvalidLoginPausedErrorDisplayed, defaultValue: false)
-    private var didShowInvalidLoginSyncPausedError: Bool
+    var didShowInvalidLoginSyncPausedError: Bool
 
     @UserDefaultsWrapper(key: .syncLastErrorNotificationTime, defaultValue: nil)
-    private var lastErrorNotificationTime: Date?
+    var lastErrorNotificationTime: Date?
 
     @UserDefaultsWrapper(key: .syncLastSuccesfullTime, defaultValue: nil)
-    private var lastSyncSuccessTime: Date?
+    var lastSyncSuccessTime: Date?
 
     @UserDefaultsWrapper(key: .syncLastNonActionableErrorCount, defaultValue: 0)
-    private var nonActionableErrorCount: Int
+    var nonActionableErrorCount: Int
 
     var isSyncPausedChangedPublisher = PassthroughSubject<Void, Never>()
+    let dateProvider: DateProvider
 
     private var currentSyncAllPausedError: AsyncErrorType?
 
     public weak var alertPresenter: AlertPresenter?
 
-    public init() {
+    public init(dateProvider: DateProvider = Date()) {
+        self.dateProvider = dateProvider
         super.init { event, error, _, _ in
             switch event {
             case .failedToMigrate:
@@ -118,8 +120,9 @@ extension SyncErrorHandler {
     }
 
     private func shouldShowAlertForNonActionableError() -> Bool {
+        let currentDate = dateProvider.currentDate
         nonActionableErrorCount += 1
-        let oneDayAgo = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+        let oneDayAgo = Calendar.current.date(byAdding: .day, value: -1, to: currentDate)!
         var lastErrorNotificationWasMoreThan24hAgo: Bool
         if let lastErrorNotificationTime {
             lastErrorNotificationWasMoreThan24hAgo = lastErrorNotificationTime < oneDayAgo
@@ -130,8 +133,8 @@ extension SyncErrorHandler {
         if nonActionableErrorCount >= 10 {
             nonActionableErrorCount = 0
         }
-        let twelveHoursAgo = Calendar.current.date(byAdding: .hour, value: -12, to: Date())!
-        let noSuccessfulSyncInLast12h = nonActionableErrorCount > 1 && lastSyncSuccessTime ?? Date() <= twelveHoursAgo
+        let twelveHoursAgo = Calendar.current.date(byAdding: .hour, value: -12, to: currentDate)!
+        let noSuccessfulSyncInLast12h = nonActionableErrorCount > 1 && lastSyncSuccessTime ?? currentDate <= twelveHoursAgo
 
         return lastErrorNotificationWasMoreThan24hAgo &&
         (areThere10ConsecutiveError || noSuccessfulSyncInLast12h)
@@ -229,13 +232,13 @@ extension SyncErrorHandler {
             alertPresenter?.showSyncPausedAlert(
                 title: UserText.syncErrorAlertTitle,
                 informative: UserText.syncTooManyRequestsAlertDescription)
-            lastErrorNotificationTime = Date()
+            lastErrorNotificationTime = dateProvider.currentDate
         case .badRequest:
             guard shouldShowAlertForNonActionableError() == true else { return }
             alertPresenter?.showSyncPausedAlert(
                 title: UserText.syncErrorAlertTitle,
                 informative: UserText.syncBadRequestAlertDescription)
-            lastErrorNotificationTime = Date()
+            lastErrorNotificationTime = dateProvider.currentDate
         }
 
     }
@@ -295,12 +298,12 @@ extension SyncErrorHandler: SyncAdapterErrorHandler {
     }
     
     public func syncBookmarksSucceded() {
-        lastSyncSuccessTime = Date()
+        lastSyncSuccessTime = dateProvider.currentDate
         resetBookmarksErrors()
     }
     
     public func syncCredentialsSucceded() {
-        lastSyncSuccessTime = Date()
+        lastSyncSuccessTime = dateProvider.currentDate
         resetCredentialsErrors()
     }
 }
@@ -371,5 +374,15 @@ public struct SyncPausedErrorMetadata {
         self.syncPausedTitle = syncPausedTitle
         self.syncPausedMessage = syncPausedMessage
         self.syncPausedButtonTitle = syncPausedButtonTitle
+    }
+}
+
+public protocol DateProvider {
+    var currentDate: Date { get }
+}
+
+extension Date: DateProvider {
+    public var currentDate: Date {
+        return self
     }
 }

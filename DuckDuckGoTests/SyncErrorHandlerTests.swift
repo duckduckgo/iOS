@@ -32,7 +32,6 @@ final class SyncErrorHandlerTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        clearDefaults()
         UserDefaultsWrapper<Any>.clearAll()
         userDefaults.synchronize()
         cancellables = []
@@ -221,11 +220,9 @@ final class SyncErrorHandlerTests: XCTestCase {
 
     func test_whenSyncBookmarksSucced_ThenDateSaved() async {
         handler.syncBookmarksSucceded()
-        let actualTime =  userDefaults.value(forKey: UserDefaultsWrapper<Date>.Key.syncLastSuccesfullTime.rawValue) as? Date
+        let actualTime =  handler.lastSyncSuccessTime
         let currentTime = Date()
         let timeDifference = currentTime.timeIntervalSince(actualTime ?? Date(timeIntervalSince1970: 0))
-
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
 
         XCTAssertNotNil(actualTime)
         XCTAssertTrue(abs(timeDifference) <= 10)
@@ -233,10 +230,9 @@ final class SyncErrorHandlerTests: XCTestCase {
 
     func test_whenCredentialsSucced_ThenDateSaved() async {
         handler.syncCredentialsSucceded()
-        let actualTime =  userDefaults.value(forKey: UserDefaultsWrapper<Date>.Key.syncLastSuccesfullTime.rawValue) as? Date
+        let actualTime =  handler.lastSyncSuccessTime
         let currentTime = Date()
         let timeDifference = currentTime.timeIntervalSince(actualTime ?? Date(timeIntervalSince1970: 0))
-
 
         XCTAssertNotNil(actualTime)
         XCTAssertTrue(abs(timeDifference) <= 10)
@@ -253,20 +249,11 @@ final class SyncErrorHandlerTests: XCTestCase {
         XCTAssertFalse(handler.isSyncCredentialsPaused)
         XCTAssertFalse(handler.isSyncPaused)
 
-        XCTAssertNil(userDefaults.value(forKey: UserDefaultsWrapper<Date>.Key.syncLastSuccesfullTime.rawValue))
-        XCTAssertFalse(userDefaults.bool(forKey: UserDefaultsWrapper<Bool>.Key.syncBookmarksPausedErrorDisplayed.rawValue))
-        XCTAssertFalse(userDefaults.bool(forKey: UserDefaultsWrapper<Bool>.Key.syncCredentialsPausedErrorDisplayed.rawValue))
-        XCTAssertFalse(userDefaults.bool(forKey: UserDefaultsWrapper<Bool>.Key.syncInvalidLoginPausedErrorDisplayed.rawValue))
-        XCTAssertNil(userDefaults.value(forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue))
-        XCTAssertEqual(userDefaults.integer(forKey: UserDefaultsWrapper<Int>.Key.syncLastNonActionableErrorCount.rawValue), 0)
-    }
-
-    private func clearDefaults() {
-        userDefaults.removeObject(forKey: UserDefaultsWrapper<Date>.Key.syncLastSuccesfullTime.rawValue)
-        userDefaults.removeObject(forKey: UserDefaultsWrapper<Bool>.Key.syncBookmarksPausedErrorDisplayed.rawValue)
-        userDefaults.removeObject(forKey: UserDefaultsWrapper<Bool>.Key.syncCredentialsPausedErrorDisplayed.rawValue)
-        userDefaults.removeObject(forKey: UserDefaultsWrapper<Bool>.Key.syncInvalidLoginPausedErrorDisplayed.rawValue)
-        userDefaults.removeObject(forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
-        userDefaults.removeObject(forKey: UserDefaultsWrapper<Int>.Key.syncLastNonActionableErrorCount.rawValue)
+        XCTAssertNil(handler.lastSyncSuccessTime)
+        XCTAssertFalse(handler.didShowBookmarksSyncPausedError)
+        XCTAssertFalse(handler.didShowCredentialsSyncPausedError)
+        XCTAssertFalse(handler.didShowInvalidLoginSyncPausedError)
+        XCTAssertNil(handler.lastErrorNotificationTime)
+        XCTAssertEqual(handler.nonActionableErrorCount, 0)
     }
 }

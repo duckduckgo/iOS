@@ -27,11 +27,9 @@ final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
 
     var handler: SyncErrorHandler!
     var alertPresenter: CapturingAlertPresenter!
-    let userDefaults = UserDefaults.app
 
     override func setUp() {
         super.setUp()
-        clearDefaults()
         UserDefaultsWrapper<Any>.clearAll()
         alertPresenter = CapturingAlertPresenter()
         handler = SyncErrorHandler()
@@ -163,14 +161,4 @@ final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
 
         XCTAssertEqual(alertPresenter.showAlertCount, 1)
     }
-
-    private func clearDefaults() {
-        userDefaults.removeObject(forKey: UserDefaultsWrapper<Date>.Key.syncLastSuccesfullTime.rawValue)
-        userDefaults.removeObject(forKey: UserDefaultsWrapper<Bool>.Key.syncBookmarksPausedErrorDisplayed.rawValue)
-        userDefaults.removeObject(forKey: UserDefaultsWrapper<Bool>.Key.syncCredentialsPausedErrorDisplayed.rawValue)
-        userDefaults.removeObject(forKey: UserDefaultsWrapper<Bool>.Key.syncInvalidLoginPausedErrorDisplayed.rawValue)
-        userDefaults.removeObject(forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
-        userDefaults.removeObject(forKey: UserDefaultsWrapper<Int>.Key.syncLastNonActionableErrorCount.rawValue)
-    }
-
 }

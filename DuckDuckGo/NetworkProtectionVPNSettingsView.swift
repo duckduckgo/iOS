@@ -31,11 +31,13 @@ struct NetworkProtectionVPNSettingsView: View {
             List {
                 // Widget only available for iOS 17 and up
                 if #available(iOS 17.0, *) {
-                    NavigationLink(UserText.vpnSettingsAddWidget) {
+                    NavigationLink {
                         WidgetEducationView(
                             navBarTitle: UserText.vpnSettingsAddWidget,
                             thirdParagraphText: UserText.addVPNWidgetSettingsThirdParagraph
                         )
+                    } label: {
+                        Text(UserText.vpnSettingsAddWidget).daxBodyRegular()
                     }
                 }
 

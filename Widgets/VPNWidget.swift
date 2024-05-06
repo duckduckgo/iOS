@@ -33,6 +33,7 @@ enum VPNStatus {
     case error
     case notConfigured
 }
+
 struct VPNStatusTimelineEntry: TimelineEntry {
     let date: Date
     let status: VPNStatus
@@ -113,6 +114,7 @@ extension NEVPNStatus {
 struct VPNStatusView: View {
     @Environment(\.widgetFamily) var family: WidgetFamily
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.openURL) private var openURL
     var entry: VPNStatusTimelineProvider.Entry
 
     @ViewBuilder
@@ -158,7 +160,7 @@ struct VPNStatusView: View {
                         .padding(.top, 6)
                         .padding(.bottom, 16)
                 case .disconnected, .disconnecting:
-                    Button(UserText.vpnWidgetConnectButton, intent: EnableVPNIntent())
+                    connectButton
                         .daxButton()
                         .foregroundStyle(connectButtonForegroundColor(isDisabled: status != .disconnected))
                         .buttonStyle(.borderedProminent)
@@ -174,6 +176,17 @@ struct VPNStatusView: View {
             .padding(.horizontal, 14)
             .padding(.top, 16)
             Spacer()
+        }
+    }
+
+    private var connectButton: Button<Text> {
+        switch entry.status {
+        case .status:
+            Button(UserText.vpnWidgetConnectButton, intent: EnableVPNIntent())
+        case .error, .notConfigured:
+            Button(UserText.vpnWidgetConnectButton) {
+                openURL(DeepLinks.openVPN)
+            }
         }
     }
 

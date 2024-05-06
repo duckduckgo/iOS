@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "dedd5ef4cc71379e43cbd8244374a53043163e21",
-        "version" : "143.0.1"
+        "branch" : "sam/remote-messaging-target-percentile",
+        "revision" : "3e76183e2cdac2085d0e04760a42c6f71e7f9f91"
       }
     },
     {

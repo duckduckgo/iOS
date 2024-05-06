@@ -1199,15 +1199,15 @@ extension TabViewController: WKNavigationDelegate {
             let size = CGSize(width: webView.frame.size.width,
                               height: webView.frame.size.height - webView.scrollView.contentInset.top - webView.scrollView.contentInset.bottom)
             
-            UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
-            UIGraphicsGetCurrentContext()?.translateBy(x: 0, y: -webView.scrollView.contentInset.top)
-            webView.drawHierarchy(in: webView.bounds, afterScreenUpdates: true)
-            if let jsAlertController = self?.jsAlertController {
-                jsAlertController.view.drawHierarchy(in: jsAlertController.view.bounds,
-                                                     afterScreenUpdates: false)
+            let renderer = UIGraphicsImageRenderer(size: size)
+            let image = renderer.image { context in
+                context.cgContext.translateBy(x: 0, y: -webView.scrollView.contentInset.top)
+                webView.drawHierarchy(in: webView.bounds, afterScreenUpdates: true)
+                if let jsAlertController = self?.jsAlertController {
+                    jsAlertController.view.drawHierarchy(in: jsAlertController.view.bounds, afterScreenUpdates: false)
+                }
             }
-            let image = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
+
             completion(image)
         }
     }
@@ -2407,6 +2407,10 @@ extension TabViewController: SecureVaultManagerDelegate {
     
     func secureVaultError(_ error: SecureStorageError) {
         SecureVaultReporter.shared.secureVaultError(error)
+    }
+
+    func secureVaultKeyStoreEvent(_ event: SecureStorageKeyStoreEvent) {
+        SecureVaultReporter.shared.secureVaultKeyStoreEvent(event)
     }
 
     func secureVaultManagerIsEnabledStatus(_ manager: SecureVaultManager, forType type: AutofillType?) -> Bool {

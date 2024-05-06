@@ -2,15 +2,36 @@ appId: com.duckduckgo.mobile.ios
 tags:
     - securityTest
 ---
-# Test 1
-- doubleTapOn:
+# Set up 
+- clearState
+- launchApp
+- runFlow: 
+    when: 
+      visible: 
+        text: "Let’s Do It!"
+        index: 0
+    file: ../shared/onboarding.yaml
+
+# Load Site
+- assertVisible:
     id: "searchEntry"
-- pressKey: Backspace
+- tapOn: 
+    id: "searchEntry"
 - inputText: "https://privacy-test-pages.site/security/address-bar-spoofing/spoof-form-action.html"
 - pressKey: Enter
+
+# Manage onboarding
+- runFlow:
+    when:
+      visible:
+        text: "Got It"
+        index: 0
+    file: ../shared/onboarding_browsing.yaml
+
+# Test
 - tapOn: "run"
 # Should navigate to duckduckgo.com without any spoofed HTML document content.
 - copyTextFrom:
     id: "searchEntry"
-- assertTrue: ${maestro.copiedText == "https://duckduckgo.com/"}
+- assertTrue: ${maestro.copiedText == "duckduckgo.com"}
 - assertNotVisible: "Not DDG."

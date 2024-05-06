@@ -30,7 +30,8 @@ final class SyncErrorHandlerTests: XCTestCase {
     var alertPresenter: CapturingAlertPresenter!
     let userDefaults = UserDefaults.app
 
-    override func setUpWithError() throws {
+    override func setUp() {
+        super.setUp()
         clearDefaults()
         UserDefaultsWrapper<Any>.clearAll()
         userDefaults.synchronize()
@@ -40,11 +41,12 @@ final class SyncErrorHandlerTests: XCTestCase {
         handler.alertPresenter = alertPresenter
     }
 
-    override func tearDownWithError() throws {
+    override func tearDown() {
         UserDefaultsWrapper<Any>.clearAll()
         cancellables = nil
         alertPresenter = nil
         handler = nil
+        super.tearDown()
     }
 
     func testInitialization_DefaultsNotSet() {
@@ -235,7 +237,6 @@ final class SyncErrorHandlerTests: XCTestCase {
         let currentTime = Date()
         let timeDifference = currentTime.timeIntervalSince(actualTime ?? Date(timeIntervalSince1970: 0))
 
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
 
         XCTAssertNotNil(actualTime)
         XCTAssertTrue(abs(timeDifference) <= 10)
@@ -246,17 +247,7 @@ final class SyncErrorHandlerTests: XCTestCase {
         handler.handleBookmarkError(_:)(SyncError.unexpectedStatusCode(409))
         handler.handleBookmarkError(_:)(SyncError.unexpectedStatusCode(401))
 
-        userDefaults.set(Date(), forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
-        userDefaults.set(true, forKey: UserDefaultsWrapper<Bool>.Key.syncBookmarksPausedErrorDisplayed.rawValue)
-        userDefaults.set(true, forKey: UserDefaultsWrapper<Bool>.Key.syncCredentialsPausedErrorDisplayed.rawValue)
-        userDefaults.set(true, forKey: UserDefaultsWrapper<Bool>.Key.syncInvalidLoginPausedErrorDisplayed.rawValue)
-        userDefaults.set(true, forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
-        userDefaults.set(6, forKey: UserDefaultsWrapper<Int>.Key.syncLastNonActionableErrorCount.rawValue)
-
         handler.syncDidTurnOff()
-        UserDefaults.standard.synchronize()
-
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
 
         XCTAssertFalse(handler.isSyncBookmarksPaused)
         XCTAssertFalse(handler.isSyncCredentialsPaused)
@@ -271,11 +262,11 @@ final class SyncErrorHandlerTests: XCTestCase {
     }
 
     private func clearDefaults() {
-        userDefaults.set(nil, forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
-        userDefaults.set(false, forKey: UserDefaultsWrapper<Bool>.Key.syncBookmarksPausedErrorDisplayed.rawValue)
-        userDefaults.set(false, forKey: UserDefaultsWrapper<Bool>.Key.syncCredentialsPausedErrorDisplayed.rawValue)
-        userDefaults.set(false, forKey: UserDefaultsWrapper<Bool>.Key.syncInvalidLoginPausedErrorDisplayed.rawValue)
-        userDefaults.set(nil, forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
-        userDefaults.set(0, forKey: UserDefaultsWrapper<Int>.Key.syncLastNonActionableErrorCount.rawValue)
+        userDefaults.removeObject(forKey: UserDefaultsWrapper<Date>.Key.syncLastSuccesfullTime.rawValue)
+        userDefaults.removeObject(forKey: UserDefaultsWrapper<Bool>.Key.syncBookmarksPausedErrorDisplayed.rawValue)
+        userDefaults.removeObject(forKey: UserDefaultsWrapper<Bool>.Key.syncCredentialsPausedErrorDisplayed.rawValue)
+        userDefaults.removeObject(forKey: UserDefaultsWrapper<Bool>.Key.syncInvalidLoginPausedErrorDisplayed.rawValue)
+        userDefaults.removeObject(forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
+        userDefaults.removeObject(forKey: UserDefaultsWrapper<Int>.Key.syncLastNonActionableErrorCount.rawValue)
     }
 }

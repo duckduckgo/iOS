@@ -29,7 +29,8 @@ final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
     var alertPresenter: CapturingAlertPresenter!
     let userDefaults = UserDefaults.app
 
-    override func setUpWithError() throws {
+    override func setUp() {
+        super.setUp()
         clearDefaults()
         UserDefaultsWrapper<Any>.clearAll()
         alertPresenter = CapturingAlertPresenter()
@@ -37,10 +38,11 @@ final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
         handler.alertPresenter = alertPresenter
     }
 
-    override func tearDownWithError() throws {
+    override func tearDown() {
         UserDefaultsWrapper<Any>.clearAll()
         alertPresenter = nil
         handler = nil
+        super.tearDown()
     }
 
     func test_WhenHandleBookmarksError409ForTheFirstTime_ThenAlertShown() async {
@@ -163,12 +165,12 @@ final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
     }
 
     private func clearDefaults() {
-        userDefaults.set(nil, forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
-        userDefaults.set(false, forKey: UserDefaultsWrapper<Bool>.Key.syncBookmarksPausedErrorDisplayed.rawValue)
-        userDefaults.set(false, forKey: UserDefaultsWrapper<Bool>.Key.syncCredentialsPausedErrorDisplayed.rawValue)
-        userDefaults.set(false, forKey: UserDefaultsWrapper<Bool>.Key.syncInvalidLoginPausedErrorDisplayed.rawValue)
-        userDefaults.set(nil, forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
-        userDefaults.set(0, forKey: UserDefaultsWrapper<Int>.Key.syncLastNonActionableErrorCount.rawValue)
+        userDefaults.removeObject(forKey: UserDefaultsWrapper<Date>.Key.syncLastSuccesfullTime.rawValue)
+        userDefaults.removeObject(forKey: UserDefaultsWrapper<Bool>.Key.syncBookmarksPausedErrorDisplayed.rawValue)
+        userDefaults.removeObject(forKey: UserDefaultsWrapper<Bool>.Key.syncCredentialsPausedErrorDisplayed.rawValue)
+        userDefaults.removeObject(forKey: UserDefaultsWrapper<Bool>.Key.syncInvalidLoginPausedErrorDisplayed.rawValue)
+        userDefaults.removeObject(forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
+        userDefaults.removeObject(forKey: UserDefaultsWrapper<Int>.Key.syncLastNonActionableErrorCount.rawValue)
     }
 
 }

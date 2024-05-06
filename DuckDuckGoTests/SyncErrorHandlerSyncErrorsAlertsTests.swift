@@ -27,7 +27,8 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
     var alertPresenter: CapturingAlertPresenter!
     let userDefaults = UserDefaults.app
 
-    override func setUpWithError() throws {
+    override func setUp() {
+        super.setUp()
         clearDefaults()
         UserDefaultsWrapper<Any>.clearAll()
         alertPresenter = CapturingAlertPresenter()
@@ -35,10 +36,11 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
         handler.alertPresenter = alertPresenter
     }
 
-    override func tearDownWithError() throws {
+    override func tearDown() {
         alertPresenter = nil
         handler = nil
         UserDefaultsWrapper<Any>.clearAll()
+        super.tearDown()
     }
 
     func test_WhenHandleCredentialsError400ForTheFirstTime_ThenNoAlertShown() async {
@@ -76,7 +78,6 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
         XCTAssertFalse(alertPresenter.showAlertCalled)
     }
 
-    //THIS
     func test_When400ErrorFired10Times_ThenAlertShown() async {
         let error = SyncError.unexpectedStatusCode(400)
 
@@ -147,7 +148,6 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
         XCTAssertEqual(alertPresenter.showAlertCount, 2)
     }
 
-    //THIS
     func test_When400ErrorFiredAfter12HoursFromLastSuccessfulSync_ThenAlertShown() async {
         let error = SyncError.unexpectedStatusCode(400)
         let thirteenHoursAgo = Calendar.current.date(byAdding: .hour, value: -13, to: Date())!
@@ -171,7 +171,6 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
         XCTAssertFalse(alertPresenter.showAlertCalled)
     }
 
-    //THIS
     func test_When400ErrorFired10Times_AndAfter24H_400ErrorFired10TimesAgain_ThenAlertShownTwice() async {
         let error = SyncError.unexpectedStatusCode(400)
         
@@ -192,11 +191,11 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
     }
 
     private func clearDefaults() {
-        userDefaults.set(nil, forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
-        userDefaults.set(false, forKey: UserDefaultsWrapper<Bool>.Key.syncBookmarksPausedErrorDisplayed.rawValue)
-        userDefaults.set(false, forKey: UserDefaultsWrapper<Bool>.Key.syncCredentialsPausedErrorDisplayed.rawValue)
-        userDefaults.set(false, forKey: UserDefaultsWrapper<Bool>.Key.syncInvalidLoginPausedErrorDisplayed.rawValue)
-        userDefaults.set(nil, forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
-        userDefaults.set(0, forKey: UserDefaultsWrapper<Int>.Key.syncLastNonActionableErrorCount.rawValue)
+        userDefaults.removeObject(forKey: UserDefaultsWrapper<Date>.Key.syncLastSuccesfullTime.rawValue)
+        userDefaults.removeObject(forKey: UserDefaultsWrapper<Bool>.Key.syncBookmarksPausedErrorDisplayed.rawValue)
+        userDefaults.removeObject(forKey: UserDefaultsWrapper<Bool>.Key.syncCredentialsPausedErrorDisplayed.rawValue)
+        userDefaults.removeObject(forKey: UserDefaultsWrapper<Bool>.Key.syncInvalidLoginPausedErrorDisplayed.rawValue)
+        userDefaults.removeObject(forKey: UserDefaultsWrapper<Date>.Key.syncLastErrorNotificationTime.rawValue)
+        userDefaults.removeObject(forKey: UserDefaultsWrapper<Int>.Key.syncLastNonActionableErrorCount.rawValue)
     }
 }

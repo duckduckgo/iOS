@@ -31,7 +31,8 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
     var errorHandler: CapturingSyncSettingsErrorHandler!
 
     @MainActor
-    override func setUpWithError() throws {
+    override func setUp() {
+        super.setUp()
         cancellables = []
         errorHandler = CapturingSyncSettingsErrorHandler()
         let bundle = DDGSync.bundle
@@ -59,10 +60,11 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
             syncSettingsErrorHandler: errorHandler)
     }
 
-    override func tearDownWithError() throws {
+    override func tearDown() {
         cancellables = nil
         errorHandler = nil
         vc = nil
+        super.tearDown()
     }
 
     @MainActor

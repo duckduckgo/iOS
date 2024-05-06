@@ -71,8 +71,8 @@ struct SettingsView: View {
             viewModel.onAppear()
         }
         
-        .onAppear {
-            viewModel.onDissapear()
+        .onDisappear {
+            viewModel.onDisappear()
         }
         
         // MARK: Deeplink Modifiers

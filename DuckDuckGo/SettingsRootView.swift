@@ -66,10 +66,6 @@ struct SettingsRootView: View {
             viewModel.onAppear()
         }
 
-        .onAppear {
-            viewModel.onDissapear()
-        }
-
         // MARK: Deeplink Modifiers
 
         .sheet(isPresented: $shouldDisplayDeepLinkSheet,
@@ -85,8 +81,11 @@ struct SettingsRootView: View {
                     }
                 })
 
-        .onReceive(viewModel.$deepLinkTarget, perform: { link in
-            guard let link else { return }
+        .onReceive(viewModel.$deepLinkTarget.removeDuplicates(), perform: { link in
+            guard let link, link != self.deepLinkTarget else {
+                return
+            }
+
             self.deepLinkTarget = link
 
             switch link.type {

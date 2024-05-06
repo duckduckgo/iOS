@@ -21,7 +21,7 @@ import Foundation
 import Core
 
 protocol PixelFiring {
-    static func fire(pixel: Pixel.Event, withAdditionalParameters params: [String: String]) async throws
+    static func fire(pixel: Pixel.Event, withAdditionalParameters params: [String: String], includedParameters: [Pixel.QueryParameters]) async throws
 }
 
 final class AdAttributionPixelReporter {
@@ -52,7 +52,11 @@ final class AdAttributionPixelReporter {
             if attributionData.attribution {
                 let parameters = self.pixelParametersForAttribution(attributionData)
                 do {
-                    try await pixelFiring.fire(pixel: .appleAdAttribution, withAdditionalParameters: parameters)
+                    try await pixelFiring.fire(
+                        pixel: .appleAdAttribution,
+                        withAdditionalParameters: parameters,
+                        includedParameters: [.appVersion, .atb]
+                    )
                 } catch {
                     return false
                 }
@@ -83,10 +87,10 @@ final class AdAttributionPixelReporter {
 }
 
 extension Pixel: PixelFiring {
-    static func fire(pixel: Event, withAdditionalParameters params: [String: String]) async throws {
+    static func fire(pixel: Event, withAdditionalParameters params: [String: String], includedParameters: [QueryParameters]) async throws {
 
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            Pixel.fire(pixel: pixel, withAdditionalParameters: params) { error in
+            Pixel.fire(pixel: pixel, withAdditionalParameters: params, includedParameters: includedParameters) { error in
                 if let error {
                     continuation.resume(throwing: error)
                 } else {

@@ -858,10 +858,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if NETWORK_PROTECTION
             if shortcutItem.type == ShortcutKey.openVPNSettings {
-                let visibility = DefaultNetworkProtectionVisibility()
-                if visibility.shouldShowVPNShortcut() {
-                    presentNetworkProtectionStatusSettingsModal()
-                }
+                presentNetworkProtectionStatusSettingsModal()
             }
 #endif
 
@@ -970,13 +967,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
 #if NETWORK_PROTECTION
             if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
-                Task {
-                    let accountManager = AccountManager()
-                    if case .success(let hasEntitlements) = await accountManager.hasEntitlement(for: .networkProtection),
-                        hasEntitlements {
-                        presentNetworkProtectionStatusSettingsModal()
-                    }
-                }
+                presentNetworkProtectionStatusSettingsModal()
             }
 
             if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist(), identifier == VPNWaitlist.notificationIdentifier {
@@ -997,9 +988,17 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
     func presentNetworkProtectionStatusSettingsModal() {
-        if #available(iOS 15, *) {
-            let networkProtectionRoot = NetworkProtectionRootViewController()
-            presentSettings(with: networkProtectionRoot)
+        Task {
+            let accountManager = AccountManager()
+            if case .success(let hasEntitlements) = await accountManager.hasEntitlement(for: .networkProtection),
+               hasEntitlements {
+                if #available(iOS 15, *) {
+                    let networkProtectionRoot = NetworkProtectionRootViewController()
+                    presentSettings(with: networkProtectionRoot)
+                }
+            } else {
+                (window?.rootViewController as? MainViewController)?.segueToPrivacyPro()
+            }
         }
     }
 #endif

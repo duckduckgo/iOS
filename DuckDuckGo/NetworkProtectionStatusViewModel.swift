@@ -290,6 +290,10 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     }
 
     private func setUpErrorPublishers() {
+        guard AppDependencyProvider.shared.internalUserDecider.isInternalUser else {
+            return
+        }
+
         errorObserver.publisher
             .map { errorMessage in
                 guard let errorMessage else {

@@ -51,11 +51,11 @@ class VPNStatusTimelineProvider: TimelineProvider {
     typealias Entry = VPNStatusTimelineEntry
 
     func placeholder(in context: Context) -> VPNStatusTimelineEntry {
-        return VPNStatusTimelineEntry(date: Date(), status: .status(.disconnected), location: "Los Angeles, CA")
+        return VPNStatusTimelineEntry(date: Date(), status: .status(.connected), location: "Los Angeles")
     }
 
     func getSnapshot(in context: Context, completion: @escaping (VPNStatusTimelineEntry) -> Void) {
-        let entry = VPNStatusTimelineEntry(date: Date(), status: .status(.disconnected), location: "Los Angeles, CA")
+        let entry = VPNStatusTimelineEntry(date: Date(), status: .status(.connected), location: "Los Angeles")
         completion(entry)
     }
 

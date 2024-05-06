@@ -324,7 +324,9 @@ private struct SuggestionsSection: View {
                      onSuggestionSelected(suggestions[index])
                  } label: {
                     SuggestionView(model: suggestions[index], query: query)
-                 }.buttonStyle(.plain)
+                 }
+                 .contentShape(Rectangle())
+                 .tintIfAvailable(.primary)
             }
         }
     }

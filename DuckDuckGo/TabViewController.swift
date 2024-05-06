@@ -2409,6 +2409,10 @@ extension TabViewController: SecureVaultManagerDelegate {
         SecureVaultReporter.shared.secureVaultError(error)
     }
 
+    func secureVaultKeyStoreEvent(_ event: SecureStorageKeyStoreEvent) {
+        SecureVaultReporter.shared.secureVaultKeyStoreEvent(event)
+    }
+
     func secureVaultManagerIsEnabledStatus(_ manager: SecureVaultManager, forType type: AutofillType?) -> Bool {
         let isEnabled = AutofillSettingStatus.isAutofillEnabledInSettings &&
                         featureFlagger.isFeatureOn(.autofillCredentialInjecting) &&

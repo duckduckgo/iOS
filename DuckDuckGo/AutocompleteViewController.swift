@@ -272,8 +272,21 @@ struct AutocompleteView: View {
         .modifier(HideScrollContentBackground())
         .modifier(CompactSectionSpacing())
         .modifier(DisableSelection())
+        .modifier(DismissKeyboard())
         .environmentObject(model)
    }
+
+}
+
+private struct DismissKeyboard: ViewModifier {
+    
+    func body(content: Content) -> some View {
+        if #available(iOS 16, *) {
+            content.scrollDismissesKeyboard(.immediately)
+        } else {
+            content
+        }
+    }
 
 }
 

@@ -25,6 +25,7 @@ import Foundation
 import Combine
 import NetworkProtection
 import WidgetKit
+import BrowserServicesKit
 
 struct NetworkProtectionLocationStatusModel {
     enum LocationIcon {

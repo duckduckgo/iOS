@@ -87,7 +87,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
         setUpFaviconsFetcherSwitch(viewModel)
         setUpFavoritesDisplayModeSwitch(viewModel, appSettings)
-        setUpSyncPaused(viewModel, appSettings)
+        setUpSyncPaused(viewModel, syncSettingsErrorHandler: syncSettingsErrorHandler)
         setUpSyncInvalidObjectsInfo(viewModel)
         setUpSyncFeatureFlags(viewModel)
         refreshForState(syncService.authState)

@@ -43,7 +43,7 @@ final class SettingsViewModel: ObservableObject {
     private var legacyViewProvider: SettingsLegacyViewProvider
     private lazy var versionProvider: AppVersion = AppVersion.shared
     private let voiceSearchHelper: VoiceSearchHelperProtocol
-    private let syncSettingsErrorHandler: any SyncSettingsErrorHandler
+    private let syncSettingsErrorHandler: any SyncPausedStateManaging
     var emailManager: EmailManager { EmailManager() }
 
     // Subscription Dependencies
@@ -393,7 +393,7 @@ final class SettingsViewModel: ObservableObject {
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil,
-         syncSettingsErrorHandler: any SyncSettingsErrorHandler) {
+         syncSettingsErrorHandler: any SyncPausedStateManaging) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
         self.subscriptionAccountManager = accountManager

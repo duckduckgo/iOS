@@ -1,5 +1,5 @@
 //
-//  CapturingAlertPresenter.swift
+//  AlertPresenting.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,17 +18,7 @@
 //
 
 import Foundation
-import Core
 
-class CapturingAlertPresenter: AlertPresenting {
-    var showAlertCalled = false
-    var capturedTitle = ""
-    var capturedInformative = ""
-    var showAlertCount = 0
-    func showSyncPausedAlert(title: String, informative: String) {
-        showAlertCount += 1
-        showAlertCalled = true
-        capturedTitle = title
-        capturedInformative = informative
-    }
+public protocol AlertPresenting: AnyObject {
+    func showSyncPausedAlert(title: String, informative: String)
 }

@@ -64,7 +64,7 @@ public final class SyncBookmarksAdapter {
     public private(set) var provider: BookmarksProvider?
     public let databaseCleaner: BookmarkDatabaseCleaner
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
-    let syncAdapterErrorHandler: SyncAdapterErrorHandler
+    let syncAdapterErrorHandler: SyncErrorHandling
 
     @UserDefaultsWrapper(key: .syncDidMigrateToImprovedListsHandling, defaultValue: false)
     private var didMigrateToImprovedListsHandling: Bool
@@ -87,7 +87,7 @@ public final class SyncBookmarksAdapter {
 
     public init(database: CoreDataDatabase,
                 favoritesDisplayModeStorage: FavoritesDisplayModeStoring,
-                syncAdapterErrorHandler: SyncAdapterErrorHandler) {
+                syncAdapterErrorHandler: SyncErrorHandling) {
         self.database = database
         self.favoritesDisplayModeStorage = favoritesDisplayModeStorage
         self.syncAdapterErrorHandler = syncAdapterErrorHandler

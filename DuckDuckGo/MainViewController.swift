@@ -93,7 +93,7 @@ class MainViewController: UIViewController {
     private var favoritesViewModel: FavoritesListInteracting
     let syncService: DDGSyncing
     let syncDataProviders: SyncDataProviders
-    let syncSettingErrorHandler: any SyncSettingsErrorHandler
+    let syncSettingErrorHandler: any SyncPausedStateManaging
 
     @UserDefaultsWrapper(key: .syncDidShowSyncPausedByFeatureFlagAlert, defaultValue: false)
     private var syncDidShowSyncPausedByFeatureFlagAlert: Bool
@@ -171,7 +171,7 @@ class MainViewController: UIViewController {
         appSettings: AppSettings,
         previewsSource: TabPreviewsSource,
         tabsModel: TabsModel,
-        syncSettingsErrorHandler: any SyncSettingsErrorHandler
+        syncSettingsErrorHandler: any SyncPausedStateManaging
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -2553,7 +2553,7 @@ extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
     }
 }
 
-extension MainViewController: AlertPresenter {
+extension MainViewController: AlertPresenting {
     func showSyncPausedAlert(title: String, informative: String) {
         Task {
             await MainActor.run {

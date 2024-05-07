@@ -55,7 +55,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     }
 
     var cancellables = Set<AnyCancellable>()
-    let syncSettingsErrorHandler: any SyncSettingsErrorHandler
+    let syncSettingsErrorHandler: any SyncPausedStateManaging
     var viewModel: SyncSettingsViewModel?
 
     var onConfirmSyncDisable: (() -> Void)?
@@ -67,7 +67,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         syncBookmarksAdapter: SyncBookmarksAdapter,
         syncCredentialsAdapter: SyncCredentialsAdapter,
         appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
-        syncSettingsErrorHandler: any SyncSettingsErrorHandler
+        syncSettingsErrorHandler: any SyncPausedStateManaging
     ) {
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
@@ -191,7 +191,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
             .store(in: &cancellables)
     }
 
-    private func setUpSyncPaused(_ viewModel: SyncSettingsViewModel, syncSettingsErrorHandler: any SyncSettingsErrorHandler) {
+    private func setUpSyncPaused(_ viewModel: SyncSettingsViewModel, syncSettingsErrorHandler: any SyncPausedStateManaging) {
         updateSyncPausedState(viewModel, syncSettingsErrorHandler: syncSettingsErrorHandler)
         syncSettingsErrorHandler.syncPausedChangedPublisher
             .receive(on: DispatchQueue.main)
@@ -201,7 +201,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
             .store(in: &cancellables)
     }
 
-    private func updateSyncPausedState(_ viewModel: SyncSettingsViewModel, syncSettingsErrorHandler: any SyncSettingsErrorHandler) {
+    private func updateSyncPausedState(_ viewModel: SyncSettingsViewModel, syncSettingsErrorHandler: any SyncPausedStateManaging) {
         viewModel.isSyncBookmarksPaused = syncSettingsErrorHandler.isSyncBookmarksPaused
         viewModel.isSyncCredentialsPaused = syncSettingsErrorHandler.isSyncCredentialsPaused
         viewModel.isSyncPaused = syncSettingsErrorHandler.isSyncPaused

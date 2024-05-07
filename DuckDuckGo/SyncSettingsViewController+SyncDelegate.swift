@@ -26,35 +26,35 @@ import AVFoundation
 
 extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     var syncBookmarksPausedTitle: String {
-        syncSettingsErrorHandler.syncBookmarksPausedMetadata.syncPausedTitle
+        syncSettingsErrorHandler.syncBookmarksPausedMetadata.title
     }
     
     var syncCredentialsPausedTitle: String {
-        syncSettingsErrorHandler.syncCredentialsPausedMetadata.syncPausedTitle
+        syncSettingsErrorHandler.syncCredentialsPausedMetadata.title
     }
     
     var syncPausedTitle: String? {
-        syncSettingsErrorHandler.syncPausedMetadata?.syncPausedTitle
+        syncSettingsErrorHandler.syncPausedMetadata?.title
     }
     
     var syncBookmarksPausedDescription: String {
-        syncSettingsErrorHandler.syncBookmarksPausedMetadata.syncPausedMessage
+        syncSettingsErrorHandler.syncBookmarksPausedMetadata.message
     }
     
     var syncCredentialsPausedDescription: String {
-        syncSettingsErrorHandler.syncCredentialsPausedMetadata.syncPausedMessage
+        syncSettingsErrorHandler.syncCredentialsPausedMetadata.message
     }
     
     var syncPausedDescription: String? {
-        syncSettingsErrorHandler.syncPausedMetadata?.syncPausedMessage
+        syncSettingsErrorHandler.syncPausedMetadata?.message
     }
     
     var syncBookmarksPausedButtonTitle: String {
-        syncSettingsErrorHandler.syncBookmarksPausedMetadata.syncPausedButtonTitle
+        syncSettingsErrorHandler.syncBookmarksPausedMetadata.buttonTitle
     }
     
     var syncCredentialsPausedButtonTitle: String {
-        syncSettingsErrorHandler.syncCredentialsPausedMetadata.syncPausedButtonTitle
+        syncSettingsErrorHandler.syncCredentialsPausedMetadata.buttonTitle
     }
     
 

@@ -24,6 +24,27 @@ import Persistence
 import Foundation
 import SyncUI
 
+/// The SyncErrorHandling protocol defines methods for handling sync errors related to specific data types such as bookmarks and credentials.
+public protocol SyncErrorHandling {
+    func handleBookmarkError(_ error: Error)
+    func handleCredentialError(_ error: Error)
+    func syncBookmarksSucceded()
+    func syncCredentialsSucceded()
+}
+
+/// The SyncPausedStateManaging protocol manages sync error states. It provides properties and methods to detect and handle changes in the synchronization status, aiding in error user notification.
+public protocol SyncPausedStateManaging: ObservableObject {
+    var isSyncPaused: Bool { get }
+    var isSyncBookmarksPaused: Bool { get }
+    var isSyncCredentialsPaused: Bool { get }
+    var syncPausedChangedPublisher: AnyPublisher<Void, Never> { get }
+    var syncPausedMetadata: SyncPausedMessageData? { get }
+    var syncBookmarksPausedMetadata: SyncPausedMessageData { get }
+    var syncCredentialsPausedMetadata: SyncPausedMessageData { get }
+
+    func syncDidTurnOff()
+}
+
 public class SyncErrorHandler: EventMapping<SyncError> {
 
     @UserDefaultsWrapper(key: .syncBookmarksPaused, defaultValue: false)
@@ -66,13 +87,13 @@ public class SyncErrorHandler: EventMapping<SyncError> {
     var nonActionableErrorCount: Int
 
     var isSyncPausedChangedPublisher = PassthroughSubject<Void, Never>()
-    let dateProvider: DateProvider
+    let dateProvider: DateProviding
 
     private var currentSyncAllPausedError: AsyncErrorType?
 
-    public weak var alertPresenter: AlertPresenter?
+    public weak var alertPresenter: AlertPresenting?
 
-    public init(dateProvider: DateProvider = Date()) {
+    public init(dateProvider: DateProviding = Date()) {
         self.dateProvider = dateProvider
         super.init { event, error, _, _ in
             switch event {
@@ -288,7 +309,7 @@ extension SyncErrorHandler {
 }
 
 // MARK: - SyncAdapterErrorHandler
-extension SyncErrorHandler: SyncAdapterErrorHandler {
+extension SyncErrorHandler: SyncErrorHandling {
     public func handleBookmarkError(_ error: Error) {
         handleError(error, modelType: .bookmarks)
     }
@@ -309,27 +330,27 @@ extension SyncErrorHandler: SyncAdapterErrorHandler {
 }
 
 // MARK: - SyncSettingsErrorHandler
-extension SyncErrorHandler: SyncSettingsErrorHandler {
-    public var syncPausedMetadata: SyncPausedErrorMetadata? {
+extension SyncErrorHandler: SyncPausedStateManaging {
+    public var syncPausedMetadata: SyncPausedMessageData? {
         guard let syncPausedMessage else { return nil }
         guard let syncPausedTitle else { return nil }
-        return SyncPausedErrorMetadata(syncPausedTitle: syncPausedTitle,
-                                       syncPausedMessage: syncPausedMessage,
-                                       syncPausedButtonTitle: "")
+        return SyncPausedMessageData(title: syncPausedTitle,
+                                       message: syncPausedMessage,
+                                       buttonTitle: "")
     }
 
     @MainActor
-    public var syncBookmarksPausedMetadata: SyncPausedErrorMetadata {
-        return SyncPausedErrorMetadata(syncPausedTitle: UserText.syncLimitExceededTitle,
-                                       syncPausedMessage: UserText.bookmarksLimitExceededDescription,
-                                       syncPausedButtonTitle: UserText.bookmarksLimitExceededAction)
+    public var syncBookmarksPausedMetadata: SyncPausedMessageData {
+        return SyncPausedMessageData(title: UserText.syncLimitExceededTitle,
+                                     message: UserText.bookmarksLimitExceededDescription,
+                                     buttonTitle: UserText.bookmarksLimitExceededAction)
     }
 
     @MainActor
-    public var syncCredentialsPausedMetadata: SyncPausedErrorMetadata {
-        return SyncPausedErrorMetadata(syncPausedTitle: UserText.syncLimitExceededTitle,
-                                       syncPausedMessage: UserText.credentialsLimitExceededDescription,
-                                       syncPausedButtonTitle: UserText.credentialsLimitExceededAction)
+    public var syncCredentialsPausedMetadata: SyncPausedMessageData {
+        return SyncPausedMessageData(title: UserText.syncLimitExceededTitle,
+                                     message: UserText.credentialsLimitExceededDescription,
+                                     buttonTitle: UserText.credentialsLimitExceededAction)
     }
 
     public var syncPausedChangedPublisher: AnyPublisher<Void, Never> {
@@ -342,47 +363,14 @@ extension SyncErrorHandler: SyncSettingsErrorHandler {
     }
 }
 
-public protocol SyncAdapterErrorHandler {
-    func handleBookmarkError(_ error: Error)
-    func handleCredentialError(_ error: Error)
-    func syncBookmarksSucceded()
-    func syncCredentialsSucceded()
-}
+public struct SyncPausedMessageData {
+    public let title: String
+    public let message: String
+    public let buttonTitle: String
 
-public protocol AlertPresenter: AnyObject {
-    func showSyncPausedAlert(title: String, informative: String)
-}
-
-public protocol SyncSettingsErrorHandler: ObservableObject {
-    var isSyncPaused: Bool { get }
-    var isSyncBookmarksPaused: Bool { get }
-    var isSyncCredentialsPaused: Bool { get }
-    var syncPausedChangedPublisher: AnyPublisher<Void, Never> { get }
-    var syncPausedMetadata: SyncPausedErrorMetadata? { get }
-    var syncBookmarksPausedMetadata: SyncPausedErrorMetadata { get }
-    var syncCredentialsPausedMetadata: SyncPausedErrorMetadata { get }
-
-    func syncDidTurnOff()
-}
-
-public struct SyncPausedErrorMetadata {
-    public let syncPausedTitle: String
-    public let syncPausedMessage: String
-    public let syncPausedButtonTitle: String
-
-    public init(syncPausedTitle: String, syncPausedMessage: String, syncPausedButtonTitle: String) {
-        self.syncPausedTitle = syncPausedTitle
-        self.syncPausedMessage = syncPausedMessage
-        self.syncPausedButtonTitle = syncPausedButtonTitle
-    }
-}
-
-public protocol DateProvider {
-    var currentDate: Date { get }
-}
-
-extension Date: DateProvider {
-    public var currentDate: Date {
-        return self
+    public init(title: String, message: String, buttonTitle: String) {
+        self.title = title
+        self.message = message
+        self.buttonTitle = buttonTitle
     }
 }

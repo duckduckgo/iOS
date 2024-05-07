@@ -32,11 +32,11 @@ public final class SyncCredentialsAdapter {
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
     public static let syncCredentialsPausedStateChanged = SyncBookmarksAdapter.syncBookmarksPausedStateChanged
     public static let credentialsSyncLimitReached = Notification.Name("com.duckduckgo.app.SyncCredentialsLimitReached")
-    let syncAdapterErrorHandler: SyncAdapterErrorHandler
+    let syncAdapterErrorHandler: SyncErrorHandling
 
     public init(secureVaultFactory: AutofillVaultFactory = AutofillSecureVaultFactory,
                 secureVaultErrorReporter: SecureVaultReporting,
-                syncAdapterErrorHandler: SyncAdapterErrorHandler) {
+                syncAdapterErrorHandler: SyncErrorHandling) {
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
         self.secureVaultErrorReporter = secureVaultErrorReporter
         self.syncAdapterErrorHandler = syncAdapterErrorHandler

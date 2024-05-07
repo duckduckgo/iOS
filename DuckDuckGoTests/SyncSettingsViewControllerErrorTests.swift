@@ -162,22 +162,22 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
 
     @MainActor
     func test_ErrorHandlerReturnsExpectedSyncBookmarksPausedMetadata() {
-        XCTAssertEqual(vc.syncBookmarksPausedTitle, errorHandler.syncBookmarksPausedMetadata.syncPausedTitle)
-        XCTAssertEqual(vc.syncBookmarksPausedDescription, errorHandler.syncBookmarksPausedMetadata.syncPausedMessage)
-        XCTAssertEqual(vc.syncBookmarksPausedButtonTitle, errorHandler.syncBookmarksPausedMetadata.syncPausedButtonTitle)
+        XCTAssertEqual(vc.syncBookmarksPausedTitle, errorHandler.syncBookmarksPausedMetadata.title)
+        XCTAssertEqual(vc.syncBookmarksPausedDescription, errorHandler.syncBookmarksPausedMetadata.message)
+        XCTAssertEqual(vc.syncBookmarksPausedButtonTitle, errorHandler.syncBookmarksPausedMetadata.buttonTitle)
     }
 
     @MainActor
     func test_ErrorHandlerReturnsExpectedSyncCredentialsPausedMetadata() {
-        XCTAssertEqual(vc.syncCredentialsPausedTitle, errorHandler.syncCredentialsPausedMetadata.syncPausedTitle)
-        XCTAssertEqual(vc.syncCredentialsPausedDescription, errorHandler.syncCredentialsPausedMetadata.syncPausedMessage)
-        XCTAssertEqual(vc.syncCredentialsPausedButtonTitle, errorHandler.syncCredentialsPausedMetadata.syncPausedButtonTitle)
+        XCTAssertEqual(vc.syncCredentialsPausedTitle, errorHandler.syncCredentialsPausedMetadata.title)
+        XCTAssertEqual(vc.syncCredentialsPausedDescription, errorHandler.syncCredentialsPausedMetadata.message)
+        XCTAssertEqual(vc.syncCredentialsPausedButtonTitle, errorHandler.syncCredentialsPausedMetadata.buttonTitle)
     }
 
     @MainActor
     func test_ErrorHandlerReturnsExpectedSyncIsPausedMetadata() {
-        XCTAssertEqual(vc.syncPausedTitle, errorHandler.syncPausedMetadata?.syncPausedTitle)
-        XCTAssertEqual(vc.syncPausedDescription, errorHandler.syncPausedMetadata?.syncPausedMessage)
+        XCTAssertEqual(vc.syncPausedTitle, errorHandler.syncPausedMetadata?.title)
+        XCTAssertEqual(vc.syncPausedDescription, errorHandler.syncPausedMetadata?.message)
     }
 }
 

@@ -21,7 +21,7 @@ import Foundation
 import Core
 import Combine
 
-class CapturingSyncSettingsErrorHandler: SyncSettingsErrorHandler {
+class CapturingSyncSettingsErrorHandler: SyncPausedStateManaging {
     var isSyncPausedChangedPublisher = PassthroughSubject<Void, Never>()
     var syncDidTurnOffCalled = false
 
@@ -35,20 +35,20 @@ class CapturingSyncSettingsErrorHandler: SyncSettingsErrorHandler {
         isSyncPausedChangedPublisher.eraseToAnyPublisher()
     }
 
-    var syncPausedMetadata: SyncPausedErrorMetadata? = SyncPausedErrorMetadata(
-        syncPausedTitle: "syncPausedTitle",
-        syncPausedMessage: "syncPausedMessage",
-        syncPausedButtonTitle: "syncPausedButtonTitle")
+    var syncPausedMetadata: SyncPausedMessageData? = SyncPausedMessageData(
+        title: "syncPausedTitle",
+        message: "syncPausedMessage",
+        buttonTitle: "syncPausedButtonTitle")
 
-    var syncBookmarksPausedMetadata: SyncPausedErrorMetadata = SyncPausedErrorMetadata(
-        syncPausedTitle: "syncPausedTitle bookmarks",
-        syncPausedMessage: "syncPausedMessage bookmarks",
-        syncPausedButtonTitle: "syncPausedButtonTitle bookmarks")
+    var syncBookmarksPausedMetadata: SyncPausedMessageData = SyncPausedMessageData(
+        title: "syncPausedTitle bookmarks",
+        message: "syncPausedMessage bookmarks",
+        buttonTitle: "syncPausedButtonTitle bookmarks")
 
-    var syncCredentialsPausedMetadata: SyncPausedErrorMetadata = SyncPausedErrorMetadata(
-        syncPausedTitle: "syncPausedTitle credentials ",
-        syncPausedMessage: "syncPausedMessage credentials",
-        syncPausedButtonTitle: "syncPausedButtonTitle credentials")
+    var syncCredentialsPausedMetadata: SyncPausedMessageData = SyncPausedMessageData(
+        title: "syncPausedTitle credentials ",
+        message: "syncPausedMessage credentials",
+        buttonTitle: "syncPausedButtonTitle credentials")
 
     func syncDidTurnOff() {
         syncDidTurnOffCalled = true

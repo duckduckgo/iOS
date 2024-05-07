@@ -100,7 +100,7 @@ public class SyncDataProviders: DataProvidersSource {
         secureVaultErrorReporter: SecureVaultReporting,
         settingHandlers: [SettingSyncHandler],
         favoritesDisplayModeStorage: FavoritesDisplayModeStoring,
-        syncAdapterErrorHandler: SyncAdapterErrorHandler
+        syncAdapterErrorHandler: SyncErrorHandling
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.secureVaultFactory = secureVaultFactory

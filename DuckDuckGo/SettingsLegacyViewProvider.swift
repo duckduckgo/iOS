@@ -33,14 +33,14 @@ class SettingsLegacyViewProvider: ObservableObject {
     let appSettings: AppSettings
     let bookmarksDatabase: CoreDataDatabase
     let tabManager: TabManager
-    let syncSettingsErrorHandler: any SyncSettingsErrorHandler
+    let syncSettingsErrorHandler: any SyncPausedStateManaging
 
     init(syncService: any DDGSyncing,
          syncDataProviders: SyncDataProviders,
          appSettings: any AppSettings,
          bookmarksDatabase: CoreDataDatabase,
          tabManager: TabManager,
-         syncSettingsErrorHandler: any SyncSettingsErrorHandler) {
+         syncSettingsErrorHandler: any SyncPausedStateManaging) {
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.appSettings = appSettings

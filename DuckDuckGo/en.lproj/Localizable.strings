@@ -116,7 +116,7 @@
 "addWidget.description" = "Get quick access to private search and the sites you love.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Long-press on the home screen to enter jiggle mode.";
+"addWidget.settings.firstParagraph" = "Long-press on the Home Screen to enter jiggle mode.";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Tap the plus %@ button.";
@@ -2304,7 +2304,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
 
 /* No comment provided by engineer. */
-"vpn.addWidget.settings.title" = "Find and select DuckDuckGo. Then select the VPN widget.";
+"vpn.addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";

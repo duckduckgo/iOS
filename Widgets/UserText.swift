@@ -66,7 +66,7 @@ struct UserText {
                                                                comment: "Display name for VPN widget in widget gallery")
 
     static let vpnWidgetGalleryDescription = NSLocalizedString("widget.gallery.vpn.description",
-                                                               value: "Privacy Pro subscribers can view and manage the VPN connection.",
+                                                               value: "View and manage your VPN connection. Requires a Privacy Pro subscription.",
                                                                comment: "Description of VPN widget in widget gallery")
 
     static let vpnWidgetConnectedStatus = NSLocalizedString("widget.vpn.status.connected",

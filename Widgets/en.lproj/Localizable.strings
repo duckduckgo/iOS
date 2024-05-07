@@ -53,7 +53,7 @@
 "widget.gallery.search.display.name" = "Search";
 
 /* Description of VPN widget in widget gallery */
-"widget.gallery.vpn.description" = "Privacy Pro subscribers can view and manage the VPN connection.";
+"widget.gallery.vpn.description" = "View and manage your VPN connection. Requires a Privacy Pro subscription.";
 
 /* Display name for VPN widget in widget gallery */
 "widget.gallery.vpn.display.name" = "VPN";

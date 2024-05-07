@@ -31,6 +31,7 @@ public protocol HistoryManaging {
 
 }
 
+// TODO determine if message should be shown and handle persisting its dismissal
 public class HistoryManager: HistoryManaging {
 
     let privacyConfigManager: PrivacyConfigurationManaging

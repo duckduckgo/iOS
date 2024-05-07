@@ -399,7 +399,7 @@ final class SettingsViewModel: ObservableObject {
         self.deepLinkTarget = deepLink
         
         setupNotificationObservers()
-        autocompleteSubtitle = variantManager.isSupported(feature: .history) ? UserText.settingsAutocompleteSubtitle : nil
+        autocompleteSubtitle = UserText.settingsAutocompleteSubtitle
     }
     
     deinit {

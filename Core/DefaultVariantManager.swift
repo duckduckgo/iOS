@@ -26,8 +26,6 @@ extension FeatureName {
     // Define your feature e.g.:
     // public static let experimentalFeature = FeatureName(rawValue: "experimentalFeature")
 
-    public static let history = FeatureName(rawValue: "history")
-    public static let newSuggestionLogic = FeatureName(rawValue: "newSuggestionLogic")
 }
 
 public struct VariantIOS: Variant {
@@ -62,8 +60,6 @@ public struct VariantIOS: Variant {
         VariantIOS(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "se", weight: doNotAllocate, isIncluded: When.always, features: []),
-        VariantIOS(name: "mc", weight: doNotAllocate, isIncluded: When.inEnglish, features: [.newSuggestionLogic]),
-        VariantIOS(name: "md", weight: doNotAllocate, isIncluded: When.inEnglish, features: [.history]),
 
         returningUser
     ]
@@ -91,9 +87,7 @@ public protocol VariantRNG {
 public class DefaultVariantManager: VariantManager {
 
     public var currentVariant: Variant? {
-        #warning("do not merge")
-        // let variantName = ProcessInfo.processInfo.environment["VARIANT", default: storage.variant ?? "" ]
-        let variantName = "md"
+        let variantName = ProcessInfo.processInfo.environment["VARIANT", default: storage.variant ?? "" ]
         return variants.first(where: { $0.name == variantName })
     }
 

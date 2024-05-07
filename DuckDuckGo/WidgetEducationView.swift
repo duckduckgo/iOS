@@ -130,7 +130,7 @@ private struct NumberedCircle: View {
 private extension Color {
     static let background = Color(designSystemColor: .background)
     static let font = Color("WidgetEducationFontColor")
-    static let circle = Color(UIColor.cornflowerBlue)
+    static let circle = Color(designSystemColor: .accent)
     static let numbers = Color.white
 }
 

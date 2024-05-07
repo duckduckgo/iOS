@@ -171,9 +171,9 @@ class AutocompleteViewModel: ObservableObject {
     }
 
     var emptySuggestion: SuggestionModel {
-        SuggestionModel(suggestion: .phrase(phrase: query ?? ""))
+        SuggestionModel(suggestion: .phrase(phrase: query ?? ""), canShowTapAhead: false)
     }
-
+    
     func onSuggestionSelected(_ model: SuggestionModel) {
         print("***", #function, model)
         delegate?.autocomplete(selectedSuggestion: model.suggestion)
@@ -186,7 +186,7 @@ class AutocompleteViewModel: ObservableObject {
         isEmpty = topHits.isEmpty && ddgSuggestions.isEmpty && localResults.isEmpty
     }
 
-    func onCompleteTapped(_ model: SuggestionModel) {
+    func onTapAhead(_ model: SuggestionModel) {
         print("***", #function, model)
         delegate?.autocomplete(pressedPlusButtonForSuggestion: model.suggestion)
     }
@@ -201,6 +201,7 @@ class AutocompleteViewModel: ObservableObject {
     struct SuggestionModel: Identifiable {
         let id = UUID()
         let suggestion: Suggestion
+        var canShowTapAhead: Bool = true
     }
 
 }
@@ -339,7 +340,7 @@ private struct SuggestionsSection: View {
                     SuggestionView(model: suggestions[index], query: query)
                  }
                  .contentShape(Rectangle())
-                 .tintIfAvailable(.primary)
+                 .tintIfAvailable(Color(designSystemColor: .textPrimary))
             }
         }
     }
@@ -355,6 +356,12 @@ private struct SuggestionView: View {
 
     @State var rowBackground: Color?
 
+    var tapAheadImage: Image? {
+        guard model.canShowTapAhead else { return nil }
+        return Image(autocompleteModel.isAddressBarAtBottom ?
+                      "Arrow-Circle-Down-Left-16" : "Arrow-Circle-Up-Left-16")
+    }
+
     var body: some View {
         Group {
 
@@ -363,9 +370,8 @@ private struct SuggestionView: View {
                 SuggestionListItem(icon: Image("Find-Search-24"),
                                    title: phrase,
                                    query: query,
-                                   indicator: Image(autocompleteModel.isAddressBarAtBottom ?
-                                                    "Arrow-Circle-Down-Left-16" : "Arrow-Circle-Up-Left-16")) {
-                    autocompleteModel.onCompleteTapped(model)
+                                   indicator: tapAheadImage) {
+                    autocompleteModel.onTapAhead(model)
                 }
 
             case .website(let url):

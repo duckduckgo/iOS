@@ -29,6 +29,7 @@ struct DisableVPNIntent: AppIntent {
     static let title: LocalizedStringResource = "Disable VPN"
     static let description: LocalizedStringResource = "Disables the DuckDuckGo VPN"
     static let openAppWhenRun: Bool = false
+    static let isDiscoverable: Bool = false
 
     @MainActor
     func perform() async throws -> some IntentResult {
@@ -69,6 +70,7 @@ struct EnableVPNIntent: AppIntent {
     static let title: LocalizedStringResource = "Enable VPN"
     static let description: LocalizedStringResource = "Enables the DuckDuckGo VPN"
     static let openAppWhenRun: Bool = false
+    static let isDiscoverable: Bool = false
 
     @MainActor
     func perform() async throws -> some IntentResult {

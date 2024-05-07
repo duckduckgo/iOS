@@ -319,8 +319,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
     private func observeServerChanges() {
         lastSelectedServerInfoPublisher.sink { server in
-            let location = server?.serverLocation ?? "Unknown Location"
-            UserDefaults.networkProtectionGroupDefaults.set(location, forKey: NetworkProtectionUserDefaultKeys.lastSelectedServer)
+            let location = server?.attributes.city ?? "Unknown Location"
+            UserDefaults.networkProtectionGroupDefaults.set(location, forKey: NetworkProtectionUserDefaultKeys.lastSelectedServerCity)
         }
         .store(in: &cancellables)
     }

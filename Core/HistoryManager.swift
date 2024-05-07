@@ -31,6 +31,15 @@ public protocol HistoryManaging {
 
 }
 
+// Used for controlling incremental rollout
+public enum HistorySubFeature: String, PrivacySubfeature {
+    public var parent: PrivacyFeature {
+        .history
+    }
+
+    case onByDefault
+}
+
 // TODO determine if message should be shown and handle persisting its dismissal
 public class HistoryManager: HistoryManaging {
 
@@ -75,8 +84,19 @@ public class HistoryManager: HistoryManaging {
     }
 
     func isHistoryFeatureEnabled() -> Bool {
-        // TODO handle roll out 
-        return privacyConfigManager.privacyConfig.isEnabled(featureKey: .history)
+        return true
+
+        #warning("hardcoded for testing")
+        /*
+        if variantManager.isSupported(feature: .history) &&
+            privacyConfigManager.privacyConfig.isEnabled(featureKey: .history) {
+            // Ensures that users who saw this in the experiment retain it
+            return true
+        }
+
+        // Handles incremental roll out
+        return privacyConfigManager.privacyConfig.isSubfeatureEnabled(HistorySubFeature.onByDefault)
+        */
     }
 
     public func removeAllHistory() async {

@@ -45,6 +45,7 @@ public class AppUserDefaults: AppSettings {
 
     struct Keys {
         static let autocompleteKey = "com.duckduckgo.app.autocompleteDisabledKey"
+        static let recentlyVisitedSites = "com.duckduckgo.app.recentlyVisitedSitesKey"
         static let currentThemeNameKey = "com.duckduckgo.app.currentThemeNameKey"
         
         static let autoClearActionKey = "com.duckduckgo.app.autoClearActionKey"
@@ -107,6 +108,18 @@ public class AppUserDefaults: AppSettings {
 
     }
     
+    var recentlyVisitedSites: Bool {
+
+        get {
+            return userDefaults?.bool(forKey: Keys.recentlyVisitedSites, defaultValue: true) ?? true
+        }
+
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.recentlyVisitedSites)
+        }
+
+    }
+
     var currentThemeName: ThemeName {
         
         get {

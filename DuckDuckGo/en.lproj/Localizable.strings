@@ -1715,6 +1715,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings screen cell for autocomplete */
 "settings.autocomplete" = "Autocomplete Suggestions";
 
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited" = "Recently Visited Sites";
+
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Application Lock";
 

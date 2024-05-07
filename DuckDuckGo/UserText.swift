@@ -999,6 +999,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsKeyboard = NSLocalizedString("settings.keyboard", value: "Keyboard", comment: "Settings screen cell for Keyboard")
     public static let settingsPreviews = NSLocalizedString("settings.previews", value: "Long-Press Previews", comment: "Settings screen cell for long press previews")
     public static let settingsAutocomplete = NSLocalizedString("settings.autocomplete", value: "Autocomplete Suggestions", comment: "Settings screen cell for autocomplete")
+    public static let settingsAutocompleteRecentlyVisited = NSLocalizedString("settings.autocomplete.recentlyvisited", value: "Recently Visited Sites", comment: "Settings label for enabling or disabling recently visited sites")
 
     // Hardcoded for the experiment
     public static let settingsAutocompleteSubtitle = "See search suggestions, including your bookmarks and recently visited sites"

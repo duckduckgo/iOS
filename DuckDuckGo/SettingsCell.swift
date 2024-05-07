@@ -107,10 +107,14 @@ struct SettingsCellView: View, Identifiable {
                     cellContent
                         .disabled(!enabled)
                 }
-                .buttonStyle(PlainButtonStyle())
                 .contentShape(Rectangle())
             } else {
-                cellContent
+                Button {
+                    // No-op
+                } label: {
+                    cellContent
+                }
+                .contentShape(Rectangle())
             }
         }.frame(maxWidth: .infinity)
         

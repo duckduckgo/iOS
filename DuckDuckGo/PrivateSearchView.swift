@@ -58,6 +58,12 @@ struct PrivateSearchViewSettings: View {
             // Autocomplete Suggestions
             SettingsCellView(label: UserText.settingsAutocomplete,
                              accesory: .toggle(isOn: viewModel.autocompletePrivateSearchBinding))
+
+            if viewModel.autocompletePrivateSearchBinding.wrappedValue {
+                SettingsCellView(label: UserText.settingsAutocompleteRecentlyVisited,
+                                 accesory: .toggle(isOn: viewModel.autocompleteRecentlyVisitedSitesBinding))
+            }
+
         }
 
         Section(footer: Text(UserText.voiceSearchFooter)) {

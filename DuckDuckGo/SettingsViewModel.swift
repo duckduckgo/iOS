@@ -205,6 +205,16 @@ final class SettingsViewModel: ObservableObject {
         )
     }
 
+    var autocompleteRecentlyVisitedSitesBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.recentlyVisitedSites },
+            set: {
+                self.appSettings.recentlyVisitedSites = $0
+                self.state.recentlyVisitedSites = $0
+            }
+        )
+    }
+
     // Remove after Settings experiment
     var autocompleteGeneralBinding: Binding<Bool> {
         Binding<Bool>(
@@ -428,6 +438,7 @@ extension SettingsViewModel {
             autoclearDataEnabled: AutoClearSettingsModel(settings: appSettings) != nil,
             applicationLock: privacyStore.authenticationEnabled,
             autocomplete: appSettings.autocomplete,
+            recentlyVisitedSites: appSettings.recentlyVisitedSites,
             longPressPreviews: appSettings.longPressPreviews,
             allowUniversalLinks: appSettings.allowUniversalLinks,
             activeWebsiteAccount: nil,

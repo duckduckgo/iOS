@@ -95,7 +95,7 @@ struct DefaultSurveyURLBuilder: SurveyURLBuilder {
         let surveyURLWithParameters = addSurveyParameters(to: surveyURL)
 
         guard var components = URLComponents(string: surveyURLWithParameters.absoluteString), let bucket = passwordsCountBucket() else {
-            return surveyURL
+            return surveyURLWithParameters
         }
 
         var queryItems = components.queryItems ?? []

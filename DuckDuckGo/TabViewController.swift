@@ -1399,10 +1399,13 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 
-        if #available(iOS 17.4, *), navigationAction.request.url?.scheme == "marketplace-kit" {
+        if #available(iOS 17.4, *),
+            navigationAction.request.url?.scheme == "marketplace-kit",
+            internalUserDecider.isInternalUser {
+
             decisionHandler(.allow)
             let urlString = navigationAction.request.url?.absoluteString ?? "<no url>"
-            ActionMessageView.present(message: "\(urlString)",
+            ActionMessageView.present(message: "Marketplace Kit URL detected",
                                       actionTitle: "COPY",
                                       presentationLocation: .withoutBottomBar, onAction: {
                 UIPasteboard.general.string = urlString

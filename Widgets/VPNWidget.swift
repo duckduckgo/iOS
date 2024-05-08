@@ -134,7 +134,7 @@ struct VPNStatusView: View {
     private func connectionView(with status: NEVPNStatus) -> some View {
         HStack {
             VStack(alignment: .leading, spacing: 0) {
-                Image(headerImageName(with: status))
+                Image(headerImageName(with: status)).padding([.bottom], 7)
 
                 Text(title(with: status))
                     .font(.system(size: 16, weight: .semibold))
@@ -142,29 +142,31 @@ struct VPNStatusView: View {
                     .foregroundStyle(Color(designSystemColor: .textPrimary))
 
                 Text(status == .connected ? entry.location : UserText.vpnWidgetDisconnectedSubtitle)
-                    .font(.system(size: 12, weight: .medium))
+                    .font(.system(size: 12, weight: .regular))
                     .foregroundStyle(Color(designSystemColor: .textSecondary))
                     .opacity(status.isConnected ? 0.8 : 0.6)
 
                 switch status {
                 case .connected, .connecting, .reasserting:
                     Button(UserText.vpnWidgetDisconnectButton, intent: DisableVPNIntent())
-                        .daxButton()
+                        .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(disconnectButtonForegroundColor(isDisabled: status != .connected))
                         .buttonStyle(.borderedProminent)
                         .buttonBorderShape(.roundedRectangle(radius: 8))
                         .tint(disconnectButtonBackgroundColor(isDisabled: status != .connected))
                         .disabled(status != .connected)
+                        .frame(height: 28)
                         .padding(.top, 6)
                         .padding(.bottom, 16)
                 case .disconnected, .disconnecting:
                     connectButton
-                        .daxButton()
+                        .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(connectButtonForegroundColor(isDisabled: status != .disconnected))
                         .buttonStyle(.borderedProminent)
                         .buttonBorderShape(.roundedRectangle(radius: 8))
                         .tint(Color(designSystemColor: .accent))
                         .disabled(status != .disconnected)
+                        .frame(height: 28)
                         .padding(.top, 6)
                         .padding(.bottom, 16)
                 default:
@@ -204,7 +206,7 @@ struct VPNStatusView: View {
 
     private func disconnectButtonForegroundColor(isDisabled: Bool) -> Color {
         let isDark = colorScheme == .dark
-        let defaultForegroundColor = isDark ? Color.white : Color.black.opacity(0.84)
+        let defaultForegroundColor = isDark ? Color.white.opacity(0.84) : Color.black.opacity(0.84)
         let disabledForegroundColor = isDark ? Color.white.opacity(0.36) : Color.black.opacity(0.36)
         return isDisabled ? disabledForegroundColor : defaultForegroundColor
     }

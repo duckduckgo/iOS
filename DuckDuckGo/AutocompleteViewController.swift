@@ -156,6 +156,8 @@ class AutocompleteViewModel: ObservableObject {
 
     @Published var isMessageVisible = true
 
+    var geometry: GeometryProxy?
+
     weak var delegate: AutocompleteViewControllerDelegate?
 
     let isAddressBarAtBottom: Bool
@@ -178,6 +180,11 @@ class AutocompleteViewModel: ObservableObject {
         ddgSuggestions = suggestions.duckduckgoSuggestions.map { SuggestionModel(suggestion: $0) }
         localResults = suggestions.localSuggestions.map { SuggestionModel(suggestion: $0) }
         isEmpty = topHits.isEmpty && ddgSuggestions.isEmpty && localResults.isEmpty
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            print("***", self.geometry?.size ?? .zero)
+        }
+
     }
 
     func onTapAhead(_ model: SuggestionModel) {
@@ -236,38 +243,45 @@ struct AutocompleteView: View {
     @ObservedObject var model: AutocompleteViewModel
 
     var body: some View {
-        List {
-            if model.isMessageVisible {
-                HistoryMessageView() {
-                    model.onDismissMessage()
+        GeometryReader { geometry in
+            List {
+                if model.isMessageVisible {
+                    HistoryMessageView {
+                        model.onDismissMessage()
+                    }
                 }
-            }
 
-            if model.isEmpty {
-                SuggestionsSection(suggestions: [model.emptySuggestion],
+                if model.isEmpty {
+                    SuggestionsSection(suggestions: [model.emptySuggestion],
+                                       query: model.query,
+                                       onSuggestionSelected: model.onSuggestionSelected)
+                }
+
+                SuggestionsSection(suggestions: model.topHits,
                                    query: model.query,
                                    onSuggestionSelected: model.onSuggestionSelected)
+
+                SuggestionsSection(suggestions: model.ddgSuggestions,
+                                   query: model.query,
+                                   onSuggestionSelected: model.onSuggestionSelected)
+
+                SuggestionsSection(suggestions: model.localResults,
+                                   query: model.query,
+                                   onSuggestionSelected: model.onSuggestionSelected)
+
             }
-
-            SuggestionsSection(suggestions: model.topHits,
-                               query: model.query,
-                               onSuggestionSelected: model.onSuggestionSelected)
-
-            SuggestionsSection(suggestions: model.ddgSuggestions,
-                               query: model.query,
-                               onSuggestionSelected: model.onSuggestionSelected)
-
-            SuggestionsSection(suggestions: model.localResults,
-                               query: model.query,
-                               onSuggestionSelected: model.onSuggestionSelected)
-
+            .onAppear {
+                model.geometry = geometry
+            }
         }
         .offset(x: 0, y: -20)
         .padding(.bottom, -20)
         .modifier(HideScrollContentBackground())
+        .background(Color(designSystemColor: .background))
+        .listRowBackground(Color(designSystemColor: .surface))
         .modifier(CompactSectionSpacing())
         .modifier(DisableSelection())
-        .modifier(DismissKeyboard())
+        .modifier(DismissKeyboardOnSwipe())
         .environmentObject(model)
    }
 
@@ -310,7 +324,7 @@ private struct HistoryMessageView: View {
 
 }
 
-private struct DismissKeyboard: ViewModifier {
+private struct DismissKeyboardOnSwipe: ViewModifier {
     
     func body(content: Content) -> some View {
         if #available(iOS 16, *) {
@@ -371,7 +385,7 @@ private struct SuggestionsSection: View {
                     SuggestionView(model: suggestions[index], query: query)
                  }
                  .contentShape(Rectangle())
-                 .tintIfAvailable(Color(designSystemColor: .textPrimary))
+                 .tintIfAvailable(Color(designSystemColor: .icons))
             }
         }
     }
@@ -475,22 +489,26 @@ private struct SuggestionListItem: View {
             icon
                 .resizable()
                 .frame(width: 24, height: 24)
+                // .tintIfAvailable(Color(designSystemColor: .icons))
 
             VStack(alignment: .leading) {
 
                 Group {
+                    // Can't use dax modifiers because they are not typed for Text
                     if let query, title.hasPrefix(query) {
                         Text(query)
                             .font(Font(uiFont: UIFont.daxBodyRegular()))
+                            .foregroundColor(Color(designSystemColor: .textPrimary))
                         +
                         Text(title.dropping(prefix: query))
                             .font(Font(uiFont: UIFont.daxBodyBold()))
+                            .foregroundColor(Color(designSystemColor: .textPrimary))
                     } else {
                         Text(title)
                             .font(Font(uiFont: UIFont.daxBodyRegular()))
+                            .foregroundColor(Color(designSystemColor: .textPrimary))
                     }
                 }
-                .foregroundColor(Color(designSystemColor: .textPrimary))
                 .lineLimit(1)
 
                 if let subtitle {
@@ -508,6 +526,7 @@ private struct SuggestionListItem: View {
                         print("*** tap")
                         onTapIndicator?()
                     })
+                    .tintIfAvailable(Color(designSystemColor: .icons))
             }
         }
 

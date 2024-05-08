@@ -28,15 +28,8 @@ public class SchemeHandler {
         case cancel
     }
 
-    public enum LinkActivated: Equatable {
-        case required
-        case notRequired
-    }
-
     public enum SchemeType: Equatable {
         case navigational
-        case system(linkActivated: LinkActivated)
-        case unsupported
         case external(Action)
         case blob
         case unknown
@@ -57,7 +50,6 @@ public class SchemeHandler {
         case shortcuts
         case shortcutsProduction = "shortcuts-production"
         case workflow
-        case marketplaceKit = "marketplace-kit"
     }
 
     private enum BlockedScheme: String {
@@ -81,12 +73,6 @@ public class SchemeHandler {
         switch PlatformScheme(rawValue: schemeString) {
         case .sms, .mailto, .itms, .itmss, .itunes, .itmsApps, .itmsAppss, .shortcuts, .shortcutsProduction, .workflow:
             return .external(.askForConfirmation)
-        case .marketplaceKit:
-            if #available(iOS 17.4, *) {
-                return .system(linkActivated: .required)
-            } else {
-                return .unsupported
-            }
         case .none:
             return .unknown
         default:

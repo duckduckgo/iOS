@@ -20,6 +20,7 @@
 import AppIntents
 import NetworkExtension
 import WidgetKit
+import Core
 
 @available(iOS 17.0, *)
 struct DisableVPNIntent: AppIntent {
@@ -32,6 +33,8 @@ struct DisableVPNIntent: AppIntent {
     @MainActor
     func perform() async throws -> some IntentResult {
         do {
+            DailyPixel.fire(pixel: .networkProtectionWidgetDisconnectAttempt)
+
             let managers = try await NETunnelProviderManager.loadAllFromPreferences()
             guard let manager = managers.first else {
                 return .result()
@@ -48,6 +51,7 @@ struct DisableVPNIntent: AppIntent {
                 try? await Task.sleep(interval: .seconds(0.5))
 
                 if manager.connection.status == .disconnected {
+                    DailyPixel.fire(pixel: .networkProtectionWidgetDisconnectSuccess)
                     return .result()
                 }
 
@@ -73,6 +77,8 @@ struct EnableVPNIntent: AppIntent {
     @MainActor
     func perform() async throws -> some IntentResult {
         do {
+            DailyPixel.fire(pixel: .networkProtectionWidgetConnectAttempt)
+
             let managers = try await NETunnelProviderManager.loadAllFromPreferences()
             guard let manager = managers.first else {
                 return .result()
@@ -89,6 +95,7 @@ struct EnableVPNIntent: AppIntent {
                 try? await Task.sleep(interval: .seconds(0.5))
 
                 if manager.connection.status == .connected {
+                    DailyPixel.fire(pixel: .networkProtectionWidgetConnectSuccess)
                     return .result()
                 }
 

@@ -271,6 +271,15 @@ class SuggestionTrayViewController: UIViewController {
         addChild(controller)
         controller.view.frame = containerView.bounds
         containerView.addSubview(controller.view)
+
+        controller.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            containerView.topAnchor.constraint(equalTo: controller.view.topAnchor),
+            containerView.leftAnchor.constraint(equalTo: controller.view.leftAnchor),
+            containerView.bottomAnchor.constraint(equalTo: controller.view.bottomAnchor),
+            containerView.rightAnchor.constraint(equalTo: controller.view.rightAnchor)
+        ])
+
         controller.didMove(toParent: self)
         controller.view.alpha = 0
         UIView.animate(withDuration: 0.2, animations: {

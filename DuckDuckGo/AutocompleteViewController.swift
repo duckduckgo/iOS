@@ -491,7 +491,7 @@ private struct SuggestionListItem: View {
                 .frame(width: 24, height: 24)
                 // .tintIfAvailable(Color(designSystemColor: .icons))
 
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 2) {
 
                 Group {
                     // Can't use dax modifiers because they are not typed for Text

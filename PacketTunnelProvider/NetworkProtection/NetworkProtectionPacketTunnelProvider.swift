@@ -27,6 +27,7 @@ import Networking
 import NetworkExtension
 import NetworkProtection
 import Subscription
+import WidgetKit
 
 // swiftlint:disable type_body_length
 
@@ -332,6 +333,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
         activationDateStore.setActivationDateIfNecessary()
         activationDateStore.updateLastActiveDate()
+        WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
     }
 
     private static func entitlementCheck() async -> Result<Bool, Error> {

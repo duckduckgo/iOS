@@ -191,7 +191,6 @@ struct VPNStatusView: View {
     private func connectButtonForegroundColor(isDisabled: Bool) -> Color {
         let isDark = colorScheme == .dark
         let standardForegroundColor = isDark ? Color.black.opacity(0.84) : Color.white
-        let pressedForegroundColor = isDark ? Color.black.opacity(0.84) : Color.white
         let disabledForegroundColor = isDark ? Color.white.opacity(0.36) : Color.black.opacity(0.36)
         return isDisabled ? disabledForegroundColor : standardForegroundColor
     }

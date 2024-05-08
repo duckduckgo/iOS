@@ -42,15 +42,8 @@ struct HomeMessageView: View {
     }
 
     let viewModel: HomeMessageViewModel
-    let backgroundDisabled: Bool
 
     @State var activityItem: ShareItem?
-
-    init(viewModel: HomeMessageViewModel, backgroundDisabled: Bool = false, activityItem: ShareItem? = nil) {
-        self.viewModel = viewModel
-        self.backgroundDisabled = backgroundDisabled
-        self.activityItem = activityItem
-    }
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
@@ -89,7 +82,12 @@ struct HomeMessageView: View {
                     dimension[.top]
                 }
         }
-        .modifier(OptionalBackground(backgroundDisabled: backgroundDisabled))
+        .background(RoundedRectangle(cornerRadius: Const.Radius.corner)
+                        .fill(Color.background)
+                        .shadow(color: Color.shadow,
+                                radius: Const.Radius.shadow,
+                                x: 0,
+                                y: Const.Offset.shadowVertical))
         .onAppear {
             viewModel.onDidAppear()
         }
@@ -236,25 +234,6 @@ struct ActivityViewPresentationModifier: ViewModifier {
     func body(content: Content) -> some View {
         if #available(iOS 16.0, *) {
             content.presentationDetents([.medium])
-        } else {
-            content
-        }
-    }
-
-}
-
-struct OptionalBackground: ViewModifier {
-
-    let backgroundDisabled: Bool
-
-    func body(content: Content) -> some View {
-        if !backgroundDisabled {
-            content.background(RoundedRectangle(cornerRadius: Const.Radius.corner)
-                .fill(Color.background)
-                .shadow(color: Color.shadow,
-                        radius: Const.Radius.shadow,
-                        x: 0,
-                        y: Const.Offset.shadowVertical))
         } else {
             content
         }

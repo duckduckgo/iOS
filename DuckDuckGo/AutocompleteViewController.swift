@@ -154,7 +154,7 @@ class AutocompleteViewModel: ObservableObject {
     @Published var query: String?
     @Published var isEmpty = true
 
-    @Published var messageModel: HomeMessageViewModel?
+    @Published var isMessageVisible = true
 
     weak var delegate: AutocompleteViewControllerDelegate?
 
@@ -162,12 +162,6 @@ class AutocompleteViewModel: ObservableObject {
 
     init(isAddressBarAtBottom: Bool) {
         self.isAddressBarAtBottom = isAddressBarAtBottom
-        messageModel = HomeMessageViewModel(messageId: "in-app.history-message",
-                                            modelType: .medium(titleText: UserText.autocompleteHistoryWarningTitle,
-                                                               descriptionText: UserText.autocompleteHistoryWarningDescription,
-                                                               placeholder: .announce),
-                                            onDidClose: onDidCloseMessage,
-                                            onDidAppear: {})
     }
 
     var emptySuggestion: SuggestionModel {
@@ -191,10 +185,10 @@ class AutocompleteViewModel: ObservableObject {
         delegate?.autocomplete(pressedPlusButtonForSuggestion: model.suggestion)
     }
 
-    func onDidCloseMessage(ignored: Any) {
+    func onDismissMessage() {
         print("***", #function)
         withAnimation {
-            messageModel = nil
+            isMessageVisible = false
         }
     }
 
@@ -243,10 +237,10 @@ struct AutocompleteView: View {
 
     var body: some View {
         List {
-
-            if let messageModel = model.messageModel {
-                HomeMessageView(viewModel: messageModel, backgroundDisabled: true)
-                    .buttonStyle(.plain)
+            if model.isMessageVisible {
+                HistoryMessageView() {
+                    model.onDismissMessage()
+                }
             }
 
             if model.isEmpty {
@@ -276,6 +270,43 @@ struct AutocompleteView: View {
         .modifier(DismissKeyboard())
         .environmentObject(model)
    }
+
+}
+
+private struct HistoryMessageView: View {
+
+    var onDismiss: () -> Void
+
+    var body: some View {
+        ZStack(alignment: .topTrailing) {
+            Button {
+                onDismiss()
+            } label: {
+                Image("Close-24")
+                    .foregroundColor(.primary)
+            }
+            .padding(.top, 4)
+            .buttonStyle(.plain)
+
+            VStack {
+                Image("RemoteMessageAnnouncement")
+                    .padding(8)
+
+                Text(UserText.autocompleteHistoryWarningTitle)
+                    .multilineTextAlignment(.center)
+                    .daxHeadline()
+                    .padding(2)
+
+                Text(UserText.autocompleteHistoryWarningDescription)
+                    .multilineTextAlignment(.center)
+                    .daxBodyRegular()
+                    .frame(maxWidth: 536)
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .padding(.bottom, 8)
+        .frame(maxWidth: .infinity)
+    }
 
 }
 

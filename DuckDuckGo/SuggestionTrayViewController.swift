@@ -322,6 +322,6 @@ extension SuggestionTrayViewController {
 
 private extension SuggestionTrayViewController {
     enum Constant {
-        static let suggestionTrayInitialHeight = SuggestionTableViewCell.Constants.defaultCellHeight * 6
+        static let suggestionTrayInitialHeight = 312.0 // ie 52 * 6
     }
 }

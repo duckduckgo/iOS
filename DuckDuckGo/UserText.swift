@@ -1146,7 +1146,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionPIRMacOS = NSLocalizedString("subscription.pir.macos", value: "macOS", comment: "Text for the 'macOS' button")
 
     // Autocomplete
-    public static let autocompleteHistoryWarningTitle = "Better Search Results"
-    public static let autocompleteHistoryWarningDescription = "To help speed up your searches, search suggestions now include recently visited sites. Use the Fire Button 🔥 anytime to delete."
+    public static let autocompleteHistoryWarningTitle = "Same privacy, better search suggestions"
+    public static let autocompleteHistoryWarningDescription = "Autocomplete Suggestions now include your recently visited sites. Turn off in Settings, or clear history with the Fire Button 🔥 anytime."
 
 }

@@ -1880,6 +1880,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
     func autocomplete(selectedSuggestion suggestion: Suggestion) {
         homeController?.chromeDelegate = nil
         dismissOmniBar()
+        viewCoordinator.omniBar.cancel()
         switch suggestion {
         case .phrase(phrase: let phrase):
             if let url = URL.makeSearchURL(text: phrase) {

@@ -104,7 +104,6 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
     }
     
     func updateQuery(_ query: String) {
-        print("***", #function, query)
         model.selectedItemIndex = -1
         guard self.query != query else { return }
         cancelInFlightRequests()
@@ -156,8 +155,6 @@ class AutocompleteViewModel: ObservableObject {
 
     @Published var isMessageVisible = true
 
-    var geometry: GeometryProxy?
-
     weak var delegate: AutocompleteViewControllerDelegate?
 
     let isAddressBarAtBottom: Bool
@@ -171,7 +168,6 @@ class AutocompleteViewModel: ObservableObject {
     }
     
     func onSuggestionSelected(_ model: SuggestionModel) {
-        print("***", #function, model)
         delegate?.autocomplete(selectedSuggestion: model.suggestion)
     }
 
@@ -180,20 +176,13 @@ class AutocompleteViewModel: ObservableObject {
         ddgSuggestions = suggestions.duckduckgoSuggestions.map { SuggestionModel(suggestion: $0) }
         localResults = suggestions.localSuggestions.map { SuggestionModel(suggestion: $0) }
         isEmpty = topHits.isEmpty && ddgSuggestions.isEmpty && localResults.isEmpty
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            print("***", self.geometry?.size ?? .zero)
-        }
-
     }
 
     func onTapAhead(_ model: SuggestionModel) {
-        print("***", #function, model)
         delegate?.autocomplete(pressedPlusButtonForSuggestion: model.suggestion)
     }
 
     func onDismissMessage() {
-        print("***", #function)
         withAnimation {
             isMessageVisible = false
         }
@@ -210,7 +199,6 @@ class AutocompleteViewModel: ObservableObject {
 extension AutocompleteViewController: SuggestionLoadingDataSource {
 
     func history(for suggestionLoading: Suggestions.SuggestionLoading) -> [HistorySuggestion] {
-        // TODO consolidate this array type if we edit BSK
         return historyCoordinator.history ?? []
     }
 
@@ -243,36 +231,31 @@ struct AutocompleteView: View {
     @ObservedObject var model: AutocompleteViewModel
 
     var body: some View {
-        GeometryReader { geometry in
-            List {
-                if model.isMessageVisible {
-                    HistoryMessageView {
-                        model.onDismissMessage()
-                    }
+        List {
+            if model.isMessageVisible {
+                HistoryMessageView {
+                    model.onDismissMessage()
                 }
-
-                if model.isEmpty {
-                    SuggestionsSection(suggestions: [model.emptySuggestion],
-                                       query: model.query,
-                                       onSuggestionSelected: model.onSuggestionSelected)
-                }
-
-                SuggestionsSection(suggestions: model.topHits,
-                                   query: model.query,
-                                   onSuggestionSelected: model.onSuggestionSelected)
-
-                SuggestionsSection(suggestions: model.ddgSuggestions,
-                                   query: model.query,
-                                   onSuggestionSelected: model.onSuggestionSelected)
-
-                SuggestionsSection(suggestions: model.localResults,
-                                   query: model.query,
-                                   onSuggestionSelected: model.onSuggestionSelected)
-
             }
-            .onAppear {
-                model.geometry = geometry
+
+            if model.isEmpty {
+                SuggestionsSection(suggestions: [model.emptySuggestion],
+                                   query: model.query,
+                                   onSuggestionSelected: model.onSuggestionSelected)
             }
+
+            SuggestionsSection(suggestions: model.topHits,
+                               query: model.query,
+                               onSuggestionSelected: model.onSuggestionSelected)
+
+            SuggestionsSection(suggestions: model.ddgSuggestions,
+                               query: model.query,
+                               onSuggestionSelected: model.onSuggestionSelected)
+
+            SuggestionsSection(suggestions: model.localResults,
+                               query: model.query,
+                               onSuggestionSelected: model.onSuggestionSelected)
+
         }
         .offset(x: 0, y: -20)
         .padding(.bottom, -20)
@@ -523,7 +506,6 @@ private struct SuggestionListItem: View {
                 Spacer()
                 indicator
                     .highPriorityGesture(TapGesture().onEnded {
-                        print("*** tap")
                         onTapIndicator?()
                     })
                     .tintIfAvailable(Color(designSystemColor: .icons))

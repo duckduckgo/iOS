@@ -37,17 +37,13 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
 
     var selectedSuggestion: Suggestion?
 
-    weak var delegate: AutocompleteViewControllerDelegate? {
-        didSet {
-            model.delegate = delegate
-        }
-    }
+    weak var delegate: AutocompleteViewControllerDelegate?
     weak var presentationDelegate: AutocompleteViewControllerPresentationDelegate?
 
-    private var historyCoordinator: HistoryCoordinating
-    private var bookmarksDatabase: CoreDataDatabase
-    private var appSettings: AppSettings
-    private var model: AutocompleteViewModel
+    private let historyCoordinator: HistoryCoordinating
+    private let bookmarksDatabase: CoreDataDatabase
+    private let appSettings: AppSettings
+    private let model: AutocompleteViewModel
 
     private var task: URLSessionDataTask?
 
@@ -59,6 +55,7 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
     }()
 
     private var loader: SuggestionLoader?
+    private var isMessageDismissed = false
 
     init(historyCoordinator: HistoryCoordinating,
          bookmarksDatabase: CoreDataDatabase,
@@ -68,6 +65,7 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
         self.appSettings = appSettings
         self.model = AutocompleteViewModel(isAddressBarAtBottom: appSettings.currentAddressBarPosition == .bottom)
         super.init(rootView: AutocompleteView(model: model))
+        self.model.delegate = self
     }
     
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
@@ -137,10 +135,50 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
 
         loader?.getSuggestions(query: query) { [weak self] result, error in
             guard let self, error == nil else { return }
-            model.updateSuggestions(result ?? .empty)
+            let updatedResults = result ?? .empty
+            model.updateSuggestions(updatedResults)
+
+            let messageHeight = isMessageDismissed ? 0 : 196
+
+            let height =
+                (updatedResults.topHits.count * 44) +
+                (updatedResults.topHits.isEmpty ? 0 : 10) +
+                (updatedResults.duckduckgoSuggestions.count * 44) +
+                (updatedResults.duckduckgoSuggestions.isEmpty ? 0 : 10) +
+                (updatedResults.localSuggestions.count * 44) +
+                (updatedResults.localSuggestions.isEmpty ? 0 : 10) +
+                messageHeight +
+                16 // padding
+
+            presentationDelegate?
+                .autocompleteDidChangeContentHeight(height: CGFloat(height))
         }
 
     }
+
+}
+
+extension AutocompleteViewController: AutocompleteViewModelDelegate {
+
+    func onMessageDismissed() {
+        self.isMessageDismissed = true
+        presentationDelegate?.autocompleteDidChangeContentHeight(height: view.frame.height - 196)
+    }
+    
+    func onSuggestionSelected(_ suggestion: Suggestion) {
+        self.delegate?.autocomplete(selectedSuggestion: suggestion)
+    }
+
+    func onTapAhead(_ suggestion: Suggestion) {
+        self.delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestion)
+    }
+}
+
+protocol AutocompleteViewModelDelegate: NSObjectProtocol {
+
+    func onSuggestionSelected(_ suggestion: Suggestion)
+    func onTapAhead(_ suggestion: Suggestion)
+    func onMessageDismissed()
 
 }
 
@@ -155,7 +193,7 @@ class AutocompleteViewModel: ObservableObject {
 
     @Published var isMessageVisible = true
 
-    weak var delegate: AutocompleteViewControllerDelegate?
+    weak var delegate: AutocompleteViewModelDelegate?
 
     let isAddressBarAtBottom: Bool
 
@@ -166,10 +204,6 @@ class AutocompleteViewModel: ObservableObject {
     var emptySuggestion: SuggestionModel {
         SuggestionModel(suggestion: .phrase(phrase: query ?? ""), canShowTapAhead: false)
     }
-    
-    func onSuggestionSelected(_ model: SuggestionModel) {
-        delegate?.autocomplete(selectedSuggestion: model.suggestion)
-    }
 
     func updateSuggestions(_ suggestions: SuggestionResult) {
         topHits = suggestions.topHits.map { SuggestionModel(suggestion: $0) }
@@ -178,14 +212,19 @@ class AutocompleteViewModel: ObservableObject {
         isEmpty = topHits.isEmpty && ddgSuggestions.isEmpty && localResults.isEmpty
     }
 
-    func onTapAhead(_ model: SuggestionModel) {
-        delegate?.autocomplete(pressedPlusButtonForSuggestion: model.suggestion)
-    }
-
     func onDismissMessage() {
         withAnimation {
             isMessageVisible = false
+            delegate?.onMessageDismissed()
         }
+    }
+
+    func onSuggestionSelected(_ model: SuggestionModel) {
+        delegate?.onSuggestionSelected(model.suggestion)
+    }
+
+    func onTapAhead(_ model: SuggestionModel) {
+        delegate?.onTapAhead(model.suggestion)
     }
 
     struct SuggestionModel: Identifiable {

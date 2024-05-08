@@ -70,11 +70,11 @@ struct UserText {
                                                                comment: "Description of VPN widget in widget gallery")
 
     static let vpnWidgetConnectedStatus = NSLocalizedString("widget.vpn.status.connected",
-                                                            value: "VPN is ON",
+                                                            value: "VPN is On",
                                                             comment: "Message describing VPN connected status")
 
     static let vpnWidgetDisconnectedStatus = NSLocalizedString("widget.vpn.status.disconnected",
-                                                               value: "VPN is OFF",
+                                                               value: "VPN is Off",
                                                                comment: "Message describing VPN disconnected status")
 
     static let vpnWidgetDisconnectedSubtitle = NSLocalizedString("widget.vpn.subtitle.disconnected",

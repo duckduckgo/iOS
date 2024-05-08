@@ -77,10 +77,10 @@
 "widget.vpn.button.disconnect" = "Disconnect";
 
 /* Message describing VPN connected status */
-"widget.vpn.status.connected" = "VPN is ON";
+"widget.vpn.status.connected" = "VPN is On";
 
 /* Message describing VPN disconnected status */
-"widget.vpn.status.disconnected" = "VPN is OFF";
+"widget.vpn.status.disconnected" = "VPN is Off";
 
 /* Subtitle describing VPN disconnected status */
 "widget.vpn.subtitle.disconnected" = "Not connected";

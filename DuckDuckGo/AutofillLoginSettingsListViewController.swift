@@ -231,7 +231,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
         }, closeButtonAction: { [weak self] in
             self?.viewModel.disableAutofillSurvey()
-            removeSurveyView()
+            self?.removeSurveyView()
         })
 
         let hostingController = UIHostingController(rootView: messageView)

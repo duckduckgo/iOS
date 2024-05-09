@@ -124,9 +124,6 @@
 /* Standard Buttons - Paste Button */
 "paste.button" = "Beillesztés";
 
-/* Description of rollout banner */
-"preferences.sync.rollout-banner.description" = "A szinkronizálás és biztonsági mentés funkció fokozatosan kerül bevezetésre, és előfordulhat, hogy a többi eszköz DuckDuckGo alkalmazásában még nem érhető el.";
-
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "A rendszer előkészíti a könyvjelzők és jelszavak szinkronizálását. Ez csak néhány pillanatig tart.";
 

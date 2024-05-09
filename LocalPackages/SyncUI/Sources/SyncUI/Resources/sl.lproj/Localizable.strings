@@ -124,9 +124,6 @@
 /* Standard Buttons - Paste Button */
 "paste.button" = "Prilepi";
 
-/* Description of rollout banner */
-"preferences.sync.rollout-banner.description" = "Sinhronizacijo in varnostno kopiranje uvajamo postopoma in morda še ni na voljo v DuckDuckGo v vaših drugih napravah.";
-
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Vaše zaznamke in gesla pripravljamo za sinhronizacijo. To bo trajalo le trenutek.";
 

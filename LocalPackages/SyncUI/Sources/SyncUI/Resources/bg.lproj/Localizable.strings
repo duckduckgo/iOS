@@ -124,9 +124,6 @@
 /* Standard Buttons - Paste Button */
 "paste.button" = "Поставяне";
 
-/* Description of rollout banner */
-"preferences.sync.rollout-banner.description" = "Функцията Синхронизиране и архивиране се въвежда постепенно и може все още да не е достъпна в DuckDuckGo на останалите Ви устройства.";
-
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Вашите отметки и пароли се подготвят за синхронизиране. Това ще отнеме само няколко секунди.";
 

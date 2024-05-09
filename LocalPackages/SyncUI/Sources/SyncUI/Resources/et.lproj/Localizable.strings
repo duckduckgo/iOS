@@ -124,9 +124,6 @@
 /* Standard Buttons - Paste Button */
 "paste.button" = "Kleebi";
 
-/* Description of rollout banner */
-"preferences.sync.rollout-banner.description" = "Sünkroonimine ja varundamine võetakse kasutusele järk-järgult ning see ei pruugi teistes seadmetes DuckDuckGo's veel saadaval olla.";
-
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Teie järjehoidjad ja paroolid valmistatakse sünkroonimiseks ette. See peaks võtma vaid hetke.";
 

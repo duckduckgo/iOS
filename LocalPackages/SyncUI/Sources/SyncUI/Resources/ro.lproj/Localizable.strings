@@ -124,9 +124,6 @@
 /* Standard Buttons - Paste Button */
 "paste.button" = "Lipește";
 
-/* Description of rollout banner */
-"preferences.sync.rollout-banner.description" = "Sincronizare și backup se implementează treptat și este posibil să nu fie încă disponibil în DuckDuckGo pe celelalte dispozitive ale tale.";
-
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Marcajele și parolele tale sunt pregătite pentru sincronizare. Acest lucru ar trebui să dureze doar un moment.";
 

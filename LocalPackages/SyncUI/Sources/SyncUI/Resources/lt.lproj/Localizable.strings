@@ -124,9 +124,6 @@
 /* Standard Buttons - Paste Button */
 "paste.button" = "Įklijuoti";
 
-/* Description of rollout banner */
-"preferences.sync.rollout-banner.description" = "Sinchronizavimas ir atsarginės kopijos kūrimas atliekami palaipsniui ir gali būti dar nepasiekiami „DuckDuckGo“ kituose jūsų įrenginiuose.";
-
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Jūsų žymės ir slaptažodžiai yra ruošiami sinchronizuoti. Tai turėtų užtrukti tik akimirką.";
 

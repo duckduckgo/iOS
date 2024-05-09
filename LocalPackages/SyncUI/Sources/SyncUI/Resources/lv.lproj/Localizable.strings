@@ -124,9 +124,6 @@
 /* Standard Buttons - Paste Button */
 "paste.button" = "Ielīmēt";
 
-/* Description of rollout banner */
-"preferences.sync.rollout-banner.description" = "Sinhronizācija un dublēšana tiek ieviesta pakāpeniski, un tā vēl var nebūt pieejama DuckDuckGo citās ierīcēs.";
-
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Tavas grāmatzīmes un paroles tiek sagatavotas sinhronizēšanai. Tam vajadzētu aizņemt tikai neilgu brīdi.";
 

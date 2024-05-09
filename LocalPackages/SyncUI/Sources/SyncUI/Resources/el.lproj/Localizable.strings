@@ -124,9 +124,6 @@
 /* Standard Buttons - Paste Button */
 "paste.button" = "Επικόλληση";
 
-/* Description of rollout banner */
-"preferences.sync.rollout-banner.description" = "Η λειτουργία Συγχρονισμός και δημιουργία αντιγράφων ασφάλειας κυκλοφορεί σταδιακά και ενδέχεται να μην είναι ακόμα διαθέσιμη στο DuckDuckGo στις άλλες συσκευές σας.";
-
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Οι σελιδοδείκτες και οι κωδικοί πρόσβασής σας προετοιμάζονται για συγχρονισμό. Αυτό θα πρέπει να διαρκέσει ελάχιστο χρόνο.";
 

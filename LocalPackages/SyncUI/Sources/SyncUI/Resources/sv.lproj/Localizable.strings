@@ -124,9 +124,6 @@
 /* Standard Buttons - Paste Button */
 "paste.button" = "Klistra in";
 
-/* Description of rollout banner */
-"preferences.sync.rollout-banner.description" = "Synkronisering och säkerhetskopiering lanseras gradvis och det kan hända att funktionen ännu inte är tillgänglig i DuckDuckGo på dina andra enheter.";
-
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Dina bokmärken och lösenord förbereds för synkronisering. Detta bör bara ta ett ögonblick.";
 

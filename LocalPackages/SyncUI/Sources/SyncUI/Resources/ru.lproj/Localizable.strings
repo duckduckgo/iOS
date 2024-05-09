@@ -124,9 +124,6 @@
 /* Standard Buttons - Paste Button */
 "paste.button" = "Вставить";
 
-/* Description of rollout banner */
-"preferences.sync.rollout-banner.description" = "Внедрение функции «Синхронизация и резервное копирование» в DuckDuckGo выполняется постепенно, поэтому она доступна не на всех устройствах.";
-
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Закладки и пароли готовятся к синхронизации. Это не займет много времени.";
 

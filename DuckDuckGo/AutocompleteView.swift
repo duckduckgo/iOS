@@ -162,7 +162,6 @@ private struct SuggestionsSection: View {
                     SuggestionView(model: suggestions[index], query: query)
                  }
                  .contentShape(Rectangle())
-                 .tintIfAvailable(Color(designSystemColor: .icons))
             }
         }
     }
@@ -266,7 +265,7 @@ private struct SuggestionListItem: View {
             icon
                 .resizable()
                 .frame(width: 24, height: 24)
-                // .tintIfAvailable(Color(designSystemColor: .icons))
+                .tintIfAvailable(Color(designSystemColor: .icons))
 
             VStack(alignment: .leading, spacing: 2) {
 
@@ -302,12 +301,10 @@ private struct SuggestionListItem: View {
                     .highPriorityGesture(TapGesture().onEnded {
                         onTapIndicator?()
                     })
-                    .tintIfAvailable(Color(designSystemColor: .icons))
+                    .tintIfAvailable(Color.secondary)
             }
         }
-
     }
-
 }
 
 private extension URL {

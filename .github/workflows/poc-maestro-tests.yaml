@@ -5,7 +5,7 @@ on:
     branches:
       - kshann/maestro-poc
 jobs:
-  maestro_test_setup:
+  build-app-for-testing:
     runs-on: macos-14-xlarge
 
     steps:
@@ -35,8 +35,6 @@ jobs:
     - name: Select Xcode
       run: sudo xcode-select -s /Applications/Xcode_$(<.xcode-version).app/Contents/Developer
 
-
-
     - name: Build for tests
       run: |
         set -o pipefail && xcodebuild \
@@ -56,7 +54,7 @@ jobs:
 
   run-tests:
     name: Run tests
-    needs: maestro_test_setup
+    needs: build-app-for-testing
     runs-on: macos-14-xlarge
     timeout-minutes: 60
     strategy:
@@ -116,7 +114,8 @@ jobs:
       run: |
         maestro test --format junit --output results.xml .maestro --include-tags ${{ matrix.test-tag }}
 
-    - name: Publish unit tests report ${{ matrix.test-tag }}
-      uses: mikepenz/action-junit-report@v3
+    - name: Publish unit tests report
+      uses: mikepenz/action-junit-report@v4
       with:
+        check_name: "Test Report ${{ matrix.runner }}"
         report_paths: results.xml

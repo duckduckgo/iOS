@@ -70,6 +70,7 @@ protocol AppSettings: AnyObject {
     func setAutofillIsNewInstallForOnByDefault()
     var autofillImportViaSyncStart: Date? { get set }
     func clearAutofillImportViaSyncStart()
+    var autofillSurveyEnabled: Bool { get set }
 
     var voiceSearchEnabled: Bool { get set }
 

@@ -21,6 +21,7 @@ import Core
 import Suggestions
 import SwiftUI
 
+// TODO handle pressing enter on selection
 protocol AutocompleteViewModelDelegate: NSObjectProtocol {
 
     func onSuggestionSelected(_ suggestion: Suggestion)
@@ -31,7 +32,11 @@ protocol AutocompleteViewModelDelegate: NSObjectProtocol {
 
 class AutocompleteViewModel: ObservableObject {
 
-    @Published var selectedItemIndex = -1
+    @Published var selection: SuggestionModel? {
+        didSet {
+            print(selection?.id.uuidString ?? "<nil> selection")
+        }
+    }
     @Published var topHits = [SuggestionModel]()
     @Published var ddgSuggestions = [SuggestionModel]()
     @Published var localResults = [SuggestionModel]()
@@ -75,10 +80,45 @@ class AutocompleteViewModel: ObservableObject {
         delegate?.onTapAhead(model.suggestion)
     }
 
-    struct SuggestionModel: Identifiable {
+    func nextSelection() {
+        let all = topHits + ddgSuggestions + localResults
+        guard let selection else {
+            selection = all.first
+            return
+        }
+
+        guard let index = all.firstIndex(of: selection) else {
+            return
+        }
+
+        let nextIndex = index + 1
+        if all.indices.contains(nextIndex) {
+            self.selection = all[nextIndex]
+        }
+    }
+
+    func previousSelection() {
+        guard let selection else { return }
+        let all = topHits + ddgSuggestions + localResults
+
+        guard let index = all.firstIndex(of: selection) else {
+            return
+        }
+
+        let nextIndex = index - 1
+        if all.indices.contains(nextIndex) {
+            self.selection = all[nextIndex]
+        }
+    }
+
+    struct SuggestionModel: Identifiable, Equatable {
         let id = UUID()
         let suggestion: Suggestion
-        var canShowTapAhead: Bool = true
+        var canShowTapAhead = true
+
+        static func == (lhs: Self, rhs: Self) -> Bool {
+            lhs.id == rhs.id
+        }
     }
 
 }

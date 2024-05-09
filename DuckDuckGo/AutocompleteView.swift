@@ -55,7 +55,6 @@ struct AutocompleteView: View {
         .padding(.bottom, -20)
         .modifier(HideScrollContentBackground())
         .background(Color(designSystemColor: .background))
-        .listRowBackground(Color(designSystemColor: .surface))
         .modifier(CompactSectionSpacing())
         .modifier(DisableSelection())
         .modifier(DismissKeyboardOnSwipe())
@@ -149,9 +148,14 @@ private struct HideScrollContentBackground: ViewModifier {
 
 private struct SuggestionsSection: View {
 
+    @EnvironmentObject var autocompleteViewModel: AutocompleteViewModel
+
     let suggestions: [AutocompleteViewModel.SuggestionModel]
     let query: String?
     var onSuggestionSelected: (AutocompleteViewModel.SuggestionModel) -> Void
+
+    let selectedColor = Color(designSystemColor: .container)
+    let unselectedColor = Color(designSystemColor: .surface)
 
     var body: some View {
         Section {
@@ -161,7 +165,8 @@ private struct SuggestionsSection: View {
                  } label: {
                     SuggestionView(model: suggestions[index], query: query)
                  }
-                 .contentShape(Rectangle())
+                 .listRowBackground(autocompleteViewModel.selection == suggestions[index] ? selectedColor : unselectedColor)
+                 // .contentShape(Rectangle())
             }
         }
     }
@@ -174,8 +179,6 @@ private struct SuggestionView: View {
 
     let model: AutocompleteViewModel.SuggestionModel
     let query: String?
-
-    @State var rowBackground: Color?
 
     var tapAheadImage: Image? {
         guard model.canShowTapAhead else { return nil }
@@ -226,10 +229,11 @@ private struct SuggestionView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(rowBackground ?? Color.white.opacity(0.001))
 
-        // TODO use correct color when the item is selected using arrow
-        .listRowBackground(rowBackground)
+        // .listRowBackground(Rectangle().foregroundColor(.red))
+        // .background(autocompleteModel.selection == model ? .red : Color.white.opacity(0.0001))
+        // .listRowBackground(autocompleteModel.selection == model ? Color.red : Color(designSystemColor: .surface))
+        // .listRowBackground(Color.red)
 
     }
 

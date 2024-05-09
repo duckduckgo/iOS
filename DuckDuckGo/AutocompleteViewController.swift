@@ -99,14 +99,16 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
 
     func keyboardMoveSelectionDown() {
         print("***", #function, query)
+        model.nextSelection()
     }
 
     func keyboardMoveSelectionUp() {
         print("***", #function, query)
+        model.previousSelection()
     }
     
     func updateQuery(_ query: String) {
-        model.selectedItemIndex = -1
+        model.selection = nil
         guard self.query != query else { return }
         cancelInFlightRequests()
         self.query = query
@@ -119,7 +121,7 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
     }
 
     private func requestSuggestions(query: String) {
-        model.selectedItemIndex = -1
+        model.selection = nil
 
         loader = SuggestionLoader(dataSource: self, urlFactory: { phrase in
             guard let url = URL(trimmedAddressBarString: phrase),

@@ -40,7 +40,6 @@ public enum HistorySubFeature: String, PrivacySubfeature {
     case onByDefault
 }
 
-// TODO determine if message should be shown and handle persisting its dismissal
 public class HistoryManager: HistoryManaging {
 
     let privacyConfigManager: PrivacyConfigurationManaging

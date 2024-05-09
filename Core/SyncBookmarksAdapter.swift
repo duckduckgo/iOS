@@ -189,6 +189,8 @@ public final class SyncBookmarksAdapter {
         syncErrorCancellable = provider.syncErrorPublisher
             .sink { error in
                 switch error {
+                case SyncError.patchPayloadCompressionFailed(let errorCode):
+                    Pixel.fire(pixel: .syncBookmarksPatchCompressionFailed, withAdditionalParameters: ["error": "\(errorCode)"])
                 case let syncError as SyncError:
                     Pixel.fire(pixel: .syncBookmarksFailed, error: syncError)
                     switch syncError {

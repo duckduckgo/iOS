@@ -81,29 +81,24 @@ jobs:
 
     - name: Install App onto simulator
       run : |
-          xcrun simctl install $DEVICE_ID DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+        xcrun simctl install $DEVICE_ID DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
 
     - name: Release Tests
       run: |
-        maestro test --format junit --output testresults/release.xml .maestro --include-tags release
+        maestro test .maestro --include-tags release
 
     - name: Privacy tests
       run: |
-        maestro test --format junit --output testresults/privacy.xml .maestro --include-tags privacy
+        maestro test .maestro --include-tags privacy
 
     - name: Security tests
       run: |
-        maestro test --format junit --output testresults/security.xml .maestro --include-tags securityTest
+        maestro test .maestro --include-tags securityTest
     
     - name: Ad Click Detection Flow tests
       run: |
-        maestro test --format junit --output testresults/adclick.xml .maestro --include-tags adClick
+        maestro test .maestro --include-tags adClick
 
-    - name: Publish Test report
-      uses: mikepenz/action-junit-report@v3
-      if: success() || failure()
-      with:
-        report_paths: '**/testresults/*.xml'
 
     - name: Upload logs when workflow failed
       uses: actions/upload-artifact@v4

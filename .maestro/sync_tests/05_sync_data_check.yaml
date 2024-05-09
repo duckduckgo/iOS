@@ -3,7 +3,10 @@ tags:
     - sync
 
 ---
-
+# IMPORTANT: This test is strictly related to 04_sync_data_setup
+#            and it will fail if 04 is not executed before. 
+#            The test is split in two different flow to accomodate 
+#            for Maestro CI max execution time. 
 # Clear and launch
 - clearState
 - launchApp
@@ -15,23 +18,6 @@ tags:
         text: "Let’s Do It!"
         index: 0
     file: ../shared/onboarding.yaml
-
-# Add local favorite and bookmark
-- runFlow:
-    file: ../shared/add_bookmarks_and_favorites.yaml
-- tapOn: Close Tabs and Clear Data
-- tapOn: Close Tabs and Clear Data
-
-# Add local login
-- runFlow:
-    when:
-      visible:
-        text: "Cancel"
-    commands:
-      - tapOn: Cancel
-- tapOn: Settings
-- runFlow:
-    file: ../shared/add_login_from_settings.yaml
 
 #  Copy Recovery Code
 - tapOn: Settings
@@ -50,26 +36,6 @@ tags:
 - runFlow:
     file: ../shared/sync_login.yaml
 - assertVisible: Sync & Backup
-
-# Log Out
-- runFlow:
-    file: ../shared/sync_logout.yaml
-- tapOn: Settings
-- tapOn: Done
-
-# Remove bookmarks that were added locally
-- runFlow:
-    file: ../shared/remove_local_bookmarks.yaml
-
-# Remove Login that were added locally
-- runFlow:
-    file: ../shared/remove_local_logins.yaml
-
-# Login
-- tapOn: Settings
-- tapOn: Sync & Backup
-- runFlow:
-    file: ../shared/sync_login.yaml
 
 # Verify bookmarks have been merged
 - tapOn: Settings

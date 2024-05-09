@@ -1,6 +1,7 @@
 appId: com.duckduckgo.mobile.ios
 tags:
     - sync
+name: 04_sync_data_setup
 
 ---
 

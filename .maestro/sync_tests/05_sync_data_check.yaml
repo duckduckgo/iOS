@@ -1,6 +1,7 @@
 appId: com.duckduckgo.mobile.ios
 tags:
     - sync
+name: 05_sync_data_check
 
 ---
 # IMPORTANT: This test is strictly related to 04_sync_data_setup

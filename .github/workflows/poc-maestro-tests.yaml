@@ -120,4 +120,3 @@ jobs:
       with:
         check_name: "Test Report ${{ matrix.test-tag }}"
         report_paths: results.xml
-        

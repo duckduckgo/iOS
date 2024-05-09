@@ -4,6 +4,7 @@ on:
   schedule:
     - cron: '0 5 * * *' # run at 5 AM UTC
   workflow_dispatch:
+  push: # TODO: Remove, only for testing
 
 jobs:
   build-for-sync-end-to-end-tests:

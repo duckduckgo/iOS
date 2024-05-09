@@ -19,6 +19,6 @@
 
 import Foundation
 
-public protocol AlertPresenting: AnyObject {
+public protocol SyncAlertsPresenting: AnyObject {
     func showSyncPausedAlert(title: String, informative: String)
 }

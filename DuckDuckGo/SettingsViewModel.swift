@@ -43,7 +43,7 @@ final class SettingsViewModel: ObservableObject {
     private var legacyViewProvider: SettingsLegacyViewProvider
     private lazy var versionProvider: AppVersion = AppVersion.shared
     private let voiceSearchHelper: VoiceSearchHelperProtocol
-    private let syncSettingsErrorHandler: any SyncPausedStateManaging
+    private let syncPausedStateManager: any SyncPausedStateManaging
     var emailManager: EmailManager { EmailManager() }
 
     // Subscription Dependencies
@@ -393,13 +393,13 @@ final class SettingsViewModel: ObservableObject {
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil,
-         syncSettingsErrorHandler: any SyncPausedStateManaging) {
+                                                           syncPausedStateManager: any SyncPausedStateManaging) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
         self.subscriptionAccountManager = accountManager
         self.voiceSearchHelper = voiceSearchHelper
         self.deepLinkTarget = deepLink
-        self.syncSettingsErrorHandler = syncSettingsErrorHandler
+        self.syncPausedStateManager =                                                   syncPausedStateManager
 
         setupNotificationObservers()
         autocompleteSubtitle = variantManager.isSupported(feature: .history) ? UserText.settingsAutocompleteSubtitle : nil
@@ -467,9 +467,9 @@ extension SettingsViewModel {
             let isDataSyncingDisabled = !syncService.featureFlags.contains(.dataSyncing)
             && syncService.authState == .active
             if isDataSyncingDisabled
-                || syncSettingsErrorHandler.isSyncPaused
-                || syncSettingsErrorHandler.isSyncBookmarksPaused
-                || syncSettingsErrorHandler.isSyncCredentialsPaused {
+                || syncPausedStateManager.isSyncPaused
+                || syncPausedStateManager.isSyncBookmarksPaused
+                || syncPausedStateManager.isSyncCredentialsPaused {
                 return "⚠️ \(UserText.settingsSync)"
             }
             return SyncUI.UserText.syncTitle

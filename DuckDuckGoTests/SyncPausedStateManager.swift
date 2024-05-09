@@ -1,5 +1,5 @@
 //
-//  CapturingSyncSettingsErrorHandler.swift
+//  CapturingSyncPausedStateManager.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -21,7 +21,7 @@ import Foundation
 import Core
 import Combine
 
-class CapturingSyncSettingsErrorHandler: SyncPausedStateManaging {
+class CapturingSyncPausedStateManager: SyncPausedStateManaging {
     var isSyncPausedChangedPublisher = PassthroughSubject<Void, Never>()
     var syncDidTurnOffCalled = false
 
@@ -35,17 +35,17 @@ class CapturingSyncSettingsErrorHandler: SyncPausedStateManaging {
         isSyncPausedChangedPublisher.eraseToAnyPublisher()
     }
 
-    var syncPausedMetadata: SyncPausedMessageData? = SyncPausedMessageData(
+    var syncPausedMessageData: SyncPausedMessageData? = SyncPausedMessageData(
         title: "syncPausedTitle",
         message: "syncPausedMessage",
         buttonTitle: "syncPausedButtonTitle")
 
-    var syncBookmarksPausedMetadata: SyncPausedMessageData? = SyncPausedMessageData(
+    var syncBookmarksPausedMessageData: SyncPausedMessageData? = SyncPausedMessageData(
         title: "syncPausedTitle bookmarks",
         message: "syncPausedMessage bookmarks",
         buttonTitle: "syncPausedButtonTitle bookmarks")
 
-    var syncCredentialsPausedMetadata: SyncPausedMessageData? = SyncPausedMessageData(
+    var syncCredentialsPausedMessageData: SyncPausedMessageData? = SyncPausedMessageData(
         title: "syncPausedTitle credentials ",
         message: "syncPausedMessage credentials",
         buttonTitle: "syncPausedButtonTitle credentials")

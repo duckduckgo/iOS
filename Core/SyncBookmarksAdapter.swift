@@ -64,7 +64,7 @@ public final class SyncBookmarksAdapter {
     public private(set) var provider: BookmarksProvider?
     public let databaseCleaner: BookmarkDatabaseCleaner
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
-    let syncAdapterErrorHandler: SyncErrorHandling
+    let syncErrorHandler: SyncErrorHandling
 
     @UserDefaultsWrapper(key: .syncDidMigrateToImprovedListsHandling, defaultValue: false)
     private var didMigrateToImprovedListsHandling: Bool
@@ -87,10 +87,10 @@ public final class SyncBookmarksAdapter {
 
     public init(database: CoreDataDatabase,
                 favoritesDisplayModeStorage: FavoritesDisplayModeStoring,
-                syncAdapterErrorHandler: SyncErrorHandling) {
+                syncErrorHandler: SyncErrorHandling) {
         self.database = database
         self.favoritesDisplayModeStorage = favoritesDisplayModeStorage
-        self.syncAdapterErrorHandler = syncAdapterErrorHandler
+        self.syncErrorHandler = syncErrorHandler
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
         databaseCleaner = BookmarkDatabaseCleaner(
             bookmarkDatabase: database,
@@ -130,7 +130,7 @@ public final class SyncBookmarksAdapter {
             metricsEvents: metricsEventsHandler,
             syncDidUpdateData: { [weak self] in
                 self?.syncDidCompleteSubject.send()
-                self?.syncAdapterErrorHandler.syncBookmarksSucceded()
+                self?.syncErrorHandler.syncBookmarksSucceded()
             },
             syncDidFinish: { [weak self] faviconsFetcherInput in
                 if let faviconsFetcher, self?.isFaviconsFetchingEnabled == true {
@@ -181,7 +181,7 @@ public final class SyncBookmarksAdapter {
     private func bindSyncErrorPublisher(_ provider: BookmarksProvider) {
         syncErrorCancellable = provider.syncErrorPublisher
             .sink { [weak self] error in
-                self?.syncAdapterErrorHandler.handleBookmarkError(error)
+                self?.syncErrorHandler.handleBookmarkError(error)
             }
     }
 

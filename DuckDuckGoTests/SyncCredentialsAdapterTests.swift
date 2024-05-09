@@ -34,7 +34,7 @@ final class SyncCredentialsAdapterTests: XCTestCase {
 
     override func setUpWithError() throws {
         errorHandler = CapturingAdapterErrorHandler()
-        adapter = SyncCredentialsAdapter(secureVaultErrorReporter: MockSecureVaultReporting(), syncAdapterErrorHandler: errorHandler)
+        adapter = SyncCredentialsAdapter(secureVaultErrorReporter: MockSecureVaultReporting(), syncErrorHandler: errorHandler)
         cancellables = []
     }
 

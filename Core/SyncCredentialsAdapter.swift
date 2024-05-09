@@ -32,14 +32,14 @@ public final class SyncCredentialsAdapter {
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
     public static let syncCredentialsPausedStateChanged = SyncBookmarksAdapter.syncBookmarksPausedStateChanged
     public static let credentialsSyncLimitReached = Notification.Name("com.duckduckgo.app.SyncCredentialsLimitReached")
-    let syncAdapterErrorHandler: SyncErrorHandling
+    let syncErrorHandler: SyncErrorHandling
 
     public init(secureVaultFactory: AutofillVaultFactory = AutofillSecureVaultFactory,
                 secureVaultErrorReporter: SecureVaultReporting,
-                syncAdapterErrorHandler: SyncErrorHandling) {
+                syncErrorHandler: SyncErrorHandling) {
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
         self.secureVaultErrorReporter = secureVaultErrorReporter
-        self.syncAdapterErrorHandler = syncAdapterErrorHandler
+        self.syncErrorHandler = syncErrorHandler
         databaseCleaner = CredentialsDatabaseCleaner(
             secureVaultFactory: secureVaultFactory,
             secureVaultErrorReporter: secureVaultErrorReporter,
@@ -74,13 +74,13 @@ public final class SyncCredentialsAdapter {
                 metricsEvents: metricsEventsHandler,
                 syncDidUpdateData: { [weak self] in
                     self?.syncDidCompleteSubject.send()
-                    self?.syncAdapterErrorHandler.syncCredentialsSucceded()
+                    self?.syncErrorHandler.syncCredentialsSucceded()
                 }
             )
 
             syncErrorCancellable = provider.syncErrorPublisher
                 .sink { [weak self] error in
-                    self?.syncAdapterErrorHandler.handleCredentialError(error)
+                    self?.syncErrorHandler.handleCredentialError(error)
                 }
 
             self.provider = provider

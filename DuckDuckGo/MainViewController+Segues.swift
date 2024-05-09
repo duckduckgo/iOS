@@ -246,12 +246,12 @@ extension MainViewController {
                                                             appSettings: appSettings,
                                                             bookmarksDatabase: bookmarksDatabase,
                                                             tabManager: tabManager,
-                                                            syncSettingsErrorHandler: syncSettingErrorHandler)
+                                                            syncPausedStateManager: syncPausedStateManager)
 
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider,
                                                   accountManager: AccountManager(),
                                                   deepLink: deepLinkTarget,
-                                                  syncSettingsErrorHandler: syncSettingErrorHandler)
+                                                  syncPausedStateManager: syncPausedStateManager)
 
         Pixel.fire(pixel: .settingsPresented,
                    withAdditionalParameters: PixelExperiment.parameters)

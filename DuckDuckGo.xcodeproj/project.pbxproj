@@ -237,6 +237,7 @@
 		4BE67B032B96B864007335F7 /* ContentBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 4BE67B022B96B864007335F7 /* ContentBlocking */; };
 		4BE67B052B96B9AB007335F7 /* ContentBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 4BE67B042B96B9AB007335F7 /* ContentBlocking */; };
 		4BE67B072B96B9B0007335F7 /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = 4BE67B062B96B9B0007335F7 /* Common */; };
+		566B73702BECD46800FF1959 /* MainViewController+SyncAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B736F2BECD46800FF1959 /* MainViewController+SyncAlerts.swift */; };
 		569437242BDD405400C0881B /* SyncBookmarksAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569437232BDD405400C0881B /* SyncBookmarksAdapterTests.swift */; };
 		569437272BDD467400C0881B /* CapturingAdapterErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569437262BDD467400C0881B /* CapturingAdapterErrorHandler.swift */; };
 		569437292BDD487600C0881B /* SyncCredentialsAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569437282BDD487600C0881B /* SyncCredentialsAdapterTests.swift */; };
@@ -245,10 +246,10 @@
 		569437312BE3F64400C0881B /* SyncErrorHandlerSyncPausedAlertsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5694372F2BE3F63B00C0881B /* SyncErrorHandlerSyncPausedAlertsTests.swift */; };
 		569437342BE4E41500C0881B /* SyncErrorHandlerSyncErrorsAlertsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569437322BE4E3DD00C0881B /* SyncErrorHandlerSyncErrorsAlertsTests.swift */; };
 		569437362BE5160600C0881B /* SyncSettingsViewControllerErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569437352BE5160600C0881B /* SyncSettingsViewControllerErrorTests.swift */; };
-		569437382BE530D300C0881B /* CapturingSyncSettingsErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569437372BE530D300C0881B /* CapturingSyncSettingsErrorHandler.swift */; };
+		569437382BE530D300C0881B /* SyncPausedStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569437372BE530D300C0881B /* SyncPausedStateManager.swift */; };
 		5694373A2BE534D000C0881B /* UserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569437392BE534D000C0881B /* UserText.swift */; };
 		56D8556A2BEA9169009F9698 /* DateProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D855692BEA9169009F9698 /* DateProviding.swift */; };
-		56D8556C2BEA91C4009F9698 /* AlertPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D8556B2BEA91C4009F9698 /* AlertPresenting.swift */; };
+		56D8556C2BEA91C4009F9698 /* SyncAlertsPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D8556B2BEA91C4009F9698 /* SyncAlertsPresenting.swift */; };
 		6AC6DAB328804F97002723C0 /* BarsAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC6DAB228804F97002723C0 /* BarsAnimator.swift */; };
 		6AC98419288055C1005FA9CA /* BarsAnimatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC98418288055C1005FA9CA /* BarsAnimatorTests.swift */; };
 		6F655BE22BAB289E00AC3597 /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F655BE12BAB289E00AC3597 /* DefaultTheme.swift */; };
@@ -1308,6 +1309,7 @@
 		4BCD146A2B05C4B5000B1E4C /* VPNWaitlistTermsAndConditionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNWaitlistTermsAndConditionsViewController.swift; sourceTree = "<group>"; };
 		4BCD146C2B05DB09000B1E4C /* NetworkProtectionAccessControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionAccessControllerTests.swift; sourceTree = "<group>"; };
 		4BE27566272F878F006B20B0 /* URLRequestExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLRequestExtension.swift; path = ../DuckDuckGo/URLRequestExtension.swift; sourceTree = "<group>"; };
+		566B736F2BECD46800FF1959 /* MainViewController+SyncAlerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+SyncAlerts.swift"; sourceTree = "<group>"; };
 		569437232BDD405400C0881B /* SyncBookmarksAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncBookmarksAdapterTests.swift; sourceTree = "<group>"; };
 		569437262BDD467400C0881B /* CapturingAdapterErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapturingAdapterErrorHandler.swift; sourceTree = "<group>"; };
 		569437282BDD487600C0881B /* SyncCredentialsAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCredentialsAdapterTests.swift; sourceTree = "<group>"; };
@@ -1316,10 +1318,10 @@
 		5694372F2BE3F63B00C0881B /* SyncErrorHandlerSyncPausedAlertsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncErrorHandlerSyncPausedAlertsTests.swift; sourceTree = "<group>"; };
 		569437322BE4E3DD00C0881B /* SyncErrorHandlerSyncErrorsAlertsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncErrorHandlerSyncErrorsAlertsTests.swift; sourceTree = "<group>"; };
 		569437352BE5160600C0881B /* SyncSettingsViewControllerErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncSettingsViewControllerErrorTests.swift; sourceTree = "<group>"; };
-		569437372BE530D300C0881B /* CapturingSyncSettingsErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapturingSyncSettingsErrorHandler.swift; sourceTree = "<group>"; };
+		569437372BE530D300C0881B /* SyncPausedStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncPausedStateManager.swift; sourceTree = "<group>"; };
 		569437392BE534D000C0881B /* UserText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
 		56D855692BEA9169009F9698 /* DateProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateProviding.swift; sourceTree = "<group>"; };
-		56D8556B2BEA91C4009F9698 /* AlertPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenting.swift; sourceTree = "<group>"; };
+		56D8556B2BEA91C4009F9698 /* SyncAlertsPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncAlertsPresenting.swift; sourceTree = "<group>"; };
 		6AC6DAB228804F97002723C0 /* BarsAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsAnimator.swift; sourceTree = "<group>"; };
 		6AC98418288055C1005FA9CA /* BarsAnimatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsAnimatorTests.swift; sourceTree = "<group>"; };
 		6F655BE12BAB289E00AC3597 /* DefaultTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
@@ -3236,6 +3238,7 @@
 		37DF000829F9C3F0002B7D3E /* Sync */ = {
 			isa = PBXGroup;
 			children = (
+				566B736E2BECD3DC00FF1959 /* Utilities */,
 				37DF000929F9C416002B7D3E /* SyncMetadataDatabase.swift */,
 				37DF000E29F9D635002B7D3E /* SyncBookmarksAdapter.swift */,
 				37E615742A5F533E00ACD63D /* SyncCredentialsAdapter.swift */,
@@ -3305,6 +3308,14 @@
 			name = VPN;
 			sourceTree = "<group>";
 		};
+		566B736E2BECD3DC00FF1959 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				56D8556B2BEA91C4009F9698 /* SyncAlertsPresenting.swift */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 		569437222BDD402600C0881B /* Sync */ = {
 			isa = PBXGroup;
 			children = (
@@ -3324,7 +3335,7 @@
 			children = (
 				569437262BDD467400C0881B /* CapturingAdapterErrorHandler.swift */,
 				5694372C2BE3F58B00C0881B /* CapturingAlertPresenter.swift */,
-				569437372BE530D300C0881B /* CapturingSyncSettingsErrorHandler.swift */,
+				569437372BE530D300C0881B /* SyncPausedStateManager.swift */,
 			);
 			name = Mock;
 			sourceTree = "<group>";
@@ -4952,7 +4963,6 @@
 				1EE411F22857C4A30003FE64 /* CollectionExtension.swift */,
 				1E6A4D682984208800A371D3 /* LocaleExtension.swift */,
 				56D855692BEA9169009F9698 /* DateProviding.swift */,
-				56D8556B2BEA91C4009F9698 /* AlertPresenting.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -5213,6 +5223,7 @@
 				8577A1C4255D2C0D00D43FCD /* HitTestingToolbar.swift */,
 				85DDE03F2AC6FF65006ABCA2 /* MainView.swift */,
 				F17669D61E43401C003D3222 /* MainViewController.swift */,
+				566B736F2BECD46800FF1959 /* MainViewController+SyncAlerts.swift */,
 				981CA7E92617797500E119D5 /* MainViewController+AddFavoriteFlow.swift */,
 				1E4F4A59297193DE00625985 /* MainViewController+CookiesManaged.swift */,
 				8546A5492A672959003929BF /* MainViewController+Email.swift */,
@@ -6343,7 +6354,7 @@
 				F1DE78581E5CAE350058895A /* TabViewGridCell.swift in Sources */,
 				984D035824ACCC6F0066CFB8 /* TabViewListCell.swift in Sources */,
 				B6BA95C328891E33004ABA20 /* BrowsingMenuAnimator.swift in Sources */,
-				569437382BE530D300C0881B /* CapturingSyncSettingsErrorHandler.swift in Sources */,
+				569437382BE530D300C0881B /* SyncPausedStateManager.swift in Sources */,
 				D68DF81C2B58302E0023DBEA /* SubscriptionRestoreView.swift in Sources */,
 				D664C7CE2B289AA200CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift in Sources */,
 				EE9D68DC2AE16AE100B55EF4 /* NotificationsAuthorizationController.swift in Sources */,
@@ -6375,6 +6386,7 @@
 				C14D43012B45D6CD00ACA4DC /* AutofillDebugViewController.swift in Sources */,
 				853C5F6121C277C7001F7A05 /* global.swift in Sources */,
 				EE9D68D82AE15AD600B55EF4 /* UIApplicationExtension.swift in Sources */,
+				566B73702BECD46800FF1959 /* MainViewController+SyncAlerts.swift in Sources */,
 				F13B4BD31F1822C700814661 /* Tab.swift in Sources */,
 				BDFF031D2BA3D2BD00F324C9 /* DefaultNetworkProtectionVisibility.swift in Sources */,
 				F1BE54581E69DE1000FCF649 /* TutorialSettings.swift in Sources */,
@@ -7053,7 +7065,7 @@
 				85BDC3142434D8F80053DB07 /* DebugUserScript.swift in Sources */,
 				85011867290028C400BDEE27 /* BookmarksDatabase.swift in Sources */,
 				1D8F727F2BA86D8000E31493 /* PixelExperiment.swift in Sources */,
-				56D8556C2BEA91C4009F9698 /* AlertPresenting.swift in Sources */,
+				56D8556C2BEA91C4009F9698 /* SyncAlertsPresenting.swift in Sources */,
 				85D2187B24BF9F85004373D2 /* FaviconUserScript.swift in Sources */,
 				37FD780F2A29E28B00B36DB1 /* SyncErrorHandler.swift in Sources */,
 				85F21DC621145DD5002631A6 /* global.swift in Sources */,

@@ -38,11 +38,23 @@ public protocol SyncPausedStateManaging: ObservableObject {
     var isSyncBookmarksPaused: Bool { get }
     var isSyncCredentialsPaused: Bool { get }
     var syncPausedChangedPublisher: AnyPublisher<Void, Never> { get }
-    var syncPausedMetadata: SyncPausedMessageData? { get }
-    var syncBookmarksPausedMetadata: SyncPausedMessageData? { get }
-    var syncCredentialsPausedMetadata: SyncPausedMessageData? { get }
+    var syncPausedMessageData: SyncPausedMessageData? { get }
+    var syncBookmarksPausedMessageData: SyncPausedMessageData? { get }
+    var syncCredentialsPausedMessageData: SyncPausedMessageData? { get }
 
     func syncDidTurnOff()
+}
+
+public struct SyncPausedMessageData {
+    public let title: String
+    public let message: String
+    public let buttonTitle: String
+
+    public init(title: String, message: String, buttonTitle: String) {
+        self.title = title
+        self.message = message
+        self.buttonTitle = buttonTitle
+    }
 }
 
 public class SyncErrorHandler: EventMapping<SyncError> {
@@ -98,7 +110,7 @@ public class SyncErrorHandler: EventMapping<SyncError> {
     var isSyncPausedChangedPublisher = PassthroughSubject<Void, Never>()
     let dateProvider: DateProviding
 
-    public weak var alertPresenter: AlertPresenting?
+    public weak var alertPresenter: SyncAlertsPresenting?
 
     public init(dateProvider: DateProviding = Date()) {
         self.dateProvider = dateProvider
@@ -369,7 +381,7 @@ extension SyncErrorHandler {
     }
 }
 
-// MARK: - SyncAdapterErrorHandler
+// MARK: - SyncErrorHandler
 extension SyncErrorHandler: SyncErrorHandling {
     public func handleBookmarkError(_ error: Error) {
         handleError(error, modelType: .bookmarks)
@@ -390,9 +402,9 @@ extension SyncErrorHandler: SyncErrorHandling {
     }
 }
 
-// MARK: - SyncSettingsErrorHandler
+// MARK: - syncPausedStateManager
 extension SyncErrorHandler: SyncPausedStateManaging {
-    public var syncPausedMetadata: SyncPausedMessageData? {
+    public var syncPausedMessageData: SyncPausedMessageData? {
         guard let syncPausedMessage else { return nil }
         guard let syncPausedTitle else { return nil }
         return SyncPausedMessageData(title: syncPausedTitle,
@@ -401,7 +413,7 @@ extension SyncErrorHandler: SyncPausedStateManaging {
     }
 
     @MainActor
-    public var syncBookmarksPausedMetadata: SyncPausedMessageData? {
+    public var syncBookmarksPausedMessageData: SyncPausedMessageData? {
         guard let syncBookmarksPausedMessage else { return nil }
         return SyncPausedMessageData(title: UserText.syncLimitExceededTitle,
                                      message: syncBookmarksPausedMessage,
@@ -409,7 +421,7 @@ extension SyncErrorHandler: SyncPausedStateManaging {
     }
 
     @MainActor
-    public var syncCredentialsPausedMetadata: SyncPausedMessageData? {
+    public var syncCredentialsPausedMessageData: SyncPausedMessageData? {
         guard let syncCredentialsPausedMessage else { return nil }
         return SyncPausedMessageData(title: UserText.syncLimitExceededTitle,
                                      message: syncCredentialsPausedMessage,
@@ -423,17 +435,5 @@ extension SyncErrorHandler: SyncPausedStateManaging {
     public func syncDidTurnOff() {
         resetBookmarksErrors()
         resetCredentialsErrors()
-    }
-}
-
-public struct SyncPausedMessageData {
-    public let title: String
-    public let message: String
-    public let buttonTitle: String
-
-    public init(title: String, message: String, buttonTitle: String) {
-        self.title = title
-        self.message = message
-        self.buttonTitle = buttonTitle
     }
 }

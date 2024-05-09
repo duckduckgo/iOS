@@ -55,7 +55,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     }
 
     var cancellables = Set<AnyCancellable>()
-    let syncSettingsErrorHandler: any SyncPausedStateManaging
+    let syncPausedStateManager: any SyncPausedStateManaging
     var viewModel: SyncSettingsViewModel?
 
     var onConfirmSyncDisable: (() -> Void)?
@@ -67,12 +67,12 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         syncBookmarksAdapter: SyncBookmarksAdapter,
         syncCredentialsAdapter: SyncCredentialsAdapter,
         appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
-        syncSettingsErrorHandler: any SyncPausedStateManaging
+                                                  syncPausedStateManager: any SyncPausedStateManaging
     ) {
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
         self.syncCredentialsAdapter = syncCredentialsAdapter
-        self.syncSettingsErrorHandler = syncSettingsErrorHandler
+        self.syncPausedStateManager =                                           syncPausedStateManager
 
         let viewModel = SyncSettingsViewModel(
             isOnDevEnvironment: { syncService.serverEnvironment == .development },
@@ -87,7 +87,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
         setUpFaviconsFetcherSwitch(viewModel)
         setUpFavoritesDisplayModeSwitch(viewModel, appSettings)
-        setUpSyncPaused(viewModel, syncSettingsErrorHandler: syncSettingsErrorHandler)
+        setUpSyncPaused(viewModel, syncPausedStateManager:                                           syncPausedStateManager)
         setUpSyncInvalidObjectsInfo(viewModel)
         setUpSyncFeatureFlags(viewModel)
         refreshForState(syncService.authState)
@@ -191,20 +191,20 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
             .store(in: &cancellables)
     }
 
-    private func setUpSyncPaused(_ viewModel: SyncSettingsViewModel, syncSettingsErrorHandler: any SyncPausedStateManaging) {
-        updateSyncPausedState(viewModel, syncSettingsErrorHandler: syncSettingsErrorHandler)
-        syncSettingsErrorHandler.syncPausedChangedPublisher
+    private func setUpSyncPaused(_ viewModel: SyncSettingsViewModel, syncPausedStateManager: any SyncPausedStateManaging) {
+        updateSyncPausedState(viewModel, syncPausedStateManager: syncPausedStateManager)
+        syncPausedStateManager.syncPausedChangedPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.updateSyncPausedState(viewModel, syncSettingsErrorHandler: syncSettingsErrorHandler)
+                self?.updateSyncPausedState(viewModel, syncPausedStateManager: syncPausedStateManager)
             }
             .store(in: &cancellables)
     }
 
-    private func updateSyncPausedState(_ viewModel: SyncSettingsViewModel, syncSettingsErrorHandler: any SyncPausedStateManaging) {
-        viewModel.isSyncBookmarksPaused = syncSettingsErrorHandler.isSyncBookmarksPaused
-        viewModel.isSyncCredentialsPaused = syncSettingsErrorHandler.isSyncCredentialsPaused
-        viewModel.isSyncPaused = syncSettingsErrorHandler.isSyncPaused
+    private func updateSyncPausedState(_ viewModel: SyncSettingsViewModel, syncPausedStateManager: any SyncPausedStateManaging) {
+        viewModel.isSyncBookmarksPaused = syncPausedStateManager.isSyncBookmarksPaused
+        viewModel.isSyncCredentialsPaused = syncPausedStateManager.isSyncCredentialsPaused
+        viewModel.isSyncPaused = syncPausedStateManager.isSyncPaused
     }
 
     private func setUpSyncInvalidObjectsInfo(_ viewModel: SyncSettingsViewModel) {

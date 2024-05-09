@@ -26,35 +26,35 @@ import AVFoundation
 
 extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     var syncBookmarksPausedTitle: String? {
-        syncSettingsErrorHandler.syncBookmarksPausedMetadata?.title
+        syncPausedStateManager.syncBookmarksPausedMessageData?.title
     }
     
     var syncCredentialsPausedTitle: String? {
-        syncSettingsErrorHandler.syncCredentialsPausedMetadata?.title
+        syncPausedStateManager.syncCredentialsPausedMessageData?.title
     }
     
     var syncPausedTitle: String? {
-        syncSettingsErrorHandler.syncPausedMetadata?.title
+        syncPausedStateManager.syncPausedMessageData?.title
     }
     
     var syncBookmarksPausedDescription: String? {
-        syncSettingsErrorHandler.syncBookmarksPausedMetadata?.message
+        syncPausedStateManager.syncBookmarksPausedMessageData?.message
     }
     
     var syncCredentialsPausedDescription: String? {
-        syncSettingsErrorHandler.syncCredentialsPausedMetadata?.message
+        syncPausedStateManager.syncCredentialsPausedMessageData?.message
     }
     
     var syncPausedDescription: String? {
-        syncSettingsErrorHandler.syncPausedMetadata?.message
+        syncPausedStateManager.syncPausedMessageData?.message
     }
     
     var syncBookmarksPausedButtonTitle: String? {
-        syncSettingsErrorHandler.syncBookmarksPausedMetadata?.buttonTitle
+        syncPausedStateManager.syncBookmarksPausedMessageData?.buttonTitle
     }
     
     var syncCredentialsPausedButtonTitle: String? {
-        syncSettingsErrorHandler.syncCredentialsPausedMetadata?.buttonTitle
+        syncPausedStateManager.syncCredentialsPausedMessageData?.buttonTitle
     }
     
 
@@ -244,7 +244,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                        do {
                            try await self.syncService.disconnect()
                            self.rootView.model.isSyncEnabled = false
-                           self.syncSettingsErrorHandler.syncDidTurnOff()
+                           self.syncPausedStateManager.syncDidTurnOff()
                            continuation.resume(returning: true)
                        } catch {
                            self.handleError(SyncErrorMessage.unableToTurnSyncOff, error: error, event: .syncLogoutError)
@@ -278,7 +278,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                     do {
                         try await self.syncService.deleteAccount()
                         self.rootView.model.isSyncEnabled = false
-                        self.syncSettingsErrorHandler.syncDidTurnOff()
+                        self.syncPausedStateManager.syncDidTurnOff()
                         continuation.resume(returning: true)
                     } catch {
                         self.handleError(SyncErrorMessage.unableToDeleteData, error: error, event: .syncDeleteAccountError)

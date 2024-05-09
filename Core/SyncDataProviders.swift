@@ -100,17 +100,17 @@ public class SyncDataProviders: DataProvidersSource {
         secureVaultErrorReporter: SecureVaultReporting,
         settingHandlers: [SettingSyncHandler],
         favoritesDisplayModeStorage: FavoritesDisplayModeStoring,
-        syncAdapterErrorHandler: SyncErrorHandling
+                    syncErrorHandler: SyncErrorHandling
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.secureVaultFactory = secureVaultFactory
         self.secureVaultErrorReporter = secureVaultErrorReporter
         bookmarksAdapter = SyncBookmarksAdapter(database: bookmarksDatabase,
                                                 favoritesDisplayModeStorage: favoritesDisplayModeStorage,
-                                                syncAdapterErrorHandler: syncAdapterErrorHandler)
+                                                syncErrorHandler:             syncErrorHandler)
         credentialsAdapter = SyncCredentialsAdapter(secureVaultFactory: secureVaultFactory,
                                                     secureVaultErrorReporter: secureVaultErrorReporter,
-                                                    syncAdapterErrorHandler: syncAdapterErrorHandler)
+                                                    syncErrorHandler:             syncErrorHandler)
         settingsAdapter = SyncSettingsAdapter(settingHandlers: settingHandlers)
     }
 

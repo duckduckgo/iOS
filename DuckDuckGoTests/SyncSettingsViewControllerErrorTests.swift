@@ -28,36 +28,36 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
 
     var cancellables: Set<AnyCancellable>!
     var vc: SyncSettingsViewController!
-    var errorHandler: CapturingSyncSettingsErrorHandler!
+    var errorHandler: SyncPausedStateManager!
 
     @MainActor
     override func setUp() {
         super.setUp()
         cancellables = []
-        errorHandler = CapturingSyncSettingsErrorHandler()
+        errorHandler = SyncPausedStateManager()
         let bundle = DDGSync.bundle
         guard let model = CoreDataDatabase.loadModel(from: bundle, named: "SyncMetadata") else {
             XCTFail("Failed to load model")
             return
         }
         let database = CoreDataDatabase(name: "",
-                                    containerLocation: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString),
-                                    model: model,
-                                    readOnly: true,
-                                    options: [:])
+                                        containerLocation: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString),
+                                        model: model,
+                                        readOnly: true,
+                                        options: [:])
         let ddgSyncing = MockDDGSyncing(authState: .active, isSyncInProgress: false)
         let bookmarksAdapter = SyncBookmarksAdapter(
             database: database,
             favoritesDisplayModeStorage: MockFavoritesDisplayModeStoring(),
-            syncAdapterErrorHandler: CapturingAdapterErrorHandler())
+            syncErrorHandler: CapturingAdapterErrorHandler())
         let credentialsAdapter = SyncCredentialsAdapter(
             secureVaultErrorReporter: MockSecureVaultReporting(),
-            syncAdapterErrorHandler: CapturingAdapterErrorHandler())
+            syncErrorHandler: CapturingAdapterErrorHandler())
         vc = SyncSettingsViewController(
             syncService: ddgSyncing,
             syncBookmarksAdapter: bookmarksAdapter,
             syncCredentialsAdapter: credentialsAdapter,
-            syncSettingsErrorHandler: errorHandler)
+            syncPausedStateManager: errorHandler)
     }
 
     override func tearDown() {
@@ -162,22 +162,22 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
 
     @MainActor
     func test_ErrorHandlerReturnsExpectedSyncBookmarksPausedMetadata() {
-        XCTAssertEqual(vc.syncBookmarksPausedTitle, errorHandler.syncBookmarksPausedMetadata?.title)
-        XCTAssertEqual(vc.syncBookmarksPausedDescription, errorHandler.syncBookmarksPausedMetadata?.message)
-        XCTAssertEqual(vc.syncBookmarksPausedButtonTitle, errorHandler.syncBookmarksPausedMetadata?.buttonTitle)
+        XCTAssertEqual(vc.syncBookmarksPausedTitle, errorHandler.syncBookmarksPausedMessageData?.title)
+        XCTAssertEqual(vc.syncBookmarksPausedDescription, errorHandler.syncBookmarksPausedMessageData?.message)
+        XCTAssertEqual(vc.syncBookmarksPausedButtonTitle, errorHandler.syncBookmarksPausedMessageData?.buttonTitle)
     }
 
     @MainActor
     func test_ErrorHandlerReturnsExpectedSyncCredentialsPausedMetadata() {
-        XCTAssertEqual(vc.syncCredentialsPausedTitle, errorHandler.syncCredentialsPausedMetadata?.title)
-        XCTAssertEqual(vc.syncCredentialsPausedDescription, errorHandler.syncCredentialsPausedMetadata?.message)
-        XCTAssertEqual(vc.syncCredentialsPausedButtonTitle, errorHandler.syncCredentialsPausedMetadata?.buttonTitle)
+        XCTAssertEqual(vc.syncCredentialsPausedTitle, errorHandler.syncCredentialsPausedMessageData?.title)
+        XCTAssertEqual(vc.syncCredentialsPausedDescription, errorHandler.syncCredentialsPausedMessageData?.message)
+        XCTAssertEqual(vc.syncCredentialsPausedButtonTitle, errorHandler.syncCredentialsPausedMessageData?.buttonTitle)
     }
 
     @MainActor
     func test_ErrorHandlerReturnsExpectedSyncIsPausedMetadata() {
-        XCTAssertEqual(vc.syncPausedTitle, errorHandler.syncPausedMetadata?.title)
-        XCTAssertEqual(vc.syncPausedDescription, errorHandler.syncPausedMetadata?.message)
+        XCTAssertEqual(vc.syncPausedTitle, errorHandler.syncPausedMessageData?.title)
+        XCTAssertEqual(vc.syncPausedDescription, errorHandler.syncPausedMessageData?.message)
     }
 }
 

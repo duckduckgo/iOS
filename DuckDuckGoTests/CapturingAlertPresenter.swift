@@ -20,7 +20,7 @@
 import Foundation
 import Core
 
-class CapturingAlertPresenter: AlertPresenting {
+class CapturingAlertPresenter: SyncAlertsPresenting {
     var showAlertCalled = false
     var capturedTitle = ""
     var capturedInformative = ""

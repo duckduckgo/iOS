@@ -33,20 +33,20 @@ class SettingsLegacyViewProvider: ObservableObject {
     let appSettings: AppSettings
     let bookmarksDatabase: CoreDataDatabase
     let tabManager: TabManager
-    let syncSettingsErrorHandler: any SyncPausedStateManaging
+    let syncPausedStateManager: any SyncPausedStateManaging
 
     init(syncService: any DDGSyncing,
          syncDataProviders: SyncDataProviders,
          appSettings: any AppSettings,
          bookmarksDatabase: CoreDataDatabase,
          tabManager: TabManager,
-         syncSettingsErrorHandler: any SyncPausedStateManaging) {
+                                                                     syncPausedStateManager: any SyncPausedStateManaging) {
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
         self.tabManager = tabManager
-        self.syncSettingsErrorHandler = syncSettingsErrorHandler
+        self.syncPausedStateManager =                                                             syncPausedStateManager
     }
     
     enum LegacyView {
@@ -96,7 +96,7 @@ class SettingsLegacyViewProvider: ObservableObject {
                                           syncBookmarksAdapter: self.syncDataProviders.bookmarksAdapter,
                                           syncCredentialsAdapter: self.syncDataProviders.credentialsAdapter,
                                           appSettings: self.appSettings,
-                                          syncSettingsErrorHandler: self.syncSettingsErrorHandler)
+                                                                                    syncPausedStateManager: self.syncPausedStateManager)
     }
     
     func loginSettings(delegate: AutofillLoginSettingsListViewControllerDelegate,

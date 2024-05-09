@@ -93,7 +93,7 @@ class MainViewController: UIViewController {
     private var favoritesViewModel: FavoritesListInteracting
     let syncService: DDGSyncing
     let syncDataProviders: SyncDataProviders
-    let syncSettingErrorHandler: any SyncPausedStateManaging
+    let syncPausedStateManager: any SyncPausedStateManaging
 
     @UserDefaultsWrapper(key: .syncDidShowSyncPausedByFeatureFlagAlert, defaultValue: false)
     private var syncDidShowSyncPausedByFeatureFlagAlert: Bool
@@ -171,7 +171,7 @@ class MainViewController: UIViewController {
         appSettings: AppSettings,
         previewsSource: TabPreviewsSource,
         tabsModel: TabsModel,
-        syncSettingsErrorHandler: any SyncPausedStateManaging
+                                              syncPausedStateManager: any SyncPausedStateManaging
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -189,7 +189,7 @@ class MainViewController: UIViewController {
                                      bookmarksDatabase: bookmarksDatabase,
                                      historyManager: historyManager,
                                      syncService: syncService)
-        self.syncSettingErrorHandler = syncSettingsErrorHandler
+        self.syncPausedStateManager =                                       syncPausedStateManager
 
 
         super.init(nibName: nil, bundle: nil)
@@ -2551,30 +2551,6 @@ extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
         controller.dismiss(animated: true)
     }
-}
-
-extension MainViewController: AlertPresenting {
-    func showSyncPausedAlert(title: String, informative: String) {
-        Task {
-            await MainActor.run {
-                if self.presentedViewController is SyncSettingsViewController {
-                    return
-                }
-                self.presentedViewController?.dismiss(animated: true)
-                let alert = UIAlertController(title: title,
-                                              message: informative,
-                                              preferredStyle: .alert)
-                let learnMoreAction = UIAlertAction(title: UserText.syncPausedAlertLearnMoreButton, style: .default) { _ in
-                    self.segueToSettingsSync()
-                }
-                let okAction = UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .cancel)
-                alert.addAction(learnMoreAction)
-                alert.addAction(okAction)
-                self.present(alert, animated: true)
-            }
-        }
-    }
-
 }
 
 // swiftlint:enable file_length

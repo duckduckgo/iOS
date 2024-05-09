@@ -378,4 +378,3 @@ extension View {
         closure(self)
     }
 }
-

@@ -25,6 +25,7 @@ import Foundation
 import Combine
 import NetworkProtection
 import WidgetKit
+import BrowserServicesKit
 
 struct NetworkProtectionLocationStatusModel {
     enum LocationIcon {
@@ -45,10 +46,12 @@ struct NetworkProtectionLocationStatusModel {
         case .location(let location):
             let countryLabelsModel = NetworkProtectionVPNCountryLabelsModel(country: location.country, useFullCountryName: true)
             if let city = location.city {
-                title = UserText.netPVPNSettingsLocationSubtitleFormattedCityAndCountry(
+                let formattedCityAndCountry = UserText.netPVPNSettingsLocationSubtitleFormattedCityAndCountry(
                     city: city,
                     country: countryLabelsModel.title
                 )
+
+                title = "\(countryLabelsModel.emoji) \(formattedCityAndCountry)"
             } else {
                 title = "\(countryLabelsModel.emoji) \(countryLabelsModel.title)"
             }
@@ -256,7 +259,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     private func setUpServerInfoPublishers() {
         serverInfoObserver.publisher
-            .compactMap { serverInfo in
+            .map { serverInfo in
                 guard let attributes = serverInfo.serverLocation else {
                     return nil
                 }
@@ -318,7 +321,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             return
         }
 
-        let data: ExtensionMessageString? = try? await activeSession.sendProviderMessage(.getConnectionThroughput)
+        let data: ExtensionMessageString? = try? await activeSession.sendProviderMessage(.getDataVolume)
 
         guard let data else {
             return

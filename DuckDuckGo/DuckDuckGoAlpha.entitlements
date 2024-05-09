@@ -8,9 +8,10 @@
 	</array>
 	<key>com.apple.developer.web-browser</key>
 	<true/>
+	<key>com.apple.developer.browser.app-installation</key>
+	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.duckduckgo.alpha.apptp</string>
 		<string>group.com.duckduckgo.alpha.bookmarks</string>
 		<string>group.com.duckduckgo.alpha.contentblocker</string>
 		<string>group.com.duckduckgo.alpha.database</string>

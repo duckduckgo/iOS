@@ -88,10 +88,6 @@ class MainViewController: UIViewController {
     
     var doRefreshAfterClear = true
 
-#if APP_TRACKING_PROTECTION
-    private let appTrackingProtectionDatabase: CoreDataDatabase
-#endif
-    
     let bookmarksDatabase: CoreDataDatabase
     private weak var bookmarksDatabaseCleaner: BookmarkDatabaseCleaner?
     private var favoritesViewModel: FavoritesListInteracting
@@ -165,42 +161,6 @@ class MainViewController: UIViewController {
     var historyManager: HistoryManager
     var viewCoordinator: MainViewCoordinator!
     
-#if APP_TRACKING_PROTECTION
-    init(
-        bookmarksDatabase: CoreDataDatabase,
-        bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
-        appTrackingProtectionDatabase: CoreDataDatabase,
-        historyManager: HistoryManager,
-        syncService: DDGSyncing,
-        syncDataProviders: SyncDataProviders,
-        appSettings: AppSettings = AppUserDefaults(),
-        previewsSource: TabPreviewsSource,
-        tabsModel: TabsModel
-    ) {
-        self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
-        self.bookmarksDatabase = bookmarksDatabase
-        self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
-        self.historyManager = historyManager
-        self.syncService = syncService
-        self.syncDataProviders = syncDataProviders
-        self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
-        self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
-        self.appSettings = appSettings
-        self.previewsSource = previewsSource
-
-        self.tabManager = TabManager(model: tabsModel,
-                                     previewsSource: previewsSource,
-                                     bookmarksDatabase: bookmarksDatabase,
-                                     historyManager: historyManager,
-                                     syncService: syncService)
-
-        super.init(nibName: nil, bundle: nil)
-
-        tabManager.delegate = self
-        bindFavoritesDisplayMode()
-        bindSyncService()
-    }
-#else
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
@@ -219,6 +179,7 @@ class MainViewController: UIViewController {
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         self.appSettings = appSettings
+
         self.previewsSource = previewsSource
 
         self.tabManager = TabManager(model: tabsModel,
@@ -233,7 +194,6 @@ class MainViewController: UIViewController {
         tabManager.delegate = self
         bindSyncService()
     }
-#endif
 
     func loadFindInPage() {
 
@@ -339,7 +299,7 @@ class MainViewController: UIViewController {
         assertionFailure()
         super.performSegue(withIdentifier: identifier, sender: sender)
     }
-    
+
     private func installSwipeTabs() {
         guard swipeTabsCoordinator == nil else { return }
         
@@ -354,6 +314,7 @@ class MainViewController: UIViewController {
             self?.select(tabAt: $0)
             
         } newTab: { [weak self] in
+            Pixel.fire(pixel: .swipeToOpenNewTab)
             self?.newTab()
         } onSwipeStarted: { [weak self] in
             self?.hideKeyboard()
@@ -454,6 +415,32 @@ class MainViewController: UIViewController {
                                                selector: #selector(keyboardWillChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow),
+                                               name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide),
+                                               name: UIResponder.keyboardDidHideNotification, object: nil)
+    }
+
+    var keyboardShowing = false
+
+    @objc
+    private func keyboardDidShow() {
+        keyboardShowing = true
+    }
+
+    @objc
+    private func keyboardWillHide() {
+        if homeController?.collectionView.isDragging == true, keyboardShowing {
+            Pixel.fire(pixel: .addressBarGestureDismiss)
+        }
+    }
+
+    @objc
+    private func keyboardDidHide() {
+        keyboardShowing = false
     }
 
     private func registerForSyncPausedNotifications() {
@@ -767,20 +754,11 @@ class MainViewController: UIViewController {
             fatalError("No tab model")
         }
 
-#if APP_TRACKING_PROTECTION
-        let controller = HomeViewController.loadFromStoryboard(model: tabModel,
-                                                               favoritesViewModel: favoritesViewModel,
-                                                               appSettings: appSettings,
-                                                               syncService: syncService,
-                                                               syncDataProviders: syncDataProviders,
-                                                               appTPDatabase: appTrackingProtectionDatabase)
-#else
         let controller = HomeViewController.loadFromStoryboard(model: tabModel,
                                                                favoritesViewModel: favoritesViewModel,
                                                                appSettings: appSettings,
                                                                syncService: syncService,
                                                                syncDataProviders: syncDataProviders)
-#endif
 
         homeController = controller
 
@@ -1057,6 +1035,8 @@ class MainViewController: UIViewController {
         viewCoordinator.omniBar.forwardButton.isEnabled = viewCoordinator.toolbarForwardButton.isEnabled
     }
   
+    var orientationPixelWorker: DispatchWorkItem?
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
@@ -1068,11 +1048,25 @@ class MainViewController: UIViewController {
         
         coordinator.animate { _ in
             self.swipeTabsCoordinator?.refresh(tabsModel: self.tabManager.model, scrollToSelected: true)
+
+            self.deferredFireOrientationPixel()
         } completion: { _ in
             ViewHighlighter.updatePositions()
         }
     }
-    
+
+    private func deferredFireOrientationPixel() {
+        orientationPixelWorker?.cancel()
+        orientationPixelWorker = nil
+        if UIDevice.current.orientation.isLandscape {
+            let worker = DispatchWorkItem {
+                Pixel.fire(pixel: .deviceOrientationLandscape)
+            }
+            DispatchQueue.global(qos: .default).asyncAfter(deadline: .now() + 3, execute: worker)
+            orientationPixelWorker = worker
+        }
+    }
+
     private func applyWidth() {
 
         if AppWidthObserver.shared.isLargeWidth {
@@ -1717,9 +1711,23 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onEnterPressed() {
+        fireControllerAwarePixel(ntp: .keyboardGoWhileOnNTP, serp: .keyboardGoWhileOnSERP, website: .keyboardGoWhileOnWebsite)
+
         guard !viewCoordinator.suggestionTrayContainer.isHidden else { return }
         
         suggestionTrayController?.willDismiss(with: viewCoordinator.omniBar.textField.text ?? "")
+    }
+
+    func fireControllerAwarePixel(ntp: Pixel.Event, serp: Pixel.Event, website: Pixel.Event) {
+        if homeController != nil {
+            Pixel.fire(pixel: ntp)
+        } else if let currentTab {
+            if currentTab.url?.isDuckDuckGoSearch == true {
+                Pixel.fire(pixel: serp)
+            } else {
+                Pixel.fire(pixel: website)
+            }
+        }
     }
 
     func onDismissed() {
@@ -1741,21 +1749,38 @@ extension MainViewController: OmniBarDelegate {
         }
     }
 
-    func onCancelPressed() {
+    func performCancel() {
         dismissOmniBar()
         hideSuggestionTray()
         homeController?.omniBarCancelPressed()
         self.showMenuHighlighterIfNeeded()
     }
-    
+
+    func onCancelPressed() {
+        fireControllerAwarePixel(ntp: .addressBarCancelPressedOnNTP,
+                                 serp: .addressBarCancelPressedOnSERP,
+                                 website: .addressBarCancelPressedOnWebsite)
+        performCancel()
+    }
+
+    func onClearPressed() {
+        fireControllerAwarePixel(ntp: .addressBarClearPressedOnNTP,
+                                 serp: .addressBarClearPressedOnSERP,
+                                 website: .addressBarClearPressedOnWebsite)
+    }
+
     private var isSERPPresented: Bool {
         guard let tabURL = currentTab?.url else { return false }
         return tabURL.isDuckDuckGoSearch
     }
     
-    func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
+    func onTextFieldWillBeginEditing(_ omniBar: OmniBar, tapped: Bool) {
         if let currentTab {
             viewCoordinator.omniBar.refreshText(forUrl: currentTab.url, forceFullURL: true)
+        }
+
+        if tapped {
+            fireControllerAwarePixel(ntp: .addressBarClickOnNTP, serp: .addressBarClickOnSERP, website: .addressBarClickOnWebsite)
         }
 
         guard homeController == nil else { return }
@@ -1816,7 +1841,7 @@ extension MainViewController: FavoritesOverlayDelegate {
     
     func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: BookmarkEntity) {
         guard let url = favorite.urlObject else { return }
-        Pixel.fire(pixel: .homeScreenFavouriteLaunched)
+        Pixel.fire(pixel: .favoriteLaunchedWebsite)
         homeController?.chromeDelegate = nil
         dismissOmniBar()
         Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .fireproof, fromCache: .tabs)
@@ -1852,7 +1877,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             loadUrl(url)
         case .historyEntry(_, url: let url, _):
             loadUrl(url)
-        case .unknown(value: let value):
+        case .unknown(value: let value), .internalPage(title: let value, url: _):
             assertionFailure("Unknown suggestion: \(value)")
         }
 
@@ -1873,7 +1898,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             viewCoordinator.omniBar.textField.text = title
         case .historyEntry(title: let title, _, _):
             viewCoordinator.omniBar.textField.text = title
-        case .unknown(value: let value):
+        case .unknown(value: let value), .internalPage(title: let value, url: _):
             assertionFailure("Unknown suggestion: \(value)")
         }
 
@@ -1899,7 +1924,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             if (title ?? url.absoluteString).hasPrefix(query) {
                 viewCoordinator.omniBar.selectTextToEnd(query.count)
             }
-        case .unknown(value: let value):
+        case .unknown(value: let value), .internalPage(title: let value, url: _):
             assertionFailure("Unknown suggestion: \(value)")
         }
     }
@@ -2162,7 +2187,7 @@ extension MainViewController: TabDelegate {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
         select(tabAt: index)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.onCancelPressed()
+            self.performCancel()
         }
     }
 
@@ -2221,6 +2246,7 @@ extension MainViewController: TabSwitcherDelegate {
 
 extension MainViewController: BookmarksDelegate {
     func bookmarksDidSelect(url: URL) {
+
         dismissOmniBar()
         if url.isBookmarklet() {
             executeBookmarklet(url)
@@ -2233,6 +2259,7 @@ extension MainViewController: BookmarksDelegate {
 extension MainViewController: TabSwitcherButtonDelegate {
     
     func launchNewTab(_ button: TabSwitcherButton) {
+        Pixel.fire(pixel: .tabSwitchLongPressNewTab)
         newTab()
     }
 
@@ -2242,7 +2269,7 @@ extension MainViewController: TabSwitcherButtonDelegate {
     }
 
     func showTabSwitcher() {
-        guard let currentTab = currentTab ?? tabManager.current(createIfNeeded: true) else {
+        guard currentTab ?? tabManager.current(createIfNeeded: true) != nil else {
             fatalError("Unable to get current tab")
         }
 

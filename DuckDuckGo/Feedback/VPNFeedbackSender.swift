@@ -34,7 +34,7 @@ struct DefaultVPNFeedbackSender: VPNFeedbackSender {
                 "breakageCategory": category.rawValue,
                 "breakageDescription": encodedUserText,
                 "breakageMetadata": metadata.toBase64(),
-            ]) { error in
+            ], includedParameters: [.appVersion, .atb]) { error in
                 if let error {
                     continuation.resume(throwing: error)
                 } else {

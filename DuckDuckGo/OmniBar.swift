@@ -176,6 +176,8 @@ class OmniBar: UIView {
         }
     }
     
+    var textFieldTapped = true
+
     private func configureSeparator() {
         separatorHeightConstraint.constant = 1.0 / UIScreen.main.scale
     }
@@ -364,6 +366,10 @@ class OmniBar: UIView {
     }
 
     @discardableResult override func becomeFirstResponder() -> Bool {
+        textFieldTapped = false
+        defer {
+            textFieldTapped = true
+        }
         return textField.becomeFirstResponder()
     }
 
@@ -416,6 +422,7 @@ class OmniBar: UIView {
     }
     
     @IBAction func onClearButtonPressed(_ sender: Any) {
+        omniDelegate?.onClearPressed()
         refreshState(state.onTextClearedState)
     }
 
@@ -487,9 +494,9 @@ extension OmniBar: UITextFieldDelegate {
         self.refreshState(self.state.onEditingStartedState)
         return true
     }
-    
+
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        omniDelegate?.onTextFieldWillBeginEditing(self)
+        omniDelegate?.onTextFieldWillBeginEditing(self, tapped: textFieldTapped)
         return true
     }
 

@@ -51,7 +51,6 @@ public enum PixelExperiment: String, CaseIterable {
 
     /// Enables this experiment for new users when called from the new installation path.
     public static func install() {
-        // Disable the experiment until all other experiments are finished
         logic.install()
     }
 
@@ -101,12 +100,10 @@ final internal class PixelExperimentLogic {
 
         // Allocate user to a cohort based on the random number
         let cohort: PixelExperiment
-        if randomNumber < 5 {
+        if randomNumber < 50 {
             cohort = .control
-        } else if randomNumber < 10 {
-            cohort = .newSettings
         } else {
-            cohort = .noVariant
+            cohort = .newSettings
         }
 
         // Store and use the selected cohort

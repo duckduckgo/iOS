@@ -59,6 +59,10 @@ jobs:
     - name: Privacy tests
       run: |
         export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --fail-on-timeout=true --timeout=150 --ios-version=17 --include-tags=privacy DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
+
+    - name: Security tests
+      run: |
+        export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --fail-on-timeout=true --timeout=150 --ios-version=17 --include-tags=securityTest DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
     
     - name: Ad Click Detection Flow tests
       run: |

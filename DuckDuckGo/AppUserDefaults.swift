@@ -23,6 +23,7 @@ import Core
 import WidgetKit
 
 // swiftlint:disable file_length
+// swiftlint:disable:next type_body_length
 public class AppUserDefaults: AppSettings {
     
     public struct Notifications {
@@ -71,6 +72,8 @@ public class AppUserDefaults: AppSettings {
         static let autofillIsNewInstallForOnByDefault = "com.duckduckgo.ios.autofillIsNewInstallForOnByDefault"
 
         static let favoritesDisplayMode = "com.duckduckgo.ios.favoritesDisplayMode"
+
+        static let crashCollectionOptInStatus = "com.duckduckgo.ios.crashCollectionOptInStatus"
     }
 
     private struct DebugKeys {
@@ -283,6 +286,13 @@ public class AppUserDefaults: AppSettings {
         autofillIsNewInstallForOnByDefault = StatisticsUserDefaults().installDate == nil
     }
 
+    @UserDefaultsWrapper(key: .autofillImportViaSyncStart, defaultValue: nil)
+    var autofillImportViaSyncStart: Date?
+
+    func clearAutofillImportViaSyncStart() {
+        autofillImportViaSyncStart = nil
+    }
+
     @UserDefaultsWrapper(key: .voiceSearchEnabled, defaultValue: false)
     var voiceSearchEnabled: Bool
 
@@ -343,6 +353,19 @@ public class AppUserDefaults: AppSettings {
         }
     }
 
+    var crashCollectionOptInStatus: CrashCollectionOptInStatus {
+        get {
+            guard let string = userDefaults?.string(forKey: Keys.crashCollectionOptInStatus),
+                  let optInStatus = CrashCollectionOptInStatus(rawValue: string)
+            else {
+                return .undetermined
+            }
+            return optInStatus
+        }
+        set {
+            userDefaults?.setValue(newValue.rawValue, forKey: Keys.crashCollectionOptInStatus)
+        }
+    }
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

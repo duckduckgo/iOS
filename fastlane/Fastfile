@@ -23,6 +23,11 @@ lane :sync_signing_alpha do |options|
   do_sync_signing(options)
 end
 
+desc 'Fetches and updates certificates and provisioning profiles for Ad-Hoc distribution'
+lane :sync_signing_alpha_adhoc do |options|
+  do_sync_signing(options)
+end
+
 desc 'Makes Ad-Hoc build with a specified name in a given directory'
 lane :adhoc do |options|
 
@@ -79,6 +84,76 @@ lane :adhoc do |options|
     export_options: "adhocExportOptions.plist",
     derived_data_path: "DerivedData",
     xcargs: "-skipPackagePluginValidation -skipMacroValidation"
+  )
+
+  if is_ci
+    sh("echo output_name=#{output_name} >> $GITHUB_ENV")
+  end
+
+  Dir.chdir("..") do
+    sh("open", "#{options[:output]}") unless is_ci
+  end
+end
+
+desc 'Makes Ad-Hoc build for alpha with a specified name in a given directory'
+lane :alpha_adhoc do |options|
+
+  # Workaround for match + gym failing at build phase https://forums.swift.org/t/xcode-14-beta-code-signing-issues-when-spm-targets-include-resources/59685/32
+  if is_ci
+    configurations = [
+      {
+        targets: ["DuckDuckGo"],
+        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha"
+      },
+      {
+        targets: ["ShareExtension"],
+        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.ShareExtension"
+      },
+      {
+        targets: ["OpenAction"],
+        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.OpenAction2"
+      },
+      {
+        targets: ["WidgetsExtension"],
+        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.Widgets"
+      },
+      {
+        targets: ["PacketTunnelProvider"],
+        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.NetworkExtension"
+      }
+    ]
+
+    configurations.each do |config|
+      update_code_signing_settings(
+        use_automatic_signing: false,
+        build_configurations: ["Release"],
+        code_sign_identity: "iPhone Distribution",
+        **config
+      )
+    end
+  end
+
+  sync_signing_alpha(options)
+  sync_signing_alpha_adhoc(options)
+
+  suffix = ""
+  if options[:suffix]
+    suffix = "#{options[:suffix]}-"
+  end
+
+  timestamp = Time.now.strftime("%Y-%m-%d-%H-%M")
+  output_name = "DuckDuckGo-Alpha-#{suffix}#{timestamp}"
+  
+
+  build_app(
+    output_directory: options[:output],
+    output_name: output_name,
+    export_method: "ad-hoc",
+    configuration: "Alpha",
+    scheme: "DuckDuckGo-Alpha",
+    export_options: "alphaAdhocExportOptions.plist",
+    derived_data_path: "DerivedData",
+    xcargs: "-skipPackagePluginValidation"
   )
 
   if is_ci

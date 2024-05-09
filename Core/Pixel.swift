@@ -122,6 +122,7 @@ public struct PixelParameters {
     public static let function = "function"
     public static let line = "line"
     public static let reason = "reason"
+    public static let vpnCohort = "cohort"
 
     // Return user
     public static let returnUserErrorCode = "error_code"
@@ -130,6 +131,15 @@ public struct PixelParameters {
 
     // Pixel Experiment
     public static let cohort = "cohort"
+
+    // Ad Attribution
+    public static let adAttributionOrgID = "org_id"
+    public static let adAttributionCampaignID = "campaign_id"
+    public static let adAttributionConversionType = "conversion_type"
+    public static let adAttributionAdGroupID = "ad_group_id"
+    public static let adAttributionCountryOrRegion = "country_or_region"
+    public static let adAttributionKeywordID = "keyword_id"
+    public static let adAttributionAdID = "ad_id"
 }
 
 public struct PixelValues {
@@ -169,7 +179,7 @@ public class Pixel {
                             withAdditionalParameters params: [String: String] = [:],
                             allowedQueryReservedCharacters: CharacterSet? = nil,
                             withHeaders headers: APIRequest.Headers = APIRequest.Headers(),
-                            includedParameters: [QueryParameters] = [.atb, .appVersion],
+                            includedParameters: [QueryParameters] = [.appVersion],
                             onComplete: @escaping (Error?) -> Void = { _ in },
                             debounce: Int = 0) {
         
@@ -199,7 +209,7 @@ public class Pixel {
                             withAdditionalParameters params: [String: String] = [:],
                             allowedQueryReservedCharacters: CharacterSet? = nil,
                             withHeaders headers: APIRequest.Headers = APIRequest.Headers(),
-                            includedParameters: [QueryParameters] = [.atb, .appVersion],
+                            includedParameters: [QueryParameters] = [.appVersion],
                             onComplete: @escaping (Error?) -> Void = { _ in }) {
         var newParams = params
         if includedParameters.contains(.appVersion) {

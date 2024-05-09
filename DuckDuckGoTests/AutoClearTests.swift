@@ -66,13 +66,13 @@ class AutoClearTests: XCTestCase {
         appSettings.autoClearAction = .clearData
         appSettings.autoClearTiming = .termination
         
-        await logic.applicationWillMoveToForeground()
-        logic.applicationDidEnterBackground()
-        
+        await logic.clearDataIfEnabledAndTimeExpired()
+        logic.startClearingTimer()
+
         XCTAssertEqual(worker.clearNavigationStackInvocationCount, 0)
         XCTAssertEqual(worker.forgetDataInvocationCount, 0)
 
-        await logic.applicationWillMoveToForeground()
+        await logic.clearDataIfEnabledAndTimeExpired()
 
         XCTAssertEqual(worker.clearNavigationStackInvocationCount, 0)
         XCTAssertEqual(worker.forgetDataInvocationCount, 0)
@@ -90,14 +90,14 @@ class AutoClearTests: XCTestCase {
         for (timing, delay) in cases {
             appSettings.autoClearTiming = timing
             
-            logic.applicationDidEnterBackground(Date().timeIntervalSince1970 - delay + 1)
-            await logic.applicationWillMoveToForeground()
-            
+            logic.startClearingTimer(Date().timeIntervalSince1970 - delay + 1)
+            await logic.clearDataIfEnabledAndTimeExpired()
+
             XCTAssertEqual(worker.clearNavigationStackInvocationCount, iterationCount)
             XCTAssertEqual(worker.forgetDataInvocationCount, iterationCount)
             
-            logic.applicationDidEnterBackground(Date().timeIntervalSince1970 - delay - 1)
-            await logic.applicationWillMoveToForeground()
+            logic.startClearingTimer(Date().timeIntervalSince1970 - delay - 1)
+            await logic.clearDataIfEnabledAndTimeExpired()
             
             iterationCount += 1
             XCTAssertEqual(worker.clearNavigationStackInvocationCount, iterationCount)

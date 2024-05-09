@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/apple-toolbox.git",
       "state" : {
-        "revision" : "d51beaf1736013b530576ace13a16d6d1a63742c",
-        "version" : "2.0.0"
+        "revision" : "ab53ca41e9044a20eab7e53249526fadcf9acc9f",
+        "version" : "3.1.1"
       }
     },
     {
@@ -32,17 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "90e789b95403481e7c2f0e4aa661890d4252f0e6",
-        "version" : "134.1.0"
-      }
-    },
-    {
-      "identity" : "cocoaasyncsocket",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/robbiehanson/CocoaAsyncSocket",
-      "state" : {
-        "revision" : "dbdc00669c1ced63b27c3c5f052ee4d28f10150c",
-        "version" : "7.6.5"
+        "revision" : "9906b9464f6f12e94f3cc62456b5b5a9c1a43db8",
+        "version" : "144.0.0"
       }
     },
     {
@@ -59,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/DesignResourcesKit",
       "state" : {
-        "revision" : "d7ea2561ec7624c224f52e1c9b349075ddf1c782",
-        "version" : "2.0.0"
+        "revision" : "ae83941bb277a2750abc2d6697fa278f8c8c5f5e",
+        "version" : "3.0.0"
       }
     },
     {
@@ -104,8 +95,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/airbnb/lottie-spm.git",
       "state" : {
-        "revision" : "4d0c11c85f5a9ec3d1b0daf2dc6daebc0e2df897",
-        "version" : "4.4.2"
+        "revision" : "1d29eccc24cc8b75bff9f6804155112c0ffc9605",
+        "version" : "4.4.3"
       }
     },
     {
@@ -185,8 +176,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/TrackerRadarKit",
       "state" : {
-        "revision" : "a6b7ba151d9dc6684484f3785293875ec01cc1ff",
-        "version" : "1.2.2"
+        "revision" : "6c84fd19139414fc0edbf9673ade06e532a564f0",
+        "version" : "2.0.0"
       }
     },
     {

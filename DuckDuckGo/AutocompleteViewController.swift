@@ -168,7 +168,7 @@ class AutocompleteViewController: UIViewController {
             Pixel.fire(pixel: isFavorite ? .autocompleteClickFavorite : .autocompleteClickBookmark)
         case .historyEntry:
             Pixel.fire(pixel: .autocompleteClickHistory)
-        case .unknown(value: let value):
+        case .unknown(value: let value), .internalPage(title: let value, url: _):
             assertionFailure("Unknown suggestion \(value)")
         }
     }
@@ -230,6 +230,7 @@ class AutocompleteViewController: UIViewController {
     }
 
     @IBAction func onAutocompleteDismissed(_ sender: Any) {
+        Pixel.fire(pixel: .addressBarGestureDismiss)
         delegate?.autocompleteWasDismissed()
     }
 }
@@ -353,13 +354,17 @@ extension AutocompleteViewController {
 }
 
 extension AutocompleteViewController: SuggestionLoadingDataSource {
-    
+
     func history(for suggestionLoading: Suggestions.SuggestionLoading) -> [HistorySuggestion] {
         return variantManager.inSuggestionExperiment ? (historyCoordinator.history ?? []) : []
     }
 
     func bookmarks(for suggestionLoading: Suggestions.SuggestionLoading) -> [Suggestions.Bookmark] {
         return variantManager.inSuggestionExperiment ? cachedBookmarks.all : []
+    }
+
+    func internalPages(for suggestionLoading: Suggestions.SuggestionLoading) -> [Suggestions.InternalPage] {
+        return []
     }
 
     func suggestionLoading(_ suggestionLoading: Suggestions.SuggestionLoading, suggestionDataFromUrl url: URL, withParameters parameters: [String: String], completion: @escaping (Data?, Error?) -> Void) {

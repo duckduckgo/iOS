@@ -40,11 +40,19 @@ public final class UniquePixel {
     }
 
     public static let storage = UserDefaults(suiteName: Constant.uniquePixelStorageIdentifier)!
+    private static let calendar: Calendar = {
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        return calendar
+    }()
+
+    private static let weeksToCoalesceCohort = 6
 
     /// Sends a unique Pixel
     /// This requires the pixel name to end with `_u`
     public static func fire(pixel: Pixel.Event,
                             withAdditionalParameters params: [String: String] = [:],
+                            includedParameters: [Pixel.QueryParameters] = [.appVersion],
                             onComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
         guard pixel.name.hasSuffix("_u") else {
             assertionFailure("Unique pixel: must end with _u")
@@ -52,22 +60,26 @@ public final class UniquePixel {
         }
 
         if !pixel.hasBeenFiredEver(uniquePixelStorage: storage) {
-            Pixel.fire(pixel: pixel, withAdditionalParameters: params, onComplete: onComplete)
+            Pixel.fire(pixel: pixel, withAdditionalParameters: params, includedParameters: includedParameters, onComplete: onComplete)
             storage.set(Date(), forKey: pixel.name)
         } else {
             onComplete(Error.alreadyFired)
         }
     }
 
-    public static func dateString(for date: Date?) -> String {
-        guard let date else { return "" }
+    public static func cohort(from cohortLocalDate: Date?) -> String {
+        guard let cohortLocalDate,
+              let baseDate = calendar.date(from: .init(year: 2023, month: 1, day: 1)),
+              let weeksSinceCohortAssigned = calendar.dateComponents([.weekOfYear], from: cohortLocalDate, to: Date()).weekOfYear,
+              let assignedCohort = calendar.dateComponents([.weekOfYear], from: baseDate, to: cohortLocalDate).weekOfYear else {
+            return ""
+        }
 
-        let dateFormatter = DateFormatter()
-        dateFormatter.calendar = Calendar.current
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-
-        return dateFormatter.string(from: date)
+        if weeksSinceCohortAssigned > Self.weeksToCoalesceCohort {
+            return ""
+        } else {
+            return "week-" + String(assignedCohort + 1)
+        }
     }
 }
 

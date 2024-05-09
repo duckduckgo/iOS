@@ -26,70 +26,100 @@ import History
 
 final class HistoryManagerTests: XCTestCase {
 
+    let privacyConfig = MockPrivacyConfiguration()
     let privacyConfigManager = MockPrivacyConfigurationManager()
     var variantManager = MockVariantManager()
+    let internalUserStore = MockInternalUserStoring()
+    var enabledByUser = true
 
     func test() {
 
         struct Condition {
 
+            let privacyConfig: Bool
             let variant: Bool
-            let privacy: Bool
+            let inRollOut: Bool
+            let internalUser: Bool
             let expected: Bool
 
         }
 
         let conditions = [
-            Condition(variant: true, privacy: true, expected: true),
-            Condition(variant: false, privacy: true, expected: false),
-            Condition(variant: true, privacy: false, expected: false),
+            // Users in the experiment should get the feature
+            Condition(privacyConfig: true, variant: true, inRollOut: false, internalUser: false, expected: true),
+            Condition(privacyConfig: true, variant: true, inRollOut: true, internalUser: false, expected: true),
+
+            // If not previously in the experiment then check for the rollout
+            Condition(privacyConfig: true, variant: false, inRollOut: false, internalUser: false, expected: false),
+            Condition(privacyConfig: true, variant: false, inRollOut: true, internalUser: false, expected: true),
+
+            // Internal users also get the feature
+            Condition(privacyConfig: true, variant: false, inRollOut: false, internalUser: true, expected: true),
+            Condition(privacyConfig: true, variant: false, inRollOut: true, internalUser: true, expected: true),
+
+            // Privacy config is the ultimate on/off switch though
+            Condition(privacyConfig: false, variant: true, inRollOut: true, internalUser: true, expected: false),
         ]
 
-        let privacyConfig = MockPrivacyConfiguration()
-        let privacyConfigManager = MockPrivacyConfigurationManager()
-        var variantManager = MockVariantManager()
-
-        for condition in conditions {
+        for index in conditions.indices {
+            let condition = conditions[index]
             privacyConfig.isFeatureKeyEnabled = { feature, _ in
                 XCTAssertEqual(feature, .history)
-                return condition.privacy
+                return condition.privacyConfig
             }
 
+            privacyConfig.isSubfeatureKeyEnabled = { subFeature, _ in
+                XCTAssertEqual(subFeature as? HistorySubFeature, HistorySubFeature.onByDefault)
+                return condition.inRollOut
+            }
+
+            internalUserStore.isInternalUser = condition.internalUser
             privacyConfigManager.privacyConfig = privacyConfig
             variantManager.isSupportedReturns = condition.variant
 
             let model = CoreDataDatabase.loadModel(from: History.bundle, named: "BrowsingHistory")!
             let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
-
-            let historyManager = HistoryManager(privacyConfigManager: privacyConfigManager, variantManager: variantManager, database: db) {
+            let historyManager = makeHistoryManager(db) {
                 XCTFail("DB Error \($0)")
             }
-            XCTAssertEqual(condition.expected, historyManager.isHistoryFeatureEnabled(), String(describing: condition))
+
+            XCTAssertEqual(condition.expected, historyManager.isHistoryFeatureEnabled(), "\(index): \(condition)")
         }
 
     }
 
     func test_WhenManagerFailsToLoadStore_ThenThrowsError() {
-        let privacyConfig = MockPrivacyConfiguration()
-        let privacyConfigManager = MockPrivacyConfigurationManager()
-        var variantManager = MockVariantManager()
 
         privacyConfig.isFeatureKeyEnabled = { feature, _ in
             XCTAssertEqual(feature, .history)
             return true
         }
 
+        internalUserStore.isInternalUser = true
         privacyConfigManager.privacyConfig = privacyConfig
-        variantManager.isSupportedReturns = true
 
         let model = CoreDataDatabase.loadModel(from: History.bundle, named: "BrowsingHistory")!
         let db = CoreDataDatabase(name: "Test", containerLocation: URL.aboutLink, model: model)
 
         var error: Error?
-        let historyManager = HistoryManager(privacyConfigManager: privacyConfigManager, variantManager: variantManager, database: db) {
+        let historyManager = makeHistoryManager(db) {
             error = $0
         }
         _ = historyManager.historyCoordinator
         XCTAssertNotNil(error)
     }
+
+    private func makeHistoryManager(_ db: CoreDataDatabase, onStoreLoadFailed: @escaping (Error) -> Void) -> HistoryManager {
+        return HistoryManager(privacyConfigManager: privacyConfigManager,
+                              variantManager: variantManager,
+                              database: db,
+                              internalUserDecider: DefaultInternalUserDecider(mockedStore: internalUserStore),
+                              isEnabledByUser: self.isEnabledByUser(),
+                              onStoreLoadFailed: onStoreLoadFailed)
+    }
+
+    private func isEnabledByUser() -> Bool {
+        return enabledByUser
+    }
+
 }

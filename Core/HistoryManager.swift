@@ -94,17 +94,21 @@ public class HistoryManager: HistoryManaging {
         self.onStoreLoadFailed = onStoreLoadFailed
     }
 
+    /// Determines if the history feature is enabled.  This code will need to be cleaned up once the roll out is at 100%
     func isHistoryFeatureEnabled() -> Bool {
-        if internalUserDecider.isInternalUser,
-           privacyConfigManager.privacyConfig.isEnabled(featureKey: .history) {
-            // Enable by default for internal users, but still allow it to be disabled remotely in case of critical problem
+        guard privacyConfigManager.privacyConfig.isEnabled(featureKey: .history) else {
+            // Whatever happens if this is disabled then disable the feature
+            return false
+        }
+
+        if internalUserDecider.isInternalUser {
+            // Internal users get the feature
             return true
         }
 
-        guard variantManager.isSupported(feature: .history),
-              privacyConfigManager.privacyConfig.isEnabled(featureKey: .history) else {
-            // Ensures that users who saw this in the experiment retain it
-            return false
+        if variantManager.isSupported(feature: .history) {
+            // Users in the experiment get the fature
+            return true
         }
 
         // Handles incremental roll out to everyone else

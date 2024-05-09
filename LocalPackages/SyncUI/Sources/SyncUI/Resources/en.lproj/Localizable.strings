@@ -103,9 +103,6 @@
 /* Standard Buttons - Paste Button */
 "paste.button" = "Paste";
 
-/* Description of rollout banner */
-"preferences.sync.rollout-banner.description" = "Sync & Backup is rolling out gradually and may not be available yet within DuckDuckGo on your other devices.";
-
 /* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
 "prefrences.sync.bookmarks-limit-exceeded-action" = "Manage Bookmarks";
 

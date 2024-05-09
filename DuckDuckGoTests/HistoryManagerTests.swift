@@ -84,8 +84,32 @@ final class HistoryManagerTests: XCTestCase {
             }
 
             XCTAssertEqual(condition.expected, historyManager.isHistoryFeatureEnabled(), "\(index): \(condition)")
+
+            // If not enabled, then the history manager should be using a "null" history coordinator
+            XCTAssertEqual(!condition.expected, historyManager.historyCoordinator is NullHistoryCoordinator)
         }
 
+    }
+
+    func test_WhenUserHasDisabledSetting_ThenDontStoreOrLoadHistory() {
+
+        privacyConfig.isFeatureKeyEnabled = { feature, _ in
+            XCTAssertEqual(feature, .history)
+            return true
+        }
+
+        internalUserStore.isInternalUser = true
+        privacyConfigManager.privacyConfig = privacyConfig
+        enabledByUser = false
+
+        let model = CoreDataDatabase.loadModel(from: History.bundle, named: "BrowsingHistory")!
+        let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
+
+        let historyManager = makeHistoryManager(db) {
+            XCTFail("DB Error \($0)")
+        }
+
+        XCTAssertTrue(historyManager.historyCoordinator is NullHistoryCoordinator)
     }
 
     func test_WhenManagerFailsToLoadStore_ThenThrowsError() {

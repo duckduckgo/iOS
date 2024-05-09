@@ -1,6 +1,6 @@
 name: "POC maestro tests"
 on:
-  workflow_dispatch: 
+  workflow_dispatch: {}
   push: 
     branches:
       - kshann/maestro-poc

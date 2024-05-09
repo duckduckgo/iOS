@@ -1717,10 +1717,6 @@ extension MainViewController: OmniBarDelegate {
     
     func onEnterPressed() {
         fireControllerAwarePixel(ntp: .keyboardGoWhileOnNTP, serp: .keyboardGoWhileOnSERP, website: .keyboardGoWhileOnWebsite)
-
-        guard !viewCoordinator.suggestionTrayContainer.isHidden else { return }
-        
-        suggestionTrayController?.willDismiss(with: viewCoordinator.omniBar.textField.text ?? "")
     }
 
     func fireControllerAwarePixel(ntp: Pixel.Event, serp: Pixel.Event, website: Pixel.Event) {

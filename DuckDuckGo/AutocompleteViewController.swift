@@ -54,16 +54,21 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
         CachedBookmarks(bookmarksDatabase)
     }()
 
+    private var lastResults: SuggestionResult?
     private var loader: SuggestionLoader?
-    private var isMessageDismissed = false
+
+    private var historyMessageManager: HistoryMessageManager
 
     init(historyCoordinator: HistoryCoordinating,
          bookmarksDatabase: CoreDataDatabase,
-         appSettings: AppSettings ) {
+         appSettings: AppSettings,
+         historyMessageManager: HistoryMessageManager = HistoryMessageManager()) {
         self.historyCoordinator = historyCoordinator
         self.bookmarksDatabase = bookmarksDatabase
         self.appSettings = appSettings
-        self.model = AutocompleteViewModel(isAddressBarAtBottom: appSettings.currentAddressBarPosition == .bottom)
+        self.historyMessageManager = historyMessageManager
+        self.model = AutocompleteViewModel(isAddressBarAtBottom: appSettings.currentAddressBarPosition == .bottom,
+                                           showMessage: historyMessageManager.shouldShow())
         super.init(rootView: AutocompleteView(model: model))
         self.model.delegate = self
     }
@@ -83,14 +88,13 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
                 self?.requestSuggestions(query: query)
             }
     }
-    
-    @IBAction func onAutocompleteDismissed(_ sender: Any) {
-        Pixel.fire(pixel: .addressBarGestureDismiss)
-        delegate?.autocompleteWasDismissed()
-    }
 
-    func willDismiss(with query: String) {
-        print("***", #function, query)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        historyMessageManager.incrementDisplayCount()
+
+        // TODO fire pixels based on current state
+
     }
 
     func keyboardMoveSelectionDown() {
@@ -107,11 +111,6 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
         cancelInFlightRequests()
         self.query = query
         model.query = query
-    }
-
-    func applyTableViewInset(_ inset: UIEdgeInsets) {
-        // TODO
-        print("***", #function, inset)
     }
 
     private func cancelInFlightRequests() {
@@ -136,24 +135,33 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
         loader?.getSuggestions(query: query) { [weak self] result, error in
             guard let self, error == nil else { return }
             let updatedResults = result ?? .empty
+            self.lastResults = updatedResults
             model.updateSuggestions(updatedResults)
-
-            let messageHeight = isMessageDismissed ? 0 : 196
-
-            let height =
-                (updatedResults.topHits.count * 44) +
-                (updatedResults.topHits.isEmpty ? 0 : 10) +
-                (updatedResults.duckduckgoSuggestions.count * 44) +
-                (updatedResults.duckduckgoSuggestions.isEmpty ? 0 : 10) +
-                (updatedResults.localSuggestions.count * 44) +
-                (updatedResults.localSuggestions.isEmpty ? 0 : 10) +
-                messageHeight +
-                16 // padding
-
-            presentationDelegate?
-                .autocompleteDidChangeContentHeight(height: CGFloat(height))
+            updateHeight()
         }
 
+    }
+
+    private func updateHeight() {
+        guard let lastResults else { return }
+
+        let messageHeight = historyMessageManager.shouldShow() ? 196 : 0
+        let cellHeight = 44
+        let sectionPadding = 10
+        let controllerPadding = 16
+
+        let height =
+            (lastResults.topHits.count * cellHeight) +
+            (lastResults.topHits.isEmpty ? 0 : sectionPadding) +
+            (lastResults.duckduckgoSuggestions.count * cellHeight) +
+            (lastResults.duckduckgoSuggestions.isEmpty ? 0 : sectionPadding) +
+            (lastResults.localSuggestions.count * cellHeight) +
+            (lastResults.localSuggestions.isEmpty ? 0 : sectionPadding) +
+            messageHeight +
+            controllerPadding
+
+        presentationDelegate?
+            .autocompleteDidChangeContentHeight(height: CGFloat(height))
     }
 
 }
@@ -161,8 +169,8 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
 extension AutocompleteViewController: AutocompleteViewModelDelegate {
 
     func onMessageDismissed() {
-        self.isMessageDismissed = true
-        presentationDelegate?.autocompleteDidChangeContentHeight(height: view.frame.height - 196)
+        historyMessageManager.dismiss()
+        updateHeight()
     }
     
     func onSuggestionSelected(_ suggestion: Suggestion) {
@@ -197,8 +205,9 @@ class AutocompleteViewModel: ObservableObject {
 
     let isAddressBarAtBottom: Bool
 
-    init(isAddressBarAtBottom: Bool) {
+    init(isAddressBarAtBottom: Bool, showMessage: Bool) {
         self.isAddressBarAtBottom = isAddressBarAtBottom
+        self.isMessageVisible = showMessage
     }
 
     var emptySuggestion: SuggestionModel {
@@ -574,6 +583,34 @@ private extension URL {
             .dropping(prefix: "https://")
             .dropping(prefix: "http://")
         return pathComponents.isEmpty ? string : string.dropping(suffix: "/")
+    }
+
+}
+
+class HistoryMessageManager {
+
+    @UserDefaultsWrapper(key: .historyMessageDisplayCount, defaultValue: 0)
+    private var count: Int
+
+    @UserDefaultsWrapper(key: .historyMessageDismissed, defaultValue: false)
+    private var dismissed: Bool
+
+    func incrementDisplayCount() {
+        guard !dismissed else { return }
+        count += 1
+        if count >= 3 {
+            dismissed = true
+        }
+    }
+
+    func dismiss() {
+        dismissed = true
+    }
+
+    func shouldShow() -> Bool {
+        // return !dismissed
+        #warning("hardcoded for testing / ship review")
+        return true
     }
 
 }

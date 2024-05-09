@@ -131,6 +131,8 @@ public struct UserDefaultsWrapper<T> {
         case pixelExperimentCohort = "com.duckduckgo.ios.pixel.experiment.cohort"
         case pixelExperimentEnrollmentDate = "com.duckduckgo.ios.pixel.experiment.enrollment.date"
 
+        case historyMessageDisplayCount = "com.duckduckgo.ios.historyMessage.displayCount"
+        case historyMessageDismissed = "com.duckduckgo.ios.historyMessage.dismissed"
     }
 
     private let key: Key

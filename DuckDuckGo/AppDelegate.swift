@@ -209,12 +209,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         PrivacyFeatures.httpsUpgrade.loadDataAsync()
         
+        let variantManager = DefaultVariantManager()
+        let historyMessageManager = HistoryMessageManager()
+
         // assign it here, because "did become active" is already too late and "viewWillAppear"
         // has already been called on the HomeViewController so won't show the home row CTA
         AtbAndVariantCleanup.cleanup()
-        DefaultVariantManager().assignVariantIfNeeded { _ in
+        variantManager.assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
             DaxDialogs.shared.primeForUse()
+            historyMessageManager.dismiss()
+        }
+
+        if variantManager.isSupported(feature: .history) {
+            historyMessageManager.dismiss()
         }
 
         PixelExperiment.install()

@@ -129,15 +129,7 @@ class SuggestionTrayViewController: UIViewController {
             }
         }
     }
-    
-    func willDismiss(with query: String) {
-        guard !query.isEmpty else { return }
         
-        if let autocomplete = autocompleteController {
-            autocomplete.willDismiss(with: query)
-        }
-    }
-    
     var contentFrame: CGRect {
         return containerView.frame
     }
@@ -292,9 +284,6 @@ class SuggestionTrayViewController: UIViewController {
     var contentInsets = UIEdgeInsets.zero
     func applyContentInset(_ inset: UIEdgeInsets) {
         self.contentInsets = inset
-//        autocompleteController?.tableView.contentInset = inset
-//        autocompleteController?.tableView.scrollIndicatorInsets = inset
-        autocompleteController?.applyTableViewInset(inset)
         favoritesOverlay?.collectionView.contentInset = inset
         favoritesOverlay?.collectionView.scrollIndicatorInsets = inset
     }

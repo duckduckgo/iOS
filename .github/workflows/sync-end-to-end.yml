@@ -93,6 +93,10 @@ jobs:
         name: duckduckgo-ios-app
         path: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
 
+    - name: Install Maestro
+      run: |
+        export MAESTRO_VERSION=1.36.0; curl -Ls "https://get.maestro.mobile.dev" | bash
+
     - name: Sync e2e tests 
       run: |
         export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --env=CODE=${{ steps.sync-recovery-code.outputs.recovery-code }} --fail-on-timeout=true --timeout=150 --ios-version=${{ matrix.os-version }} --include-tags=sync DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/

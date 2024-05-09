@@ -242,6 +242,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Experiment installation will be uncommented once we decide to run the experiment
 //        PixelExperiment.install()
+        PixelExperimentForBrokenSites.install()
 
         // MARK: Sync initialisation
 

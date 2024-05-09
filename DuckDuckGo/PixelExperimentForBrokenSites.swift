@@ -1,5 +1,5 @@
 //
-//  PixelExperiment.swift
+//  PixelExperimentForBrokenSites.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,32 +18,29 @@
 //
 
 import Foundation
+import Core
 
-public enum PixelExperiment: String, CaseIterable {
+// This class serves the singular purpose of facilitating a specific experiment, necessitated by the limitation of the current API, which precludes running multiple experiments concurrently. It will be removed once this experiment is concluded.
+public enum PixelExperimentForBrokenSites: String, CaseIterable {
 
-    fileprivate static var logic: PixelExperimentLogic {
-        customLogic ?? defaultLogic
-    }
+    fileprivate static var logic: PixelExperimentLogic { defaultLogic }
     fileprivate static let defaultLogic = PixelExperimentLogic {
-        Pixel.fire(pixel: $0,
-                   withAdditionalParameters: PixelExperiment.parameters)
+        Pixel.fire(pixel: $0, withAdditionalParameters: PixelExperimentForBrokenSites.parameters)
     }
-    // Custom logic for testing purposes
-    static var customLogic: PixelExperimentLogic?
 
     /// When `cohort` is accessed for the first time after the experiment is installed with `install()`,
     ///  allocate and return a cohort.  Subsequently, return the same cohort.
-    public static var cohort: PixelExperiment? {
+    public static var cohort: PixelExperimentForBrokenSites? {
         logic.cohort
     }
 
     static var isExperimentInstalled: Bool {
-        return logic.isInstalled
+        logic.isInstalled
     }
 
     static var allocatedCohortDoesNotMatchCurrentCohorts: Bool {
         guard let allocatedCohort = logic.allocatedCohort else { return false }
-        if PixelExperiment(rawValue: allocatedCohort) == nil {
+        if PixelExperimentForBrokenSites(rawValue: allocatedCohort) == nil {
             return true
         }
         return false
@@ -59,17 +56,21 @@ public enum PixelExperiment: String, CaseIterable {
         logic.cleanup()
     }
 
-    // These are the variants. Rename or add/remove them as needed.  If you change the string value
-    //  remember to keep it clear for privacy triage.
-    case control
-    case newSettings
-
     // Internal state for users not included in any variant
     case noVariant
 
+    case reloadTwiceWithin12SecondsShowsPrompt
+    case reloadTwiceWithin24SecondsShowsPrompt
+
+    case reloadAndRestartWithin30SecondsShowsPrompt
+    case reloadAndRestartWithin50SecondsShowsPrompt
+
+    case reloadThreeTimesWithin20SecondsShowsPrompt
+    case reloadThreeTimesWithin40SecondsShowsPrompt
+
 }
 
-extension PixelExperiment {
+extension PixelExperimentForBrokenSites {
 
     // Pixel parameter - cohort
     public static var parameters: [String: String] {
@@ -84,63 +85,45 @@ extension PixelExperiment {
 
 final internal class PixelExperimentLogic {
 
-    var cohort: PixelExperiment? {
-        guard isInstalled else { return nil }
+    private let promptCohorts: [PixelExperimentForBrokenSites] = [
+        .reloadTwiceWithin12SecondsShowsPrompt,
+        .reloadTwiceWithin24SecondsShowsPrompt,
+        .reloadAndRestartWithin30SecondsShowsPrompt,
+        .reloadAndRestartWithin50SecondsShowsPrompt,
+        .reloadThreeTimesWithin20SecondsShowsPrompt,
+        .reloadThreeTimesWithin40SecondsShowsPrompt
+    ]
 
-        // Use the `customCohort` if it's set
-        if let customCohort = customCohort {
-            return customCohort
-        }
+    var cohort: PixelExperimentForBrokenSites? {
+        guard isInstalled else { return nil }
 
         // Check if a cohort is already allocated and valid
         if let allocatedCohort,
-           let cohort = PixelExperiment(rawValue: allocatedCohort) {
+           let cohort = PixelExperimentForBrokenSites(rawValue: allocatedCohort) {
             return cohort
         }
 
-        let randomNumber = Int.random(in: 0..<100)
-
-        // Allocate user to a cohort based on the random number
-        let cohort: PixelExperiment
-        if randomNumber < 5 {
-            cohort = .control
-        } else if randomNumber < 10 {
-            cohort = .newSettings
-        } else {
-            cohort = .noVariant
-        }
+        let bucketIndex = Int.random(in: 0..<6)
+        let cohort = promptCohorts[bucketIndex]
 
         // Store and use the selected cohort
         allocatedCohort = cohort.rawValue
-        fireEnrollmentPixel()
         return cohort
     }
 
-    @UserDefaultsWrapper(key: .pixelExperimentInstalled, defaultValue: false)
+    @UserDefaultsWrapper(key: .pixelExperimentForBrokenSitesInstalled, defaultValue: false)
     var isInstalled: Bool
 
-    @UserDefaultsWrapper(key: .pixelExperimentCohort, defaultValue: nil)
+    @UserDefaultsWrapper(key: .pixelExperimentForBrokenSitesCohort, defaultValue: nil)
     var allocatedCohort: String?
 
     private let fire: (Pixel.Event) -> Void
-    private let customCohort: PixelExperiment?
-
-    init(fire: @escaping (Pixel.Event) -> Void,
-         customCohort: PixelExperiment? = nil) {
+    init(fire: @escaping (Pixel.Event) -> Void) {
         self.fire = fire
-        self.customCohort = customCohort
     }
 
     func install() {
         isInstalled = true
-    }
-
-    private func fireEnrollmentPixel() {
-        guard cohort != .noVariant else {
-            return
-        }
-
-        fire(.pixelExperimentEnrollment)
     }
 
     func cleanup() {
@@ -149,3 +132,4 @@ final internal class PixelExperimentLogic {
     }
 
 }
+

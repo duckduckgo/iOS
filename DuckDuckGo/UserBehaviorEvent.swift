@@ -47,7 +47,7 @@ public enum UserBehaviorEvent: String {
 
 extension UserBehaviorEvent {
 
-    var matchingPixelExperimentVariant: PixelExperiment {
+    var matchingPixelExperimentVariant: PixelExperimentForBrokenSites {
         switch self {
         case .reloadTwiceWithin12Seconds: return .reloadTwiceWithin12SecondsShowsPrompt
         case .reloadTwiceWithin24Seconds: return .reloadTwiceWithin24SecondsShowsPrompt

@@ -21,10 +21,10 @@ import Core
 import Suggestions
 import SwiftUI
 
-// TODO handle pressing enter on selection
 protocol AutocompleteViewModelDelegate: NSObjectProtocol {
 
     func onSuggestionSelected(_ suggestion: Suggestion)
+    func onSuggestionHighlighted(_ suggestion: Suggestion, forQuery query: String)
     func onTapAhead(_ suggestion: Suggestion)
     func onMessageDismissed()
 
@@ -34,7 +34,10 @@ class AutocompleteViewModel: ObservableObject {
 
     @Published var selection: SuggestionModel? {
         didSet {
-            print(selection?.id.uuidString ?? "<nil> selection")
+            if let selection {
+                delegate?.onSuggestionHighlighted(selection.suggestion,
+                                                  forQuery: query ?? "")
+            }
         }
     }
     @Published var topHits = [SuggestionModel]()

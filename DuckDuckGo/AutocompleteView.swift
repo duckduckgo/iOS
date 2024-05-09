@@ -30,6 +30,7 @@ struct AutocompleteView: View {
                 HistoryMessageView {
                     model.onDismissMessage()
                 }
+                .listRowBackground(Color(designSystemColor: .surface))
             }
 
             if model.isEmpty {
@@ -154,7 +155,7 @@ private struct SuggestionsSection: View {
     let query: String?
     var onSuggestionSelected: (AutocompleteViewModel.SuggestionModel) -> Void
 
-    let selectedColor = Color(designSystemColor: .container)
+    let selectedColor = Color(designSystemColor: .accent)
     let unselectedColor = Color(designSystemColor: .surface)
 
     var body: some View {
@@ -166,7 +167,6 @@ private struct SuggestionsSection: View {
                     SuggestionView(model: suggestions[index], query: query)
                  }
                  .listRowBackground(autocompleteViewModel.selection == suggestions[index] ? selectedColor : unselectedColor)
-                 // .contentShape(Rectangle())
             }
         }
     }
@@ -229,12 +229,6 @@ private struct SuggestionView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-
-        // .listRowBackground(Rectangle().foregroundColor(.red))
-        // .background(autocompleteModel.selection == model ? .red : Color.white.opacity(0.0001))
-        // .listRowBackground(autocompleteModel.selection == model ? Color.red : Color(designSystemColor: .surface))
-        // .listRowBackground(Color.red)
-
     }
 
 }

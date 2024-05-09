@@ -98,12 +98,10 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
     }
 
     func keyboardMoveSelectionDown() {
-        print("***", #function, query)
         model.nextSelection()
     }
 
     func keyboardMoveSelectionUp() {
-        print("***", #function, query)
         model.previousSelection()
     }
     
@@ -181,6 +179,10 @@ extension AutocompleteViewController: AutocompleteViewModelDelegate {
 
     func onTapAhead(_ suggestion: Suggestion) {
         self.delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestion)
+    }
+
+    func onSuggestionHighlighted(_ suggestion: Suggestion, forQuery query: String) {
+        self.delegate?.autocomplete(highlighted: suggestion, for: query)
     }
 }
 

@@ -44,6 +44,7 @@ final class SettingsViewModel: ObservableObject {
     private lazy var versionProvider: AppVersion = AppVersion.shared
     private let voiceSearchHelper: VoiceSearchHelperProtocol
     var emailManager: EmailManager { EmailManager() }
+    private let historyManager: HistoryManager
 
     // Subscription Dependencies
     private var subscriptionAccountManager: AccountManager
@@ -86,7 +87,9 @@ final class SettingsViewModel: ObservableObject {
     var shouldShowNoMicrophonePermissionAlert: Bool = false
     @Published var shouldShowEmailAlert: Bool = false
     var autocompleteSubtitle: String?
-    
+
+    @Published var shouldShowRecentlyVisitedSites: Bool = true
+
     // MARK: - Deep linking
     // Used to automatically navigate to a specific section
     // immediately after loading the Settings View
@@ -176,6 +179,7 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
+                self.updateRecentlyVisitedSitesVisibility()
                 if $0 {
                     Pixel.fire(pixel: .settingsAutocompleteOn,
                                withAdditionalParameters: PixelExperiment.parameters)
@@ -194,6 +198,7 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
+                self.updateRecentlyVisitedSitesVisibility()
                 if $0 {
                     Pixel.fire(pixel: .settingsPrivateSearchAutocompleteOn,
                                withAdditionalParameters: PixelExperiment.parameters)
@@ -222,6 +227,7 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
+                self.updateRecentlyVisitedSitesVisibility()
                 if $0 {
                     Pixel.fire(pixel: .settingsGeneralAutocompleteOn,
                                withAdditionalParameters: PixelExperiment.parameters)
@@ -401,17 +407,20 @@ final class SettingsViewModel: ObservableObject {
          accountManager: AccountManager,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
-         deepLink: SettingsDeepLinkSection? = nil) {
+         deepLink: SettingsDeepLinkSection? = nil,
+         historyManager: HistoryManager) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
         self.subscriptionAccountManager = accountManager
         self.voiceSearchHelper = voiceSearchHelper
         self.deepLinkTarget = deepLink
-        
+        self.historyManager = historyManager
+
         setupNotificationObservers()
         autocompleteSubtitle = UserText.settingsAutocompleteSubtitle
+        updateRecentlyVisitedSitesVisibility()
     }
-    
+
     deinit {
         subscriptionSignOutObserver = nil
     }
@@ -457,7 +466,13 @@ extension SettingsViewModel {
         Task { await setupSubscriptionEnvironment() }
         
     }
-    
+
+    private func updateRecentlyVisitedSitesVisibility() {
+        withAnimation {
+            shouldShowRecentlyVisitedSites = historyManager.isHistoryFeatureEnabled() && state.autocomplete
+        }
+    }
+
     private func getNetworkProtectionState() -> SettingsState.NetworkProtection {
         var enabled = false
 #if NETWORK_PROTECTION

@@ -41,7 +41,7 @@ struct SettingsGeneralView: View {
                 SettingsCellView(label: UserText.settingsAutocomplete,
                                  accesory: .toggle(isOn: viewModel.autocompleteGeneralBinding))
 
-                if viewModel.autocompleteGeneralBinding.wrappedValue {
+                if viewModel.shouldShowRecentlyVisitedSites {
                     SettingsCellView(label: UserText.settingsAutocompleteRecentlyVisited,
                                      accesory: .toggle(isOn: viewModel.autocompleteRecentlyVisitedSitesBinding))
                 }

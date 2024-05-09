@@ -95,7 +95,7 @@ public class HistoryManager: HistoryManaging {
     }
 
     /// Determines if the history feature is enabled.  This code will need to be cleaned up once the roll out is at 100%
-    func isHistoryFeatureEnabled() -> Bool {
+    public func isHistoryFeatureEnabled() -> Bool {
         guard privacyConfigManager.privacyConfig.isEnabled(featureKey: .history) else {
             // Whatever happens if this is disabled then disable the feature
             return false

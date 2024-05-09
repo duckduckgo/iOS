@@ -59,7 +59,7 @@ struct PrivateSearchViewSettings: View {
             SettingsCellView(label: UserText.settingsAutocomplete,
                              accesory: .toggle(isOn: viewModel.autocompletePrivateSearchBinding))
 
-            if viewModel.autocompletePrivateSearchBinding.wrappedValue {
+            if viewModel.shouldShowRecentlyVisitedSites {
                 SettingsCellView(label: UserText.settingsAutocompleteRecentlyVisited,
                                  accesory: .toggle(isOn: viewModel.autocompleteRecentlyVisitedSitesBinding))
             }

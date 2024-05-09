@@ -379,4 +379,3 @@ extension View {
     }
 }
 
-// swiftlint:enable file_length

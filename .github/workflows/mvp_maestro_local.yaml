@@ -16,7 +16,7 @@ jobs:
 
     - name: Start iOS Simulator
       run: |
-        DEVICE_ID=$(xcrun simctl list devices available --json | jq -r '.devices["com.apple.CoreSimulator.SimRuntime.iOS-17-4"][] | select(.name == "iPhone 15") | .udid' | head -n 1)
+        DEVICE_ID=$(xcrun simctl list devices available --json | jq -r '.devices["com.apple.CoreSimulator.SimRuntime.iOS-17-2"][] | select(.name == "iPhone 15") | .udid' | head -n 1)
         DEVICE_STATE=$(xcrun simctl list devices available --json | jq -r --arg DEVICE_ID "$DEVICE_ID" '.devices[] | .[] | select(.udid == $DEVICE_ID) | .state')
         
         echo "Picked device $DEVICE_ID in state: $DEVICE_STATE"

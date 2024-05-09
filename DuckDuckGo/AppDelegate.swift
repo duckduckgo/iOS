@@ -263,7 +263,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
 
         let previewsSource = TabPreviewsSource()
-        let historyManager = makeHistoryManager()
+        let historyManager = makeHistoryManager(AppDependencyProvider.shared.appSettings, AppDependencyProvider.shared.internalUserDecider)
         let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
@@ -352,10 +352,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return tabsModel
     }
 
-    private func makeHistoryManager() -> HistoryManager {
+    private func makeHistoryManager(_ appSettings: AppSettings, _ internalUserDecider: InternalUserDecider) -> HistoryManager {
         let historyManager = HistoryManager(privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
-                              variantManager: DefaultVariantManager(),
-                              database: HistoryDatabase.make()) { error in
+                                            variantManager: DefaultVariantManager(),
+                                            database: HistoryDatabase.make(),
+                                            internalUserDecider: internalUserDecider,
+                                            isEnabledByUser: appSettings.recentlyVisitedSites) { error in
             Pixel.fire(pixel: .historyStoreLoadFailed, error: error)
             if error.isDiskFull {
                 self.presentInsufficientDiskSpaceAlert()

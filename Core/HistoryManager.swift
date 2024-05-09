@@ -46,12 +46,15 @@ public class HistoryManager: HistoryManaging {
     let privacyConfigManager: PrivacyConfigurationManaging
     let variantManager: VariantManager
     let database: CoreDataDatabase
+    let internalUserDecider: InternalUserDecider
+    let isEnabledByUser: () -> Bool
     let onStoreLoadFailed: (Error) -> Void
 
     private var currentHistoryCoordinator: HistoryCoordinating?
 
     public var historyCoordinator: HistoryCoordinating {
-        guard isHistoryFeatureEnabled() else {
+        guard isHistoryFeatureEnabled(),
+                isEnabledByUser() else {
             currentHistoryCoordinator = nil
             return NullHistoryCoordinator()
         }
@@ -76,27 +79,36 @@ public class HistoryManager: HistoryManaging {
         return historyCoordinator
     }
 
-    public init(privacyConfigManager: PrivacyConfigurationManaging, variantManager: VariantManager, database: CoreDataDatabase, onStoreLoadFailed: @escaping (Error) -> Void) {
+    public init(privacyConfigManager: PrivacyConfigurationManaging, 
+                variantManager: VariantManager,
+                database: CoreDataDatabase,
+                internalUserDecider: InternalUserDecider,
+                isEnabledByUser: @autoclosure @escaping () -> Bool,
+                onStoreLoadFailed: @escaping (Error) -> Void) {
+
         self.privacyConfigManager = privacyConfigManager
         self.variantManager = variantManager
         self.database = database
+        self.internalUserDecider = internalUserDecider
+        self.isEnabledByUser = isEnabledByUser
         self.onStoreLoadFailed = onStoreLoadFailed
     }
 
     func isHistoryFeatureEnabled() -> Bool {
-        return true
-
-        #warning("hardcoded for testing")
-        /*
-        if variantManager.isSupported(feature: .history) &&
-            privacyConfigManager.privacyConfig.isEnabled(featureKey: .history) {
-            // Ensures that users who saw this in the experiment retain it
+        if internalUserDecider.isInternalUser,
+           privacyConfigManager.privacyConfig.isEnabled(featureKey: .history) {
+            // Enable by default for internal users, but still allow it to be disabled remotely in case of critical problem
             return true
         }
 
-        // Handles incremental roll out
+        guard variantManager.isSupported(feature: .history),
+              privacyConfigManager.privacyConfig.isEnabled(featureKey: .history) else {
+            // Ensures that users who saw this in the experiment retain it
+            return false
+        }
+
+        // Handles incremental roll out to everyone else
         return privacyConfigManager.privacyConfig.isSubfeatureEnabled(HistorySubFeature.onByDefault)
-        */
     }
 
     public func removeAllHistory() async {

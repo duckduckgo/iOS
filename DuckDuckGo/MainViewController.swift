@@ -1235,6 +1235,7 @@ class MainViewController: UIViewController {
 
         self.notificationView = contentView
 
+        view.layoutIfNeeded()
         view.layoutSubviews()
         viewCoordinator.showTopSlideContainer()
         UIView.animate(withDuration: 0.3) {
@@ -1271,14 +1272,12 @@ class MainViewController: UIViewController {
 
     @objc func attemptToShowBrokenSitePrompt(_ notification: Notification) {
         guard /*userDidInteractWithBrokenSitePrompt,*/
-              let event = notification.userInfo?[UserBehaviorEvent.Key.event] as? UserBehaviorEvent,
-              let url = currentTab?.url, !url.isDuckDuckGo,
-              notificationView == nil,
-              !isPad,
-              DefaultTutorialSettings().hasSeenOnboarding else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.showBrokenSitePrompt(after: event)
-        }
+            let event = notification.userInfo?[UserBehaviorEvent.Key.event] as? UserBehaviorEvent,
+            let url = currentTab?.url, !url.isDuckDuckGo,
+            notificationView == nil,
+            !isPad,
+            DefaultTutorialSettings().hasSeenOnboarding else { return }
+        self.showBrokenSitePrompt(after: event)
     }
 
     private func showBrokenSitePrompt(after event: UserBehaviorEvent) {
@@ -1303,7 +1302,7 @@ class MainViewController: UIViewController {
             self?.brokenSitePromptViewHostingController = nil
             Pixel.fire(pixel: .siteNotWorkingWebsiteIsBroken, withAdditionalParameters: parameters)
         })
-        return UIHostingController(rootView: BrokenSitePromptView(viewModel: viewModel))
+        return UIHostingController(rootView: BrokenSitePromptView(viewModel: viewModel), ignoreSafeArea: true)
     }
 
     func animateBackgroundTab() {
@@ -1717,7 +1716,7 @@ extension MainViewController: OmniBarDelegate {
             Pixel.fire(pixel: .siteNotWorkingDismissByNavigation,
                        withAdditionalParameters: [UserBehaviorEvent.Parameter.event: event])
         }
-        hideNotification()
+//        hideNotification()
         showHomeRowReminder()
     }
 
@@ -1876,7 +1875,7 @@ extension MainViewController: OmniBarDelegate {
         hideSuggestionTray()
         currentTab?.refresh()
         if brokenSitePromptViewHostingController != nil, let event = brokenSitePromptEvent?.rawValue {
-            hideNotification()
+//            hideNotification()
             Pixel.fire(pixel: .siteNotWorkingDismissByRefresh,
                        withAdditionalParameters: [UserBehaviorEvent.Parameter.event: event])
         }

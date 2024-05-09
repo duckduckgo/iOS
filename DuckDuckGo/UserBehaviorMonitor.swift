@@ -105,11 +105,11 @@ final class UserBehaviorMonitor {
         func fireEventIfActionOccurredRecently(within interval: Double = 30.0, since timestamp: Date?, eventToFire: UserBehaviorEvent) {
             if let timestamp = timestamp, date.timeIntervalSince(timestamp) < interval {
                 eventMapping.fire(eventToFire)
-                if PixelExperimentForBrokenSites.cohort == eventToFire.matchingPixelExperimentVariant {
+//                if PixelExperimentForBrokenSites.cohort == eventToFire.matchingPixelExperimentVariant {
                     NotificationCenter.default.post(name: .userBehaviorDidMatchExperimentVariant,
                                                     object: self, 
                                                     userInfo: [UserBehaviorEvent.Key.event: eventToFire])
-                }
+//                }
             }
         }
     }

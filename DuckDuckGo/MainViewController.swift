@@ -1234,19 +1234,18 @@ class MainViewController: UIViewController {
         ])
 
         self.notificationView = contentView
-        view.layoutSubviews()
-        viewCoordinator.topSlideContainer.layoutIfNeeded()
 
+        view.layoutSubviews()
         viewCoordinator.showTopSlideContainer()
-        UIView.animate(withDuration: 0.4) {
+        UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
     }
 
     func hideNotification() {
-        self.view.layoutIfNeeded()
+        view.layoutIfNeeded()
         viewCoordinator.hideTopSlideContainer()
-        UIView.animate(withDuration: 0.4) {
+        UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         } completion: { _ in
             self.notificationView?.removeFromSuperview()
@@ -1271,13 +1270,15 @@ class MainViewController: UIViewController {
     private var brokenSitePromptEvent: UserBehaviorEvent?
 
     @objc func attemptToShowBrokenSitePrompt(_ notification: Notification) {
-        guard userDidInteractWithBrokenSitePrompt,
+        guard /*userDidInteractWithBrokenSitePrompt,*/
               let event = notification.userInfo?[UserBehaviorEvent.Key.event] as? UserBehaviorEvent,
               let url = currentTab?.url, !url.isDuckDuckGo,
               notificationView == nil,
               !isPad,
               DefaultTutorialSettings().hasSeenOnboarding else { return }
-        showBrokenSitePrompt(after: event)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.showBrokenSitePrompt(after: event)
+        }
     }
 
     private func showBrokenSitePrompt(after event: UserBehaviorEvent) {
@@ -1874,9 +1875,9 @@ extension MainViewController: OmniBarDelegate {
     func onRefreshPressed() {
         hideSuggestionTray()
         currentTab?.refresh()
-        hideNotification()
         if brokenSitePromptViewHostingController != nil, let event = brokenSitePromptEvent?.rawValue {
-            Pixel.fire(pixel: .siteNotWorkingDismissByRefresh, 
+            hideNotification()
+            Pixel.fire(pixel: .siteNotWorkingDismissByRefresh,
                        withAdditionalParameters: [UserBehaviorEvent.Parameter.event: event])
         }
     }

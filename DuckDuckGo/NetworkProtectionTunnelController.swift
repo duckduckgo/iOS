@@ -79,16 +79,16 @@ final class NetworkProtectionTunnelController: TunnelController {
     /// Starts the VPN connection used for Network Protection
     ///
     func start() async {
-        Pixel.fire(pixel: .networkProtectionControllerStartAttempt)
+        Pixel.fire(pixel: .networkProtectionControllerStartAttempt, includedParameters: [.appVersion, .atb])
 
         do {
             try await startWithError()
-            Pixel.fire(pixel: .networkProtectionControllerStartSuccess)
+            Pixel.fire(pixel: .networkProtectionControllerStartSuccess, includedParameters: [.appVersion, .atb])
         } catch {
             if case StartError.configSystemPermissionsDenied = error {
                 return
             }
-            Pixel.fire(pixel: .networkProtectionControllerStartFailure, error: error)
+            Pixel.fire(pixel: .networkProtectionControllerStartFailure, error: error, includedParameters: [.appVersion, .atb])
 
             #if DEBUG
             errorStore.lastErrorMessage = error.localizedDescription
@@ -190,7 +190,7 @@ final class NetworkProtectionTunnelController: TunnelController {
 
         do {
             try tunnelManager.connection.startVPNTunnel(options: options)
-            UniquePixel.fire(pixel: .networkProtectionNewUser) { error in
+            UniquePixel.fire(pixel: .networkProtectionNewUser, includedParameters: [.appVersion, .atb]) { error in
                 guard error != nil else { return }
                 UserDefaults.networkProtectionGroupDefaults.vpnFirstEnabled = Pixel.Event.networkProtectionNewUser.lastFireDate(
                     uniquePixelStorage: UniquePixel.storage

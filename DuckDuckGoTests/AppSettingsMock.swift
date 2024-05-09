@@ -62,6 +62,14 @@ class AppSettingsMock: AppSettings {
 
     var autofill: Bool = false
 
+    var autofillImportViaSyncStart: Date?
+
+    func clearAutofillImportViaSyncStart() {
+        autofillImportViaSyncStart = nil
+    }
+
+    var autofillSurveyEnabled: Bool = false
+
     var voiceSearchEnabled: Bool = false
 
     var widgetInstalled: Bool = false

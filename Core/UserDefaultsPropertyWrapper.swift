@@ -82,6 +82,8 @@ public struct UserDefaultsWrapper<T> {
         case autofillCredentialsSavePromptShowAtLeastOnce = "com.duckduckgo.ios.autofillCredentialsSavePromptShowAtLeastOnce"
         case autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary =
                 "com.duckduckgo.ios.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary"
+        case autofillImportViaSyncStart = "com.duckduckgo.ios.autofillImportViaSyncStart"
+        case autofillSurveyEnabled = "com.duckduckgo.ios.autofillSurveyEnabled"
 
         // .v2 suffix added to fix https://app.asana.com/0/547792610048271/1206524375402369/f
         case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser.v2"
@@ -91,9 +93,6 @@ public struct UserDefaultsWrapper<T> {
         case autoconsentEnabled = "com.duckduckgo.ios.autoconsentEnabled"
 
         case shouldScheduleRulesCompilationOnAppLaunch = "com.duckduckgo.ios.shouldScheduleRulesCompilationOnAppLaunch"
-
-        case lastAppTrackingProtectionHistoryFetchTimestamp = "com.duckduckgo.ios.appTrackingProtection.lastTrackerHistoryFetchTimestamp"
-        case appTPUsed = "com.duckduckgo.ios.appTrackingProtection.appTPUsed"
 
         case defaultBrowserUsageLastSeen = "com.duckduckgo.ios.default-browser-usage-last-seen"
 
@@ -123,6 +122,8 @@ public struct UserDefaultsWrapper<T> {
         case privacyConfigCustomURL = "com.duckduckgo.ios.privacyConfigCustomURL"
 
         case privacyProEnvironment = "com.duckduckgo.ios.privacyPro.environment"
+
+        case appleAdAttributionReportCompleted = "com.duckduckgo.ios.appleAdAttributionReport.completed"
 
         case didRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didRefreshTimestamp"
         case didDoubleRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didDoubleRefreshTimestamp"

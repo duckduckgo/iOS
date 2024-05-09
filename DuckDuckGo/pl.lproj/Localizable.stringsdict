@@ -158,38 +158,6 @@ Zablokowałem ich!
 			<string>%1$d prywatnych kart</string>
 		</dict>
 	</dict>
-	<key>appTP.home.blockedCount</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@attempts@</string>
-		<key>attempts</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>%d tracking attempts</string>
-			<key>one</key>
-			<string>%d tracking attempt</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-		</dict>
-	</dict>
-	<key>appTP.trackingattempts</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@attempts@</string>
-		<key>attempts</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>%d tracking attempts</string>
-			<key>one</key>
-			<string>%d tracking attempt</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-		</dict>
-	</dict>
 	<key>autofill.number.of.passwords</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -198,8 +166,8 @@ Zablokowałem ich!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>%1$d hasło</string>
 			<key>few</key>
@@ -218,8 +186,8 @@ Zablokowałem ich!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>Czy na pewno chcesz usunąć %1$d hasło?</string>
 			<key>few</key>
@@ -230,41 +198,41 @@ Zablokowałem ich!
 			<string>Czy na pewno chcesz usunąć %1$d hasła?</string>
 		</dict>
 	</dict>
-    <key>autofill.delete.all.passwords.confirmation.body</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%1$#@passwords@</string>
-        <key>passwords</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>Twoje hasła zostaną usunięte z tego urządzenia. Upewnij się, że nadal masz możliwość dostępu do swojego %2$#@accounts@.</string>
-            <key>few</key>
-            <string>Twoje hasła zostaną usunięte z tego urządzenia. Upewnij się, że nadal masz możliwość dostępu do swoich %2$#@accounts@.</string>
-            <key>many</key>
-            <string>Twoje hasła zostaną usunięte z tego urządzenia. Upewnij się, że nadal masz możliwość dostępu do swoich %2$#@accounts@.</string>
-            <key>other</key>
-            <string>Twoje hasła zostaną usunięte z tego urządzenia. Upewnij się, że nadal masz możliwość dostępu do swoich %2$#@accounts@.</string>
-        </dict>
-        <key>accounts</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>konto</string>
-            <key>few</key>
-            <string>konta</string>
-            <key>many</key>
-            <string>kont</string>
-            <key>other</key>
-            <string>kont</string>
-        </dict>
-    </dict>
+	<key>autofill.delete.all.passwords.confirmation.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$#@passwords@</string>
+		<key>passwords</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Twoje hasła zostaną usunięte z tego urządzenia. Upewnij się, że nadal masz możliwość dostępu do swojego %2$#@accounts@.</string>
+			<key>few</key>
+			<string>Twoje hasła zostaną usunięte z tego urządzenia. Upewnij się, że nadal masz możliwość dostępu do swoich %2$#@accounts@.</string>
+			<key>many</key>
+			<string>Twoje hasła zostaną usunięte z tego urządzenia. Upewnij się, że nadal masz możliwość dostępu do swoich %2$#@accounts@.</string>
+			<key>other</key>
+			<string>Twoje hasła zostaną usunięte z tego urządzenia. Upewnij się, że nadal masz możliwość dostępu do swoich %2$#@accounts@.</string>
+		</dict>
+		<key>accounts</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>konto</string>
+			<key>few</key>
+			<string>konta</string>
+			<key>many</key>
+			<string>kont</string>
+			<key>other</key>
+			<string>kont</string>
+		</dict>
+	</dict>
 	<key>autofill.delete.all.passwords.sync.confirmation.body</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -273,8 +241,8 @@ Zablokowałem ich!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>Twoje hasła zostaną usunięte ze wszystkich zsynchronizowanych urządzeń. Upewnij się, że nadal masz dostęp do swojego %2$#@accounts@.</string>
 			<key>few</key>
@@ -288,8 +256,8 @@ Zablokowałem ich!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>konto</string>
 			<key>few</key>
@@ -308,8 +276,8 @@ Zablokowałem ich!
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
 			<key>one</key>
 			<string>Usunięto %1$d hasło</string>
 			<key>few</key>

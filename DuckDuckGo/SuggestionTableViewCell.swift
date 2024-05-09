@@ -68,7 +68,7 @@ class SuggestionTableViewCell: UITableViewCell {
             typeImage.image = UIImage(named: "History-20")
             self.accessibilityValue = UserText.voiceoverSuggestionTypeBookmark
 
-        case .unknown(value: let value):
+        case .unknown(value: let value), .internalPage(title: let value, url: _):
             assertionFailure("Unknown suggestion \(value)")
         }
 

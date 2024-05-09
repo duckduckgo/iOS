@@ -1,0 +1,86 @@
+name: "POC maestro tests"
+on:
+  workflow_dispatch: 
+  push: 
+    branches:
+      - kshann/maestro-poc
+jobs:
+  maestro_test:
+    runs-on: macos-13-xlarge
+
+    steps:
+    - name: Check out the code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Start iOS Simulator
+      run: |
+        DEVICE_ID=$(xcrun simctl list devices available --json | jq -r '.devices["com.apple.CoreSimulator.SimRuntime.iOS-17-4"][] | select(.name == "iPhone 15") | .udid' | head -n 1)
+        DEVICE_STATE=$(xcrun simctl list devices available --json | jq -r --arg DEVICE_ID "$DEVICE_ID" '.devices[] | .[] | select(.udid == $DEVICE_ID) | .state')
+        
+        echo "Picked device $DEVICE_ID in state: $DEVICE_STATE"
+
+        if [ -z "$DEVICE_ID" ]; then
+          echo "No available simulator found for the criteria."
+          exit 1
+        fi
+        
+        echo "DEVICE_ID=$DEVICE_ID" >> $GITHUB_ENV
+        
+        if [ "$DEVICE_STATE" != "Booted" ]; then
+          echo "Booting iOS device "$DEVICE_ID""
+          xcrun simctl boot "$DEVICE_ID"
+        else
+          echo "Simulator with DEVICE_ID=$DEVICE_ID is already booted."
+        fi
+
+        DEVICE_STATE=$(xcrun simctl list devices available --json | jq -r --arg DEVICE_ID "$DEVICE_ID" '.devices[] | .[] | select(.udid == $DEVICE_ID) | .state')
+        echo "Device currently in state: $DEVICE_STATE"
+
+    - name: Set cache key hash
+      run: |
+         has_only_tags=$(jq '[ .pins[].state | has("version") ] | all' DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
+         if [[ "$has_only_tags" == "true" ]]; then
+           echo "cache_key_hash=${{ hashFiles('DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}" >> $GITHUB_ENV
+         else
+           echo "Package.resolved contains dependencies specified by branch or commit, skipping cache."
+         fi
+
+    - name: Cache SPM
+      if: env.cache_key_hash
+      uses: actions/cache@v3
+      with:
+        path: DerivedData/SourcePackages
+        key: ${{ runner.os }}-spm-${{ env.cache_key_hash }}
+        restore-keys: |
+          ${{ runner.os }}-spm-
+
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode_$(<.xcode-version).app/Contents/Developer
+
+    - name: Install deps
+      run: |
+        curl -Ls "https://get.maestro.mobile.dev" | bash
+        brew tap facebook/fb
+        brew install facebook/fb/idb-companion
+        echo "${HOME}/.maestro/bin" >> $GITHUB_PATH
+      env:
+        MAESTRO_VERSION: '1.33.1'
+
+    - name: Build for tests
+      run: |
+        set -o pipefail && xcodebuild \
+          -scheme "DuckDuckGo" \
+          -destination "platform=iOS Simulator,name=iPhone 15,OS=17.2" \
+          -derivedDataPath "DerivedData" \
+          -skipPackagePluginValidation \
+          -skipMacroValidation \
+          ONLY_ACTIVE_ARCH=NO \
+        | tee xcodebuild.log
+
+    - name: Run release tests
+      run: |
+        export PATH="$PATH":"$HOME/.maestro/bin"
+        xcrun simctl install $DEVICE_ID DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+        maestro test .maestro --include-tags release

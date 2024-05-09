@@ -6,7 +6,7 @@ on:
       - kshann/maestro-poc
 jobs:
   maestro_test:
-    runs-on: macos-13-xlarge
+    runs-on: macos-14-xlarge
 
     steps:
     - name: Check out the code

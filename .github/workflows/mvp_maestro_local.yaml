@@ -5,7 +5,7 @@ on:
     branches:
       - kshann/maestro-poc
 jobs:
-  maestro_test:
+  maestro_test_setup:
     runs-on: macos-14-xlarge
 
     steps:
@@ -13,30 +13,6 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: recursive
-
-    - name: Start iOS Simulator
-      run: |
-        DEVICE_ID=$(xcrun simctl list devices available --json | jq -r '.devices["com.apple.CoreSimulator.SimRuntime.iOS-17-4"][] | select(.name == "iPhone 15") | .udid' | head -n 1)
-        DEVICE_STATE=$(xcrun simctl list devices available --json | jq -r --arg DEVICE_ID "$DEVICE_ID" '.devices[] | .[] | select(.udid == $DEVICE_ID) | .state')
-        
-        echo "Picked device $DEVICE_ID in state: $DEVICE_STATE"
-
-        if [ -z "$DEVICE_ID" ]; then
-          echo "No available simulator found for the criteria."
-          exit 1
-        fi
-        
-        echo "DEVICE_ID=$DEVICE_ID" >> $GITHUB_ENV
-        
-        if [ "$DEVICE_STATE" != "Booted" ]; then
-          echo "Booting iOS device "$DEVICE_ID""
-          xcrun simctl boot "$DEVICE_ID"
-        else
-          echo "Simulator with DEVICE_ID=$DEVICE_ID is already booted."
-        fi
-
-        DEVICE_STATE=$(xcrun simctl list devices available --json | jq -r --arg DEVICE_ID "$DEVICE_ID" '.devices[] | .[] | select(.udid == $DEVICE_ID) | .state')
-        echo "Device currently in state: $DEVICE_STATE"
 
     - name: Set cache key hash
       run: |
@@ -59,14 +35,7 @@ jobs:
     - name: Select Xcode
       run: sudo xcode-select -s /Applications/Xcode_$(<.xcode-version).app/Contents/Developer
 
-    - name: Install deps
-      run: |
-        curl -Ls "https://get.maestro.mobile.dev" | bash
-        brew tap facebook/fb
-        brew install facebook/fb/idb-companion
-        echo "${HOME}/.maestro/bin" >> $GITHUB_PATH
-      env:
-        MAESTRO_VERSION: '1.33.1'
+
 
     - name: Build for tests
       run: |
@@ -79,33 +48,75 @@ jobs:
           ONLY_ACTIVE_ARCH=NO \
         | tee xcodebuild.log
 
+    - name: Store Binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: duckduckgo-ios-app
+        path: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+
+  run-tests:
+    name: Run tests
+    needs: maestro_test_setup
+    runs-on: macos-14-xlarge
+    timeout-minutes: 60
+    strategy:
+      matrix:
+        test-tag: ['release', 'privacy', 'securityTest', 'adClick']
+      fail-fast: false
+
+    steps:
+    - name: Start iOS Simulator
+      run: |
+        DEVICE_ID=$(xcrun simctl list devices available --json | jq -r '.devices["com.apple.CoreSimulator.SimRuntime.iOS-17-4"][] | select(.name == "iPhone 15") | .udid' | head -n 1)
+        DEVICE_STATE=$(xcrun simctl list devices available --json | jq -r --arg DEVICE_ID "$DEVICE_ID" '.devices[] | .[] | select(.udid == $DEVICE_ID) | .state')
+        
+        echo "Picked device $DEVICE_ID in state: $DEVICE_STATE"
+
+        if [ -z "$DEVICE_ID" ]; then
+          echo "No available simulator found for the criteria."
+          exit 1
+        fi
+        
+        echo "DEVICE_ID=$DEVICE_ID" >> $GITHUB_ENV
+        
+        if [ "$DEVICE_STATE" != "Booted" ]; then
+          echo "Booting iOS device "$DEVICE_ID""
+          xcrun simctl boot "$DEVICE_ID"
+          sleep 30
+        else
+          echo "Simulator with DEVICE_ID=$DEVICE_ID is already booted."
+        fi
+
+        DEVICE_STATE=$(xcrun simctl list devices available --json | jq -r --arg DEVICE_ID "$DEVICE_ID" '.devices[] | .[] | select(.udid == $DEVICE_ID) | .state')
+        echo "Device currently in state: $DEVICE_STATE"]
+
+    - name: Check out the code
+      uses: actions/checkout@v4
+
+    - name: Install deps
+      run: |
+        curl -Ls "https://get.maestro.mobile.dev" | bash
+        brew tap facebook/fb
+        brew install facebook/fb/idb-companion
+        echo "${HOME}/.maestro/bin" >> $GITHUB_PATH
+      env:
+        MAESTRO_VERSION: '1.33.1'
+
+    - name: Retrieve Binary
+      uses: actions/download-artifact@v4
+      with:
+        name: duckduckgo-ios-app
+        path: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+
     - name: Install App onto simulator
-      run : |
+      run: |
         xcrun simctl install $DEVICE_ID DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
 
-    - name: Release Tests
+    - name: Run ${{ matrix.test-tag }} Tests
       run: |
-        maestro test .maestro --include-tags release
+        maestro test --format junit --output results.xml .maestro --include-tags ${{ matrix.test-tag }}
 
-    - name: Privacy tests
-      run: |
-        maestro test .maestro --include-tags privacy
-
-    - name: Security tests
-      run: |
-        maestro test .maestro --include-tags securityTest
-    
-    - name: Ad Click Detection Flow tests
-      run: |
-        maestro test .maestro --include-tags adClick
-
-
-    - name: Upload logs when workflow failed
-      uses: actions/upload-artifact@v4
-      if: failure()
+    - name: Publish unit tests report ${{ matrix.test-tag }}
+      uses: mikepenz/action-junit-report@v3
       with:
-        name: BuildLogs
-        path: |
-          xcodebuild.log
-          DerivedData/Logs/Test/*.xcresult
-        retention-days: 7
+        report_paths: results.xml

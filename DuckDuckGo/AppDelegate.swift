@@ -664,6 +664,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             showKeyboardIfSettingOn = true
             syncService.scheduler.resumeSyncQueue()
         }
+
+        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {

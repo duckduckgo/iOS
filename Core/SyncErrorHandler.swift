@@ -24,41 +24,7 @@ import Persistence
 import Foundation
 import SyncUI
 
-/// The SyncErrorHandling protocol defines methods for handling sync errors related to specific data types such as bookmarks and credentials.
-public protocol SyncErrorHandling {
-    func handleBookmarkError(_ error: Error)
-    func handleCredentialError(_ error: Error)
-    func syncBookmarksSucceded()
-    func syncCredentialsSucceded()
-}
-
-/// The SyncPausedStateManaging protocol manages sync error states. It provides properties and methods to detect and handle changes in the synchronization status, aiding in error user notification.
-public protocol SyncPausedStateManaging: ObservableObject {
-    var isSyncPaused: Bool { get }
-    var isSyncBookmarksPaused: Bool { get }
-    var isSyncCredentialsPaused: Bool { get }
-    var syncPausedChangedPublisher: AnyPublisher<Void, Never> { get }
-    var syncPausedMessageData: SyncPausedMessageData? { get }
-    var syncBookmarksPausedMessageData: SyncPausedMessageData? { get }
-    var syncCredentialsPausedMessageData: SyncPausedMessageData? { get }
-
-    func syncDidTurnOff()
-}
-
-public struct SyncPausedMessageData {
-    public let title: String
-    public let message: String
-    public let buttonTitle: String
-
-    public init(title: String, message: String, buttonTitle: String) {
-        self.title = title
-        self.message = message
-        self.buttonTitle = buttonTitle
-    }
-}
-
 public class SyncErrorHandler: EventMapping<SyncError> {
-
     @UserDefaultsWrapper(key: .syncBookmarksPaused, defaultValue: false)
     private (set) public var isSyncBookmarksPaused: Bool {
         didSet {
@@ -109,7 +75,6 @@ public class SyncErrorHandler: EventMapping<SyncError> {
 
     var isSyncPausedChangedPublisher = PassthroughSubject<Void, Never>()
     let dateProvider: DateProviding
-
     public weak var alertPresenter: SyncAlertsPresenting?
 
     public init(dateProvider: DateProviding = Date()) {
@@ -127,7 +92,6 @@ public class SyncErrorHandler: EventMapping<SyncError> {
                 let domainEvent = Pixel.Event.syncSentUnauthenticatedRequest
                 Pixel.fire(pixel: domainEvent, error: event)
             }
-
         }
     }
 
@@ -138,21 +102,18 @@ public class SyncErrorHandler: EventMapping<SyncError> {
 
 // MARK: - Private functions
 extension SyncErrorHandler {
-
     private func resetBookmarksErrors() {
         isSyncBookmarksPaused = false
         didShowBookmarksSyncPausedError = false
         currentSyncBookmarksPausedError = nil
         resetGeneralErrors()
     }
-
     private func resetCredentialsErrors() {
         isSyncCredentialsPaused = false
         didShowCredentialsSyncPausedError = false
         currentSyncCredentialsPausedError = nil
         resetGeneralErrors()
     }
-
     private func resetGeneralErrors() {
         isSyncPaused = false
         didShowInvalidLoginSyncPausedError = false
@@ -229,7 +190,6 @@ extension SyncErrorHandler {
         }
     }
 
-
     private func syncIsPaused(errorType: AsyncErrorType) {
         showSyncPausedAlertIfNeeded(for: errorType)
         switch errorType {
@@ -304,14 +264,12 @@ extension SyncErrorHandler {
         }
 
     }
-
     private func getErrorType(from errorString: String?) -> AsyncErrorType? {
         guard let errorString = errorString else {
             return nil
         }
         return AsyncErrorType(rawValue: errorString)
     }
-
     private var syncPausedTitle: String? {
         guard let error = getErrorType(from: currentSyncAllPausedError) else { return nil }
         switch error {
@@ -324,7 +282,6 @@ extension SyncErrorHandler {
             return nil
         }
     }
-
     private var syncPausedMessage: String? {
         guard let error = getErrorType(from: currentSyncAllPausedError) else { return nil }
         switch error {
@@ -337,7 +294,6 @@ extension SyncErrorHandler {
             return nil
         }
     }
-
     private var syncBookmarksPausedMessage: String? {
         guard let error = getErrorType(from: currentSyncBookmarksPausedError) else { return nil }
         switch error {
@@ -350,7 +306,6 @@ extension SyncErrorHandler {
             return nil
         }
     }
-
     private var syncCredentialsPausedMessage: String? {
         guard let error = getErrorType(from: currentSyncCredentialsPausedError) else { return nil }
         switch error {
@@ -363,12 +318,10 @@ extension SyncErrorHandler {
             return nil
         }
     }
-
     private enum ModelType {
         case bookmarks
         case credentials
     }
-
     private enum AsyncErrorType: String {
         case bookmarksCountLimitExceeded
         case credentialsCountLimitExceeded

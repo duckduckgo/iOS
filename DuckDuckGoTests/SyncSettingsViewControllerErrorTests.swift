@@ -28,13 +28,13 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
 
     var cancellables: Set<AnyCancellable>!
     var vc: SyncSettingsViewController!
-    var errorHandler: SyncPausedStateManager!
+    var errorHandler: CapturingSyncPausedStateManager!
 
     @MainActor
     override func setUp() {
         super.setUp()
         cancellables = []
-        errorHandler = SyncPausedStateManager()
+        errorHandler = CapturingSyncPausedStateManager()
         let bundle = DDGSync.bundle
         guard let model = CoreDataDatabase.loadModel(from: bundle, named: "SyncMetadata") else {
             XCTFail("Failed to load model")

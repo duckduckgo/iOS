@@ -241,7 +241,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             secureVaultErrorReporter: SecureVaultReporter.shared,
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage(),
-                        syncErrorHandler: syncErrorHandler
+            syncErrorHandler: syncErrorHandler
         )
 
         let syncService = DDGSync(
@@ -277,7 +277,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                       appSettings: AppDependencyProvider.shared.appSettings,
                                       previewsSource: previewsSource,
                                       tabsModel: tabsModel,
-                                                                            syncPausedStateManager: syncErrorHandler)
+                                      syncPausedStateManager: syncErrorHandler)
 
         main.loadViewIfNeeded()
         syncErrorHandler.alertPresenter = main

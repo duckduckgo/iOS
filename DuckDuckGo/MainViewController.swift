@@ -1282,6 +1282,7 @@ class MainViewController: UIViewController {
     }
 
     private func showNotification(with contentView: UIView) {
+        guard viewCoordinator.topSlideContainer.subviews.isEmpty else { return }
         viewCoordinator.topSlideContainer.addSubview(contentView)
 
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -1297,7 +1298,7 @@ class MainViewController: UIViewController {
         viewCoordinator.topSlideContainer.layoutIfNeeded()
 
         viewCoordinator.showTopSlideContainer()
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.4) {
             self.view.layoutIfNeeded()
         }
     }
@@ -1305,7 +1306,7 @@ class MainViewController: UIViewController {
     func hideNotification() {
         self.view.layoutIfNeeded()
         viewCoordinator.hideTopSlideContainer()
-        UIView.animate(withDuration: 1.0) {
+        UIView.animate(withDuration: 0.4) {
             self.view.layoutIfNeeded()
         } completion: { _ in
             self.notificationView?.removeFromSuperview()
@@ -1327,19 +1328,23 @@ class MainViewController: UIViewController {
     }
 
     private var brokenSitePromptViewHostingController: UIHostingController<BrokenSitePromptView>?
+    private var brokenSitePromptEvent: UserBehaviorEvent?
 
     @objc func attemptToShowBrokenSitePrompt(_ notification: Notification) {
         guard userDidInteractWithBrokenSitePrompt,
               let event = notification.userInfo?[UserBehaviorEvent.Key.event] as? UserBehaviorEvent,
               let url = currentTab?.url, !url.isDuckDuckGo,
               notificationView == nil,
-              !isPad  else { return }
+              !isPad,
+              DefaultTutorialSettings().hasSeenOnboarding else { return }
         showBrokenSitePrompt(after: event)
     }
 
     private func showBrokenSitePrompt(after event: UserBehaviorEvent) {
         let host = makeBrokenSitePromptViewHostingController(event: event)
-        self.brokenSitePromptViewHostingController = host
+        brokenSitePromptViewHostingController = host
+        brokenSitePromptEvent = event
+        Pixel.fire(pixel: .siteNotWorkingShown, withAdditionalParameters: [UserBehaviorEvent.Parameter.event: event.rawValue])
         showNotification(with: host.view)
     }
 
@@ -1348,11 +1353,13 @@ class MainViewController: UIViewController {
         let viewModel = BrokenSitePromptViewModel(onDidDismiss: { [weak self] in
             self?.hideNotification()
             self?.userDidInteractWithBrokenSitePrompt = true
+            self?.brokenSitePromptViewHostingController = nil
             Pixel.fire(pixel: .siteNotWorkingDismiss, withAdditionalParameters: parameters)
         }, onDidSubmit: { [weak self] in
             self?.segueToReportBrokenSite(mode: .prompt(event.rawValue))
             self?.hideNotification()
             self?.userDidInteractWithBrokenSitePrompt = true
+            self?.brokenSitePromptViewHostingController = nil
             Pixel.fire(pixel: .siteNotWorkingWebsiteIsBroken, withAdditionalParameters: parameters)
         })
         return UIHostingController(rootView: BrokenSitePromptView(viewModel: viewModel))
@@ -1765,7 +1772,11 @@ extension MainViewController: OmniBarDelegate {
         }
         loadQuery(query)
         hideSuggestionTray()
-        hideBrokenSitePrompt()
+        if brokenSitePromptViewHostingController != nil, let event = brokenSitePromptEvent?.rawValue {
+            Pixel.fire(pixel: .siteNotWorkingDismissByNavigation,
+                       withAdditionalParameters: [UserBehaviorEvent.Parameter.event: event])
+        }
+        hideNotification()
         showHomeRowReminder()
     }
 
@@ -1923,6 +1934,11 @@ extension MainViewController: OmniBarDelegate {
     func onRefreshPressed() {
         hideSuggestionTray()
         currentTab?.refresh()
+        hideNotification()
+        if brokenSitePromptViewHostingController != nil, let event = brokenSitePromptEvent?.rawValue {
+            Pixel.fire(pixel: .siteNotWorkingDismissByRefresh, 
+                       withAdditionalParameters: [UserBehaviorEvent.Parameter.event: event])
+        }
     }
     
     func onSharePressed() {

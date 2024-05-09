@@ -86,12 +86,17 @@ public class SyncErrorHandler: EventMapping<SyncError> {
     @UserDefaultsWrapper(key: .syncLastNonActionableErrorCount, defaultValue: 0)
     var nonActionableErrorCount: Int
 
+    @UserDefaultsWrapper(key: .syncCurrentAllPausedError, defaultValue: nil)
+    private var currentSyncAllPausedError: String?
+
+    @UserDefaultsWrapper(key: .syncCurrentBookmarksPausedError, defaultValue: nil)
+    private var currentSyncBookmarksPausedError: String?
+
+    @UserDefaultsWrapper(key: .syncCurrentCredentialsPausedError, defaultValue: nil)
+    private var currentSyncCredentialsPausedError: String?
+
     var isSyncPausedChangedPublisher = PassthroughSubject<Void, Never>()
     let dateProvider: DateProviding
-
-    private var currentSyncAllPausedError: AsyncErrorType?
-    private var currentSyncCredentialsPausedError: AsyncErrorType?
-    private var currentSyncBookmarksPausedError: AsyncErrorType?
 
     public weak var alertPresenter: AlertPresenting?
 
@@ -217,32 +222,32 @@ extension SyncErrorHandler {
         showSyncPausedAlertIfNeeded(for: errorType)
         switch errorType {
         case .bookmarksCountLimitExceeded:
-            currentSyncBookmarksPausedError = errorType
+            currentSyncBookmarksPausedError = errorType.rawValue
             self.isSyncBookmarksPaused = true
             DailyPixel.fire(pixel: .syncBookmarksCountLimitExceededDaily)
         case .credentialsCountLimitExceeded:
-            currentSyncCredentialsPausedError = errorType
+            currentSyncCredentialsPausedError = errorType.rawValue
             self.isSyncCredentialsPaused = true
             DailyPixel.fire(pixel: .syncCredentialsCountLimitExceededDaily)
         case .bookmarksRequestSizeLimitExceeded:
-            currentSyncBookmarksPausedError = errorType
+            currentSyncBookmarksPausedError = errorType.rawValue
             self.isSyncBookmarksPaused = true
             DailyPixel.fire(pixel: .syncBookmarksRequestSizeLimitExceededDaily)
         case .credentialsRequestSizeLimitExceeded:
-            currentSyncCredentialsPausedError = errorType
+            currentSyncCredentialsPausedError = errorType.rawValue
             self.isSyncCredentialsPaused = true
             DailyPixel.fire(pixel: .syncCredentialsRequestSizeLimitExceededDaily)
         case .badRequestBookmarks:
-            currentSyncBookmarksPausedError = errorType
+            currentSyncBookmarksPausedError = errorType.rawValue
             self.isSyncBookmarksPaused = true
         case .badRequestCredentials:
-            currentSyncCredentialsPausedError = errorType
+            currentSyncCredentialsPausedError = errorType.rawValue
             self.isSyncCredentialsPaused = true
         case .invalidLoginCredentials:
-            currentSyncAllPausedError = errorType
+            currentSyncAllPausedError = errorType.rawValue
             self.isSyncPaused = true
         case .tooManyRequests:
-            currentSyncAllPausedError = errorType
+            currentSyncAllPausedError = errorType.rawValue
             self.isSyncPaused = true
         }
     }
@@ -288,8 +293,15 @@ extension SyncErrorHandler {
 
     }
 
+    private func getErrorType(from errorString: String?) -> AsyncErrorType? {
+        guard let errorString = errorString else {
+            return nil
+        }
+        return AsyncErrorType(rawValue: errorString)
+    }
+
     private var syncPausedTitle: String? {
-        guard let error = currentSyncAllPausedError else { return nil }
+        guard let error = getErrorType(from: currentSyncAllPausedError) else { return nil }
         switch error {
         case .invalidLoginCredentials:
             return UserText.syncPausedTitle
@@ -302,7 +314,7 @@ extension SyncErrorHandler {
     }
 
     private var syncPausedMessage: String? {
-        guard let error = currentSyncAllPausedError else { return nil }
+        guard let error = getErrorType(from: currentSyncAllPausedError) else { return nil }
         switch error {
         case .invalidLoginCredentials:
             return UserText.invalidLoginCredentialErrorDescription
@@ -315,7 +327,7 @@ extension SyncErrorHandler {
     }
 
     private var syncBookmarksPausedMessage: String? {
-        guard let error = currentSyncBookmarksPausedError else { return nil }
+        guard let error = getErrorType(from: currentSyncBookmarksPausedError) else { return nil }
         switch error {
         case .bookmarksCountLimitExceeded, .bookmarksRequestSizeLimitExceeded:
             return UserText.bookmarksLimitExceededDescription
@@ -328,7 +340,7 @@ extension SyncErrorHandler {
     }
 
     private var syncCredentialsPausedMessage: String? {
-        guard let error = currentSyncCredentialsPausedError else { return nil }
+        guard let error = getErrorType(from: currentSyncCredentialsPausedError) else { return nil }
         switch error {
         case .credentialsCountLimitExceeded, .credentialsRequestSizeLimitExceeded:
             return UserText.credentialsLimitExceededDescription
@@ -345,7 +357,7 @@ extension SyncErrorHandler {
         case credentials
     }
 
-    private enum AsyncErrorType {
+    private enum AsyncErrorType: String {
         case bookmarksCountLimitExceeded
         case credentialsCountLimitExceeded
         case bookmarksRequestSizeLimitExceeded

@@ -218,6 +218,42 @@ final class SyncErrorHandlerTests: XCTestCase {
         XCTAssertFalse(handler.isSyncPaused)
     }
 
+    func test_WhenHandleBookmarksError409_AndHandlerIsReinitialised_ThenErrorIsStillPresent() async {
+        let error = SyncError.unexpectedStatusCode(409)
+
+        handler.handleBookmarkError(error)
+
+        handler = SyncErrorHandler()
+
+        XCTAssertTrue(handler.isSyncBookmarksPaused)
+        XCTAssertFalse(handler.isSyncCredentialsPaused)
+        XCTAssertFalse(handler.isSyncPaused)
+    }
+
+    func test_WhenHandleCredentialError409_AndHandlerIsReinitialised_ThenErrorIsStillPresent() async {
+        let error = SyncError.unexpectedStatusCode(409)
+        
+        handler.handleCredentialError(error)
+
+        handler = SyncErrorHandler()
+
+        XCTAssertFalse(handler.isSyncBookmarksPaused)
+        XCTAssertTrue(handler.isSyncCredentialsPaused)
+        XCTAssertFalse(handler.isSyncPaused)
+    }
+
+    func test_WhenHandleCredentialError429_AndHandlerIsReinitialised_ThenErrorIsStillPresent() async {
+        let error = SyncError.unexpectedStatusCode(429)
+
+        handler.handleCredentialError(error)
+
+        handler = SyncErrorHandler()
+
+        XCTAssertFalse(handler.isSyncBookmarksPaused)
+        XCTAssertFalse(handler.isSyncCredentialsPaused)
+        XCTAssertTrue(handler.isSyncPaused)
+    }
+
     func test_whenSyncBookmarksSucced_ThenDateSaved() async {
         handler.syncBookmarksSucceded()
         let actualTime =  handler.lastSyncSuccessTime

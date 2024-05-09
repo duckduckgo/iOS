@@ -792,7 +792,7 @@ class MainViewController: UIViewController {
 
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
-        
+        hideNotificationBarIfBrokenSitePromptShown()
         wakeLazyFireButtonAnimator()
         
         if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
@@ -807,7 +807,6 @@ class MainViewController: UIViewController {
     
     func onQuickFirePressed() {
         wakeLazyFireButtonAnimator()
-        
         forgetAllWithAnimation {}
         dismiss(animated: true)
         if KeyboardSettings().onAppLaunch {
@@ -823,12 +822,14 @@ class MainViewController: UIViewController {
 
     @IBAction func onBackPressed() {
         Pixel.fire(pixel: .tabBarBackPressed)
+        hideNotificationBarIfBrokenSitePromptShown()
         currentTab?.goBack()
         refreshOmniBar()
     }
 
     @IBAction func onForwardPressed() {
         Pixel.fire(pixel: .tabBarForwardPressed)
+        hideNotificationBarIfBrokenSitePromptShown()
         currentTab?.goForward()
     }
     
@@ -1038,6 +1039,16 @@ class MainViewController: UIViewController {
         viewCoordinator.omniBar.resignFirstResponder()
         hideSuggestionTray()
         refreshOmniBar()
+    }
+
+    private func hideNotificationBarIfBrokenSitePromptShown(afterRefresh: Bool = false) {
+        guard brokenSitePromptViewHostingController != nil,
+                let event = brokenSitePromptEvent?.rawValue else { return }
+        brokenSitePromptViewHostingController = nil
+        let pixel: Pixel.Event = afterRefresh ? .siteNotWorkingDismissByRefresh: .siteNotWorkingDismissByNavigation
+        Pixel.fire(pixel: .siteNotWorkingDismissByNavigation,
+                   withAdditionalParameters: [UserBehaviorEvent.Parameter.event: event])
+        hideNotification()
     }
 
     fileprivate func refreshBackForwardButtons() {
@@ -1277,7 +1288,11 @@ class MainViewController: UIViewController {
             notificationView == nil,
             !isPad,
             DefaultTutorialSettings().hasSeenOnboarding else { return }
-        self.showBrokenSitePrompt(after: event)
+
+        // We're using async to ensure the view dismissal happens on the first runloop after a refresh. This prevents the scenario where the view briefly appears and then immediately disappears after a refresh.
+        DispatchQueue.main.async {
+            self.showBrokenSitePrompt(after: event)
+        }
     }
 
     private func showBrokenSitePrompt(after event: UserBehaviorEvent) {
@@ -1712,11 +1727,7 @@ extension MainViewController: OmniBarDelegate {
         }
         loadQuery(query)
         hideSuggestionTray()
-        if brokenSitePromptViewHostingController != nil, let event = brokenSitePromptEvent?.rawValue {
-            Pixel.fire(pixel: .siteNotWorkingDismissByNavigation,
-                       withAdditionalParameters: [UserBehaviorEvent.Parameter.event: event])
-        }
-//        hideNotification()
+        hideNotificationBarIfBrokenSitePromptShown()
         showHomeRowReminder()
     }
 
@@ -1870,17 +1881,13 @@ extension MainViewController: OmniBarDelegate {
         homeController.launchNewSearch()
         return selectQueryText
     }
-    
+
     func onRefreshPressed() {
         hideSuggestionTray()
         currentTab?.refresh()
-        if brokenSitePromptViewHostingController != nil, let event = brokenSitePromptEvent?.rawValue {
-//            hideNotification()
-            Pixel.fire(pixel: .siteNotWorkingDismissByRefresh,
-                       withAdditionalParameters: [UserBehaviorEvent.Parameter.event: event])
-        }
+        hideNotificationBarIfBrokenSitePromptShown(afterRefresh: true)
     }
-    
+
     func onSharePressed() {
         hideSuggestionTray()
         guard let link = currentTab?.link else { return }
@@ -2059,7 +2066,7 @@ extension MainViewController: TabDelegate {
              didRequestNewWebViewWithConfiguration configuration: WKWebViewConfiguration,
              for navigationAction: WKNavigationAction,
              inheritingAttribution: AdClickAttributionLogic.State?) -> WKWebView? {
-
+        hideNotificationBarIfBrokenSitePromptShown()
         showBars()
         currentTab?.dismiss()
 
@@ -2120,7 +2127,7 @@ extension MainViewController: TabDelegate {
              openedByPage: Bool,
              inheritingAttribution attribution: AdClickAttributionLogic.State?) {
         _ = findInPageView.resignFirstResponder()
-
+        hideNotificationBarIfBrokenSitePromptShown()
         if openedByPage {
             showBars()
             newTabAnimation {
@@ -2300,6 +2307,7 @@ extension MainViewController: TabSwitcherDelegate {
     func closeTab(_ tab: Tab) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
         hideSuggestionTray()
+        hideNotificationBarIfBrokenSitePromptShown()
         tabManager.remove(at: index)
         updateCurrentTab()
         tabsBarController?.refresh(tabsModel: tabManager.model)
@@ -2341,7 +2349,7 @@ extension MainViewController: TabSwitcherButtonDelegate {
         guard currentTab ?? tabManager.current(createIfNeeded: true) != nil else {
             fatalError("Unable to get current tab")
         }
-
+        hideNotificationBarIfBrokenSitePromptShown()
         updatePreviewForCurrentTab {
             ViewHighlighter.hideAll()
             self.segueToTabSwitcher()

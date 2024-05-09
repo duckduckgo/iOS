@@ -248,7 +248,7 @@ private struct NetworkProtectionErrorView: View {
                 .daxBodyRegular()
                 .foregroundColor(.primary)
         }
-        .listRowBackground(Color(designSystemColor: .accent))
+        .listRowBackground(Color(designSystemColor: .surface))
     }
 }
 

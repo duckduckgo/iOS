@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "dominik/sync-payload-compression",
-        "revision" : "fbfcb614f152d244b475cee704e1c28fd80a3669"
+        "revision" : "803be7265bac4eefff35be97aed6d7d693d8c8a9"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
       "state" : {
-        "revision" : "6053999d6af384a716ab0ce7205dbab5d70ed1b3",
-        "version" : "11.0.1"
+        "revision" : "10aeff1ec7f533d1705233a9b14f9393a699b1c0",
+        "version" : "11.0.2"
       }
     },
     {

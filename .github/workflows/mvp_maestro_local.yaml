@@ -79,13 +79,38 @@ jobs:
           ONLY_ACTIVE_ARCH=NO \
         | tee xcodebuild.log
 
-    - name: Run release tests
-      run: |
-        export PATH="$PATH":"$HOME/.maestro/bin"
-        xcrun simctl install $DEVICE_ID DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
-        maestro test --format junit --output results.xml .maestro --include-tags release
+    - name: Install App onto simulator
+      run : |
+          xcrun simctl install $DEVICE_ID DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
 
-    - name: Publish unit tests report
+    - name: Release Tests
+      run: |
+        maestro test --format junit --output testresults/release.xml .maestro --include-tags release
+
+    - name: Privacy tests
+      run: |
+        maestro test --format junit --output testresults/privacy.xml .maestro --include-tags privacy
+
+    - name: Security tests
+      run: |
+        maestro test --format junit --output testresults/security.xml .maestro --include-tags securityTest
+    
+    - name: Ad Click Detection Flow tests
+      run: |
+        maestro test --format junit --output testresults/adclick.xml .maestro --include-tags adClick
+
+    - name: Publish Test report
       uses: mikepenz/action-junit-report@v3
+      if: success() || failure()
       with:
-        report_paths: results.xml
+        report_paths: '**/testresults/*.xml'
+
+    - name: Upload logs when workflow failed
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: BuildLogs
+        path: |
+          xcodebuild.log
+          DerivedData/Logs/Test/*.xcresult
+        retention-days: 7

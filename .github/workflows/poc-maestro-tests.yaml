@@ -115,7 +115,8 @@ jobs:
         maestro test --format junit --output results.xml .maestro --include-tags ${{ matrix.test-tag }}
 
     - name: Publish unit tests report
+      if: ${{ success() || failure() }}
       uses: mikepenz/action-junit-report@v4
       with:
-        check_name: "Test Report ${{ matrix.runner }}"
+        check_name: "Test Report ${{ matrix.test-tag }}"
         report_paths: results.xml

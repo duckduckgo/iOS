@@ -44,8 +44,8 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_WhenHandleCredentialsError400ForTheFirstTime_ThenNoAlertShown() async {
-        let error = SyncError.unexpectedStatusCode(400)
+    func test_WhenHandleCredentialsError429ForTheFirstTime_ThenNoAlertShown() async {
+        let error = SyncError.unexpectedStatusCode(429)
 
         handler.handleCredentialError(_:)(error)
 
@@ -68,8 +68,8 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
         XCTAssertFalse(alertPresenter.showAlertCalled)
     }
 
-    func test_When400ErrorFired9Times_ThenNoAlertShown() async {
-        let error = SyncError.unexpectedStatusCode(400)
+    func test_When429ErrorFired9Times_ThenNoAlertShown() async {
+        let error = SyncError.unexpectedStatusCode(429)
 
         for _ in 0...8 {
             handler.handleCredentialError(_:)(error)
@@ -79,8 +79,8 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
         XCTAssertFalse(alertPresenter.showAlertCalled)
     }
 
-    func test_When400ErrorFired10Times_ThenAlertShown() async {
-        let error = SyncError.unexpectedStatusCode(400)
+    func test_When418ErrorFired10Times_ThenAlertShown() async {
+        let error = SyncError.unexpectedStatusCode(418)
 
         for _ in 0...10 {
             handler.handleCredentialError(_:)(error)
@@ -162,8 +162,8 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
         XCTAssertEqual(alertPresenter.showAlertCount, 1)
     }
 
-    func test_When400ErrorFiredAfter12HoursFromLastSuccessfulSync_ButNoErrorRegisteredBefore_ThenNoAlertShown() async {
-        let error = SyncError.unexpectedStatusCode(400)
+    func test_When418ErrorFiredAfter12HoursFromLastSuccessfulSync_ButNoErrorRegisteredBefore_ThenNoAlertShown() async {
+        let error = SyncError.unexpectedStatusCode(418)
         let thirteenHoursAgo = Calendar.current.date(byAdding: .hour, value: -13, to: Date())!
         dateProvider.currentDate = thirteenHoursAgo
         handler.syncBookmarksSucceded()
@@ -174,8 +174,8 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
         XCTAssertFalse(alertPresenter.showAlertCalled)
     }
 
-    func test_When400ErrorFired10Times_AndAfter24H_400ErrorFired10TimesAgain_ThenAlertShownTwice() async {
-        let error = SyncError.unexpectedStatusCode(400)
+    func test_When429ErrorFired10Times_AndAfter24H_429ErrorFired10TimesAgain_ThenAlertShownTwice() async {
+        let error = SyncError.unexpectedStatusCode(429)
         let oneDayAgo = Calendar.current.date(byAdding: .hour, value: -25, to: Date())!
         dateProvider.currentDate = oneDayAgo
 

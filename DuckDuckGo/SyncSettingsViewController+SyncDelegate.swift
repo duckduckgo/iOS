@@ -25,36 +25,36 @@ import DDGSync
 import AVFoundation
 
 extension SyncSettingsViewController: SyncManagementViewModelDelegate {
-    var syncBookmarksPausedTitle: String {
-        syncSettingsErrorHandler.syncBookmarksPausedMetadata.title
+    var syncBookmarksPausedTitle: String? {
+        syncSettingsErrorHandler.syncBookmarksPausedMetadata?.title
     }
     
-    var syncCredentialsPausedTitle: String {
-        syncSettingsErrorHandler.syncCredentialsPausedMetadata.title
+    var syncCredentialsPausedTitle: String? {
+        syncSettingsErrorHandler.syncCredentialsPausedMetadata?.title
     }
     
     var syncPausedTitle: String? {
         syncSettingsErrorHandler.syncPausedMetadata?.title
     }
     
-    var syncBookmarksPausedDescription: String {
-        syncSettingsErrorHandler.syncBookmarksPausedMetadata.message
+    var syncBookmarksPausedDescription: String? {
+        syncSettingsErrorHandler.syncBookmarksPausedMetadata?.message
     }
     
-    var syncCredentialsPausedDescription: String {
-        syncSettingsErrorHandler.syncCredentialsPausedMetadata.message
+    var syncCredentialsPausedDescription: String? {
+        syncSettingsErrorHandler.syncCredentialsPausedMetadata?.message
     }
     
     var syncPausedDescription: String? {
         syncSettingsErrorHandler.syncPausedMetadata?.message
     }
     
-    var syncBookmarksPausedButtonTitle: String {
-        syncSettingsErrorHandler.syncBookmarksPausedMetadata.buttonTitle
+    var syncBookmarksPausedButtonTitle: String? {
+        syncSettingsErrorHandler.syncBookmarksPausedMetadata?.buttonTitle
     }
     
-    var syncCredentialsPausedButtonTitle: String {
-        syncSettingsErrorHandler.syncCredentialsPausedMetadata.buttonTitle
+    var syncCredentialsPausedButtonTitle: String? {
+        syncSettingsErrorHandler.syncCredentialsPausedMetadata?.buttonTitle
     }
     
 

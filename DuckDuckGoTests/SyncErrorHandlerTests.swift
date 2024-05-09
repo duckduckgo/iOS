@@ -203,9 +203,9 @@ final class SyncErrorHandlerTests: XCTestCase {
 
         handler.handleBookmarkError(error)
 
-        XCTAssertFalse(handler.isSyncBookmarksPaused)
+        XCTAssertTrue(handler.isSyncBookmarksPaused)
         XCTAssertFalse(handler.isSyncCredentialsPaused)
-        XCTAssertTrue(handler.isSyncPaused)
+        XCTAssertFalse(handler.isSyncPaused)
     }
 
     func test_WhenHandleCredentialsError400_ThenIsSyncIsPausedIsUpdatedToTrue() async {
@@ -214,8 +214,8 @@ final class SyncErrorHandlerTests: XCTestCase {
         handler.handleCredentialError(error)
 
         XCTAssertFalse(handler.isSyncBookmarksPaused)
-        XCTAssertFalse(handler.isSyncCredentialsPaused)
-        XCTAssertTrue(handler.isSyncPaused)
+        XCTAssertTrue(handler.isSyncCredentialsPaused)
+        XCTAssertFalse(handler.isSyncPaused)
     }
 
     func test_whenSyncBookmarksSucced_ThenDateSaved() async {

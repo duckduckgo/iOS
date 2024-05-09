@@ -40,12 +40,12 @@ class CapturingSyncSettingsErrorHandler: SyncPausedStateManaging {
         message: "syncPausedMessage",
         buttonTitle: "syncPausedButtonTitle")
 
-    var syncBookmarksPausedMetadata: SyncPausedMessageData = SyncPausedMessageData(
+    var syncBookmarksPausedMetadata: SyncPausedMessageData? = SyncPausedMessageData(
         title: "syncPausedTitle bookmarks",
         message: "syncPausedMessage bookmarks",
         buttonTitle: "syncPausedButtonTitle bookmarks")
 
-    var syncCredentialsPausedMetadata: SyncPausedMessageData = SyncPausedMessageData(
+    var syncCredentialsPausedMetadata: SyncPausedMessageData? = SyncPausedMessageData(
         title: "syncPausedTitle credentials ",
         message: "syncPausedMessage credentials",
         buttonTitle: "syncPausedButtonTitle credentials")

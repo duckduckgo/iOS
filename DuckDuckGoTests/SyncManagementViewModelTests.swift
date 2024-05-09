@@ -24,14 +24,14 @@ import XCTest
 class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate {
     
     fileprivate var monitor = Monitor<SyncManagementViewModelDelegate>()
-    var syncBookmarksPausedTitle: String = "syncBookmarksPausedTitle"
-    var syncCredentialsPausedTitle: String = "syncCredentialsPausedTitle"
+    var syncBookmarksPausedTitle: String? = "syncBookmarksPausedTitle"
+    var syncCredentialsPausedTitle: String? = "syncCredentialsPausedTitle"
     var syncPausedTitle: String? = "syncPausedTitle"
-    var syncBookmarksPausedDescription: String = "syncBookmarksPausedDescription"
-    var syncCredentialsPausedDescription: String = "syncCredentialsPausedDescription"
+    var syncBookmarksPausedDescription: String? = "syncBookmarksPausedDescription"
+    var syncCredentialsPausedDescription: String? = "syncCredentialsPausedDescription"
     var syncPausedDescription: String? = "syncPausedDescription"
-    var syncBookmarksPausedButtonTitle: String = "syncBookmarksPausedButtonTitle"
-    var syncCredentialsPausedButtonTitle: String = "syncCredentialsPausedButtonTitle"
+    var syncBookmarksPausedButtonTitle: String? = "syncBookmarksPausedButtonTitle"
+    var syncCredentialsPausedButtonTitle: String? = "syncCredentialsPausedButtonTitle"
 
     lazy var model: SyncSettingsViewModel = {
         let model = SyncSettingsViewModel(isOnDevEnvironment: { false }, switchToProdEnvironment: {})

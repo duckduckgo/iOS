@@ -161,4 +161,25 @@ final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
 
         XCTAssertEqual(alertPresenter.showAlertCount, 1)
     }
+
+    func test_WhenHandleCredentialsError400ForTheFirstTime_ThenAlertShown() async {
+        let error = SyncError.unexpectedStatusCode(400)
+
+        handler.handleCredentialError(_:)(error)
+
+        XCTAssertTrue(alertPresenter.showAlertCalled)
+    }
+
+    func test_WhenHandleBookmarksError400ForTheSecondTime_ThenNoAlertShown() async {
+        let error = SyncError.unexpectedStatusCode(400)
+
+        handler.handleBookmarkError(_:)(error)
+
+        handler = SyncErrorHandler()
+        handler.alertPresenter = alertPresenter
+
+        handler.handleBookmarkError(_:)(error)
+
+        XCTAssertEqual(alertPresenter.showAlertCount, 1)
+    }
 }

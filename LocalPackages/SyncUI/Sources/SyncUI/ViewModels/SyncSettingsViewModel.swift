@@ -40,14 +40,14 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
     func launchBookmarksViewController()
     func launchAutofillViewController()
 
-    var syncBookmarksPausedTitle: String { get }
-    var syncCredentialsPausedTitle: String { get }
+    var syncBookmarksPausedTitle: String? { get }
+    var syncCredentialsPausedTitle: String? { get }
     var syncPausedTitle: String? { get }
-    var syncBookmarksPausedDescription: String { get }
-    var syncCredentialsPausedDescription: String { get }
+    var syncBookmarksPausedDescription: String? { get }
+    var syncCredentialsPausedDescription: String? { get }
     var syncPausedDescription: String? { get }
-    var syncBookmarksPausedButtonTitle: String { get }
-    var syncCredentialsPausedButtonTitle: String { get }
+    var syncBookmarksPausedButtonTitle: String? { get }
+    var syncCredentialsPausedButtonTitle: String? { get }
 }
 
 public class SyncSettingsViewModel: ObservableObject {

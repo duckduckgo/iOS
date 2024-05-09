@@ -1293,8 +1293,8 @@ class MainViewController: UIViewController {
         ])
 
         self.notificationView = contentView
-        view.layoutSubviews()
         viewCoordinator.topSlideContainer.layoutIfNeeded()
+        view.layoutSubviews()
 
         viewCoordinator.showTopSlideContainer()
         UIView.animate(withDuration: 0.5) {
@@ -1329,7 +1329,7 @@ class MainViewController: UIViewController {
     private var brokenSitePromptViewHostingController: UIHostingController<BrokenSitePromptView>?
 
     @objc func attemptToShowBrokenSitePrompt(_ notification: Notification) {
-        guard userDidInteractWithBrokenSitePrompt,
+        guard /*userDidInteractWithBrokenSitePrompt,*/
               let event = notification.userInfo?[UserBehaviorEvent.Key.event] as? UserBehaviorEvent,
               let url = currentTab?.url, !url.isDuckDuckGo,
               notificationView == nil,
@@ -1765,7 +1765,7 @@ extension MainViewController: OmniBarDelegate {
         }
         loadQuery(query)
         hideSuggestionTray()
-        hideBrokenSitePrompt()
+//        hideBrokenSitePrompt()
         showHomeRowReminder()
     }
 

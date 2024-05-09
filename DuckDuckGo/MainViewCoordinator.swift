@@ -79,6 +79,7 @@ class MainViewCoordinator {
         var topSlideContainerBottomToStatusBackgroundBottom: NSLayoutConstraint!
         var topSlideContainerTopToNavigationBar: NSLayoutConstraint!
         var topSlideContainerTopToStatusBackground: NSLayoutConstraint!
+        var topSlideContainerHeight: NSLayoutConstraint!
 
     }
 

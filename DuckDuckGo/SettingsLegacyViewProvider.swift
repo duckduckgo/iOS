@@ -40,13 +40,13 @@ class SettingsLegacyViewProvider: ObservableObject {
          appSettings: any AppSettings,
          bookmarksDatabase: CoreDataDatabase,
          tabManager: TabManager,
-                                                                     syncPausedStateManager: any SyncPausedStateManaging) {
+         syncPausedStateManager: any SyncPausedStateManaging) {
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
         self.tabManager = tabManager
-        self.syncPausedStateManager =                                                             syncPausedStateManager
+        self.syncPausedStateManager = syncPausedStateManager
     }
     
     enum LegacyView {

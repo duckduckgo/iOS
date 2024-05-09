@@ -51,9 +51,10 @@ final class SettingsViewModel: ObservableObject {
     private var subscriptionSignOutObserver: Any?
     
     // Used to cache the lasts subscription state for up to a week
-    private var subscriptionStateCache = UserDefaultsCache<SettingsState.Subscription>(key: UserDefaultsCacheKey.subscriptionState,
-                                                                         settings: UserDefaultsCacheSettings(defaultExpirationInterval: .days(7)))
-    
+    private var subscriptionStateCache = UserDefaultsCache<SettingsState.Subscription>(
+        key: UserDefaultsCacheKey.subscriptionState,
+        settings: UserDefaultsCacheSettings(defaultExpirationInterval: .days(7)))
+
 #if NETWORK_PROTECTION
     private let connectionObserver = ConnectionStatusObserverThroughSession()
 #endif
@@ -393,13 +394,13 @@ final class SettingsViewModel: ObservableObject {
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil,
-                                                           syncPausedStateManager: any SyncPausedStateManaging) {
+         syncPausedStateManager: any SyncPausedStateManaging) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
         self.subscriptionAccountManager = accountManager
         self.voiceSearchHelper = voiceSearchHelper
         self.deepLinkTarget = deepLink
-        self.syncPausedStateManager =                                                   syncPausedStateManager
+        self.syncPausedStateManager = syncPausedStateManager
 
         setupNotificationObservers()
         autocompleteSubtitle = variantManager.isSupported(feature: .history) ? UserText.settingsAutocompleteSubtitle : nil

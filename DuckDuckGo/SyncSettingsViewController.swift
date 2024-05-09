@@ -67,12 +67,12 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         syncBookmarksAdapter: SyncBookmarksAdapter,
         syncCredentialsAdapter: SyncCredentialsAdapter,
         appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
-                                                  syncPausedStateManager: any SyncPausedStateManaging
+        syncPausedStateManager: any SyncPausedStateManaging
     ) {
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
         self.syncCredentialsAdapter = syncCredentialsAdapter
-        self.syncPausedStateManager =                                           syncPausedStateManager
+        self.syncPausedStateManager = syncPausedStateManager
 
         let viewModel = SyncSettingsViewModel(
             isOnDevEnvironment: { syncService.serverEnvironment == .development },
@@ -87,7 +87,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
         setUpFaviconsFetcherSwitch(viewModel)
         setUpFavoritesDisplayModeSwitch(viewModel, appSettings)
-        setUpSyncPaused(viewModel, syncPausedStateManager:                                           syncPausedStateManager)
+        setUpSyncPaused(viewModel, syncPausedStateManager: syncPausedStateManager)
         setUpSyncInvalidObjectsInfo(viewModel)
         setUpSyncFeatureFlags(viewModel)
         refreshForState(syncService.authState)

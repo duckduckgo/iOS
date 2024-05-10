@@ -281,6 +281,7 @@ final class SubscriptionDebugViewController: UITableViewController {
     
     private func setEnvironment(_ environment: SubscriptionEnvironment.ServiceEnvironment) {
         
+        // TODO: reimplement debug menu
 //        let fullEnv = SubscriptionEnvironment()
 //        SubscriptionManager.save(subscriptionEnvironment: currentEnvironment, userDefaults: subscriptionUserDefaults)
 //

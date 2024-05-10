@@ -23,7 +23,6 @@ import SwiftUI
 import SyncUI
 import DDGSync
 import AVFoundation
-import Core
 
 extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     var syncBookmarksPausedTitle: String? {

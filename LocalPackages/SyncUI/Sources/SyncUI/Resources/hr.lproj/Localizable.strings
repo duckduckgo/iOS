@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Za korištenje Sync & Backupa potrebna je lozinka uređaja.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Natrag";
 
@@ -6,12 +9,6 @@
 
 /* Alert title for invalid bookmarks being filtered out of synced data */
 "bookmarks.invalid.objects.present.title" = "Neke se oznake ne sinkroniziraju zbog pretjerano dugog sadržaja u određenim poljima.";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Action */
-"bookmarks.limit.exceeded.action" = "Upravljanje knjižnim oznakama";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Description */
-"bookmarks.limit.exceeded.description" = "Ograničenje oznake premašeno. Izbriši neke za nastavak sinkronizacije.";
 
 /* Camera View - Go to Settings Button */
 "camera.go.to.settings.button" = "Idi na Postavke";
@@ -55,12 +52,6 @@
 /* Alert title for invalid logins being filtered out of synced data */
 "credentials.invalid.objects.present.title" = "Neke se prijave ne sinkroniziraju zbog pretjerano dugog sadržaja u određenim poljima.";
 
-/* Sync Paused Errors - Credentials Limit Exceeded Action */
-"credentials.limit.exceeded.action" = "Upravljanje prijavama";
-
-/* Sync Paused Errors - Credentials Limit Exceeded Description */
-"credentials.limit.exceeded.description" = "Ograničenje prijava premašeno. Izbriši neke za nastavak sinkronizacije.";
-
 /* Delete Server Data - Button */
 "delete.server.data" = "Isključi i izbriši podatke poslužitelja...";
 
@@ -95,6 +86,9 @@
 "fetch.favicons.option.title" = "Ikone za automatsko preuzimanje";
 
 /* No comment provided by engineer. */
+"Go to Settings" = "Idi na Postavke";
+
+/* No comment provided by engineer. */
 "Keep Development" = "Nastavi razvoj";
 
 /* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
@@ -124,8 +118,11 @@
 /* Standard Buttons - Paste Button */
 "paste.button" = "Zalijepi";
 
-/* Description of rollout banner */
-"preferences.sync.rollout-banner.description" = "Sinkronizacija i sigurnosno kopiranje postupno se uvode i možda još nisu dostupni unutar DuckDuckGo na tvojim drugim uređajima.";
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Upravljanje knjižnim oznakama";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Upravljanje lozinkama…";
 
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Tvoje oznake i lozinke se pripremaju za sinkronizaciju. Ovo bi trebalo trajati samo trenutak.";
@@ -218,13 +215,13 @@
 "scan.or.see.code.title" = "Skeniraj QR kôd";
 
 /* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Zaštiti svoj uređaj za korištenje značajke Sync & Backup";
+
+/* No comment provided by engineer. */
 "Switch to Production" = "Prijeđi na proizvodnju";
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Sinkroniziraj i izradi sigurnosnu kopiju ovog uređaja";
-
-/* Sync Paused Errors - Title */
-"sync.limit.exceeded.title" = "Sinkronizacija je zaustavljena";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Postavke > Sinkronizacija i sigurnosno kopiranje kopija > Sinkronizacija s drugim uređajem";
@@ -237,9 +234,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Žao nam je, ali Sync & Backup (sinkronizacija i sigurnosno kopiranje) više nisu dostupni u ovoj verziji aplikacije. Molimo te da za nastavak ažuriraš DuckDuckGo na najnoviju verziju.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Sync & Backup pauziran";
 
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Sinkronizacija i sigurnosno kopiranje nisu dostupni";

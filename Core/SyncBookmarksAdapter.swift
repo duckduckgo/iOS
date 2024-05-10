@@ -64,16 +64,7 @@ public final class SyncBookmarksAdapter {
     public private(set) var provider: BookmarksProvider?
     public let databaseCleaner: BookmarkDatabaseCleaner
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
-
-    @UserDefaultsWrapper(key: .syncBookmarksPaused, defaultValue: false)
-    static public var isSyncBookmarksPaused: Bool {
-        didSet {
-            NotificationCenter.default.post(name: syncBookmarksPausedStateChanged, object: nil)
-        }
-    }
-
-    @UserDefaultsWrapper(key: .syncBookmarksPausedErrorDisplayed, defaultValue: false)
-    static private var didShowBookmarksSyncPausedError: Bool
+    let syncErrorHandler: SyncErrorHandling
 
     @UserDefaultsWrapper(key: .syncDidMigrateToImprovedListsHandling, defaultValue: false)
     private var didMigrateToImprovedListsHandling: Bool
@@ -94,9 +85,12 @@ public final class SyncBookmarksAdapter {
     @UserDefaultsWrapper(key: .syncIsEligibleForFaviconsFetcherOnboarding, defaultValue: false)
     public var isEligibleForFaviconsFetcherOnboarding: Bool
 
-    public init(database: CoreDataDatabase, favoritesDisplayModeStorage: FavoritesDisplayModeStoring) {
+    public init(database: CoreDataDatabase,
+                favoritesDisplayModeStorage: FavoritesDisplayModeStoring,
+                syncErrorHandler: SyncErrorHandling) {
         self.database = database
         self.favoritesDisplayModeStorage = favoritesDisplayModeStorage
+        self.syncErrorHandler = syncErrorHandler
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
         databaseCleaner = BookmarkDatabaseCleaner(
             bookmarkDatabase: database,
@@ -136,8 +130,7 @@ public final class SyncBookmarksAdapter {
             metricsEvents: metricsEventsHandler,
             syncDidUpdateData: { [weak self] in
                 self?.syncDidCompleteSubject.send()
-                Self.isSyncBookmarksPaused = false
-                Self.didShowBookmarksSyncPausedError = false
+                self?.syncErrorHandler.syncBookmarksSucceded()
             },
             syncDidFinish: { [weak self] faviconsFetcherInput in
                 if let faviconsFetcher, self?.isFaviconsFetchingEnabled == true {
@@ -187,35 +180,8 @@ public final class SyncBookmarksAdapter {
 
     private func bindSyncErrorPublisher(_ provider: BookmarksProvider) {
         syncErrorCancellable = provider.syncErrorPublisher
-            .sink { error in
-                switch error {
-                case SyncError.patchPayloadCompressionFailed(let errorCode):
-                    Pixel.fire(pixel: .syncBookmarksPatchCompressionFailed, withAdditionalParameters: ["error": "\(errorCode)"])
-                case let syncError as SyncError:
-                    Pixel.fire(pixel: .syncBookmarksFailed, error: syncError)
-                    switch syncError {
-                    case .unexpectedStatusCode(409):
-                        // If bookmarks count limit has been exceeded
-                        Self.isSyncBookmarksPaused = true
-                        DailyPixel.fire(pixel: .syncBookmarksCountLimitExceededDaily)
-                        Self.notifyBookmarksSyncLimitReached()
-                    case .unexpectedStatusCode(413):
-                        // If bookmarks request size limit has been exceeded
-                        Self.isSyncBookmarksPaused = true
-                        DailyPixel.fire(pixel: .syncBookmarksRequestSizeLimitExceededDaily)
-                        Self.notifyBookmarksSyncLimitReached()
-                    default:
-                        break
-                    }
-                default:
-                    let nsError = error as NSError
-                    if nsError.domain != NSURLErrorDomain {
-                        let processedErrors = CoreDataErrorsParser.parse(error: error as NSError)
-                        let params = processedErrors.errorPixelParameters
-                        Pixel.fire(pixel: .syncBookmarksFailed, error: error, withAdditionalParameters: params)
-                    }
-                }
-                os_log(.error, log: OSLog.syncLog, "Bookmarks Sync error: %{public}s", String(reflecting: error))
+            .sink { [weak self] error in
+                self?.syncErrorHandler.handleBookmarkError(error)
             }
     }
 
@@ -262,13 +228,6 @@ public final class SyncBookmarksAdapter {
                 let params = processedErrors.errorPixelParameters
                 Pixel.fire(pixel: .favoritesCleanupFailed, error: error, withAdditionalParameters: params)
             }
-        }
-    }
-
-    static private func notifyBookmarksSyncLimitReached() {
-        if !Self.didShowBookmarksSyncPausedError {
-            NotificationCenter.default.post(name: Self.bookmarksSyncLimitReached, object: nil)
-            Self.didShowBookmarksSyncPausedError = true
         }
     }
 

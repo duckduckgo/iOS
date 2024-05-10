@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "dominik/sync-payload-compression",
-        "revision" : "803be7265bac4eefff35be97aed6d7d693d8c8a9"
+        "revision" : "72be4e73360989af170399bc063fd5c628e1e84c",
+        "version" : "144.0.6"
       }
     },
     {

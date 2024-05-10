@@ -126,6 +126,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // This is used just for iOS <15, it's a sort of mocked environment that will not be used.
             subscriptionManager = SubscriptionManageriOS14(accountManager: accountManager)
         }
+        let isProduction = (subscriptionEnvironment.serviceEnvironment == .production)
+        VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment = isProduction ? .production : .staging
     }
 
     // swiftlint:disable:next function_body_length cyclomatic_complexity

@@ -815,12 +815,14 @@ class MainViewController: UIViewController {
 
     @IBAction func onBackPressed() {
         Pixel.fire(pixel: .tabBarBackPressed)
+        hideSuggestionTray()
         currentTab?.goBack()
         refreshOmniBar()
     }
 
     @IBAction func onForwardPressed() {
         Pixel.fire(pixel: .tabBarForwardPressed)
+        hideSuggestionTray()
         currentTab?.goForward()
     }
     

@@ -237,6 +237,7 @@
 		4BE67B032B96B864007335F7 /* ContentBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 4BE67B022B96B864007335F7 /* ContentBlocking */; };
 		4BE67B052B96B9AB007335F7 /* ContentBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 4BE67B042B96B9AB007335F7 /* ContentBlocking */; };
 		4BE67B072B96B9B0007335F7 /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = 4BE67B062B96B9B0007335F7 /* Common */; };
+		560E990F2BEE2CB800507CE0 /* SyncErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560E990E2BEE2CB800507CE0 /* SyncErrorMessage.swift */; };
 		566B73702BECD46800FF1959 /* MainViewController+SyncAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B736F2BECD46800FF1959 /* MainViewController+SyncAlerts.swift */; };
 		566B73732BECE4F200FF1959 /* SyncErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B73712BECE4F200FF1959 /* SyncErrorHandling.swift */; };
 		566B73762BECE53D00FF1959 /* SyncPausedStateManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B73742BECE53D00FF1959 /* SyncPausedStateManaging.swift */; };
@@ -1310,6 +1311,7 @@
 		4BCD146A2B05C4B5000B1E4C /* VPNWaitlistTermsAndConditionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNWaitlistTermsAndConditionsViewController.swift; sourceTree = "<group>"; };
 		4BCD146C2B05DB09000B1E4C /* NetworkProtectionAccessControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionAccessControllerTests.swift; sourceTree = "<group>"; };
 		4BE27566272F878F006B20B0 /* URLRequestExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLRequestExtension.swift; path = ../DuckDuckGo/URLRequestExtension.swift; sourceTree = "<group>"; };
+		560E990E2BEE2CB800507CE0 /* SyncErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncErrorMessage.swift; sourceTree = "<group>"; };
 		566B736F2BECD46800FF1959 /* MainViewController+SyncAlerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+SyncAlerts.swift"; sourceTree = "<group>"; };
 		566B73712BECE4F200FF1959 /* SyncErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncErrorHandling.swift; sourceTree = "<group>"; };
 		566B73742BECE53D00FF1959 /* SyncPausedStateManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncPausedStateManaging.swift; sourceTree = "<group>"; };
@@ -3948,6 +3950,7 @@
 				85F98F97296F4CB100742F4A /* SyncAssets.xcassets */,
 				85F0E97229952D7A003D5181 /* DuckDuckGo Recovery Document.pdf */,
 				85DD44232976C7A8005CC388 /* Controllers */,
+				560E990E2BEE2CB800507CE0 /* SyncErrorMessage.swift */,
 			);
 			name = Sync;
 			sourceTree = "<group>";
@@ -6710,6 +6713,7 @@
 				983EABB8236198F6003948D1 /* DatabaseMigration.swift in Sources */,
 				314C92B827C3DD660042EC96 /* QuickLookPreviewView.swift in Sources */,
 				F1AE54E81F0425FC00D9A700 /* AuthenticationViewController.swift in Sources */,
+				560E990F2BEE2CB800507CE0 /* SyncErrorMessage.swift in Sources */,
 				983D71B12A286E810072E26D /* SyncDebugViewController.swift in Sources */,
 				6FDA1FB32B59584400AC962A /* AddressDisplayHelper.swift in Sources */,
 				F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */,

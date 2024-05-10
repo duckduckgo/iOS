@@ -92,7 +92,6 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     var syncCredentialsPausedButtonTitle: String? {
         UserText.bookmarksLimitExceededAction
     }
-    
 
     func authenticateUser() async throws {
         return try await withCheckedThrowingContinuation { continuation in
@@ -163,7 +162,6 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             title: type.title,
             message: [type.description, error?.localizedDescription].compactMap({ $0 }).joined(separator: "\n"),
             preferredStyle: .alert)
-
         let okAction = UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .default, handler: nil)
         alertController.addAction(okAction)
 
@@ -368,7 +366,6 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             }
         }
     }
-
 }
 
 private class DismissibleHostingController<Content: View>: UIHostingController<Content> {
@@ -398,42 +395,5 @@ private class PortraitNavigationController: UINavigationController {
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         [.portrait, .portraitUpsideDown]
-    }
-
-}
-
-enum SyncErrorMessage {
-    case unableToSyncToServer
-    case unableToSyncWithDevice
-    case unableToMergeTwoAccounts
-    case unableToUpdateDeviceName
-    case unableToTurnSyncOff
-    case unableToDeleteData
-    case unableToRemoveDevice
-    case unableToCreateRecoveryPdf
-
-    var title: String {
-        return UserText.syncErrorAlertTitle
-    }
-
-    var description: String {
-        switch self {
-        case .unableToSyncToServer:
-            return UserText.unableToSyncToServerDescription
-        case .unableToSyncWithDevice:
-            return UserText.unableToSyncWithOtherDeviceDescription
-        case .unableToMergeTwoAccounts:
-            return UserText.unableToMergeTwoAccountsErrorDescription
-        case .unableToUpdateDeviceName:
-            return UserText.unableToUpdateDeviceNameDescription
-        case .unableToTurnSyncOff:
-            return UserText.unableToTurnSyncOffDescription
-        case .unableToDeleteData:
-            return UserText.unableToDeleteDataDescription
-        case .unableToRemoveDevice:
-            return UserText.unableToRemoveDeviceDescription
-        case .unableToCreateRecoveryPdf:
-            return UserText.unableToCreateRecoveryPDF
-        }
     }
 }

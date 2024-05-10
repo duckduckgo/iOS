@@ -27,6 +27,7 @@ protocol AutocompleteViewModelDelegate: NSObjectProtocol {
     func onSuggestionHighlighted(_ suggestion: Suggestion, forQuery query: String)
     func onTapAhead(_ suggestion: Suggestion)
     func onMessageDismissed()
+    func onMessageShown()
 
 }
 
@@ -73,6 +74,10 @@ class AutocompleteViewModel: ObservableObject {
             isMessageVisible = false
             delegate?.onMessageDismissed()
         }
+    }
+
+    func onShownToUser() {
+        delegate?.onMessageShown()
     }
 
     func onSuggestionSelected(_ model: SuggestionModel) {

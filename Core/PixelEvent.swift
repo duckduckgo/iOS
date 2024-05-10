@@ -123,11 +123,16 @@ extension Pixel {
         case favoriteLaunchedWebsite
         case favoriteLaunchedWidget
 
+        case autocompleteMessageShown
+        case autocompleteMessageDismissed
         case autocompleteClickPhrase
         case autocompleteClickWebsite
         case autocompleteClickBookmark
         case autocompleteClickFavorite
         case autocompleteClickHistory
+        case autocompleteDisplayedLocalBookmark
+        case autocompleteDisplayedLocalFavorite
+        case autocompleteDisplayedLocalHistory
 
         case feedbackPositive
         case feedbackNegativePrefix(category: String)
@@ -798,11 +803,16 @@ extension Pixel.Event {
         case .favoriteLaunchedWebsite: return "m_favorite_launched_website"
         case .favoriteLaunchedWidget: return "m_favorite_launched_widget"
 
+        case .autocompleteMessageShown: return "m_autocomplete_message_shown"
+        case .autocompleteMessageDismissed: return "m_autocomplete_message_dismissed"
         case .autocompleteClickPhrase: return "m_autocomplete_click_phrase"
         case .autocompleteClickWebsite: return "m_autocomplete_click_website"
         case .autocompleteClickBookmark: return "m_autocomplete_click_bookmark"
         case .autocompleteClickFavorite: return "m_autocomplete_click_favorite"
         case .autocompleteClickHistory: return "m_autocomplete_click_history"
+        case .autocompleteDisplayedLocalBookmark: return "m_autocomplete_display_local_bookmark"
+        case .autocompleteDisplayedLocalFavorite: return "m_autocomplete_display_local_favorite"
+        case .autocompleteDisplayedLocalHistory: return "m_autocomplete_display_local_history"
 
         case .feedbackPositive: return "mfbs_positive_submit"
         case .feedbackNegativePrefix(category: let category): return "mfbs_negative_\(category)"

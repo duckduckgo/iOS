@@ -92,9 +92,7 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         historyMessageManager.incrementDisplayCount()
-
-        // TODO fire pixels based on current state
-
+        fireUsagePixels()
     }
 
     func keyboardMoveSelectionDown() {
@@ -111,6 +109,41 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
         cancelInFlightRequests()
         self.query = query
         model.query = query
+    }
+
+    private func fireUsagePixels() {
+        var bookmark = false
+        var favorite = false
+        var history = false
+
+        lastResults?.all.forEach {
+            switch $0 {
+            case .bookmark(_, _, isFavorite: let isFavorite, _):
+                if isFavorite {
+                    favorite = true
+                } else {
+                    bookmark = true
+                }
+
+            case .historyEntry(_, _, _):
+                history = true
+
+            default: break
+            }
+        }
+
+        if bookmark {
+            Pixel.fire(pixel: .autocompleteDisplayedLocalBookmark)
+        }
+
+        if favorite {
+            Pixel.fire(pixel: .autocompleteDisplayedLocalFavorite)
+        }
+
+        if history {
+            Pixel.fire(pixel: .autocompleteDisplayedLocalHistory)
+        }
+
     }
 
     private func cancelInFlightRequests() {
@@ -169,10 +202,14 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
 extension AutocompleteViewController: AutocompleteViewModelDelegate {
 
     func onMessageDismissed() {
-        historyMessageManager.dismiss()
+        historyMessageManager.dismissedByUser()
         updateHeight()
     }
-    
+
+    func onMessageShown() {
+        historyMessageManager.shownToUser()        
+    }
+
     func onSuggestionSelected(_ suggestion: Suggestion) {
         self.delegate?.autocomplete(selectedSuggestion: suggestion)
     }

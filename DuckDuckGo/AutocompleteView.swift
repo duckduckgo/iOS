@@ -31,6 +31,9 @@ struct AutocompleteView: View {
                     model.onDismissMessage()
                 }
                 .listRowBackground(Color(designSystemColor: .surface))
+                .onAppear {
+                    model.onShownToUser()
+                }
             }
 
             if model.isEmpty {

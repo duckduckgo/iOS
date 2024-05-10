@@ -40,6 +40,15 @@ class HistoryMessageManager {
         dismissed = true
     }
 
+    func dismissedByUser() {
+        dismissed = true
+        Pixel.fire(pixel: .autocompleteMessageDismissed)
+    }
+
+    func shownToUser() {
+        Pixel.fire(pixel: .autocompleteMessageShown)
+    }
+
     func shouldShow() -> Bool {
         // return !dismissed
         #warning("hardcoded for testing / ship review")

@@ -195,6 +195,6 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
     }
 }
 
-class MockDateProveder: DateProviding {
+class MockDateProveder: CurrentDateProviding {
     var currentDate: Date = Date()
 }

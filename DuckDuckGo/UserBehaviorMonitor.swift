@@ -107,7 +107,7 @@ final class UserBehaviorMonitor {
                 eventMapping.fire(eventToFire)
 //                if PixelExperimentForBrokenSites.cohort == eventToFire.matchingPixelExperimentVariant {
                     NotificationCenter.default.post(name: .userBehaviorDidMatchExperimentVariant,
-                                                    object: self, 
+                                                    object: self,
                                                     userInfo: [UserBehaviorEvent.Key.event: eventToFire])
 //                }
             }

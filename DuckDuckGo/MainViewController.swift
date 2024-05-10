@@ -1046,8 +1046,7 @@ class MainViewController: UIViewController {
                 let event = brokenSitePromptEvent?.rawValue else { return }
         brokenSitePromptViewHostingController = nil
         let pixel: Pixel.Event = afterRefresh ? .siteNotWorkingDismissByRefresh: .siteNotWorkingDismissByNavigation
-        Pixel.fire(pixel: .siteNotWorkingDismissByNavigation,
-                   withAdditionalParameters: [UserBehaviorEvent.Parameter.event: event])
+        Pixel.fire(pixel: pixel, withAdditionalParameters: [UserBehaviorEvent.Parameter.event: event])
         hideNotification()
     }
 

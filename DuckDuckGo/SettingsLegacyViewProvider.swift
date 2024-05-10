@@ -96,7 +96,7 @@ class SettingsLegacyViewProvider: ObservableObject {
                                           syncBookmarksAdapter: self.syncDataProviders.bookmarksAdapter,
                                           syncCredentialsAdapter: self.syncDataProviders.credentialsAdapter,
                                           appSettings: self.appSettings,
-                                                                                    syncPausedStateManager: self.syncPausedStateManager)
+                                          syncPausedStateManager: self.syncPausedStateManager)
     }
     
     func loginSettings(delegate: AutofillLoginSettingsListViewControllerDelegate,

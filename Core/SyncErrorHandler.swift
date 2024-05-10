@@ -50,7 +50,7 @@ public class SyncErrorHandler: EventMapping<SyncError> {
         }
     }
 
-    @UserDefaultsWrapper(key: .synclsPaused, defaultValue: false)
+    @UserDefaultsWrapper(key: .syncIsPaused, defaultValue: false)
     private (set) public var isSyncPaused: Bool {
         didSet {
             isSyncPausedChangedPublisher.send()
@@ -85,10 +85,10 @@ public class SyncErrorHandler: EventMapping<SyncError> {
     public var currentSyncCredentialsPausedError: String?
 
     var isSyncPausedChangedPublisher = PassthroughSubject<Void, Never>()
-    let dateProvider: DateProviding
+    let dateProvider: CurrentDateProviding
     public weak var alertPresenter: SyncAlertsPresenting?
 
-    public init(dateProvider: DateProviding = Date()) {
+    public init(dateProvider: CurrentDateProviding = Date()) {
         self.dateProvider = dateProvider
         super.init { event, error, _, _ in
             switch event {

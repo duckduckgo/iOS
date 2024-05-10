@@ -98,7 +98,7 @@ public struct UserDefaultsWrapper<T> {
         case syncEnvironment = "com.duckduckgo.ios.sync-environment"
         case syncBookmarksPaused = "com.duckduckgo.ios.sync-bookmarksPaused"
         case syncCredentialsPaused = "com.duckduckgo.ios.sync-credentialsPaused"
-        case synclsPaused = "sync.paused"
+        case syncIsPaused = "sync.paused"
         case syncBookmarksPausedErrorDisplayed = "com.duckduckgo.ios.sync-bookmarksPausedErrorDisplayed"
         case syncCredentialsPausedErrorDisplayed = "com.duckduckgo.ios.sync-credentialsPausedErrorDisplayed"
         case syncInvalidLoginPausedErrorDisplayed = "sync.invalid-login-paused-error-displayed"

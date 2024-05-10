@@ -45,8 +45,6 @@ extension AppDelegate {
 
 #if NETWORK_PROTECTION
     private func checkNetworkProtectionWaitlist() {
-//        let accessController = NetworkProtectionAccessController()
-
         VPNWaitlist.shared.fetchInviteCodeIfAvailable { [weak self] error in
             guard error == nil else {
                 return

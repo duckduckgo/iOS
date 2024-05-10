@@ -76,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if NETWORK_PROTECTION
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
-    let vpnFeatureVisibility: DefaultNetworkProtectionVisibility
+    var vpnFeatureVisibility: DefaultNetworkProtectionVisibility!
 #endif
 
     private var autoClear: AutoClear?
@@ -126,8 +126,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // This is used just for iOS <15, it's a sort of mocked environment that will not be used.
             subscriptionManager = SubscriptionManageriOS14(accountManager: accountManager)
         }
-
-        vpnFeatureVisibility = DefaultNetworkProtectionVisibility(accountManager: accountManager)
     }
 
     // swiftlint:disable:next function_body_length cyclomatic_complexity
@@ -135,6 +133,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // SKAD4 support
         updateSKAd(conversionValue: 1)
+
+        vpnFeatureVisibility = DefaultNetworkProtectionVisibility(accountManager: accountManager)
 
 #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {

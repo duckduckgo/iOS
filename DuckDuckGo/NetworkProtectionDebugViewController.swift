@@ -718,9 +718,7 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
         let accessController = NetworkProtectionAccessController()
         accessController.revokeNetworkProtectionAccess()
     }
-
 }
-
 
 extension NWConnection {
 

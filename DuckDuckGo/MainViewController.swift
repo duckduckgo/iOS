@@ -189,8 +189,7 @@ class MainViewController: UIViewController {
                                      bookmarksDatabase: bookmarksDatabase,
                                      historyManager: historyManager,
                                      syncService: syncService)
-        self.syncPausedStateManager =                                       syncPausedStateManager
-
+        self.syncPausedStateManager = syncPausedStateManager
 
         super.init(nibName: nil, bundle: nil)
         

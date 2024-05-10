@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Norint naudoti „Sync & Backup“, reikalingas įrenginio slaptažodis.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Atgal";
 
@@ -6,12 +9,6 @@
 
 /* Alert title for invalid bookmarks being filtered out of synced data */
 "bookmarks.invalid.objects.present.title" = "Kai kurios žymės nėra sinchronizuojamos dėl pernelyg ilgo turinio tam tikruose laukuose.";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Action */
-"bookmarks.limit.exceeded.action" = "Tvarkyti žymes";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Description */
-"bookmarks.limit.exceeded.description" = "Viršyta žymių riba. Ištrinkite kai kurias, kad tęstumėte sinchronizavimą.";
 
 /* Camera View - Go to Settings Button */
 "camera.go.to.settings.button" = "Eikite į „Nustatymai“";
@@ -55,12 +52,6 @@
 /* Alert title for invalid logins being filtered out of synced data */
 "credentials.invalid.objects.present.title" = "Kai kurie prisijungimai nesinchronizuojami dėl pernelyg ilgo turinio tam tikruose laukuose.";
 
-/* Sync Paused Errors - Credentials Limit Exceeded Action */
-"credentials.limit.exceeded.action" = "Tvarkyti prisijungimus";
-
-/* Sync Paused Errors - Credentials Limit Exceeded Description */
-"credentials.limit.exceeded.description" = "Viršyta prisijungimų riba. Ištrinkite kai kuriuos, kad tęstumėte sinchronizavimą.";
-
 /* Delete Server Data - Button */
 "delete.server.data" = "Išjungti ir ištrinti serverio duomenis...";
 
@@ -95,6 +86,9 @@
 "fetch.favicons.option.title" = "Automatinio atsisiuntimo piktogramos";
 
 /* No comment provided by engineer. */
+"Go to Settings" = "Eikite į „Nustatymai“";
+
+/* No comment provided by engineer. */
 "Keep Development" = "Laikytis kūrimo";
 
 /* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
@@ -123,6 +117,12 @@
 
 /* Standard Buttons - Paste Button */
 "paste.button" = "Įklijuoti";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Tvarkyti žymes";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Slaptažodžių valdymas…";
 
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Jūsų žymės ir slaptažodžiai yra ruošiami sinchronizuoti. Tai turėtų užtrukti tik akimirką.";
@@ -215,13 +215,13 @@
 "scan.or.see.code.title" = "Nuskaityti QR kodą";
 
 /* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Apsaugokite savo įrenginį, kad galėtumėte naudoti „Sync & Backup“";
+
+/* No comment provided by engineer. */
 "Switch to Production" = "Pereiti prie gamybos";
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Sinchronizuokite ir sukurkite atsarginę šio įrenginio kopiją";
-
-/* Sync Paused Errors - Title */
-"sync.limit.exceeded.title" = "Sinchronizavimas pristabdytas";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Nustatymai > Sinchronizavimas ir atsarginė kopijos kūrimas > Sinchronizuoti su kitu įrenginiu";
@@ -234,9 +234,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Atsiprašome, bet šioje programos versijoje nepasiekiamos sinchronizavimo ir atsarginės kopijos kūrimo funkcijos. Norėdami tęsti, atnaujinkite „DuckDuckGo“ į naujausią versiją.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Sinchronizavimas ir atsarginės kopijos kūrimas pristabdyti";
 
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Sinchronizavimas ir atsarginės kopijos kūrimas nepasiekiami";

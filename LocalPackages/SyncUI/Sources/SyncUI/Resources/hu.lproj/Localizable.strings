@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "A Sync & Backup funkció használatához eszközjelszó szükséges.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Vissza";
 
@@ -6,12 +9,6 @@
 
 /* Alert title for invalid bookmarks being filtered out of synced data */
 "bookmarks.invalid.objects.present.title" = "Egyes könyvjelzőket nem szinkronizál a rendszer bizonyos mezők túl hosszú tartalma miatt.";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Action */
-"bookmarks.limit.exceeded.action" = "Könyvjelzők kezelése";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Description */
-"bookmarks.limit.exceeded.description" = "Túllépted a könyvjelzők maximális számát. A szinkronizálás folytatásához törölj néhányat.";
 
 /* Camera View - Go to Settings Button */
 "camera.go.to.settings.button" = "Lépj a Beállítások menübe";
@@ -55,12 +52,6 @@
 /* Alert title for invalid logins being filtered out of synced data */
 "credentials.invalid.objects.present.title" = "Egyes bejelentkezési adatokat nem szinkronizál a rendszer bizonyos mezők túl hosszú tartalma miatt.";
 
-/* Sync Paused Errors - Credentials Limit Exceeded Action */
-"credentials.limit.exceeded.action" = "Bejelentkezések kezelése";
-
-/* Sync Paused Errors - Credentials Limit Exceeded Description */
-"credentials.limit.exceeded.description" = "Túllépted a bejelentkezések maximális számát. A szinkronizálás folytatásához törölj néhányat.";
-
 /* Delete Server Data - Button */
 "delete.server.data" = "Kikapcsolás és szerveradatok törlése…";
 
@@ -95,6 +86,9 @@
 "fetch.favicons.option.title" = "Ikonok automatikus letöltése";
 
 /* No comment provided by engineer. */
+"Go to Settings" = "Lépj a Beállítások menübe";
+
+/* No comment provided by engineer. */
 "Keep Development" = "Fejlesztés folytatása";
 
 /* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
@@ -123,6 +117,12 @@
 
 /* Standard Buttons - Paste Button */
 "paste.button" = "Beillesztés";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Könyvjelzők kezelése";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Jelszavak kezelése…";
 
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "A rendszer előkészíti a könyvjelzők és jelszavak szinkronizálását. Ez csak néhány pillanatig tart.";
@@ -215,13 +215,13 @@
 "scan.or.see.code.title" = "QR-kód beolvasása";
 
 /* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Eszköz lezárása a Sync & Backup használatához";
+
+/* No comment provided by engineer. */
 "Switch to Production" = "Váltás éles környezetre";
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Az eszköz szinkronizálása és biztonsági mentése";
-
-/* Sync Paused Errors - Title */
-"sync.limit.exceeded.title" = "Szinkronizálás szüneteltetve";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Beállítások > Szinkronizálás és biztonsági mentés > szinkronizálás másik eszközzel";
@@ -234,9 +234,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "A szinkronizálás és biztonsági mentés az alkalmazás ezen verziójában már nem érhető el. A folytatáshoz frissíts a DuckDuckGo a legújabb verziójára.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "A szinkronizálás és biztonsági mentés szünetel";
 
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Szinkronizálás és biztonsági mentés nem érhető el";

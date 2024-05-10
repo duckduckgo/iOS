@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Ett enhetslösenord krävs för att använda Sync & Backup.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Tillbaka";
 
@@ -6,12 +9,6 @@
 
 /* Alert title for invalid bookmarks being filtered out of synced data */
 "bookmarks.invalid.objects.present.title" = "Vissa bokmärken synkroniseras inte på grund av för långt innehåll i vissa fält.";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Action */
-"bookmarks.limit.exceeded.action" = "Hantera bokmärken";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Description */
-"bookmarks.limit.exceeded.description" = "Gränsen för antal bokmärken har överskridits. Ta bort några för att återuppta synkronisering.";
 
 /* Camera View - Go to Settings Button */
 "camera.go.to.settings.button" = "Gå till inställningarna";
@@ -55,12 +52,6 @@
 /* Alert title for invalid logins being filtered out of synced data */
 "credentials.invalid.objects.present.title" = "Vissa inloggningar synkroniseras inte på grund av för långt innehåll i vissa fält.";
 
-/* Sync Paused Errors - Credentials Limit Exceeded Action */
-"credentials.limit.exceeded.action" = "Hantera inloggningar";
-
-/* Sync Paused Errors - Credentials Limit Exceeded Description */
-"credentials.limit.exceeded.description" = "Gränsen för antalet inloggningar har överskridits. Ta bort några för att återuppta synkronisering.";
-
 /* Delete Server Data - Button */
 "delete.server.data" = "Stäng av och radera serverdata …";
 
@@ -95,6 +86,9 @@
 "fetch.favicons.option.title" = "Ladda ner ikoner automatiskt";
 
 /* No comment provided by engineer. */
+"Go to Settings" = "Gå till inställningarna";
+
+/* No comment provided by engineer. */
 "Keep Development" = "Behåll utveckling";
 
 /* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
@@ -123,6 +117,12 @@
 
 /* Standard Buttons - Paste Button */
 "paste.button" = "Klistra in";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Hantera bokmärken";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Hantera lösenord…";
 
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Dina bokmärken och lösenord förbereds för synkronisering. Detta bör bara ta ett ögonblick.";
@@ -215,13 +215,13 @@
 "scan.or.see.code.title" = "Skanna QR-kod";
 
 /* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Säkra din enhet för att använda Sync & Backup";
+
+/* No comment provided by engineer. */
 "Switch to Production" = "Byt till produktion";
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Synkronisera och säkerhetskopiera denna enhet";
-
-/* Sync Paused Errors - Title */
-"sync.limit.exceeded.title" = "Synkronisering pausad";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Inställningar > Synkronisera och säkerhetskopiera > Synkronisera med en annan enhet";
@@ -234,9 +234,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Tyvärr är synkronisering och säkerhetskopiering inte längre tillgängliga i den här appversionen. Uppdatera DuckDuckGo till den senaste versionen för att fortsätta.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Synkronisering och säkerhetskopiering har pausats";
 
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Synkronisering och säkerhetskopiering är inte tillgängligt";

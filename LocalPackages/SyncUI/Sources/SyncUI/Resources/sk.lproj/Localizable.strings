@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Na používanie služby Sync & Backup je potrebné heslo zariadenia.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Späť";
 
@@ -6,12 +9,6 @@
 
 /* Alert title for invalid bookmarks being filtered out of synced data */
 "bookmarks.invalid.objects.present.title" = "Niektoré záložky sa nesynchronizujú kvôli príliš dlhému obsahu v určitých poliach.";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Action */
-"bookmarks.limit.exceeded.action" = "Správa záložiek";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Description */
-"bookmarks.limit.exceeded.description" = "Limit záložiek bol prekročený. Ak chcete obnoviť synchronizáciu, odstráňte niektoré záložky.";
 
 /* Camera View - Go to Settings Button */
 "camera.go.to.settings.button" = "Prejdite do Nastavení";
@@ -55,12 +52,6 @@
 /* Alert title for invalid logins being filtered out of synced data */
 "credentials.invalid.objects.present.title" = "Niektoré prihlásenia sa nesynchronizujú kvôli príliš dlhému obsahu v určitých poliach.";
 
-/* Sync Paused Errors - Credentials Limit Exceeded Action */
-"credentials.limit.exceeded.action" = "Správa prihlásení";
-
-/* Sync Paused Errors - Credentials Limit Exceeded Description */
-"credentials.limit.exceeded.description" = "Limit prihlásení bol prekročený. Ak chcete obnoviť synchronizáciu, odstráňte niektoré prihlásenia.";
-
 /* Delete Server Data - Button */
 "delete.server.data" = "Vypnúť a zmazať údaje servera...";
 
@@ -95,6 +86,9 @@
 "fetch.favicons.option.title" = "Ikony automatického sťahovania";
 
 /* No comment provided by engineer. */
+"Go to Settings" = "Prejdite do Nastavení";
+
+/* No comment provided by engineer. */
 "Keep Development" = "Udržiavanie vývoja";
 
 /* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
@@ -123,6 +117,12 @@
 
 /* Standard Buttons - Paste Button */
 "paste.button" = "Vložiť";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Správa záložiek";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Spravovať heslá…";
 
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Vaše záložky a heslá sa pripravujú na synchronizáciu. Malo by to trvať len chvíľu.";
@@ -215,13 +215,13 @@
 "scan.or.see.code.title" = "Skenovanie kódu QR";
 
 /* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Aby ste mohli používať službu Sync & Backup, zabezpečte svoje zariadenie.";
+
+/* No comment provided by engineer. */
 "Switch to Production" = "Prepnutie na výrobu";
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Synchronizujte a zálohujte toto zariadenie";
-
-/* Sync Paused Errors - Title */
-"sync.limit.exceeded.title" = "Synchronizácia bola pozastavená";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Nastavenia > Synchronizácia a zálohovanie > Synchronizácia s iným zariadením";
@@ -234,9 +234,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Je nám ľúto, ale služba Synchronizácia a zálohovanie už nie je v tejto verzii aplikácie k dispozícii. Ak chcete pokračovať, aktualizujte DuckDuckGo na najnovšiu verziu.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Synchronizácia a zálohovanie sú pozastavené";
 
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Synchronizácia a zálohovanie nie je k dispozícii";

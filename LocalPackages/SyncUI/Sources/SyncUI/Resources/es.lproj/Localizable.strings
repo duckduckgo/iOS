@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "El dispositivo necesita una contraseña para usar Sync & Backup.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Volver";
 
@@ -6,12 +9,6 @@
 
 /* Alert title for invalid bookmarks being filtered out of synced data */
 "bookmarks.invalid.objects.present.title" = "Algunos marcadores no se sincronizan debido a un contenido excesivamente largo en determinados campos.";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Action */
-"bookmarks.limit.exceeded.action" = "Gestionar marcadores";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Description */
-"bookmarks.limit.exceeded.description" = "Se ha superado el límite de marcadores. Elimina algunos para reanudar la sincronización.";
 
 /* Camera View - Go to Settings Button */
 "camera.go.to.settings.button" = "Ir a Ajustes";
@@ -55,12 +52,6 @@
 /* Alert title for invalid logins being filtered out of synced data */
 "credentials.invalid.objects.present.title" = "Algunos inicios de sesión no se sincronizan debido a un contenido excesivamente largo en determinados campos.";
 
-/* Sync Paused Errors - Credentials Limit Exceeded Action */
-"credentials.limit.exceeded.action" = "Gestionar inicios de sesión";
-
-/* Sync Paused Errors - Credentials Limit Exceeded Description */
-"credentials.limit.exceeded.description" = "Se ha superado el límite de inicios de sesión. Elimina algunos para reanudar la sincronización.";
-
 /* Delete Server Data - Button */
 "delete.server.data" = "Desactivar y eliminar datos del servidor...";
 
@@ -95,6 +86,9 @@
 "fetch.favicons.option.title" = "Descargar automáticamente iconos";
 
 /* No comment provided by engineer. */
+"Go to Settings" = "Ir a Ajustes";
+
+/* No comment provided by engineer. */
 "Keep Development" = "Mantener el desarrollo";
 
 /* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
@@ -123,6 +117,12 @@
 
 /* Standard Buttons - Paste Button */
 "paste.button" = "Pegar";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Gestionar marcadores";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Administrar contraseñas...";
 
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Tus marcadores y contraseñas se están preparando para sincronizar. Esto solo debería tardar un momento.";
@@ -215,13 +215,13 @@
 "scan.or.see.code.title" = "Escanear código QR";
 
 /* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Protege tu dispositivo para usar Sync & Backup";
+
+/* No comment provided by engineer. */
 "Switch to Production" = "Cambiar a producción";
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Sincronizar y hacer una copia de seguridad de este dispositivo";
-
-/* Sync Paused Errors - Title */
-"sync.limit.exceeded.title" = "Sincronización pausada";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Ajustes > Sincronización y copia de seguridad > Sincronizar con otro dispositivo";
@@ -234,9 +234,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Lo sentimos, pero la sincronización y la copia de seguridad ya no están disponibles en esta versión de la aplicación. Actualiza DuckDuckGo a la última versión para continuar.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Sincronización y copia de seguridad en pausa";
 
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "La sincronización y copia de seguridad no está disponible";

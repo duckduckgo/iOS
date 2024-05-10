@@ -7,12 +7,6 @@
 /* Alert title for invalid bookmarks being filtered out of synced data */
 "bookmarks.invalid.objects.present.title" = "Some bookmarks are not syncing due to excessively long content in certain fields.";
 
-/* Sync Paused Errors - Bookmarks Limit Exceeded Action */
-"bookmarks.limit.exceeded.action" = "Manage Bookmarks";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Description */
-"bookmarks.limit.exceeded.description" = "Bookmark limit exceeded. Delete some to resume syncing.";
-
 /* Camera View - Go to Settings Button */
 "camera.go.to.settings.button" = "Go to Settings";
 
@@ -51,12 +45,6 @@
 
 /* Alert title for invalid logins being filtered out of synced data */
 "credentials.invalid.objects.present.title" = "Some logins are not syncing due to excessively long content in certain fields.";
-
-/* Sync Paused Errors - Credentials Limit Exceeded Action */
-"credentials.limit.exceeded.action" = "Manage Logins";
-
-/* Sync Paused Errors - Credentials Limit Exceeded Description */
-"credentials.limit.exceeded.description" = "Logins limit exceeded. Delete some to resume syncing.";
 
 /* Delete Server Data - Button */
 "delete.server.data" = "Turn Off and Delete Server Data...";
@@ -114,6 +102,12 @@
 
 /* Standard Buttons - Paste Button */
 "paste.button" = "Paste";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Manage Bookmarks";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Manage passwords…";
 
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Your bookmarks and passwords are being prepared to sync. This should only take a moment.";
@@ -208,9 +202,6 @@
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Sync and Back Up This Device";
 
-/* Sync Paused Errors - Title */
-"sync.limit.exceeded.title" = "Sync Paused";
-
 /* Sync Menu Path */
 "sync.menu.path" = "Settings > Sync & Backup > Sync With Another Device";
 
@@ -222,9 +213,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Sorry, but Sync & Backup is no longer available in this app version. Please update DuckDuckGo to the latest version to continue.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Sync & Backup is Paused";
 
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Sync & Backup is Unavailable";

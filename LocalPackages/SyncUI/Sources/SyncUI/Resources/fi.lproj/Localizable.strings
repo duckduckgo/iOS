@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Sync & Backup -ominaisuuden käyttäminen edellyttää laitteen salasanaa.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Takaisin";
 
@@ -6,12 +9,6 @@
 
 /* Alert title for invalid bookmarks being filtered out of synced data */
 "bookmarks.invalid.objects.present.title" = "Joitakin kirjanmerkkejä ei synkronoida, koska tiettyjen kenttien sisältö on liian pitkä.";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Action */
-"bookmarks.limit.exceeded.action" = "Hallitse kirjanmerkkejä";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Description */
-"bookmarks.limit.exceeded.description" = "Kirjanmerkkiraja ylitetty. Poista jotain jatkaaksesi synkronointia.";
 
 /* Camera View - Go to Settings Button */
 "camera.go.to.settings.button" = "Siirry kohtaan Asetukset";
@@ -55,12 +52,6 @@
 /* Alert title for invalid logins being filtered out of synced data */
 "credentials.invalid.objects.present.title" = "Joitakin kirjautumisia ei synkronoida, koska tiettyjen kenttien sisältö on liian pitkä.";
 
-/* Sync Paused Errors - Credentials Limit Exceeded Action */
-"credentials.limit.exceeded.action" = "Hallitse kirjautumisia";
-
-/* Sync Paused Errors - Credentials Limit Exceeded Description */
-"credentials.limit.exceeded.description" = "Kirjautumisten raja ylitetty. Poista jotain jatkaaksesi synkronointia.";
-
 /* Delete Server Data - Button */
 "delete.server.data" = "Sammuta ja poista palvelimen tiedot...";
 
@@ -95,6 +86,9 @@
 "fetch.favicons.option.title" = "Automaattisesti ladattavat kuvakkeet";
 
 /* No comment provided by engineer. */
+"Go to Settings" = "Siirry kohtaan Asetukset";
+
+/* No comment provided by engineer. */
 "Keep Development" = "Säilytä kehitys";
 
 /* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
@@ -123,6 +117,12 @@
 
 /* Standard Buttons - Paste Button */
 "paste.button" = "Liitä";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Hallitse kirjanmerkkejä";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Hallitse salasanoja…";
 
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Kirjanmerkkejä ja salasanoja valmistellaan synkronointiin. Tähän menee vain pieni hetki.";
@@ -215,13 +215,13 @@
 "scan.or.see.code.title" = "Skannaa QR-koodi";
 
 /* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Suojaa laitteesi käyttääksesi Sync & Backup -ominaisuutta";
+
+/* No comment provided by engineer. */
 "Switch to Production" = "Siirry tuotantoon";
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Synkronoi ja varmuuskopioi tämä laite";
-
-/* Sync Paused Errors - Title */
-"sync.limit.exceeded.title" = "Synkronointi keskeytetty";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Asetukset > Synkronointi ja varmuuskopiointi > Synkronoi toisen laitteen kanssa";
@@ -234,9 +234,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Sync & Backup ei valitettavasti ole käytettävissä tässä sovellusversiossa. Päivitä DuckDuckGo uusimpaan versioon jatkaaksesi.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Sync & Backup on keskeytetty";
 
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Synkronointi ja varmuuskopiointi ei ole käytettävissä";

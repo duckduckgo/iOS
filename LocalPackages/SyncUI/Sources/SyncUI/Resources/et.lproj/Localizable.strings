@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Funktsiooni Sync & Backup kasutamiseks on vaja seadme parooli.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Tagasi";
 
@@ -6,12 +9,6 @@
 
 /* Alert title for invalid bookmarks being filtered out of synced data */
 "bookmarks.invalid.objects.present.title" = "Mõned järjehoidjad ei sünkroonita teatud väljade liiga pika sisu tõttu.";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Action */
-"bookmarks.limit.exceeded.action" = "Halda järjehoidjaid";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Description */
-"bookmarks.limit.exceeded.description" = "Järjehoidjate limiit on täis. Kustuta mõni, et jätkata sünkroonimist.";
 
 /* Camera View - Go to Settings Button */
 "camera.go.to.settings.button" = "Ava Sätted";
@@ -55,12 +52,6 @@
 /* Alert title for invalid logins being filtered out of synced data */
 "credentials.invalid.objects.present.title" = "Mõned sisselogimisandmed ei sünkroonita teatud väljade liiga pika sisu tõttu.";
 
-/* Sync Paused Errors - Credentials Limit Exceeded Action */
-"credentials.limit.exceeded.action" = "Halda sisselogimisandmeid";
-
-/* Sync Paused Errors - Credentials Limit Exceeded Description */
-"credentials.limit.exceeded.description" = "Sisselogimisandmete limiit on täis. Kustuta mõni, et jätkata sünkroonimist.";
-
 /* Delete Server Data - Button */
 "delete.server.data" = "Lülita välja ja kustuta serveri andmed ...";
 
@@ -95,6 +86,9 @@
 "fetch.favicons.option.title" = "Ikoonide automaatne allalaadimine";
 
 /* No comment provided by engineer. */
+"Go to Settings" = "Ava Sätted";
+
+/* No comment provided by engineer. */
 "Keep Development" = "Säilita arendus";
 
 /* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
@@ -123,6 +117,12 @@
 
 /* Standard Buttons - Paste Button */
 "paste.button" = "Kleebi";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Halda järjehoidjaid";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Halda paroole…";
 
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Teie järjehoidjad ja paroolid valmistatakse sünkroonimiseks ette. See peaks võtma vaid hetke.";
@@ -215,13 +215,13 @@
 "scan.or.see.code.title" = "QR-koodi skannimine";
 
 /* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Funktsiooni Sync & Backup kasutamiseks kindlusta oma seade";
+
+/* No comment provided by engineer. */
 "Switch to Production" = "Lülitu töökeskkonnale";
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Sünkroonimi ja varunda see seade";
-
-/* Sync Paused Errors - Title */
-"sync.limit.exceeded.title" = "Sünkroonimine peatatud";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Seaded > Sünkroonimine ja varundamine > Sünkrooni teise seadmega";
@@ -234,9 +234,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Vabandust, kuid sünkroonimine ja varundus pole selles rakenduse versioonis enam saadaval. Jätkamiseks värskenda DuckDuckGo uusimale versioonile.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Sünkroonimine ja varundamine on peatatud";
 
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Sünkroonimine ja varundamine pole saadaval";

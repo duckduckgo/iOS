@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Este necesară o parolă pentru dispozitiv pentru a utiliza Sync & Backup.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Înapoi";
 
@@ -6,12 +9,6 @@
 
 /* Alert title for invalid bookmarks being filtered out of synced data */
 "bookmarks.invalid.objects.present.title" = "Unele marcaje nu se sincronizează din cauza conținutului excesiv de lung din anumite câmpuri.";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Action */
-"bookmarks.limit.exceeded.action" = "Gestionează marcajele";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Description */
-"bookmarks.limit.exceeded.description" = "Limita de marcaje a fost depășită. Șterge unele dintre ele pentru a relua sincronizarea.";
 
 /* Camera View - Go to Settings Button */
 "camera.go.to.settings.button" = "Mergi la Setări";
@@ -55,12 +52,6 @@
 /* Alert title for invalid logins being filtered out of synced data */
 "credentials.invalid.objects.present.title" = "Unele date de conectare nu se sincronizează din cauza conținutului excesiv de lung din anumite câmpuri.";
 
-/* Sync Paused Errors - Credentials Limit Exceeded Action */
-"credentials.limit.exceeded.action" = "Gestionează conectările";
-
-/* Sync Paused Errors - Credentials Limit Exceeded Description */
-"credentials.limit.exceeded.description" = "Limita de conectări a fost depășită. Șterge unele dintre ele pentru a relua sincronizarea.";
-
 /* Delete Server Data - Button */
 "delete.server.data" = "Oprește și șterge datele serverului...";
 
@@ -95,6 +86,9 @@
 "fetch.favicons.option.title" = "Descărcare automată a pictogramelor";
 
 /* No comment provided by engineer. */
+"Go to Settings" = "Mergi la Setări";
+
+/* No comment provided by engineer. */
 "Keep Development" = "Continuă dezvoltarea";
 
 /* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
@@ -123,6 +117,12 @@
 
 /* Standard Buttons - Paste Button */
 "paste.button" = "Lipește";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Gestionează marcajele";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Gestionează parolele…";
 
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Marcajele și parolele tale sunt pregătite pentru sincronizare. Acest lucru ar trebui să dureze doar un moment.";
@@ -215,13 +215,13 @@
 "scan.or.see.code.title" = "Scanează codul QR";
 
 /* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Securizează-ți dispozitivul pentru a utiliza Sync & Backup";
+
+/* No comment provided by engineer. */
 "Switch to Production" = "Treci la producție";
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Sincronizează și fă backup pentru acest dispozitiv";
-
-/* Sync Paused Errors - Title */
-"sync.limit.exceeded.title" = "Sincronizarea întreruptă";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Setări > Sincronizare și backup > Sincronizează cu un alt dispozitiv";
@@ -234,9 +234,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Ne pare rău, dar Sincronizarea și copierea de rezervă nu mai este disponibilă în această versiune de aplicație. Te rugăm să actualizezi DuckDuckGo la cea mai recentă versiune pentru a continua.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Sincronizarea și copierea de rezervă este întreruptă";
 
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Sincronizare și backup nu este disponibil";

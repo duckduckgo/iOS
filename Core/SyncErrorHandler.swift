@@ -39,7 +39,7 @@ public class SyncErrorHandler: EventMapping<SyncError> {
         }
     }
 
-    @UserDefaultsWrapper(key: .synclsPaused, defaultValue: false)
+    @UserDefaultsWrapper(key: .syncIsPaused, defaultValue: false)
     private (set) public var isSyncPaused: Bool {
         didSet {
             isSyncPausedChangedPublisher.send()

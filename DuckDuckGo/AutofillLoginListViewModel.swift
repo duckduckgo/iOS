@@ -128,6 +128,14 @@ final class AutofillLoginListViewModel: ObservableObject {
     
  // MARK: Public Methods
 
+    func isAutofillSurveyEnabled() -> Bool {
+        return appSettings.autofillSurveyEnabled
+    }
+
+    func disableAutofillSurvey() {
+        appSettings.autofillSurveyEnabled = false
+    }
+
     func delete(at indexPath: IndexPath) -> Bool {
         let section = sections[indexPath.section]
         switch section {

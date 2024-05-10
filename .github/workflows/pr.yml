@@ -89,7 +89,7 @@ jobs:
 
     - name: Upload logs if workflow failed
       uses: actions/upload-artifact@v4
-      if: failure()
+      if: failure() || cancelled()
       with:
         name: BuildLogs
         path: |

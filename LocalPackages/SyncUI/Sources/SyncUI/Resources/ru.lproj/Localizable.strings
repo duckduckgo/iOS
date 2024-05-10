@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Для работы с функцией синхронизации и резервного копирования Sync & Backup необходим пароль от устройства.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Назад";
 
@@ -6,12 +9,6 @@
 
 /* Alert title for invalid bookmarks being filtered out of synced data */
 "bookmarks.invalid.objects.present.title" = "Некоторые закладки не синхронизируются из-за слишком длинных записей в отдельных полях.";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Action */
-"bookmarks.limit.exceeded.action" = "Управление закладками";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Description */
-"bookmarks.limit.exceeded.description" = "Превышен лимит по количеству закладок. Удалите некоторые из них, чтобы возобновить синхронизацию.";
 
 /* Camera View - Go to Settings Button */
 "camera.go.to.settings.button" = "Открыть «Настройки»";
@@ -55,12 +52,6 @@
 /* Alert title for invalid logins being filtered out of synced data */
 "credentials.invalid.objects.present.title" = "Некоторые логины не синхронизируются из-за слишком длинных записей в отдельных полях.";
 
-/* Sync Paused Errors - Credentials Limit Exceeded Action */
-"credentials.limit.exceeded.action" = "Управление логинами";
-
-/* Sync Paused Errors - Credentials Limit Exceeded Description */
-"credentials.limit.exceeded.description" = "Превышен лимит по количеству логинов. Удалите некоторые из них, чтобы возобновить синхронизацию.";
-
 /* Delete Server Data - Button */
 "delete.server.data" = "Отключить и удалить данные с сервера...";
 
@@ -95,6 +86,9 @@
 "fetch.favicons.option.title" = "Автоматическая загрузка значков";
 
 /* No comment provided by engineer. */
+"Go to Settings" = "Открыть «Настройки»";
+
+/* No comment provided by engineer. */
 "Keep Development" = "Остаться на стадии разработки";
 
 /* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
@@ -124,8 +118,11 @@
 /* Standard Buttons - Paste Button */
 "paste.button" = "Вставить";
 
-/* Description of rollout banner */
-"preferences.sync.rollout-banner.description" = "Внедрение функции «Синхронизация и резервное копирование» в DuckDuckGo выполняется постепенно, поэтому она доступна не на всех устройствах.";
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Управление закладками";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Управление паролями...";
 
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Закладки и пароли готовятся к синхронизации. Это не займет много времени.";
@@ -218,13 +215,13 @@
 "scan.or.see.code.title" = "Сканирование QR-кода";
 
 /* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Защитите устройство для работы функции Sync & Backup";
+
+/* No comment provided by engineer. */
 "Switch to Production" = "Переключиться на производство";
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Синхронизация и резервное копирование устройства";
-
-/* Sync Paused Errors - Title */
-"sync.limit.exceeded.title" = "Синхронизация на паузе";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Настройки > Синхронизация и резервное копирование > Синхронизировать с другим устройством";
@@ -237,9 +234,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "К сожалению, функция «Синхронизация и резервное копирование» больше не работает в этой версии приложения. Чтобы продолжить, обновите DuckDuckGo до последней версии.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Синхронизация и резервное копирование на паузе";
 
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Функция «Синхронизация и резервное копирование» недоступна";

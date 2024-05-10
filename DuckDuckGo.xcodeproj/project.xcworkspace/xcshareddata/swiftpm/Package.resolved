@@ -32,8 +32,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "151737e0b690437a127cc6f1b9f443481cf2f645",
-        "version" : "144.0.5"
+        "revision" : "8c44b2535c9298fbb87f74d990fa513c86224eae"
       }
     },
     {
@@ -70,6 +69,15 @@
       "state" : {
         "revision" : "9f049d7b97b1e68ffd86744b500660d34a9e79b8",
         "version" : "2.3.0"
+      }
+    },
+    {
+      "identity" : "gzipswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/1024jp/GzipSwift.git",
+      "state" : {
+        "revision" : "731037f6cc2be2ec01562f6597c1d0aa3fe6fd05",
+        "version" : "6.0.1"
       }
     },
     {

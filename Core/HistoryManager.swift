@@ -78,7 +78,7 @@ public class HistoryManager: HistoryManaging {
         return historyCoordinator
     }
 
-    public init(privacyConfigManager: PrivacyConfigurationManaging, 
+    public init(privacyConfigManager: PrivacyConfigurationManaging,
                 variantManager: VariantManager,
                 database: CoreDataDatabase,
                 internalUserDecider: InternalUserDecider,
@@ -124,7 +124,7 @@ public class HistoryManager: HistoryManaging {
 
     public func loadStore() {
         historyCoordinator.loadHistory {
-            // Do migrations here if needed
+            // Do migrations here if needed in the future
         }
     }
 

@@ -71,15 +71,13 @@ protocol AppSettings: AnyObject {
     func setAutofillIsNewInstallForOnByDefault()
     var autofillImportViaSyncStart: Date? { get set }
     func clearAutofillImportViaSyncStart()
+    var autofillSurveyEnabled: Bool { get set }
 
     var voiceSearchEnabled: Bool { get set }
 
     func isWidgetInstalled() async -> Bool
     
     var autoconsentEnabled: Bool { get set }
-
-    var isSyncBookmarksPaused: Bool { get }
-    var isSyncCredentialsPaused: Bool { get }
 
     var crashCollectionOptInStatus: CrashCollectionOptInStatus { get set }
 }

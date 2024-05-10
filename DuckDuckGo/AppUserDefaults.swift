@@ -232,12 +232,6 @@ public class AppUserDefaults: AppSettings {
     @UserDefaultsWrapper(key: .textSize, defaultValue: 100)
     var textSize: Int
 
-    @UserDefaultsWrapper(key: .syncBookmarksPaused, defaultValue: false)
-    var isSyncBookmarksPaused: Bool
-
-    @UserDefaultsWrapper(key: .syncCredentialsPaused, defaultValue: false)
-    var isSyncCredentialsPaused: Bool
-
     public var favoritesDisplayMode: FavoritesDisplayMode {
         get {
             guard let string = userDefaults?.string(forKey: Keys.favoritesDisplayMode), let favoritesDisplayMode = FavoritesDisplayMode(string) else {
@@ -305,6 +299,9 @@ public class AppUserDefaults: AppSettings {
     func clearAutofillImportViaSyncStart() {
         autofillImportViaSyncStart = nil
     }
+
+    @UserDefaultsWrapper(key: .autofillSurveyEnabled, defaultValue: true)
+    var autofillSurveyEnabled: Bool
 
     @UserDefaultsWrapper(key: .voiceSearchEnabled, defaultValue: false)
     var voiceSearchEnabled: Bool

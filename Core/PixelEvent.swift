@@ -244,6 +244,8 @@ extension Pixel {
         case autofillLoginsPasswordGenerationPromptConfirmed
         case autofillLoginsPasswordGenerationPromptDismissed
 
+        case autofillManagementScreenVisitSurveyAvailable
+        
         case autofillLoginsLaunchWidgetHome
         case autofillLoginsLaunchWidgetLock
         case autofillLoginsLaunchAppShortcut
@@ -916,6 +918,7 @@ extension Pixel.Event {
         case .autofillLoginsPasswordGenerationPromptConfirmed: return "m_autofill_logins_password_generation_prompt_confirmed"
         case .autofillLoginsPasswordGenerationPromptDismissed: return "m_autofill_logins_password_generation_prompt_dismissed"
 
+        case .autofillManagementScreenVisitSurveyAvailable: return "m_autofill_management_screen_visit_survey_available"
         case .autofillLoginsLaunchWidgetHome: return "m_autofill_logins_launch_widget_home"
         case .autofillLoginsLaunchWidgetLock: return "m_autofill_logins_launch_widget_lock"
         case .autofillLoginsLaunchAppShortcut: return "m_autofill_logins_launch_app_shortcut"

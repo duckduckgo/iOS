@@ -34,7 +34,6 @@ import NetworkProtection
 // swiftlint:disable type_body_length
 final class SettingsViewModel: ObservableObject {
 
-    
     // Dependencies
     private(set) lazy var appSettings = AppDependencyProvider.shared.appSettings
     private(set) var privacyStore = PrivacyUserDefaults()
@@ -46,11 +45,14 @@ final class SettingsViewModel: ObservableObject {
     var emailManager: EmailManager { EmailManager() }
 
     // Subscription Dependencies
-    private var subscriptionAccountManager: AccountManager
+    private let subscriptionManager: SubscriptionManaging?
     private var subscriptionSignOutObserver: Any?
     
+    private enum UserDefaultsCacheKey: String, UserDefaultsCacheKeyStore {
+        case subscriptionState = "com.duckduckgo.ios.subscription.state"
+    }
     // Used to cache the lasts subscription state for up to a week
-    private var subscriptionStateCache = UserDefaultsCache<SettingsState.Subscription>(key: UserDefaultsCacheKey.subscriptionState,
+    private let subscriptionStateCache = UserDefaultsCache<SettingsState.Subscription>(key: UserDefaultsCacheKey.subscriptionState,
                                                                          settings: UserDefaultsCacheSettings(defaultExpirationInterval: .days(7)))
     
 #if NETWORK_PROTECTION
@@ -388,13 +390,13 @@ final class SettingsViewModel: ObservableObject {
     // MARK: Default Init
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
-         accountManager: AccountManager,
+         subscriptionManager: SubscriptionManaging?,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
-        self.subscriptionAccountManager = accountManager
+        self.subscriptionManager = subscriptionManager
         self.voiceSearchHelper = voiceSearchHelper
         self.deepLinkTarget = deepLink
         
@@ -444,14 +446,13 @@ extension SettingsViewModel {
         
         setupSubscribers()
         Task { await setupSubscriptionEnvironment() }
-        
     }
     
     private func getNetworkProtectionState() -> SettingsState.NetworkProtection {
         var enabled = false
 #if NETWORK_PROTECTION
-        if #available(iOS 15, *) {
-            enabled = DefaultNetworkProtectionVisibility(accountManager: subscriptionAccountManager).shouldKeepVPNAccessViaWaitlist()
+        if #available(iOS 15, *), let subscriptionManager {
+            enabled = DefaultNetworkProtectionVisibility(accountManager: subscriptionManager.accountManager).shouldKeepVPNAccessViaWaitlist()
         }
 #endif
         return SettingsState.NetworkProtection(enabled: enabled, status: "")
@@ -490,7 +491,8 @@ extension SettingsViewModel {
     
 #if NETWORK_PROTECTION
     private func updateNetPStatus(connectionStatus: ConnectionStatus) {
-        if DefaultNetworkProtectionVisibility(accountManager: subscriptionAccountManager).isPrivacyProLaunched() {
+        if let subscriptionManager,
+           DefaultNetworkProtectionVisibility(accountManager: subscriptionManager.accountManager).isPrivacyProLaunched() {
             switch connectionStatus {
             case .connected:
                 self.state.networkProtection.status = UserText.netPCellConnected
@@ -742,7 +744,11 @@ extension SettingsViewModel {
 
     @MainActor
     private func setupSubscriptionEnvironment() async {
-        
+
+        guard let subscriptionManager else {
+            return
+        }
+
         // If there's cached data use it by default
         if let cachedSubscription = subscriptionStateCache.get() {
             state.subscription = cachedSubscription
@@ -755,15 +761,15 @@ extension SettingsViewModel {
         state.subscription.enabled = AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
 
         // Update if can purchase based on App Store product availability
-        state.subscription.canPurchase = SubscriptionPurchaseEnvironment.canPurchase
+        state.subscription.canPurchase = subscriptionManager.canPurchase
 
         // Active subscription check
-        guard let token = subscriptionAccountManager.accessToken else {
+        guard let token = subscriptionManager.accountManager.accessToken else {
             subscriptionStateCache.set(state.subscription) // Sync cache
             return
         }
         
-        let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token)
+        let subscriptionResult = await subscriptionManager.subscriptionService.getSubscription(accessToken: token)
         switch subscriptionResult {
             
         case .success(let subscription):
@@ -797,7 +803,6 @@ extension SettingsViewModel {
             
         case .failure:
             break
-            
         }
         
         // Sync Cache
@@ -821,7 +826,7 @@ extension SettingsViewModel {
     @available(iOS 15.0, *)
     func restoreAccountPurchase() async {
         DispatchQueue.main.async { self.state.subscription.isRestoring = true }
-        let appStoreRestoreFlow = AppStoreRestoreFlow(accountManager: subscriptionAccountManager)
+        let appStoreRestoreFlow = AppStoreRestoreFlow(subscriptionManager: subscriptionManager)
         let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase()
         switch result {
         case .success:

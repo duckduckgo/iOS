@@ -26,7 +26,7 @@ import Core
 @available(iOS 15.0, *)
 final class SubscriptionSettingsViewModel: ObservableObject {
     
-    let accountManager: AccountManaging
+    private let subscriptionManager: SubscriptionManaging
     private var subscriptionUpdateTimer: Timer?
     private var signOutObserver: Any?
     
@@ -39,7 +39,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         var shouldDismissView: Bool = false
         var isShowingGoogleView: Bool = false
         var isShowingFAQView: Bool = false
-        var subscriptionInfo: SubscriptionService.GetSubscriptionResponse?
+        var subscriptionInfo: Subscription?
         var isLoadingSubscriptionInfo: Bool = false
         
         // Used to display stripe WebUI
@@ -50,7 +50,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         var isShowingConnectionError: Bool = false
         
         // Used to display the FAQ WebUI
-        var FAQViewModel: SubscriptionExternalLinkViewModel = SubscriptionExternalLinkViewModel(url: URL.subscriptionFAQ)
+        let subscriptionFAQURL = SubscriptionURL.FAQ.subscriptionURL(environment: subscriptionManager.currentEnvironment.serviceEnvironment)
+        var FAQViewModel: SubscriptionExternalLinkViewModel = SubscriptionExternalLinkViewModel(url: subscriptionFAQURL)
     }
 
     // Publish the currently selected feature
@@ -60,8 +61,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     @Published private(set) var state = State()
     
     
-    init(accountManager: AccountManaging) {
-        self.accountManager = accountManager
+    init(subscriptionManager: SubscriptionManaging = AppDelegate.appDelegate().getSubscriptionManager()) {
+        self.subscriptionManager = subscriptionManager
         setupSubscriptionUpdater()
         setupNotificationObservers()
     }
@@ -76,11 +77,12 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         self.fetchAndUpdateSubscriptionDetails(cachePolicy: .returnCacheDataElseLoad)
     }
         
-    private func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad, loadingIndicator: Bool = true) {
+    private func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad,
+                                                   loadingIndicator: Bool = true) {
         Task {
             if loadingIndicator { displayLoader(true) }
-            guard let token = self.accountManager.accessToken else { return }
-            let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
+            guard let token = self.subscriptionManager.accountManager.accessToken else { return }
+            let subscriptionResult = await self.subscriptionManager.subscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
             switch subscriptionResult {
             case .success(let subscription):
                 DispatchQueue.main.async {

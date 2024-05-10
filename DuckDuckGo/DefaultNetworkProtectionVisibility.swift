@@ -32,14 +32,14 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
     private let networkProtectionAccessManager: NetworkProtectionAccess?
     private let featureFlagger: FeatureFlagger
     private let userDefaults: UserDefaults
-    private let accountManager: AccountManaging
+    private let accountManager: AccountManaging?
 
     init(privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
          networkProtectionTokenStore: NetworkProtectionTokenStore? = NetworkProtectionKeychainTokenStore(),
          networkProtectionAccessManager: NetworkProtectionAccess? = NetworkProtectionAccessController(),
          featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
          userDefaults: UserDefaults = .networkProtectionGroupDefaults,
-         accountManager: AccountManaging) {
+         accountManager: AccountManaging?) {
 
         self.privacyConfigurationManager = privacyConfigurationManager
         self.networkProtectionTokenStore = networkProtectionTokenStore
@@ -54,7 +54,7 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
     static func forTokenStore() -> DefaultNetworkProtectionVisibility {
         DefaultNetworkProtectionVisibility(networkProtectionTokenStore: nil,
                                            networkProtectionAccessManager: nil,
-                                           accountManager: AppDelegate.accountManager)
+                                           accountManager: AppDelegate.appDelegate().getSubscriptionManager().accountManager)
     }
 
     func isWaitlistBetaActive() -> Bool {
@@ -107,7 +107,7 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
 
     func shouldShowVPNShortcut() -> Bool {
         if isPrivacyProLaunched() {
-            return accountManager.isUserAuthenticated
+            return accountManager?.isUserAuthenticated ?? false
         } else {
             return shouldKeepVPNAccessViaWaitlist()
         }

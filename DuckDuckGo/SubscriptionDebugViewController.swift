@@ -29,12 +29,8 @@ import NetworkProtection
 @available(iOS 15.0, *)
 final class SubscriptionDebugViewController: UITableViewController {
     
-    private let accountManager: AccountManaging = AppDelegate.accountManager
-    fileprivate var purchaseManager: PurchaseManager = PurchaseManager.shared
-    
-    @UserDefaultsWrapper(key: .privacyProEnvironment, defaultValue: SubscriptionPurchaseEnvironment.ServiceEnvironment.default.description)
-    private var privacyProEnvironment: String
-    
+    private let subscriptionManager: SubscriptionManaging
+
     private let titles = [
         Sections.authorization: "Authentication",
         Sections.subscription: "Subscription",
@@ -69,7 +65,6 @@ final class SubscriptionDebugViewController: UITableViewController {
         case staging
         case production
     }
-    
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return Sections.allCases.count
@@ -125,15 +120,15 @@ final class SubscriptionDebugViewController: UITableViewController {
             }
         
         case .environment:
-            let staging = SubscriptionPurchaseEnvironment.ServiceEnvironment.staging
-            let prod = SubscriptionPurchaseEnvironment.ServiceEnvironment.production
+            let staging = SubscriptionEnvironment.ServiceEnvironment.staging
+            let prod = SubscriptionEnvironment.ServiceEnvironment.production
             switch EnvironmentRows(rawValue: indexPath.row) {
             case .staging:
                 cell.textLabel?.text = "Staging"
-                cell.accessoryType = SubscriptionPurchaseEnvironment.currentServiceEnvironment == staging ? .checkmark : .none
+                cell.accessoryType = SubscriptionEnvironment.currentServiceEnvironment == staging ? .checkmark : .none
             case .production:
                 cell.textLabel?.text = "Production"
-                cell.accessoryType = SubscriptionPurchaseEnvironment.currentServiceEnvironment == prod ? .checkmark : .none
+                cell.accessoryType = SubscriptionEnvironment.currentServiceEnvironment == prod ? .checkmark : .none
             case .none:
                 break
             }
@@ -281,7 +276,7 @@ final class SubscriptionDebugViewController: UITableViewController {
         }
     }
     
-    private func setEnvironment(_ environment: SubscriptionPurchaseEnvironment.ServiceEnvironment) {
+    private func setEnvironment(_ environment: SubscriptionEnvironment.ServiceEnvironment) {
         if environment.description != privacyProEnvironment {
             
             accountManager.signOut()

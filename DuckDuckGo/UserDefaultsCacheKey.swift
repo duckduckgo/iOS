@@ -19,6 +19,6 @@
 
 import Common
 
-public enum UserDefaultsCacheKey: String, UserDefaultsCacheKeyStore {
-    case subscriptionState = "com.duckduckgo.ios.subscription.state"
-}
+// public enum UserDefaultsCacheKey: String, UserDefaultsCacheKeyStore {
+//    case subscriptionState = "com.duckduckgo.ios.subscription.state"
+// }

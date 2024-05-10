@@ -26,7 +26,7 @@ import Core
 struct SubscriptionSettingsView: View {
         
     @Environment(\.dismiss) var dismiss
-    @StateObject var viewModel = SubscriptionSettingsViewModel(accountManager: AppDelegate.accountManager)
+    @StateObject var viewModel = SubscriptionSettingsViewModel()
     @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
     var viewPlans: (() -> Void)?
     

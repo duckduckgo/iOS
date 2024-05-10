@@ -72,9 +72,9 @@ class AppDependencyProvider: DependencyProvider {
 
     let toggleProtectionsCounter: ToggleProtectionsCounter = ContentBlocking.shared.privacyConfigurationManager.toggleProtectionsCounter
     let userBehaviorMonitor = UserBehaviorMonitor()
-    
+
     let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
         privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-        purchasePlatform: .appStore)
+        subscriptionPlatform: .appStore)
 
 }

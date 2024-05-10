@@ -865,6 +865,7 @@
 		F1564F032B7B915F00D454A6 /* AppDelegate+SKAD4.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1564F022B7B915F00D454A6 /* AppDelegate+SKAD4.swift */; };
 		F159BDA41F0BDB5A00B4A01D /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F159BDA31F0BDB5A00B4A01D /* TabViewController.swift */; };
 		F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15D431F1E706CC500BF2CDC /* AutocompleteViewController.swift */; };
+		F15E9F3C2BECFCFD00DEFDDE /* SubscriptionTestingUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = F15E9F3B2BECFCFD00DEFDDE /* SubscriptionTestingUtilities */; };
 		F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C121E572E0300DEDCAF /* TabSwitcherViewController.swift */; };
 		F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C141E57336D00DEDCAF /* TabManager.swift */; };
 		F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C181E573EA800DEDCAF /* TabSwitcherDelegate.swift */; };
@@ -2653,6 +2654,7 @@
 				F115ED9C2B4EFC8E001A0453 /* TestUtils in Frameworks */,
 				EEFAB4672A73C230008A38E4 /* NetworkProtectionTestUtils in Frameworks */,
 				4BE67B072B96B9B0007335F7 /* Common in Frameworks */,
+				F15E9F3C2BECFCFD00DEFDDE /* SubscriptionTestingUtilities in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5511,6 +5513,7 @@
 				F115ED9B2B4EFC8E001A0453 /* TestUtils */,
 				4BE67B042B96B9AB007335F7 /* ContentBlocking */,
 				4BE67B062B96B9B0007335F7 /* Common */,
+				F15E9F3B2BECFCFD00DEFDDE /* SubscriptionTestingUtilities */,
 			);
 			productName = DuckDuckGoTests;
 			productReference = 84E341A61E2F7EFB00BDBA6F /* UnitTests.xctest */;
@@ -9964,6 +9967,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = TestUtils;
+		};
+		F15E9F3B2BECFCFD00DEFDDE /* SubscriptionTestingUtilities */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SubscriptionTestingUtilities;
 		};
 		F1D43AF92B99C1D300BAB743 /* BareBonesBrowserKit */ = {
 			isa = XCSwiftPackageProductDependency;

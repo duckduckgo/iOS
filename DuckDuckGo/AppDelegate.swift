@@ -47,6 +47,13 @@ import WebKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 // swiftlint:enable type_body_length
 
+    static func appDelegate() -> AppDelegate {
+       guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
+           fatalError("could not get app delegate ")
+       }
+       return delegate
+    }
+
     private static let ShowKeyboardOnLaunchThreshold = TimeInterval(20)
     
     private struct ShortcutKey {
@@ -69,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if NETWORK_PROTECTION
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
-    lazy var vpnFeatureVisibility = DefaultNetworkProtectionVisibility(accountManager: AppDelegate.accountManager)
+    let vpnFeatureVisibility: DefaultNetworkProtectionVisibility
 #endif
 
     private var autoClear: AutoClear?
@@ -89,11 +96,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
     private var privacyConfigCustomURL: String?
-    
-    @UserDefaultsWrapper(key: .privacyProEnvironment, defaultValue: SubscriptionPurchaseEnvironment.ServiceEnvironment.default.description)
-    private var privacyProEnvironment: String
+    public let subscriptionManager: SubscriptionManaging?
+    private var accountManager: AccountManaging? {
+        subscriptionManager?.accountManager
+    }
 
-    public static let accountManager = AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+    override init() {
+        // MARK: - Configure Subscription
+        let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
+        let subscriptionUserDefaults = UserDefaults(suiteName: subscriptionAppGroup)!
+        let subscriptionEnvironment = SubscriptionManager.getSavedOrDefaultEnvironment(userDefaults: subscriptionUserDefaults)
+        let entitlementsCache = UserDefaultsCache<[Entitlement]>(userDefaults: subscriptionUserDefaults,
+                                                                 key: UserDefaultsCacheKey.subscriptionEntitlements,
+                                                                 settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
+        let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
+        let subscriptionService = SubscriptionService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let authService = AuthService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let accountManager = AccountManager(accessTokenStorage: accessTokenStorage,
+                                            entitlementsCache: entitlementsCache,
+                                            subscriptionService: subscriptionService,
+                                            authService: authService)
+        if #available(iOS 15.0, *) {
+            subscriptionManager = SubscriptionManager(storePurchaseManager: StorePurchaseManager(),
+                                                      accountManager: accountManager,
+                                                      subscriptionService: subscriptionService,
+                                                      authService: authService,
+                                                      subscriptionEnvironment: subscriptionEnvironment)
+        }
+
+        vpnFeatureVisibility = DefaultNetworkProtectionVisibility(accountManager: accountManager)
+    }
 
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -319,8 +351,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         widgetRefreshModel.beginObservingVPNStatus()
         NetworkProtectionAccessController().refreshNetworkProtectionAccess()
 #endif
-        
-        setupSubscriptionsEnvironment()
+
+//        setupSubscriptionsEnvironment()
 
         if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() {
             clearDebugWaitlistState()
@@ -331,6 +363,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
         return true
+    }
+
+    @available(iOS 15.0, *)
+    public func getSubscriptionManager() -> SubscriptionManaging {
+        subscriptionManager!
     }
 
     private func prepareTabsModel(previewsSource: TabPreviewsSource = TabPreviewsSource(),
@@ -425,20 +462,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-
-    private func setupSubscriptionsEnvironment() {
-        Task {
-            #if ALPHA || DEBUG
-                let defaultEnvironment = SubscriptionPurchaseEnvironment.ServiceEnvironment.staging
-            #else
-                let defaultEnvironment = SubscriptionPurchaseEnvironment.ServiceEnvironment.production
-            #endif
-            let environment = SubscriptionPurchaseEnvironment.ServiceEnvironment(rawValue: privacyProEnvironment) ?? defaultEnvironment
-            SubscriptionPurchaseEnvironment.currentServiceEnvironment = environment
-            VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment = (environment == .production) ? .production : .staging
-            SubscriptionPurchaseEnvironment.current = .appStore
-        }
-    }
+//    private func setupSubscriptionsEnvironment() {
+//        Task {
+//            #if ALPHA || DEBUG
+//                let defaultEnvironment = SubscriptionPurchaseEnvironment.ServiceEnvironment.staging
+//            #else
+//                let defaultEnvironment = SubscriptionPurchaseEnvironment.ServiceEnvironment.production
+//            #endif
+//            let environment = SubscriptionPurchaseEnvironment.ServiceEnvironment(rawValue: privacyProEnvironment) ?? defaultEnvironment
+//            SubscriptionPurchaseEnvironment.currentServiceEnvironment = environment
+//            VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment = (environment == .production) ? .production : .staging
+//            SubscriptionPurchaseEnvironment.current = .appStore
+//        }
+//    }
 
     private func reportAdAttribution() {
         guard AdAttributionPixelReporter.isAdAttributionReportingEnabled else { return }
@@ -516,7 +552,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func stopTunnelAndShowThankYouMessagingIfNeeded() {
-        if AppDelegate.accountManager.isUserAuthenticated {
+
+        if let accountManager,
+            accountManager.isUserAuthenticated {
             tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
             return
         }
@@ -525,7 +563,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Task {
                 await self.stopAndRemoveVPN(with: "thank-you-dialog")
             }
-        } else if vpnFeatureVisibility.isPrivacyProLaunched() && !AppDelegate.accountManager.isUserAuthenticated {
+        } else if let accountManager,
+                  vpnFeatureVisibility.isPrivacyProLaunched() && !accountManager.isUserAuthenticated {
             Task {
                 await self.stopAndRemoveVPN(with: "subscription-check")
             }
@@ -551,16 +590,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func updateSubscriptionStatus() {
         Task {
-            guard let token = AppDelegate.accountManager.accessToken else { return }
+            guard let token = accountManager?.accessToken else { return }
 
-            if case .success(let subscription) = await SubscriptionService.getSubscription(accessToken: token,
-                                                                                           cachePolicy: .reloadIgnoringLocalCacheData) {
+            if case .success(let subscription) = await subscriptionManager?.subscriptionService.getSubscription(accessToken: token,
+                                                                                                                cachePolicy: .reloadIgnoringLocalCacheData) {
                 if subscription.isActive {
                     DailyPixel.fire(pixel: .privacyProSubscriptionActive)
                 }
             }
-
-            _ = await AppDelegate.accountManager.fetchEntitlements(cachePolicy: .reloadIgnoringLocalCacheData)
+            await accountManager?.fetchEntitlements(cachePolicy: .reloadIgnoringLocalCacheData)
         }
     }
 
@@ -858,7 +896,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if NETWORK_PROTECTION
             if shortcutItem.type == ShortcutKey.openVPNSettings {
-                let visibility = DefaultNetworkProtectionVisibility(accountManager: AppDelegate.accountManager)
+                let visibility = DefaultNetworkProtectionVisibility(accountManager: accountManager)
                 if visibility.shouldShowVPNShortcut() {
                     presentNetworkProtectionStatusSettingsModal()
                 }
@@ -971,7 +1009,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 #if NETWORK_PROTECTION
             if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
                 Task {
-                    if case .success(let hasEntitlements) = await AppDelegate.accountManager.hasEntitlement(for: .networkProtection),
+                    if case .success(let hasEntitlements) = await accountManager?.hasEntitlement(for: .networkProtection),
                         hasEntitlements {
                         presentNetworkProtectionStatusSettingsModal()
                     }

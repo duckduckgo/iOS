@@ -26,21 +26,13 @@ public protocol SyncPausedStateManaging: ObservableObject {
     var isSyncBookmarksPaused: Bool { get }
     var isSyncCredentialsPaused: Bool { get }
     var syncPausedChangedPublisher: AnyPublisher<Void, Never> { get }
-    var syncPausedMessageData: SyncPausedMessageData? { get }
-    var syncBookmarksPausedMessageData: SyncPausedMessageData? { get }
-    var syncCredentialsPausedMessageData: SyncPausedMessageData? { get }
+//    var syncPausedMessageData: SyncPausedMessageData? { get }
+//    var syncBookmarksPausedMessageData: SyncPausedMessageData? { get }
+//    var syncCredentialsPausedMessageData: SyncPausedMessageData? { get }
+    var currentSyncAllPausedError: String? { get }
+    var currentSyncBookmarksPausedError: String? { get }
+    var currentSyncCredentialsPausedError: String? { get }
+
 
     func syncDidTurnOff()
-}
-
-public struct SyncPausedMessageData {
-    public let title: String
-    public let message: String
-    public let buttonTitle: String
-
-    public init(title: String, message: String, buttonTitle: String) {
-        self.title = title
-        self.message = message
-        self.buttonTitle = buttonTitle
-    }
 }

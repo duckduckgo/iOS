@@ -23,38 +23,75 @@ import SwiftUI
 import SyncUI
 import DDGSync
 import AVFoundation
+import Core
 
 extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     var syncBookmarksPausedTitle: String? {
-        syncPausedStateManager.syncBookmarksPausedMessageData?.title
+        UserText.syncLimitExceededTitle
     }
     
     var syncCredentialsPausedTitle: String? {
-        syncPausedStateManager.syncCredentialsPausedMessageData?.title
+        UserText.syncLimitExceededTitle
     }
     
     var syncPausedTitle: String? {
-        syncPausedStateManager.syncPausedMessageData?.title
+        guard let error = getErrorType(from: syncPausedStateManager.currentSyncAllPausedError) else { return nil }
+        switch error {
+        case .invalidLoginCredentials:
+            return UserText.syncLimitExceededTitle
+        case .tooManyRequests:
+            return UserText.syncErrorTitle
+        default:
+            assertionFailure("Sync Paused error should be one of those listed")
+            return nil
+        }
     }
     
     var syncBookmarksPausedDescription: String? {
-        syncPausedStateManager.syncBookmarksPausedMessageData?.message
+        guard let error = getErrorType(from: syncPausedStateManager.currentSyncBookmarksPausedError) else { return nil }
+        switch error {
+        case .bookmarksCountLimitExceeded, .bookmarksRequestSizeLimitExceeded:
+            return UserText.bookmarksLimitExceededDescription
+        case .badRequestBookmarks:
+            return UserText.badRequestErrorDescription
+        default:
+            assertionFailure("Sync Bookmarks Paused error should be one of those listed")
+            return nil
+        }
     }
     
     var syncCredentialsPausedDescription: String? {
-        syncPausedStateManager.syncCredentialsPausedMessageData?.message
+        guard let error = getErrorType(from: syncPausedStateManager.currentSyncCredentialsPausedError) else { return nil }
+        switch error {
+        case .credentialsCountLimitExceeded, .credentialsRequestSizeLimitExceeded:
+            return UserText.credentialsLimitExceededDescription
+        case .badRequestBookmarks:
+            return UserText.badRequestErrorDescription
+        default:
+            assertionFailure("Sync Bookmarks Paused error should be one of those listed")
+            return nil
+        }
     }
     
     var syncPausedDescription: String? {
-        syncPausedStateManager.syncPausedMessageData?.message
+        guard let error = getErrorType(from: syncPausedStateManager.currentSyncAllPausedError) else { return nil }
+        switch error {
+        case .invalidLoginCredentials:
+            return UserText.invalidLoginCredentialErrorDescription
+        case .tooManyRequests:
+            return UserText.tooManyRequestsErrorDescription
+        default:
+            assertionFailure("Sync Paused error should be one of those listed")
+            return nil
+        }
     }
     
     var syncBookmarksPausedButtonTitle: String? {
-        syncPausedStateManager.syncBookmarksPausedMessageData?.buttonTitle
+        UserText.bookmarksLimitExceededAction
     }
     
     var syncCredentialsPausedButtonTitle: String? {
-        syncPausedStateManager.syncCredentialsPausedMessageData?.buttonTitle
+        UserText.bookmarksLimitExceededAction
     }
     
 
@@ -145,6 +182,13 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 self?.present(alertController, animated: true, completion: nil)
             }
         }
+    }
+
+    private func getErrorType(from errorString: String?) -> AsyncErrorType? {
+        guard let errorString = errorString else {
+            return nil
+        }
+        return AsyncErrorType(rawValue: errorString)
     }
 
     private func firePixelIfNeededFor(event: Pixel.Event, error: Error?) {

@@ -24,6 +24,17 @@ import Persistence
 import Foundation
 import SyncUI
 
+public enum AsyncErrorType: String {
+    case bookmarksCountLimitExceeded
+    case credentialsCountLimitExceeded
+    case bookmarksRequestSizeLimitExceeded
+    case credentialsRequestSizeLimitExceeded
+    case invalidLoginCredentials
+    case tooManyRequests
+    case badRequestBookmarks
+    case badRequestCredentials
+}
+
 public class SyncErrorHandler: EventMapping<SyncError> {
     @UserDefaultsWrapper(key: .syncBookmarksPaused, defaultValue: false)
     private (set) public var isSyncBookmarksPaused: Bool {
@@ -65,13 +76,13 @@ public class SyncErrorHandler: EventMapping<SyncError> {
     var nonActionableErrorCount: Int
 
     @UserDefaultsWrapper(key: .syncCurrentAllPausedError, defaultValue: nil)
-    private var currentSyncAllPausedError: String?
+    public var currentSyncAllPausedError: String?
 
     @UserDefaultsWrapper(key: .syncCurrentBookmarksPausedError, defaultValue: nil)
-    private var currentSyncBookmarksPausedError: String?
+    public var currentSyncBookmarksPausedError: String?
 
     @UserDefaultsWrapper(key: .syncCurrentCredentialsPausedError, defaultValue: nil)
-    private var currentSyncCredentialsPausedError: String?
+    public var currentSyncCredentialsPausedError: String?
 
     var isSyncPausedChangedPublisher = PassthroughSubject<Void, Never>()
     let dateProvider: DateProviding
@@ -227,110 +238,34 @@ extension SyncErrorHandler {
         switch errorType {
         case .bookmarksCountLimitExceeded, .bookmarksRequestSizeLimitExceeded:
             guard !didShowBookmarksSyncPausedError else { return }
-            alertPresenter?.showSyncPausedAlert(
-                title: UserText.syncBookmarkPausedAlertTitle,
-                informative: UserText.syncBookmarkPausedAlertDescription)
+            alertPresenter?.showSyncPausedAlert(for: errorType)
             didShowBookmarksSyncPausedError = true
         case .credentialsCountLimitExceeded, .credentialsRequestSizeLimitExceeded:
             guard !didShowCredentialsSyncPausedError else { return }
-            alertPresenter?.showSyncPausedAlert(
-                title: UserText.syncCredentialsPausedAlertTitle,
-                informative: UserText.syncCredentialsPausedAlertDescription)
+            alertPresenter?.showSyncPausedAlert(for: errorType)
             didShowCredentialsSyncPausedError = true
         case .badRequestBookmarks:
             guard !didShowBookmarksSyncPausedError else { return }
-            alertPresenter?.showSyncPausedAlert(
-                title: UserText.syncBookmarkPausedAlertTitle,
-                informative: UserText.syncBadRequestAlertDescription)
+            alertPresenter?.showSyncPausedAlert(for: errorType)
             didShowBookmarksSyncPausedError = true
         case .badRequestCredentials:
             guard !didShowCredentialsSyncPausedError else { return }
-            alertPresenter?.showSyncPausedAlert(
-                title: UserText.syncBookmarkPausedAlertTitle,
-                informative: UserText.syncBadRequestAlertDescription)
+            alertPresenter?.showSyncPausedAlert(for: errorType)
             didShowCredentialsSyncPausedError = true
         case .invalidLoginCredentials:
             guard !didShowInvalidLoginSyncPausedError else { return }
-            alertPresenter?.showSyncPausedAlert(
-                title: UserText.syncPausedAlertTitle,
-                informative: UserText.syncInvalidLoginAlertDescription)
+            alertPresenter?.showSyncPausedAlert(for: errorType)
             didShowInvalidLoginSyncPausedError = true
         case .tooManyRequests:
             guard shouldShowAlertForNonActionableError() == true else { return }
-            alertPresenter?.showSyncPausedAlert(
-                title: UserText.syncErrorAlertTitle,
-                informative: UserText.syncTooManyRequestsAlertDescription)
+            alertPresenter?.showSyncPausedAlert(for: errorType)
             lastErrorNotificationTime = dateProvider.currentDate
         }
 
     }
-    private func getErrorType(from errorString: String?) -> AsyncErrorType? {
-        guard let errorString = errorString else {
-            return nil
-        }
-        return AsyncErrorType(rawValue: errorString)
-    }
-    private var syncPausedTitle: String? {
-        guard let error = getErrorType(from: currentSyncAllPausedError) else { return nil }
-        switch error {
-        case .invalidLoginCredentials:
-            return UserText.syncPausedTitle
-        case .tooManyRequests:
-            return UserText.syncErrorTitle
-        default:
-            assertionFailure("Sync Paused error should be one of those listed")
-            return nil
-        }
-    }
-    private var syncPausedMessage: String? {
-        guard let error = getErrorType(from: currentSyncAllPausedError) else { return nil }
-        switch error {
-        case .invalidLoginCredentials:
-            return UserText.invalidLoginCredentialErrorDescription
-        case .tooManyRequests:
-            return UserText.tooManyRequestsErrorDescription
-        default:
-            assertionFailure("Sync Paused error should be one of those listed")
-            return nil
-        }
-    }
-    private var syncBookmarksPausedMessage: String? {
-        guard let error = getErrorType(from: currentSyncBookmarksPausedError) else { return nil }
-        switch error {
-        case .bookmarksCountLimitExceeded, .bookmarksRequestSizeLimitExceeded:
-            return UserText.bookmarksLimitExceededDescription
-        case .badRequestBookmarks:
-            return UserText.badRequestErrorDescription
-        default:
-            assertionFailure("Sync Bookmarks Paused error should be one of those listed")
-            return nil
-        }
-    }
-    private var syncCredentialsPausedMessage: String? {
-        guard let error = getErrorType(from: currentSyncCredentialsPausedError) else { return nil }
-        switch error {
-        case .credentialsCountLimitExceeded, .credentialsRequestSizeLimitExceeded:
-            return UserText.credentialsLimitExceededDescription
-        case .badRequestBookmarks:
-            return UserText.badRequestErrorDescription
-        default:
-            assertionFailure("Sync Bookmarks Paused error should be one of those listed")
-            return nil
-        }
-    }
     private enum ModelType {
         case bookmarks
         case credentials
-    }
-    private enum AsyncErrorType: String {
-        case bookmarksCountLimitExceeded
-        case credentialsCountLimitExceeded
-        case bookmarksRequestSizeLimitExceeded
-        case credentialsRequestSizeLimitExceeded
-        case invalidLoginCredentials
-        case tooManyRequests
-        case badRequestBookmarks
-        case badRequestCredentials
     }
 }
 
@@ -357,30 +292,6 @@ extension SyncErrorHandler: SyncErrorHandling {
 
 // MARK: - syncPausedStateManager
 extension SyncErrorHandler: SyncPausedStateManaging {
-    public var syncPausedMessageData: SyncPausedMessageData? {
-        guard let syncPausedMessage else { return nil }
-        guard let syncPausedTitle else { return nil }
-        return SyncPausedMessageData(title: syncPausedTitle,
-                                       message: syncPausedMessage,
-                                       buttonTitle: "")
-    }
-
-    @MainActor
-    public var syncBookmarksPausedMessageData: SyncPausedMessageData? {
-        guard let syncBookmarksPausedMessage else { return nil }
-        return SyncPausedMessageData(title: UserText.syncLimitExceededTitle,
-                                     message: syncBookmarksPausedMessage,
-                                     buttonTitle: UserText.bookmarksLimitExceededAction)
-    }
-
-    @MainActor
-    public var syncCredentialsPausedMessageData: SyncPausedMessageData? {
-        guard let syncCredentialsPausedMessage else { return nil }
-        return SyncPausedMessageData(title: UserText.syncLimitExceededTitle,
-                                     message: syncCredentialsPausedMessage,
-                                     buttonTitle: UserText.credentialsLimitExceededAction)
-    }
-
     public var syncPausedChangedPublisher: AnyPublisher<Void, Never> {
         isSyncPausedChangedPublisher.eraseToAnyPublisher()
     }

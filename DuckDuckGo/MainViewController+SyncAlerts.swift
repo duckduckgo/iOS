@@ -21,7 +21,36 @@ import Foundation
 import Core
 
 extension MainViewController: SyncAlertsPresenting {
-    func showSyncPausedAlert(title: String, informative: String) {
+    func showSyncPausedAlert(for error: AsyncErrorType) {
+        switch error {
+        case .bookmarksCountLimitExceeded, .bookmarksRequestSizeLimitExceeded:
+            showSyncPausedAlert(
+                title: UserText.syncBookmarkPausedAlertTitle,
+                informative: UserText.syncBookmarkPausedAlertDescription)
+        case .credentialsCountLimitExceeded, .credentialsRequestSizeLimitExceeded:
+            showSyncPausedAlert(
+                title: UserText.syncCredentialsPausedAlertTitle,
+                informative: UserText.syncCredentialsPausedAlertDescription)
+        case .invalidLoginCredentials:
+            showSyncPausedAlert(
+                title: UserText.syncPausedAlertTitle,
+                informative: UserText.syncInvalidLoginAlertDescription)
+        case .tooManyRequests:
+            showSyncPausedAlert(
+                title: UserText.syncErrorAlertTitle,
+                informative: UserText.syncTooManyRequestsAlertDescription)
+        case .badRequestBookmarks:
+            showSyncPausedAlert(
+                title: UserText.syncBookmarkPausedAlertTitle,
+                informative: UserText.syncBadRequestAlertDescription)
+        case .badRequestCredentials:
+            showSyncPausedAlert(
+                title: UserText.syncBookmarkPausedAlertTitle,
+                informative: UserText.syncBadRequestAlertDescription)
+        }
+    }
+    
+    private func showSyncPausedAlert(title: String, informative: String) {
         Task {
             await MainActor.run {
                 if self.presentedViewController is SyncSettingsViewController {

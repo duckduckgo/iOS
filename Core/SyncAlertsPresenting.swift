@@ -20,5 +20,5 @@
 import Foundation
 
 public protocol SyncAlertsPresenting: AnyObject {
-    func showSyncPausedAlert(title: String, informative: String)
+    func showSyncPausedAlert(for error: AsyncErrorType)
 }

@@ -159,26 +159,6 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: 5.0)
         XCTAssertTrue(errorHandler.syncDidTurnOffCalled)
     }
-
-    @MainActor
-    func test_ErrorHandlerReturnsExpectedSyncBookmarksPausedMetadata() {
-        XCTAssertEqual(vc.syncBookmarksPausedTitle, errorHandler.syncBookmarksPausedMessageData?.title)
-        XCTAssertEqual(vc.syncBookmarksPausedDescription, errorHandler.syncBookmarksPausedMessageData?.message)
-        XCTAssertEqual(vc.syncBookmarksPausedButtonTitle, errorHandler.syncBookmarksPausedMessageData?.buttonTitle)
-    }
-
-    @MainActor
-    func test_ErrorHandlerReturnsExpectedSyncCredentialsPausedMetadata() {
-        XCTAssertEqual(vc.syncCredentialsPausedTitle, errorHandler.syncCredentialsPausedMessageData?.title)
-        XCTAssertEqual(vc.syncCredentialsPausedDescription, errorHandler.syncCredentialsPausedMessageData?.message)
-        XCTAssertEqual(vc.syncCredentialsPausedButtonTitle, errorHandler.syncCredentialsPausedMessageData?.buttonTitle)
-    }
-
-    @MainActor
-    func test_ErrorHandlerReturnsExpectedSyncIsPausedMetadata() {
-        XCTAssertEqual(vc.syncPausedTitle, errorHandler.syncPausedMessageData?.title)
-        XCTAssertEqual(vc.syncPausedDescription, errorHandler.syncPausedMessageData?.message)
-    }
 }
 
 class MockFavoritesDisplayModeStoring: MockFavoriteDisplayModeStorage {}

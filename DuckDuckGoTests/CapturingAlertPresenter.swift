@@ -22,13 +22,11 @@ import Core
 
 class CapturingAlertPresenter: SyncAlertsPresenting {
     var showAlertCalled = false
-    var capturedTitle = ""
-    var capturedInformative = ""
+    var capturedError: AsyncErrorType?
     var showAlertCount = 0
-    func showSyncPausedAlert(title: String, informative: String) {
+    func showSyncPausedAlert(for error: AsyncErrorType) {
         showAlertCount += 1
         showAlertCalled = true
-        capturedTitle = title
-        capturedInformative = informative
+        capturedError = error
     }
 }

@@ -49,6 +49,7 @@ final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
         handler.handleBookmarkError(error)
 
         XCTAssertTrue(alertPresenter.showAlertCalled)
+        XCTAssertEqual(alertPresenter.capturedError, .bookmarksCountLimitExceeded)
     }
 
     func test_WhenHandleBookmarksError409ForTheSecondTime_ThenAlertNotShown() async {
@@ -63,6 +64,7 @@ final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
         handler.handleBookmarkError(error)
 
         XCTAssertEqual(alertPresenter.showAlertCount, 1)
+        XCTAssertEqual(alertPresenter.capturedError, .bookmarksCountLimitExceeded)
     }
 
     func test_WhenHandleCredentialsError409ForTheFirstTime_ThenAlertShown() async {
@@ -71,6 +73,7 @@ final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
         handler.handleCredentialError(_:)(error)
 
         XCTAssertTrue(alertPresenter.showAlertCalled)
+        XCTAssertEqual(alertPresenter.capturedError, .credentialsCountLimitExceeded)
     }
 
     func test_WhenHandleCredentialsError409ForTheSecondTime_ThenAlertNotShown() async {
@@ -84,6 +87,7 @@ final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
         handler.handleCredentialError(error)
 
         XCTAssertEqual(alertPresenter.showAlertCount, 1)
+        XCTAssertEqual(alertPresenter.capturedError, .credentialsCountLimitExceeded)
     }
 
     func test_WhenHandleBookmarksError413ForTheFirstTime_ThenAlertShown() async {
@@ -92,6 +96,7 @@ final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
         handler.handleBookmarkError(error)
 
         XCTAssertTrue(alertPresenter.showAlertCalled)
+        XCTAssertEqual(alertPresenter.capturedError, .bookmarksRequestSizeLimitExceeded)
     }
 
     func test_WhenHandleBookmarksError413ForTheSecondTime_ThenAlertNotShown() async {
@@ -105,6 +110,7 @@ final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
         handler.handleBookmarkError(error)
 
         XCTAssertEqual(alertPresenter.showAlertCount, 1)
+        XCTAssertEqual(alertPresenter.capturedError, .bookmarksRequestSizeLimitExceeded)
     }
 
     func test_WhenHandleCredentialsError413ForTheFirstTime_ThenAlertShown() async {
@@ -113,6 +119,7 @@ final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
         handler.handleCredentialError(_:)(error)
 
         XCTAssertTrue(alertPresenter.showAlertCalled)
+        XCTAssertEqual(alertPresenter.capturedError, .credentialsRequestSizeLimitExceeded)
     }
 
     func test_WhenHandleCredentialsError413ForTheSecondTime_ThenAlertNotShown() async {
@@ -126,6 +133,7 @@ final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
         handler.handleCredentialError(error)
 
         XCTAssertEqual(alertPresenter.showAlertCount, 1)
+        XCTAssertEqual(alertPresenter.capturedError, .credentialsRequestSizeLimitExceeded)
     }
 
     func test_WhenHandleCredentialsError413_AndThenHandleBookmarksError413_ThenAlertShownTwice() async {
@@ -139,6 +147,7 @@ final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
         handler.handleBookmarkError(_:)(error)
 
         XCTAssertEqual(alertPresenter.showAlertCount, 2)
+        XCTAssertEqual(alertPresenter.capturedError, .bookmarksRequestSizeLimitExceeded)
     }
 
     func test_WhenHandleCredentialsError401ForTheFirstTime_ThenAlertShown() async {
@@ -147,6 +156,7 @@ final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
         handler.handleCredentialError(_:)(error)
 
         XCTAssertTrue(alertPresenter.showAlertCalled)
+        XCTAssertEqual(alertPresenter.capturedError, .invalidLoginCredentials)
     }
 
     func test_WhenHandleBookmarksError401ForTheSecondTime_ThenNoAlertShown() async {
@@ -160,6 +170,7 @@ final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
         handler.handleBookmarkError(_:)(error)
 
         XCTAssertEqual(alertPresenter.showAlertCount, 1)
+        XCTAssertEqual(alertPresenter.capturedError, .invalidLoginCredentials)
     }
 
     func test_WhenHandleCredentialsError400ForTheFirstTime_ThenAlertShown() async {
@@ -168,6 +179,7 @@ final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
         handler.handleCredentialError(_:)(error)
 
         XCTAssertTrue(alertPresenter.showAlertCalled)
+        XCTAssertEqual(alertPresenter.capturedError, .badRequestCredentials)
     }
 
     func test_WhenHandleBookmarksError400ForTheSecondTime_ThenNoAlertShown() async {
@@ -181,5 +193,6 @@ final class SyncErrorHandlerSyncPausedAlertsTests: XCTestCase {
         handler.handleBookmarkError(_:)(error)
 
         XCTAssertEqual(alertPresenter.showAlertCount, 1)
+        XCTAssertEqual(alertPresenter.capturedError, .badRequestBookmarks)
     }
 }

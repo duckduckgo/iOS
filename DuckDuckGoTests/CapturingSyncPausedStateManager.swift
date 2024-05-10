@@ -22,6 +22,12 @@ import Core
 import Combine
 
 class CapturingSyncPausedStateManager: SyncPausedStateManaging {
+    var currentSyncAllPausedError: String?
+
+    var currentSyncBookmarksPausedError: String?
+    
+    var currentSyncCredentialsPausedError: String?
+    
     var isSyncPausedChangedPublisher = PassthroughSubject<Void, Never>()
     var syncDidTurnOffCalled = false
 
@@ -34,21 +40,6 @@ class CapturingSyncPausedStateManager: SyncPausedStateManaging {
     var syncPausedChangedPublisher: AnyPublisher<Void, Never> {
         isSyncPausedChangedPublisher.eraseToAnyPublisher()
     }
-
-    var syncPausedMessageData: SyncPausedMessageData? = SyncPausedMessageData(
-        title: "syncPausedTitle",
-        message: "syncPausedMessage",
-        buttonTitle: "syncPausedButtonTitle")
-
-    var syncBookmarksPausedMessageData: SyncPausedMessageData? = SyncPausedMessageData(
-        title: "syncPausedTitle bookmarks",
-        message: "syncPausedMessage bookmarks",
-        buttonTitle: "syncPausedButtonTitle bookmarks")
-
-    var syncCredentialsPausedMessageData: SyncPausedMessageData? = SyncPausedMessageData(
-        title: "syncPausedTitle credentials ",
-        message: "syncPausedMessage credentials",
-        buttonTitle: "syncPausedButtonTitle credentials")
 
     func syncDidTurnOff() {
         syncDidTurnOffCalled = true

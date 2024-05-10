@@ -1287,7 +1287,8 @@ class MainViewController: UIViewController {
             let url = currentTab?.url, !url.isDuckDuckGo,
             notificationView == nil,
             !isPad,
-            DefaultTutorialSettings().hasSeenOnboarding else { return }
+            DefaultTutorialSettings().hasSeenOnboarding,
+            !DaxDialogs.shared.isStillOnboarding() else { return }
 
         // We're using async to ensure the view dismissal happens on the first runloop after a refresh. This prevents the scenario where the view briefly appears and then immediately disappears after a refresh.
         DispatchQueue.main.async {

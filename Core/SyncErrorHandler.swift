@@ -156,6 +156,16 @@ extension SyncErrorHandler {
 
     private func handleError(_ error: Error, modelType: ModelType) {
         switch error {
+        case SyncError.patchPayloadCompressionFailed(let errorCode):
+            let pixel: Pixel.Event = {
+                switch modelType {
+                case .bookmarks:
+                    return .syncBookmarksPatchCompressionFailed
+                case .credentials:
+                    return .syncCredentialsPatchCompressionFailed
+                }
+            }()
+            Pixel.fire(pixel: pixel, withAdditionalParameters: ["error": "\(errorCode)"])
         case let syncError as SyncError:
             handleSyncError(syncError, modelType: modelType)
         default:

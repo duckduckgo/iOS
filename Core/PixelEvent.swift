@@ -525,10 +525,13 @@ extension Pixel {
         case syncSentUnauthenticatedRequest
         case syncMetadataCouldNotLoadDatabase
         case syncBookmarksFailed
+        case syncBookmarksPatchCompressionFailed
         case syncCredentialsProviderInitializationFailed
         case syncCredentialsFailed
+        case syncCredentialsPatchCompressionFailed
         case syncSettingsFailed
         case syncSettingsMetadataUpdateFailed
+        case syncSettingsPatchCompressionFailed
         case syncSignupError
         case syncLoginError
         case syncLogoutError
@@ -1173,10 +1176,13 @@ extension Pixel.Event {
         case .syncSentUnauthenticatedRequest: return "m_d_sync_sent_unauthenticated_request"
         case .syncMetadataCouldNotLoadDatabase: return "m_d_sync_metadata_could_not_load_database"
         case .syncBookmarksFailed: return "m_d_sync_bookmarks_failed"
+        case .syncBookmarksPatchCompressionFailed: return "m_d_sync_bookmarks_patch_compression_failed"
         case .syncCredentialsProviderInitializationFailed: return "m_d_sync_credentials_provider_initialization_failed"
         case .syncCredentialsFailed: return "m_d_sync_credentials_failed"
+        case .syncCredentialsPatchCompressionFailed: return "m_d_sync_credentials_patch_compression_failed"
         case .syncSettingsFailed: return "m_d_sync_settings_failed"
         case .syncSettingsMetadataUpdateFailed: return "m_d_sync_settings_metadata_update_failed"
+        case .syncSettingsPatchCompressionFailed: return "m_d_sync_settings_patch_compression_failed"
         case .syncSignupError: return "m_d_sync_signup_error"
         case .syncLoginError: return "m_d_sync_login_error"
         case .syncLogoutError: return "m_d_sync_logout_error"

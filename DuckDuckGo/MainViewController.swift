@@ -259,7 +259,7 @@ class MainViewController: UIViewController {
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
         registerForKeyboardNotifications()
-        registerForSynFeatureFlags()
+        registerForSyncFeatureFlagsUpdates()
 
         decorate()
 
@@ -445,7 +445,7 @@ class MainViewController: UIViewController {
         keyboardShowing = false
     }
 
-    private func registerForSynFeatureFlags() {
+    private func registerForSyncFeatureFlagsUpdates() {
         syncFeatureFlagsCancellable = syncService.featureFlagsPublisher
             .dropFirst()
             .map { $0.contains(.dataSyncing) }

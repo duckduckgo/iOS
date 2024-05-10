@@ -110,7 +110,7 @@ jobs:
 
     - name: Run simctl in background
       run: |
-        nohup xcrun simctl io $DEVICE_ID recordVideo --codec=h264 --f ${{ matrix.test-tag }}.mov >/dev/null 2>&1 &
+        nohup xcrun simctl io $DEVICE_ID recordVideo --codec=h264 --f ${{ matrix.test-tag }}.mp4 >/dev/null 2>&1 &
         echo $! > save_pid.txt
 
     - name: Run ${{ matrix.test-tag }} Tests
@@ -125,6 +125,7 @@ jobs:
         report_paths: results.xml
 
     - name: Stop recording
+      if: ${{ always() }}
       run: |
         kill -SIGINT $(cat save_pid.txt)
 

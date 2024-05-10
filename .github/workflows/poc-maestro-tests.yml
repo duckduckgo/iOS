@@ -108,13 +108,45 @@ jobs:
       run: |
         xcrun simctl install $DEVICE_ID DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
 
+    # simple recorder for now... will look at one that can stop start 
+    # in sync with tests later rather than arbitrarily recording for a duration
+    - name: Start recorder
+      run: |
+        # Set specific recording durations based on the test-tag
+        case "${{ matrix.test-tag }}" in
+          release)
+            DURATION=600 # 10 minutes
+            ;;
+          privacy)
+            DURATION=1320 # 22 minutes
+            ;;
+          securityTest)
+            DURATION=450 # 7 minutes and 30 seconds
+            ;;
+          adClick)
+            DURATION=780 # 13 minutes
+            ;;
+        esac
+        screencapture -v -V $DURATION ${{ matrix.test-tag }}.mov &
+
     - name: Run ${{ matrix.test-tag }} Tests
       run: |
         maestro test --format junit --output results.xml .maestro --include-tags ${{ matrix.test-tag }}
-
+    
     - name: Publish unit tests report
       if: ${{ success() || failure() }}
       uses: mikepenz/action-junit-report@v4
       with:
         check_name: "Test Report ${{ matrix.test-tag }}"
         report_paths: results.xml
+
+    - name: Sleep for recording to finish
+      if: ${{ always() }}
+      run: sleep 60
+
+    - name: Upload recording
+      uses: actions/upload-artifact@v4
+      if: ${{ failure() }}
+      with:
+        name: ${{ matrix.test-tag }}.mov
+        path: ${{ matrix.test-tag }}.mov

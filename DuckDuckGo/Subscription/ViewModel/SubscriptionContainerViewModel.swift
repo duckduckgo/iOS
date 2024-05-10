@@ -31,12 +31,12 @@ final class SubscriptionContainerViewModel: ObservableObject {
     let restore: SubscriptionRestoreViewModel
     let email: SubscriptionEmailViewModel
 
-    init(accountManager: AccountManaging) {
+    init(subscriptionManager: SubscriptionManaging) {
         self.userScript = SubscriptionPagesUserScript()
-        self.subFeature = SubscriptionPagesUseSubscriptionFeature(accountManager: accountManager)
-        self.flow = SubscriptionFlowViewModel(userScript: userScript, subFeature: subFeature)
-        self.restore = SubscriptionRestoreViewModel(userScript: userScript, subFeature: subFeature, accountManager: accountManager)
-        self.email = SubscriptionEmailViewModel(userScript: userScript, subFeature: subFeature, accountManager: accountManager)
+        self.subFeature = SubscriptionPagesUseSubscriptionFeature(subscriptionManager: subscriptionManager)
+        self.flow = SubscriptionFlowViewModel(userScript: userScript, subFeature: subFeature, subscriptionManager: subscriptionManager)
+        self.restore = SubscriptionRestoreViewModel(userScript: userScript, subFeature: subFeature, subscriptionManager: subscriptionManager)
+        self.email = SubscriptionEmailViewModel(userScript: userScript, subFeature: subFeature, subscriptionManager: subscriptionManager)
     }
     
     deinit {

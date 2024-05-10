@@ -50,19 +50,25 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         var isShowingConnectionError: Bool = false
         
         // Used to display the FAQ WebUI
-        let subscriptionFAQURL = SubscriptionURL.FAQ.subscriptionURL(environment: subscriptionManager.currentEnvironment.serviceEnvironment)
-        var FAQViewModel: SubscriptionExternalLinkViewModel = SubscriptionExternalLinkViewModel(url: subscriptionFAQURL)
+        var FAQViewModel: SubscriptionExternalLinkViewModel
+
+        init(faqURL: URL) {
+            self.FAQViewModel = SubscriptionExternalLinkViewModel(url: faqURL)
+        }
     }
 
     // Publish the currently selected feature
     @Published var selectedFeature: SettingsViewModel.SettingsDeepLinkSection?
     
     // Read only View State - Should only be modified from the VM
-    @Published private(set) var state = State()
+    @Published private(set) var state: State
+
     
-    
-    init(subscriptionManager: SubscriptionManaging = AppDelegate.appDelegate().getSubscriptionManager()) {
+    init(subscriptionManager: SubscriptionManaging = AppDelegate.appDelegate().subscriptionManager) {
         self.subscriptionManager = subscriptionManager
+        let subscriptionFAQURL = SubscriptionURL.FAQ.subscriptionURL(environment: subscriptionManager.currentEnvironment.serviceEnvironment)
+        self.state = State(faqURL: subscriptionFAQURL)
+
         setupSubscriptionUpdater()
         setupNotificationObservers()
     }
@@ -76,7 +82,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     func onFirstAppear() {
         self.fetchAndUpdateSubscriptionDetails(cachePolicy: .returnCacheDataElseLoad)
     }
-        
+    
     private func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad,
                                                    loadingIndicator: Bool = true) {
         Task {
@@ -156,7 +162,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     func removeSubscription() {
-        accountManager.signOut()
+        subscriptionManager.accountManager.signOut()
         _ = ActionMessageView()
         ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation,
                                   presentationLocation: .withoutBottomBar)
@@ -198,7 +204,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     @MainActor private func manageAppleSubscription() async {
         if state.subscriptionInfo?.isActive ?? false {
-            let url = URL.manageSubscriptionsInAppStoreAppURL
+            let url = SubscriptionURL.manageSubscriptionsInAppStore.subscriptionURL(environment:
+                                                                                        subscriptionManager.currentEnvironment.serviceEnvironment)
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                 do {
                     try await AppStore.showManageSubscriptions(in: windowScene)
@@ -212,9 +219,10 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
          
     private func manageStripeSubscription() async {
-        guard let token = accountManager.accessToken, let externalID = accountManager.externalID else { return }
-        let serviceResponse = await  SubscriptionService.getCustomerPortalURL(accessToken: token, externalID: externalID)
-        
+        guard let token = subscriptionManager.accountManager.accessToken,
+                let externalID = subscriptionManager.accountManager.externalID else { return }
+        let serviceResponse = await  subscriptionManager.subscriptionService.getCustomerPortalURL(accessToken: token, externalID: externalID)
+
         // Get Stripe Customer Portal URL and update the model
         if case .success(let response) = serviceResponse {
             guard let url = URL(string: response.customerPortalUrl) else { return }

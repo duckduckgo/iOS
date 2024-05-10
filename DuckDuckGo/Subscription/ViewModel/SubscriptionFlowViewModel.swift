@@ -234,8 +234,12 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 strongSelf.state.canNavigateBack = false
                 guard let currentURL = self?.webViewModel.url else { return }
                 Task { await strongSelf.setTransactionStatus(.idle) }
-                if currentURL.forComparison() == SubscriptionURL.addEmail.subscriptionURL(environment: strongSelf.subscriptionServiceEnvironment).forComparison() ||
-                    currentURL.forComparison() == SubscriptionURL.addEmailToSubscriptionSuccess.subscriptionURL(environment: strongSelf.subscriptionServiceEnvironment).forComparison() {
+
+                let addEmailURL = SubscriptionURL.addEmail.subscriptionURL(environment: strongSelf.subscriptionServiceEnvironment)
+                let addEmailSuccessURL = SubscriptionURL.addEmailToSubscriptionSuccess.subscriptionURL(environment:
+                                                                                                        strongSelf.subscriptionServiceEnvironment)
+                if currentURL.forComparison() == addEmailURL.forComparison() ||
+                    currentURL.forComparison() == addEmailSuccessURL.forComparison() {
                     strongSelf.state.viewTitle = UserText.subscriptionRestoreAddEmailTitle
                 } else {
                     strongSelf.state.viewTitle = UserText.subscriptionTitle
@@ -311,7 +315,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
             self.resetState()
         }
         if webViewModel.url != SubscriptionURL.purchase.subscriptionURL(environment: subscriptionServiceEnvironment).forComparison() {
-            self.webViewModel.navigationCoordinator.navigateTo(url: SubscriptionURL.purchase.subscriptionURL(environment: self.subscriptionServiceEnvironment))
+            self.webViewModel.navigationCoordinator.navigateTo(url: SubscriptionURL.purchase.subscriptionURL(environment:
+                                                                                                                self.subscriptionServiceEnvironment))
         }
         await self.setupTransactionObserver()
         await self.setupWebViewObservers()

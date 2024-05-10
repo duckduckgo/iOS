@@ -34,7 +34,7 @@ import Subscription
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
     private var cancellables = Set<AnyCancellable>()
-    private static let accountManager: AccountManaging = AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+    private let accountManager: AccountManaging
 
     // MARK: - PacketTunnelProvider.Event reporting
 
@@ -254,14 +254,28 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
-        let featureVisibility = NetworkProtectionVisibilityForTunnelProvider(accountManager: NetworkProtectionPacketTunnelProvider.accountManager)
+        // MARK: - Configure Subscription
+        let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
+        let subscriptionUserDefaults = UserDefaults(suiteName: subscriptionAppGroup)!
+        let subscriptionEnvironment = SubscriptionManager.getSavedOrDefaultEnvironment(userDefaults: subscriptionUserDefaults)
+        let entitlementsCache = UserDefaultsCache<[Entitlement]>(userDefaults: subscriptionUserDefaults,
+                                                                 key: UserDefaultsCacheKey.subscriptionEntitlements,
+                                                                 settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
+        let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
+        let subscriptionService = SubscriptionService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let authService = AuthService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let accountManager = AccountManager(accessTokenStorage: accessTokenStorage,
+                                            entitlementsCache: entitlementsCache,
+                                            subscriptionService: subscriptionService,
+                                            authService: authService)
+        self.accountManager = accountManager
+        let featureVisibility = NetworkProtectionVisibilityForTunnelProvider(accountManager: accountManager)
         let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
         let accessTokenProvider: () -> String? = {
             if featureVisibility.shouldMonitorEntitlement() {
-                return { NetworkProtectionPacketTunnelProvider.accountManager.accessToken }
+                return { accountManager.accessToken }
             }
-            return { nil }
-        }()
+            return { nil } }()
         let tokenStore = NetworkProtectionKeychainTokenStore(
             keychainType: .dataProtection(.unspecified),
             errorEvents: nil,
@@ -288,7 +302,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    settings: settings,
                    defaults: .networkProtectionGroupDefaults,
                    isSubscriptionEnabled: isSubscriptionEnabled,
-                   entitlementCheck: Self.entitlementCheck)
+                   entitlementCheck: { return await Self.entitlementCheck(accountManager: accountManager) })
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
@@ -335,15 +349,15 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         activationDateStore.updateLastActiveDate()
     }
 
-    private static func entitlementCheck() async -> Result<Bool, Error> {
-        let accountManager = NetworkProtectionPacketTunnelProvider.accountManager
+    private static func entitlementCheck(accountManager: AccountManaging) async -> Result<Bool, Error> {
         guard NetworkProtectionVisibilityForTunnelProvider(accountManager: accountManager).shouldMonitorEntitlement() else {
             return .success(true)
         }
 
-        if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {
-            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
-        }
+        // TODO: the subscription environment should be matching to the VPNSettings environment, what should we do?
+//        if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {
+//            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
+//        }
 
         let result = await accountManager.hasEntitlement(for: .networkProtection)
         switch result {

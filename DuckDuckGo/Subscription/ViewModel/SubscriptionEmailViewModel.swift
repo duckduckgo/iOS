@@ -26,16 +26,17 @@ import Subscription
 @available(iOS 15.0, *)
 final class SubscriptionEmailViewModel: ObservableObject {
     
-    let accountManager: AccountManaging
+    private let subscriptionManager: SubscriptionManaging
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     
     private var canGoBackCancellable: AnyCancellable?
     private var urlCancellable: AnyCancellable?
     
-    var emailURL = URL.activateSubscriptionViaEmail
+    private var emailURL: URL
     var webViewModel: AsyncHeadlessWebViewViewModel
-    
+
+
     enum SelectedFeature {
         case netP, dbp, itr, none
     }
@@ -69,23 +70,31 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
 
     private var cancellables = Set<AnyCancellable>()
-    
+
+    var subscriptionServiceEnvironment: SubscriptionEnvironment.ServiceEnvironment {
+        subscriptionManager.currentEnvironment.serviceEnvironment
+    }
+    var accountManager: AccountManaging { subscriptionManager.accountManager }
+
     private var isWelcomePageOrSuccessPage: Bool {
-        webViewModel.url?.forComparison() == URL.subscriptionActivateSuccess.forComparison() ||
-        webViewModel.url?.forComparison() == URL.subscriptionPurchase.forComparison()
+        let subscriptionActivateSuccessURL = SubscriptionURL.activateSuccess.subscriptionURL(environment: subscriptionServiceEnvironment)
+        let subscriptionPurchaseURL = SubscriptionURL.purchase.subscriptionURL(environment: subscriptionServiceEnvironment)
+        return webViewModel.url?.forComparison() == subscriptionActivateSuccessURL.forComparison() ||
+        webViewModel.url?.forComparison() == subscriptionPurchaseURL.forComparison()
     }
 
     init(userScript: SubscriptionPagesUserScript,
          subFeature: SubscriptionPagesUseSubscriptionFeature,
-         accountManager: AccountManaging) {
+         subscriptionManager: SubscriptionManaging) {
         self.userScript = userScript
         self.subFeature = subFeature
-        self.accountManager = accountManager
+        self.subscriptionManager = subscriptionManager
         self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,
                                                           subFeature: subFeature,
                                                           settings: AsyncHeadlessWebViewSettings(bounces: false,
                                                                                                  allowedDomains: Self.allowedDomains,
                                                                                                  contentBlocking: false))
+        self.emailURL = SubscriptionURL.activateViaEmail.subscriptionURL(environment: subscriptionManager.currentEnvironment.serviceEnvironment)
     }
     
     @MainActor
@@ -95,7 +104,8 @@ final class SubscriptionEmailViewModel: ObservableObject {
         } else {
             // If not in the Welcome page, dismiss the view, otherwise, assume we
             // came from Activation, so dismiss the entire stack
-            if webViewModel.url?.forComparison() != URL.subscriptionPurchase.forComparison() {
+            let subscriptionPurchaseURL = SubscriptionURL.purchase.subscriptionURL(environment: subscriptionServiceEnvironment)
+            if webViewModel.url?.forComparison() != subscriptionPurchaseURL.forComparison() {
                 state.shouldDismissView = true
             } else {
                 state.shouldPopToAppSettings = true
@@ -123,7 +133,9 @@ final class SubscriptionEmailViewModel: ObservableObject {
         // If the user is Authenticated & not in the Welcome page
         if accountManager.isUserAuthenticated && !isWelcomePageOrSuccessPage {
             // If user is authenticated, we want to "Add or manage email" instead of activating
-            emailURL = accountManager.email == nil ? URL.addEmailToSubscription : URL.manageSubscriptionEmail
+            let addEmailToSubscriptionURL = SubscriptionURL.addEmail.subscriptionURL(environment: subscriptionServiceEnvironment)
+            let manageSubscriptionEmailURL = SubscriptionURL.manageEmail.subscriptionURL(environment: subscriptionServiceEnvironment)
+            emailURL = accountManager.email == nil ? addEmailToSubscriptionURL : manageSubscriptionEmailURL
             state.viewTitle = accountManager.email == nil ?  UserText.subscriptionRestoreAddEmailTitle : UserText.subscriptionManageEmailTitle
             
             // Also we assume subscription requires managing, and not activation

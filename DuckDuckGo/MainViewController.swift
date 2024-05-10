@@ -1417,7 +1417,8 @@ class MainViewController: UIViewController {
     @objc
     private func onEntitlementsChange(_ notification: Notification) {
         Task {
-            guard case .success(false) = await AppDelegate.appDelegate().subscriptionManager?.accountManager.hasEntitlement(for: .networkProtection) else { return }
+            let accountManager = AppDelegate.appDelegate().subscriptionManager.accountManager
+            guard case .success(false) = await accountManager.hasEntitlement(for: .networkProtection) else { return }
 
             let controller = NetworkProtectionTunnelController()
 

@@ -154,7 +154,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     }
 
     required convenience init?(coder: NSCoder) {
-        self.init(coder: coder, tokenStore: NetworkProtectionKeychainTokenStore(), accountManager: AppDelegate.accountManager)
+        self.init(coder: coder, tokenStore: NetworkProtectionKeychainTokenStore(),
+                  accountManager: AppDelegate.appDelegate().subscriptionManager.accountManager)
     }
 
     override func viewWillAppear(_ animated: Bool) {

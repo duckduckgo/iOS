@@ -37,6 +37,11 @@ protocol TabURLInterceptor {
 
 final class TabURLInterceptorDefault: TabURLInterceptor {
     
+    private let subscriptionManager: SubscriptionManaging
+
+    init(subscriptionManager: SubscriptionManaging) {
+        self.subscriptionManager = subscriptionManager
+    }
 
     static let interceptedURLs: [InterceptedURLInfo] = [
         InterceptedURLInfo(id: .privacyPro, path: "/pro")
@@ -56,8 +61,7 @@ final class TabURLInterceptorDefault: TabURLInterceptor {
             return true
         }
         
-        return Self.handleURLInterception(url: matchingURL.id)
-        
+        return handleURLInterception(url: matchingURL.id)
     }
 }
 
@@ -79,12 +83,11 @@ extension TabURLInterceptorDefault {
         return URLComponents(string: "\(URL.URLProtocol.https.scheme)\(noScheme)")
     }
 
-    private static func handleURLInterception(url: InterceptedURL) -> Bool {
+    private func handleURLInterception(url: InterceptedURL) -> Bool {
         switch url {
-            
             // Opens the Privacy Pro Subscription Purchase page (if user can purchase)
             case .privacyPro:
-                if SubscriptionPurchaseEnvironment.canPurchase {
+            if subscriptionManager.canPurchase {
                     NotificationCenter.default.post(name: .urlInterceptPrivacyPro, object: nil)
                     return false
                 }

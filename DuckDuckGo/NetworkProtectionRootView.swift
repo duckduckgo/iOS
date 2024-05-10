@@ -32,7 +32,7 @@ struct NetworkProtectionRootView: View {
             redemptionCoordinator: NetworkProtectionCodeRedemptionCoordinator(isManualCodeRedemptionFlow: true),
             completion: inviteCompletion
         )
-        if DefaultNetworkProtectionVisibility(accountManager: AppDelegate.appDelegate().subscriptionManager?.accountManager).isPrivacyProLaunched() {
+        if DefaultNetworkProtectionVisibility(accountManager: AppDelegate.appDelegate().subscriptionManager.accountManager).isPrivacyProLaunched() {
             NetworkProtectionStatusView(
                 statusModel: NetworkProtectionStatusViewModel()
             )

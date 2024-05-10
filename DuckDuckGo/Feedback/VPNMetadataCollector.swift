@@ -278,7 +278,7 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
             enableSource: .init(from: accessManager.networkProtectionAccessType()),
             betaParticipant: accessType == .waitlistInvited,
             hasToken: hasToken,
-            subscriptionActive: AppDelegate.accountManager.isUserAuthenticated
+            subscriptionActive: AppDelegate.appDelegate().subscriptionManager.accountManager.isUserAuthenticated
         )
     }
 }

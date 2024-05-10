@@ -340,7 +340,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
     
     func getAccessToken(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        if let accessToken = AccountManager().accessToken {
+        if let accessToken = subscriptionManager.accountManager.accessToken {
             return [Constants.token: accessToken]
         } else {
             return [String: String]()

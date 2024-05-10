@@ -63,7 +63,7 @@ extension NetworkProtectionKeychainTokenStore {
         let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
         let accessTokenProvider: () -> String? = {
         if featureVisibility.shouldMonitorEntitlement() {
-            return { AppDelegate.accountManager.accessToken }
+            return { AppDelegate.appDelegate().subscriptionManager.accountManager.accessToken }
         }
         return { nil }
     }()
@@ -79,12 +79,14 @@ extension NetworkProtectionKeychainTokenStore {
 extension NetworkProtectionCodeRedemptionCoordinator {
     convenience init(isManualCodeRedemptionFlow: Bool = false) {
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+        var subscriptionManager: SubscriptionManaging { AppDelegate.appDelegate().subscriptionManager }
+        let networkProtectionVisibility = DefaultNetworkProtectionVisibility(accountManager: subscriptionManager.accountManager)
         self.init(
             environment: settings.selectedEnvironment,
             tokenStore: NetworkProtectionKeychainTokenStore(),
             isManualCodeRedemptionFlow: isManualCodeRedemptionFlow,
             errorEvents: .networkProtectionAppDebugEvents,
-            isSubscriptionEnabled: DefaultNetworkProtectionVisibility(accountManager: AppDelegate.accountManager).isPrivacyProLaunched()
+            isSubscriptionEnabled: networkProtectionVisibility.isPrivacyProLaunched()
         )
     }
 }
@@ -101,11 +103,12 @@ extension NetworkProtectionVPNSettingsViewModel {
 extension NetworkProtectionLocationListCompositeRepository {
     convenience init() {
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+        var subscriptionManager: SubscriptionManaging { AppDelegate.appDelegate().subscriptionManager }
         self.init(
             environment: settings.selectedEnvironment,
             tokenStore: NetworkProtectionKeychainTokenStore(),
             errorEvents: .networkProtectionAppDebugEvents,
-            isSubscriptionEnabled: DefaultNetworkProtectionVisibility(accountManager: AppDelegate.accountManager).isPrivacyProLaunched()
+            isSubscriptionEnabled: DefaultNetworkProtectionVisibility(accountManager: subscriptionManager.accountManager).isPrivacyProLaunched()
         )
     }
 }

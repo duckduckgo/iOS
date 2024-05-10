@@ -96,9 +96,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
     private var privacyConfigCustomURL: String?
-    public let subscriptionManager: SubscriptionManaging?
+    public let subscriptionManager: SubscriptionManaging
     private var accountManager: AccountManaging? {
-        subscriptionManager?.accountManager
+        subscriptionManager.accountManager
     }
 
     override init() {
@@ -122,6 +122,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                       subscriptionService: subscriptionService,
                                                       authService: authService,
                                                       subscriptionEnvironment: subscriptionEnvironment)
+        } else {
+            // This is used just for iOS <15, it's a sort of mocked environment that will not be used.
+            subscriptionManager = SubscriptionManageriOS14(accountManager: accountManager)
         }
 
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(accountManager: accountManager)
@@ -352,8 +355,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NetworkProtectionAccessController().refreshNetworkProtectionAccess()
 #endif
 
-//        setupSubscriptionsEnvironment()
-
         if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() {
             clearDebugWaitlistState()
         }
@@ -363,11 +364,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
         return true
-    }
-
-    @available(iOS 15.0, *)
-    public func getSubscriptionManager() -> SubscriptionManaging {
-        subscriptionManager!
     }
 
     private func prepareTabsModel(previewsSource: TabPreviewsSource = TabPreviewsSource(),
@@ -591,9 +587,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func updateSubscriptionStatus() {
         Task {
             guard let token = accountManager?.accessToken else { return }
-
-            if case .success(let subscription) = await subscriptionManager?.subscriptionService.getSubscription(accessToken: token,
-                                                                                                                cachePolicy: .reloadIgnoringLocalCacheData) {
+            var subscriptionService: SubscriptionService { subscriptionManager.subscriptionService }
+            if case .success(let subscription) = await subscriptionService.getSubscription(accessToken: token,
+                                                                                           cachePolicy: .reloadIgnoringLocalCacheData) {
                 if subscription.isActive {
                     DailyPixel.fire(pixel: .privacyProSubscriptionActive)
                 }

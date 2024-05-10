@@ -45,7 +45,7 @@ final class SettingsViewModel: ObservableObject {
     var emailManager: EmailManager { EmailManager() }
 
     // Subscription Dependencies
-    private let subscriptionManager: SubscriptionManaging?
+    private let subscriptionManager: SubscriptionManaging
     private var subscriptionSignOutObserver: Any?
     
     private enum UserDefaultsCacheKey: String, UserDefaultsCacheKeyStore {
@@ -390,7 +390,7 @@ final class SettingsViewModel: ObservableObject {
     // MARK: Default Init
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
-         subscriptionManager: SubscriptionManaging?,
+         subscriptionManager: SubscriptionManaging,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil) {
@@ -451,7 +451,7 @@ extension SettingsViewModel {
     private func getNetworkProtectionState() -> SettingsState.NetworkProtection {
         var enabled = false
 #if NETWORK_PROTECTION
-        if #available(iOS 15, *), let subscriptionManager {
+        if #available(iOS 15, *) {
             enabled = DefaultNetworkProtectionVisibility(accountManager: subscriptionManager.accountManager).shouldKeepVPNAccessViaWaitlist()
         }
 #endif
@@ -491,8 +491,7 @@ extension SettingsViewModel {
     
 #if NETWORK_PROTECTION
     private func updateNetPStatus(connectionStatus: ConnectionStatus) {
-        if let subscriptionManager,
-           DefaultNetworkProtectionVisibility(accountManager: subscriptionManager.accountManager).isPrivacyProLaunched() {
+        if DefaultNetworkProtectionVisibility(accountManager: subscriptionManager.accountManager).isPrivacyProLaunched() {
             switch connectionStatus {
             case .connected:
                 self.state.networkProtection.status = UserText.netPCellConnected
@@ -744,11 +743,6 @@ extension SettingsViewModel {
 
     @MainActor
     private func setupSubscriptionEnvironment() async {
-
-        guard let subscriptionManager else {
-            return
-        }
-
         // If there's cached data use it by default
         if let cachedSubscription = subscriptionStateCache.get() {
             state.subscription = cachedSubscription
@@ -783,7 +777,7 @@ extension SettingsViewModel {
                 // Check entitlements and update state
                 let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
                 for entitlement in entitlements {
-                    if case .success = await AccountManager().hasEntitlement(for: entitlement) {
+                    if case .success = await subscriptionManager.accountManager.hasEntitlement(for: entitlement) {
                         switch entitlement {
                         case .identityTheftRestoration:
                             self.state.subscription.entitlements.append(.identityTheftRestoration)

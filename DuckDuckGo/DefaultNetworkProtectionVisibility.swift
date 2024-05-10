@@ -54,7 +54,7 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
     static func forTokenStore() -> DefaultNetworkProtectionVisibility {
         DefaultNetworkProtectionVisibility(networkProtectionTokenStore: nil,
                                            networkProtectionAccessManager: nil,
-                                           accountManager: AppDelegate.appDelegate().getSubscriptionManager().accountManager)
+                                           accountManager: AppDelegate.appDelegate().subscriptionManager.accountManager)
     }
 
     func isWaitlistBetaActive() -> Bool {

@@ -37,7 +37,7 @@ struct SubscriptionContainerView: View {
         
     init(currentView: CurrentView) {
         _currentViewState = State(initialValue: currentView)
-        self.viewModel = SubscriptionContainerViewModel(accountManager: AppDelegate.accountManager)
+        self.viewModel = SubscriptionContainerViewModel(subscriptionManager: AppDelegate.appDelegate().subscriptionManager)
 //        let userScript = viewModel.userScript
 //        let subFeature = viewModel.subFeature
         flowViewModel = viewModel.flow

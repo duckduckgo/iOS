@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "sam/remote-messaging-target-percentile",
-        "revision" : "ff34df3e99629391b19a35c6b72ffd67a9ce7f09"
+        "revision" : "0a93216c930588fbc6d13fda9a020dceab0d9401"
       }
     },
     {

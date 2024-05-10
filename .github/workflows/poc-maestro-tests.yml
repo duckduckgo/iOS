@@ -133,5 +133,5 @@ jobs:
       uses: actions/upload-artifact@v4
       if: ${{ failure() }}
       with:
-        name: ${{ matrix.test-tag }}.mov
-        path: ${{ matrix.test-tag }}.mov
+        name: ${{ matrix.test-tag }}.mp4
+        path: ${{ matrix.test-tag }}.mp4

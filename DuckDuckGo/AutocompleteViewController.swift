@@ -129,7 +129,7 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
                     bookmark = true
                 }
 
-            case .historyEntry(_, _, _):
+            case .historyEntry:
                 history = true
 
             default: break
@@ -211,7 +211,7 @@ extension AutocompleteViewController: AutocompleteViewModelDelegate {
     }
 
     func onMessageShown() {
-        historyMessageManager.shownToUser()        
+        historyMessageManager.shownToUser()
     }
 
     func onSuggestionSelected(_ suggestion: Suggestion) {

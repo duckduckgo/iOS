@@ -15,6 +15,12 @@ appId: com.duckduckgo.mobile.ios
 - assertVisible: githubusername
 - assertVisible: github.com
 - tapOn: Passwords
+- runFlow:
+  # Handle password management survey banner
+    when: 
+      visible: "Take Survey"
+    commands:
+      - scroll
 - assertVisible: StackOverflow
 - tapOn: StackOverflow
 - assertVisible: stacker

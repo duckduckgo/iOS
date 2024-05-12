@@ -27,7 +27,7 @@ import Persistence
 public protocol HistoryManaging {
 
     var historyCoordinator: HistoryCoordinating { get }
-    func loadStore()
+    func loadStore(onCleanFinished: @escaping () -> Void) throws
 
 }
 
@@ -47,7 +47,6 @@ public class HistoryManager: HistoryManaging {
     let database: CoreDataDatabase
     let internalUserDecider: InternalUserDecider
     let isEnabledByUser: () -> Bool
-    let onStoreLoadFailed: (Error) -> Void
 
     private var currentHistoryCoordinator: HistoryCoordinating?
 
@@ -62,35 +61,25 @@ public class HistoryManager: HistoryManaging {
             return currentHistoryCoordinator
         }
 
-        var loadError: Error?
-        database.loadStore { _, error in
-            loadError = error
+        let coordinator = makeDatabaseHistoryCoordinator()
+        coordinator.loadHistory {
+            // No-op: Post-clean migrations were handled on startup.
         }
-        
-        if let loadError {
-            onStoreLoadFailed(loadError)
-            return NullHistoryCoordinator()
-        }
-
-        let context = database.makeContext(concurrencyType: .privateQueueConcurrencyType)
-        let historyCoordinator = HistoryCoordinator(historyStoring: HistoryStore(context: context, eventMapper: HistoryStoreEventMapper()))
-        currentHistoryCoordinator = historyCoordinator
-        return historyCoordinator
+        currentHistoryCoordinator = coordinator
+        return coordinator
     }
 
     public init(privacyConfigManager: PrivacyConfigurationManaging,
                 variantManager: VariantManager,
                 database: CoreDataDatabase,
                 internalUserDecider: InternalUserDecider,
-                isEnabledByUser: @autoclosure @escaping () -> Bool,
-                onStoreLoadFailed: @escaping (Error) -> Void) {
+                isEnabledByUser: @autoclosure @escaping () -> Bool) {
 
         self.privacyConfigManager = privacyConfigManager
         self.variantManager = variantManager
         self.database = database
         self.internalUserDecider = internalUserDecider
         self.isEnabledByUser = isEnabledByUser
-        self.onStoreLoadFailed = onStoreLoadFailed
     }
 
     /// Determines if the history feature is enabled.  This code will need to be cleaned up once the roll out is at 100%
@@ -122,10 +111,26 @@ public class HistoryManager: HistoryManaging {
         }
     }
 
-    public func loadStore() {
-        historyCoordinator.loadHistory {
-            // Do migrations here if needed in the future
+    public func loadStore(onCleanFinished: @escaping () -> Void) throws {
+        var loadError: Error?
+        database.loadStore { _, error in
+            loadError = error
         }
+
+        if let loadError {
+            throw loadError
+        }
+
+        let coordinator = makeDatabaseHistoryCoordinator()
+        coordinator.loadHistory {
+            onCleanFinished()
+        }
+    }
+
+    private func makeDatabaseHistoryCoordinator() -> HistoryCoordinator {
+        let context = database.makeContext(concurrencyType: .privateQueueConcurrencyType)
+        let historyCoordinator = HistoryCoordinator(historyStoring: HistoryStore(context: context, eventMapper: HistoryStoreEventMapper()))
+        return historyCoordinator
     }
 
 }

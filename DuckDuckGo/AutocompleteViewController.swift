@@ -40,7 +40,11 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
     weak var delegate: AutocompleteViewControllerDelegate?
     weak var presentationDelegate: AutocompleteViewControllerPresentationDelegate?
 
-    private let historyCoordinator: HistoryCoordinating
+    private let historyManager: HistoryManager
+    var historyCoordinator: HistoryCoordinating {
+        historyManager.historyCoordinator
+    }
+
     private let bookmarksDatabase: CoreDataDatabase
     private let appSettings: AppSettings
     private let model: AutocompleteViewModel
@@ -59,11 +63,11 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
 
     private var historyMessageManager: HistoryMessageManager
 
-    init(historyCoordinator: HistoryCoordinating,
+    init(historyManager: HistoryManager,
          bookmarksDatabase: CoreDataDatabase,
          appSettings: AppSettings,
          historyMessageManager: HistoryMessageManager = HistoryMessageManager()) {
-        self.historyCoordinator = historyCoordinator
+        self.historyManager = historyManager
         self.bookmarksDatabase = bookmarksDatabase
         self.appSettings = appSettings
         self.historyMessageManager = historyMessageManager

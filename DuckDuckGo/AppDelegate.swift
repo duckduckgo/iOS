@@ -365,26 +365,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return tabsModel
     }
 
-    private func makeHistoryManager(_ appSettings: AppSettings, _ internalUserDecider: InternalUserDecider) -> HistoryManager {
-        let historyManager = HistoryManager(privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
+    private func makeHistoryManager(_ appSettings: AppSettings,
+                                    _ internalUserDecider: InternalUserDecider,
+                                    _ privacyConfigManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager)
+            -> HistoryManager {
+
+        let historyManager = HistoryManager(privacyConfigManager: privacyConfigManager,
                                             variantManager: DefaultVariantManager(),
                                             database: HistoryDatabase.make(),
                                             internalUserDecider: internalUserDecider,
-                                            isEnabledByUser: appSettings.recentlyVisitedSites) { error in
-            Pixel.fire(pixel: .historyStoreLoadFailed, error: error)
-            if error.isDiskFull {
-                self.presentInsufficientDiskSpaceAlert()
-            } else {
-                self.presentPreemptiveCrashAlert()
+                                            isEnabledByUser: appSettings.recentlyVisitedSites)
+
+        // Ensure we don't do this if the history is disabled in privacy confg
+        if historyManager.isHistoryFeatureEnabled() {
+            do {
+                try historyManager.loadStore(onCleanFinished: {
+                    // Do future migrations after clean has finished.  See macOS for an example.
+                })
+            } catch {
+                Pixel.fire(pixel: .historyStoreLoadFailed, error: error)
+                if error.isDiskFull {
+                    self.presentInsufficientDiskSpaceAlert()
+                } else {
+                    self.presentPreemptiveCrashAlert()
+                }
             }
         }
 
-        // This is a compromise to support hot reloading via privacy config.
-        //  * If the history is disabled this will do nothing. If it is subsequently enabled then it won't start collecting history
-        //     until the app cold launches at least once.
-        //  * If the history is enabled this loads the store sets up the history manager
-        //     correctly. If the history manager is subsequently disabled it will stop working immediately.
-        historyManager.loadStore()
         return historyManager
     }
 

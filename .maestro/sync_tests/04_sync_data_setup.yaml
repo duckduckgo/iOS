@@ -65,3 +65,7 @@ name: 04_sync_data_setup
 # Remove Login that were added locally
 - runFlow:
     file: ../shared/remove_local_logins.yaml
+
+# Maestro seems to get stuck without an additional step here
+- assertVisible: 
+    id: searchEntry

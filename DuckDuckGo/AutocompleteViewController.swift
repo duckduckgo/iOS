@@ -185,7 +185,7 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
         let messageHeight = historyMessageManager.shouldShow() ? 196 : 0
         let cellHeight = 44
         let sectionPadding = 10
-        let controllerPadding = 16
+        let controllerPadding = 32
 
         let height =
             (lastResults.topHits.count * cellHeight) +

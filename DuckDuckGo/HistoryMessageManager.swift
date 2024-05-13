@@ -50,9 +50,7 @@ class HistoryMessageManager {
     }
 
     func shouldShow() -> Bool {
-        // return !dismissed
-        #warning("hardcoded for testing / ship review")
-        return true
+        return !dismissed
     }
 
 }

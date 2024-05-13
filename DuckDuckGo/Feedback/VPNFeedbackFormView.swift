@@ -25,6 +25,8 @@ import NetworkProtection
 @available(iOS 15.0, *)
 struct VPNFeedbackFormCategoryView: View {
     @Environment(\.dismiss) private var dismiss
+    let collector = DefaultVPNMetadataCollector(networkProtectionAccessManager: AppDependencyProvider.shared.networkProtectionAccessController,
+                                                tokenStore: AppDependencyProvider.shared.networkProtectionKeychainTokenStore)
 
     var body: some View {
         VStack {
@@ -32,7 +34,7 @@ struct VPNFeedbackFormCategoryView: View {
                 Section {
                     ForEach(VPNFeedbackCategory.allCases, id: \.self) { category in
                         NavigationLink {
-                            VPNFeedbackFormView(viewModel: VPNFeedbackFormViewModel(category: category)) {
+                            VPNFeedbackFormView(viewModel: VPNFeedbackFormViewModel(metadataCollector: collector, category: category)) {
                                 dismiss()
                                 DispatchQueue.main.async {
                                     ActionMessageView.present(message: UserText.vpnFeedbackFormSubmittedMessage,

@@ -154,8 +154,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     }
 
     required convenience init?(coder: NSCoder) {
-        self.init(coder: coder, tokenStore: NetworkProtectionKeychainTokenStore(),
-                  accountManager: AppDelegate.appDelegate().subscriptionManager.accountManager)
+        self.init(coder: coder, tokenStore: AppDependencyProvider.shared.networkProtectionKeychainTokenStore,
+                  accountManager: AppDependencyProvider.shared.subscriptionManager.accountManager)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -645,7 +645,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
                 cell.textLabel?.text = "Subscription Override: N/A"
             }
         case .debugInfo:
-            let vpnVisibility = DefaultNetworkProtectionVisibility(accountManager: accountManager)
+            let vpnVisibility = AppDependencyProvider.shared.vpnFeatureVisibility
 
             cell.textLabel?.font = .monospacedSystemFont(ofSize: 13.0, weight: .regular)
             cell.textLabel?.text = """
@@ -667,7 +667,8 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
 
     @MainActor
     private func refreshMetadata() async {
-        let collector = DefaultVPNMetadataCollector()
+        let collector = DefaultVPNMetadataCollector(networkProtectionAccessManager: AppDependencyProvider.shared.networkProtectionAccessController,
+                                                    tokenStore: AppDependencyProvider.shared.networkProtectionKeychainTokenStore)
         self.vpnMetadata = await collector.collectMetadata()
         self.tableView.reloadData()
     }
@@ -715,8 +716,7 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
     }
 
     private func clearAllVPNData() {
-        let accessController = NetworkProtectionAccessController()
-        accessController.revokeNetworkProtectionAccess()
+        AppDependencyProvider.shared.networkProtectionAccessController.revokeNetworkProtectionAccess()
     }
 }
 

@@ -56,34 +56,34 @@ extension ConnectionServerInfoObserverThroughSession {
     }
 }
 
-extension NetworkProtectionKeychainTokenStore {
-    
-    convenience init() {
-        let featureVisibility = DefaultNetworkProtectionVisibility.forTokenStore()
-        let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
-        let accessTokenProvider: () -> String? = {
-        if featureVisibility.shouldMonitorEntitlement() {
-            return { AppDelegate.appDelegate().subscriptionManager.accountManager.accessToken }
-        }
-        return { nil }
-    }()
-
-        self.init(keychainType: .dataProtection(.unspecified),
-                  serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
-                  errorEvents: .networkProtectionAppDebugEvents,
-                  isSubscriptionEnabled: isSubscriptionEnabled,
-                  accessTokenProvider: accessTokenProvider)
-    }
-}
+// extension NetworkProtectionKeychainTokenStore {
+//    
+//    convenience init(accountManager: AccountManaging) {
+//        let featureVisibility = AppDependencyProvider.shared.vpnFeatureVisibility
+//        let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
+//        let accessTokenProvider: () -> String? = {
+//        if featureVisibility.shouldMonitorEntitlement() {
+//            return { accountManager.accessToken }
+//        }
+//        return { nil }
+//    }()
+//
+//        self.init(keychainType: .dataProtection(.unspecified),
+//                  serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
+//                  errorEvents: .networkProtectionAppDebugEvents,
+//                  isSubscriptionEnabled: isSubscriptionEnabled,
+//                  accessTokenProvider: accessTokenProvider)
+//    }
+// }
 
 extension NetworkProtectionCodeRedemptionCoordinator {
-    convenience init(isManualCodeRedemptionFlow: Bool = false) {
+    
+    convenience init(isManualCodeRedemptionFlow: Bool = false, accountManager: AccountManaging) {
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
-        var subscriptionManager: SubscriptionManaging { AppDelegate.appDelegate().subscriptionManager }
-        let networkProtectionVisibility = DefaultNetworkProtectionVisibility(accountManager: subscriptionManager.accountManager)
+        let networkProtectionVisibility = AppDependencyProvider.shared.vpnFeatureVisibility
         self.init(
             environment: settings.selectedEnvironment,
-            tokenStore: NetworkProtectionKeychainTokenStore(),
+            tokenStore: AppDependencyProvider.shared.networkProtectionKeychainTokenStore,
             isManualCodeRedemptionFlow: isManualCodeRedemptionFlow,
             errorEvents: .networkProtectionAppDebugEvents,
             isSubscriptionEnabled: networkProtectionVisibility.isPrivacyProLaunched()
@@ -101,21 +101,22 @@ extension NetworkProtectionVPNSettingsViewModel {
 }
 
 extension NetworkProtectionLocationListCompositeRepository {
-    convenience init() {
+    
+    convenience init(accountManager: AccountManaging) {
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
-        var subscriptionManager: SubscriptionManaging { AppDelegate.appDelegate().subscriptionManager }
         self.init(
             environment: settings.selectedEnvironment,
-            tokenStore: NetworkProtectionKeychainTokenStore(),
+            tokenStore: AppDependencyProvider.shared.networkProtectionKeychainTokenStore,
             errorEvents: .networkProtectionAppDebugEvents,
-            isSubscriptionEnabled: DefaultNetworkProtectionVisibility(accountManager: subscriptionManager.accountManager).isPrivacyProLaunched()
+            isSubscriptionEnabled: AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched()
         )
     }
 }
 
 extension NetworkProtectionVPNLocationViewModel {
-    convenience init() {
-        let locationListRepository = NetworkProtectionLocationListCompositeRepository()
+    
+    convenience init(accountManager: AccountManaging) {
+        let locationListRepository = NetworkProtectionLocationListCompositeRepository(accountManager: accountManager)
         self.init(
             locationListRepository: locationListRepository,
             settings: VPNSettings(defaults: .networkProtectionGroupDefaults)

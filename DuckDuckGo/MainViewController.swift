@@ -1379,42 +1379,42 @@ class MainViewController: UIViewController {
         os_log("[NetP Subscription] Reset expired entitlement messaging", log: .networkProtection, type: .info)
     }
 
+    var networkProtectionTunnelController: NetworkProtectionTunnelController {
+        AppDependencyProvider.shared.networkProtectionTunnelController
+    }
+
     @objc
     private func onEntitlementsChange(_ notification: Notification) {
         Task {
-            let accountManager = AppDelegate.appDelegate().subscriptionManager.accountManager
+            let accountManager = AppDependencyProvider.shared.subscriptionManager.accountManager
             guard case .success(false) = await accountManager.hasEntitlement(for: .networkProtection) else { return }
 
-            let controller = NetworkProtectionTunnelController()
-
-            if await controller.isInstalled {
+            if await networkProtectionTunnelController.isInstalled {
                 tunnelDefaults.enableEntitlementMessaging()
             }
 
-            if await controller.isConnected {
+            if await networkProtectionTunnelController.isConnected {
                 DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
                     "reason": "entitlement-change"
                 ])
             }
 
-            await controller.stop()
-            await controller.removeVPN()
+            await networkProtectionTunnelController.stop()
+            await networkProtectionTunnelController.removeVPN()
         }
     }
 
     @objc
     private func onNetworkProtectionAccountSignOut(_ notification: Notification) {
         Task {
-            let controller = NetworkProtectionTunnelController()
-            
-            if await controller.isConnected {
+            if await networkProtectionTunnelController.isConnected {
                 DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
                     "reason": "account-signed-out"
                 ])
             }
 
-            await controller.stop()
-            await controller.removeVPN()
+            await networkProtectionTunnelController.stop()
+            await networkProtectionTunnelController.removeVPN()
         }
     }
 #endif

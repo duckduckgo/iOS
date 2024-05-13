@@ -142,12 +142,12 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     @Published public var animationsOn: Bool = false
 
-    public init(tunnelController: TunnelController = NetworkProtectionTunnelController(),
+    public init(tunnelController: TunnelController,
                 settings: VPNSettings = VPNSettings(defaults: .networkProtectionGroupDefaults),
                 statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
                 serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
                 errorObserver: ConnectionErrorObserver = ConnectionErrorObserverThroughSession(),
-                locationListRepository: NetworkProtectionLocationListRepository = NetworkProtectionLocationListCompositeRepository()) {
+                locationListRepository: NetworkProtectionLocationListRepository) {
         self.tunnelController = tunnelController
         self.settings = settings
         self.statusObserver = statusObserver

@@ -24,12 +24,13 @@ import Combine
 import Core
 import NetworkExtension
 import NetworkProtection
+import Subscription
 
 final class NetworkProtectionTunnelController: TunnelController {
     static var shouldSimulateFailure: Bool = false
 
     private let debugFeatures = NetworkProtectionDebugFeatures()
-    private let tokenStore = NetworkProtectionKeychainTokenStore()
+    private let tokenStore: NetworkProtectionKeychainTokenStore
     private let errorStore = NetworkProtectionTunnelErrorStore()
     private let notificationCenter: NotificationCenter = .default
     private var previousStatus: NEVPNStatus = .invalid
@@ -72,7 +73,8 @@ final class NetworkProtectionTunnelController: TunnelController {
         }
     }
 
-    init() {
+    init(accountManager: AccountManaging, tokenStore: NetworkProtectionKeychainTokenStore) {
+        self.tokenStore = tokenStore
         subscribeToStatusChanges()
     }
 

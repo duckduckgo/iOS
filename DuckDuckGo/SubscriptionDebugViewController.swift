@@ -30,7 +30,7 @@ import NetworkProtection
 final class SubscriptionDebugViewController: UITableViewController {
     
     private var subscriptionManager: SubscriptionManaging {
-        AppDelegate.appDelegate().subscriptionManager
+        AppDependencyProvider.shared.subscriptionManager
     }
 
     private let titles = [

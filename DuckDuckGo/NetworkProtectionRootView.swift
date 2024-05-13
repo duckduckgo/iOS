@@ -21,29 +21,34 @@
 
 import SwiftUI
 import NetworkProtection
+import Subscription
 
 @available(iOS 15, *)
 struct NetworkProtectionRootView: View {
-    let model = NetworkProtectionRootViewModel()
+    let model = NetworkProtectionRootViewModel(featureActivation: AppDependencyProvider.shared.networkProtectionKeychainTokenStore)
     let inviteCompletion: () -> Void
+    var accountManager: AccountManaging {
+        AppDependencyProvider.shared.subscriptionManager.accountManager
+    }
 
     var body: some View {
         let inviteViewModel = NetworkProtectionInviteViewModel(
-            redemptionCoordinator: NetworkProtectionCodeRedemptionCoordinator(isManualCodeRedemptionFlow: true),
+            redemptionCoordinator: NetworkProtectionCodeRedemptionCoordinator(isManualCodeRedemptionFlow: true,
+                                                                              accountManager: accountManager),
             completion: inviteCompletion
         )
-        if DefaultNetworkProtectionVisibility(accountManager: AppDelegate.appDelegate().subscriptionManager.accountManager).isPrivacyProLaunched() {
-            NetworkProtectionStatusView(
-                statusModel: NetworkProtectionStatusViewModel()
-            )
+    
+        let locationListRepository = NetworkProtectionLocationListCompositeRepository(accountManager: accountManager)
+        let statusViewModel = NetworkProtectionStatusViewModel(tunnelController: AppDependencyProvider.shared.networkProtectionTunnelController,
+                                                               locationListRepository: locationListRepository)
+        if AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched() {
+            NetworkProtectionStatusView(statusModel: statusViewModel)
         } else {
             switch model.initialViewKind {
             case .invite:
                 NetworkProtectionInviteView(model: inviteViewModel)
             case .status:
-                NetworkProtectionStatusView(
-                    statusModel: NetworkProtectionStatusViewModel()
-                )
+                NetworkProtectionStatusView(statusModel: statusViewModel )
             }
         }
     }

@@ -276,12 +276,10 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 return { accountManager.accessToken }
             }
             return { nil } }()
-        let tokenStore = NetworkProtectionKeychainTokenStore(
-            keychainType: .dataProtection(.unspecified),
-            errorEvents: nil,
-            isSubscriptionEnabled: isSubscriptionEnabled,
-            accessTokenProvider: accessTokenProvider
-        )
+        let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
+                                                             errorEvents: nil,
+                                                             isSubscriptionEnabled: isSubscriptionEnabled,
+                                                             accessTokenProvider: accessTokenProvider)
 
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()

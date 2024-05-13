@@ -249,7 +249,7 @@ extension MainViewController {
                                                             syncPausedStateManager: syncPausedStateManager)
 
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider,
-                                                  subscriptionManager: AppDelegate.appDelegate().subscriptionManager,
+                                                  subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
                                                   deepLink: deepLinkTarget,
                                                   syncPausedStateManager: syncPausedStateManager)
         Pixel.fire(pixel: .settingsPresented,

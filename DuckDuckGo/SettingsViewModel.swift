@@ -454,7 +454,7 @@ extension SettingsViewModel {
         var enabled = false
 #if NETWORK_PROTECTION
         if #available(iOS 15, *) {
-            enabled = DefaultNetworkProtectionVisibility(accountManager: subscriptionManager.accountManager).shouldKeepVPNAccessViaWaitlist()
+            enabled = AppDependencyProvider.shared.vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist()
         }
 #endif
         return SettingsState.NetworkProtection(enabled: enabled, status: "")
@@ -494,7 +494,7 @@ extension SettingsViewModel {
     
 #if NETWORK_PROTECTION
     private func updateNetPStatus(connectionStatus: ConnectionStatus) {
-        if DefaultNetworkProtectionVisibility(accountManager: subscriptionManager.accountManager).isPrivacyProLaunched() {
+        if AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched() {
             switch connectionStatus {
             case .connected:
                 self.state.networkProtection.status = UserText.netPCellConnected
@@ -502,7 +502,7 @@ extension SettingsViewModel {
                 self.state.networkProtection.status = UserText.netPCellDisconnected
             }
         } else {
-            switch NetworkProtectionAccessController().networkProtectionAccessType() {
+            switch AppDependencyProvider.shared.networkProtectionAccessController.networkProtectionAccessType() {
             case .none, .waitlistAvailable, .waitlistJoined, .waitlistInvitedPendingTermsAcceptance:
                 self.state.networkProtection.status = VPNWaitlist.shared.settingsSubtitle
             case .waitlistInvited, .inviteCodeInvited:

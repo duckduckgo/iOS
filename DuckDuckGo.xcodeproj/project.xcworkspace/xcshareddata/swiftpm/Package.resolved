@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "739e7a89f1ddf18d2fe83e94a83892e248f60668",
-        "version" : "145.1.0"
+        "branch" : "alessandro/subscription-attribution",
+        "revision" : "7c2bace3d21122cec3cf215b7560dc4539ed76c1"
       }
     },
     {

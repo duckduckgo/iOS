@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1715089103665,
+    "version": 1715597796155,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -298,6 +298,9 @@
                     "domain": "malmostadsteater.se"
                 },
                 {
+                    "domain": "hertz.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -334,7 +337,7 @@
                     }
                 }
             },
-            "hash": "b920b816d8bae4d780f40472367d33a6"
+            "hash": "b7d8dac447260fb747353606c105a298"
         },
         "autofill": {
             "exceptions": [
@@ -6608,7 +6611,14 @@
                             {
                                 "rule": "grow.me/main.js",
                                 "domains": [
-                                    "budgetbytes.com"
+                                    "budgetbytes.com",
+                                    "foodfornet.com"
+                                ]
+                            },
+                            {
+                                "rule": "api.grow.me",
+                                "domains": [
+                                    "foodfornet.com"
                                 ]
                             }
                         ]
@@ -6970,6 +6980,12 @@
                                 "domains": [
                                     "cosmicbook.news"
                                 ]
+                            },
+                            {
+                                "rule": "scripts.mediavine.com/tags/food-for-net.js",
+                                "domains": [
+                                    "foodfornet.com"
+                                ]
                             }
                         ]
                     },
@@ -7112,6 +7128,12 @@
                                 "rule": "altriagroupinc.tt.omtrdc.net/rest/v1/delivery",
                                 "domains": [
                                     "marlboro.com"
+                                ]
+                            },
+                            {
+                                "rule": "whirlpool.tt.omtrdc.net/rest/v1/delivery",
+                                "domains": [
+                                    "kitchenaid.com"
                                 ]
                             },
                             {
@@ -8193,7 +8215,7 @@
                     "domain": "sundancecatalog.com"
                 }
             ],
-            "hash": "f2d857a6f3ddf32e4d22f1202a0e19e7"
+            "hash": "9d27a37af261c74dd1cc7c960a7a6265"
         },
         "trackingCookies1p": {
             "settings": {

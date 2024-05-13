@@ -575,7 +575,7 @@ public struct UserText {
     // MARK: VPN Widget
 
     public static let vpnSettingsAddWidget = NSLocalizedString("vpn.settings.add.widget", value: "Add VPN Widget to Home Screen", comment: "VPN settings screen cell text for adding the VPN widget to the home screen")
-    public static let addVPNWidgetSettingsThirdParagraph = NSLocalizedString("vpn.addWidget.settings.title", value: "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.", comment: "")
+    public static let addVPNWidgetSettingsThirdParagraph = NSLocalizedString("vpn.addWidget.settings.title", value: "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.", comment: "Title for the VPN widget onboarding screen")
 
     // MARK: Notifications
     

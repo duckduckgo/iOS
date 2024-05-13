@@ -2350,7 +2350,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
 
-/* No comment provided by engineer. */
+/* Title for the VPN widget onboarding screen */
 "vpn.addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
 
 /* Title for the Cancel button of the VPN feedback form */

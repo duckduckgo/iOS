@@ -28,6 +28,15 @@
       }
     },
     {
+      "identity" : "browserserviceskit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
+      "state" : {
+        "branch" : "fcappelli/subscription_refactoring_2",
+        "revision" : "5936635dc4bd4978e74939e8bc39e6b054e18199"
+      }
+    },
+    {
       "identity" : "content-scope-scripts",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",

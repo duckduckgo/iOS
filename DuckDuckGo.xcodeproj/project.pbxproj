@@ -880,7 +880,6 @@
 		F1564F032B7B915F00D454A6 /* AppDelegate+SKAD4.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1564F022B7B915F00D454A6 /* AppDelegate+SKAD4.swift */; };
 		F159BDA41F0BDB5A00B4A01D /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F159BDA31F0BDB5A00B4A01D /* TabViewController.swift */; };
 		F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15D431F1E706CC500BF2CDC /* AutocompleteViewController.swift */; };
-		F15E9F3C2BECFCFD00DEFDDE /* SubscriptionTestingUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = F15E9F3B2BECFCFD00DEFDDE /* SubscriptionTestingUtilities */; };
 		F15E9F3E2BEE128200DEFDDE /* SubscriptionManageriOS14.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E9F3D2BEE128200DEFDDE /* SubscriptionManageriOS14.swift */; };
 		F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C121E572E0300DEDCAF /* TabSwitcherViewController.swift */; };
 		F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C141E57336D00DEDCAF /* TabManager.swift */; };
@@ -2525,7 +2524,6 @@
 		F1134ECF1F40EBE200B73467 /* JsonTestDataLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonTestDataLoader.swift; sourceTree = "<group>"; };
 		F1134ED41F40F15800B73467 /* StatisticsUserDefaultsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsUserDefaultsTests.swift; sourceTree = "<group>"; };
 		F114C55A1E66EB020018F95F /* NibLoading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoading.swift; sourceTree = "<group>"; };
-		F119CCC62BE397850002B30E /* BrowserServicesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BrowserServicesKit; path = ../BrowserServicesKit; sourceTree = "<group>"; };
 		F130D7391E5776C500C45811 /* OmniBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBarDelegate.swift; sourceTree = "<group>"; };
 		F1386BA31E6846C40062FC3C /* TabDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabDelegate.swift; sourceTree = "<group>"; };
 		F13B4BBF1F180D8A00814661 /* TabsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsModel.swift; sourceTree = "<group>"; };
@@ -2686,7 +2684,6 @@
 				F115ED9C2B4EFC8E001A0453 /* TestUtils in Frameworks */,
 				EEFAB4672A73C230008A38E4 /* NetworkProtectionTestUtils in Frameworks */,
 				4BE67B072B96B9B0007335F7 /* Common in Frameworks */,
-				F15E9F3C2BECFCFD00DEFDDE /* SubscriptionTestingUtilities in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3508,7 +3505,6 @@
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
-				F119CCC62BE397850002B30E /* BrowserServicesKit */,
 				EE3B98EB2A963515002F63A0 /* WidgetsExtensionAlpha.entitlements */,
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				EEB8FDB92A990AEE00EBEDCF /* Configuration-Alpha.xcconfig */,
@@ -5577,7 +5573,6 @@
 				F115ED9B2B4EFC8E001A0453 /* TestUtils */,
 				4BE67B042B96B9AB007335F7 /* ContentBlocking */,
 				4BE67B062B96B9B0007335F7 /* Common */,
-				F15E9F3B2BECFCFD00DEFDDE /* SubscriptionTestingUtilities */,
 			);
 			productName = DuckDuckGoTests;
 			productReference = 84E341A61E2F7EFB00BDBA6F /* UnitTests.xctest */;
@@ -7063,7 +7058,6 @@
 				854858E32937BC550063610B /* CollectionExtension.swift in Sources */,
 				1E6A4D692984208800A371D3 /* LocaleExtension.swift in Sources */,
 				98F6EA472863124100720957 /* ContentBlockerRulesLists.swift in Sources */,
-				D6FF22482BC95F0B008E7BCC /* AccountManager+AppGroup.swift in Sources */,
 				566B73732BECE4F200FF1959 /* SyncErrorHandling.swift in Sources */,
 				F1134EB01F40AC6300B73467 /* AtbParser.swift in Sources */,
 				EE50052E29C369D300AE0773 /* FeatureFlag.swift in Sources */,
@@ -10048,10 +10042,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = TestUtils;
-		};
-		F15E9F3B2BECFCFD00DEFDDE /* SubscriptionTestingUtilities */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SubscriptionTestingUtilities;
 		};
 		F1D43AF92B99C1D300BAB743 /* BareBonesBrowserKit */ = {
 			isa = XCSwiftPackageProductDependency;

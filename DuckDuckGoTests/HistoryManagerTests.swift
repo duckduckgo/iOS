@@ -83,6 +83,8 @@ final class HistoryManagerTests: XCTestCase {
                 XCTFail("DB Error \($0)")
             }
 
+            RunLoop.main.run(until: .init() + 0.5)
+
             XCTAssertEqual(condition.expected, historyManager.isHistoryFeatureEnabled(), "\(index): \(condition)")
 
             // If not enabled, then the history manager should be using a "null" history coordinator
@@ -126,20 +128,27 @@ final class HistoryManagerTests: XCTestCase {
         let db = CoreDataDatabase(name: "Test", containerLocation: URL.aboutLink, model: model)
 
         var error: Error?
-        let historyManager = makeHistoryManager(db) {
+        _ = makeHistoryManager(db) {
             error = $0
         }
-        _ = historyManager.historyCoordinator
+
         XCTAssertNotNil(error)
     }
 
     private func makeHistoryManager(_ db: CoreDataDatabase, onStoreLoadFailed: @escaping (Error) -> Void) -> HistoryManager {
-        return HistoryManager(privacyConfigManager: privacyConfigManager,
+        let manager = HistoryManager(privacyConfigManager: privacyConfigManager,
                               variantManager: variantManager,
                               database: db,
                               internalUserDecider: DefaultInternalUserDecider(mockedStore: internalUserStore),
-                              isEnabledByUser: self.isEnabledByUser(),
-                              onStoreLoadFailed: onStoreLoadFailed)
+                              isEnabledByUser: self.isEnabledByUser())
+        do {
+            try manager.loadStore {
+                //
+            }
+        } catch {
+            onStoreLoadFailed(error)
+        }
+        return manager
     }
 
     private func isEnabledByUser() -> Bool {

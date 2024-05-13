@@ -85,7 +85,6 @@ class MockHistoryManager: HistoryManaging {
         self.historyCoordinator = historyCoordinator
     }
 
-    func loadStore() {
+    func loadStore(onCleanFinished: @escaping () -> Void) throws {
     }
-
 }

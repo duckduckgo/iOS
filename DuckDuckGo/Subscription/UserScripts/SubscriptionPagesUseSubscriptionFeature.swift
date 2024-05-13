@@ -257,6 +257,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         case .success(let purchaseUpdate):
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess)
             UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
+            Pixel.fireAttribution(pixel: .privacyProSuccessfulSubscriptionAttribution, origin: subscriptionAttributionOrigin)
             setTransactionStatus(.idle)
             await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
         case .failure:
@@ -426,6 +427,24 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         onActivateSubscription = nil
         onBackToSettings = nil
     }
-    
+
+}
+
+private extension Pixel {
+
+    enum AttributionParameters {
+        static let origin = "origin"
+        static let locale = "locale"
+    }
+
+    static func fireAttribution(pixel: Pixel.Event, origin: String?, locale: Locale = .current) {
+        var parameters: [String: String] = [:]
+        parameters[AttributionParameters.locale] = locale.identifier
+        if let origin {
+            parameters[AttributionParameters.origin] = origin
+        }
+        Self.fire(pixel: pixel, withAdditionalParameters: parameters)
+    }
+
 }
 // swiftlint:enable file_length

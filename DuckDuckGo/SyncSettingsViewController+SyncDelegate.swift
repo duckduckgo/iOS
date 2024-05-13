@@ -298,7 +298,6 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             }
             let confirmAction = UIAlertAction(title: UserText.syncTurnOffConfirmAction, style: .destructive) { _ in
                 self.onConfirmSyncDisable?()
-                continuation.resume(returning: true)
             }
             alert.addAction(cancelAction)
             alert.addAction(confirmAction)
@@ -329,7 +328,6 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             }
             alert.addAction(title: UserText.syncDeleteAllConfirmAction, style: .destructive) {
                 self.onConfirmAndDeleteAllData?()
-                continuation.resume(returning: true)
             }
             self.present(alert, animated: true)
         }

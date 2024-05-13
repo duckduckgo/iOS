@@ -38,6 +38,6 @@ public protocol NetworkProtectionFeatureVisibility {
     /// N.B. Backend will independently check for valid entitlement regardless of this value
     func shouldMonitorEntitlement() -> Bool
 
-    /// Whether to show VPN shortcut on the homescreen
+    /// Whether to show VPN shortcut on the home screen
     func shouldShowVPNShortcut() -> Bool
 }

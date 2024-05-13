@@ -89,6 +89,9 @@ import WebKit
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
+        // SKAD4 support
+        updateSKAd(conversionValue: 1)
+
 #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
             // Disable hardware keyboards.
@@ -140,9 +143,6 @@ import WebKit
         }
 
         clearTmp()
-
-        // SKAD4 support
-        updateSKAd(conversionValue: 1)
 
         _ = DefaultUserAgentManager.shared
         testing = ProcessInfo().arguments.contains("testing")

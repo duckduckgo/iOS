@@ -21,9 +21,11 @@ import XCTest
 @testable import DuckDuckGo
 import Subscription
 import SubscriptionTestingUtilities
+import Common
 
 /// Test all permutations according to https://app.asana.com/0/0/1206812323779606/f
 final class NetworkProtectionFeatureVisibilityTests: XCTestCase {
+    
     func testPrivacyProNotYetLaunched() {
         // Current waitlist user -> VPN works as usual, no thank-you, no entitlement check
         let mockWithVPNAccess = NetworkProtectionFeatureVisibilityMocks(with: [.isWaitlistBetaActive, .isWaitlistUser])
@@ -89,7 +91,7 @@ final class NetworkProtectionFeatureVisibilityTests: XCTestCase {
 
 struct NetworkProtectionFeatureVisibilityMocks: NetworkProtectionFeatureVisibility {
     
-    let accountManager = AccountManagerMock(isUserAuthenticated: true) // TODO: this makes no sense
+    let accountManager: AccountManager
 
     func shouldShowThankYouMessaging() -> Bool {
         isPrivacyProLaunched() && isWaitlistUser()
@@ -119,6 +121,20 @@ struct NetworkProtectionFeatureVisibilityMocks: NetworkProtectionFeatureVisibili
 
     init(with options: Options) {
         self.options = options
+        
+        let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
+        let subscriptionUserDefaults = UserDefaults(suiteName: subscriptionAppGroup)!
+        let subscriptionEnvironment = SubscriptionManager.getSavedOrDefaultEnvironment(userDefaults: subscriptionUserDefaults)
+        let entitlementsCache = UserDefaultsCache<[Entitlement]>(userDefaults: subscriptionUserDefaults,
+                                                                 key: UserDefaultsCacheKey.subscriptionEntitlements,
+                                                                 settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
+        let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
+        let subscriptionService = SubscriptionService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let authService = AuthService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        accountManager = AccountManager(accessTokenStorage: accessTokenStorage,
+                                        entitlementsCache: entitlementsCache,
+                                        subscriptionService: subscriptionService,
+                                        authService: authService)
     }
 
     func adding(_ additionalOptions: Options) -> NetworkProtectionFeatureVisibilityMocks {

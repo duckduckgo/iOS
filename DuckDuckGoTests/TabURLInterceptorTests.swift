@@ -49,7 +49,7 @@ class TabURLInterceptorDefaultTests: XCTestCase {
     }
     
     func testNotificationForInterceptedPrivacyProPath() {
-//        let expectation = self.expectation(forNotification: .urlInterceptPrivacyPro, object: nil, handler: nil)
+        let expectation = self.expectation(forNotification: .urlInterceptPrivacyPro, object: nil, handler: nil)
         
         let url = URL(string: "https://duckduckgo.com/pro")!
         let canNavigate = urlInterceptor.allowsNavigatingTo(url: url)

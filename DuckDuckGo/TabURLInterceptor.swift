@@ -56,8 +56,8 @@ final class TabURLInterceptorDefault: TabURLInterceptor {
             return true
         }
         
-        return Self.handleURLInterception(url: matchingURL.id)
-        
+        return Self.handleURLInterception(interceptedURL: matchingURL.id, queryItems: components.percentEncodedQueryItems)
+
     }
 }
 
@@ -79,13 +79,23 @@ extension TabURLInterceptorDefault {
         return URLComponents(string: "\(URL.URLProtocol.https.scheme)\(noScheme)")
     }
 
-    private static func handleURLInterception(url: InterceptedURL) -> Bool {
-        switch url {
-            
+    private static func handleURLInterception(interceptedURL: InterceptedURL, queryItems: [URLQueryItem]?) -> Bool {
+        switch interceptedURL {
+
             // Opens the Privacy Pro Subscription Purchase page (if user can purchase)
             case .privacyPro:
                 if SubscriptionPurchaseEnvironment.canPurchase {
-                    NotificationCenter.default.post(name: .urlInterceptPrivacyPro, object: nil)
+                    // If URL has an `origin` query parameter, append it to the `subscriptionPurchase` URL.
+                    // Also forward the origin as it will need to be sent as parameter to the Pixel to track subcription attributions.
+                    let originQueryItem = queryItems?.first(where: { $0.name == AttributionParameter.origin })
+                    let purchaseURL = URL.subscriptionPurchase
+                    let redirectURL = originQueryItem.flatMap(purchaseURL.appending(percentEncodedQueryItem:))
+                    let subscriptionFlowInfo = SubscriptionFlowInfo(url: redirectURL ?? purchaseURL, origin: originQueryItem?.value)
+                    NotificationCenter.default.post(
+                        name: .urlInterceptPrivacyPro,
+                        object: nil,
+                        userInfo: [AttributionParameter.subscriptionFlowInfo: subscriptionFlowInfo]
+                    )
                     return false
                 }
             }
@@ -96,4 +106,8 @@ extension TabURLInterceptorDefault {
 
 extension NSNotification.Name {
     static let urlInterceptPrivacyPro: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.urlInterceptPrivacyPro")
+}
+
+extension AttributionParameter {
+    static let subscriptionFlowInfo = "subscription_purchase_flow_info"
 }

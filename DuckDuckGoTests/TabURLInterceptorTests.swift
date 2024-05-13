@@ -48,7 +48,7 @@ class TabURLInterceptorDefaultTests: XCTestCase {
     }
     
     func testNotificationForInterceptedPrivacyProPath() {
-        let expectation = self.expectation(forNotification: .urlInterceptPrivacyPro, object: nil, handler: nil)
+        _ = self.expectation(forNotification: .urlInterceptPrivacyPro, object: nil, handler: nil)
         
         let url = URL(string: "https://duckduckgo.com/pro")!
         let canNavigate = urlInterceptor.allowsNavigatingTo(url: url)
@@ -61,5 +61,44 @@ class TabURLInterceptorDefaultTests: XCTestCase {
                 XCTFail("Notification expectation failed: \(error)")
             }
         }
+    }
+
+    func testWhenURLIsPrivacyProAndHasOriginQueryParameterThenNotificationHasURLWithOriginAndOriginIsSet() throws {
+        // GIVEN
+        var capturedNotification: Notification?
+        _ = self.expectation(forNotification: .urlInterceptPrivacyPro, object: nil, handler: { notification in
+            capturedNotification = notification
+            return true
+        })
+        let url = try XCTUnwrap(URL(string: "https://duckduckgo.com/pro?origin=test_origin"))
+        let expectedQueryItem = URLQueryItem(name: "origin", value: "test_origin")
+
+        // WHEN
+        _ = urlInterceptor.allowsNavigatingTo(url: url)
+
+        // THEN
+        waitForExpectations(timeout: 1)
+        let subscriptionFlowInfo = try XCTUnwrap(capturedNotification?.userInfo?[AttributionParameter.subscriptionFlowInfo] as? SubscriptionFlowInfo)
+        XCTAssertEqual(subscriptionFlowInfo.url, URL.subscriptionPurchase.appending(percentEncodedQueryItem: expectedQueryItem))
+        XCTAssertEqual(subscriptionFlowInfo.origin, "test_origin")
+    }
+
+    func testWhenURLIsPrivacyProAndDoesNotHaveOriginQueryParameterThenNotificationHasDefaultURLAndOriginIsNil() throws {
+        // GIVEN
+        var capturedNotification: Notification?
+        _ = self.expectation(forNotification: .urlInterceptPrivacyPro, object: nil, handler: { notification in
+            capturedNotification = notification
+            return true
+        })
+        let url = try XCTUnwrap(URL(string: "https://duckduckgo.com/pro"))
+
+        // WHEN
+        _ = urlInterceptor.allowsNavigatingTo(url: url)
+
+        // THEN
+        waitForExpectations(timeout: 1)
+        let subscriptionFlowInfo = try XCTUnwrap(capturedNotification?.userInfo?[AttributionParameter.subscriptionFlowInfo] as? SubscriptionFlowInfo)
+        XCTAssertEqual(subscriptionFlowInfo.url, URL.subscriptionPurchase)
+        XCTAssertNil(subscriptionFlowInfo.origin)
     }
 }

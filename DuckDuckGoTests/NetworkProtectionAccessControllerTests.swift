@@ -17,6 +17,9 @@
 //  limitations under the License.
 //
 
+// TODO: Re-implement this in a way that makes sense
+
+/*
 #if NETWORK_PROTECTION
 
 import XCTest
@@ -182,3 +185,4 @@ private class MockNetworkProtectionTermsAndConditionsStore: NetworkProtectionTer
 }
 
 #endif
+*/

@@ -21,6 +21,7 @@ import XCTest
 import NetworkProtection
 import NetworkExtension
 import NetworkProtectionTestUtils
+import SubscriptionTestingUtilities
 @testable import DuckDuckGo
 
 final class NetworkProtectionStatusViewModelTests: XCTestCase {
@@ -39,11 +40,10 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
         tunnelController = MockTunnelController()
         statusObserver = MockConnectionStatusObserver()
         serverInfoObserver = MockConnectionServerInfoObserver()
-        viewModel = NetworkProtectionStatusViewModel(
-            tunnelController: tunnelController,
-            statusObserver: statusObserver,
-            serverInfoObserver: serverInfoObserver
-        )
+        viewModel = NetworkProtectionStatusViewModel(tunnelController: tunnelController,
+                                                     statusObserver: statusObserver,
+                                                     serverInfoObserver: serverInfoObserver,
+                                                     locationListRepository: MockNetworkProtectionLocationListRepository())
     }
 
     override func tearDown() {
@@ -56,7 +56,10 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
 
     func testInit_prefetchesLocationList() throws {
         let locationListRepo = MockNetworkProtectionLocationListRepository()
-        viewModel = NetworkProtectionStatusViewModel(locationListRepository: locationListRepo)
+        viewModel = NetworkProtectionStatusViewModel(tunnelController: tunnelController,
+                                                     statusObserver: statusObserver,
+                                                     serverInfoObserver: serverInfoObserver,
+                                                     locationListRepository: MockNetworkProtectionLocationListRepository())
         waitFor(condition: locationListRepo.didCallFetchLocationList)
     }
 

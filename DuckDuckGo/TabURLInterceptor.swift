@@ -37,10 +37,11 @@ protocol TabURLInterceptor {
 
 final class TabURLInterceptorDefault: TabURLInterceptor {
     
-    private let subscriptionManager: SubscriptionManaging
+    typealias CanPurchaseUpdater = () -> Bool
+    private let canPurchase: CanPurchaseUpdater
 
-    init(subscriptionManager: SubscriptionManaging) {
-        self.subscriptionManager = subscriptionManager
+    init(canPurchase: @escaping CanPurchaseUpdater) {
+        self.canPurchase = canPurchase
     }
 
     static let interceptedURLs: [InterceptedURLInfo] = [
@@ -87,7 +88,7 @@ extension TabURLInterceptorDefault {
         switch url {
             // Opens the Privacy Pro Subscription Purchase page (if user can purchase)
             case .privacyPro:
-            if subscriptionManager.canPurchase {
+            if canPurchase() {
                     NotificationCenter.default.post(name: .urlInterceptPrivacyPro, object: nil)
                     return false
                 }

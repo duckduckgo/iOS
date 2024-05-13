@@ -127,7 +127,9 @@ class TabViewController: UIViewController {
 
     private var trackersInfoWorkItem: DispatchWorkItem?
     
-    private var tabURLInterceptor: TabURLInterceptor = TabURLInterceptorDefault(subscriptionManager: AppDependencyProvider.shared.subscriptionManager)
+    private var tabURLInterceptor: TabURLInterceptor = TabURLInterceptorDefault {
+        return AppDependencyProvider.shared.subscriptionManager.canPurchase
+    }
     private var currentlyLoadedURL: URL?
     
 #if NETWORK_PROTECTION

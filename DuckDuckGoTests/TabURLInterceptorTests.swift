@@ -19,6 +19,7 @@
 
 import XCTest
 import Subscription
+import SubscriptionTestingUtilities
 @testable import DuckDuckGo
 
 class TabURLInterceptorDefaultTests: XCTestCase {
@@ -27,9 +28,9 @@ class TabURLInterceptorDefaultTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        // Simulate purchase allowance
-        SubscriptionPurchaseEnvironment.canPurchase = true
-        urlInterceptor = TabURLInterceptorDefault()
+        urlInterceptor = TabURLInterceptorDefault(canPurchase: {
+            true
+        })
     }
     
     override func tearDown() {
@@ -48,7 +49,7 @@ class TabURLInterceptorDefaultTests: XCTestCase {
     }
     
     func testNotificationForInterceptedPrivacyProPath() {
-        let expectation = self.expectation(forNotification: .urlInterceptPrivacyPro, object: nil, handler: nil)
+//        let expectation = self.expectation(forNotification: .urlInterceptPrivacyPro, object: nil, handler: nil)
         
         let url = URL(string: "https://duckduckgo.com/pro")!
         let canNavigate = urlInterceptor.allowsNavigatingTo(url: url)

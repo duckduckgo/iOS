@@ -64,7 +64,8 @@ extension AppDelegate {
         Task {
             do {
                 try await NetworkProtectionCodeRedemptionCoordinator(accountManager:
-                                                                        AppDependencyProvider.shared.subscriptionManager.accountManager).redeem(inviteCode)
+                                                                        AppDependencyProvider.shared.subscriptionManager.accountManager
+                ).redeem(inviteCode)
                 VPNWaitlist.shared.sendInviteCodeAvailableNotification()
             } catch {}
         }

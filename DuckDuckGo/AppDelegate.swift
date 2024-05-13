@@ -213,7 +213,7 @@ import WebKit
         PixelExperiment.install()
 
         // MARK: Sync initialisation
-
+        // TODO: Why are not all these vars in the init?
 #if DEBUG
         let defaultEnvironment = ServerEnvironment.development
 #else

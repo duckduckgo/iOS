@@ -93,6 +93,7 @@ class AppDependencyProvider: DependencyProvider {
 
     let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
 
+    // swiftlint:disable:next function_body_length
     init() {
         featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,
                                                privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager)

@@ -31,9 +31,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     let purchaseManager: PurchaseManager
     var webViewModel: AsyncHeadlessWebViewViewModel
-        
-    var purchaseURL = URL.subscriptionPurchase
-    
+    let purchaseURL: URL
+
     private var cancellables = Set<AnyCancellable>()
     private var canGoBackCancellable: AnyCancellable?
     private var urlCancellable: AnyCancellable?
@@ -69,10 +68,12 @@ final class SubscriptionFlowViewModel: ObservableObject {
                                                                 allowedDomains: allowedDomains,
                                                                 contentBlocking: false)
         
-    init(userScript: SubscriptionPagesUserScript,
+    init(purchaseURL: URL,
+         userScript: SubscriptionPagesUserScript,
          subFeature: SubscriptionPagesUseSubscriptionFeature,
          purchaseManager: PurchaseManager = PurchaseManager.shared,
          selectedFeature: SettingsViewModel.SettingsDeepLinkSection? = nil) {
+        self.purchaseURL = purchaseURL
         self.userScript = userScript
         self.subFeature = subFeature
         self.purchaseManager = purchaseManager

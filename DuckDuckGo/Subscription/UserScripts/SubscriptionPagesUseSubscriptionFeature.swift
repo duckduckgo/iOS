@@ -116,6 +116,11 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     var originalMessage: WKScriptMessage?
 
+    private let subscriptionAttributionOrigin: String?
+    init(subscriptionAttributionOrigin: String?) {
+        self.subscriptionAttributionOrigin = subscriptionAttributionOrigin
+    }
+
     func with(broker: UserScriptMessageBroker) {
         self.broker = broker
     }

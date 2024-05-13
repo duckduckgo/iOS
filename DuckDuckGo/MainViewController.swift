@@ -760,6 +760,8 @@ class MainViewController: UIViewController {
             })
             self.present(controller: alert, fromView: self.viewCoordinator.toolbar)
         }
+
+        omniBar.cancel()
     }
     
     func onQuickFirePressed() {
@@ -783,12 +785,14 @@ class MainViewController: UIViewController {
         hideSuggestionTray()
         currentTab?.goBack()
         refreshOmniBar()
+        omniBar.cancel()
     }
 
     @IBAction func onForwardPressed() {
         Pixel.fire(pixel: .tabBarForwardPressed)
         hideSuggestionTray()
         currentTab?.goForward()
+        omniBar.cancel()
     }
     
     func didReturnFromBackground() {
@@ -1639,6 +1643,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onMenuPressed() {
+        omniBar.cancel()
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }

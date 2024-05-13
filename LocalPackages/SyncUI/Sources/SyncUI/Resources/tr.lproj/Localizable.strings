@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Sync & Backup'ı kullanmak için cihaz şifresi gerekir.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Geri";
 
@@ -6,12 +9,6 @@
 
 /* Alert title for invalid bookmarks being filtered out of synced data */
 "bookmarks.invalid.objects.present.title" = "Bazı yer işaretleri, belirli alanlardaki aşırı uzun içerik nedeniyle senkronize edilmiyor.";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Action */
-"bookmarks.limit.exceeded.action" = "Yer İmlerini Yönet";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Description */
-"bookmarks.limit.exceeded.description" = "Yer imi sınırı aşıldı. Senkronizasyona devam etmek için bazılarını silin.";
 
 /* Camera View - Go to Settings Button */
 "camera.go.to.settings.button" = "Ayarlar'a gidin";
@@ -55,12 +52,6 @@
 /* Alert title for invalid logins being filtered out of synced data */
 "credentials.invalid.objects.present.title" = "Bazı girişler, belirli alanlardaki aşırı uzun içerik nedeniyle senkronize edilmiyor.";
 
-/* Sync Paused Errors - Credentials Limit Exceeded Action */
-"credentials.limit.exceeded.action" = "Girişleri Yönet";
-
-/* Sync Paused Errors - Credentials Limit Exceeded Description */
-"credentials.limit.exceeded.description" = "Giriş sınırı aşıldı. Senkronizasyona devam etmek için bazılarını silin.";
-
 /* Delete Server Data - Button */
 "delete.server.data" = "Sunucu Verilerini Kapat ve Sil...";
 
@@ -95,6 +86,9 @@
 "fetch.favicons.option.title" = "Simgeleri Otomatik İndir";
 
 /* No comment provided by engineer. */
+"Go to Settings" = "Ayarlar'a gidin";
+
+/* No comment provided by engineer. */
 "Keep Development" = "Geliştirmeye Devam Et";
 
 /* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
@@ -124,8 +118,11 @@
 /* Standard Buttons - Paste Button */
 "paste.button" = "Yapıştır";
 
-/* Description of rollout banner */
-"preferences.sync.rollout-banner.description" = "Senkronizasyon ve Yedekleme kademeli olarak kullanıma sunulmaktadır ve diğer cihazlarınızda DuckDuckGo'da henüz mevcut olmayabilir.";
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Yer İmlerini Yönet";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Şifreleri yönet…";
 
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Yer imleriniz ve şifreler senkronize edilmek üzere hazırlanıyor. Bu sadece bir dakikanızı alacaktır.";
@@ -218,13 +215,13 @@
 "scan.or.see.code.title" = "QR Kodunu Tara";
 
 /* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Sync & Backup'ı kullanmak için cihazınızı güvenli hale getirin";
+
+/* No comment provided by engineer. */
 "Switch to Production" = "Üretime Geç";
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Bu Cihazı Senkronize Et ve Yedekle";
-
-/* Sync Paused Errors - Title */
-"sync.limit.exceeded.title" = "Senkronizasyon Duraklatıldı";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Ayarlar > Senkronizasyon ve Yedekleme > Başka Bir Cihazla Senkronize Et";
@@ -237,9 +234,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Üzgünüz, Senkronizasyon ve Yedekleme bu uygulama sürümünde artık kullanılamıyor. Devam etmek için lütfen DuckDuckGo'yu en son sürüme güncelleyin.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Senkronizasyon ve Yedekleme Duraklatıldı";
 
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Senkronizasyon ve Yedekleme Kullanılamıyor";

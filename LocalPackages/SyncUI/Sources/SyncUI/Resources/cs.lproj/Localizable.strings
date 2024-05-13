@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Pro použití funkce Sync & Backup se vyžaduje heslo k zařízení.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Zpět";
 
@@ -6,12 +9,6 @@
 
 /* Alert title for invalid bookmarks being filtered out of synced data */
 "bookmarks.invalid.objects.present.title" = "Některé záložky se nesynchronizují kvůli příliš dlouhému obsahu v určitých polích.";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Action */
-"bookmarks.limit.exceeded.action" = "Spravovat záložky";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Description */
-"bookmarks.limit.exceeded.description" = "Je překročený limit počtu záložek. Jestli chceš synchronizaci obnovit, některé odstraň.";
 
 /* Camera View - Go to Settings Button */
 "camera.go.to.settings.button" = "Přejdi do Nastavení";
@@ -55,12 +52,6 @@
 /* Alert title for invalid logins being filtered out of synced data */
 "credentials.invalid.objects.present.title" = "Některá přihlášení se nesynchronizují kvůli příliš dlouhému obsahu v určitých polích.";
 
-/* Sync Paused Errors - Credentials Limit Exceeded Action */
-"credentials.limit.exceeded.action" = "Spravovat přihlašovací údaje";
-
-/* Sync Paused Errors - Credentials Limit Exceeded Description */
-"credentials.limit.exceeded.description" = "Je překročený limit počtu přihlášení. Jestli chceš synchronizaci obnovit, některá odstraň.";
-
 /* Delete Server Data - Button */
 "delete.server.data" = "Vypnout a smazat data serveru...";
 
@@ -95,6 +86,9 @@
 "fetch.favicons.option.title" = "Automatické stahování ikon";
 
 /* No comment provided by engineer. */
+"Go to Settings" = "Přejdi do Nastavení";
+
+/* No comment provided by engineer. */
 "Keep Development" = "Nechat vývojovou verzi";
 
 /* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
@@ -124,8 +118,11 @@
 /* Standard Buttons - Paste Button */
 "paste.button" = "Vložit";
 
-/* Description of rollout banner */
-"preferences.sync.rollout-banner.description" = "Synchronizaci a zálohování zpřístupňujeme postupně a na tvých dalších zařízeních nemusí být v aplikaci DuckDuckGo ještě k dispozici.";
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Spravovat záložky";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Spravovat hesla…";
 
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Tvoje záložky a hesla připravujeme na synchronizaci. Nemělo by to trvat dlouho.";
@@ -218,13 +215,13 @@
 "scan.or.see.code.title" = "Skenování QR kódu";
 
 /* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Zabezpeč své zařízení, ať můžeš používat funkci Sync & Backup";
+
+/* No comment provided by engineer. */
 "Switch to Production" = "Přepnout na produkční verzi";
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Synchronizace a záloha tohoto zařízení";
-
-/* Sync Paused Errors - Title */
-"sync.limit.exceeded.title" = "Synchronizace je pozastavená";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Nastavení > Synchronizace a zálohování > Synchronizace s jiným zařízením";
@@ -237,9 +234,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Omlouváme se, ale funkce synchronizace a zálohování není v téhle verzi aplikace dostupná. Pro pokračování aktualizuj DuckDuckGo na nejnovější verzi.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Funkce synchronizace a zálohování je pozastavená";
 
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Synchronizace a zálohování není k dispozici";

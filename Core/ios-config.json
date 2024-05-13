@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1714380838297,
+    "version": 1715597796155,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -295,6 +295,12 @@
                     "domain": "www.michelinman.com"
                 },
                 {
+                    "domain": "malmostadsteater.se"
+                },
+                {
+                    "domain": "hertz.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -331,15 +337,12 @@
                     }
                 }
             },
-            "hash": "d8b00554567fbee5603e8d141e57b091"
+            "hash": "b7d8dac447260fb747353606c105a298"
         },
         "autofill": {
             "exceptions": [
                 {
                     "domain": "roll20.net"
-                },
-                {
-                    "domain": "rumble.com"
                 }
             ],
             "state": "enabled",
@@ -382,7 +385,7 @@
                     }
                 }
             },
-            "hash": "ffaa2e81fb2bf264cb5ce2dadac549e1"
+            "hash": "bd604dcd1f7bb584185f0c1cb94a5771"
         },
         "clickToLoad": {
             "exceptions": [
@@ -3540,6 +3543,15 @@
                         ]
                     },
                     {
+                        "domain": "realtor.com",
+                        "rules": [
+                            {
+                                "selector": ".ads_container",
+                                "type": "hide"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "reddit.com",
                         "rules": [
                             {
@@ -4289,7 +4301,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "81163c0a36336ae398f48239b7ac5b4c"
+            "hash": "9e553bf9eb5663dea0b7b381f18137ff"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -5715,6 +5727,16 @@
                             }
                         ]
                     },
+                    "curalate.com": {
+                        "rules": [
+                            {
+                                "rule": "edge.curalate.com/sites/",
+                                "domains": [
+                                    "<all>"
+                                ]
+                            }
+                        ]
+                    },
                     "cxense.com": {
                         "rules": [
                             {
@@ -5915,6 +5937,12 @@
                                 "domains": [
                                     "<all>"
                                 ]
+                            },
+                            {
+                                "rule": "st.dynamicyield.com/st",
+                                "domains": [
+                                    "harborfreight.com"
+                                ]
                             }
                         ]
                     },
@@ -6040,6 +6068,28 @@
                             }
                         ]
                     },
+                    "facebook.com": {
+                        "rules": [
+                            {
+                                "rule": "facebook.com/plugins/customer_chat/",
+                                "domains": [
+                                    "danibowman.com"
+                                ]
+                            },
+                            {
+                                "rule": "facebook.com/v6.0/plugins/customer_chat/",
+                                "domains": [
+                                    "danibowman.com"
+                                ]
+                            },
+                            {
+                                "rule": "facebook.com/v6.0/plugins/customerchat.php",
+                                "domains": [
+                                    "danibowman.com"
+                                ]
+                            }
+                        ]
+                    },
                     "facebook.net": {
                         "rules": [
                             {
@@ -6054,6 +6104,12 @@
                                 "rule": "connect.facebook.net/en_US/all.js",
                                 "domains": [
                                     "nordicwellness.se"
+                                ]
+                            },
+                            {
+                                "rule": "connect.facebook.net/en_US/sdk/xfbml.customerchat.js",
+                                "domains": [
+                                    "danibowman.com"
                                 ]
                             }
                         ]
@@ -6550,6 +6606,23 @@
                             }
                         ]
                     },
+                    "grow.me": {
+                        "rules": [
+                            {
+                                "rule": "grow.me/main.js",
+                                "domains": [
+                                    "budgetbytes.com",
+                                    "foodfornet.com"
+                                ]
+                            },
+                            {
+                                "rule": "api.grow.me",
+                                "domains": [
+                                    "foodfornet.com"
+                                ]
+                            }
+                        ]
+                    },
                     "gstatic.com": {
                         "rules": [
                             {
@@ -6586,6 +6659,12 @@
                             },
                             {
                                 "rule": "no-cache.hubspot.com/cta/default/",
+                                "domains": [
+                                    "<all>"
+                                ]
+                            },
+                            {
+                                "rule": "api.hubspot.com/livechat-public/v1/message/public",
                                 "domains": [
                                     "<all>"
                                 ]
@@ -6901,6 +6980,12 @@
                                 "domains": [
                                     "cosmicbook.news"
                                 ]
+                            },
+                            {
+                                "rule": "scripts.mediavine.com/tags/food-for-net.js",
+                                "domains": [
+                                    "foodfornet.com"
+                                ]
                             }
                         ]
                     },
@@ -6989,8 +7074,7 @@
                             {
                                 "rule": "connect.nosto.com/script/shopify/nosto.js",
                                 "domains": [
-                                    "oneill.com",
-                                    "thefryecompany.com"
+                                    "<all>"
                                 ]
                             }
                         ]
@@ -7038,6 +7122,18 @@
                                 "rule": "cigna.sc.omtrdc.net/public/digital-experience/js/common.js",
                                 "domains": [
                                     "cigna.com"
+                                ]
+                            },
+                            {
+                                "rule": "altriagroupinc.tt.omtrdc.net/rest/v1/delivery",
+                                "domains": [
+                                    "marlboro.com"
+                                ]
+                            },
+                            {
+                                "rule": "whirlpool.tt.omtrdc.net/rest/v1/delivery",
+                                "domains": [
+                                    "kitchenaid.com"
                                 ]
                             },
                             {
@@ -8119,7 +8215,7 @@
                     "domain": "sundancecatalog.com"
                 }
             ],
-            "hash": "da10a46e71d682e23ef44fca926c9541"
+            "hash": "9d27a37af261c74dd1cc7c960a7a6265"
         },
         "trackingCookies1p": {
             "settings": {

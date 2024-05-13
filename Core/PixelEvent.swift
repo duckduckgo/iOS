@@ -244,6 +244,8 @@ extension Pixel {
         case autofillLoginsPasswordGenerationPromptConfirmed
         case autofillLoginsPasswordGenerationPromptDismissed
 
+        case autofillManagementScreenVisitSurveyAvailable
+        
         case autofillLoginsLaunchWidgetHome
         case autofillLoginsLaunchWidgetLock
         case autofillLoginsLaunchAppShortcut
@@ -528,10 +530,13 @@ extension Pixel {
         case syncSentUnauthenticatedRequest
         case syncMetadataCouldNotLoadDatabase
         case syncBookmarksFailed
+        case syncBookmarksPatchCompressionFailed
         case syncCredentialsProviderInitializationFailed
         case syncCredentialsFailed
+        case syncCredentialsPatchCompressionFailed
         case syncSettingsFailed
         case syncSettingsMetadataUpdateFailed
+        case syncSettingsPatchCompressionFailed
         case syncSignupError
         case syncLoginError
         case syncLogoutError
@@ -921,6 +926,7 @@ extension Pixel.Event {
         case .autofillLoginsPasswordGenerationPromptConfirmed: return "m_autofill_logins_password_generation_prompt_confirmed"
         case .autofillLoginsPasswordGenerationPromptDismissed: return "m_autofill_logins_password_generation_prompt_dismissed"
 
+        case .autofillManagementScreenVisitSurveyAvailable: return "m_autofill_management_screen_visit_survey_available"
         case .autofillLoginsLaunchWidgetHome: return "m_autofill_logins_launch_widget_home"
         case .autofillLoginsLaunchWidgetLock: return "m_autofill_logins_launch_widget_lock"
         case .autofillLoginsLaunchAppShortcut: return "m_autofill_logins_launch_app_shortcut"
@@ -1175,10 +1181,13 @@ extension Pixel.Event {
         case .syncSentUnauthenticatedRequest: return "m_d_sync_sent_unauthenticated_request"
         case .syncMetadataCouldNotLoadDatabase: return "m_d_sync_metadata_could_not_load_database"
         case .syncBookmarksFailed: return "m_d_sync_bookmarks_failed"
+        case .syncBookmarksPatchCompressionFailed: return "m_d_sync_bookmarks_patch_compression_failed"
         case .syncCredentialsProviderInitializationFailed: return "m_d_sync_credentials_provider_initialization_failed"
         case .syncCredentialsFailed: return "m_d_sync_credentials_failed"
+        case .syncCredentialsPatchCompressionFailed: return "m_d_sync_credentials_patch_compression_failed"
         case .syncSettingsFailed: return "m_d_sync_settings_failed"
         case .syncSettingsMetadataUpdateFailed: return "m_d_sync_settings_metadata_update_failed"
+        case .syncSettingsPatchCompressionFailed: return "m_d_sync_settings_patch_compression_failed"
         case .syncSignupError: return "m_d_sync_signup_error"
         case .syncLoginError: return "m_d_sync_login_error"
         case .syncLogoutError: return "m_d_sync_logout_error"

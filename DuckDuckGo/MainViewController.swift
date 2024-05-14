@@ -429,6 +429,8 @@ class MainViewController: UIViewController {
                                                name: UIResponder.keyboardDidHideNotification, object: nil)
     }
 
+    
+
     var keyboardShowing = false
 
     @objc
@@ -1076,6 +1078,8 @@ class MainViewController: UIViewController {
         } completion: { _ in
             ViewHighlighter.updatePositions()
         }
+
+        hideNotificationBarIfBrokenSitePromptShown()
     }
 
     private func deferredFireOrientationPixel() {
@@ -1287,7 +1291,8 @@ class MainViewController: UIViewController {
             notificationView == nil,
             !isPad,
             DefaultTutorialSettings().hasSeenOnboarding,
-            !DaxDialogs.shared.isStillOnboarding() else { return }
+            !DaxDialogs.shared.isStillOnboarding(),
+            UIDevice.current.orientation.isPortrait else { return }
 
         // We're using async to ensure the view dismissal happens on the first runloop after a refresh. This prevents the scenario where the view briefly appears and then immediately disappears after a refresh.
         DispatchQueue.main.async {
@@ -2270,6 +2275,15 @@ extension MainViewController: TabDelegate {
     func tabCheckIfItsBeingCurrentlyPresented(_ tab: TabViewController) -> Bool {
         return currentTab === tab
     }
+
+    func tabDidRequestRefresh(tab: TabViewController) {
+        hideNotificationBarIfBrokenSitePromptShown(afterRefresh: true)
+    }
+
+    func tabDidRequestNavigationToDifferentSite(tab: TabViewController) {
+        hideNotificationBarIfBrokenSitePromptShown()
+    }
+
 }
 
 extension MainViewController: TabSwitcherDelegate {

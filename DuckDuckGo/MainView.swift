@@ -340,6 +340,7 @@ extension MainViewFactory {
 
         NSLayoutConstraint.activate([
             topSlideContainer.constrainView(superview, by: .width),
+            topSlideContainer.constrainView(superview, by: .centerX),
             coordinator.constraints.topSlideContainerHeight,
             coordinator.constraints.topSlideContainerBottomToNavigationBarBottom,
         ])

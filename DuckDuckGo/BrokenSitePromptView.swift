@@ -26,24 +26,27 @@ struct BrokenSitePromptView: View {
     let viewModel: BrokenSitePromptViewModel
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            VStack(alignment: .leading) {
-                Text(UserText.siteNotWorkingTitle)
-                    .font(Font(uiFont: .daxSubheadSemibold()))
-                Text(UserText.siteNotWorkingSubtitle)
-                    .font(Font(uiFont: .daxSubheadRegular()))
+        VStack {
+            VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading) {
+                    Text(UserText.siteNotWorkingTitle)
+                        .font(Font(uiFont: .daxSubheadSemibold()))
+                    Text(UserText.siteNotWorkingSubtitle)
+                        .font(Font(uiFont: .daxSubheadRegular()))
+                }
+                HStack {
+                    Spacer()
+                    Button(UserText.siteNotWorkingDismiss, action: viewModel.onDidDismiss)
+                        .buttonStyle(GhostButtonStyle())
+                        .fixedSize()
+                    Button(UserText.siteNotWorkingWebsiteIsBroken, action: viewModel.onDidSubmit)
+                        .buttonStyle(PrimaryButtonStyle(compact: true))
+                        .fixedSize()
+                }
             }
-            HStack {
-                Spacer()
-                Button(UserText.siteNotWorkingDismiss, action: viewModel.onDidDismiss)
-                    .buttonStyle(GhostButtonStyle())
-                    .fixedSize()
-                Button(UserText.siteNotWorkingWebsiteIsBroken, action: viewModel.onDidSubmit)
-                    .buttonStyle(PrimaryButtonStyle(compact: true))
-                    .fixedSize()
-            }
+            .padding(EdgeInsets(top: 12, leading: 16, bottom: 4, trailing: 16))
+            Color(designSystemColor: .lines).frame(height: 1 / UIScreen.main.scale)
         }
-        .padding(EdgeInsets(top: 12, leading: 16, bottom: 8, trailing: 16))
         .background(Color(designSystemColor: .panel))
     }
 

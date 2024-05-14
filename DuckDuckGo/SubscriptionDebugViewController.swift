@@ -26,9 +26,9 @@ import Core
 import NetworkProtection
 #endif
 
-@available(iOS 15.0, *)
-final class SubscriptionDebugViewController: UITableViewController {
-    
+// swiftlint:disable:next type_body_length
+@available(iOS 15.0, *) final class SubscriptionDebugViewController: UITableViewController {
+
     let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
     private var subscriptionManager: SubscriptionManaging {
         AppDependencyProvider.shared.subscriptionManager
@@ -78,7 +78,7 @@ final class SubscriptionDebugViewController: UITableViewController {
         return titles[section]
     }
 
-    // swiftlint:disable cyclomatic_complexity
+    // swiftlint:disable:next cyclomatic_complexity function_body_length
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
@@ -139,7 +139,6 @@ final class SubscriptionDebugViewController: UITableViewController {
         }
         return cell
     }
-    // swiftlint:enable cyclomatic_complexity
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section) {
@@ -152,7 +151,7 @@ final class SubscriptionDebugViewController: UITableViewController {
         }
     }
 
-    // swiftlint:disable cyclomatic_complexity
+    // swiftlint:disable:next cyclomatic_complexity
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch Sections(rawValue: indexPath.section) {
         case .authorization:
@@ -176,43 +175,45 @@ final class SubscriptionDebugViewController: UITableViewController {
             }
         case .environment:
             guard let subEnv: EnvironmentRows = EnvironmentRows(rawValue: indexPath.row) else { return }
-            var subEnvDesc: String
-            switch subEnv {
-            case .staging:
-                subEnvDesc = "STAGING"
-            case .production:
-                subEnvDesc = "PRODUCTION"
-            }
-            let message = """
-                        Are you sure you want to change the purchase platform to \(subEnvDesc)?
-                        This setting IS persisted between app runs. This action will close the app, do you want to proceed?
-                        """
-            let alertController = UIAlertController(title: "⚠️ App restart required! The changes are persistent",
-                                                    message: message,
-                                                    preferredStyle: .actionSheet)
-            alertController.addAction(UIAlertAction(title: "Yes", style: .destructive) { [weak self] _ in
-                switch subEnv {
-                case .staging:
-                    self?.setEnvironment(.staging)
-                case .production:
-                    self?.setEnvironment(.production)
-                }
-                // Close the app
-                exit(0)
-            })
-            let okAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            alertController.addAction(okAction)
-            DispatchQueue.main.async {
-                self.present(alertController, animated: true, completion: nil)
-            }
+            changeSubscriptionEnvironment(envRows: subEnv)
         case .none:
             break
         }
-
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    // swiftlint:enable cyclomatic_complexity
     
+    private func changeSubscriptionEnvironment(envRows: EnvironmentRows) {
+        var subEnvDesc: String
+        switch envRows {
+        case .staging:
+            subEnvDesc = "STAGING"
+        case .production:
+            subEnvDesc = "PRODUCTION"
+        }
+        let message = """
+                    Are you sure you want to change the purchase platform to \(subEnvDesc)?
+                    This setting IS persisted between app runs. This action will close the app, do you want to proceed?
+                    """
+        let alertController = UIAlertController(title: "⚠️ App restart required! The changes are persistent",
+                                                message: message,
+                                                preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: "Yes", style: .destructive) { [weak self] _ in
+            switch envRows {
+            case .staging:
+                self?.setEnvironment(.staging)
+            case .production:
+                self?.setEnvironment(.production)
+            }
+            // Close the app
+            exit(0)
+        })
+        let okAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(okAction)
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+
     private func showAlert(title: String, message: String? = nil) {
         DispatchQueue.main.async {
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)

@@ -17,7 +17,7 @@
 //  limitations under the License.
 //
 
-// TODO: Re-implement this in a way that makes sense
+// Re-implement this in a way that makes sense
 
 /*
 #if NETWORK_PROTECTION

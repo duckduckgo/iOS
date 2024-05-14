@@ -67,7 +67,6 @@ class MockDependencyProvider: DependencyProvider {
         toggleProtectionsCounter = defaultProvider.toggleProtectionsCounter
         subscriptionFeatureAvailability = defaultProvider.subscriptionFeatureAvailability
 
-        // TODO: Create Mocks for everything
         accountManager = AccountManagerMock(isUserAuthenticated: true)
         if #available(iOS 15.0, *) {
             let subscriptionService = SubscriptionService(currentServiceEnvironment: .production)

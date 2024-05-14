@@ -21,7 +21,9 @@ end
 
 for_lane :adhoc do
     type "adhoc"
+    app_identifier ["com.duckduckgo.mobile.ios.alpha", "com.duckduckgo.mobile.ios.alpha.ShareExtension", "com.duckduckgo.mobile.ios.alpha.OpenAction2", "com.duckduckgo.mobile.ios.alpha.Widgets", "com.duckduckgo.mobile.ios.alpha.NetworkExtension"]
     force_for_new_devices true
+    template_name "Default Web Browser iOS (Dist)"
 end
 
 for_lane :alpha_adhoc do

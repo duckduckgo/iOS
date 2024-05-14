@@ -133,18 +133,6 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Obstoječi zaznamki ne bodo podvojeni.";
 
-/* Description for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-description" = "Presegli ste omejitev sinhronizacije zaznamkov. Poskusite izbrisati nekaj zaznamkov. Dokler ta težava ne bo odpravljena, zaznamki ne bodo varnostno kopirani.";
-
-/* Title for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-title" = "Sinhronizacija zaznamkov je zaustavljena";
-
-/* Description for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-description" = "Presegli ste omejitev sinhronizacije gesel. Poskusite izbrisati nekaj gesel. Dokler ta težava ne bo odpravljena, vaša gesla ne bodo varnostno kopirana.";
-
-/* Title for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-title" = "Sinhronizacija gesel je zaustavljena";
-
 /* Title for sync error alert */
 "alert.sync-error" = "Napaka pri sinhronizaciji in varnostnem kopiranju";
 
@@ -646,14 +634,11 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Uvozite datoteko HTML z zaznamki iz drugega brskalnika ali pa izvozite vaše obstoječe zaznamke.";
 
-/* No comment provided by engineer. */
-"bucket: %@" = "zbiralnik: %@";
-
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Vedno pošlji poročila o zrušitvah";
 
 /* Crash Report hide details button title */
-"crash.report.dialog.hide.details" = "Skrij se";
+"crash.report.dialog.hide.details" = "Hide";
 
 /* Crash Report dialog message */
 "crash.report.dialog.message" = "Poročila o zrušitvah pomagajo DuckDuckGo pri diagnosticiranju težav in izboljševanju naših izdelkov. Ne vsebujejo nobenih osebnih podatkov.";
@@ -900,9 +885,6 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Ni zadetkov";
-
-/* No comment provided by engineer. */
-"Error" = "Napaka";
 
 /* Button title to Sign In */
 "error.email-protection-sign-in.action" = "Prijavite se";
@@ -1573,9 +1555,6 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
-/* No comment provided by engineer. */
-"Ok" = "V REDU";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Upravljani piškotki";
 
@@ -1614,9 +1593,6 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Aplikacije, ki je potrebna za odpiranje te povezave, ni mogoče najti";
-
-/* No comment provided by engineer. */
-"Please enter which app on your device is broken." = "Vnesite, katera aplikacija v vaši napravi ne deluje.";
 
 /* Activate button */
 "pm.activate" = "Reactivate";
@@ -1720,6 +1696,9 @@
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
 "settings.address.full.url" = "Prikaži polni naslov spletnega mesta";
+
+/* Label describing a feature which is turned on always */
+"settings.always.on" = "Always On";
 
 /* Settings screen appearance section title */
 "settings.appearance" = "Izgled";
@@ -1827,6 +1806,12 @@
 /* The name of a settings category listing next steps */
 "settings.next.steps" = "Naslednji koraki";
 
+/* Label describing a feature which is turned off */
+"settings.off" = "Off";
+
+/* Label describing a feature which is turned on */
+"settings.on" = "On";
+
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
@@ -1871,6 +1856,12 @@
 
 /* I have a Subscription button text for privacy pro */
 "settings.subscription.existing.subscription" = "I Have a Subscription";
+
+/* Subscription expired description */
+"settings.subscription.expired.comment" = "Subscribe again to continue using Privacy Pro";
+
+/* Subscription expired tittle message */
+"settings.subscription.expired.title" = "Your Privacy Pro subscription expired";
 
 /* Privacy pro features list */
 "settings.subscription.features" = " • VPN\n • Personal Information Removal\n • Identity Theft Restoration";
@@ -2190,6 +2181,9 @@
 /* Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)' */
 "subscription.subscription.active.caption" = "Your subscription %1$@ on %2$@";
 
+/* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
+"subscription.subscription.expired.caption" = "Your subscription expired on %@";
+
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
 
@@ -2231,9 +2225,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Sinhronizacija in varnostno kopiranje v tej različici aplikacije žal nista več na voljo. Za nadaljevanje DuckDuckGo posodobite na najnovejšo različico.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Sinhronizacija in varnostno kopiranje sta zaustavljena";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Zapri zavihek Domov";

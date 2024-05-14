@@ -94,7 +94,8 @@ class MainViewController: UIViewController {
     private var favoritesViewModel: FavoritesListInteracting
     let syncService: DDGSyncing
     let syncDataProviders: SyncDataProviders
-    
+    let syncPausedStateManager: any SyncPausedStateManaging
+
     @UserDefaultsWrapper(key: .syncDidShowSyncPausedByFeatureFlagAlert, defaultValue: false)
     private var syncDidShowSyncPausedByFeatureFlagAlert: Bool
 
@@ -164,7 +165,7 @@ class MainViewController: UIViewController {
     
     var historyManager: HistoryManager
     var viewCoordinator: MainViewCoordinator!
-    
+
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
@@ -173,7 +174,8 @@ class MainViewController: UIViewController {
         syncDataProviders: SyncDataProviders,
         appSettings: AppSettings,
         previewsSource: TabPreviewsSource,
-        tabsModel: TabsModel
+        tabsModel: TabsModel,
+        syncPausedStateManager: any SyncPausedStateManaging
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -191,7 +193,7 @@ class MainViewController: UIViewController {
                                      bookmarksDatabase: bookmarksDatabase,
                                      historyManager: historyManager,
                                      syncService: syncService)
-
+        self.syncPausedStateManager = syncPausedStateManager
 
         super.init(nibName: nil, bundle: nil)
         
@@ -261,8 +263,8 @@ class MainViewController: UIViewController {
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
         registerForKeyboardNotifications()
-        registerForSyncPausedNotifications()
         registerForUserBehaviorEvents()
+        registerForSyncFeatureFlagsUpdates()
 
         decorate()
 
@@ -450,17 +452,15 @@ class MainViewController: UIViewController {
         keyboardShowing = false
     }
 
-    private func registerForSyncPausedNotifications() {
+    private func registerForUserBehaviorEvents() {
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(showSyncPausedError),
-            name: SyncBookmarksAdapter.bookmarksSyncLimitReached,
+            selector: #selector(attemptToShowBrokenSitePrompt(_:)),
+            name: .userBehaviorDidMatchExperimentVariant,
             object: nil)
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(showSyncPausedError),
-            name: SyncCredentialsAdapter.credentialsSyncLimitReached,
-            object: nil)
+    }
+
+    private func registerForSyncFeatureFlagsUpdates() {
         syncFeatureFlagsCancellable = syncService.featureFlagsPublisher
             .dropFirst()
             .map { $0.contains(.dataSyncing) }
@@ -476,41 +476,6 @@ class MainViewController: UIViewController {
                     self.syncDidShowSyncPausedByFeatureFlagAlert = true
                 }
             }
-    }
-
-    private func registerForUserBehaviorEvents() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(attemptToShowBrokenSitePrompt(_:)),
-            name: .userBehaviorDidMatchExperimentVariant,
-            object: nil)
-    }
-
-    @objc private func showSyncPausedError(_ notification: Notification) {
-        Task {
-            await MainActor.run {
-                var title = UserText.syncBookmarkPausedAlertTitle
-                var description = UserText.syncBookmarkPausedAlertDescription
-                if notification.name == SyncCredentialsAdapter.credentialsSyncLimitReached {
-                    title = UserText.syncCredentialsPausedAlertTitle
-                    description = UserText.syncCredentialsPausedAlertDescription
-                }
-                if self.presentedViewController is SyncSettingsViewController {
-                    return
-                }
-                self.presentedViewController?.dismiss(animated: true)
-                let alert = UIAlertController(title: title,
-                                              message: description,
-                                              preferredStyle: .alert)
-                let learnMoreAction = UIAlertAction(title: UserText.syncPausedAlertLearnMoreButton, style: .default) { _ in
-                    self.segueToSettingsSync()
-                }
-                let okAction = UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .cancel)
-                alert.addAction(learnMoreAction)
-                alert.addAction(okAction)
-                self.present(alert, animated: true)
-            }
-        }
     }
 
     private func showSyncPausedByFeatureFlagAlert(upgradeRequired: Bool = false) {

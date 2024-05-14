@@ -130,26 +130,47 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existing bookmarks will not be duplicated.";
 
+/* Description for alert shown when sync error occurs because of bad data */
+"alert.sync-bad-data-error-description" = "Some bookmarks or passwords are formatted incorrectly or too long and were not synced.";
+
 /* Description for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-description" = "You have exceeded the bookmarks sync limit. Try deleting some bookmarks. Until this is resolved your bookmarks will not be backed up.";
+"alert.sync-bookmarks-paused-description" = "You've reached the maximum number of bookmarks. Please delete some bookmarks to resume sync.";
 
 /* Title for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-title" = "Bookmarks Sync is Paused";
+"alert.sync-bookmarks-paused-title" = "Bookmark Sync is Paused";
 
 /* Description for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-description" = "You have exceeded the passwords sync limit. Try deleting some passwords. Until this is resolved your passwords will not be backed up.";
+"alert.sync-credentials-paused-description" = "You've reached the maximum number of passwords. Please delete some passwords to resume sync.";
 
 /* Title for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-title" = "Passwords Sync is Paused";
+"alert.sync-credentials-paused-title" = "Password Sync is Paused";
 
 /* Title for sync error alert */
 "alert.sync-error" = "Sync & Backup Error";
+
+/* Sync error alert action button title, takes the user to the sync settings page. */
+"alert.sync-error-action" = "Sync Settings";
+
+/* Description for alert shown when user logged off from sync */
+"alert.sync-invalid-login-error-description" = "Sync has been paused. If you want to continue syncing this device, reconnect using another device or your recovery code.";
 
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Learn More";
 
 /* Confirmation button in alert */
 "alert.sync-paused-alert-ok-button" = "OK";
+
+/* Title for alert shown when sync paused for an error */
+"alert.sync-paused-title" = "Sync is Paused";
+
+/* Description for alert shown when sync error occurs because of too many requests */
+"alert.sync-too-many-requests-error-description" = "Sync & Backup is temporarily unavailable.";
+
+/* Title of the warning message that tells the user that there was an error with the sync feature. */
+"alert.sync.warning.sync-error" = "Sync Error";
+
+/* Title of the warning message */
+"alert.sync.warning.sync-paused" = "Sync & Backup is Paused";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Bookmark All Tabs?";
@@ -1603,6 +1624,26 @@ https://duckduckgo.com/mac";
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
 
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Manage Bookmarks";
+
+/* Description for sync bookmarks limits exceeded warning */
+"prefrences.sync.bookmarks-limit-exceeded-description" = "You've reached the maximum number of bookmarks. Please delete some to resume sync.";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Manage passwords…";
+
+/* Description for sync credentials limits exceeded warning */
+"prefrences.sync.credentials-limit-exceeded-description" = "You've reached the maximum number of passwords. Please delete some to resume sync.";
+
+/* Description invalid credentials error when syncing.
+   Description of incorrectly formatted data error when syncing.
+   Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Sync encountered an error. Try disabling sync on this device and then reconnect using another device or your recovery code.";
+
+/* Title for sync limits exceeded warning */
+"prefrences.sync.limit-exceeded-title" = "Sync Paused";
+
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Websites rely on cookies to keep you signed in. When you Fireproof a site, cookies won’t be erased and you’ll stay signed in, even after using the Fire Button. We still block third-party trackers found on Fireproof websites.";
 
@@ -2230,9 +2271,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Sorry, but Sync & Backup is no longer available in this app version. Please update DuckDuckGo to the latest version to continue.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Sync & Backup is Paused";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Close home tab";

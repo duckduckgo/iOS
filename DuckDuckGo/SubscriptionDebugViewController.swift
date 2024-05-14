@@ -29,6 +29,7 @@ import NetworkProtection
 @available(iOS 15.0, *)
 final class SubscriptionDebugViewController: UITableViewController {
     
+    let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
     private var subscriptionManager: SubscriptionManaging {
         AppDependencyProvider.shared.subscriptionManager
     }
@@ -281,40 +282,24 @@ final class SubscriptionDebugViewController: UITableViewController {
     
     private func setEnvironment(_ environment: SubscriptionEnvironment.ServiceEnvironment) {
         
-        // TODO: reimplement debug menu
-//        let fullEnv = SubscriptionEnvironment()
-//        SubscriptionManager.save(subscriptionEnvironment: currentEnvironment, userDefaults: subscriptionUserDefaults)
-//
-//
-//        var currentEnvironment: SubscriptionEnvironment = SubscriptionManager.getSavedOrDefaultEnvironment(userDefaults: subscriptionUserDefaults)
-//        let updateServiceEnvironment: (SubscriptionEnvironment.ServiceEnvironment) -> Void = { env in
-//            currentEnvironment.serviceEnvironment = env
-//            SubscriptionManager.save(subscriptionEnvironment: currentEnvironment, userDefaults: subscriptionUserDefaults)
-//        }
-//        let updatePurchasingPlatform: (SubscriptionEnvironment.Platform) -> Void = { platform in
-//            currentEnvironment.platform = platform
-//            SubscriptionManager.save(subscriptionEnvironment: currentEnvironment, userDefaults: subscriptionUserDefaults)
-//        }
-//
-//
-//
-//
-//
-//
-//        if environment.description != privacyProEnvironment {
-//            accountManager.signOut()
-//            
-//            // Update Subscription environment
-//            privacyProEnvironment = environment.rawValue
-//            SubscriptionPurchaseEnvironment.currentServiceEnvironment = environment
-//            
-//            // Update VPN Environment
-//            VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment = environment == .production
-//                ? .production
-//                : .staging
-//            NetworkProtectionLocationListCompositeRepository.clearCache()
-//            
-//            tableView.reloadData()
-//        }
+        let subscriptionUserDefaults = UserDefaults(suiteName: subscriptionAppGroup)!
+        let currentSubscriptionEnvironment = SubscriptionManager.getSavedOrDefaultEnvironment(userDefaults: subscriptionUserDefaults)
+        var newSubscriptionEnvironment = SubscriptionEnvironment.default
+        newSubscriptionEnvironment.serviceEnvironment = environment
+
+        if newSubscriptionEnvironment.serviceEnvironment != currentSubscriptionEnvironment.serviceEnvironment {
+            subscriptionManager.accountManager.signOut()
+
+            // Save Subscription environment
+            SubscriptionManager.save(subscriptionEnvironment: newSubscriptionEnvironment, userDefaults: subscriptionUserDefaults)
+
+            // Update VPN Environment
+            VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment = newSubscriptionEnvironment.serviceEnvironment == .production
+            ? .production
+            : .staging
+            NetworkProtectionLocationListCompositeRepository.clearCache()
+        }
+
+        tableView.reloadData()
     }
 }

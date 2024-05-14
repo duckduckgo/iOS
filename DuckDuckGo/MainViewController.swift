@@ -761,6 +761,7 @@ class MainViewController: UIViewController {
             self.present(controller: alert, fromView: self.viewCoordinator.toolbar)
         }
 
+        hideSuggestionTray()
         omniBar.cancel()
     }
     

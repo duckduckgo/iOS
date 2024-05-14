@@ -138,7 +138,6 @@ lane :alpha_adhoc do |options|
     end
   end
 
-  sync_signing_alpha(options)
   sync_signing_alpha_adhoc(options)
 
   suffix = ""
@@ -148,7 +147,6 @@ lane :alpha_adhoc do |options|
 
   timestamp = Time.now.strftime("%Y-%m-%d-%H-%M")
   output_name = "DuckDuckGo-Alpha-#{suffix}#{timestamp}"
-
 
   build_app(
     output_directory: options[:output],

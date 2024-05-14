@@ -1285,7 +1285,7 @@ class MainViewController: UIViewController {
     private var brokenSitePromptEvent: UserBehaviorEvent?
 
     @objc func attemptToShowBrokenSitePrompt(_ notification: Notification) {
-        guard /*userDidInteractWithBrokenSitePrompt,*/
+        guard !userDidInteractWithBrokenSitePrompt,
             let event = notification.userInfo?[UserBehaviorEvent.Key.event] as? UserBehaviorEvent,
             let url = currentTab?.url, !url.isDuckDuckGo,
             notificationView == nil,

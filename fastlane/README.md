@@ -51,7 +51,7 @@ Fetches and updates certificates and provisioning profiles for Ad-Hoc distributi
 [bundle exec] fastlane adhoc
 ```
 
-Makes Ad-Hoc build with a specified name and release bundle ID in a given directory
+Makes Ad-Hoc build with a specified name and alpha bundle ID in a given directory
 
 ### release_adhoc
 

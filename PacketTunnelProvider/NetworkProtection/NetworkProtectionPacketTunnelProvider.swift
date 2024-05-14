@@ -348,14 +348,10 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     private static func entitlementCheck(accountManager: AccountManaging) async -> Result<Bool, Error> {
+        
         guard NetworkProtectionVisibilityForTunnelProvider(accountManager: accountManager).shouldMonitorEntitlement() else {
             return .success(true)
         }
-
-        // TODO: the subscription environment should be matching to the VPNSettings environment, what should we do?
-//        if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {
-//            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
-//        }
 
         let result = await accountManager.hasEntitlement(for: .networkProtection)
         switch result {

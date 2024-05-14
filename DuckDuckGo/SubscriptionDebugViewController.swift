@@ -175,10 +175,35 @@ final class SubscriptionDebugViewController: UITableViewController {
             default: break
             }
         case .environment:
-            switch EnvironmentRows(rawValue: indexPath.row) {
-            case .staging: setEnvironment(.staging)
-            case .production: setEnvironment(.production)
-            default: break
+            guard let subEnv: EnvironmentRows = EnvironmentRows(rawValue: indexPath.row) else { return }
+            var subEnvDesc: String
+            switch subEnv {
+            case .staging:
+                subEnvDesc = "STAGING"
+            case .production:
+                subEnvDesc = "PRODUCTION"
+            }
+            let message = """
+                        Are you sure you want to change the purchase platform to \(subEnvDesc)?
+                        This setting IS persisted between app runs. This action will close the app, do you want to proceed?
+                        """
+            let alertController = UIAlertController(title: "⚠️ App restart required! The changes are persistent",
+                                                    message: message,
+                                                    preferredStyle: .actionSheet)
+            alertController.addAction(UIAlertAction(title: "Yes", style: .destructive) { [weak self] _ in
+                switch subEnv {
+                case .staging:
+                    self?.setEnvironment(.staging)
+                case .production:
+                    self?.setEnvironment(.production)
+                }
+                // Close the app
+                exit(0)
+            })
+            let okAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alertController.addAction(okAction)
+            DispatchQueue.main.async {
+                self.present(alertController, animated: true, completion: nil)
             }
         case .none:
             break
@@ -196,6 +221,8 @@ final class SubscriptionDebugViewController: UITableViewController {
             self.present(alertController, animated: true, completion: nil)
         }
     }
+
+//    func showAlert(title: String, message: String, alternativeAction)
 
     // MARK: Account Status Actions
     private func clearAuthData() {
@@ -294,13 +321,15 @@ final class SubscriptionDebugViewController: UITableViewController {
             // Save Subscription environment
             SubscriptionManager.save(subscriptionEnvironment: newSubscriptionEnvironment, userDefaults: subscriptionUserDefaults)
 
-            // Update VPN Environment
-            VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment = newSubscriptionEnvironment.serviceEnvironment == .production
-            ? .production
-            : .staging
+            // The VPN environment is forced to match the subscription environment
+            let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+            switch newSubscriptionEnvironment.serviceEnvironment {
+            case .production:
+                settings.selectedEnvironment = .production
+            case .staging:
+                settings.selectedEnvironment = .staging
+            }
             NetworkProtectionLocationListCompositeRepository.clearCache()
         }
-
-        tableView.reloadData()
     }
 }

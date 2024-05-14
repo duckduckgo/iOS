@@ -121,9 +121,6 @@ class AppDependencyProvider: DependencyProvider {
             // This is used just for iOS <15, it's a sort of mocked environment that will not be used.
             subscriptionManager = SubscriptionManageriOS14(accountManager: accountManager)
         }
-        let isProduction = (subscriptionEnvironment.serviceEnvironment == .production)
-        VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment = isProduction ? .production : .staging
-
 
         let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
             privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,

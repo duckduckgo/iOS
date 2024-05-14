@@ -85,6 +85,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let crashCollection = CrashCollection(platform: .iOS, log: .generalLog)
     private var crashReportUploaderOnboarding: CrashCollectionOnboarding?
 
+    private let autofillPixelReporter = AutofillPixelReporter()
+
     // MARK: lifecycle
 
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)

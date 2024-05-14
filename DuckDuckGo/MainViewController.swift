@@ -431,7 +431,6 @@ class MainViewController: UIViewController {
                                                name: UIResponder.keyboardDidHideNotification, object: nil)
     }
 
-    
 
     var keyboardShowing = false
 

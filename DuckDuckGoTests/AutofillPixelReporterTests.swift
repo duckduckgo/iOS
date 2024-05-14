@@ -24,9 +24,9 @@ import XCTest
 
 final class AutofillPixelReporterTests: XCTestCase {
 
-    var statisticsStorage: MockStatisticsStore!
+    private var statisticsStorage: MockStatisticsStore!
     private let vault = (try? MockSecureVaultFactory.makeVault(reporter: nil))!
-    var autofillPixelReporter: AutofillPixelReporter!
+    private  var autofillPixelReporter: AutofillPixelReporter!
 
     override func setUpWithError() throws {
         statisticsStorage = MockStatisticsStore()

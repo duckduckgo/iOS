@@ -125,13 +125,14 @@ final class SubscriptionDebugViewController: UITableViewController {
         case .environment:
             let staging = SubscriptionEnvironment.ServiceEnvironment.staging
             let prod = SubscriptionEnvironment.ServiceEnvironment.production
+            let currentEnv = subscriptionManager.currentEnvironment.serviceEnvironment
             switch EnvironmentRows(rawValue: indexPath.row) {
             case .staging:
                 cell.textLabel?.text = "Staging"
-                cell.accessoryType = subscriptionManager.currentEnvironment.serviceEnvironment == staging ? .checkmark : .none
+                cell.accessoryType = currentEnv == staging ? .checkmark : .none
             case .production:
                 cell.textLabel?.text = "Production"
-                cell.accessoryType = subscriptionManager.currentEnvironment.serviceEnvironment == prod ? .checkmark : .none
+                cell.accessoryType = currentEnv == prod ? .checkmark : .none
             case .none:
                 break
             }

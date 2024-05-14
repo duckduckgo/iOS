@@ -131,7 +131,7 @@ lane :alpha_adhoc do |options|
     configurations.each do |config|
       update_code_signing_settings(
         use_automatic_signing: false,
-        build_configurations: ["Release"],
+        build_configurations: ["Alpha"],
         code_sign_identity: "iPhone Distribution",
         **config
       )

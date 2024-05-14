@@ -148,6 +148,7 @@ extension MainViewController {
         
         currentTab?.privacyDashboard = controller
         controller.popoverPresentationController?.delegate = controller
+        controller.view.backgroundColor = UIColor(designSystemColor: .backgroundSheets)
 
         if UIDevice.current.userInterfaceIdiom == .pad {
             controller.modalPresentationStyle = .formSheet

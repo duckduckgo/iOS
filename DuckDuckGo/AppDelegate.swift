@@ -217,6 +217,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DaxDialogs.shared.primeForUse()
         }
 
+        PixelExperimentForBrokenSites.install()
         PixelExperiment.install()
 
         // MARK: Sync initialisation
@@ -668,6 +669,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             showKeyboardIfSettingOn = true
             syncService.scheduler.resumeSyncQueue()
         }
+
+        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {

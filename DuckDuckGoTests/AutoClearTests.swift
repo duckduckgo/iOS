@@ -49,31 +49,36 @@ class AutoClearTests: XCTestCase {
     
     private var worker: MockWorker!
     private var logic: AutoClear!
+    private var appSettings: AppSettingsMock!
 
-    override func setUp() {
-        super.setUp()
-        
+    override func setUp() async throws {
+        try await super.setUp()
+
         worker = MockWorker()
-        logic = AutoClear(worker: worker)
+        appSettings = AppSettingsMock()
+        logic = AutoClear(worker: worker, appSettings: appSettings)
     }
 
     // Note: applicationDidLaunch based clearing has moved to "configureTabManager" function of
     //  MainViewController to ensure that tabs are removed before the data is cleared.
 
     func testWhenTimingIsSetToTerminationThenOnlyRestartClearsData() async {
-        let appSettings = AppUserDefaults()
         appSettings.autoClearAction = .clearData
         appSettings.autoClearTiming = .termination
         
-        await logic.applicationWillMoveToForeground()
-        logic.applicationDidEnterBackground()
-        
+        await logic.clearDataIfEnabledAndTimeExpired()
+        logic.startClearingTimer()
+
+        XCTAssertEqual(worker.clearNavigationStackInvocationCount, 0)
+        XCTAssertEqual(worker.forgetDataInvocationCount, 0)
+
+        await logic.clearDataIfEnabledAndTimeExpired()
+
         XCTAssertEqual(worker.clearNavigationStackInvocationCount, 0)
         XCTAssertEqual(worker.forgetDataInvocationCount, 0)
     }
     
     func testWhenDesiredTimingIsSetThenDataIsClearedOnceTimeHasElapsed() async {
-        let appSettings = AppUserDefaults()
         appSettings.autoClearAction = .clearData
         
         let cases: [AutoClearSettingsModel.Timing: TimeInterval] = [.delay5min: 5 * 60,
@@ -85,14 +90,14 @@ class AutoClearTests: XCTestCase {
         for (timing, delay) in cases {
             appSettings.autoClearTiming = timing
             
-            logic.applicationDidEnterBackground(Date().timeIntervalSince1970 - delay + 1)
-            await logic.applicationWillMoveToForeground()
-            
+            logic.startClearingTimer(Date().timeIntervalSince1970 - delay + 1)
+            await logic.clearDataIfEnabledAndTimeExpired()
+
             XCTAssertEqual(worker.clearNavigationStackInvocationCount, iterationCount)
             XCTAssertEqual(worker.forgetDataInvocationCount, iterationCount)
             
-            logic.applicationDidEnterBackground(Date().timeIntervalSince1970 - delay - 1)
-            await logic.applicationWillMoveToForeground()
+            logic.startClearingTimer(Date().timeIntervalSince1970 - delay - 1)
+            await logic.clearDataIfEnabledAndTimeExpired()
             
             iterationCount += 1
             XCTAssertEqual(worker.clearNavigationStackInvocationCount, iterationCount)

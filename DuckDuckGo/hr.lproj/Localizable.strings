@@ -133,18 +133,6 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Postojeće knjižne oznake neće se duplicirati.";
 
-/* Description for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-description" = "Prekoračeno je ograničenje sinkronizacije oznaka. Pokušaj izbrisati neke oznake. Dok se to ne riješi, tvoje se oznake neće sigurnosno kopirati.";
-
-/* Title for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-title" = "Sinkronizacija oznaka je pauzirana";
-
-/* Description for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-description" = "Prekoračeno je ograničenje sinkronizacije lozinki. Pokušaj izbrisati neke lozinke. Dok se to ne riješi, tvoje se lozinke neće sigurnosno kopirati.";
-
-/* Title for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-title" = "Sinkronizacija lozinki je pauzirana";
-
 /* Title for sync error alert */
 "alert.sync-error" = "Pogreška Sinkronizacije i sigurnosnog kopiranja";
 
@@ -246,6 +234,42 @@
 
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Sakrij lozinku";
+
+/* Button label to get link to download the desktop browser */
+"autofill.import.passwords.get-browser-button" = "Nabavi preglednik za PC";
+
+/* Step 1 for instructions to import passwords */
+"autofill.import.passwords.instructions.step1" = "Otvori DuckDuckGo na Macu ili u Windowsima";
+
+/* Step 2 for instructions to import passwords. This reads as 'Go to Settings > Passwords' */
+"autofill.import.passwords.instructions.step2" = "Idi na %1$@ > %2$@";
+
+/* second parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.passwords" = "Lozinke";
+
+/* first parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.settings" = "Postavke";
+
+/* Step 3 for instructions to import passwords. This reads as 'Select Import Passwords and follow the steps' */
+"autofill.import.passwords.instructions.step3" = "Odaberi %@ i slijedi korake za uvoz";
+
+/* Parameter for autofill.import.passwords.instructions.step3 */
+"autofill.import.passwords.instructions.step3.import" = "Uvezi lozinke...";
+
+/* Step 4 for instructions to import passwords: Once imported on your computer you can set up sync on this iPhone|iPad|device */
+"autofill.import.passwords.instructions.step4" = "Nakon uvoza na svoje računalo možeš postaviti sinkronizaciju na ovom uređaju %@";
+
+/* Title for section with instructions to import passwords */
+"autofill.import.passwords.instructions.title" = "Uvoz iz preglednika PC-a:";
+
+/* Subtitle for screen to import passwords */
+"autofill.import.passwords.subtitle" = "Uvezi lozinke u stolnu verziju preglednika DuckDuckGo, a zatim sinkroniziraj preko uređaja.";
+
+/* Button label to sync passwords with desktop browser */
+"autofill.import.passwords.sync-button" = "Sinkronizacija s preglednikom na PC-u";
+
+/* Title for screen to import passwords */
+"autofill.import.passwords.title" = "Kako uvesti lozinke";
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Onemogući";
@@ -349,8 +373,11 @@
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Korisničko ime";
 
-/* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Lozinke su sigurno pohranjene na tvom uređaju.";
+/* Title for button to Import Passwords when autofill has no items */
+"autofill.logins.empty-view.button.title" = "Uvezi lozinke";
+
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle" = "Lozinke iz drugih preglednika ili aplikacija mogu se uvesti pomoću desktop verzije preglednika DuckDuckGo.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Još nema spremljenih lozinki";
@@ -369,6 +396,9 @@
 
 /* Title for a toggle that enables autofill */
 "autofill.logins.list.enable" = "Spremi i automatski popuni lozinke";
+
+/* Footer label displayed below table section with option to enable autofill */
+"autofill.logins.list.enable.footer" = "Lozinke su sigurno pohranjene na tvom uređaju.";
 
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Lozinka za %@ je izbrisana";
@@ -604,14 +634,11 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Uvezite HTML datoteku oznaka iz drugog preglednika ili izvezite postojeće oznake.";
 
-/* No comment provided by engineer. */
-"bucket: %@" = "bucket: %@";
-
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Uvijek šalji izvješća o padu programa";
 
 /* Crash Report hide details button title */
-"crash.report.dialog.hide.details" = "Sakrij";
+"crash.report.dialog.hide.details" = "Hide";
 
 /* Crash Report dialog message */
 "crash.report.dialog.message" = "Izvješća o padovima pomažu DuckDuckGou u dijagnosticiranju problema i poboljšanju naših proizvoda. Oni ne sadrže nikakve osobne podatke koji bi omogućilitvoju  identifikaciju.";
@@ -711,6 +738,15 @@
 
 /* No comment provided by engineer. */
 "Debug" = "Debug";
+
+/* Default string used if users device is not iPhone or iPad */
+"device.type.default" = "uređaj";
+
+/* Device type is iPhone */
+"device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"device.type.pad" = "iPad";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Onemogućeno";
@@ -849,9 +885,6 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Nema pronađenih rezultata";
-
-/* No comment provided by engineer. */
-"Error" = "Pogreška";
 
 /* Button title to Sign In */
 "error.email-protection-sign-in.action" = "Prijava";
@@ -1098,6 +1131,21 @@
 
 /* No comment provided by engineer. */
 "fireButtonAnimation.waterSwirl.name" = "Vrtlog";
+
+/* Description text above the Share Link button */
+"get.browser.on-your-desktop-go-to" = "Na računalu idi na:";
+
+/* Title for the Share Download Link button */
+"get.browser.share-link" = "Podijeli poveznicu za preuzimanje";
+
+/* Message displayed in the share action when sharing via email */
+"get.browser.share-link.message" = "Privatno pretražuj i blokiraj alate za praćenje pomoću desktop verzije preglednika DuckDuckGo. Posjeti ovu poveznicu na svom računalu za preuzimanje.";
+
+/* Title displayed in the share action */
+"get.browser.share-link.title" = "Nabavi DuckDuckGo preglednik za Mac ili Windows";
+
+/* Title for the get desktop browser feature */
+"get.browser.title" = "Nabavi DuckDuckGo za Mac ili Windows";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Dodaj DuckDuckGo na svoj početni zaslon!";
@@ -1507,9 +1555,6 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
-/* No comment provided by engineer. */
-"Ok" = "U redu";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Upravlja se kolačićima";
 
@@ -1548,9 +1593,6 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Nije moguće pronaći aplikaciju koja je potrebna za otvaranje te poveznice";
-
-/* No comment provided by engineer. */
-"Please enter which app on your device is broken." = "Navedi koja je aplikacija na tvom uređaju neispravna.";
 
 /* Activate button */
 "pm.activate" = "Reactivate";
@@ -1654,6 +1696,9 @@
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
 "settings.address.full.url" = "Pokaži cijelu adresu web-mjesta";
+
+/* Label describing a feature which is turned on always */
+"settings.always.on" = "Always On";
 
 /* Settings screen appearance section title */
 "settings.appearance" = "Izgled";
@@ -1761,6 +1806,12 @@
 /* The name of a settings category listing next steps */
 "settings.next.steps" = "Sljedeći koraci";
 
+/* Label describing a feature which is turned off */
+"settings.off" = "Off";
+
+/* Label describing a feature which is turned on */
+"settings.on" = "On";
+
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
@@ -1805,6 +1856,12 @@
 
 /* I have a Subscription button text for privacy pro */
 "settings.subscription.existing.subscription" = "I Have a Subscription";
+
+/* Subscription expired description */
+"settings.subscription.expired.comment" = "Subscribe again to continue using Privacy Pro";
+
+/* Subscription expired tittle message */
+"settings.subscription.expired.title" = "Your Privacy Pro subscription expired";
 
 /* Privacy pro features list */
 "settings.subscription.features" = " • VPN\n • Personal Information Removal\n • Identity Theft Restoration";
@@ -2109,6 +2166,9 @@
 /* Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)' */
 "subscription.subscription.active.caption" = "Your subscription %1$@ on %2$@";
 
+/* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
+"subscription.subscription.expired.caption" = "Your subscription expired on %@";
+
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
 
@@ -2150,9 +2210,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Žao nam je, ali Sync & Backup (sinkronizacija i sigurnosno kopiranje) više nisu dostupni u ovoj verziji aplikacije. Molimo te da za nastavak ažuriraš DuckDuckGo na najnoviju verziju.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Sync & Backup pauziran";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Zatvori početnu karticu";

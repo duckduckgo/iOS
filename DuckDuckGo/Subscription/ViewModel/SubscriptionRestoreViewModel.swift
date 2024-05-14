@@ -106,8 +106,10 @@ final class SubscriptionRestoreViewModel: ObservableObject {
                     self.state.viewTitle = UserText.subscriptionAddDeviceTitle
                 }
             default:
-                self.state.viewTitle = UserText.subscriptionActivate
-                state.isLoading = false
+                DispatchQueue.main.async {
+                    self.state.viewTitle = UserText.subscriptionActivate
+                    self.state.isLoading = false
+                }
             }
         }
     }

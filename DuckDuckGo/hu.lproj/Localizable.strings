@@ -133,18 +133,6 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "A meglévő könyvjelzők nem kettőződnek.";
 
-/* Description for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-description" = "Túllépted a szinkronizálható könyvjelzők maximális számát. Próbálj törölni néhány könyvjelzőt. Amíg ezt nem sikerül megoldani, a könyvjelzőkről nem készül biztonsági másolat.";
-
-/* Title for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-title" = "A könyvjelzők szinkronizálása szünetel";
-
-/* Description for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-description" = "Túllépted a szinkronizálható jelszavak maximális számát. Próbálj törölni néhány jelszót. Amíg ezt nem sikerül megoldani, a jelszavakról nem készül biztonsági másolat.";
-
-/* Title for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-title" = "A jelszavak szinkronizálása szünetel";
-
 /* Title for sync error alert */
 "alert.sync-error" = "Szinkronizálási és biztonsági mentési hiba";
 
@@ -246,6 +234,42 @@
 
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Jelszó elrejtése";
+
+/* Button label to get link to download the desktop browser */
+"autofill.import.passwords.get-browser-button" = "Asztali böngésző letöltése";
+
+/* Step 1 for instructions to import passwords */
+"autofill.import.passwords.instructions.step1" = "Nyisd meg Mac vagy Windows rendszeren a DuckDuckGo böngészőt";
+
+/* Step 2 for instructions to import passwords. This reads as 'Go to Settings > Passwords' */
+"autofill.import.passwords.instructions.step2" = "Lépj a %1$@ > %2$@ menüpontra";
+
+/* second parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.passwords" = "Jelszavak";
+
+/* first parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.settings" = "Beállítások";
+
+/* Step 3 for instructions to import passwords. This reads as 'Select Import Passwords and follow the steps' */
+"autofill.import.passwords.instructions.step3" = "Válaszd a %@ lehetőséget, és kövesd az importálás lépéseit";
+
+/* Parameter for autofill.import.passwords.instructions.step3 */
+"autofill.import.passwords.instructions.step3.import" = "Jelszavak importálása…";
+
+/* Step 4 for instructions to import passwords: Once imported on your computer you can set up sync on this iPhone|iPad|device */
+"autofill.import.passwords.instructions.step4" = "A számítógépre való importálás után beállíthatod a szinkronizálást ezen az %@";
+
+/* Title for section with instructions to import passwords */
+"autofill.import.passwords.instructions.title" = "Importálás az asztali böngészőből:";
+
+/* Subtitle for screen to import passwords */
+"autofill.import.passwords.subtitle" = "Importálj jelszavakat a DuckDuckGo böngésző asztali verziójába, majd szinkronizáld őket az eszközök között.";
+
+/* Button label to sync passwords with desktop browser */
+"autofill.import.passwords.sync-button" = "Szinkronizálás asztali böngészővel";
+
+/* Title for screen to import passwords */
+"autofill.import.passwords.title" = "Jelszavak importálásának módja";
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Letilt";
@@ -349,8 +373,11 @@
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Felhasználónév";
 
-/* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "A jelszavakat az eszközöd biztonságosan tárolja.";
+/* Title for button to Import Passwords when autofill has no items */
+"autofill.logins.empty-view.button.title" = "Jelszavak importálása";
+
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle" = "Más böngészőkből vagy alkalmazásokból származó jelszavak a DuckDuckGo böngésző asztali verziójával importálhatók.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Még nincsenek mentett jelszavak";
@@ -369,6 +396,9 @@
 
 /* Title for a toggle that enables autofill */
 "autofill.logins.list.enable" = "Jelszavak mentése és automatikus kitöltése";
+
+/* Footer label displayed below table section with option to enable autofill */
+"autofill.logins.list.enable.footer" = "A jelszavakat az eszközöd biztonságosan tárolja.";
 
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "%@ jelszava törölve";
@@ -604,14 +634,11 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Könyvjelzőket tartalmazó HTML-fájl importálása másik gépről, vagy a meglévő könyvjelzők exportálása.";
 
-/* No comment provided by engineer. */
-"bucket: %@" = "gyűjtő: %@";
-
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Mindig küldjön hibajelentést";
 
 /* Crash Report hide details button title */
-"crash.report.dialog.hide.details" = "Elrejtés";
+"crash.report.dialog.hide.details" = "Hide";
 
 /* Crash Report dialog message */
 "crash.report.dialog.message" = "A hibajelentések segítséget nyújtanak ahhoz, hogy a DuckDuckGo diagnosztizálhassa a problémákat, és tökéletesíthesse termékeit. A jelentések nem tartalmaznak személyes azonosításra alkalmas adatokat.";
@@ -711,6 +738,15 @@
 
 /* No comment provided by engineer. */
 "Debug" = "Debug";
+
+/* Default string used if users device is not iPhone or iPad */
+"device.type.default" = "eszközön";
+
+/* Device type is iPhone */
+"device.type.iphone" = "iPhone készüléken";
+
+/* Device type is iPad */
+"device.type.pad" = "iPad készüléken";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Letiltva";
@@ -849,9 +885,6 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Nincs találat";
-
-/* No comment provided by engineer. */
-"Error" = "Hiba";
 
 /* Button title to Sign In */
 "error.email-protection-sign-in.action" = "Bejelentkezés";
@@ -1098,6 +1131,21 @@
 
 /* No comment provided by engineer. */
 "fireButtonAnimation.waterSwirl.name" = "Örvény";
+
+/* Description text above the Share Link button */
+"get.browser.on-your-desktop-go-to" = "A számítógépeden lépj a következő lehetőségre:";
+
+/* Title for the Share Download Link button */
+"get.browser.share-link" = "Letöltési link megosztása";
+
+/* Message displayed in the share action when sharing via email */
+"get.browser.share-link.message" = "Keress privát módon, és blokkold a nyomkövetőket a DuckDuckGo asztali böngészőjével. A letöltéshez nyisd meg ezt a linket a számítógépen.";
+
+/* Title displayed in the share action */
+"get.browser.share-link.title" = "Mac vagy Windows verziójú DuckDuckGo böngésző letöltése";
+
+/* Title for the get desktop browser feature */
+"get.browser.title" = "Mac vagy Windows verziójú DuckDuckGo letöltése";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Add hozzá a DuckDuckGo-t a kezdőképernyődhöz!";
@@ -1507,9 +1555,6 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
-/* No comment provided by engineer. */
-"Ok" = "OK";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Kezelt sütik";
 
@@ -1548,9 +1593,6 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "A link megnyitásához szükséges alkalmazás nem található.";
-
-/* No comment provided by engineer. */
-"Please enter which app on your device is broken." = "Add meg, hogy melyik alkalmazás működik hibásan az eszközön.";
 
 /* Activate button */
 "pm.activate" = "Reactivate";
@@ -1654,6 +1696,9 @@
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
 "settings.address.full.url" = "Teljes webhelycím megjelenítése";
+
+/* Label describing a feature which is turned on always */
+"settings.always.on" = "Always On";
 
 /* Settings screen appearance section title */
 "settings.appearance" = "Megjelenés";
@@ -1761,6 +1806,12 @@
 /* The name of a settings category listing next steps */
 "settings.next.steps" = "Következő lépések";
 
+/* Label describing a feature which is turned off */
+"settings.off" = "Off";
+
+/* Label describing a feature which is turned on */
+"settings.on" = "On";
+
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
@@ -1805,6 +1856,12 @@
 
 /* I have a Subscription button text for privacy pro */
 "settings.subscription.existing.subscription" = "I Have a Subscription";
+
+/* Subscription expired description */
+"settings.subscription.expired.comment" = "Subscribe again to continue using Privacy Pro";
+
+/* Subscription expired tittle message */
+"settings.subscription.expired.title" = "Your Privacy Pro subscription expired";
 
 /* Privacy pro features list */
 "settings.subscription.features" = " • VPN\n • Personal Information Removal\n • Identity Theft Restoration";
@@ -2109,6 +2166,9 @@
 /* Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)' */
 "subscription.subscription.active.caption" = "Your subscription %1$@ on %2$@";
 
+/* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
+"subscription.subscription.expired.caption" = "Your subscription expired on %@";
+
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
 
@@ -2150,9 +2210,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "A szinkronizálás és biztonsági mentés az alkalmazás ezen verziójában már nem érhető el. A folytatáshoz frissíts a DuckDuckGo a legújabb verziójára.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "A szinkronizálás és biztonsági mentés szünetel";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Kezdőlap bezárása";

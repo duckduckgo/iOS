@@ -133,18 +133,6 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Eksisterende bogmærker duplikeres ikke.";
 
-/* Description for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-description" = "Du har overskredet grænsen for bogmærkesynkronisering. Prøv at slette nogle bogmærker. Dine bogmærker vil ikke blive sikkerhedskopieret, før dette er løst.";
-
-/* Title for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-title" = "Bogmærkesynkronisering er sat på pause";
-
-/* Description for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-description" = "Du har overskredet grænsen for synkronisering af adgangskoder. Prøv at slette nogle adgangskoder. Dine adgangskoder vil ikke blive sikkerhedskopieret, før dette er løst.";
-
-/* Title for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-title" = "Synkronisering af adgangskoder er sat på pause";
-
 /* Title for sync error alert */
 "alert.sync-error" = "Fejl ved synkronisering og sikkerhedskopiering";
 
@@ -246,6 +234,42 @@
 
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Skjul adgangskode";
+
+/* Button label to get link to download the desktop browser */
+"autofill.import.passwords.get-browser-button" = "Hent browser til computeren";
+
+/* Step 1 for instructions to import passwords */
+"autofill.import.passwords.instructions.step1" = "Åbn DuckDuckGo på Mac eller Windows";
+
+/* Step 2 for instructions to import passwords. This reads as 'Go to Settings > Passwords' */
+"autofill.import.passwords.instructions.step2" = "Gå til %1$@ > %2$@";
+
+/* second parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.passwords" = "Adgangskoder";
+
+/* first parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.settings" = "Indstillinger";
+
+/* Step 3 for instructions to import passwords. This reads as 'Select Import Passwords and follow the steps' */
+"autofill.import.passwords.instructions.step3" = "Vælg %@, og følg trinene for at importere";
+
+/* Parameter for autofill.import.passwords.instructions.step3 */
+"autofill.import.passwords.instructions.step3.import" = "Importer adgangskoder...";
+
+/* Step 4 for instructions to import passwords: Once imported on your computer you can set up sync on this iPhone|iPad|device */
+"autofill.import.passwords.instructions.step4" = "Når de er importeret til din computer, kan du konfigurere synkronisering på denne %@";
+
+/* Title for section with instructions to import passwords */
+"autofill.import.passwords.instructions.title" = "Importer fra browseren på computeren:";
+
+/* Subtitle for screen to import passwords */
+"autofill.import.passwords.subtitle" = "Importer adgangskoder i computerversionen af DuckDuckGo-browseren, og synkroniser derefter på tværs af enheder.";
+
+/* Button label to sync passwords with desktop browser */
+"autofill.import.passwords.sync-button" = "Synkroniser med computer";
+
+/* Title for screen to import passwords */
+"autofill.import.passwords.title" = "Sådan importerer du adgangskoder";
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Deaktiver";
@@ -349,8 +373,11 @@
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Brugernavn";
 
-/* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Adgangskoder gemmes sikkert på din enhed.";
+/* Title for button to Import Passwords when autofill has no items */
+"autofill.logins.empty-view.button.title" = "Importer adgangskoder";
+
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle" = "Adgangskoder fra andre browsere eller apps kan importeres ved hjælp af computerversionen af DuckDuckGo-browseren.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Ingen adgangskoder gemt endnu";
@@ -369,6 +396,9 @@
 
 /* Title for a toggle that enables autofill */
 "autofill.logins.list.enable" = "Gem og udfyld adgangskoder automatisk";
+
+/* Footer label displayed below table section with option to enable autofill */
+"autofill.logins.list.enable.footer" = "Adgangskoder gemmes sikkert på din enhed.";
 
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Adgangskode til %@ slettet";
@@ -604,14 +634,11 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Importér en HTML-fil med bogmærker fra en anden browser, eller eksportér dine eksisterende bogmærker.";
 
-/* No comment provided by engineer. */
-"bucket: %@" = "bucket: %@";
-
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Send altid fejlrapporter";
 
 /* Crash Report hide details button title */
-"crash.report.dialog.hide.details" = "Skjul";
+"crash.report.dialog.hide.details" = "Hide";
 
 /* Crash Report dialog message */
 "crash.report.dialog.message" = "Fejlrapporter hjælper DuckDuckGo med at diagnosticere problemer og forbedre vores produkter. De indeholder ingen personligt identificerbare oplysninger.";
@@ -711,6 +738,15 @@
 
 /* No comment provided by engineer. */
 "Debug" = "Debug";
+
+/* Default string used if users device is not iPhone or iPad */
+"device.type.default" = "enhed";
+
+/* Device type is iPhone */
+"device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"device.type.pad" = "iPad";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Deaktiveret";
@@ -849,9 +885,6 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Ingen match fundet";
-
-/* No comment provided by engineer. */
-"Error" = "Fejl";
 
 /* Button title to Sign In */
 "error.email-protection-sign-in.action" = "Log ind";
@@ -1098,6 +1131,21 @@
 
 /* No comment provided by engineer. */
 "fireButtonAnimation.waterSwirl.name" = "Whirlpool";
+
+/* Description text above the Share Link button */
+"get.browser.on-your-desktop-go-to" = "På din computer skal du gå til:";
+
+/* Title for the Share Download Link button */
+"get.browser.share-link" = "Del downloadlink";
+
+/* Message displayed in the share action when sharing via email */
+"get.browser.share-link.message" = "Søg privat og bloker trackere med DuckDuckGo-browseren til computeren. Besøg dette link på din computer for at downloade i dag.";
+
+/* Title displayed in the share action */
+"get.browser.share-link.title" = "Hent DuckDuckGo-browseren til Mac eller Windows";
+
+/* Title for the get desktop browser feature */
+"get.browser.title" = "Hent DuckDuckGo til Mac eller Windows";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Føj DuckDuckGo til din startskærm!";
@@ -1507,9 +1555,6 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
-/* No comment provided by engineer. */
-"Ok" = "Okay";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Administrerede cookies";
 
@@ -1548,9 +1593,6 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Den app, der kræves for at åbne dette link, kan ikke findes";
-
-/* No comment provided by engineer. */
-"Please enter which app on your device is broken." = "Indtast hvilken app på din enhed, der ikke fungerer.";
 
 /* Activate button */
 "pm.activate" = "Reactivate";
@@ -1654,6 +1696,9 @@
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
 "settings.address.full.url" = "Vis hele webstedsadressen";
+
+/* Label describing a feature which is turned on always */
+"settings.always.on" = "Always On";
 
 /* Settings screen appearance section title */
 "settings.appearance" = "udseende";
@@ -1761,6 +1806,12 @@
 /* The name of a settings category listing next steps */
 "settings.next.steps" = "Næste trin";
 
+/* Label describing a feature which is turned off */
+"settings.off" = "Off";
+
+/* Label describing a feature which is turned on */
+"settings.on" = "On";
+
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
@@ -1805,6 +1856,12 @@
 
 /* I have a Subscription button text for privacy pro */
 "settings.subscription.existing.subscription" = "I Have a Subscription";
+
+/* Subscription expired description */
+"settings.subscription.expired.comment" = "Subscribe again to continue using Privacy Pro";
+
+/* Subscription expired tittle message */
+"settings.subscription.expired.title" = "Your Privacy Pro subscription expired";
 
 /* Privacy pro features list */
 "settings.subscription.features" = " • VPN\n • Personal Information Removal\n • Identity Theft Restoration";
@@ -2109,6 +2166,9 @@
 /* Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)' */
 "subscription.subscription.active.caption" = "Your subscription %1$@ on %2$@";
 
+/* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
+"subscription.subscription.expired.caption" = "Your subscription expired on %@";
+
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
 
@@ -2150,9 +2210,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Beklager, men synkronisering og sikkerhedskopiering er ikke længere tilgængelig i denne app-version. Opdater DuckDuckGo til den nyeste version for at fortsætte.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Synkronisering og sikkerhedskopiering er sat på pause";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Luk hjemmefanen";

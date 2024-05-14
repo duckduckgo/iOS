@@ -244,10 +244,23 @@ extension Pixel {
         case autofillLoginsPasswordGenerationPromptConfirmed
         case autofillLoginsPasswordGenerationPromptDismissed
 
+        case autofillManagementScreenVisitSurveyAvailable
+        
         case autofillLoginsLaunchWidgetHome
         case autofillLoginsLaunchWidgetLock
         case autofillLoginsLaunchAppShortcut
 
+        case autofillLoginsImport
+        case autofillLoginsImportNoPasswords
+        case autofillLoginsImportGetDesktop
+        case autofillLoginsImportSync
+        case autofillLoginsImportNoAction
+        case autofillLoginsImportSuccess
+        case autofillLoginsImportFailure
+
+        case getDesktopCopy
+        case getDesktopShare
+        
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
         
         case secureVaultError
@@ -282,9 +295,17 @@ extension Pixel {
         case networkProtectionTunnelStartSuccess
         case networkProtectionTunnelStartFailure
 
+        case networkProtectionTunnelStopAttempt
+        case networkProtectionTunnelStopSuccess
+        case networkProtectionTunnelStopFailure
+
         case networkProtectionTunnelUpdateAttempt
         case networkProtectionTunnelUpdateSuccess
         case networkProtectionTunnelUpdateFailure
+
+        case networkProtectionTunnelWakeAttempt
+        case networkProtectionTunnelWakeSuccess
+        case networkProtectionTunnelWakeFailure
 
         case networkProtectionEnableAttemptConnecting
         case networkProtectionEnableAttemptSuccess
@@ -353,7 +374,12 @@ extension Pixel {
         case networkProtectionGeoswitchingSetNearest
         case networkProtectionGeoswitchingSetCustom
         case networkProtectionGeoswitchingNoLocations
-        
+
+        case networkProtectionFailureRecoveryStarted
+        case networkProtectionFailureRecoveryFailed
+        case networkProtectionFailureRecoveryCompletedHealthy
+        case networkProtectionFailureRecoveryCompletedUnhealthy
+
         // MARK: remote messaging pixels
         
         case remoteMessageShown
@@ -499,10 +525,13 @@ extension Pixel {
         case syncSentUnauthenticatedRequest
         case syncMetadataCouldNotLoadDatabase
         case syncBookmarksFailed
+        case syncBookmarksPatchCompressionFailed
         case syncCredentialsProviderInitializationFailed
         case syncCredentialsFailed
+        case syncCredentialsPatchCompressionFailed
         case syncSettingsFailed
         case syncSettingsMetadataUpdateFailed
+        case syncSettingsPatchCompressionFailed
         case syncSignupError
         case syncLoginError
         case syncLogoutError
@@ -652,10 +681,14 @@ extension Pixel {
         case privacyProAddEmailSuccess
         case privacyProWelcomeFAQClick
 
+        // MARK: Apple Ad Attribution
+        case appleAdAttribution
+
         // MARK: Secure Vault
         case secureVaultL1KeyMigration
         case secureVaultL2KeyMigration
         case secureVaultL2KeyPasswordMigration
+
     }
 
 }
@@ -888,9 +921,21 @@ extension Pixel.Event {
         case .autofillLoginsPasswordGenerationPromptConfirmed: return "m_autofill_logins_password_generation_prompt_confirmed"
         case .autofillLoginsPasswordGenerationPromptDismissed: return "m_autofill_logins_password_generation_prompt_dismissed"
 
+        case .autofillManagementScreenVisitSurveyAvailable: return "m_autofill_management_screen_visit_survey_available"
         case .autofillLoginsLaunchWidgetHome: return "m_autofill_logins_launch_widget_home"
         case .autofillLoginsLaunchWidgetLock: return "m_autofill_logins_launch_widget_lock"
         case .autofillLoginsLaunchAppShortcut: return "m_autofill_logins_launch_app_shortcut"
+
+        case .autofillLoginsImport: return "m_autofill_logins_import"
+        case .autofillLoginsImportNoPasswords: return "m_autofill_logins_import_no_passwords"
+        case .autofillLoginsImportGetDesktop: return "m_autofill_logins_import_get_desktop"
+        case .autofillLoginsImportSync: return "m_autofill_logins_import_sync"
+        case .autofillLoginsImportNoAction: return "m_autofill_logins_import_no-action"
+        case .autofillLoginsImportSuccess: return "m_autofill_logins_import_success"
+        case .autofillLoginsImportFailure: return "m_autofill_logins_import_failure"
+
+        case .getDesktopCopy: return "m_get_desktop_copy"
+        case .getDesktopShare: return "m_get_desktop_share"
 
         case .autofillJSPixelFired(let pixel):
             return "m_ios_\(pixel.pixelName)"
@@ -923,9 +968,15 @@ extension Pixel.Event {
         case .networkProtectionTunnelStartAttempt: return "m_netp_tunnel_start_attempt"
         case .networkProtectionTunnelStartSuccess: return "m_netp_tunnel_start_success"
         case .networkProtectionTunnelStartFailure: return "m_netp_tunnel_start_failure"
+        case .networkProtectionTunnelStopAttempt: return "m_netp_tunnel_stop_attempt"
+        case .networkProtectionTunnelStopSuccess: return "m_netp_tunnel_stop_success"
+        case .networkProtectionTunnelStopFailure: return "m_netp_tunnel_stop_failure"
         case .networkProtectionTunnelUpdateAttempt: return "m_netp_tunnel_update_attempt"
         case .networkProtectionTunnelUpdateSuccess: return "m_netp_tunnel_update_success"
         case .networkProtectionTunnelUpdateFailure: return "m_netp_tunnel_update_failure"
+        case .networkProtectionTunnelWakeAttempt: return "m_netp_tunnel_wake_attempt"
+        case .networkProtectionTunnelWakeSuccess: return "m_netp_tunnel_wake_success"
+        case .networkProtectionTunnelWakeFailure: return "m_netp_tunnel_wake_failure"
         case .networkProtectionEnableAttemptConnecting: return "m_netp_ev_enable_attempt"
         case .networkProtectionEnableAttemptSuccess: return "m_netp_ev_enable_attempt_success"
         case .networkProtectionEnableAttemptFailure: return "m_netp_ev_enable_attempt_failure"
@@ -1125,10 +1176,13 @@ extension Pixel.Event {
         case .syncSentUnauthenticatedRequest: return "m_d_sync_sent_unauthenticated_request"
         case .syncMetadataCouldNotLoadDatabase: return "m_d_sync_metadata_could_not_load_database"
         case .syncBookmarksFailed: return "m_d_sync_bookmarks_failed"
+        case .syncBookmarksPatchCompressionFailed: return "m_d_sync_bookmarks_patch_compression_failed"
         case .syncCredentialsProviderInitializationFailed: return "m_d_sync_credentials_provider_initialization_failed"
         case .syncCredentialsFailed: return "m_d_sync_credentials_failed"
+        case .syncCredentialsPatchCompressionFailed: return "m_d_sync_credentials_patch_compression_failed"
         case .syncSettingsFailed: return "m_d_sync_settings_failed"
         case .syncSettingsMetadataUpdateFailed: return "m_d_sync_settings_metadata_update_failed"
+        case .syncSettingsPatchCompressionFailed: return "m_d_sync_settings_patch_compression_failed"
         case .syncSignupError: return "m_d_sync_signup_error"
         case .syncLoginError: return "m_d_sync_login_error"
         case .syncLogoutError: return "m_d_sync_logout_error"
@@ -1176,6 +1230,9 @@ extension Pixel.Event {
         case .toggleReportDismiss: return "m_toggle-report-dismiss"
 
         case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
+            
+        // MARK: - Apple Ad Attribution
+        case .appleAdAttribution: return "m_apple-ad-attribution"
 
             // MARK: - User behavior
         case .userBehaviorReloadTwice: return "m_reload-twice"
@@ -1285,6 +1342,10 @@ extension Pixel.Event {
         case .privacyProOfferYearlyPriceClick: return "m_privacy-pro_offer_yearly-price_click"
         case .privacyProAddEmailSuccess: return "m_privacy-pro_app_add-email_success_u"
         case .privacyProWelcomeFAQClick: return "m_privacy-pro_welcome_faq_click_u"
+        case .networkProtectionFailureRecoveryStarted: return "m_netp_ev_failure_recovery_started"
+        case .networkProtectionFailureRecoveryFailed: return "m_netp_ev_failure_recovery_failed"
+        case .networkProtectionFailureRecoveryCompletedHealthy: return "m_netp_ev_failure_recovery_completed_server_healthy"
+        case .networkProtectionFailureRecoveryCompletedUnhealthy: return "m_netp_ev_failure_recovery_completed_server_unhealthy"
             
             // MARK: Secure Vault
         case .secureVaultL1KeyMigration: return "m_secure-vault_keystore_event_l1-key-migration"

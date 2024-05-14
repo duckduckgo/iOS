@@ -133,18 +133,6 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Съществуващите отметки няма да бъдат дублирани.";
 
-/* Description for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-description" = "Превишихте ограничението за синхронизиране на отметки. Опитайте да изтриете някои от отметките. Докато този проблем не бъде разрешен, отметките няма да бъдат архивирани.";
-
-/* Title for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-title" = "Синхронизирането на отметки е на пауза";
-
-/* Description for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-description" = "Превишихте ограничението за синхронизиране на пароли. Опитайте да изтриете някои от паролите. Докато този проблем не бъде разрешен, паролите няма да бъдат архивирани.";
-
-/* Title for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-title" = "Синхронизирането на паролите е на пауза";
-
 /* Title for sync error alert */
 "alert.sync-error" = "Грешка при синхронизиране и архивиране";
 
@@ -246,6 +234,42 @@
 
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Скриване на паролата";
+
+/* Button label to get link to download the desktop browser */
+"autofill.import.passwords.get-browser-button" = "Вземете браузъра за работен плот";
+
+/* Step 1 for instructions to import passwords */
+"autofill.import.passwords.instructions.step1" = "Отворете DuckDuckGo на Mac или Windows";
+
+/* Step 2 for instructions to import passwords. This reads as 'Go to Settings > Passwords' */
+"autofill.import.passwords.instructions.step2" = "Отидете на „%1$@ > %2$@“";
+
+/* second parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.passwords" = "Пароли";
+
+/* first parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.settings" = "Настройки";
+
+/* Step 3 for instructions to import passwords. This reads as 'Select Import Passwords and follow the steps' */
+"autofill.import.passwords.instructions.step3" = "Изберете „%@“ и следвайте стъпките за импортиране";
+
+/* Parameter for autofill.import.passwords.instructions.step3 */
+"autofill.import.passwords.instructions.step3.import" = "Импортиране на пароли...";
+
+/* Step 4 for instructions to import passwords: Once imported on your computer you can set up sync on this iPhone|iPad|device */
+"autofill.import.passwords.instructions.step4" = "След като бъдат импортирани на вашия компютър, можете да настроите синхронизирането на %@";
+
+/* Title for section with instructions to import passwords */
+"autofill.import.passwords.instructions.title" = "Импортиране от браузъра на работния плот:";
+
+/* Subtitle for screen to import passwords */
+"autofill.import.passwords.subtitle" = "Импортирайте пароли в десктоп версията на браузъра DuckDuckGo, след което ги синхронизирайте с различни устройства.";
+
+/* Button label to sync passwords with desktop browser */
+"autofill.import.passwords.sync-button" = "Синхронизиране с браузъра на работния плот";
+
+/* Title for screen to import passwords */
+"autofill.import.passwords.title" = "Как се импортират пароли";
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Забрани";
@@ -349,8 +373,11 @@
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Потребителско име";
 
-/* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Паролите се съхраняват сигурно на Вашето устройство.";
+/* Title for button to Import Passwords when autofill has no items */
+"autofill.logins.empty-view.button.title" = "Импортиране на пароли";
+
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle" = "Паролите от други браузъри или приложения могат да бъдат импортирани чрез версията за работен плот на браузъра DuckDuckGo.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Все още няма запазени пароли";
@@ -369,6 +396,9 @@
 
 /* Title for a toggle that enables autofill */
 "autofill.logins.list.enable" = "Запазване и автоматично попълване на паролите";
+
+/* Footer label displayed below table section with option to enable autofill */
+"autofill.logins.list.enable.footer" = "Паролите се съхраняват сигурно на Вашето устройство.";
 
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Паролата за %@ е изтрита";
@@ -604,14 +634,11 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Импортирайте HTML файл с отметки от друг браузър или експортирайте съществуващите отметки.";
 
-/* No comment provided by engineer. */
-"bucket: %@" = "контейнер: %@";
-
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Винаги да се изпращат доклади за сривове";
 
 /* Crash Report hide details button title */
-"crash.report.dialog.hide.details" = "Скрий";
+"crash.report.dialog.hide.details" = "Hide";
 
 /* Crash Report dialog message */
 "crash.report.dialog.message" = "Докладите за сривове помагат на DuckDuckGo да диагностицира проблеми и да подобрява продуктите си. Те не съдържат никаква лична информация.";
@@ -711,6 +738,15 @@
 
 /* No comment provided by engineer. */
 "Debug" = "Debug";
+
+/* Default string used if users device is not iPhone or iPad */
+"device.type.default" = "устройство";
+
+/* Device type is iPhone */
+"device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"device.type.pad" = "iPad";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Деактивирано";
@@ -849,9 +885,6 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Няма намерени съвпадения";
-
-/* No comment provided by engineer. */
-"Error" = "Грешка";
 
 /* Button title to Sign In */
 "error.email-protection-sign-in.action" = "Влизане";
@@ -1098,6 +1131,21 @@
 
 /* No comment provided by engineer. */
 "fireButtonAnimation.waterSwirl.name" = "Водовъртеж";
+
+/* Description text above the Share Link button */
+"get.browser.on-your-desktop-go-to" = "На компютъра си отидете на:";
+
+/* Title for the Share Download Link button */
+"get.browser.share-link" = "Споделяне на връзка за изтегляне";
+
+/* Message displayed in the share action when sharing via email */
+"get.browser.share-link.message" = "Търсете поверително и блокирайте тракерите с браузъра за работен плот DuckDuckGo. Посетете тази връзка на своя компютър, за да го изтеглите още днес.";
+
+/* Title displayed in the share action */
+"get.browser.share-link.title" = "Вземете браузъра DuckDuckGo за Mac или Windows";
+
+/* Title for the get desktop browser feature */
+"get.browser.title" = "Вземете DuckDuckGo за Mac или Windows";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Добавете DuckDuckGo към началния си екран!";
@@ -1507,9 +1555,6 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
-/* No comment provided by engineer. */
-"Ok" = "ОК";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Бисквитките са настроени";
 
@@ -1548,9 +1593,6 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Не е намерено приложението, необходимо за отваряне на тази връзка";
-
-/* No comment provided by engineer. */
-"Please enter which app on your device is broken." = "Моля, въведете кое приложение на Вашето устройство е повредено.";
 
 /* Activate button */
 "pm.activate" = "Reactivate";
@@ -1654,6 +1696,9 @@
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
 "settings.address.full.url" = "Показване на пълния адрес на сайта";
+
+/* Label describing a feature which is turned on always */
+"settings.always.on" = "Always On";
 
 /* Settings screen appearance section title */
 "settings.appearance" = "Външен Вид";
@@ -1761,6 +1806,12 @@
 /* The name of a settings category listing next steps */
 "settings.next.steps" = "Следващи стъпки";
 
+/* Label describing a feature which is turned off */
+"settings.off" = "Off";
+
+/* Label describing a feature which is turned on */
+"settings.on" = "On";
+
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
@@ -1805,6 +1856,12 @@
 
 /* I have a Subscription button text for privacy pro */
 "settings.subscription.existing.subscription" = "I Have a Subscription";
+
+/* Subscription expired description */
+"settings.subscription.expired.comment" = "Subscribe again to continue using Privacy Pro";
+
+/* Subscription expired tittle message */
+"settings.subscription.expired.title" = "Your Privacy Pro subscription expired";
 
 /* Privacy pro features list */
 "settings.subscription.features" = " • VPN\n • Personal Information Removal\n • Identity Theft Restoration";
@@ -2109,6 +2166,9 @@
 /* Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)' */
 "subscription.subscription.active.caption" = "Your subscription %1$@ on %2$@";
 
+/* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
+"subscription.subscription.expired.caption" = "Your subscription expired on %@";
+
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
 
@@ -2150,9 +2210,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Съжаляваме, но функцията за синхронизиране и архивиране вече не се предлага в тази версия на приложението. Моля, актуализирайте DuckDuckGo до най-новата версия, за да продължите.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Функцията за синхронизиране и архивиране е на пауза";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Затваряне на началния раздел";

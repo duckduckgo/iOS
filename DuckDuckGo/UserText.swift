@@ -459,7 +459,14 @@ public struct UserText {
     public static let windowsWaitlistTryDuckDuckGoForWindowsDownload = NSLocalizedString("windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows", value: "Get DuckDuckGo for Windows!", comment: "Title for the Windows browser download link page")
         public static let windowsWaitlistMac = NSLocalizedString("windows-waitlist.join-waitlist-screen.mac-waitlist", value: "Looking for the Mac version?", comment: "Title for the Windows waitlist button redirecting to Mac waitlist")
     public static let windowsWaitlistBrowsePrivately = NSLocalizedString("windows-waitlist.settings.browse-privately", value: "Browse privately with our app for Windows", comment: "Title for the settings subtitle")
-    
+
+    //MARK: - Get Desktop Browser
+    public static let getBrowserTitle = NSLocalizedString("get.browser.title", value: "Get DuckDuckGo for Mac or Windows", comment: "Title for the get desktop browser feature")
+    public static let getBrowserOnYourDesktopGoTo = NSLocalizedString("get.browser.on-your-desktop-go-to", value: "On your computer, go to:", comment: "Description text above the Share Link button")
+    public static let getBrowserShareLink = NSLocalizedString("get.browser.share-link", value: "Share Download Link", comment: "Title for the Share Download Link button")
+    public static let getBrowserShareLinkTitle = NSLocalizedString("get.browser.share-link.title", value: "Get DuckDuckGo Browser for Mac or Windows", comment: "Title displayed in the share action")
+    public static let getBrowserShareLinkMessage = NSLocalizedString("get.browser.share-link.message", value: "Search privately and block trackers with the DuckDuckGo desktop browser. Visit this link on your computer to download today.", comment: "Message displayed in the share action when sharing via email")
+
     // MARK: Network Protection
     
     public static let netPSettingsTitle = NSLocalizedString("netP.settings.title", value: "VPN", comment: "Title for the DuckDuckGo VPN feature in settings")
@@ -603,7 +610,9 @@ public struct UserText {
     public static let autofillLoginDetailsAddress = NSLocalizedString("autofill.logins.details.address", value:"Website URL", comment: "Address label for login details on autofill")
     public static let autofillLoginDetailsNotes = NSLocalizedString("autofill.logins.details.notes", value:"Notes", comment: "Notes label for login details on autofill")
     public static let autofillEmptyViewTitle = NSLocalizedString("autofill.logins.empty-view.title", value:"No passwords saved yet", comment: "Title for view displayed when autofill has no items")
-    public static let autofillEmptyViewSubtitle = NSLocalizedString("autofill.logins.empty-view.subtitle", value:"Passwords are stored securely on your device.", comment: "Subtitle for view displayed when autofill has no items")
+    public static let autofillEmptyViewSubtitle = NSLocalizedString("autofill.logins.empty-view.subtitle", value:"Passwords from other browsers or apps can be imported using the desktop version of the DuckDuckGo browser.", comment: "Subtitle for view displayed when no autofill passwords have been saved")
+    public static let autofillEmptyViewButtonTitle = NSLocalizedString("autofill.logins.empty-view.button.title", value:"Import Passwords", comment: "Title for button to Import Passwords when autofill has no items")
+
     public static let autofillSearchNoResultTitle = NSLocalizedString("autofill.logins.search.no-results.title", value:"No Results", comment: "Title displayed when there are no results on Autofill search")
     public static func autofillSearchNoResultSubtitle(for query: String) -> String {
         let message = NSLocalizedString("autofill.logins.search.no-results.subtitle", value: "for '%@'", comment: "Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle)")
@@ -622,6 +631,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     public static let autofillEnableSettings = NSLocalizedString("autofill.logins.list.enable", value:"Save and autofill passwords", comment: "Title for a toggle that enables autofill")
     public static let autofillNeverSavedSettings = NSLocalizedString("autofill.logins.list.never.saved", value:"Reset Excluded Sites", comment: "Title for a button that allows a user to reset their list of never saved sites")
+    public static let autofillSettingsFooter = NSLocalizedString("autofill.logins.list.enable.footer", value:"Passwords are stored securely on your device.", comment: "Footer label displayed below table section with option to enable autofill")
     public static let autofillLoginListTitle = NSLocalizedString("autofill.logins.list.title", value:"Passwords", comment: "Title for screen listing autofill logins")
     public static let autofillLoginListSearchPlaceholder = NSLocalizedString("autofill.logins.list.search-placeholder", value:"Search passwords", comment: "Placeholder for search field on autofill login listing")
     public static let autofillLoginListSuggested = NSLocalizedString("autofill.logins.list.suggested", value:"Suggested", comment: "Section title for group of suggested saved logins")
@@ -736,7 +746,24 @@ But if you *do* want a peek under the hood, you can find more information about 
     static let autofillRemovedDuckAddressButton = NSLocalizedString("autofill.removed.duck.address.button", value: "Got it", comment: "Button text for the alert dialog telling the user an updated username is no longer a private email address")
     static let autofillDeactivate = NSLocalizedString("pm.deactivate", value: "Deactivate", comment: "Deactivate button")
     static let autofillActivate = NSLocalizedString("pm.activate", value: "Reactivate", comment: "Activate button")
-    
+
+    // Autofill Password Import
+    public static let autofillImportPasswordsTitle = NSLocalizedString("autofill.import.passwords.title", value:"How To Import Passwords", comment: "Title for screen to import passwords")
+    public static let autofillImportPasswordsSubtitle = NSLocalizedString("autofill.import.passwords.subtitle", value:"Import passwords in the desktop version of the DuckDuckGo browser, then sync across devices.", comment: "Subtitle for screen to import passwords")
+    public static let autofillImportPasswordsGetBrowserButton = NSLocalizedString("autofill.import.passwords.get-browser-button", value:"Get Desktop Browser", comment: "Button label to get link to download the desktop browser")
+    public static let autofillImportPasswordsSyncButton = NSLocalizedString("autofill.import.passwords.sync-button", value:"Sync With Desktop", comment: "Button label to sync passwords with desktop browser")
+    public static let autofillImportPasswordsInstructionsTitle = NSLocalizedString("autofill.import.passwords.instructions.title", value:"Import from the desktop browser:", comment: "Title for section with instructions to import passwords")
+    public static let autofillImportPasswordsInstructionsStep1 = NSLocalizedString("autofill.import.passwords.instructions.step1", value:"Open DuckDuckGo on Mac or Windows", comment: "Step 1 for instructions to import passwords")
+    public static let autofillImportPasswordsInstructionsStep2 = NSLocalizedString("autofill.import.passwords.instructions.step2", value:"Go to %@ > %@", comment: "Step 2 for instructions to import passwords. This reads as 'Go to Settings > Passwords'")
+    public static let autofillImportPasswordsInstructionsStep2Settings = NSLocalizedString("autofill.import.passwords.instructions.step2.settings", value:"Settings", comment: "first parameter for autofill.import.passwords.instructions.step2")
+    public static let autofillImportPasswordsInstructionsStep2Autofill = NSLocalizedString("autofill.import.passwords.instructions.step2.passwords", value:"Passwords", comment: "second parameter for autofill.import.passwords.instructions.step2")
+    public static let autofillImportPasswordsInstructionsStep3 = NSLocalizedString("autofill.import.passwords.instructions.step3", value:"Select %@ and follow the steps to import", comment: "Step 3 for instructions to import passwords. This reads as 'Select Import Passwords and follow the steps'")
+    public static let autofillImportPasswordsInstructionsStep3Import = NSLocalizedString("autofill.import.passwords.instructions.step3.import", value:"Import Passwords...", comment: "Parameter for autofill.import.passwords.instructions.step3")
+    public static let autofillImportPasswordsInstructionsStep4 = NSLocalizedString("autofill.import.passwords.instructions.step4", value:"Once imported on your computer you can set up sync on this %@", comment: "Step 4 for instructions to import passwords: Once imported on your computer you can set up sync on this iPhone|iPad|device")
+    public static let deviceTypeiPhone = NSLocalizedString("device.type.iphone", value:"iPhone", comment: "Device type is iPhone")
+    public static let deviceTypeiPad = NSLocalizedString("device.type.pad", value:"iPad", comment: "Device type is iPad")
+    public static let deviceTypeDefault = NSLocalizedString("device.type.default", value:"device", comment: "Default string used if users device is not iPhone or iPad")
+
     // Email Protection In-context Signup
     public static let emailProtection = NSLocalizedString("email-protection", value: "Email Protection", comment: "Email protection service offered by DuckDuckGo")
     public static let emailSignupPromptTitle = NSLocalizedString("email.signup-prompt.title", value:"Hide Your Email and\nBlock Trackers", comment: "Title for prompt to sign up for email protection")
@@ -772,13 +799,27 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let syncRemoveDeviceConfirmAction = NSLocalizedString("sync.remove-device.action", value:"Remove", comment: "Caption for a button to remove device from Sync")
     public static let syncCodeCopied = NSLocalizedString("sync.code.copied", value:"Recovery code copied to clipboard", comment: "Message confirming that recovery code was copied to clipboard")
 
-    // MARK: Errors
-    
+    // MARK: Sync Errors
+    static let syncLimitExceededTitle = NSLocalizedString("prefrences.sync.limit-exceeded-title", value: "Sync Paused", comment: "Title for sync limits exceeded warning")
+    static let syncErrorTitle = NSLocalizedString("alert.sync.warning.sync-error", value: "Sync Error", comment: "Title of the warning message that tells the user that there was an error with the sync feature.")
+    static let bookmarksLimitExceededDescription = NSLocalizedString("prefrences.sync.bookmarks-limit-exceeded-description", value: "You've reached the maximum number of bookmarks. Please delete some to resume sync.", comment: "Description for sync bookmarks limits exceeded warning")
+    static let credentialsLimitExceededDescription = NSLocalizedString("prefrences.sync.credentials-limit-exceeded-description", value: "You've reached the maximum number of passwords. Please delete some to resume sync.", comment: "Description for sync credentials limits exceeded warning")
+    public static let invalidLoginCredentialErrorDescription = NSLocalizedString("prefrences.sync.invalid-login-description", value: "Sync encountered an error. Try disabling sync on this device and then reconnect using another device or your recovery code.", comment: "Description invalid credentials error when syncing.")
+    static let tooManyRequestsErrorDescription = NSLocalizedString("prefrences.sync.invalid-login-description", value: "Sync & Backup is temporarily unavailable.", comment: "Description of too many requests error when syncing.")
+    static let badRequestErrorDescription = NSLocalizedString("prefrences.sync.invalid-login-description", value: "Some bookmarks or passwords are formatted incorrectly or too long and were not synced.", comment: "Description of incorrectly formatted data error when syncing.")
+    static let bookmarksLimitExceededAction = NSLocalizedString("prefrences.sync.bookmarks-limit-exceeded-action", value: "Manage Bookmarks", comment: "Button title for sync bookmarks limits exceeded warning to go to manage bookmarks")
+    static let credentialsLimitExceededAction = NSLocalizedString("prefrences.sync.credentials-limit-exceeded-action", value: "Manage passwords…", comment: "Button title for sync credentials limits exceeded warning to go to manage passwords")
+    static let syncPausedAlertTitle = NSLocalizedString("alert.sync-paused-title", value: "Sync is Paused", comment: "Title for alert shown when sync paused for an error")
+    static let syncInvalidLoginAlertDescription = NSLocalizedString("alert.sync-invalid-login-error-description", value: "Sync has been paused. If you want to continue syncing this device, reconnect using another device or your recovery code.", comment: "Description for alert shown when user logged off from sync")
+    static let syncTooManyRequestsAlertDescription = NSLocalizedString("alert.sync-too-many-requests-error-description", value: "Sync & Backup is temporarily unavailable.", comment: "Description for alert shown when sync error occurs because of too many requests")
+    static let syncBadRequestAlertDescription = NSLocalizedString("alert.sync-bad-data-error-description", value: "Some bookmarks or passwords are formatted incorrectly or too long and were not synced.", comment: "Description for alert shown when sync error occurs because of bad data")
+    static let syncErrorAlertAction  = NSLocalizedString("alert.sync-error-action", value: "Sync Settings", comment: "Sync error alert action button title, takes the user to the sync settings page.")
+    static let syncBookmarkPausedAlertTitle = NSLocalizedString("alert.sync-bookmarks-paused-title", value: "Bookmark Sync is Paused", comment: "Title for alert shown when sync bookmarks paused for too many items")
+    static let syncBookmarkPausedAlertDescription = NSLocalizedString("alert.sync-bookmarks-paused-description", value: "You've reached the maximum number of bookmarks. Please delete some bookmarks to resume sync.", comment: "Description for alert shown when sync bookmarks paused for too many items")
+    static let syncCredentialsPausedAlertTitle = NSLocalizedString("alert.sync-credentials-paused-title", value: "Password Sync is Paused", comment: "Title for alert shown when sync credentials paused for too many items")
+    static let syncCredentialsPausedAlertDescription = NSLocalizedString("alert.sync-credentials-paused-description", value: "You've reached the maximum number of passwords. Please delete some passwords to resume sync.", comment: "Description for alert shown when sync credentials paused for too many items")
+    static let syncPausedTitle = NSLocalizedString("alert.sync.warning.sync-paused", value: "Sync & Backup is Paused", comment: "Title of the warning message")
     static let unknownErrorTryAgainMessage = NSLocalizedString("error.unknown.try.again", value: "An unknown error has occurred", comment: "Generic error message on a dialog for when the cause is not known.")
-    static let syncBookmarkPausedAlertTitle = NSLocalizedString("alert.sync-bookmarks-paused-title", value: "Bookmarks Sync is Paused", comment: "Title for alert shown when sync bookmarks paused for too many items")
-    static let syncBookmarkPausedAlertDescription = NSLocalizedString("alert.sync-bookmarks-paused-description", value: "You have exceeded the bookmarks sync limit. Try deleting some bookmarks. Until this is resolved your bookmarks will not be backed up.", comment: "Description for alert shown when sync bookmarks paused for too many items")
-    static let syncCredentialsPausedAlertTitle = NSLocalizedString("alert.sync-credentials-paused-title", value: "Passwords Sync is Paused", comment: "Title for alert shown when sync credentials paused for too many items")
-    static let syncCredentialsPausedAlertDescription = NSLocalizedString("alert.sync-credentials-paused-description", value: "You have exceeded the passwords sync limit. Try deleting some passwords. Until this is resolved your passwords will not be backed up.", comment: "Description for alert shown when sync credentials paused for too many items")
     public static let syncPausedAlertOkButton = NSLocalizedString("alert.sync-paused-alert-ok-button", value: "OK", comment: "Confirmation button in alert")
     public static let syncPausedAlertLearnMoreButton = NSLocalizedString("alert.sync-paused-alert-learn-more-button", value: "Learn More", comment: "Learn more button in alert")
     public static let syncErrorAlertTitle = NSLocalizedString("alert.sync-error", value: "Sync & Backup Error", comment: "Title for sync error alert")
@@ -790,7 +831,6 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let unableToDeleteDataDescription = NSLocalizedString("alert.unable-to-delete-data-description", value: "Unable to delete data on the server.", comment: "Description for unable to delete data error")
     public static let unableToRemoveDeviceDescription = NSLocalizedString("alert.unable-to-remove-device-description", value: "Unable to remove this device from Sync & Backup.", comment: "Description for unable to remove device error")
     public static let unableToCreateRecoveryPDF = NSLocalizedString("alert.unable-to-create-recovery-pdf-description", value: "Unable to create the recovery PDF.", comment: "Description for unable to create recovery pdf error")
-    static let syncPausedTitle = NSLocalizedString("sync.warning.sync.paused", value: "Sync & Backup is Paused", comment: "Title of the warning message")
     static let syncUnavailableMessage = NSLocalizedString("sync.warning.data.syncing.disabled", value: "Sorry, but Sync & Backup is currently unavailable. Please try again later.", comment: "Data syncing unavailable warning message")
     static let syncUnavailableMessageUpgradeRequired = NSLocalizedString("sync.warning.data.syncing.disabled.upgrade.required", value: "Sorry, but Sync & Backup is no longer available in this app version. Please update DuckDuckGo to the latest version to continue.", comment: "Data syncing unavailable warning message")
 
@@ -961,7 +1001,12 @@ But if you *do* want a peek under the hood, you can find more information about 
     
     public static let settingsPProActivationPendingTitle = NSLocalizedString("settings.subscription.activation.pending.title", value: "Your Subscription is Being Activated", comment: "Subscription activation pending title")
     public static let settingsPProActivationPendingDescription = NSLocalizedString("settings.subscription.activation.pending.description", value: "This is taking longer than usual, please check back later.", comment: "Subscription activation pending description")
+    
+    // Expired Subscription
+    public static let settingsPProSubscriptionExpiredTitle = NSLocalizedString("settings.subscription.expired.title", value: "Your Privacy Pro subscription expired", comment: "Subscription expired tittle message")
+    public static let settingsPProSubscribeAgain = NSLocalizedString("settings.subscription.expired.comment", value: "Subscribe again to continue using Privacy Pro", comment: "Subscription expired description")
 
+    
     // Customize Section
     public static let settingsCustomizeSection = NSLocalizedString("settings.customize", value: "Customize", comment: "Settings title for the customize section")
     public static let settingsKeyboard = NSLocalizedString("settings.keyboard", value: "Keyboard", comment: "Settings screen cell for Keyboard")
@@ -1008,6 +1053,13 @@ But if you *do* want a peek under the hood, you can find more information about 
                                           value: "Your subscription %@ on %@",
                                           comment: "Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)'")
         return String(format: localized, status, expiration)
+    }
+    
+    static func expiredSubscriptionInfo(expiration: String) -> String {
+        let localized = NSLocalizedString("subscription.subscription.expired.caption",
+                                          value: "Your subscription expired on %@",
+                                          comment: "Subscription Expired Data. This reads as 'Your subscription expired on (date)'")
+        return String(format: localized, expiration)
     }
     
     public static let subscriptionRenews = NSLocalizedString("subscription.renews", value: "renews", comment: "text for renewal string")

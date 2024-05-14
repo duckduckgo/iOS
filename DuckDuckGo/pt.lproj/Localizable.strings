@@ -133,18 +133,6 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Os marcadores existentes não serão duplicados.";
 
-/* Description for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-description" = "Excedeste o limite de sincronização de favoritos. Experimenta eliminar alguns favoritos. Não é possível fazer uma cópia de segurança dos favoritos até este problema estar resolvido.";
-
-/* Title for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-title" = "A sincronização de favoritos está em pausa";
-
-/* Description for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-description" = "Excedeste o limite de sincronização de palavras-passe. Experimenta eliminar algumas palavras-passe. Não é possível fazer uma cópia de segurança das palavras-passe até este problema estar resolvido.";
-
-/* Title for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-title" = "A sincronização de palavras-passe está em pausa";
-
 /* Title for sync error alert */
 "alert.sync-error" = "Erro de sincronização e cópia de segurança";
 
@@ -246,6 +234,42 @@
 
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Ocultar palavra-passe";
+
+/* Button label to get link to download the desktop browser */
+"autofill.import.passwords.get-browser-button" = "Obter navegador para computador";
+
+/* Step 1 for instructions to import passwords */
+"autofill.import.passwords.instructions.step1" = "Abre o DuckDuckGo no Mac ou Windows";
+
+/* Step 2 for instructions to import passwords. This reads as 'Go to Settings > Passwords' */
+"autofill.import.passwords.instructions.step2" = "Acede a %1$@ > %2$@";
+
+/* second parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.passwords" = "Palavras-passe";
+
+/* first parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.settings" = "Definições";
+
+/* Step 3 for instructions to import passwords. This reads as 'Select Import Passwords and follow the steps' */
+"autofill.import.passwords.instructions.step3" = "Seleciona %@ e segue os passos para importar";
+
+/* Parameter for autofill.import.passwords.instructions.step3 */
+"autofill.import.passwords.instructions.step3.import" = "Importar palavras-passe...";
+
+/* Step 4 for instructions to import passwords: Once imported on your computer you can set up sync on this iPhone|iPad|device */
+"autofill.import.passwords.instructions.step4" = "Depois de importares as palavras-passe, podes configurar a sincronização neste %@";
+
+/* Title for section with instructions to import passwords */
+"autofill.import.passwords.instructions.title" = "Importar do navegador para computadores:";
+
+/* Subtitle for screen to import passwords */
+"autofill.import.passwords.subtitle" = "Importa palavras-passe na versão para computadores do navegador DuckDuckGo e sincroniza-as entre dispositivos.";
+
+/* Button label to sync passwords with desktop browser */
+"autofill.import.passwords.sync-button" = "Sincronizar com computador";
+
+/* Title for screen to import passwords */
+"autofill.import.passwords.title" = "Como importar palavras-passe";
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Desabilitar (fora)";
@@ -349,8 +373,11 @@
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Nome de utilizador";
 
-/* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "As palavras-passe são armazenadas com segurança no teu dispositivo.";
+/* Title for button to Import Passwords when autofill has no items */
+"autofill.logins.empty-view.button.title" = "Importar palavras-passe";
+
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle" = "As palavras-passe de outros navegadores ou aplicações podem ser importadas com a versão para computadores do navegador DuckDuckGo.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Ainda não há palavras-passe guardadas";
@@ -369,6 +396,9 @@
 
 /* Title for a toggle that enables autofill */
 "autofill.logins.list.enable" = "Guardar e preencher palavras-passe automaticamente";
+
+/* Footer label displayed below table section with option to enable autofill */
+"autofill.logins.list.enable.footer" = "As palavras-passe são armazenadas com segurança no teu dispositivo.";
 
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Palavra-passe para %@ eliminada";
@@ -604,14 +634,11 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Importe um ficheiro HTML de marcadores de outro navegador ou exporte os seus marcadores existentes.";
 
-/* No comment provided by engineer. */
-"bucket: %@" = "grupo: %@";
-
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Enviar sempre relatórios de falhas";
 
 /* Crash Report hide details button title */
-"crash.report.dialog.hide.details" = "Ocultar";
+"crash.report.dialog.hide.details" = "Hide";
 
 /* Crash Report dialog message */
 "crash.report.dialog.message" = "Os relatórios de falhas ajudam a DuckDuckGo a diagnosticar problemas e a melhorar os nossos produtos. Não contêm nenhuma informação pessoal identificável.";
@@ -711,6 +738,15 @@
 
 /* No comment provided by engineer. */
 "Debug" = "Debug";
+
+/* Default string used if users device is not iPhone or iPad */
+"device.type.default" = "dispositivo";
+
+/* Device type is iPhone */
+"device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"device.type.pad" = "iPad";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Desativado";
@@ -849,9 +885,6 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Nenhuma correspondência encontrada";
-
-/* No comment provided by engineer. */
-"Error" = "Erro";
 
 /* Button title to Sign In */
 "error.email-protection-sign-in.action" = "Iniciar sessão";
@@ -1098,6 +1131,21 @@
 
 /* No comment provided by engineer. */
 "fireButtonAnimation.waterSwirl.name" = "Remoinho";
+
+/* Description text above the Share Link button */
+"get.browser.on-your-desktop-go-to" = "No teu computador, acede a:";
+
+/* Title for the Share Download Link button */
+"get.browser.share-link" = "Partilhar link de transferência";
+
+/* Message displayed in the share action when sharing via email */
+"get.browser.share-link.message" = "Pesquisa em privado e bloqueia rastreadores com o navegador para computadores DuckDuckGo. Visita este link no teu computador para transferires hoje.";
+
+/* Title displayed in the share action */
+"get.browser.share-link.title" = "Obtém o navegador DuckDuckGo para Mac ou Windows";
+
+/* Title for the get desktop browser feature */
+"get.browser.title" = "Obtém o DuckDuckGo para Mac ou Windows";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Adicione o DuckDuckGo ao seu ecrã inicial!";
@@ -1507,9 +1555,6 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
-/* No comment provided by engineer. */
-"Ok" = "OK";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Cookies geridos";
 
@@ -1548,9 +1593,6 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Não encontramos a aplicação necessária para abrir esse link";
-
-/* No comment provided by engineer. */
-"Please enter which app on your device is broken." = "Indica que aplicação no teu dispositivo está com problemas.";
 
 /* Activate button */
 "pm.activate" = "Reactivate";
@@ -1654,6 +1696,9 @@
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
 "settings.address.full.url" = "Mostrar endereço completo do site";
+
+/* Label describing a feature which is turned on always */
+"settings.always.on" = "Always On";
 
 /* Settings screen appearance section title */
 "settings.appearance" = "Aparência";
@@ -1761,6 +1806,12 @@
 /* The name of a settings category listing next steps */
 "settings.next.steps" = "Passos seguintes";
 
+/* Label describing a feature which is turned off */
+"settings.off" = "Off";
+
+/* Label describing a feature which is turned on */
+"settings.on" = "On";
+
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
@@ -1805,6 +1856,12 @@
 
 /* I have a Subscription button text for privacy pro */
 "settings.subscription.existing.subscription" = "I Have a Subscription";
+
+/* Subscription expired description */
+"settings.subscription.expired.comment" = "Subscribe again to continue using Privacy Pro";
+
+/* Subscription expired tittle message */
+"settings.subscription.expired.title" = "Your Privacy Pro subscription expired";
 
 /* Privacy pro features list */
 "settings.subscription.features" = " • VPN\n • Personal Information Removal\n • Identity Theft Restoration";
@@ -2109,6 +2166,9 @@
 /* Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)' */
 "subscription.subscription.active.caption" = "Your subscription %1$@ on %2$@";
 
+/* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
+"subscription.subscription.expired.caption" = "Your subscription expired on %@";
+
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
 
@@ -2150,9 +2210,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Lamentamos, mas a sincronização e cópia de segurança já não estão disponíveis nesta versão da aplicação. Atualiza o DuckDuckGo para a versão mais recente para continuar.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "A sincronização e a cópia de segurança estão em pausa";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Fechar o separador inicial";

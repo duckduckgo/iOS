@@ -55,17 +55,24 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     }
 
     var cancellables = Set<AnyCancellable>()
+    let syncPausedStateManager: any SyncPausedStateManaging
+    var viewModel: SyncSettingsViewModel?
+
+    var onConfirmSyncDisable: (() -> Void)?
+    var onConfirmAndDeleteAllData: (() -> Void)?
 
     // For some reason, on iOS 14, the viewDidLoad wasn't getting called so do some setup here
     init(
         syncService: DDGSyncing,
         syncBookmarksAdapter: SyncBookmarksAdapter,
         syncCredentialsAdapter: SyncCredentialsAdapter,
-        appSettings: AppSettings = AppDependencyProvider.shared.appSettings
+        appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
+        syncPausedStateManager: any SyncPausedStateManaging
     ) {
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
         self.syncCredentialsAdapter = syncCredentialsAdapter
+        self.syncPausedStateManager = syncPausedStateManager
 
         let viewModel = SyncSettingsViewModel(
             isOnDevEnvironment: { syncService.serverEnvironment == .development },
@@ -74,15 +81,14 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
                 UserDefaults.standard.set(ServerEnvironment.production.description, forKey: UserDefaultsWrapper<String>.Key.syncEnvironment.rawValue)
             }
         )
+        self.viewModel = viewModel
 
         super.init(rootView: SyncSettingsView(model: viewModel))
 
         setUpFaviconsFetcherSwitch(viewModel)
         setUpFavoritesDisplayModeSwitch(viewModel, appSettings)
-        setUpSyncPaused(viewModel, appSettings)
-        if DDGSync.isFieldValidationEnabled {
-            setUpSyncInvalidObjectsInfo(viewModel)
-        }
+        setUpSyncPaused(viewModel, syncPausedStateManager: syncPausedStateManager)
+        setUpSyncInvalidObjectsInfo(viewModel)
         setUpSyncFeatureFlags(viewModel)
         refreshForState(syncService.authState)
 
@@ -185,16 +191,20 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
             .store(in: &cancellables)
     }
 
-    private func setUpSyncPaused(_ viewModel: SyncSettingsViewModel, _ appSettings: AppSettings) {
-        viewModel.isSyncBookmarksPaused = appSettings.isSyncBookmarksPaused
-        viewModel.isSyncCredentialsPaused = appSettings.isSyncCredentialsPaused
-        NotificationCenter.default.publisher(for: AppUserDefaults.Notifications.syncPausedStateChanged)
+    private func setUpSyncPaused(_ viewModel: SyncSettingsViewModel, syncPausedStateManager: any SyncPausedStateManaging) {
+        updateSyncPausedState(viewModel, syncPausedStateManager: syncPausedStateManager)
+        syncPausedStateManager.syncPausedChangedPublisher
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-                viewModel.isSyncBookmarksPaused = appSettings.isSyncBookmarksPaused
-                viewModel.isSyncCredentialsPaused = appSettings.isSyncCredentialsPaused
+            .sink { [weak self] _ in
+                self?.updateSyncPausedState(viewModel, syncPausedStateManager: syncPausedStateManager)
             }
             .store(in: &cancellables)
+    }
+
+    private func updateSyncPausedState(_ viewModel: SyncSettingsViewModel, syncPausedStateManager: any SyncPausedStateManaging) {
+        viewModel.isSyncBookmarksPaused = syncPausedStateManager.isSyncBookmarksPaused
+        viewModel.isSyncCredentialsPaused = syncPausedStateManager.isSyncCredentialsPaused
+        viewModel.isSyncPaused = syncPausedStateManager.isSyncPaused
     }
 
     private func setUpSyncInvalidObjectsInfo(_ viewModel: SyncSettingsViewModel) {

@@ -81,17 +81,20 @@ class MainViewController: UIViewController {
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
     
-    var tabManager: TabManager!
-    let previewsSource = TabPreviewsSource()
+    let tabManager: TabManager
+    let previewsSource: TabPreviewsSource
     let appSettings: AppSettings
     private var launchTabObserver: LaunchTabNotification.Observer?
     
+    var doRefreshAfterClear = true
+
     let bookmarksDatabase: CoreDataDatabase
     private weak var bookmarksDatabaseCleaner: BookmarkDatabaseCleaner?
     private var favoritesViewModel: FavoritesListInteracting
     let syncService: DDGSyncing
     let syncDataProviders: SyncDataProviders
-    
+    let syncPausedStateManager: any SyncPausedStateManaging
+
     @UserDefaultsWrapper(key: .syncDidShowSyncPausedByFeatureFlagAlert, defaultValue: false)
     private var syncDidShowSyncPausedByFeatureFlagAlert: Bool
     
@@ -132,7 +135,7 @@ class MainViewController: UIViewController {
     
     lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
-        return tabManager?.current(createIfNeeded: false)
+        return tabManager.current(createIfNeeded: false)
     }
     
     var searchBarRect: CGRect {
@@ -158,14 +161,17 @@ class MainViewController: UIViewController {
     
     var historyManager: HistoryManager
     var viewCoordinator: MainViewCoordinator!
-    
+
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
         historyManager: HistoryManager,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
-        appSettings: AppSettings
+        appSettings: AppSettings,
+        previewsSource: TabPreviewsSource,
+        tabsModel: TabsModel,
+        syncPausedStateManager: any SyncPausedStateManaging
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -176,8 +182,18 @@ class MainViewController: UIViewController {
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         self.appSettings = appSettings
 
-        super.init(nibName: nil, bundle: nil)
+        self.previewsSource = previewsSource
 
+        self.tabManager = TabManager(model: tabsModel,
+                                     previewsSource: previewsSource,
+                                     bookmarksDatabase: bookmarksDatabase,
+                                     historyManager: historyManager,
+                                     syncService: syncService)
+        self.syncPausedStateManager = syncPausedStateManager
+
+        super.init(nibName: nil, bundle: nil)
+        
+        tabManager.delegate = self
         bindSyncService()
     }
 
@@ -230,7 +246,6 @@ class MainViewController: UIViewController {
         initTabButton()
         initMenuButton()
         initBookmarksButton()
-        configureTabManager()
         loadInitialView()
         previewsSource.prepare()
         addLaunchTabNotificationObserver()
@@ -244,7 +259,7 @@ class MainViewController: UIViewController {
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
         registerForKeyboardNotifications()
-        registerForSyncPausedNotifications()
+        registerForSyncFeatureFlagsUpdates()
 
         decorate()
 
@@ -430,17 +445,7 @@ class MainViewController: UIViewController {
         keyboardShowing = false
     }
 
-    private func registerForSyncPausedNotifications() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(showSyncPausedError),
-            name: SyncBookmarksAdapter.bookmarksSyncLimitReached,
-            object: nil)
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(showSyncPausedError),
-            name: SyncCredentialsAdapter.credentialsSyncLimitReached,
-            object: nil)
+    private func registerForSyncFeatureFlagsUpdates() {
         syncFeatureFlagsCancellable = syncService.featureFlagsPublisher
             .dropFirst()
             .map { $0.contains(.dataSyncing) }
@@ -456,33 +461,6 @@ class MainViewController: UIViewController {
                     self.syncDidShowSyncPausedByFeatureFlagAlert = true
                 }
             }
-    }
-
-    @objc private func showSyncPausedError(_ notification: Notification) {
-        Task {
-            await MainActor.run {
-                var title = UserText.syncBookmarkPausedAlertTitle
-                var description = UserText.syncBookmarkPausedAlertDescription
-                if notification.name == SyncCredentialsAdapter.credentialsSyncLimitReached {
-                    title = UserText.syncCredentialsPausedAlertTitle
-                    description = UserText.syncCredentialsPausedAlertDescription
-                }
-                if self.presentedViewController is SyncSettingsViewController {
-                    return
-                }
-                self.presentedViewController?.dismiss(animated: true)
-                let alert = UIAlertController(title: title,
-                                              message: description,
-                                              preferredStyle: .alert)
-                let learnMoreAction = UIAlertAction(title: UserText.syncPausedAlertLearnMoreButton, style: .default) { _ in
-                    self.segueToSettingsSync()
-                }
-                let okAction = UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .cancel)
-                alert.addAction(learnMoreAction)
-                alert.addAction(okAction)
-                self.present(alert, animated: true)
-            }
-        }
     }
 
     private func showSyncPausedByFeatureFlagAlert(upgradeRequired: Bool = false) {
@@ -683,40 +661,6 @@ class MainViewController: UIViewController {
         dismissOmniBar()
     }
 
-    private func configureTabManager() {
-
-        let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
-
-        let tabsModel: TabsModel
-        if let settings = AutoClearSettingsModel(settings: appSettings) {
-            // This needs to be refactored so that tabs model is injected and cleared before view did load,
-            //  but for now, ensure this happens in the right order by clearing data here too, if needed.
-            tabsModel = TabsModel(desktop: isPadDevice)
-            tabsModel.save()
-            previewsSource.removeAllPreviews()
-
-            if settings.action.contains(.clearData) {
-                Task { @MainActor in
-                    await forgetData()
-                }
-            }
-        } else {
-            if let storedModel = TabsModel.get() {
-                // Save new model in case of migration
-                storedModel.save()
-                tabsModel = storedModel
-            } else {
-                tabsModel = TabsModel(desktop: isPadDevice)
-            }
-        }
-        tabManager = TabManager(model: tabsModel,
-                                previewsSource: previewsSource,
-                                bookmarksDatabase: bookmarksDatabase,
-                                historyManager: historyManager,
-                                syncService: syncService,
-                                delegate: self)
-    }
-
     private func addLaunchTabNotificationObserver() {
         launchTabObserver = LaunchTabNotification.addObserver(handler: { [weak self] urlString in
             guard let self = self else { return }
@@ -865,6 +809,7 @@ class MainViewController: UIViewController {
                 selectTab(existing)
                 return
             } else if reuseExisting, let existing = tabManager.firstHomeTab() {
+                doRefreshAfterClear = false
                 tabManager.selectTab(existing)
                 loadUrl(url, fromExternalLink: fromExternalLink)
             } else {
@@ -1896,7 +1841,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             loadUrl(url)
         case .historyEntry(_, url: let url, _):
             loadUrl(url)
-        case .unknown(value: let value):
+        case .unknown(value: let value), .internalPage(title: let value, url: _):
             assertionFailure("Unknown suggestion: \(value)")
         }
 
@@ -1917,7 +1862,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             viewCoordinator.omniBar.textField.text = title
         case .historyEntry(title: let title, _, _):
             viewCoordinator.omniBar.textField.text = title
-        case .unknown(value: let value):
+        case .unknown(value: let value), .internalPage(title: let value, url: _):
             assertionFailure("Unknown suggestion: \(value)")
         }
 
@@ -1943,7 +1888,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             if (title ?? url.absoluteString).hasPrefix(query) {
                 viewCoordinator.omniBar.selectTextToEnd(query.count)
             }
-        case .unknown(value: let value):
+        case .unknown(value: let value), .internalPage(title: let value, url: _):
             assertionFailure("Unknown suggestion: \(value)")
         }
     }
@@ -2039,7 +1984,7 @@ extension MainViewController: TabDelegate {
         if currentTab == tab {
             refreshControls()
         }
-        tabManager?.save()
+        tabManager.save()
         tabsBarController?.refresh(tabsModel: tabManager.model)
         // note: model in swipeTabsCoordinator doesn't need to be updated here
         // https://app.asana.com/0/414235014887631/1206847376910045/f
@@ -2288,7 +2233,7 @@ extension MainViewController: TabSwitcherButtonDelegate {
     }
 
     func showTabSwitcher() {
-        guard let currentTab = currentTab ?? tabManager?.current(createIfNeeded: true) else {
+        guard currentTab ?? tabManager.current(createIfNeeded: true) != nil else {
             fatalError("Unable to get current tab")
         }
 
@@ -2345,6 +2290,10 @@ extension MainViewController: AutoClearWorker {
     }
 
     func refreshUIAfterClear() {
+        guard doRefreshAfterClear else {
+            doRefreshAfterClear = true
+            return
+        }
         showBars()
         attachHomeScreen()
         tabsBarController?.refresh(tabsModel: tabManager.model)
@@ -2357,6 +2306,7 @@ extension MainViewController: AutoClearWorker {
         refreshUIAfterClear()
     }
 
+    @MainActor
     func forgetData() async {
         guard !clearInProgress else {
             assertionFailure("Shouldn't get called multiple times")

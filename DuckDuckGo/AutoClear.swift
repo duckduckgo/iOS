@@ -33,18 +33,19 @@ class AutoClear {
     private let worker: AutoClearWorker
     private var timestamp: TimeInterval?
     
-    private lazy var appSettings = AppDependencyProvider.shared.appSettings
-    
+    private let appSettings: AppSettings
+
     var isClearingEnabled: Bool {
         return AutoClearSettingsModel(settings: appSettings) != nil
     }
     
-    init(worker: AutoClearWorker) {
+    init(worker: AutoClearWorker, appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
         self.worker = worker
+        self.appSettings = appSettings
     }
     
     @MainActor
-    private func clearData() async {
+    func clearDataIfEnabled(launching: Bool = false) async {
         guard let settings = AutoClearSettingsModel(settings: appSettings) else { return }
         
         if settings.action.contains(.clearTabs) {
@@ -55,11 +56,13 @@ class AutoClear {
             await worker.forgetData()
         }
 
-        worker.clearDataFinished(self)
+        if !launching {
+            worker.clearDataFinished(self)
+        }
     }
     
     /// Note: function is parametrised because of tests.
-    func applicationDidEnterBackground(_ time: TimeInterval = Date().timeIntervalSince1970) {
+    func startClearingTimer(_ time: TimeInterval = Date().timeIntervalSince1970) {
         timestamp = time
     }
     
@@ -81,13 +84,13 @@ class AutoClear {
     }
     
     @MainActor
-    func applicationWillMoveToForeground() async {
+    func clearDataIfEnabledAndTimeExpired() async {
         guard isClearingEnabled,
             let timestamp = timestamp,
             shouldClearData(elapsedTime: Date().timeIntervalSince1970 - timestamp) else { return }
         
-        worker.clearNavigationStack()
-        await clearData()
         self.timestamp = nil
+        worker.clearNavigationStack()
+        await clearDataIfEnabled()
     }
 }

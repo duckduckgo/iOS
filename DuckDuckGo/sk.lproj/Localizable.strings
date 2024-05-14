@@ -133,18 +133,6 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existujúce záložky sa nebudú duplikovať.";
 
-/* Description for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-description" = "Prekročili ste limit na synchronizáciu záložiek. Skúste niektoré záložky odstrániť. Kým to nevyriešite, vaše záložky sa nebudú zálohovať.";
-
-/* Title for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-title" = "Synchronizácia záložiek je pozastavená.";
-
-/* Description for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-description" = "Prekročili ste limit na synchronizáciu hesiel. Skúste niektoré heslá odstrániť. Kým to nevyriešite, vaše heslá sa nebudú zálohovať.";
-
-/* Title for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-title" = "Synchronizácia hesiel je pozastavená.";
-
 /* Title for sync error alert */
 "alert.sync-error" = "Chyba synchronizácie a zálohovania";
 
@@ -246,6 +234,42 @@
 
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Skryť heslo";
+
+/* Button label to get link to download the desktop browser */
+"autofill.import.passwords.get-browser-button" = "Získajte prehliadač pre desktop PC";
+
+/* Step 1 for instructions to import passwords */
+"autofill.import.passwords.instructions.step1" = "Otvoriť DuckDuckGo na Macu alebo v systéme Windows";
+
+/* Step 2 for instructions to import passwords. This reads as 'Go to Settings > Passwords' */
+"autofill.import.passwords.instructions.step2" = "Prejsť na %1$@ > %2$@";
+
+/* second parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.passwords" = "Heslo";
+
+/* first parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.settings" = "Nastavenia";
+
+/* Step 3 for instructions to import passwords. This reads as 'Select Import Passwords and follow the steps' */
+"autofill.import.passwords.instructions.step3" = "Vyberte %@ a postupujte podľa pokynov na importovanie";
+
+/* Parameter for autofill.import.passwords.instructions.step3 */
+"autofill.import.passwords.instructions.step3.import" = "Importovať heslá...";
+
+/* Step 4 for instructions to import passwords: Once imported on your computer you can set up sync on this iPhone|iPad|device */
+"autofill.import.passwords.instructions.step4" = "Po importovaní do počítača môžete nastaviť synchronizáciu na tomto %@";
+
+/* Title for section with instructions to import passwords */
+"autofill.import.passwords.instructions.title" = "Importovať z prehliadača na počítači:";
+
+/* Subtitle for screen to import passwords */
+"autofill.import.passwords.subtitle" = "Heslá môžete importovať do počítačovej verzie prehliadača DuckDuckGo a potom ich synchronizovať medzi zariadeniami.";
+
+/* Button label to sync passwords with desktop browser */
+"autofill.import.passwords.sync-button" = "Synchronizácia s počítačom";
+
+/* Title for screen to import passwords */
+"autofill.import.passwords.title" = "Ako importovať heslá";
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Zakázať";
@@ -349,8 +373,11 @@
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Používateľské meno";
 
-/* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Heslá sú bezpečne uložené vo vašom zariadení.";
+/* Title for button to Import Passwords when autofill has no items */
+"autofill.logins.empty-view.button.title" = "Importovať heslá";
+
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle" = "Heslá z iných prehliadačov alebo aplikácií možno importovať pomocou verzie prehliadača DuckDuckGo pre počítače.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Zatiaľ nie sú uložené žiadne heslá";
@@ -369,6 +396,9 @@
 
 /* Title for a toggle that enables autofill */
 "autofill.logins.list.enable" = "Ukladať a automaticky dopĺňať heslá";
+
+/* Footer label displayed below table section with option to enable autofill */
+"autofill.logins.list.enable.footer" = "Heslá sú bezpečne uložené vo vašom zariadení.";
 
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Heslo pre %@ bolo odstránené";
@@ -604,14 +634,11 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Importujte súbor HTML so záložkami z iného prehliadača alebo exportujte svoje existujúce záložky.";
 
-/* No comment provided by engineer. */
-"bucket: %@" = "vedro: %@";
-
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Vždy odosielať správy o zlyhaní";
 
 /* Crash Report hide details button title */
-"crash.report.dialog.hide.details" = "Skryť";
+"crash.report.dialog.hide.details" = "Hide";
 
 /* Crash Report dialog message */
 "crash.report.dialog.message" = "Hlásenia o zlyhaniach pomáhajú spoločnosti DuckDuckGo diagnostikovať problémy a zlepšovať naše produkty. Neobsahujú žiadne osobné identifikačné údaje.";
@@ -711,6 +738,15 @@
 
 /* No comment provided by engineer. */
 "Debug" = "Debug";
+
+/* Default string used if users device is not iPhone or iPad */
+"device.type.default" = "zariadenie";
+
+/* Device type is iPhone */
+"device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"device.type.pad" = "iPad";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Zakázané";
@@ -849,9 +885,6 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Nenašli sa žiadne zhody";
-
-/* No comment provided by engineer. */
-"Error" = "Chyba";
 
 /* Button title to Sign In */
 "error.email-protection-sign-in.action" = "Prihlásiť sa";
@@ -1098,6 +1131,21 @@
 
 /* No comment provided by engineer. */
 "fireButtonAnimation.waterSwirl.name" = "Vodný vír";
+
+/* Description text above the Share Link button */
+"get.browser.on-your-desktop-go-to" = "V počítači prejdite na:";
+
+/* Title for the Share Download Link button */
+"get.browser.share-link" = "Zdieľať odkaz na stiahnutie";
+
+/* Message displayed in the share action when sharing via email */
+"get.browser.share-link.message" = "Vyhľadávajte súkromne a blokujte sledovacie zariadenia pomocou prehliadača DuckDuckGo pre počítače. Navštívte tento odkaz vo svojom počítači a stiahnite si ho ešte dnes.";
+
+/* Title displayed in the share action */
+"get.browser.share-link.title" = "Získajte prehliadač DuckDuckGo pre Mac alebo Windows";
+
+/* Title for the get desktop browser feature */
+"get.browser.title" = "Získajte DuckDuckGo pre Mac alebo Windows";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Pridajte DuckDuckGo na svoju domovskú obrazovku!";
@@ -1507,9 +1555,6 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
-/* No comment provided by engineer. */
-"Ok" = "OK";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Spravované súbory cookie";
 
@@ -1548,9 +1593,6 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Aplikácia potrebná na otvorenie odkazu sa nenašla";
-
-/* No comment provided by engineer. */
-"Please enter which app on your device is broken." = "Zadajte, ktorá aplikácia vo vašom zariadení je nefunkčná.";
 
 /* Activate button */
 "pm.activate" = "Reactivate";
@@ -1654,6 +1696,9 @@
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
 "settings.address.full.url" = "Zobraziť úplnú adresu lokality";
+
+/* Label describing a feature which is turned on always */
+"settings.always.on" = "Always On";
 
 /* Settings screen appearance section title */
 "settings.appearance" = "Vzhľad";
@@ -1761,6 +1806,12 @@
 /* The name of a settings category listing next steps */
 "settings.next.steps" = "Ďalšie kroky";
 
+/* Label describing a feature which is turned off */
+"settings.off" = "Off";
+
+/* Label describing a feature which is turned on */
+"settings.on" = "On";
+
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
@@ -1805,6 +1856,12 @@
 
 /* I have a Subscription button text for privacy pro */
 "settings.subscription.existing.subscription" = "I Have a Subscription";
+
+/* Subscription expired description */
+"settings.subscription.expired.comment" = "Subscribe again to continue using Privacy Pro";
+
+/* Subscription expired tittle message */
+"settings.subscription.expired.title" = "Your Privacy Pro subscription expired";
 
 /* Privacy pro features list */
 "settings.subscription.features" = " • VPN\n • Personal Information Removal\n • Identity Theft Restoration";
@@ -2109,6 +2166,9 @@
 /* Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)' */
 "subscription.subscription.active.caption" = "Your subscription %1$@ on %2$@";
 
+/* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
+"subscription.subscription.expired.caption" = "Your subscription expired on %@";
+
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
 
@@ -2150,9 +2210,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Je nám ľúto, ale služba Synchronizácia a zálohovanie už nie je v tejto verzii aplikácie k dispozícii. Ak chcete pokračovať, aktualizujte DuckDuckGo na najnovšiu verziu.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Synchronizácia a zálohovanie sú pozastavené";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Zatvorte kartu domovskej stránky";

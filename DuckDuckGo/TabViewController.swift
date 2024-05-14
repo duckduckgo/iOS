@@ -1186,7 +1186,7 @@ extension TabViewController: WKNavigationDelegate {
 
 #if NETWORK_PROTECTION
         if webView.url?.isDuckDuckGoSearch == true, case .connected = netPConnectionStatus {
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnabledOnSearch)
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnabledOnSearch, includedParameters: [.appVersion, .atb])
         }
 #endif
     }
@@ -1199,15 +1199,15 @@ extension TabViewController: WKNavigationDelegate {
             let size = CGSize(width: webView.frame.size.width,
                               height: webView.frame.size.height - webView.scrollView.contentInset.top - webView.scrollView.contentInset.bottom)
             
-            UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
-            UIGraphicsGetCurrentContext()?.translateBy(x: 0, y: -webView.scrollView.contentInset.top)
-            webView.drawHierarchy(in: webView.bounds, afterScreenUpdates: true)
-            if let jsAlertController = self?.jsAlertController {
-                jsAlertController.view.drawHierarchy(in: jsAlertController.view.bounds,
-                                                     afterScreenUpdates: false)
+            let renderer = UIGraphicsImageRenderer(size: size)
+            let image = renderer.image { context in
+                context.cgContext.translateBy(x: 0, y: -webView.scrollView.contentInset.top)
+                webView.drawHierarchy(in: webView.bounds, afterScreenUpdates: true)
+                if let jsAlertController = self?.jsAlertController {
+                    jsAlertController.view.drawHierarchy(in: jsAlertController.view.bounds, afterScreenUpdates: false)
+                }
             }
-            let image = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
+
             completion(image)
         }
     }
@@ -1398,7 +1398,21 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
+
+        if #available(iOS 17.4, *),
+            navigationAction.request.url?.scheme == "marketplace-kit",
+            internalUserDecider.isInternalUser {
+
+            decisionHandler(.allow)
+            let urlString = navigationAction.request.url?.absoluteString ?? "<no url>"
+            ActionMessageView.present(message: "Marketplace Kit URL detected",
+                                      actionTitle: "COPY",
+                                      presentationLocation: .withoutBottomBar, onAction: {
+                UIPasteboard.general.string = urlString
+            })
+            return
+        }
+
         if let url = navigationAction.request.url {
             if !tabURLInterceptor.allowsNavigatingTo(url: url) {
                 decisionHandler(.cancel)
@@ -2407,6 +2421,10 @@ extension TabViewController: SecureVaultManagerDelegate {
     
     func secureVaultError(_ error: SecureStorageError) {
         SecureVaultReporter.shared.secureVaultError(error)
+    }
+
+    func secureVaultKeyStoreEvent(_ event: SecureStorageKeyStoreEvent) {
+        SecureVaultReporter.shared.secureVaultKeyStoreEvent(event)
     }
 
     func secureVaultManagerIsEnabledStatus(_ manager: SecureVaultManager, forType type: AutofillType?) -> Bool {

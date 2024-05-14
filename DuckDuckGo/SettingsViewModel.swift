@@ -43,12 +43,18 @@ final class SettingsViewModel: ObservableObject {
     private var legacyViewProvider: SettingsLegacyViewProvider
     private lazy var versionProvider: AppVersion = AppVersion.shared
     private let voiceSearchHelper: VoiceSearchHelperProtocol
+    private let syncPausedStateManager: any SyncPausedStateManaging
     var emailManager: EmailManager { EmailManager() }
 
     // Subscription Dependencies
-    private var accountManager: AccountManager
-    private var signOutObserver: Any?
+    private var subscriptionAccountManager: AccountManager
+    private var subscriptionSignOutObserver: Any?
     
+    // Used to cache the lasts subscription state for up to a week
+    private var subscriptionStateCache = UserDefaultsCache<SettingsState.Subscription>(
+        key: UserDefaultsCacheKey.subscriptionState,
+        settings: UserDefaultsCacheSettings(defaultExpirationInterval: .days(7)))
+
 #if NETWORK_PROTECTION
     private let connectionObserver = ConnectionStatusObserverThroughSession()
 #endif
@@ -387,19 +393,21 @@ final class SettingsViewModel: ObservableObject {
          accountManager: AccountManager,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
-         deepLink: SettingsDeepLinkSection? = nil) {
+         deepLink: SettingsDeepLinkSection? = nil,
+         syncPausedStateManager: any SyncPausedStateManaging) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
-        self.accountManager = accountManager
+        self.subscriptionAccountManager = accountManager
         self.voiceSearchHelper = voiceSearchHelper
         self.deepLinkTarget = deepLink
-        
+        self.syncPausedStateManager = syncPausedStateManager
+
         setupNotificationObservers()
         autocompleteSubtitle = variantManager.isSupported(feature: .history) ? UserText.settingsAutocompleteSubtitle : nil
     }
     
     deinit {
-        signOutObserver = nil
+        subscriptionSignOutObserver = nil
     }
 }
 // swiftlint:enable type_body_length
@@ -446,22 +454,23 @@ extension SettingsViewModel {
     private func getNetworkProtectionState() -> SettingsState.NetworkProtection {
         return SettingsState.NetworkProtection(enabled: false, status: "")
     }
-    
+
     private func getSyncState() -> SettingsState.SyncSettings {
         SettingsState.SyncSettings(enabled: legacyViewProvider.syncService.featureFlags.contains(.userInterface),
                                    title: {
             let syncService = legacyViewProvider.syncService
             let isDataSyncingDisabled = !syncService.featureFlags.contains(.dataSyncing)
             && syncService.authState == .active
-            if SyncBookmarksAdapter.isSyncBookmarksPaused
-                || SyncCredentialsAdapter.isSyncCredentialsPaused
-                || isDataSyncingDisabled {
+            if isDataSyncingDisabled
+                || syncPausedStateManager.isSyncPaused
+                || syncPausedStateManager.isSyncBookmarksPaused
+                || syncPausedStateManager.isSyncCredentialsPaused {
                 return "⚠️ \(UserText.settingsSync)"
             }
             return SyncUI.UserText.syncTitle
         }())
     }
-    
+
     private func firePixel(_ event: Pixel.Event,
                            withAdditionalParameters params: [String: String] = [:]) {
         Pixel.fire(pixel: event, withAdditionalParameters: params)
@@ -523,7 +532,7 @@ extension SettingsViewModel {
         }
     }
     
-    func onDissapear() {
+    func onDisappear() {
         self.deepLinkTarget = nil
     }
     
@@ -723,18 +732,23 @@ extension SettingsViewModel {
     @MainActor
     private func setupSubscriptionEnvironment() async {
         
-        
+        // If there's cached data use it by default
+        if let cachedSubscription = subscriptionStateCache.get() {
+            state.subscription = cachedSubscription
+        // Otherwise use defaults and setup purchase availability
+        } else {
+            state.subscription = SettingsState.defaults.subscription
+        }
+
+        // Update visibility based on Feature flag
         state.subscription.enabled = AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
+
+        // Update if can purchase based on App Store product availability
         state.subscription.canPurchase = SubscriptionPurchaseEnvironment.canPurchase
-        state.subscription.hasActiveSubscription = false
-        state.subscription.isSubscriptionPendingActivation = false
-        self.state.subscription.entitlements = []
-        
+
         // Active subscription check
-        guard let token = accountManager.accessToken else {
-            if #available(iOS 15, *) {
-                setupSubscriptionPurchaseOptions()
-            }
+        guard let token = subscriptionAccountManager.accessToken else {
+            subscriptionStateCache.set(state.subscription) // Sync cache
             return
         }
         
@@ -742,9 +756,12 @@ extension SettingsViewModel {
         switch subscriptionResult {
             
         case .success(let subscription):
+            
+            state.subscription.isSignedIn = true
+            state.subscription.platform = subscription.platform
+            
             if subscription.isActive {
                 state.subscription.hasActiveSubscription = true
-                state.subscription.isSubscriptionPendingActivation = false
                 
                 // Check entitlements and update state
                 let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
@@ -763,45 +780,29 @@ extension SettingsViewModel {
                     }
                 }
             } else {
-                // Sign out in case subscription is no longer active, reset the state
+                // Mark the subscription as 'inactive' 
                 state.subscription.hasActiveSubscription = false
-                state.subscription.isSubscriptionPendingActivation = false
-                if #available(iOS 15, *) {
-                    signOutUser()
-                }
             }
             
         case .failure:
-            // Account is active but there's not a valid subscription / entitlements
-            if #available(iOS 15, *) {
-                if await PurchaseManager.hasActiveSubscription() {
-                    state.subscription.isSubscriptionPendingActivation = true
-                }
-            }
+            break
             
         }
-    }
-    
-    @available(iOS 15.0, *)
-    private func signOutUser() {
-        AccountManager().signOut()
-        setupSubscriptionPurchaseOptions()
-    }
-    
-    @available(iOS 15.0, *)
-    private func setupSubscriptionPurchaseOptions() {
-        PurchaseManager.shared.$availableProducts
-            .receive(on: RunLoop.main)
-            .sink { [weak self] products in
-                self?.state.subscription.canPurchase = !products.isEmpty
-            }.store(in: &cancellables)
+        
+        // Sync Cache
+        subscriptionStateCache.set(state.subscription)
     }
     
     private func setupNotificationObservers() {
-        signOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut, object: nil, queue: .main) { [weak self] _ in
+        subscriptionSignOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut,
+                                                                             object: nil,
+                                                                             queue: .main) { [weak self] _ in
             if #available(iOS 15.0, *) {
                 guard let strongSelf = self else { return }
-                Task { await strongSelf.setupSubscriptionEnvironment() }
+                Task {
+                    strongSelf.subscriptionStateCache.reset()
+                    await strongSelf.setupSubscriptionEnvironment()
+                }
             }
         }
     }
@@ -826,5 +827,6 @@ extension SettingsViewModel {
             }
         }
     }
+    
 }
 // swiftlint:enable file_length

@@ -166,6 +166,10 @@ struct SubscriptionFlowView: View {
             }
         }
         
+        .onChange(of: viewModel.state.shouldGoBackToSettings) { _ in
+            dismiss()
+        }
+        
         .onFirstAppear {
             setUpAppearances()
             Task { await viewModel.onFirstAppear() }

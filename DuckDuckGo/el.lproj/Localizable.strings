@@ -133,18 +133,6 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Οι υπάρχοντες σελιδοδείκτες δεν θα αναπαραχθούν.";
 
-/* Description for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-description" = "Έχετε υπερβεί το όριο συγχρονισμού σελιδοδεικτών. Προσπαθήστε να διαγράψετε ορισμένους σελιδοδείκτες. Μέχρι να επιλυθεί το πρόβλημα αυτό, δεν θα δημιουργηθούν αντίγραφα ασφαλείας για τους σελιδοδείκτες σας.";
-
-/* Title for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-title" = "Ο συγχρονισμός σελιδοδεικτών έχει τεθεί σε παύση";
-
-/* Description for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-description" = "Έχετε υπερβεί το όριο συγχρονισμού κωδικών πρόσβασης. Προσπαθήστε να διαγράψετε κάποιους κωδικούς πρόσβασης. Μέχρι να επιλυθεί το πρόβλημα αυτό, δεν θα δημιουργηθούν αντίγραφα ασφαλείας για τους κωδικούς πρόσβασής σας.";
-
-/* Title for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-title" = "Ο συγχρονισμός κωδικών πρόσβασης έχει τεθεί σε παύση";
-
 /* Title for sync error alert */
 "alert.sync-error" = "Σφάλμα συγχρονισμού και δημιουργίας αντιγράφων ασφαλείας";
 
@@ -246,6 +234,42 @@
 
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Απόκρυψη κωδικού πρόσβασης";
+
+/* Button label to get link to download the desktop browser */
+"autofill.import.passwords.get-browser-button" = "Αποκτήστε το πρόγραμμα περιήγησης για υπολογιστές";
+
+/* Step 1 for instructions to import passwords */
+"autofill.import.passwords.instructions.step1" = "Ανοίξτε το DuckDuckGo σε Mac ή Windows";
+
+/* Step 2 for instructions to import passwords. This reads as 'Go to Settings > Passwords' */
+"autofill.import.passwords.instructions.step2" = "Μεταβείτε στις επιλογές %1$@ > %2$@";
+
+/* second parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.passwords" = "Κωδικός πρόσβασης";
+
+/* first parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.settings" = "Ρυθμίσεις";
+
+/* Step 3 for instructions to import passwords. This reads as 'Select Import Passwords and follow the steps' */
+"autofill.import.passwords.instructions.step3" = "Επιλέξτε %@ και ακολουθήστε τα βήματα για εισαγωγή";
+
+/* Parameter for autofill.import.passwords.instructions.step3 */
+"autofill.import.passwords.instructions.step3.import" = "Εισαγωγή κωδικών πρόσβασης...";
+
+/* Step 4 for instructions to import passwords: Once imported on your computer you can set up sync on this iPhone|iPad|device */
+"autofill.import.passwords.instructions.step4" = "Μόλις εισαχθεί στον υπολογιστή σας, μπορείτε να ρυθμίσετε το συγχρονισμό σε %@";
+
+/* Title for section with instructions to import passwords */
+"autofill.import.passwords.instructions.title" = "Εισαγωγή από το πρόγραμμα περιήγησης για υπολογιστές:";
+
+/* Subtitle for screen to import passwords */
+"autofill.import.passwords.subtitle" = "Εισαγάγετε κωδικούς πρόσβασης στην έκδοση του προγράμματος περιήγησης DuckDuckGo για υπολογιστές και έπειτα συγχρονίστε τους σε όλες τις συσκευές.";
+
+/* Button label to sync passwords with desktop browser */
+"autofill.import.passwords.sync-button" = "Συγχρονισμός με υπολογιστή";
+
+/* Title for screen to import passwords */
+"autofill.import.passwords.title" = "Τρόπος εισαγωγής κωδικών πρόσβασης";
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Απενεργοποίηση";
@@ -349,8 +373,11 @@
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Όνομα χρήστη";
 
-/* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Οι κωδικοί πρόσβασης αποθηκεύονται με ασφάλεια στη συσκευή σας.";
+/* Title for button to Import Passwords when autofill has no items */
+"autofill.logins.empty-view.button.title" = "Εισαγωγή κωδικών πρόσβασης";
+
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle" = "Οι κωδικοί πρόσβασης από άλλα προγράμματα περιήγησης ή εφαρμογές μπορούν να εισαχθούν με χρήση της έκδοσης του προγράμματος περιήγησης DuckDuckGo για υπολογιστές.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Δεν έχουν αποθηκευτεί ακόμα κωδικοί πρόσβασης";
@@ -369,6 +396,9 @@
 
 /* Title for a toggle that enables autofill */
 "autofill.logins.list.enable" = "Αποθήκευση και αυτόματη συμπλήρωση κωδικών πρόσβασης";
+
+/* Footer label displayed below table section with option to enable autofill */
+"autofill.logins.list.enable.footer" = "Οι κωδικοί πρόσβασης αποθηκεύονται με ασφάλεια στη συσκευή σας.";
 
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Ο κωδικός πρόσβασης για το %@ διαγράφηκε";
@@ -604,14 +634,11 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Κάντε εισαγωγή ενός αρχείου HTML με σελιδοδείκτες από άλλο πρόγραμμα περιήγησης, ή κάντε εξαγωγή των σελιδοδεικτών που διαθέτετε ήδη.";
 
-/* No comment provided by engineer. */
-"bucket: %@" = "κάδος: %@";
-
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Να αποστέλλονται πάντα αναφορές σφαλμάτων";
 
 /* Crash Report hide details button title */
-"crash.report.dialog.hide.details" = "Απόκρυψη";
+"crash.report.dialog.hide.details" = "Hide";
 
 /* Crash Report dialog message */
 "crash.report.dialog.message" = "Οι αναφορές σφαλμάτων βοηθούν το DuckDuckGo να πραγματοποιεί διάγνωση προβλημάτων και να βελτιώνει τα προϊόντα μας. Δεν περιέχουν προσωπικά στοιχεία ταυτοποίησης.";
@@ -711,6 +738,15 @@
 
 /* No comment provided by engineer. */
 "Debug" = "Debug";
+
+/* Default string used if users device is not iPhone or iPad */
+"device.type.default" = "συσκευή";
+
+/* Device type is iPhone */
+"device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"device.type.pad" = "iPad";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Απενεργοποιήθηκε";
@@ -849,9 +885,6 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Δεν βρέθηκαν αντιστοιχίες";
-
-/* No comment provided by engineer. */
-"Error" = "Σφάλμα";
 
 /* Button title to Sign In */
 "error.email-protection-sign-in.action" = "Είσοδος";
@@ -1098,6 +1131,21 @@
 
 /* No comment provided by engineer. */
 "fireButtonAnimation.waterSwirl.name" = "Δίνη νερού";
+
+/* Description text above the Share Link button */
+"get.browser.on-your-desktop-go-to" = "Στον υπολογιστή σας, μεταβείτε στη διεύθυνση:";
+
+/* Title for the Share Download Link button */
+"get.browser.share-link" = "Κοινή χρήση συνδέσμου λήψης";
+
+/* Message displayed in the share action when sharing via email */
+"get.browser.share-link.message" = "Αναζητήστε ιδιωτικά και αποκλείστε εφαρμογές παρακολούθησης με το πρόγραμμα περιήγησης DuckDuckGo για υπολογιστές. Επισκεφτείτε αυτόν τον σύνδεσμο στον υπολογιστή σας για να πραγματοποιήσετε λήψη σήμερα.";
+
+/* Title displayed in the share action */
+"get.browser.share-link.title" = "Αποκτήστε το πρόγραμμα περιήγησης DuckDuckGo για Mac ή Windows";
+
+/* Title for the get desktop browser feature */
+"get.browser.title" = "Αποκτήστε το DuckDuckGo για Mac ή Windows";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Προσθήκη του DuckDuckGo στην αρχική οθόνη σας!";
@@ -1507,9 +1555,6 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
-/* No comment provided by engineer. */
-"Ok" = "Εντάξει";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Διαχειριζόμενα cookies";
 
@@ -1548,9 +1593,6 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Δεν είναι δυνατή η εύρεση της εφαρμογής που απαιτείται για άνοιγμα αυτού του συνδέσμου";
-
-/* No comment provided by engineer. */
-"Please enter which app on your device is broken." = "Εισαγάγετε ποια εφαρμογή δεν λειτουργεί σωστά στη συσκευή σας.";
 
 /* Activate button */
 "pm.activate" = "Reactivate";
@@ -1654,6 +1696,9 @@
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
 "settings.address.full.url" = "Εμφάνιση πλήρους διεύθυνσης ιστότοπου";
+
+/* Label describing a feature which is turned on always */
+"settings.always.on" = "Always On";
 
 /* Settings screen appearance section title */
 "settings.appearance" = "Εμφάνιση";
@@ -1761,6 +1806,12 @@
 /* The name of a settings category listing next steps */
 "settings.next.steps" = "Επόμενα βήματα";
 
+/* Label describing a feature which is turned off */
+"settings.off" = "Off";
+
+/* Label describing a feature which is turned on */
+"settings.on" = "On";
+
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
@@ -1805,6 +1856,12 @@
 
 /* I have a Subscription button text for privacy pro */
 "settings.subscription.existing.subscription" = "I Have a Subscription";
+
+/* Subscription expired description */
+"settings.subscription.expired.comment" = "Subscribe again to continue using Privacy Pro";
+
+/* Subscription expired tittle message */
+"settings.subscription.expired.title" = "Your Privacy Pro subscription expired";
 
 /* Privacy pro features list */
 "settings.subscription.features" = " • VPN\n • Personal Information Removal\n • Identity Theft Restoration";
@@ -2109,6 +2166,9 @@
 /* Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)' */
 "subscription.subscription.active.caption" = "Your subscription %1$@ on %2$@";
 
+/* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
+"subscription.subscription.expired.caption" = "Your subscription expired on %@";
+
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
 
@@ -2150,9 +2210,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Δυστυχώς, η λειτουργία Συγχρονισμός και δημιουργία αντιγράφων ασφαλείας δεν είναι διαθέσιμη πλέον σε αυτήν την έκδοση της εφαρμογής. Ενημερώστε το DuckDuckGo στην πιο πρόσφατη έκδοση για να συνεχίσετε.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Η λειτουργία Συγχρονισμός και δημιουργία αντιγράφων ασφαλείας είναι σε παύση";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Κλείσιμο αρχικής καρτέλας";

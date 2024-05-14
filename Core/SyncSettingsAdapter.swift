@@ -63,6 +63,8 @@ public final class SyncSettingsAdapter {
         syncErrorCancellable = provider.syncErrorPublisher
             .sink { error in
                 switch error {
+                case SyncError.patchPayloadCompressionFailed(let errorCode):
+                    Pixel.fire(pixel: .syncSettingsPatchCompressionFailed, withAdditionalParameters: ["error": "\(errorCode)"])
                 case let syncError as SyncError:
                     Pixel.fire(pixel: .syncSettingsFailed, error: syncError)
                 case let settingsMetadataError as SettingsSyncMetadataSaveError:

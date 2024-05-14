@@ -44,12 +44,15 @@ struct HomeMessageViewModelBuilder {
 
 extension RemoteAction {
 
-    var actionStyle: HomeMessageButtonViewModel.ActionStyle {
+    func actionStyle(isSecondaryAction: Bool = false) -> HomeMessageButtonViewModel.ActionStyle {
         switch self {
         case .share(let value, let title):
             return .share(value: value, title: title)
 
         case .appStore, .url, .surveyURL:
+            if isSecondaryAction {
+                return .cancel
+            }
             return .default
 
         case .dismiss:

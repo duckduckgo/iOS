@@ -133,18 +133,6 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Mevcut yer imleri çoğaltılmayacaktır.";
 
-/* Description for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-description" = "Yer işaretleri senkronizasyon sınırını aştınız. Bazı yer işaretlerini silmeyi deneyin. Bu sorun çözülene kadar yer işaretleriniz yedeklenmeyecektir.";
-
-/* Title for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-title" = "Yer İşaretleri Senkronizasyonu Duraklatıldı";
-
-/* Description for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-description" = "Şifre senkronizasyon sınırını aştınız. Bazı şifreleri silmeyi deneyin. Bu sorun çözülene kadar şifreleriniz yedeklenmeyecektir.";
-
-/* Title for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-title" = "Şifre Senkronizasyonu Duraklatıldı";
-
 /* Title for sync error alert */
 "alert.sync-error" = "Senkronizasyon ve Yedekleme Hatası";
 
@@ -246,6 +234,42 @@
 
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Parolayı gizle";
+
+/* Button label to get link to download the desktop browser */
+"autofill.import.passwords.get-browser-button" = "Masaüstü Tarayıcısını Edinin";
+
+/* Step 1 for instructions to import passwords */
+"autofill.import.passwords.instructions.step1" = "DuckDuckGo'yu Mac veya Windows'ta açın";
+
+/* Step 2 for instructions to import passwords. This reads as 'Go to Settings > Passwords' */
+"autofill.import.passwords.instructions.step2" = "1$@ > %2$@ adresine gidin";
+
+/* second parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.passwords" = "Şifreler";
+
+/* first parameter for autofill.import.passwords.instructions.step2 */
+"autofill.import.passwords.instructions.step2.settings" = "Ayarlar";
+
+/* Step 3 for instructions to import passwords. This reads as 'Select Import Passwords and follow the steps' */
+"autofill.import.passwords.instructions.step3" = "%@ seçeneğini seçin ve içe aktarma adımlarını izleyin";
+
+/* Parameter for autofill.import.passwords.instructions.step3 */
+"autofill.import.passwords.instructions.step3.import" = "Şifreleri İçe Aktar...";
+
+/* Step 4 for instructions to import passwords: Once imported on your computer you can set up sync on this iPhone|iPad|device */
+"autofill.import.passwords.instructions.step4" = "Bilgisayarınıza aktarıldıktan sonra bu %@ üzerinde senkronizasyon ayarlayabilirsiniz.";
+
+/* Title for section with instructions to import passwords */
+"autofill.import.passwords.instructions.title" = "Masaüstü tarayıcısından içe aktarın:";
+
+/* Subtitle for screen to import passwords */
+"autofill.import.passwords.subtitle" = "DuckDuckGo tarayıcısının masaüstü sürümünde şifreleri içe aktarın, ardından cihazlar arasında senkronize edin.";
+
+/* Button label to sync passwords with desktop browser */
+"autofill.import.passwords.sync-button" = "Masaüstü ile Senkronize Et";
+
+/* Title for screen to import passwords */
+"autofill.import.passwords.title" = "Şifreler Nasıl Aktarılır";
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Devre dışı bırak";
@@ -349,8 +373,11 @@
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Kullanıcı adı";
 
-/* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Şifreler cihazınızda güvenli bir şekilde saklanır.";
+/* Title for button to Import Passwords when autofill has no items */
+"autofill.logins.empty-view.button.title" = "Şifreleri İçe Aktar";
+
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle" = "Diğer tarayıcılardan veya uygulamalardan şifreler, DuckDuckGo tarayıcısının masaüstü sürümü kullanılarak içe aktarılabilir.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Henüz şifre kaydedilmedi";
@@ -369,6 +396,9 @@
 
 /* Title for a toggle that enables autofill */
 "autofill.logins.list.enable" = "Şifreleri kaydedin ve otomatik doldurun";
+
+/* Footer label displayed below table section with option to enable autofill */
+"autofill.logins.list.enable.footer" = "Şifreler cihazınızda güvenli bir şekilde saklanır.";
 
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "@@ için şifre silindi";
@@ -604,14 +634,11 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Yer işaretleri HTML dosyasını başka bir tarayıcıdan içeri aktarın veya mevcut yer işaretlerinizi dışarı aktarın.";
 
-/* No comment provided by engineer. */
-"bucket: %@" = "kova: %@";
-
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Kilitlenme Raporlarını Her Zaman Gönder";
 
 /* Crash Report hide details button title */
-"crash.report.dialog.hide.details" = "Gizle";
+"crash.report.dialog.hide.details" = "Hide";
 
 /* Crash Report dialog message */
 "crash.report.dialog.message" = "Kilitlenme raporları DuckDuckGo'nun sorunları teşhis etmesine ve ürünlerimizi geliştirmesine yardımcı olur. Kişisel olarak tanımlanabilir hiçbir bilgi içermezler.";
@@ -711,6 +738,15 @@
 
 /* No comment provided by engineer. */
 "Debug" = "Debug";
+
+/* Default string used if users device is not iPhone or iPad */
+"device.type.default" = "cihaz";
+
+/* Device type is iPhone */
+"device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"device.type.pad" = "iPad";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Devre Dışı";
@@ -849,9 +885,6 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Eşleşme bulunamadı";
-
-/* No comment provided by engineer. */
-"Error" = "Hata";
 
 /* Button title to Sign In */
 "error.email-protection-sign-in.action" = "Oturum Aç";
@@ -1098,6 +1131,21 @@
 
 /* No comment provided by engineer. */
 "fireButtonAnimation.waterSwirl.name" = "Girdap";
+
+/* Description text above the Share Link button */
+"get.browser.on-your-desktop-go-to" = "Bilgisayarınızda şu adrese gidin:";
+
+/* Title for the Share Download Link button */
+"get.browser.share-link" = "İndirme Bağlantısını Paylaş";
+
+/* Message displayed in the share action when sharing via email */
+"get.browser.share-link.message" = "DuckDuckGo masaüstü tarayıcısı ile gizli arama yapın ve izleyicileri engelleyin. Bugün indirmek için bilgisayarınızda bu bağlantıyı ziyaret edin.";
+
+/* Title displayed in the share action */
+"get.browser.share-link.title" = "Mac veya Windows için DuckDuckGo Tarayıcısını edinin";
+
+/* Title for the get desktop browser feature */
+"get.browser.title" = "Mac veya Windows için DuckDuckGo'yu edinin";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "DuckDuckGo'yu ana ekranınıza ekleyin!";
@@ -1507,9 +1555,6 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
-/* No comment provided by engineer. */
-"Ok" = "Tamam";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Yönetilen Çerezler";
 
@@ -1548,9 +1593,6 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Bu bağlantıyı açmak için gereken uygulama bulunamıyor";
-
-/* No comment provided by engineer. */
-"Please enter which app on your device is broken." = "Lütfen cihazınızda hangi uygulamanın bozuk olduğunu girin.";
 
 /* Activate button */
 "pm.activate" = "Reactivate";
@@ -1654,6 +1696,9 @@
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
 "settings.address.full.url" = "Tam Site Adresini Göster";
+
+/* Label describing a feature which is turned on always */
+"settings.always.on" = "Always On";
 
 /* Settings screen appearance section title */
 "settings.appearance" = "Görünüm";
@@ -1761,6 +1806,12 @@
 /* The name of a settings category listing next steps */
 "settings.next.steps" = "Sonraki Adımlar";
 
+/* Label describing a feature which is turned off */
+"settings.off" = "Off";
+
+/* Label describing a feature which is turned on */
+"settings.on" = "On";
+
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
@@ -1805,6 +1856,12 @@
 
 /* I have a Subscription button text for privacy pro */
 "settings.subscription.existing.subscription" = "I Have a Subscription";
+
+/* Subscription expired description */
+"settings.subscription.expired.comment" = "Subscribe again to continue using Privacy Pro";
+
+/* Subscription expired tittle message */
+"settings.subscription.expired.title" = "Your Privacy Pro subscription expired";
 
 /* Privacy pro features list */
 "settings.subscription.features" = " • VPN\n • Personal Information Removal\n • Identity Theft Restoration";
@@ -2109,6 +2166,9 @@
 /* Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)' */
 "subscription.subscription.active.caption" = "Your subscription %1$@ on %2$@";
 
+/* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
+"subscription.subscription.expired.caption" = "Your subscription expired on %@";
+
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
 
@@ -2150,9 +2210,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Üzgünüz, Senkronizasyon ve Yedekleme bu uygulama sürümünde artık kullanılamıyor. Devam etmek için lütfen DuckDuckGo'yu en son sürüme güncelleyin.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Senkronizasyon ve Yedekleme Duraklatıldı";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Ana sekmeyi kapat";

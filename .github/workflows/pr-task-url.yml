@@ -2,7 +2,7 @@ name: Asana PR Task URL
 
 on: 
   pull_request:
-    types: [opened, edited, closed, unlabeled, synchronize]
+    types: [opened, edited, closed, unlabeled, synchronize, review_requested]
 
 jobs:
 
@@ -111,6 +111,24 @@ jobs:
     - name: Report status
       if: ${{ needs.assert-project-membership.outputs.task_id }}
       run: exit ${{ needs.assert-project-membership.outputs.failure }}
+
+  # When reviewer is assigned create a subtask in Asana if not existing already
+  create-asana-pr-subtask-if-needed:
+
+    name: "Create the PR subtask in Asana"
+
+    runs-on: ubuntu-latest
+    if: github.event.action == 'review_requested'
+
+    needs: [assert-project-membership]
+
+    steps:
+    - name: Create or Update PR Subtask
+      uses: duckduckgo/apple-toolbox/actions/asana-create-pr-subtask@main
+      with:
+        access-token: ${{ secrets.ASANA_ACCESS_TOKEN }}
+        asana-task-id: ${{ needs.assert-project-membership.outputs.task_id }}
+        github-reviewer-user: ${{ github.event.requested_reviewer.login }}
 
   # When a PR is merged, move the task to the Waiting for Release section of the App Board.
   mark-waiting-for-release:

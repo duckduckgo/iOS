@@ -153,7 +153,6 @@ struct RemoteMessaging {
         case .success(let statusResponse):
             os_log("Successfully fetched remote messages", log: .remoteMessaging, type: .debug)
 
-            let isNetworkProtectionWaitlistUser: Bool
             let daysSinceNetworkProtectionEnabled: Int
 
 #if NETWORK_PROTECTION
@@ -161,7 +160,6 @@ struct RemoteMessaging {
 
             daysSinceNetworkProtectionEnabled = activationDateStore.daysSinceActivation() ?? -1
 #else
-            isNetworkProtectionWaitlistUser = false
             daysSinceNetworkProtectionEnabled = -1
 #endif
 

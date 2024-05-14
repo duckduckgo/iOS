@@ -137,7 +137,6 @@ class RemoteMessagingStoreTests: XCTestCase {
                                                            favoritesCount: 0,
                                                            appTheme: "light",
                                                            isWidgetInstalled: false,
-                                                           isNetPWaitlistUser: false,
                                                            daysSinceNetPEnabled: -1),
                 dismissedMessageIds: []
         )

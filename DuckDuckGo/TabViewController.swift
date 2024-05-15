@@ -2501,6 +2501,9 @@ extension TabViewController: SecureVaultManagerDelegate {
             presentAutofillPromptViewController(accountMatches: accountMatches, domain: domain, trigger: trigger, useLargeDetent: false) { account in
                 onAccountSelected(account)
             } completionHandler: { account in
+                if account != nil {
+                    NotificationCenter.default.post(name: .autofillFillEvent, object: nil)
+                }
                 completionHandler(account)
             }
         } else {
@@ -2513,6 +2516,9 @@ extension TabViewController: SecureVaultManagerDelegate {
                             promptUserWithGeneratedPassword password: String,
                             completionHandler: @escaping (Bool) -> Void) {
         let passwordGenerationPromptViewController = PasswordGenerationPromptViewController(generatedPassword: password) { useGeneratedPassword in
+                if useGeneratedPassword {
+                    NotificationCenter.default.post(name: .autofillFillEvent, object: nil)
+                }
                 completionHandler(useGeneratedPassword)
         }
 

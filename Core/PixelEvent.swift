@@ -258,6 +258,11 @@ extension Pixel {
         case autofillLoginsImportSuccess
         case autofillLoginsImportFailure
 
+        case autofillActiveUser
+        case autofillEnabledUser
+        case autofillOnboardedUser
+        case autofillLoginsStacked
+
         case getDesktopCopy
         case getDesktopShare
         
@@ -938,6 +943,11 @@ extension Pixel.Event {
         case .autofillLoginsImportNoAction: return "m_autofill_logins_import_no-action"
         case .autofillLoginsImportSuccess: return "m_autofill_logins_import_success"
         case .autofillLoginsImportFailure: return "m_autofill_logins_import_failure"
+
+        case .autofillActiveUser: return "m_autofill_activeuser"
+        case .autofillEnabledUser: return "m_autofill_enableduser"
+        case .autofillOnboardedUser: return "m_autofill_onboardeduser"
+        case .autofillLoginsStacked: return "m_autofill_logins_stacked"
 
         case .getDesktopCopy: return "m_get_desktop_copy"
         case .getDesktopShare: return "m_get_desktop_share"

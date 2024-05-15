@@ -933,6 +933,8 @@
 		F1ED309D1EDC2EA400651986 /* TabSwitcher.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1ED309B1EDC2EA400651986 /* TabSwitcher.storyboard */; };
 		F1F5337C1F26A9EF00D80D4F /* UserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F5337B1F26A9EF00D80D4F /* UserText.swift */; };
 		F1F533841F26ABAC00D80D4F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1F533861F26ABAC00D80D4F /* Localizable.strings */; };
+		F1FDC9302BF4E0B3006B1435 /* SubscriptionEnvironment+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FDC92F2BF4E0B3006B1435 /* SubscriptionEnvironment+Default.swift */; };
+		F1FDC9312BF4E0B3006B1435 /* SubscriptionEnvironment+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FDC92F2BF4E0B3006B1435 /* SubscriptionEnvironment+Default.swift */; };
 		F40F843728C939760081AE75 /* AutofillLoginListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40F843528C938370081AE75 /* AutofillLoginListViewModelTests.swift */; };
 		F4147354283BF834004AA7A5 /* AutofillContentScopeFeatureToggles.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4147353283BF834004AA7A5 /* AutofillContentScopeFeatureToggles.swift */; };
 		F41610BC29E5DF66001F709D /* DeprecatedColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F41610BB29E5DF65001F709D /* DeprecatedColors.xcassets */; };
@@ -2608,6 +2610,7 @@
 		F1E90C1F1E678E7C005E7E21 /* HomeControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeControllerDelegate.swift; sourceTree = "<group>"; };
 		F1ED309C1EDC2EA400651986 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TabSwitcher.storyboard; sourceTree = "<group>"; };
 		F1F5337B1F26A9EF00D80D4F /* UserText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
+		F1FDC92F2BF4E0B3006B1435 /* SubscriptionEnvironment+Default.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SubscriptionEnvironment+Default.swift"; sourceTree = "<group>"; };
 		F40F843528C938370081AE75 /* AutofillLoginListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginListViewModelTests.swift; sourceTree = "<group>"; };
 		F4147353283BF834004AA7A5 /* AutofillContentScopeFeatureToggles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillContentScopeFeatureToggles.swift; sourceTree = "<group>"; };
 		F41610BB29E5DF65001F709D /* DeprecatedColors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = DeprecatedColors.xcassets; sourceTree = "<group>"; };
@@ -4426,6 +4429,7 @@
 		D664C7922B289AA000CBFA76 /* Subscription */ = {
 			isa = PBXGroup;
 			children = (
+				F1FDC92F2BF4E0B3006B1435 /* SubscriptionEnvironment+Default.swift */,
 				D60170BB2BA32DD6001911B5 /* Subscription.swift */,
 				F15E9F3D2BEE128200DEFDDE /* SubscriptionManageriOS14.swift */,
 				D6D95CE42B6DA3F200960317 /* AsyncHeadlessWebview */,
@@ -6303,6 +6307,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1FDC9312BF4E0B3006B1435 /* SubscriptionEnvironment+Default.swift in Sources */,
 				BDFF03232BA3D8E300F324C9 /* NetworkProtectionFeatureVisibility.swift in Sources */,
 				EEEB80A32A421CE600386378 /* NetworkProtectionPacketTunnelProvider.swift in Sources */,
 				EE3766DE2AC5945500AAB575 /* NetworkProtectionUNNotificationPresenter.swift in Sources */,
@@ -6734,6 +6739,7 @@
 				EE4BE0092A740BED00CD6AA8 /* ClearTextField.swift in Sources */,
 				F159BDA41F0BDB5A00B4A01D /* TabViewController.swift in Sources */,
 				F44D279C27F331BB0037F371 /* AutofillLoginPromptView.swift in Sources */,
+				F1FDC9302BF4E0B3006B1435 /* SubscriptionEnvironment+Default.swift in Sources */,
 				CBD4F13E279EBFAB00B20FD7 /* HomeMessageView.swift in Sources */,
 				851DFD87212C39D300D95F20 /* TabSwitcherButton.swift in Sources */,
 				8505836A219F424500ED4EDB /* UIAlertControllerExtension.swift in Sources */,

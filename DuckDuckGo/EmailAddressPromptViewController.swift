@@ -87,6 +87,8 @@ extension EmailAddressPromptViewController: EmailAddressPromptViewModelDelegate 
 
         completion(.user, false)
 
+        NotificationCenter.default.post(name: .autofillFillEvent, object: nil)
+
         dismiss(animated: true)
     }
 
@@ -98,6 +100,8 @@ extension EmailAddressPromptViewController: EmailAddressPromptViewModelDelegate 
 
         completion(.generated, true)
 
+        NotificationCenter.default.post(name: .autofillFillEvent, object: nil)
+        
         dismiss(animated: true)
     }
 

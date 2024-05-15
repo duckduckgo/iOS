@@ -103,6 +103,8 @@ public class StatisticsLoader {
             if let data = response?.data, let atb = try? self.parser.convert(fromJsonData: data) {
                 self.statisticsStore.searchRetentionAtb = atb.version
                 self.storeUpdateVersionIfPresent(atb)
+                NotificationCenter.default.post(name: .searchDAU,
+                                                object: nil, userInfo: nil)
             }
             completion()
         }
@@ -138,4 +140,8 @@ public class StatisticsLoader {
             returnUserMeasurement.updateStoredATB(atb)
         }
     }
+}
+
+extension NSNotification.Name {
+    public static let searchDAU: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.searchDAU")
 }

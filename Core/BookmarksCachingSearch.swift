@@ -171,7 +171,7 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
             self?.refreshCache()
         }
 
-        loadCache()
+        refreshCache()
     }
 
     public var hasData: Bool {
@@ -181,24 +181,14 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
     private var cachedBookmarksAndFavorites = [ScoredBookmark]()
     private var cacheLoadedCondition = RunLoop.ResumeCondition()
 
-    private func loadCache() {
+    private func refreshCache() {
         bookmarksStore.bookmarksAndFavorites { result in
             self.cachedBookmarksAndFavorites = result
-            if !self.cacheLoadedCondition.isResolved {
-                self.cacheLoadedCondition.resolve()
-            }
         }
     }
 
     private var bookmarksAndFavorites: [ScoredBookmark] {
-        RunLoop.current.run(until: cacheLoadedCondition)
         return cachedBookmarksAndFavorites
-    }
-
-    public func refreshCache() {
-        // setting cacheLoadedCondition back to initialized state
-        cacheLoadedCondition = RunLoop.ResumeCondition()
-        loadCache()
     }
 
     // swiftlint:disable cyclomatic_complexity

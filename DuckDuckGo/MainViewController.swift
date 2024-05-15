@@ -367,7 +367,8 @@ class MainViewController: UIViewController {
             SuggestionTrayViewController(coder: coder,
                                          favoritesViewModel: self.favoritesViewModel,
                                          bookmarksDatabase: self.bookmarksDatabase,
-                                         historyCoordinator: self.historyManager.historyCoordinator)
+                                         historyCoordinator: self.historyManager.historyCoordinator,
+                                         bookmarksStringSearch: self.bookmarksCachingSearch)
         }) else {
             assertionFailure()
             return

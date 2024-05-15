@@ -5,24 +5,36 @@ appId: com.duckduckgo.mobile.ios
 - tapOn: Passcode field
 - inputText: "0000"
 - pressKey: Enter
+- scrollUntilVisible:
+    element: Dax Login
 - assertVisible: Dax Login
 - tapOn: Dax Login
 - assertVisible: daxthetest
 - assertVisible: duckduckgo.com
+
 - tapOn: Passwords
+- scrollUntilVisible:
+    element: Github
 - assertVisible: Github
 - tapOn: Github
 - assertVisible: githubusername
 - assertVisible: github.com
+
 - tapOn: Passwords
+- scrollUntilVisible:
+    element: StackOverflow
 - assertVisible: StackOverflow
 - tapOn: StackOverflow
 - assertVisible: stacker
 - assertVisible: stackoverflow.com
+
 - tapOn: Passwords
+- scrollUntilVisible:
+    element: My Personal Website
 - assertVisible: My Personal Website
 - tapOn: My Personal Website
 - assertVisible: me@mypersonalwebsite.com
 - assertVisible: mypersonalwebsite.com
+
 - tapOn: Passwords
 - tapOn: Settings

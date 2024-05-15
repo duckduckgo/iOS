@@ -1,0 +1,39 @@
+appId: com.duckduckgo.mobile.ios
+tags:
+    - sync
+
+---
+
+# No clear, just aunch
+- launchApp
+
+# Run onboarding Flow
+- runFlow: 
+    when: 
+      visible: 
+        text: "Let’s Do It!"
+        index: 0
+    file: ../shared/onboarding.yaml
+
+# Login
+- tapOn: Settings
+- tapOn: Sync & Backup
+- runFlow:
+    file: ../shared/sync_login.yaml
+
+# Verify bookmarks have been merged
+- tapOn: Settings
+- runFlow:
+    file: ../shared/sync_verify_bookmarks.yaml
+
+# Verify favorites are unified
+- tapOn: Done
+- tapOn: Settings
+- runFlow:
+    file: ../shared/sync_verify_unified_favorites.yaml
+
+# Verify logins
+- tapOn: Settings
+- runFlow:
+    file: ../shared/sync_verify_logins.yaml
+

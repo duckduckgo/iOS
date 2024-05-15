@@ -27,17 +27,21 @@ import CoreData
 
 class RemoteMessagingStoreTests: XCTestCase {
 
+    static let userDefaultsSuiteName = "remote-messaging-store-tests"
+
     private var data = JsonTestDataLoader()
-
     private var store: RemoteMessagingStore!
-
     private let notificationCenter = NotificationCenter()
+    private var defaults: UserDefaults!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
         let container = CoreData.remoteMessagingContainer()
         let context = container.viewContext
         store = RemoteMessagingStore(context: context, notificationCenter: notificationCenter)
+
+        defaults = UserDefaults(suiteName: Self.userDefaultsSuiteName)!
+        defaults.removePersistentDomain(forName: Self.userDefaultsSuiteName)
     }
 
     override func tearDownWithError() throws {
@@ -139,6 +143,7 @@ class RemoteMessagingStoreTests: XCTestCase {
                                                            isWidgetInstalled: false,
                                                            isNetPWaitlistUser: false,
                                                            daysSinceNetPEnabled: -1),
+                percentileStore: RemoteMessagingPercentileUserDefaultsStore(userDefaults: self.defaults),
                 dismissedMessageIds: []
         )
 

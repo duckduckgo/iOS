@@ -16,6 +16,7 @@ for_lane :sync_signing_alpha_adhoc do
     type "adhoc"
     app_identifier ["com.duckduckgo.mobile.ios.alpha", "com.duckduckgo.mobile.ios.alpha.ShareExtension", "com.duckduckgo.mobile.ios.alpha.OpenAction2", "com.duckduckgo.mobile.ios.alpha.Widgets", "com.duckduckgo.mobile.ios.alpha.NetworkExtension"]
     force_for_new_devices true
+    template_name "Default Web Browser iOS (Dist)"
 end
 
 for_lane :adhoc do
@@ -27,12 +28,15 @@ for_lane :alpha_adhoc do
     type "adhoc"
     app_identifier ["com.duckduckgo.mobile.ios.alpha", "com.duckduckgo.mobile.ios.alpha.ShareExtension", "com.duckduckgo.mobile.ios.alpha.OpenAction2", "com.duckduckgo.mobile.ios.alpha.Widgets", "com.duckduckgo.mobile.ios.alpha.NetworkExtension"]
     force_for_new_devices true
+    template_name "Default Web Browser iOS (Dist)"
 end
 
 for_lane :sync_signing_alpha do
     app_identifier ["com.duckduckgo.mobile.ios.alpha", "com.duckduckgo.mobile.ios.alpha.ShareExtension", "com.duckduckgo.mobile.ios.alpha.OpenAction2", "com.duckduckgo.mobile.ios.alpha.Widgets", "com.duckduckgo.mobile.ios.alpha.NetworkExtension"]
+    template_name "Default Web Browser iOS (Dist)"
 end
 
 for_lane :release_alpha do
     app_identifier ["com.duckduckgo.mobile.ios.alpha", "com.duckduckgo.mobile.ios.alpha.ShareExtension", "com.duckduckgo.mobile.ios.alpha.OpenAction2", "com.duckduckgo.mobile.ios.alpha.Widgets", "com.duckduckgo.mobile.ios.alpha.NetworkExtension"]
+    template_name "Default Web Browser iOS (Dist)"
 end

@@ -32,6 +32,7 @@ import PrivacyDashboard
 import Networking
 import Suggestions
 import Subscription
+import SwiftUI
 
 #if NETWORK_PROTECTION
 import NetworkProtection
@@ -56,8 +57,8 @@ class MainViewController: UIViewController {
     weak var findInPageHeightLayoutConstraint: NSLayoutConstraint!
     weak var findInPageBottomLayoutConstraint: NSLayoutConstraint!
     
-    weak var notificationView: NotificationView?
-    
+    weak var notificationView: UIView?
+
     var chromeManager: BrowserChromeManager!
     
     var allowContentUnderflow = false {
@@ -101,7 +102,10 @@ class MainViewController: UIViewController {
 
     @UserDefaultsWrapper(key: .syncDidShowSyncPausedByFeatureFlagAlert, defaultValue: false)
     private var syncDidShowSyncPausedByFeatureFlagAlert: Bool
-    
+
+    @UserDefaultsWrapper(key: .userDidInteractWithBrokenSitePrompt, defaultValue: false)
+    private var userDidInteractWithBrokenSitePrompt: Bool
+
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
     private var syncFeatureFlagsCancellable: AnyCancellable?
@@ -263,6 +267,7 @@ class MainViewController: UIViewController {
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
         registerForKeyboardNotifications()
+        registerForUserBehaviorEvents()
         registerForSyncFeatureFlagsUpdates()
 
         decorate()
@@ -430,6 +435,7 @@ class MainViewController: UIViewController {
                                                name: UIResponder.keyboardDidHideNotification, object: nil)
     }
 
+
     var keyboardShowing = false
 
     @objc
@@ -447,6 +453,14 @@ class MainViewController: UIViewController {
     @objc
     private func keyboardDidHide() {
         keyboardShowing = false
+    }
+
+    private func registerForUserBehaviorEvents() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(attemptToShowBrokenSitePrompt(_:)),
+            name: .userBehaviorDidMatchExperimentVariant,
+            object: nil)
     }
 
     private func registerForSyncFeatureFlagsUpdates() {
@@ -749,7 +763,7 @@ class MainViewController: UIViewController {
 
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
-        
+        hideNotificationBarIfBrokenSitePromptShown()
         wakeLazyFireButtonAnimator()
         
         if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
@@ -767,7 +781,6 @@ class MainViewController: UIViewController {
     
     func onQuickFirePressed() {
         wakeLazyFireButtonAnimator()
-        
         forgetAllWithAnimation {}
         dismiss(animated: true)
         if KeyboardSettings().onAppLaunch {
@@ -784,6 +797,7 @@ class MainViewController: UIViewController {
     @IBAction func onBackPressed() {
         Pixel.fire(pixel: .tabBarBackPressed)
         hideSuggestionTray()
+        hideNotificationBarIfBrokenSitePromptShown()
         currentTab?.goBack()
         refreshOmniBar()
         omniBar.cancel()
@@ -792,6 +806,7 @@ class MainViewController: UIViewController {
     @IBAction func onForwardPressed() {
         Pixel.fire(pixel: .tabBarForwardPressed)
         hideSuggestionTray()
+        hideNotificationBarIfBrokenSitePromptShown()
         currentTab?.goForward()
         omniBar.cancel()
     }
@@ -1004,6 +1019,15 @@ class MainViewController: UIViewController {
         refreshOmniBar()
     }
 
+    private func hideNotificationBarIfBrokenSitePromptShown(afterRefresh: Bool = false) {
+        guard brokenSitePromptViewHostingController != nil,
+                let event = brokenSitePromptEvent?.rawValue else { return }
+        brokenSitePromptViewHostingController = nil
+        let pixel: Pixel.Event = afterRefresh ? .siteNotWorkingDismissByRefresh: .siteNotWorkingDismissByNavigation
+        Pixel.fire(pixel: pixel, withAdditionalParameters: [UserBehaviorEvent.Parameter.event: event])
+        hideNotification()
+    }
+
     fileprivate func refreshBackForwardButtons() {
         viewCoordinator.toolbarBackButton.isEnabled = currentTab?.canGoBack ?? false
         viewCoordinator.toolbarForwardButton.isEnabled = currentTab?.canGoForward ?? false
@@ -1030,6 +1054,8 @@ class MainViewController: UIViewController {
         } completion: { _ in
             ViewHighlighter.updatePositions()
         }
+
+        hideNotificationBarIfBrokenSitePromptShown()
     }
 
     private func deferredFireOrientationPixel() {
@@ -1172,42 +1198,50 @@ class MainViewController: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        notificationView?.layoutSubviews()
-        let height = notificationView?.frame.size.height ?? 0
-        viewCoordinator.constraints.notificationContainerHeight.constant = height
         ViewHighlighter.updatePositions()
     }
 
-    func showNotification(title: String, message: String, dismissHandler: @escaping NotificationView.DismissHandler) {
+    private func showNotification(title: String, message: String, dismissHandler: @escaping NotificationView.DismissHandler) {
+        guard notificationView == nil else { return }
 
         let notificationView = NotificationView.loadFromNib(dismissHandler: dismissHandler)
-
         notificationView.setTitle(text: title)
         notificationView.setMessage(text: message)
-        viewCoordinator.notificationBarContainer.addSubview(notificationView)
-        self.notificationView = notificationView
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.viewCoordinator.constraints.notificationContainerHeight.constant = notificationView.frame.height
-            UIView.animate(withDuration: 0.3) {
-                self.view.layoutIfNeeded()
-            }
+        showNotification(with: notificationView)
+    }
+
+    private func showNotification(with contentView: UIView) {
+        guard viewCoordinator.topSlideContainer.subviews.isEmpty else { return }
+        viewCoordinator.topSlideContainer.addSubview(contentView)
+
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            contentView.leadingAnchor.constraint(equalTo: viewCoordinator.topSlideContainer.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: viewCoordinator.topSlideContainer.trailingAnchor),
+            contentView.topAnchor.constraint(equalTo: viewCoordinator.topSlideContainer.topAnchor),
+            contentView.bottomAnchor.constraint(equalTo: viewCoordinator.topSlideContainer.bottomAnchor),
+        ])
+
+        self.notificationView = contentView
+
+        view.layoutIfNeeded()
+        view.layoutSubviews()
+        viewCoordinator.showTopSlideContainer()
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
         }
-
     }
 
     func hideNotification() {
-
-        viewCoordinator.constraints.notificationContainerHeight.constant = 0
-        UIView.animate(withDuration: 0.5, animations: {
-            if let frame = self.notificationView?.frame {
-                self.notificationView?.frame = frame.offsetBy(dx: 0, dy: -frame.height)
-            }
-            self.view.layoutSubviews()
-        }, completion: { _ in
+        view.layoutIfNeeded()
+        viewCoordinator.hideTopSlideContainer()
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        } completion: { _ in
             self.notificationView?.removeFromSuperview()
-        })
-
+            self.notificationView = nil
+        }
     }
 
     func showHomeRowReminder() {
@@ -1221,6 +1255,49 @@ class MainViewController: UIViewController {
             }
             feature.setShown()
         }
+    }
+
+    private var brokenSitePromptViewHostingController: UIHostingController<BrokenSitePromptView>?
+    private var brokenSitePromptEvent: UserBehaviorEvent?
+
+    @objc func attemptToShowBrokenSitePrompt(_ notification: Notification) {
+        guard !userDidInteractWithBrokenSitePrompt,
+            let event = notification.userInfo?[UserBehaviorEvent.Key.event] as? UserBehaviorEvent,
+            let url = currentTab?.url, !url.isDuckDuckGo,
+            notificationView == nil,
+            !isPad,
+            DefaultTutorialSettings().hasSeenOnboarding,
+            !DaxDialogs.shared.isStillOnboarding(),
+            isPortrait else { return }
+        // We're using async to ensure the view dismissal happens on the first runloop after a refresh. This prevents the scenario where the view briefly appears and then immediately disappears after a refresh.
+        DispatchQueue.main.async {
+            self.showBrokenSitePrompt(after: event)
+        }
+    }
+
+    private func showBrokenSitePrompt(after event: UserBehaviorEvent) {
+        let host = makeBrokenSitePromptViewHostingController(event: event)
+        brokenSitePromptViewHostingController = host
+        brokenSitePromptEvent = event
+        Pixel.fire(pixel: .siteNotWorkingShown, withAdditionalParameters: [UserBehaviorEvent.Parameter.event: event.rawValue])
+        showNotification(with: host.view)
+    }
+
+    private func makeBrokenSitePromptViewHostingController(event: UserBehaviorEvent) -> UIHostingController<BrokenSitePromptView> {
+        let parameters = [UserBehaviorEvent.Parameter.event: event.rawValue]
+        let viewModel = BrokenSitePromptViewModel(onDidDismiss: { [weak self] in
+            self?.hideNotification()
+            self?.userDidInteractWithBrokenSitePrompt = true
+            self?.brokenSitePromptViewHostingController = nil
+            Pixel.fire(pixel: .siteNotWorkingDismiss, withAdditionalParameters: parameters)
+        }, onDidSubmit: { [weak self] in
+            self?.segueToReportBrokenSite(mode: .prompt(event.rawValue))
+            self?.hideNotification()
+            self?.userDidInteractWithBrokenSitePrompt = true
+            self?.brokenSitePromptViewHostingController = nil
+            Pixel.fire(pixel: .siteNotWorkingWebsiteIsBroken, withAdditionalParameters: parameters)
+        })
+        return UIHostingController(rootView: BrokenSitePromptView(viewModel: viewModel), ignoreSafeArea: true)
     }
 
     func animateBackgroundTab() {
@@ -1630,6 +1707,7 @@ extension MainViewController: OmniBarDelegate {
         }
         loadQuery(query)
         hideSuggestionTray()
+        hideNotificationBarIfBrokenSitePromptShown()
         showHomeRowReminder()
     }
 
@@ -1788,12 +1866,13 @@ extension MainViewController: OmniBarDelegate {
         homeController.launchNewSearch()
         return selectQueryText
     }
-    
+
     func onRefreshPressed() {
         hideSuggestionTray()
         currentTab?.refresh()
+        hideNotificationBarIfBrokenSitePromptShown(afterRefresh: true)
     }
-    
+
     func onSharePressed() {
         hideSuggestionTray()
         guard let link = currentTab?.link else { return }
@@ -1984,7 +2063,7 @@ extension MainViewController: TabDelegate {
              didRequestNewWebViewWithConfiguration configuration: WKWebViewConfiguration,
              for navigationAction: WKNavigationAction,
              inheritingAttribution: AdClickAttributionLogic.State?) -> WKWebView? {
-
+        hideNotificationBarIfBrokenSitePromptShown()
         showBars()
         currentTab?.dismiss()
 
@@ -2045,7 +2124,7 @@ extension MainViewController: TabDelegate {
              openedByPage: Bool,
              inheritingAttribution attribution: AdClickAttributionLogic.State?) {
         _ = findInPageView.resignFirstResponder()
-
+        hideNotificationBarIfBrokenSitePromptShown()
         if openedByPage {
             showBars()
             newTabAnimation {
@@ -2188,6 +2267,15 @@ extension MainViewController: TabDelegate {
     func tabCheckIfItsBeingCurrentlyPresented(_ tab: TabViewController) -> Bool {
         return currentTab === tab
     }
+
+    func tabDidRequestRefresh(tab: TabViewController) {
+        hideNotificationBarIfBrokenSitePromptShown(afterRefresh: true)
+    }
+
+    func tabDidRequestNavigationToDifferentSite(tab: TabViewController) {
+        hideNotificationBarIfBrokenSitePromptShown()
+    }
+
 }
 
 extension MainViewController: TabSwitcherDelegate {
@@ -2225,6 +2313,7 @@ extension MainViewController: TabSwitcherDelegate {
     func closeTab(_ tab: Tab) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
         hideSuggestionTray()
+        hideNotificationBarIfBrokenSitePromptShown()
         tabManager.remove(at: index)
         updateCurrentTab()
         tabsBarController?.refresh(tabsModel: tabManager.model)
@@ -2266,7 +2355,7 @@ extension MainViewController: TabSwitcherButtonDelegate {
         guard currentTab ?? tabManager.current(createIfNeeded: true) != nil else {
             fatalError("Unable to get current tab")
         }
-
+        hideNotificationBarIfBrokenSitePromptShown()
         updatePreviewForCurrentTab {
             ViewHighlighter.hideAll()
             self.segueToTabSwitcher()
@@ -2378,7 +2467,6 @@ extension MainViewController: AutoClearWorker {
     func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
-        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.burn)
 
         tabManager.prepareAllTabsExceptCurrentForDataClearing()
         

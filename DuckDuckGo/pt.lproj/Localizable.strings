@@ -1914,6 +1914,21 @@
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "O DuckDuckGo bloqueia automaticamente os rastreadores ocultos enquanto navegas na Internet.\n[Sabe Mais](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
 
+/* Description on a report broken site page. */
+"site.not.working.description" = "Seleciona a opção que melhor descreve o problema que enfrentaste.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Ignorar";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Isto ajuda-nos a melhorar o navegador.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "O site não funciona? Informa o DuckDuckGo.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "O site não funciona";
+
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Submeter relatório";
 

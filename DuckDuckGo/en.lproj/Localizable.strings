@@ -1963,6 +1963,21 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo automatically blocks hidden trackers as you browse the web.\n[Learn More](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
 
+/* Description on a report broken site page. */
+"site.not.working.description" = "Select the option that best describes the problem you experienced.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Dismiss";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "This helps us improve the browser.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Site not working? Let DuckDuckGo know.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Website Is Broken";
+
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Submit Report";
 

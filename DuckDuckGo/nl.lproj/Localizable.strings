@@ -1914,6 +1914,21 @@
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo blokkeert automatisch verborgen trackers terwijl je op het web surft.\n[Meer informatie](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
 
+/* Description on a report broken site page. */
+"site.not.working.description" = "Selecteer de optie die het beste je probleem beschrijft.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Negeren";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Hiermee kunnen we de browser verbeteren.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Werkt de site niet? Laat het DuckDuckGo weten.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "De website werkt niet";
+
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Rapport versturen";
 

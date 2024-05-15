@@ -1036,7 +1036,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             rootViewController.segueToSettings()
             let navigationController = rootViewController.presentedViewController as? UINavigationController
             navigationController?.popToRootViewController(animated: false)
-            navigationController?.pushViewController(viewController, animated: true)
+            navigationController?.pushViewController(viewController, animated: false)
         }
     }
 }

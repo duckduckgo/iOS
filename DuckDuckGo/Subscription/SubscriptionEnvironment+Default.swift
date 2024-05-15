@@ -27,7 +27,7 @@ extension SubscriptionEnvironment {
 #else
         let environment: SubscriptionEnvironment.ServiceEnvironment = .production
 #endif
-        return SubscriptionEnvironment(serviceEnvironment: environment, platform: .appStore)
+        return SubscriptionEnvironment(serviceEnvironment: environment, purchasePlatform: .appStore)
     }
 }
 

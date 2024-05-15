@@ -128,7 +128,7 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     private let settings: VPNSettings
     private let defaults: UserDefaults
 
-    init(statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
+    init(statusObserver: ConnectionStatusObserver,
          serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
          networkProtectionAccessManager: NetworkProtectionAccessController,
          tokenStore: NetworkProtectionTokenStore,

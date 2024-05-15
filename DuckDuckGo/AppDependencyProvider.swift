@@ -49,6 +49,7 @@ protocol DependencyProvider {
     var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore { get }
     var networkProtectionAccessController: NetworkProtectionAccessController { get }
     var networkProtectionTunnelController: NetworkProtectionTunnelController { get }
+    var connectionObserver: ConnectionStatusObserver { get }
 }
 
 /// Provides dependencies for objects that are not directly instantiated
@@ -92,6 +93,8 @@ class AppDependencyProvider: DependencyProvider {
     let networkProtectionTunnelController: NetworkProtectionTunnelController
 
     let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
+    
+    let connectionObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession()
 
     // swiftlint:disable:next function_body_length
     init() {

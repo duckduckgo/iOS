@@ -77,7 +77,7 @@ class MockDependencyProvider: DependencyProvider {
                                                           authService: authService,
                                                           storePurchaseManaging: storePurchaseManaging,
                                                           currentEnvironment: SubscriptionEnvironment(serviceEnvironment: .production,
-                                                                                                      platform: .appStore),
+                                                                                                      purchasePlatform: .appStore),
                                                           canPurchase: true)
         } else {
             // This is used just for iOS <15, it's a sort of mocked environment that will not be used.

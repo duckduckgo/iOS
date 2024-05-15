@@ -133,7 +133,7 @@ class TabViewController: UIViewController {
     private var currentlyLoadedURL: URL?
     
 #if NETWORK_PROTECTION
-    private let netPConnectionObserver = ConnectionStatusObserverThroughSession()
+    private let netPConnectionObserver: ConnectionStatusObserver = AppDependencyProvider.shared.connectionObserver
     private var netPConnectionObserverCancellable: AnyCancellable?
     private var netPConnectionStatus: ConnectionStatus = .default
     private var netPConnected: Bool {

@@ -55,10 +55,6 @@ final class SettingsViewModel: ObservableObject {
     // Used to cache the lasts subscription state for up to a week
     private let subscriptionStateCache = UserDefaultsCache<SettingsState.Subscription>(key: UserDefaultsCacheKey.subscriptionState,
                                                                          settings: UserDefaultsCacheSettings(defaultExpirationInterval: .days(7)))
-#if NETWORK_PROTECTION
-    private let connectionObserver = ConnectionStatusObserverThroughSession()
-#endif
-    
     // Properties
     private lazy var isPad = UIDevice.current.userInterfaceIdiom == .pad
     private var cancellables = Set<AnyCancellable>()
@@ -523,10 +519,9 @@ extension SettingsViewModel {
 extension SettingsViewModel {
     
     private func setupSubscribers() {
-               
 
     #if NETWORK_PROTECTION
-        connectionObserver.publisher
+        AppDependencyProvider.shared.connectionObserver.publisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] hasActiveSubscription in
                 self?.updateNetPStatus(connectionStatus: hasActiveSubscription)

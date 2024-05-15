@@ -144,7 +144,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     public init(tunnelController: TunnelController,
                 settings: VPNSettings = VPNSettings(defaults: .networkProtectionGroupDefaults),
-                statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
+                statusObserver: ConnectionStatusObserver,
                 serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
                 errorObserver: ConnectionErrorObserver = ConnectionErrorObserverThroughSession(),
                 locationListRepository: NetworkProtectionLocationListRepository) {

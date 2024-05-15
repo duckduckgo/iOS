@@ -68,12 +68,16 @@ final class SubscriptionFlowViewModel: ObservableObject {
                                                                 allowedDomains: allowedDomains,
                                                                 contentBlocking: false)
         
-    init(purchaseURL: URL,
+    init(origin: String?,
          userScript: SubscriptionPagesUserScript,
          subFeature: SubscriptionPagesUseSubscriptionFeature,
          purchaseManager: PurchaseManager = PurchaseManager.shared,
          selectedFeature: SettingsViewModel.SettingsDeepLinkSection? = nil) {
-        self.purchaseURL = purchaseURL
+        if let origin {
+            purchaseURL = URL.subscriptionPurchase.appendingParameter(name: AttributionParameter.origin, value: origin)
+        } else {
+            purchaseURL = URL.subscriptionPurchase
+        }
         self.userScript = userScript
         self.subFeature = subFeature
         self.purchaseManager = purchaseManager

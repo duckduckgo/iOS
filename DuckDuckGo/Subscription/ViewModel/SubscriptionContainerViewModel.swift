@@ -37,13 +37,9 @@ final class SubscriptionContainerViewModel: ObservableObject {
         userScript: SubscriptionPagesUserScript,
         subFeature: SubscriptionPagesUseSubscriptionFeature
     ) {
-        var purchaseURL = URL.subscriptionPurchase
-        if let origin {
-            purchaseURL = purchaseURL.appendingParameter(name: AttributionParameter.origin, value: origin)
-        }
         self.userScript = userScript
         self.subFeature = subFeature
-        self.flow = SubscriptionFlowViewModel(purchaseURL: purchaseURL, userScript: userScript, subFeature: subFeature)
+        self.flow = SubscriptionFlowViewModel(origin: origin, userScript: userScript, subFeature: subFeature)
         self.restore = SubscriptionRestoreViewModel(userScript: userScript, subFeature: subFeature)
         self.email = SubscriptionEmailViewModel(userScript: userScript, subFeature: subFeature)
     }

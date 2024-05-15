@@ -95,7 +95,7 @@ public class HistoryManager: HistoryManaging {
         }
 
         if variantManager.isSupported(feature: .history) {
-            // Users in the experiment get the fature
+            // Users in the experiment get the feature
             return true
         }
 

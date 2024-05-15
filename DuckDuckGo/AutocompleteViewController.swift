@@ -72,7 +72,7 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
         self.appSettings = appSettings
         self.historyMessageManager = historyMessageManager
         self.model = AutocompleteViewModel(isAddressBarAtBottom: appSettings.currentAddressBarPosition == .bottom,
-                                           showMessage: historyMessageManager.shouldShow())
+                                           showMessage: historyManager.isHistoryFeatureEnabled() && historyMessageManager.shouldShow())
         super.init(rootView: AutocompleteView(model: model))
         self.model.delegate = self
     }
@@ -182,7 +182,7 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
     private func updateHeight() {
         guard let lastResults else { return }
 
-        let messageHeight = historyMessageManager.shouldShow() ? 196 : 0
+        let messageHeight = model.isMessageVisible ? 196 : 0
         let cellHeight = 44
         let sectionPadding = 10
         let controllerPadding = 32

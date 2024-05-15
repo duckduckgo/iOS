@@ -85,6 +85,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let crashCollection = CrashCollection(platform: .iOS, log: .generalLog)
     private var crashReportUploaderOnboarding: CrashCollectionOnboarding?
 
+    private let autofillPixelReporter = AutofillPixelReporter()
+
     // MARK: lifecycle
 
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
@@ -217,6 +219,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DaxDialogs.shared.primeForUse()
         }
 
+        PixelExperimentForBrokenSites.install()
         PixelExperiment.install()
 
         // MARK: Sync initialisation
@@ -668,6 +671,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             showKeyboardIfSettingOn = true
             syncService.scheduler.resumeSyncQueue()
         }
+
+        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {

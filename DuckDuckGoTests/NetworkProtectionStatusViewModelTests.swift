@@ -41,6 +41,7 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
         statusObserver = MockConnectionStatusObserver()
         serverInfoObserver = MockConnectionServerInfoObserver()
         viewModel = NetworkProtectionStatusViewModel(tunnelController: tunnelController,
+                                                     settings: VPNSettings(defaults: .networkProtectionGroupDefaults),
                                                      statusObserver: statusObserver,
                                                      serverInfoObserver: serverInfoObserver,
                                                      locationListRepository: MockNetworkProtectionLocationListRepository())

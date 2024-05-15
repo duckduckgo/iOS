@@ -48,6 +48,8 @@ class MockDependencyProvider: DependencyProvider {
     var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
     var networkProtectionAccessController: NetworkProtectionAccessController
     var networkProtectionTunnelController: NetworkProtectionTunnelController
+    var connectionObserver: NetworkProtection.ConnectionStatusObserver
+    var vpnSettings: NetworkProtection.VPNSettings
 
     init() {
         let defaultProvider = AppDependencyProvider()
@@ -103,5 +105,7 @@ class MockDependencyProvider: DependencyProvider {
                                                                   featureFlagger: featureFlagger,
                                                                   accountManager: accountManager)
 
+        connectionObserver = ConnectionStatusObserverThroughSession()
+        vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
     }
 }

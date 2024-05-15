@@ -4,7 +4,6 @@ on:
   schedule:
     - cron: '0 5 * * *' # run at 5 AM UTC
   workflow_dispatch:
-  push:
 
 jobs:
   build-for-sync-end-to-end-tests:

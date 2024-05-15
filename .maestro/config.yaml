@@ -2,10 +2,5 @@ appStartup:
   enabled: false
 appSize:
   enabled: false
-executionOrder:
-    continueOnFailure: false
-    flowsOrder:
-        - 04a_sync_data_prepare
-        - 04b_sync_data_validate
 flows:
   - "**"

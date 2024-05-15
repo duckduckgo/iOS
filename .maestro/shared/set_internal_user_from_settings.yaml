@@ -1,9 +1,8 @@
 appId: com.duckduckgo.mobile.ios
 ---
 
-- scroll
-- scroll
-- scroll
+- scrollUntilVisible:
+    element: All debug options
 - assertVisible: All debug options
 - tapOn: All debug options
 - tapOn: Internal User State

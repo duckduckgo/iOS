@@ -88,4 +88,8 @@ protocol TabDelegate: AnyObject {
     func tabCheckIfItsBeingCurrentlyPresented(_ tab: TabViewController) -> Bool
     
     func showBars()
+
+    func tabDidRequestRefresh(tab: TabViewController)
+
+    func tabDidRequestNavigationToDifferentSite(tab: TabViewController)
 }

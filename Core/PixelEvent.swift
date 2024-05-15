@@ -258,6 +258,11 @@ extension Pixel {
         case autofillLoginsImportSuccess
         case autofillLoginsImportFailure
 
+        case autofillActiveUser
+        case autofillEnabledUser
+        case autofillOnboardedUser
+        case autofillLoginsStacked
+
         case getDesktopCopy
         case getDesktopShare
         
@@ -575,13 +580,18 @@ extension Pixel {
         case toggleReportDoNotSend
         case toggleReportDismiss
 
-        case userBehaviorReloadTwice
-        case userBehaviorReloadAndRestart
-        case userBehaviorReloadAndFireButton
-        case userBehaviorReloadAndOpenSettings
-        case userBehaviorReloadAndTogglePrivacyControls
-        case userBehaviorFireButtonAndRestart
-        case userBehaviorFireButtonAndTogglePrivacyControls
+        case userBehaviorReloadTwiceWithin12Seconds
+        case userBehaviorReloadTwiceWithin24Seconds
+        case userBehaviorReloadAndRestartWithin30Seconds
+        case userBehaviorReloadAndRestartWithin50Seconds
+        case userBehaviorReloadThreeTimesWithin20Seconds
+        case userBehaviorReloadThreeTimesWithin40Seconds
+
+        case siteNotWorkingShown
+        case siteNotWorkingDismiss
+        case siteNotWorkingDismissByNavigation
+        case siteNotWorkingDismissByRefresh
+        case siteNotWorkingWebsiteIsBroken
 
         // MARK: History
         case historyStoreLoadFailed
@@ -934,6 +944,11 @@ extension Pixel.Event {
         case .autofillLoginsImportSuccess: return "m_autofill_logins_import_success"
         case .autofillLoginsImportFailure: return "m_autofill_logins_import_failure"
 
+        case .autofillActiveUser: return "m_autofill_activeuser"
+        case .autofillEnabledUser: return "m_autofill_enableduser"
+        case .autofillOnboardedUser: return "m_autofill_onboardeduser"
+        case .autofillLoginsStacked: return "m_autofill_logins_stacked"
+
         case .getDesktopCopy: return "m_get_desktop_copy"
         case .getDesktopShare: return "m_get_desktop_share"
 
@@ -1234,14 +1249,21 @@ extension Pixel.Event {
         // MARK: - Apple Ad Attribution
         case .appleAdAttribution: return "m_apple-ad-attribution"
 
-            // MARK: - User behavior
-        case .userBehaviorReloadTwice: return "m_reload-twice"
-        case .userBehaviorReloadAndRestart: return "m_reload-and-restart"
-        case .userBehaviorReloadAndFireButton: return "m_reload-and-fire-button"
-        case .userBehaviorReloadAndOpenSettings: return "m_reload-and-open-settings"
-        case .userBehaviorReloadAndTogglePrivacyControls: return "m_reload-and-toggle-privacy-controls"
-        case .userBehaviorFireButtonAndRestart: return "m_fire-button-and-restart"
-        case .userBehaviorFireButtonAndTogglePrivacyControls: return "m_fire-button-and-toggle-privacy-controls"
+        // MARK: - User behavior
+        case .userBehaviorReloadTwiceWithin12Seconds: return "m_reload-twice-within-12-seconds"
+        case .userBehaviorReloadTwiceWithin24Seconds: return "m_reload-twice-within-24-seconds"
+
+        case .userBehaviorReloadAndRestartWithin30Seconds: return "m_reload-and-restart-within-30-seconds"
+        case .userBehaviorReloadAndRestartWithin50Seconds: return "m_reload-and-restart-within-50-seconds"
+
+        case .userBehaviorReloadThreeTimesWithin20Seconds: return "m_reload-three-times-within-20-seconds"
+        case .userBehaviorReloadThreeTimesWithin40Seconds: return "m_reload-three-times-within-40-seconds"
+
+        case .siteNotWorkingShown: return "m_site-not-working_shown"
+        case .siteNotWorkingDismiss: return "m_site-not-working_dismiss"
+        case .siteNotWorkingDismissByNavigation: return "m_site-not-working.dismiss-by-navigation"
+        case .siteNotWorkingDismissByRefresh: return "m_site-not-working.dismiss-by-refresh"
+        case .siteNotWorkingWebsiteIsBroken: return "m_site-not-working_website-is-broken"
 
         // MARK: - History debug
         case .historyStoreLoadFailed: return "m_debug_history-store-load-failed"

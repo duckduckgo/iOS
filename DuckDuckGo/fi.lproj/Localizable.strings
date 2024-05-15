@@ -1914,6 +1914,21 @@
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo estää piilotetut seurantalaitteet automaattisesti, kun selaat verkkoa.\n[Lue lisää] (ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
 
+/* Description on a report broken site page. */
+"site.not.working.description" = "Valitse vaihtoehto, joka parhaiten kuvaa ongelmaa.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Hylkää";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Tämä auttaa meitä parantamaan selainta.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Eikö sivusto toimi? Kerro siitä DuckDuckGolle.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Verkkosivusto on viallinen";
+
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Lähetä raportti";
 

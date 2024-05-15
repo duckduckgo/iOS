@@ -1914,6 +1914,21 @@
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo автоматично блокира скритите тракери, докато сърфирате в мрежата.\n[Научете повече](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
 
+/* Description on a report broken site page. */
+"site.not.working.description" = "Изберете опцията, която най-добре описва възникналия проблем.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Отказване";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Това ни помага да подобрим браузъра.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Сайтът не работи ли? Уведомете DuckDuckGo.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Уебсайтът е повреден";
+
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Изпращане на доклад";
 

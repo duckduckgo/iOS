@@ -181,6 +181,7 @@ struct RemoteMessaging {
                                                            isWidgetInstalled: isWidgetInstalled,
                                                            isNetPWaitlistUser: isNetworkProtectionWaitlistUser,
                                                            daysSinceNetPEnabled: daysSinceNetworkProtectionEnabled),
+                percentileStore: RemoteMessagingPercentileUserDefaultsStore(userDefaults: .standard),
                 dismissedMessageIds: remoteMessagingStore.fetchDismissedRemoteMessageIds()
             )
 

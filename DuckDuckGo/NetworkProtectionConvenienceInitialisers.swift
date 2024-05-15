@@ -79,7 +79,7 @@ extension ConnectionServerInfoObserverThroughSession {
 extension NetworkProtectionCodeRedemptionCoordinator {
     
     convenience init(isManualCodeRedemptionFlow: Bool = false, accountManager: AccountManaging) {
-        let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+        let settings = AppDependencyProvider.shared.vpnSettings
         let networkProtectionVisibility = AppDependencyProvider.shared.vpnFeatureVisibility
         self.init(
             environment: settings.selectedEnvironment,
@@ -95,7 +95,7 @@ extension NetworkProtectionVPNSettingsViewModel {
     convenience init() {
         self.init(
             notificationsAuthorization: NotificationsAuthorizationController(),
-            settings: VPNSettings(defaults: .networkProtectionGroupDefaults)
+            settings: AppDependencyProvider.shared.vpnSettings
         )
     }
 }
@@ -103,7 +103,7 @@ extension NetworkProtectionVPNSettingsViewModel {
 extension NetworkProtectionLocationListCompositeRepository {
     
     convenience init(accountManager: AccountManaging) {
-        let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+        let settings = AppDependencyProvider.shared.vpnSettings
         self.init(
             environment: settings.selectedEnvironment,
             tokenStore: AppDependencyProvider.shared.networkProtectionKeychainTokenStore,
@@ -119,7 +119,7 @@ extension NetworkProtectionVPNLocationViewModel {
         let locationListRepository = NetworkProtectionLocationListCompositeRepository(accountManager: accountManager)
         self.init(
             locationListRepository: locationListRepository,
-            settings: VPNSettings(defaults: .networkProtectionGroupDefaults)
+            settings: AppDependencyProvider.shared.vpnSettings
         )
     }
 }

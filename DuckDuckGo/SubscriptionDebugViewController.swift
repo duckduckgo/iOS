@@ -323,7 +323,7 @@ import NetworkProtection
             SubscriptionManager.save(subscriptionEnvironment: newSubscriptionEnvironment, userDefaults: subscriptionUserDefaults)
 
             // The VPN environment is forced to match the subscription environment
-            let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+            let settings = AppDependencyProvider.shared.vpnSettings
             switch newSubscriptionEnvironment.serviceEnvironment {
             case .production:
                 settings.selectedEnvironment = .production

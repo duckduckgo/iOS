@@ -631,7 +631,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     private func configure(_ cell: UITableViewCell, forVisibilityRow row: Int) {
         switch FeatureVisibilityRows(rawValue: row) {
         case .toggleSelectedEnvironment:
-            let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+            let settings = AppDependencyProvider.shared.vpnSettings
             if settings.selectedEnvironment == .production {
                 cell.textLabel?.text = "Selected Environment: PRODUCTION"
             } else {
@@ -649,7 +649,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
             cell.textLabel?.font = .monospacedSystemFont(ofSize: 13.0, weight: .regular)
             cell.textLabel?.text = """
-Endpoint: \(VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment.endpointURL.absoluteString)
+Endpoint: \(AppDependencyProvider.shared.vpnSettings.selectedEnvironment.endpointURL.absoluteString)
 
 isPrivacyProLaunched: \(vpnVisibility.isPrivacyProLaunched() ? "YES" : "NO")
 isWaitlistBetaActive: \(vpnVisibility.isWaitlistBetaActive() ? "YES" : "NO")

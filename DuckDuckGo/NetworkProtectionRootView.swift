@@ -39,6 +39,7 @@ struct NetworkProtectionRootView: View {
         inviteViewModel = NetworkProtectionInviteViewModel(redemptionCoordinator: redemptionCoordinator, completion: inviteCompletion)
         let locationListRepository = NetworkProtectionLocationListCompositeRepository(accountManager: accountManager)
         statusViewModel = NetworkProtectionStatusViewModel(tunnelController: AppDependencyProvider.shared.networkProtectionTunnelController,
+                                                           settings: AppDependencyProvider.shared.vpnSettings,
                                                            statusObserver: AppDependencyProvider.shared.connectionObserver,
                                                            locationListRepository: locationListRepository)
         // Prefetching this now for snappy load times on the locations screens

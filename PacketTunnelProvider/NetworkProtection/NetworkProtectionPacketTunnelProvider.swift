@@ -284,6 +284,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+        settings.alignTo(subscriptionEnvironment: subscriptionEnvironment)
+
         let notificationsPresenterDecorator = NetworkProtectionNotificationsPresenterTogglableDecorator(
             settings: settings,
             defaults: .networkProtectionGroupDefaults,

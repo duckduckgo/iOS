@@ -394,7 +394,7 @@ import WebKit
 
     private func presentExpiredEntitlementNotificationIfNeeded() {
         let presenter = NetworkProtectionNotificationsPresenterTogglableDecorator(
-            settings: VPNSettings(defaults: .networkProtectionGroupDefaults),
+            settings: AppDependencyProvider.shared.vpnSettings,
             defaults: .networkProtectionGroupDefaults,
             wrappee: NetworkProtectionUNNotificationPresenter()
         )

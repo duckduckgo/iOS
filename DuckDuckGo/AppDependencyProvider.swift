@@ -50,6 +50,7 @@ protocol DependencyProvider {
     var networkProtectionAccessController: NetworkProtectionAccessController { get }
     var networkProtectionTunnelController: NetworkProtectionTunnelController { get }
     var connectionObserver: ConnectionStatusObserver { get }
+    var vpnSettings: VPNSettings { get }
 }
 
 /// Provides dependencies for objects that are not directly instantiated
@@ -95,6 +96,7 @@ class AppDependencyProvider: DependencyProvider {
     let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
     
     let connectionObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession()
+    let vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
 
     // swiftlint:disable:next function_body_length
     init() {
@@ -104,6 +106,8 @@ class AppDependencyProvider: DependencyProvider {
         // MARK: - Configure Subscription
         let subscriptionUserDefaults = UserDefaults(suiteName: subscriptionAppGroup)!
         let subscriptionEnvironment = SubscriptionManager.getSavedOrDefaultEnvironment(userDefaults: subscriptionUserDefaults)
+        vpnSettings.alignTo(subscriptionEnvironment: subscriptionEnvironment)
+
         let entitlementsCache = UserDefaultsCache<[Entitlement]>(userDefaults: subscriptionUserDefaults,
                                                                  key: UserDefaultsCacheKey.subscriptionEntitlements,
                                                                  settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
@@ -157,9 +161,8 @@ class AppDependencyProvider: DependencyProvider {
                                                                               accountManager: subscriptionManager.accountManager,
                                                                               tokenStore: networkProtectionKeychainTokenStore,
                                                                               networkProtectionTunnelController: networkProtectionTunnelController)
-        self.vpnFeatureVisibility = DefaultNetworkProtectionVisibility(networkProtectionAccessManager: networkProtectionAccessController,
-                                                                       featureFlagger: featureFlagger,
-                                                                       accountManager: accountManager)
+        vpnFeatureVisibility = DefaultNetworkProtectionVisibility(networkProtectionAccessManager: networkProtectionAccessController,
+                                                                  featureFlagger: featureFlagger,
+                                                                  accountManager: accountManager)
     }
-
 }

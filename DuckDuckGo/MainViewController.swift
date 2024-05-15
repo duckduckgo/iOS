@@ -1442,7 +1442,7 @@ class MainViewController: UIViewController {
 
     private func presentExpiredEntitlementNotification() {
         let presenter = NetworkProtectionNotificationsPresenterTogglableDecorator(
-            settings: VPNSettings(defaults: .networkProtectionGroupDefaults),
+            settings: AppDependencyProvider.shared.vpnSettings,
             defaults: .networkProtectionGroupDefaults,
             wrappee: NetworkProtectionUNNotificationPresenter()
         )

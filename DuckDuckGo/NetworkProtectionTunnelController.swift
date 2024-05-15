@@ -187,7 +187,7 @@ final class NetworkProtectionTunnelController: TunnelController {
         } catch {
             throw StartError.fetchAuthTokenFailed(error)
         }
-        options[NetworkProtectionOptionKey.selectedEnvironment] = VPNSettings(defaults: .networkProtectionGroupDefaults)
+        options[NetworkProtectionOptionKey.selectedEnvironment] = AppDependencyProvider.shared.vpnSettings
             .selectedEnvironment.rawValue as NSString
 
         do {

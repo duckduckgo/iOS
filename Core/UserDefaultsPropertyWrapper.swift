@@ -134,11 +134,16 @@ public struct UserDefaultsWrapper<T> {
         case appleAdAttributionReportCompleted = "com.duckduckgo.ios.appleAdAttributionReport.completed"
 
         case didRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didRefreshTimestamp"
-        case didBurnTimestamp = "com.duckduckgo.ios.userBehavior.didBurnTimestamp"
+        case didDoubleRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didDoubleRefreshTimestamp"
+        case didRefreshCounter = "com.duckduckgo.ios.userBehavior.didRefreshCounter"
+        case userDidInteractWithBrokenSitePrompt = "com.duckduckgo.ios.userBehavior.userDidInteractWithBrokenSitePrompt"
 
         case pixelExperimentInstalled = "com.duckduckgo.ios.pixel.experiment.installed"
         case pixelExperimentCohort = "com.duckduckgo.ios.pixel.experiment.cohort"
         case pixelExperimentEnrollmentDate = "com.duckduckgo.ios.pixel.experiment.enrollment.date"
+
+        case pixelExperimentForBrokenSitesInstalled = "com.duckduckgo.ios.pixel.experiment.for.broken.sites.installed"
+        case pixelExperimentForBrokenSitesCohort = "com.duckduckgo.ios.pixel.experiment.for.broken.sites.cohort"
 
     }
 

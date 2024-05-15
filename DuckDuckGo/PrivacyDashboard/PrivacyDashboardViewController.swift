@@ -133,7 +133,6 @@ final class PrivacyDashboardViewController: UIViewController {
         }
         
         contentBlockingManager.scheduleCompilation()
-        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.toggleProtections)
     }
     
     private func privacyDashboardCloseHandler() {
@@ -224,7 +223,6 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
                                     didRequestSubmitBrokenSiteReportWithCategory category: String,
                                     description: String) {
         Task { @MainActor in
-            let source: BrokenSiteReport.Source = privacyDashboardController.initDashboardMode == .report ? .appMenu : .dashboard
             do {
                 let report = try await makeBrokenSiteReport(category: category, description: description, source: source)
                 try brokenSiteReporter.report(report, reportMode: .regular)
@@ -234,6 +232,14 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
 
             ActionMessageView.present(message: UserText.feedbackSumbittedConfirmation)
             privacyDashboardCloseHandler()
+        }
+
+        var source: BrokenSiteReport.Source {
+            switch privacyDashboardController.initDashboardMode {
+            case .report: return .appMenu
+            case .toggleReport, .dashboard: return .dashboard
+            case .prompt(let event): return .prompt(event)
+            }
         }
     }
 

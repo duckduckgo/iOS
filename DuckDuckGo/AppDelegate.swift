@@ -210,6 +210,7 @@ import WebKit
             DaxDialogs.shared.primeForUse()
         }
 
+        PixelExperimentForBrokenSites.install()
         PixelExperiment.install()
 
         // MARK: Sync initialisation
@@ -644,6 +645,8 @@ import WebKit
             showKeyboardIfSettingOn = true
             syncService.scheduler.resumeSyncQueue()
         }
+
+        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {

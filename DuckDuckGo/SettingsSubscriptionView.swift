@@ -87,7 +87,7 @@ struct SettingsSubscriptionView: View {
             SettingsCustomCell(content: { subscriptionDescriptionView })
             
             let subscribeView = SubscriptionContainerViewFactory.makeSubscribeFlow(
-                info: .default,
+                origin: nil,
                 navigationCoordinator: subscriptionNavigationCoordinator
             ).navigationViewStyle(.stack)
             let restoreView = SubscriptionContainerViewFactory.makeRestoreFlow(navigationCoordinator: subscriptionNavigationCoordinator)
@@ -123,7 +123,7 @@ struct SettingsSubscriptionView: View {
             })
                         
             let subscribeView = SubscriptionContainerViewFactory.makeSubscribeFlow(
-                info: .default,
+                origin: nil,
                 navigationCoordinator: subscriptionNavigationCoordinator
             ).navigationViewStyle(.stack)
             NavigationLink(

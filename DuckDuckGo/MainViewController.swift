@@ -1373,8 +1373,8 @@ class MainViewController: UIViewController {
                 switch notification.name {
                 case .urlInterceptPrivacyPro:
                     let deepLinkTarget: SettingsViewModel.SettingsDeepLinkSection
-                    if let info = notification.userInfo?[AttributionParameter.subscriptionFlowInfo] as? SubscriptionFlowInfo {
-                        deepLinkTarget = .subscriptionFlow(info)
+                    if let origin = notification.userInfo?[AttributionParameter.origin] as? String {
+                        deepLinkTarget = .subscriptionFlow(origin: origin)
                     } else {
                         deepLinkTarget = .subscriptionFlow()
                     }

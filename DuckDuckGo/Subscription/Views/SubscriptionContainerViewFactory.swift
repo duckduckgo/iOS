@@ -22,11 +22,11 @@ import SwiftUI
 @available(iOS 15.0, *)
 enum SubscriptionContainerViewFactory {
 
-    static func makeSubscribeFlow(info: SubscriptionFlowInfo, navigationCoordinator: SubscriptionNavigationCoordinator) -> some View {
+    static func makeSubscribeFlow(origin: String?, navigationCoordinator: SubscriptionNavigationCoordinator) -> some View {
         let viewModel = SubscriptionContainerViewModel(
-            purchaseURL: info.url,
+            origin: origin,
             userScript: SubscriptionPagesUserScript(),
-            subFeature: SubscriptionPagesUseSubscriptionFeature(subscriptionAttributionOrigin: info.origin)
+            subFeature: SubscriptionPagesUseSubscriptionFeature(subscriptionAttributionOrigin: origin)
         )
         return SubscriptionContainerView(currentView: .subscribe, viewModel: viewModel)
             .environmentObject(navigationCoordinator)
@@ -34,6 +34,7 @@ enum SubscriptionContainerViewFactory {
 
     static func makeRestoreFlow(navigationCoordinator: SubscriptionNavigationCoordinator) -> some View {
         let viewModel = SubscriptionContainerViewModel(
+            origin: nil,
             userScript: SubscriptionPagesUserScript(),
             subFeature: SubscriptionPagesUseSubscriptionFeature(subscriptionAttributionOrigin: nil)
         )

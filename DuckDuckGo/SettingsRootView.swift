@@ -114,8 +114,8 @@ struct SettingsRootView: View {
             SubscriptionPIRView()
         case .itr:
             SubscriptionITPView()
-        case let .subscriptionFlow(info):
-            SubscriptionContainerViewFactory.makeSubscribeFlow(info: info, navigationCoordinator: subscriptionNavigationCoordinator)
+        case let .subscriptionFlow(origin):
+            SubscriptionContainerViewFactory.makeSubscribeFlow(origin: origin, navigationCoordinator: subscriptionNavigationCoordinator)
         case .subscriptionRestoreFlow:
             SubscriptionContainerViewFactory.makeRestoreFlow(navigationCoordinator: subscriptionNavigationCoordinator)
         default:

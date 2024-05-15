@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Subscription
 import Combine
 
 @available(iOS 15.0, *)
@@ -32,10 +33,14 @@ final class SubscriptionContainerViewModel: ObservableObject {
     
     
     init(
-        purchaseURL: URL = .subscriptionPurchase,
+        origin: String?,
         userScript: SubscriptionPagesUserScript,
         subFeature: SubscriptionPagesUseSubscriptionFeature
     ) {
+        var purchaseURL = URL.subscriptionPurchase
+        if let origin {
+            purchaseURL = purchaseURL.appendingParameter(name: AttributionParameter.origin, value: origin)
+        }
         self.userScript = userScript
         self.subFeature = subFeature
         self.flow = SubscriptionFlowViewModel(purchaseURL: purchaseURL, userScript: userScript, subFeature: subFeature)

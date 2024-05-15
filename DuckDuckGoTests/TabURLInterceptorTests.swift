@@ -63,7 +63,7 @@ class TabURLInterceptorDefaultTests: XCTestCase {
         }
     }
 
-    func testWhenURLIsPrivacyProAndHasOriginQueryParameterThenNotificationHasURLWithOriginAndOriginIsSet() throws {
+    func testWhenURLIsPrivacyProAndHasOriginQueryParameterThenNotificationUserInfoHasOriginSet() throws {
         // GIVEN
         var capturedNotification: Notification?
         _ = self.expectation(forNotification: .urlInterceptPrivacyPro, object: nil, handler: { notification in
@@ -71,19 +71,17 @@ class TabURLInterceptorDefaultTests: XCTestCase {
             return true
         })
         let url = try XCTUnwrap(URL(string: "https://duckduckgo.com/pro?origin=test_origin"))
-        let expectedQueryItem = URLQueryItem(name: "origin", value: "test_origin")
-
+        
         // WHEN
         _ = urlInterceptor.allowsNavigatingTo(url: url)
 
         // THEN
         waitForExpectations(timeout: 1)
-        let subscriptionFlowInfo = try XCTUnwrap(capturedNotification?.userInfo?[AttributionParameter.subscriptionFlowInfo] as? SubscriptionFlowInfo)
-        XCTAssertEqual(subscriptionFlowInfo.url, URL.subscriptionPurchase.appending(percentEncodedQueryItem: expectedQueryItem))
-        XCTAssertEqual(subscriptionFlowInfo.origin, "test_origin")
+        let origin = try XCTUnwrap(capturedNotification?.userInfo?[AttributionParameter.origin] as? String)
+        XCTAssertEqual(origin, "test_origin")
     }
 
-    func testWhenURLIsPrivacyProAndDoesNotHaveOriginQueryParameterThenNotificationHasDefaultURLAndOriginIsNil() throws {
+    func testWhenURLIsPrivacyProAndDoesNotHaveOriginQueryParameterThenNotificationUserInfoDoesNotHaveOriginSet() throws {
         // GIVEN
         var capturedNotification: Notification?
         _ = self.expectation(forNotification: .urlInterceptPrivacyPro, object: nil, handler: { notification in
@@ -97,8 +95,6 @@ class TabURLInterceptorDefaultTests: XCTestCase {
 
         // THEN
         waitForExpectations(timeout: 1)
-        let subscriptionFlowInfo = try XCTUnwrap(capturedNotification?.userInfo?[AttributionParameter.subscriptionFlowInfo] as? SubscriptionFlowInfo)
-        XCTAssertEqual(subscriptionFlowInfo.url, URL.subscriptionPurchase)
-        XCTAssertNil(subscriptionFlowInfo.origin)
+        XCTAssertNil(capturedNotification?.userInfo?[AttributionParameter.origin] as? String)
     }
 }

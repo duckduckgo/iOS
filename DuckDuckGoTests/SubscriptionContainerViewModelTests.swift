@@ -24,16 +24,25 @@ import XCTest
 final class SubscriptionContainerViewModelTests: XCTestCase {
     private var sut: SubscriptionContainerViewModel!
 
-    func testWhenInitWithPurchaseURLThenSubscriptionFlowReflectsURL() {
+    func testWhenInitWithOriginThenSubscriptionFlowPurchaseURLHasOriginSet() {
         // GIVEN
+        let origin = "test_origin"
         let queryParameter = URLQueryItem(name: "origin", value: "test_origin")
-        let url = URL.subscriptionPurchase.appending(percentEncodedQueryItem: queryParameter)
+        let expectedURL = URL.subscriptionPurchase.appending(percentEncodedQueryItem: queryParameter)
 
         // WHEN
-        sut = .init(purchaseURL: url, userScript: .init(), subFeature: .init(subscriptionAttributionOrigin: nil))
+        sut = .init(origin: origin, userScript: .init(), subFeature: .init(subscriptionAttributionOrigin: nil))
 
         // THEN
-        XCTAssertEqual(sut.flow.purchaseURL, url)
+        XCTAssertEqual(sut.flow.purchaseURL, expectedURL)
+    }
+
+    func testWhenInitWithoutOriginThenSubscriptionFlowPurchaseURLDoesNotHaveOriginSet() {
+        // WHEN
+        sut = .init(origin: nil, userScript: .init(), subFeature: .init(subscriptionAttributionOrigin: nil))
+
+        // THEN
+        XCTAssertEqual(sut.flow.purchaseURL, URL.subscriptionPurchase)
     }
 
 }

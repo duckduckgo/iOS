@@ -691,7 +691,7 @@ extension SettingsViewModel {
         case netP
         case dbp
         case itr
-        case subscriptionFlow(SubscriptionFlowInfo = .default)
+        case subscriptionFlow(origin: String? = nil)
         case subscriptionRestoreFlow
         // Add other cases as needed
 

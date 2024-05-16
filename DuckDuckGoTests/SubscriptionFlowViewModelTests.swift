@@ -19,19 +19,25 @@
 
 import XCTest
 @testable import DuckDuckGo
+import Subscription
+import SubscriptionTestingUtilities
 
 @available(iOS 15.0, *)
 final class SubscriptionFlowViewModelTests: XCTestCase {
     private var sut: SubscriptionFlowViewModel!
 
+    let mockDependencyProvider = MockDependencyProvider()
+
     func testWhenInitWithOriginThenSubscriptionFlowPurchaseURLHasOriginSet() {
         // GIVEN
         let origin = "test_origin"
         let queryParameter = URLQueryItem(name: "origin", value: "test_origin")
-        let expectedURL = URL.subscriptionPurchase.appending(percentEncodedQueryItem: queryParameter)
+        let expectedURL = SubscriptionURL.purchase.subscriptionURL(environment: .production).appending(percentEncodedQueryItem: queryParameter)
 
         // WHEN
-        sut = .init(origin: origin, userScript: .init(), subFeature: .init(subscriptionAttributionOrigin: nil))
+        sut = .init(origin: origin, userScript: .init(), subFeature: .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
+                                                                           subscriptionAttributionOrigin: nil),
+                    subscriptionManager: mockDependencyProvider.subscriptionManager)
 
         // THEN
         XCTAssertEqual(sut.purchaseURL, expectedURL)
@@ -39,10 +45,12 @@ final class SubscriptionFlowViewModelTests: XCTestCase {
 
     func testWhenInitWithoutOriginThenSubscriptionFlowPurchaseURLDoesNotHaveOriginSet() {
         // WHEN
-        sut = .init(origin: nil, userScript: .init(), subFeature: .init(subscriptionAttributionOrigin: nil))
+        sut = .init(origin: nil, userScript: .init(), subFeature: .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
+                                                                        subscriptionAttributionOrigin: nil),
+                    subscriptionManager: mockDependencyProvider.subscriptionManager)
 
         // THEN
-        XCTAssertEqual(sut.purchaseURL, URL.subscriptionPurchase)
+        XCTAssertEqual(sut.purchaseURL, SubscriptionURL.purchase.subscriptionURL(environment: .production))
     }
     
 }

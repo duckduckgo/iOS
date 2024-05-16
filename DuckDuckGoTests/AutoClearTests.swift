@@ -86,14 +86,17 @@ class AutoClearTests: XCTestCase {
             appSettings.autoClearTiming = timing
             
             logic.startClearingTimer(Date().timeIntervalSince1970 - delay + 1)
-            await logic.clearDataIfEnabledAndTimeExpired()
+
+            // Swift Concurrency appears to sometimes get delayed so we pass the base time internal to use just for tests
+            //  otherwise it's not computed until the functional is called
+            await logic.clearDataIfEnabledAndTimeExpired(baseTimeInterval: Date().timeIntervalSince1970)
 
             XCTAssertEqual(worker.clearNavigationStackInvocationCount, iterationCount)
             XCTAssertEqual(worker.forgetDataInvocationCount, iterationCount)
             
             logic.startClearingTimer(Date().timeIntervalSince1970 - delay - 1)
-            await logic.clearDataIfEnabledAndTimeExpired()
-            
+            await logic.clearDataIfEnabledAndTimeExpired(baseTimeInterval: Date().timeIntervalSince1970)
+
             iterationCount += 1
             XCTAssertEqual(worker.clearNavigationStackInvocationCount, iterationCount)
             XCTAssertEqual(worker.forgetDataInvocationCount, iterationCount)

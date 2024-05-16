@@ -66,7 +66,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     init(subscriptionManager: SubscriptionManaging = AppDependencyProvider.shared.subscriptionManager) {
         self.subscriptionManager = subscriptionManager
-        let subscriptionFAQURL = SubscriptionURL.FAQ.subscriptionURL(environment: subscriptionManager.currentEnvironment.serviceEnvironment)
+        let subscriptionFAQURL = SubscriptionURL.faq.subscriptionURL(environment: subscriptionManager.currentEnvironment.serviceEnvironment)
         self.state = State(faqURL: subscriptionFAQURL)
 
         setupSubscriptionUpdater()

@@ -46,9 +46,7 @@ final class AutofillPixelReporter {
 
         createNotificationObservers()
 
-        if shouldFireOnboardedUserPixel() {
-            DailyPixel.fire(pixel: .autofillOnboardedUser)
-        }
+        checkIfOnboardedUser()
     }
 
     private func createNotificationObservers() {
@@ -83,6 +81,14 @@ final class AutofillPixelReporter {
         autofillFillDate = Date()
 
         firePixels(pixelsToFireFor(.fill))
+    }
+
+    func checkIfOnboardedUser() {
+        guard !autofillOnboardedUser else { return }
+
+        if shouldFireOnboardedUserPixel() {
+            firePixels([.autofillOnboardedUser])
+        }
     }
 
     func pixelsToFireFor(_ type: EventType) -> [Pixel.Event] {

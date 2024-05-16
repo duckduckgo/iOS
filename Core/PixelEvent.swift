@@ -644,6 +644,7 @@ extension Pixel {
         case privacyProVPNAccessRevokedDialogShown
         case privacyProVPNBetaStoppedWhenPrivacyProEnabled
         case privacyProTransactionProgressNotHiddenAfter60s
+        case privacyProSuccessfulSubscriptionAttribution
 
         // MARK: Pixel Experiment
         case pixelExperimentEnrollment
@@ -1318,6 +1319,7 @@ extension Pixel.Event {
         case .privacyProSubscriptionManagementPlanBilling: return "m_privacy-pro_settings_change-plan-or-billing_click"
         case .privacyProSubscriptionManagementRemoval: return "m_privacy-pro_settings_remove-from-device_click"
         case .privacyProTransactionProgressNotHiddenAfter60s: return "m_privacy-pro_progress_not_hidden_after_60s"
+        case .privacyProSuccessfulSubscriptionAttribution: return "m_subscribe"
 
         // MARK: Pixel Experiment
         case .pixelExperimentEnrollment: return "pixel_experiment_enrollment"

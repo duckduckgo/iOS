@@ -59,11 +59,11 @@ final class AutofillPixelReporterTests: XCTestCase {
         XCTAssertTrue(autofillPixelReporter.pixelsToFireFor(.searchDAU).isEmpty)
     }
 
-    func testWhenUserSearchDauIsNotTodayAndEventTypeIsFillThenOnePixelWillBeFired() {
+    func testWhenUserSearchDauIsNotTodayAndEventTypeIsFillThenNoPixelsWillBeFired() {
         autofillPixelReporter.autofillSearchDauDate = Date().addingTimeInterval(-2 * 60 * 60 * 24)
         autofillPixelReporter.autofillFillDate = Date().addingTimeInterval(-2 * 60 * 60 * 24)
 
-        XCTAssertEqual(autofillPixelReporter.pixelsToFireFor(.fill).count, 1)
+        XCTAssertTrue(autofillPixelReporter.pixelsToFireFor(.fill).isEmpty)
     }
 
     func testWhenUserSearchDauIsTodayAndAutofillDateIsTodayAndEventTypeIsSearchDauAndAccountsCountIsLessThanTenThenTwoPixelWillBeFired() {

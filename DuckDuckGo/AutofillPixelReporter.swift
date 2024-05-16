@@ -96,15 +96,16 @@ final class AutofillPixelReporter {
 
         if shouldFireActiveUserPixel() {
             pixelsToFire.append(.autofillActiveUser)
+            pixelsToFire.append(.autofillLoginsStacked)
         }
 
         switch type {
-        case .fill:
-            pixelsToFire.append(.autofillLoginsStacked)
         case .searchDAU:
             if shouldFireEnabledUserPixel() {
                 pixelsToFire.append(.autofillEnabledUser)
             }
+        default:
+            break
         }
 
         return pixelsToFire

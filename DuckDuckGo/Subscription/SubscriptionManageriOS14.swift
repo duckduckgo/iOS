@@ -27,7 +27,7 @@ class SubscriptionManageriOS14: SubscriptionManaging {
     var authService: AuthService = AuthService(currentServiceEnvironment: .production)
 
     @available(iOS 15, *)
-    func getStorePurchaseManager() -> StorePurchaseManaging {
+    func storePurchaseManager() -> StorePurchaseManaging {
         StorePurchaseManager()
     }
     var currentEnvironment: SubscriptionEnvironment = SubscriptionEnvironment.default

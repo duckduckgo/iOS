@@ -250,7 +250,7 @@ import NetworkProtection
             
     private func syncAppleIDAccount() {
         Task {
-            switch await subscriptionManager.getStorePurchaseManager().syncAppleIDAccount() {
+            switch await subscriptionManager.storePurchaseManager().syncAppleIDAccount() {
             case .success:
                 showAlert(title: "Account synced!", message: "")
             case .failure(let error):

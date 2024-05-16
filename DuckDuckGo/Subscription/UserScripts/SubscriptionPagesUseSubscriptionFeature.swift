@@ -190,7 +190,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     func getSubscriptionOptions(params: Any, original: WKScriptMessage) async -> Encodable? {
         resetSubscriptionFlow()
-        if let subscriptionOptions = await subscriptionManager.getStorePurchaseManager().subscriptionOptions() {
+        if let subscriptionOptions = await subscriptionManager.storePurchaseManager().subscriptionOptions() {
             if AppDependencyProvider.shared.subscriptionFeatureAvailability.isSubscriptionPurchaseAllowed {
                 return subscriptionOptions
             } else {
@@ -223,7 +223,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
         
         // Check for active subscriptions
-        if await subscriptionManager.getStorePurchaseManager().hasActiveSubscription() {
+        if await subscriptionManager.storePurchaseManager().hasActiveSubscription() {
             setTransactionError(.hasActiveSubscription)
             Pixel.fire(pixel: .privacyProRestoreAfterPurchaseAttempt)
             setTransactionStatus(.idle)

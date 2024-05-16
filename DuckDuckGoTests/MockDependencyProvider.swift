@@ -78,7 +78,7 @@ class MockDependencyProvider: DependencyProvider {
             subscriptionManager = SubscriptionManagerMock(accountManager: accountManager,
                                                           subscriptionService: subscriptionService,
                                                           authService: authService,
-                                                          storePurchaseManaging: storePurchaseManaging,
+                                                          storePurchaseManager: storePurchaseManaging,
                                                           currentEnvironment: SubscriptionEnvironment(serviceEnvironment: .production,
                                                                                                       purchasePlatform: .appStore),
                                                           canPurchase: true)

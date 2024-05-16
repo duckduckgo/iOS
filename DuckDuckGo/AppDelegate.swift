@@ -149,8 +149,6 @@ import WebKit
         _ = DefaultUserAgentManager.shared
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
-            UIApplication.shared.keyWindow?.layer.speed = Float.leastNonzeroMagnitude
-
             Pixel.isDryRun = true
             _ = DefaultUserAgentManager.shared
             Database.shared.loadStore { _, _ in }

@@ -33,14 +33,14 @@ final class AutofillPixelReporter {
     var autofillOnboardedUser: Bool
 
     private let statisticsStorage: StatisticsStore
-    private let secureVault: (any AutofillSecureVault)?
+    private var secureVault: (any AutofillSecureVault)?
 
     enum EventType {
         case fill
         case searchDAU
     }
 
-    init(statisticsStorage: StatisticsStore = StatisticsUserDefaults(), secureVault: (any AutofillSecureVault)? = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter.shared)) {
+    init(statisticsStorage: StatisticsStore = StatisticsUserDefaults(), secureVault: (any AutofillSecureVault)? = nil) {
         self.statisticsStorage = statisticsStorage
         self.secureVault = secureVault
 
@@ -54,6 +54,13 @@ final class AutofillPixelReporter {
     private func createNotificationObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveSearchDAU), name: .searchDAU, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveFillEvent), name: .autofillFillEvent, object: nil)
+    }
+
+    private func vault() -> (any AutofillSecureVault)? {
+        if secureVault == nil {
+            secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter.shared)
+        }
+        return secureVault
     }
 
     @objc
@@ -133,7 +140,7 @@ final class AutofillPixelReporter {
     }
 
     private func shouldFireEnabledUserPixel() -> Bool {
-        if Date().isSameDay(autofillSearchDauDate), let count = try? secureVault?.accountsCount(), count >= 10 {
+        if Date().isSameDay(autofillSearchDauDate), let count = try? vault()?.accountsCount(), count >= 10 {
             return true
         }
         return false
@@ -147,7 +154,7 @@ final class AutofillPixelReporter {
         let pastWeek = Date().addingTimeInterval(.days(-7))
 
         if installDate >= pastWeek {
-            if let count = try? secureVault?.accountsCount(), count > 0 {
+            if let count = try? vault()?.accountsCount(), count > 0 {
                 autofillOnboardedUser = true
                 return true
             }

@@ -76,7 +76,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
          subFeature: SubscriptionPagesUseSubscriptionFeature,
          subscriptionManager: SubscriptionManaging,
          selectedFeature: SettingsViewModel.SettingsDeepLinkSection? = nil) {
-        let url = SubscriptionURL.purchase.subscriptionURL(environment: subscriptionManager.currentEnvironment.serviceEnvironment)
+        let url = subscriptionManager.url(for: .purchase)
         if let origin {
             purchaseURL = url.appendingParameter(name: AttributionParameter.origin, value: origin)
         } else {
@@ -243,9 +243,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 guard let currentURL = self?.webViewModel.url else { return }
                 Task { await strongSelf.setTransactionStatus(.idle) }
 
-                let addEmailURL = SubscriptionURL.addEmail.subscriptionURL(environment: strongSelf.subscriptionServiceEnvironment)
-                let addEmailSuccessURL = SubscriptionURL.addEmailToSubscriptionSuccess.subscriptionURL(environment:
-                                                                                                        strongSelf.subscriptionServiceEnvironment)
+                let addEmailURL = strongSelf.subscriptionManager.url(for: .addEmail)
+                let addEmailSuccessURL = strongSelf.subscriptionManager.url(for: .addEmailToSubscriptionSuccess)
                 if currentURL.forComparison() == addEmailURL.forComparison() ||
                     currentURL.forComparison() == addEmailSuccessURL.forComparison() {
                     strongSelf.state.viewTitle = UserText.subscriptionRestoreAddEmailTitle
@@ -257,9 +256,9 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
 
     private func backButtonForURL(currentURL: URL) -> Bool {
-        return currentURL.forComparison() != SubscriptionURL.baseURL.subscriptionURL(environment: subscriptionServiceEnvironment).forComparison() &&
-        currentURL.forComparison() != SubscriptionURL.activateSuccess.subscriptionURL(environment: subscriptionServiceEnvironment).forComparison() &&
-        currentURL.forComparison() != SubscriptionURL.purchase.subscriptionURL(environment: subscriptionServiceEnvironment).forComparison()
+        return currentURL.forComparison() != subscriptionManager.url(for: .baseURL).forComparison() &&
+        currentURL.forComparison() != subscriptionManager.url(for: .activateSuccess).forComparison() &&
+        currentURL.forComparison() != subscriptionManager.url(for: .purchase).forComparison()
     }
     
     private func cleanUp() {
@@ -322,9 +321,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
         DispatchQueue.main.async {
             self.resetState()
         }
-        if webViewModel.url != SubscriptionURL.purchase.subscriptionURL(environment: subscriptionServiceEnvironment).forComparison() {
-            self.webViewModel.navigationCoordinator.navigateTo(url: SubscriptionURL.purchase.subscriptionURL(environment:
-                                                                                                                self.subscriptionServiceEnvironment))
+        if webViewModel.url != subscriptionManager.url(for: .purchase).forComparison() {
+            self.webViewModel.navigationCoordinator.navigateTo(url: subscriptionManager.url(for: .purchase))
         }
         await self.setupTransactionObserver()
         await self.setupWebViewObservers()

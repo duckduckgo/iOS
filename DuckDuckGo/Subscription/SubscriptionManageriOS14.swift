@@ -21,7 +21,7 @@ import Foundation
 import Subscription
 
 class SubscriptionManageriOS14: SubscriptionManaging {
-    
+
     var accountManager: AccountManaging
     var subscriptionService: SubscriptionService = SubscriptionService(currentServiceEnvironment: .production)
     var authService: AuthService = AuthService(currentServiceEnvironment: .production)
@@ -34,6 +34,10 @@ class SubscriptionManageriOS14: SubscriptionManaging {
     var canPurchase: Bool = false
     func loadInitialData() {}
     func updateSubscriptionStatus(completion: @escaping (Bool) -> Void) {}
+
+    func url(for type: SubscriptionURL) -> URL {
+        URL(string: "https://duckduckgo.com")!
+    }
 
     init(accountManager: AccountManaging) {
         self.accountManager = accountManager

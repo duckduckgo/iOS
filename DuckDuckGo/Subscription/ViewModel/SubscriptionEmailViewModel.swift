@@ -77,8 +77,8 @@ final class SubscriptionEmailViewModel: ObservableObject {
     var accountManager: AccountManaging { subscriptionManager.accountManager }
 
     private var isWelcomePageOrSuccessPage: Bool {
-        let subscriptionActivateSuccessURL = SubscriptionURL.activateSuccess.subscriptionURL(environment: subscriptionServiceEnvironment)
-        let subscriptionPurchaseURL = SubscriptionURL.purchase.subscriptionURL(environment: subscriptionServiceEnvironment)
+        let subscriptionActivateSuccessURL = subscriptionManager.url(for: .activateSuccess)
+        let subscriptionPurchaseURL = subscriptionManager.url(for: .purchase)
         return webViewModel.url?.forComparison() == subscriptionActivateSuccessURL.forComparison() ||
         webViewModel.url?.forComparison() == subscriptionPurchaseURL.forComparison()
     }
@@ -94,7 +94,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
                                                           settings: AsyncHeadlessWebViewSettings(bounces: false,
                                                                                                  allowedDomains: Self.allowedDomains,
                                                                                                  contentBlocking: false))
-        self.emailURL = SubscriptionURL.activateViaEmail.subscriptionURL(environment: subscriptionManager.currentEnvironment.serviceEnvironment)
+        self.emailURL = subscriptionManager.url(for: .activateViaEmail)
     }
     
     @MainActor
@@ -104,7 +104,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
         } else {
             // If not in the Welcome page, dismiss the view, otherwise, assume we
             // came from Activation, so dismiss the entire stack
-            let subscriptionPurchaseURL = SubscriptionURL.purchase.subscriptionURL(environment: subscriptionServiceEnvironment)
+            let subscriptionPurchaseURL = subscriptionManager.url(for: .purchase)
             if webViewModel.url?.forComparison() != subscriptionPurchaseURL.forComparison() {
                 state.shouldDismissView = true
             } else {
@@ -133,8 +133,8 @@ final class SubscriptionEmailViewModel: ObservableObject {
         // If the user is Authenticated & not in the Welcome page
         if accountManager.isUserAuthenticated && !isWelcomePageOrSuccessPage {
             // If user is authenticated, we want to "Add or manage email" instead of activating
-            let addEmailToSubscriptionURL = SubscriptionURL.addEmail.subscriptionURL(environment: subscriptionServiceEnvironment)
-            let manageSubscriptionEmailURL = SubscriptionURL.manageEmail.subscriptionURL(environment: subscriptionServiceEnvironment)
+            let addEmailToSubscriptionURL = subscriptionManager.url(for: .addEmail)
+            let manageSubscriptionEmailURL = subscriptionManager.url(for: .manageEmail)
             emailURL = accountManager.email == nil ? addEmailToSubscriptionURL : manageSubscriptionEmailURL
             state.viewTitle = accountManager.email == nil ?  UserText.subscriptionRestoreAddEmailTitle : UserText.subscriptionManageEmailTitle
             

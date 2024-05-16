@@ -66,7 +66,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     init(subscriptionManager: SubscriptionManaging = AppDependencyProvider.shared.subscriptionManager) {
         self.subscriptionManager = subscriptionManager
-        let subscriptionFAQURL = SubscriptionURL.faq.subscriptionURL(environment: subscriptionManager.currentEnvironment.serviceEnvironment)
+        let subscriptionFAQURL = subscriptionManager.url(for: .faq)
         self.state = State(faqURL: subscriptionFAQURL)
 
         setupSubscriptionUpdater()
@@ -204,8 +204,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     @MainActor private func manageAppleSubscription() async {
         if state.subscriptionInfo?.isActive ?? false {
-            let url = SubscriptionURL.manageSubscriptionsInAppStore.subscriptionURL(environment:
-                                                                                        subscriptionManager.currentEnvironment.serviceEnvironment)
+            let url = subscriptionManager.url(for: .manageSubscriptionsInAppStore)
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                 do {
                     try await AppStore.showManageSubscriptions(in: windowScene)

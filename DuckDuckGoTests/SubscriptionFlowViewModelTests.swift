@@ -19,7 +19,7 @@
 
 import XCTest
 @testable import DuckDuckGo
-import Subscription
+@testable import Subscription
 import SubscriptionTestingUtilities
 
 @available(iOS 15.0, *)

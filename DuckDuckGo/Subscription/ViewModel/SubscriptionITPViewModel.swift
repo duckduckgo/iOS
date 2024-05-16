@@ -62,7 +62,7 @@ final class SubscriptionITPViewModel: ObservableObject {
     private var canGoBackCancellable: AnyCancellable?
 
     init(subscriptionManager: SubscriptionManaging) {
-        self.itpURL = SubscriptionURL.identityTheftRestoration.subscriptionURL(environment: subscriptionManager.currentEnvironment.serviceEnvironment)
+        self.itpURL = subscriptionManager.url(for: .identityTheftRestoration)
         self.manageITPURL = self.itpURL
         self.userScript = IdentityTheftRestorationPagesUserScript()
         self.subFeature = IdentityTheftRestorationPagesFeature(accountManager: subscriptionManager.accountManager)

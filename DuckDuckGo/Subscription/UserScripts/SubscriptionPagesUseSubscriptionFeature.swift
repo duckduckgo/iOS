@@ -90,16 +90,18 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
              accountCreationFailed,
              generalError
     }
-        
+    
+    private let subscriptionAttributionOrigin: String?
     private let subscriptionManager: SubscriptionManaging
     private var accountManager: AccountManaging {
         subscriptionManager.accountManager
     }
     private let appStorePurchaseFlow: AppStorePurchaseFlow
 
-    init(subscriptionManager: SubscriptionManaging) {
+    init(subscriptionManager: SubscriptionManaging, subscriptionAttributionOrigin: String?) {
         self.subscriptionManager = subscriptionManager
         self.appStorePurchaseFlow =  AppStorePurchaseFlow(subscriptionManager: subscriptionManager)
+        self.subscriptionAttributionOrigin = subscriptionAttributionOrigin
     }
 
     // Transaction Status and errors are observed from ViewModels to handle errors in the UI
@@ -259,6 +261,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         case .success(let purchaseUpdate):
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess)
             UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
+            Pixel.fireAttribution(pixel: .privacyProSuccessfulSubscriptionAttribution, origin: subscriptionAttributionOrigin)
             setTransactionStatus(.idle)
             await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
         case .failure:
@@ -427,6 +430,24 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         onActivateSubscription = nil
         onBackToSettings = nil
     }
-    
+
+}
+
+private extension Pixel {
+
+    enum AttributionParameters {
+        static let origin = "origin"
+        static let locale = "locale"
+    }
+
+    static func fireAttribution(pixel: Pixel.Event, origin: String?, locale: Locale = .current) {
+        var parameters: [String: String] = [:]
+        parameters[AttributionParameters.locale] = locale.identifier
+        if let origin {
+            parameters[AttributionParameters.origin] = origin
+        }
+        Self.fire(pixel: pixel, withAdditionalParameters: parameters)
+    }
+
 }
 // swiftlint:enable file_length

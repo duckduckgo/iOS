@@ -34,6 +34,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     var subscriptionServiceEnvironment: SubscriptionEnvironment.ServiceEnvironment {
         subscriptionManager.currentEnvironment.serviceEnvironment
     }
+    let purchaseURL: URL
 
     private var cancellables = Set<AnyCancellable>()
     private var canGoBackCancellable: AnyCancellable?
@@ -70,10 +71,17 @@ final class SubscriptionFlowViewModel: ObservableObject {
                                                                 allowedDomains: allowedDomains,
                                                                 contentBlocking: false)
         
-    init(userScript: SubscriptionPagesUserScript,
+    init(origin: String?,
+         userScript: SubscriptionPagesUserScript,
          subFeature: SubscriptionPagesUseSubscriptionFeature,
          subscriptionManager: SubscriptionManaging,
          selectedFeature: SettingsViewModel.SettingsDeepLinkSection? = nil) {
+        let url = SubscriptionURL.purchase.subscriptionURL(environment: subscriptionManager.currentEnvironment.serviceEnvironment)
+        if let origin {
+            purchaseURL = url.appendingParameter(name: AttributionParameter.origin, value: origin)
+        } else {
+            purchaseURL = url
+        }
         self.userScript = userScript
         self.subFeature = subFeature
         self.subscriptionManager = subscriptionManager

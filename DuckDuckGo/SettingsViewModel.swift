@@ -681,11 +681,11 @@ extension SettingsViewModel: AutofillLoginSettingsListViewControllerDelegate {
 // MARK: DeepLinks
 extension SettingsViewModel {
 
-    enum SettingsDeepLinkSection: Identifiable {
+    enum SettingsDeepLinkSection: Identifiable, Equatable {
         case netP
         case dbp
         case itr
-        case subscriptionFlow
+        case subscriptionFlow(origin: String? = nil)
         case subscriptionRestoreFlow
         // Add other cases as needed
 

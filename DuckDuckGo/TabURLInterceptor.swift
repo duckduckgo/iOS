@@ -61,8 +61,8 @@ final class TabURLInterceptorDefault: TabURLInterceptor {
         guard let matchingURL = urlToIntercept(path: components.path) else {
             return true
         }
-        
-        return handleURLInterception(url: matchingURL.id)
+
+        return handleURLInterception(interceptedURL: matchingURL.id, queryItems: components.percentEncodedQueryItems)
     }
 }
 
@@ -84,17 +84,23 @@ extension TabURLInterceptorDefault {
         return URLComponents(string: "\(URL.URLProtocol.https.scheme)\(noScheme)")
     }
 
-    private func handleURLInterception(url: InterceptedURL) -> Bool {
-        switch url {
+    private func handleURLInterception(interceptedURL: InterceptedURL, queryItems: [URLQueryItem]?) -> Bool {
+        switch interceptedURL {
             // Opens the Privacy Pro Subscription Purchase page (if user can purchase)
-            case .privacyPro:
+        case .privacyPro:
             if canPurchase() {
-                    NotificationCenter.default.post(name: .urlInterceptPrivacyPro, object: nil)
-                    return false
-                }
+                // If URL has an `origin` query parameter, append it to the `subscriptionPurchase` URL.
+                // Also forward the origin as it will need to be sent as parameter to the Pixel to track subcription attributions.
+                let originQueryItem = queryItems?.first(where: { $0.name == AttributionParameter.origin })
+                NotificationCenter.default.post(
+                    name: .urlInterceptPrivacyPro,
+                    object: nil,
+                    userInfo: [AttributionParameter.origin: originQueryItem?.value]
+                )
+                return false
             }
+        }
         return true
-        
     }
 }
 

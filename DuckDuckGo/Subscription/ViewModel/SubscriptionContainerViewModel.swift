@@ -18,12 +18,12 @@
 //
 
 import Foundation
-import Combine
 import Subscription
+import Combine
 
 @available(iOS 15.0, *)
 final class SubscriptionContainerViewModel: ObservableObject {
-    
+
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
 
@@ -31,14 +31,24 @@ final class SubscriptionContainerViewModel: ObservableObject {
     let restore: SubscriptionRestoreViewModel
     let email: SubscriptionEmailViewModel
 
-    init(subscriptionManager: SubscriptionManaging) {
-        self.userScript = SubscriptionPagesUserScript()
-        self.subFeature = SubscriptionPagesUseSubscriptionFeature(subscriptionManager: subscriptionManager)
-        self.flow = SubscriptionFlowViewModel(userScript: userScript, subFeature: subFeature, subscriptionManager: subscriptionManager)
-        self.restore = SubscriptionRestoreViewModel(userScript: userScript, subFeature: subFeature, subscriptionManager: subscriptionManager)
-        self.email = SubscriptionEmailViewModel(userScript: userScript, subFeature: subFeature, subscriptionManager: subscriptionManager)
+    init(subscriptionManager: SubscriptionManaging,
+         origin: String?,
+         userScript: SubscriptionPagesUserScript,
+         subFeature: SubscriptionPagesUseSubscriptionFeature) {
+        self.userScript = userScript
+        self.subFeature = subFeature
+        self.flow = SubscriptionFlowViewModel(origin: origin,
+                                              userScript: userScript,
+                                              subFeature: subFeature,
+                                              subscriptionManager: subscriptionManager)
+        self.restore = SubscriptionRestoreViewModel(userScript: userScript,
+                                                    subFeature: subFeature,
+                                                    subscriptionManager: subscriptionManager)
+        self.email = SubscriptionEmailViewModel(userScript: userScript,
+                                                subFeature: subFeature,
+                                                subscriptionManager: subscriptionManager)
     }
-    
+
     deinit {
         subFeature.cleanup()
     }

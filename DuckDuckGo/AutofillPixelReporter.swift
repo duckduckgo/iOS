@@ -101,11 +101,26 @@ final class AutofillPixelReporter {
         for pixel in pixels {
             switch pixel {
             case .autofillLoginsStacked:
-                let bucket = (try? secureVault?.accountsCountBucket()) ?? ""
-                DailyPixel.fire(pixel: pixel, withAdditionalParameters: [PixelParameters.countBucket: bucket])
+                if let count = try? vault()?.accountsCount() {
+                    DailyPixel.fire(pixel: pixel, withAdditionalParameters: [PixelParameters.countBucket: accountsBucketNameFrom(count: count)])
+                }
             default:
                 DailyPixel.fire(pixel: pixel)
             }
+        }
+    }
+
+    public func accountsBucketNameFrom(count: Int) -> String {
+        if count == 0 {
+            return "none"
+        } else if count < 4 {
+            return "few"
+        } else if count < 11 {
+            return "some"
+        } else if count < 50 {
+            return "many"
+        } else {
+            return "lots"
         }
     }
 

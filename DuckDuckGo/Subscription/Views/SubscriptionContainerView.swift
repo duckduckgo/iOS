@@ -36,7 +36,7 @@ struct SubscriptionContainerView: View {
     private let emailViewModel: SubscriptionEmailViewModel
         
     init(currentView: CurrentView,
-         viewModel: SubscriptionContainerViewModel = SubscriptionContainerViewModel()) {
+         viewModel: SubscriptionContainerViewModel) {
         _currentViewState = State(initialValue: currentView)
         self.viewModel = viewModel
         let userScript = viewModel.userScript

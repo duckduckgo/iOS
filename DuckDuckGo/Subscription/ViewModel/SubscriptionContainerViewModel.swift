@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Subscription
 import Combine
 
 @available(iOS 15.0, *)
@@ -31,11 +32,14 @@ final class SubscriptionContainerViewModel: ObservableObject {
     let email: SubscriptionEmailViewModel
     
     
-    init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
-         subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature()) {
+    init(
+        origin: String?,
+        userScript: SubscriptionPagesUserScript,
+        subFeature: SubscriptionPagesUseSubscriptionFeature
+    ) {
         self.userScript = userScript
         self.subFeature = subFeature
-        self.flow = SubscriptionFlowViewModel(userScript: userScript, subFeature: subFeature)
+        self.flow = SubscriptionFlowViewModel(origin: origin, userScript: userScript, subFeature: subFeature)
         self.restore = SubscriptionRestoreViewModel(userScript: userScript, subFeature: subFeature)
         self.email = SubscriptionEmailViewModel(userScript: userScript, subFeature: subFeature)
     }

@@ -1,6 +1,8 @@
 appId: com.duckduckgo.mobile.ios
 ---
 
+- scrollUntilVisible:
+    element: Passwords
 - tapOn: Passwords
 - tapOn: Add 24
 - tapOn: Title

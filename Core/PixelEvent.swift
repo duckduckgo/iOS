@@ -258,6 +258,11 @@ extension Pixel {
         case autofillLoginsImportSuccess
         case autofillLoginsImportFailure
 
+        case autofillActiveUser
+        case autofillEnabledUser
+        case autofillOnboardedUser
+        case autofillLoginsStacked
+
         case getDesktopCopy
         case getDesktopShare
         
@@ -634,6 +639,7 @@ extension Pixel {
         case privacyProVPNAccessRevokedDialogShown
         case privacyProVPNBetaStoppedWhenPrivacyProEnabled
         case privacyProTransactionProgressNotHiddenAfter60s
+        case privacyProSuccessfulSubscriptionAttribution
 
         // MARK: Pixel Experiment
         case pixelExperimentEnrollment
@@ -938,6 +944,11 @@ extension Pixel.Event {
         case .autofillLoginsImportNoAction: return "m_autofill_logins_import_no-action"
         case .autofillLoginsImportSuccess: return "m_autofill_logins_import_success"
         case .autofillLoginsImportFailure: return "m_autofill_logins_import_failure"
+
+        case .autofillActiveUser: return "m_autofill_activeuser"
+        case .autofillEnabledUser: return "m_autofill_enableduser"
+        case .autofillOnboardedUser: return "m_autofill_onboardeduser"
+        case .autofillLoginsStacked: return "m_autofill_logins_stacked"
 
         case .getDesktopCopy: return "m_get_desktop_copy"
         case .getDesktopShare: return "m_get_desktop_share"
@@ -1298,6 +1309,7 @@ extension Pixel.Event {
         case .privacyProSubscriptionManagementPlanBilling: return "m_privacy-pro_settings_change-plan-or-billing_click"
         case .privacyProSubscriptionManagementRemoval: return "m_privacy-pro_settings_remove-from-device_click"
         case .privacyProTransactionProgressNotHiddenAfter60s: return "m_privacy-pro_progress_not_hidden_after_60s"
+        case .privacyProSuccessfulSubscriptionAttribution: return "m_subscribe"
 
         // MARK: Pixel Experiment
         case .pixelExperimentEnrollment: return "pixel_experiment_enrollment"

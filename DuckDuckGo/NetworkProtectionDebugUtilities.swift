@@ -55,7 +55,7 @@ final class NetworkProtectionDebugUtilities {
             return
         }
 
-        try? await activeSession.sendProviderMessage(.request(.debugCommand(.disableConnectOnDemandAndShutDown)))
+        try? await activeSession.sendProviderRequest(.command(.disableConnectOnDemandAndShutDown))
     }
 
     // MARK: - Failure Simulation

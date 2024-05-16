@@ -23,6 +23,7 @@ import Combine
 import Persistence
 import Foundation
 import SyncUI
+import SyncDataProviders
 
 public enum AsyncErrorType: String {
     case bookmarksCountLimitExceeded
@@ -157,28 +158,27 @@ extension SyncErrorHandler {
     private func handleError(_ error: Error, modelType: ModelType) {
         switch error {
         case SyncError.patchPayloadCompressionFailed(let errorCode):
-            let pixel: Pixel.Event = {
-                switch modelType {
-                case .bookmarks:
-                    return .syncBookmarksPatchCompressionFailed
-                case .credentials:
-                    return .syncCredentialsPatchCompressionFailed
-                }
-            }()
-            Pixel.fire(pixel: pixel, withAdditionalParameters: ["error": "\(errorCode)"])
+            Pixel.fire(pixel: modelType.patchPayloadCompressionFailedPixel, withAdditionalParameters: ["error": "\(errorCode)"])
         case let syncError as SyncError:
             handleSyncError(syncError, modelType: modelType)
+            Pixel.fire(pixel: modelType.syncFailedPixel, error: syncError)
+        case let settingsMetadataError as SettingsSyncMetadataSaveError:
+            let underlyingError = settingsMetadataError.underlyingError
+            let processedErrors = CoreDataErrorsParser.parse(error: underlyingError as NSError)
+            let params = processedErrors.errorPixelParameters
+            Pixel.fire(pixel: .syncSettingsMetadataUpdateFailed, error: underlyingError, withAdditionalParameters: params)
         default:
             let nsError = error as NSError
             if nsError.domain != NSURLErrorDomain {
                 let processedErrors = CoreDataErrorsParser.parse(error: error as NSError)
                 let params = processedErrors.errorPixelParameters
-                Pixel.fire(pixel: .syncCredentialsFailed, error: error, withAdditionalParameters: params)
+                Pixel.fire(pixel: modelType.syncFailedPixel, error: error, withAdditionalParameters: params)
             }
         }
-        os_log(.error, log: OSLog.syncLog, "Credentials Sync error: %{public}s", String(reflecting: error))
+        let modelTypeString = modelType.rawValue.capitalized
+        os_log(.error, log: OSLog.syncLog, "%{public}@ Sync error: %{public}s", modelTypeString, String(reflecting: error))
     }
-    
+
     private func handleSyncError(_ syncError: SyncError, modelType: ModelType) {
         switch syncError {
         case .unexpectedStatusCode(409):
@@ -187,6 +187,8 @@ extension SyncErrorHandler {
                 syncIsPaused(errorType: .bookmarksCountLimitExceeded)
             case .credentials:
                 syncIsPaused(errorType: .credentialsCountLimitExceeded)
+            case .settings:
+                break
             }
         case .unexpectedStatusCode(413):
             switch modelType {
@@ -194,6 +196,8 @@ extension SyncErrorHandler {
                 syncIsPaused(errorType: .bookmarksRequestSizeLimitExceeded)
             case .credentials:
                 syncIsPaused(errorType: .credentialsRequestSizeLimitExceeded)
+            case .settings:
+                break
             }
         case .unexpectedStatusCode(400):
             switch modelType {
@@ -201,6 +205,8 @@ extension SyncErrorHandler {
                 syncIsPaused(errorType: .badRequestBookmarks)
             case .credentials:
                 syncIsPaused(errorType: .badRequestCredentials)
+            case .settings:
+                break
             }
         case .unexpectedStatusCode(401):
             syncIsPaused(errorType: .invalidLoginCredentials)
@@ -273,14 +279,41 @@ extension SyncErrorHandler {
         }
 
     }
-    private enum ModelType {
+    private enum ModelType: String {
         case bookmarks
         case credentials
+        case settings
+
+        var syncFailedPixel: Pixel.Event {
+            switch self {
+            case .bookmarks:
+                    .syncBookmarksFailed
+            case .credentials:
+                    .syncCredentialsFailed
+            case .settings:
+                    .syncSettingsFailed
+            }
+        }
+
+        var patchPayloadCompressionFailedPixel: Pixel.Event {
+            switch self {
+            case .bookmarks:
+                    .syncBookmarksPatchCompressionFailed
+            case .credentials:
+                    .syncCredentialsPatchCompressionFailed
+            case .settings:
+                    .syncSettingsPatchCompressionFailed
+            }
+        }
     }
 }
 
 // MARK: - SyncErrorHandler
 extension SyncErrorHandler: SyncErrorHandling {
+    public func handleSettingsError(_ error: Error) {
+        handleError(error, modelType: .settings)
+    }
+    
     public func handleBookmarkError(_ error: Error) {
         handleError(error, modelType: .bookmarks)
     }

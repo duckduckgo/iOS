@@ -29,10 +29,12 @@ public final class SyncSettingsAdapter {
     public private(set) var provider: SettingsProvider?
     public private(set) var emailManager: EmailManager?
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
+    private let syncErrorHandler: SyncErrorHandling
 
-    public init(settingHandlers: [SettingSyncHandler]) {
+    public init(settingHandlers: [SettingSyncHandler], syncErrorHandler: SyncErrorHandling) {
         self.settingHandlers = settingHandlers
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
+        self.syncErrorHandler = syncErrorHandler
     }
 
     public func updateDatabaseCleanupSchedule(shouldEnable: Bool) {
@@ -61,26 +63,27 @@ public final class SyncSettingsAdapter {
         )
 
         syncErrorCancellable = provider.syncErrorPublisher
-            .sink { error in
-                switch error {
-                case SyncError.patchPayloadCompressionFailed(let errorCode):
-                    Pixel.fire(pixel: .syncSettingsPatchCompressionFailed, withAdditionalParameters: ["error": "\(errorCode)"])
-                case let syncError as SyncError:
-                    Pixel.fire(pixel: .syncSettingsFailed, error: syncError)
-                case let settingsMetadataError as SettingsSyncMetadataSaveError:
-                    let underlyingError = settingsMetadataError.underlyingError
-                    let processedErrors = CoreDataErrorsParser.parse(error: underlyingError as NSError)
-                    let params = processedErrors.errorPixelParameters
-                    Pixel.fire(pixel: .syncSettingsMetadataUpdateFailed, error: underlyingError, withAdditionalParameters: params)
-                default:
-                    let nsError = error as NSError
-                    if nsError.domain != NSURLErrorDomain {
-                        let processedErrors = CoreDataErrorsParser.parse(error: error as NSError)
-                        let params = processedErrors.errorPixelParameters
-                        Pixel.fire(pixel: .syncSettingsFailed, error: error, withAdditionalParameters: params)
-                    }
-                }
-                os_log(.error, log: OSLog.syncLog, "Settings Sync error: %{public}s", String(reflecting: error))
+            .sink { [weak self] error in
+                self?.syncErrorHandler.handleSettingsError(error)
+//                switch error {
+//                case SyncError.patchPayloadCompressionFailed(let errorCode):
+//                    Pixel.fire(pixel: .syncSettingsPatchCompressionFailed, withAdditionalParameters: ["error": "\(errorCode)"])
+//                case let syncError as SyncError:
+//                    Pixel.fire(pixel: .syncSettingsFailed, error: syncError)
+//                case let settingsMetadataError as SettingsSyncMetadataSaveError:
+//                    let underlyingError = settingsMetadataError.underlyingError
+//                    let processedErrors = CoreDataErrorsParser.parse(error: underlyingError as NSError)
+//                    let params = processedErrors.errorPixelParameters
+//                    Pixel.fire(pixel: .syncSettingsMetadataUpdateFailed, error: underlyingError, withAdditionalParameters: params)
+//                default:
+//                    let nsError = error as NSError
+//                    if nsError.domain != NSURLErrorDomain {
+//                        let processedErrors = CoreDataErrorsParser.parse(error: error as NSError)
+//                        let params = processedErrors.errorPixelParameters
+//                        Pixel.fire(pixel: .syncSettingsFailed, error: error, withAdditionalParameters: params)
+//                    }
+//                }
+//                os_log(.error, log: OSLog.syncLog, "Settings Sync error: %{public}s", String(reflecting: error))
             }
 
         self.provider = provider

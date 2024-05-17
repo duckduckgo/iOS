@@ -776,7 +776,7 @@ class MainViewController: UIViewController {
         }
 
         hideSuggestionTray()
-        omniBar.cancel()
+        performCancel()
     }
     
     func onQuickFirePressed() {
@@ -796,19 +796,18 @@ class MainViewController: UIViewController {
 
     @IBAction func onBackPressed() {
         Pixel.fire(pixel: .tabBarBackPressed)
+        performCancel()
         hideSuggestionTray()
         hideNotificationBarIfBrokenSitePromptShown()
         currentTab?.goBack()
-        refreshOmniBar()
-        omniBar.cancel()
     }
 
     @IBAction func onForwardPressed() {
         Pixel.fire(pixel: .tabBarForwardPressed)
+        performCancel()
         hideSuggestionTray()
         hideNotificationBarIfBrokenSitePromptShown()
         currentTab?.goForward()
-        omniBar.cancel()
     }
     
     func didReturnFromBackground() {
@@ -1732,6 +1731,7 @@ extension MainViewController: OmniBarDelegate {
             ViewHighlighter.hideAll()
         }
         hideSuggestionTray()
+        performCancel()
         ActionMessageView.dismissAllMessages()
         Task {
             await launchBrowsingMenu()
@@ -1813,6 +1813,7 @@ extension MainViewController: OmniBarDelegate {
 
     func performCancel() {
         dismissOmniBar()
+        omniBar.cancel()
         hideSuggestionTray()
         homeController?.omniBarCancelPressed()
         self.showMenuHighlighterIfNeeded()
@@ -2349,14 +2350,14 @@ extension MainViewController: TabSwitcherButtonDelegate {
     func launchNewTab(_ button: TabSwitcherButton) {
         Pixel.fire(pixel: .tabSwitchLongPressNewTab)
         hideSuggestionTray()
-        omniBar.cancel()
+        performCancel()
         newTab()
     }
 
     func showTabSwitcher(_ button: TabSwitcherButton) {
         Pixel.fire(pixel: .tabBarTabSwitcherPressed)
         hideSuggestionTray()
-        omniBar.cancel()
+        performCancel()
         showTabSwitcher()
     }
 

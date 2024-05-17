@@ -62,9 +62,15 @@ public class HistoryManager: HistoryManaging {
         }
 
         let coordinator = makeDatabaseHistoryCoordinator()
+        let group = DispatchGroup()
+        group.enter()
         coordinator.loadHistory {
+            group.leave()
             // No-op: Post-clean migrations were handled on startup.
         }
+
+        // We have to ensure that load finishes because remove data on clear uses the entries loaded into memory to decide what to delete.
+        assert(group.wait(timeout: .now() + 5) != .timedOut)
         currentHistoryCoordinator = coordinator
         return coordinator
     }

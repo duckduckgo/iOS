@@ -1272,8 +1272,8 @@ extension Pixel.Event {
 
         case .siteNotWorkingShown: return "m_site-not-working_shown"
         case .siteNotWorkingDismiss: return "m_site-not-working_dismiss"
-        case .siteNotWorkingDismissByNavigation: return "m_site-not-working.dismiss-by-navigation"
-        case .siteNotWorkingDismissByRefresh: return "m_site-not-working.dismiss-by-refresh"
+        case .siteNotWorkingDismissByNavigation: return "m_site-not-working_dismiss-by-navigation"
+        case .siteNotWorkingDismissByRefresh: return "m_site-not-working_dismiss-by-refresh"
         case .siteNotWorkingWebsiteIsBroken: return "m_site-not-working_website-is-broken"
 
         // MARK: - History debug

@@ -84,11 +84,11 @@ class AutoClear {
     }
     
     @MainActor
-    func clearDataIfEnabledAndTimeExpired() async {
+    func clearDataIfEnabledAndTimeExpired(baseTimeInterval: TimeInterval = Date().timeIntervalSince1970) async {
         guard isClearingEnabled,
             let timestamp = timestamp,
-            shouldClearData(elapsedTime: Date().timeIntervalSince1970 - timestamp) else { return }
-        
+            shouldClearData(elapsedTime: baseTimeInterval - timestamp) else { return }
+
         self.timestamp = nil
         worker.clearNavigationStack()
         await clearDataIfEnabled()

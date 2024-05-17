@@ -84,9 +84,9 @@ public struct UserDefaultsWrapper<T> {
                 "com.duckduckgo.ios.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary"
         case autofillImportViaSyncStart = "com.duckduckgo.ios.autofillImportViaSyncStart"
         case autofillSurveyEnabled = "com.duckduckgo.ios.autofillSurveyEnabled"
-        case autofillSearchDauDate = "com.duckduckgo.ios.autofillSearchDauDate"
-        case autofillFillDate = "com.duckduckgo.ios.autofillFillDate"
-        case autofillOnboardedUser = "com.duckduckgo.ios.autofillOnboardedUser"
+        case autofillSearchDauDate = "com.duckduckgo.app.autofill.SearchDauDate"
+        case autofillFillDate = "com.duckduckgo.app.autofill.FillDate"
+        case autofillOnboardedUser = "com.duckduckgo.app.autofill.OnboardedUser"
 
         // .v2 suffix added to fix https://app.asana.com/0/547792610048271/1206524375402369/f
         case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser.v2"

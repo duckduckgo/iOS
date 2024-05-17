@@ -1761,7 +1761,7 @@ extension MainViewController: OmniBarDelegate {
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
-        hideSuggestionTray()
+        performCancel()
         segueToBookmarks()
     }
     

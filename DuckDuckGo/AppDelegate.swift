@@ -977,7 +977,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
     func presentNetworkProtectionStatusSettingsModal() {
         Task {
-            let accountManager = AccountManager()
+            let accountManager = AppDependencyProvider.shared.accountManager
             if case .success(let hasEntitlements) = await accountManager.hasEntitlement(for: .networkProtection),
                hasEntitlements {
                 if #available(iOS 15, *) {

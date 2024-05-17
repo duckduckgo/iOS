@@ -215,6 +215,23 @@ extension AutocompleteViewController: AutocompleteViewModelDelegate {
     }
 
     func onSuggestionSelected(_ suggestion: Suggestion) {
+        switch suggestion {
+        case .bookmark(_, _, let isFavorite, _):
+            Pixel.fire(pixel: isFavorite ? .autocompleteClickFavorite : .autocompleteClickBookmark)
+
+        case .historyEntry(_, let url, _):
+            Pixel.fire(pixel: url.isDuckDuckGoSearch ? .autocompleteClickSearchHistory : .autocompleteClickSiteHistory)
+
+        case .phrase:
+            Pixel.fire(pixel: .autocompleteClickPhrase)
+
+        case .website:
+            Pixel.fire(pixel: .autocompleteClickWebsite)
+
+        default:
+            // NO-OP
+            break
+        }
         self.delegate?.autocomplete(selectedSuggestion: suggestion)
     }
 

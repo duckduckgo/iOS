@@ -59,35 +59,35 @@ final class AutofillPixelReporterTests: XCTestCase {
         XCTAssertTrue(autofillPixelReporter.pixelsToFireFor(.searchDAU).isEmpty)
     }
 
-    func testWhenUserSearchDauIsNotTodayAndEventTypeIsFillThenOnePixelWillBeFired() {
+    func testWhenUserSearchDauIsNotTodayAndEventTypeIsFillThenNoPixelsWillBeFired() {
         autofillPixelReporter.autofillSearchDauDate = Date().addingTimeInterval(-2 * 60 * 60 * 24)
         autofillPixelReporter.autofillFillDate = Date().addingTimeInterval(-2 * 60 * 60 * 24)
 
-        XCTAssertEqual(autofillPixelReporter.pixelsToFireFor(.fill).count, 1)
+        XCTAssertTrue(autofillPixelReporter.pixelsToFireFor(.fill).isEmpty)
     }
 
-    func testWhenUserSearchDauIsTodayAndAutofillDateIsTodayAndEventTypeIsSearchDauAndAccountsCountIsLessThanTenThenOnePixelWillBeFired() {
+    func testWhenUserSearchDauIsTodayAndAutofillDateIsTodayAndEventTypeIsSearchDauAndAccountsCountIsLessThanTenThenTwoPixelWillBeFired() {
         autofillPixelReporter.autofillSearchDauDate = Date()
         autofillPixelReporter.autofillFillDate = Date()
         createAccountsInVault(count: 4)
 
-        XCTAssertEqual(autofillPixelReporter.pixelsToFireFor(.searchDAU).count, 1)
+        XCTAssertEqual(autofillPixelReporter.pixelsToFireFor(.searchDAU).count, 2)
     }
 
-    func testWhenUserSearchDauIsTodayAndAutofillDateIsTodayAndEventTypeIsSearchDauAndAccountsCountIsTenThenTwoPixelsWillBeFired() {
+    func testWhenUserSearchDauIsTodayAndAutofillDateIsTodayAndEventTypeIsSearchDauAndAccountsCountIsTenThenThreePixelsWillBeFired() {
         autofillPixelReporter.autofillSearchDauDate = Date()
         autofillPixelReporter.autofillFillDate = Date()
         createAccountsInVault(count: 10)
 
-        XCTAssertEqual(autofillPixelReporter.pixelsToFireFor(.searchDAU).count, 2)
+        XCTAssertEqual(autofillPixelReporter.pixelsToFireFor(.searchDAU).count, 3)
     }
 
-    func testWhenUserSearchDauIsTodayAndAutofillDateIsTodayAndEventTypeIsSearchDauAndAccountsCountIsGreaterThanTenThenTwoPixelsWillBeFired() {
+    func testWhenUserSearchDauIsTodayAndAutofillDateIsTodayAndEventTypeIsSearchDauAndAccountsCountIsGreaterThanTenThenThreePixelsWillBeFired() {
         autofillPixelReporter.autofillSearchDauDate = Date()
         autofillPixelReporter.autofillFillDate = Date()
         createAccountsInVault(count: 15)
 
-        XCTAssertEqual(autofillPixelReporter.pixelsToFireFor(.searchDAU).count, 2)
+        XCTAssertEqual(autofillPixelReporter.pixelsToFireFor(.searchDAU).count, 3)
     }
 
     func testWhenUserSearchDauIsTodayAndAutofillDateIsNotTodayAndEventTypeIsSearchDauAndAccountsCountIsLessThanTenThenNoPixelsWillBeFired() {

@@ -673,6 +673,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
+
+        autofillPixelReporter.checkIfOnboardedUser()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {

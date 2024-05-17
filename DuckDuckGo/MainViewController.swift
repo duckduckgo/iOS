@@ -2348,11 +2348,15 @@ extension MainViewController: TabSwitcherButtonDelegate {
     
     func launchNewTab(_ button: TabSwitcherButton) {
         Pixel.fire(pixel: .tabSwitchLongPressNewTab)
+        hideSuggestionTray()
+        omniBar.cancel()
         newTab()
     }
 
     func showTabSwitcher(_ button: TabSwitcherButton) {
         Pixel.fire(pixel: .tabBarTabSwitcherPressed)
+        hideSuggestionTray()
+        omniBar.cancel()
         showTabSwitcher()
     }
 

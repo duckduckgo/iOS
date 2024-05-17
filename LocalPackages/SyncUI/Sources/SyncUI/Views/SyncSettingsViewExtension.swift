@@ -21,8 +21,6 @@ import DesignResourcesKit
 import DuckUI
 import SwiftUI
 
-// swiftlint:disable file_length
-
 extension SyncSettingsView {
 
     @ViewBuilder
@@ -264,30 +262,46 @@ extension SyncSettingsView {
 
     @ViewBuilder
     func syncPaused(for itemType: LimitedItemType) -> some View {
-        var explanation: String {
+        var title: String? {
             switch itemType {
             case .bookmarks:
-                return UserText.bookmarksLimitExceededDescription
+                return model.syncBookmarksPausedTitle
             case .credentials:
-                return UserText.credentialsLimitExceededDescription
+                return model.syncCredentialsPausedTitle
             }
         }
-        var buttonTitle: String {
+        var explanation: String? {
             switch itemType {
             case .bookmarks:
-                return UserText.bookmarksLimitExceededAction
+                return model.syncBookmarksPausedDescription
             case .credentials:
-                return UserText.credentialsLimitExceededAction
+                return model.syncCredentialsPausedDescription
             }
         }
+        var buttonTitle: String? {
+            switch itemType {
+            case .bookmarks:
+                return model.syncBookmarksPausedButtonTitle
+            case .credentials:
+                return model.syncCredentialsPausedButtonTitle
+            }
+        }
+        if let title, let explanation, let buttonTitle {
+            SyncWarningMessageView(title: title, message: explanation, buttonTitle: buttonTitle) {
+                switch itemType {
+                case .bookmarks:
+                    model.manageBookmarks()
+                case .credentials:
+                    model.manageLogins()
+                }
+            }
+        }
+    }
 
-        SyncWarningMessageView(title: UserText.syncLimitExceededTitle, message: explanation, buttonTitle: buttonTitle) {
-            switch itemType {
-            case .bookmarks:
-                model.manageBookmarks()
-            case .credentials:
-                model.manageLogins()
-            }
+    @ViewBuilder
+    func syncPaused() -> some View {
+        if let title = model.syncPausedTitle, let message = model.syncPausedDescription {
+            SyncWarningMessageView(title: title, message: message)
         }
     }
 
@@ -368,24 +382,6 @@ extension SyncSettingsView {
         }
     }
 
-    @ViewBuilder
-    func rolloutBanner() -> some View {
-        Section {
-            HStack(alignment: .top, spacing: 16) {
-                Image("Info-Color-16")
-                Text(UserText.syncRollOutBannerDescription)
-                    .font(.system(size: 12))
-                    .foregroundColor(.primary)
-                    .multilineTextAlignment(.leading)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-        }
-        .padding()
-        .background(RoundedRectangle(cornerRadius: 8).foregroundColor(Color("RolloutBannerBackground")))
-        .padding(.bottom, 10)
-        .padding(.horizontal, 14)
-    }
-
     enum LimitedItemType {
         case bookmarks
         case credentials
@@ -398,5 +394,3 @@ extension View {
         closure(self)
     }
 }
-
-// swiftlint:enable file_length

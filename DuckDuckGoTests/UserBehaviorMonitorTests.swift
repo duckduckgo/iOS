@@ -37,7 +37,8 @@ final class MockUserBehaviorEventsMapping: EventMapping<UserBehaviorEvent> {
 final class MockUserBehaviorStore: UserBehaviorStoring {
 
     var didRefreshTimestamp: Date?
-    var didBurnTimestamp: Date?
+    var didDoubleRefreshTimestamp: Date?
+    var didRefreshCounter: Int = 0
 
 }
 
@@ -63,119 +64,136 @@ final class UserBehaviorMonitorTests: XCTestCase {
     func testWhenUserRefreshesTwiceItSendsReloadTwiceEvent() {
         monitor.handleAction(.refresh)
         monitor.handleAction(.refresh)
-        XCTAssertEqual(events.count, 1)
-        XCTAssertEqual(events.first!, .reloadTwice)
+        XCTAssertEqual(events.count, 2)
+        XCTAssertEqual(events[0], .reloadTwiceWithin12Seconds)
+        XCTAssertEqual(events[1], .reloadTwiceWithin24Seconds)
     }
 
     func testWhenUserRefreshesAndThenReopensAppItSendsReloadAndRestartEvent() {
         monitor.handleAction(.refresh)
         monitor.handleAction(.reopenApp)
-        XCTAssertEqual(events.count, 1)
-        XCTAssertEqual(events.first!, .reloadAndRestart)
-    }
-
-    func testWhenUserRefreshesAndThenUsesFireButtonItSendsReloadAndFireButtonEvent() {
-        monitor.handleAction(.refresh)
-        monitor.handleAction(.burn)
-        XCTAssertEqual(events.count, 1)
-        XCTAssertEqual(events.first!, .reloadAndFireButton)
-    }
-
-    func testWhenUserRefreshesAndThenOpensSettingsItSendsReloadAndOpenSettingsEvent() {
-        monitor.handleAction(.refresh)
-        monitor.handleAction(.openSettings)
-        XCTAssertEqual(events.count, 1)
-        XCTAssertEqual(events.first!, .reloadAndOpenSettings)
-    }
-
-    func testWhenUserRefreshesAndThenTogglesProtectionsItSendsReloadAndTogglePrivacyControlsEvent() {
-        monitor.handleAction(.refresh)
-        monitor.handleAction(.toggleProtections)
-        XCTAssertEqual(events.count, 1)
-        XCTAssertEqual(events.first!, .reloadAndTogglePrivacyControls)
-    }
-
-    func testWhenUserUsesFireButtonAndThenReopensAppItSendsFireButtonAndRestartEvent() {
-        monitor.handleAction(.burn)
-        monitor.handleAction(.reopenApp)
-        XCTAssertEqual(events.count, 1)
-        XCTAssertEqual(events.first!, .fireButtonAndRestart)
-    }
-
-    func testWhenUserUsesFireButtonAndThenTogglesProtectionsItSendsFireButtonAndTogglePrivacyControlsEvent() {
-        monitor.handleAction(.burn)
-        monitor.handleAction(.toggleProtections)
-        XCTAssertEqual(events.count, 1)
-        XCTAssertEqual(events.first!, .fireButtonAndTogglePrivacyControls)
-    }
-
-    func testWhenUserUsesFireButtonThenOpensSettingsThenReopensAppItSendsFireButtonAndRestartEvent() {
-        monitor.handleAction(.burn)
-        monitor.handleAction(.openSettings)
-        monitor.handleAction(.reopenApp)
-        XCTAssertEqual(events.count, 1)
-        XCTAssertEqual(events.first!, .fireButtonAndRestart)
-    }
-
-    func testWhenUserUsesFireButtonThenRefreshesThenReopensAppItSendsTwoEvents() {
-        monitor.handleAction(.burn)
-        monitor.handleAction(.refresh)
-        monitor.handleAction(.reopenApp)
         XCTAssertEqual(events.count, 2)
-        XCTAssertEqual(events[0], .reloadAndRestart)
-        XCTAssertEqual(events[1], .fireButtonAndRestart)
+        XCTAssertEqual(events[0], .reloadAndRestartWithin30Seconds)
+        XCTAssertEqual(events[1], .reloadAndRestartWithin50Seconds)
     }
 
-    func testWhenUserRefreshesThenReopensAppThenUsesFireButtonThenItSendsThreeEvents() {
+    func testWhenUserRefreshesThreeTimesItSendsTwoReloadTwiceEvents() {
         monitor.handleAction(.refresh)
-        monitor.handleAction(.burn)
+        monitor.handleAction(.refresh)
+        monitor.handleAction(.refresh)
+        XCTAssertEqual(events.count, 6)
+        XCTAssertEqual(events[0], .reloadTwiceWithin12Seconds)
+        XCTAssertEqual(events[1], .reloadTwiceWithin24Seconds)
+        XCTAssertEqual(events[2], .reloadTwiceWithin12Seconds)
+        XCTAssertEqual(events[3], .reloadTwiceWithin24Seconds)
+    }
+
+    func testWhenUserRefreshesThreeTimesItSendsReloadThreeTimesEvent() {
+        monitor.handleAction(.refresh)
+        monitor.handleAction(.refresh)
+        monitor.handleAction(.refresh)
+        XCTAssertEqual(events.count, 6)
+        XCTAssertEqual(events[4], .reloadThreeTimesWithin20Seconds)
+        XCTAssertEqual(events[5], .reloadThreeTimesWithin40Seconds)
+    }
+
+    func testWhenUserRefreshesThenReopensAppThenRefreshesAgainItSendsTwoEvents() {
+        monitor.handleAction(.refresh)
         monitor.handleAction(.reopenApp)
-        XCTAssertEqual(events.count, 3)
-        XCTAssertEqual(events[0], .reloadAndFireButton)
-        XCTAssertEqual(events[1], .reloadAndRestart)
-        XCTAssertEqual(events[2], .fireButtonAndRestart)
+        monitor.handleAction(.refresh)
+        XCTAssertEqual(events.count, 4)
+        XCTAssertEqual(events[0], .reloadAndRestartWithin30Seconds)
+        XCTAssertEqual(events[1], .reloadAndRestartWithin50Seconds)
+        XCTAssertEqual(events[2], .reloadTwiceWithin12Seconds)
+        XCTAssertEqual(events[3], .reloadTwiceWithin24Seconds)
     }
 
     // Not expecting any events
 
-    func testWhenUserUsesFireButtonAndThenRefreshesItShouldNotSendAnyEvent() {
-        monitor.handleAction(.burn)
+    func testWhenUserUsesReopensAppAndThenRefreshesItShouldNotSendAnyEvent() {
+        monitor.handleAction(.reopenApp)
         monitor.handleAction(.refresh)
         XCTAssertTrue(events.isEmpty)
     }
 
-    // Timing
+    // Timed pixels
 
-    func testFireReloadTwiceEventOnlyIfItHappenedWithin10seconds() {
+    func testReloadTwiceEventShouldNotSendEventIfSecondRefreshOccuredAfter24Seconds() {
+        let date = Date()
+        monitor.handleAction(.refresh, date: date)
+        monitor.handleAction(.refresh, date: date + 24) // 24 seconds after the first event
+        XCTAssertTrue(events.isEmpty)
+    }
+
+    func testReloadTwiceEventShouldSendEventIfSecondRefreshOccurredBelow24Seconds() {
+        let date = Date()
+        monitor.handleAction(.refresh, date: date)
+        monitor.handleAction(.refresh, date: date + 20) // 20 seconds after the first event
+        XCTAssertEqual(events.count, 1)
+        XCTAssertEqual(events[0], .reloadTwiceWithin24Seconds)
+    }
+
+    func testReloadTwiceEventShouldSendTwoEventsIfSecondRefreshOccurredBelow12Seconds() {
         let date = Date()
         monitor.handleAction(.refresh, date: date)
         monitor.handleAction(.refresh, date: date + 10) // 10 seconds after the first event
-        XCTAssertTrue(events.isEmpty)
-        monitor.handleAction(.refresh, date: date + 15) // 5 seconds after the second event
-        XCTAssertEqual(events.count, 1)
-        XCTAssertEqual(events.first!, .reloadTwice)
+        XCTAssertEqual(events.count, 2)
+        XCTAssertEqual(events[0], .reloadTwiceWithin12Seconds)
+        XCTAssertEqual(events[1], .reloadTwiceWithin24Seconds)
     }
 
-    func testFireReloadAndRestartEventOnlyIfItHappenedWithin30seconds() {
+    func testReloadAndRestartEventShouldNotSendEventIfRestartOccurredAfter50Seconds() {
+        let date = Date()
+        monitor.handleAction(.refresh, date: date)
+        monitor.handleAction(.reopenApp, date: date + 50) // 50 seconds after the first event
+        XCTAssertTrue(events.isEmpty)
+    }
+
+    func testReloadAndRestartEventShouldSendEventIfRestartOccurredBelow50Seconds() {
         let date = Date()
         monitor.handleAction(.refresh, date: date)
         monitor.handleAction(.reopenApp, date: date + 30) // 30 seconds after the first event
-        XCTAssertTrue(events.isEmpty)
-        monitor.handleAction(.refresh, date: date + 30)
-        monitor.handleAction(.reopenApp, date: date + 50) // 20 seconds after the second event
         XCTAssertEqual(events.count, 1)
-        XCTAssertEqual(events.first!, .reloadAndRestart)
+        XCTAssertEqual(events[0], .reloadAndRestartWithin50Seconds)
     }
 
-    func testFireButtonAndRestartEventOnlyIfItHappenedWithin30seconds() {
+    func testReloadAndRestartEventShouldSendTwoEventsIfRestartOccurredBelow30Seconds() {
         let date = Date()
-        monitor.handleAction(.burn, date: date)
-        monitor.handleAction(.reopenApp, date: date + 30) // 30 seconds after the first event
+        monitor.handleAction(.refresh, date: date)
+        monitor.handleAction(.reopenApp, date: date + 20) // 20 seconds after the first event
+        XCTAssertEqual(events.count, 2)
+        XCTAssertEqual(events[0], .reloadAndRestartWithin30Seconds)
+        XCTAssertEqual(events[1], .reloadAndRestartWithin50Seconds)
+    }
+
+    func testReloadThreeTimesEventShouldNotSendEventIfSecondRefreshOccuredAfter40Seconds() {
+        let date = Date()
+        monitor.handleAction(.refresh, date: date)
+        monitor.handleAction(.refresh, date: date)
+        monitor.handleAction(.refresh, date: date + 40) // 40 seconds after the first event
+        events.removeAll { $0 == .reloadTwiceWithin12Seconds || $0 == .reloadTwiceWithin24Seconds } // remove events that are not being tested
         XCTAssertTrue(events.isEmpty)
-        monitor.handleAction(.burn, date: date + 30)
-        monitor.handleAction(.reopenApp, date: date + 50) // 20 seconds after the second event
+    }
+
+    func testReloadThreeTimesEventShouldSendEventIfSecondRefreshOccurredBelow40Seconds() {
+        let date = Date()
+        monitor.handleAction(.refresh, date: date)
+        monitor.handleAction(.refresh, date: date)
+        monitor.handleAction(.refresh, date: date + 30) // 30 seconds after the first event
+        events.removeAll { $0 == .reloadTwiceWithin12Seconds || $0 == .reloadTwiceWithin24Seconds } // remove events that are not being tested
         XCTAssertEqual(events.count, 1)
-        XCTAssertEqual(events.first!, .fireButtonAndRestart)
+        XCTAssertEqual(events[0], .reloadThreeTimesWithin40Seconds)
+    }
+
+    func testReloadThreeTimesEventShouldSendTwoEventsIfSecondRefreshOccurredBelow20Seconds() {
+        let date = Date()
+        monitor.handleAction(.refresh, date: date)
+        monitor.handleAction(.refresh, date: date)
+        monitor.handleAction(.refresh, date: date + 10) // 10 seconds after the first event
+        events.removeAll { $0 == .reloadTwiceWithin12Seconds || $0 == .reloadTwiceWithin24Seconds } // remove events that are not being tested
+        XCTAssertEqual(events.count, 2)
+        XCTAssertEqual(events[0], .reloadThreeTimesWithin20Seconds)
+        XCTAssertEqual(events[1], .reloadThreeTimesWithin40Seconds)
     }
 
 }

@@ -61,9 +61,7 @@ class AutocompleteViewController: UIViewController {
         CachedBookmarks(bookmarksDatabase)
     }()
 
-    private lazy var cachedBookmarksSearch: BookmarksStringSearch = {
-        BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
-    }()
+    private var bookmarksStringSearch: BookmarksStringSearch!
 
     var backgroundColor: UIColor {
         appSettings.currentAddressBarPosition.isBottom ?
@@ -88,6 +86,7 @@ class AutocompleteViewController: UIViewController {
     var shouldOffsetY = false
     
     static func loadFromStoryboard(bookmarksDatabase: CoreDataDatabase,
+                                   bookmarksStringSearch: BookmarksStringSearch,
                                    historyCoordinator: HistoryCoordinating,
                                    appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
                                    variantManager: VariantManager = DefaultVariantManager()) -> AutocompleteViewController {
@@ -96,6 +95,7 @@ class AutocompleteViewController: UIViewController {
             fatalError("Failed to instatiate correct Autocomplete view controller")
         }
         controller.bookmarksDatabase = bookmarksDatabase
+        controller.bookmarksStringSearch = bookmarksStringSearch
         controller.historyCoordinator = historyCoordinator
         controller.appSettings = appSettings
         controller.variantManager = variantManager
@@ -192,7 +192,7 @@ class AutocompleteViewController: UIViewController {
         if variantManager.inSuggestionExperiment {
             bookmarks = [] // We'll supply bookmarks elsewhere
         } else {
-            bookmarks = cachedBookmarksSearch.search(query: query).prefix(2).map {
+            bookmarks = bookmarksStringSearch.search(query: query).prefix(2).map {
                 .bookmark(title: $0.title, url: $0.url, isFavorite: $0.isFavorite, allowedInTopHits: true)
             }
         }

@@ -43,6 +43,7 @@ final class SettingsViewModel: ObservableObject {
     private var legacyViewProvider: SettingsLegacyViewProvider
     private lazy var versionProvider: AppVersion = AppVersion.shared
     private let voiceSearchHelper: VoiceSearchHelperProtocol
+    private let syncPausedStateManager: any SyncPausedStateManaging
     var emailManager: EmailManager { EmailManager() }
 
     // Subscription Dependencies
@@ -50,9 +51,10 @@ final class SettingsViewModel: ObservableObject {
     private var subscriptionSignOutObserver: Any?
     
     // Used to cache the lasts subscription state for up to a week
-    private var subscriptionStateCache = UserDefaultsCache<SettingsState.Subscription>(key: UserDefaultsCacheKey.subscriptionState,
-                                                                         settings: UserDefaultsCacheSettings(defaultExpirationInterval: .days(7)))
-    
+    private var subscriptionStateCache = UserDefaultsCache<SettingsState.Subscription>(
+        key: UserDefaultsCacheKey.subscriptionState,
+        settings: UserDefaultsCacheSettings(defaultExpirationInterval: .days(7)))
+
 #if NETWORK_PROTECTION
     private let connectionObserver = ConnectionStatusObserverThroughSession()
 #endif
@@ -391,13 +393,15 @@ final class SettingsViewModel: ObservableObject {
          accountManager: AccountManager,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
-         deepLink: SettingsDeepLinkSection? = nil) {
+         deepLink: SettingsDeepLinkSection? = nil,
+         syncPausedStateManager: any SyncPausedStateManaging) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
         self.subscriptionAccountManager = accountManager
         self.voiceSearchHelper = voiceSearchHelper
         self.deepLinkTarget = deepLink
-        
+        self.syncPausedStateManager = syncPausedStateManager
+
         setupNotificationObservers()
         autocompleteSubtitle = variantManager.isSupported(feature: .history) ? UserText.settingsAutocompleteSubtitle : nil
     }
@@ -456,22 +460,23 @@ extension SettingsViewModel {
 #endif
         return SettingsState.NetworkProtection(enabled: enabled, status: "")
     }
-    
+
     private func getSyncState() -> SettingsState.SyncSettings {
         SettingsState.SyncSettings(enabled: legacyViewProvider.syncService.featureFlags.contains(.userInterface),
                                    title: {
             let syncService = legacyViewProvider.syncService
             let isDataSyncingDisabled = !syncService.featureFlags.contains(.dataSyncing)
             && syncService.authState == .active
-            if SyncBookmarksAdapter.isSyncBookmarksPaused
-                || SyncCredentialsAdapter.isSyncCredentialsPaused
-                || isDataSyncingDisabled {
+            if isDataSyncingDisabled
+                || syncPausedStateManager.isSyncPaused
+                || syncPausedStateManager.isSyncBookmarksPaused
+                || syncPausedStateManager.isSyncCredentialsPaused {
                 return "⚠️ \(UserText.settingsSync)"
             }
             return SyncUI.UserText.syncTitle
         }())
     }
-    
+
     private func firePixel(_ event: Pixel.Event,
                            withAdditionalParameters params: [String: String] = [:]) {
         Pixel.fire(pixel: event, withAdditionalParameters: params)
@@ -682,11 +687,11 @@ extension SettingsViewModel: AutofillLoginSettingsListViewControllerDelegate {
 // MARK: DeepLinks
 extension SettingsViewModel {
 
-    enum SettingsDeepLinkSection: Identifiable {
+    enum SettingsDeepLinkSection: Identifiable, Equatable {
         case netP
         case dbp
         case itr
-        case subscriptionFlow
+        case subscriptionFlow(origin: String? = nil)
         case subscriptionRestoreFlow
         // Add other cases as needed
 

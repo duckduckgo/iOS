@@ -133,18 +133,6 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Olemassa olevia kirjanmerkkejä ei kopioida.";
 
-/* Description for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-description" = "Olet ylittänyt kirjanmerkkien synkronointirajan. Yritä poistaa joitakin kirjanmerkkejä. Kirjanmerkkejäsi ei varmuuskopioida ennen kuin tämä ongelma on ratkaistu.";
-
-/* Title for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-title" = "Kirjanmerkkien synkronointi on keskeytetty";
-
-/* Description for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-description" = "Olet ylittänyt salasanojen synkronointirajan. Yritä poistaa joitakin salasanoja. Salasanojasi ei varmuuskopioida ennen kuin tämä ongelma on ratkaistu.";
-
-/* Title for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-title" = "Salasanojen synkronointi on keskeytetty";
-
 /* Title for sync error alert */
 "alert.sync-error" = "Synkronointi- ja varmuuskopiointivirhe";
 
@@ -646,14 +634,11 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Tuo HTML-kirjanmerkkitiedosto toisesta selaimesta tai vie olemassa olevat kirjanmerkkisi.";
 
-/* No comment provided by engineer. */
-"bucket: %@" = "bucket: %@";
-
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Lähetä aina virheraportit";
 
 /* Crash Report hide details button title */
-"crash.report.dialog.hide.details" = "Piilota";
+"crash.report.dialog.hide.details" = "Hide";
 
 /* Crash Report dialog message */
 "crash.report.dialog.message" = "Virheraportit auttavat DuckDuckGota diagnosoimaan ongelmia ja parantamaan tuotteitamme. Ne eivät sisällä henkilön tunnistamisen mahdollistavia tietoja.";
@@ -900,9 +885,6 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Ei hakutuloksia";
-
-/* No comment provided by engineer. */
-"Error" = "Virhe";
 
 /* Button title to Sign In */
 "error.email-protection-sign-in.action" = "Kirjaudu sisään";
@@ -1573,9 +1555,6 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
-/* No comment provided by engineer. */
-"Ok" = "OK";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Hallitut evästeet";
 
@@ -1614,9 +1593,6 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Linkin avaamiseen tarvittavaa sovellusta ei löydy";
-
-/* No comment provided by engineer. */
-"Please enter which app on your device is broken." = "Ilmoita, mikä laitteesi sovellus on rikki.";
 
 /* Activate button */
 "pm.activate" = "Reactivate";
@@ -1720,6 +1696,9 @@
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
 "settings.address.full.url" = "Näytä sivuston osoite kokonaan";
+
+/* Label describing a feature which is turned on always */
+"settings.always.on" = "Always On";
 
 /* Settings screen appearance section title */
 "settings.appearance" = "Ulkoasu";
@@ -1827,6 +1806,12 @@
 /* The name of a settings category listing next steps */
 "settings.next.steps" = "Seuraavat vaiheet";
 
+/* Label describing a feature which is turned off */
+"settings.off" = "Off";
+
+/* Label describing a feature which is turned on */
+"settings.on" = "On";
+
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
@@ -1871,6 +1856,12 @@
 
 /* I have a Subscription button text for privacy pro */
 "settings.subscription.existing.subscription" = "I Have a Subscription";
+
+/* Subscription expired description */
+"settings.subscription.expired.comment" = "Subscribe again to continue using Privacy Pro";
+
+/* Subscription expired tittle message */
+"settings.subscription.expired.title" = "Your Privacy Pro subscription expired";
 
 /* Privacy pro features list */
 "settings.subscription.features" = " • VPN\n • Personal Information Removal\n • Identity Theft Restoration";
@@ -1922,6 +1913,21 @@
 
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo estää piilotetut seurantalaitteet automaattisesti, kun selaat verkkoa.\n[Lue lisää] (ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
+
+/* Description on a report broken site page. */
+"site.not.working.description" = "Valitse vaihtoehto, joka parhaiten kuvaa ongelmaa.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Hylkää";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Tämä auttaa meitä parantamaan selainta.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Eikö sivusto toimi? Kerro siitä DuckDuckGolle.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Verkkosivusto on viallinen";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Lähetä raportti";
@@ -2175,6 +2181,9 @@
 /* Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)' */
 "subscription.subscription.active.caption" = "Your subscription %1$@ on %2$@";
 
+/* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
+"subscription.subscription.expired.caption" = "Your subscription expired on %@";
+
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
 
@@ -2216,9 +2225,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Sync & Backup ei valitettavasti ole käytettävissä tässä sovellusversiossa. Päivitä DuckDuckGo uusimpaan versioon jatkaaksesi.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Sync & Backup on keskeytetty";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Sulje koti-välilehti";

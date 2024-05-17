@@ -82,7 +82,7 @@ struct SettingsRootView: View {
                 })
 
         .onReceive(viewModel.$deepLinkTarget.removeDuplicates(), perform: { link in
-            guard let link, link != self.deepLinkTarget else {
+            guard let link else {
                 return
             }
 
@@ -114,10 +114,10 @@ struct SettingsRootView: View {
             SubscriptionPIRView()
         case .itr:
             SubscriptionITPView()
-        case .subscriptionFlow:
-            SubscriptionContainerView(currentView: .subscribe).environmentObject(subscriptionNavigationCoordinator)
+        case let .subscriptionFlow(origin):
+            SubscriptionContainerViewFactory.makeSubscribeFlow(origin: origin, navigationCoordinator: subscriptionNavigationCoordinator)
         case .subscriptionRestoreFlow:
-            SubscriptionContainerView(currentView: .restore).environmentObject(subscriptionNavigationCoordinator)
+            SubscriptionContainerViewFactory.makeRestoreFlow(navigationCoordinator: subscriptionNavigationCoordinator)
         default:
             EmptyView()
         }

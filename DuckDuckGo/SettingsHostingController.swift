@@ -47,11 +47,9 @@ class SettingsHostingController: UIHostingController<AnyView> {
             self?.navigationController?.dismiss(animated: true)
         }
 
-        let settingsView: AnyView
-        switch PixelExperiment.cohort {
-        case .control, .noVariant, .none: settingsView = AnyView(SettingsView(viewModel: viewModel))
-        case .newSettings: settingsView = AnyView(SettingsRootView(viewModel: viewModel))
-        }
+        let settingsView = PixelExperiment.cohort == .newSettings ?
+            AnyView(SettingsRootView(viewModel: viewModel)) :
+            AnyView(SettingsView(viewModel: viewModel))
         self.rootView = AnyView(settingsView)
 
         decorateNavigationBar()

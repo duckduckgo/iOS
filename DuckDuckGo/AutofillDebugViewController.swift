@@ -27,6 +27,7 @@ class AutofillDebugViewController: UITableViewController {
         case toggleAutofillDebugScript = 201
         case resetEmailProtectionInContextSignUp = 202
         case resetDaysSinceInstalledTo0 = 203
+        case toggleAutofillSurvey = 204
     }
 
     let defaults = AppUserDefaults()
@@ -45,6 +46,9 @@ class AutofillDebugViewController: UITableViewController {
                 defaults.autofillDebugScriptEnabled.toggle()
                 cell.accessoryType = defaults.autofillDebugScriptEnabled ? .checkmark : .none
                 NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.autofillDebugScriptToggled))
+            } else if cell.tag == Row.toggleAutofillSurvey.rawValue {
+                defaults.autofillSurveyEnabled = true
+                ActionMessageView.present(message: "Passwords Survey enabled")
             } else if cell.tag == Row.resetEmailProtectionInContextSignUp.rawValue {
                 EmailManager().resetEmailProtectionInContextPrompt()
                 tableView.deselectRow(at: indexPath, animated: true)

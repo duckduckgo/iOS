@@ -467,6 +467,7 @@ extension SettingsViewModel {
             sync: getSyncState()
         )
         
+        updateRecentlyVisitedSitesVisibility()
         setupSubscribers()
         Task { await setupSubscriptionEnvironment() }
         

@@ -775,7 +775,6 @@ class MainViewController: UIViewController {
             self.present(controller: alert, fromView: self.viewCoordinator.toolbar)
         }
 
-        hideSuggestionTray()
         performCancel()
     }
     
@@ -1730,7 +1729,6 @@ extension MainViewController: OmniBarDelegate {
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
-        hideSuggestionTray()
         performCancel()
         ActionMessageView.dismissAllMessages()
         Task {
@@ -2349,14 +2347,12 @@ extension MainViewController: TabSwitcherButtonDelegate {
     
     func launchNewTab(_ button: TabSwitcherButton) {
         Pixel.fire(pixel: .tabSwitchLongPressNewTab)
-        hideSuggestionTray()
         performCancel()
         newTab()
     }
 
     func showTabSwitcher(_ button: TabSwitcherButton) {
         Pixel.fire(pixel: .tabBarTabSwitcherPressed)
-        hideSuggestionTray()
         performCancel()
         showTabSwitcher()
     }

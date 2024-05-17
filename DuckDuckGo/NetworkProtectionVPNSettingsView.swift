@@ -29,6 +29,15 @@ struct NetworkProtectionVPNSettingsView: View {
     var body: some View {
         VStack {
             List {
+                // Widget only available for iOS 17 and up
+                if #available(iOS 17.0, *) {
+                    NavigationLink {
+                        WidgetEducationView.vpn
+                    } label: {
+                        Text(UserText.vpnSettingsAddWidget).daxBodyRegular()
+                    }
+                }
+
                 switch viewModel.viewKind {
                 case .loading: EmptyView()
                 case .unauthorized: notificationsUnauthorizedView
@@ -125,6 +134,20 @@ struct NetworkProtectionVPNSettingsView: View {
         .listRowBackground(Color(designSystemColor: .surface))
     }
 
+}
+
+private extension WidgetEducationView {
+    static var vpn: Self {
+        WidgetEducationView(
+            navBarTitle: UserText.vpnSettingsAddWidget,
+            thirdParagraphText: UserText.addVPNWidgetSettingsThirdParagraph,
+            widgetExampleImageConfig: .init(
+                image: Image("WidgetEducationVPNWidgetExample"),
+                maxWidth: 164,
+                horizontalOffset: -7
+            )
+        )
+    }
 }
 
 #endif

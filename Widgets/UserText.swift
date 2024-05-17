@@ -61,6 +61,35 @@ struct UserText {
                                              value: "Search Passwords",
                                              comment: "Text in passwords widget")
 
+    static let vpnWidgetGalleryDisplayName = NSLocalizedString("widget.gallery.vpn.display.name",
+                                                               value: "VPN",
+                                                               comment: "Display name for VPN widget in widget gallery")
+
+    static let vpnWidgetGalleryDescription = NSLocalizedString("widget.gallery.vpn.description",
+                                                               value: "View and manage your VPN connection. Requires a Privacy Pro subscription.",
+                                                               comment: "Description of VPN widget in widget gallery")
+
+    static let vpnWidgetConnectedStatus = NSLocalizedString("widget.vpn.status.connected",
+                                                            value: "VPN is On",
+                                                            comment: "Message describing VPN connected status")
+
+    static let vpnWidgetDisconnectedStatus = NSLocalizedString("widget.vpn.status.disconnected",
+                                                               value: "VPN is Off",
+                                                               comment: "Message describing VPN disconnected status")
+
+    static let vpnWidgetDisconnectedSubtitle = NSLocalizedString("widget.vpn.subtitle.disconnected",
+                                                                 value: "Not connected",
+                                                                 comment: "Subtitle describing VPN disconnected status")
+
+    static let vpnWidgetConnectButton = NSLocalizedString("widget.vpn.button.connect",
+                                                          value: "Connect",
+                                                          comment: "VPN connect button text")
+
+    static let vpnWidgetDisconnectButton = NSLocalizedString("widget.vpn.button.disconnect",
+                                                             value: "Disconnect",
+                                                             comment: "VPN disconnect button text")
+
+
     static let lockScreenSearchTitle = NSLocalizedString(
         "lock.screen.widget.search.title",
         value: "Private Search",

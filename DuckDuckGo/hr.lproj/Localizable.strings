@@ -133,14 +133,50 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Postojeće knjižne oznake neće se duplicirati.";
 
+/* Description for alert shown when sync error occurs because of bad bookmarks data */
+"alert.sync-bookmarks-bad-data-error-description" = "Neke oznake formatirane su pogrešno, ili su preduge i nisu sinkronizirane.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Dosegnut je maksimalni broj knjižnih oznaka. Izbriši neke oznake da bi nastavio sinkronizaciju.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Sinkronizacija knjižnih oznaka je pauzirana";
+
+/* Description for alert shown when sync error occurs because of bad credentials data */
+"alert.sync-credentials-bad-data-error-description" = "Neke lozinke formatirane su pogrešno, ili su preduge i nisu sinkronizirane.";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Dosegnut je maksimalni broj lozinki. Izbriši neke lozinke za nastavak sinkronizacije.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Sinkronizacija lozinke je pauzirana";
+
 /* Title for sync error alert */
 "alert.sync-error" = "Pogreška Sinkronizacije i sigurnosnog kopiranja";
+
+/* Sync error alert action button title, takes the user to the sync settings page. */
+"alert.sync-error-action" = "Postavke sinkronizacije";
+
+/* Description for alert shown when user logged off from sync */
+"alert.sync-invalid-login-error-description" = "Sinkronizacija je pauzirana. Ako želiš nastaviti sinkronizirati ovaj uređaj, ponovno se poveži pomoću drugog uređaja ili šifre za oporavak.";
 
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Saznajte više";
 
 /* Confirmation button in alert */
 "alert.sync-paused-alert-ok-button" = "U redu";
+
+/* Title for alert shown when sync paused for an error */
+"alert.sync-paused-title" = "Sinkronizacija je pauzirana";
+
+/* Description for alert shown when sync error occurs because of too many requests */
+"alert.sync-too-many-requests-error-description" = "Sinkronizacija i sigurnosno kopiranje Sync & Backup privremeno su nedostupni.";
+
+/* Title of the warning message that tells the user that there was an error with the sync feature. */
+"alert.sync.warning.sync-error" = "Pogreška pri sinkronizaciji";
+
+/* Title of the warning message */
+"alert.sync.warning.sync-paused" = "Sync & Backup pauziran";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Označi sve kartice?";
@@ -1148,6 +1184,9 @@
 "get.browser.title" = "Nabavi DuckDuckGo za Mac ili Windows";
 
 /* No comment provided by engineer. */
+"Help us improve!" = "Help us improve!";
+
+/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Dodaj DuckDuckGo na svoj početni zaslon!";
 
 /* No comment provided by engineer. */
@@ -1602,6 +1641,26 @@
 
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Upravljanje knjižnim oznakama";
+
+/* Description for sync bookmarks limits exceeded warning */
+"prefrences.sync.bookmarks-limit-exceeded-description" = "Dosegnut je maksimalni broj knjižnih oznaka. Izbriši neke za nastavak sinkronizacije.";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Upravljanje lozinkama…";
+
+/* Description for sync credentials limits exceeded warning */
+"prefrences.sync.credentials-limit-exceeded-description" = "Dosegnut je maksimalni broj lozinki. Izbriši neke za nastavak sinkronizacije.";
+
+/* Description invalid credentials error when syncing.
+   Description of incorrectly formatted data error when syncing.
+   Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Sinkronizacija je naišla na pogrešku. Pokušaj onemogućiti sinkronizaciju na ovom uređaju, a zatim se ponovno poveži pomoću drugog uređaja ili šifre za oporavak.";
+
+/* Title for sync limits exceeded warning */
+"prefrences.sync.limit-exceeded-title" = "Sinkronizacija je zaustavljena";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Web-mjesta oslanjaju se na kolačiće kako bi te zadržala prijavljenim/om. Kada je web-mjesto označeno kao zaštićeno, kolačići neće biti izbrisani i ostat ćeš prijavljen/a čak i nakon upotrebe gumba Fire. I dalje blokiramo alate za praćenje trećih strana koje pronađemo na mrežnim mjestima označenim kao Fireproof.";
@@ -2226,6 +2285,9 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Mjenjač kartica";
 
+/* No comment provided by engineer. */
+"Take Survey" = "Take Survey";
+
 /* Description text for the text size adjustment setting */
 "textSize.description" = "Odaberite željenu veličinu teksta. Web stranice koje pregledavate u DuckDuckGou prilagodit će se ovoj postavci.";
 
@@ -2423,6 +2485,9 @@
 
 /* Title for the share sheet entry */
 "waitlist.share-sheet.title" = "Pozvani ste!";
+
+/* No comment provided by engineer. */
+"We want to make using passwords in DuckDuckGo better." = "We want to make using passwords in DuckDuckGo better.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Omiljena je stavka uklonjena";

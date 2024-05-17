@@ -133,14 +133,50 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "A meglévő könyvjelzők nem kettőződnek.";
 
+/* Description for alert shown when sync error occurs because of bad bookmarks data */
+"alert.sync-bookmarks-bad-data-error-description" = "Egyes könyvjelzők helytelen formátumúak vagy túl hosszúak, és nem lettek szinkronizálva.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Elérted a könyvjelzők maximális számát. A szinkronizálás folytatásához törölj néhány könyvjelzőt.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "A könyvjelző-szinkronizálás szünetel";
+
+/* Description for alert shown when sync error occurs because of bad credentials data */
+"alert.sync-credentials-bad-data-error-description" = "Egyes jelszavak helytelen formátumúak vagy túl hosszúak, és nem lettek szinkronizálva.";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Elérted a jelszavak maximális számát. A szinkronizálás folytatásához törölj néhány jelszót.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "A jelszó-szinkronizálás szünetel";
+
 /* Title for sync error alert */
 "alert.sync-error" = "Szinkronizálási és biztonsági mentési hiba";
+
+/* Sync error alert action button title, takes the user to the sync settings page. */
+"alert.sync-error-action" = "Beállítások szinkronizálása";
+
+/* Description for alert shown when user logged off from sync */
+"alert.sync-invalid-login-error-description" = "A szinkronizálás szünetel. Ha folytatni szeretnéd az eszköz szinkronizálását, csatlakozz újra egy másik eszközzel vagy a helyreállítási kóddal.";
 
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "További részletek";
 
 /* Confirmation button in alert */
 "alert.sync-paused-alert-ok-button" = "OK";
+
+/* Title for alert shown when sync paused for an error */
+"alert.sync-paused-title" = "A szinkronizálás szünetel";
+
+/* Description for alert shown when sync error occurs because of too many requests */
+"alert.sync-too-many-requests-error-description" = "A szinkronizálás és biztonsági mentés átmenetileg nem érhető el.";
+
+/* Title of the warning message that tells the user that there was an error with the sync feature. */
+"alert.sync.warning.sync-error" = "Szinkronizálási hiba";
+
+/* Title of the warning message */
+"alert.sync.warning.sync-paused" = "A szinkronizálás és biztonsági mentés szünetel";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Az összes lapot könyvjelzőzöd?";
@@ -1148,6 +1184,9 @@
 "get.browser.title" = "Mac vagy Windows verziójú DuckDuckGo letöltése";
 
 /* No comment provided by engineer. */
+"Help us improve!" = "Help us improve!";
+
+/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Add hozzá a DuckDuckGo-t a kezdőképernyődhöz!";
 
 /* No comment provided by engineer. */
@@ -1602,6 +1641,26 @@
 
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Könyvjelzők kezelése";
+
+/* Description for sync bookmarks limits exceeded warning */
+"prefrences.sync.bookmarks-limit-exceeded-description" = "Elérted a könyvjelzők maximális számát. A szinkronizálás folytatásához törölj néhányat.";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Jelszavak kezelése…";
+
+/* Description for sync credentials limits exceeded warning */
+"prefrences.sync.credentials-limit-exceeded-description" = "Elérted a jelszavak maximális számát. A szinkronizálás folytatásához törölj néhányat.";
+
+/* Description invalid credentials error when syncing.
+   Description of incorrectly formatted data error when syncing.
+   Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Szinkronizálási hiba történt. Próbáld meg kikapcsolni a szinkronizálást ezen az eszközön, majd csatlakozz újra egy másik eszközzel vagy a helyreállítási kóddal.";
+
+/* Title for sync limits exceeded warning */
+"prefrences.sync.limit-exceeded-title" = "Szinkronizálás szüneteltetve";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "A webhelyek sütik segítségével teszik lehetővé, hogy bejelentkezve maradhass. Ha tűzállóvá teszel egy weboldalt, a sütik nem törlődnek, és még a Tűz gomb használata után is bejelentkezve maradsz. A tűzálló webhelyeken a külső felek nyomkövetőit azonban blokkoljuk.";
@@ -2226,6 +2285,9 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Lapváltó";
 
+/* No comment provided by engineer. */
+"Take Survey" = "Take Survey";
+
 /* Description text for the text size adjustment setting */
 "textSize.description" = "Válaszd ki a kívánt szövegméretet. A DuckDuckGo ennek használatával jeleníti meg a webhelyeket.";
 
@@ -2423,6 +2485,9 @@
 
 /* Title for the share sheet entry */
 "waitlist.share-sheet.title" = "Meghívót kaptál!";
+
+/* No comment provided by engineer. */
+"We want to make using passwords in DuckDuckGo better." = "We want to make using passwords in DuckDuckGo better.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Kedvenc eltávolítva";

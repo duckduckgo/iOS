@@ -133,14 +133,50 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existující záložky nebudou duplikovány.";
 
+/* Description for alert shown when sync error occurs because of bad bookmarks data */
+"alert.sync-bookmarks-bad-data-error-description" = "Některé záložky jsou nesprávně naformátované nebo příliš dlouhé, takže jsme je nemohli synchronizovat.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Už máš maximální počet záložek. Jestli chceš synchronizaci obnovit, některé záložky smaž.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Synchronizace záložek je pozastavená";
+
+/* Description for alert shown when sync error occurs because of bad credentials data */
+"alert.sync-credentials-bad-data-error-description" = "Některá hesla jsou nesprávně naformátovaná nebo příliš dlouhá, takže jsme je nemohli synchronizovat.";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Už máš maximální počet hesel. Jestli chceš synchronizaci obnovit, některá hesla smaž.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Synchronizace hesel je pozastavená";
+
 /* Title for sync error alert */
 "alert.sync-error" = "Chyba synchronizace a zálohování";
+
+/* Sync error alert action button title, takes the user to the sync settings page. */
+"alert.sync-error-action" = "Nastavení synchronizace";
+
+/* Description for alert shown when user logged off from sync */
+"alert.sync-invalid-login-error-description" = "Synchronizace je pozastavená. Pokud chceš toto zařízení dál synchronizovat, znovu se připoj pomocí jiného zařízení nebo kódu pro obnovení.";
 
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Více informací";
 
 /* Confirmation button in alert */
 "alert.sync-paused-alert-ok-button" = "DOBŘE";
+
+/* Title for alert shown when sync paused for an error */
+"alert.sync-paused-title" = "Synchronizace je pozastavená";
+
+/* Description for alert shown when sync error occurs because of too many requests */
+"alert.sync-too-many-requests-error-description" = "Funkce Sync & Backup je dočasně nedostupná.";
+
+/* Title of the warning message that tells the user that there was an error with the sync feature. */
+"alert.sync.warning.sync-error" = "Chyba synchronizace";
+
+/* Title of the warning message */
+"alert.sync.warning.sync-paused" = "Funkce synchronizace a zálohování je pozastavená";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Dát do záložek všechny karty?";
@@ -1148,6 +1184,9 @@
 "get.browser.title" = "Nainstaluj si DuckDuckGo pro Mac nebo Windows";
 
 /* No comment provided by engineer. */
+"Help us improve!" = "Help us improve!";
+
+/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Přidejte DuckDuckGo na svou domovskou obrazovku!";
 
 /* No comment provided by engineer. */
@@ -1602,6 +1641,26 @@
 
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Spravovat záložky";
+
+/* Description for sync bookmarks limits exceeded warning */
+"prefrences.sync.bookmarks-limit-exceeded-description" = "Už máš maximální počet záložek. Jestli chceš synchronizaci obnovit, některé smaž.";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Spravovat hesla…";
+
+/* Description for sync credentials limits exceeded warning */
+"prefrences.sync.credentials-limit-exceeded-description" = "Už máš maximální počet hesel. Jestli chceš synchronizaci obnovit, některá smaž.";
+
+/* Description invalid credentials error when syncing.
+   Description of incorrectly formatted data error when syncing.
+   Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Při synchronizaci došlo k chybě. Zkus na tomto zařízení synchronizaci vypnout a pak se znovu připoj pomocí jiného zařízení nebo kódu pro obnovení.";
+
+/* Title for sync limits exceeded warning */
+"prefrences.sync.limit-exceeded-title" = "Synchronizace je pozastavená";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Webové stránky spoléhají na soubory cookie, aby vás udržely přihlášené. Když na webu zapnete ochranu, soubory cookie se nevymažou a zůstanete přihlášeni, a to i po použití tlačítka pro mazání. Stále přitom blokujeme sledovací programy třetích stran nalezené na webových stránkách s ochranou.";
@@ -2226,6 +2285,9 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Přepínač karet";
 
+/* No comment provided by engineer. */
+"Take Survey" = "Take Survey";
+
 /* Description text for the text size adjustment setting */
 "textSize.description" = "Vyberte preferovanou velikost textu. Webové stránky, které zobrazíte v DuckDuckGo, se tomu přizpůsobí.";
 
@@ -2423,6 +2485,9 @@
 
 /* Title for the share sheet entry */
 "waitlist.share-sheet.title" = "Zveme tě!";
+
+/* No comment provided by engineer. */
+"We want to make using passwords in DuckDuckGo better." = "We want to make using passwords in DuckDuckGo better.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Oblíbená položka odstraněna";

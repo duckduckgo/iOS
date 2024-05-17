@@ -133,14 +133,50 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Съществуващите отметки няма да бъдат дублирани.";
 
+/* Description for alert shown when sync error occurs because of bad bookmarks data */
+"alert.sync-bookmarks-bad-data-error-description" = "Някои отметки са форматирани неправилно или са твърде дълги и не бяха синхронизирани.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Достигнахте максималния брой отметки. Изтрийте някои отметки, за да възобновите синхронизирането.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Синхронизирането на отметки е на пауза";
+
+/* Description for alert shown when sync error occurs because of bad credentials data */
+"alert.sync-credentials-bad-data-error-description" = "Някои пароли са форматирани неправилно или са твърде дълги и не бяха синхронизирани.";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Достигнахте максималния брой пароли. Изтрийте някои пароли, за да възобновите синхронизирането.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Синхронизирането на пароли е на пауза";
+
 /* Title for sync error alert */
 "alert.sync-error" = "Грешка при синхронизиране и архивиране";
+
+/* Sync error alert action button title, takes the user to the sync settings page. */
+"alert.sync-error-action" = "Настройки за синхронизиране";
+
+/* Description for alert shown when user logged off from sync */
+"alert.sync-invalid-login-error-description" = "Синхронизирането е на пауза. Ако искате да продължите със синхронизирането на това устройство, свържете се отново с помощта на друго устройство или със своя код за възстановяване.";
 
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Научете повече";
 
 /* Confirmation button in alert */
 "alert.sync-paused-alert-ok-button" = "ОК";
+
+/* Title for alert shown when sync paused for an error */
+"alert.sync-paused-title" = "Синхронизирането е на пауза";
+
+/* Description for alert shown when sync error occurs because of too many requests */
+"alert.sync-too-many-requests-error-description" = "Sync & Backup временно не е налична.";
+
+/* Title of the warning message that tells the user that there was an error with the sync feature. */
+"alert.sync.warning.sync-error" = "Грешка при синхронизиране";
+
+/* Title of the warning message */
+"alert.sync.warning.sync-paused" = "Функцията за синхронизиране и архивиране е на пауза";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Поставяне на всички раздели в отметки?";
@@ -1148,6 +1184,9 @@
 "get.browser.title" = "Вземете DuckDuckGo за Mac или Windows";
 
 /* No comment provided by engineer. */
+"Help us improve!" = "Help us improve!";
+
+/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Добавете DuckDuckGo към началния си екран!";
 
 /* No comment provided by engineer. */
@@ -1602,6 +1641,26 @@
 
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Управление на отметки";
+
+/* Description for sync bookmarks limits exceeded warning */
+"prefrences.sync.bookmarks-limit-exceeded-description" = "Достигнахте максималния брой отметки. Изтрийте някои от тях, за да възобновите синхронизирането.";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Управление на пароли…";
+
+/* Description for sync credentials limits exceeded warning */
+"prefrences.sync.credentials-limit-exceeded-description" = "Достигнахте максималния брой пароли. Изтрийте някои от тях, за да възобновите синхронизирането.";
+
+/* Description invalid credentials error when syncing.
+   Description of incorrectly formatted data error when syncing.
+   Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Грешка при синхронизирането. Опитайте да деактивирате синхронизирането на това устройство и след това се свържете отново чрез друго устройство или със своя код за възстановяване.";
+
+/* Title for sync limits exceeded warning */
+"prefrences.sync.limit-exceeded-title" = "Синхронизирането е на пауза";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Уеб сайтовете разчитат на бисквитки, за да поддържат сесията ви активна. Когато направите сайта огнеустойчив, бисквитките няма да бъдат изтрити и ще останете вписани, дори след като използвате огнения бутон. Ние все пак блокираме тракери на трети страни, които се намират на огнеустойчиви сайтове.";
@@ -2226,6 +2285,9 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Превключване на раздели";
 
+/* No comment provided by engineer. */
+"Take Survey" = "Take Survey";
+
 /* Description text for the text size adjustment setting */
 "textSize.description" = "Изберете предпочитания размер на текста. Уебсайтът, който разглеждате в DuckDuckGo, ще се регулира спрямо него.";
 
@@ -2423,6 +2485,9 @@
 
 /* Title for the share sheet entry */
 "waitlist.share-sheet.title" = "Имате покана!";
+
+/* No comment provided by engineer. */
+"We want to make using passwords in DuckDuckGo better." = "We want to make using passwords in DuckDuckGo better.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Премахнато от любими";

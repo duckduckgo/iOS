@@ -133,14 +133,50 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "I segnalibri già presenti non saranno duplicati.";
 
+/* Description for alert shown when sync error occurs because of bad bookmarks data */
+"alert.sync-bookmarks-bad-data-error-description" = "Alcuni segnalibri sono formattati in modo errato o sono troppo lunghi e non sono stati sincronizzati.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Hai raggiunto il numero massimo di segnalibri. Elimina alcuni segnalibri per riprendere la sincronizzazione.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Sync dei segnalibri è in pausa";
+
+/* Description for alert shown when sync error occurs because of bad credentials data */
+"alert.sync-credentials-bad-data-error-description" = "Alcune password sono formattate in modo errato o sono troppo lunghe e non sono state sincronizzate.";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Hai raggiunto il numero massimo di password. Elimina alcune password per riprendere la sincronizzazione.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Sync delle password è in pausa";
+
 /* Title for sync error alert */
 "alert.sync-error" = "Errore di sincronizzazione e backup";
+
+/* Sync error alert action button title, takes the user to the sync settings page. */
+"alert.sync-error-action" = "Impostazioni Sync";
+
+/* Description for alert shown when user logged off from sync */
+"alert.sync-invalid-login-error-description" = "La sincronizzazione è stata sospesa. Se vuoi continuare a sincronizzare questo dispositivo, riconnettiti utilizzando un altro dispositivo o il tuo codice di ripristino.";
 
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Ulteriori informazioni";
 
 /* Confirmation button in alert */
 "alert.sync-paused-alert-ok-button" = "OK";
+
+/* Title for alert shown when sync paused for an error */
+"alert.sync-paused-title" = "Sync è in pausa";
+
+/* Description for alert shown when sync error occurs because of too many requests */
+"alert.sync-too-many-requests-error-description" = "Sync & Backup non è temporaneamente disponibile.";
+
+/* Title of the warning message that tells the user that there was an error with the sync feature. */
+"alert.sync.warning.sync-error" = "Errore di sincronizzazione";
+
+/* Title of the warning message */
+"alert.sync.warning.sync-paused" = "Sincronizzazione e Backup è in pausa";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Creare un segnalibro con tutte le schede?";
@@ -1148,6 +1184,9 @@
 "get.browser.title" = "Scarica DuckDuckGo per Mac o Windows";
 
 /* No comment provided by engineer. */
+"Help us improve!" = "Help us improve!";
+
+/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Aggiungi DuckDuckGo alla tua schermata iniziale!";
 
 /* No comment provided by engineer. */
@@ -1602,6 +1641,26 @@
 
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Gestisci segnalibri";
+
+/* Description for sync bookmarks limits exceeded warning */
+"prefrences.sync.bookmarks-limit-exceeded-description" = "Hai raggiunto il numero massimo di segnalibri. Eliminane alcuni per riprendere la sincronizzazione.";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Gestisci password…";
+
+/* Description for sync credentials limits exceeded warning */
+"prefrences.sync.credentials-limit-exceeded-description" = "Hai raggiunto il numero massimo di password. Eliminane alcuni per riprendere la sincronizzazione.";
+
+/* Description invalid credentials error when syncing.
+   Description of incorrectly formatted data error when syncing.
+   Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Sync ha riscontrato un errore. Prova a disattivare la sincronizzazione su questo dispositivo e riconnettiti utilizzando un altro dispositivo o il codice di ripristino.";
+
+/* Title for sync limits exceeded warning */
+"prefrences.sync.limit-exceeded-title" = "Sincronizzazione in pausa";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Per mantenere l'accesso degli utenti, i siti web si affidano ai cookie. Quando attivi la Protezione dal fuoco per un sito, i cookie non verranno cancellati e manterrai l'accesso, anche dopo aver usato il Fire Button (icona del fuoco). Continueremo a bloccare i tracker di terze parti anche sui siti ignifughi.";
@@ -2226,6 +2285,9 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Selettore schede";
 
+/* No comment provided by engineer. */
+"Take Survey" = "Take Survey";
+
 /* Description text for the text size adjustment setting */
 "textSize.description" = "Scegli le dimensioni del testo che preferisci. I siti web che visualizzi su DuckDuckGo si adatteranno a questa impostazione.";
 
@@ -2423,6 +2485,9 @@
 
 /* Title for the share sheet entry */
 "waitlist.share-sheet.title" = "Hai ricevuto un invito!";
+
+/* No comment provided by engineer. */
+"We want to make using passwords in DuckDuckGo better." = "We want to make using passwords in DuckDuckGo better.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Preferito rimosso";

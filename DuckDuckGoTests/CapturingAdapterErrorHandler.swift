@@ -20,12 +20,18 @@
 import Foundation
 import Core
 
-class CapturingAdapterErrorHandler: SyncErrorHandling {
+class CapturingAdapterErrorHandler: SyncErrorHandling {    
     var handleBookmarkErrorCalled = false
     var syncCredentialsSuccededCalled = false
     var handleCredentialErrorCalled = false
     var syncBookmarksSuccededCalled = false
+    var handleSettingsErrorCalled = false
     var capturedError: Error?
+
+    func handleSettingsError(_ error: Error) {
+        handleSettingsErrorCalled = true
+        capturedError = error
+    }
 
     func handleBookmarkError(_ error: Error) {
         handleBookmarkErrorCalled = true

@@ -133,14 +133,50 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Olemasolevaid järjehoidjaid ei dubleerita.";
 
+/* Description for alert shown when sync error occurs because of bad bookmarks data */
+"alert.sync-bookmarks-bad-data-error-description" = "Mõned järjehoidjad on valesti vormindatud või liiga pikad ja neid ei sünkroonitud.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Oled saavutanud maksimaalse järjehoidjate arvu. Sünkroonimise jätkamiseks kustuta mõned järjehoidjad.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Järjehoidja sünkroonimine on peatatud";
+
+/* Description for alert shown when sync error occurs because of bad credentials data */
+"alert.sync-credentials-bad-data-error-description" = "Mõned paroolid on valesti vormindatud või liiga pikad ja neid ei sünkroonitud.";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Oled saavutanud maksimaalse paroolide arvu. Sünkroonimise jätkamiseks kustuta mõned paroolid.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Parooli sünkroonimine on peatatud";
+
 /* Title for sync error alert */
 "alert.sync-error" = "Sünkroonimise ja varundamise tõrge";
+
+/* Sync error alert action button title, takes the user to the sync settings page. */
+"alert.sync-error-action" = "Sünkroonimise sätted";
+
+/* Description for alert shown when user logged off from sync */
+"alert.sync-invalid-login-error-description" = "Sünkroonimine on peatatud. Kui soovid selle seadme sünkroonimist jätkata, loo uuesti ühendus, kasutades mõnda teist seadet või taastamiskoodi.";
 
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Loe edasi";
 
 /* Confirmation button in alert */
 "alert.sync-paused-alert-ok-button" = "OK";
+
+/* Title for alert shown when sync paused for an error */
+"alert.sync-paused-title" = "Sünkroonimine on peatatud";
+
+/* Description for alert shown when sync error occurs because of too many requests */
+"alert.sync-too-many-requests-error-description" = "Sync & Backup pole ajutiselt saadaval.";
+
+/* Title of the warning message that tells the user that there was an error with the sync feature. */
+"alert.sync.warning.sync-error" = "Sünkroonimisviga";
+
+/* Title of the warning message */
+"alert.sync.warning.sync-paused" = "Sünkroonimine ja varundamine on peatatud";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Kas lisada kõik vahekaardid järjehoidjasse?";
@@ -1148,6 +1184,9 @@
 "get.browser.title" = "Hangi DuckDuckGo Maci või Windowsi jaoks";
 
 /* No comment provided by engineer. */
+"Help us improve!" = "Help us improve!";
+
+/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Lisa DuckDuckGo oma avaekraanile!";
 
 /* No comment provided by engineer. */
@@ -1602,6 +1641,26 @@
 
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Halda järjehoidjaid";
+
+/* Description for sync bookmarks limits exceeded warning */
+"prefrences.sync.bookmarks-limit-exceeded-description" = "Oled saavutanud maksimaalse järjehoidjate arvu. Kustuta mõni, et jätkata sünkroonimisega.";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Halda paroole…";
+
+/* Description for sync credentials limits exceeded warning */
+"prefrences.sync.credentials-limit-exceeded-description" = "Oled saavutanud maksimaalse paroolide arvu. Kustuta mõni, et jätkata sünkroonimisega.";
+
+/* Description invalid credentials error when syncing.
+   Description of incorrectly formatted data error when syncing.
+   Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Sünkroonimisel ilmnes tõrge. Proovi sellel seadmel sünkroonimine keelata ja seejärel loo uuesti ühendus, kasutades mõnda teist seadet või taastamiskoodi.";
+
+/* Title for sync limits exceeded warning */
+"prefrences.sync.limit-exceeded-title" = "Sünkroonimine peatatud";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Veebisaidid kasutavad küpsiseid, et hoida sind sisse logitud. Kui teed saidi tulekindlaks, ei kustutata küpsiseid ja sa jääd sisse logituks isegi pärast tulenupu kasutamist. Me blokeerime endiselt kolmanda poole jälitajad, kelle me tulekindlatelt lehtedelt leiame.";
@@ -2226,6 +2285,9 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Vahekaardi vahetaja";
 
+/* No comment provided by engineer. */
+"Take Survey" = "Take Survey";
+
 /* Description text for the text size adjustment setting */
 "textSize.description" = "Valige soovitud teksti suurus. Veebisaidid, mida DuckDuckGos vaatate, kohanduvad sellega.";
 
@@ -2423,6 +2485,9 @@
 
 /* Title for the share sheet entry */
 "waitlist.share-sheet.title" = "Oled kutsutud!";
+
+/* No comment provided by engineer. */
+"We want to make using passwords in DuckDuckGo better." = "We want to make using passwords in DuckDuckGo better.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Lemmik on eemaldatud";

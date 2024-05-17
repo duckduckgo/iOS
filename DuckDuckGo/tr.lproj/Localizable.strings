@@ -133,14 +133,50 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Mevcut yer imleri çoğaltılmayacaktır.";
 
+/* Description for alert shown when sync error occurs because of bad bookmarks data */
+"alert.sync-bookmarks-bad-data-error-description" = "Bazı yer işaretleri yanlış biçimlendirilmiş veya çok uzun olduğu için senkronize edilmedi.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Maksimum yer işareti sayısına ulaştınız. Senkronizasyona devam etmek için lütfen bazı yer işaretlerini silin.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Yer İşaretleri Senkronizasyonu Duraklatıldı";
+
+/* Description for alert shown when sync error occurs because of bad credentials data */
+"alert.sync-credentials-bad-data-error-description" = "Bazı şifreler yanlış biçimlendirilmiş veya çok uzun olduğu için senkronize edilmedi.";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Maksimum şifre sayısına ulaştınız. Lütfen senkronizasyona devam etmek için bazı şifreleri silin.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Şifre Senkronizasyonu Duraklatıldı";
+
 /* Title for sync error alert */
 "alert.sync-error" = "Senkronizasyon ve Yedekleme Hatası";
+
+/* Sync error alert action button title, takes the user to the sync settings page. */
+"alert.sync-error-action" = "Senkronizasyon Ayarları";
+
+/* Description for alert shown when user logged off from sync */
+"alert.sync-invalid-login-error-description" = "Senkronizasyon duraklatıldı. Bu cihazın senkronizasyonuna devam etmek istiyorsanız, başka bir cihaz veya kurtarma kodunuzu kullanarak yeniden bağlanın.";
 
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Daha Fazla Bilgi";
 
 /* Confirmation button in alert */
 "alert.sync-paused-alert-ok-button" = "Tamam";
+
+/* Title for alert shown when sync paused for an error */
+"alert.sync-paused-title" = "Senkronizasyon Duraklatıldı";
+
+/* Description for alert shown when sync error occurs because of too many requests */
+"alert.sync-too-many-requests-error-description" = "Senkronizasyon ve Yedekleme geçici olarak kullanılamıyor.";
+
+/* Title of the warning message that tells the user that there was an error with the sync feature. */
+"alert.sync.warning.sync-error" = "Senkronizasyon Hatası";
+
+/* Title of the warning message */
+"alert.sync.warning.sync-paused" = "Senkronizasyon ve Yedekleme Duraklatıldı";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Tüm Sekmelere Yer İmi Eklensin mi?";
@@ -1148,6 +1184,9 @@
 "get.browser.title" = "Mac veya Windows için DuckDuckGo'yu edinin";
 
 /* No comment provided by engineer. */
+"Help us improve!" = "Help us improve!";
+
+/* No comment provided by engineer. */
 "home.row.onboarding.header" = "DuckDuckGo'yu ana ekranınıza ekleyin!";
 
 /* No comment provided by engineer. */
@@ -1602,6 +1641,26 @@
 
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Yer İmlerini Yönet";
+
+/* Description for sync bookmarks limits exceeded warning */
+"prefrences.sync.bookmarks-limit-exceeded-description" = "Maksimum yer işareti sayısına ulaştınız. Lütfen senkronizasyona devam etmek için bazılarını silin.";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Şifreleri yönet…";
+
+/* Description for sync credentials limits exceeded warning */
+"prefrences.sync.credentials-limit-exceeded-description" = "Maksimum şifre sayısına ulaştınız. Lütfen senkronizasyona devam etmek için bazılarını silin.";
+
+/* Description invalid credentials error when syncing.
+   Description of incorrectly formatted data error when syncing.
+   Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Senkronizasyon bir hatayla karşılaştı. Bu cihazda senkronizasyonu devre dışı bırakmayı deneyin ve ardından başka bir cihaz veya kurtarma kodunuzu kullanarak yeniden bağlanın.";
+
+/* Title for sync limits exceeded warning */
+"prefrences.sync.limit-exceeded-title" = "Senkronizasyon Duraklatıldı";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Web siteleri oturumunuzu açık tutmak için çerezler kullanır. Bir siteyi Korumalı hâle getirdiğinizde çerezler silinmez ve Yangın Düğmesi'ni kullandıktan sonra bile oturumunuz açık kalır. Korumalı web sitelerinde bulunan üçüncü taraf izleyicileri yine engelleriz.";
@@ -2226,6 +2285,9 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Sekme Değiştirici";
 
+/* No comment provided by engineer. */
+"Take Survey" = "Take Survey";
+
 /* Description text for the text size adjustment setting */
 "textSize.description" = "Tercih ettiğiniz metin boyutunu seçin. DuckDuckGo'da görüntülediğiniz web siteleri bu boyuta ayarlanır.";
 
@@ -2423,6 +2485,9 @@
 
 /* Title for the share sheet entry */
 "waitlist.share-sheet.title" = "Davetlisiniz!";
+
+/* No comment provided by engineer. */
+"We want to make using passwords in DuckDuckGo better." = "We want to make using passwords in DuckDuckGo better.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favori kaldırıldı";

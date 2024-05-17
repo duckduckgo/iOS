@@ -133,14 +133,50 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Οι υπάρχοντες σελιδοδείκτες δεν θα αναπαραχθούν.";
 
+/* Description for alert shown when sync error occurs because of bad bookmarks data */
+"alert.sync-bookmarks-bad-data-error-description" = "Ορισμένοι σελιδοδείκτες δεν έχουν μορφοποιηθεί σωστά ή είναι πολύ μεγάλοι και δεν συγχρονίστηκαν.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Έχετε φτάσει στον μέγιστο αριθμό σελιδοδεικτών. Διαγράψτε ορισμένους σελιδοδείκτες για να συνεχίσετε τον συγχρονισμό.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Ο συγχρονισμός σελιδοδεικτών έχει τεθεί σε παύση";
+
+/* Description for alert shown when sync error occurs because of bad credentials data */
+"alert.sync-credentials-bad-data-error-description" = "Ορισμένοι κωδικοί πρόσβασης δεν έχουν μορφοποιηθεί σωστά ή είναι πολύ μεγάλοι και δεν συγχρονίστηκαν.";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Έχετε φτάσει στον μέγιστο αριθμό κωδικών πρόσβασης. Διαγράψτε ορισμένους κωδικούς πρόσβασης για να συνεχίσετε τον συγχρονισμό.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Ο συγχρονισμός κωδικών πρόσβασης έχει τεθεί σε παύση";
+
 /* Title for sync error alert */
 "alert.sync-error" = "Σφάλμα συγχρονισμού και δημιουργίας αντιγράφων ασφαλείας";
+
+/* Sync error alert action button title, takes the user to the sync settings page. */
+"alert.sync-error-action" = "Ρυθμίσεις συγχρονισμού";
+
+/* Description for alert shown when user logged off from sync */
+"alert.sync-invalid-login-error-description" = "Ο συγχρονισμός έχει τεθεί σε παύση. Αν θέλετε να συνεχίσετε με τον συγχρονισμό της συσκευής αυτής, συνδεθείτε ξανά χρησιμοποιώντας άλλη συσκευή ή τον κωδικό ανάκτησής σας.";
 
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Μάθετε περισσότερα";
 
 /* Confirmation button in alert */
 "alert.sync-paused-alert-ok-button" = "Εντάξει";
+
+/* Title for alert shown when sync paused for an error */
+"alert.sync-paused-title" = "Ο συγχρονισμός έχει τεθεί σε παύση";
+
+/* Description for alert shown when sync error occurs because of too many requests */
+"alert.sync-too-many-requests-error-description" = "Το Sync & Backup είναι προσωρινά μη διαθέσιμο.";
+
+/* Title of the warning message that tells the user that there was an error with the sync feature. */
+"alert.sync.warning.sync-error" = "Σφάλμα συγχρονισμού";
+
+/* Title of the warning message */
+"alert.sync.warning.sync-paused" = "Η λειτουργία Συγχρονισμός και δημιουργία αντιγράφων ασφαλείας είναι σε παύση";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Προσθήκη σελιδοδείκτη για όλες τις καρτέλες;";
@@ -1148,6 +1184,9 @@
 "get.browser.title" = "Αποκτήστε το DuckDuckGo για Mac ή Windows";
 
 /* No comment provided by engineer. */
+"Help us improve!" = "Help us improve!";
+
+/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Προσθήκη του DuckDuckGo στην αρχική οθόνη σας!";
 
 /* No comment provided by engineer. */
@@ -1602,6 +1641,26 @@
 
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Διαχείριση σελιδοδεικτών";
+
+/* Description for sync bookmarks limits exceeded warning */
+"prefrences.sync.bookmarks-limit-exceeded-description" = "Έχετε φτάσει στον μέγιστο αριθμό σελιδοδεικτών. Διαγράψτε ορισμένους για να συνεχίσετε τον συγχρονισμό.";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Διαχείριση κωδικών πρόσβασης…";
+
+/* Description for sync credentials limits exceeded warning */
+"prefrences.sync.credentials-limit-exceeded-description" = "Έχετε φτάσει στον μέγιστο αριθμό κωδικών πρόσβασης. Διαγράψτε ορισμένους για να συνεχίσετε τον συγχρονισμό.";
+
+/* Description invalid credentials error when syncing.
+   Description of incorrectly formatted data error when syncing.
+   Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Ο συγχρονισμός αντιμετώπισε σφάλμα. Δοκιμάστε να απενεργοποιήσετε τον συγχρονισμό στη συσκευή αυτή και έπειτα συνδεθείτε ξανά χρησιμοποιώντας άλλη συσκευή ή τον κωδικό ανάκτησής σας.";
+
+/* Title for sync limits exceeded warning */
+"prefrences.sync.limit-exceeded-title" = "Παύση συγχρονισμού";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Οι ιστότοποι βασίζονται σε cookies για να σας διατηρούν συνδεδεμένους. Όταν ενεργοποιείτε τη διαγραφή δραστηριότητας για έναν ιστότοπο, τα cookies δεν διαγράφονται και παραμένετε συνδεδεμένοι, ακόμα και μετά τη χρήση του Κουμπιού διαγραφής δραστηριότητας. Εξακολουθούμε να αποκλείουμε εφαρμογές παρακολούθησης από τρίτους που υπάρχουν σε ιστότοπους με διαγραφή δραστηριότητας.";
@@ -2226,6 +2285,9 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Εναλλαγή καρτελών";
 
+/* No comment provided by engineer. */
+"Take Survey" = "Take Survey";
+
 /* Description text for the text size adjustment setting */
 "textSize.description" = "Επιλέξτε το προτιμώμενο μέγεθος κειμένου. Οι ιστότοποι που βλέπετε στο DuckDuckGo θα προσαρμοστούν σε αυτό.";
 
@@ -2423,6 +2485,9 @@
 
 /* Title for the share sheet entry */
 "waitlist.share-sheet.title" = "Έχετε προσκληθεί!";
+
+/* No comment provided by engineer. */
+"We want to make using passwords in DuckDuckGo better." = "We want to make using passwords in DuckDuckGo better.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Το Αγαπημένο αφαιρέθηκε";

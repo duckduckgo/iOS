@@ -133,14 +133,50 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Eksisterende bokmerker blir ikke duplisert.";
 
+/* Description for alert shown when sync error occurs because of bad bookmarks data */
+"alert.sync-bookmarks-bad-data-error-description" = "Noen bokmerker er formatert feil eller for lange og ble ikke synkronisert.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Du har nådd det maksimale antallet bokmerker. Slett noen bokmerker for å gjenoppta synkronisering.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Synkronisering av bokmerker er satt på pause";
+
+/* Description for alert shown when sync error occurs because of bad credentials data */
+"alert.sync-credentials-bad-data-error-description" = "Noen passord er formatert feil eller for lange og ble ikke synkronisert.";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Du har nådd det maksimale antallet passord. Slett noen passord for å gjenoppta synkronisering.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Synkronisering av passord er satt på pause";
+
 /* Title for sync error alert */
 "alert.sync-error" = "Synkroniserings- og sikkerhetskopieringsfeil";
+
+/* Sync error alert action button title, takes the user to the sync settings page. */
+"alert.sync-error-action" = "Synkroniser innstillinger";
+
+/* Description for alert shown when user logged off from sync */
+"alert.sync-invalid-login-error-description" = "Synkronisering er satt på pause. Hvis du vil fortsette å synkronisere denne enheten, må du koble til på nytt ved hjelp av en annen enhet eller gjenopprettingskoden.";
 
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Finn ut mer";
 
 /* Confirmation button in alert */
 "alert.sync-paused-alert-ok-button" = "OK";
+
+/* Title for alert shown when sync paused for an error */
+"alert.sync-paused-title" = "Synkronisering er satt på pause";
+
+/* Description for alert shown when sync error occurs because of too many requests */
+"alert.sync-too-many-requests-error-description" = "Sync & Backup er midlertidig utilgjengelig.";
+
+/* Title of the warning message that tells the user that there was an error with the sync feature. */
+"alert.sync.warning.sync-error" = "Synkroniseringsfeil";
+
+/* Title of the warning message */
+"alert.sync.warning.sync-paused" = "Synkronisering og sikkerhetskopiering er satt på pause";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Legg til alle faner i bokmerker?";
@@ -1148,6 +1184,9 @@
 "get.browser.title" = "Skaff deg DuckDuckGo for Mac eller Windows";
 
 /* No comment provided by engineer. */
+"Help us improve!" = "Help us improve!";
+
+/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Legg til DuckDuckGo på startskjermen!";
 
 /* No comment provided by engineer. */
@@ -1602,6 +1641,26 @@
 
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Administrer bokmerker";
+
+/* Description for sync bookmarks limits exceeded warning */
+"prefrences.sync.bookmarks-limit-exceeded-description" = "Du har nådd det maksimale antallet bokmerker. Slett noen for å gjenoppta synkronisering.";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Administrer passord …";
+
+/* Description for sync credentials limits exceeded warning */
+"prefrences.sync.credentials-limit-exceeded-description" = "Du har nådd det maksimale antallet passord. Slett noen for å gjenoppta synkronisering.";
+
+/* Description invalid credentials error when syncing.
+   Description of incorrectly formatted data error when syncing.
+   Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Synkronisering oppdaget en feil. Prøv å slå av synkronisering på denne enheten og koble til igjen med en annen enhet eller gjenopprettingskoden.";
+
+/* Title for sync limits exceeded warning */
+"prefrences.sync.limit-exceeded-title" = "Synkronisering satt på pause";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Nettsider anvender informasjonskapsler for å holde deg innlogget. Når du gjør en side brannsikker, slettes ikke informasjonskapslene, og du forblir innlogget, selv etter å ha brukt brannknappen. Vi blokkerer fortsatt tredjeparters sporingsanordninger som blir funnet på Brannsikre nettsteder.";
@@ -2226,6 +2285,9 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Fanebytter";
 
+/* No comment provided by engineer. */
+"Take Survey" = "Take Survey";
+
 /* Description text for the text size adjustment setting */
 "textSize.description" = "Velg ønsket tekststørrelse. Nettsteder du ser på i DuckDuckGo tilpasser seg den.";
 
@@ -2423,6 +2485,9 @@
 
 /* Title for the share sheet entry */
 "waitlist.share-sheet.title" = "Du er invitert!";
+
+/* No comment provided by engineer. */
+"We want to make using passwords in DuckDuckGo better." = "We want to make using passwords in DuckDuckGo better.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favoritt er fjernet";

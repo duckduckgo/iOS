@@ -133,14 +133,50 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Esošās grāmatzīmes netiks dublētas.";
 
+/* Description for alert shown when sync error occurs because of bad bookmarks data */
+"alert.sync-bookmarks-bad-data-error-description" = "Dažas grāmatzīmes ir formatētas nepareizi vai pārāk garas un netika sinhronizētas.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Tu esi sasniedzis maksimālo grāmatzīmju skaitu. Lūdzu, izdzēs dažas grāmatzīmes, lai atsāktu sinhronizāciju.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Grāmatzīmju sinhronizācija ir apturēta";
+
+/* Description for alert shown when sync error occurs because of bad credentials data */
+"alert.sync-credentials-bad-data-error-description" = "Dažas paroles ir formatētas nepareizi vai pārāk garas un netika sinhronizētas.";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Tu esi sasniedzis maksimālo paroļu skaitu. Lūdzu, izdzēs dažas paroles, lai atsāktu sinhronizāciju.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Paroļu sinhronizācija ir apturēta";
+
 /* Title for sync error alert */
 "alert.sync-error" = "Sinhronizācijas un dublēšanas kļūda";
+
+/* Sync error alert action button title, takes the user to the sync settings page. */
+"alert.sync-error-action" = "Sinhronizācijas iestatījumi";
+
+/* Description for alert shown when user logged off from sync */
+"alert.sync-invalid-login-error-description" = "Sinhronizācija ir apturēta. Ja vēlies turpināt sinhronizēt šo ierīci, izveido savienojumu no jauna, izmantojot citu ierīci vai savu atgūšanas kodu.";
 
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Uzzināt vairāk";
 
 /* Confirmation button in alert */
 "alert.sync-paused-alert-ok-button" = "Labi";
+
+/* Title for alert shown when sync paused for an error */
+"alert.sync-paused-title" = "Sinhronizācija ir apturēta";
+
+/* Description for alert shown when sync error occurs because of too many requests */
+"alert.sync-too-many-requests-error-description" = "Sync & Backup uz laiku nav pieejams.";
+
+/* Title of the warning message that tells the user that there was an error with the sync feature. */
+"alert.sync.warning.sync-error" = "Sinhronizācijas kļūda";
+
+/* Title of the warning message */
+"alert.sync.warning.sync-paused" = "Sinhronizācija un dublēšana ir pauzēta";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Vai pievienot grāmatzīmes visām cilnēm?";
@@ -1148,6 +1184,9 @@
 "get.browser.title" = "Iegūsti DuckDuckGo Mac vai Windows datoram";
 
 /* No comment provided by engineer. */
+"Help us improve!" = "Help us improve!";
+
+/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Pievieno DuckDuckGo savam sākuma ekrānam!";
 
 /* No comment provided by engineer. */
@@ -1602,6 +1641,26 @@
 
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Pārvaldīt grāmatzīmes";
+
+/* Description for sync bookmarks limits exceeded warning */
+"prefrences.sync.bookmarks-limit-exceeded-description" = "Tu esi sasniedzis maksimālo grāmatzīmju skaitu. Lūdzu, izdzēs dažas, lai atsāktu sinhronizāciju.";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Pārvaldīt paroles…";
+
+/* Description for sync credentials limits exceeded warning */
+"prefrences.sync.credentials-limit-exceeded-description" = "Tu esi sasniedzis maksimālo paroļu skaitu. Lūdzu, izdzēs dažas, lai atsāktu sinhronizāciju.";
+
+/* Description invalid credentials error when syncing.
+   Description of incorrectly formatted data error when syncing.
+   Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Sinhronizācijā radās kļūda. Mēģini atspējot sinhronizāciju šajā ierīcē un pēc tam atkārtoti izveido savienojumu, izmantojot citu ierīci vai atgūšanas kodu.";
+
+/* Title for sync limits exceeded warning */
+"prefrences.sync.limit-exceeded-title" = "Sinhronizācija pārtraukta";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Vietnes lieto sīkfailus, lai tu varētu turpināt būt pierakstījies(-usies). Padarot vietni ugunsdrošu, sīkfaili netiek dzēsti, bet tu vari turpināt būt pierakstījies(-usies) arī pēc Uguns pogas lietošanas. Mēs joprojām bloķēsim trešo pušu izsekotājus, kas atrodami ugunsdrošās vietnēs.";
@@ -2226,6 +2285,9 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Ciļņu pārslēdzējs";
 
+/* No comment provided by engineer. */
+"Take Survey" = "Take Survey";
+
 /* Description text for the text size adjustment setting */
 "textSize.description" = "Izvēlies burtu izmēru. Vietnes tavā DuckDuckGo tam pielāgosies.";
 
@@ -2423,6 +2485,9 @@
 
 /* Title for the share sheet entry */
 "waitlist.share-sheet.title" = "Tu esi uzaicināts!";
+
+/* No comment provided by engineer. */
+"We want to make using passwords in DuckDuckGo better." = "We want to make using passwords in DuckDuckGo better.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Izlase ir noņemta";

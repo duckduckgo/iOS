@@ -133,14 +133,50 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Esamos žymės nebus kopijuojamos.";
 
+/* Description for alert shown when sync error occurs because of bad bookmarks data */
+"alert.sync-bookmarks-bad-data-error-description" = "Kai kurios žymės suformatuotos neteisingai arba yra per ilgos ir nebuvo sinchronizuotos.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Pasiekėte didžiausią žymių skaičių. Ištrinkite kai kurias žymes, kad tęstumėte sinchronizavimą.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Žymių sinchronizavimas pristabdytas";
+
+/* Description for alert shown when sync error occurs because of bad credentials data */
+"alert.sync-credentials-bad-data-error-description" = "Kai kurie slaptažodžiai suformatuoti neteisingai arba yra per ilgi ir nebuvo sinchronizuoti.";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Pasiekėte maksimalų slaptažodžių skaičių. Ištrinkite kai kuriuos slaptažodžius, kad tęstumėte sinchronizavimą.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Slaptažodžių sinchronizavimas pristabdytas";
+
 /* Title for sync error alert */
 "alert.sync-error" = "Sinchronizavimo ir atsarginės kopijos kūrimo klaida";
+
+/* Sync error alert action button title, takes the user to the sync settings page. */
+"alert.sync-error-action" = "Sinchronizavimo parametrai";
+
+/* Description for alert shown when user logged off from sync */
+"alert.sync-invalid-login-error-description" = "Sinchronizavimas buvo sustabdytas. Jei norite toliau sinchronizuoti šį įrenginį, iš naujo prisijunkite naudodami kitą įrenginį arba atkūrimo kodą.";
 
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Sužinoti daugiau";
 
 /* Confirmation button in alert */
 "alert.sync-paused-alert-ok-button" = "GERAI";
+
+/* Title for alert shown when sync paused for an error */
+"alert.sync-paused-title" = "Sinchronizavimas pristabdytas";
+
+/* Description for alert shown when sync error occurs because of too many requests */
+"alert.sync-too-many-requests-error-description" = "Sinchronizavimas ir atsarginės kopijos kūrimas laikinai nepasiekiami.";
+
+/* Title of the warning message that tells the user that there was an error with the sync feature. */
+"alert.sync.warning.sync-error" = "Sinchronizavimo klaida";
+
+/* Title of the warning message */
+"alert.sync.warning.sync-paused" = "Sinchronizavimas ir atsarginės kopijos kūrimas pristabdyti";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Pažymėti visus skirtukus?";
@@ -1148,6 +1184,9 @@
 "get.browser.title" = "Gaukite „DuckDuckGo“, skirtą „Mac“ arba „Windows“";
 
 /* No comment provided by engineer. */
+"Help us improve!" = "Help us improve!";
+
+/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Pridėti „DuckDuckGo“ prie pagrindinio ekrano!";
 
 /* No comment provided by engineer. */
@@ -1602,6 +1641,26 @@
 
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
+
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Tvarkyti žymes";
+
+/* Description for sync bookmarks limits exceeded warning */
+"prefrences.sync.bookmarks-limit-exceeded-description" = "Pasiekėte didžiausią žymių skaičių. Ištrinkite kai kurias žymes, kad tęstumėte sinchronizavimą.";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Slaptažodžių valdymas…";
+
+/* Description for sync credentials limits exceeded warning */
+"prefrences.sync.credentials-limit-exceeded-description" = "Pasiekėte maksimalų slaptažodžių skaičių. Ištrinkite kai kuriuos slaptažodžius, kad tęstumėte sinchronizavimą.";
+
+/* Description invalid credentials error when syncing.
+   Description of incorrectly formatted data error when syncing.
+   Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Sinchronizuojant įvyko klaida. Pabandykite išjungti sinchronizavimą šiame prietaise ir vėl prisijungti naudodami kitą prietaisą arba atkūrimo kodą.";
+
+/* Title for sync limits exceeded warning */
+"prefrences.sync.limit-exceeded-title" = "Sinchronizavimas pristabdytas";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Svetainės pagrįstos slapukais, kad liktumėte prisijungę. Apsaugojus svetainę, slapukai nėra ištrinami ir liksite prisijungę net paspaudę apsaugojimo mygtuką. Vis tiek blokuosime trečiųjų šalių stebėjimo priemones, randamas svetainėse, kuriose pasinaudosite parinktimi „Fireproof“.";
@@ -2226,6 +2285,9 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Skirtukų perjungiklis";
 
+/* No comment provided by engineer. */
+"Take Survey" = "Take Survey";
+
 /* Description text for the text size adjustment setting */
 "textSize.description" = "Pasirinkite norimą teksto dydį. „DuckDuckGo“ rodomos svetainės atitiks šį nustatymą.";
 
@@ -2423,6 +2485,9 @@
 
 /* Title for the share sheet entry */
 "waitlist.share-sheet.title" = "Esate pakviesti!";
+
+/* No comment provided by engineer. */
+"We want to make using passwords in DuckDuckGo better." = "We want to make using passwords in DuckDuckGo better.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Mėgstamas pašalintas";

@@ -47,7 +47,6 @@ final class FireButtonReferenceTests: XCTestCase {
     @MainActor
     func testClearDataUsingLegacyContainer() async throws {
         // Using WKWebsiteDataStore(forIdentifier:) doesn't persist cookies in a testable way, so use the legacy container here.
-        
         let preservedLogins = PreserveLogins.shared
         preservedLogins.clearAll()
         
@@ -64,10 +63,13 @@ final class FireButtonReferenceTests: XCTestCase {
         let cookieStorage = CookieStorage()
         
         let idManager = DataStoreIdManager()
-        XCTAssertFalse(idManager.hasId)
         
         for test in referenceTests {
             let cookie = try XCTUnwrap(cookie(for: test))
+            XCTAssertFalse(idManager.hasId)
+
+            let warmup = DataStoreWarmup()
+            await warmup.ensureReady()
 
             let cookieStore = WKWebsiteDataStore.default().httpCookieStore
             await cookieStore.setCookie(cookie)

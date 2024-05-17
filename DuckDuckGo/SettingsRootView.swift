@@ -81,7 +81,7 @@ struct SettingsRootView: View {
                 })
 
         .onReceive(viewModel.$deepLinkTarget.removeDuplicates(), perform: { link in
-            guard let link, link != self.deepLinkTarget else {
+            guard let link else {
                 return
             }
 

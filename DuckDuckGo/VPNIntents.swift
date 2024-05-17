@@ -17,11 +17,10 @@
 //  limitations under the License.
 //
 
-#if ALPHA
-
 import AppIntents
 import NetworkExtension
 import WidgetKit
+import Core
 
 @available(iOS 17.0, *)
 struct DisableVPNIntent: AppIntent {
@@ -29,10 +28,13 @@ struct DisableVPNIntent: AppIntent {
     static let title: LocalizedStringResource = "Disable VPN"
     static let description: LocalizedStringResource = "Disables the DuckDuckGo VPN"
     static let openAppWhenRun: Bool = false
+    static let isDiscoverable: Bool = false
 
     @MainActor
     func perform() async throws -> some IntentResult {
         do {
+            DailyPixel.fire(pixel: .networkProtectionWidgetDisconnectAttempt)
+
             let managers = try await NETunnelProviderManager.loadAllFromPreferences()
             guard let manager = managers.first else {
                 return .result()
@@ -49,6 +51,7 @@ struct DisableVPNIntent: AppIntent {
                 try? await Task.sleep(interval: .seconds(0.5))
 
                 if manager.connection.status == .disconnected {
+                    DailyPixel.fire(pixel: .networkProtectionWidgetDisconnectSuccess)
                     return .result()
                 }
 
@@ -69,10 +72,13 @@ struct EnableVPNIntent: AppIntent {
     static let title: LocalizedStringResource = "Enable VPN"
     static let description: LocalizedStringResource = "Enables the DuckDuckGo VPN"
     static let openAppWhenRun: Bool = false
+    static let isDiscoverable: Bool = false
 
     @MainActor
     func perform() async throws -> some IntentResult {
         do {
+            DailyPixel.fire(pixel: .networkProtectionWidgetConnectAttempt)
+
             let managers = try await NETunnelProviderManager.loadAllFromPreferences()
             guard let manager = managers.first else {
                 return .result()
@@ -89,6 +95,7 @@ struct EnableVPNIntent: AppIntent {
                 try? await Task.sleep(interval: .seconds(0.5))
 
                 if manager.connection.status == .connected {
+                    DailyPixel.fire(pixel: .networkProtectionWidgetConnectSuccess)
                     return .result()
                 }
 
@@ -102,5 +109,3 @@ struct EnableVPNIntent: AppIntent {
     }
 
 }
-
-#endif

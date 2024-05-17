@@ -27,6 +27,7 @@ import Networking
 import NetworkExtension
 import NetworkProtection
 import Subscription
+import WidgetKit
 
 // swiftlint:disable type_body_length
 
@@ -334,8 +335,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
     private func observeServerChanges() {
         lastSelectedServerInfoPublisher.sink { server in
-            let location = server?.serverLocation ?? "Unknown Location"
-            UserDefaults.networkProtectionGroupDefaults.set(location, forKey: NetworkProtectionUserDefaultKeys.lastSelectedServer)
+            let location = server?.attributes.city ?? "Unknown Location"
+            UserDefaults.networkProtectionGroupDefaults.set(location, forKey: NetworkProtectionUserDefaultKeys.lastSelectedServerCity)
         }
         .store(in: &cancellables)
     }
@@ -347,6 +348,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
         activationDateStore.setActivationDateIfNecessary()
         activationDateStore.updateLastActiveDate()
+        WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
     }
 
     private static func entitlementCheck(accountManager: AccountManaging) async -> Result<Bool, Error> {

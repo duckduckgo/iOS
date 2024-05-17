@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "1c692ce52ffd74edd1d1180e038a14a0cf1dd736",
-        "version" : "145.3.2"
+        "branch" : "anh/netp/error-ui",
+        "revision" : "26700ba1741861ccf6710817ffb933001ac67b65"
       }
     },
     {

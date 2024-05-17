@@ -1371,7 +1371,13 @@ class MainViewController: UIViewController {
             .sink { [weak self] notification in
                 switch notification.name {
                 case .urlInterceptPrivacyPro:
-                    self?.launchSettings(deepLinkTarget: .subscriptionFlow)
+                    let deepLinkTarget: SettingsViewModel.SettingsDeepLinkSection
+                    if let origin = notification.userInfo?[AttributionParameter.origin] as? String {
+                        deepLinkTarget = .subscriptionFlow(origin: origin)
+                    } else {
+                        deepLinkTarget = .subscriptionFlow()
+                    }
+                    self?.launchSettings(deepLinkTarget: deepLinkTarget)
                 default:
                     return
                 }

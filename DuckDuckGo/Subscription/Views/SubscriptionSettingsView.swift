@@ -121,8 +121,7 @@ struct SubscriptionSettingsView: View {
     private var devicesSection: some View {
         Section(header: Text(UserText.subscriptionManageDevices)) {
             
-            NavigationLink(destination: SubscriptionContainerView(currentView: .restore)
-                                            .environmentObject(subscriptionNavigationCoordinator),
+            NavigationLink(destination: SubscriptionContainerViewFactory.makeRestoreFlow(navigationCoordinator: subscriptionNavigationCoordinator),
                            isActive: $isShowingRestoreView) {
                 SettingsCustomCell(content: {
                     Text(UserText.subscriptionAddDeviceButton)

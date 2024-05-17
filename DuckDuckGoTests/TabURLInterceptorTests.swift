@@ -48,7 +48,7 @@ class TabURLInterceptorDefaultTests: XCTestCase {
     }
     
     func testNotificationForInterceptedPrivacyProPath() {
-        let expectation = self.expectation(forNotification: .urlInterceptPrivacyPro, object: nil, handler: nil)
+        _ = self.expectation(forNotification: .urlInterceptPrivacyPro, object: nil, handler: nil)
         
         let url = URL(string: "https://duckduckgo.com/pro")!
         let canNavigate = urlInterceptor.allowsNavigatingTo(url: url)
@@ -61,5 +61,40 @@ class TabURLInterceptorDefaultTests: XCTestCase {
                 XCTFail("Notification expectation failed: \(error)")
             }
         }
+    }
+
+    func testWhenURLIsPrivacyProAndHasOriginQueryParameterThenNotificationUserInfoHasOriginSet() throws {
+        // GIVEN
+        var capturedNotification: Notification?
+        _ = self.expectation(forNotification: .urlInterceptPrivacyPro, object: nil, handler: { notification in
+            capturedNotification = notification
+            return true
+        })
+        let url = try XCTUnwrap(URL(string: "https://duckduckgo.com/pro?origin=test_origin"))
+        
+        // WHEN
+        _ = urlInterceptor.allowsNavigatingTo(url: url)
+
+        // THEN
+        waitForExpectations(timeout: 1)
+        let origin = try XCTUnwrap(capturedNotification?.userInfo?[AttributionParameter.origin] as? String)
+        XCTAssertEqual(origin, "test_origin")
+    }
+
+    func testWhenURLIsPrivacyProAndDoesNotHaveOriginQueryParameterThenNotificationUserInfoDoesNotHaveOriginSet() throws {
+        // GIVEN
+        var capturedNotification: Notification?
+        _ = self.expectation(forNotification: .urlInterceptPrivacyPro, object: nil, handler: { notification in
+            capturedNotification = notification
+            return true
+        })
+        let url = try XCTUnwrap(URL(string: "https://duckduckgo.com/pro"))
+
+        // WHEN
+        _ = urlInterceptor.allowsNavigatingTo(url: url)
+
+        // THEN
+        waitForExpectations(timeout: 1)
+        XCTAssertNil(capturedNotification?.userInfo?[AttributionParameter.origin] as? String)
     }
 }

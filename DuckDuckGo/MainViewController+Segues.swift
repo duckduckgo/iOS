@@ -206,7 +206,7 @@ extension MainViewController {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
         launchSettings {
-            $0.triggerDeepLinkNavigation(to: .subscriptionFlow)
+            $0.triggerDeepLinkNavigation(to: .subscriptionFlow())
         }
     }
 

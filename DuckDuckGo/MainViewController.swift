@@ -328,6 +328,7 @@ class MainViewController: UIViewController {
             Pixel.fire(pixel: .swipeToOpenNewTab)
             self?.newTab()
         } onSwipeStarted: { [weak self] in
+            self?.performCancel()
             self?.hideKeyboard()
             self?.updatePreviewForCurrentTab()
         }

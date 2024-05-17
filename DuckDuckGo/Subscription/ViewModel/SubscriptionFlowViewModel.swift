@@ -322,7 +322,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
             self.resetState()
         }
         if webViewModel.url != subscriptionManager.url(for: .purchase).forComparison() {
-            self.webViewModel.navigationCoordinator.navigateTo(url: subscriptionManager.url(for: .purchase))
+             self.webViewModel.navigationCoordinator.navigateTo(url: purchaseURL)
         }
         await self.setupTransactionObserver()
         await self.setupWebViewObservers()

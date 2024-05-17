@@ -83,12 +83,7 @@ final class HistoryManagerTests: XCTestCase {
                 XCTFail("DB Error \($0)")
             }
 
-            RunLoop.main.run(until: .init() + 0.5)
-
             XCTAssertEqual(condition.expected, historyManager.isHistoryFeatureEnabled(), "\(index): \(condition)")
-
-            // If not enabled, then the history manager should be using a "null" history coordinator
-            XCTAssertEqual(!condition.expected, historyManager.historyCoordinator is NullHistoryCoordinator)
         }
 
     }

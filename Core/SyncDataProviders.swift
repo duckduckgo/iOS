@@ -111,7 +111,8 @@ public class SyncDataProviders: DataProvidersSource {
         credentialsAdapter = SyncCredentialsAdapter(secureVaultFactory: secureVaultFactory,
                                                     secureVaultErrorReporter: secureVaultErrorReporter,
                                                     syncErrorHandler: syncErrorHandler)
-        settingsAdapter = SyncSettingsAdapter(settingHandlers: settingHandlers)
+        settingsAdapter = SyncSettingsAdapter(settingHandlers: settingHandlers, 
+                                              syncErrorHandler: syncErrorHandler)
     }
 
     private func initializeMetadataDatabaseIfNeeded() {

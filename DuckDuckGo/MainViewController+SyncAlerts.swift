@@ -42,11 +42,11 @@ extension MainViewController: SyncAlertsPresenting {
         case .badRequestBookmarks:
             showSyncPausedAlert(
                 title: UserText.syncBookmarkPausedAlertTitle,
-                informative: UserText.syncBadRequestAlertDescription)
+                informative: UserText.syncBadBookmarksRequestAlertDescription)
         case .badRequestCredentials:
             showSyncPausedAlert(
                 title: UserText.syncBookmarkPausedAlertTitle,
-                informative: UserText.syncBadRequestAlertDescription)
+                informative: UserText.syncBadCredentialsRequestAlertDescription)
         }
     }
     

@@ -23,6 +23,7 @@ import Foundation
 public protocol SyncErrorHandling {
     func handleBookmarkError(_ error: Error)
     func handleCredentialError(_ error: Error)
+    func handleSettingsError(_ error: Error)
     func syncBookmarksSucceded()
     func syncCredentialsSucceded()
 }

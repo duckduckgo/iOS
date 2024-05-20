@@ -93,7 +93,7 @@ private struct HistoryMessageView: View {
 
                 Text(UserText.autocompleteHistoryWarningDescription)
                     .multilineTextAlignment(.center)
-                    .daxBodyRegular()
+                    .daxFootnoteRegular()
                     .frame(maxWidth: 536)
             }
             .frame(maxWidth: .infinity)

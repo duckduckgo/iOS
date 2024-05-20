@@ -213,7 +213,7 @@
 		4B6484F327FD1E350050A7A1 /* MenuControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E927FD1E340050A7A1 /* MenuControllerView.swift */; };
 		4B6ED9452B992FE4007F5CAA /* vpn-dark-mode.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B6ED9442B992FE4007F5CAA /* vpn-dark-mode.json */; };
 		4B75EA9226A266CB00018634 /* PrintingUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75EA9126A266CB00018634 /* PrintingUserScript.swift */; };
-		4B78074E2B183A1F009DB2CF /* SurveyURLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B78074D2B183A1F009DB2CF /* SurveyURLBuilder.swift */; };
+		4B78074E2B183A1F009DB2CF /* RemoteMessagingSurveyURLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B78074D2B183A1F009DB2CF /* RemoteMessagingSurveyURLBuilder.swift */; };
 		4B948E2629DCCDB9002531FA /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = 4B948E2529DCCDB9002531FA /* Persistence */; };
 		4BB697A42B1D99C4003699B5 /* VPNWaitlistActivationDateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B78074B2B1823C5009DB2CF /* VPNWaitlistActivationDateStore.swift */; };
 		4BB697A52B1D99C5003699B5 /* VPNWaitlistActivationDateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B78074B2B1823C5009DB2CF /* VPNWaitlistActivationDateStore.swift */; };
@@ -1304,7 +1304,7 @@
 		4B6ED9442B992FE4007F5CAA /* vpn-dark-mode.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "vpn-dark-mode.json"; sourceTree = "<group>"; };
 		4B75EA9126A266CB00018634 /* PrintingUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintingUserScript.swift; sourceTree = "<group>"; };
 		4B78074B2B1823C5009DB2CF /* VPNWaitlistActivationDateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNWaitlistActivationDateStore.swift; sourceTree = "<group>"; };
-		4B78074D2B183A1F009DB2CF /* SurveyURLBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyURLBuilder.swift; sourceTree = "<group>"; };
+		4B78074D2B183A1F009DB2CF /* RemoteMessagingSurveyURLBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteMessagingSurveyURLBuilder.swift; sourceTree = "<group>"; };
 		4BB7CBAF2AF59C310014A35F /* VPNWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNWidget.swift; sourceTree = "<group>"; };
 		4BBBBA892B031B4200D965DA /* VPNWaitlistDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPNWaitlistDebugViewController.swift; sourceTree = "<group>"; };
 		4BBBBA8A2B031B4200D965DA /* VPNWaitlistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPNWaitlistViewController.swift; sourceTree = "<group>"; };
@@ -3326,7 +3326,6 @@
 				4BBBBA8A2B031B4200D965DA /* VPNWaitlistViewController.swift */,
 				4BCD146A2B05C4B5000B1E4C /* VPNWaitlistTermsAndConditionsViewController.swift */,
 				4B78074B2B1823C5009DB2CF /* VPNWaitlistActivationDateStore.swift */,
-				4B78074D2B183A1F009DB2CF /* SurveyURLBuilder.swift */,
 				BDFF031F2BA3D3AD00F324C9 /* Feature Visibility */,
 			);
 			name = VPN;
@@ -4319,6 +4318,7 @@
 				C1B7B52028941F2A0098FD6A /* RemoteMessageRequest.swift */,
 				C1B7B52128941F2A0098FD6A /* RemoteMessaging.swift */,
 				C1B7B51F28941F2A0098FD6A /* RemoteMessagingStore.swift */,
+				4B78074D2B183A1F009DB2CF /* RemoteMessagingSurveyURLBuilder.swift */,
 			);
 			name = RemoteMessaging;
 			sourceTree = "<group>";
@@ -6451,7 +6451,7 @@
 				F1386BA41E6846C40062FC3C /* TabDelegate.swift in Sources */,
 				37CF91602BB4737300BADCAE /* CrashCollectionOnboarding.swift in Sources */,
 				C1B924B72ACD6E6800EE7B06 /* AutofillNeverSavedTableViewCell.swift in Sources */,
-				4B78074E2B183A1F009DB2CF /* SurveyURLBuilder.swift in Sources */,
+				4B78074E2B183A1F009DB2CF /* RemoteMessagingSurveyURLBuilder.swift in Sources */,
 				3132FA2A27A0788F00DD7A12 /* QuickLookPreviewHelper.swift in Sources */,
 				D670E5BB2BB6A75300941A42 /* SubscriptionNavigationCoordinator.swift in Sources */,
 				C1D21E2D293A5965006E5A05 /* AutofillLoginSession.swift in Sources */,
@@ -9853,8 +9853,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = exactVersion;
-				version = 145.3.2;
+				branch = "sam/rmf-survey-updates";
+				kind = branch;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

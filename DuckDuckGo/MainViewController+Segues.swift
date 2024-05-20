@@ -257,14 +257,21 @@ extension MainViewController {
 
         Pixel.fire(pixel: .settingsPresented,
                    withAdditionalParameters: PixelExperiment.parameters)
-        let settingsController = SettingsHostingController(viewModel: settingsViewModel, viewProvider: legacyViewProvider)
-        
-        // We are still presenting legacy views, so use a Navcontroller
-        let navController = UINavigationController(rootViewController: settingsController)
-        settingsController.modalPresentationStyle = UIModalPresentationStyle.automatic
-        
-        present(navController, animated: true) {
-            completion?(settingsViewModel)
+
+        if let navigationController = self.presentedViewController as? UINavigationController,
+           let settingsHostingController = navigationController.viewControllers.first as? SettingsHostingController {
+            navigationController.popToRootViewController(animated: false)
+            completion?(settingsHostingController.viewModel)
+        } else {
+            let settingsController = SettingsHostingController(viewModel: settingsViewModel, viewProvider: legacyViewProvider)
+
+            // We are still presenting legacy views, so use a Navcontroller
+            let navController = UINavigationController(rootViewController: settingsController)
+            settingsController.modalPresentationStyle = UIModalPresentationStyle.automatic
+
+            present(navController, animated: true) {
+                completion?(settingsViewModel)
+            }
         }
     }
 

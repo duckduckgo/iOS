@@ -51,7 +51,15 @@ Fetches and updates certificates and provisioning profiles for Ad-Hoc distributi
 [bundle exec] fastlane adhoc
 ```
 
-Makes Ad-Hoc build with a specified name in a given directory
+Makes Ad-Hoc build with a specified name and alpha bundle ID in a given directory
+
+### release_adhoc
+
+```sh
+[bundle exec] fastlane release_adhoc
+```
+
+Makes Ad-Hoc build with a specified name and release bundle ID in a given directory
 
 ### alpha_adhoc
 
@@ -59,7 +67,7 @@ Makes Ad-Hoc build with a specified name in a given directory
 [bundle exec] fastlane alpha_adhoc
 ```
 
-Makes Ad-Hoc build for alpha with a specified name in a given directory
+Makes Ad-Hoc build for alpha with a specified name and alpha bundle ID in a given directory
 
 ### release_appstore
 

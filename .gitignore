@@ -24,6 +24,7 @@ xcuserdata/
 *.moved-aside
 *.xcuserstate
 .DS_Store
+default.profraw
 
 ## Obj-C/Swift specific
 *.hmap

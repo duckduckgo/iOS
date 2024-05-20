@@ -391,6 +391,11 @@ extension Pixel {
         case networkProtectionFailureRecoveryCompletedHealthy
         case networkProtectionFailureRecoveryCompletedUnhealthy
 
+        case networkProtectionWidgetConnectAttempt
+        case networkProtectionWidgetConnectSuccess
+        case networkProtectionWidgetDisconnectAttempt
+        case networkProtectionWidgetDisconnectSuccess
+
         // MARK: remote messaging pixels
         
         case remoteMessageShown
@@ -1382,7 +1387,12 @@ extension Pixel.Event {
         case .networkProtectionFailureRecoveryFailed: return "m_netp_ev_failure_recovery_failed"
         case .networkProtectionFailureRecoveryCompletedHealthy: return "m_netp_ev_failure_recovery_completed_server_healthy"
         case .networkProtectionFailureRecoveryCompletedUnhealthy: return "m_netp_ev_failure_recovery_completed_server_unhealthy"
-            
+
+        case .networkProtectionWidgetConnectAttempt: return "m_netp_widget_connect_attempt"
+        case .networkProtectionWidgetConnectSuccess: return "m_netp_widget_connect_success"
+        case .networkProtectionWidgetDisconnectAttempt: return "m_netp_widget_disconnect_attempt"
+        case .networkProtectionWidgetDisconnectSuccess: return "m_netp_widget_disconnect_success"
+
             // MARK: Secure Vault
         case .secureVaultL1KeyMigration: return "m_secure-vault_keystore_event_l1-key-migration"
         case .secureVaultL2KeyMigration: return "m_secure-vault_keystore_event_l2-key-migration"

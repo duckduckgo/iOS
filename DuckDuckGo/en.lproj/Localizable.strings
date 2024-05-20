@@ -116,7 +116,7 @@
 "addWidget.description" = "Get quick access to private search and the sites you love.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Long-press on the home screen to enter jiggle mode.";
+"addWidget.settings.firstParagraph" = "Long-press on the Home Screen to enter jiggle mode.";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Tap the plus %@ button.";
@@ -2368,6 +2368,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
 
+/* Title for the VPN widget onboarding screen */
+"vpn.addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
+
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";
 
@@ -2436,6 +2439,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
+
+/* VPN settings screen cell text for adding the VPN widget to the home screen */
+"vpn.settings.add.widget" = "Add VPN Widget to Home Screen";
 
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Allow Notifications";

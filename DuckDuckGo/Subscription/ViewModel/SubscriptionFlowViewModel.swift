@@ -285,10 +285,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     private func setTransactionStatus(_ status: SubscriptionTransactionStatus) {
         self.state.transactionStatus = status
         
-        // Fire a temp pixel if status is not back to idle in 60s
-        // Remove block when removing pixel
-        // https://app.asana.com/0/1204099484721401/1207003487111848/f
-        
         // Invalidate existing timer if any
         transactionStatusTimer?.invalidate()
         
@@ -296,9 +292,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
             // Schedule a new timer
             transactionStatusTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: false) { [weak self] _ in
                 guard let strongSelf = self else { return }
-                if strongSelf.state.transactionStatus != .idle {
-                    Pixel.fire(pixel: .privacyProTransactionProgressNotHiddenAfter60s, error: nil)
-                }
                 strongSelf.transactionStatusTimer?.invalidate()
                 strongSelf.transactionStatusTimer = nil
             }

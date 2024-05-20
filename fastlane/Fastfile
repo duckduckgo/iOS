@@ -28,8 +28,13 @@ lane :sync_signing_alpha_adhoc do |options|
   do_sync_signing(options)
 end
 
-desc 'Makes Ad-Hoc build with a specified name in a given directory'
+desc 'Makes Ad-Hoc build with a specified name and alpha bundle ID in a given directory'
 lane :adhoc do |options|
+  alpha_adhoc(options)
+end
+
+desc 'Makes Ad-Hoc build with a specified name and release bundle ID in a given directory'
+lane :release_adhoc do |options|
 
   # Workaround for match + gym failing at build phase https://forums.swift.org/t/xcode-14-beta-code-signing-issues-when-spm-targets-include-resources/59685/32
   if is_ci
@@ -75,7 +80,7 @@ lane :adhoc do |options|
 
   timestamp = Time.now.strftime("%Y-%m-%d-%H-%M")
   output_name = "DuckDuckGo-#{suffix}#{timestamp}"
-  
+
   build_app(
     output_directory: options[:output],
     output_name: output_name,
@@ -95,7 +100,7 @@ lane :adhoc do |options|
   end
 end
 
-desc 'Makes Ad-Hoc build for alpha with a specified name in a given directory'
+desc 'Makes Ad-Hoc build for alpha with a specified name and alpha bundle ID in a given directory'
 lane :alpha_adhoc do |options|
 
   # Workaround for match + gym failing at build phase https://forums.swift.org/t/xcode-14-beta-code-signing-issues-when-spm-targets-include-resources/59685/32
@@ -126,14 +131,13 @@ lane :alpha_adhoc do |options|
     configurations.each do |config|
       update_code_signing_settings(
         use_automatic_signing: false,
-        build_configurations: ["Release"],
+        build_configurations: ["Alpha"],
         code_sign_identity: "iPhone Distribution",
         **config
       )
     end
   end
 
-  sync_signing_alpha(options)
   sync_signing_alpha_adhoc(options)
 
   suffix = ""
@@ -143,7 +147,6 @@ lane :alpha_adhoc do |options|
 
   timestamp = Time.now.strftime("%Y-%m-%d-%H-%M")
   output_name = "DuckDuckGo-Alpha-#{suffix}#{timestamp}"
-  
 
   build_app(
     output_directory: options[:output],
@@ -236,11 +239,11 @@ lane :increment_build_number_for_version do |options|
     app_identifier = options[:app_identifier]
   end
   increment_build_number({
-    build_number: 
+    build_number:
       latest_testflight_build_number(
         api_key: get_api_key,
         version: options[:version],
-        app_identifier: app_identifier, 
+        app_identifier: app_identifier,
         initial_build_number: -1,
         username: get_username(options)) + 1,
     skip_info_plist: "true"

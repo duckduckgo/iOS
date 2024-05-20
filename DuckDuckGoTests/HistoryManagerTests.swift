@@ -79,11 +79,20 @@ final class HistoryManagerTests: XCTestCase {
 
             let model = CoreDataDatabase.loadModel(from: History.bundle, named: "BrowsingHistory")!
             let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
+            db.loadStore()
+
             let historyManager = makeHistoryManager(db) {
                 XCTFail("DB Error \($0)")
             }
 
             XCTAssertEqual(condition.expected, historyManager.isHistoryFeatureEnabled(), "\(index): \(condition)")
+
+            if condition.expected {
+                XCTAssertTrue(historyManager.historyCoordinator is HistoryCoordinator)
+            } else {
+                XCTAssertTrue(historyManager.historyCoordinator is NullHistoryCoordinator)
+            }
+
         }
 
     }
@@ -101,6 +110,7 @@ final class HistoryManagerTests: XCTestCase {
 
         let model = CoreDataDatabase.loadModel(from: History.bundle, named: "BrowsingHistory")!
         let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
+        db.loadStore()
 
         let historyManager = makeHistoryManager(db) {
             XCTFail("DB Error \($0)")
@@ -109,40 +119,12 @@ final class HistoryManagerTests: XCTestCase {
         XCTAssertTrue(historyManager.historyCoordinator is NullHistoryCoordinator)
     }
 
-    func test_WhenManagerFailsToLoadStore_ThenThrowsError() {
-
-        privacyConfig.isFeatureKeyEnabled = { feature, _ in
-            XCTAssertEqual(feature, .history)
-            return true
-        }
-
-        internalUserStore.isInternalUser = true
-        privacyConfigManager.privacyConfig = privacyConfig
-
-        let model = CoreDataDatabase.loadModel(from: History.bundle, named: "BrowsingHistory")!
-        let db = CoreDataDatabase(name: "Test", containerLocation: URL.aboutLink, model: model)
-
-        var error: Error?
-        _ = makeHistoryManager(db) {
-            error = $0
-        }
-
-        XCTAssertNotNil(error)
-    }
-
     private func makeHistoryManager(_ db: CoreDataDatabase, onStoreLoadFailed: @escaping (Error) -> Void) -> HistoryManager {
         let manager = HistoryManager(privacyConfigManager: privacyConfigManager,
                               variantManager: variantManager,
                               database: db,
                               internalUserDecider: DefaultInternalUserDecider(mockedStore: internalUserStore),
                               isEnabledByUser: self.isEnabledByUser())
-        do {
-            try manager.loadStore {
-                //
-            }
-        } catch {
-            onStoreLoadFailed(error)
-        }
         return manager
     }
 

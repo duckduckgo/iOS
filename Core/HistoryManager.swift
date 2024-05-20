@@ -62,15 +62,10 @@ public class HistoryManager: HistoryManaging {
         }
 
         let coordinator = makeDatabaseHistoryCoordinator()
-        let group = DispatchGroup()
-        group.enter()
         coordinator.loadHistory {
-            group.leave()
-            // No-op: Post-clean migrations were handled on startup.
+            // no-op - only done here in case it was flipped in settings
         }
 
-        // We have to ensure that load finishes because remove data on clear uses the entries loaded into memory to decide what to delete.
-        assert(group.wait(timeout: .now() + 5) != .timedOut)
         currentHistoryCoordinator = coordinator
         return coordinator
     }
@@ -117,16 +112,7 @@ public class HistoryManager: HistoryManaging {
         }
     }
 
-    public func loadStore(onCleanFinished: @escaping () -> Void) throws {
-        var loadError: Error?
-        database.loadStore { _, error in
-            loadError = error
-        }
-
-        if let loadError {
-            throw loadError
-        }
-
+    public func loadStore(onCleanFinished: @escaping () -> Void) {
         let coordinator = makeDatabaseHistoryCoordinator()
         coordinator.loadHistory {
             onCleanFinished()

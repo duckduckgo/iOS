@@ -277,7 +277,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
 
         let previewsSource = TabPreviewsSource()
-        let historyManager = makeHistoryManager(AppDependencyProvider.shared.appSettings, AppDependencyProvider.shared.internalUserDecider)
+        let historyManager = makeHistoryManager(AppDependencyProvider.shared.appSettings, 
+                                                AppDependencyProvider.shared.internalUserDecider,
+                                                ContentBlocking.shared.privacyConfigurationManager)
         let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
@@ -370,31 +372,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func makeHistoryManager(_ appSettings: AppSettings,
                                     _ internalUserDecider: InternalUserDecider,
-                                    _ privacyConfigManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager)
-            -> HistoryManager {
+                                    _ privacyConfigManager: PrivacyConfigurationManaging) -> HistoryManager {
+
+        let db = HistoryDatabase.make()
+        var loadError: Error?
+        db.loadStore { _, error in
+            loadError = error
+        }
+
+        if let loadError {
+            Pixel.fire(pixel: .historyStoreLoadFailed, error: loadError)
+            if loadError.isDiskFull {
+                self.presentInsufficientDiskSpaceAlert()
+            } else {
+                self.presentPreemptiveCrashAlert()
+            }
+        }
 
         let historyManager = HistoryManager(privacyConfigManager: privacyConfigManager,
                                             variantManager: DefaultVariantManager(),
-                                            database: HistoryDatabase.make(),
+                                            database: db,
                                             internalUserDecider: internalUserDecider,
                                             isEnabledByUser: appSettings.recentlyVisitedSites)
 
         // Ensure we don't do this if the history is disabled in privacy confg
-        if historyManager.isHistoryFeatureEnabled() {
-            do {
-                try historyManager.loadStore(onCleanFinished: {
-                    // Do future migrations after clean has finished.  See macOS for an example.
-                })
-            } catch {
-                Pixel.fire(pixel: .historyStoreLoadFailed, error: error)
-                if error.isDiskFull {
-                    self.presentInsufficientDiskSpaceAlert()
-                } else {
-                    self.presentPreemptiveCrashAlert()
-                }
-            }
-        }
-
+        guard historyManager.isHistoryFeatureEnabled() else { return historyManager }
+        historyManager.loadStore(onCleanFinished: {
+            // Do future migrations after clean has finished.  See macOS for an example.
+        })
         return historyManager
     }
 

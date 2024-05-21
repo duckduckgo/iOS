@@ -160,8 +160,8 @@ class SuggestionTrayViewController: UIViewController {
         backgroundView.layer.shadowOpacity = 0.3
         backgroundView.layer.shadowRadius = 120
 
-        topConstraint.constant = 15
-        
+        topConstraint.constant = 3
+
         let isFirstPresentation = fullHeightConstraint.isActive
         if isFirstPresentation {
             variableHeightConstraint.constant = Constant.suggestionTrayInitialHeight

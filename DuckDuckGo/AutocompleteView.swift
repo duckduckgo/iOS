@@ -213,7 +213,7 @@ private struct SuggestionView: View {
             case .historyEntry(let title, let url, _):
                 SuggestionListItem(icon: Image("History-24"),
                                    title: title ?? "",
-                                   subtitle: url.isDuckDuckGoSearch ? "Search DuckDuckGo" : url.formattedForSuggestion())
+                                   subtitle: url.isDuckDuckGoSearch ? UserText.autocompleteSearchDuckDuckGo : url.formattedForSuggestion())
 
             case .internalPage, .unknown:
                 FailedAssertionView("Unknown or unsupported suggestion type")

@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "fcappelli/subscription_refactoring_2",
-        "revision" : "dc996ee2c8a8d3a9476ed4776dc570ee7b9ce845"
+        "revision" : "874ae4269db821797742655e134e72199c2813c8"
       }
     },
     {
@@ -185,8 +185,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/TrackerRadarKit.git",
       "state" : {
-        "revision" : "6c84fd19139414fc0edbf9673ade06e532a564f0",
-        "version" : "2.0.0"
+        "revision" : "c01e6a59d000356b58ec77053e0a99d538be56a5",
+        "version" : "2.1.1"
       }
     },
     {

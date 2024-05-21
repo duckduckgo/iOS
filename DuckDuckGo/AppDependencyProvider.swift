@@ -81,7 +81,7 @@ class AppDependencyProvider: DependencyProvider {
 
     let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
         privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-        subscriptionPlatform: .appStore)
+        purchasePlatform: .appStore)
 
     // Subscription
     let subscriptionManager: SubscriptionManaging
@@ -131,7 +131,7 @@ class AppDependencyProvider: DependencyProvider {
 
         let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
             privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-            subscriptionPlatform: .appStore)
+            purchasePlatform: .appStore)
         let accessTokenProvider: () -> String? = {
             func isSubscriptionEnabled() -> Bool {
                 if let subscriptionOverrideEnabled = UserDefaults.networkProtectionGroupDefaults.subscriptionOverrideEnabled {

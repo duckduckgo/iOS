@@ -1165,7 +1165,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     // Autocomplete
     public static let autocompleteHistoryWarningTitle = "Same privacy.\nBetter search suggestions!"
-    public static let autocompleteHistoryWarningDescription = "Suggestions now include recently visited sites, stored on your device. Turn off in settings, or clear any time with the 🔥 Fire Button."
+    public static let autocompleteHistoryWarningDescription = "Suggestions now include recently visited sites. These are stored on your device and never on DuckDuckGo's servers. Turn off in settings, or clear any time with the 🔥 Fire Button."
 
     // Site not working
     public static let siteNotWorkingTitle = NSLocalizedString("site.not.working.title", value: "Site not working? Let DuckDuckGo know.", comment: "Prompt asking user to send report to us if we suspect site may be broken")

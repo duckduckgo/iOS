@@ -1887,7 +1887,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "settings.subscription.activation.pending.description" = "This is taking longer than usual, please check back later.";
 
 /* Subscription activation pending title */
-"settings.subscription.activation.pending.title" = "Your Subscription is Being Activated";
+"settings.subscription.activation.pending.title" = "Your Subscription is being activated";
 
 /* Data Broker protection cell subtitle for privacy pro */
 "settings.subscription.DBP.subtitle" = "Remove your info from sites that sell it";
@@ -1896,7 +1896,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "settings.subscription.DBP.title" = "Personal Information Removal";
 
 /* Privacy pro description subtext */
-"settings.subscription.description" = "More seamless privacy with three new protections, including:";
+"settings.subscription.description" = "More seamless privacy with three new protections:";
 
 /* I have a Subscription button text for privacy pro */
 "settings.subscription.existing.subscription" = "I Have a Subscription";
@@ -2168,7 +2168,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.pir.heroTextMenyEntry" = "I have a subscription";
 
 /* Text for the 'macOS' button */
-"subscription.pir.macos" = "macOS";
+"subscription.pir.macos" = "Mac";
 
 /* Text for the 'Windows' button */
 "subscription.pir.windows" = "Windows";

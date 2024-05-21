@@ -211,22 +211,10 @@ private struct SuggestionView: View {
                                    subtitle: url.formattedForSuggestion())
 
             case .historyEntry(let title, let url, _):
-                if url.isDuckDuckGoSearch {
-                    HStack {
-                        SuggestionListItem(icon: Image("History-24"),
-                                           title: url.searchQuery ?? url.formattedForSuggestion())
+                SuggestionListItem(icon: Image("History-24"),
+                                   title: title ?? "",
+                                   subtitle: url.isDuckDuckGoSearch ? "Search DuckDuckGo" : url.formattedForSuggestion())
 
-                        Text("— Search DuckDuckGo")
-                            .lineLimit(1)
-                            .layoutPriority(1)
-                            .foregroundColor(Color(designSystemColor: .accent))
-
-                    }
-                } else {
-                    SuggestionListItem(icon: Image("History-24"),
-                                       title: title ?? "",
-                                       subtitle: url.formattedForSuggestion())
-                }
             case .internalPage, .unknown:
                 FailedAssertionView("Unknown or unsupported suggestion type")
             }

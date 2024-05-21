@@ -36,12 +36,6 @@ struct AutocompleteView: View {
                 }
             }
 
-            if model.isEmpty {
-                SuggestionsSection(suggestions: [model.emptySuggestion],
-                                   query: model.query,
-                                   onSuggestionSelected: model.onSuggestionSelected)
-            }
-
             SuggestionsSection(suggestions: model.topHits,
                                query: model.query,
                                onSuggestionSelected: model.onSuggestionSelected)

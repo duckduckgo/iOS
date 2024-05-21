@@ -45,9 +45,8 @@ class AutocompleteViewModel: ObservableObject {
     @Published var ddgSuggestions = [SuggestionModel]()
     @Published var localResults = [SuggestionModel]()
     @Published var query: String?
-    @Published var isEmpty = true
-
     @Published var isMessageVisible = true
+    @Published var emptySuggestion: [SuggestionModel]?
 
     weak var delegate: AutocompleteViewModelDelegate?
 
@@ -58,15 +57,13 @@ class AutocompleteViewModel: ObservableObject {
         self.isMessageVisible = showMessage
     }
 
-    var emptySuggestion: SuggestionModel {
-        SuggestionModel(suggestion: .phrase(phrase: query ?? ""), canShowTapAhead: false)
-    }
-
     func updateSuggestions(_ suggestions: SuggestionResult) {
         topHits = suggestions.topHits.map { SuggestionModel(suggestion: $0) }
         ddgSuggestions = suggestions.duckduckgoSuggestions.map { SuggestionModel(suggestion: $0) }
         localResults = suggestions.localSuggestions.map { SuggestionModel(suggestion: $0) }
-        isEmpty = topHits.isEmpty && ddgSuggestions.isEmpty && localResults.isEmpty
+        if topHits.isEmpty && ddgSuggestions.isEmpty && localResults.isEmpty {
+            topHits = [SuggestionModel(suggestion: .phrase(phrase: query ?? ""), canShowTapAhead: false)]
+        }
     }
 
     func onDismissMessage() {

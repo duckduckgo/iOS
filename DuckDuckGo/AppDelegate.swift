@@ -277,7 +277,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
 
         let previewsSource = TabPreviewsSource()
-        let historyManager = makeHistoryManager(AppDependencyProvider.shared.appSettings, 
+        let historyManager = makeHistoryManager(AppDependencyProvider.shared.appSettings,
                                                 AppDependencyProvider.shared.internalUserDecider,
                                                 ContentBlocking.shared.privacyConfigurationManager)
         let tabsModel = prepareTabsModel(previewsSource: previewsSource)

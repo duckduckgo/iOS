@@ -985,7 +985,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     // Subscription Section
     public static let settingsPProSection = NSLocalizedString("settings.ppro", value: "Privacy Pro", comment: "Product name for the subscription bundle")
     public static let settingsPProSubscribe = NSLocalizedString("settings.subscription.subscribe", value: "Subscribe to Privacy Pro", comment: "Call to action title for Privacy Pro")
-    public static let settingsPProDescription = NSLocalizedString("settings.subscription.description", value:"More seamless privacy with three new protections, including:", comment: "Privacy pro description subtext")
+    public static let settingsPProDescription = NSLocalizedString("settings.subscription.description", value:"More seamless privacy with three new protections:", comment: "Privacy pro description subtext")
     public static let settingsPProFeatures = NSLocalizedString("settings.subscription.features", value:
                                                                 """
                                                                  • VPN
@@ -1004,7 +1004,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsPProITRTitle = NSLocalizedString("settings.subscription.ITR.title", value: "Identity Theft Restoration", comment: "Identity theft restoration cell title for privacy pro")
     public static let settingsPProITRSubTitle = NSLocalizedString("settings.subscription.ITR.subtitle", value: "If your identity is stolen, we'll help restore it", comment: "Identity theft restoration cell subtitle for privacy pro")
     
-    public static let settingsPProActivationPendingTitle = NSLocalizedString("settings.subscription.activation.pending.title", value: "Your Subscription is Being Activated", comment: "Subscription activation pending title")
+    public static let settingsPProActivationPendingTitle = NSLocalizedString("settings.subscription.activation.pending.title", value: "Your Subscription is being activated", comment: "Subscription activation pending title")
     public static let settingsPProActivationPendingDescription = NSLocalizedString("settings.subscription.activation.pending.description", value: "This is taking longer than usual, please check back later.", comment: "Subscription activation pending description")
     
     // Expired Subscription
@@ -1160,7 +1160,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionPIRHeroDesktopMenuLocation = NSLocalizedString("subscription.pir.heroTextLocation", value: "Settings > Privacy Pro", comment: "Settings references a menu in the Desktop app, Privacy Pro, references our product name")
     public static let subscriptionPIRHeroDesktopMenuItem = NSLocalizedString("subscription.pir.heroTextMenyEntry", value: "I have a subscription", comment: "Menu item for enabling Personal Information Removal on Desktop")
     public static let subscriptionPIRWindows = NSLocalizedString("subscription.pir.windows", value: "Windows", comment: "Text for the 'Windows' button")
-    public static let subscriptionPIRMacOS = NSLocalizedString("subscription.pir.macos", value: "macOS", comment: "Text for the 'macOS' button")
+    public static let subscriptionPIRMacOS = NSLocalizedString("subscription.pir.macos", value: "Mac", comment: "Text for the 'macOS' button")
 
     public static let siteNotWorkingTitle = NSLocalizedString("site.not.working.title", value: "Site not working? Let DuckDuckGo know.", comment: "Prompt asking user to send report to us if we suspect site may be broken")
     public static let siteNotWorkingSubtitle = NSLocalizedString("site.not.working.subtitle", value: "This helps us improve the browser.", comment: "Prompt asking user to send report to us if we suspect site may be broken")

@@ -38,13 +38,11 @@ final class SubscriptionContainerViewModel: ObservableObject {
         subFeature: SubscriptionPagesUseSubscriptionFeature
     ) {
         self.userScript = userScript
+        subFeature.cleanup()
         self.subFeature = subFeature
         self.flow = SubscriptionFlowViewModel(origin: origin, userScript: userScript, subFeature: subFeature)
         self.restore = SubscriptionRestoreViewModel(userScript: userScript, subFeature: subFeature)
         self.email = SubscriptionEmailViewModel(userScript: userScript, subFeature: subFeature)
     }
     
-    deinit {
-        subFeature.cleanup()
-    }
 }

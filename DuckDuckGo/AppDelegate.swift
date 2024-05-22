@@ -454,6 +454,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+    // swiftlint:disable:next function_body_length
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
@@ -501,7 +502,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         checkWaitlists()
         syncService.scheduler.notifyAppLifecycleEvent()
         fireFailedCompilationsPixelIfNeeded()
-        refreshShortcuts()
+
+        Task {
+            await refreshShortcuts()
+        }
 
 #if NETWORK_PROTECTION
         widgetRefreshModel.refreshVPNWidget()
@@ -573,7 +577,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        refreshShortcuts()
+        Task {
+            await refreshShortcuts()
+        }
     }
 
     private func fireAppLaunchPixel() {
@@ -903,22 +909,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return window?.rootViewController as? MainViewController
     }
 
-    func refreshShortcuts() {
+    @MainActor
+    func refreshShortcuts() async {
 #if NETWORK_PROTECTION
         guard vpnFeatureVisibility.shouldShowVPNShortcut() else {
             UIApplication.shared.shortcutItems = nil
             return
         }
 
-        let items = [
-            UIApplicationShortcutItem(type: ShortcutKey.openVPNSettings,
-                                      localizedTitle: UserText.netPOpenVPNQuickAction,
-                                      localizedSubtitle: nil,
-                                      icon: UIApplicationShortcutIcon(templateImageName: "VPN-16"),
-                                      userInfo: nil)
-        ]
+        if case .success(true) = await AccountManager().hasEntitlement(for: .networkProtection, cachePolicy: .returnCacheDataDontLoad) {
+            let items = [
+                UIApplicationShortcutItem(type: ShortcutKey.openVPNSettings,
+                                          localizedTitle: UserText.netPOpenVPNQuickAction,
+                                          localizedSubtitle: nil,
+                                          icon: UIApplicationShortcutIcon(templateImageName: "VPN-16"),
+                                          userInfo: nil)
+            ]
 
-        UIApplication.shared.shortcutItems = items
+            UIApplication.shared.shortcutItems = items
+        } else {
+            UIApplication.shared.shortcutItems = nil
+        }
 #endif
     }
 

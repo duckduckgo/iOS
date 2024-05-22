@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "fcappelli/subscription_refactoring_2",
-        "revision" : "874ae4269db821797742655e134e72199c2813c8"
+        "revision" : "b01a7ba359b650f0c5c3ab00a756e298b1ae650c",
+        "version" : "146.0.0"
       }
     },
     {

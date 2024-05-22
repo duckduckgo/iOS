@@ -88,6 +88,10 @@ import WebKit
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
     private var privacyConfigCustomURL: String?
 
+    var accountManager: AccountManaging {
+        AppDependencyProvider.shared.accountManager
+    }
+
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
@@ -502,7 +506,7 @@ import WebKit
 
     private func stopTunnelAndShowThankYouMessagingIfNeeded() {
 
-        if AppDependencyProvider.shared.accountManager.isUserAuthenticated {
+        if accountManager.isUserAuthenticated {
             tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
             return
         }
@@ -513,7 +517,7 @@ import WebKit
                 await self.stopAndRemoveVPN(with: "thank-you-dialog")
             }
         } else if AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched()
-                    && !AppDependencyProvider.shared.accountManager.isUserAuthenticated {
+                    && !accountManager.isUserAuthenticated {
             Task {
                 await self.stopAndRemoveVPN(with: "subscription-check")
             }
@@ -538,7 +542,7 @@ import WebKit
 
     func updateSubscriptionStatus() {
         Task {
-            guard let token = AppDependencyProvider.shared.accountManager.accessToken else { return }
+            guard let token = accountManager.accessToken else { return }
             var subscriptionService: SubscriptionService {
                 AppDependencyProvider.shared.subscriptionManager.subscriptionService
             }
@@ -548,7 +552,7 @@ import WebKit
                     DailyPixel.fire(pixel: .privacyProSubscriptionActive)
                 }
             }
-            await AppDependencyProvider.shared.accountManager.fetchEntitlements(cachePolicy: .reloadIgnoringLocalCacheData)
+            await accountManager.fetchEntitlements(cachePolicy: .reloadIgnoringLocalCacheData)
         }
     }
 
@@ -893,7 +897,7 @@ import WebKit
             return
         }
 
-        if case .success(true) = await AccountManager().hasEntitlement(for: .networkProtection, cachePolicy: .returnCacheDataDontLoad) {
+        if case .success(true) = await accountManager.hasEntitlement(for: .networkProtection, cachePolicy: .returnCacheDataDontLoad) {
             let items = [
                 UIApplicationShortcutItem(type: ShortcutKey.openVPNSettings,
                                           localizedTitle: UserText.netPOpenVPNQuickAction,
@@ -988,7 +992,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
     func presentNetworkProtectionStatusSettingsModal() {
         Task {
-            let accountManager = AppDependencyProvider.shared.accountManager
             if case .success(let hasEntitlements) = await accountManager.hasEntitlement(for: .networkProtection),
                hasEntitlements {
                 if #available(iOS 15, *) {

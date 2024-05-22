@@ -31,9 +31,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     var webViewModel: AsyncHeadlessWebViewViewModel
     let subscriptionManager: SubscriptionManaging
-    var subscriptionServiceEnvironment: SubscriptionEnvironment.ServiceEnvironment {
-        subscriptionManager.currentEnvironment.serviceEnvironment
-    }
     let purchaseURL: URL
 
     private var cancellables = Set<AnyCancellable>()

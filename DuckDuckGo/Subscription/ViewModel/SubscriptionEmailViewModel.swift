@@ -70,10 +70,6 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
 
     private var cancellables = Set<AnyCancellable>()
-
-    var subscriptionServiceEnvironment: SubscriptionEnvironment.ServiceEnvironment {
-        subscriptionManager.currentEnvironment.serviceEnvironment
-    }
     var accountManager: AccountManaging { subscriptionManager.accountManager }
 
     private var isWelcomePageOrSuccessPage: Bool {

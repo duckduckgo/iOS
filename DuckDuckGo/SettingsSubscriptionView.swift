@@ -86,12 +86,12 @@ struct SettingsSubscriptionView: View {
         Group {
             SettingsCustomCell(content: { subscriptionDescriptionView })
             
-            let subscribeView = SubscriptionContainerView(currentView: .subscribe)
+            let subscribeView = SubscriptionContainerViewFactory.makeSubscribeFlow(
+                origin: nil,
+                navigationCoordinator: subscriptionNavigationCoordinator
+            ).navigationViewStyle(.stack)
+            let restoreView = SubscriptionContainerViewFactory.makeRestoreFlow(navigationCoordinator: subscriptionNavigationCoordinator)
                 .navigationViewStyle(.stack)
-                .environmentObject(subscriptionNavigationCoordinator)
-            let restoreView = SubscriptionContainerView(currentView: .restore)
-                .navigationViewStyle(.stack)
-                .environmentObject(subscriptionNavigationCoordinator)
                 .onFirstAppear {
                     Pixel.fire(pixel: .privacyProRestorePurchaseClick)
                 }
@@ -122,9 +122,10 @@ struct SettingsSubscriptionView: View {
                 }
             })
                         
-            let subscribeView = SubscriptionContainerView(currentView: .subscribe)
-                .navigationViewStyle(.stack)
-                .environmentObject(subscriptionNavigationCoordinator)
+            let subscribeView = SubscriptionContainerViewFactory.makeSubscribeFlow(
+                origin: nil,
+                navigationCoordinator: subscriptionNavigationCoordinator
+            ).navigationViewStyle(.stack)
             NavigationLink(
                 destination: subscribeView,
                 isActive: $isShowingSubscribeFlow,

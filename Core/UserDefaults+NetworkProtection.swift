@@ -33,7 +33,7 @@ public extension UserDefaults {
 
 public enum NetworkProtectionUserDefaultKeys {
 
-    public static let lastSelectedServer = "com.duckduckgo.network-protection.last-selected-server"
+    public static let lastSelectedServerCity = "com.duckduckgo.network-protection.last-selected-server-city"
 
 }
 

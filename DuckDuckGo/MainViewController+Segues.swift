@@ -148,6 +148,7 @@ extension MainViewController {
         
         currentTab?.privacyDashboard = controller
         controller.popoverPresentationController?.delegate = controller
+        controller.view.backgroundColor = UIColor(designSystemColor: .backgroundSheets)
 
         if UIDevice.current.userInterfaceIdiom == .pad {
             controller.modalPresentationStyle = .formSheet
@@ -205,7 +206,7 @@ extension MainViewController {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
         launchSettings {
-            $0.triggerDeepLinkNavigation(to: .subscriptionFlow)
+            $0.triggerDeepLinkNavigation(to: .subscriptionFlow())
         }
     }
 
@@ -245,22 +246,31 @@ extension MainViewController {
                                                             syncDataProviders: syncDataProviders,
                                                             appSettings: appSettings,
                                                             bookmarksDatabase: bookmarksDatabase,
-                                                            tabManager: tabManager)
+                                                            tabManager: tabManager,
+                                                            syncPausedStateManager: syncPausedStateManager)
 
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider,
                                                   accountManager: AccountManager(),
-                                                  deepLink: deepLinkTarget)
+                                                  deepLink: deepLinkTarget,
+                                                  syncPausedStateManager: syncPausedStateManager)
 
         Pixel.fire(pixel: .settingsPresented,
                    withAdditionalParameters: PixelExperiment.parameters)
-        let settingsController = SettingsHostingController(viewModel: settingsViewModel, viewProvider: legacyViewProvider)
-        
-        // We are still presenting legacy views, so use a Navcontroller
-        let navController = UINavigationController(rootViewController: settingsController)
-        settingsController.modalPresentationStyle = UIModalPresentationStyle.automatic
-        
-        present(navController, animated: true) {
-            completion?(settingsViewModel)
+
+        if let navigationController = self.presentedViewController as? UINavigationController,
+           let settingsHostingController = navigationController.viewControllers.first as? SettingsHostingController {
+            navigationController.popToRootViewController(animated: false)
+            completion?(settingsHostingController.viewModel)
+        } else {
+            let settingsController = SettingsHostingController(viewModel: settingsViewModel, viewProvider: legacyViewProvider)
+
+            // We are still presenting legacy views, so use a Navcontroller
+            let navController = UINavigationController(rootViewController: settingsController)
+            settingsController.modalPresentationStyle = UIModalPresentationStyle.automatic
+
+            present(navController, animated: true) {
+                completion?(settingsViewModel)
+            }
         }
     }
 

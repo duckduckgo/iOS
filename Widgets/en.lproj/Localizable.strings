@@ -52,6 +52,12 @@
 /* Display name for search only widget in widget gallery */
 "widget.gallery.search.display.name" = "Search";
 
+/* Description of VPN widget in widget gallery */
+"widget.gallery.vpn.description" = "View and manage your VPN connection. Requires a Privacy Pro subscription.";
+
+/* Display name for VPN widget in widget gallery */
+"widget.gallery.vpn.display.name" = "VPN";
+
 /* CTA shown in the favorites widget empty state. */
 "widget.no.favorites.cta" = "Add Favorites";
 
@@ -63,4 +69,19 @@
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Search DuckDuckGo";
+
+/* VPN connect button text */
+"widget.vpn.button.connect" = "Connect";
+
+/* VPN disconnect button text */
+"widget.vpn.button.disconnect" = "Disconnect";
+
+/* Message describing VPN connected status */
+"widget.vpn.status.connected" = "VPN is On";
+
+/* Message describing VPN disconnected status */
+"widget.vpn.status.disconnected" = "VPN is Off";
+
+/* Subtitle describing VPN disconnected status */
+"widget.vpn.subtitle.disconnected" = "Not connected";
 

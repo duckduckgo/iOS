@@ -65,6 +65,7 @@ public enum PixelExperiment: String, CaseIterable {
 
     // Internal state for users not included in any variant
     case noVariant
+
 }
 
 extension PixelExperiment {

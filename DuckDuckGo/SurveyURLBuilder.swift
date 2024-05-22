@@ -91,6 +91,21 @@ struct DefaultSurveyURLBuilder: SurveyURLBuilder {
         return components.url ?? surveyURL
     }
 
+    func addPasswordsCountSurveyParameter(to surveyURL: URL) -> URL {
+        let surveyURLWithParameters = addSurveyParameters(to: surveyURL)
+
+        guard var components = URLComponents(string: surveyURLWithParameters.absoluteString), let bucket = passwordsCountBucket() else {
+            return surveyURLWithParameters
+        }
+
+        var queryItems = components.queryItems ?? []
+        queryItems.append(URLQueryItem(name: "saved_passwords", value: bucket))
+
+        components.queryItems = queryItems
+
+        return components.url ?? surveyURL
+    }
+
     private func hardwareModel() -> String {
         var systemInfo = utsname()
         uname(&systemInfo)
@@ -102,6 +117,15 @@ struct DefaultSurveyURLBuilder: SurveyURLBuilder {
         }
 
         return identifier
+    }
+
+    private func passwordsCountBucket() -> String? {
+        guard let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter.shared),
+                let bucket = try? secureVault.accountsCountBucket() else {
+            return nil
+        }
+
+        return bucket
     }
 
 }

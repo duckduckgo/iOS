@@ -218,11 +218,9 @@ struct Widgets: WidgetBundle {
         PasswordsWidget()
         FavoritesWidget()
 
-#if ALPHA
         if #available(iOSApplicationExtension 17.0, *) {
             VPNStatusWidget()
         }
-#endif
 
         if #available(iOSApplicationExtension 16.0, *) {
             SearchLockScreenWidget()

@@ -1,11 +1,8 @@
 appId: com.duckduckgo.mobile.ios
 ---
 
-- runFlow:
-    when:
-      notVisible: Passwords
-    commands:
-        - scroll
+- scrollUntilVisible:
+    element: Passwords
 - tapOn: Passwords
 - tapOn: Add 24
 - tapOn: Title

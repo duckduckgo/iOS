@@ -133,18 +133,6 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Съществуващите отметки няма да бъдат дублирани.";
 
-/* Description for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-description" = "Превишихте ограничението за синхронизиране на отметки. Опитайте да изтриете някои от отметките. Докато този проблем не бъде разрешен, отметките няма да бъдат архивирани.";
-
-/* Title for alert shown when sync bookmarks paused for too many items */
-"alert.sync-bookmarks-paused-title" = "Синхронизирането на отметки е на пауза";
-
-/* Description for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-description" = "Превишихте ограничението за синхронизиране на пароли. Опитайте да изтриете някои от паролите. Докато този проблем не бъде разрешен, паролите няма да бъдат архивирани.";
-
-/* Title for alert shown when sync credentials paused for too many items */
-"alert.sync-credentials-paused-title" = "Синхронизирането на паролите е на пауза";
-
 /* Title for sync error alert */
 "alert.sync-error" = "Грешка при синхронизиране и архивиране";
 
@@ -646,14 +634,11 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Импортирайте HTML файл с отметки от друг браузър или експортирайте съществуващите отметки.";
 
-/* No comment provided by engineer. */
-"bucket: %@" = "контейнер: %@";
-
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Винаги да се изпращат доклади за сривове";
 
 /* Crash Report hide details button title */
-"crash.report.dialog.hide.details" = "Скрий";
+"crash.report.dialog.hide.details" = "Hide";
 
 /* Crash Report dialog message */
 "crash.report.dialog.message" = "Докладите за сривове помагат на DuckDuckGo да диагностицира проблеми и да подобрява продуктите си. Те не съдържат никаква лична информация.";
@@ -900,9 +885,6 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Няма намерени съвпадения";
-
-/* No comment provided by engineer. */
-"Error" = "Грешка";
 
 /* Button title to Sign In */
 "error.email-protection-sign-in.action" = "Влизане";
@@ -1573,9 +1555,6 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
-/* No comment provided by engineer. */
-"Ok" = "ОК";
-
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Бисквитките са настроени";
 
@@ -1614,9 +1593,6 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Не е намерено приложението, необходимо за отваряне на тази връзка";
-
-/* No comment provided by engineer. */
-"Please enter which app on your device is broken." = "Моля, въведете кое приложение на Вашето устройство е повредено.";
 
 /* Activate button */
 "pm.activate" = "Reactivate";
@@ -1720,6 +1696,9 @@
 
 /* Settings screen cell title for toggling full URL visibility in address bar */
 "settings.address.full.url" = "Показване на пълния адрес на сайта";
+
+/* Label describing a feature which is turned on always */
+"settings.always.on" = "Always On";
 
 /* Settings screen appearance section title */
 "settings.appearance" = "Външен Вид";
@@ -1827,6 +1806,12 @@
 /* The name of a settings category listing next steps */
 "settings.next.steps" = "Следващи стъпки";
 
+/* Label describing a feature which is turned off */
+"settings.off" = "Off";
+
+/* Label describing a feature which is turned on */
+"settings.on" = "On";
+
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
@@ -1871,6 +1856,12 @@
 
 /* I have a Subscription button text for privacy pro */
 "settings.subscription.existing.subscription" = "I Have a Subscription";
+
+/* Subscription expired description */
+"settings.subscription.expired.comment" = "Subscribe again to continue using Privacy Pro";
+
+/* Subscription expired tittle message */
+"settings.subscription.expired.title" = "Your Privacy Pro subscription expired";
 
 /* Privacy pro features list */
 "settings.subscription.features" = " • VPN\n • Personal Information Removal\n • Identity Theft Restoration";
@@ -1922,6 +1913,21 @@
 
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo автоматично блокира скритите тракери, докато сърфирате в мрежата.\n[Научете повече](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
+
+/* Description on a report broken site page. */
+"site.not.working.description" = "Изберете опцията, която най-добре описва възникналия проблем.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Отказване";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Това ни помага да подобрим браузъра.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Сайтът не работи ли? Уведомете DuckDuckGo.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Уебсайтът е повреден";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Изпращане на доклад";
@@ -2175,6 +2181,9 @@
 /* Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)' */
 "subscription.subscription.active.caption" = "Your subscription %1$@ on %2$@";
 
+/* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
+"subscription.subscription.expired.caption" = "Your subscription expired on %@";
+
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
 
@@ -2216,9 +2225,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Съжаляваме, но функцията за синхронизиране и архивиране вече не се предлага в тази версия на приложението. Моля, актуализирайте DuckDuckGo до най-новата версия, за да продължите.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Функцията за синхронизиране и архивиране е на пауза";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Затваряне на началния раздел";

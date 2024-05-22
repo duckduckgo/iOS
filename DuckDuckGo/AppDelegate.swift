@@ -85,6 +85,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let crashCollection = CrashCollection(platform: .iOS, log: .generalLog)
     private var crashReportUploaderOnboarding: CrashCollectionOnboarding?
 
+    private let autofillPixelReporter = AutofillPixelReporter()
+
     // MARK: lifecycle
 
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
@@ -217,6 +219,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DaxDialogs.shared.primeForUse()
         }
 
+        PixelExperimentForBrokenSites.install()
         PixelExperiment.install()
 
         // MARK: Sync initialisation
@@ -234,11 +237,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ).wrappedValue
         ) ?? defaultEnvironment
 
+        let syncErrorHandler = SyncErrorHandler()
+
         syncDataProviders = SyncDataProviders(
             bookmarksDatabase: bookmarksDatabase,
             secureVaultErrorReporter: SecureVaultReporter.shared,
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
-            favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
+            favoritesDisplayModeStorage: FavoritesDisplayModeStorage(),
+            syncErrorHandler: syncErrorHandler
         )
 
         let syncService = DDGSync(
@@ -273,9 +279,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                       syncDataProviders: syncDataProviders,
                                       appSettings: AppDependencyProvider.shared.appSettings,
                                       previewsSource: previewsSource,
-                                      tabsModel: tabsModel)
+                                      tabsModel: tabsModel,
+                                      syncPausedStateManager: syncErrorHandler)
 
         main.loadViewIfNeeded()
+        syncErrorHandler.alertPresenter = main
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = main
@@ -663,6 +671,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             showKeyboardIfSettingOn = true
             syncService.scheduler.resumeSyncQueue()
         }
+
+        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
+
+        autofillPixelReporter.checkIfOnboardedUser()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -858,10 +870,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if NETWORK_PROTECTION
             if shortcutItem.type == ShortcutKey.openVPNSettings {
-                let visibility = DefaultNetworkProtectionVisibility()
-                if visibility.shouldShowVPNShortcut() {
-                    presentNetworkProtectionStatusSettingsModal()
-                }
+                presentNetworkProtectionStatusSettingsModal()
             }
 #endif
 
@@ -970,13 +979,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
 #if NETWORK_PROTECTION
             if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
-                Task {
-                    let accountManager = AccountManager()
-                    if case .success(let hasEntitlements) = await accountManager.hasEntitlement(for: .networkProtection),
-                        hasEntitlements {
-                        presentNetworkProtectionStatusSettingsModal()
-                    }
-                }
+                presentNetworkProtectionStatusSettingsModal()
             }
 
             if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist(), identifier == VPNWaitlist.notificationIdentifier {
@@ -997,9 +1000,17 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
     func presentNetworkProtectionStatusSettingsModal() {
-        if #available(iOS 15, *) {
-            let networkProtectionRoot = NetworkProtectionRootViewController()
-            presentSettings(with: networkProtectionRoot)
+        Task {
+            let accountManager = AccountManager()
+            if case .success(let hasEntitlements) = await accountManager.hasEntitlement(for: .networkProtection),
+               hasEntitlements {
+                if #available(iOS 15, *) {
+                    let networkProtectionRoot = NetworkProtectionRootViewController()
+                    presentSettings(with: networkProtectionRoot)
+                }
+            } else {
+                (window?.rootViewController as? MainViewController)?.segueToPrivacyPro()
+            }
         }
     }
 #endif
@@ -1027,7 +1038,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             rootViewController.segueToSettings()
             let navigationController = rootViewController.presentedViewController as? UINavigationController
             navigationController?.popToRootViewController(animated: false)
-            navigationController?.pushViewController(viewController, animated: true)
+            navigationController?.pushViewController(viewController, animated: false)
         }
     }
 }

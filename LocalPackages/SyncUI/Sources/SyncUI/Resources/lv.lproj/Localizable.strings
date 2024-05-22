@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"A device password is required to use Sync & Backup." = "Lai izmantotu Sync & Backup, nepieciešama ierīces parole.";
+
 /* Standard Buttons - Back Button */
 "back.button" = "Atpakaļ";
 
@@ -6,12 +9,6 @@
 
 /* Alert title for invalid bookmarks being filtered out of synced data */
 "bookmarks.invalid.objects.present.title" = "Dažas grāmatzīmes netiek sinhronizētas, jo dažos laukos ir pārāk garš saturs.";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Action */
-"bookmarks.limit.exceeded.action" = "Pārvaldīt grāmatzīmes";
-
-/* Sync Paused Errors - Bookmarks Limit Exceeded Description */
-"bookmarks.limit.exceeded.description" = "Pārsniegts grāmatzīmju ierobežojums. Izdzēsiet dažas, lai atsāktu sinhronizāciju.";
 
 /* Camera View - Go to Settings Button */
 "camera.go.to.settings.button" = "Doties uz Iestatījumiem";
@@ -55,12 +52,6 @@
 /* Alert title for invalid logins being filtered out of synced data */
 "credentials.invalid.objects.present.title" = "Daži pieteikšanās dati netiek sinhronizēti, jo noteiktos laukos saturs ir pārāk garš.";
 
-/* Sync Paused Errors - Credentials Limit Exceeded Action */
-"credentials.limit.exceeded.action" = "Pārvaldīt pieteikšanās datus";
-
-/* Sync Paused Errors - Credentials Limit Exceeded Description */
-"credentials.limit.exceeded.description" = "Pārsniegts pieteikšanās datu ierobežojums. Izdzēs dažus, lai atsāktu sinhronizāciju.";
-
 /* Delete Server Data - Button */
 "delete.server.data" = "Izslēgt un dzēst servera datus...";
 
@@ -95,6 +86,9 @@
 "fetch.favicons.option.title" = "Automātiski lejupielādēt ikonas";
 
 /* No comment provided by engineer. */
+"Go to Settings" = "Doties uz Iestatījumiem";
+
+/* No comment provided by engineer. */
 "Keep Development" = "Paturēt izstrādi";
 
 /* Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted */
@@ -124,8 +118,11 @@
 /* Standard Buttons - Paste Button */
 "paste.button" = "Ielīmēt";
 
-/* Description of rollout banner */
-"preferences.sync.rollout-banner.description" = "Sinhronizācija un dublēšana tiek ieviesta pakāpeniski, un tā vēl var nebūt pieejama DuckDuckGo citās ierīcēs.";
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Pārvaldīt grāmatzīmes";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Pārvaldīt paroles…";
 
 /* Preparing To Sync Sheet - Description */
 "preparing.to.sync.sheet.description" = "Tavas grāmatzīmes un paroles tiek sagatavotas sinhronizēšanai. Tam vajadzētu aizņemt tikai neilgu brīdi.";
@@ -218,13 +215,13 @@
 "scan.or.see.code.title" = "Kvadrātkoda skenēšana";
 
 /* No comment provided by engineer. */
+"Secure Your Device to Use Sync & Backup" = "Aizsargā savu ierīci, lai izmantotu Sync & Backup";
+
+/* No comment provided by engineer. */
 "Switch to Production" = "Pārslēgties uz ražošanu";
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Sinhronizēt un dublēt šo ierīci";
-
-/* Sync Paused Errors - Title */
-"sync.limit.exceeded.title" = "Sinhronizācija pārtraukta";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Iestatījumi > Sinhronizācija un dublēšana > Sinhronizācija ar citu ierīci";
@@ -237,9 +234,6 @@
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled.upgrade.required" = "Diemžēl sinhronizācija un dublēšana šajā lietotnes versijā vairs nav pieejama. Lai turpinātu, lūdzu, atjaunini DuckDuckGo uz jaunāko versiju.";
-
-/* Title of the warning message */
-"sync.warning.sync.paused" = "Sinhronizācija un dublēšana ir pauzēta";
 
 /* Title of the warning message */
 "sync.warning.sync.unavailable" = "Sinhronizācija un dublēšana nav pieejama";

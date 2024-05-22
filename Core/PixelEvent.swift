@@ -244,6 +244,8 @@ extension Pixel {
         case autofillLoginsPasswordGenerationPromptConfirmed
         case autofillLoginsPasswordGenerationPromptDismissed
 
+        case autofillManagementScreenVisitSurveyAvailable
+        
         case autofillLoginsLaunchWidgetHome
         case autofillLoginsLaunchWidgetLock
         case autofillLoginsLaunchAppShortcut
@@ -255,6 +257,11 @@ extension Pixel {
         case autofillLoginsImportNoAction
         case autofillLoginsImportSuccess
         case autofillLoginsImportFailure
+
+        case autofillActiveUser
+        case autofillEnabledUser
+        case autofillOnboardedUser
+        case autofillLoginsStacked
 
         case getDesktopCopy
         case getDesktopShare
@@ -377,6 +384,11 @@ extension Pixel {
         case networkProtectionFailureRecoveryFailed
         case networkProtectionFailureRecoveryCompletedHealthy
         case networkProtectionFailureRecoveryCompletedUnhealthy
+
+        case networkProtectionWidgetConnectAttempt
+        case networkProtectionWidgetConnectSuccess
+        case networkProtectionWidgetDisconnectAttempt
+        case networkProtectionWidgetDisconnectSuccess
 
         // MARK: remote messaging pixels
         
@@ -523,10 +535,13 @@ extension Pixel {
         case syncSentUnauthenticatedRequest
         case syncMetadataCouldNotLoadDatabase
         case syncBookmarksFailed
+        case syncBookmarksPatchCompressionFailed
         case syncCredentialsProviderInitializationFailed
         case syncCredentialsFailed
+        case syncCredentialsPatchCompressionFailed
         case syncSettingsFailed
         case syncSettingsMetadataUpdateFailed
+        case syncSettingsPatchCompressionFailed
         case syncSignupError
         case syncLoginError
         case syncLogoutError
@@ -570,13 +585,18 @@ extension Pixel {
         case toggleReportDoNotSend
         case toggleReportDismiss
 
-        case userBehaviorReloadTwice
-        case userBehaviorReloadAndRestart
-        case userBehaviorReloadAndFireButton
-        case userBehaviorReloadAndOpenSettings
-        case userBehaviorReloadAndTogglePrivacyControls
-        case userBehaviorFireButtonAndRestart
-        case userBehaviorFireButtonAndTogglePrivacyControls
+        case userBehaviorReloadTwiceWithin12Seconds
+        case userBehaviorReloadTwiceWithin24Seconds
+        case userBehaviorReloadAndRestartWithin30Seconds
+        case userBehaviorReloadAndRestartWithin50Seconds
+        case userBehaviorReloadThreeTimesWithin20Seconds
+        case userBehaviorReloadThreeTimesWithin40Seconds
+
+        case siteNotWorkingShown
+        case siteNotWorkingDismiss
+        case siteNotWorkingDismissByNavigation
+        case siteNotWorkingDismissByRefresh
+        case siteNotWorkingWebsiteIsBroken
 
         // MARK: History
         case historyStoreLoadFailed
@@ -624,6 +644,7 @@ extension Pixel {
         case privacyProVPNAccessRevokedDialogShown
         case privacyProVPNBetaStoppedWhenPrivacyProEnabled
         case privacyProTransactionProgressNotHiddenAfter60s
+        case privacyProSuccessfulSubscriptionAttribution
 
         // MARK: Pixel Experiment
         case pixelExperimentEnrollment
@@ -916,6 +937,7 @@ extension Pixel.Event {
         case .autofillLoginsPasswordGenerationPromptConfirmed: return "m_autofill_logins_password_generation_prompt_confirmed"
         case .autofillLoginsPasswordGenerationPromptDismissed: return "m_autofill_logins_password_generation_prompt_dismissed"
 
+        case .autofillManagementScreenVisitSurveyAvailable: return "m_autofill_management_screen_visit_survey_available"
         case .autofillLoginsLaunchWidgetHome: return "m_autofill_logins_launch_widget_home"
         case .autofillLoginsLaunchWidgetLock: return "m_autofill_logins_launch_widget_lock"
         case .autofillLoginsLaunchAppShortcut: return "m_autofill_logins_launch_app_shortcut"
@@ -927,6 +949,11 @@ extension Pixel.Event {
         case .autofillLoginsImportNoAction: return "m_autofill_logins_import_no-action"
         case .autofillLoginsImportSuccess: return "m_autofill_logins_import_success"
         case .autofillLoginsImportFailure: return "m_autofill_logins_import_failure"
+
+        case .autofillActiveUser: return "m_autofill_activeuser"
+        case .autofillEnabledUser: return "m_autofill_enableduser"
+        case .autofillOnboardedUser: return "m_autofill_onboardeduser"
+        case .autofillLoginsStacked: return "m_autofill_logins_stacked"
 
         case .getDesktopCopy: return "m_get_desktop_copy"
         case .getDesktopShare: return "m_get_desktop_share"
@@ -1170,10 +1197,13 @@ extension Pixel.Event {
         case .syncSentUnauthenticatedRequest: return "m_d_sync_sent_unauthenticated_request"
         case .syncMetadataCouldNotLoadDatabase: return "m_d_sync_metadata_could_not_load_database"
         case .syncBookmarksFailed: return "m_d_sync_bookmarks_failed"
+        case .syncBookmarksPatchCompressionFailed: return "m_d_sync_bookmarks_patch_compression_failed"
         case .syncCredentialsProviderInitializationFailed: return "m_d_sync_credentials_provider_initialization_failed"
         case .syncCredentialsFailed: return "m_d_sync_credentials_failed"
+        case .syncCredentialsPatchCompressionFailed: return "m_d_sync_credentials_patch_compression_failed"
         case .syncSettingsFailed: return "m_d_sync_settings_failed"
         case .syncSettingsMetadataUpdateFailed: return "m_d_sync_settings_metadata_update_failed"
+        case .syncSettingsPatchCompressionFailed: return "m_d_sync_settings_patch_compression_failed"
         case .syncSignupError: return "m_d_sync_signup_error"
         case .syncLoginError: return "m_d_sync_login_error"
         case .syncLogoutError: return "m_d_sync_logout_error"
@@ -1225,14 +1255,21 @@ extension Pixel.Event {
         // MARK: - Apple Ad Attribution
         case .appleAdAttribution: return "m_apple-ad-attribution"
 
-            // MARK: - User behavior
-        case .userBehaviorReloadTwice: return "m_reload-twice"
-        case .userBehaviorReloadAndRestart: return "m_reload-and-restart"
-        case .userBehaviorReloadAndFireButton: return "m_reload-and-fire-button"
-        case .userBehaviorReloadAndOpenSettings: return "m_reload-and-open-settings"
-        case .userBehaviorReloadAndTogglePrivacyControls: return "m_reload-and-toggle-privacy-controls"
-        case .userBehaviorFireButtonAndRestart: return "m_fire-button-and-restart"
-        case .userBehaviorFireButtonAndTogglePrivacyControls: return "m_fire-button-and-toggle-privacy-controls"
+        // MARK: - User behavior
+        case .userBehaviorReloadTwiceWithin12Seconds: return "m_reload-twice-within-12-seconds"
+        case .userBehaviorReloadTwiceWithin24Seconds: return "m_reload-twice-within-24-seconds"
+
+        case .userBehaviorReloadAndRestartWithin30Seconds: return "m_reload-and-restart-within-30-seconds"
+        case .userBehaviorReloadAndRestartWithin50Seconds: return "m_reload-and-restart-within-50-seconds"
+
+        case .userBehaviorReloadThreeTimesWithin20Seconds: return "m_reload-three-times-within-20-seconds"
+        case .userBehaviorReloadThreeTimesWithin40Seconds: return "m_reload-three-times-within-40-seconds"
+
+        case .siteNotWorkingShown: return "m_site-not-working_shown"
+        case .siteNotWorkingDismiss: return "m_site-not-working_dismiss"
+        case .siteNotWorkingDismissByNavigation: return "m_site-not-working_dismiss-by-navigation"
+        case .siteNotWorkingDismissByRefresh: return "m_site-not-working_dismiss-by-refresh"
+        case .siteNotWorkingWebsiteIsBroken: return "m_site-not-working_website-is-broken"
 
         // MARK: - History debug
         case .historyStoreLoadFailed: return "m_debug_history-store-load-failed"
@@ -1277,6 +1314,7 @@ extension Pixel.Event {
         case .privacyProSubscriptionManagementPlanBilling: return "m_privacy-pro_settings_change-plan-or-billing_click"
         case .privacyProSubscriptionManagementRemoval: return "m_privacy-pro_settings_remove-from-device_click"
         case .privacyProTransactionProgressNotHiddenAfter60s: return "m_privacy-pro_progress_not_hidden_after_60s"
+        case .privacyProSuccessfulSubscriptionAttribution: return "m_subscribe"
 
         // MARK: Pixel Experiment
         case .pixelExperimentEnrollment: return "pixel_experiment_enrollment"
@@ -1337,7 +1375,12 @@ extension Pixel.Event {
         case .networkProtectionFailureRecoveryFailed: return "m_netp_ev_failure_recovery_failed"
         case .networkProtectionFailureRecoveryCompletedHealthy: return "m_netp_ev_failure_recovery_completed_server_healthy"
         case .networkProtectionFailureRecoveryCompletedUnhealthy: return "m_netp_ev_failure_recovery_completed_server_unhealthy"
-            
+
+        case .networkProtectionWidgetConnectAttempt: return "m_netp_widget_connect_attempt"
+        case .networkProtectionWidgetConnectSuccess: return "m_netp_widget_connect_success"
+        case .networkProtectionWidgetDisconnectAttempt: return "m_netp_widget_disconnect_attempt"
+        case .networkProtectionWidgetDisconnectSuccess: return "m_netp_widget_disconnect_success"
+
             // MARK: Secure Vault
         case .secureVaultL1KeyMigration: return "m_secure-vault_keystore_event_l1-key-migration"
         case .secureVaultL2KeyMigration: return "m_secure-vault_keystore_event_l2-key-migration"

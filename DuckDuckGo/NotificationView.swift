@@ -57,35 +57,14 @@ class NotificationView: UIView {
 
     func setMessage(text: String) {
         messageLabel.text = text
-        update()
     }
 
     func setTitle(text: String) {
         titleLabel.text = text
-        update()
     }
 
     func setIcon(image: UIImage) {
         icon.image = image
-        update()
-    }
-
-    func update() {
-        guard let superview = superview else { return }
-        let height = titleLabel.frame.height + messageLabel.frame.height + 24
-
-        frame.size.width = superview.frame.width
-        frame.size.height = height
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        update()
-    }
-
-    override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        update()
     }
 
     deinit {

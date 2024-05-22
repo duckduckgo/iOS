@@ -105,7 +105,9 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
     }
 
     func revokeNetworkProtectionAccess() {
+#if os(macOS)
         try? networkProtectionKeychainTokenStore.deleteToken()
+#endif
 
         Task {
             await networkProtectionTunnelController.stop()

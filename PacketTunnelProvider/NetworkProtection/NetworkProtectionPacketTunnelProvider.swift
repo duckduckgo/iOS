@@ -284,13 +284,18 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
         let accessTokenProvider: () -> String? = {
             if featureVisibility.shouldMonitorEntitlement() {
-                return { accountManager.accessToken }
+                return { AccountManager().accessToken }
             }
-            return { nil } }()
+            return { nil }
+        }()
+#if os(macOS)
         let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
                                                              errorEvents: nil,
                                                              isSubscriptionEnabled: isSubscriptionEnabled,
                                                              accessTokenProvider: accessTokenProvider)
+#else
+        let tokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
+#endif
 
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()

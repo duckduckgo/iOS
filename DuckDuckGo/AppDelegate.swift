@@ -910,21 +910,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func setUpAutofillPixelReporter() {
-        autofillPixelReporter = AutofillPixelReporter(userDefaults: .standard,
-                                                      eventMapping: EventMapping<AutofillPixelEvent> {event, _, params, _ in
-            switch event {
-            case .autofillActiveUser:
-                Pixel.fire(pixel: .autofillActiveUser)
-            case .autofillEnabledUser:
-                Pixel.fire(pixel: .autofillEnabledUser)
-            case .autofillOnboardedUser:
-                Pixel.fire(pixel: .autofillOnboardedUser)
-            case .autofillLoginsStacked:
-                Pixel.fire(pixel: .autofillLoginsStacked, withAdditionalParameters: params ?? [:])
-            default:
-                break
-            }
-        }, installDate: StatisticsUserDefaults().installDate ?? Date())
+        autofillPixelReporter = AutofillPixelReporter(
+            userDefaults: .standard,
+            eventMapping: EventMapping<AutofillPixelEvent> {event, _, params, _ in
+                switch event {
+                case .autofillActiveUser:
+                    Pixel.fire(pixel: .autofillActiveUser)
+                case .autofillEnabledUser:
+                    Pixel.fire(pixel: .autofillEnabledUser)
+                case .autofillOnboardedUser:
+                    Pixel.fire(pixel: .autofillOnboardedUser)
+                case .autofillLoginsStacked:
+                    Pixel.fire(pixel: .autofillLoginsStacked, withAdditionalParameters: params ?? [:])
+                default:
+                    break
+                }
+            },
+            installDate: StatisticsUserDefaults().installDate ?? Date())
     }
 
     @MainActor

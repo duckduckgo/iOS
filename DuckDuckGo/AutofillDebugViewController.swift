@@ -51,7 +51,9 @@ class AutofillDebugViewController: UITableViewController {
             } else if cell.tag == Row.resetAutofillData.rawValue {
                 let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter.shared)
                 try? secureVault?.deleteAllWebsiteCredentials()
-                let autofillPixelReporter = AutofillPixelReporter(userDefaults: .standard, eventMapping: EventMapping<AutofillPixelEvent> { _, _, _, _ in })
+                let autofillPixelReporter = AutofillPixelReporter(
+                        userDefaults: .standard,
+                        eventMapping: EventMapping<AutofillPixelEvent> { _, _, _, _ in })
                 autofillPixelReporter.resetStoreDefaults()
                 ActionMessageView.present(message: "Autofill Data reset")
             } else if cell.tag == Row.toggleAutofillSurvey.rawValue {

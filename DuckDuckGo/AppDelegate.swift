@@ -917,7 +917,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
 
-        if case .success = await AccountManager().hasEntitlement(for: .networkProtection, cachePolicy: .returnCacheDataDontLoad) {
+        if case .success(true) = await AccountManager().hasEntitlement(for: .networkProtection, cachePolicy: .returnCacheDataDontLoad) {
             let items = [
                 UIApplicationShortcutItem(type: ShortcutKey.openVPNSettings,
                                           localizedTitle: UserText.netPOpenVPNQuickAction,

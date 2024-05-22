@@ -50,10 +50,10 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         var isShowingConnectionError: Bool = false
         
         // Used to display the FAQ WebUI
-        var FAQViewModel: SubscriptionExternalLinkViewModel
+        var faqViewModel: SubscriptionExternalLinkViewModel
 
         init(faqURL: URL) {
-            self.FAQViewModel = SubscriptionExternalLinkViewModel(url: faqURL)
+            self.faqViewModel = SubscriptionExternalLinkViewModel(url: faqURL)
         }
     }
 

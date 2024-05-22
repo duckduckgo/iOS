@@ -27,19 +27,22 @@ import Core
 import Subscription
 
 struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
-    public let privacyConfigurationManager: PrivacyConfigurationManaging
+    private let privacyConfigurationManager: PrivacyConfigurationManaging
+    private let networkProtectionTokenStore: NetworkProtectionTokenStore
     private let networkProtectionAccessManager: NetworkProtectionAccess
     private let featureFlagger: FeatureFlagger
     private let userDefaults: UserDefaults
     private let accountManager: AccountManaging
 
     init(privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
+         networkProtectionTokenStore: NetworkProtectionTokenStore,
          networkProtectionAccessManager: NetworkProtectionAccess,
          featureFlagger: FeatureFlagger,
          userDefaults: UserDefaults = .networkProtectionGroupDefaults,
          accountManager: AccountManaging) {
 
         self.privacyConfigurationManager = privacyConfigurationManager
+        self.networkProtectionTokenStore = networkProtectionTokenStore
         self.networkProtectionAccessManager = networkProtectionAccessManager
         self.featureFlagger = featureFlagger
         self.userDefaults = userDefaults
@@ -59,7 +62,7 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
     
     func isWaitlistUser() -> Bool {
         let hasLegacyAuthToken = {
-            guard let authToken = token,
+            guard let authToken = try? networkProtectionTokenStore.fetchToken(),
                   !authToken.hasPrefix(NetworkProtectionKeychainTokenStore.authTokenPrefix) else {
                 return false
             }

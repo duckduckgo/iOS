@@ -161,8 +161,10 @@ class AppDependencyProvider: DependencyProvider {
                                                                               accountManager: subscriptionManager.accountManager,
                                                                               tokenStore: networkProtectionKeychainTokenStore,
                                                                               networkProtectionTunnelController: networkProtectionTunnelController)
-        vpnFeatureVisibility = DefaultNetworkProtectionVisibility(networkProtectionAccessManager: networkProtectionAccessController,
-                                                                  featureFlagger: featureFlagger,
-                                                                  accountManager: accountManager)
+        vpnFeatureVisibility = DefaultNetworkProtectionVisibility(
+            networkProtectionTokenStore: networkProtectionKeychainTokenStore,
+            networkProtectionAccessManager: networkProtectionAccessController,
+            featureFlagger: featureFlagger,
+            accountManager: accountManager)
     }
 }

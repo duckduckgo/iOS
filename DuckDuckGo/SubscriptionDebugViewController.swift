@@ -78,7 +78,6 @@ import NetworkProtection
         return titles[section]
     }
 
-    // swiftlint:disable:next cyclomatic_complexity function_body_length
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
@@ -123,16 +122,14 @@ import NetworkProtection
             }
         
         case .environment:
-            let staging = SubscriptionEnvironment.ServiceEnvironment.staging
-            let prod = SubscriptionEnvironment.ServiceEnvironment.production
             let currentEnv = subscriptionManager.currentEnvironment.serviceEnvironment
             switch EnvironmentRows(rawValue: indexPath.row) {
             case .staging:
                 cell.textLabel?.text = "Staging"
-                cell.accessoryType = currentEnv == staging ? .checkmark : .none
+                cell.accessoryType = currentEnv == .staging ? .checkmark : .none
             case .production:
                 cell.textLabel?.text = "Production"
-                cell.accessoryType = currentEnv == prod ? .checkmark : .none
+                cell.accessoryType = currentEnv == .production ? .checkmark : .none
             case .none:
                 break
             }
@@ -191,7 +188,7 @@ import NetworkProtection
             subEnvDesc = "PRODUCTION"
         }
         let message = """
-                    Are you sure you want to change the purchase platform to \(subEnvDesc)?
+                    Are you sure you want to change the environment to \(subEnvDesc)?
                     This setting IS persisted between app runs. This action will close the app, do you want to proceed?
                     """
         let alertController = UIAlertController(title: "⚠️ App restart required! The changes are persistent",

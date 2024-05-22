@@ -252,7 +252,7 @@ struct SubscriptionSettingsView: View {
         }
         
         .sheet(isPresented: $isShowingFAQView, content: {
-            SubscriptionExternalLinkView(viewModel: viewModel.state.FAQViewModel, title: UserText.subscriptionFAQ)
+            SubscriptionExternalLinkView(viewModel: viewModel.state.faqViewModel, title: UserText.subscriptionFAQ)
         })
         
         .onFirstAppear {

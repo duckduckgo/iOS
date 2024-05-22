@@ -56,26 +56,6 @@ extension ConnectionServerInfoObserverThroughSession {
     }
 }
 
-// extension NetworkProtectionKeychainTokenStore {
-//    
-//    convenience init(accountManager: AccountManaging) {
-//        let featureVisibility = AppDependencyProvider.shared.vpnFeatureVisibility
-//        let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
-//        let accessTokenProvider: () -> String? = {
-//        if featureVisibility.shouldMonitorEntitlement() {
-//            return { accountManager.accessToken }
-//        }
-//        return { nil }
-//    }()
-//
-//        self.init(keychainType: .dataProtection(.unspecified),
-//                  serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
-//                  errorEvents: .networkProtectionAppDebugEvents,
-//                  isSubscriptionEnabled: isSubscriptionEnabled,
-//                  accessTokenProvider: accessTokenProvider)
-//    }
-// }
-
 extension NetworkProtectionCodeRedemptionCoordinator {
     
     convenience init(isManualCodeRedemptionFlow: Bool = false, accountManager: AccountManaging) {

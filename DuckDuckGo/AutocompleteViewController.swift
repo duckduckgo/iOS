@@ -185,7 +185,7 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
         let messageHeight = model.isMessageVisible ? 196 : 0
         let cellHeight = 44
         let sectionPadding = 10
-        let controllerPadding = 32
+        let controllerPadding = 20
 
         let height =
             (lastResults.topHits.count * cellHeight) +

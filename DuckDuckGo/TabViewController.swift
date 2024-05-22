@@ -2659,6 +2659,8 @@ extension TabViewController: SaveLoginViewControllerDelegate {
                                                                             with: AutofillSecureVaultFactory)
             confirmSavedCredentialsFor(credentialID: credentialID, message: message)
             syncService.scheduler.notifyDataChanged()
+
+            NotificationCenter.default.post(name: .autofillSaveEvent, object: nil)
         } catch {
             os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
         }

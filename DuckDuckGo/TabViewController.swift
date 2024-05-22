@@ -2516,9 +2516,6 @@ extension TabViewController: SecureVaultManagerDelegate {
                             promptUserWithGeneratedPassword password: String,
                             completionHandler: @escaping (Bool) -> Void) {
         let passwordGenerationPromptViewController = PasswordGenerationPromptViewController(generatedPassword: password) { useGeneratedPassword in
-                if useGeneratedPassword {
-                    NotificationCenter.default.post(name: .autofillFillEvent, object: nil)
-                }
                 completionHandler(useGeneratedPassword)
         }
 

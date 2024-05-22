@@ -67,8 +67,7 @@ extension Theme {
     var feedbackPrimaryTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
     var feedbackSecondaryTextColor: UIColor { UIColor(designSystemColor: .textSecondary) }
 
-    var progressBarGradientDarkColor: UIColor { UIColor(designSystemColor: .accent) }
-    var progressBarGradientLightColor: UIColor { UIColor(designSystemColor: .accent) }
+    var progressBarColor: UIColor { UIColor(designSystemColor: .accent) }
 
     var daxDialogBackgroundColor: UIColor { UIColor(designSystemColor: .surface) }
     var daxDialogTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }

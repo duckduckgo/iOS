@@ -73,9 +73,8 @@ protocol Theme {
     var browsingMenuSeparatorColor: UIColor { get }
     var browsingMenuHighlightColor: UIColor { get }
     
-    var progressBarGradientDarkColor: UIColor { get }
-    var progressBarGradientLightColor: UIColor { get }
-    
+    var progressBarColor: UIColor { get }
+
     var autocompleteSuggestionTextColor: UIColor { get }
     var autocompleteCellAccessoryColor: UIColor { get }
 

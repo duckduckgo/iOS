@@ -23,14 +23,13 @@ import UIKit
 class ProgressView: UIView, CAAnimationDelegate {
     
     private struct Constants {
-        static let gradientAnimationKey = "animateGradient"
         static let progressAnimationKey = "animateProgress"
         static let fadeOutAnimationKey = "animateFadeOut"
         
         static let completionThreshold = 1 - CGFloat.ulpOfOne
     }
     
-    private var progressLayer = CAGradientLayer()
+    private var progressLayer = CALayer()
     private var progressMask = CALayer()
     
     // Actual progress, as reported by WKWebView.
@@ -66,9 +65,6 @@ class ProgressView: UIView, CAAnimationDelegate {
         progressLayer.anchorPoint = .zero
         progressLayer.mask = progressMask
         
-        progressLayer.locations = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3]
-        progressLayer.startPoint = CGPoint(x: 0, y: 0.5)
-        progressLayer.endPoint = CGPoint(x: 1, y: 0.5)
         layer.insertSublayer(progressLayer, at: 0)
     }
     
@@ -83,17 +79,12 @@ class ProgressView: UIView, CAAnimationDelegate {
         progressMask.bounds = calculateProgressMaskRect()
         progressMask.opacity = 1
         CATransaction.commit()
-        CATransaction.flush()
-        
-        startGradientAnimation()
     }
     
     func increaseProgress(to progress: CGFloat, animated: Bool = false) {
         guard progress > currentProgress else { return }
         currentProgress = progress
         
-        // Workaround for the issue, when iOS removes all animations automatically (e.g. when putting app to the background)
-        startGradientAnimation()
         updateProgressMask(animated: animated)
     }
     
@@ -160,21 +151,7 @@ class ProgressView: UIView, CAAnimationDelegate {
         progressMask.frame = calculateProgressMaskRect()
         progressMask.removeAnimation(forKey: Constants.progressAnimationKey)
     }
-    
-    private func startGradientAnimation() {
-        guard progressLayer.animation(forKey: Constants.gradientAnimationKey) == nil else { return }
-        
-        let animation = CABasicAnimation(keyPath: "locations")
-        animation.toValue = [-0.2, -0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1]
-        animation.duration = 0.4
-        animation.repeatCount = .greatestFiniteMagnitude
-        progressLayer.add(animation, forKey: Constants.gradientAnimationKey)
-    }
-    
-    private func stopGradientAnimation() {
-        progressLayer.removeAnimation(forKey: Constants.gradientAnimationKey)
-    }
-    
+
     func hide(animated: Bool = false) {
         if animated {
             CATransaction.begin()
@@ -183,11 +160,9 @@ class ProgressView: UIView, CAAnimationDelegate {
             animation.toValue = 0
             animation.duration = 0.4
             progressMask.add(animation, forKey: Constants.fadeOutAnimationKey)
-            CATransaction.setCompletionBlock(stopGradientAnimation)
             CATransaction.commit()
         } else {
             progressMask.removeAllAnimations()
-            stopGradientAnimation()
         }
         
         CATransaction.begin()
@@ -207,13 +182,7 @@ extension ProgressView {
     
     private func decorate() {
         let theme = ThemeManager.shared.currentTheme
-        var colors = [CGColor]()
-        for _ in 0...6 {
-            colors.append(theme.progressBarGradientDarkColor.cgColor)
-            colors.append(theme.progressBarGradientLightColor.cgColor)
-        }
-        
-        progressLayer.colors = colors
+        progressLayer.backgroundColor = theme.progressBarColor.cgColor
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

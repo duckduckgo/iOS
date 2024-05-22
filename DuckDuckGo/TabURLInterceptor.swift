@@ -37,6 +37,12 @@ protocol TabURLInterceptor {
 
 final class TabURLInterceptorDefault: TabURLInterceptor {
     
+    typealias CanPurchaseUpdater = () -> Bool
+    private let canPurchase: CanPurchaseUpdater
+
+    init(canPurchase: @escaping CanPurchaseUpdater) {
+        self.canPurchase = canPurchase
+    }
 
     static let interceptedURLs: [InterceptedURLInfo] = [
         InterceptedURLInfo(id: .privacyPro, path: "/pro")
@@ -55,9 +61,8 @@ final class TabURLInterceptorDefault: TabURLInterceptor {
         guard let matchingURL = urlToIntercept(path: components.path) else {
             return true
         }
-        
-        return Self.handleURLInterception(interceptedURL: matchingURL.id, queryItems: components.percentEncodedQueryItems)
 
+        return handleURLInterception(interceptedURL: matchingURL.id, queryItems: components.percentEncodedQueryItems)
     }
 }
 
@@ -79,25 +84,23 @@ extension TabURLInterceptorDefault {
         return URLComponents(string: "\(URL.URLProtocol.https.scheme)\(noScheme)")
     }
 
-    private static func handleURLInterception(interceptedURL: InterceptedURL, queryItems: [URLQueryItem]?) -> Bool {
+    private func handleURLInterception(interceptedURL: InterceptedURL, queryItems: [URLQueryItem]?) -> Bool {
         switch interceptedURL {
-
             // Opens the Privacy Pro Subscription Purchase page (if user can purchase)
-            case .privacyPro:
-                if SubscriptionPurchaseEnvironment.canPurchase {
-                    // If URL has an `origin` query parameter, append it to the `subscriptionPurchase` URL.
-                    // Also forward the origin as it will need to be sent as parameter to the Pixel to track subcription attributions.
-                    let originQueryItem = queryItems?.first(where: { $0.name == AttributionParameter.origin })
-                    NotificationCenter.default.post(
-                        name: .urlInterceptPrivacyPro,
-                        object: nil,
-                        userInfo: [AttributionParameter.origin: originQueryItem?.value]
-                    )
-                    return false
-                }
+        case .privacyPro:
+            if canPurchase() {
+                // If URL has an `origin` query parameter, append it to the `subscriptionPurchase` URL.
+                // Also forward the origin as it will need to be sent as parameter to the Pixel to track subcription attributions.
+                let originQueryItem = queryItems?.first(where: { $0.name == AttributionParameter.origin })
+                NotificationCenter.default.post(
+                    name: .urlInterceptPrivacyPro,
+                    object: nil,
+                    userInfo: [AttributionParameter.origin: originQueryItem?.value]
+                )
+                return false
             }
+        }
         return true
-        
     }
 }
 

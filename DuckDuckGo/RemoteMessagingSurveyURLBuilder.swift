@@ -25,16 +25,6 @@ import Common
 
 struct DefaultRemoteMessagingSurveyURLBuilder: RemoteMessagingSurveyActionMapping {
 
-    enum SurveyURLParameters: String, CaseIterable {
-        case atb = "atb"
-        case atbVariant = "var"
-        case daysSinceActivated = "delta"
-        case iosVersion = "mv"
-        case appVersion = "ddgv"
-        case hardwareModel = "mo"
-        case lastActiveDate = "da"
-    }
-
     private let statisticsStore: StatisticsStore
     private let activationDateStore: VPNWaitlistActivationDateStore
 

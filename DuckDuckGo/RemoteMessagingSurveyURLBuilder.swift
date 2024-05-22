@@ -75,7 +75,10 @@ struct DefaultRemoteMessagingSurveyURLBuilder: RemoteMessagingSurveyActionMappin
                     queryItems.append(URLQueryItem(name: parameter.rawValue, value: String(describing: daysSinceLastActive)))
                 }
             case .daysInstalled:
-                break // TODO
+                if let installDate = statisticsStore.installDate,
+                      let daysSinceInstall = Calendar.current.numberOfDaysBetween(installDate, and: Date()) {
+                    queryItems.append(URLQueryItem(name: parameter.rawValue, value: String(describing: daysSinceInstall)))
+                }
             }
         }
 

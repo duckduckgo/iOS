@@ -35,6 +35,7 @@ public enum FeatureFlag: String {
     case networkProtectionWaitlistActive
     case autoconsentOnByDefault
     case history
+    case historyRollout
 }
 
 extension FeatureFlag: FeatureFlagSourceProviding {
@@ -68,7 +69,9 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .remoteReleasable(.subfeature(AutoconsentSubfeature.onByDefault))
         case .history:
             return .remoteReleasable(.feature(.history))
-        
+        case .historyRollout:
+            return .remoteReleasable(.subfeature(HistorySubFeature.onByDefault))
+
         }
     }
 }

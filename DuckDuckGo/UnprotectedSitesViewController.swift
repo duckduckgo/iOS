@@ -225,8 +225,8 @@ class UnprotectedSitesViewController: UITableViewController {
     }
     
     private func createAllProtectedCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let allProtectedCell = tableView.dequeueReusableCell(withIdentifier: "AllProtectedCell") as? NoSuggestionsTableViewCell else {
-            fatalError("Failed to dequeue NoSuggestionsTableViewCell using 'AllProtectedCell'")
+        guard let allProtectedCell = tableView.dequeueReusableCell(withIdentifier: "AllProtectedCell") as? AllProtectedCell else {
+            fatalError("Failed to dequeue AllProtectedCell using 'AllProtectedCell'")
         }
         
         let theme = ThemeManager.shared.currentTheme

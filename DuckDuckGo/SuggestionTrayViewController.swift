@@ -38,7 +38,10 @@ class SuggestionTrayViewController: UIViewController {
     weak var favoritesOverlayDelegate: FavoritesOverlayDelegate?
     
     var dismissHandler: (() -> Void)?
-    
+    var isShowingAutocompleteSuggestions: Bool {
+        autocompleteController != nil
+    }
+
     private let appSettings = AppUserDefaults()
 
     private var autocompleteController: AutocompleteViewController?
@@ -46,8 +49,7 @@ class SuggestionTrayViewController: UIViewController {
     private var willRemoveAutocomplete = false
     private let bookmarksDatabase: CoreDataDatabase
     private let favoritesModel: FavoritesListInteracting
-    private let historyCoordinator: HistoryCoordinating
-    private let bookmarksStringSearch: BookmarksStringSearch
+    private let historyManager: HistoryManager
 
     var selectedSuggestion: Suggestion? {
         autocompleteController?.selectedSuggestion
@@ -77,11 +79,10 @@ class SuggestionTrayViewController: UIViewController {
         }
     }
     
-    required init?(coder: NSCoder, favoritesViewModel: FavoritesListInteracting, bookmarksDatabase: CoreDataDatabase, historyCoordinator: HistoryCoordinating, bookmarksStringSearch: BookmarksStringSearch) {
+    required init?(coder: NSCoder, favoritesViewModel: FavoritesListInteracting, bookmarksDatabase: CoreDataDatabase, historyManager: HistoryManager) {
         self.favoritesModel = favoritesViewModel
         self.bookmarksDatabase = bookmarksDatabase
-        self.historyCoordinator = historyCoordinator
-        self.bookmarksStringSearch = bookmarksStringSearch
+        self.historyManager = historyManager
         super.init(coder: coder)
     }
     
@@ -128,15 +129,7 @@ class SuggestionTrayViewController: UIViewController {
             }
         }
     }
-    
-    func willDismiss(with query: String) {
-        guard !query.isEmpty else { return }
         
-        if let autocomplete = autocompleteController {
-            autocomplete.willDismiss(with: query)
-        }
-    }
-    
     var contentFrame: CGRect {
         return containerView.frame
     }
@@ -155,8 +148,7 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     func float(withWidth width: CGFloat) {
-        autocompleteController?.showBackground = false
-        
+
         containerView.layer.cornerRadius = 16
         containerView.layer.masksToBounds = true
  
@@ -168,11 +160,11 @@ class SuggestionTrayViewController: UIViewController {
         backgroundView.layer.shadowOpacity = 0.3
         backgroundView.layer.shadowRadius = 120
 
-        topConstraint.constant = 15
-        
+        topConstraint.constant = 4
+
         let isFirstPresentation = fullHeightConstraint.isActive
         if isFirstPresentation {
-            variableHeightConstraint.constant = SuggestionTableViewCell.Constants.cellHeight * 6
+            variableHeightConstraint.constant = Constant.suggestionTrayInitialHeight
         }
         
         variableWidthConstraint.constant = width
@@ -181,8 +173,6 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     func fill() {
-        autocompleteController?.showBackground = true
-
         containerView.layer.shadowColor = UIColor.clear.cgColor
         containerView.layer.cornerRadius = 0
 
@@ -240,13 +230,14 @@ class SuggestionTrayViewController: UIViewController {
         if autocompleteController == nil {
             installAutocompleteSuggestions()
         }
-        autocompleteController?.updateQuery(query: query)
+        autocompleteController?.updateQuery(query)
     }
     
     private func installAutocompleteSuggestions() {
-        let controller = AutocompleteViewController.loadFromStoryboard(bookmarksDatabase: bookmarksDatabase,
-                                                                       bookmarksStringSearch: bookmarksStringSearch,
-                                                                       historyCoordinator: historyCoordinator)
+        let controller = AutocompleteViewController(historyManager: historyManager,
+                                                    bookmarksDatabase: bookmarksDatabase,
+                                                    appSettings: appSettings)
+
         install(controller: controller)
         controller.delegate = autocompleteDelegate
         controller.presentationDelegate = self
@@ -272,6 +263,15 @@ class SuggestionTrayViewController: UIViewController {
         addChild(controller)
         controller.view.frame = containerView.bounds
         containerView.addSubview(controller.view)
+
+        controller.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            containerView.topAnchor.constraint(equalTo: controller.view.topAnchor),
+            containerView.leftAnchor.constraint(equalTo: controller.view.leftAnchor),
+            containerView.bottomAnchor.constraint(equalTo: controller.view.bottomAnchor),
+            containerView.rightAnchor.constraint(equalTo: controller.view.rightAnchor)
+        ])
+
         controller.didMove(toParent: self)
         controller.view.alpha = 0
         UIView.animate(withDuration: 0.2, animations: {
@@ -284,8 +284,8 @@ class SuggestionTrayViewController: UIViewController {
     var contentInsets = UIEdgeInsets.zero
     func applyContentInset(_ inset: UIEdgeInsets) {
         self.contentInsets = inset
-        autocompleteController?.tableView.contentInset = inset
         favoritesOverlay?.collectionView.contentInset = inset
+        favoritesOverlay?.collectionView.scrollIndicatorInsets = inset
     }
 }
 
@@ -298,7 +298,7 @@ extension SuggestionTrayViewController: AutocompleteViewControllerPresentationDe
         
         guard !fullHeightConstraint.isActive else { return }
         
-        if height > variableHeightConstraint.constant {
+        if height > Constant.suggestionTrayInitialHeight {
             variableHeightConstraint.constant = height
         }
     }
@@ -316,4 +316,10 @@ extension SuggestionTrayViewController {
         }
     }
     
+}
+
+private extension SuggestionTrayViewController {
+    enum Constant {
+        static let suggestionTrayInitialHeight = 312.0 // ie 52 * 6
+    }
 }

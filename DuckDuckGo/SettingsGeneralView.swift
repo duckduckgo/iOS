@@ -40,6 +40,12 @@ struct SettingsGeneralView: View {
                 // Autocomplete Suggestions
                 SettingsCellView(label: UserText.settingsAutocomplete,
                                  accesory: .toggle(isOn: viewModel.autocompleteGeneralBinding))
+
+                if viewModel.shouldShowRecentlyVisitedSites {
+                    SettingsCellView(label: UserText.settingsAutocompleteRecentlyVisited,
+                                     accesory: .toggle(isOn: viewModel.autocompleteRecentlyVisitedSitesBinding))
+                }
+
             }
 
             Section(footer: Text(UserText.voiceSearchFooter)) {

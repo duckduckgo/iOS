@@ -44,6 +44,7 @@ final class SettingsViewModel: ObservableObject {
     private let voiceSearchHelper: VoiceSearchHelperProtocol
     private let syncPausedStateManager: any SyncPausedStateManaging
     var emailManager: EmailManager { EmailManager() }
+    private let historyManager: HistoryManager
 
     // Subscription Dependencies
     private let subscriptionManager: SubscriptionManaging
@@ -84,7 +85,9 @@ final class SettingsViewModel: ObservableObject {
     var shouldShowNoMicrophonePermissionAlert: Bool = false
     @Published var shouldShowEmailAlert: Bool = false
     var autocompleteSubtitle: String?
-    
+
+    @Published var shouldShowRecentlyVisitedSites: Bool = true
+
     // MARK: - Deep linking
     // Used to automatically navigate to a specific section
     // immediately after loading the Settings View
@@ -174,6 +177,7 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
+                self.updateRecentlyVisitedSitesVisibility()
                 if $0 {
                     Pixel.fire(pixel: .settingsAutocompleteOn,
                                withAdditionalParameters: PixelExperiment.parameters)
@@ -192,6 +196,7 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
+                self.updateRecentlyVisitedSitesVisibility()
                 if $0 {
                     Pixel.fire(pixel: .settingsPrivateSearchAutocompleteOn,
                                withAdditionalParameters: PixelExperiment.parameters)
@@ -203,6 +208,16 @@ final class SettingsViewModel: ObservableObject {
         )
     }
 
+    var autocompleteRecentlyVisitedSitesBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.recentlyVisitedSites },
+            set: {
+                self.appSettings.recentlyVisitedSites = $0
+                self.state.recentlyVisitedSites = $0
+            }
+        )
+    }
+
     // Remove after Settings experiment
     var autocompleteGeneralBinding: Binding<Bool> {
         Binding<Bool>(
@@ -210,6 +225,7 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
+                self.updateRecentlyVisitedSitesVisibility()
                 if $0 {
                     Pixel.fire(pixel: .settingsGeneralAutocompleteOn,
                                withAdditionalParameters: PixelExperiment.parameters)
@@ -390,18 +406,22 @@ final class SettingsViewModel: ObservableObject {
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil,
+         historyManager: HistoryManager,
          syncPausedStateManager: any SyncPausedStateManaging) {
+
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
         self.subscriptionManager = subscriptionManager
         self.voiceSearchHelper = voiceSearchHelper
         self.deepLinkTarget = deepLink
+        self.historyManager = historyManager
         self.syncPausedStateManager = syncPausedStateManager
 
         setupNotificationObservers()
-        autocompleteSubtitle = variantManager.isSupported(feature: .history) ? UserText.settingsAutocompleteSubtitle : nil
+        autocompleteSubtitle = UserText.settingsAutocompleteSubtitle
+        updateRecentlyVisitedSitesVisibility()
     }
-    
+
     deinit {
         subscriptionSignOutObserver = nil
     }
@@ -428,6 +448,7 @@ extension SettingsViewModel {
             autoclearDataEnabled: AutoClearSettingsModel(settings: appSettings) != nil,
             applicationLock: privacyStore.authenticationEnabled,
             autocomplete: appSettings.autocomplete,
+            recentlyVisitedSites: appSettings.recentlyVisitedSites,
             longPressPreviews: appSettings.longPressPreviews,
             allowUniversalLinks: appSettings.allowUniversalLinks,
             activeWebsiteAccount: nil,
@@ -442,10 +463,17 @@ extension SettingsViewModel {
             sync: getSyncState()
         )
         
+        updateRecentlyVisitedSitesVisibility()
         setupSubscribers()
         Task { await setupSubscriptionEnvironment() }
     }
-    
+
+    private func updateRecentlyVisitedSitesVisibility() {
+        withAnimation {
+            shouldShowRecentlyVisitedSites = historyManager.isHistoryFeatureEnabled() && state.autocomplete
+        }
+    }
+
     private func getNetworkProtectionState() -> SettingsState.NetworkProtection {
         var enabled = false
 #if NETWORK_PROTECTION

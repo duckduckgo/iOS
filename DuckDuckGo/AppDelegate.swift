@@ -208,12 +208,20 @@ import WebKit
         
         PrivacyFeatures.httpsUpgrade.loadDataAsync()
         
+        let variantManager = DefaultVariantManager()
+        let historyMessageManager = HistoryMessageManager()
+
         // assign it here, because "did become active" is already too late and "viewWillAppear"
         // has already been called on the HomeViewController so won't show the home row CTA
         AtbAndVariantCleanup.cleanup()
-        DefaultVariantManager().assignVariantIfNeeded { _ in
+        variantManager.assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
             DaxDialogs.shared.primeForUse()
+            historyMessageManager.dismiss()
+        }
+
+        if variantManager.isSupported(feature: .history) {
+            historyMessageManager.dismiss()
         }
 
         PixelExperimentForBrokenSites.install()
@@ -265,7 +273,9 @@ import WebKit
             }
 
         let previewsSource = TabPreviewsSource()
-        let historyManager = makeHistoryManager()
+        let historyManager = makeHistoryManager(AppDependencyProvider.shared.appSettings,
+                                                AppDependencyProvider.shared.internalUserDecider,
+                                                ContentBlocking.shared.privacyConfigurationManager)
         let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
@@ -354,24 +364,36 @@ import WebKit
         return tabsModel
     }
 
-    private func makeHistoryManager() -> HistoryManager {
-        let historyManager = HistoryManager(privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
-                              variantManager: DefaultVariantManager(),
-                              database: HistoryDatabase.make()) { error in
-            Pixel.fire(pixel: .historyStoreLoadFailed, error: error)
-            if error.isDiskFull {
+    private func makeHistoryManager(_ appSettings: AppSettings,
+                                    _ internalUserDecider: InternalUserDecider,
+                                    _ privacyConfigManager: PrivacyConfigurationManaging) -> HistoryManager {
+
+        let db = HistoryDatabase.make()
+        var loadError: Error?
+        db.loadStore { _, error in
+            loadError = error
+        }
+
+        if let loadError {
+            Pixel.fire(pixel: .historyStoreLoadFailed, error: loadError)
+            if loadError.isDiskFull {
                 self.presentInsufficientDiskSpaceAlert()
             } else {
                 self.presentPreemptiveCrashAlert()
             }
         }
 
-        // This is a compromise to support hot reloading via privacy config.
-        //  * If the history is disabled this will do nothing. If it is subsequently enabled then it won't start collecting history
-        //     until the app cold launches at least once.
-        //  * If the history is enabled this loads the store sets up the history manager
-        //     correctly. If the history manager is subsequently disabled it will stop working immediately.
-        historyManager.loadStore()
+        let historyManager = HistoryManager(privacyConfigManager: privacyConfigManager,
+                                            variantManager: DefaultVariantManager(),
+                                            database: db,
+                                            internalUserDecider: internalUserDecider,
+                                            isEnabledByUser: appSettings.recentlyVisitedSites)
+
+        // Ensure we don't do this if the history is disabled in privacy confg
+        guard historyManager.isHistoryFeatureEnabled() else { return historyManager }
+        historyManager.loadStore(onCleanFinished: {
+            // Do future migrations after clean has finished.  See macOS for an example.
+        })
         return historyManager
     }
 

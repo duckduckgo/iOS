@@ -58,26 +58,32 @@ struct PrivateSearchViewSettings: View {
             // Autocomplete Suggestions
             SettingsCellView(label: UserText.settingsAutocomplete,
                              accesory: .toggle(isOn: viewModel.autocompletePrivateSearchBinding))
+
+            if viewModel.shouldShowRecentlyVisitedSites {
+                SettingsCellView(label: UserText.settingsAutocompleteRecentlyVisited,
+                                 accesory: .toggle(isOn: viewModel.autocompleteRecentlyVisitedSitesBinding))
+            }
+
         }
 
-        Section(footer: Text(UserText.voiceSearchFooter)) {
-            // Private Voice Search
-            if viewModel.state.speechRecognitionAvailable {
+        if viewModel.state.speechRecognitionAvailable {
+            Section(footer: Text(UserText.voiceSearchFooter)) {
+                // Private Voice Search
                 SettingsCellView(label: UserText.settingsVoiceSearch,
                                  accesory: .toggle(isOn: viewModel.voiceSearchEnabledPrivateSearchBinding))
             }
-        }
-        .alert(isPresented: $shouldShowNoMicrophonePermissionAlert) {
-            Alert(title: Text(UserText.noVoicePermissionAlertTitle),
-                  message: Text(UserText.noVoicePermissionAlertMessage),
-                  dismissButton: .default(Text(UserText.noVoicePermissionAlertOKbutton),
-                  action: {
-                    viewModel.shouldShowNoMicrophonePermissionAlert = false
-                })
-            )
-        }
-        .onChange(of: viewModel.shouldShowNoMicrophonePermissionAlert) { value in
-            shouldShowNoMicrophonePermissionAlert = value
+            .alert(isPresented: $shouldShowNoMicrophonePermissionAlert) {
+                Alert(title: Text(UserText.noVoicePermissionAlertTitle),
+                      message: Text(UserText.noVoicePermissionAlertMessage),
+                      dismissButton: .default(Text(UserText.noVoicePermissionAlertOKbutton),
+                      action: {
+                        viewModel.shouldShowNoMicrophonePermissionAlert = false
+                    })
+                )
+            }
+            .onChange(of: viewModel.shouldShowNoMicrophonePermissionAlert) { value in
+                shouldShowNoMicrophonePermissionAlert = value
+            }
         }
 
         Section {

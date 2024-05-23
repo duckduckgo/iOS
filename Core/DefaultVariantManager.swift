@@ -27,7 +27,6 @@ extension FeatureName {
     // public static let experimentalFeature = FeatureName(rawValue: "experimentalFeature")
 
     public static let history = FeatureName(rawValue: "history")
-    public static let newSuggestionLogic = FeatureName(rawValue: "newSuggestionLogic")
 }
 
 public struct VariantIOS: Variant {
@@ -62,7 +61,9 @@ public struct VariantIOS: Variant {
         VariantIOS(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "se", weight: doNotAllocate, isIncluded: When.always, features: []),
-        VariantIOS(name: "mc", weight: doNotAllocate, isIncluded: When.inEnglish, features: [.newSuggestionLogic]),
+
+        // This needs to stay until we finish rolling out history to all users...
+        // This ensures that users who previously had do not lose it.
         VariantIOS(name: "md", weight: doNotAllocate, isIncluded: When.inEnglish, features: [.history]),
 
         returningUser

@@ -119,7 +119,7 @@
 "addWidget.description" = "Gyors hozzáférés a privát kereséshez és kedvenc weboldalaidhoz.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Az ugráló ikonos üzemmódba lépéshez tartsd nyomva hosszan a kezdőképernyőt.";
+"addWidget.settings.firstParagraph" = "Long-press on the Home Screen to enter jiggle mode.";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Koppints a plusz %@ gombra.";
@@ -133,14 +133,47 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "A meglévő könyvjelzők nem kettőződnek.";
 
+/* Description for alert shown when sync error occurs because of bad data */
+"alert.sync-bad-data-error-description" = "Egyes könyvjelzők vagy jelszavak helytelen formátumúak vagy túl hosszúak, és nem lettek szinkronizálva.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Elérted a könyvjelzők maximális számát. A szinkronizálás folytatásához törölj néhány könyvjelzőt.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "A könyvjelző-szinkronizálás szünetel";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Elérted a jelszavak maximális számát. A szinkronizálás folytatásához törölj néhány jelszót.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "A jelszó-szinkronizálás szünetel";
+
 /* Title for sync error alert */
 "alert.sync-error" = "Szinkronizálási és biztonsági mentési hiba";
+
+/* Sync error alert action button title, takes the user to the sync settings page. */
+"alert.sync-error-action" = "Beállítások szinkronizálása";
+
+/* Description for alert shown when user logged off from sync */
+"alert.sync-invalid-login-error-description" = "A szinkronizálás szünetel. Ha folytatni szeretnéd az eszköz szinkronizálását, csatlakozz újra egy másik eszközzel vagy a helyreállítási kóddal.";
 
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "További részletek";
 
 /* Confirmation button in alert */
 "alert.sync-paused-alert-ok-button" = "OK";
+
+/* Title for alert shown when sync paused for an error */
+"alert.sync-paused-title" = "A szinkronizálás szünetel";
+
+/* Description for alert shown when sync error occurs because of too many requests */
+"alert.sync-too-many-requests-error-description" = "A szinkronizálás és biztonsági mentés átmenetileg nem érhető el.";
+
+/* Title of the warning message that tells the user that there was an error with the sync feature. */
+"alert.sync.warning.sync-error" = "Szinkronizálási hiba";
+
+/* Title of the warning message */
+"alert.sync.warning.sync-paused" = "A szinkronizálás és biztonsági mentés szünetel";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Az összes lapot könyvjelzőzöd?";
@@ -207,6 +240,15 @@
 
 /* No comment provided by engineer. */
 "autoclear.on" = "Be";
+
+/* Subtitle for search history items */
+"autocomplete.history.search.duckduckgo" = "DuckDuckGo keresés";
+
+/* The message text shown in suggestions */
+"autocomplete.history.warning.message" = "A javaslatok között már a legutóbb meglátogatott webhelyek is szerepelnek. Ezeket az eszközödön tároljuk, és soha nem a DuckDuckGo szerverein. A beállításokban kikapcsolhatod, vagy bármikor törölheted a 🔥 Tűz gombbal.";
+
+/* Title for message show in suggestions */
+"autocomplete.history.warning.title" = "Ugyanolyan adatvédelem.\nJobb keresési javaslatok!";
 
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Letiltva";
@@ -1148,6 +1190,9 @@
 "get.browser.title" = "Mac vagy Windows verziójú DuckDuckGo letöltése";
 
 /* No comment provided by engineer. */
+"Help us improve!" = "Help us improve!";
+
+/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Add hozzá a DuckDuckGo-t a kezdőképernyődhöz!";
 
 /* No comment provided by engineer. */
@@ -1603,6 +1648,26 @@
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
 
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Könyvjelzők kezelése";
+
+/* Description for sync bookmarks limits exceeded warning */
+"prefrences.sync.bookmarks-limit-exceeded-description" = "Elérted a könyvjelzők maximális számát. A szinkronizálás folytatásához törölj néhányat.";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Jelszavak kezelése…";
+
+/* Description for sync credentials limits exceeded warning */
+"prefrences.sync.credentials-limit-exceeded-description" = "Elérted a jelszavak maximális számát. A szinkronizálás folytatásához törölj néhányat.";
+
+/* Description invalid credentials error when syncing.
+   Description of incorrectly formatted data error when syncing.
+   Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Szinkronizálási hiba történt. Próbáld meg kikapcsolni a szinkronizálást ezen az eszközön, majd csatlakozz újra egy másik eszközzel vagy a helyreállítási kóddal.";
+
+/* Title for sync limits exceeded warning */
+"prefrences.sync.limit-exceeded-title" = "Szinkronizálás szüneteltetve";
+
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "A webhelyek sütik segítségével teszik lehetővé, hogy bejelentkezve maradhass. Ha tűzállóvá teszel egy weboldalt, a sütik nem törlődnek, és még a Tűz gomb használata után is bejelentkezve maradsz. A tűzálló webhelyeken a külső felek nyomkövetőit azonban blokkoljuk.";
 
@@ -1711,6 +1776,9 @@
 
 /* Settings screen cell for autocomplete */
 "settings.autocomplete" = "Automatikus kiegészítési javaslatok megjelenítése";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited" = "Legutóbb meglátogatott webhelyek";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Alkalmazás zárolás";
@@ -2241,6 +2309,9 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Lapváltó";
 
+/* No comment provided by engineer. */
+"Take Survey" = "Take Survey";
+
 /* Description text for the text size adjustment setting */
 "textSize.description" = "Válaszd ki a kívánt szövegméretet. A DuckDuckGo ennek használatával jeleníti meg a webhelyeket.";
 
@@ -2319,6 +2390,9 @@
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
 
+/* Title for the VPN widget onboarding screen */
+"vpn.addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
+
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";
 
@@ -2388,6 +2462,9 @@
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
 
+/* VPN settings screen cell text for adding the VPN widget to the home screen */
+"vpn.settings.add.widget" = "Add VPN Widget to Home Screen";
+
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Értesítések engedélyezése";
 
@@ -2438,6 +2515,9 @@
 
 /* Title for the share sheet entry */
 "waitlist.share-sheet.title" = "Meghívót kaptál!";
+
+/* No comment provided by engineer. */
+"We want to make using passwords in DuckDuckGo better." = "We want to make using passwords in DuckDuckGo better.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Kedvenc eltávolítva";

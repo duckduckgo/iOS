@@ -1,8 +1,8 @@
 //
-//  NoSuggestionsTableViewCell.swift
+//  AllProtectedCell.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -19,9 +19,9 @@
 
 import UIKit
 
-class NoSuggestionsTableViewCell: UITableViewCell {
+class AllProtectedCell: UITableViewCell {
 
-    static let reuseIdentifier = "NoSuggestionsTableViewCell"
+    static let reuseIdentifier = "AllProtectedCell"
 
     @IBOutlet weak var label: UILabel!
 }

@@ -74,6 +74,7 @@ struct SettingsState {
 
     // Customization properties
     var autocomplete: Bool
+    var recentlyVisitedSites: Bool
     var longPressPreviews: Bool
     var allowUniversalLinks: Bool
 
@@ -112,6 +113,7 @@ struct SettingsState {
             autoclearDataEnabled: false,
             applicationLock: false,
             autocomplete: true,
+            recentlyVisitedSites: true,
             longPressPreviews: true,
             allowUniversalLinks: true,
             activeWebsiteAccount: nil,

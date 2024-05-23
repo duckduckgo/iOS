@@ -119,7 +119,7 @@
 "addWidget.description" = "Obtén acceso rápido a búsquedas privadas y a los sitios que más te gustan.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Mantén pulsada la pantalla de inicio para entrar en el modo jiggle.";
+"addWidget.settings.firstParagraph" = "Long-press on the Home Screen to enter jiggle mode.";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Pulsa el botón más %@.";
@@ -133,14 +133,47 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Los marcadores existentes no se duplicarán.";
 
+/* Description for alert shown when sync error occurs because of bad data */
+"alert.sync-bad-data-error-description" = "Algunos marcadores o contraseñas tienen un formato incorrecto o demasiado largo y no se han sincronizado.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Has alcanzado el número máximo de marcadores. Elimina algunos marcadores para reanudar la sincronización.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "La sincronización de marcadores está en pausa";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Has alcanzado el número máximo de contraseñas. Elimina algunas contraseñas para reanudar la sincronización.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "La sincronización de contraseñas está en pausa";
+
 /* Title for sync error alert */
 "alert.sync-error" = "Error de sincronización y copia de seguridad";
+
+/* Sync error alert action button title, takes the user to the sync settings page. */
+"alert.sync-error-action" = "Ajustes de sincronización";
+
+/* Description for alert shown when user logged off from sync */
+"alert.sync-invalid-login-error-description" = "La sincronización se ha pausado. Si quieres seguir sincronizando este dispositivo, vuelve a conectarte con otro dispositivo o con tu código de recuperación.";
 
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Más información";
 
 /* Confirmation button in alert */
 "alert.sync-paused-alert-ok-button" = "De acuerdo";
+
+/* Title for alert shown when sync paused for an error */
+"alert.sync-paused-title" = "La sincronización está en pausa";
+
+/* Description for alert shown when sync error occurs because of too many requests */
+"alert.sync-too-many-requests-error-description" = "La sincronización y la copia de seguridad no están disponibles temporalmente.";
+
+/* Title of the warning message that tells the user that there was an error with the sync feature. */
+"alert.sync.warning.sync-error" = "Error de sincronización";
+
+/* Title of the warning message */
+"alert.sync.warning.sync-paused" = "Sincronización y copia de seguridad en pausa";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "¿Añadir todas las pestañas a marcadores?";
@@ -207,6 +240,15 @@
 
 /* No comment provided by engineer. */
 "autoclear.on" = "Activado";
+
+/* Subtitle for search history items */
+"autocomplete.history.search.duckduckgo" = "Buscar en DuckDuckGo";
+
+/* The message text shown in suggestions */
+"autocomplete.history.warning.message" = "Las sugerencias ahora incluyen sitios visitados recientemente. Estos se almacenan en tu dispositivo y nunca en los servidores de DuckDuckGo. Desactívalas en ajustes o elimínalas en cualquier momento con el 🔥 Fire Button.";
+
+/* Title for message show in suggestions */
+"autocomplete.history.warning.title" = "Misma privacidad.\n¡Mejores sugerencias de búsqueda!";
 
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Desactivado";
@@ -1148,6 +1190,9 @@
 "get.browser.title" = "Consigue DuckDuckGo para Mac o Windows";
 
 /* No comment provided by engineer. */
+"Help us improve!" = "Help us improve!";
+
+/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Añade DuckDuckGo a tu pantalla de inicio.";
 
 /* No comment provided by engineer. */
@@ -1603,6 +1648,26 @@
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
 
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Gestionar marcadores";
+
+/* Description for sync bookmarks limits exceeded warning */
+"prefrences.sync.bookmarks-limit-exceeded-description" = "Has alcanzado el número máximo de marcadores. Elimina algunos para reanudar la sincronización.";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Administrar contraseñas...";
+
+/* Description for sync credentials limits exceeded warning */
+"prefrences.sync.credentials-limit-exceeded-description" = "Has alcanzado el número máximo de contraseñas. Elimina algunas para reanudar la sincronización.";
+
+/* Description invalid credentials error when syncing.
+   Description of incorrectly formatted data error when syncing.
+   Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Se ha producido un error en la sincronización. Intenta desactivar la sincronización en este dispositivo y, a continuación, vuelve a conectarte con otro dispositivo o con tu código de recuperación.";
+
+/* Title for sync limits exceeded warning */
+"prefrences.sync.limit-exceeded-title" = "Sincronización pausada";
+
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Los sitios web dependen de cookies para mantener tu sesión iniciada. Cuando marcas una web como «a prueba de fuego» no se borrarán las cookies y tu sesión permanecerá iniciada, incluso después de utilizar el botón Fuego. Seguiremos bloqueando rastreadores de terceros que se encuentren en sitios web a prueba de fuego.";
 
@@ -1711,6 +1776,9 @@
 
 /* Settings screen cell for autocomplete */
 "settings.autocomplete" = "Sugerencias de autocompletado";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited" = "Sitios visitados recientemente";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Bloqueo de aplicación";
@@ -2241,6 +2309,9 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Cambiar pestañas";
 
+/* No comment provided by engineer. */
+"Take Survey" = "Take Survey";
+
 /* Description text for the text size adjustment setting */
 "textSize.description" = "Elige tu tamaño de texto preferido. Los sitios web que veas en DuckDuckGo se ajustarán a él.";
 
@@ -2319,6 +2390,9 @@
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
 
+/* Title for the VPN widget onboarding screen */
+"vpn.addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
+
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";
 
@@ -2388,6 +2462,9 @@
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
 
+/* VPN settings screen cell text for adding the VPN widget to the home screen */
+"vpn.settings.add.widget" = "Add VPN Widget to Home Screen";
+
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Permitir notificaciones";
 
@@ -2438,6 +2515,9 @@
 
 /* Title for the share sheet entry */
 "waitlist.share-sheet.title" = "¡Has recibido una invitación!";
+
+/* No comment provided by engineer. */
+"We want to make using passwords in DuckDuckGo better." = "We want to make using passwords in DuckDuckGo better.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favorito eliminado";

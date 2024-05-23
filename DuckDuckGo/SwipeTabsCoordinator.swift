@@ -291,7 +291,10 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
         if !isEnabled || tabsModel.currentIndex == indexPath.row {
             cell.omniBar = coordinator.omniBar
         } else {
-            cell.omniBar = OmniBar.loadFromXib()
+            // Strong reference while we use the omnibar
+            let omniBar = OmniBar.loadFromXib()
+
+            cell.omniBar = omniBar
             cell.omniBar?.translatesAutoresizingMaskIntoConstraints = false
             cell.updateConstraints()
             

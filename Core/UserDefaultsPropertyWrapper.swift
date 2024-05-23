@@ -84,6 +84,9 @@ public struct UserDefaultsWrapper<T> {
                 "com.duckduckgo.ios.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary"
         case autofillImportViaSyncStart = "com.duckduckgo.ios.autofillImportViaSyncStart"
         case autofillSurveyEnabled = "com.duckduckgo.ios.autofillSurveyEnabled"
+        case autofillSearchDauDate = "com.duckduckgo.app.autofill.SearchDauDate"
+        case autofillFillDate = "com.duckduckgo.app.autofill.FillDate"
+        case autofillOnboardedUser = "com.duckduckgo.app.autofill.OnboardedUser"
 
         // .v2 suffix added to fix https://app.asana.com/0/547792610048271/1206524375402369/f
         case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser.v2"
@@ -134,12 +137,18 @@ public struct UserDefaultsWrapper<T> {
         case appleAdAttributionReportCompleted = "com.duckduckgo.ios.appleAdAttributionReport.completed"
 
         case didRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didRefreshTimestamp"
-        case didBurnTimestamp = "com.duckduckgo.ios.userBehavior.didBurnTimestamp"
+        case didDoubleRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didDoubleRefreshTimestamp"
+        case didRefreshCounter = "com.duckduckgo.ios.userBehavior.didRefreshCounter"
+        case userDidInteractWithBrokenSitePrompt = "com.duckduckgo.ios.userBehavior.userDidInteractWithBrokenSitePrompt"
 
         case pixelExperimentInstalled = "com.duckduckgo.ios.pixel.experiment.installed"
         case pixelExperimentCohort = "com.duckduckgo.ios.pixel.experiment.cohort"
         case pixelExperimentEnrollmentDate = "com.duckduckgo.ios.pixel.experiment.enrollment.date"
 
+        case historyMessageDisplayCount = "com.duckduckgo.ios.historyMessage.displayCount"
+        case historyMessageDismissed = "com.duckduckgo.ios.historyMessage.dismissed"
+        case pixelExperimentForBrokenSitesInstalled = "com.duckduckgo.ios.pixel.experiment.for.broken.sites.installed"
+        case pixelExperimentForBrokenSitesCohort = "com.duckduckgo.ios.pixel.experiment.for.broken.sites.cohort"
     }
 
     private let key: Key

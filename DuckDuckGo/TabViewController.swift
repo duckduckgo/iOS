@@ -127,11 +127,13 @@ class TabViewController: UIViewController {
 
     private var trackersInfoWorkItem: DispatchWorkItem?
     
-    private var tabURLInterceptor: TabURLInterceptor = TabURLInterceptorDefault()
+    private var tabURLInterceptor: TabURLInterceptor = TabURLInterceptorDefault {
+        return AppDependencyProvider.shared.subscriptionManager.canPurchase
+    }
     private var currentlyLoadedURL: URL?
     
 #if NETWORK_PROTECTION
-    private let netPConnectionObserver = ConnectionStatusObserverThroughSession()
+    private let netPConnectionObserver: ConnectionStatusObserver = AppDependencyProvider.shared.connectionObserver
     private var netPConnectionObserverCancellable: AnyCancellable?
     private var netPConnectionStatus: ConnectionStatus = .default
     private var netPConnected: Bool {
@@ -451,6 +453,7 @@ class TabViewController: UIViewController {
         webView.scrollView.refreshControl?.addAction(UIAction { [weak self] _ in
             guard let self else { return }
             self.reload()
+            delegate?.tabDidRequestRefresh(tab: self)
             Pixel.fire(pixel: .pullToRefresh)
             AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.refresh)
         }, for: .valueChanged)
@@ -1445,6 +1448,10 @@ extension TabViewController: WKNavigationDelegate {
             // Ignore .other actions because refresh can cause a redirect
             // This is also handled in loadRequest(_:)
             refreshCountSinceLoad = 0
+        }
+
+        if navigationAction.navigationType != .reload, webView.url != navigationAction.request.mainDocumentURL {
+            delegate?.tabDidRequestNavigationToDifferentSite(tab: self)
         }
 
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
@@ -2496,6 +2503,9 @@ extension TabViewController: SecureVaultManagerDelegate {
             presentAutofillPromptViewController(accountMatches: accountMatches, domain: domain, trigger: trigger, useLargeDetent: false) { account in
                 onAccountSelected(account)
             } completionHandler: { account in
+                if account != nil {
+                    NotificationCenter.default.post(name: .autofillFillEvent, object: nil)
+                }
                 completionHandler(account)
             }
         } else {
@@ -2508,6 +2518,9 @@ extension TabViewController: SecureVaultManagerDelegate {
                             promptUserWithGeneratedPassword password: String,
                             completionHandler: @escaping (Bool) -> Void) {
         let passwordGenerationPromptViewController = PasswordGenerationPromptViewController(generatedPassword: password) { useGeneratedPassword in
+                if useGeneratedPassword {
+                    NotificationCenter.default.post(name: .autofillFillEvent, object: nil)
+                }
                 completionHandler(useGeneratedPassword)
         }
 

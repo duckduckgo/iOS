@@ -21,6 +21,7 @@
 
 import SwiftUI
 import NetworkProtection
+import Subscription
 
 @available(iOS 15, *)
 struct NetworkProtectionRootView: View {

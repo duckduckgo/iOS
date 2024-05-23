@@ -121,8 +121,9 @@ struct SubscriptionSettingsView: View {
     private var devicesSection: some View {
         Section(header: Text(UserText.subscriptionManageDevices)) {
             
-            NavigationLink(destination: SubscriptionContainerView(currentView: .restore)
-                                            .environmentObject(subscriptionNavigationCoordinator),
+            NavigationLink(destination: SubscriptionContainerViewFactory.makeRestoreFlow(
+                navigationCoordinator: subscriptionNavigationCoordinator,
+                subscriptionManager: AppDependencyProvider.shared.subscriptionManager),
                            isActive: $isShowingRestoreView) {
                 SettingsCustomCell(content: {
                     Text(UserText.subscriptionAddDeviceButton)
@@ -251,7 +252,7 @@ struct SubscriptionSettingsView: View {
         }
         
         .sheet(isPresented: $isShowingFAQView, content: {
-            SubscriptionExternalLinkView(viewModel: viewModel.state.FAQViewModel, title: UserText.subscriptionFAQ)
+            SubscriptionExternalLinkView(viewModel: viewModel.state.faqViewModel, title: UserText.subscriptionFAQ)
         })
         
         .onFirstAppear {

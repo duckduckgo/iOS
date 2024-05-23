@@ -174,6 +174,7 @@ struct RemoteMessaging {
                                                            appTheme: AppUserDefaults().currentThemeName.rawValue,
                                                            isWidgetInstalled: isWidgetInstalled,
                                                            daysSinceNetPEnabled: daysSinceNetworkProtectionEnabled),
+                percentileStore: RemoteMessagingPercentileUserDefaultsStore(userDefaults: .standard),
                 dismissedMessageIds: remoteMessagingStore.fetchDismissedRemoteMessageIds()
             )
 

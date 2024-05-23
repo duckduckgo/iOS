@@ -28,7 +28,7 @@ final class SubscriptionITPViewModel: ObservableObject {
     
     var userScript: IdentityTheftRestorationPagesUserScript?
     var subFeature: IdentityTheftRestorationPagesFeature?
-    var manageITPURL = URL.identityTheftRestoration
+    let manageITPURL: URL
     var viewTitle = UserText.settingsPProITRTitle
     
     enum Constants {
@@ -38,7 +38,7 @@ final class SubscriptionITPViewModel: ObservableObject {
     }
     
     // State variables
-    var itpURL = URL.identityTheftRestoration
+    let itpURL: URL
     @Published var canNavigateBack: Bool = false
     @Published var isDownloadableContent: Bool = false
     @Published var activityItems: [Any] = []
@@ -60,12 +60,13 @@ final class SubscriptionITPViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
     private var canGoBackCancellable: AnyCancellable?
-    
-    init(userScript: IdentityTheftRestorationPagesUserScript = IdentityTheftRestorationPagesUserScript(),
-         subFeature: IdentityTheftRestorationPagesFeature = IdentityTheftRestorationPagesFeature()) {
-        self.userScript = userScript
-        self.subFeature = subFeature
-        
+
+    init(subscriptionManager: SubscriptionManaging) {
+        self.itpURL = subscriptionManager.url(for: .identityTheftRestoration)
+        self.manageITPURL = self.itpURL
+        self.userScript = IdentityTheftRestorationPagesUserScript()
+        self.subFeature = IdentityTheftRestorationPagesFeature(accountManager: subscriptionManager.accountManager)
+
         let webViewSettings = AsyncHeadlessWebViewSettings(bounces: false,
                                                            allowedDomains: Self.allowedDomains,
                                                            contentBlocking: false)

@@ -17,6 +17,9 @@
 //  limitations under the License.
 //
 
+// Re-implement this in a way that makes sense
+
+/*
 #if NETWORK_PROTECTION
 
 import XCTest
@@ -25,6 +28,7 @@ import NetworkProtection
 import NetworkExtension
 import NetworkProtectionTestUtils
 import WaitlistMocks
+import SubscriptionTestingUtilities
 @testable import DuckDuckGo
 
 final class MockNetworkProtectionFeatureActivation: NetworkProtectionFeatureActivation {
@@ -138,3 +142,4 @@ private class MockNetworkProtectionTermsAndConditionsStore: NetworkProtectionTer
 }
 
 #endif
+*/

@@ -25,11 +25,27 @@ import Subscription
 struct NetworkProtectionVisibilityForTunnelProvider: NetworkProtectionFeatureVisibility {
 
     func isPrivacyProLaunched() -> Bool {
-        AccountManager().isUserAuthenticated
+        accountManager.isUserAuthenticated
     }
     
     func shouldMonitorEntitlement() -> Bool {
         isPrivacyProLaunched()
+    }
+
+    func shouldShowThankYouMessaging() -> Bool {
+        isPrivacyProLaunched() && isWaitlistUser()
+    }
+
+    func shouldKeepVPNAccessViaWaitlist() -> Bool {
+        !isPrivacyProLaunched() && isWaitlistBetaActive() && isWaitlistUser()
+    }
+
+    func shouldShowVPNShortcut() -> Bool {
+        if isPrivacyProLaunched() {
+            return accountManager.isUserAuthenticated
+        } else {
+            return shouldKeepVPNAccessViaWaitlist()
+        }
     }
 }
 

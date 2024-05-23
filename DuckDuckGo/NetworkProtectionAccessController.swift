@@ -25,6 +25,7 @@ import ContentBlocking
 import Core
 import NetworkProtection
 import Waitlist
+import Subscription
 
 enum NetworkProtectionAccessType {
     /// Used if the user does not have waitlist feature flag access
@@ -44,6 +45,9 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
     private let networkProtectionTermsAndConditionsStore: NetworkProtectionTermsAndConditionsStore
     private let featureFlagger: FeatureFlagger
     private let internalUserDecider: InternalUserDecider
+    private let networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
+    private let accountManager: AccountManaging
+    private let networkProtectionTunnelController: NetworkProtectionTunnelController
 
     private var isUserLocaleAllowed: Bool {
         var regionCode: String?
@@ -67,6 +71,7 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
         self.networkProtectionTermsAndConditionsStore = networkProtectionTermsAndConditionsStore
         self.featureFlagger = featureFlagger
         self.internalUserDecider = internalUserDecider
+        self.networkProtectionTunnelController = networkProtectionTunnelController
     }
 
     func networkProtectionAccessType() -> NetworkProtectionAccessType {
@@ -100,15 +105,13 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
     }
 
     func revokeNetworkProtectionAccess() {
-        try? NetworkProtectionKeychainTokenStore().deleteToken()
+        try? networkProtectionKeychainTokenStore.deleteToken()
 
         Task {
-            let controller = NetworkProtectionTunnelController()
-            await controller.stop()
-            await controller.removeVPN()
+            await networkProtectionTunnelController.stop()
+            await networkProtectionTunnelController.removeVPN()
         }
     }
-
 }
 
 #endif

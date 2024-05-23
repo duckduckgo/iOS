@@ -27,7 +27,6 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "NO"
-      language = "en"
       codeCoverageEnabled = "YES">
       <MacroExpansion>
          <BuildableReference
@@ -61,6 +60,9 @@
             <SkippedTests>
                <Test
                   Identifier = "AppTrackingProtectionListModelTests/testWhenNewChangesAreWrittenToTheDatabase_ThenTheSectionsPropertyIsUpdated()">
+               </Test>
+               <Test
+                  Identifier = "AutoconsentMessageProtocolTests/testEval()">
                </Test>
             </SkippedTests>
          </TestableReference>

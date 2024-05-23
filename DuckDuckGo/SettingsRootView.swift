@@ -61,7 +61,6 @@ struct SettingsRootView: View {
         .accentColor(Color(designSystemColor: .textPrimary))
         .environmentObject(viewModel)
         .conditionalInsetGroupedListStyle()
-
         .onAppear {
             viewModel.onAppear()
         }
@@ -82,7 +81,7 @@ struct SettingsRootView: View {
                 })
 
         .onReceive(viewModel.$deepLinkTarget.removeDuplicates(), perform: { link in
-            guard let link, link != self.deepLinkTarget else {
+            guard let link else {
                 return
             }
 
@@ -114,10 +113,13 @@ struct SettingsRootView: View {
             SubscriptionPIRView()
         case .itr:
             SubscriptionITPView()
-        case .subscriptionFlow:
-            SubscriptionContainerView(currentView: .subscribe).environmentObject(subscriptionNavigationCoordinator)
+        case let .subscriptionFlow(origin):
+            SubscriptionContainerViewFactory.makeSubscribeFlow(origin: origin,
+                                                               navigationCoordinator: subscriptionNavigationCoordinator,
+                                                               subscriptionManager: AppDependencyProvider.shared.subscriptionManager)
         case .subscriptionRestoreFlow:
-            SubscriptionContainerView(currentView: .restore).environmentObject(subscriptionNavigationCoordinator)
+            SubscriptionContainerViewFactory.makeRestoreFlow(navigationCoordinator: subscriptionNavigationCoordinator,
+                                                             subscriptionManager: AppDependencyProvider.shared.subscriptionManager)
         default:
             EmptyView()
         }

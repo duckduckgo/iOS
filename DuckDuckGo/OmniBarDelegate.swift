@@ -20,6 +20,11 @@
 import Foundation
 import Suggestions
 
+enum OmniBarEditingEndResult {
+    case suspended
+    case dismissed
+}
+
 protocol OmniBarDelegate: AnyObject {
 
     func onOmniQueryUpdated(_ query: String)
@@ -28,8 +33,8 @@ protocol OmniBarDelegate: AnyObject {
 
     func onOmniSuggestionSelected(_ suggestion: Suggestion)
     
-    func onDismissed()
-    
+    func onEditingEnd() -> OmniBarEditingEndResult
+
     func onPrivacyIconPressed()
     
     func onMenuPressed()
@@ -74,10 +79,6 @@ extension OmniBarDelegate {
     }
     
     func onOmniQuerySubmitted(_ query: String) {
-        
-    }
-    
-    func onDismissed() {
         
     }
     

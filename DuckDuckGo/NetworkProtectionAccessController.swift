@@ -46,7 +46,6 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
     private let featureFlagger: FeatureFlagger
     private let internalUserDecider: InternalUserDecider
     private let networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
-    private let accountManager: AccountManaging
     private let networkProtectionTunnelController: NetworkProtectionTunnelController
 
     private var isUserLocaleAllowed: Bool {
@@ -61,13 +60,14 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
         return (regionCode ?? "US") == "US"
     }
 
-    init(
-        networkProtectionActivation: NetworkProtectionFeatureActivation = NetworkProtectionKeychainTokenStore(),
-        networkProtectionTermsAndConditionsStore: NetworkProtectionTermsAndConditionsStore = NetworkProtectionTermsAndConditionsUserDefaultsStore(),
-        featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
-        internalUserDecider: InternalUserDecider = AppDependencyProvider.shared.internalUserDecider
+    init(networkProtectionTermsAndConditionsStore: NetworkProtectionTermsAndConditionsStore = NetworkProtectionTermsAndConditionsUserDefaultsStore(),
+         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
+         internalUserDecider: InternalUserDecider = AppDependencyProvider.shared.internalUserDecider,
+         tokenStore: NetworkProtectionKeychainTokenStore,
+         networkProtectionTunnelController: NetworkProtectionTunnelController
     ) {
-        self.networkProtectionActivation = networkProtectionActivation
+        self.networkProtectionActivation = tokenStore
+        self.networkProtectionKeychainTokenStore = tokenStore
         self.networkProtectionTermsAndConditionsStore = networkProtectionTermsAndConditionsStore
         self.featureFlagger = featureFlagger
         self.internalUserDecider = internalUserDecider

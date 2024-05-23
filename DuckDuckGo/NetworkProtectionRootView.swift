@@ -25,10 +25,20 @@ import Subscription
 
 @available(iOS 15, *)
 struct NetworkProtectionRootView: View {
+    let statusViewModel: NetworkProtectionStatusViewModel
+
+    init() {
+        let accountManager = AppDependencyProvider.shared.subscriptionManager.accountManager
+        let locationListRepository = NetworkProtectionLocationListCompositeRepository(accountManager: accountManager)
+        statusViewModel = NetworkProtectionStatusViewModel(tunnelController: AppDependencyProvider.shared.networkProtectionTunnelController,
+                                                           settings: AppDependencyProvider.shared.vpnSettings,
+                                                           statusObserver: AppDependencyProvider.shared.connectionObserver,
+                                                           locationListRepository: locationListRepository)
+    }
     var body: some View {
-        if DefaultNetworkProtectionVisibility().isPrivacyProLaunched() {
+        if AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched() {
             NetworkProtectionStatusView(
-                statusModel: NetworkProtectionStatusViewModel()
+                statusModel: statusViewModel
             )
         }
     }

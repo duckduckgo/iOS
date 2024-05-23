@@ -522,11 +522,11 @@ import WebKit
     }
 
     private func stopTunnelAndShowThankYouMessagingIfNeeded() {
-        if AccountManager().isUserAuthenticated {
+        if accountManager.isUserAuthenticated {
             return
         }
 
-        if vpnFeatureVisibility.isPrivacyProLaunched() && !AccountManager().isUserAuthenticated {
+        if AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched() && !accountManager.isUserAuthenticated {
             Task {
                 await self.stopAndRemoveVPN(with: "subscription-check")
             }

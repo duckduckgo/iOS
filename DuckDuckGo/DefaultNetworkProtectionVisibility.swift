@@ -27,24 +27,10 @@ import Core
 import Subscription
 
 struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
-    private let privacyConfigurationManager: PrivacyConfigurationManaging
-    private let networkProtectionTokenStore: NetworkProtectionTokenStore
-    private let networkProtectionAccessManager: NetworkProtectionAccess
-    private let featureFlagger: FeatureFlagger
     private let userDefaults: UserDefaults
     private let accountManager: AccountManaging
 
-    init(privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
-         networkProtectionTokenStore: NetworkProtectionTokenStore,
-         networkProtectionAccessManager: NetworkProtectionAccess,
-         featureFlagger: FeatureFlagger,
-         userDefaults: UserDefaults = .networkProtectionGroupDefaults,
-         accountManager: AccountManaging) {
-
-        self.privacyConfigurationManager = privacyConfigurationManager
-        self.networkProtectionTokenStore = networkProtectionTokenStore
-        self.networkProtectionAccessManager = networkProtectionAccessManager
-        self.featureFlagger = featureFlagger
+    init(userDefaults: UserDefaults, accountManager: AccountManaging) {
         self.userDefaults = userDefaults
         self.accountManager = accountManager
     }
@@ -72,19 +58,11 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
         isPrivacyProLaunched()
     }
 
-    func shouldShowThankYouMessaging() -> Bool {
-        isPrivacyProLaunched() && isWaitlistUser()
-    }
-
-    func shouldKeepVPNAccessViaWaitlist() -> Bool {
-        !isPrivacyProLaunched() && isWaitlistBetaActive() && isWaitlistUser()
-    }
-
     func shouldShowVPNShortcut() -> Bool {
         if isPrivacyProLaunched() {
             return accountManager.isUserAuthenticated
         } else {
-            return shouldKeepVPNAccessViaWaitlist()
+            return false
         }
     }
 }

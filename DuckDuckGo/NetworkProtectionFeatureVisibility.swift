@@ -31,14 +31,3 @@ public protocol NetworkProtectionFeatureVisibility {
     /// Whether to show VPN shortcut on the home screen
     func shouldShowVPNShortcut() -> Bool
 }
-
-public extension NetworkProtectionFeatureVisibility {
-    func shouldShowVPNShortcut() -> Bool {
-        guard isPrivacyProLaunched() else {
-            return false
-        }
-
-        let accountManager = AccountManager()
-        return accountManager.isUserAuthenticated
-    }
-}

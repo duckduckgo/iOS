@@ -6285,7 +6285,7 @@
 				F1FDC9312BF4E0B3006B1435 /* SubscriptionEnvironment+Default.swift in Sources */,
 				BDFF03232BA3D8E300F324C9 /* NetworkProtectionFeatureVisibility.swift in Sources */,
 				EEEB80A32A421CE600386378 /* NetworkProtectionPacketTunnelProvider.swift in Sources */,
-				EE3766DE2AC5945500AAB575 /* NetworkProtectionUNNotificationPresenter.swift in Sources */,				
+				EE3766DE2AC5945500AAB575 /* NetworkProtectionUNNotificationPresenter.swift in Sources */,
 				F1FDC9362BF51E41006B1435 /* VPNSettings+Environment.swift in Sources */,
 				BDFF03212BA3D3CF00F324C9 /* NetworkProtectionVisibilityForTunnelProvider.swift in Sources */,
 				EEFC6A602AC0F2F80065027D /* UserText.swift in Sources */,
@@ -9786,7 +9786,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = revision;
-				revision = 6821ee51e297d475283ddefa454c81a04c9dad4f;
+				revision = a930b6fd2d5c769a0b6d5308fe6f87c682b59d92;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

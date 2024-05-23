@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "a49bbac8aa58033981a5a946d220886366dd471b",
-        "version" : "145.3.3"
+        "branch" : "graeme/sanitize-location-selection",
+        "revision" : "63daeee8c09fa851052c0430a1ccf189d02a365c"
       }
     },
     {

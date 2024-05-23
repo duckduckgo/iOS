@@ -19,6 +19,7 @@
 
 import XCTest
 import Subscription
+import SubscriptionTestingUtilities
 @testable import DuckDuckGo
 
 class TabURLInterceptorDefaultTests: XCTestCase {
@@ -27,9 +28,9 @@ class TabURLInterceptorDefaultTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        // Simulate purchase allowance
-        SubscriptionPurchaseEnvironment.canPurchase = true
-        urlInterceptor = TabURLInterceptorDefault()
+        urlInterceptor = TabURLInterceptorDefault(canPurchase: {
+            true
+        })
     }
     
     override func tearDown() {

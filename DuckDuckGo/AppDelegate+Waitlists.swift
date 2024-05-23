@@ -37,7 +37,7 @@ extension AppDelegate {
     func checkWaitlists() {
 
 #if NETWORK_PROTECTION
-        if vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() {
+        if AppDependencyProvider.shared.vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() {
             checkNetworkProtectionWaitlist()
         }
 #endif
@@ -45,8 +45,6 @@ extension AppDelegate {
 
 #if NETWORK_PROTECTION
     private func checkNetworkProtectionWaitlist() {
-        let accessController = NetworkProtectionAccessController()
-
         VPNWaitlist.shared.fetchInviteCodeIfAvailable { [weak self] error in
             guard error == nil else {
                 return
@@ -65,7 +63,9 @@ extension AppDelegate {
     func fetchVPNWaitlistAuthToken(inviteCode: String) {
         Task {
             do {
-                try await NetworkProtectionCodeRedemptionCoordinator().redeem(inviteCode)
+                try await NetworkProtectionCodeRedemptionCoordinator(accountManager:
+                                                                        AppDependencyProvider.shared.subscriptionManager.accountManager
+                ).redeem(inviteCode)
                 VPNWaitlist.shared.sendInviteCodeAvailableNotification()
             } catch {}
         }

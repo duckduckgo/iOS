@@ -61,6 +61,9 @@
                <Test
                   Identifier = "AppTrackingProtectionListModelTests/testWhenNewChangesAreWrittenToTheDatabase_ThenTheSectionsPropertyIsUpdated()">
                </Test>
+               <Test
+                  Identifier = "AutoconsentMessageProtocolTests/testEval()">
+               </Test>
             </SkippedTests>
          </TestableReference>
          <TestableReference

@@ -79,18 +79,23 @@ struct SettingsSubscriptionView: View {
         Text(UserText.settingsPProManageSubscription)
             .daxBodyRegular()
     }
-    
+
+    private var subscriptionManager: SubscriptionManaging {
+        AppDependencyProvider.shared.subscriptionManager
+    }
+
     @ViewBuilder
     private var purchaseSubscriptionView: some View {
 
         Group {
             SettingsCustomCell(content: { subscriptionDescriptionView })
             
-            let subscribeView = SubscriptionContainerViewFactory.makeSubscribeFlow(
-                origin: nil,
-                navigationCoordinator: subscriptionNavigationCoordinator
+            let subscribeView = SubscriptionContainerViewFactory.makeSubscribeFlow(origin: nil,
+                                                                                   navigationCoordinator: subscriptionNavigationCoordinator,
+                                                                                   subscriptionManager: subscriptionManager
             ).navigationViewStyle(.stack)
-            let restoreView = SubscriptionContainerViewFactory.makeRestoreFlow(navigationCoordinator: subscriptionNavigationCoordinator)
+            let restoreView = SubscriptionContainerViewFactory.makeRestoreFlow(navigationCoordinator: subscriptionNavigationCoordinator,
+                                                                               subscriptionManager: subscriptionManager)
                 .navigationViewStyle(.stack)
                 .onFirstAppear {
                     Pixel.fire(pixel: .privacyProRestorePurchaseClick)
@@ -122,9 +127,9 @@ struct SettingsSubscriptionView: View {
                 }
             })
                         
-            let subscribeView = SubscriptionContainerViewFactory.makeSubscribeFlow(
-                origin: nil,
-                navigationCoordinator: subscriptionNavigationCoordinator
+            let subscribeView = SubscriptionContainerViewFactory.makeSubscribeFlow(origin: nil,
+                                                                                   navigationCoordinator: subscriptionNavigationCoordinator,
+                                                                                   subscriptionManager: subscriptionManager
             ).navigationViewStyle(.stack)
             NavigationLink(
                 destination: subscribeView,

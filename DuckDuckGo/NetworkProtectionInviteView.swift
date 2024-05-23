@@ -148,7 +148,8 @@ struct NetworkProtectionInviteView_Previews: PreviewProvider {
     static var previews: some View {
         NetworkProtectionInviteView(
             model: NetworkProtectionInviteViewModel(
-                redemptionCoordinator: NetworkProtectionCodeRedemptionCoordinator()
+                redemptionCoordinator: NetworkProtectionCodeRedemptionCoordinator(accountManager:
+                                                                                    AppDependencyProvider.shared.subscriptionManager.accountManager)
             ) { }
         )
     }

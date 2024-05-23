@@ -116,6 +116,7 @@ final class AutoconsentMessageProtocolTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
 
+    // Flaky test that fails often, to re-evaluate. See 15s timeout, something wrong here
     @MainActor
     func testEval() {
         let message = MockWKScriptMessage(name: "eval", body: [

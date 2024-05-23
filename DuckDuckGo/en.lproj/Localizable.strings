@@ -238,6 +238,15 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "On";
 
+/* Subtitle for search history items */
+"autocomplete.history.search.duckduckgo" = "Search DuckDuckGo";
+
+/* The message text shown in suggestions */
+"autocomplete.history.warning.message" = "Suggestions now include recently visited sites. These are stored on your device and never on DuckDuckGo's servers. Turn off in settings, or clear any time with the 🔥 Fire Button.";
+
+/* Title for message show in suggestions */
+"autocomplete.history.warning.title" = "Same privacy.\nBetter search suggestions!";
+
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Disabled";
 
@@ -1755,6 +1764,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Settings screen cell for autocomplete */
 "settings.autocomplete" = "Autocomplete Suggestions";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited" = "Recently Visited Sites";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Application Lock";

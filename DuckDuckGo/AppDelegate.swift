@@ -81,7 +81,7 @@ import WebKit
     private let crashCollection = CrashCollection(platform: .iOS, log: .generalLog)
     private var crashReportUploaderOnboarding: CrashCollectionOnboarding?
 
-    private let autofillPixelReporter = AutofillPixelReporter()
+    private var autofillPixelReporter: AutofillPixelReporter?
 
     // MARK: lifecycle
 
@@ -335,6 +335,8 @@ import WebKit
         AppDependencyProvider.shared.toggleProtectionsCounter.sendEventsIfNeeded()
 
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
+
+        setUpAutofillPixelReporter()
 
         return true
     }
@@ -668,8 +670,6 @@ import WebKit
         }
 
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
-
-        autofillPixelReporter.checkIfOnboardedUser()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -896,6 +896,26 @@ import WebKit
 
     private var mainViewController: MainViewController? {
         return window?.rootViewController as? MainViewController
+    }
+
+    private func setUpAutofillPixelReporter() {
+        autofillPixelReporter = AutofillPixelReporter(
+            userDefaults: .standard,
+            eventMapping: EventMapping<AutofillPixelEvent> {event, _, params, _ in
+                switch event {
+                case .autofillActiveUser:
+                    Pixel.fire(pixel: .autofillActiveUser)
+                case .autofillEnabledUser:
+                    Pixel.fire(pixel: .autofillEnabledUser)
+                case .autofillOnboardedUser:
+                    Pixel.fire(pixel: .autofillOnboardedUser)
+                case .autofillLoginsStacked:
+                    Pixel.fire(pixel: .autofillLoginsStacked, withAdditionalParameters: params ?? [:])
+                default:
+                    break
+                }
+            },
+            installDate: StatisticsUserDefaults().installDate ?? Date())
     }
 
     @MainActor

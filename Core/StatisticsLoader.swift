@@ -141,7 +141,3 @@ public class StatisticsLoader {
         }
     }
 }
-
-extension NSNotification.Name {
-    public static let searchDAU: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.searchDAU")
-}

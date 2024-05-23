@@ -24,30 +24,36 @@ import BrowserServicesKit
 import Waitlist
 import NetworkProtection
 import Core
+import Subscription
 
 struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
     private let privacyConfigurationManager: PrivacyConfigurationManaging
-    private let networkProtectionTokenStore: NetworkProtectionTokenStore?
-    private let networkProtectionAccessManager: NetworkProtectionAccess?
+    private let networkProtectionTokenStore: NetworkProtectionTokenStore
+    private let networkProtectionAccessManager: NetworkProtectionAccess
     private let featureFlagger: FeatureFlagger
     private let userDefaults: UserDefaults
+    private let accountManager: AccountManaging
 
     init(privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
-         networkProtectionTokenStore: NetworkProtectionTokenStore? = NetworkProtectionKeychainTokenStore(),
-         networkProtectionAccessManager: NetworkProtectionAccess? = NetworkProtectionAccessController(),
-         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
-         userDefaults: UserDefaults = .networkProtectionGroupDefaults) {
+         networkProtectionTokenStore: NetworkProtectionTokenStore,
+         networkProtectionAccessManager: NetworkProtectionAccess,
+         featureFlagger: FeatureFlagger,
+         userDefaults: UserDefaults = .networkProtectionGroupDefaults,
+         accountManager: AccountManaging) {
+
         self.privacyConfigurationManager = privacyConfigurationManager
         self.networkProtectionTokenStore = networkProtectionTokenStore
         self.networkProtectionAccessManager = networkProtectionAccessManager
         self.featureFlagger = featureFlagger
         self.userDefaults = userDefaults
+        self.accountManager = accountManager
     }
 
-    /// A lite version with fewer dependencies
-    /// We need this to run shouldMonitorEntitlement() check inside the token store
-    static func forTokenStore() -> DefaultNetworkProtectionVisibility {
-        DefaultNetworkProtectionVisibility(networkProtectionTokenStore: nil, networkProtectionAccessManager: nil)
+    var token: String? {
+        if shouldMonitorEntitlement() {
+            return accountManager.accessToken
+        }
+        return nil
     }
 
     func isWaitlistBetaActive() -> Bool {
@@ -55,10 +61,6 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
     }
     
     func isWaitlistUser() -> Bool {
-        guard let networkProtectionTokenStore, let networkProtectionAccessManager else {
-            preconditionFailure("networkProtectionTokenStore and networkProtectionAccessManager must be non-nil")
-        }
-
         let hasLegacyAuthToken = {
             guard let authToken = try? networkProtectionTokenStore.fetchToken(),
                   !authToken.hasPrefix(NetworkProtectionKeychainTokenStore.authTokenPrefix) else {
@@ -88,6 +90,22 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
     
     func shouldMonitorEntitlement() -> Bool {
         isPrivacyProLaunched()
+    }
+
+    func shouldShowThankYouMessaging() -> Bool {
+        isPrivacyProLaunched() && isWaitlistUser()
+    }
+
+    func shouldKeepVPNAccessViaWaitlist() -> Bool {
+        !isPrivacyProLaunched() && isWaitlistBetaActive() && isWaitlistUser()
+    }
+
+    func shouldShowVPNShortcut() -> Bool {
+        if isPrivacyProLaunched() {
+            return accountManager.isUserAuthenticated
+        } else {
+            return shouldKeepVPNAccessViaWaitlist()
+        }
     }
 }
 

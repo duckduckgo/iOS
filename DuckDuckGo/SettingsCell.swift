@@ -281,7 +281,7 @@ struct SettingsCustomCell<Content: View>: View {
                 .contentShape(Rectangle())
                 .frame(maxWidth: .infinity)
                 .onTapGesture {
-                    action() // We need this to make sute tap target is expanded to frame
+                    action() // We need this to make sure tap target is expanded to frame
                 }
             }
             .frame(maxWidth: .infinity)

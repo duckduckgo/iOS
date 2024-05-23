@@ -28,8 +28,11 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
-    let purchaseManager: PurchaseManager
-    let accountManager: AccountManager
+    let subscriptionManager: SubscriptionManaging
+    var accountManager: AccountManaging {
+        subscriptionManager.accountManager
+    }
+    let appStoreAccountManagementFlow: AppStoreAccountManagementFlow
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -58,13 +61,12 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         
     init(userScript: SubscriptionPagesUserScript,
          subFeature: SubscriptionPagesUseSubscriptionFeature,
-         purchaseManager: PurchaseManager = PurchaseManager.shared,
-         accountManager: AccountManager = AccountManager(),
+         subscriptionManager: SubscriptionManaging,
          isAddingDevice: Bool = false) {
         self.userScript = userScript
         self.subFeature = subFeature
-        self.purchaseManager = purchaseManager
-        self.accountManager = accountManager
+        self.subscriptionManager = subscriptionManager
+        self.appStoreAccountManagementFlow = AppStoreAccountManagementFlow(subscriptionManager: subscriptionManager)
         self.state.isAddingDevice = false
     }
     
@@ -84,10 +86,10 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     private func cleanUp() {
         cancellables.removeAll()
     }
-    
+
     private func refreshToken() async {
         if state.isAddingDevice {
-            await AppStoreAccountManagementFlow.refreshAuthTokenIfNeeded(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+            await appStoreAccountManagementFlow.refreshAuthTokenIfNeeded()
         }
     }
     

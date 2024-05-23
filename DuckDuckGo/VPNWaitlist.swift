@@ -87,7 +87,7 @@ final class VPNWaitlist: Waitlist {
             store: store,
             request: request,
             featureFlagger: AppDependencyProvider.shared.featureFlagger,
-            networkProtectionAccess: NetworkProtectionAccessController()
+            networkProtectionAccess: AppDependencyProvider.shared.networkProtectionAccessController
         )
     }
 

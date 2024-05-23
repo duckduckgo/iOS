@@ -1,5 +1,5 @@
 //
-//  UserDefaultsCacheKey.swift
+//  VPNSettings+Environment.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,8 +17,19 @@
 //  limitations under the License.
 //
 
-import Common
+import Foundation
+import NetworkProtection
+import Subscription
 
-public enum UserDefaultsCacheKey: String, UserDefaultsCacheKeyStore {
-    case subscriptionState = "com.duckduckgo.ios.subscription.state"
+public extension VPNSettings {
+
+    /// Align VPN environment to the Subscription environment
+    func alignTo(subscriptionEnvironment: SubscriptionEnvironment) {
+        switch subscriptionEnvironment.serviceEnvironment {
+        case .production:
+            self.selectedEnvironment = .production
+        case .staging:
+            self.selectedEnvironment = .staging
+        }
+    }
 }

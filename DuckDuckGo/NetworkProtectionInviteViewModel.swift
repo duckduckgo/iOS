@@ -87,7 +87,7 @@ final class NetworkProtectionInviteViewModel: ObservableObject {
     @Published var redeemedText: String?
 
     private func updateAuthenticatedText() {
-        redeemedText = NetworkProtectionKeychainTokenStore().isFeatureActivated ? "Already redeemed" : nil
+        redeemedText = AppDependencyProvider.shared.networkProtectionKeychainTokenStore.isFeatureActivated ? "Already redeemed" : nil
     }
 }
 

@@ -127,11 +127,13 @@ class TabViewController: UIViewController {
 
     private var trackersInfoWorkItem: DispatchWorkItem?
     
-    private var tabURLInterceptor: TabURLInterceptor = TabURLInterceptorDefault()
+    private var tabURLInterceptor: TabURLInterceptor = TabURLInterceptorDefault {
+        return AppDependencyProvider.shared.subscriptionManager.canPurchase
+    }
     private var currentlyLoadedURL: URL?
     
 #if NETWORK_PROTECTION
-    private let netPConnectionObserver = ConnectionStatusObserverThroughSession()
+    private let netPConnectionObserver: ConnectionStatusObserver = AppDependencyProvider.shared.connectionObserver
     private var netPConnectionObserverCancellable: AnyCancellable?
     private var netPConnectionStatus: ConnectionStatus = .default
     private var netPConnected: Bool {

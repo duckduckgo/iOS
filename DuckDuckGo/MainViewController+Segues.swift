@@ -250,11 +250,10 @@ extension MainViewController {
                                                             syncPausedStateManager: syncPausedStateManager)
 
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider,
-                                                  accountManager: AccountManager(),
+                                                  subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
                                                   deepLink: deepLinkTarget,
                                                   historyManager: historyManager,
                                                   syncPausedStateManager: syncPausedStateManager)
-
         Pixel.fire(pixel: .settingsPresented,
                    withAdditionalParameters: PixelExperiment.parameters)
 

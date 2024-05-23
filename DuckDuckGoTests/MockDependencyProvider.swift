@@ -51,7 +51,6 @@ class MockDependencyProvider: DependencyProvider {
     var connectionObserver: NetworkProtection.ConnectionStatusObserver
     var vpnSettings: NetworkProtection.VPNSettings
 
-    // swiftlint:disable:next function_body_length
     init() {
         let defaultProvider = AppDependencyProvider()
         appSettings = defaultProvider.appSettings

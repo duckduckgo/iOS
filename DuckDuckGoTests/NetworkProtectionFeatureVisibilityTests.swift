@@ -45,19 +45,11 @@ struct NetworkProtectionFeatureVisibilityMocks: NetworkProtectionFeatureVisibili
     
     let accountManager: AccountManager
 
-    func shouldShowThankYouMessaging() -> Bool {
-        isPrivacyProLaunched() && isWaitlistUser()
-    }
-
-    func shouldKeepVPNAccessViaWaitlist() -> Bool {
-        !isPrivacyProLaunched() && isWaitlistBetaActive() && isWaitlistUser()
-    }
-
     func shouldShowVPNShortcut() -> Bool {
         if isPrivacyProLaunched() {
             return accountManager.isUserAuthenticated
         } else {
-            return shouldKeepVPNAccessViaWaitlist()
+            return false
         }
     }
 

@@ -1,10 +1,13 @@
 appId: com.duckduckgo.mobile.ios
 tags:
     - sync
-name: 02_login_account
+name: 05_sync_data_check
 
 ---
-
+# IMPORTANT: This test is strictly related to 04_sync_data_setup
+#            and it will fail if 04 is not executed before. 
+#            The test is split in two different flow to accomodate 
+#            for Maestro CI max execution time. 
 # Clear and launch
 - clearState
 - launchApp
@@ -35,6 +38,19 @@ name: 02_login_account
     file: ../shared/sync_login.yaml
 - assertVisible: Sync & Backup
 
-# Clean up
+# Verify bookmarks have been merged
+- tapOn: Settings
 - runFlow:
-    file: ../shared/sync_logout.yaml
+    file: ../shared/sync_verify_bookmarks.yaml
+
+# Verify favorites are unified
+- tapOn: Done
+- tapOn: Settings
+- runFlow:
+    file: ../shared/sync_verify_unified_favorites.yaml
+
+# Verify logins
+- tapOn: Settings
+- runFlow:
+    file: ../shared/sync_verify_logins.yaml
+

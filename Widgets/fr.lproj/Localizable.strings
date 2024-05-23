@@ -1,13 +1,4 @@
 /* No comment provided by engineer. */
-"Connect" = "Connect";
-
-/* No comment provided by engineer. */
-"Disconnect" = "Disconnect";
-
-/* No comment provided by engineer. */
-"Error" = "Erreur";
-
-/* No comment provided by engineer. */
 "iOS 17 required" = "iOS 17 required";
 
 /* No comment provided by engineer. */
@@ -49,9 +40,6 @@
 /* Title shown to the user when adding the Voice Search lock screen widget */
 "lock.screen.widget.voice.title" = "Recherche vocale";
 
-/* No comment provided by engineer. */
-"VPN Not Configured" = "VPN Not Configured";
-
 /* Description of search passwords widget in widget gallery */
 "widget.gallery.passwords.description" = "Recherchez rapidement vos mots de passe DuckDuckGo enregistrés.";
 
@@ -70,6 +58,12 @@
 /* Display name for search only widget in widget gallery */
 "widget.gallery.search.display.name" = "Rechercher";
 
+/* Description of VPN widget in widget gallery */
+"widget.gallery.vpn.description" = "View and manage your VPN connection. Requires a Privacy Pro subscription.";
+
+/* Display name for VPN widget in widget gallery */
+"widget.gallery.vpn.display.name" = "VPN";
+
 /* CTA shown in the favorites widget empty state. */
 "widget.no.favorites.cta" = "Ajouter des favoris";
 
@@ -81,4 +75,19 @@
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Rechercher avec DuckDuckGo";
+
+/* VPN connect button text */
+"widget.vpn.button.connect" = "Connect";
+
+/* VPN disconnect button text */
+"widget.vpn.button.disconnect" = "Disconnect";
+
+/* Message describing VPN connected status */
+"widget.vpn.status.connected" = "VPN is On";
+
+/* Message describing VPN disconnected status */
+"widget.vpn.status.disconnected" = "VPN is Off";
+
+/* Subtitle describing VPN disconnected status */
+"widget.vpn.subtitle.disconnected" = "Not connected";
 

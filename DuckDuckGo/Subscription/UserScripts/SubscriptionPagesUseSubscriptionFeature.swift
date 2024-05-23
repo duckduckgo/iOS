@@ -90,7 +90,20 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
              accountCreationFailed,
              generalError
     }
-        
+    
+    private let subscriptionAttributionOrigin: String?
+    private let subscriptionManager: SubscriptionManaging
+    private var accountManager: AccountManaging {
+        subscriptionManager.accountManager
+    }
+    private let appStorePurchaseFlow: AppStorePurchaseFlow
+
+    init(subscriptionManager: SubscriptionManaging, subscriptionAttributionOrigin: String?) {
+        self.subscriptionManager = subscriptionManager
+        self.appStorePurchaseFlow =  AppStorePurchaseFlow(subscriptionManager: subscriptionManager)
+        self.subscriptionAttributionOrigin = subscriptionAttributionOrigin
+    }
+
     // Transaction Status and errors are observed from ViewModels to handle errors in the UI
     @Published private(set) var transactionStatus: SubscriptionTransactionStatus = .idle
     @Published private(set) var transactionError: UseSubscriptionError?
@@ -115,11 +128,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     ])
     
     var originalMessage: WKScriptMessage?
-
-    private let subscriptionAttributionOrigin: String?
-    init(subscriptionAttributionOrigin: String?) {
-        self.subscriptionAttributionOrigin = subscriptionAttributionOrigin
-    }
 
     func with(broker: UserScriptMessageBroker) {
         self.broker = broker
@@ -176,21 +184,19 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     // MARK: Broker Methods (Called from WebView via UserScripts)
     func getSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
-        let authToken = AccountManager().authToken ?? Constants.empty
+        let authToken = accountManager.authToken ?? Constants.empty
         return [Constants.token: authToken]
     }
     
     func getSubscriptionOptions(params: Any, original: WKScriptMessage) async -> Encodable? {
         resetSubscriptionFlow()
-                    
-        switch await AppStorePurchaseFlow.subscriptionOptions() {
-        case .success(let subscriptionOptions):
+        if let subscriptionOptions = await subscriptionManager.storePurchaseManager().subscriptionOptions() {
             if AppDependencyProvider.shared.subscriptionFeatureAvailability.isSubscriptionPurchaseAllowed {
                 return subscriptionOptions
             } else {
                 return SubscriptionOptions.empty
             }
-        case .failure:
+        } else {
             os_log("Failed to obtain subscription options", log: .subscription, type: .error)
             setTransactionError(.failedToGetSubscriptionOptions)
             return nil
@@ -217,7 +223,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
         
         // Check for active subscriptions
-        if await PurchaseManager.hasActiveSubscription() {
+        if await subscriptionManager.storePurchaseManager().hasActiveSubscription() {
             setTransactionError(.hasActiveSubscription)
             Pixel.fire(pixel: .privacyProRestoreAfterPurchaseAttempt)
             setTransactionStatus(.idle)
@@ -227,9 +233,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         let emailAccessToken = try? EmailManager().getToken()
         let purchaseTransactionJWS: String
 
-        switch await AppStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id,
-                                                               emailAccessToken: emailAccessToken,
-                                                               subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)) {
+        switch await appStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id,
+                                                               emailAccessToken: emailAccessToken) {
         case .success(let transactionJWS):
             purchaseTransactionJWS = transactionJWS
 
@@ -252,8 +257,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
         
         setTransactionStatus(.polling)
-        switch await AppStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS,
-                                                                       subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)) {
+        switch await appStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS) {
         case .success(let purchaseUpdate):
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess)
             UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
@@ -277,10 +281,9 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
 
         // Clear subscription Cache
-        SubscriptionService.signOut()
-        
+        subscriptionManager.subscriptionService.signOut()
+
         let authToken = subscriptionValues.token
-        let accountManager = AccountManager()
         if case let .success(accessToken) = await accountManager.exchangeAuthTokenToAccessToken(authToken),
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
             accountManager.storeAuthToken(token: authToken)
@@ -319,10 +322,9 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func backToSettings(params: Any, original: WKScriptMessage) async -> Encodable? {
-        let accountManager = AccountManager()
         if let accessToken = accountManager.accessToken,
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
-            switch await SubscriptionService.getSubscription(accessToken: accessToken) {
+            switch await subscriptionManager.subscriptionService.getSubscription(accessToken: accessToken) {
 
             case .success:
                 accountManager.storeAccount(token: accessToken,
@@ -341,7 +343,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
     
     func getAccessToken(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        if let accessToken = AccountManager().accessToken {
+        if let accessToken = subscriptionManager.accountManager.accessToken {
             return [Constants.token: accessToken]
         } else {
             return [String: String]()
@@ -395,7 +397,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func restoreAccountFromAppStorePurchase() async throws {
         setTransactionStatus(.restoring)
         
-        let result = await AppStoreRestoreFlow.restoreAccountFromPastPurchase(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+        let appStoreRestoreFlow = AppStoreRestoreFlow(subscriptionManager: subscriptionManager)
+        let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase()
         switch result {
         case .success:
             setTransactionStatus(.idle)

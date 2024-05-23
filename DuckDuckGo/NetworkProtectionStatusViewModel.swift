@@ -142,12 +142,12 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     @Published public var animationsOn: Bool = false
 
-    public init(tunnelController: TunnelController = NetworkProtectionTunnelController(),
-                settings: VPNSettings = VPNSettings(defaults: .networkProtectionGroupDefaults),
-                statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
+    public init(tunnelController: TunnelController,
+                settings: VPNSettings,
+                statusObserver: ConnectionStatusObserver,
                 serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
                 errorObserver: ConnectionErrorObserver = ConnectionErrorObserverThroughSession(),
-                locationListRepository: NetworkProtectionLocationListRepository = NetworkProtectionLocationListCompositeRepository()) {
+                locationListRepository: NetworkProtectionLocationListRepository) {
         self.tunnelController = tunnelController
         self.settings = settings
         self.statusObserver = statusObserver
@@ -167,11 +167,6 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         setUpLocationPublishers()
         setUpThroughputRefreshTimer()
         setUpErrorPublishers()
-
-        // Prefetching this now for snappy load times on the locations screens
-        Task {
-            _ = try? await locationListRepository.fetchLocationList()
-        }
     }
 
     private func setUpIsConnectedStatePublishers() {

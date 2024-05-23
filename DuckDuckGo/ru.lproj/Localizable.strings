@@ -119,7 +119,7 @@
 "addWidget.description" = "Быстрый доступ к конфиденциальному поиску и любимым сайтам.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Удерживайте нажатие на домашнем экране, чтобы запустить режим настройки.";
+"addWidget.settings.firstParagraph" = "Long-press on the Home Screen to enter jiggle mode.";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Нажмите кнопку «плюс» %@.";
@@ -133,14 +133,47 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Существующие закладки дублироваться не будут.";
 
+/* Description for alert shown when sync error occurs because of bad data */
+"alert.sync-bad-data-error-description" = "Некоторые закладки или пароли не синхронизируются из-за неверного формата или превышения ограничений по длине.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Достигнуто максимальное число закладок. Чтобы возобновить синхронизацию, удалите некоторые из них.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Синхронизация закладок приостановлена";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Достигнуто максимальное число паролей. Чтобы возобновить синхронизацию, удалите некоторые из них.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Синхронизация паролей приостановлена";
+
 /* Title for sync error alert */
 "alert.sync-error" = "Ошибка синхронизации и резервного копирования";
+
+/* Sync error alert action button title, takes the user to the sync settings page. */
+"alert.sync-error-action" = "Синхронизация настроек";
+
+/* Description for alert shown when user logged off from sync */
+"alert.sync-invalid-login-error-description" = "Синхронизация приостановлена. Чтобы возобновить ее, выполните повторную привязку, используя другое устройство или код восстановления.";
 
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Узнать больше";
 
 /* Confirmation button in alert */
 "alert.sync-paused-alert-ok-button" = "Хорошо";
+
+/* Title for alert shown when sync paused for an error */
+"alert.sync-paused-title" = "Синхронизация приостановлена";
+
+/* Description for alert shown when sync error occurs because of too many requests */
+"alert.sync-too-many-requests-error-description" = "Функция «Синхронизация и резервное копирование» временно недоступна.";
+
+/* Title of the warning message that tells the user that there was an error with the sync feature. */
+"alert.sync.warning.sync-error" = "Ошибка синхронизации";
+
+/* Title of the warning message */
+"alert.sync.warning.sync-paused" = "Синхронизация и резервное копирование на паузе";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Добавить все вкладки в закладки?";
@@ -207,6 +240,15 @@
 
 /* No comment provided by engineer. */
 "autoclear.on" = "Включено";
+
+/* Subtitle for search history items */
+"autocomplete.history.search.duckduckgo" = "Поиск в DuckDuckGo";
+
+/* The message text shown in suggestions */
+"autocomplete.history.warning.message" = "Теперь рекомендации включают недавно посещенные сайты. Они хранятся на вашем устройстве, а не на серверах DuckDuckGo. Их можно отключить в настройках или очистить с помощью кнопки Fire Button 🔥.";
+
+/* Title for message show in suggestions */
+"autocomplete.history.warning.title" = "Та же конфиденциальность.\nЛучшие поисковые рекомендации!";
 
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Отключено";
@@ -1148,6 +1190,9 @@
 "get.browser.title" = "DuckDuckGo для Mac и Windows";
 
 /* No comment provided by engineer. */
+"Help us improve!" = "Help us improve!";
+
+/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Добавьте DuckDuckGo на домашний экран!";
 
 /* No comment provided by engineer. */
@@ -1603,6 +1648,26 @@
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
 
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Управление закладками";
+
+/* Description for sync bookmarks limits exceeded warning */
+"prefrences.sync.bookmarks-limit-exceeded-description" = "Достигнуто максимальное число закладок. Чтобы возобновить синхронизацию, удалите некоторые из них.";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Управление паролями...";
+
+/* Description for sync credentials limits exceeded warning */
+"prefrences.sync.credentials-limit-exceeded-description" = "Достигнуто максимальное число паролей. Чтобы возобновить синхронизацию, удалите некоторые из них.";
+
+/* Description invalid credentials error when syncing.
+   Description of incorrectly formatted data error when syncing.
+   Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Произошла ошибка синхронизации. Попробуйте отключить синхронизацию на этом устройстве, а затем выполнить повторную привязку с помощью другого устройства или кода восстановления.";
+
+/* Title for sync limits exceeded warning */
+"prefrences.sync.limit-exceeded-title" = "Синхронизация на паузе";
+
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Чтобы вам не приходилось каждый раз входить в свою учетную запись, сайты используют куки-файлы. Если сделать сайт огнеупорным, мы не будем стирать его куки-файлы, даже если вы воспользуетесь кнопкой «Огонь». Но мы по-прежнему будем блокировать сторонние трекеры, в том числе на огнеупорных сайтах.";
 
@@ -1711,6 +1776,9 @@
 
 /* Settings screen cell for autocomplete */
 "settings.autocomplete" = "Показать предложения автозаполнения";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited" = "Недавно посещенные сайты";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Блокировка";
@@ -2241,6 +2309,9 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Переключатель вкладок";
 
+/* No comment provided by engineer. */
+"Take Survey" = "Take Survey";
+
 /* Description text for the text size adjustment setting */
 "textSize.description" = "Выберите удобный для вас размер шрифта. DuckDuckGo настроит вид сайтов автоматически.";
 
@@ -2319,6 +2390,9 @@
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
 
+/* Title for the VPN widget onboarding screen */
+"vpn.addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
+
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";
 
@@ -2388,6 +2462,9 @@
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
 
+/* VPN settings screen cell text for adding the VPN widget to the home screen */
+"vpn.settings.add.widget" = "Add VPN Widget to Home Screen";
+
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Разрешить уведомления";
 
@@ -2438,6 +2515,9 @@
 
 /* Title for the share sheet entry */
 "waitlist.share-sheet.title" = "Вас пригласили!";
+
+/* No comment provided by engineer. */
+"We want to make using passwords in DuckDuckGo better." = "We want to make using passwords in DuckDuckGo better.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Страница удалена из избранного";

@@ -24,13 +24,13 @@ import Core
 import Subscription
 
 @available(iOS 15.0, *)
-// swiftlint:disable type_body_length
+// swiftlint:disable:next type_body_length
 final class SubscriptionFlowViewModel: ObservableObject {
     
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
-    let purchaseManager: PurchaseManager
     var webViewModel: AsyncHeadlessWebViewViewModel
+    let subscriptionManager: SubscriptionManaging
     let purchaseURL: URL
 
     private var cancellables = Set<AnyCancellable>()
@@ -71,16 +71,17 @@ final class SubscriptionFlowViewModel: ObservableObject {
     init(origin: String?,
          userScript: SubscriptionPagesUserScript,
          subFeature: SubscriptionPagesUseSubscriptionFeature,
-         purchaseManager: PurchaseManager = PurchaseManager.shared,
+         subscriptionManager: SubscriptionManaging,
          selectedFeature: SettingsViewModel.SettingsDeepLinkSection? = nil) {
+        let url = subscriptionManager.url(for: .purchase)
         if let origin {
-            purchaseURL = URL.subscriptionPurchase.appendingParameter(name: AttributionParameter.origin, value: origin)
+            purchaseURL = url.appendingParameter(name: AttributionParameter.origin, value: origin)
         } else {
-            purchaseURL = URL.subscriptionPurchase
+            purchaseURL = url
         }
         self.userScript = userScript
         self.subFeature = subFeature
-        self.purchaseManager = purchaseManager
+        self.subscriptionManager = subscriptionManager
         self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,
                                                           subFeature: subFeature,
                                                           settings: webViewSettings)
@@ -240,9 +241,11 @@ final class SubscriptionFlowViewModel: ObservableObject {
                 strongSelf.state.canNavigateBack = false
                 guard let currentURL = self?.webViewModel.url else { return }
                 Task { await strongSelf.setTransactionStatus(.idle) }
-                if currentURL.forComparison() == URL.addEmailToSubscription.forComparison() ||
-                    currentURL.forComparison() == URL.addEmailToSubscriptionSuccess.forComparison() ||
-                    currentURL.forComparison() == URL.addEmailToSubscriptionSuccess.forComparison() {
+
+                let addEmailURL = strongSelf.subscriptionManager.url(for: .addEmail)
+                let addEmailSuccessURL = strongSelf.subscriptionManager.url(for: .addEmailToSubscriptionSuccess)
+                if currentURL.forComparison() == addEmailURL.forComparison() ||
+                    currentURL.forComparison() == addEmailSuccessURL.forComparison() {
                     strongSelf.state.viewTitle = UserText.subscriptionRestoreAddEmailTitle
                 } else {
                     strongSelf.state.viewTitle = UserText.subscriptionTitle
@@ -250,11 +253,11 @@ final class SubscriptionFlowViewModel: ObservableObject {
             }
         
     }
-    
+
     private func backButtonForURL(currentURL: URL) -> Bool {
-        return currentURL.forComparison() != URL.subscriptionBaseURL.forComparison() &&
-        currentURL.forComparison() != URL.subscriptionActivateSuccess.forComparison() &&
-        currentURL.forComparison() != URL.subscriptionPurchase.forComparison()
+        return currentURL.forComparison() != subscriptionManager.url(for: .baseURL).forComparison() &&
+        currentURL.forComparison() != subscriptionManager.url(for: .activateSuccess).forComparison() &&
+        currentURL.forComparison() != subscriptionManager.url(for: .purchase).forComparison()
     }
     
     private func cleanUp() {
@@ -310,8 +313,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
         DispatchQueue.main.async {
             self.resetState()
         }
-        if webViewModel.url != URL.subscriptionPurchase.forComparison() {
-            self.webViewModel.navigationCoordinator.navigateTo(url: self.purchaseURL)
+        if webViewModel.url != subscriptionManager.url(for: .purchase).forComparison() {
+             self.webViewModel.navigationCoordinator.navigateTo(url: purchaseURL)
         }
         await self.setupTransactionObserver()
         await self.setupWebViewObservers()
@@ -346,4 +349,3 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
     
 }
-// swiftlint:enable type_body_length

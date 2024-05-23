@@ -24,6 +24,7 @@ xcuserdata/
 *.moved-aside
 *.xcuserstate
 .DS_Store
+default.profraw
 
 ## Obj-C/Swift specific
 *.hmap
@@ -76,3 +77,4 @@ Configuration/ExternalDeveloper.xcconfig
 scripts/assets
 
 DuckDuckGoTests/NetworkProtectionVPNLocationViewModelTests.swift*.plist
+*.profraw

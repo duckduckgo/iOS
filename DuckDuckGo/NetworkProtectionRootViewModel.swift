@@ -30,7 +30,7 @@ enum NetworkProtectionInitialViewKind {
 final class NetworkProtectionRootViewModel: ObservableObject {
     var initialViewKind: NetworkProtectionInitialViewKind
 
-    init(featureActivation: NetworkProtectionFeatureActivation = NetworkProtectionKeychainTokenStore()) {
+    init(featureActivation: NetworkProtectionFeatureActivation) {
         initialViewKind = featureActivation.isFeatureActivated ? .status : .invite
     }
 }

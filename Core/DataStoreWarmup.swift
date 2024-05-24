@@ -23,11 +23,21 @@ import WebKit
 /// WKWebsiteDataStore is basically non-functional until a web view has been instanciated and a page is successfully loaded.
 public class DataStoreWarmup {
 
+    public enum ApplicationState: String {
+        case active
+        case inactive
+        case background
+        case handlingShortcut
+        case unknown
+    }
+
     public init() { }
 
     @MainActor
-    public func ensureReady() async {
+    public func ensureReady(applicationState: ApplicationState) async {
+        Pixel.fire(pixel: .webkitWarmupStart(appState: applicationState.rawValue))
         await BlockingNavigationDelegate().loadInBackgroundWebView(url: URL(string: "about:blank")!)
+        Pixel.fire(pixel: .webkitWarmupFinished(appState: applicationState.rawValue))
     }
 
 }

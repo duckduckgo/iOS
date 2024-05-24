@@ -102,7 +102,9 @@ final class SubscriptionFlowViewModel: ObservableObject {
         
         
         subFeature.onBackToSettings = {
-            self.state.shouldGoBackToSettings = true
+            DispatchQueue.main.async {
+                self.state.shouldGoBackToSettings = true
+            }
         }
         
         subFeature.onActivateSubscription = {

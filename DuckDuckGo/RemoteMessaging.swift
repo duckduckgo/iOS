@@ -26,6 +26,7 @@ import Persistence
 import Bookmarks
 import RemoteMessaging
 import NetworkProtection
+import Subscription
 
 struct RemoteMessaging {
 
@@ -153,15 +154,12 @@ struct RemoteMessaging {
         case .success(let statusResponse):
             os_log("Successfully fetched remote messages", log: .remoteMessaging, type: .debug)
 
-            let daysSinceNetworkProtectionEnabled: Int
+            let isPrivacyProSubscriber = AppDependencyProvider.shared.subscriptionManager.accountManager.isUserAuthenticated
+            let canPurchase = AppDependencyProvider.shared.subscriptionManager.canPurchase
 
-#if NETWORK_PROTECTION
             let activationDateStore = DefaultVPNActivationDateStore()
-
-            daysSinceNetworkProtectionEnabled = activationDateStore.daysSinceActivation() ?? -1
-#else
-            daysSinceNetworkProtectionEnabled = -1
-#endif
+            let daysSinceNetworkProtectionEnabled = activationDateStore.daysSinceActivation() ?? -1
+            let surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(statisticsStore: statisticsStore)
 
             let remoteMessagingConfigMatcher = RemoteMessagingConfigMatcher(
                 appAttributeMatcher: AppAttributeMatcher(statisticsStore: statisticsStore,
@@ -173,8 +171,11 @@ struct RemoteMessaging {
                                                            favoritesCount: favoritesCount,
                                                            appTheme: AppUserDefaults().currentThemeName.rawValue,
                                                            isWidgetInstalled: isWidgetInstalled,
-                                                           daysSinceNetPEnabled: daysSinceNetworkProtectionEnabled),
+                                                           daysSinceNetPEnabled: daysSinceNetworkProtectionEnabled,
+                                                           isPrivacyProEligibleUser: canPurchase,
+                                                           isPrivacyProSubscriber: isPrivacyProSubscriber),
                 percentileStore: RemoteMessagingPercentileUserDefaultsStore(userDefaults: .standard),
+                surveyActionMapper: surveyActionMapper,
                 dismissedMessageIds: remoteMessagingStore.fetchDismissedRemoteMessageIds()
             )
 

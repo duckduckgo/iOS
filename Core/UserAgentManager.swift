@@ -32,6 +32,8 @@ public protocol UserAgentManager {
 
     func userAgent(isDesktop: Bool) -> String
 
+    func userAgent(isDesktop: Bool, url: URL?) -> String
+
 }
 
 public class DefaultUserAgentManager: UserAgentManager {
@@ -58,6 +60,10 @@ public class DefaultUserAgentManager: UserAgentManager {
 
     public func userAgent(isDesktop: Bool) -> String {
         return userAgent.agent(forUrl: nil, isDesktop: isDesktop)
+    }
+
+    public func userAgent(isDesktop: Bool, url: URL?) -> String {
+        return userAgent.agent(forUrl: url, isDesktop: isDesktop)
     }
 
     public func update(request: inout URLRequest, isDesktop: Bool) {

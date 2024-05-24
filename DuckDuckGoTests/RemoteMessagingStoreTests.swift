@@ -141,9 +141,11 @@ class RemoteMessagingStoreTests: XCTestCase {
                                                            favoritesCount: 0,
                                                            appTheme: "light",
                                                            isWidgetInstalled: false,
-                                                           isNetPWaitlistUser: false,
-                                                           daysSinceNetPEnabled: -1),
+                                                           daysSinceNetPEnabled: -1,
+                                                           isPrivacyProEligibleUser: false,
+                                                           isPrivacyProSubscriber: false),
                 percentileStore: RemoteMessagingPercentileUserDefaultsStore(userDefaults: self.defaults),
+                surveyActionMapper: MockRemoteMessagingSurveyActionMapper(),
                 dismissedMessageIds: []
         )
 
@@ -159,4 +161,12 @@ class RemoteMessagingStoreTests: XCTestCase {
             return RemoteMessagingConfigProcessor.ProcessorResult(version: 0, message: nil)
         }
     }
+}
+
+private final class MockRemoteMessagingSurveyActionMapper: RemoteMessagingSurveyActionMapping {
+
+    func add(parameters: [RemoteMessagingSurveyActionParameter], to url: URL) -> URL {
+        return url
+    }
+
 }

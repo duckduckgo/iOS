@@ -26,6 +26,7 @@ import Persistence
 import Bookmarks
 import RemoteMessaging
 import NetworkProtection
+import Subscription
 
 struct RemoteMessaging {
 
@@ -153,21 +154,12 @@ struct RemoteMessaging {
         case .success(let statusResponse):
             os_log("Successfully fetched remote messages", log: .remoteMessaging, type: .debug)
 
-            let isNetworkProtectionWaitlistUser: Bool
-            let daysSinceNetworkProtectionEnabled: Int
+            let isPrivacyProSubscriber = AppDependencyProvider.shared.subscriptionManager.accountManager.isUserAuthenticated
+            let canPurchase = AppDependencyProvider.shared.subscriptionManager.canPurchase
 
-#if NETWORK_PROTECTION
-            let vpnAccess = AppDependencyProvider.shared.networkProtectionAccessController
-            let accessType = vpnAccess.networkProtectionAccessType()
-            let isVPNActivated = AppDependencyProvider.shared.networkProtectionKeychainTokenStore.isFeatureActivated
             let activationDateStore = DefaultVPNWaitlistActivationDateStore()
-
-            isNetworkProtectionWaitlistUser = (accessType == .waitlistInvited) && isVPNActivated
-            daysSinceNetworkProtectionEnabled = activationDateStore.daysSinceActivation() ?? -1
-#else
-            isNetworkProtectionWaitlistUser = false
-            daysSinceNetworkProtectionEnabled = -1
-#endif
+            let daysSinceNetworkProtectionEnabled = activationDateStore.daysSinceActivation() ?? -1
+            let surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(statisticsStore: statisticsStore)
 
             let remoteMessagingConfigMatcher = RemoteMessagingConfigMatcher(
                 appAttributeMatcher: AppAttributeMatcher(statisticsStore: statisticsStore,
@@ -179,9 +171,11 @@ struct RemoteMessaging {
                                                            favoritesCount: favoritesCount,
                                                            appTheme: AppUserDefaults().currentThemeName.rawValue,
                                                            isWidgetInstalled: isWidgetInstalled,
-                                                           isNetPWaitlistUser: isNetworkProtectionWaitlistUser,
-                                                           daysSinceNetPEnabled: daysSinceNetworkProtectionEnabled),
+                                                           daysSinceNetPEnabled: daysSinceNetworkProtectionEnabled,
+                                                           isPrivacyProEligibleUser: canPurchase,
+                                                           isPrivacyProSubscriber: isPrivacyProSubscriber),
                 percentileStore: RemoteMessagingPercentileUserDefaultsStore(userDefaults: .standard),
+                surveyActionMapper: surveyActionMapper,
                 dismissedMessageIds: remoteMessagingStore.fetchDismissedRemoteMessageIds()
             )
 

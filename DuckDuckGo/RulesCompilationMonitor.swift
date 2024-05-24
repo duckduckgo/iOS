@@ -92,7 +92,7 @@ final class RulesCompilationMonitor {
     private func reportWaitTime(_ waitTime: TimeInterval, result: Pixel.Event.CompileRulesResult) {
         didReport = true
         Pixel.fire(pixel: .compilationResult(result: result,
-                                             waitTime: Pixel.Event.CompileRulesWaitTime(waitTime: waitTime),
+                                             waitTime: Pixel.Event.BucketAggregation(number: waitTime),
                                              appState: isOnboarding ? .onboarding : .regular),
                    withAdditionalParameters: [Const.waitTime: String(waitTime)])
     }

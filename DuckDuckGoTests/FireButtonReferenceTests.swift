@@ -69,7 +69,7 @@ final class FireButtonReferenceTests: XCTestCase {
             XCTAssertFalse(idManager.hasId)
 
             let warmup = DataStoreWarmup()
-            await warmup.ensureReady()
+            await warmup.ensureReady(applicationState: .unknown)
 
             let cookieStore = WKWebsiteDataStore.default().httpCookieStore
             await cookieStore.setCookie(cookie)

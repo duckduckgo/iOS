@@ -2435,6 +2435,11 @@ extension MainViewController: AutoClearWorker {
 
     @MainActor
     func forgetData() async {
+        await forgetData(applicationState: .unknown)
+    }
+
+    @MainActor
+    func forgetData(applicationState: DataStoreWarmup.ApplicationState) async {
         guard !clearInProgress else {
             assertionFailure("Shouldn't get called multiple times")
             return
@@ -2443,7 +2448,7 @@ extension MainViewController: AutoClearWorker {
 
         // This needs to happen only once per app launch
         if let dataStoreWarmup {
-            await dataStoreWarmup.ensureReady()
+            await dataStoreWarmup.ensureReady(applicationState: applicationState)
             self.dataStoreWarmup = nil
         }
 

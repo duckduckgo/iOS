@@ -349,7 +349,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         .store(in: &cancellables)
     }
 
-    private let activationDateStore = DefaultVPNWaitlistActivationDateStore()
+    private let activationDateStore = DefaultVPNActivationDateStore()
 
     public override func handleConnectionStatusChange(old: ConnectionStatus, new: ConnectionStatus) {
         super.handleConnectionStatusChange(old: old, new: new)

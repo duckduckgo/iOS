@@ -51,7 +51,6 @@ class MockDependencyProvider: DependencyProvider {
     var connectionObserver: NetworkProtection.ConnectionStatusObserver
     var vpnSettings: NetworkProtection.VPNSettings
 
-    // swiftlint:disable:next function_body_length
     init() {
         let defaultProvider = AppDependencyProvider()
         appSettings = defaultProvider.appSettings
@@ -99,13 +98,9 @@ class MockDependencyProvider: DependencyProvider {
                                                                               tokenStore: networkProtectionKeychainTokenStore)
         networkProtectionAccessController = NetworkProtectionAccessController(featureFlagger: featureFlagger,
                                                                               internalUserDecider: internalUserDecider,
-                                                                              accountManager: subscriptionManager.accountManager,
                                                                               tokenStore: networkProtectionKeychainTokenStore,
                                                                               networkProtectionTunnelController: networkProtectionTunnelController)
-        vpnFeatureVisibility = DefaultNetworkProtectionVisibility(
-            networkProtectionTokenStore: networkProtectionKeychainTokenStore,
-            networkProtectionAccessManager: networkProtectionAccessController,
-                                                                  featureFlagger: featureFlagger,
+        vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
                                                                   accountManager: accountManager)
 
         connectionObserver = ConnectionStatusObserverThroughSession()

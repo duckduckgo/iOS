@@ -157,7 +157,7 @@ struct RemoteMessaging {
             let isPrivacyProSubscriber = AppDependencyProvider.shared.subscriptionManager.accountManager.isUserAuthenticated
             let canPurchase = AppDependencyProvider.shared.subscriptionManager.canPurchase
 
-            let activationDateStore = DefaultVPNWaitlistActivationDateStore()
+            let activationDateStore = DefaultVPNActivationDateStore()
             let daysSinceNetworkProtectionEnabled = activationDateStore.daysSinceActivation() ?? -1
             let surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(statisticsStore: statisticsStore)
 

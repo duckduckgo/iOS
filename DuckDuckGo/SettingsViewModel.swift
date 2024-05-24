@@ -475,13 +475,7 @@ extension SettingsViewModel {
     }
 
     private func getNetworkProtectionState() -> SettingsState.NetworkProtection {
-        var enabled = false
-#if NETWORK_PROTECTION
-        if #available(iOS 15, *) {
-            enabled = AppDependencyProvider.shared.vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist()
-        }
-#endif
-        return SettingsState.NetworkProtection(enabled: enabled, status: "")
+        return SettingsState.NetworkProtection(enabled: false, status: "")
     }
 
     private func getSyncState() -> SettingsState.SyncSettings {
@@ -526,17 +520,7 @@ extension SettingsViewModel {
                 self.state.networkProtection.status = UserText.netPCellDisconnected
             }
         } else {
-            switch AppDependencyProvider.shared.networkProtectionAccessController.networkProtectionAccessType() {
-            case .none, .waitlistAvailable, .waitlistJoined, .waitlistInvitedPendingTermsAcceptance:
-                self.state.networkProtection.status = VPNWaitlist.shared.settingsSubtitle
-            case .waitlistInvited, .inviteCodeInvited:
-                switch connectionStatus {
-                case .connected:
-                    self.state.networkProtection.status = UserText.netPCellConnected
-                default:
-                    self.state.networkProtection.status = UserText.netPCellDisconnected
-                }
-            }
+            self.state.networkProtection.status = ""
         }
     }
 #endif

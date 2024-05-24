@@ -26,10 +26,10 @@ import Common
 struct DefaultRemoteMessagingSurveyURLBuilder: RemoteMessagingSurveyActionMapping {
 
     private let statisticsStore: StatisticsStore
-    private let activationDateStore: VPNWaitlistActivationDateStore
+    private let activationDateStore: VPNActivationDateStore
 
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
-         activationDateStore: VPNWaitlistActivationDateStore = DefaultVPNWaitlistActivationDateStore()) {
+         activationDateStore: VPNActivationDateStore = DefaultVPNActivationDateStore()) {
         self.statisticsStore = statisticsStore
         self.activationDateStore = activationDateStore
     }

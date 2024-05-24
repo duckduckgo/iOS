@@ -154,13 +154,9 @@ struct RemoteMessaging {
         case .success(let statusResponse):
             os_log("Successfully fetched remote messages", log: .remoteMessaging, type: .debug)
 
-            let isNetworkProtectionWaitlistUser: Bool
-            let daysSinceNetworkProtectionEnabled: Int
+            let isPrivacyProSubscriber = AppDependencyProvider.shared.subscriptionManager.accountManager.isUserAuthenticated
+            let canPurchase = AppDependencyProvider.shared.subscriptionManager.canPurchase
 
-#if NETWORK_PROTECTION
-            let vpnAccess = AppDependencyProvider.shared.networkProtectionAccessController
-            let accessType = vpnAccess.networkProtectionAccessType()
-            let isVPNActivated = AppDependencyProvider.shared.networkProtectionKeychainTokenStore.isFeatureActivated
             let activationDateStore = DefaultVPNWaitlistActivationDateStore()
             let daysSinceNetworkProtectionEnabled = activationDateStore.daysSinceActivation() ?? -1
             let surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(statisticsStore: statisticsStore)
@@ -176,8 +172,8 @@ struct RemoteMessaging {
                                                            appTheme: AppUserDefaults().currentThemeName.rawValue,
                                                            isWidgetInstalled: isWidgetInstalled,
                                                            daysSinceNetPEnabled: daysSinceNetworkProtectionEnabled,
-                                                           isPrivacyProEligibleUser: SubscriptionPurchaseEnvironment.canPurchase,
-                                                           isPrivacyProSubscriber: AccountManager().isUserAuthenticated),
+                                                           isPrivacyProEligibleUser: canPurchase,
+                                                           isPrivacyProSubscriber: isPrivacyProSubscriber),
                 percentileStore: RemoteMessagingPercentileUserDefaultsStore(userDefaults: .standard),
                 surveyActionMapper: surveyActionMapper,
                 dismissedMessageIds: remoteMessagingStore.fetchDismissedRemoteMessageIds()

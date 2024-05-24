@@ -154,6 +154,13 @@ struct RemoteMessaging {
         case .success(let statusResponse):
             os_log("Successfully fetched remote messages", log: .remoteMessaging, type: .debug)
 
+            let isNetworkProtectionWaitlistUser: Bool
+            let daysSinceNetworkProtectionEnabled: Int
+
+#if NETWORK_PROTECTION
+            let vpnAccess = AppDependencyProvider.shared.networkProtectionAccessController
+            let accessType = vpnAccess.networkProtectionAccessType()
+            let isVPNActivated = AppDependencyProvider.shared.networkProtectionKeychainTokenStore.isFeatureActivated
             let activationDateStore = DefaultVPNWaitlistActivationDateStore()
             let daysSinceNetworkProtectionEnabled = activationDateStore.daysSinceActivation() ?? -1
             let surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(statisticsStore: statisticsStore)

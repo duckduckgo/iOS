@@ -24,7 +24,7 @@ import SwiftUI
 
 @available(iOS 15, *)
 struct NetworkProtectionVPNLocationView: View {
-    @StateObject var model = NetworkProtectionVPNLocationViewModel()
+    @StateObject var model = NetworkProtectionVPNLocationViewModel(accountManager: AppDependencyProvider.shared.subscriptionManager.accountManager)
 
     var body: some View {
         List {

@@ -162,7 +162,11 @@ extension BlankSnapshotViewController: OmniBarDelegate {
     func onVoiceSearchPressed() {
        // No-op
     }
-    
+
+    func onEditingEnd() -> OmniBarEditingEndResult {
+        .dismissed
+    }
+
     func selectedSuggestion() -> Suggestion? {
         return nil
     }

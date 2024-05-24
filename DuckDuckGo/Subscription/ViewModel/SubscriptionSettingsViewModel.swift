@@ -26,7 +26,7 @@ import Core
 @available(iOS 15.0, *)
 final class SubscriptionSettingsViewModel: ObservableObject {
     
-    let accountManager: AccountManager
+    private let subscriptionManager: SubscriptionManaging
     private var subscriptionUpdateTimer: Timer?
     private var signOutObserver: Any?
     
@@ -39,7 +39,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         var shouldDismissView: Bool = false
         var isShowingGoogleView: Bool = false
         var isShowingFAQView: Bool = false
-        var subscriptionInfo: SubscriptionService.GetSubscriptionResponse?
+        var subscriptionInfo: Subscription?
         var isLoadingSubscriptionInfo: Bool = false
         
         // Used to display stripe WebUI
@@ -50,18 +50,25 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         var isShowingConnectionError: Bool = false
         
         // Used to display the FAQ WebUI
-        var FAQViewModel: SubscriptionExternalLinkViewModel = SubscriptionExternalLinkViewModel(url: URL.subscriptionFAQ)
+        var faqViewModel: SubscriptionExternalLinkViewModel
+
+        init(faqURL: URL) {
+            self.faqViewModel = SubscriptionExternalLinkViewModel(url: faqURL)
+        }
     }
 
     // Publish the currently selected feature
     @Published var selectedFeature: SettingsViewModel.SettingsDeepLinkSection?
     
     // Read only View State - Should only be modified from the VM
-    @Published private(set) var state = State()
+    @Published private(set) var state: State
+
     
-    
-    init(accountManager: AccountManager = AccountManager()) {
-        self.accountManager = accountManager
+    init(subscriptionManager: SubscriptionManaging = AppDependencyProvider.shared.subscriptionManager) {
+        self.subscriptionManager = subscriptionManager
+        let subscriptionFAQURL = subscriptionManager.url(for: .faq)
+        self.state = State(faqURL: subscriptionFAQURL)
+
         setupSubscriptionUpdater()
         setupNotificationObservers()
     }
@@ -75,12 +82,13 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     func onFirstAppear() {
         self.fetchAndUpdateSubscriptionDetails(cachePolicy: .returnCacheDataElseLoad)
     }
-        
-    private func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad, loadingIndicator: Bool = true) {
+    
+    private func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad,
+                                                   loadingIndicator: Bool = true) {
         Task {
             if loadingIndicator { displayLoader(true) }
-            guard let token = self.accountManager.accessToken else { return }
-            let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
+            guard let token = self.subscriptionManager.accountManager.accessToken else { return }
+            let subscriptionResult = await self.subscriptionManager.subscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
             switch subscriptionResult {
             case .success(let subscription):
                 DispatchQueue.main.async {
@@ -154,7 +162,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     func removeSubscription() {
-        AccountManager().signOut()
+        subscriptionManager.accountManager.signOut()
         _ = ActionMessageView()
         ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation,
                                   presentationLocation: .withoutBottomBar)
@@ -196,7 +204,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     @MainActor private func manageAppleSubscription() async {
         if state.subscriptionInfo?.isActive ?? false {
-            let url = URL.manageSubscriptionsInAppStoreAppURL
+            let url = subscriptionManager.url(for: .manageSubscriptionsInAppStore)
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                 do {
                     try await AppStore.showManageSubscriptions(in: windowScene)
@@ -210,9 +218,10 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
          
     private func manageStripeSubscription() async {
-        guard let token = accountManager.accessToken, let externalID = accountManager.externalID else { return }
-        let serviceResponse = await  SubscriptionService.getCustomerPortalURL(accessToken: token, externalID: externalID)
-        
+        guard let token = subscriptionManager.accountManager.accessToken,
+                let externalID = subscriptionManager.accountManager.externalID else { return }
+        let serviceResponse = await  subscriptionManager.subscriptionService.getCustomerPortalURL(accessToken: token, externalID: externalID)
+
         // Get Stripe Customer Portal URL and update the model
         if case .success(let response) = serviceResponse {
             guard let url = URL(string: response.customerPortalUrl) else { return }

@@ -22,6 +22,8 @@ import Suggestions
 
 protocol AutocompleteViewControllerDelegate: AnyObject {
 
+    func autocompleteDidEndWithUserQuery()
+
     func autocomplete(selectedSuggestion suggestion: Suggestion)
 
     func autocomplete(highlighted suggestion: Suggestion, for query: String)

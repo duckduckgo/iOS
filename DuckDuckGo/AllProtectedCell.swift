@@ -1,5 +1,5 @@
 //
-//  AccountManager+AppGroup.swift
+//  AllProtectedCell.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,11 +17,11 @@
 //  limitations under the License.
 //
 
-import Foundation
-import Subscription
+import UIKit
 
-public extension AccountManager {
-    convenience init() {
-        self.init(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
-    }
+class AllProtectedCell: UITableViewCell {
+
+    static let reuseIdentifier = "AllProtectedCell"
+
+    @IBOutlet weak var label: UILabel!
 }

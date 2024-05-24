@@ -21,6 +21,7 @@ import Foundation
 import Subscription
 
 public protocol NetworkProtectionFeatureVisibility {
+
     func isWaitlistBetaActive() -> Bool
     func isWaitlistUser() -> Bool
     func isPrivacyProLaunched() -> Bool
@@ -37,25 +38,6 @@ public protocol NetworkProtectionFeatureVisibility {
     /// N.B. Backend will independently check for valid entitlement regardless of this value
     func shouldMonitorEntitlement() -> Bool
 
-    /// Whether to show VPN shortcut on the homescreen
+    /// Whether to show VPN shortcut on the home screen
     func shouldShowVPNShortcut() -> Bool
-}
-
-public extension NetworkProtectionFeatureVisibility {
-    func shouldShowThankYouMessaging() -> Bool {
-        isPrivacyProLaunched() && isWaitlistUser()
-    }
-
-    func shouldKeepVPNAccessViaWaitlist() -> Bool {
-        !isPrivacyProLaunched() && isWaitlistBetaActive() && isWaitlistUser()
-    }
-
-    func shouldShowVPNShortcut() -> Bool {
-        if isPrivacyProLaunched() {
-            let accountManager = AccountManager()
-            return accountManager.isUserAuthenticated
-        } else {
-            return shouldKeepVPNAccessViaWaitlist()
-        }
-    }
 }

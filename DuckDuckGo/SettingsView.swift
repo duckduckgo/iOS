@@ -124,9 +124,11 @@ struct SettingsView: View {
         case .itr:
             SubscriptionITPView()
         case let .subscriptionFlow(origin):
-            SubscriptionContainerViewFactory.makeSubscribeFlow(origin: origin, navigationCoordinator: subscriptionNavigationCoordinator)
+            SubscriptionContainerViewFactory.makeSubscribeFlow(origin: origin, navigationCoordinator: subscriptionNavigationCoordinator,
+                                                               subscriptionManager: AppDependencyProvider.shared.subscriptionManager)
         case .subscriptionRestoreFlow:
-            SubscriptionContainerViewFactory.makeRestoreFlow(navigationCoordinator: subscriptionNavigationCoordinator)
+            SubscriptionContainerViewFactory.makeRestoreFlow(navigationCoordinator: subscriptionNavigationCoordinator,
+                                                             subscriptionManager: AppDependencyProvider.shared.subscriptionManager)
         default:
             EmptyView()
         }

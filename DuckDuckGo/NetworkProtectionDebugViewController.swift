@@ -35,7 +35,6 @@ import NetworkExtension
 import NetworkProtection
 import Subscription
 
-
 // swiftlint:disable:next type_body_length
 final class NetworkProtectionDebugViewController: UITableViewController {
     private let titles = [
@@ -138,21 +137,25 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     private var connectionTestResults: [ConnectionTestResult] = []
     private var connectionTestResultError: String?
     private let connectionTestQueue = DispatchQueue(label: "com.duckduckgo.ios.vpnDebugConnectionTestQueue")
+    private let accountManager: AccountManaging
 
     // MARK: Lifecycle
 
-    init?(coder: NSCoder,
-          tokenStore: NetworkProtectionTokenStore,
-          debugFeatures: NetworkProtectionDebugFeatures = NetworkProtectionDebugFeatures()) {
-
+    required init?(coder: NSCoder,
+                   tokenStore: NetworkProtectionTokenStore,
+                   debugFeatures: NetworkProtectionDebugFeatures = NetworkProtectionDebugFeatures(),
+                   accountManager: AccountManaging) {
+        
         self.debugFeatures = debugFeatures
         self.tokenStore = tokenStore
+        self.accountManager = accountManager
 
         super.init(coder: coder)
     }
 
     required convenience init?(coder: NSCoder) {
-        self.init(coder: coder, tokenStore: NetworkProtectionKeychainTokenStore())
+        self.init(coder: coder, tokenStore: AppDependencyProvider.shared.networkProtectionKeychainTokenStore,
+                  accountManager: AppDependencyProvider.shared.subscriptionManager.accountManager)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -628,7 +631,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     private func configure(_ cell: UITableViewCell, forVisibilityRow row: Int) {
         switch FeatureVisibilityRows(rawValue: row) {
         case .toggleSelectedEnvironment:
-            let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+            let settings = AppDependencyProvider.shared.vpnSettings
             if settings.selectedEnvironment == .production {
                 cell.textLabel?.text = "Selected Environment: PRODUCTION"
             } else {
@@ -642,11 +645,11 @@ final class NetworkProtectionDebugViewController: UITableViewController {
                 cell.textLabel?.text = "Subscription Override: N/A"
             }
         case .debugInfo:
-            let vpnVisibility = DefaultNetworkProtectionVisibility()
+            let vpnVisibility = AppDependencyProvider.shared.vpnFeatureVisibility
 
             cell.textLabel?.font = .monospacedSystemFont(ofSize: 13.0, weight: .regular)
             cell.textLabel?.text = """
-Endpoint: \(VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment.endpointURL.absoluteString)
+Endpoint: \(AppDependencyProvider.shared.vpnSettings.selectedEnvironment.endpointURL.absoluteString)
 
 isPrivacyProLaunched: \(vpnVisibility.isPrivacyProLaunched() ? "YES" : "NO")
 isWaitlistBetaActive: \(vpnVisibility.isWaitlistBetaActive() ? "YES" : "NO")
@@ -664,7 +667,9 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
 
     @MainActor
     private func refreshMetadata() async {
-        let collector = DefaultVPNMetadataCollector()
+        let collector = DefaultVPNMetadataCollector(statusObserver: AppDependencyProvider.shared.connectionObserver,
+                                                    networkProtectionAccessManager: AppDependencyProvider.shared.networkProtectionAccessController,
+                                                    tokenStore: AppDependencyProvider.shared.networkProtectionKeychainTokenStore)
         self.vpnMetadata = await collector.collectMetadata()
         self.tableView.reloadData()
     }
@@ -692,7 +697,7 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
             if let subscriptionOverrideEnabled = defaults.subscriptionOverrideEnabled {
                 if subscriptionOverrideEnabled {
                     defaults.subscriptionOverrideEnabled = false
-                    AccountManager().signOut()
+                    accountManager.signOut()
                 } else {
                     defaults.resetsubscriptionOverrideEnabled()
                 }
@@ -712,12 +717,9 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
     }
 
     private func clearAllVPNData() {
-        let accessController = NetworkProtectionAccessController()
-        accessController.revokeNetworkProtectionAccess()
+        AppDependencyProvider.shared.networkProtectionAccessController.revokeNetworkProtectionAccess()
     }
-
 }
-
 
 extension NWConnection {
 

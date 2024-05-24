@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "diego/remove-waitlist-code",
-        "revision" : "884734aee6031c2a6438f186da95c6d440071070"
+        "revision" : "7c235d29fc446436734612e81dd486b7c52aa577",
+        "version" : "148.0.0"
       }
     },
     {

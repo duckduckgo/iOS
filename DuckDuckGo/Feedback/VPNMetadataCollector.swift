@@ -128,10 +128,10 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     private let settings: VPNSettings
     private let defaults: UserDefaults
 
-    init(statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
+    init(statusObserver: ConnectionStatusObserver,
          serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
-         networkProtectionAccessManager: NetworkProtectionAccessController = NetworkProtectionAccessController(),
-         tokenStore: NetworkProtectionTokenStore = NetworkProtectionKeychainTokenStore(),
+         networkProtectionAccessManager: NetworkProtectionAccessController,
+         tokenStore: NetworkProtectionTokenStore,
          settings: VPNSettings = .init(defaults: .networkProtectionGroupDefaults),
          defaults: UserDefaults = .networkProtectionGroupDefaults) {
         self.statusObserver = statusObserver
@@ -278,7 +278,7 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
             enableSource: .init(from: accessManager.networkProtectionAccessType()),
             betaParticipant: accessType == .waitlistInvited,
             hasToken: hasToken,
-            subscriptionActive: AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)).isUserAuthenticated
+            subscriptionActive: AppDependencyProvider.shared.subscriptionManager.accountManager.isUserAuthenticated
         )
     }
 }

@@ -35,6 +35,7 @@ import WidgetKit
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
     private var cancellables = Set<AnyCancellable>()
+    private let accountManager: AccountManaging
 
     // MARK: - PacketTunnelProvider.Event reporting
 
@@ -253,25 +254,47 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         super.stopTunnel(with: reason, completionHandler: completionHandler)
     }
 
+    // swiftlint:disable:next function_body_length
     @objc init() {
-        let featureVisibility = NetworkProtectionVisibilityForTunnelProvider()
+
+        let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+
+        // Align Subscription environment to the VPN environment
+        var subscriptionEnvironment = SubscriptionEnvironment.default
+        switch settings.selectedEnvironment {
+        case .production:
+            subscriptionEnvironment.serviceEnvironment = .production
+        case .staging:
+            subscriptionEnvironment.serviceEnvironment = .staging
+        }
+
+        // MARK: - Configure Subscription
+        let entitlementsCache = UserDefaultsCache<[Entitlement]>(userDefaults: UserDefaults.standard,
+                                                                 key: UserDefaultsCacheKey.subscriptionEntitlements,
+                                                                 settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
+        let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.unspecified))
+        let subscriptionService = SubscriptionService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let authService = AuthService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let accountManager = AccountManager(accessTokenStorage: accessTokenStorage,
+                                            entitlementsCache: entitlementsCache,
+                                            subscriptionService: subscriptionService,
+                                            authService: authService)
+        self.accountManager = accountManager
+        let featureVisibility = NetworkProtectionVisibilityForTunnelProvider(accountManager: accountManager)
         let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
         let accessTokenProvider: () -> String? = {
-        if featureVisibility.shouldMonitorEntitlement() {
-            return { AccountManager().accessToken }
-        }
-        return { nil }
-        }()
-        let tokenStore = NetworkProtectionKeychainTokenStore(
-            keychainType: .dataProtection(.unspecified),
-            errorEvents: nil,
-            isSubscriptionEnabled: isSubscriptionEnabled,
-            accessTokenProvider: accessTokenProvider
-        )
+            if featureVisibility.shouldMonitorEntitlement() {
+                return { accountManager.accessToken }
+            }
+            return { nil } }()
+        let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
+                                                             errorEvents: nil,
+                                                             isSubscriptionEnabled: isSubscriptionEnabled,
+                                                             accessTokenProvider: accessTokenProvider)
 
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
-        let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+
         let notificationsPresenterDecorator = NetworkProtectionNotificationsPresenterTogglableDecorator(
             settings: settings,
             defaults: .networkProtectionGroupDefaults,
@@ -288,7 +311,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    settings: settings,
                    defaults: .networkProtectionGroupDefaults,
                    isSubscriptionEnabled: isSubscriptionEnabled,
-                   entitlementCheck: Self.entitlementCheck)
+                   entitlementCheck: { return await Self.entitlementCheck(accountManager: accountManager) })
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
@@ -336,17 +359,13 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
     }
 
-    private static func entitlementCheck() async -> Result<Bool, Error> {
-        guard NetworkProtectionVisibilityForTunnelProvider().shouldMonitorEntitlement() else {
+    private static func entitlementCheck(accountManager: AccountManaging) async -> Result<Bool, Error> {
+        
+        guard NetworkProtectionVisibilityForTunnelProvider(accountManager: accountManager).shouldMonitorEntitlement() else {
             return .success(true)
         }
 
-        if VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment == .staging {
-            SubscriptionPurchaseEnvironment.currentServiceEnvironment = .staging
-        }
-
-        let result = await AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
-            .hasEntitlement(for: .networkProtection)
+        let result = await accountManager.hasEntitlement(for: .networkProtection)
         switch result {
         case .success(let hasEntitlement):
             return .success(hasEntitlement)

@@ -18,25 +18,30 @@
 //
 
 import SwiftUI
+import Subscription
 
 @available(iOS 15.0, *)
 enum SubscriptionContainerViewFactory {
 
-    static func makeSubscribeFlow(origin: String?, navigationCoordinator: SubscriptionNavigationCoordinator) -> some View {
+    static func makeSubscribeFlow(origin: String?, navigationCoordinator: SubscriptionNavigationCoordinator, subscriptionManager: SubscriptionManaging) -> some View {
         let viewModel = SubscriptionContainerViewModel(
+            subscriptionManager: subscriptionManager,
             origin: origin,
             userScript: SubscriptionPagesUserScript(),
-            subFeature: SubscriptionPagesUseSubscriptionFeature(subscriptionAttributionOrigin: origin)
+            subFeature: SubscriptionPagesUseSubscriptionFeature(subscriptionManager: subscriptionManager,
+                                                                subscriptionAttributionOrigin: origin)
         )
         return SubscriptionContainerView(currentView: .subscribe, viewModel: viewModel)
             .environmentObject(navigationCoordinator)
     }
 
-    static func makeRestoreFlow(navigationCoordinator: SubscriptionNavigationCoordinator) -> some View {
+    static func makeRestoreFlow(navigationCoordinator: SubscriptionNavigationCoordinator, subscriptionManager: SubscriptionManaging) -> some View {
         let viewModel = SubscriptionContainerViewModel(
+            subscriptionManager: subscriptionManager,
             origin: nil,
             userScript: SubscriptionPagesUserScript(),
-            subFeature: SubscriptionPagesUseSubscriptionFeature(subscriptionAttributionOrigin: nil)
+            subFeature: SubscriptionPagesUseSubscriptionFeature(subscriptionManager: subscriptionManager,
+                                                                subscriptionAttributionOrigin: nil)
         )
         return SubscriptionContainerView(currentView: .restore, viewModel: viewModel)
             .environmentObject(navigationCoordinator)

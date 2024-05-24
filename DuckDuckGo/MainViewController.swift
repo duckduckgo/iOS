@@ -70,7 +70,11 @@ class MainViewController: UIViewController {
     var contentUnderflow: CGFloat {
         return 3 + (allowContentUnderflow ? -viewCoordinator.navigationBarContainer.frame.size.height : 0)
     }
-    
+
+    var isShowingAutocompleteSuggestions: Bool {
+        suggestionTrayController?.isShowingAutocompleteSuggestions == true
+    }
+
     lazy var emailManager: EmailManager = {
         let emailManager = EmailManager()
         emailManager.aliasPermissionDelegate = self
@@ -324,6 +328,7 @@ class MainViewController: UIViewController {
             Pixel.fire(pixel: .swipeToOpenNewTab)
             self?.newTab()
         } onSwipeStarted: { [weak self] in
+            self?.performCancel()
             self?.hideKeyboard()
             self?.updatePreviewForCurrentTab()
         }
@@ -367,8 +372,7 @@ class MainViewController: UIViewController {
             SuggestionTrayViewController(coder: coder,
                                          favoritesViewModel: self.favoritesViewModel,
                                          bookmarksDatabase: self.bookmarksDatabase,
-                                         historyCoordinator: self.historyManager.historyCoordinator,
-                                         bookmarksStringSearch: self.bookmarksCachingSearch)
+                                         historyManager: self.historyManager)
         }) else {
             assertionFailure()
             return
@@ -568,8 +572,8 @@ class MainViewController: UIViewController {
         if let suggestionsTray = suggestionTrayController {
             let suggestionsFrameInView = suggestionsTray.view.convert(suggestionsTray.contentFrame, to: view)
 
-            let overflow = suggestionsFrameInView.size.height + suggestionsFrameInView.origin.y - keyboardFrameInView.origin.y + 10
-            if overflow > 0 {
+            let overflow = suggestionsFrameInView.intersection(keyboardFrameInView).height
+            if overflow > 0 && !appSettings.currentAddressBarPosition.isBottom {
                 suggestionsTray.applyContentInset(UIEdgeInsets(top: 0, left: 0, bottom: overflow, right: 0))
             } else {
                 suggestionsTray.applyContentInset(.zero)
@@ -673,6 +677,7 @@ class MainViewController: UIViewController {
     }
         
     @objc func dismissSuggestionTray() {
+        omniBar.cancel()
         dismissOmniBar()
     }
 
@@ -770,6 +775,8 @@ class MainViewController: UIViewController {
             })
             self.present(controller: alert, fromView: self.viewCoordinator.toolbar)
         }
+
+        performCancel()
     }
     
     func onQuickFirePressed() {
@@ -789,13 +796,16 @@ class MainViewController: UIViewController {
 
     @IBAction func onBackPressed() {
         Pixel.fire(pixel: .tabBarBackPressed)
+        performCancel()
+        hideSuggestionTray()
         hideNotificationBarIfBrokenSitePromptShown()
         currentTab?.goBack()
-        refreshOmniBar()
     }
 
     @IBAction func onForwardPressed() {
         Pixel.fire(pixel: .tabBarForwardPressed)
+        performCancel()
+        hideSuggestionTray()
         hideNotificationBarIfBrokenSitePromptShown()
         currentTab?.goForward()
     }
@@ -1449,7 +1459,7 @@ class MainViewController: UIViewController {
 
     private func presentExpiredEntitlementNotification() {
         let presenter = NetworkProtectionNotificationsPresenterTogglableDecorator(
-            settings: VPNSettings(defaults: .networkProtectionGroupDefaults),
+            settings: AppDependencyProvider.shared.vpnSettings,
             defaults: .networkProtectionGroupDefaults,
             wrappee: NetworkProtectionUNNotificationPresenter()
         )
@@ -1463,41 +1473,42 @@ class MainViewController: UIViewController {
         os_log("[NetP Subscription] Reset expired entitlement messaging", log: .networkProtection, type: .info)
     }
 
+    var networkProtectionTunnelController: NetworkProtectionTunnelController {
+        AppDependencyProvider.shared.networkProtectionTunnelController
+    }
+
     @objc
     private func onEntitlementsChange(_ notification: Notification) {
         Task {
-            guard case .success(false) = await AccountManager().hasEntitlement(for: .networkProtection) else { return }
+            let accountManager = AppDependencyProvider.shared.subscriptionManager.accountManager
+            guard case .success(false) = await accountManager.hasEntitlement(for: .networkProtection) else { return }
 
-            let controller = NetworkProtectionTunnelController()
-
-            if await controller.isInstalled {
+            if await networkProtectionTunnelController.isInstalled {
                 tunnelDefaults.enableEntitlementMessaging()
             }
 
-            if await controller.isConnected {
+            if await networkProtectionTunnelController.isConnected {
                 DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
                     "reason": "entitlement-change"
                 ])
             }
 
-            await controller.stop()
-            await controller.removeVPN()
+            await networkProtectionTunnelController.stop()
+            await networkProtectionTunnelController.removeVPN()
         }
     }
 
     @objc
     private func onNetworkProtectionAccountSignOut(_ notification: Notification) {
         Task {
-            let controller = NetworkProtectionTunnelController()
-            
-            if await controller.isConnected {
+            if await networkProtectionTunnelController.isConnected {
                 DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
                     "reason": "account-signed-out"
                 ])
             }
 
-            await controller.stop()
-            await controller.removeVPN()
+            await networkProtectionTunnelController.stop()
+            await networkProtectionTunnelController.removeVPN()
         }
     }
 #endif
@@ -1717,10 +1728,11 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onMenuPressed() {
+        omniBar.cancel()
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
-        hideSuggestionTray()
+        performCancel()
         ActionMessageView.dismissAllMessages()
         Task {
             await launchBrowsingMenu()
@@ -1750,7 +1762,7 @@ extension MainViewController: OmniBarDelegate {
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
-        hideSuggestionTray()
+        performCancel()
         segueToBookmarks()
     }
     
@@ -1762,10 +1774,6 @@ extension MainViewController: OmniBarDelegate {
     
     func onEnterPressed() {
         fireControllerAwarePixel(ntp: .keyboardGoWhileOnNTP, serp: .keyboardGoWhileOnSERP, website: .keyboardGoWhileOnWebsite)
-
-        guard !viewCoordinator.suggestionTrayContainer.isHidden else { return }
-        
-        suggestionTrayController?.willDismiss(with: viewCoordinator.omniBar.textField.text ?? "")
     }
 
     func fireControllerAwarePixel(ntp: Pixel.Event, serp: Pixel.Event, website: Pixel.Event) {
@@ -1780,8 +1788,13 @@ extension MainViewController: OmniBarDelegate {
         }
     }
 
-    func onDismissed() {
-        dismissOmniBar()
+    func onEditingEnd() -> OmniBarEditingEndResult {
+        if isShowingAutocompleteSuggestions {
+            return .suspended
+        } else {
+            dismissOmniBar()
+            return .dismissed
+        }
     }
 
     func onSettingsPressed() {
@@ -1801,6 +1814,7 @@ extension MainViewController: OmniBarDelegate {
 
     func performCancel() {
         dismissOmniBar()
+        omniBar.cancel()
         hideSuggestionTray()
         homeController?.omniBarCancelPressed()
         self.showMenuHighlighterIfNeeded()
@@ -1825,6 +1839,9 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar, tapped: Bool) {
+        // We don't want any action here if we're still in autocomplete context
+        guard !isShowingAutocompleteSuggestions else { return }
+
         if let currentTab {
             viewCoordinator.omniBar.refreshText(forUrl: currentTab.url, forceFullURL: true)
         }
@@ -1908,9 +1925,17 @@ extension MainViewController: FavoritesOverlayDelegate {
 
 extension MainViewController: AutocompleteViewControllerDelegate {
 
+    func autocompleteDidEndWithUserQuery() {
+        if let query = omniBar.textField.text {
+            onOmniQuerySubmitted(query
+            )
+        }
+    }
+
     func autocomplete(selectedSuggestion suggestion: Suggestion) {
         homeController?.chromeDelegate = nil
         dismissOmniBar()
+        viewCoordinator.omniBar.cancel()
         switch suggestion {
         case .phrase(phrase: let phrase):
             if let url = URL.makeSearchURL(text: phrase) {
@@ -1972,6 +1997,10 @@ extension MainViewController: AutocompleteViewControllerDelegate {
                 viewCoordinator.omniBar.selectTextToEnd(query.count)
             }
         case .historyEntry(title: let title, let url, _):
+            if url.isDuckDuckGoSearch, let query = url.searchQuery {
+                viewCoordinator.omniBar.textField.text = query
+            }
+
             if (title ?? url.absoluteString).hasPrefix(query) {
                 viewCoordinator.omniBar.selectTextToEnd(query.count)
             }
@@ -2321,11 +2350,13 @@ extension MainViewController: TabSwitcherButtonDelegate {
     
     func launchNewTab(_ button: TabSwitcherButton) {
         Pixel.fire(pixel: .tabSwitchLongPressNewTab)
+        performCancel()
         newTab()
     }
 
     func showTabSwitcher(_ button: TabSwitcherButton) {
         Pixel.fire(pixel: .tabBarTabSwitcherPressed)
+        performCancel()
         showTabSwitcher()
     }
 

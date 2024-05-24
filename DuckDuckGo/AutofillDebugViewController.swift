@@ -20,6 +20,7 @@
 import UIKit
 import BrowserServicesKit
 import Core
+import Common
 
 class AutofillDebugViewController: UITableViewController {
 
@@ -27,7 +28,8 @@ class AutofillDebugViewController: UITableViewController {
         case toggleAutofillDebugScript = 201
         case resetEmailProtectionInContextSignUp = 202
         case resetDaysSinceInstalledTo0 = 203
-        case toggleAutofillSurvey = 204
+        case resetAutofillData = 204
+        case toggleAutofillSurvey = 205
     }
 
     let defaults = AppUserDefaults()
@@ -46,6 +48,14 @@ class AutofillDebugViewController: UITableViewController {
                 defaults.autofillDebugScriptEnabled.toggle()
                 cell.accessoryType = defaults.autofillDebugScriptEnabled ? .checkmark : .none
                 NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.autofillDebugScriptToggled))
+            } else if cell.tag == Row.resetAutofillData.rawValue {
+                let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter.shared)
+                try? secureVault?.deleteAllWebsiteCredentials()
+                let autofillPixelReporter = AutofillPixelReporter(
+                        userDefaults: .standard,
+                        eventMapping: EventMapping<AutofillPixelEvent> { _, _, _, _ in })
+                autofillPixelReporter.resetStoreDefaults()
+                ActionMessageView.present(message: "Autofill Data reset")
             } else if cell.tag == Row.toggleAutofillSurvey.rawValue {
                 defaults.autofillSurveyEnabled = true
                 ActionMessageView.present(message: "Passwords Survey enabled")

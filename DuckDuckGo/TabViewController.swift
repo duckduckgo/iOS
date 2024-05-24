@@ -127,11 +127,13 @@ class TabViewController: UIViewController {
 
     private var trackersInfoWorkItem: DispatchWorkItem?
     
-    private var tabURLInterceptor: TabURLInterceptor = TabURLInterceptorDefault()
+    private var tabURLInterceptor: TabURLInterceptor = TabURLInterceptorDefault {
+        return AppDependencyProvider.shared.subscriptionManager.canPurchase
+    }
     private var currentlyLoadedURL: URL?
     
 #if NETWORK_PROTECTION
-    private let netPConnectionObserver = ConnectionStatusObserverThroughSession()
+    private let netPConnectionObserver: ConnectionStatusObserver = AppDependencyProvider.shared.connectionObserver
     private var netPConnectionObserverCancellable: AnyCancellable?
     private var netPConnectionStatus: ConnectionStatus = .default
     private var netPConnected: Bool {
@@ -2516,9 +2518,6 @@ extension TabViewController: SecureVaultManagerDelegate {
                             promptUserWithGeneratedPassword password: String,
                             completionHandler: @escaping (Bool) -> Void) {
         let passwordGenerationPromptViewController = PasswordGenerationPromptViewController(generatedPassword: password) { useGeneratedPassword in
-                if useGeneratedPassword {
-                    NotificationCenter.default.post(name: .autofillFillEvent, object: nil)
-                }
                 completionHandler(useGeneratedPassword)
         }
 
@@ -2659,6 +2658,8 @@ extension TabViewController: SaveLoginViewControllerDelegate {
                                                                             with: AutofillSecureVaultFactory)
             confirmSavedCredentialsFor(credentialID: credentialID, message: message)
             syncService.scheduler.notifyDataChanged()
+
+            NotificationCenter.default.post(name: .autofillSaveEvent, object: nil)
         } catch {
             os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
         }

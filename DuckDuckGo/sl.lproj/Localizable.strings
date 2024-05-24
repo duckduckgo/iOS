@@ -119,7 +119,7 @@
 "addWidget.description" = "Zagotovite si hiter dostop do zasebnega iskanja in spletnih mest, ki so vam všeč.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Pritisnite in pridržite točko na začetnem zaslonu, da vstopite v način premikanja.";
+"addWidget.settings.firstParagraph" = "Long-press on the Home Screen to enter jiggle mode.";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Tapnite gumb plus %@.";
@@ -133,14 +133,47 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Obstoječi zaznamki ne bodo podvojeni.";
 
+/* Description for alert shown when sync error occurs because of bad data */
+"alert.sync-bad-data-error-description" = "Nekateri zaznamki ali gesla so napačno oblikovani ali predolgi in niso bili sinhronizirani.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Dosegli ste največje število zaznamkov. Izbrišite nekaj zaznamkov, da nadaljujete sinhronizacijo.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Sinhronizacija zaznamkov je zaustavljena";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Dosegli ste največje število gesel. Izbrišite nekatera gesla, da nadaljujete sinhronizacijo.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Sinhronizacija gesla je zaustavljena";
+
 /* Title for sync error alert */
 "alert.sync-error" = "Napaka pri sinhronizaciji in varnostnem kopiranju";
+
+/* Sync error alert action button title, takes the user to the sync settings page. */
+"alert.sync-error-action" = "Nastavitve sinhronizacije";
+
+/* Description for alert shown when user logged off from sync */
+"alert.sync-invalid-login-error-description" = "Sinhronizacija je bila začasno zaustavljena. Če želite še naprej sinhronizirati to napravo, znova vzpostavite povezavo z uporabo druge naprave ali obnovitvene kode.";
 
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Več";
 
 /* Confirmation button in alert */
 "alert.sync-paused-alert-ok-button" = "V REDU";
+
+/* Title for alert shown when sync paused for an error */
+"alert.sync-paused-title" = "Sinhronizacija je začasno zaustavljena";
+
+/* Description for alert shown when sync error occurs because of too many requests */
+"alert.sync-too-many-requests-error-description" = "Sinhronizacija in varnostno kopiranje sta začasno nedostopna.";
+
+/* Title of the warning message that tells the user that there was an error with the sync feature. */
+"alert.sync.warning.sync-error" = "Napaka pri sinhronizaciji";
+
+/* Title of the warning message */
+"alert.sync.warning.sync-paused" = "Sinhronizacija in varnostno kopiranje sta zaustavljena";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Želiš dodati vse zavihke med zaznamke?";
@@ -207,6 +240,15 @@
 
 /* No comment provided by engineer. */
 "autoclear.on" = "Vključeno";
+
+/* Subtitle for search history items */
+"autocomplete.history.search.duckduckgo" = "Iščite po DuckDuckGo";
+
+/* The message text shown in suggestions */
+"autocomplete.history.warning.message" = "Predlogi zdaj vključujejo nedavno obiskana spletna mesta. Ta so shranjena v vaši napravi in nikoli v strežnikih DuckDuckGo. Funkcijo izklopite v nastavitvah ali pa seznam kadar koli počistite z gumbom Fire Button 🔥.";
+
+/* Title for message show in suggestions */
+"autocomplete.history.warning.title" = "Enaka raven zasebnosti.\nBoljši predlogi iskanja!";
 
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Onemogočeno";
@@ -1148,6 +1190,9 @@
 "get.browser.title" = "Prenesite DuckDuckGo za računalnike Mac ali Windows";
 
 /* No comment provided by engineer. */
+"Help us improve!" = "Help us improve!";
+
+/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Dodaj DuckDuckGo na domači zaslon!";
 
 /* No comment provided by engineer. */
@@ -1603,6 +1648,26 @@
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
 
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Upravljanje zaznamkov";
+
+/* Description for sync bookmarks limits exceeded warning */
+"prefrences.sync.bookmarks-limit-exceeded-description" = "Dosegli ste največje število zaznamkov. Izbrišite jih nekaj, če želite nadaljevati sinhronizacijo.";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Upravljanje gesel…";
+
+/* Description for sync credentials limits exceeded warning */
+"prefrences.sync.credentials-limit-exceeded-description" = "Dosegli ste največje število gesel. Izbrišite jih nekaj, če želite nadaljevati sinhronizacijo.";
+
+/* Description invalid credentials error when syncing.
+   Description of incorrectly formatted data error when syncing.
+   Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Sinhronizacija je naletela na napako. Poskusite onemogočiti sinhronizacijo v tej napravi in nato znova vzpostavite povezavo z drugo napravo ali obnovitveno kodo.";
+
+/* Title for sync limits exceeded warning */
+"prefrences.sync.limit-exceeded-title" = "Sinhronizacija je začasno zaustavljena";
+
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Spletne strani se zanašajo na piškotke, da boš vedno prijavljen. Ko spletno mesto požarno zaščitiš, piškotki ne bodo izbrisani in ostal boš prijavljen tudi po uporabi gumba Fire. Še vedno blokiramo zunanje sledilce, ki jih najdemo na požarno izoliranih spletnih mestih.";
 
@@ -1711,6 +1776,9 @@
 
 /* Settings screen cell for autocomplete */
 "settings.autocomplete" = "Pokaži predloge za samodokončanje";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited" = "Nedavno obiskana spletna mesta";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Zaklepanje aplikacije";
@@ -2241,6 +2309,9 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Preklopi med zavihki";
 
+/* No comment provided by engineer. */
+"Take Survey" = "Take Survey";
+
 /* Description text for the text size adjustment setting */
 "textSize.description" = "Izberite želeno velikost besedila. Spletna mesta, ki se prikazujejo v iskalniku DuckDuckGo, se temu prilagodijo.";
 
@@ -2319,6 +2390,9 @@
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
 
+/* Title for the VPN widget onboarding screen */
+"vpn.addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
+
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";
 
@@ -2388,6 +2462,9 @@
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
 
+/* VPN settings screen cell text for adding the VPN widget to the home screen */
+"vpn.settings.add.widget" = "Add VPN Widget to Home Screen";
+
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Dovoli obvestila";
 
@@ -2438,6 +2515,9 @@
 
 /* Title for the share sheet entry */
 "waitlist.share-sheet.title" = "Povabljeni ste!";
+
+/* No comment provided by engineer. */
+"We want to make using passwords in DuckDuckGo better." = "We want to make using passwords in DuckDuckGo better.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Priljubljeni odstranjeni";

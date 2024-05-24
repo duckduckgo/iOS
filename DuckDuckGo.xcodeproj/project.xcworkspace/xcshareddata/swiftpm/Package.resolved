@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "anh/netp/error-ui",
-        "revision" : "2d37fc155dda9d8fe5f74da79f0442cdccfb9926"
+        "revision" : "0d077ddde5c8784e017af4ce0fa4574229ec3046"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "bb8e7e62104ed6506c7bfd3ef7aa4aca3686ed4f",
-        "version" : "5.15.0"
+        "revision" : "fa861c4eccb21d235e34070b208b78bdc32ece08",
+        "version" : "5.17.0"
       }
     },
     {

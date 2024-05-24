@@ -149,11 +149,15 @@ class AppDependencyProvider: DependencyProvider {
             }
             return { nil }
         }()
+#if os(macOS)
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
                                                                                   serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
                                                                                   errorEvents: .networkProtectionAppDebugEvents,
                                                                                   isSubscriptionEnabled: accountManager.isUserAuthenticated,
                                                                                   accessTokenProvider: accessTokenProvider)
+#else
+        networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
+#endif
         networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
                                                                               tokenStore: networkProtectionKeychainTokenStore)
         networkProtectionAccessController = NetworkProtectionAccessController(featureFlagger: featureFlagger,

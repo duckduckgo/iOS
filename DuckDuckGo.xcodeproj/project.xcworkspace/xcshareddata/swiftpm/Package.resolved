@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "7c235d29fc446436734612e81dd486b7c52aa577",
-        "version" : "148.0.0"
+        "branch" : "anh/netp/remove-token-store",
+        "revision" : "f93619b5d18e98209986605cf1bcb501f6d3ceec"
       }
     },
     {

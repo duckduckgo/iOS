@@ -284,7 +284,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
         let accessTokenProvider: () -> String? = {
             if featureVisibility.shouldMonitorEntitlement() {
-                return { AccountManager().accessToken }
+                return { accountManager.accessToken }
             }
             return { nil }
         }()

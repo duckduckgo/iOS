@@ -755,6 +755,7 @@
 		CBDD5DE129A6741300832877 /* MockBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDD5DE029A6741300832877 /* MockBundle.swift */; };
 		CBEFB9142AE0844700DEDE7B /* CriticalAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEFB9102ADFFE7900DEDE7B /* CriticalAlerts.swift */; };
 		CBFCB30E2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFCB30D2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift */; };
+		CD668E2B2C00C1F8009A73D1 /* PhishingDetection in Frameworks */ = {isa = PBXBuildFile; productRef = CD668E2A2C00C1F8009A73D1 /* PhishingDetection */; };
 		D60170BD2BA34CE8001911B5 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60170BB2BA32DD6001911B5 /* Subscription.swift */; };
 		D60B1F272B9DDE5A00AE4760 /* SubscriptionGoogleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60B1F262B9DDE5A00AE4760 /* SubscriptionGoogleView.swift */; };
 		D61CDA162B7CF77300A0FBB9 /* Subscription in Frameworks */ = {isa = PBXBuildFile; productRef = D61CDA152B7CF77300A0FBB9 /* Subscription */; };
@@ -2664,6 +2665,7 @@
 				853273B624FFE0BB00E3C778 /* WidgetKit.framework in Frameworks */,
 				0238E44F29C0FAA100615E30 /* FindInPageIOSJSSupport in Frameworks */,
 				3760DFED299315EF0045A446 /* Waitlist in Frameworks */,
+				CD668E2B2C00C1F8009A73D1 /* PhishingDetection in Frameworks */,
 				F1D43AFA2B99C1D300BAB743 /* BareBonesBrowserKit in Frameworks */,
 				F143C2EB1E4A4CD400CFDE3A /* Core.framework in Frameworks */,
 				31E69A63280F4CB600478327 /* DuckUI in Frameworks */,
@@ -5587,6 +5589,7 @@
 				CB941A6D2B96AB08000F9E7A /* PrivacyDashboard */,
 				F1D43AF92B99C1D300BAB743 /* BareBonesBrowserKit */,
 				9F8FE9482BAE50E50071E372 /* Lottie */,
+				CD668E2A2C00C1F8009A73D1 /* PhishingDetection */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -9829,8 +9832,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = exactVersion;
-				version = 147.0.0;
+				branch = "tespach/phishing-protection-client";
+				kind = branch;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
@@ -10049,6 +10052,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = Configuration;
+		};
+		CD668E2A2C00C1F8009A73D1 /* PhishingDetection */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = PhishingDetection;
 		};
 		D61CDA152B7CF77300A0FBB9 /* Subscription */ = {
 			isa = XCSwiftPackageProductDependency;

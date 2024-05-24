@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "610a58a77fefe82f8541d4a7f998ef2a4609a068",
-        "version" : "147.0.0"
+        "branch" : "tespach/phishing-protection-client",
+        "revision" : "ab323737d2ae7e8d5bc502ff98c939c287c7f853"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "fa861c4eccb21d235e34070b208b78bdc32ece08",
-        "version" : "5.17.0"
+        "revision" : "bb8e7e62104ed6506c7bfd3ef7aa4aca3686ed4f",
+        "version" : "5.15.0"
       }
     },
     {

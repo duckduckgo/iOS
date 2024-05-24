@@ -1,5 +1,5 @@
 //
-//  SurveyURLBuilder.swift
+//  RemoteMessagingSurveyURLBuilder.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -17,40 +17,25 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import Foundation
 import BrowserServicesKit
+import RemoteMessaging
 import Core
 import Common
 
-protocol SurveyURLBuilder {
-    func addSurveyParameters(to url: URL) -> URL
-}
-
-struct DefaultSurveyURLBuilder: SurveyURLBuilder {
-
-    enum SurveyURLParameters: String, CaseIterable {
-        case atb = "atb"
-        case atbVariant = "var"
-        case daysSinceActivated = "delta"
-        case iosVersion = "mv"
-        case appVersion = "ddgv"
-        case hardwareModel = "mo"
-        case lastActiveDate = "da"
-    }
+struct DefaultRemoteMessagingSurveyURLBuilder: RemoteMessagingSurveyActionMapping {
 
     private let statisticsStore: StatisticsStore
-    private let activationDateStore: VPNWaitlistActivationDateStore
+    private let activationDateStore: VPNActivationDateStore
 
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
-         activationDateStore: VPNWaitlistActivationDateStore = DefaultVPNWaitlistActivationDateStore()) {
+         activationDateStore: VPNActivationDateStore = DefaultVPNActivationDateStore()) {
         self.statisticsStore = statisticsStore
         self.activationDateStore = activationDateStore
     }
 
     // swiftlint:disable:next cyclomatic_complexity
-    func addSurveyParameters(to surveyURL: URL) -> URL {
+    func add(parameters: [RemoteMessagingSurveyActionParameter], to surveyURL: URL) -> URL {
         guard var components = URLComponents(string: surveyURL.absoluteString) else {
             assertionFailure("Could not build URL components from survey URL")
             return surveyURL
@@ -58,7 +43,7 @@ struct DefaultSurveyURLBuilder: SurveyURLBuilder {
 
         var queryItems = components.queryItems ?? []
 
-        for parameter in SurveyURLParameters.allCases {
+        for parameter in parameters {
             switch parameter {
             case .atb:
                 if let atb = statisticsStore.atb {
@@ -68,11 +53,7 @@ struct DefaultSurveyURLBuilder: SurveyURLBuilder {
                 if let variant = statisticsStore.variant {
                     queryItems.append(URLQueryItem(name: parameter.rawValue, value: variant))
                 }
-            case .daysSinceActivated:
-                if let daysSinceActivated = activationDateStore.daysSinceActivation() {
-                    queryItems.append(URLQueryItem(name: parameter.rawValue, value: String(describing: daysSinceActivated)))
-                }
-            case .iosVersion:
+            case .osVersion:
                 queryItems.append(URLQueryItem(name: parameter.rawValue, value: AppVersion.shared.osVersion))
             case .appVersion:
                 queryItems.append(URLQueryItem(name: parameter.rawValue, value: AppVersion.shared.versionAndBuildNumber))
@@ -83,6 +64,11 @@ struct DefaultSurveyURLBuilder: SurveyURLBuilder {
                 if let daysSinceLastActive = activationDateStore.daysSinceLastActive() {
                     queryItems.append(URLQueryItem(name: parameter.rawValue, value: String(describing: daysSinceLastActive)))
                 }
+            case .daysInstalled:
+                if let installDate = statisticsStore.installDate,
+                      let daysSinceInstall = Calendar.current.numberOfDaysBetween(installDate, and: Date()) {
+                    queryItems.append(URLQueryItem(name: parameter.rawValue, value: String(describing: daysSinceInstall)))
+                }
             }
         }
 
@@ -92,7 +78,7 @@ struct DefaultSurveyURLBuilder: SurveyURLBuilder {
     }
 
     func addPasswordsCountSurveyParameter(to surveyURL: URL) -> URL {
-        let surveyURLWithParameters = addSurveyParameters(to: surveyURL)
+        let surveyURLWithParameters = add(parameters: RemoteMessagingSurveyActionParameter.allCases, to: surveyURL)
 
         guard var components = URLComponents(string: surveyURLWithParameters.absoluteString), let bucket = passwordsCountBucket() else {
             return surveyURLWithParameters
@@ -129,5 +115,3 @@ struct DefaultSurveyURLBuilder: SurveyURLBuilder {
     }
 
 }
-
-#endif

@@ -55,7 +55,7 @@ struct SubscriptionFlowView: View {
     var body: some View {
         
         // Hidden Navigation Links for Onboarding sections
-        NavigationLink(destination: NetworkProtectionRootView(inviteCompletion: {}).navigationViewStyle(.stack),
+        NavigationLink(destination: NetworkProtectionRootView().navigationViewStyle(.stack),
                        isActive: $isShowingNetP,
                        label: { EmptyView() })
         NavigationLink(destination: SubscriptionITPView().navigationViewStyle(.stack),

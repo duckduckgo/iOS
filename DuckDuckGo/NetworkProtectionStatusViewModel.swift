@@ -167,6 +167,11 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         setUpLocationPublishers()
         setUpThroughputRefreshTimer()
         setUpErrorPublishers()
+
+        // Prefetching this now for snappy load times on the locations screens
+        Task {
+            _ = try? await locationListRepository.fetchLocationList()
+        }
     }
 
     private func setUpIsConnectedStatePublishers() {

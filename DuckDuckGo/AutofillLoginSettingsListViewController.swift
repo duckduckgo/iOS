@@ -220,7 +220,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         let messageView = PasswordsSurveyView(surveyButtonAction: { [weak self] in
             let survey = "https://selfserve.decipherinc.com/survey/selfserve/32ab/240409"
             if let surveyURL = URL(string: survey) {
-                let surveyURLBuilder = DefaultSurveyURLBuilder()
+                let surveyURLBuilder = DefaultRemoteMessagingSurveyURLBuilder()
                 let surveyURLWithParameters = surveyURLBuilder.addPasswordsCountSurveyParameter(to: surveyURL)
                 LaunchTabNotification.postLaunchTabNotification(urlString: surveyURLWithParameters.absoluteString)
             } else {

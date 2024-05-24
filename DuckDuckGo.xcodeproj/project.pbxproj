@@ -3289,7 +3289,7 @@
 			isa = PBXGroup;
 			children = (
 				7BC5711F2BDBB877003B0CCE /* VPNActivationDateStore.swift */,
-				4B78074D2B183A1F009DB2CF /* SurveyURLBuilder.swift */,
+				4B78074D2B183A1F009DB2CF /* RemoteMessagingSurveyURLBuilder.swift */,
 				BDFF031F2BA3D3AD00F324C9 /* Feature Visibility */,
 			);
 			name = VPN;
@@ -4292,7 +4292,6 @@
 				C1B7B52028941F2A0098FD6A /* RemoteMessageRequest.swift */,
 				C1B7B52128941F2A0098FD6A /* RemoteMessaging.swift */,
 				C1B7B51F28941F2A0098FD6A /* RemoteMessagingStore.swift */,
-				4B78074D2B183A1F009DB2CF /* RemoteMessagingSurveyURLBuilder.swift */,
 			);
 			name = RemoteMessaging;
 			sourceTree = "<group>";
@@ -9778,8 +9777,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = revision;
-				revision = 8d58961b3c51926cc2979b37d1295fafc0859e54;
+				branch = "diego/remove-waitlist-code";
+				kind = branch;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

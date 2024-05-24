@@ -36,6 +36,7 @@ final class SubscriptionContainerViewModel: ObservableObject {
          userScript: SubscriptionPagesUserScript,
          subFeature: SubscriptionPagesUseSubscriptionFeature) {
         self.userScript = userScript
+        subFeature.cleanup()
         self.subFeature = subFeature
         self.flow = SubscriptionFlowViewModel(origin: origin,
                                               userScript: userScript,
@@ -49,7 +50,4 @@ final class SubscriptionContainerViewModel: ObservableObject {
                                                 subscriptionManager: subscriptionManager)
     }
 
-    deinit {
-        subFeature.cleanup()
-    }
 }

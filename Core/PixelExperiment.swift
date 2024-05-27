@@ -59,7 +59,7 @@ public enum PixelExperiment: String, CaseIterable {
     }
 
     // These are the variants. Rename or add/remove them as needed.  If you change the string value
-    //  remember to keep it clear for privacy triage.
+    // remember to keep it clear for privacy triage.
     case control
     case newSettings
 

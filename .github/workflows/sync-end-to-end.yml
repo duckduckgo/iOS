@@ -98,7 +98,7 @@ jobs:
         
     - name: Overwrite default config with sync one
       run: |
-        cp .maestro/config-sync.yaml .maestro/config.yaml
+        cp .maestro/config-sync .maestro/config.yaml
         
     - name: Sync e2e tests 
       run: |

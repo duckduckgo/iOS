@@ -243,6 +243,14 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
         }
     }
 
+    func privacyDashboardControllerDidRequestShowAlertForMissingDescription(_ privacyDashboardController: PrivacyDashboardController) {
+        let alert = UIAlertController(title: UserText.brokenSiteReportMissingDescriptionAlertTitle,
+                                      message: UserText.brokenSiteReportMissingDescriptionAlertDescription,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: UserText.brokenSiteReportMissingDescriptionAlertButton, style: .default))
+        present(alert, animated: true)
+    }
+
 }
 
 // MARK: - PrivacyDashboardToggleReportDelegate

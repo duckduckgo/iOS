@@ -260,6 +260,7 @@ class TabSwitcherViewController: UIViewController {
     }
     
     @IBAction func onDisplayModeButtonPressed(_ sender: UIButton) {
+        isProcessingUpdates = true
         tabSwitcherSettings.isGridViewEnabled = !tabSwitcherSettings.isGridViewEnabled
         
         if tabSwitcherSettings.isGridViewEnabled {
@@ -273,7 +274,8 @@ class TabSwitcherViewController: UIViewController {
         UIView.transition(with: view,
                           duration: 0.3,
                           options: .transitionCrossDissolve, animations: {
-                            self.collectionView.reloadData()
+            self.collectionView.reloadData()
+            self.isProcessingUpdates = false
         }, completion: nil)
     }
 

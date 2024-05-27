@@ -159,6 +159,26 @@ extension MainViewController {
         present(controller, animated: true)
     }
 
+    func segueToNegativeFeedbackForm() {
+        os_log(#function, log: .generalLog, type: .debug)
+        hideAllHighlightsIfNeeded()
+
+        let feedbackPicker = FeedbackPickerViewController.loadFromStoryboard()
+
+        feedbackPicker.popoverPresentationController?.delegate = feedbackPicker
+        feedbackPicker.view.backgroundColor = UIColor(designSystemColor: .backgroundSheets)
+
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            feedbackPicker.modalPresentationStyle = .formSheet
+        } else {
+            feedbackPicker.modalPresentationStyle = .pageSheet
+        }
+        feedbackPicker.loadViewIfNeeded()
+        feedbackPicker.configure(with: Feedback.Category.allCases)
+
+        present(UINavigationController(rootViewController: feedbackPicker), animated: true)
+    }
+
     func segueToDownloads() {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()

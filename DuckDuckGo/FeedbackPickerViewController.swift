@@ -126,6 +126,8 @@ class FeedbackPickerViewController: UITableViewController {
     }
 }
 
+extension FeedbackPickerViewController: UIPopoverPresentationControllerDelegate {}
+
 extension FeedbackPickerViewController {
     
     private func decorate() {

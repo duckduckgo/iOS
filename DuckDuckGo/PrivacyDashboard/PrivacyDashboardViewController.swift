@@ -219,12 +219,12 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
         privacyDashboardProtectionSwitchChangeHandler(state: protectionState)
     }
     
-    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboard.PrivacyDashboardController,
+    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController,
                                     didRequestSubmitBrokenSiteReportWithCategory category: String,
                                     description: String) {
         Task { @MainActor in
             do {
-                let report = try await makeBrokenSiteReport(category: category, description: description, source: source)
+                let report = try await makeBrokenSiteReport(category: category, description: description, source: privacyDashboardController.source)
                 try brokenSiteReporter.report(report, reportMode: .regular)
             } catch {
                 os_log("Failed to generate or send the broken site report: %@", type: .error, error.localizedDescription)
@@ -233,13 +233,12 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
             ActionMessageView.present(message: UserText.feedbackSumbittedConfirmation)
             privacyDashboardCloseHandler()
         }
+    }
 
-        var source: BrokenSiteReport.Source {
-            switch privacyDashboardController.initDashboardMode {
-            case .report: return .appMenu
-            case .toggleReport, .dashboard: return .dashboard
-            case .prompt(let event): return .prompt(event)
-            }
+    func privacyDashboardControllerDidRequestShowGeneralFeedback(_ privacyDashboardController: PrivacyDashboardController) {
+        guard let mainViewController = presentingViewController as? MainViewController else { return }
+        dismiss(animated: true) {
+            mainViewController.segueToNegativeFeedbackForm()
         }
     }
 

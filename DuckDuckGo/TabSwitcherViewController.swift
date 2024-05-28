@@ -275,8 +275,9 @@ class TabSwitcherViewController: UIViewController {
                           duration: 0.3,
                           options: .transitionCrossDissolve, animations: {
             self.collectionView.reloadData()
+        }, completion: { _ in
             self.isProcessingUpdates = false
-        }, completion: nil)
+        })
     }
 
     @IBAction func onAddPressed(_ sender: UIBarButtonItem) {

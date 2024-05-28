@@ -260,24 +260,35 @@ class TabSwitcherViewController: UIViewController {
     }
     
     @IBAction func onDisplayModeButtonPressed(_ sender: UIButton) {
+        guard isProcessingUpdates == false else { return }
+
         isProcessingUpdates = true
-        tabSwitcherSettings.isGridViewEnabled = !tabSwitcherSettings.isGridViewEnabled
-        
-        if tabSwitcherSettings.isGridViewEnabled {
-            Pixel.fire(pixel: .tabSwitcherGridEnabled)
-        } else {
-            Pixel.fire(pixel: .tabSwitcherListEnabled)
+        // Idea is here to wait for any pending processing of reconfigureItems on a cells,
+        // so when transition to/from grid happens we can request cells without any issues
+        // related to mismatched identifiers.
+        // Alternative is to use reloadItems instead of reconfigureItems but it looks very bad
+        // when tabs are reloading in the background.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+            guard let self else { return }
+
+            tabSwitcherSettings.isGridViewEnabled = !tabSwitcherSettings.isGridViewEnabled
+
+            if tabSwitcherSettings.isGridViewEnabled {
+                Pixel.fire(pixel: .tabSwitcherGridEnabled)
+            } else {
+                Pixel.fire(pixel: .tabSwitcherListEnabled)
+            }
+
+            self.refreshDisplayModeButton()
+
+            UIView.transition(with: view,
+                              duration: 0.3,
+                              options: .transitionCrossDissolve, animations: {
+                self.collectionView.reloadData()
+            }, completion: { _ in
+                self.isProcessingUpdates = false
+            })
         }
-        
-        refreshDisplayModeButton()
-        
-        UIView.transition(with: view,
-                          duration: 0.3,
-                          options: .transitionCrossDissolve, animations: {
-            self.collectionView.reloadData()
-        }, completion: { _ in
-            self.isProcessingUpdates = false
-        })
     }
 
     @IBAction func onAddPressed(_ sender: UIBarButtonItem) {

@@ -25,6 +25,18 @@ import BrowserServicesKit
 import PrivacyDashboard
 import Common
 
+extension PixelExperiment {
+
+    static var privacyDashboardVariant: PrivacyDashboardVariant {
+        switch Self.cohort {
+        case .control: return .control // TODO: change to case .a / case .b!
+        default: return .control
+        }
+    }
+
+
+}
+
 final class PrivacyDashboardViewController: UIViewController {
 
     @IBOutlet private(set) weak var webView: WKWebView!
@@ -51,11 +63,18 @@ final class PrivacyDashboardViewController: UIViewController {
         }, keyValueStoring: UserDefaults.standard)
     }()
 
-    private let toggleReportEvents = EventMapping<ToggleReportEvents> { event, _, parameters, _ in
+    private let toggleReportEvents = EventMapping<PrivacyDashboardEvents> { event, _, parameters, _ in
         let domainEvent: Pixel.Event
         switch event {
         case .toggleReportDismiss: domainEvent = .toggleReportDismiss
         case .toggleReportDoNotSend: domainEvent = .toggleReportDoNotSend
+        
+        case .showReportBrokenSite: domainEvent = .privacyDashboardReportBrokenSite
+
+        case .breakageCategorySelected: domainEvent = .reportBrokenSiteBreakageCategorySelected
+        case .overallCategorySelected: domainEvent = .reportBrokenSiteOverallCategorySelected
+        case .reportBrokenSiteShown: domainEvent = .reportBrokenSiteShown
+        case .reportBrokenSiteSent: domainEvent = .reportBrokenSiteSent
         }
         if let parameters {
             Pixel.fire(pixel: domainEvent, withAdditionalParameters: parameters)
@@ -72,6 +91,7 @@ final class PrivacyDashboardViewController: UIViewController {
           breakageAdditionalInfo: BreakageAdditionalInfo?) {
         self.privacyDashboardController = PrivacyDashboardController(privacyInfo: privacyInfo,
                                                                      dashboardMode: dashboardMode,
+                                                                     variant: PixelExperiment.privacyDashboardVariant,
                                                                      privacyConfigurationManager: privacyConfigurationManager,
                                                                      eventMapping: toggleReportEvents)
         self.privacyConfigurationManager = privacyConfigurationManager
@@ -173,10 +193,6 @@ extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
         dismiss(animated: true) {
             mainViewController.loadUrlInNewTab(url, inheritedAttribution: nil)
         }
-    }
-    
-    func privacyDashboardControllerDidRequestShowReportBrokenSite(_ privacyDashboardController: PrivacyDashboardController) {
-        Pixel.fire(pixel: .privacyDashboardReportBrokenSite)
     }
     
     func privacyDashboardController(_ privacyDashboardController: PrivacyDashboard.PrivacyDashboardController,

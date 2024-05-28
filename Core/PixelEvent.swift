@@ -1427,7 +1427,7 @@ extension Pixel.Event {
         case .reportBrokenSiteFeedbackCategorySubmitted: return "m_report-broken-site_feedback-category-submitted"
         case .reportBrokenSiteTogglePromptNo: return "m_report-broken-site_toggle-prompt-no"
         case .reportBrokenSiteTogglePromptYes: return "m_report-broken-site_toggle-prompt-yes"
-
+            // TODO: use these pixels
         }
     }
 }

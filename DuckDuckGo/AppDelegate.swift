@@ -501,10 +501,6 @@ import WebKit
         syncService.scheduler.notifyAppLifecycleEvent()
         fireFailedCompilationsPixelIfNeeded()
 
-        Task {
-            await refreshShortcuts()
-        }
-
 #if NETWORK_PROTECTION
         widgetRefreshModel.refreshVPNWidget()
 
@@ -515,6 +511,16 @@ import WebKit
         }
 
         presentExpiredEntitlementNotificationIfNeeded()
+
+        Task {
+            let vpnWorkaround = VPNRedditSessionWorkaround(
+                accountManager: AppDependencyProvider.shared.accountManager,
+                tunnelController: AppDependencyProvider.shared.networkProtectionTunnelController
+            )
+
+            await refreshShortcuts()
+            await vpnWorkaround.installRedditSessionWorkaround()
+        }
 #endif
 
         updateSubscriptionStatus()

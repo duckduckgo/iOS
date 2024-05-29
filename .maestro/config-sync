@@ -1,0 +1,15 @@
+appStartup:
+  enabled: false
+appSize:
+  enabled: false
+flows:
+  - "**"
+executionOrder:
+  flowsOrder:
+    - 01_create_account
+    - 02_login_account
+    - 03_recover_account
+    - 04_sync_data_setup
+    - 05_sync_data_check
+    - 06_delete_account
+

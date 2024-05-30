@@ -1871,6 +1871,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
+/* Title for Link in the Footer of Privacy Pro section */
+"settings.ppro.footer" = "Privacy Policy and Terms of Service";
+
 /* Settings screen cell for long press previews */
 "settings.previews" = "Long-Press Previews";
 

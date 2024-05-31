@@ -152,7 +152,7 @@ class AppDependencyProvider: DependencyProvider {
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
                                                                                   serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
                                                                                   errorEvents: .networkProtectionAppDebugEvents,
-                                                                                  isSubscriptionEnabled: accountManager.isUserAuthenticated,
+                                                                                  isSubscriptionEnabled: true,
                                                                                   accessTokenProvider: accessTokenProvider)
         networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
                                                                               tokenStore: networkProtectionKeychainTokenStore)

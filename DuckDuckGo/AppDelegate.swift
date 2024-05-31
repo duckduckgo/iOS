@@ -225,7 +225,7 @@ import WebKit
         }
 
         PixelExperimentForBrokenSites.install()
-        PixelExperiment.install()
+        PixelExperiment.cleanup()
 
         // MARK: Sync initialisation
 #if DEBUG

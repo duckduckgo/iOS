@@ -303,7 +303,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             environment: settings.selectedEnvironment,
             tokenStore: tokenStore,
             errorEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
-            isSubscriptionEnabled: isSubscriptionEnabled
+            isSubscriptionEnabled: true
         )
         notificationsPresenter.requestAuthorization()
         super.init(notificationsPresenter: notificationsPresenterDecorator,

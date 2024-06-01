@@ -120,4 +120,24 @@ public extension Color {
     }
 }
 
+public extension Color {
+    static func shade(_ percent: Double) -> Color {
+        Self.black.opacity(percent)
+    }
+
+    static func tint(_ percent: Double) -> Color {
+        Self.white.opacity(percent)
+    }
+}
+
+public extension UIColor {
+    static func shade(_ percent: Double) -> UIColor {
+        UIColor(.shade(percent))
+    }
+
+    static func tint(_ percent: Double) -> UIColor {
+        UIColor(.tint(percent))
+    }
+}
+
 #endif

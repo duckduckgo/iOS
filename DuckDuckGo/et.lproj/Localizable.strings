@@ -119,7 +119,7 @@
 "addWidget.description" = "Kasuta kiiret juurdepääsu privaatsele otsingule ja lemmiksaitidele.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Pikk vajutus avaekraanile rakenduse ümberkorraldusrežiimi sisenemiseks.";
+"addWidget.settings.firstParagraph" = "Long-press on the Home Screen to enter jiggle mode.";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Vajutage plussnupule %@.";
@@ -133,14 +133,47 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Olemasolevaid järjehoidjaid ei dubleerita.";
 
+/* Description for alert shown when sync error occurs because of bad data */
+"alert.sync-bad-data-error-description" = "Mõned järjehoidjad või paroolid on valesti vormindatud või liiga pikad ja neid ei sünkroonitud.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Oled saavutanud maksimaalse järjehoidjate arvu. Sünkroonimise jätkamiseks kustuta mõned järjehoidjad.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Järjehoidja sünkroonimine on peatatud";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Oled saavutanud maksimaalse paroolide arvu. Sünkroonimise jätkamiseks kustuta mõned paroolid.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Parooli sünkroonimine on peatatud";
+
 /* Title for sync error alert */
 "alert.sync-error" = "Sünkroonimise ja varundamise tõrge";
+
+/* Sync error alert action button title, takes the user to the sync settings page. */
+"alert.sync-error-action" = "Sünkroonimise sätted";
+
+/* Description for alert shown when user logged off from sync */
+"alert.sync-invalid-login-error-description" = "Sünkroonimine on peatatud. Kui soovid selle seadme sünkroonimist jätkata, loo uuesti ühendus, kasutades mõnda teist seadet või taastamiskoodi.";
 
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Loe edasi";
 
 /* Confirmation button in alert */
 "alert.sync-paused-alert-ok-button" = "OK";
+
+/* Title for alert shown when sync paused for an error */
+"alert.sync-paused-title" = "Sünkroonimine on peatatud";
+
+/* Description for alert shown when sync error occurs because of too many requests */
+"alert.sync-too-many-requests-error-description" = "Sync & Backup pole ajutiselt saadaval.";
+
+/* Title of the warning message that tells the user that there was an error with the sync feature. */
+"alert.sync.warning.sync-error" = "Sünkroonimisviga";
+
+/* Title of the warning message */
+"alert.sync.warning.sync-paused" = "Sünkroonimine ja varundamine on peatatud";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Kas lisada kõik vahekaardid järjehoidjasse?";
@@ -207,6 +240,15 @@
 
 /* No comment provided by engineer. */
 "autoclear.on" = "Sees";
+
+/* Subtitle for search history items */
+"autocomplete.history.search.duckduckgo" = "Otsi DuckDuckGo'st";
+
+/* The message text shown in suggestions */
+"autocomplete.history.warning.message" = "Soovitused hõlmavad nüüd hiljuti külastatud saite. Need salvestatakse sinu seadmesse ja mitte kunagi DuckDuckGo serveritesse. Saad selle välja lülitada seadetes või tühjendada igal ajal nupu 🔥 Fire Button abil.";
+
+/* Title for message show in suggestions */
+"autocomplete.history.warning.title" = "Sama privaatsus.\nParemad otsingusoovitused!";
 
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Keelatud";
@@ -1148,6 +1190,9 @@
 "get.browser.title" = "Hangi DuckDuckGo Maci või Windowsi jaoks";
 
 /* No comment provided by engineer. */
+"Help us improve!" = "Help us improve!";
+
+/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Lisa DuckDuckGo oma avaekraanile!";
 
 /* No comment provided by engineer. */
@@ -1603,6 +1648,26 @@
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
 
+/* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
+"prefrences.sync.bookmarks-limit-exceeded-action" = "Halda järjehoidjaid";
+
+/* Description for sync bookmarks limits exceeded warning */
+"prefrences.sync.bookmarks-limit-exceeded-description" = "Oled saavutanud maksimaalse järjehoidjate arvu. Kustuta mõni, et jätkata sünkroonimisega.";
+
+/* Button title for sync credentials limits exceeded warning to go to manage passwords */
+"prefrences.sync.credentials-limit-exceeded-action" = "Halda paroole…";
+
+/* Description for sync credentials limits exceeded warning */
+"prefrences.sync.credentials-limit-exceeded-description" = "Oled saavutanud maksimaalse paroolide arvu. Kustuta mõni, et jätkata sünkroonimisega.";
+
+/* Description invalid credentials error when syncing.
+   Description of incorrectly formatted data error when syncing.
+   Description of too many requests error when syncing. */
+"prefrences.sync.invalid-login-description" = "Sünkroonimisel ilmnes tõrge. Proovi sellel seadmel sünkroonimine keelata ja seejärel loo uuesti ühendus, kasutades mõnda teist seadet või taastamiskoodi.";
+
+/* Title for sync limits exceeded warning */
+"prefrences.sync.limit-exceeded-title" = "Sünkroonimine peatatud";
+
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Veebisaidid kasutavad küpsiseid, et hoida sind sisse logitud. Kui teed saidi tulekindlaks, ei kustutata küpsiseid ja sa jääd sisse logituks isegi pärast tulenupu kasutamist. Me blokeerime endiselt kolmanda poole jälitajad, kelle me tulekindlatelt lehtedelt leiame.";
 
@@ -1711,6 +1776,9 @@
 
 /* Settings screen cell for autocomplete */
 "settings.autocomplete" = "Automaatselt täidetavad ettepanekud";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited" = "Hiljuti külastatud saidid";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Rakenduse lukk";
@@ -2241,6 +2309,9 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Vahekaardi vahetaja";
 
+/* No comment provided by engineer. */
+"Take Survey" = "Take Survey";
+
 /* Description text for the text size adjustment setting */
 "textSize.description" = "Valige soovitud teksti suurus. Veebisaidid, mida DuckDuckGos vaatate, kohanduvad sellega.";
 
@@ -2319,6 +2390,9 @@
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
 
+/* Title for the VPN widget onboarding screen */
+"vpn.addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
+
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";
 
@@ -2388,6 +2462,9 @@
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
 
+/* VPN settings screen cell text for adding the VPN widget to the home screen */
+"vpn.settings.add.widget" = "Add VPN Widget to Home Screen";
+
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Luba teavitused";
 
@@ -2438,6 +2515,9 @@
 
 /* Title for the share sheet entry */
 "waitlist.share-sheet.title" = "Oled kutsutud!";
+
+/* No comment provided by engineer. */
+"We want to make using passwords in DuckDuckGo better." = "We want to make using passwords in DuckDuckGo better.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Lemmik on eemaldatud";

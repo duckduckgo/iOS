@@ -39,7 +39,7 @@ class URLDownloadSession: NSObject, DownloadSession {
             self.session = session
         } else {
             let configuration = URLSessionConfiguration.ephemeral
-            let userAgent = DefaultUserAgentManager.shared.userAgent(isDesktop: false)
+            let userAgent = DefaultUserAgentManager.shared.userAgent(isDesktop: false, url: url)
             configuration.httpAdditionalHeaders = ["user-agent": userAgent]
             self.session = URLSession(configuration: configuration, delegate: self, delegateQueue: .main)
         }

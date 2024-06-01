@@ -229,6 +229,10 @@ class OmniBar: UIView {
         separatorToBottom.constant = 0
     }
 
+    func cancel() {
+        refreshState(state.onEditingStoppedState)
+    }
+
     func startBrowsing() {
         refreshState(state.onBrowsingStartedState)
     }
@@ -446,6 +450,7 @@ class OmniBar: UIView {
 
     @IBAction func onCancelPressed(_ sender: Any) {
         omniDelegate?.onCancelPressed()
+        refreshState(state.onEditingStoppedState)
     }
     
     @IBAction func onRefreshPressed(_ sender: Any) {
@@ -517,8 +522,12 @@ extension OmniBar: UITextFieldDelegate {
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        omniDelegate?.onDismissed()
-        refreshState(state.onEditingStoppedState)
+        switch omniDelegate?.onEditingEnd() {
+        case .dismissed, .none:
+            refreshState(state.onEditingStoppedState)
+        case .suspended:
+            refreshState(state.onEditingSuspendedState)
+        }
     }
 }
 

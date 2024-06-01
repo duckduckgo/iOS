@@ -24,8 +24,8 @@ import SwiftUI
 @available(iOS 15, *)
 final class NetworkProtectionRootViewController: UIHostingController<NetworkProtectionRootView> {
 
-    init(inviteCompletion: @escaping () -> Void = { }) {
-        let rootView = NetworkProtectionRootView(inviteCompletion: inviteCompletion)
+    init() {
+        let rootView = NetworkProtectionRootView()
         super.init(rootView: rootView)
     }
     

@@ -238,6 +238,15 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "On";
 
+/* Subtitle for search history items */
+"autocomplete.history.search.duckduckgo" = "Search DuckDuckGo";
+
+/* The message text shown in suggestions */
+"autocomplete.history.warning.message" = "Suggestions now include recently visited sites. These are stored on your device and never on DuckDuckGo's servers. Turn off in settings, or clear any time with the 🔥 Fire Button.";
+
+/* Title for message show in suggestions */
+"autocomplete.history.warning.title" = "Same privacy.\nBetter search suggestions!";
+
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Disabled";
 
@@ -1565,7 +1574,7 @@ https://duckduckgo.com/mac";
 "network.protection.vpn.secure.dns.setting.footer" = "Our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.";
 
 /* Title for the FAQ row in the VPN status screen. */
-"network.protection.vpn.settings.faq" = "Frequently Asked Questions";
+"network.protection.vpn.settings.faq" = "FAQs and Support";
 
 /* Title for the feedback row in the VPN status screen. */
 "network.protection.vpn.settings.share-feedback" = "Share VPN Feedback";
@@ -1756,6 +1765,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings screen cell for autocomplete */
 "settings.autocomplete" = "Autocomplete Suggestions";
 
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited" = "Recently Visited Sites";
+
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Application Lock";
 
@@ -1859,6 +1871,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
+/* Title for Link in the Footer of Privacy Pro section */
+"settings.ppro.footer" = "Privacy Policy and Terms of Service";
+
 /* Settings screen cell for long press previews */
 "settings.previews" = "Long-Press Previews";
 
@@ -1887,7 +1902,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "settings.subscription.activation.pending.description" = "This is taking longer than usual, please check back later.";
 
 /* Subscription activation pending title */
-"settings.subscription.activation.pending.title" = "Your Subscription is Being Activated";
+"settings.subscription.activation.pending.title" = "Your Subscription is being activated";
 
 /* Data Broker protection cell subtitle for privacy pro */
 "settings.subscription.DBP.subtitle" = "Remove your info from sites that sell it";
@@ -1896,7 +1911,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "settings.subscription.DBP.title" = "Personal Information Removal";
 
 /* Privacy pro description subtext */
-"settings.subscription.description" = "More seamless privacy with three new protections, including:";
+"settings.subscription.description" = "More seamless privacy with three new protections:";
 
 /* I have a Subscription button text for privacy pro */
 "settings.subscription.existing.subscription" = "I Have a Subscription";
@@ -2135,7 +2150,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.manage.devices" = "Manage Devices";
 
 /* Description for Email Management options */
-"subscription.manage.email.description" = "You can use this email to activate your subscription from browser settings in the DuckDuckGo app on your other devices.";
+"subscription.manage.email.description" = "Use this email to activate your subscription from browser settings in the DuckDuckGo app on other devices..";
 
 /* Manage Plan header */
 "subscription.manage.plan" = "Manage Plan";
@@ -2168,7 +2183,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.pir.heroTextMenyEntry" = "I have a subscription";
 
 /* Text for the 'macOS' button */
-"subscription.pir.macos" = "macOS";
+"subscription.pir.macos" = "Mac";
 
 /* Text for the 'Windows' button */
 "subscription.pir.windows" = "Windows";

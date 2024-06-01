@@ -34,7 +34,6 @@ import NetworkProtection
 // swiftlint:disable type_body_length
 final class SettingsViewModel: ObservableObject {
 
-    
     // Dependencies
     private(set) lazy var appSettings = AppDependencyProvider.shared.appSettings
     private(set) var privacyStore = PrivacyUserDefaults()
@@ -45,20 +44,18 @@ final class SettingsViewModel: ObservableObject {
     private let voiceSearchHelper: VoiceSearchHelperProtocol
     private let syncPausedStateManager: any SyncPausedStateManaging
     var emailManager: EmailManager { EmailManager() }
+    private let historyManager: HistoryManager
 
     // Subscription Dependencies
-    private var subscriptionAccountManager: AccountManager
+    private let subscriptionManager: SubscriptionManaging
     private var subscriptionSignOutObserver: Any?
     
+    private enum UserDefaultsCacheKey: String, UserDefaultsCacheKeyStore {
+        case subscriptionState = "com.duckduckgo.ios.subscription.state"
+    }
     // Used to cache the lasts subscription state for up to a week
-    private var subscriptionStateCache = UserDefaultsCache<SettingsState.Subscription>(
-        key: UserDefaultsCacheKey.subscriptionState,
-        settings: UserDefaultsCacheSettings(defaultExpirationInterval: .days(7)))
-
-#if NETWORK_PROTECTION
-    private let connectionObserver = ConnectionStatusObserverThroughSession()
-#endif
-    
+    private let subscriptionStateCache = UserDefaultsCache<SettingsState.Subscription>(key: UserDefaultsCacheKey.subscriptionState,
+                                                                         settings: UserDefaultsCacheSettings(defaultExpirationInterval: .days(7)))
     // Properties
     private lazy var isPad = UIDevice.current.userInterfaceIdiom == .pad
     private var cancellables = Set<AnyCancellable>()
@@ -88,7 +85,9 @@ final class SettingsViewModel: ObservableObject {
     var shouldShowNoMicrophonePermissionAlert: Bool = false
     @Published var shouldShowEmailAlert: Bool = false
     var autocompleteSubtitle: String?
-    
+
+    @Published var shouldShowRecentlyVisitedSites: Bool = true
+
     // MARK: - Deep linking
     // Used to automatically navigate to a specific section
     // immediately after loading the Settings View
@@ -178,6 +177,7 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
+                self.updateRecentlyVisitedSitesVisibility()
                 if $0 {
                     Pixel.fire(pixel: .settingsAutocompleteOn,
                                withAdditionalParameters: PixelExperiment.parameters)
@@ -196,6 +196,7 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
+                self.updateRecentlyVisitedSitesVisibility()
                 if $0 {
                     Pixel.fire(pixel: .settingsPrivateSearchAutocompleteOn,
                                withAdditionalParameters: PixelExperiment.parameters)
@@ -207,6 +208,16 @@ final class SettingsViewModel: ObservableObject {
         )
     }
 
+    var autocompleteRecentlyVisitedSitesBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.recentlyVisitedSites },
+            set: {
+                self.appSettings.recentlyVisitedSites = $0
+                self.state.recentlyVisitedSites = $0
+            }
+        )
+    }
+
     // Remove after Settings experiment
     var autocompleteGeneralBinding: Binding<Bool> {
         Binding<Bool>(
@@ -214,6 +225,7 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
+                self.updateRecentlyVisitedSitesVisibility()
                 if $0 {
                     Pixel.fire(pixel: .settingsGeneralAutocompleteOn,
                                withAdditionalParameters: PixelExperiment.parameters)
@@ -390,22 +402,26 @@ final class SettingsViewModel: ObservableObject {
     // MARK: Default Init
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
-         accountManager: AccountManager,
+         subscriptionManager: SubscriptionManaging,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil,
+         historyManager: HistoryManager,
          syncPausedStateManager: any SyncPausedStateManaging) {
+
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
-        self.subscriptionAccountManager = accountManager
+        self.subscriptionManager = subscriptionManager
         self.voiceSearchHelper = voiceSearchHelper
         self.deepLinkTarget = deepLink
+        self.historyManager = historyManager
         self.syncPausedStateManager = syncPausedStateManager
 
         setupNotificationObservers()
-        autocompleteSubtitle = variantManager.isSupported(feature: .history) ? UserText.settingsAutocompleteSubtitle : nil
+        autocompleteSubtitle = UserText.settingsAutocompleteSubtitle
+        updateRecentlyVisitedSitesVisibility()
     }
-    
+
     deinit {
         subscriptionSignOutObserver = nil
     }
@@ -432,6 +448,7 @@ extension SettingsViewModel {
             autoclearDataEnabled: AutoClearSettingsModel(settings: appSettings) != nil,
             applicationLock: privacyStore.authenticationEnabled,
             autocomplete: appSettings.autocomplete,
+            recentlyVisitedSites: appSettings.recentlyVisitedSites,
             longPressPreviews: appSettings.longPressPreviews,
             allowUniversalLinks: appSettings.allowUniversalLinks,
             activeWebsiteAccount: nil,
@@ -446,19 +463,19 @@ extension SettingsViewModel {
             sync: getSyncState()
         )
         
+        updateRecentlyVisitedSitesVisibility()
         setupSubscribers()
         Task { await setupSubscriptionEnvironment() }
-        
     }
-    
-    private func getNetworkProtectionState() -> SettingsState.NetworkProtection {
-        var enabled = false
-#if NETWORK_PROTECTION
-        if #available(iOS 15, *) {
-            enabled = DefaultNetworkProtectionVisibility().shouldKeepVPNAccessViaWaitlist()
+
+    private func updateRecentlyVisitedSitesVisibility() {
+        withAnimation {
+            shouldShowRecentlyVisitedSites = historyManager.isHistoryFeatureEnabled() && state.autocomplete
         }
-#endif
-        return SettingsState.NetworkProtection(enabled: enabled, status: "")
+    }
+
+    private func getNetworkProtectionState() -> SettingsState.NetworkProtection {
+        return SettingsState.NetworkProtection(enabled: false, status: "")
     }
 
     private func getSyncState() -> SettingsState.SyncSettings {
@@ -495,7 +512,7 @@ extension SettingsViewModel {
     
 #if NETWORK_PROTECTION
     private func updateNetPStatus(connectionStatus: ConnectionStatus) {
-        if DefaultNetworkProtectionVisibility().isPrivacyProLaunched() {
+        if AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched() {
             switch connectionStatus {
             case .connected:
                 self.state.networkProtection.status = UserText.netPCellConnected
@@ -503,17 +520,7 @@ extension SettingsViewModel {
                 self.state.networkProtection.status = UserText.netPCellDisconnected
             }
         } else {
-            switch NetworkProtectionAccessController().networkProtectionAccessType() {
-            case .none, .waitlistAvailable, .waitlistJoined, .waitlistInvitedPendingTermsAcceptance:
-                self.state.networkProtection.status = VPNWaitlist.shared.settingsSubtitle
-            case .waitlistInvited, .inviteCodeInvited:
-                switch connectionStatus {
-                case .connected:
-                    self.state.networkProtection.status = UserText.netPCellConnected
-                default:
-                    self.state.networkProtection.status = UserText.netPCellDisconnected
-                }
-            }
+            self.state.networkProtection.status = ""
         }
     }
 #endif
@@ -524,10 +531,9 @@ extension SettingsViewModel {
 extension SettingsViewModel {
     
     private func setupSubscribers() {
-               
 
     #if NETWORK_PROTECTION
-        connectionObserver.publisher
+        AppDependencyProvider.shared.connectionObserver.publisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] hasActiveSubscription in
                 self?.updateNetPStatus(connectionStatus: hasActiveSubscription)
@@ -747,7 +753,6 @@ extension SettingsViewModel {
 
     @MainActor
     private func setupSubscriptionEnvironment() async {
-        
         // If there's cached data use it by default
         if let cachedSubscription = subscriptionStateCache.get() {
             state.subscription = cachedSubscription
@@ -760,15 +765,15 @@ extension SettingsViewModel {
         state.subscription.enabled = AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
 
         // Update if can purchase based on App Store product availability
-        state.subscription.canPurchase = SubscriptionPurchaseEnvironment.canPurchase
+        state.subscription.canPurchase = subscriptionManager.canPurchase
 
         // Active subscription check
-        guard let token = subscriptionAccountManager.accessToken else {
+        guard let token = subscriptionManager.accountManager.accessToken else {
             subscriptionStateCache.set(state.subscription) // Sync cache
             return
         }
         
-        let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token)
+        let subscriptionResult = await subscriptionManager.subscriptionService.getSubscription(accessToken: token)
         switch subscriptionResult {
             
         case .success(let subscription):
@@ -782,7 +787,7 @@ extension SettingsViewModel {
                 // Check entitlements and update state
                 let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
                 for entitlement in entitlements {
-                    if case .success = await AccountManager().hasEntitlement(for: entitlement) {
+                    if case .success = await subscriptionManager.accountManager.hasEntitlement(for: entitlement) {
                         switch entitlement {
                         case .identityTheftRestoration:
                             self.state.subscription.entitlements.append(.identityTheftRestoration)
@@ -802,7 +807,6 @@ extension SettingsViewModel {
             
         case .failure:
             break
-            
         }
         
         // Sync Cache
@@ -826,7 +830,8 @@ extension SettingsViewModel {
     @available(iOS 15.0, *)
     func restoreAccountPurchase() async {
         DispatchQueue.main.async { self.state.subscription.isRestoring = true }
-        let result = await AppStoreRestoreFlow.restoreAccountFromPastPurchase(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+        let appStoreRestoreFlow = AppStoreRestoreFlow(subscriptionManager: subscriptionManager)
+        let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase()
         switch result {
         case .success:
             DispatchQueue.main.async {

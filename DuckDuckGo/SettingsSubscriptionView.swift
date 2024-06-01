@@ -35,7 +35,7 @@ struct SettingsSubscriptionView: View {
     @State var isShowingStripeView = false
     @State var isShowingSubscriptionError = false
     @State var isShowingPrivacyPro = false
-    
+
     enum Constants {
         static let purchaseDescriptionPadding = 5.0
         static let topCellPadding = 3.0
@@ -43,6 +43,8 @@ struct SettingsSubscriptionView: View {
         static let navigationDelay = 0.3
         static let infoIcon = "info-16"
         static let alertIcon = "Exclamation-Color-16"
+
+        static let privacyPolicyURL = URL(string: "https://duckduckgo.com/pro/privacy-terms")!
     }
 
     private var subscriptionDescriptionView: some View {
@@ -79,18 +81,23 @@ struct SettingsSubscriptionView: View {
         Text(UserText.settingsPProManageSubscription)
             .daxBodyRegular()
     }
-    
+
+    private var subscriptionManager: SubscriptionManaging {
+        AppDependencyProvider.shared.subscriptionManager
+    }
+
     @ViewBuilder
     private var purchaseSubscriptionView: some View {
 
         Group {
             SettingsCustomCell(content: { subscriptionDescriptionView })
             
-            let subscribeView = SubscriptionContainerViewFactory.makeSubscribeFlow(
-                origin: nil,
-                navigationCoordinator: subscriptionNavigationCoordinator
+            let subscribeView = SubscriptionContainerViewFactory.makeSubscribeFlow(origin: nil,
+                                                                                   navigationCoordinator: subscriptionNavigationCoordinator,
+                                                                                   subscriptionManager: subscriptionManager
             ).navigationViewStyle(.stack)
-            let restoreView = SubscriptionContainerViewFactory.makeRestoreFlow(navigationCoordinator: subscriptionNavigationCoordinator)
+            let restoreView = SubscriptionContainerViewFactory.makeRestoreFlow(navigationCoordinator: subscriptionNavigationCoordinator,
+                                                                               subscriptionManager: subscriptionManager)
                 .navigationViewStyle(.stack)
                 .onFirstAppear {
                     Pixel.fire(pixel: .privacyProRestorePurchaseClick)
@@ -122,9 +129,9 @@ struct SettingsSubscriptionView: View {
                 }
             })
                         
-            let subscribeView = SubscriptionContainerViewFactory.makeSubscribeFlow(
-                origin: nil,
-                navigationCoordinator: subscriptionNavigationCoordinator
+            let subscribeView = SubscriptionContainerViewFactory.makeSubscribeFlow(origin: nil,
+                                                                                   navigationCoordinator: subscriptionNavigationCoordinator,
+                                                                                   subscriptionManager: subscriptionManager
             ).navigationViewStyle(.stack)
             NavigationLink(
                 destination: subscribeView,
@@ -209,9 +216,12 @@ struct SettingsSubscriptionView: View {
     var body: some View {
         Group {
             if isShowingPrivacyPro {
-                
-                Section(header: Text(UserText.settingsPProSection)) {
-                                    
+                let footerLink = Link(UserText.settingsPProSectionFooter,
+                                      destination: Constants.privacyPolicyURL
+                ).daxFootnoteRegular().accentColor(Color.init(designSystemColor: .accent))
+
+                Section(header: Text(UserText.settingsPProSection), footer: footerLink) {
+
                     switch (
                         viewModel.state.subscription.isSignedIn,
                         viewModel.state.subscription.hasActiveSubscription,
@@ -248,7 +258,7 @@ struct SettingsSubscriptionView: View {
                         isShowingSubscribeFlow = false
                     }
                 }
-                
+
             }
         }.onReceive(viewModel.$state) { state in
             if state.subscription.enabled && state.subscription.canPurchase {

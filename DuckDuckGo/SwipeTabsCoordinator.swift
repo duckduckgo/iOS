@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Core
 
 class SwipeTabsCoordinator: NSObject {
     
@@ -85,6 +86,14 @@ class SwipeTabsCoordinator: NSObject {
         case starting(CGPoint)
         case swiping(CGPoint, FloatingPointSign)
         
+        var isIdle: Bool {
+            if case .idle = self {
+                return true
+            }
+
+            return false
+        }
+
     }
     
     var state: State = .idle
@@ -217,6 +226,12 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
     }
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard !state.isIdle else {
+            Pixel.fire(pixel: .swipeTabsIncorrectScrollState)
+            assertionFailure("invalid state")
+            return
+        }
+
         defer {
             cleanUpViews()
             state = .idle
@@ -291,7 +306,10 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
         if !isEnabled || tabsModel.currentIndex == indexPath.row {
             cell.omniBar = coordinator.omniBar
         } else {
-            cell.omniBar = OmniBar.loadFromXib()
+            // Strong reference while we use the omnibar
+            let omniBar = OmniBar.loadFromXib()
+
+            cell.omniBar = omniBar
             cell.omniBar?.translatesAutoresizingMaskIntoConstraints = false
             cell.updateConstraints()
             

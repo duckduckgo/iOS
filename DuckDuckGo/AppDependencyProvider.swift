@@ -23,6 +23,8 @@ import BrowserServicesKit
 import DDGSync
 import Bookmarks
 import Subscription
+import Common
+import NetworkProtection
 
 protocol DependencyProvider {
 
@@ -41,7 +43,14 @@ protocol DependencyProvider {
     var toggleProtectionsCounter: ToggleProtectionsCounter { get }
     var userBehaviorMonitor: UserBehaviorMonitor { get }
     var subscriptionFeatureAvailability: SubscriptionFeatureAvailability { get }
-
+    var subscriptionManager: SubscriptionManaging { get }
+    var accountManager: AccountManaging { get }
+    var vpnFeatureVisibility: DefaultNetworkProtectionVisibility { get }
+    var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore { get }
+    var networkProtectionAccessController: NetworkProtectionAccessController { get }
+    var networkProtectionTunnelController: NetworkProtectionTunnelController { get }
+    var connectionObserver: ConnectionStatusObserver { get }
+    var vpnSettings: VPNSettings { get }
 }
 
 /// Provides dependencies for objects that are not directly instantiated
@@ -54,10 +63,7 @@ class AppDependencyProvider: DependencyProvider {
     let variantManager: VariantManager = DefaultVariantManager()
     
     let internalUserDecider: InternalUserDecider = ContentBlocking.shared.privacyConfigurationManager.internalUserDecider
-    lazy var featureFlagger: FeatureFlagger = DefaultFeatureFlagger(
-        internalUserDecider: internalUserDecider,
-        privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager
-    )
+    let featureFlagger: FeatureFlagger
 
     let remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore()
     lazy var homePageConfiguration: HomePageConfiguration = HomePageConfiguration(variantManager: variantManager,
@@ -72,9 +78,89 @@ class AppDependencyProvider: DependencyProvider {
 
     let toggleProtectionsCounter: ToggleProtectionsCounter = ContentBlocking.shared.privacyConfigurationManager.toggleProtectionsCounter
     let userBehaviorMonitor = UserBehaviorMonitor()
-    
+
     let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
         privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
         purchasePlatform: .appStore)
 
+    // Subscription
+    let subscriptionManager: SubscriptionManaging
+    var accountManager: AccountManaging {
+        subscriptionManager.accountManager
+    }
+    let vpnFeatureVisibility: DefaultNetworkProtectionVisibility
+    let networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
+    let networkProtectionAccessController: NetworkProtectionAccessController
+    let networkProtectionTunnelController: NetworkProtectionTunnelController
+
+    let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
+    
+    let connectionObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession()
+    let vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+
+    // swiftlint:disable:next function_body_length
+    init() {
+        featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,
+                                               privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager)
+
+        // MARK: - Configure Subscription
+        let subscriptionUserDefaults = UserDefaults(suiteName: subscriptionAppGroup)!
+        let subscriptionEnvironment = SubscriptionManager.getSavedOrDefaultEnvironment(userDefaults: subscriptionUserDefaults)
+        vpnSettings.alignTo(subscriptionEnvironment: subscriptionEnvironment)
+
+        let entitlementsCache = UserDefaultsCache<[Entitlement]>(userDefaults: subscriptionUserDefaults,
+                                                                 key: UserDefaultsCacheKey.subscriptionEntitlements,
+                                                                 settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
+        let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
+        let subscriptionService = SubscriptionService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let authService = AuthService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let accountManager = AccountManager(accessTokenStorage: accessTokenStorage,
+                                            entitlementsCache: entitlementsCache,
+                                            subscriptionService: subscriptionService,
+                                            authService: authService)
+        if #available(iOS 15.0, *) {
+            subscriptionManager = SubscriptionManager(storePurchaseManager: StorePurchaseManager(),
+                                                      accountManager: accountManager,
+                                                      subscriptionService: subscriptionService,
+                                                      authService: authService,
+                                                      subscriptionEnvironment: subscriptionEnvironment)
+        } else {
+            // This is used just for iOS <15, it's a sort of mocked environment that will not be used.
+            subscriptionManager = SubscriptionManageriOS14(accountManager: accountManager)
+        }
+
+        let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
+            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+            purchasePlatform: .appStore)
+        let accessTokenProvider: () -> String? = {
+            func isSubscriptionEnabled() -> Bool {
+                if let subscriptionOverrideEnabled = UserDefaults.networkProtectionGroupDefaults.subscriptionOverrideEnabled {
+#if ALPHA || DEBUG
+                    return subscriptionOverrideEnabled
+#else
+                    return false
+#endif
+                }
+                return subscriptionFeatureAvailability.isFeatureAvailable
+            }
+
+            if isSubscriptionEnabled() {
+                return { accountManager.accessToken }
+            }
+            return { nil }
+        }()
+        networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
+                                                                                  serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
+                                                                                  errorEvents: .networkProtectionAppDebugEvents,
+                                                                                  isSubscriptionEnabled: true,
+                                                                                  accessTokenProvider: accessTokenProvider)
+        networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
+                                                                              tokenStore: networkProtectionKeychainTokenStore)
+        networkProtectionAccessController = NetworkProtectionAccessController(featureFlagger: featureFlagger,
+                                                                              internalUserDecider: internalUserDecider,
+                                                                              tokenStore: networkProtectionKeychainTokenStore,
+                                                                              networkProtectionTunnelController: networkProtectionTunnelController)
+        vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
+                                                                  accountManager: accountManager)
+    }
 }

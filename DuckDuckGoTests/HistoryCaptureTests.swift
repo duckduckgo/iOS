@@ -51,6 +51,33 @@ final class HistoryCaptureTests: XCTestCase {
         XCTAssertEqual(0, mockHistoryCoordinator.updateTitleIfNeededCalls.count)
     }
 
+    func test_whenComittedURLIsASearch_thenCleanURLIsUsed() {
+        let capture = makeCapture()
+        capture.webViewDidCommit(url: URL(string: "https://duckduckgo.com/?q=search+terms&t=osx&ia=web")!)
+
+        func assertUrlIsExpected(_ url: URL?) {
+            XCTAssertEqual(true, url?.isDuckDuckGoSearch)
+            XCTAssertEqual(url?.getQueryItems()?.count, 1)
+            XCTAssertEqual("search terms", url?.searchQuery)
+        }
+
+        assertUrlIsExpected(capture.url)
+        XCTAssertEqual(1, mockHistoryCoordinator.addVisitCalls.count)
+        assertUrlIsExpected(mockHistoryCoordinator.addVisitCalls[0])
+    }
+
+    func test_whenTitleUpdatedForSearchURL_thenCleanURLIsUsed() {
+        let capture = makeCapture()
+        capture.webViewDidCommit(url: URL(string: "https://duckduckgo.com/?q=search+terms&t=osx&ia=web")!)
+
+        // Note parameter order has changed
+        capture.titleDidChange("title", forURL: URL(string: "https://duckduckgo.com/?q=search+terms&ia=web&t=osx")!)
+
+        XCTAssertEqual(true, capture.url?.isDuckDuckGoSearch)
+        XCTAssertEqual(capture.url?.getQueryItems()?.count, 1)
+        XCTAssertEqual(1, mockHistoryCoordinator.updateTitleIfNeededCalls.count)
+    }
+
     func makeCapture() -> HistoryCapture {
         return HistoryCapture(historyManager: MockHistoryManager(historyCoordinator: mockHistoryCoordinator))
     }
@@ -85,7 +112,6 @@ class MockHistoryManager: HistoryManaging {
         self.historyCoordinator = historyCoordinator
     }
 
-    func loadStore() {
+    func loadStore(onCleanFinished: @escaping () -> Void) throws {
     }
-
 }

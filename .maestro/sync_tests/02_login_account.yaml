@@ -1,6 +1,7 @@
 appId: com.duckduckgo.mobile.ios
 tags:
     - sync
+name: 02_login_account
 
 ---
 

@@ -73,7 +73,6 @@ struct VPNMetadata: Encodable {
         // swiftlint:enable nesting
 
         let enableSource: Source
-        let betaParticipant: Bool
         let hasToken: Bool
         let subscriptionActive: Bool
     }
@@ -128,10 +127,10 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     private let settings: VPNSettings
     private let defaults: UserDefaults
 
-    init(statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
+    init(statusObserver: ConnectionStatusObserver,
          serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
-         networkProtectionAccessManager: NetworkProtectionAccessController = NetworkProtectionAccessController(),
-         tokenStore: NetworkProtectionTokenStore = NetworkProtectionKeychainTokenStore(),
+         networkProtectionAccessManager: NetworkProtectionAccessController,
+         tokenStore: NetworkProtectionTokenStore,
          settings: VPNSettings = .init(defaults: .networkProtectionGroupDefaults),
          defaults: UserDefaults = .networkProtectionGroupDefaults) {
         self.statusObserver = statusObserver
@@ -265,7 +264,6 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     }
 
     func collectPrivacyProInfo() -> VPNMetadata.PrivacyProInfo {
-        let accessType = accessManager.networkProtectionAccessType()
         var hasToken: Bool {
             guard let token = try? tokenStore.fetchToken(),
                   !token.hasPrefix(NetworkProtectionKeychainTokenStore.authTokenPrefix) else {
@@ -276,9 +274,8 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
 
         return .init(
             enableSource: .init(from: accessManager.networkProtectionAccessType()),
-            betaParticipant: accessType == .waitlistInvited,
             hasToken: hasToken,
-            subscriptionActive: AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)).isUserAuthenticated
+            subscriptionActive: AppDependencyProvider.shared.subscriptionManager.accountManager.isUserAuthenticated
         )
     }
 }
@@ -288,8 +285,6 @@ extension VPNMetadata.PrivacyProInfo.Source {
         switch accessType {
         case .inviteCodeInvited:
             self = .internal
-        case .waitlistInvited:
-            self = .waitlist
         default:
             self = .other
         }

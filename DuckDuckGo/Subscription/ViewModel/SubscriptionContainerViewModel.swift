@@ -23,28 +23,31 @@ import Combine
 
 @available(iOS 15.0, *)
 final class SubscriptionContainerViewModel: ObservableObject {
-    
+
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
-    
+
     let flow: SubscriptionFlowViewModel
     let restore: SubscriptionRestoreViewModel
     let email: SubscriptionEmailViewModel
-    
-    
-    init(
-        origin: String?,
-        userScript: SubscriptionPagesUserScript,
-        subFeature: SubscriptionPagesUseSubscriptionFeature
-    ) {
+
+    init(subscriptionManager: SubscriptionManaging,
+         origin: String?,
+         userScript: SubscriptionPagesUserScript,
+         subFeature: SubscriptionPagesUseSubscriptionFeature) {
         self.userScript = userScript
-        self.subFeature = subFeature
-        self.flow = SubscriptionFlowViewModel(origin: origin, userScript: userScript, subFeature: subFeature)
-        self.restore = SubscriptionRestoreViewModel(userScript: userScript, subFeature: subFeature)
-        self.email = SubscriptionEmailViewModel(userScript: userScript, subFeature: subFeature)
-    }
-    
-    deinit {
         subFeature.cleanup()
+        self.subFeature = subFeature
+        self.flow = SubscriptionFlowViewModel(origin: origin,
+                                              userScript: userScript,
+                                              subFeature: subFeature,
+                                              subscriptionManager: subscriptionManager)
+        self.restore = SubscriptionRestoreViewModel(userScript: userScript,
+                                                    subFeature: subFeature,
+                                                    subscriptionManager: subscriptionManager)
+        self.email = SubscriptionEmailViewModel(userScript: userScript,
+                                                subFeature: subFeature,
+                                                subscriptionManager: subscriptionManager)
     }
+
 }

@@ -25,22 +25,11 @@ import ContentBlocking
 import Core
 import NetworkProtection
 import Waitlist
+import Subscription
 
 enum NetworkProtectionAccessType {
     /// Used if the user does not have waitlist feature flag access
     case none
-
-    /// Used if the user has waitlist feature flag access, but has not joined the waitlist
-    case waitlistAvailable
-
-    /// Used if the user has waitlist feature flag access, and has joined the waitlist
-    case waitlistJoined
-
-    /// Used if the user has been invited via the waitlist, but needs to accept the Privacy Policy and Terms of Service
-    case waitlistInvitedPendingTermsAcceptance
-
-    /// Used if the user has been invited via the waitlist and has accepted the Privacy Policy and Terms of Service
-    case waitlistInvited
 
     /// Used if the user has been invited to test Network Protection directly
     case inviteCodeInvited
@@ -53,10 +42,11 @@ protocol NetworkProtectionAccess {
 struct NetworkProtectionAccessController: NetworkProtectionAccess {
 
     private let networkProtectionActivation: NetworkProtectionFeatureActivation
-    private let networkProtectionWaitlistStorage: WaitlistStorage
     private let networkProtectionTermsAndConditionsStore: NetworkProtectionTermsAndConditionsStore
     private let featureFlagger: FeatureFlagger
     private let internalUserDecider: InternalUserDecider
+    private let networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
+    private let networkProtectionTunnelController: NetworkProtectionTunnelController
 
     private var isUserLocaleAllowed: Bool {
         var regionCode: String?
@@ -70,18 +60,18 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
         return (regionCode ?? "US") == "US"
     }
 
-    init(
-        networkProtectionActivation: NetworkProtectionFeatureActivation = NetworkProtectionKeychainTokenStore(),
-        networkProtectionWaitlistStorage: WaitlistStorage = WaitlistKeychainStore(waitlistIdentifier: VPNWaitlist.identifier),
-        networkProtectionTermsAndConditionsStore: NetworkProtectionTermsAndConditionsStore = NetworkProtectionTermsAndConditionsUserDefaultsStore(),
-        featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
-        internalUserDecider: InternalUserDecider = AppDependencyProvider.shared.internalUserDecider
+    init(networkProtectionTermsAndConditionsStore: NetworkProtectionTermsAndConditionsStore = NetworkProtectionTermsAndConditionsUserDefaultsStore(),
+         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
+         internalUserDecider: InternalUserDecider = AppDependencyProvider.shared.internalUserDecider,
+         tokenStore: NetworkProtectionKeychainTokenStore,
+         networkProtectionTunnelController: NetworkProtectionTunnelController
     ) {
-        self.networkProtectionActivation = networkProtectionActivation
-        self.networkProtectionWaitlistStorage = networkProtectionWaitlistStorage
+        self.networkProtectionActivation = tokenStore
+        self.networkProtectionKeychainTokenStore = tokenStore
         self.networkProtectionTermsAndConditionsStore = networkProtectionTermsAndConditionsStore
         self.featureFlagger = featureFlagger
         self.internalUserDecider = internalUserDecider
+        self.networkProtectionTunnelController = networkProtectionTunnelController
     }
 
     func networkProtectionAccessType() -> NetworkProtectionAccessType {
@@ -91,7 +81,7 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
         }
 
         // Check for users who have activated the VPN via an invite code:
-        if networkProtectionActivation.isFeatureActivated && !networkProtectionWaitlistStorage.isInvited {
+        if networkProtectionActivation.isFeatureActivated {
             return .inviteCodeInvited
         }
 
@@ -99,25 +89,6 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
         let isWaitlistActive = featureFlagger.isFeatureOn(.networkProtectionWaitlistActive)
         if !isWaitlistActive {
             return .none
-        }
-
-        // Check if a waitlist user has NetP access and whether they need to accept T&C.
-        if networkProtectionActivation.isFeatureActivated && networkProtectionWaitlistStorage.isInvited {
-            if networkProtectionTermsAndConditionsStore.networkProtectionWaitlistTermsAndConditionsAccepted {
-                return .waitlistInvited
-            } else {
-                return .waitlistInvitedPendingTermsAcceptance
-            }
-        }
-
-        // Check if the user has waitlist access at all and whether they've already joined.
-        let hasWaitlistAccess = featureFlagger.isFeatureOn(.networkProtectionWaitlistAccess)
-        if hasWaitlistAccess {
-            if networkProtectionWaitlistStorage.isOnWaitlist {
-                return .waitlistJoined
-            } else {
-                return .waitlistAvailable
-            }
         }
 
         return .none
@@ -134,15 +105,13 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
     }
 
     func revokeNetworkProtectionAccess() {
-        try? NetworkProtectionKeychainTokenStore().deleteToken()
+        try? networkProtectionKeychainTokenStore.deleteToken()
 
         Task {
-            let controller = NetworkProtectionTunnelController()
-            await controller.stop()
-            await controller.removeVPN()
+            await networkProtectionTunnelController.stop()
+            await networkProtectionTunnelController.removeVPN()
         }
     }
-
 }
 
 #endif

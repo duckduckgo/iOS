@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "graeme/sanitize-location-selection",
-        "revision" : "63daeee8c09fa851052c0430a1ccf189d02a365c"
+        "revision" : "8399a103cbbbeda36ad0954201dbc5fd629de2e5"
       }
     },
     {

@@ -37,7 +37,13 @@ struct SettingsCustomizeView: View {
             SettingsCellView(label: UserText.settingsAutocomplete,
                              subtitle: viewModel.autocompleteSubtitle,
                              accesory: .toggle(isOn: viewModel.autocompleteBinding))
-            
+
+            if viewModel.shouldShowRecentlyVisitedSites {
+                SettingsCellView(label: UserText.settingsAutocompleteRecentlyVisited,
+                                 accesory: .toggle(isOn: viewModel.autocompleteRecentlyVisitedSitesBinding))
+            }
+
+
             if viewModel.state.speechRecognitionAvailable {
                 SettingsCellView(label: UserText.settingsVoiceSearch,
                                  accesory: .toggle(isOn: viewModel.voiceSearchEnabledBinding))

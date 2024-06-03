@@ -1,6 +1,6 @@
 {
     "_builtWith": {
-        "tracker-radar": "a8f276714a31d43fb185a1b233ed92f12680627ca54c6f98da44de9fe27f097e-4013b4e91930c643394cb31c6c745356f133b04f",
+        "tracker-radar": "9c02278e8bfb43db5e6b8756cdedc469924d600b8c4d6c9d7177de01405c8f5c-4013b4e91930c643394cb31c6c745356f133b04f",
         "tracker-surrogates": "0528e3226df15b1a3e319ad68ef76612a8f26623"
     },
     "readme": "https://github.com/duckduckgo/tracker-blocklists",
@@ -41441,7 +41441,8 @@
                 "twittercommunity.com",
                 "twttr.com",
                 "twttr.net",
-                "vine.co"
+                "vine.co",
+                "x.com"
             ],
             "prevalence": 8.79,
             "displayName": "Twitter"
@@ -52872,6 +52873,7 @@
         "twttr.com": "Twitter, Inc.",
         "twttr.net": "Twitter, Inc.",
         "vine.co": "Twitter, Inc.",
+        "x.com": "Twitter, Inc.",
         "ads1-adnow.com": "Mas Capital Group Ltd",
         "ads2-adnow.com": "Mas Capital Group Ltd",
         "ads3-adnow.com": "Mas Capital Group Ltd",

@@ -139,20 +139,9 @@ struct HomeMessageViewModel {
                 LaunchTabNotification.postLaunchTabNotification(urlString: value)
                 onDidClose(buttonAction)
             }
-        case .surveyURL(let value):
+        case .survey(let value):
             return {
-#if NETWORK_PROTECTION
-                if let surveyURL = URL(string: value) {
-                    let surveyURLBuilder = DefaultSurveyURLBuilder()
-                    let surveyURLWithParameters = surveyURLBuilder.addSurveyParameters(to: surveyURL)
-                    LaunchTabNotification.postLaunchTabNotification(urlString: surveyURLWithParameters.absoluteString)
-                } else {
-                    LaunchTabNotification.postLaunchTabNotification(urlString: value)
-                }
-#else
                 LaunchTabNotification.postLaunchTabNotification(urlString: value)
-#endif
-
                 onDidClose(buttonAction)
             }
         case .appStore:

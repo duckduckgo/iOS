@@ -1,5 +1,5 @@
 //
-//  VPNWaitlistActivationDateStore.swift
+//  VPNActivationDateStore.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -22,7 +22,7 @@
 import Foundation
 import Core
 
-protocol VPNWaitlistActivationDateStore {
+protocol VPNActivationDateStore {
 
     func setActivationDateIfNecessary()
     func daysSinceActivation() -> Int?
@@ -32,7 +32,7 @@ protocol VPNWaitlistActivationDateStore {
 
 }
 
-struct DefaultVPNWaitlistActivationDateStore: VPNWaitlistActivationDateStore {
+struct DefaultVPNActivationDateStore: VPNActivationDateStore {
 
     private enum Constants {
         static let networkProtectionActivationDateKey = "com.duckduckgo.network-protection.activation-date"

@@ -1,8 +1,8 @@
 //
-//  NetworkProtectionRootViewModel.swift
+//  AllProtectedCell.swift
 //  DuckDuckGo
 //
-//  Copyright © 2023 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,22 +17,11 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
+import UIKit
 
-import Foundation
-import NetworkProtection
+class AllProtectedCell: UITableViewCell {
 
-enum NetworkProtectionInitialViewKind {
-    case invite
-    case status
+    static let reuseIdentifier = "AllProtectedCell"
+
+    @IBOutlet weak var label: UILabel!
 }
-
-final class NetworkProtectionRootViewModel: ObservableObject {
-    var initialViewKind: NetworkProtectionInitialViewKind
-
-    init(featureActivation: NetworkProtectionFeatureActivation) {
-        initialViewKind = featureActivation.isFeatureActivated ? .status : .invite
-    }
-}
-
-#endif

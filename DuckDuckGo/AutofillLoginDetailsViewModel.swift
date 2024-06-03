@@ -341,6 +341,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     self.updateData(with: newCredential.account)
                 }
                 
+                NotificationCenter.default.post(name: .autofillSaveEvent, object: nil)
             } catch let error {
                 handleSecureVaultError(error)
             }

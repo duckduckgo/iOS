@@ -497,7 +497,7 @@ public struct UserText {
     static let netPStatusViewConnectionDetails = NSLocalizedString("network.protection.status.view.connection.details", value: "Connection Details", comment: "Connection details label shown in NetworkProtection's status view.")
     static let netPStatusViewSettingsSectionTitle = NSLocalizedString("network.protection.status.view.settings.section.title", value: "Manage", comment: "Label shown on the title of the settings section in NetworkProtection's status view.")
     static let netPVPNSettingsTitle = NSLocalizedString("network.protection.vpn.settings.title", value: "VPN Settings", comment: "Title for the VPN Settings screen.")
-    static let netPVPNSettingsFAQ = NSLocalizedString("network.protection.vpn.settings.faq", value: "Frequently Asked Questions", comment: "Title for the FAQ row in the VPN status screen.")
+    static let netPVPNSettingsFAQ = NSLocalizedString("network.protection.vpn.settings.faq", value: "FAQs and Support", comment: "Title for the FAQ row in the VPN status screen.")
     static let netPVPNSettingsShareFeedback = NSLocalizedString("network.protection.vpn.settings.share-feedback", value: "Share VPN Feedback", comment: "Title for the feedback row in the VPN status screen.")
     static func netPVPNSettingsLocationSubtitleFormattedCityAndCountry(city: String, country: String) -> String {
         let localized = NSLocalizedString("network.protection.vpn.location.subtitle.formatted.city.and.country", value: "%@, %@", comment: "Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States")
@@ -984,8 +984,10 @@ But if you *do* want a peek under the hood, you can find more information about 
     
     // Subscription Section
     public static let settingsPProSection = NSLocalizedString("settings.ppro", value: "Privacy Pro", comment: "Product name for the subscription bundle")
+    public static let settingsPProSectionFooter = NSLocalizedString("settings.ppro.footer", value: "Privacy Policy and Terms of Service", comment: "Title for Link in the Footer of Privacy Pro section")
+
     public static let settingsPProSubscribe = NSLocalizedString("settings.subscription.subscribe", value: "Subscribe to Privacy Pro", comment: "Call to action title for Privacy Pro")
-    public static let settingsPProDescription = NSLocalizedString("settings.subscription.description", value:"More seamless privacy with three new protections, including:", comment: "Privacy pro description subtext")
+    public static let settingsPProDescription = NSLocalizedString("settings.subscription.description", value:"More seamless privacy with three new protections:", comment: "Privacy pro description subtext")
     public static let settingsPProFeatures = NSLocalizedString("settings.subscription.features", value:
                                                                 """
                                                                  • VPN
@@ -1004,7 +1006,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsPProITRTitle = NSLocalizedString("settings.subscription.ITR.title", value: "Identity Theft Restoration", comment: "Identity theft restoration cell title for privacy pro")
     public static let settingsPProITRSubTitle = NSLocalizedString("settings.subscription.ITR.subtitle", value: "If your identity is stolen, we'll help restore it", comment: "Identity theft restoration cell subtitle for privacy pro")
     
-    public static let settingsPProActivationPendingTitle = NSLocalizedString("settings.subscription.activation.pending.title", value: "Your Subscription is Being Activated", comment: "Subscription activation pending title")
+    public static let settingsPProActivationPendingTitle = NSLocalizedString("settings.subscription.activation.pending.title", value: "Your Subscription is being activated", comment: "Subscription activation pending title")
     public static let settingsPProActivationPendingDescription = NSLocalizedString("settings.subscription.activation.pending.description", value: "This is taking longer than usual, please check back later.", comment: "Subscription activation pending description")
     
     // Expired Subscription
@@ -1017,6 +1019,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsKeyboard = NSLocalizedString("settings.keyboard", value: "Keyboard", comment: "Settings screen cell for Keyboard")
     public static let settingsPreviews = NSLocalizedString("settings.previews", value: "Long-Press Previews", comment: "Settings screen cell for long press previews")
     public static let settingsAutocomplete = NSLocalizedString("settings.autocomplete", value: "Autocomplete Suggestions", comment: "Settings screen cell for autocomplete")
+    public static let settingsAutocompleteRecentlyVisited = NSLocalizedString("settings.autocomplete.recentlyvisited", value: "Recently Visited Sites", comment: "Settings label for enabling or disabling recently visited sites")
 
     // Hardcoded for the experiment
     public static let settingsAutocompleteSubtitle = "See search suggestions, including your bookmarks and recently visited sites"
@@ -1121,7 +1124,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionRestoreAddEmailTitle = NSLocalizedString("subscription.add.email.title", value: "Add Email", comment: "View title for adding email to subscription")
     
     // Manage Subscription Email
-    public static let subscriptionManageEmailDescription = NSLocalizedString("subscription.manage.email.description", value: "You can use this email to activate your subscription from browser settings in the DuckDuckGo app on your other devices.", comment: "Description for Email Management options")
+    public static let subscriptionManageEmailDescription = NSLocalizedString("subscription.manage.email.description", value: "Use this email to activate your subscription from browser settings in the DuckDuckGo app on other devices..", comment: "Description for Email Management options")
     public static let subscriptionManageEmailButton = NSLocalizedString("subscription.activate.manage.email.button", value: "Manage", comment: "Restore button title for Managing Email")
     public static let subscriptionManageEmailTitle = NSLocalizedString("subscription.activate.manage.email.title", value: "Manage Email", comment: "View Title for managing your email account")
     public static let subscriptionManageEmailCancelButton = NSLocalizedString("subscription.activate.manage.email.cancel", value: "Cancel", comment: "Button title for cancelling email deletion")
@@ -1160,8 +1163,14 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionPIRHeroDesktopMenuLocation = NSLocalizedString("subscription.pir.heroTextLocation", value: "Settings > Privacy Pro", comment: "Settings references a menu in the Desktop app, Privacy Pro, references our product name")
     public static let subscriptionPIRHeroDesktopMenuItem = NSLocalizedString("subscription.pir.heroTextMenyEntry", value: "I have a subscription", comment: "Menu item for enabling Personal Information Removal on Desktop")
     public static let subscriptionPIRWindows = NSLocalizedString("subscription.pir.windows", value: "Windows", comment: "Text for the 'Windows' button")
-    public static let subscriptionPIRMacOS = NSLocalizedString("subscription.pir.macos", value: "macOS", comment: "Text for the 'macOS' button")
+    public static let subscriptionPIRMacOS = NSLocalizedString("subscription.pir.macos", value: "Mac", comment: "Text for the 'macOS' button")
 
+    // Autocomplete
+    public static let autocompleteHistoryWarningTitle = NSLocalizedString("autocomplete.history.warning.title", value: "Same privacy.\nBetter search suggestions!", comment: "Title for message show in suggestions")
+    public static let autocompleteHistoryWarningDescription = NSLocalizedString("autocomplete.history.warning.message", value: "Suggestions now include recently visited sites. These are stored on your device and never on DuckDuckGo's servers. Turn off in settings, or clear any time with the 🔥 Fire Button.", comment: "The message text shown in suggestions")
+    public static let autocompleteSearchDuckDuckGo = NSLocalizedString("autocomplete.history.search.duckduckgo", value: "Search DuckDuckGo", comment: "Subtitle for search history items")
+
+    // Site not working
     public static let siteNotWorkingTitle = NSLocalizedString("site.not.working.title", value: "Site not working? Let DuckDuckGo know.", comment: "Prompt asking user to send report to us if we suspect site may be broken")
     public static let siteNotWorkingSubtitle = NSLocalizedString("site.not.working.subtitle", value: "This helps us improve the browser.", comment: "Prompt asking user to send report to us if we suspect site may be broken")
     public static let siteNotWorkingDismiss = NSLocalizedString("site.not.working.dismiss", value: "Dismiss", comment: "Dismiss button")

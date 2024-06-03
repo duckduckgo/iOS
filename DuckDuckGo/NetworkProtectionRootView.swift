@@ -25,40 +25,21 @@ import Subscription
 
 @available(iOS 15, *)
 struct NetworkProtectionRootView: View {
-    
-    let model = NetworkProtectionRootViewModel(featureActivation: AppDependencyProvider.shared.networkProtectionKeychainTokenStore)
-    let inviteViewModel: NetworkProtectionInviteViewModel
     let statusViewModel: NetworkProtectionStatusViewModel
-    let inviteCompletion: () -> Void
 
-    init(inviteCompletion: @escaping () -> Void) {
-        self.inviteCompletion = inviteCompletion
+    init() {
         let accountManager = AppDependencyProvider.shared.subscriptionManager.accountManager
-        let redemptionCoordinator = NetworkProtectionCodeRedemptionCoordinator(isManualCodeRedemptionFlow: true,
-                                                                               accountManager: accountManager)
-        inviteViewModel = NetworkProtectionInviteViewModel(redemptionCoordinator: redemptionCoordinator, completion: inviteCompletion)
         let locationListRepository = NetworkProtectionLocationListCompositeRepository(accountManager: accountManager)
         statusViewModel = NetworkProtectionStatusViewModel(tunnelController: AppDependencyProvider.shared.networkProtectionTunnelController,
                                                            settings: AppDependencyProvider.shared.vpnSettings,
                                                            statusObserver: AppDependencyProvider.shared.connectionObserver,
                                                            locationListRepository: locationListRepository)
-        // Prefetching this now for snappy load times on the locations screens
-        Task {
-            try? await locationListRepository.fetchLocationList()
-        }
     }
-
     var body: some View {
-
         if AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched() {
-            NetworkProtectionStatusView(statusModel: statusViewModel)
-        } else {
-            switch model.initialViewKind {
-            case .invite:
-                NetworkProtectionInviteView(model: inviteViewModel)
-            case .status:
-                NetworkProtectionStatusView(statusModel: statusViewModel )
-            }
+            NetworkProtectionStatusView(
+                statusModel: statusViewModel
+            )
         }
     }
 }

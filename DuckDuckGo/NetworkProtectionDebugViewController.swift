@@ -95,7 +95,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case shutDown
         case showEntitlementMessaging
         case resetEntitlementMessaging
-        case resetThankYouMessaging
     }
 
     enum NetworkPathRows: Int, CaseIterable {
@@ -392,8 +391,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             cell.textLabel?.text = "Show Entitlement Messaging"
         case .resetEntitlementMessaging:
             cell.textLabel?.text = "Reset Entitlement Messaging"
-        case .resetThankYouMessaging:
-            cell.textLabel?.text = "Reset Thank You Messaging"
         case .none:
             break
         }
@@ -413,8 +410,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             UserDefaults.networkProtectionGroupDefaults.enableEntitlementMessaging()
         case .resetEntitlementMessaging:
             UserDefaults.networkProtectionGroupDefaults.resetEntitlementMessaging()
-        case .resetThankYouMessaging:
-            UserDefaults.networkProtectionGroupDefaults.resetThankYouMessaging()
         case .none:
             break
         }
@@ -652,11 +647,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 Endpoint: \(AppDependencyProvider.shared.vpnSettings.selectedEnvironment.endpointURL.absoluteString)
 
 isPrivacyProLaunched: \(vpnVisibility.isPrivacyProLaunched() ? "YES" : "NO")
-isWaitlistBetaActive: \(vpnVisibility.isWaitlistBetaActive() ? "YES" : "NO")
-isWaitlistUser: \(vpnVisibility.isWaitlistUser() ? "YES" : "NO")
 
-shouldShowThankYouMessaging: \(vpnVisibility.shouldShowThankYouMessaging() ? "YES" : "NO")
-shouldKeepVPNAccessViaWaitlist: \(vpnVisibility.shouldKeepVPNAccessViaWaitlist() ? "YES" : "NO")
 shouldMonitorEntitlement: \(vpnVisibility.shouldMonitorEntitlement() ? "YES" : "NO")
 shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
 """

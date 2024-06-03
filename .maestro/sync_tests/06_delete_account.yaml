@@ -1,7 +1,7 @@
 appId: com.duckduckgo.mobile.ios
 tags:
     - sync
-
+name: 06_delete_account
 ---
 
 # Clear and launch

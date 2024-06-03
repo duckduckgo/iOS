@@ -21,17 +21,7 @@ import Foundation
 import Subscription
 
 public protocol NetworkProtectionFeatureVisibility {
-
-    func isWaitlistBetaActive() -> Bool
-    func isWaitlistUser() -> Bool
     func isPrivacyProLaunched() -> Bool
-
-    /// Whether to show the thank-you messaging for current waitlist users
-    func shouldShowThankYouMessaging() -> Bool
-
-    /// Whether to let the user continues to use the VPN via the waitlist
-    /// This should only before 100% roll out
-    func shouldKeepVPNAccessViaWaitlist() -> Bool
 
     /// Whether to enforce entitlement check and show entitlement-related messaging
     /// This should always happen after 100% roll out

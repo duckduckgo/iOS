@@ -129,7 +129,7 @@ final class AutofillLoginListViewModel: ObservableObject {
  // MARK: Public Methods
 
     func isAutofillSurveyEnabled() -> Bool {
-        return appSettings.autofillSurveyEnabled
+        return false
     }
 
     func disableAutofillSurvey() {

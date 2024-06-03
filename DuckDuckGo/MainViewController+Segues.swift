@@ -252,6 +252,7 @@ extension MainViewController {
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider,
                                                   subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
                                                   deepLink: deepLinkTarget,
+                                                  historyManager: historyManager,
                                                   syncPausedStateManager: syncPausedStateManager)
         Pixel.fire(pixel: .settingsPresented,
                    withAdditionalParameters: PixelExperiment.parameters)

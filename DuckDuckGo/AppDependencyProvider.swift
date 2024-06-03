@@ -152,19 +152,15 @@ class AppDependencyProvider: DependencyProvider {
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
                                                                                   serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
                                                                                   errorEvents: .networkProtectionAppDebugEvents,
-                                                                                  isSubscriptionEnabled: accountManager.isUserAuthenticated,
+                                                                                  isSubscriptionEnabled: true,
                                                                                   accessTokenProvider: accessTokenProvider)
         networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
                                                                               tokenStore: networkProtectionKeychainTokenStore)
         networkProtectionAccessController = NetworkProtectionAccessController(featureFlagger: featureFlagger,
                                                                               internalUserDecider: internalUserDecider,
-                                                                              accountManager: subscriptionManager.accountManager,
                                                                               tokenStore: networkProtectionKeychainTokenStore,
                                                                               networkProtectionTunnelController: networkProtectionTunnelController)
-        vpnFeatureVisibility = DefaultNetworkProtectionVisibility(
-            networkProtectionTokenStore: networkProtectionKeychainTokenStore,
-            networkProtectionAccessManager: networkProtectionAccessController,
-            featureFlagger: featureFlagger,
-            accountManager: accountManager)
+        vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
+                                                                  accountManager: accountManager)
     }
 }

@@ -81,7 +81,7 @@ import WebKit
     private let crashCollection = CrashCollection(platform: .iOS, log: .generalLog)
     private var crashReportUploaderOnboarding: CrashCollectionOnboarding?
 
-    private let autofillPixelReporter = AutofillPixelReporter()
+    private var autofillPixelReporter: AutofillPixelReporter?
 
     // MARK: lifecycle
 
@@ -208,16 +208,24 @@ import WebKit
         
         PrivacyFeatures.httpsUpgrade.loadDataAsync()
         
+        let variantManager = DefaultVariantManager()
+        let historyMessageManager = HistoryMessageManager()
+
         // assign it here, because "did become active" is already too late and "viewWillAppear"
         // has already been called on the HomeViewController so won't show the home row CTA
         AtbAndVariantCleanup.cleanup()
-        DefaultVariantManager().assignVariantIfNeeded { _ in
+        variantManager.assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
             DaxDialogs.shared.primeForUse()
+            historyMessageManager.dismiss()
+        }
+
+        if variantManager.isSupported(feature: .history) {
+            historyMessageManager.dismiss()
         }
 
         PixelExperimentForBrokenSites.install()
-        PixelExperiment.install()
+        PixelExperiment.cleanup()
 
         // MARK: Sync initialisation
 #if DEBUG
@@ -265,7 +273,9 @@ import WebKit
             }
 
         let previewsSource = TabPreviewsSource()
-        let historyManager = makeHistoryManager()
+        let historyManager = makeHistoryManager(AppDependencyProvider.shared.appSettings,
+                                                AppDependencyProvider.shared.internalUserDecider,
+                                                ContentBlocking.shared.privacyConfigurationManager)
         let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
@@ -290,8 +300,9 @@ import WebKit
         }
 
         autoClear = AutoClear(worker: main)
+        let applicationState = application.applicationState
         Task {
-            await autoClear?.clearDataIfEnabled(launching: true)
+            await autoClear?.clearDataIfEnabled(applicationState: .init(with: applicationState))
         }
 
         AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
@@ -322,13 +333,11 @@ import WebKit
         AppDependencyProvider.shared.networkProtectionAccessController.refreshNetworkProtectionAccess()
 #endif
 
-        if AppDependencyProvider.shared.vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist() {
-            clearDebugWaitlistState()
-        }
-
         AppDependencyProvider.shared.toggleProtectionsCounter.sendEventsIfNeeded()
 
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
+
+        setUpAutofillPixelReporter()
 
         return true
     }
@@ -354,24 +363,36 @@ import WebKit
         return tabsModel
     }
 
-    private func makeHistoryManager() -> HistoryManager {
-        let historyManager = HistoryManager(privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
-                              variantManager: DefaultVariantManager(),
-                              database: HistoryDatabase.make()) { error in
-            Pixel.fire(pixel: .historyStoreLoadFailed, error: error)
-            if error.isDiskFull {
+    private func makeHistoryManager(_ appSettings: AppSettings,
+                                    _ internalUserDecider: InternalUserDecider,
+                                    _ privacyConfigManager: PrivacyConfigurationManaging) -> HistoryManager {
+
+        let db = HistoryDatabase.make()
+        var loadError: Error?
+        db.loadStore { _, error in
+            loadError = error
+        }
+
+        if let loadError {
+            Pixel.fire(pixel: .historyStoreLoadFailed, error: loadError)
+            if loadError.isDiskFull {
                 self.presentInsufficientDiskSpaceAlert()
             } else {
                 self.presentPreemptiveCrashAlert()
             }
         }
 
-        // This is a compromise to support hot reloading via privacy config.
-        //  * If the history is disabled this will do nothing. If it is subsequently enabled then it won't start collecting history
-        //     until the app cold launches at least once.
-        //  * If the history is enabled this loads the store sets up the history manager
-        //     correctly. If the history manager is subsequently disabled it will stop working immediately.
-        historyManager.loadStore()
+        let historyManager = HistoryManager(privacyConfigManager: privacyConfigManager,
+                                            variantManager: DefaultVariantManager(),
+                                            database: db,
+                                            internalUserDecider: internalUserDecider,
+                                            isEnabledByUser: appSettings.recentlyVisitedSites)
+
+        // Ensure we don't do this if the history is disabled in privacy confg
+        guard historyManager.isHistoryFeatureEnabled() else { return historyManager }
+        historyManager.loadStore(onCleanFinished: {
+            // Do future migrations after clean has finished.  See macOS for an example.
+        })
         return historyManager
     }
 
@@ -433,7 +454,6 @@ import WebKit
         }
     }
 
-    // swiftlint:disable:next function_body_length
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
@@ -478,7 +498,6 @@ import WebKit
             }
         }
 
-        checkWaitlists()
         syncService.scheduler.notifyAppLifecycleEvent()
         fireFailedCompilationsPixelIfNeeded()
 
@@ -505,19 +524,11 @@ import WebKit
     }
 
     private func stopTunnelAndShowThankYouMessagingIfNeeded() {
-
         if accountManager.isUserAuthenticated {
-            tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown = true
             return
         }
 
-        if AppDependencyProvider.shared.vpnFeatureVisibility.shouldShowThankYouMessaging()
-            && !tunnelDefaults.vpnEarlyAccessOverAlertAlreadyShown {
-            Task {
-                await self.stopAndRemoveVPN(with: "thank-you-dialog")
-            }
-        } else if AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched()
-                    && !accountManager.isUserAuthenticated {
+        if AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched() && !accountManager.isUserAuthenticated {
             Task {
                 await self.stopAndRemoveVPN(with: "subscription-check")
             }
@@ -653,14 +664,12 @@ import WebKit
 
         Task { @MainActor in
             await beginAuthentication()
-            await autoClear?.clearDataIfEnabledAndTimeExpired()
+            await autoClear?.clearDataIfEnabledAndTimeExpired(applicationState: .active)
             showKeyboardIfSettingOn = true
             syncService.scheduler.resumeSyncQueue()
         }
 
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
-
-        autofillPixelReporter.checkIfOnboardedUser()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -835,7 +844,7 @@ import WebKit
             if appIsLaunching {
                 await autoClear?.clearDataIfEnabled()
             } else {
-                await autoClear?.clearDataIfEnabledAndTimeExpired()
+                await autoClear?.clearDataIfEnabledAndTimeExpired(applicationState: .active)
             }
 
             if shortcutItem.type == ShortcutKey.clipboard, let query = UIPasteboard.general.string {
@@ -887,6 +896,26 @@ import WebKit
 
     private var mainViewController: MainViewController? {
         return window?.rootViewController as? MainViewController
+    }
+
+    private func setUpAutofillPixelReporter() {
+        autofillPixelReporter = AutofillPixelReporter(
+            userDefaults: .standard,
+            eventMapping: EventMapping<AutofillPixelEvent> {event, _, params, _ in
+                switch event {
+                case .autofillActiveUser:
+                    Pixel.fire(pixel: .autofillActiveUser)
+                case .autofillEnabledUser:
+                    Pixel.fire(pixel: .autofillEnabledUser)
+                case .autofillOnboardedUser:
+                    Pixel.fire(pixel: .autofillOnboardedUser)
+                case .autofillLoginsStacked:
+                    Pixel.fire(pixel: .autofillLoginsStacked, withAdditionalParameters: params ?? [:])
+                default:
+                    break
+                }
+            },
+            installDate: StatisticsUserDefaults().installDate ?? Date())
     }
 
     @MainActor
@@ -972,10 +1001,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
                 presentNetworkProtectionStatusSettingsModal()
             }
-
-            if AppDependencyProvider.shared.vpnFeatureVisibility.shouldKeepVPNAccessViaWaitlist(), identifier == VPNWaitlist.notificationIdentifier {
-                presentNetworkProtectionWaitlistModal()
-            }
 #endif
         }
 
@@ -983,13 +1008,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
 #if NETWORK_PROTECTION
-    private func presentNetworkProtectionWaitlistModal() {
-        if #available(iOS 15, *) {
-            let networkProtectionRoot = VPNWaitlistViewController(nibName: nil, bundle: nil)
-            presentSettings(with: networkProtectionRoot)
-        }
-    }
-
     func presentNetworkProtectionStatusSettingsModal() {
         Task {
             if case .success(let hasEntitlements) = await accountManager.hasEntitlement(for: .networkProtection),
@@ -1029,6 +1047,22 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             let navigationController = rootViewController.presentedViewController as? UINavigationController
             navigationController?.popToRootViewController(animated: false)
             navigationController?.pushViewController(viewController, animated: false)
+        }
+    }
+}
+
+extension DataStoreWarmup.ApplicationState {
+
+    init(with state: UIApplication.State) {
+        switch state {
+        case .inactive:
+            self = .inactive
+        case .active:
+            self = .active
+        case .background:
+            self = .background
+        @unknown default:
+            self = .unknown
         }
     }
 }

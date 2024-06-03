@@ -835,11 +835,7 @@ class TabViewController: UIViewController {
     }
 
     func setRefreshControlEnabled(_ isEnabled: Bool) {
-        if isEnabled {
-            webView.scrollView.refreshControl = refreshControl
-        } else {
-            webView.scrollView.refreshControl = nil
-        }
+        webView.scrollView.refreshControl = isEnabled ? refreshControl : nil
     }
 
     private var didGoBackForward: Bool = false

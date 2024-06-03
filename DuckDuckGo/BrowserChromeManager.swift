@@ -23,7 +23,8 @@ protocol BrowserChromeDelegate: AnyObject {
 
     func setBarsHidden(_ hidden: Bool, animated: Bool)
     func setNavigationBarHidden(_ hidden: Bool)
-    
+    func setRefreshControlEnabled(_ isEnabled: Bool)
+
     func setBarsVisibility(_ percent: CGFloat, animated: Bool)
     
     var canHideBars: Bool { get }
@@ -104,6 +105,11 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
     
     func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
         startZoomScale = scrollView.zoomScale
+        delegate?.setRefreshControlEnabled(false)
+    }
+
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+        delegate?.setRefreshControlEnabled(true)
     }
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {

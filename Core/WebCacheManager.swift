@@ -66,22 +66,14 @@ public class WebCacheManager {
 
     public func removeCookies(forDomains domains: [String],
                               dataStore: WKWebsiteDataStore) async {
-
-        let timeoutTask = Task.detached {
-            try? await Task.sleep(interval: 5.0)
-            if !Task.isCancelled {
-                Pixel.fire(pixel: .cookieDeletionTimedOut, withAdditionalParameters: [
-                    PixelParameters.removeCookiesTimedOut: "1"
-                ])
-            }
-        }
-
+        let startTime = CACurrentMediaTime()
         let cookieStore = dataStore.httpCookieStore
         let cookies = await cookieStore.allCookies()
         for cookie in cookies where domains.contains(where: { cookie.matchesDomain($0) }) {
             await cookieStore.deleteCookie(cookie)
         }
-        timeoutTask.cancel()
+        let totalTime = CACurrentMediaTime() - startTime
+        Pixel.fire(pixel: .cookieDeletionTime(.init(number: totalTime)))
     }
 
     public func clear(cookieStorage: CookieStorage = CookieStorage(),
@@ -131,15 +123,10 @@ extension WebCacheManager {
     }
 
     private func legacyDataClearing() async -> [HTTPCookie]? {
-        let timeoutTask = Task.detached {
-            try? await Task.sleep(interval: 5.0)
-            if !Task.isCancelled {
-                Pixel.fire(pixel: .cookieDeletionTimedOut, withAdditionalParameters: [
-                    PixelParameters.clearWebDataTimedOut: "1"
-                ])
-            }
-        }
+
         let dataStore = WKWebsiteDataStore.default()
+        let startTime = CACurrentMediaTime()
+
         let cookies = await dataStore.httpCookieStore.allCookies()
         var types = WKWebsiteDataStore.allWebsiteDataTypes()
         types.insert("_WKWebsiteDataTypeMediaKeys")
@@ -152,8 +139,11 @@ extension WebCacheManager {
         types.insert("_WKWebsiteDataTypeAlternativeServices")
 
         await dataStore.removeData(ofTypes: types, modifiedSince: .distantPast)
+
         self.removeObservationsData()
-        timeoutTask.cancel()
+        let totalTime = CACurrentMediaTime() - startTime
+        Pixel.fire(pixel: .legacyDataClearingTime(.init(number: totalTime)))
+
         return cookies
     }
 

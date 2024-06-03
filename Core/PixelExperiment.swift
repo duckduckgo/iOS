@@ -54,7 +54,7 @@ public enum PixelExperiment: String, CaseIterable {
         logic.install()
     }
 
-    static func cleanup() {
+    public static func cleanup() {
         logic.cleanup()
     }
 

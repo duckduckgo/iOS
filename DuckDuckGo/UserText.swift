@@ -1022,7 +1022,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsAutocompleteRecentlyVisited = NSLocalizedString("settings.autocomplete.recentlyvisited", value: "Recently Visited Sites", comment: "Settings label for enabling or disabling recently visited sites")
 
     // Hardcoded for the experiment
-    public static let settingsAutocompleteSubtitle = "See search suggestions, including your bookmarks and recently visited sites"
+    public static let settingsAutocompleteSubtitle = "See private search suggestions as you type, including your bookmarks and recently visited sites. Recent sites are only stored on your device and can be cleared with the Fire Button."
     public static let settingsVoiceSearch = NSLocalizedString("settings.voice.search", value: "Private Voice Search", comment: "Settings screen cell for voice search")
     public static let settingsAssociatedApps = NSLocalizedString("settings.associated.apps", value: "Open Links in Associated Apps", comment: "Settings screen cell for opening links in associated apps")
     public static let settingsAssociatedAppsDescription = NSLocalizedString("settings.associated.apps.description", value: "Disable to prevent links from automatically opening in other installed apps.", comment: "Description for associated apps description")

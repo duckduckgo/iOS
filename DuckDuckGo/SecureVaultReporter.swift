@@ -43,9 +43,8 @@ final class SecureVaultKeyStoreEventMapper: EventMapping<SecureStorageKeyStoreEv
  }
 
 final class SecureVaultReporter: SecureVaultReporting {
-    static let shared = SecureVaultReporter()
     private var keyStoreMapper: SecureVaultKeyStoreEventMapper
-    private init(keyStoreMapper: SecureVaultKeyStoreEventMapper = SecureVaultKeyStoreEventMapper()) {
+    init(keyStoreMapper: SecureVaultKeyStoreEventMapper = SecureVaultKeyStoreEventMapper()) {
         self.keyStoreMapper = keyStoreMapper
     }
 

@@ -49,7 +49,7 @@ class AutofillDebugViewController: UITableViewController {
                 cell.accessoryType = defaults.autofillDebugScriptEnabled ? .checkmark : .none
                 NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.autofillDebugScriptToggled))
             } else if cell.tag == Row.resetAutofillData.rawValue {
-                let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter.shared)
+                let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter())
                 try? secureVault?.deleteAllWebsiteCredentials()
                 let autofillPixelReporter = AutofillPixelReporter(
                         userDefaults: .standard,

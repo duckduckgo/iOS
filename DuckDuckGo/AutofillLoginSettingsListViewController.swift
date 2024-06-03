@@ -166,7 +166,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
          syncDataProviders: SyncDataProviders,
          selectedAccount: SecureVaultModels.WebsiteAccount?,
          openSearch: Bool = false) {
-        let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter.shared)
+        let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter())
         if secureVault == nil {
             os_log("Failed to make vault")
         }

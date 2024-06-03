@@ -106,7 +106,7 @@ struct DefaultRemoteMessagingSurveyURLBuilder: RemoteMessagingSurveyActionMappin
     }
 
     private func passwordsCountBucket() -> String? {
-        guard let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter.shared),
+        guard let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter()),
                 let bucket = try? secureVault.accountsCountBucket() else {
             return nil
         }

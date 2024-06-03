@@ -180,8 +180,8 @@ class TabViewController: UIViewController {
         let refreshControl = UIRefreshControl()
         refreshControl.addAction(UIAction { [weak self] _ in
             guard let self else { return }
-            self.reload()
-            self.delegate?.tabDidRequestRefresh(tab: self)
+            reload()
+            delegate?.tabDidRequestRefresh(tab: self)
             Pixel.fire(pixel: .pullToRefresh)
             AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.refresh)
         }, for: .valueChanged)

@@ -161,6 +161,20 @@ struct RemoteMessaging {
             let daysSinceNetworkProtectionEnabled = activationDateStore.daysSinceActivation() ?? -1
             let surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(statisticsStore: statisticsStore)
 
+            var privacyProDaysSinceSubscribed: Int = -1
+            var privacyProDaysUntilExpiry: Int = -1
+
+            if let accessToken = AppDependencyProvider.shared.subscriptionManager.accountManager.accessToken {
+                let subscriptionResult = await AppDependencyProvider.shared.subscriptionManager.subscriptionService.getSubscription(
+                    accessToken: accessToken
+                )
+
+                if case let .success(subscription) = subscriptionResult {
+                    privacyProDaysSinceSubscribed = Calendar.current.numberOfDaysBetween(subscription.startedAt, and: Date()) ?? -1
+                    privacyProDaysUntilExpiry = Calendar.current.numberOfDaysBetween(Date(), and: subscription.expiresOrRenewsAt) ?? -1
+                }
+            }
+
             let remoteMessagingConfigMatcher = RemoteMessagingConfigMatcher(
                 appAttributeMatcher: AppAttributeMatcher(statisticsStore: statisticsStore,
                                                          variantManager: variantManager,
@@ -173,7 +187,9 @@ struct RemoteMessaging {
                                                            isWidgetInstalled: isWidgetInstalled,
                                                            daysSinceNetPEnabled: daysSinceNetworkProtectionEnabled,
                                                            isPrivacyProEligibleUser: canPurchase,
-                                                           isPrivacyProSubscriber: isPrivacyProSubscriber),
+                                                           isPrivacyProSubscriber: isPrivacyProSubscriber,
+                                                           privacyProDaysSinceSubscribed: privacyProDaysSinceSubscribed,
+                                                           privacyProDaysUntilExpiry: privacyProDaysUntilExpiry),
                 percentileStore: RemoteMessagingPercentileUserDefaultsStore(userDefaults: .standard),
                 surveyActionMapper: surveyActionMapper,
                 dismissedMessageIds: remoteMessagingStore.fetchDismissedRemoteMessageIds()

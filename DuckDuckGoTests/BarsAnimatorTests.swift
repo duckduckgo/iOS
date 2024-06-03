@@ -155,6 +155,7 @@ private class BrowserChromeDelegateMock: BrowserChromeDelegate {
         case setBarsHidden(Bool)
         case setNavigationBarHidden(Bool)
         case setBarsVisibility(CGFloat)
+        case setRefreshControlEnabled(Bool)
     }
 
     var receivedMessages: [Message] = []
@@ -169,6 +170,10 @@ private class BrowserChromeDelegateMock: BrowserChromeDelegate {
 
     func setBarsVisibility(_ percent: CGFloat, animated: Bool) {
         receivedMessages.append(.setBarsVisibility(percent))
+    }
+
+    func setRefreshControlEnabled(_ isEnabled: Bool) {
+        receivedMessages.append(.setRefreshControlEnabled(isEnabled))
     }
 
     var canHideBars: Bool = false

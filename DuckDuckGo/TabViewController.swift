@@ -2185,7 +2185,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
     func refresh() {
         let url: URL?
         if isError || webView.url == nil {
-            url = URL(string: chromeDelegate?.omniBar.textField.text ?? "")
+            url = self.url
         } else {
             url = webView.url
         }

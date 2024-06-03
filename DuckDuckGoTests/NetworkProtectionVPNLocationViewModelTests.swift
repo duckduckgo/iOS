@@ -660,9 +660,11 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
 // swiftlint:enable type_body_length
 
 final class MockNetworkProtectionLocationListRepository: NetworkProtectionLocationListRepository {
+
     var stubLocationList: [NetworkProtectionLocation] = []
     var stubError: Error?
     var didCallFetchLocationList: Bool = false
+    var didCallFetchLocationListIgnoringCache: Bool = false
 
     func fetchLocationList() async throws -> [NetworkProtectionLocation] {
         didCallFetchLocationList = true
@@ -671,6 +673,15 @@ final class MockNetworkProtectionLocationListRepository: NetworkProtectionLocati
         }
         return stubLocationList
     }
+
+    func fetchLocationListIgnoringCache() async throws -> [NetworkProtection.NetworkProtectionLocation] {
+        didCallFetchLocationListIgnoringCache = true
+        if let stubError {
+            throw stubError
+        }
+        return stubLocationList
+    }
+
 }
 
 extension NetworkProtectionLocation {

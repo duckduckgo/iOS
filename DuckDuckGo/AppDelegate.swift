@@ -225,7 +225,7 @@ import WebKit
         }
 
         PixelExperimentForBrokenSites.install()
-        PixelExperiment.install()
+        PixelExperiment.cleanup()
 
         // MARK: Sync initialisation
 #if DEBUG
@@ -300,8 +300,9 @@ import WebKit
         }
 
         autoClear = AutoClear(worker: main)
+        let applicationState = application.applicationState
         Task {
-            await autoClear?.clearDataIfEnabled(launching: true)
+            await autoClear?.clearDataIfEnabled(applicationState: .init(with: applicationState))
         }
 
         AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
@@ -663,7 +664,7 @@ import WebKit
 
         Task { @MainActor in
             await beginAuthentication()
-            await autoClear?.clearDataIfEnabledAndTimeExpired()
+            await autoClear?.clearDataIfEnabledAndTimeExpired(applicationState: .active)
             showKeyboardIfSettingOn = true
             syncService.scheduler.resumeSyncQueue()
         }
@@ -843,7 +844,7 @@ import WebKit
             if appIsLaunching {
                 await autoClear?.clearDataIfEnabled()
             } else {
-                await autoClear?.clearDataIfEnabledAndTimeExpired()
+                await autoClear?.clearDataIfEnabledAndTimeExpired(applicationState: .active)
             }
 
             if shortcutItem.type == ShortcutKey.clipboard, let query = UIPasteboard.general.string {
@@ -1046,6 +1047,22 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             let navigationController = rootViewController.presentedViewController as? UINavigationController
             navigationController?.popToRootViewController(animated: false)
             navigationController?.pushViewController(viewController, animated: false)
+        }
+    }
+}
+
+extension DataStoreWarmup.ApplicationState {
+
+    init(with state: UIApplication.State) {
+        switch state {
+        case .inactive:
+            self = .inactive
+        case .active:
+            self = .active
+        case .background:
+            self = .background
+        @unknown default:
+            self = .unknown
         }
     }
 }

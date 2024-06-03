@@ -281,7 +281,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                                             authService: authService)
         self.accountManager = accountManager
         let featureVisibility = NetworkProtectionVisibilityForTunnelProvider(accountManager: accountManager)
-        let isSubscriptionEnabled = featureVisibility.isPrivacyProLaunched()
         let accessTokenProvider: () -> String? = {
             if featureVisibility.shouldMonitorEntitlement() {
                 return { accountManager.accessToken }
@@ -291,7 +290,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 #if os(macOS)
         let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
                                                              errorEvents: nil,
-                                                             isSubscriptionEnabled: isSubscriptionEnabled,
+                                                             isSubscriptionEnabled: true,
                                                              accessTokenProvider: accessTokenProvider)
 #else
         let tokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
@@ -315,7 +314,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,
                    defaults: .networkProtectionGroupDefaults,
-                   isSubscriptionEnabled: isSubscriptionEnabled,
+                   isSubscriptionEnabled: true,
                    entitlementCheck: { return await Self.entitlementCheck(accountManager: accountManager) })
         startMonitoringMemoryPressureEvents()
         observeServerChanges()

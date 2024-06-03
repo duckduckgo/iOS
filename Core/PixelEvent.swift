@@ -453,16 +453,20 @@ extension Pixel {
         
         case blankOverlayNotDismissed
         
-        case cookieDeletionTimedOut
+        case cookieDeletionTime(_ time: BucketAggregation)
         case cookieDeletionLeftovers
-        
+        case legacyDataClearingTime(_ time: BucketAggregation)
+
+        case webkitWarmupStart(appState: String)
+        case webkitWarmupFinished(appState: String)
+
         case cachedTabPreviewsExceedsTabCount
         case cachedTabPreviewRemovalError
         
         case missingDownloadedFile
         case unhandledDownload
         
-        case compilationResult(result: CompileRulesResult, waitTime: CompileRulesWaitTime, appState: AppState)
+        case compilationResult(result: CompileRulesResult, waitTime: BucketAggregation, appState: AppState)
         
         case emailAutofillKeychainError
         
@@ -495,7 +499,6 @@ extension Pixel {
         case debugCannotClearObservationsDatabase
         case debugWebsiteDataStoresNotClearedMultiple
         case debugWebsiteDataStoresNotClearedOne
-        case debugCookieCleanupError
         
         case debugBookmarksMigratedMoreThanOnce
         
@@ -559,6 +562,7 @@ extension Pixel {
         case syncWrongEnvironment
 
         case swipeTabsUsed
+        case swipeTabsIncorrectScrollState
         case swipeTabsUsedDaily
         case swipeToOpenNewTab
 
@@ -1126,9 +1130,17 @@ extension Pixel.Event {
             
         case .blankOverlayNotDismissed: return "m_d_ovs"
             
-        case .cookieDeletionTimedOut: return "m_debug_cookie-clearing-timeout"
+        case .cookieDeletionTime(let aggregation):
+            return "m_debug_cookie-clearing-time-\(aggregation)"
+        case .legacyDataClearingTime(let aggregation):
+            return "m_debug_legacy-data-clearing-time-\(aggregation)"
         case .cookieDeletionLeftovers: return "m_cookie_deletion_leftovers"
-            
+
+        case .webkitWarmupStart(let appState):
+            return "m_webkit-warmup-start-\(appState)"
+        case .webkitWarmupFinished(let appState):
+            return "m_webkit-warmup-finished-\(appState)"
+
         case .cachedTabPreviewsExceedsTabCount: return "m_d_tpetc"
         case .cachedTabPreviewRemovalError: return "m_d_tpre"
             
@@ -1155,7 +1167,6 @@ extension Pixel.Event {
         case .debugCannotClearObservationsDatabase: return "m_d_cannot_clear_observations_database"
         case .debugWebsiteDataStoresNotClearedMultiple: return "m_d_wkwebsitedatastoresnotcleared_multiple"
         case .debugWebsiteDataStoresNotClearedOne: return "m_d_wkwebsitedatastoresnotcleared_one"
-        case .debugCookieCleanupError: return "m_d_cookie-cleanup-error"
             
             // MARK: Ad Attribution
             
@@ -1227,6 +1238,7 @@ extension Pixel.Event {
         case .syncWrongEnvironment: return "m_d_sync_wrong_environment_u"
 
         case .swipeTabsUsed: return "m_swipe-tabs-used"
+        case .swipeTabsIncorrectScrollState: return "m_swipe-tabs.incorrect-scrollview-state"
         case .swipeTabsUsedDaily: return "m_swipe-tabs-used-daily"
         case .swipeToOpenNewTab: return "m_addressbar_swipe_new_tab"
 
@@ -1404,32 +1416,38 @@ extension Pixel.Event {
 // swiftlint:disable file_length
 extension Pixel.Event {
     
-    public enum CompileRulesWaitTime: String, CustomStringConvertible {
-        
+    public enum BucketAggregation: String, CustomStringConvertible {
+
         public var description: String { rawValue }
         
-        case noWait = "0"
-        case lessThan1s = "1"
-        case lessThan5s = "5"
-        case lessThan10s = "10"
-        case lessThan20s = "20"
-        case lessThan40s = "40"
+        case zero = "0"
+        case lessThan01 = "0.1"
+        case lessThan05 = "0.5"
+        case lessThan1 = "1"
+        case lessThan5 = "5"
+        case lessThan10 = "10"
+        case lessThan20 = "20"
+        case lessThan40 = "40"
         case more
         
-        public init(waitTime: TimeInterval) {
-            switch waitTime {
+        public init(number: Double) {
+            switch number {
             case 0:
-                self = .noWait
+                self = .zero
+            case ...0.1:
+                self = .lessThan01
+            case ...0.5:
+                self = .lessThan05
             case ...1:
-                self = .lessThan1s
+                self = .lessThan1
             case ...5:
-                self = .lessThan5s
+                self = .lessThan5
             case ...10:
-                self = .lessThan10s
+                self = .lessThan10
             case ...20:
-                self = .lessThan20s
+                self = .lessThan20
             case ...40:
-                self = .lessThan40s
+                self = .lessThan40
             default:
                 self = .more
             }

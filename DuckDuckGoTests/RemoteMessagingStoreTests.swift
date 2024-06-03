@@ -143,7 +143,9 @@ class RemoteMessagingStoreTests: XCTestCase {
                                                            isWidgetInstalled: false,
                                                            daysSinceNetPEnabled: -1,
                                                            isPrivacyProEligibleUser: false,
-                                                           isPrivacyProSubscriber: false),
+                                                           isPrivacyProSubscriber: false,
+                                                           privacyProDaysSinceSubscribed: -1,
+                                                           privacyProDaysUntilExpiry: -1),
                 percentileStore: RemoteMessagingPercentileUserDefaultsStore(userDefaults: self.defaults),
                 surveyActionMapper: MockRemoteMessagingSurveyActionMapper(),
                 dismissedMessageIds: []

@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1716814163860,
+    "version": 1717171433682,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -2082,6 +2082,15 @@
                         ]
                     },
                     {
+                        "domain": "canalrcn.com",
+                        "rules": [
+                            {
+                                "selector": ".pauta-en-vivo-mobile",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "carandclassic.com",
                         "rules": [
                             {
@@ -2351,6 +2360,15 @@
                         "rules": [
                             {
                                 "selector": "[data-liberty-position-name]",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "economist.com",
+                        "rules": [
+                            {
+                                "selector": "[class^='adComponent']",
                                 "type": "hide-empty"
                             }
                         ]
@@ -3733,6 +3751,15 @@
                         ]
                     },
                     {
+                        "domain": "shattovet.com",
+                        "rules": [
+                            {
+                                "selector": "[class*='advertising']",
+                                "type": "override"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "si.com",
                         "rules": [
                             {
@@ -4234,7 +4261,7 @@
                             },
                             {
                                 "selector": "[class*='sdaContainer']",
-                                "type": "hide-empty"
+                                "type": "hide"
                             }
                         ]
                     },
@@ -4295,6 +4322,14 @@
                             {
                                 "selector": ".parallax-container",
                                 "type": "hide-empty"
+                            },
+                            {
+                                "selector": "div:has(.react-parallax)",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": "[id^=div-gpt-ad-]",
+                                "type": "closest-empty"
                             }
                         ]
                     },
@@ -4396,7 +4431,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "4403e14c942cbd375d40b9eddbdc7115"
+            "hash": "adc17fadc45c61f4a27fbf94b4980bdd"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -4719,6 +4754,9 @@
                     "domain": "dollargeneral.com"
                 },
                 {
+                    "domain": "monstergear.monsterenergy.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -4737,7 +4775,7 @@
                     "privacy-test-pages.site"
                 ]
             },
-            "hash": "8d421aba941721a80861bdc2aec73ed8"
+            "hash": "7fa15dd3c7d9b3a318088d6414653c66"
         },
         "harmfulApis": {
             "settings": {
@@ -6737,6 +6775,12 @@
                                 "domains": [
                                     "foodfornet.com"
                                 ]
+                            },
+                            {
+                                "rule": "grow.me",
+                                "domains": [
+                                    "grilledcheesesocial.com"
+                                ]
                             }
                         ]
                     },
@@ -6986,8 +7030,12 @@
                                 "rule": "klaviyo.com/",
                                 "domains": [
                                     "andieswim.com",
+                                    "dreamfarm.com",
                                     "footweartruth.com",
+                                    "holdonbags.com",
                                     "kmail-lists.com",
+                                    "nestlenutritionstore.com",
+                                    "organakratom.com",
                                     "usafacts.org"
                                 ]
                             }
@@ -7015,6 +7063,12 @@
                                 "rule": "cdn.listrakbi.com/scripts/script.js",
                                 "domains": [
                                     "<all>"
+                                ]
+                            },
+                            {
+                                "rule": "listrakbi.com",
+                                "domains": [
+                                    "fsastore.com"
                                 ]
                             }
                         ]
@@ -7137,7 +7191,8 @@
                             {
                                 "rule": "monetate.net",
                                 "domains": [
-                                    "kleen-ritecorp.com"
+                                    "kleen-ritecorp.com",
+                                    "qvc.com"
                                 ]
                             }
                         ]
@@ -8355,7 +8410,7 @@
                     "domain": "sundancecatalog.com"
                 }
             ],
-            "hash": "37e67043d8e92bcf5c31e05a7ccf065d"
+            "hash": "3bda09ff6f21176dfe44ef81e7dc2234"
         },
         "trackingCookies1p": {
             "settings": {

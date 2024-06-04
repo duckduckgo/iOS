@@ -134,13 +134,11 @@ class AppDependencyProvider: DependencyProvider {
             purchasePlatform: .appStore)
         let accessTokenProvider: () -> String? = {
             func isSubscriptionEnabled() -> Bool {
-                if let subscriptionOverrideEnabled = UserDefaults.networkProtectionGroupDefaults.subscriptionOverrideEnabled {
 #if ALPHA || DEBUG
+                if let subscriptionOverrideEnabled = UserDefaults.networkProtectionGroupDefaults.subscriptionOverrideEnabled {
                     return subscriptionOverrideEnabled
-#else
-                    return false
-#endif
                 }
+#endif
                 return subscriptionFeatureAvailability.isFeatureAvailable
             }
 

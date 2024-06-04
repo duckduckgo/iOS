@@ -121,8 +121,10 @@ final class AutofillLoginListViewModel: ObservableObject {
         self.currentTabUrl = currentTabUrl
         self.autofillNeverPromptWebsitesManager = autofillNeverPromptWebsitesManager
 
+        if let count = getAccountsCount() {
+            authenticationNotRequired = count == 0 || AppDependencyProvider.shared.autofillLoginSession.isSessionValid
+        }
         updateData()
-        authenticationNotRequired = !hasAccountsSaved || AppDependencyProvider.shared.autofillLoginSession.isSessionValid
         setupCancellables()
     }
     
@@ -227,7 +229,18 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
 
     // MARK: Private Methods
-    
+
+    private func getAccountsCount() -> Int? {
+        guard let secureVault = secureVault else {
+            return nil
+        }
+        do {
+            return try secureVault.accountsCount()
+        } catch {
+            return nil
+        }
+    }
+
     private func fetchAccounts() -> [SecureVaultModels.WebsiteAccount] {
         guard let secureVault = secureVault else {
             return []

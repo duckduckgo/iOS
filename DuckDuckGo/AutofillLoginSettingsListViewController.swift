@@ -176,6 +176,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         self.openSearch = openSearch
         super.init(nibName: nil, bundle: nil)
 
+        authenticate()
+
         syncUpdatesCancellable = syncDataProviders.credentialsAdapter.syncDidCompletePublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -210,7 +212,6 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        authenticate()
     }
 
     override func viewWillDisappear(_ animated: Bool) {

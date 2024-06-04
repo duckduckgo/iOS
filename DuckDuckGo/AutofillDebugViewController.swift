@@ -29,7 +29,6 @@ class AutofillDebugViewController: UITableViewController {
         case resetEmailProtectionInContextSignUp = 202
         case resetDaysSinceInstalledTo0 = 203
         case resetAutofillData = 204
-        case toggleAutofillSurvey = 205
     }
 
     let defaults = AppUserDefaults()
@@ -56,9 +55,6 @@ class AutofillDebugViewController: UITableViewController {
                         eventMapping: EventMapping<AutofillPixelEvent> { _, _, _, _ in })
                 autofillPixelReporter.resetStoreDefaults()
                 ActionMessageView.present(message: "Autofill Data reset")
-            } else if cell.tag == Row.toggleAutofillSurvey.rawValue {
-                defaults.autofillSurveyEnabled = true
-                ActionMessageView.present(message: "Passwords Survey enabled")
             } else if cell.tag == Row.resetEmailProtectionInContextSignUp.rawValue {
                 EmailManager().resetEmailProtectionInContextPrompt()
                 tableView.deselectRow(at: indexPath, animated: true)

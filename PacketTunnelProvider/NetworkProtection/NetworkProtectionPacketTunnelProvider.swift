@@ -213,7 +213,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 pixelEvent = .networkProtectionWireguardErrorCannotStartWireguardBackend
                 params[PixelParameters.wireguardErrorCode] = String(code)
             case .noAuthTokenFound:
-                pixelEvent = .networkProtectionNoAuthTokenFoundError
+                pixelEvent = .networkProtectionNoAccessTokenFoundError
             case .vpnAccessRevoked:
                 return
             case .unhandledError(function: let function, line: let line, error: let error):

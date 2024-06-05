@@ -9769,8 +9769,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "sam/remove-waitlist-feature-flags";
-				kind = branch;
+				kind = exactVersion;
+				version = 152.0.0;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

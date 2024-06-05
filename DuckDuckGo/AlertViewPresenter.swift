@@ -32,8 +32,8 @@ final class AlertViewPresenter {
     private lazy var alertView: AlertView = {
         AlertView(title: title,
                   image: image,
-                  leftButton: leftButton,
-                  rightButton: rightButton,
+                  leftButton: (leftButton.title, { [weak self] in self?.leftButton.action(); self?.hide() }),
+                  rightButton: (rightButton.title, { [weak self] in self?.rightButton.action(); self?.hide() }),
                   isVisible: Binding(get: { self.showAlert }, set: { self.showAlert = $0 })
         )
     }()

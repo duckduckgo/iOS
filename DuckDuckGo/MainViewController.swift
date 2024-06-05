@@ -1260,7 +1260,7 @@ class MainViewController: UIViewController {
         //            feature.setShown()
         //        }
     }
-    
+
     private var brokenSitePromptViewHostingController: UIHostingController<BrokenSitePromptView>?
     private var brokenSitePromptEvent: UserBehaviorEvent?
 

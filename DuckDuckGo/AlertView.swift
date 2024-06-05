@@ -36,32 +36,33 @@ struct AlertButtonStyle: ButtonStyle {
 }
 
 struct AlertView: View {
-    let question: String
-    let onYes: () -> Void
-    let onNo: () -> Void
+    let title: String
+    let image: String
+    let leftButton: (title: String, action: () -> Void)
+    let rightButton: (title: String, action: () -> Void)
     @Binding var isVisible: Bool
 
     var body: some View {
         if isVisible {
             VStack(alignment: .leading) {
                 HStack(spacing: 5) {
-                    Image("ChatPrivate")
+                    Image(image)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 53)
-                    Text(question)
+                    Text(title)
                         .font(.headline)
                         .foregroundColor(.white)
                 }
 
                 HStack(spacing: 10) {
                     Group {
-                        Button("Yes") {
-                            onYes()
+                        Button(leftButton.title) {
+                            leftButton.action()
                             isVisible = false
                         }
-                        Button("No") {
-                            onNo()
+                        Button(rightButton.title) {
+                            rightButton.action()
                             isVisible = false
                         }
                     }
@@ -78,9 +79,10 @@ struct AlertView: View {
 
 struct AlertView_Previews: PreviewProvider {
     static var previews: some View {
-        AlertView(question: "Did turning Privacy Protections off resolve the issue on this site?",
-                  onYes: {},
-                  onNo: {},
+        AlertView(title: "Did turning Privacy Protections off resolve the issue on this site?",
+                  image: "ChatPrivate",
+                  leftButton: ("Yes", {}),
+                  rightButton: ("No", {}),
                   isVisible: Binding<Bool>(get: { true },
                                            set: { _ in }))
     }

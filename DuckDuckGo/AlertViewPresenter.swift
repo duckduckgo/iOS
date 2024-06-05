@@ -23,35 +23,66 @@ import UIKit
 
 final class AlertViewPresenter {
 
+    let title: String
+    let image: String
+    let leftButton: (title: String, action: () -> Void)
+    let rightButton: (title: String, action: () -> Void)
+
     private var showAlert = false
-
-    func present() {
-        let alertView = AlertView(
-            question: "Do you want to continue?",
-            onYes: { print("User selected Yes") },
-            onNo: { print("User selected No") },
-            isVisible: Binding(get: { self.showAlert }, set: { self.showAlert = $0 })
+    private lazy var alertView: AlertView = {
+        AlertView(title: title,
+                  image: image,
+                  leftButton: leftButton,
+                  rightButton: rightButton,
+                  isVisible: Binding(get: { self.showAlert }, set: { self.showAlert = $0 })
         )
-
-        guard let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first else { return }
-
-        // Embed the SwiftUI view in a UIHostingController
+    }()
+    private lazy var hostingController: UIHostingController<AlertView> = {
         let hostingController = UIHostingController(rootView: alertView)
-        hostingController.view.frame = window.bounds
         hostingController.view.backgroundColor = .clear
+        return hostingController
+    }()
 
-        // Add the hosting controller as a child
-        window.rootViewController?.addChild(hostingController)
-        window.addSubview(hostingController.view)
-        hostingController.didMove(toParent: window.rootViewController)
+    init(title: String,
+         image: String,
+         leftButton: (title: String, action: () -> Void),
+         rightButton: (title: String, action: () -> Void)) {
+        self.title = title
+        self.image = image
+        self.leftButton = leftButton
+        self.rightButton = rightButton
+    }
 
-        // Dismiss the alert after 5 seconds
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            self.showAlert = false
-            hostingController.willMove(toParent: nil)
-            hostingController.view.removeFromSuperview()
-            hostingController.removeFromParent()
+    func present(in viewController: UIViewController, animated: Bool) {
+        showAlert = true
+
+        guard let view = viewController.view else { return }
+        viewController.addChild(hostingController)
+        view.addSubview(hostingController.view)
+        hostingController.didMove(toParent: viewController)
+        hostingController.view.alpha = 0.0
+
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            hostingController.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            hostingController.view.centerYAnchor.constraint(equalTo: view.window!.centerYAnchor),
+            hostingController.view.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, constant: -40)
+        ])
+
+        if animated {
+            UIView.animate(withDuration: 0.2) {
+                self.hostingController.view.alpha = 1.0
+            }
+        } else {
+            hostingController.view.alpha = 1.0
         }
+    }
+
+    func hide() {
+        showAlert = false
+        hostingController.willMove(toParent: nil)
+        hostingController.view.removeFromSuperview()
+        hostingController.removeFromParent()
     }
 
 }

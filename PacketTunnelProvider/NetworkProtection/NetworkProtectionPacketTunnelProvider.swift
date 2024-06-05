@@ -254,7 +254,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         super.stopTunnel(with: reason, completionHandler: completionHandler)
     }
 
-    // swiftlint:disable:next function_body_length
     @objc init() {
 
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)

@@ -1018,13 +1018,11 @@ class TabViewController: UIViewController {
                                                      image: "ChatPrivate",
                                                      leftButton: (UserText.brokenSiteReportToggleAlertYesButton, {
                 Pixel.fire(pixel: .reportBrokenSiteTogglePromptYes)
-                //                    self.segueToReportBrokenSite(mode: .afterTogglePrompt(didToggleProtectionsOff: true, // TODO
-                //                                                                          didToggleProtectionsFixIssue: true))
+                (self.parent as? MainViewController)?.segueToReportBrokenSite(mode: .afterTogglePrompt(didToggleProtectionsFixIssue: true))
             }),
                                                      rightButton: (UserText.brokenSiteReportToggleAlertNoButton, {
                 Pixel.fire(pixel: .reportBrokenSiteTogglePromptNo)
-                //                    self.segueToReportBrokenSite(mode: .afterTogglePrompt(didToggleProtectionsOff: true, // TODO
-                //                                                                          didToggleProtectionsFixIssue: false))
+                (self.parent as? MainViewController)?.segueToReportBrokenSite(mode: .afterTogglePrompt(didToggleProtectionsFixIssue: false))
             }))
             self.alertPresenter?.present(in: self, animated: true)
         }

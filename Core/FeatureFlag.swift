@@ -30,9 +30,6 @@ public enum FeatureFlag: String {
     case autofillPasswordGeneration
     case autofillOnByDefault
     case incontextSignup
-    case networkProtection
-    case networkProtectionWaitlistAccess
-    case networkProtectionWaitlistActive
     case autoconsentOnByDefault
     case history
     case historyRollout
@@ -45,12 +42,6 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .internalOnly
         case .sync:
             return .remoteReleasable(.subfeature(SyncSubfeature.level0ShowSync))
-        case .networkProtection:
-            return .remoteReleasable(.feature(.networkProtection))
-        case .networkProtectionWaitlistAccess:
-            return .remoteReleasable(.subfeature(NetworkProtectionSubfeature.waitlist))
-        case .networkProtectionWaitlistActive:
-            return .remoteReleasable(.subfeature(NetworkProtectionSubfeature.waitlistBetaActive))
         case .autofillCredentialInjecting:
             return .remoteReleasable(.subfeature(AutofillSubfeature.credentialsAutofill))
         case .autofillCredentialsSaving:

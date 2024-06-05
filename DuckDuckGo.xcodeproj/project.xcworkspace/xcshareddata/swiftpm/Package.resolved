@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "79fe0c99e43c6c1bf2c0a4d397368033fd37eae9",
-        "version" : "150.1.0"
+        "branch" : "sam/remove-waitlist-feature-flags",
+        "revision" : "8fc3bfdf9fee9eb9b987ee8fc199b39879937ef8"
       }
     },
     {

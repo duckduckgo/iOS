@@ -254,7 +254,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         super.stopTunnel(with: reason, completionHandler: completionHandler)
     }
 
-    // swiftlint:disable:next function_body_length
     @objc init() {
 
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
@@ -285,11 +284,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             if featureVisibility.shouldMonitorEntitlement() {
                 return { accountManager.accessToken }
             }
-            return { nil } }()
-        let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
-                                                             errorEvents: nil,
-                                                             isSubscriptionEnabled: true,
-                                                             accessTokenProvider: accessTokenProvider)
+            return { nil }
+        }()
+        let tokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
 
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()

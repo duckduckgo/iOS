@@ -88,11 +88,7 @@ class MockDependencyProvider: DependencyProvider {
         let accessTokenProvider: () -> String? = { { "sometoken" } }()
         let featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,
                                                    privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager)
-        networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
-                                                                                  serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
-                                                                                  errorEvents: .networkProtectionAppDebugEvents,
-                                                                                  isSubscriptionEnabled: accountManager.isUserAuthenticated,
-                                                                                  accessTokenProvider: accessTokenProvider)
+        networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
         networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
                                                                               tokenStore: networkProtectionKeychainTokenStore)
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,

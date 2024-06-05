@@ -70,7 +70,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     }
 
     enum ClearDataRows: Int, CaseIterable {
-        case clearAuthToken
         case removeVPNConfiguration
     }
 
@@ -190,8 +189,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
         case .clearData:
             switch ClearDataRows(rawValue: indexPath.row) {
-            case .clearAuthToken:
-                cell.textLabel?.text = "Clear Auth Token"
             case .removeVPNConfiguration:
                 cell.textLabel?.text = "Remove VPN Configuration"
             case .none:
@@ -255,7 +252,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         switch Sections(rawValue: indexPath.section) {
         case .clearData:
             switch ClearDataRows(rawValue: indexPath.row) {
-            case .clearAuthToken: clearAuthToken()
             case .removeVPNConfiguration: deleteVPNConfiguration()
             default: break
             }
@@ -701,10 +697,6 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
     }
 
     // MARK: Selection Actions
-
-    private func clearAuthToken() {
-        try? tokenStore.deleteToken()
-    }
 
     private func deleteVPNConfiguration() {
         Task {

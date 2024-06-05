@@ -287,14 +287,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             }
             return { nil }
         }()
-#if os(macOS)
-        let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
-                                                             errorEvents: nil,
-                                                             isSubscriptionEnabled: true,
-                                                             accessTokenProvider: accessTokenProvider)
-#else
         let tokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
-#endif
 
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()

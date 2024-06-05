@@ -674,7 +674,7 @@
 "bookmarks.importExport.title" = "Import an HTML file of bookmarks from another browser, or export your existing bookmarks.";
 
 /* Button to open report form */
-"broken.site.report.menu.title" = "Report a Problem on this Site";
+"broken.site.report.menu.title" = "Report Problem With This Site";
 
 /* Acknowledge button */
 "broken.site.report.missing.description.alert.button" = "Got It";
@@ -686,7 +686,7 @@
 "broken.site.report.missing.description.alert.title" = "Description Required";
 
 /* Message that appears after submitting report */
-"broken.site.report.success.toast" = "Your report helps to make DuckDuckGo better for everyone!";
+"broken.site.report.success.toast" = "Your report helps make DuckDuckGo better for everyone!";
 
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.no.button" = "No";

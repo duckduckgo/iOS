@@ -105,8 +105,6 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
     }
 
     func revokeNetworkProtectionAccess() {
-        try? networkProtectionKeychainTokenStore.deleteToken()
-
         Task {
             await networkProtectionTunnelController.stop()
             await networkProtectionTunnelController.removeVPN()

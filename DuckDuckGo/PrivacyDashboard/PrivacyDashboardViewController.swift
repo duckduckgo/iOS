@@ -37,15 +37,23 @@ extension PixelExperiment {
 
 }
 
+protocol PrivacyDashboardViewControllerDelegate: AnyObject {
+
+    func privacyDashboardViewController(_ privacyDashboardViewController: PrivacyDashboardViewController,
+                                        didSelectBreakageCategory breakageCategory: String)
+    
+}
+
 final class PrivacyDashboardViewController: UIViewController {
 
     @IBOutlet private(set) weak var webView: WKWebView!
-    
+
+    public var breakageAdditionalInfo: BreakageAdditionalInfo?
+    public weak var delegate: PrivacyDashboardViewControllerDelegate?
+
     private let privacyDashboardController: PrivacyDashboardController
     private let privacyConfigurationManager: PrivacyConfigurationManaging
     private let contentBlockingManager: ContentBlockerRulesManager
-    public var breakageAdditionalInfo: BreakageAdditionalInfo?
-    public var breakageCategory: String?
     private var privacyDashboardDidTriggerDismiss: Bool = false
 
     private let brokenSiteReporter: BrokenSiteReporter = {
@@ -183,7 +191,7 @@ extension PrivacyDashboardViewController {
 
 extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
     func privacyDashboardController(_ privacyDashboardController: PrivacyDashboard.PrivacyDashboardController, didSelectBreakageCategory category: String) {
-        self.breakageCategory = category
+        delegate?.privacyDashboardViewController(self, didSelectBreakageCategory: category)
     }
 
     func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController,

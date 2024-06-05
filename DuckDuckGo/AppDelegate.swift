@@ -330,7 +330,6 @@ import WebKit
 
 #if NETWORK_PROTECTION
         widgetRefreshModel.beginObservingVPNStatus()
-        AppDependencyProvider.shared.networkProtectionAccessController.refreshNetworkProtectionAccess()
 #endif
 
         AppDependencyProvider.shared.toggleProtectionsCounter.sendEventsIfNeeded()

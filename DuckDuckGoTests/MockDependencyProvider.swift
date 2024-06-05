@@ -46,7 +46,6 @@ class MockDependencyProvider: DependencyProvider {
     var accountManager: AccountManaging
     var vpnFeatureVisibility: DefaultNetworkProtectionVisibility
     var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
-    var networkProtectionAccessController: NetworkProtectionAccessController
     var networkProtectionTunnelController: NetworkProtectionTunnelController
     var connectionObserver: NetworkProtection.ConnectionStatusObserver
     var vpnSettings: NetworkProtection.VPNSettings
@@ -92,10 +91,6 @@ class MockDependencyProvider: DependencyProvider {
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
         networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
                                                                               tokenStore: networkProtectionKeychainTokenStore)
-        networkProtectionAccessController = NetworkProtectionAccessController(featureFlagger: featureFlagger,
-                                                                              internalUserDecider: internalUserDecider,
-                                                                              tokenStore: networkProtectionKeychainTokenStore,
-                                                                              networkProtectionTunnelController: networkProtectionTunnelController)
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
                                                                   accountManager: accountManager)
 

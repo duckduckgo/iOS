@@ -64,15 +64,6 @@ struct VPNMetadata: Encodable {
     }
 
     struct PrivacyProInfo: Encodable {
-        // swiftlint:disable nesting
-        enum Source: String, Encodable {
-            case `internal`
-            case waitlist
-            case other
-        }
-        // swiftlint:enable nesting
-
-        let enableSource: Source
         let hasToken: Bool
         let subscriptionActive: Bool
     }
@@ -122,20 +113,17 @@ protocol VPNMetadataCollector {
 final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
-    private let accessManager: NetworkProtectionAccessController
     private let tokenStore: NetworkProtectionTokenStore
     private let settings: VPNSettings
     private let defaults: UserDefaults
 
     init(statusObserver: ConnectionStatusObserver,
          serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
-         networkProtectionAccessManager: NetworkProtectionAccessController,
          tokenStore: NetworkProtectionTokenStore,
          settings: VPNSettings = .init(defaults: .networkProtectionGroupDefaults),
          defaults: UserDefaults = .networkProtectionGroupDefaults) {
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
-        self.accessManager = networkProtectionAccessManager
         self.tokenStore = tokenStore
         self.settings = settings
         self.defaults = defaults
@@ -273,21 +261,9 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
         }
 
         return .init(
-            enableSource: .init(from: accessManager.networkProtectionAccessType()),
             hasToken: hasToken,
             subscriptionActive: AppDependencyProvider.shared.subscriptionManager.accountManager.isUserAuthenticated
         )
-    }
-}
-
-extension VPNMetadata.PrivacyProInfo.Source {
-    init(from accessType: NetworkProtectionAccessType) {
-        switch accessType {
-        case .inviteCodeInvited:
-            self = .internal
-        default:
-            self = .other
-        }
     }
 }
 

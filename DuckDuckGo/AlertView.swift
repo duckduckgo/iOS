@@ -28,6 +28,7 @@ struct AlertButtonStyle: ButtonStyle {
             .frame(maxWidth: .infinity)
             .background(Color.white.opacity(0.18))
             .foregroundColor(.white)
+            .font(Font(uiFont: UIFont.daxBodyBold()))
             .cornerRadius(8)
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
             .animation(.easeInOut(duration: 0.2), value: configuration.isPressed)
@@ -44,14 +45,14 @@ struct AlertView: View {
 
     var body: some View {
         if isVisible {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 10) {
                 HStack(spacing: 5) {
                     Image(image)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 53)
                     Text(title)
-                        .font(.headline)
+                        .font(Font(uiFont: UIFont.daxHeadline()))
                         .foregroundColor(.white)
                 }
 
@@ -70,7 +71,7 @@ struct AlertView: View {
                 }
 
             }
-            .padding()
+            .padding(EdgeInsets(top: 16, leading: 20, bottom: 16, trailing: 20))
             .background(Color.black.opacity(0.9))
             .cornerRadius(10)
         }

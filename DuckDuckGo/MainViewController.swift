@@ -1247,8 +1247,16 @@ class MainViewController: UIViewController {
         let feature = HomeRowReminder()
         let presenter = AlertViewPresenter(title: UserText.brokenSiteReportToggleAlertTitle,
                                            image: "ChatPrivate",
-                                           leftButton: (UserText.brokenSiteReportToggleAlertYesButton, { print("User selected Yes") }),
-                                           rightButton: (UserText.brokenSiteReportToggleAlertNoButton, { print("User selected No") }))
+                                           leftButton: (UserText.brokenSiteReportToggleAlertYesButton, {
+            Pixel.fire(pixel: .reportBrokenSiteTogglePromptYes)
+            self.segueToReportBrokenSite(mode: .afterTogglePrompt(didToggleProtectionsOff: true, // TODO
+                                                                  didToggleProtectionsFixIssue: true))
+        }),
+                                           rightButton: (UserText.brokenSiteReportToggleAlertNoButton, {
+            Pixel.fire(pixel: .reportBrokenSiteTogglePromptNo)
+            self.segueToReportBrokenSite(mode: .afterTogglePrompt(didToggleProtectionsOff: true, // TODO
+                                                                  didToggleProtectionsFixIssue: false))
+        }))
         presenter.present(in: self, animated: true)
         //        if feature.showNow() {
         //            showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in

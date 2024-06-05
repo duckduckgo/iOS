@@ -23,6 +23,14 @@ import UIKit
 
 final class AlertViewPresenter {
 
+    private enum Constants {
+
+        static let animationDuration: Double = 0.2
+        static let bottomPadding: Double = 28.0
+        static let horizontalPadding: Double = 20.0
+
+    }
+
     let title: String
     let image: String
     let leftButton: (title: String, action: () -> Void)
@@ -65,12 +73,12 @@ final class AlertViewPresenter {
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             hostingController.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            hostingController.view.centerYAnchor.constraint(equalTo: view.window!.centerYAnchor),
-            hostingController.view.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, constant: -40)
+            hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.bottomPadding),
+            hostingController.view.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, constant: -2 * Constants.horizontalPadding)
         ])
 
         if animated {
-            UIView.animate(withDuration: 0.2) {
+            UIView.animate(withDuration: Constants.animationDuration) {
                 self.hostingController.view.alpha = 1.0
             }
         } else {

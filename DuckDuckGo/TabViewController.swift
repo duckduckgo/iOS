@@ -1006,6 +1006,30 @@ class TabViewController: UIViewController {
         job()
     }
 
+    private func attemptToShowAlert() {
+        guard !isPad else { return }
+        scheduleAlert()
+    }
+
+    private var alertPresenter: AlertViewPresenter?
+    private func scheduleAlert() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.alertPresenter = AlertViewPresenter(title: UserText.brokenSiteReportToggleAlertTitle,
+                                                     image: "ChatPrivate",
+                                                     leftButton: (UserText.brokenSiteReportToggleAlertYesButton, {
+                Pixel.fire(pixel: .reportBrokenSiteTogglePromptYes)
+                //                    self.segueToReportBrokenSite(mode: .afterTogglePrompt(didToggleProtectionsOff: true, // TODO
+                //                                                                          didToggleProtectionsFixIssue: true))
+            }),
+                                                     rightButton: (UserText.brokenSiteReportToggleAlertNoButton, {
+                Pixel.fire(pixel: .reportBrokenSiteTogglePromptNo)
+                //                    self.segueToReportBrokenSite(mode: .afterTogglePrompt(didToggleProtectionsOff: true, // TODO
+                //                                                                          didToggleProtectionsFixIssue: false))
+            }))
+            self.alertPresenter?.present(in: self, animated: true)
+        }
+    }
+
     deinit {
         rulesCompilationMonitor.tabWillClose(tabModel.uid)
         removeObservers()
@@ -2252,6 +2276,7 @@ extension TabViewController: UserContentControllerDelegate {
             }) {
 
             reload()
+            attemptToShowAlert()
         }
     }
 

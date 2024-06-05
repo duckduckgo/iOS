@@ -1245,14 +1245,52 @@ class MainViewController: UIViewController {
 
     func showHomeRowReminder() {
         let feature = HomeRowReminder()
-        if feature.showNow() {
-            showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
-                if tapped {
-                    self.segueToHomeRow()
-                }
-                self.hideNotification()
-            }
-            feature.setShown()
+        presentAlert()
+//        if feature.showNow() {
+//            showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
+//                if tapped {
+//                    self.segueToHomeRow()
+//                }
+//                self.hideNotification()
+//            }
+        //            feature.setShown()
+        //        }
+    }
+    private var showAlert = false
+    private func presentAlert() {
+        showAlert = true
+
+        let alertView = AlertView(
+            question: "Did turning Privacy Protections off resolve the issue on this site?",
+            onYes: { print("User selected Yes") },
+            onNo: { print("User selected No") },
+            isVisible: Binding(get: { self.showAlert }, set: { self.showAlert = $0 })
+        )
+
+        let hostingController = UIHostingController(rootView: alertView)
+        hostingController.view.backgroundColor = .clear
+
+        addChild(hostingController)
+        view.addSubview(hostingController.view)
+        hostingController.didMove(toParent: self)
+        hostingController.view.alpha = 0.0
+
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            hostingController.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            hostingController.view.centerYAnchor.constraint(equalTo: view.window!.centerYAnchor),
+            hostingController.view.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, constant: -40)
+        ])
+
+        UIView.animate(withDuration: 0.3) {
+            hostingController.view.alpha = 1.0
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 35) {
+            self.showAlert = false
+            hostingController.willMove(toParent: nil)
+            hostingController.view.removeFromSuperview()
+            hostingController.removeFromParent()
         }
     }
 

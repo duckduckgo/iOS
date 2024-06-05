@@ -1013,16 +1013,19 @@ class TabViewController: UIViewController {
 
     private var alertPresenter: AlertViewPresenter?
     private func scheduleAlert() {
+        guard let category = privacyDashboard?.breakageCategory else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             self.alertPresenter = AlertViewPresenter(title: UserText.brokenSiteReportToggleAlertTitle,
                                                      image: "ChatPrivate",
                                                      leftButton: (UserText.brokenSiteReportToggleAlertYesButton, {
                 Pixel.fire(pixel: .reportBrokenSiteTogglePromptYes)
-                (self.parent as? MainViewController)?.segueToReportBrokenSite(mode: .afterTogglePrompt(didToggleProtectionsFixIssue: true))
+                (self.parent as? MainViewController)?.segueToReportBrokenSite(mode: .afterTogglePrompt(category: category,
+                                                                                                       didToggleProtectionsFixIssue: true))
             }),
                                                      rightButton: (UserText.brokenSiteReportToggleAlertNoButton, {
                 Pixel.fire(pixel: .reportBrokenSiteTogglePromptNo)
-                (self.parent as? MainViewController)?.segueToReportBrokenSite(mode: .afterTogglePrompt(didToggleProtectionsFixIssue: false))
+                (self.parent as? MainViewController)?.segueToReportBrokenSite(mode: .afterTogglePrompt(category: category,
+                                                                                                       didToggleProtectionsFixIssue: false))
             }))
             self.alertPresenter?.present(in: self, animated: true)
         }

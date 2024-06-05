@@ -1245,28 +1245,15 @@ class MainViewController: UIViewController {
 
     func showHomeRowReminder() {
         let feature = HomeRowReminder()
-        let presenter = AlertViewPresenter(title: UserText.brokenSiteReportToggleAlertTitle,
-                                           image: "ChatPrivate",
-                                           leftButton: (UserText.brokenSiteReportToggleAlertYesButton, {
-            Pixel.fire(pixel: .reportBrokenSiteTogglePromptYes)
-            self.segueToReportBrokenSite(mode: .afterTogglePrompt(didToggleProtectionsOff: true, // TODO
-                                                                  didToggleProtectionsFixIssue: true))
-        }),
-                                           rightButton: (UserText.brokenSiteReportToggleAlertNoButton, {
-            Pixel.fire(pixel: .reportBrokenSiteTogglePromptNo)
-            self.segueToReportBrokenSite(mode: .afterTogglePrompt(didToggleProtectionsOff: true, // TODO
-                                                                  didToggleProtectionsFixIssue: false))
-        }))
-        presenter.present(in: self, animated: true)
-        //        if feature.showNow() {
-        //            showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
-        //                if tapped {
-        //                    self.segueToHomeRow()
-        //                }
-//                self.hideNotification()
-//            }
-        //            feature.setShown()
-        //        }
+        if feature.showNow() {
+            showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
+                if tapped {
+                    self.segueToHomeRow()
+                }
+                self.hideNotification()
+            }
+            feature.setShown()
+        }
     }
 
     private var brokenSitePromptViewHostingController: UIHostingController<BrokenSitePromptView>?

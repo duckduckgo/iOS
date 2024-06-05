@@ -45,6 +45,7 @@ final class PrivacyDashboardViewController: UIViewController {
     private let privacyConfigurationManager: PrivacyConfigurationManaging
     private let contentBlockingManager: ContentBlockerRulesManager
     public var breakageAdditionalInfo: BreakageAdditionalInfo?
+    public var breakageCategory: String?
     private var privacyDashboardDidTriggerDismiss: Bool = false
 
     private let brokenSiteReporter: BrokenSiteReporter = {
@@ -181,6 +182,9 @@ extension PrivacyDashboardViewController {
 // MARK: - PrivacyDashboardControllerDelegate
 
 extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
+    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboard.PrivacyDashboardController, didSelectBreakageCategory category: String) {
+        self.breakageCategory = category
+    }
 
     func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController,
                                     didChangeProtectionSwitch protectionState: ProtectionState,

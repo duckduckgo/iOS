@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "sam/remove-waitlist-feature-flags",
-        "revision" : "8fc3bfdf9fee9eb9b987ee8fc199b39879937ef8"
+        "revision" : "c2d98627cfa6230b5463e4b6a4cfa1a841e03dc4"
       }
     },
     {

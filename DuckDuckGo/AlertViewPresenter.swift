@@ -63,7 +63,7 @@ final class AlertViewPresenter {
     }
 
     func present(in viewController: UIViewController, animated: Bool) {
-        guard let view = viewController.view else { return }
+        guard let view = viewController.view, let window = view.window else { return }
 
         showAlert = true
 
@@ -72,9 +72,7 @@ final class AlertViewPresenter {
         hostingController.didMove(toParent: viewController)
         hostingController.view.alpha = 0.0
 
-        let alertViewWidth = view.window!.frame.width <= Constants.maxWidth ?
-        view.window!.frame.width - 2 * Constants.horizontalPadding : Constants.maxWidth
-
+        let alertViewWidth = min(window.frame.width - 2 * Constants.horizontalPadding, Constants.maxWidth)
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             hostingController.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),

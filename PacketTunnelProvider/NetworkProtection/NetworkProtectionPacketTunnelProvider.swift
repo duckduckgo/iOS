@@ -213,7 +213,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 pixelEvent = .networkProtectionWireguardErrorCannotStartWireguardBackend
                 params[PixelParameters.wireguardErrorCode] = String(code)
             case .noAuthTokenFound:
-                pixelEvent = .networkProtectionNoAuthTokenFoundError
+                pixelEvent = .networkProtectionNoAccessTokenFoundError
             case .vpnAccessRevoked:
                 return
             case .unhandledError(function: let function, line: let line, error: let error):
@@ -254,7 +254,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         super.stopTunnel(with: reason, completionHandler: completionHandler)
     }
 
-    // swiftlint:disable:next function_body_length
     @objc init() {
 
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
@@ -272,7 +271,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let entitlementsCache = UserDefaultsCache<[Entitlement]>(userDefaults: UserDefaults.standard,
                                                                  key: UserDefaultsCacheKey.subscriptionEntitlements,
                                                                  settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
-        let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.unspecified))
+
+        let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
+        let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
         let subscriptionService = SubscriptionService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
         let authService = AuthService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
         let accountManager = AccountManager(accessTokenStorage: accessTokenStorage,
@@ -285,11 +286,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             if featureVisibility.shouldMonitorEntitlement() {
                 return { accountManager.accessToken }
             }
-            return { nil } }()
-        let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
-                                                             errorEvents: nil,
-                                                             isSubscriptionEnabled: true,
-                                                             accessTokenProvider: accessTokenProvider)
+            return { nil }
+        }()
+        let tokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
 
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()

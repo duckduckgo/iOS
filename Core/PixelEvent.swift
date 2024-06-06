@@ -267,6 +267,8 @@ extension Pixel {
         case autofillOnboardedUser
         case autofillLoginsStacked
 
+        case autofillMultipleAuthCallsTriggered
+
         case getDesktopCopy
         case getDesktopShare
         
@@ -967,6 +969,8 @@ extension Pixel.Event {
         case .autofillEnabledUser: return "m_autofill_enableduser"
         case .autofillOnboardedUser: return "m_autofill_onboardeduser"
         case .autofillLoginsStacked: return "m_autofill_logins_stacked"
+
+        case .autofillMultipleAuthCallsTriggered: return "m_autofill_multiple_auth_calls_triggered"
 
         case .getDesktopCopy: return "m_get_desktop_copy"
         case .getDesktopShare: return "m_get_desktop_share"

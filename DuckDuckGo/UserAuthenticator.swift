@@ -94,10 +94,12 @@ class UserAuthenticator {
 
     func monitorAuthenticationCalls() {
         authenticationCallTimestamps.append(Date())
-        authenticationCallTimestamps = authenticationCallTimestamps.filter { Date().timeIntervalSince($0) <= 5 }
-        if authenticationCallTimestamps.count >= 2 {
-            os_log("authenticate called \(authenticationCallTimestamps.count) times in the last 5 seconds")
-            // TODO - fire new pixel here
+
+        // we only care about timestamps from the last 10 seconds
+        authenticationCallTimestamps = authenticationCallTimestamps.filter { Date().timeIntervalSince($0) <= 10 }
+
+        if authenticationCallTimestamps.count > 2 {
+            DailyPixel.fire(pixel: .autofillMultipleAuthCallsTriggered)
         }
     }
 }

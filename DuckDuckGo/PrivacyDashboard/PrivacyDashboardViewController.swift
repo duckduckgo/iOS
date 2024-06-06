@@ -29,7 +29,8 @@ extension PixelExperiment {
 
     static var privacyDashboardVariant: PrivacyDashboardVariant {
         switch Self.cohort {
-        case .control: return .control // TODO: change to case .a / case .b!
+        case .breakageSiteReportingFlowA: return .a
+        case .breakageSiteReportingFlowB: return .b
         default: return .control
         }
     }
@@ -258,7 +259,15 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
                 os_log("Failed to generate or send the broken site report: %@", type: .error, error.localizedDescription)
             }
 
-            ActionMessageView.present(message: UserText.feedbackSumbittedConfirmation)
+            // TODO: this is just for test build, check if not control group instead!
+            let message: String
+            if breakageAdditionalInfo?.currentURL.isPart(ofDomain: "cnn.com") ?? false || 
+                breakageAdditionalInfo?.currentURL.isPart(ofDomain: "bbc.com") ?? false {
+                message = UserText.brokenSiteReportSuccessToast
+            } else {
+                message = UserText.feedbackSumbittedConfirmation
+            }
+            ActionMessageView.present(message: message)
             privacyDashboardCloseHandler()
         }
     }

@@ -61,7 +61,8 @@ public enum PixelExperiment: String, CaseIterable {
     // These are the variants. Rename or add/remove them as needed.  If you change the string value
     // remember to keep it clear for privacy triage.
     case control
-    case newSettings
+    case breakageSiteReportingFlowA
+    case breakageSiteReportingFlowB
 
     // Internal state for users not included in any variant
     case noVariant
@@ -97,15 +98,8 @@ final internal class PixelExperimentLogic {
             return cohort
         }
 
-        let randomNumber = Int.random(in: 0..<100)
-
-        // Allocate user to a cohort based on the random number
-        let cohort: PixelExperiment
-        if randomNumber < 50 {
-            cohort = .control
-        } else {
-            cohort = .newSettings
-        }
+        let variants: [PixelExperiment] = [.control, .breakageSiteReportingFlowA, .breakageSiteReportingFlowB]
+        let cohort: PixelExperiment = variants[Int.random(in: 0..<3)]
 
         // Store and use the selected cohort
         allocatedCohort = cohort.rawValue

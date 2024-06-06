@@ -52,7 +52,7 @@ struct AlertView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 53)
                     Text(title)
-                        .font(Font(uiFont: UIFont.daxHeadline()))
+                        .font(Font(uiFont: UIFont.appFont(ofSize: 16)))
                         .foregroundColor(.white)
                 }
 

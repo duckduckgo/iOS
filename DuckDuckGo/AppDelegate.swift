@@ -225,7 +225,7 @@ import WebKit
         }
 
         PixelExperimentForBrokenSites.install()
-        PixelExperiment.install()
+        PixelExperiment.cleanup()
 
         // MARK: Sync initialisation
 #if DEBUG
@@ -330,7 +330,6 @@ import WebKit
 
 #if NETWORK_PROTECTION
         widgetRefreshModel.beginObservingVPNStatus()
-        AppDependencyProvider.shared.networkProtectionAccessController.refreshNetworkProtectionAccess()
 #endif
 
         AppDependencyProvider.shared.toggleProtectionsCounter.sendEventsIfNeeded()

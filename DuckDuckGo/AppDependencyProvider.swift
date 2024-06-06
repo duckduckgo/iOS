@@ -47,7 +47,6 @@ protocol DependencyProvider {
     var accountManager: AccountManaging { get }
     var vpnFeatureVisibility: DefaultNetworkProtectionVisibility { get }
     var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore { get }
-    var networkProtectionAccessController: NetworkProtectionAccessController { get }
     var networkProtectionTunnelController: NetworkProtectionTunnelController { get }
     var connectionObserver: ConnectionStatusObserver { get }
     var vpnSettings: VPNSettings { get }
@@ -90,7 +89,6 @@ class AppDependencyProvider: DependencyProvider {
     }
     let vpnFeatureVisibility: DefaultNetworkProtectionVisibility
     let networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
-    let networkProtectionAccessController: NetworkProtectionAccessController
     let networkProtectionTunnelController: NetworkProtectionTunnelController
 
     let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
@@ -149,17 +147,17 @@ class AppDependencyProvider: DependencyProvider {
             }
             return { nil }
         }()
+#if os(macOS)
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
                                                                                   serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
                                                                                   errorEvents: .networkProtectionAppDebugEvents,
-                                                                                  isSubscriptionEnabled: accountManager.isUserAuthenticated,
+                                                                                  isSubscriptionEnabled: true,
                                                                                   accessTokenProvider: accessTokenProvider)
+#else
+        networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
+#endif
         networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
                                                                               tokenStore: networkProtectionKeychainTokenStore)
-        networkProtectionAccessController = NetworkProtectionAccessController(featureFlagger: featureFlagger,
-                                                                              internalUserDecider: internalUserDecider,
-                                                                              tokenStore: networkProtectionKeychainTokenStore,
-                                                                              networkProtectionTunnelController: networkProtectionTunnelController)
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
                                                                   accountManager: accountManager)
     }

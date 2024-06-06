@@ -1636,7 +1636,11 @@ extension MainViewController: BrowserChromeDelegate {
         viewCoordinator.statusBackground.alpha = hidden ? 0 : 1
         
     }
-    
+
+    func setRefreshControlEnabled(_ isEnabled: Bool) {
+        currentTab?.setRefreshControlEnabled(isEnabled)
+    }
+
     var canHideBars: Bool {
         return !DaxDialogs.shared.shouldShowFireButtonPulse
     }

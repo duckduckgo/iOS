@@ -175,6 +175,21 @@ class TabViewController: UIViewController {
     lazy var faviconUpdater = FireproofFaviconUpdater(bookmarksDatabase: bookmarksDatabase,
                                                       tab: tabModel,
                                                       favicons: Favicons.shared)
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addAction(UIAction { [weak self] _ in
+            guard let self else { return }
+            reload()
+            delegate?.tabDidRequestRefresh(tab: self)
+            Pixel.fire(pixel: .pullToRefresh)
+            AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.refresh)
+        }, for: .valueChanged)
+
+        refreshControl.backgroundColor = .systemBackground
+        refreshControl.tintColor = .label
+        return refreshControl
+    }()
+
     let syncService: DDGSyncing
 
     public var url: URL? {
@@ -448,18 +463,8 @@ class TabViewController: UIViewController {
         webView.navigationDelegate = self
         webView.uiDelegate = self
         webViewContainer.addSubview(webView)
-        webView.scrollView.refreshControl = UIRefreshControl()
-        webView.scrollView.refreshControl?.addAction(UIAction { [weak self] _ in
-            guard let self else { return }
-            self.reload()
-            delegate?.tabDidRequestRefresh(tab: self)
-            Pixel.fire(pixel: .pullToRefresh)
-            AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.refresh)
-        }, for: .valueChanged)
+        webView.scrollView.refreshControl = refreshControl
 
-        webView.scrollView.refreshControl?.backgroundColor = .systemBackground
-        webView.scrollView.refreshControl?.tintColor = .label
-                
         updateContentMode()
 
         if #available(iOS 16.4, *) {
@@ -829,7 +834,11 @@ class TabViewController: UIViewController {
         Pixel.fire(pixel: .privacyDashboardOpened)
         performSegue(withIdentifier: "PrivacyDashboard", sender: self)
     }
-    
+
+    func setRefreshControlEnabled(_ isEnabled: Bool) {
+        webView.scrollView.refreshControl = isEnabled ? refreshControl : nil
+    }
+
     private var didGoBackForward: Bool = false
 
     private func resetDashboardInfo() {
@@ -2220,7 +2229,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
     func refresh() {
         let url: URL?
         if isError || webView.url == nil {
-            url = URL(string: chromeDelegate?.omniBar.textField.text ?? "")
+            url = self.url
         } else {
             url = webView.url
         }

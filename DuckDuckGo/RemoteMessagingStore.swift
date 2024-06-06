@@ -55,11 +55,12 @@ final class RemoteMessagingStore: RemoteMessagingStoring {
             deleteScheduledRemoteMessages()
             save(remoteMessage: remoteMessage)
 
-            DispatchQueue.main.async {
-                self.notificationCenter.post(name: RemoteMessaging.Notifications.remoteMessagesDidChange, object: nil)
-            }
         } else {
             deleteScheduledRemoteMessages()
+        }
+
+        DispatchQueue.main.async {
+            self.notificationCenter.post(name: RemoteMessaging.Notifications.remoteMessagesDidChange, object: nil)
         }
     }
 }

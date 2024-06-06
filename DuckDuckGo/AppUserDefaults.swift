@@ -300,9 +300,6 @@ public class AppUserDefaults: AppSettings {
         autofillImportViaSyncStart = nil
     }
 
-    @UserDefaultsWrapper(key: .autofillSurveyEnabled, defaultValue: true)
-    var autofillSurveyEnabled: Bool
-
     @UserDefaultsWrapper(key: .voiceSearchEnabled, defaultValue: false)
     var voiceSearchEnabled: Bool
 

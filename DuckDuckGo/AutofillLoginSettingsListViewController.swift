@@ -61,6 +61,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private let noAuthAvailableView = AutofillNoAuthAvailableView()
     private let tld: TLD = AppDependencyProvider.shared.storageCache.tld
     private let syncService: DDGSyncing
+    private let syncCredentialsAdapter: SyncCredentialsAdapter
     private var syncUpdatesCancellable: AnyCancellable?
 
     private lazy var addBarButtonItem: UIBarButtonItem = {
@@ -172,6 +173,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         }
         self.viewModel = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: secureVault, currentTabUrl: currentTabUrl)
         self.syncService = syncService
+        self.syncCredentialsAdapter = syncDataProviders.credentialsAdapter
         self.selectedAccount = selectedAccount
         self.openSearch = openSearch
         super.init(nibName: nil, bundle: nil)
@@ -362,7 +364,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             } else {
                 showSelectedAccountIfRequired()
                 openSearchIfRequired()
-                self.syncService.scheduler.requestSyncImmediately()
+                self.syncService.scheduler.requestSyncImmediately(for: self.syncCredentialsAdapter.provider?.feature)
             }
         }
     }
@@ -414,7 +416,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                                   presentationLocation: .withoutBottomBar,
                                   onAction: {
             self.viewModel.undoLastDelete()
-            self.syncService.scheduler.notifyDataChanged()
+            self.syncService.scheduler.notifyDataChanged(for: self.syncCredentialsAdapter.provider?.feature)
         }, onDidDismiss: {
             self.viewModel.clearUndoCache()
             NotificationCenter.default.post(name: FireproofFaviconUpdater.deleteFireproofFaviconNotification,
@@ -489,7 +491,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                                   }, onDidDismiss: {
             if shouldDeleteAccounts {
                 if self.viewModel.deleteAllCredentials() {
-                    self.syncService.scheduler.notifyDataChanged()
+                    self.syncService.scheduler.notifyDataChanged(for: self.syncCredentialsAdapter.provider?.feature)
                     self.viewModel.resetNeverPromptWebsites()
                     self.viewModel.updateData()
                 }
@@ -819,7 +821,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
 
                     presentDeleteConfirmation(for: title, domain: domain)
                 }
-                syncService.scheduler.notifyDataChanged()
+                syncService.scheduler.notifyDataChanged(for: syncCredentialsAdapter.provider?.feature)
             }
         default:
             break
@@ -878,7 +880,7 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
     func autofillLoginDetailsViewControllerDidSave(_ controller: AutofillLoginDetailsViewController, account: SecureVaultModels.WebsiteAccount?) {
         viewModel.updateData()
         tableView.reloadData()
-        syncService.scheduler.notifyDataChanged()
+        syncService.scheduler.notifyDataChanged(for: syncCredentialsAdapter.provider?.feature)
 
         if let account = account {
             showAccountDetails(account)
@@ -891,7 +893,7 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
         if deletedSuccessfully {
             viewModel.updateData()
             tableView.reloadData()
-            syncService.scheduler.notifyDataChanged()
+            syncService.scheduler.notifyDataChanged(for: syncCredentialsAdapter.provider?.feature)
             presentDeleteConfirmation(for: title, domain: account.domain ?? "")
         }
     }

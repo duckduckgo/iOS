@@ -221,7 +221,7 @@ extension TabViewController {
         Pixel.fire(pixel: .browsingMenuAddToBookmarks)
         bookmarksInterface.createBookmark(title: link.title ?? "", url: link.url)
         favicons.loadFavicon(forDomain: link.url.host, intoCache: .fireproof, fromCache: .tabs)
-        syncService.scheduler.notifyDataChanged()
+        syncService.scheduler.notifyDataChanged(for: syncDataProviders.bookmarksAdapter.provider?.feature)
 
         ActionMessageView.present(message: UserText.webSaveBookmarkDone,
                                   actionTitle: UserText.actionGenericEdit,
@@ -270,7 +270,7 @@ extension TabViewController {
         bookmarksInterface.createOrToggleFavorite(title: link.title ?? "", url: link.url)
         favicons.loadFavicon(forDomain: link.url.host, intoCache: .fireproof, fromCache: .tabs)
         WidgetCenter.shared.reloadAllTimelines()
-        syncService.scheduler.notifyDataChanged()
+        syncService.scheduler.notifyDataChanged(for: syncDataProviders.bookmarksAdapter.provider?.feature)
 
         ActionMessageView.present(message: UserText.webSaveFavoriteDone,
                                   actionTitle: UserText.actionGenericUndo,
@@ -284,7 +284,7 @@ extension TabViewController {
                                              with bookmarksInterface: MenuBookmarksInteracting) {
         bookmarksInterface.createOrToggleFavorite(title: link.title ?? "", url: link.url)
         WidgetCenter.shared.reloadAllTimelines()
-        syncService.scheduler.notifyDataChanged()
+        syncService.scheduler.notifyDataChanged(for: syncDataProviders.bookmarksAdapter.provider?.feature)
 
         ActionMessageView.present(message: UserText.webFavoriteRemoved,
                                   actionTitle: UserText.actionGenericUndo,

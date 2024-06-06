@@ -41,6 +41,7 @@ class AddOrEditBookmarkViewController: UIViewController {
     private let viewModel: BookmarkEditorViewModel
     private let bookmarksDatabase: CoreDataDatabase
     private let syncService: DDGSyncing
+    private let syncBookmarksAdapter: SyncBookmarksAdapter
     private let appSettings: AppSettings
 
     private var viewModelCancellable: AnyCancellable?
@@ -49,6 +50,7 @@ class AddOrEditBookmarkViewController: UIViewController {
           editingEntityID: NSManagedObjectID,
           bookmarksDatabase: CoreDataDatabase,
           syncService: DDGSyncing,
+          syncBookmarksAdapter: SyncBookmarksAdapter,
           appSettings: AppSettings) {
         
         self.bookmarksDatabase = bookmarksDatabase
@@ -57,6 +59,7 @@ class AddOrEditBookmarkViewController: UIViewController {
                                                  favoritesDisplayMode: appSettings.favoritesDisplayMode,
                                                  syncService: syncService)
         self.syncService = syncService
+        self.syncBookmarksAdapter = syncBookmarksAdapter
         self.appSettings = appSettings
 
         super.init(coder: coder)
@@ -66,6 +69,7 @@ class AddOrEditBookmarkViewController: UIViewController {
           parentFolderID: NSManagedObjectID?,
           bookmarksDatabase: CoreDataDatabase,
           syncService: DDGSyncing,
+          syncBookmarksAdapter: SyncBookmarksAdapter,
           appSettings: AppSettings) {
 
         self.bookmarksDatabase = bookmarksDatabase
@@ -74,6 +78,7 @@ class AddOrEditBookmarkViewController: UIViewController {
                                                  favoritesDisplayMode: appSettings.favoritesDisplayMode,
                                                  syncService: syncService)
         self.syncService = syncService
+        self.syncBookmarksAdapter = syncBookmarksAdapter
         self.appSettings = appSettings
 
         super.init(coder: coder)
@@ -147,7 +152,7 @@ class AddOrEditBookmarkViewController: UIViewController {
         WidgetCenter.shared.reloadAllTimelines()
         self.delegate?.finishedEditing(self, entityID: viewModel.bookmark.objectID)
         dismiss(animated: true, completion: nil)
-        syncService.scheduler.notifyDataChanged()
+        syncService.scheduler.notifyDataChanged(for: syncBookmarksAdapter.provider?.feature)
     }
 
     @IBSegueAction func onCreateEditor(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> AddOrEditBookmarkViewController? {
@@ -156,6 +161,7 @@ class AddOrEditBookmarkViewController: UIViewController {
             parentFolderID: viewModel.bookmark.parent?.objectID,
             bookmarksDatabase: bookmarksDatabase,
             syncService: syncService,
+            syncBookmarksAdapter: syncBookmarksAdapter,
             appSettings: appSettings
         ) else {
             fatalError("Failed to create controller")

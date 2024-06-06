@@ -192,6 +192,7 @@ class TabViewController: UIViewController {
     }()
 
     let syncService: DDGSyncing
+    let syncDataProviders: SyncDataProviders
 
     public var url: URL? {
         willSet {
@@ -311,7 +312,8 @@ class TabViewController: UIViewController {
                                    appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
                                    bookmarksDatabase: CoreDataDatabase,
                                    historyManager: HistoryManager,
-                                   syncService: DDGSyncing) -> TabViewController {
+                                   syncService: DDGSyncing,
+                                   syncDataProviders: SyncDataProviders) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -319,7 +321,8 @@ class TabViewController: UIViewController {
                               appSettings: appSettings,
                               bookmarksDatabase: bookmarksDatabase,
                               historyManager: historyManager,
-                              syncService: syncService)
+                              syncService: syncService,
+                              syncDataProviders: syncDataProviders)
         })
         return controller
     }
@@ -336,13 +339,15 @@ class TabViewController: UIViewController {
                    appSettings: AppSettings,
                    bookmarksDatabase: CoreDataDatabase,
                    historyManager: HistoryManager,
-                   syncService: DDGSyncing) {
+                   syncService: DDGSyncing,
+                   syncDataProviders: SyncDataProviders) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.historyCapture = HistoryCapture(historyManager: historyManager)
         self.syncService = syncService
+        self.syncDataProviders = syncDataProviders
         super.init(coder: aDecoder)
     }
 
@@ -2666,7 +2671,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
             let credentialID = try SaveAutofillLoginManager.saveCredentials(credentials,
                                                                             with: AutofillSecureVaultFactory)
             confirmSavedCredentialsFor(credentialID: credentialID, message: message)
-            syncService.scheduler.notifyDataChanged()
+            syncService.scheduler.notifyDataChanged(for: syncDataProviders.credentialsAdapter.provider?.feature)
 
             NotificationCenter.default.post(name: .autofillSaveEvent, object: nil)
         } catch {

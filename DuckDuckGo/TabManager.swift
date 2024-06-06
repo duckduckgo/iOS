@@ -34,6 +34,7 @@ class TabManager {
     private let bookmarksDatabase: CoreDataDatabase
     private let historyManager: HistoryManager
     private let syncService: DDGSyncing
+    private let syncDataProviders: SyncDataProviders
     private var previewsSource: TabPreviewsSource
 
     weak var delegate: TabDelegate?
@@ -46,12 +47,14 @@ class TabManager {
          previewsSource: TabPreviewsSource,
          bookmarksDatabase: CoreDataDatabase,
          historyManager: HistoryManager,
-         syncService: DDGSyncing) {
+         syncService: DDGSyncing,
+         syncDataProviders: SyncDataProviders) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.syncService = syncService
+        self.syncDataProviders = syncDataProviders
 
         registerForNotifications()
     }
@@ -68,7 +71,8 @@ class TabManager {
         let controller = TabViewController.loadFromStoryboard(model: tab,
                                                               bookmarksDatabase: bookmarksDatabase,
                                                               historyManager: historyManager,
-                                                              syncService: syncService)
+                                                              syncService: syncService,
+                                                              syncDataProviders: syncDataProviders)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -140,7 +144,8 @@ class TabManager {
         let controller = TabViewController.loadFromStoryboard(model: tab,
                                                               bookmarksDatabase: bookmarksDatabase,
                                                               historyManager: historyManager,
-                                                              syncService: syncService)
+                                                              syncService: syncService,
+                                                              syncDataProviders: syncDataProviders)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,

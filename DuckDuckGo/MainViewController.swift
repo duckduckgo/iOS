@@ -196,7 +196,8 @@ class MainViewController: UIViewController {
                                      previewsSource: previewsSource,
                                      bookmarksDatabase: bookmarksDatabase,
                                      historyManager: historyManager,
-                                     syncService: syncService)
+                                     syncService: syncService,
+                                     syncDataProviders: syncDataProviders)
         self.syncPausedStateManager = syncPausedStateManager
 
         super.init(nibName: nil, bundle: nil)
@@ -635,7 +636,7 @@ class MainViewController: UIViewController {
     private func bindSyncService() {
         localUpdatesCancellable = favoritesViewModel.localUpdates
             .sink { [weak self] in
-                self?.syncService.scheduler.notifyDataChanged()
+                self?.syncService.scheduler.notifyDataChanged(for: self?.syncDataProviders.bookmarksAdapter.provider?.feature)
             }
 
         syncUpdatesCancellable = syncDataProviders.bookmarksAdapter.syncDidCompletePublisher
@@ -753,7 +754,7 @@ class MainViewController: UIViewController {
         addToContentContainer(controller: controller)
 
         refreshControls()
-        syncService.scheduler.requestSyncImmediately()
+        syncService.scheduler.requestSyncImmediately(for: syncDataProviders.bookmarksAdapter.provider?.feature)
     }
 
     fileprivate func removeHomeScreen() {
@@ -1519,7 +1520,7 @@ class MainViewController: UIViewController {
            let emailManager = syncDataProviders.settingsAdapter.emailManager,
            object !== emailManager {
 
-            syncService.scheduler.notifyDataChanged()
+            syncService.scheduler.notifyDataChanged(for: syncDataProviders.settingsAdapter.provider?.feature)
         }
     }
     
@@ -1531,7 +1532,7 @@ class MainViewController: UIViewController {
            let emailManager = syncDataProviders.settingsAdapter.emailManager,
            object !== emailManager {
 
-            syncService.scheduler.notifyDataChanged()
+            syncService.scheduler.notifyDataChanged(for: syncDataProviders.settingsAdapter.provider?.feature)
         }
     }
 

@@ -109,14 +109,14 @@ final class MockDDGSyncing: DDGSyncing {
 class CapturingScheduler: Scheduling {
     var notifyDataChangedCalled = false
 
-    func notifyDataChanged() {
+    func notifyDataChanged(for features: [Feature]) {
         notifyDataChangedCalled = true
     }
 
-    func notifyAppLifecycleEvent() {
+    func requestSyncImmediately(for features: [Feature]) {
     }
 
-    func requestSyncImmediately() {
+    func notifyAppLifecycleEvent() {
     }
 
     func cancelSyncAndSuspendSyncQueue() {

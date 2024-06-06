@@ -53,10 +53,12 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
         let credentialsAdapter = SyncCredentialsAdapter(
             secureVaultErrorReporter: MockSecureVaultReporting(),
             syncErrorHandler: CapturingAdapterErrorHandler())
+        let settingsAdapter = SyncSettingsAdapter(settingHandlers: [])
         vc = SyncSettingsViewController(
             syncService: ddgSyncing,
             syncBookmarksAdapter: bookmarksAdapter,
             syncCredentialsAdapter: credentialsAdapter,
+            syncSettingsAdapter: settingsAdapter,
             syncPausedStateManager: errorHandler)
     }
 

@@ -32,7 +32,7 @@ extension TabViewController {
         if favorite && nil == viewModel.favorite(for: link.url) {
             viewModel.createOrToggleFavorite(title: link.displayTitle, url: link.url)
             WidgetCenter.shared.reloadAllTimelines()
-            syncService.scheduler.notifyDataChanged()
+            syncService.scheduler.notifyDataChanged(for: syncDataProviders.bookmarksAdapter.provider?.feature)
 
             DispatchQueue.main.async {
                 let addressBarBottom = self.appSettings.currentAddressBarPosition.isBottom
@@ -41,7 +41,7 @@ extension TabViewController {
             }
         } else if nil == viewModel.bookmark(for: link.url) {
             viewModel.createBookmark(title: link.displayTitle, url: link.url)
-            syncService.scheduler.notifyDataChanged()
+            syncService.scheduler.notifyDataChanged(for: syncDataProviders.bookmarksAdapter.provider?.feature)
 
             DispatchQueue.main.async {
                 let addressBarBottom = self.appSettings.currentAddressBarPosition.isBottom

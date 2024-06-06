@@ -33,6 +33,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     let syncService: DDGSyncing
     let syncBookmarksAdapter: SyncBookmarksAdapter
     let syncCredentialsAdapter: SyncCredentialsAdapter
+    let syncSettingsAdapter: SyncSettingsAdapter
     var connector: RemoteConnecting?
 
     let userAuthenticator = UserAuthenticator(reason: UserText.syncUserUserAuthenticationReason)
@@ -66,12 +67,14 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         syncService: DDGSyncing,
         syncBookmarksAdapter: SyncBookmarksAdapter,
         syncCredentialsAdapter: SyncCredentialsAdapter,
+        syncSettingsAdapter: SyncSettingsAdapter,
         appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
         syncPausedStateManager: any SyncPausedStateManaging
     ) {
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
         self.syncCredentialsAdapter = syncCredentialsAdapter
+        self.syncSettingsAdapter = syncSettingsAdapter
         self.syncPausedStateManager = syncPausedStateManager
 
         let viewModel = SyncSettingsViewModel(
@@ -160,7 +163,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
             .sink { [weak self] isFaviconsFetchingEnabled in
                 self?.syncBookmarksAdapter.isFaviconsFetchingEnabled = isFaviconsFetchingEnabled
                 if isFaviconsFetchingEnabled {
-                    self?.syncService.scheduler.notifyDataChanged()
+                    self?.syncService.scheduler.notifyDataChanged(for: self?.syncBookmarksAdapter.provider?.feature)
                 }
             }
             .store(in: &cancellables)
@@ -173,7 +176,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
             .sink { [weak self] isEnabled in
                 appSettings.favoritesDisplayMode = isEnabled ? .displayUnified(native: .mobile) : .displayNative(.mobile)
                 NotificationCenter.default.post(name: AppUserDefaults.Notifications.favoritesDisplayModeChange, object: self)
-                self?.syncService.scheduler.notifyDataChanged()
+                self?.syncService.scheduler.notifyDataChanged(for: self?.syncSettingsAdapter.provider?.feature)
             }
             .store(in: &cancellables)
 
@@ -236,11 +239,11 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         connector = nil
-        syncService.scheduler.requestSyncImmediately()
+        syncService.scheduler.requestSyncImmediately(for: syncSettingsAdapter.provider?.feature)
     }
 
     func updateOptions() {
-        syncService.scheduler.requestSyncImmediately()
+        syncService.scheduler.requestSyncImmediately(for: syncSettingsAdapter.provider?.feature)
     }
 
     func refreshForState(_ authState: SyncAuthState) {

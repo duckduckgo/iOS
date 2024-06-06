@@ -138,7 +138,7 @@ class FavoritesViewController: UIViewController {
     private func bindSyncService() {
         localUpdatesCancellable = renderer.viewModel.localUpdates
             .sink { [weak self] in
-                self?.syncService.scheduler.notifyDataChanged()
+                self?.syncService.scheduler.notifyDataChanged(for: self?.syncDataProviders.bookmarksAdapter.provider?.feature)
             }
 
         syncUpdatesCancellable = syncDataProviders.bookmarksAdapter.syncDidCompletePublisher

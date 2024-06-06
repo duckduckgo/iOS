@@ -147,7 +147,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     private func bindSyncService() {
         localUpdatesCancellable = viewModel.localUpdates
             .sink { [weak self] in
-                self?.syncService.scheduler.notifyDataChanged()
+                self?.syncService.scheduler.notifyDataChanged(for: self?.syncDataProviders.bookmarksAdapter.provider?.feature)
             }
 
         syncUpdatesCancellable = syncDataProviders.bookmarksAdapter.syncDidCompletePublisher
@@ -180,7 +180,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         }
         bindFavoritesDisplayMode()
 
-        syncService.scheduler.requestSyncImmediately()
+        syncService.scheduler.requestSyncImmediately(for: syncDataProviders.bookmarksAdapter.provider?.feature)
 
         tableView.delegate = self
 
@@ -577,6 +577,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                                                                    editingEntityID: id,
                                                                    bookmarksDatabase: bookmarksDatabase,
                                                                    syncService: syncService,
+                                                                   syncBookmarksAdapter: syncDataProviders.bookmarksAdapter,
                                                                    appSettings: appSettings) else {
                 assertionFailure("Failed to create controller")
                 return nil
@@ -589,6 +590,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                                                                    parentFolderID: viewModel.currentFolder?.objectID,
                                                                    bookmarksDatabase: bookmarksDatabase,
                                                                    syncService: syncService,
+                                                                   syncBookmarksAdapter: syncDataProviders.bookmarksAdapter,
                                                                    appSettings: appSettings) else {
                 assertionFailure("Failed to create controller")
                 return nil

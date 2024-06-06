@@ -159,10 +159,10 @@ struct RemoteMessaging {
 
             let activationDateStore = DefaultVPNActivationDateStore()
             let daysSinceNetworkProtectionEnabled = activationDateStore.daysSinceActivation() ?? -1
-            let surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(statisticsStore: statisticsStore)
 
             var privacyProDaysSinceSubscribed: Int = -1
             var privacyProDaysUntilExpiry: Int = -1
+            let surveyActionMapper: DefaultRemoteMessagingSurveyURLBuilder
 
             if let accessToken = AppDependencyProvider.shared.subscriptionManager.accountManager.accessToken {
                 let subscriptionResult = await AppDependencyProvider.shared.subscriptionManager.subscriptionService.getSubscription(
@@ -172,7 +172,12 @@ struct RemoteMessaging {
                 if case let .success(subscription) = subscriptionResult {
                     privacyProDaysSinceSubscribed = Calendar.current.numberOfDaysBetween(subscription.startedAt, and: Date()) ?? -1
                     privacyProDaysUntilExpiry = Calendar.current.numberOfDaysBetween(Date(), and: subscription.expiresOrRenewsAt) ?? -1
+                    surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(statisticsStore: statisticsStore, subscription: subscription)
+                } else {
+                    surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(statisticsStore: statisticsStore, subscription: nil)
                 }
+            } else {
+                surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(statisticsStore: statisticsStore, subscription: nil)
             }
 
             let remoteMessagingConfigMatcher = RemoteMessagingConfigMatcher(

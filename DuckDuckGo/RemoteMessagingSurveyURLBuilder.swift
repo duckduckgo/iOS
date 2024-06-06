@@ -22,16 +22,20 @@ import BrowserServicesKit
 import RemoteMessaging
 import Core
 import Common
+import Subscription
 
 struct DefaultRemoteMessagingSurveyURLBuilder: RemoteMessagingSurveyActionMapping {
 
     private let statisticsStore: StatisticsStore
     private let activationDateStore: VPNActivationDateStore
+    private let subscription: Subscription?
 
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
-         activationDateStore: VPNActivationDateStore = DefaultVPNActivationDateStore()) {
+         activationDateStore: VPNActivationDateStore = DefaultVPNActivationDateStore(),
+         subscription: Subscription?) {
         self.statisticsStore = statisticsStore
         self.activationDateStore = activationDateStore
+        self.subscription = subscription
     }
 
     // swiftlint:disable:next cyclomatic_complexity
@@ -66,8 +70,45 @@ struct DefaultRemoteMessagingSurveyURLBuilder: RemoteMessagingSurveyActionMappin
                 }
             case .daysInstalled:
                 if let installDate = statisticsStore.installDate,
-                      let daysSinceInstall = Calendar.current.numberOfDaysBetween(installDate, and: Date()) {
+                   let daysSinceInstall = Calendar.current.numberOfDaysBetween(installDate, and: Date()) {
                     queryItems.append(URLQueryItem(name: parameter.rawValue, value: String(describing: daysSinceInstall)))
+                }
+            case .privacyProStatus:
+                switch subscription?.status {
+                case .autoRenewable: queryItems.append(URLQueryItem(name: parameter.rawValue, value: "auto_renewable"))
+                case .notAutoRenewable: queryItems.append(URLQueryItem(name: parameter.rawValue, value: "not_auto_renewable"))
+                case .gracePeriod: queryItems.append(URLQueryItem(name: parameter.rawValue, value: "grace_period"))
+                case .inactive: queryItems.append(URLQueryItem(name: parameter.rawValue, value: "inactive"))
+                case .expired: queryItems.append(URLQueryItem(name: parameter.rawValue, value: "expired"))
+                case .unknown: queryItems.append(URLQueryItem(name: parameter.rawValue, value: "unknown"))
+                case nil: break
+                }
+            case .privacyProPlatform:
+
+                switch subscription?.platform {
+                case .apple: queryItems.append(URLQueryItem(name: parameter.rawValue, value: "apple"))
+                case .google: queryItems.append(URLQueryItem(name: parameter.rawValue, value: "google"))
+                case .stripe: queryItems.append(URLQueryItem(name: parameter.rawValue, value: "stripe"))
+                case .unknown: queryItems.append(URLQueryItem(name: parameter.rawValue, value: "unknown"))
+                case nil: break
+                }
+            case .privacyProBilling:
+                switch subscription?.billingPeriod {
+                case .monthly: queryItems.append(URLQueryItem(name: parameter.rawValue, value: "monthly"))
+                case .yearly: queryItems.append(URLQueryItem(name: parameter.rawValue, value: "yearly"))
+                case .unknown: queryItems.append(URLQueryItem(name: parameter.rawValue, value: "unknown"))
+                case nil: break
+                }
+
+            case .privacyProDaysSincePurchase:
+                if let startDate = subscription?.startedAt,
+                   let daysSincePurchase = Calendar.current.numberOfDaysBetween(startDate, and: Date()) {
+                    queryItems.append(URLQueryItem(name: parameter.rawValue, value: String(describing: daysSincePurchase)))
+                }
+            case .privacyProDaysUntilExpiry:
+                if let expiryDate = subscription?.expiresOrRenewsAt,
+                   let daysUntilExpiry = Calendar.current.numberOfDaysBetween(Date(), and: expiryDate) {
+                    queryItems.append(URLQueryItem(name: parameter.rawValue, value: String(describing: daysUntilExpiry)))
                 }
             }
         }

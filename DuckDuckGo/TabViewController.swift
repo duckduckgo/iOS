@@ -82,6 +82,8 @@ class TabViewController: UIViewController {
         set { findInPageScript?.findInPage = newValue }
     }
 
+    private var keyboardIsVisible: Bool = false
+
     let favicons = Favicons.shared
     let progressWorker = WebProgressWorker()
 
@@ -582,6 +584,33 @@ class TabViewController: UIViewController {
                                    completion: { [weak self] url in
             self?.load(urlRequest: .userInitiated(url))
         })
+    }
+
+    override func buildMenu(with builder: any UIMenuBuilder) {
+        super.buildMenu(with: builder)
+
+        if #available(iOS 17.0, *) {
+
+            guard let autofill = builder.menu(for: .autoFill), keyboardIsVisible else { return }
+
+            let presentPasswords = UIAction(title: "DDG Passwords") { [weak self] _ in
+                if let mainVC = self?.parent as? MainViewController {
+                    mainVC.launchAutofillLogins()
+                }
+            }
+
+            // To replace .autofill with our menu
+//            let overrideSystemAutofill = UIMenu(title: "", identifier: autofill.identifier, options: .displayInline, children: [presentPasswords])
+//            builder.replace(menu: .autoFill, with: overrideSystemAutofill)
+
+            // To add our menu so it appears after .autofill
+            let ddgMenuOption = UIMenu(title: "", options: .displayInline, children: [presentPasswords])
+            builder.insertSibling(ddgMenuOption, afterMenu: .autoFill)
+
+            // To add our menu to .autofill child menu
+//            let autofillChild = UIMenu(title: "", options: .displayInline, children: [presentPasswords])
+//            builder.insertChild(autofillChild, atStartOfMenu: .autoFill)
+        }
     }
 
     func prepareForDataClearing() {

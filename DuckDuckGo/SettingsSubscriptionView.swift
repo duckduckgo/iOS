@@ -261,9 +261,7 @@ struct SettingsSubscriptionView: View {
 
             }
         }.onReceive(viewModel.$state) { state in
-            if state.subscription.enabled && (state.subscription.isSignedIn || state.subscription.canPurchase) {
-                isShowingPrivacyPro = true
-            }
+            isShowingPrivacyPro = state.subscription.enabled && (state.subscription.isSignedIn || state.subscription.canPurchase)
         }
     }
 }

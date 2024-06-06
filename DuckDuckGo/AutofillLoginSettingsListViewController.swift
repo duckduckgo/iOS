@@ -356,6 +356,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private func authenticate() {
         viewModel.authenticate {[weak self] error in
             guard let self = self else { return }
+            self.viewModel.isAuthenticating = false
+            
             if error != nil {
                 if error != .noAuthAvailable {
                     self.delegate?.autofillLoginSettingsListViewControllerDidFinish(self)

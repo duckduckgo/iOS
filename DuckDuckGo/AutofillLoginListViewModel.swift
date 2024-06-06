@@ -71,6 +71,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
     var authenticationNotRequired = false
     var isCancelingSearch = false
+    var isAuthenticating = false
 
     @Published private var accounts = [SecureVaultModels.WebsiteAccount]()
     private var accountsToSuggest = [SecureVaultModels.WebsiteAccount]()
@@ -175,6 +176,12 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
     
     func authenticate(completion: @escaping(AutofillLoginListAuthenticator.AuthError?) -> Void) {
+        guard !isAuthenticating else {
+            return
+        }
+
+        isAuthenticating = true
+
         if !authenticator.canAuthenticate() {
             viewState = .noAuthAvailable
             completion(nil)
@@ -190,6 +197,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
 
     func authenticateInvalidateContext() {
+        isAuthenticating = false
         authenticator.invalidateContext()
     }
 

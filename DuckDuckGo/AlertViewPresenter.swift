@@ -28,6 +28,7 @@ final class AlertViewPresenter {
         static let animationDuration: Double = 0.2
         static let bottomPadding: Double = 28.0
         static let horizontalPadding: Double = 20.0
+        static let maxWidth: Double = 358.0
 
     }
 
@@ -62,19 +63,24 @@ final class AlertViewPresenter {
     }
 
     func present(in viewController: UIViewController, animated: Bool) {
+        guard let view = viewController.view else { return }
+
         showAlert = true
 
-        guard let view = viewController.view else { return }
         viewController.addChild(hostingController)
         view.addSubview(hostingController.view)
         hostingController.didMove(toParent: viewController)
         hostingController.view.alpha = 0.0
 
+        let alertViewWidth = view.window!.frame.width <= Constants.maxWidth ?
+        view.window!.frame.width - 2 * Constants.horizontalPadding : Constants.maxWidth
+
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             hostingController.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.bottomPadding),
-            hostingController.view.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, constant: -2 * Constants.horizontalPadding)
+            hostingController.view.widthAnchor.constraint(equalToConstant: alertViewWidth)
+
         ])
 
         if animated {

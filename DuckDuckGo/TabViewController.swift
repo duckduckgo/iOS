@@ -1026,6 +1026,7 @@ class TabViewController: UIViewController {
     private func schedulePrivacyProtectionsOffAlert() {
         guard let breakageCategory else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.alertPresenter?.hide()
             self.alertPresenter = AlertViewPresenter(title: UserText.brokenSiteReportToggleAlertTitle,
                                                      image: "ChatPrivate",
                                                      leftButton: (UserText.brokenSiteReportToggleAlertYesButton, {

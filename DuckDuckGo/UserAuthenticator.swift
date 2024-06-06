@@ -39,6 +39,7 @@ class UserAuthenticator {
     private var context = LAContext()
     private var reason: String
     @Published private(set) var state = AuthenticationState.loggedOut
+    private var authenticationCallTimestamps: [Date] = []
 
     init(reason: String) {
         self.reason = reason
@@ -67,17 +68,19 @@ class UserAuthenticator {
 
         if canAuthenticate() {
             let reason = reason
-            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason ) { success, error in
+            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason ) { [weak self] success, error in
 
                 DispatchQueue.main.async {
                     if success {
-                        self.state = .loggedIn
+                        self?.state = .loggedIn
                         completion?(nil)
                     } else {
                         os_log("Failed to authenticate: %s", log: .generalLog, type: .debug, error?.localizedDescription ?? "nil error")
                         completion?(.failedToAuthenticate)
                     }
                 }
+                
+                self?.monitorAuthenticationCalls()
             }
         } else {
             state = .notAvailable
@@ -87,5 +90,14 @@ class UserAuthenticator {
 
     func invalidateContext() {
         context.invalidate()
+    }
+
+    func monitorAuthenticationCalls() {
+        authenticationCallTimestamps.append(Date())
+        authenticationCallTimestamps = authenticationCallTimestamps.filter { Date().timeIntervalSince($0) <= 5 }
+        if authenticationCallTimestamps.count >= 2 {
+            os_log("authenticate called \(authenticationCallTimestamps.count) times in the last 5 seconds")
+            // TODO - fire new pixel here
+        }
     }
 }

@@ -1714,6 +1714,7 @@ extension MainViewController: OmniBarDelegate {
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
+        omniBar.cancel()
         loadQuery(query)
         hideSuggestionTray()
         hideNotificationBarIfBrokenSitePromptShown()

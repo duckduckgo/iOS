@@ -147,6 +147,9 @@ extension MainViewController {
         }
         
         currentTab?.privacyDashboard = controller
+        controller.delegate = currentTab
+        currentTab?.breakageCategory = nil
+
         controller.popoverPresentationController?.delegate = controller
         controller.view.backgroundColor = UIColor(designSystemColor: .backgroundSheets)
 

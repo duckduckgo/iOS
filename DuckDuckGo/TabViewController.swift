@@ -1022,7 +1022,7 @@ class TabViewController: UIViewController {
     }
 
     private var alertPresenter: AlertViewPresenter?
-    private var breakageCategory: String?
+    var breakageCategory: String?
     private func schedulePrivacyProtectionsOffAlert() {
         guard let breakageCategory else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {

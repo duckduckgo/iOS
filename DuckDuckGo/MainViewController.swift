@@ -90,8 +90,9 @@ class MainViewController: UIViewController {
     let previewsSource: TabPreviewsSource
     let appSettings: AppSettings
     private var launchTabObserver: LaunchTabNotification.Observer?
-    
-    var doRefreshAfterClear = true
+
+    var autoClearInProgress = false
+    var autoClearShouldRefreshUIAfterClear = true
 
     let bookmarksDatabase: CoreDataDatabase
     private weak var bookmarksDatabaseCleaner: BookmarkDatabaseCleaner?
@@ -835,7 +836,9 @@ class MainViewController: UIViewController {
                 selectTab(existing)
                 return
             } else if reuseExisting, let existing = tabManager.firstHomeTab() {
-                doRefreshAfterClear = false
+                if autoClearInProgress {
+                    autoClearShouldRefreshUIAfterClear = false
+                }
                 tabManager.selectTab(existing)
                 loadUrl(url, fromExternalLink: fromExternalLink)
             } else {
@@ -2403,7 +2406,7 @@ extension MainViewController: GestureToolbarButtonDelegate {
 }
 
 extension MainViewController: AutoClearWorker {
-    
+
     func clearNavigationStack() {
         dismissOmniBar()
 
@@ -2421,10 +2424,6 @@ extension MainViewController: AutoClearWorker {
     }
 
     func refreshUIAfterClear() {
-        guard doRefreshAfterClear else {
-            doRefreshAfterClear = true
-            return
-        }
         showBars()
         attachHomeScreen()
         tabsBarController?.refresh(tabsModel: tabManager.model)
@@ -2433,8 +2432,18 @@ extension MainViewController: AutoClearWorker {
     }
 
     @MainActor
-    func clearDataFinished(_: AutoClear) {
-        refreshUIAfterClear()
+    func willStartClearing(_: AutoClear) {
+        autoClearInProgress = true
+    }
+
+    @MainActor
+    func autoClearDidFinishClearing(_: AutoClear, isLaunching: Bool) {
+        if autoClearShouldRefreshUIAfterClear && isLaunching == false {
+            refreshUIAfterClear()
+        }
+
+        autoClearInProgress = false
+        autoClearShouldRefreshUIAfterClear = true
     }
 
     @MainActor

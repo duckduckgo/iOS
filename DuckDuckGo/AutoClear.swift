@@ -27,7 +27,9 @@ protocol AutoClearWorker {
     func forgetData() async
     func forgetData(applicationState: DataStoreWarmup.ApplicationState) async
     func forgetTabs()
-    func clearDataFinished(_: AutoClear)
+
+    func willStartClearing(_: AutoClear)
+    func autoClearDidFinishClearing(_: AutoClear, isLaunching: Bool)
 }
 
 class AutoClear {
@@ -50,6 +52,8 @@ class AutoClear {
     func clearDataIfEnabled(launching: Bool = false, applicationState: DataStoreWarmup.ApplicationState = .unknown) async {
         guard let settings = AutoClearSettingsModel(settings: appSettings) else { return }
 
+        worker.willStartClearing(self)
+
         if settings.action.contains(.clearTabs) {
             worker.forgetTabs()
         }
@@ -58,9 +62,7 @@ class AutoClear {
             await worker.forgetData(applicationState: applicationState)
         }
 
-        if !launching {
-            worker.clearDataFinished(self)
-        }
+        worker.autoClearDidFinishClearing(self, isLaunching: launching)
     }
 
     /// Note: function is parametrised because of tests.

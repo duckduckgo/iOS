@@ -35,7 +35,6 @@ extension PixelExperiment {
         }
     }
 
-
 }
 
 protocol PrivacyDashboardViewControllerDelegate: AnyObject {

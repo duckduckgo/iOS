@@ -35,6 +35,7 @@ final class UserScripts: UserScriptsProvider {
     let autoconsentUserScript: AutoconsentUserScript
 
     private(set) var faviconScript = FaviconUserScript()
+    private(set) var focusUserScript = FocusUserScript()
     private(set) var navigatorPatchScript = NavigatorSharePatchUserScript()
     private(set) var findInPageScript = FindInPageUserScript()
     private(set) var fullScreenVideoScript = FullScreenVideoUserScript()
@@ -66,6 +67,7 @@ final class UserScripts: UserScriptsProvider {
         surrogatesScript,
         contentBlockerUserScript,
         faviconScript,
+        focusUserScript,
         fullScreenVideoScript,
         autofillUserScript,
         printingUserScript,

@@ -2241,6 +2241,17 @@ extension TabViewController: UIGestureRecognizerDelegate {
 
 }
 
+extension TabViewController: FocusUserScriptDelegate {
+
+    func focusUserScript(_ script: FocusUserScript, didRequestUpdateFocus focus: Bool) {
+        if focus {
+            keyboardIsVisible = true
+        } else {
+            keyboardIsVisible = false
+        }
+    }
+}
+
 // MARK: - UserContentControllerDelegate
 extension TabViewController: UserContentControllerDelegate {
 
@@ -2269,6 +2280,7 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.autofillUserScript.emailDelegate = emailManager
         userScripts.autofillUserScript.vaultDelegate = vaultManager
         userScripts.faviconScript.delegate = faviconUpdater
+        userScripts.focusUserScript.delegate = self
         userScripts.printingUserScript.delegate = self
         userScripts.textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
         userScripts.loginFormDetectionScript?.delegate = self

@@ -25,6 +25,8 @@ import BrowserServicesKit
 import PrivacyDashboard
 import Common
 
+// swiftlint:disable file_length
+
 extension PixelExperiment {
 
     static var privacyDashboardVariant: PrivacyDashboardVariant {
@@ -260,7 +262,7 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
 
             // This is just for the ship review build
             let message: String
-            if breakageAdditionalInfo?.currentURL.isPart(ofDomain: "cnn.com") ?? false || 
+            if breakageAdditionalInfo?.currentURL.isPart(ofDomain: "cnn.com") ?? false ||
                 breakageAdditionalInfo?.currentURL.isPart(ofDomain: "bbc.com") ?? false {
                 message = UserText.brokenSiteReportSuccessToast
             } else {
@@ -274,7 +276,7 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
     func privacyDashboardControllerDidRequestShowGeneralFeedback(_ privacyDashboardController: PrivacyDashboardController) {
         guard let mainViewController = presentingViewController as? MainViewController else { return }
         dismiss(animated: true) {
-            mainViewController.segueToNegativeFeedbackForm()
+            mainViewController.segueToNegativeFeedbackForm(isFromBrokenSiteReportFlow: true)
         }
     }
 

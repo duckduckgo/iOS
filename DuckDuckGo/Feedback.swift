@@ -37,6 +37,7 @@ struct Feedback {
     struct Model {
         var category: Category?
         var subcategory: FeedbackEntry?
+        var isFromBrokenSiteReportFlow: Bool = false
     }
     
     enum NextStep {

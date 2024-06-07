@@ -100,9 +100,10 @@ final class PrivacyDashboardViewController: UIViewController {
           privacyConfigurationManager: PrivacyConfigurationManaging,
           contentBlockingManager: ContentBlockerRulesManager,
           breakageAdditionalInfo: BreakageAdditionalInfo?) {
+        let variant = !privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .brokenSiteReportExperiment) ? PrivacyDashboardVariant.control : PixelExperiment.privacyDashboardVariant
         self.privacyDashboardController = PrivacyDashboardController(privacyInfo: privacyInfo,
                                                                      dashboardMode: dashboardMode,
-                                                                     variant: PixelExperiment.privacyDashboardVariant,
+                                                                     variant: variant,
                                                                      privacyConfigurationManager: privacyConfigurationManager,
                                                                      eventMapping: toggleReportEvents)
         self.privacyConfigurationManager = privacyConfigurationManager
@@ -259,7 +260,6 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
             } catch {
                 os_log("Failed to generate or send the broken site report: %@", type: .error, error.localizedDescription)
             }
-
             // This is just for the ship review build
             let message: String
             if breakageAdditionalInfo?.currentURL.isPart(ofDomain: "cnn.com") ?? false ||

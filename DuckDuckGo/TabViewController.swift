@@ -1016,11 +1016,6 @@ class TabViewController: UIViewController {
         job()
     }
 
-    private func attemptToShowAlert() {
-        guard !isPad else { return }
-        schedulePrivacyProtectionsOffAlert()
-    }
-
     private var alertPresenter: AlertViewPresenter?
     var breakageCategory: String?
     private func schedulePrivacyProtectionsOffAlert() {
@@ -2297,7 +2292,7 @@ extension TabViewController: UserContentControllerDelegate {
             }) {
 
             reload()
-            attemptToShowAlert()
+            schedulePrivacyProtectionsOffAlert()
         }
     }
 

@@ -258,7 +258,7 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
                 os_log("Failed to generate or send the broken site report: %@", type: .error, error.localizedDescription)
             }
 
-            // TODO: this is just for test build, check if not control group instead!
+            // This is just for the ship review build
             let message: String
             if breakageAdditionalInfo?.currentURL.isPart(ofDomain: "cnn.com") ?? false || 
                 breakageAdditionalInfo?.currentURL.isPart(ofDomain: "bbc.com") ?? false {

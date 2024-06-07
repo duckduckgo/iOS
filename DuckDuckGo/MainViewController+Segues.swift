@@ -170,12 +170,7 @@ extension MainViewController {
 
         feedbackPicker.popoverPresentationController?.delegate = feedbackPicker
         feedbackPicker.view.backgroundColor = UIColor(designSystemColor: .backgroundSheets)
-
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            feedbackPicker.modalPresentationStyle = .formSheet
-        } else {
-            feedbackPicker.modalPresentationStyle = .pageSheet
-        }
+        feedbackPicker.modalPresentationStyle = isPad ? .formSheet : .pageSheet
         feedbackPicker.loadViewIfNeeded()
         feedbackPicker.configure(with: Feedback.Category.allCases)
 

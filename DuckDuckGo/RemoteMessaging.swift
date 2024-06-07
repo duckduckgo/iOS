@@ -105,7 +105,7 @@ struct RemoteMessaging {
         }
     }
 
-    // swiftlint:disable:next function_body_length
+    /// Convenience function
     static func fetchAndProcess(bookmarksDatabase: CoreDataDatabase, favoritesDisplayMode: FavoritesDisplayMode) async throws {
         
         var bookmarksCount = 0
@@ -141,6 +141,7 @@ struct RemoteMessaging {
                                        isWidgetInstalled: isWidgetInstalled)
     }
 
+    // swiftlint:disable:next function_body_length
     static private func fetchAndProcess(bookmarksCount: Int,
                                         favoritesCount: Int,
                                         remoteMessagingStore: RemoteMessagingStore = AppDependencyProvider.shared.remoteMessagingStore,

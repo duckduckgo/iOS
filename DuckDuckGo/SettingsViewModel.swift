@@ -767,8 +767,16 @@ extension SettingsViewModel {
         // Update if can purchase based on App Store product availability
         state.subscription.canPurchase = subscriptionManager.canPurchase
 
+        // Update if user is signed in based on the presence of token
+        state.subscription.isSignedIn = subscriptionManager.accountManager.isUserAuthenticated
+
         // Active subscription check
         guard let token = subscriptionManager.accountManager.accessToken else {
+            // Reset state in case cache was outdated
+            state.subscription.hasActiveSubscription = false
+            state.subscription.entitlements = []
+            state.subscription.platform = .unknown
+
             subscriptionStateCache.set(state.subscription) // Sync cache
             return
         }
@@ -777,34 +785,21 @@ extension SettingsViewModel {
         switch subscriptionResult {
             
         case .success(let subscription):
-            
-            state.subscription.isSignedIn = true
             state.subscription.platform = subscription.platform
-            
-            if subscription.isActive {
-                state.subscription.hasActiveSubscription = true
-                
-                // Check entitlements and update state
-                let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
-                for entitlement in entitlements {
-                    if case .success = await subscriptionManager.accountManager.hasEntitlement(for: entitlement) {
-                        switch entitlement {
-                        case .identityTheftRestoration:
-                            self.state.subscription.entitlements.append(.identityTheftRestoration)
-                        case .dataBrokerProtection:
-                            self.state.subscription.entitlements.append(.dataBrokerProtection)
-                        case .networkProtection:
-                            self.state.subscription.entitlements.append(.networkProtection)
-                        case .unknown:
-                            return
-                        }
-                    }
+            state.subscription.hasActiveSubscription = subscription.isActive
+
+            // Check entitlements and update state
+            var currentEntitlements: [Entitlement.ProductName] = []
+            let entitlementsToCheck: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
+
+            for entitlement in entitlementsToCheck {
+                if case .success = await subscriptionManager.accountManager.hasEntitlement(for: entitlement) {
+                    currentEntitlements.append(entitlement)
                 }
-            } else {
-                // Mark the subscription as 'inactive' 
-                state.subscription.hasActiveSubscription = false
             }
-            
+
+            self.state.subscription.entitlements = currentEntitlements
+
         case .failure:
             break
         }

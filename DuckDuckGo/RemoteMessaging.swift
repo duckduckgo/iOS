@@ -105,7 +105,7 @@ struct RemoteMessaging {
         }
     }
 
-    /// Convenience function
+    // swiftlint:disable:next function_body_length
     static func fetchAndProcess(bookmarksDatabase: CoreDataDatabase, favoritesDisplayMode: FavoritesDisplayMode) async throws {
         
         var bookmarksCount = 0

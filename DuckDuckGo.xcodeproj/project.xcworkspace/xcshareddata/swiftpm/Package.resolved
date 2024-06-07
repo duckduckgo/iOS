@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "juan/dbp/bump-css-version-to-include-no-results-selector",
-        "revision" : "7513783bcfbed8e675b73527009d37a4cb477dd8"
+        "revision" : "43d6c090699ddc1b92c0c016dc31b923fb06f59f",
+        "version" : "152.0.1"
       }
     },
     {

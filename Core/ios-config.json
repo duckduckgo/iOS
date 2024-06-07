@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1716212212537,
+    "version": 1717171433682,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -304,6 +304,9 @@
                     "domain": "www.thrifty.com"
                 },
                 {
+                    "domain": "sports.tipico.de"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -317,7 +320,8 @@
                 "disabledCMPs": [
                     "generic-cosmetic",
                     "termsfeed3",
-                    "healthline-media"
+                    "healthline-media",
+                    "ketch"
                 ]
             },
             "state": "enabled",
@@ -340,7 +344,7 @@
                     }
                 }
             },
-            "hash": "8ba3daa77d86d04b7dc15bb7ac36d768"
+            "hash": "e327901635a0f00ab376e026317ab975"
         },
         "autofill": {
             "exceptions": [
@@ -1242,6 +1246,11 @@
             "state": "disabled",
             "hash": "59ef4ce748dc657aa3d42756131dcb16"
         },
+        "dummyWebMessageListener": {
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
+        },
         "elementHiding": {
             "exceptions": [
                 {
@@ -2073,6 +2082,15 @@
                         ]
                     },
                     {
+                        "domain": "canalrcn.com",
+                        "rules": [
+                            {
+                                "selector": ".pauta-en-vivo-mobile",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "carandclassic.com",
                         "rules": [
                             {
@@ -2342,6 +2360,15 @@
                         "rules": [
                             {
                                 "selector": "[data-liberty-position-name]",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "economist.com",
+                        "rules": [
+                            {
+                                "selector": "[class^='adComponent']",
                                 "type": "hide-empty"
                             }
                         ]
@@ -3488,6 +3515,15 @@
                         ]
                     },
                     {
+                        "domain": "post-gazette.com",
+                        "rules": [
+                            {
+                                "selector": "[data-dfpads-position]",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "prajwaldesai.com",
                         "rules": [
                             {
@@ -3715,6 +3751,15 @@
                         ]
                     },
                     {
+                        "domain": "shattovet.com",
+                        "rules": [
+                            {
+                                "selector": "[class*='advertising']",
+                                "type": "override"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "si.com",
                         "rules": [
                             {
@@ -3928,6 +3973,15 @@
                         "rules": [
                             {
                                 "selector": ".tb-ad",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "toledoblade.com",
+                        "rules": [
+                            {
+                                "selector": "[data-dfpads-position]",
                                 "type": "hide-empty"
                             }
                         ]
@@ -4204,6 +4258,10 @@
                             {
                                 "selector": ".gam-placeholder",
                                 "type": "closest-empty"
+                            },
+                            {
+                                "selector": "[class*='sdaContainer']",
+                                "type": "hide"
                             }
                         ]
                     },
@@ -4264,6 +4322,14 @@
                             {
                                 "selector": ".parallax-container",
                                 "type": "hide-empty"
+                            },
+                            {
+                                "selector": "div:has(.react-parallax)",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": "[id^=div-gpt-ad-]",
+                                "type": "closest-empty"
                             }
                         ]
                     },
@@ -4365,7 +4431,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "659ee3a53847979bf626ff368c20fc57"
+            "hash": "adc17fadc45c61f4a27fbf94b4980bdd"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -4682,6 +4748,15 @@
                     "domain": "tirerack.com"
                 },
                 {
+                    "domain": "milesplit.live"
+                },
+                {
+                    "domain": "dollargeneral.com"
+                },
+                {
+                    "domain": "monstergear.monsterenergy.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -4700,7 +4775,7 @@
                     "privacy-test-pages.site"
                 ]
             },
-            "hash": "d4f8f4fd4016f14fad7bca4d72bb48c3"
+            "hash": "7fa15dd3c7d9b3a318088d6414653c66"
         },
         "harmfulApis": {
             "settings": {
@@ -6504,6 +6579,7 @@
                                 "domains": [
                                     "abril.com.br",
                                     "algomalegalclinic.com",
+                                    "bodyelectricvitality.com.au",
                                     "cosmicbook.news",
                                     "eatroyo.com",
                                     "thesimsresource.com",
@@ -6626,6 +6702,7 @@
                                     "newschannel20.com",
                                     "newschannel9.com",
                                     "okcfox.com",
+                                    "post-gazette.com",
                                     "raleighcw.com",
                                     "siouxlandnews.com",
                                     "southernoregoncw.com",
@@ -6634,6 +6711,7 @@
                                     "thecw46.com",
                                     "thecwtc.com",
                                     "thenationaldesk.com",
+                                    "toledoblade.com",
                                     "triblive.com",
                                     "turnto10.com",
                                     "univisionseattle.com",
@@ -6688,13 +6766,20 @@
                                 "rule": "grow.me/main.js",
                                 "domains": [
                                     "budgetbytes.com",
-                                    "foodfornet.com"
+                                    "foodfornet.com",
+                                    "homesteadingfamily.com"
                                 ]
                             },
                             {
                                 "rule": "api.grow.me",
                                 "domains": [
                                     "foodfornet.com"
+                                ]
+                            },
+                            {
+                                "rule": "grow.me",
+                                "domains": [
+                                    "grilledcheesesocial.com"
                                 ]
                             }
                         ]
@@ -6931,11 +7016,7 @@
                             {
                                 "rule": "static.klaviyo.com/onsite/js/klaviyo.js",
                                 "domains": [
-                                    "essentialpraxis.com",
-                                    "kidsguide.com",
-                                    "muc-off.com",
-                                    "paria.cc",
-                                    "urbanebikes.com"
+                                    "<all>"
                                 ]
                             },
                             {
@@ -6949,8 +7030,12 @@
                                 "rule": "klaviyo.com/",
                                 "domains": [
                                     "andieswim.com",
+                                    "dreamfarm.com",
                                     "footweartruth.com",
+                                    "holdonbags.com",
                                     "kmail-lists.com",
+                                    "nestlenutritionstore.com",
+                                    "organakratom.com",
                                     "usafacts.org"
                                 ]
                             }
@@ -6978,6 +7063,12 @@
                                 "rule": "cdn.listrakbi.com/scripts/script.js",
                                 "domains": [
                                     "<all>"
+                                ]
+                            },
+                            {
+                                "rule": "listrakbi.com",
+                                "domains": [
+                                    "fsastore.com"
                                 ]
                             }
                         ]
@@ -7100,7 +7191,8 @@
                             {
                                 "rule": "monetate.net",
                                 "domains": [
-                                    "kleen-ritecorp.com"
+                                    "kleen-ritecorp.com",
+                                    "qvc.com"
                                 ]
                             }
                         ]
@@ -7786,6 +7878,12 @@
                                 "domains": [
                                     "<all>"
                                 ]
+                            },
+                            {
+                                "rule": "c.slickstream.com/app/",
+                                "domains": [
+                                    "<all>"
+                                ]
                             }
                         ]
                     },
@@ -8312,7 +8410,7 @@
                     "domain": "sundancecatalog.com"
                 }
             ],
-            "hash": "d667a9b7a3d72a97c26bb0811ea71283"
+            "hash": "3bda09ff6f21176dfe44ef81e7dc2234"
         },
         "trackingCookies1p": {
             "settings": {

@@ -26,7 +26,7 @@ struct AlertButtonStyle: ButtonStyle {
         configuration.label
             .padding()
             .frame(maxWidth: .infinity)
-            .background(Color(UIColor.charcoalGrey))
+            .background(Color(.white).opacity(0.18))
             .foregroundColor(.white)
             .font(Font(uiFont: UIFont.daxBodyBold()))
             .cornerRadius(8)

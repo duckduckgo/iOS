@@ -821,6 +821,7 @@ class TabViewController: UIViewController {
     }
     
     private func hideProgressIndicator() {
+        Swift.print("** Hide progress indicator")
         progressWorker.didFinishLoading()
         webView.scrollView.refreshControl?.endRefreshing()
     }
@@ -833,6 +834,7 @@ class TabViewController: UIViewController {
         } else {
             webView.reload()
         }
+        delegate?.tabLoadingStateDidChange(tab: self)
         privacyDashboard?.dismiss(animated: true)
     }
     
@@ -1164,6 +1166,10 @@ class TabViewController: UIViewController {
     
     func onCopyAction(for text: String) {
         UIPasteboard.general.string = text
+    }
+
+    func stopLoading() {
+        webView.stopLoading()
     }
 
     private func cleanUpBeforeClosing() {

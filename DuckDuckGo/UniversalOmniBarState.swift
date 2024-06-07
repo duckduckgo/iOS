@@ -22,7 +22,7 @@ import Core
 
 enum UniversalOmniBarState {
     struct EditingSuspendedState: OmniBarState {
-        let baseState: OmniBarState
+        let baseState: any OmniBarState
 
         var hasLargeWidth: Bool { baseState.hasLargeWidth }
         var showBackButton: Bool { baseState.showBackButton }
@@ -36,19 +36,31 @@ enum UniversalOmniBarState {
         var showPrivacyIcon: Bool { baseState.showPrivacyIcon }
         var showBackground: Bool { baseState.showBackground }
         var showClear: Bool { false }
+        var showAbort: Bool { baseState.showAbort }
         var showRefresh: Bool { baseState.showRefresh }
         var showMenu: Bool { baseState.showMenu }
         var showSettings: Bool { baseState.showSettings }
         var showVoiceSearch: Bool { baseState.showVoiceSearch }
         var name: String { Type.name(self) }
-        var onEditingStoppedState: OmniBarState { baseState.onEditingStoppedState }
-        var onEditingStartedState: OmniBarState { baseState.onEditingStartedState }
-        var onTextClearedState: OmniBarState { baseState.onTextClearedState }
-        var onTextEnteredState: OmniBarState { baseState.onTextEnteredState }
-        var onBrowsingStartedState: OmniBarState { baseState.onBrowsingStartedState }
-        var onBrowsingStoppedState: OmniBarState { baseState.onBrowsingStoppedState }
-        var onEnterPhoneState: OmniBarState { baseState.onEnterPhoneState }
-        var onEnterPadState: OmniBarState { baseState.onEnterPadState }
-        var onReloadState: OmniBarState { baseState.onReloadState }
+        var onEditingStoppedState: any OmniBarState { baseState.onEditingStoppedState }
+        var onEditingStartedState: any OmniBarState { baseState.onEditingStartedState }
+        var onTextClearedState: any OmniBarState { baseState.onTextClearedState }
+        var onTextEnteredState: any OmniBarState { baseState.onTextEnteredState }
+        var onBrowsingStartedState: any OmniBarState { baseState.onBrowsingStartedState }
+        var onBrowsingStoppedState: any OmniBarState { baseState.onBrowsingStoppedState }
+        var onEnterPhoneState: any OmniBarState { baseState.onEnterPhoneState }
+        var onEnterPadState: any OmniBarState { baseState.onEnterPadState }
+        var onReloadState: any OmniBarState { baseState.onReloadState }
+
+        let voiceSearchHelper: VoiceSearchHelperProtocol
+        let isLoading: Bool
+
+        func withLoading() -> UniversalOmniBarState.EditingSuspendedState {
+            Self.init(baseState: baseState, voiceSearchHelper: voiceSearchHelper, isLoading: true)
+        }
+
+        func withoutLoading() -> UniversalOmniBarState.EditingSuspendedState {
+            Self.init(baseState: baseState, voiceSearchHelper: voiceSearchHelper, isLoading: false)
+        }
     }
 }

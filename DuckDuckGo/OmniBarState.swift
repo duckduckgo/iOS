@@ -20,8 +20,10 @@
 import Foundation
 import Core
 
-protocol OmniBarState {
-    
+protocol OmniBarState: CustomStringConvertible {
+
+    var name: String { get }
+
     var hasLargeWidth: Bool { get }
     var showBackButton: Bool { get }
     var showForwardButton: Bool { get }
@@ -39,7 +41,8 @@ protocol OmniBarState {
     var showMenu: Bool { get }
     var showSettings: Bool { get }
     var showVoiceSearch: Bool { get }
-    var name: String { get }
+    var showAbort: Bool { get }
+
     var onEditingStoppedState: OmniBarState { get }
     var onEditingSuspendedState: OmniBarState { get }
     var onEditingStartedState: OmniBarState { get }
@@ -50,10 +53,43 @@ protocol OmniBarState {
     var onEnterPhoneState: OmniBarState { get }
     var onEnterPadState: OmniBarState { get }
     var onReloadState: OmniBarState { get }
+
+    var voiceSearchHelper: VoiceSearchHelperProtocol { get }
+
+    var isLoading: Bool { get }
+
+    func withLoading() -> Self
+    func withoutLoading() -> Self
+
+    func isEquivalent(to other: OmniBarState) -> Bool
 }
 
 extension OmniBarState {
+    func isEquivalent(to other: OmniBarState) -> Bool {
+        name == other.name && isLoading == other.isLoading
+    }
+
+    var description: String {
+        "\(name)\(isLoading ? " (loading)" : "")"
+    }
+
     var onEditingSuspendedState: OmniBarState {
-        UniversalOmniBarState.EditingSuspendedState(baseState: self.onEditingStartedState)
+        UniversalOmniBarState.EditingSuspendedState(baseState: onEditingStartedState,
+                                                    voiceSearchHelper: voiceSearchHelper,
+                                                    isLoading: isLoading)
+    }
+}
+
+protocol OmniBarLoadingBearerStateCreating {
+    init(voiceSearchHelper: VoiceSearchHelperProtocol, isLoading: Bool)
+}
+
+extension OmniBarLoadingBearerStateCreating where Self: OmniBarState {
+    func withLoading() -> Self {
+        Self.init(voiceSearchHelper: voiceSearchHelper, isLoading: true)
+    }
+
+    func withoutLoading() -> Self {
+        Self.init(voiceSearchHelper: voiceSearchHelper, isLoading: false)
     }
 }

@@ -948,6 +948,10 @@ class MainViewController: UIViewController {
         loadUrl(url)
     }
 
+    func stopLoading() {
+        currentTab?.stopLoading()
+    }
+
     func loadUrl(_ url: URL, fromExternalLink: Bool = false) {
         prepareTabForRequest {
             self.currentTab?.load(url: url)
@@ -1070,6 +1074,8 @@ class MainViewController: UIViewController {
     }
 
     private func refreshOmniBar() {
+        updateOmniBarLoadingState()
+
         guard let tab = currentTab, tab.link != nil else {
             viewCoordinator.omniBar.stopBrowsing()
             return
@@ -1084,8 +1090,16 @@ class MainViewController: UIViewController {
         } else {
             viewCoordinator.omniBar.resetPrivacyIcon(for: tab.url)
         }
-            
+
         viewCoordinator.omniBar.startBrowsing()
+    }
+
+    private func updateOmniBarLoadingState() {
+        if currentTab?.webView.isLoading == true {
+            omniBar.startLoading()
+        } else {
+            omniBar.stopLoading()
+        }
     }
 
     func dismissOmniBar() {
@@ -1934,8 +1948,8 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func performCancel() {
-        dismissOmniBar()
         omniBar.cancel()
+        dismissOmniBar()
         hideSuggestionTray()
         self.showMenuHighlighterIfNeeded()
     }
@@ -1945,6 +1959,10 @@ extension MainViewController: OmniBarDelegate {
                                  serp: .addressBarCancelPressedOnSERP,
                                  website: .addressBarCancelPressedOnWebsite)
         performCancel()
+    }
+
+    func onAbortPressed() {
+        stopLoading()
     }
 
     func onClearPressed() {

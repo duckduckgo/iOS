@@ -26,7 +26,7 @@ struct AlertButtonStyle: ButtonStyle {
         configuration.label
             .padding()
             .frame(maxWidth: .infinity)
-            .background(Color.white.opacity(0.18))
+            .background(Color(UIColor.charcoalGrey))
             .foregroundColor(.white)
             .font(Font(uiFont: UIFont.daxBodyBold()))
             .cornerRadius(8)
@@ -72,7 +72,7 @@ struct AlertView: View {
 
             }
             .padding(EdgeInsets(top: 16, leading: 20, bottom: 16, trailing: 20))
-            .background(Color.black.opacity(0.9))
+            .background(Color.black)
             .cornerRadius(10)
         }
     }
@@ -81,7 +81,7 @@ struct AlertView: View {
 struct AlertView_Previews: PreviewProvider {
     static var previews: some View {
         AlertView(title: "Did turning Privacy Protections off resolve the issue on this site?",
-                  image: "ChatPrivate",
+                  image: "SiteBreakage",
                   leftButton: ("Yes", {}),
                   rightButton: ("No", {}),
                   isVisible: Binding<Bool>(get: { true },

@@ -1028,15 +1028,15 @@ class TabViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             self.alertPresenter?.hide()
             self.alertPresenter = AlertViewPresenter(title: UserText.brokenSiteReportToggleAlertTitle,
-                                                     image: "ChatPrivate",
-                                                     leftButton: (UserText.brokenSiteReportToggleAlertYesButton, {
+                                                     image: "SiteBreakage",
+                                                     leftButton: (UserText.brokenSiteReportToggleAlertYesButton, { [weak self] in
                 Pixel.fire(pixel: .reportBrokenSiteTogglePromptYes)
-                (self.parent as? MainViewController)?.segueToReportBrokenSite(mode: .afterTogglePrompt(category: breakageCategory,
+                (self?.parent as? MainViewController)?.segueToReportBrokenSite(mode: .afterTogglePrompt(category: breakageCategory,
                                                                                                        didToggleProtectionsFixIssue: true))
             }),
-                                                     rightButton: (UserText.brokenSiteReportToggleAlertNoButton, {
+                                                     rightButton: (UserText.brokenSiteReportToggleAlertNoButton, { [weak self] in
                 Pixel.fire(pixel: .reportBrokenSiteTogglePromptNo)
-                (self.parent as? MainViewController)?.segueToReportBrokenSite(mode: .afterTogglePrompt(category: breakageCategory,
+                (self?.parent as? MainViewController)?.segueToReportBrokenSite(mode: .afterTogglePrompt(category: breakageCategory,
                                                                                                        didToggleProtectionsFixIssue: false))
             }))
             self.alertPresenter?.present(in: self, animated: true)

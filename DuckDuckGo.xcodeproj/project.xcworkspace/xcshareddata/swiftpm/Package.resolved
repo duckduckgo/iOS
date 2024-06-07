@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "jacek/broken-site-report-experiment",
-        "revision" : "8d3d79e27b2a355f1cb44f94c581edc5f1329544"
+        "revision" : "7d365ce321dc4fe111b02e9aa9c0450193bc50a8"
       }
     },
     {
@@ -123,7 +123,7 @@
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
         "branch" : "shane/nav-stack",
-        "revision" : "d3508a867e41863155ad7a6cc86727315be5c32b"
+        "revision" : "2575800c34213fc6ed862513b75f85f6186e0973"
       }
     },
     {

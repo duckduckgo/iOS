@@ -78,7 +78,6 @@ final class AlertViewPresenter {
             hostingController.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.bottomPadding),
             hostingController.view.widthAnchor.constraint(equalToConstant: alertViewWidth)
-
         ])
 
         if animated {

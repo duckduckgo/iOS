@@ -47,7 +47,11 @@ class AutoClearTests: XCTestCase {
             forgetTabsInvocationCount += 1
         }
 
-        func clearDataFinished(_: AutoClear) {
+        func willStartClearing(_: DuckDuckGo.AutoClear) {
+
+        }
+
+        func autoClearDidFinishClearing(_: DuckDuckGo.AutoClear, isLaunching: Bool) {
             clearDataFinishedInvocationCount += 1
         }
     }

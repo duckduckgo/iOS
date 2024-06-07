@@ -42,17 +42,17 @@ struct SettingsAppearanceView: View {
                                        selectedOption: viewModel.themeBinding)
             }
 
-            if viewModel.state.addressbar.enabled {
-                Section(header: Text(UserText.addressBar)) {
+            Section(header: Text(UserText.addressBar)) {
+                if viewModel.state.addressbar.enabled {
                     // Address Bar Position
                     SettingsPickerCellView(label: UserText.settingsAddressBar,
                                            options: AddressBarPosition.allCases,
                                            selectedOption: viewModel.addressBarPositionBinding)
-
-                    // Show Full Site Address
-                    SettingsCellView(label: UserText.settingsFullURL,
-                                     accesory: .toggle(isOn: viewModel.addressBarShowsFullURL))
                 }
+
+                // Show Full Site Address
+                SettingsCellView(label: UserText.settingsFullURL,
+                                 accesory: .toggle(isOn: viewModel.addressBarShowsFullURL))
             }
         }
         .applySettingsListModifiers(title: UserText.settingsAppearanceSection,

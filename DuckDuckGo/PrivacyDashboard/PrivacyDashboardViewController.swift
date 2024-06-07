@@ -100,7 +100,12 @@ final class PrivacyDashboardViewController: UIViewController {
           privacyConfigurationManager: PrivacyConfigurationManaging,
           contentBlockingManager: ContentBlockerRulesManager,
           breakageAdditionalInfo: BreakageAdditionalInfo?) {
-        let variant = !privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .brokenSiteReportExperiment) ? PrivacyDashboardVariant.control : PixelExperiment.privacyDashboardVariant
+
+        var variant: PrivacyDashboardVariant {
+            let isExperimentEnabled = privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .brokenSiteReportExperiment)
+            return isExperimentEnabled ? PixelExperiment.privacyDashboardVariant : PrivacyDashboardVariant.control
+        }
+
         self.privacyDashboardController = PrivacyDashboardController(privacyInfo: privacyInfo,
                                                                      dashboardMode: dashboardMode,
                                                                      variant: variant,
@@ -116,7 +121,7 @@ final class PrivacyDashboardViewController: UIViewController {
         self.privacyDashboardController.privacyDashboardReportBrokenSiteDelegate = self
         self.privacyDashboardController.privacyDashboardToggleReportDelegate = self
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

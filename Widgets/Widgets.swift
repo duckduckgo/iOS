@@ -214,25 +214,39 @@ struct Widgets: WidgetBundle {
 
     @WidgetBundleBuilder
     var body: some Widget {
-        SearchWidget()
-        PasswordsWidget()
-        FavoritesWidget()
-
-        if #available(iOSApplicationExtension 17.0, *) {
-            VPNStatusWidget()
-        }
-
-        if #available(iOSApplicationExtension 16.0, *) {
-            SearchLockScreenWidget()
-            VoiceSearchLockScreenWidget()
-            EmailProtectionLockScreenWidget()
-            FireButtonLockScreenWidget()
-            FavoritesLockScreenWidget()
-            PasswordsLockScreenWidget()
-        }
-
+        makeWidgets()
     }
 
+    private func makeWidgets() -> some Widget {
+        if #available(iOS 17, *) {
+            return WidgetBundleBuilder.buildBlock(SearchWidget(),
+                                                  PasswordsWidget(),
+                                                  FavoritesWidget(),
+                                                  VPNStatusWidget(),
+                                                  SearchLockScreenWidget(),
+                                                  VoiceSearchLockScreenWidget(),
+                                                  EmailProtectionLockScreenWidget(),
+                                                  FireButtonLockScreenWidget(),
+                                                  FavoritesLockScreenWidget(),
+                                                  PasswordsLockScreenWidget())
+        }
+
+        if #available(iOS 16.0, *) {
+            return WidgetBundleBuilder.buildBlock(SearchWidget(),
+                                                  PasswordsWidget(),
+                                                  FavoritesWidget(),
+                                                  SearchLockScreenWidget(),
+                                                  VoiceSearchLockScreenWidget(),
+                                                  EmailProtectionLockScreenWidget(),
+                                                  FireButtonLockScreenWidget(),
+                                                  FavoritesLockScreenWidget(),
+                                                  PasswordsLockScreenWidget())
+        } else {
+            return WidgetBundleBuilder.buildBlock(SearchWidget(),
+                                                  PasswordsWidget(),
+                                                  FavoritesWidget())
+        }
+    }
 }
 
 extension UIImage {

@@ -27,14 +27,14 @@ import Subscription
 struct DefaultRemoteMessagingSurveyURLBuilder: RemoteMessagingSurveyActionMapping {
 
     private let statisticsStore: StatisticsStore
-    private let activationDateStore: VPNActivationDateStore
+    private let vpnActivationDateStore: VPNActivationDateStore
     private let subscription: Subscription?
 
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
-         activationDateStore: VPNActivationDateStore = DefaultVPNActivationDateStore(),
+         vpnActivationDateStore: VPNActivationDateStore = DefaultVPNActivationDateStore(),
          subscription: Subscription?) {
         self.statisticsStore = statisticsStore
-        self.activationDateStore = activationDateStore
+        self.vpnActivationDateStore = vpnActivationDateStore
         self.subscription = subscription
     }
 
@@ -64,10 +64,7 @@ struct DefaultRemoteMessagingSurveyURLBuilder: RemoteMessagingSurveyActionMappin
             case .hardwareModel:
                 let model = hardwareModel().addingPercentEncoding(withAllowedCharacters: .alphanumerics)
                 queryItems.append(URLQueryItem(name: parameter.rawValue, value: model))
-            case .lastActiveDate:
-                if let daysSinceLastActive = activationDateStore.daysSinceLastActive() {
-                    queryItems.append(URLQueryItem(name: parameter.rawValue, value: String(describing: daysSinceLastActive)))
-                }
+            case .lastActiveDate: break
             case .daysInstalled:
                 if let installDate = statisticsStore.installDate,
                    let daysSinceInstall = Calendar.current.numberOfDaysBetween(installDate, and: Date()) {
@@ -109,6 +106,14 @@ struct DefaultRemoteMessagingSurveyURLBuilder: RemoteMessagingSurveyActionMappin
                 if let expiryDate = subscription?.expiresOrRenewsAt,
                    let daysUntilExpiry = Calendar.current.numberOfDaysBetween(Date(), and: expiryDate) {
                     queryItems.append(URLQueryItem(name: parameter.rawValue, value: String(describing: daysUntilExpiry)))
+                }
+            case .vpnFirstUsed:
+                if let vpnFirstUsed = vpnActivationDateStore.daysSinceActivation() {
+                    queryItems.append(URLQueryItem(name: parameter.rawValue, value: String(describing: vpnFirstUsed)))
+                }
+            case .vpnLastUsed:
+                if let vpnLastUsed = vpnActivationDateStore.daysSinceLastActive() {
+                    queryItems.append(URLQueryItem(name: parameter.rawValue, value: String(describing: vpnLastUsed)))
                 }
             }
         }

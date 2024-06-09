@@ -64,7 +64,6 @@ struct DefaultRemoteMessagingSurveyURLBuilder: RemoteMessagingSurveyActionMappin
             case .hardwareModel:
                 let model = hardwareModel().addingPercentEncoding(withAllowedCharacters: .alphanumerics)
                 queryItems.append(URLQueryItem(name: parameter.rawValue, value: model))
-            case .lastActiveDate: break
             case .daysInstalled:
                 if let installDate = statisticsStore.installDate,
                    let daysSinceInstall = Calendar.current.numberOfDaysBetween(installDate, and: Date()) {

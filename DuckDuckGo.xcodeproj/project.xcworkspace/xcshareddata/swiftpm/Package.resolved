@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sam/survey-parameter-additions",
-        "revision" : "7d110949985bf41e5c0977f6fd7324459db7d763"
+        "revision" : "b78ae617c7fe66244741f489158a1f40e567e674",
+        "version" : "153.0.0"
       }
     },
     {

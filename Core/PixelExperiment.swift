@@ -61,7 +61,7 @@ public enum PixelExperiment: String, CaseIterable {
     // These are the experiment variants. If you need to change the string value,
     // ensure it remains clear for privacy triage. Before making any changes,
     // save your spot in the queue using this link:
-    // https://app.asana.com/0/414709148257752/1207478569595510/f
+    // https://app.asana.com/0/1202500774821704/1207478569595510/f
 
     case control
     case breakageSiteReportingFlowA

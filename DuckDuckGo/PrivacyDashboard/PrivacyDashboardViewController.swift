@@ -406,7 +406,8 @@ extension PrivacyDashboardViewController {
                                 jsPerformance: webVitalsResult,
                                 userRefreshCount: breakageAdditionalInfo.userRefreshCount,
                                 didOpenReportInfo: didOpenReportInfo,
-                                toggleReportCounter: toggleReportCounter)
+                                toggleReportCounter: toggleReportCounter,
+                                variant: PixelExperiment.cohort?.rawValue ?? "")
     }
 
 }

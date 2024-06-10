@@ -37,14 +37,11 @@ final class AlertViewPresenter {
     let leftButton: (title: String, action: () -> Void)
     let rightButton: (title: String, action: () -> Void)
 
-    private var showAlert = false
     private lazy var alertView: AlertView = {
         AlertView(title: title,
                   image: image,
                   leftButton: (leftButton.title, { [weak self] in self?.leftButton.action(); self?.hide() }),
-                  rightButton: (rightButton.title, { [weak self] in self?.rightButton.action(); self?.hide() }),
-                  isVisible: Binding(get: { self.showAlert }, set: { self.showAlert = $0 })
-        )
+                  rightButton: (rightButton.title, { [weak self] in self?.rightButton.action(); self?.hide() }))
     }()
     private lazy var hostingController: UIHostingController<AlertView> = {
         let hostingController = UIHostingController(rootView: alertView)
@@ -65,8 +62,6 @@ final class AlertViewPresenter {
     func present(in viewController: UIViewController, animated: Bool) {
         guard let view = viewController.view, let window = view.window else { return }
 
-        showAlert = true
-
         viewController.addChild(hostingController)
         view.addSubview(hostingController.view)
         hostingController.didMove(toParent: viewController)
@@ -79,18 +74,14 @@ final class AlertViewPresenter {
             hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.bottomPadding),
             hostingController.view.widthAnchor.constraint(equalToConstant: alertViewWidth)
         ])
+        hostingController.view.layoutIfNeeded()
 
-        if animated {
-            UIView.animate(withDuration: Constants.animationDuration) {
-                self.hostingController.view.alpha = 1.0
-            }
-        } else {
-            hostingController.view.alpha = 1.0
+        UIView.animate(withDuration: animated ? Constants.animationDuration : 0) {
+            self.hostingController.view.alpha = 1.0
         }
     }
 
     func hide() {
-        showAlert = false
         hostingController.willMove(toParent: nil)
         hostingController.view.removeFromSuperview()
         hostingController.removeFromParent()

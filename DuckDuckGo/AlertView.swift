@@ -41,40 +41,35 @@ struct AlertView: View {
     let image: String
     let leftButton: (title: String, action: () -> Void)
     let rightButton: (title: String, action: () -> Void)
-    @Binding var isVisible: Bool
 
     var body: some View {
-        if isVisible {
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(spacing: 5) {
-                    Image(image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 53)
-                    Text(title)
-                        .font(Font(uiFont: UIFont.appFont(ofSize: 16)))
-                        .foregroundColor(.white)
-                }
-
-                HStack(spacing: 10) {
-                    Group {
-                        Button(leftButton.title) {
-                            leftButton.action()
-                            isVisible = false
-                        }
-                        Button(rightButton.title) {
-                            rightButton.action()
-                            isVisible = false
-                        }
-                    }
-                    .buttonStyle(AlertButtonStyle())
-                }
-
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 5) {
+                Image(image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 53)
+                Text(title)
+                    .font(Font(uiFont: UIFont.appFont(ofSize: 16)))
+                    .foregroundColor(.white)
             }
-            .padding(EdgeInsets(top: 16, leading: 20, bottom: 16, trailing: 20))
-            .background(Color.black)
-            .cornerRadius(10)
+
+            HStack(spacing: 10) {
+                Group {
+                    Button(leftButton.title) {
+                        leftButton.action()
+                    }
+                    Button(rightButton.title) {
+                        rightButton.action()
+                    }
+                }
+                .buttonStyle(AlertButtonStyle())
+            }
+
         }
+        .padding(EdgeInsets(top: 16, leading: 20, bottom: 16, trailing: 20))
+        .background(Color.black)
+        .cornerRadius(10)
     }
 }
 
@@ -83,8 +78,6 @@ struct AlertView_Previews: PreviewProvider {
         AlertView(title: "Did turning Privacy Protections off resolve the issue on this site?",
                   image: "SiteBreakage",
                   leftButton: ("Yes", {}),
-                  rightButton: ("No", {}),
-                  isVisible: Binding<Bool>(get: { true },
-                                           set: { _ in }))
+                  rightButton: ("No", {}))
     }
 }

@@ -58,8 +58,11 @@ public enum PixelExperiment: String, CaseIterable {
         logic.cleanup()
     }
 
-    // These are the variants. Rename or add/remove them as needed.  If you change the string value
-    // remember to keep it clear for privacy triage.
+    // These are the experiment variants. If you need to change the string value,
+    // ensure it remains clear for privacy triage. Before making any changes,
+    // save your spot in the queue using this link:
+    // https://app.asana.com/0/414709148257752/1207478569595510/f
+
     case control
     case breakageSiteReportingFlowA
     case breakageSiteReportingFlowB
@@ -99,7 +102,7 @@ final internal class PixelExperimentLogic {
         }
 
         let variants: [PixelExperiment] = [.control, .breakageSiteReportingFlowA, .breakageSiteReportingFlowB]
-        let cohort: PixelExperiment = variants[Int.random(in: 0..<3)]
+        let cohort: PixelExperiment = variants[Int.random(in: variants.indices)]
 
         // Store and use the selected cohort
         allocatedCohort = cohort.rawValue

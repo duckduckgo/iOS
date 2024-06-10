@@ -39,6 +39,12 @@ final class VPNRedditSessionWorkaround {
     }
 
     @MainActor
+    func removeRedditSessionWorkaround() async {
+        let configuration = WKWebViewConfiguration.persistent()
+        await removeRedditSessionWorkaround(from: configuration.websiteDataStore.httpCookieStore)
+    }
+
+    @MainActor
     func installRedditSessionWorkaround(to cookieStore: WKHTTPCookieStore) async {
         guard accountManager.isUserAuthenticated,
               await tunnelController.isConnected,
@@ -49,7 +55,9 @@ final class VPNRedditSessionWorkaround {
         let cookies = await cookieStore.allCookies()
         var requiresRedditSessionCookie = true
         for cookie in cookies {
-            if cookie.domain == redditSessionCookie.domain, cookie.name == redditSessionCookie.name, !cookie.value.isEmpty {
+            if cookie.domain == redditSessionCookie.domain,
+               cookie.name == redditSessionCookie.name {
+                // Avoid adding the cookie if one already exists
                 requiresRedditSessionCookie = false
                 break
             }
@@ -57,11 +65,10 @@ final class VPNRedditSessionWorkaround {
 
         if requiresRedditSessionCookie {
             await cookieStore.setCookie(redditSessionCookie)
-            print("SAMDEBUG: Added reddit session cookie")
         }
     }
 
-    func removeRedditWorkaround(from cookieStore: WKHTTPCookieStore) async {
+    func removeRedditSessionWorkaround(from cookieStore: WKHTTPCookieStore) async {
         guard let redditSessionCookie = HTTPCookie.emptyRedditSession else {
             return
         }
@@ -71,7 +78,6 @@ final class VPNRedditSessionWorkaround {
             if cookie.domain == redditSessionCookie.domain, cookie.name == redditSessionCookie.name {
                 if cookie.value == redditSessionCookie.value {
                     await cookieStore.deleteCookie(cookie)
-                    print("SAMDEBUG: Deleted reddit session cookie")
                 }
 
                 break

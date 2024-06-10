@@ -66,6 +66,13 @@ import WebKit
 #if NETWORK_PROTECTION
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
+
+    private lazy var vpnWorkaround: VPNRedditSessionWorkaround = {
+        return VPNRedditSessionWorkaround(
+            accountManager: AppDependencyProvider.shared.accountManager,
+            tunnelController: AppDependencyProvider.shared.networkProtectionTunnelController
+        )
+    }()
 #endif
 
     private var autoClear: AutoClear?
@@ -512,11 +519,6 @@ import WebKit
         presentExpiredEntitlementNotificationIfNeeded()
 
         Task {
-            let vpnWorkaround = VPNRedditSessionWorkaround(
-                accountManager: AppDependencyProvider.shared.accountManager,
-                tunnelController: AppDependencyProvider.shared.networkProtectionTunnelController
-            )
-
             await refreshShortcuts()
             await vpnWorkaround.installRedditSessionWorkaround()
         }
@@ -575,6 +577,7 @@ import WebKit
     func applicationWillResignActive(_ application: UIApplication) {
         Task {
             await refreshShortcuts()
+            await vpnWorkaround.removeRedditSessionWorkaround()
         }
     }
 

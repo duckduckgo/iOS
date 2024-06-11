@@ -310,6 +310,7 @@ import WebKit
         let applicationState = application.applicationState
         Task {
             await autoClear?.clearDataIfEnabled(applicationState: .init(with: applicationState))
+            await vpnWorkaround.installRedditSessionWorkaround()
         }
 
         AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()

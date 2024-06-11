@@ -167,7 +167,6 @@ struct SubscriptionSettingsView: View {
         
         List {
             headerSection
-            manageSection
             devicesSection
                 .alert(isPresented: $isShowingRemovalNotice) {
                     Alert(
@@ -182,6 +181,7 @@ struct SubscriptionSettingsView: View {
                         }
                     )
                 }
+            manageSection
             helpSection
             
         }

@@ -322,6 +322,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private func configureNotification() {
         addObserver(for: UIApplication.didBecomeActiveNotification, selector: #selector(appDidBecomeActiveCallback))
         addObserver(for: UIApplication.willResignActiveNotification, selector: #selector(appWillResignActiveCallback))
+        addObserver(for: UIApplication.didEnterBackgroundNotification, selector: #selector(appWillResignActiveCallback))
         addObserver(for: AutofillLoginListAuthenticator.Notifications.invalidateContext, selector: #selector(authenticatorInvalidateContext))
     }
 

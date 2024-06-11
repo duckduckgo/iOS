@@ -214,6 +214,11 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.recentlyVisitedSites = $0
                 self.state.recentlyVisitedSites = $0
+                if $0 {
+                    Pixel.fire(pixel: .settingsRecentlyVisitedOn)
+                } else {
+                    Pixel.fire(pixel: .settingsRecentlyVisitedOff)
+                }
             }
         )
     }

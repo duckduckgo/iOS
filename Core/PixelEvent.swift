@@ -672,6 +672,8 @@ extension Pixel {
         case settingsGeneralOpen
         case settingsAutocompleteOn
         case settingsAutocompleteOff
+        case settingsRecentlyVisitedOn
+        case settingsRecentlyVisitedOff
         case settingsGeneralAutocompleteOn
         case settingsGeneralAutocompleteOff
         case settingsGeneralVoiceSearchOn
@@ -1354,6 +1356,8 @@ extension Pixel.Event {
         case .settingsGeneralOpen: return "m_settings_general_open"
         case .settingsAutocompleteOn: return "m_settings_autocomplete_on"
         case .settingsAutocompleteOff: return "m_settings_autocomplete_off"
+        case .settingsRecentlyVisitedOn: return "m_settings_autocomplete_recently-visited_on"
+        case .settingsRecentlyVisitedOff: return "m_settings_autocomplete_recently-visited_off"
         case .settingsGeneralAutocompleteOn: return "m_settings_general_autocomplete_on"
         case .settingsGeneralAutocompleteOff: return "m_settings_general_autocomplete_off"
         case .settingsGeneralVoiceSearchOn: return "m_settings_general_voice_search_on"

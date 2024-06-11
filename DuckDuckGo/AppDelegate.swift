@@ -460,6 +460,7 @@ import WebKit
         }
     }
 
+    // swiftlint:disable:next function_body_length
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 

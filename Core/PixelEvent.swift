@@ -560,7 +560,6 @@ extension Pixel {
         case syncWrongEnvironment
 
         case swipeTabsUsed
-        case swipeTabsIncorrectScrollState
         case swipeTabsUsedDaily
         case swipeToOpenNewTab
 
@@ -1235,7 +1234,6 @@ extension Pixel.Event {
         case .syncWrongEnvironment: return "m_d_sync_wrong_environment_u"
 
         case .swipeTabsUsed: return "m_swipe-tabs-used"
-        case .swipeTabsIncorrectScrollState: return "m_swipe-tabs.incorrect-scrollview-state"
         case .swipeTabsUsedDaily: return "m_swipe-tabs-used-daily"
         case .swipeToOpenNewTab: return "m_addressbar_swipe_new_tab"
 

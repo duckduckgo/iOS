@@ -115,6 +115,13 @@ struct SubscriptionSettingsView: View {
                     SubscriptionExternalLinkView(viewModel: stripeViewModel, title: UserText.subscriptionManagePlan)
                 }
             }
+
+            SettingsCustomCell(content: {
+                Text(UserText.subscriptionRemoveFromDevice)
+                        .daxBodyRegular()
+                        .foregroundColor(Color.init(designSystemColor: .accent))},
+                               action: { viewModel.displayRemovalNotice(true) },
+                               isButton: true)
         }
     }
     
@@ -130,14 +137,6 @@ struct SubscriptionSettingsView: View {
                         .daxBodyRegular()
                 })
             }.isDetailLink(false)
-
-            SettingsCustomCell(content: {
-                Text(UserText.subscriptionRemoveFromDevice)
-                        .daxBodyRegular()
-                        .foregroundColor(Color.init(designSystemColor: .accent))},
-                               action: { viewModel.displayRemovalNotice(true) },
-                               isButton: true)
-            
         }
     }
     

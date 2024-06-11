@@ -1455,7 +1455,6 @@ class MainViewController: UIViewController {
         }
         dismiss(animated: true) {
             self.present(alertController, animated: true, completion: nil)
-            DailyPixel.fireDailyAndCount(pixel: .privacyProVPNAccessRevokedDialogShown)
             self.tunnelDefaults.showEntitlementAlert = false
         }
     }
@@ -1489,12 +1488,6 @@ class MainViewController: UIViewController {
                 tunnelDefaults.enableEntitlementMessaging()
             }
 
-            if await networkProtectionTunnelController.isConnected {
-                DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
-                    "reason": "entitlement-change"
-                ])
-            }
-
             await networkProtectionTunnelController.stop()
             await networkProtectionTunnelController.removeVPN()
         }
@@ -1503,12 +1496,6 @@ class MainViewController: UIViewController {
     @objc
     private func onNetworkProtectionAccountSignOut(_ notification: Notification) {
         Task {
-            if await networkProtectionTunnelController.isConnected {
-                DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
-                    "reason": "account-signed-out"
-                ])
-            }
-
             await networkProtectionTunnelController.stop()
             await networkProtectionTunnelController.removeVPN()
         }

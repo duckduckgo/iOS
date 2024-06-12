@@ -74,7 +74,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     private var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMM dd, yyyy"
+        formatter.dateFormat = "MMMM dd, yyyy"
         return formatter
     }()
     

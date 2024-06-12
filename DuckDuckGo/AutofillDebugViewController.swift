@@ -52,6 +52,7 @@ class AutofillDebugViewController: UITableViewController {
                 try? secureVault?.deleteAllWebsiteCredentials()
                 let autofillPixelReporter = AutofillPixelReporter(
                         userDefaults: .standard,
+                        autofillEnabled: AppUserDefaults().autofillCredentialsEnabled,
                         eventMapping: EventMapping<AutofillPixelEvent> { _, _, _, _ in })
                 autofillPixelReporter.resetStoreDefaults()
                 ActionMessageView.present(message: "Autofill Data reset")

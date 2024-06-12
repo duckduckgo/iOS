@@ -1966,6 +1966,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Header for section for activating subscription on other devices */
 "subscription.activate.on.other.devices" = "Activate on Other Devices";
 
+/* Footer for section for activating subscription on other devices */
+"subscription.activate.on.other.devices.footer" = "Add an optional email to your subscription or use your Apple ID to access Privacy Pro on other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
+
 /* Restore button title for AppleID */
 "subscription.activate.restore.apple" = "Restore Purchase";
 

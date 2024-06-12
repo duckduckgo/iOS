@@ -65,7 +65,7 @@ struct SubscriptionSettingsView: View {
 
     private var devicesSection: some View {
         Section(header: Text(UserText.subscriptionActivateOnOtherDevices),
-                footer: Text("Add an optional email to your subscription or use your Apple ID to access Privacy Pro on other devices. Learn more")) {
+                footer: devicesSectionFooter) {
 
             NavigationLink(destination: SubscriptionContainerViewFactory.makeRestoreFlow(
                 navigationCoordinator: subscriptionNavigationCoordinator,
@@ -86,7 +86,16 @@ struct SubscriptionSettingsView: View {
                 subtitle: "asdasd@asddas.pl")
         }
     }
-    
+
+    private var devicesSectionFooter: some View {
+        Text(.init("\(UserText.subscriptionActivateOnOtherDevicesFooter)")) // required to parse markdown formatting
+            .environment(\.openURL, OpenURLAction { _ in
+                // TODO: open the proper url here
+                viewModel.displayFAQView(true)
+                return .handled
+            })
+    }
+
     private var manageSection: some View {
         Section(header: Text(UserText.subscriptionManageTitle),
                 footer: Text(viewModel.state.subscriptionDetails)) {

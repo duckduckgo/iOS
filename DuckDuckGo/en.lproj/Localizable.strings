@@ -1999,9 +1999,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Title for Alert messages */
 "subscription.alert.title" = "subscription.alert.title";
 
-/* Subscription type */
-"subscription.annual" = "Annual Subscription";
-
 /* Subscription availability message on Apple devices */
 "subscription.available.apple" = "Privacy Pro is available on any device signed in to the same Apple ID.";
 
@@ -2010,6 +2007,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Title for the manage billing page */
 "subscription.billing.google.title" = "Subscription Plans";
+
+/* Subscription annual billing period type */
+"subscription.billing.period.annual" = "annual";
+
+/* Subscription monthly billing period type */
+"subscription.billing.period.monthly" = "monthly";
 
 /* Subscription Removal confirmation message */
 "subscription.cancel.message" = "Your subscription has been removed from this device.";
@@ -2031,9 +2034,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Alert content for not found subscription */
 "subscription.expired.alert.message" = "The subscription associated with this Apple ID is no longer active.";
-
-/* text for expiration string */
-"subscription.expires" = "expires";
 
 /* FAQ Button */
 "subscription.faq" = "Privacy Pro FAQ";
@@ -2067,9 +2067,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Header for the subscription section */
 "subscription.manage.title" = "Subscription";
-
-/* Subscription type */
-"subscription.monthly" = "Monthly Subscription";
 
 /* Alert content for not found subscription */
 "subscription.notFound.alert.message" = "There is no subscription associated with this Apple ID.";
@@ -2122,9 +2119,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Remove subscription cancel button text */
 "subscription.remove.subscription.cancel" = "Cancel";
 
-/* text for renewal string */
-"subscription.renews" = "renews";
-
 /* Button text for general error message */
 "subscription.restore.backend.error.button" = "Back to Settings";
 
@@ -2149,11 +2143,14 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Alert title for restored purchase */
 "subscription.restore.success.alert.title" = "You’re all set.";
 
-/* Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)' */
-"subscription.subscription.active.caption" = "Your subscription %1$@ on %2$@";
-
 /* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
 "subscription.subscription.expired.caption" = "Your subscription expired on %@";
+
+/* Subscription expiration info. This reads as 'Your (monthly or annual) subscription expires on (date)' */
+"subscription.subscription.expiring.caption" = "Your %1$@ subscription expires on %2$@.";
+
+/* Subscription renewal info. This reads as 'Your (monthly or annual) subscription renews on (date)' */
+"subscription.subscription.renewing.caption" = "Your %1$@ subscription renews on %2$@.";
 
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";

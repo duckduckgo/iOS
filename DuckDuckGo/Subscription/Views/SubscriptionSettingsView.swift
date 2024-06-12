@@ -54,32 +54,18 @@ struct SubscriptionSettingsView: View {
     
     private var headerSection: some View {
         Section {
-            let active = viewModel.state.subscriptionInfo?.isActive ?? false
             VStack(alignment: .center, spacing: 7) {
                 Image("Privacy-Pro-96x96")
                 Text(UserText.subscriptionTitle).daxTitle2()
-                if !viewModel.state.isLoadingSubscriptionInfo {
-                    if active {
-                        Text(viewModel.state.subscriptionType).daxHeadline()
-                    }
-                    HStack {
-                        if !active { Image(Constants.alertIcon) }
-                        Text(viewModel.state.subscriptionDetails)
-                            .daxSubheadRegular()
-                            .foregroundColor(Color(designSystemColor: .textSecondary))
-                    }
-                } else {
-                    SwiftUI.ProgressView()
-                }
             }
         }
         .listRowBackground(Color.clear)
         .frame(maxWidth: .infinity, alignment: .center)
-        
     }
     
     private var manageSection: some View {
-        Section(header: Text(UserText.subscriptionManageTitle)) {
+        Section(header: Text(UserText.subscriptionManageTitle),
+                footer: Text(viewModel.state.subscriptionDetails)) {
             let active = viewModel.state.subscriptionInfo?.isActive ?? false
             SettingsCustomCell(content: {
                 
@@ -124,10 +110,11 @@ struct SubscriptionSettingsView: View {
                                isButton: true)
         }
     }
-    
+
     private var devicesSection: some View {
-        Section(header: Text(UserText.subscriptionManageDevices)) {
-            
+        Section(header: Text(UserText.subscriptionManageDevices),
+                footer: Text("Add an optional email to your subscription or use your Apple ID to access Privacy Pro on other devices. Learn more")) {
+
             NavigationLink(destination: SubscriptionContainerViewFactory.makeRestoreFlow(
                 navigationCoordinator: subscriptionNavigationCoordinator,
                 subscriptionManager: AppDependencyProvider.shared.subscriptionManager),
@@ -137,6 +124,14 @@ struct SubscriptionSettingsView: View {
                         .daxBodyRegular()
                 })
             }.isDetailLink(false)
+
+            SettingsCellView(
+                label: "Edit Email",
+                subtitle: "asdasd@asddas.pl")
+
+            SettingsCellView(
+                label: "Add Email",
+                subtitle: nil)
         }
     }
     

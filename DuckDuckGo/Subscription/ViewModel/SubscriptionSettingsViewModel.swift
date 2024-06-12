@@ -34,7 +34,6 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     struct State {
         var subscriptionDetails: String = ""
-        var subscriptionType: String = ""
         var isShowingRemovalNotice: Bool = false
         var shouldDismissView: Bool = false
         var isShowingGoogleView: Bool = false
@@ -150,14 +149,16 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     @MainActor
     private func updateSubscriptionsStatusMessage(status: Subscription.Status, date: Date, product: String, billingPeriod: Subscription.BillingPeriod) {
+        let billingPeriod = billingPeriod == .monthly ? UserText.subscriptionMonthlyBillingPeriod : UserText.subscriptionAnnualBillingPeriod
         let date = dateFormatter.string(from: date)
-        let expiredStates: [Subscription.Status] = [.expired, .inactive]
-        if expiredStates.contains(status) {
+
+        switch status {
+        case .autoRenewable:
+            state.subscriptionDetails = UserText.renewingSubscriptionInfo(billingPeriod: billingPeriod, renewalDate: date)
+        case .expired, .inactive:
             state.subscriptionDetails = UserText.expiredSubscriptionInfo(expiration: date)
-        } else {
-            let statusString = (status == .autoRenewable) ? UserText.subscriptionRenews : UserText.subscriptionExpires
-            state.subscriptionDetails = UserText.subscriptionInfo(status: statusString, expiration: date)
-            state.subscriptionType = billingPeriod == .monthly ? UserText.subscriptionMonthly : UserText.subscriptionAnnual
+        default:
+            state.subscriptionDetails = UserText.expiringSubscriptionInfo(billingPeriod: billingPeriod, expiryDate: date)
         }
     }
     

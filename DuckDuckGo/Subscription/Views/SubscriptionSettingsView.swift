@@ -71,10 +71,12 @@ struct SubscriptionSettingsView: View {
                 navigationCoordinator: subscriptionNavigationCoordinator,
                 subscriptionManager: AppDependencyProvider.shared.subscriptionManager),
                            isActive: $isShowingRestoreView) {
+
                 SettingsCustomCell(content: {
                     Text(UserText.subscriptionAddDeviceButton)
                         .daxBodyRegular()
                 })
+
             }.isDetailLink(false)
 
             SettingsCellView(
@@ -83,7 +85,7 @@ struct SubscriptionSettingsView: View {
 
             SettingsCellView(
                 label: "Edit Email",
-                subtitle: "asdasd@asddas.pl")
+                subtitle: "real-email-goes@here.com")
         }
     }
 

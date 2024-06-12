@@ -153,8 +153,6 @@ struct SubscriptionRestoreView: View {
             .onAppear {
                 viewModel.onAppear()
             }
-
-                
     }
 
     // MARK: -

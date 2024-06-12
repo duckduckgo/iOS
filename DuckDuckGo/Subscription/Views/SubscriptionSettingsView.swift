@@ -37,7 +37,7 @@ struct SubscriptionSettingsView: View {
     @State var isShowingRestoreView = false
     @State var isShowingConnectionError = false
     @State var isLoading = false
-    
+
     enum Constants {
         static let alertIcon = "Exclamation-Color-16"
     }
@@ -62,13 +62,37 @@ struct SubscriptionSettingsView: View {
         .listRowBackground(Color.clear)
         .frame(maxWidth: .infinity, alignment: .center)
     }
+
+    private var devicesSection: some View {
+        Section(header: Text(UserText.subscriptionManageDevices),
+                footer: Text("Add an optional email to your subscription or use your Apple ID to access Privacy Pro on other devices. Learn more")) {
+
+            NavigationLink(destination: SubscriptionContainerViewFactory.makeRestoreFlow(
+                navigationCoordinator: subscriptionNavigationCoordinator,
+                subscriptionManager: AppDependencyProvider.shared.subscriptionManager),
+                           isActive: $isShowingRestoreView) {
+                SettingsCustomCell(content: {
+                    Text(UserText.subscriptionAddDeviceButton)
+                        .daxBodyRegular()
+                })
+            }.isDetailLink(false)
+
+            SettingsCellView(
+                label: "Edit Email",
+                subtitle: "asdasd@asddas.pl")
+
+            SettingsCellView(
+                label: "Add Email",
+                subtitle: nil)
+        }
+    }
     
     private var manageSection: some View {
         Section(header: Text(UserText.subscriptionManageTitle),
                 footer: Text(viewModel.state.subscriptionDetails)) {
             let active = viewModel.state.subscriptionInfo?.isActive ?? false
             SettingsCustomCell(content: {
-                
+
                 if !viewModel.state.isLoadingSubscriptionInfo {
                     if active {
                         Text(UserText.subscriptionChangePlan)
@@ -111,30 +135,6 @@ struct SubscriptionSettingsView: View {
         }
     }
 
-    private var devicesSection: some View {
-        Section(header: Text(UserText.subscriptionManageDevices),
-                footer: Text("Add an optional email to your subscription or use your Apple ID to access Privacy Pro on other devices. Learn more")) {
-
-            NavigationLink(destination: SubscriptionContainerViewFactory.makeRestoreFlow(
-                navigationCoordinator: subscriptionNavigationCoordinator,
-                subscriptionManager: AppDependencyProvider.shared.subscriptionManager),
-                           isActive: $isShowingRestoreView) {
-                SettingsCustomCell(content: {
-                    Text(UserText.subscriptionAddDeviceButton)
-                        .daxBodyRegular()
-                })
-            }.isDetailLink(false)
-
-            SettingsCellView(
-                label: "Edit Email",
-                subtitle: "asdasd@asddas.pl")
-
-            SettingsCellView(
-                label: "Add Email",
-                subtitle: nil)
-        }
-    }
-    
     @ViewBuilder var helpSection: some View {
         Section(header: Text(UserText.subscriptionHelpAndSupport),
                 footer: Text(UserText.subscriptionFAQFooter)) {

@@ -265,6 +265,8 @@ extension Pixel {
         case autofillActiveUser
         case autofillEnabledUser
         case autofillOnboardedUser
+        case autofillToggledOn
+        case autofillToggledOff
         case autofillLoginsStacked
 
         case getDesktopCopy
@@ -963,6 +965,9 @@ extension Pixel.Event {
         case .autofillActiveUser: return "m_autofill_activeuser"
         case .autofillEnabledUser: return "m_autofill_enableduser"
         case .autofillOnboardedUser: return "m_autofill_onboardeduser"
+        case .autofillToggledOn: return "m_autofill_toggled_on"
+        case .autofillToggledOff: return "m_autofill_toggled_off"
+
         case .autofillLoginsStacked: return "m_autofill_logins_stacked"
 
         case .getDesktopCopy: return "m_get_desktop_copy"

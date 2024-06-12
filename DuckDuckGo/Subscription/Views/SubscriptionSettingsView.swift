@@ -64,7 +64,7 @@ struct SubscriptionSettingsView: View {
     }
 
     private var devicesSection: some View {
-        Section(header: Text(UserText.subscriptionManageDevices),
+        Section(header: Text(UserText.subscriptionActivateOnOtherDevices),
                 footer: Text("Add an optional email to your subscription or use your Apple ID to access Privacy Pro on other devices. Learn more")) {
 
             NavigationLink(destination: SubscriptionContainerViewFactory.makeRestoreFlow(
@@ -78,12 +78,12 @@ struct SubscriptionSettingsView: View {
             }.isDetailLink(false)
 
             SettingsCellView(
-                label: "Edit Email",
-                subtitle: "asdasd@asddas.pl")
-
-            SettingsCellView(
                 label: "Add Email",
                 subtitle: nil)
+
+            SettingsCellView(
+                label: "Edit Email",
+                subtitle: "asdasd@asddas.pl")
         }
     }
     

@@ -1037,7 +1037,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionMonthlyBillingPeriod = NSLocalizedString("subscription.billing.period.monthly", value: "monthly", comment: "Subscription monthly billing period type")
     public static let subscriptionAnnualBillingPeriod = NSLocalizedString("subscription.billing.period.annual", value: "annual", comment: "Subscription annual billing period type")
 
-    public static let subscriptionManageDevices = NSLocalizedString("subscription.manage.devices", value: "Manage Devices", comment: "Header for the device management section")
+    public static let subscriptionActivateOnOtherDevices = NSLocalizedString("subscription.activate.on.other.devices", value: "Activate on Other Devices", comment: "Header for section for activating subscription on other devices")
     public static let subscriptionAddDeviceButton = NSLocalizedString("subscription.add.device.button", value: "Add to Another Device", comment: "Add to another device button")
     public static let subscriptionRemoveFromDevice = NSLocalizedString("subscription.remove.from.device.button", value: "Remove From This Device", comment: "Remove from this device button")
     public static let subscriptionManageTitle = NSLocalizedString("subscription.manage.title", value: "Subscription", comment: "Header for the subscription section")

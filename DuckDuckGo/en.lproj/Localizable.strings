@@ -1963,6 +1963,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* View Title for managing your email account */
 "subscription.activate.manage.email.title" = "Manage Email";
 
+/* Header for section for activating subscription on other devices */
+"subscription.activate.on.other.devices" = "Activate on Other Devices";
+
 /* Restore button title for AppleID */
 "subscription.activate.restore.apple" = "Restore Purchase";
 
@@ -2055,9 +2058,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Help and support Section header */
 "subscription.help" = "Help and support";
-
-/* Header for the device management section */
-"subscription.manage.devices" = "Manage Devices";
 
 /* Description for Email Management options */
 "subscription.manage.email.description" = "Use this email to activate your subscription from browser settings in the DuckDuckGo app on other devices..";

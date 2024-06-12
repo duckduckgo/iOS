@@ -64,7 +64,7 @@ struct SubscriptionSettingsView: View {
     }
 
     private var devicesSection: some View {
-        Section(header: Text(UserText.subscriptionActivateOnOtherDevices),
+        Section(header: Text(UserText.subscriptionDevicesSectionHeader),
                 footer: devicesSectionFooter) {
 
             NavigationLink(destination: SubscriptionContainerViewFactory.makeRestoreFlow(
@@ -88,7 +88,9 @@ struct SubscriptionSettingsView: View {
     }
 
     private var devicesSectionFooter: some View {
-        Text(.init("\(UserText.subscriptionActivateOnOtherDevicesFooter)")) // required to parse markdown formatting
+        let hasEmail = true // TODO: need email here
+        let footerText = hasEmail ? UserText.subscriptionDevicesSectionWithEmailFooter : UserText.subscriptionDevicesSectionNoEmailFooter
+        return Text(.init("\(footerText)")) // required to parse markdown formatting
             .environment(\.openURL, OpenURLAction { _ in
                 // TODO: open the proper url here
                 viewModel.displayFAQView(true)

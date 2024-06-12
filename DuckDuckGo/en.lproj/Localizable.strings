@@ -2017,8 +2017,8 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Subscription Removal confirmation message */
 "subscription.cancel.message" = "Your subscription has been removed from this device.";
 
-/* Change plan or billing title */
-"subscription.change.plan" = "Change Plan or Billing";
+/* Change plan or cancel title */
+"subscription.change.plan" = "Update Plan or Cancel";
 
 /* Navigation Button for closing subscription view */
 "subscription.close" = "Close";

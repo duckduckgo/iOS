@@ -1042,7 +1042,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionRemoveFromDevice = NSLocalizedString("subscription.remove.from.device.button", value: "Remove From This Device", comment: "Remove from this device button")
     public static let subscriptionManageTitle = NSLocalizedString("subscription.manage.title", value: "Subscription", comment: "Header for the subscription section")
     public static let subscriptionManagePlan = NSLocalizedString("subscription.manage.plan", value: "Manage Plan", comment: "Manage Plan header")
-    public static let subscriptionChangePlan = NSLocalizedString("subscription.change.plan", value: "Change Plan or Billing", comment: "Change plan or billing title")
+    public static let subscriptionChangePlan = NSLocalizedString("subscription.change.plan", value: "Update Plan or Cancel", comment: "Change plan or cancel title")
     public static let subscriptionHelpAndSupport = NSLocalizedString("subscription.help", value: "Help and support", comment: "Help and support Section header")
     public static let subscriptionFAQ = NSLocalizedString("subscription.faq", value: "FAQs and Support", comment: "FAQ Button")
     public static let subscriptionFAQFooter = NSLocalizedString("subscription.faq.description", value: "Get answers to frequently asked questions or contact Privacy Pro support from our help pages.", comment: "FAQ Description")

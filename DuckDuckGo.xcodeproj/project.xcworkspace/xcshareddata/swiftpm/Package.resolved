@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "sam/fast-egress-server-switching",
-        "revision" : "7a1500c2c6d642fb527e5372a0479f95863e422b"
+        "revision" : "961596e889196d29c22d4a8a22a355f5bd2e5586"
       }
     },
     {

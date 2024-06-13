@@ -132,7 +132,7 @@ extension MainViewController {
         }
 
         if mode == .report {
-            fireBrokenSiteReportShownIfNeeded()
+            fireBrokenSiteReportShown()
         }
 
         let storyboard = UIStoryboard(name: "PrivacyDashboard", bundle: nil)

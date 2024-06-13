@@ -130,7 +130,11 @@ extension MainViewController {
             assertionFailure("Missing fundamental data")
             return
         }
-        
+
+        if mode == .report {
+            fireBrokenSiteReportShownIfNeeded()
+        }
+
         let storyboard = UIStoryboard(name: "PrivacyDashboard", bundle: nil)
         let controller = storyboard.instantiateInitialViewController { coder in
             PrivacyDashboardViewController(coder: coder,
@@ -160,6 +164,14 @@ extension MainViewController {
         }
         
         present(controller, animated: true)
+    }
+
+    private func fireBrokenSiteReportShownIfNeeded() {
+        let parameters = [
+            PrivacyDashboardEvents.Parameters.variant: PixelExperiment.cohort?.rawValue ?? "",
+            PrivacyDashboardEvents.Parameters.source: BrokenSiteReport.Source.appMenu.rawValue
+        ]
+        Pixel.fire(pixel: .reportBrokenSiteShown, withAdditionalParameters: parameters)
     }
 
     func segueToNegativeFeedbackForm(isFromBrokenSiteReportFlow: Bool = false) {

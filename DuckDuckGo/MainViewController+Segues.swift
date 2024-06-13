@@ -168,7 +168,7 @@ extension MainViewController {
 
     private func fireBrokenSiteReportShown() {
         let parameters = [
-            PrivacyDashboardEvents.Parameters.variant: PixelExperiment.cohort?.rawValue ?? "",
+            PrivacyDashboardEvents.Parameters.variant: PixelExperiment.privacyDashboardVariant.rawValue,
             PrivacyDashboardEvents.Parameters.source: BrokenSiteReport.Source.appMenu.rawValue
         ]
         Pixel.fire(pixel: .reportBrokenSiteShown, withAdditionalParameters: parameters)

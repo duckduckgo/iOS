@@ -181,6 +181,8 @@ struct RemoteMessaging {
                 surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(statisticsStore: statisticsStore, subscription: nil)
             }
 
+            let dismissedMessageIds = remoteMessagingStore.fetchDismissedRemoteMessageIds()
+
             let remoteMessagingConfigMatcher = RemoteMessagingConfigMatcher(
                 appAttributeMatcher: AppAttributeMatcher(statisticsStore: statisticsStore,
                                                          variantManager: variantManager,
@@ -195,10 +197,11 @@ struct RemoteMessaging {
                                                            isPrivacyProEligibleUser: canPurchase,
                                                            isPrivacyProSubscriber: isPrivacyProSubscriber,
                                                            privacyProDaysSinceSubscribed: privacyProDaysSinceSubscribed,
-                                                           privacyProDaysUntilExpiry: privacyProDaysUntilExpiry),
+                                                           privacyProDaysUntilExpiry: privacyProDaysUntilExpiry,
+                                                           dismissedMessageIds: dismissedMessageIds),
                 percentileStore: RemoteMessagingPercentileUserDefaultsStore(userDefaults: .standard),
                 surveyActionMapper: surveyActionMapper,
-                dismissedMessageIds: remoteMessagingStore.fetchDismissedRemoteMessageIds()
+                dismissedMessageIds: dismissedMessageIds
             )
 
             let processor = RemoteMessagingConfigProcessor(remoteMessagingConfigMatcher: remoteMessagingConfigMatcher)

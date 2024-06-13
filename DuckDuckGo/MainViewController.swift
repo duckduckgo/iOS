@@ -1037,6 +1037,8 @@ class MainViewController: UIViewController {
         viewCoordinator.omniBar.forwardButton.isEnabled = viewCoordinator.toolbarForwardButton.isEnabled
     }
   
+    var orientationPixelWorker: DispatchWorkItem?
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
@@ -1058,8 +1060,15 @@ class MainViewController: UIViewController {
     }
 
     private func deferredFireOrientationPixel() {
-        guard UIDevice.current.orientation.isLandscape else { return }
-        Pixel.fire(pixel: .deviceOrientationLandscape, debounce: 3)
+        orientationPixelWorker?.cancel()
+        orientationPixelWorker = nil
+        if UIDevice.current.orientation.isLandscape {
+            let worker = DispatchWorkItem {
+                Pixel.fire(pixel: .deviceOrientationLandscape)
+            }
+            DispatchQueue.global(qos: .default).asyncAfter(deadline: .now() + 3, execute: worker)
+            orientationPixelWorker = worker
+        }
     }
 
     private func applyWidth() {

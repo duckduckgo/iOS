@@ -59,7 +59,6 @@ class AutofillDebugViewController: UITableViewController {
                 ActionMessageView.present(message: "Autofill Data reset")
             } else if cell.tag == Row.addAutofillData.rawValue {
                 promptForNumberOfLoginsToAdd()
-                ActionMessageView.present(message: "Autofill Data added")
             } else if cell.tag == Row.resetEmailProtectionInContextSignUp.rawValue {
                 EmailManager().resetEmailProtectionInContextPrompt()
                 tableView.deselectRow(at: indexPath, animated: true)

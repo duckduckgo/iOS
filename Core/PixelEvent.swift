@@ -321,7 +321,11 @@ extension Pixel {
         case networkProtectionEnableAttemptConnecting
         case networkProtectionEnableAttemptSuccess
         case networkProtectionEnableAttemptFailure
-        
+
+        case networkProtectionServerMigrationAttempt
+        case networkProtectionServerMigrationAttemptSuccess
+        case networkProtectionServerMigrationAttemptFailure
+
         case networkProtectionTunnelFailureDetected
         case networkProtectionTunnelFailureRecovered
         
@@ -344,6 +348,8 @@ extension Pixel {
         
         case networkProtectionClientFailedToFetchServerList
         case networkProtectionClientFailedToParseServerListResponse
+        case networkProtectionClientFailedToFetchServerStatus
+        case networkProtectionClientFailedToParseServerStatusResponse
         case networkProtectionClientFailedToEncodeRegisterKeyRequest
         case networkProtectionClientFailedToFetchRegisteredServers
         case networkProtectionClientFailedToParseRegisteredServersResponse
@@ -1079,7 +1085,14 @@ extension Pixel.Event {
         case .networkProtectionGeoswitchingSetNearest: return "m_netp_ev_geoswitching_set_nearest"
         case .networkProtectionGeoswitchingSetCustom: return "m_netp_ev_geoswitching_set_custom"
         case .networkProtectionGeoswitchingNoLocations: return "m_netp_ev_geoswitching_no_locations"
-            
+
+        case .networkProtectionClientFailedToFetchServerStatus: return "m_netp_server_migration_failed_to_fetch_status"
+        case .networkProtectionClientFailedToParseServerStatusResponse: return "m_netp_server_migration_failed_to_parse_response"
+
+        case .networkProtectionServerMigrationAttempt: return "m_netp_ev_server_migration_attempt"
+        case .networkProtectionServerMigrationAttemptSuccess: return "m_netp_ev_server_migration_attempt_success"
+        case .networkProtectionServerMigrationAttemptFailure: return "m_netp_ev_server_migration_attempt_failed"
+
             // MARK: remote messaging pixels
             
         case .remoteMessageShown: return "m_remote_message_shown"

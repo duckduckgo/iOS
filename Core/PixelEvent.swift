@@ -699,6 +699,12 @@ extension Pixel {
         case settingsShowFullSiteAddressEnabled
         case settingsShowFullSiteAddressDisabled
 
+        // Other settings
+        case settingsKeyboardOnNewTabOn
+        case settingsKeyboardOnNewTabOff
+        case settingsKeyboardOnAppLaunchOn
+        case settingsKeyboardOnAppLaunchOff
+
         // Web pixels
         case privacyProOfferMonthlyPriceClick
         case privacyProOfferYearlyPriceClick
@@ -762,6 +768,11 @@ extension Pixel.Event {
         case .settingsAutoconsentOn: return "m_settings_autoconsent_on"
         case .settingsAutoconsentOff: return "m_settings_autoconsent_off"
             
+        case .settingsKeyboardOnNewTabOn: return "m_settings_keyboard_on-new-tab_on"
+        case .settingsKeyboardOnNewTabOff: return "m_settings_keyboard_on-new-tab_off"
+        case .settingsKeyboardOnAppLaunchOn: return "m_settings_keyboard_on-app-launch_on"
+        case .settingsKeyboardOnAppLaunchOff: return "m_settings_keyboard_on-app-launch_off"
+
         case .browsingMenuOpened: return "mb"
         case .browsingMenuNewTab: return "mb_tb"
         case .browsingMenuAddToBookmarks: return "mb_abk"

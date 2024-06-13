@@ -322,7 +322,6 @@ class MainViewController: UIViewController {
             guard $0 != self?.tabManager.model.currentIndex else { return }
             
             DailyPixel.fire(pixel: .swipeTabsUsedDaily)
-            Pixel.fire(pixel: .swipeTabsUsed)
             self?.select(tabAt: $0)
             
         } newTab: { [weak self] in

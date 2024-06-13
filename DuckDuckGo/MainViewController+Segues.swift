@@ -166,7 +166,7 @@ extension MainViewController {
         present(controller, animated: true)
     }
 
-    private func fireBrokenSiteReportShownIfNeeded() {
+    private func fireBrokenSiteReportShown() {
         let parameters = [
             PrivacyDashboardEvents.Parameters.variant: PixelExperiment.cohort?.rawValue ?? "",
             PrivacyDashboardEvents.Parameters.source: BrokenSiteReport.Source.appMenu.rawValue

@@ -81,14 +81,7 @@ extension TabViewController {
             entries.append(self.buildToggleProtectionEntry(forDomain: domain))
         }
 
-        // This is just for the ship review build
-        // let name = PixelExperiment.privacyDashboardVariant == .control ? UserText.actionReportBrokenSite : UserText.brokenSiteReportMenuTitle
-        let name: String
-        if privacyInfo?.url.isPart(ofDomain: "cnn.com") ?? false || privacyInfo?.url.isPart(ofDomain: "bbc.com") ?? false {
-            name = UserText.brokenSiteReportMenuTitle
-        } else {
-            name = UserText.actionReportBrokenSite
-        }
+        let name = PixelExperiment.privacyDashboardVariant == .control ? UserText.actionReportBrokenSite : UserText.brokenSiteReportMenuTitle
         entries.append(BrowsingMenuEntry.regular(name: name,
                                                  image: UIImage(named: "Feedback-16")!,
                                                  action: { [weak self] in

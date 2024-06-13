@@ -265,14 +265,7 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
             } catch {
                 os_log("Failed to generate or send the broken site report: %@", type: .error, error.localizedDescription)
             }
-            // This is just for the ship review build
-            let message: String
-            if breakageAdditionalInfo?.currentURL.isPart(ofDomain: "cnn.com") ?? false ||
-                breakageAdditionalInfo?.currentURL.isPart(ofDomain: "bbc.com") ?? false {
-                message = UserText.brokenSiteReportSuccessToast
-            } else {
-                message = UserText.feedbackSumbittedConfirmation
-            }
+            let message = PixelExperiment.cohort == .control ? UserText.feedbackSumbittedConfirmation : UserText.brokenSiteReportSuccessToast
             ActionMessageView.present(message: message)
             privacyDashboardCloseHandler()
         }

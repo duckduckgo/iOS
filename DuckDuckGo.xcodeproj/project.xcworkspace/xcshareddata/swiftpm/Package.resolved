@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "jacek/broken-site-report-experiment",
-        "revision" : "56600b0da5c0712cf95ba94efdce0e18668be811"
+        "revision" : "680d134ec6b9aebb2b129067edbf03ac6882ca84"
       }
     },
     {

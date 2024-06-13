@@ -176,6 +176,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         self.openSearch = openSearch
         super.init(nibName: nil, bundle: nil)
 
+        authenticate()
+
         syncUpdatesCancellable = syncDataProviders.credentialsAdapter.syncDidCompletePublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -206,11 +208,6 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         updateViewState()
         configureNotification()
         registerForKeyboardNotifications()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        authenticate()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -325,6 +322,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private func configureNotification() {
         addObserver(for: UIApplication.didBecomeActiveNotification, selector: #selector(appDidBecomeActiveCallback))
         addObserver(for: UIApplication.willResignActiveNotification, selector: #selector(appWillResignActiveCallback))
+        addObserver(for: UIApplication.didEnterBackgroundNotification, selector: #selector(appWillResignActiveCallback))
         addObserver(for: AutofillLoginListAuthenticator.Notifications.invalidateContext, selector: #selector(authenticatorInvalidateContext))
     }
 
@@ -355,6 +353,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private func authenticate() {
         viewModel.authenticate {[weak self] error in
             guard let self = self else { return }
+            self.viewModel.isAuthenticating = false
+            
             if error != nil {
                 if error != .noAuthAvailable {
                     self.delegate?.autofillLoginSettingsListViewControllerDidFinish(self)

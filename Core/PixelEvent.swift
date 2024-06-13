@@ -267,6 +267,8 @@ extension Pixel {
         case autofillOnboardedUser
         case autofillLoginsStacked
 
+        case autofillMultipleAuthCallsTriggered
+
         case getDesktopCopy
         case getDesktopShare
         
@@ -565,8 +567,6 @@ extension Pixel {
 
         case syncWrongEnvironment
 
-        case swipeTabsUsed
-        case swipeTabsIncorrectScrollState
         case swipeTabsUsedDaily
         case swipeToOpenNewTab
 
@@ -676,6 +676,8 @@ extension Pixel {
         case settingsGeneralOpen
         case settingsAutocompleteOn
         case settingsAutocompleteOff
+        case settingsRecentlyVisitedOn
+        case settingsRecentlyVisitedOff
         case settingsGeneralAutocompleteOn
         case settingsGeneralAutocompleteOff
         case settingsGeneralVoiceSearchOn
@@ -701,6 +703,12 @@ extension Pixel {
         case settingsNextStepsAddWidget
         case settingsShowFullSiteAddressEnabled
         case settingsShowFullSiteAddressDisabled
+
+        // Other settings
+        case settingsKeyboardOnNewTabOn
+        case settingsKeyboardOnNewTabOff
+        case settingsKeyboardOnAppLaunchOn
+        case settingsKeyboardOnAppLaunchOff
 
         // Web pixels
         case privacyProOfferMonthlyPriceClick
@@ -765,6 +773,11 @@ extension Pixel.Event {
         case .settingsAutoconsentOn: return "m_settings_autoconsent_on"
         case .settingsAutoconsentOff: return "m_settings_autoconsent_off"
             
+        case .settingsKeyboardOnNewTabOn: return "m_settings_keyboard_on-new-tab_on"
+        case .settingsKeyboardOnNewTabOff: return "m_settings_keyboard_on-new-tab_off"
+        case .settingsKeyboardOnAppLaunchOn: return "m_settings_keyboard_on-app-launch_on"
+        case .settingsKeyboardOnAppLaunchOff: return "m_settings_keyboard_on-app-launch_off"
+
         case .browsingMenuOpened: return "mb"
         case .browsingMenuNewTab: return "mb_tb"
         case .browsingMenuAddToBookmarks: return "mb_abk"
@@ -970,6 +983,8 @@ extension Pixel.Event {
         case .autofillEnabledUser: return "m_autofill_enableduser"
         case .autofillOnboardedUser: return "m_autofill_onboardeduser"
         case .autofillLoginsStacked: return "m_autofill_logins_stacked"
+
+        case .autofillMultipleAuthCallsTriggered: return "m_autofill_multiple_auth_calls_triggered"
 
         case .getDesktopCopy: return "m_get_desktop_copy"
         case .getDesktopShare: return "m_get_desktop_share"
@@ -1244,8 +1259,6 @@ extension Pixel.Event {
 
         case .syncWrongEnvironment: return "m_d_sync_wrong_environment_u"
 
-        case .swipeTabsUsed: return "m_swipe-tabs-used"
-        case .swipeTabsIncorrectScrollState: return "m_swipe-tabs.incorrect-scrollview-state"
         case .swipeTabsUsedDaily: return "m_swipe-tabs-used-daily"
         case .swipeToOpenNewTab: return "m_addressbar_swipe_new_tab"
 
@@ -1366,6 +1379,8 @@ extension Pixel.Event {
         case .settingsGeneralOpen: return "m_settings_general_open"
         case .settingsAutocompleteOn: return "m_settings_autocomplete_on"
         case .settingsAutocompleteOff: return "m_settings_autocomplete_off"
+        case .settingsRecentlyVisitedOn: return "m_settings_autocomplete_recently-visited_on"
+        case .settingsRecentlyVisitedOff: return "m_settings_autocomplete_recently-visited_off"
         case .settingsGeneralAutocompleteOn: return "m_settings_general_autocomplete_on"
         case .settingsGeneralAutocompleteOff: return "m_settings_general_autocomplete_off"
         case .settingsGeneralVoiceSearchOn: return "m_settings_general_voice_search_on"

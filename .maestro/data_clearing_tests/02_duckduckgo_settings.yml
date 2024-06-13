@@ -31,7 +31,7 @@ tags:
         - tapOn: "Phew!"
 
 # Change settings
-- tapOn: "Safe search: moderate"
+- tapOn: "Safe search: moderate ▼"
 - tapOn: "Off"
 
 # Fire Button - twice, just to be sure
@@ -54,4 +54,4 @@ tags:
     id: "searchEntry"
 - inputText: "creepy trackers"
 - pressKey: Enter
-- assertVisible: "Safe search: off"
+- assertVisible: "Safe search: off ▼"

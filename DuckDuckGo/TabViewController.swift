@@ -2340,6 +2340,10 @@ extension TabViewController: SurrogatesUserScriptDelegate {
         return privacyInfo?.isFor(self.url) ?? false
     }
 
+    func surrogatesUserScriptShouldProcessCTLTrackers(_ script: SurrogatesUserScript) -> Bool {
+        false
+    }
+
     func surrogatesUserScript(_ script: SurrogatesUserScript,
                               detectedTracker tracker: DetectedRequest,
                               withSurrogate host: String) {

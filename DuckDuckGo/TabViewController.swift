@@ -107,7 +107,6 @@ class TabViewController: UIViewController {
     private static let tld = AppDependencyProvider.shared.storageCache.tld
     private let adClickAttributionDetection = ContentBlocking.shared.makeAdClickAttributionDetection(tld: tld)
     let adClickAttributionLogic = ContentBlocking.shared.makeAdClickAttributionLogic(tld: tld)
-    
 
     private var httpsForced: Bool = false
     private var lastUpgradedURL: URL?
@@ -760,6 +759,8 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
             privacyDashboard = controller
+            privacyDashboard?.delegate = self
+            breakageCategory = nil
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
@@ -1015,12 +1016,42 @@ class TabViewController: UIViewController {
         job()
     }
 
+    private var alertPresenter: AlertViewPresenter?
+    var breakageCategory: String?
+    private func schedulePrivacyProtectionsOffAlert() {
+        guard let breakageCategory else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.alertPresenter?.hide()
+            self.alertPresenter = AlertViewPresenter(title: UserText.brokenSiteReportToggleAlertTitle,
+                                                     image: "SiteBreakage",
+                                                     leftButton: (UserText.brokenSiteReportToggleAlertYesButton, { [weak self] in
+                Pixel.fire(pixel: .reportBrokenSiteTogglePromptYes)
+                (self?.parent as? MainViewController)?.segueToReportBrokenSite(mode: .afterTogglePrompt(category: breakageCategory,
+                                                                                                       didToggleProtectionsFixIssue: true))
+            }),
+                                                     rightButton: (UserText.brokenSiteReportToggleAlertNoButton, { [weak self] in
+                Pixel.fire(pixel: .reportBrokenSiteTogglePromptNo)
+                (self?.parent as? MainViewController)?.segueToReportBrokenSite(mode: .afterTogglePrompt(category: breakageCategory,
+                                                                                                       didToggleProtectionsFixIssue: false))
+            }))
+            self.alertPresenter?.present(in: self, animated: true)
+        }
+    }
+
     deinit {
         rulesCompilationMonitor.tabWillClose(tabModel.uid)
         removeObservers()
         temporaryDownloadForPreviewedFile?.cancel()
         cleanUpBeforeClosing()
     }
+}
+
+extension TabViewController: PrivacyDashboardViewControllerDelegate {
+
+    func privacyDashboardViewController(_ privacyDashboardViewController: PrivacyDashboardViewController, didSelectBreakageCategory breakageCategory: String) {
+        self.breakageCategory = breakageCategory
+    }
+
 }
 
 // MARK: - LoginFormDetectionDelegate
@@ -2261,6 +2292,7 @@ extension TabViewController: UserContentControllerDelegate {
             }) {
 
             reload()
+            schedulePrivacyProtectionsOffAlert()
         }
     }
 

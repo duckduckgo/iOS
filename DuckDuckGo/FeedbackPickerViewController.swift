@@ -24,7 +24,9 @@ class FeedbackPickerViewController: UITableViewController {
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerText: UILabel!
     @IBOutlet weak var supplementaryText: UILabel!
-    
+
+    private var isFromBrokenSiteReportFlow: Bool = false
+
     private var entries = [FeedbackEntry]()
     private var selectionHandler: (Feedback.Model) -> Void = { _ in }
     
@@ -59,18 +61,19 @@ class FeedbackPickerViewController: UITableViewController {
         }
     }
     
-    func configure(with categories: [Feedback.Category]) {
+    func configure(with categories: [Feedback.Category], isFromBrokenSiteReportFlow: Bool) {
         entries = categories
-        
+        self.isFromBrokenSiteReportFlow = isFromBrokenSiteReportFlow
+
         headerText.setAttributedTextString(UserText.feedbackNegativeHeader)
         supplementaryText.setAttributedTextString(UserText.feedbackNegativeSupplementary)
     }
     
-    func configureFor(entries: [FeedbackEntry], with model: Feedback.Model) {
+    func configureFor(entries: [FeedbackEntry], with model: Feedback.Model, isFromBrokenSiteReportFlow: Bool) {
         guard let category = model.category else {
             fatalError("Feedback model has empty category")
         }
-        
+
         loadViewIfNeeded()
         feedbackModel = model
         
@@ -78,6 +81,7 @@ class FeedbackPickerViewController: UITableViewController {
         supplementaryText.setAttributedTextString(FeedbackPresenter.subtitle(for: category))
         
         self.entries = entries
+        self.isFromBrokenSiteReportFlow = isFromBrokenSiteReportFlow
     }
     
     func setSelectionHandler(_ handler: @escaping (Feedback.Model) -> Void) {
@@ -101,7 +105,7 @@ class FeedbackPickerViewController: UITableViewController {
             model.subcategory = selectedEntry
         }
         
-        FeedbackNavigator.navigate(to: selectedEntry.nextStep, from: self, with: model)
+        FeedbackNavigator.navigate(to: selectedEntry.nextStep, from: self, with: model, isFromBrokenSiteReportFlow: isFromBrokenSiteReportFlow)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -125,6 +129,8 @@ class FeedbackPickerViewController: UITableViewController {
         return cell
     }
 }
+
+extension FeedbackPickerViewController: UIPopoverPresentationControllerDelegate {}
 
 extension FeedbackPickerViewController {
     

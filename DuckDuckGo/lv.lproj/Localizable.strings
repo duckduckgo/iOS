@@ -676,6 +676,30 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Importē grāmatzīmju HTML failu no citas pārlūkprogrammas vai eksportē esošās grāmatzīmes.";
 
+/* Button to open report form */
+"broken.site.report.menu.title" = "Ziņot par problēmu šajā vietnē";
+
+/* Acknowledge button */
+"broken.site.report.missing.description.alert.button" = "Sapratu";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.description" = "Lūdzu, apraksti šajā vietnē pieredzēto problēmu, lai mēs varētu labāk saprast, kā to novērst.";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.title" = "Apraksts ir obligāts";
+
+/* Message that appears after submitting report */
+"broken.site.report.success.toast" = "Tavs ziņojums palīdz padarīt DuckDuckGo labāku visiem lietotājiem!";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.no.button" = "Nē";
+
+/* An alert that appears after user turns off the privacy protection */
+"broken.site.report.toggle.alert.title" = "Vai privātuma aizsardzības izslēgšana atrisināja problēmu šajā vietnē?";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.yes.button" = "Jā";
+
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Vienmēr sūtīt avārijas ziņojumus";
 

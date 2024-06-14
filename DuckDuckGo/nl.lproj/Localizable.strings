@@ -676,6 +676,30 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Importeer een HTML-bestand met bladwijzers uit een andere browser of exporteer je bestaande bladwijzers.";
 
+/* Button to open report form */
+"broken.site.report.menu.title" = "Een probleem melden met deze site";
+
+/* Acknowledge button */
+"broken.site.report.missing.description.alert.button" = "Ik snap het";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.description" = "Beschrijf het probleem dat je op deze site hebt ondervonden zodat we beter begrijpen hoe we het kunnen oplossen.";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.title" = "Omschrijving vereist";
+
+/* Message that appears after submitting report */
+"broken.site.report.success.toast" = "Jouw melding helpt DuckDuckGo beter te maken voor iedereen!";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.no.button" = "Nee";
+
+/* An alert that appears after user turns off the privacy protection */
+"broken.site.report.toggle.alert.title" = "Is het probleem op deze site opgelost door de Privacy Beveiligingen uit te schakelen?";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.yes.button" = "Ja";
+
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Crashrapporten altijd verzenden";
 

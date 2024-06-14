@@ -20,6 +20,7 @@ import Foundation
 import WebKit
 import Common
 import UserScript
+import PixelKit
 
 protocol YoutubeOverlayUserScriptDelegate: AnyObject {
     func youtubeOverlayUserScriptDidRequestDuckPlayer(with url: URL, in webView: WKWebView)
@@ -42,7 +43,7 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
         }
     }
 
-    // let duckPlayerPreferences: DuckPlayerPreferences
+    let duckPlayerPreferences: DuckPlayerPreferences
     weak var broker: UserScriptMessageBroker?
     weak var delegate: YoutubeOverlayUserScriptDelegate?
     weak var webView: WKWebView?
@@ -52,9 +53,9 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
     ])
     public var featureName: String = "duckPlayer"
 
-    /*init(duckPlayerPreferences: DuckPlayerPreferences = DuckPlayerPreferences.shared) {
+    init(duckPlayerPreferences: DuckPlayerPreferences = DuckPlayerPreferences.shared) {
         self.duckPlayerPreferences = duckPlayerPreferences
-    }*/
+    }
 
     // MARK: - Subfeature
 
@@ -128,10 +129,8 @@ extension YoutubeOverlayUserScript {
         guard let body = message.messageBody as? [String: Any], let parameters = body["params"] as? [String: Any] else {
             return nil
         }
-        /*
         let pixelName = parameters["pixelName"] as? String
 
-        
         switch pixelName {
         case "play.use":
             duckPlayerPreferences.youtubeOverlayAnyButtonPressed = true
@@ -147,7 +146,7 @@ extension YoutubeOverlayUserScript {
             PixelKit.fire(GeneralPixel.duckPlayerOverlayYoutubeImpressions)
         default:
             break
-        }*/
+        }
 
         return nil
     }

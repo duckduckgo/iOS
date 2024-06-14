@@ -31,13 +31,8 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
     public let messageOriginPolicy: MessageOriginPolicy = .all
     public let featureName: String = "duckPlayerPage"
 
-    struct Handlers {
-        static let setUserValues = "setUserValues"
-        static let getUserValues = "getUserValues"
-    }
-    
     // MARK: - Subfeature
-    
+
     public func with(broker: UserScriptMessageBroker) {
         self.broker = broker
     }
@@ -47,14 +42,20 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
     enum MessageNames: String, CaseIterable {
         case setUserValues
         case getUserValues
+        case initialSetup
     }
 
     func handler(forMethodNamed methodName: String) -> Subfeature.Handler? {
-        switch methodName {
-        case Handlers.setUserValues:
+        guard isEnabled else {
+            return nil
+        }
+        switch MessageNames(rawValue: methodName) {
+        case .getUserValues:
             return DuckPlayer.shared.handleGetUserValues
-        case Handlers.getUserValues:
+        case .setUserValues:
             return DuckPlayer.shared.handleSetUserValuesMessage(from: .duckPlayer)
+        case .initialSetup:
+            return DuckPlayer.shared.initialSetup(with: webView)
         default:
             assertionFailure("YoutubePlayerUserScript: Failed to parse User Script message: \(methodName)")
             return nil

@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "ddb0eb213c081a5d6d3f78f4df5dff11bc974218",
-        "version" : "155.0.0"
+        "revision" : "e9e239fe5dfeab87dcacbf5a31c8f555623a4ce2",
+        "version" : "156.0.0"
       }
     },
     {
@@ -185,8 +185,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/TrackerRadarKit",
       "state" : {
-        "revision" : "c01e6a59d000356b58ec77053e0a99d538be56a5",
-        "version" : "2.1.1"
+        "revision" : "1403e17eeeb8493b92fb9d11eb8c846bb9776581",
+        "version" : "2.1.2"
       }
     },
     {

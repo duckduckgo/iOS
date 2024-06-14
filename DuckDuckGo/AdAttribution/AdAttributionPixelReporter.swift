@@ -33,6 +33,7 @@ final class AdAttributionPixelReporter {
     private var fetcherStorage: AdAttributionReporterStorage
     private let attributionFetcher: AdAttributionFetcher
     private let pixelFiring: PixelFiring.Type
+    private var isSendingAttribution: Bool = false
 
     init(fetcherStorage: AdAttributionReporterStorage = UserDefaultsAdAttributionReporterStorage(),
          attributionFetcher: AdAttributionFetcher = DefaultAdAttributionFetcher(),
@@ -46,6 +47,16 @@ final class AdAttributionPixelReporter {
     func reportAttributionIfNeeded() async -> Bool {
         guard await fetcherStorage.wasAttributionReportSuccessful == false else {
             return false
+        }
+
+        guard !isSendingAttribution else {
+            return false
+        }
+
+        isSendingAttribution = true
+
+        defer {
+            isSendingAttribution = false
         }
 
         if let attributionData = await self.attributionFetcher.fetch() {

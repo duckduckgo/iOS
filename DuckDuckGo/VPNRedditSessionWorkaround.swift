@@ -21,8 +21,12 @@ import Foundation
 import NetworkProtection
 import Subscription
 import WebKit
+import Core
 
 final class VPNRedditSessionWorkaround {
+
+    @UserDefaultsWrapper(key: .vpnRedditWorkaroundInstalled, defaultValue: false)
+    var vpnWorkaroundInstalled: Bool
 
     private let accountManager: AccountManaging
     private let tunnelController: TunnelController

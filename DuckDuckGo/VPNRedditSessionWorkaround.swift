@@ -65,11 +65,13 @@ final class VPNRedditSessionWorkaround {
 
         if requiresRedditSessionCookie {
             await cookieStore.setCookie(redditSessionCookie)
+            vpnWorkaroundInstalled = true
         }
     }
 
     func removeRedditSessionWorkaround(from cookieStore: WKHTTPCookieStore) async {
-        guard let redditSessionCookie = HTTPCookie.emptyRedditSession else {
+        guard vpnWorkaroundInstalled,
+              let redditSessionCookie = HTTPCookie.emptyRedditSession else {
             return
         }
 
@@ -78,11 +80,16 @@ final class VPNRedditSessionWorkaround {
             if cookie.domain == redditSessionCookie.domain, cookie.name == redditSessionCookie.name {
                 if cookie.value == redditSessionCookie.value {
                     await cookieStore.deleteCookie(cookie)
+                    vpnWorkaroundInstalled = false
                 }
 
                 break
             }
         }
+    }
+
+    func resetRedditSessionFlag() {
+        vpnWorkaroundInstalled = false
     }
 
 }

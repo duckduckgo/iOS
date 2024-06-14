@@ -267,6 +267,8 @@ extension Pixel {
         case autofillOnboardedUser
         case autofillLoginsStacked
 
+        case autofillMultipleAuthCallsTriggered
+
         case getDesktopCopy
         case getDesktopShare
         
@@ -319,7 +321,11 @@ extension Pixel {
         case networkProtectionEnableAttemptConnecting
         case networkProtectionEnableAttemptSuccess
         case networkProtectionEnableAttemptFailure
-        
+
+        case networkProtectionServerMigrationAttempt
+        case networkProtectionServerMigrationAttemptSuccess
+        case networkProtectionServerMigrationAttemptFailure
+
         case networkProtectionTunnelFailureDetected
         case networkProtectionTunnelFailureRecovered
         
@@ -342,6 +348,8 @@ extension Pixel {
         
         case networkProtectionClientFailedToFetchServerList
         case networkProtectionClientFailedToParseServerListResponse
+        case networkProtectionClientFailedToFetchServerStatus
+        case networkProtectionClientFailedToParseServerStatusResponse
         case networkProtectionClientFailedToEncodeRegisterKeyRequest
         case networkProtectionClientFailedToFetchRegisteredServers
         case networkProtectionClientFailedToParseRegisteredServersResponse
@@ -559,8 +567,6 @@ extension Pixel {
 
         case syncWrongEnvironment
 
-        case swipeTabsUsed
-        case swipeTabsIncorrectScrollState
         case swipeTabsUsedDaily
         case swipeToOpenNewTab
 
@@ -648,9 +654,6 @@ extension Pixel {
         case privacyProSubscriptionManagementEmail
         case privacyProSubscriptionManagementPlanBilling
         case privacyProSubscriptionManagementRemoval
-        case privacyProFeatureEnabled
-        case privacyProVPNAccessRevokedDialogShown
-        case privacyProVPNBetaStoppedWhenPrivacyProEnabled
         case privacyProTransactionProgressNotHiddenAfter60s
         case privacyProSuccessfulSubscriptionAttribution
 
@@ -673,6 +676,8 @@ extension Pixel {
         case settingsGeneralOpen
         case settingsAutocompleteOn
         case settingsAutocompleteOff
+        case settingsRecentlyVisitedOn
+        case settingsRecentlyVisitedOff
         case settingsGeneralAutocompleteOn
         case settingsGeneralAutocompleteOff
         case settingsGeneralVoiceSearchOn
@@ -698,6 +703,12 @@ extension Pixel {
         case settingsNextStepsAddWidget
         case settingsShowFullSiteAddressEnabled
         case settingsShowFullSiteAddressDisabled
+
+        // Other settings
+        case settingsKeyboardOnNewTabOn
+        case settingsKeyboardOnNewTabOff
+        case settingsKeyboardOnAppLaunchOn
+        case settingsKeyboardOnAppLaunchOff
 
         // Web pixels
         case privacyProOfferMonthlyPriceClick
@@ -771,6 +782,11 @@ extension Pixel.Event {
         case .settingsAutoconsentOn: return "m_settings_autoconsent_on"
         case .settingsAutoconsentOff: return "m_settings_autoconsent_off"
             
+        case .settingsKeyboardOnNewTabOn: return "m_settings_keyboard_on-new-tab_on"
+        case .settingsKeyboardOnNewTabOff: return "m_settings_keyboard_on-new-tab_off"
+        case .settingsKeyboardOnAppLaunchOn: return "m_settings_keyboard_on-app-launch_on"
+        case .settingsKeyboardOnAppLaunchOff: return "m_settings_keyboard_on-app-launch_off"
+
         case .browsingMenuOpened: return "mb"
         case .browsingMenuNewTab: return "mb_tb"
         case .browsingMenuAddToBookmarks: return "mb_abk"
@@ -977,6 +993,8 @@ extension Pixel.Event {
         case .autofillOnboardedUser: return "m_autofill_onboardeduser"
         case .autofillLoginsStacked: return "m_autofill_logins_stacked"
 
+        case .autofillMultipleAuthCallsTriggered: return "m_autofill_multiple_auth_calls_triggered"
+
         case .getDesktopCopy: return "m_get_desktop_copy"
         case .getDesktopShare: return "m_get_desktop_share"
 
@@ -1076,7 +1094,14 @@ extension Pixel.Event {
         case .networkProtectionGeoswitchingSetNearest: return "m_netp_ev_geoswitching_set_nearest"
         case .networkProtectionGeoswitchingSetCustom: return "m_netp_ev_geoswitching_set_custom"
         case .networkProtectionGeoswitchingNoLocations: return "m_netp_ev_geoswitching_no_locations"
-            
+
+        case .networkProtectionClientFailedToFetchServerStatus: return "m_netp_server_migration_failed_to_fetch_status"
+        case .networkProtectionClientFailedToParseServerStatusResponse: return "m_netp_server_migration_failed_to_parse_response"
+
+        case .networkProtectionServerMigrationAttempt: return "m_netp_ev_server_migration_attempt"
+        case .networkProtectionServerMigrationAttemptSuccess: return "m_netp_ev_server_migration_attempt_success"
+        case .networkProtectionServerMigrationAttemptFailure: return "m_netp_ev_server_migration_attempt_failed"
+
             // MARK: remote messaging pixels
             
         case .remoteMessageShown: return "m_remote_message_shown"
@@ -1243,8 +1268,6 @@ extension Pixel.Event {
 
         case .syncWrongEnvironment: return "m_d_sync_wrong_environment_u"
 
-        case .swipeTabsUsed: return "m_swipe-tabs-used"
-        case .swipeTabsIncorrectScrollState: return "m_swipe-tabs.incorrect-scrollview-state"
         case .swipeTabsUsedDaily: return "m_swipe-tabs-used-daily"
         case .swipeToOpenNewTab: return "m_addressbar_swipe_new_tab"
 
@@ -1365,6 +1388,8 @@ extension Pixel.Event {
         case .settingsGeneralOpen: return "m_settings_general_open"
         case .settingsAutocompleteOn: return "m_settings_autocomplete_on"
         case .settingsAutocompleteOff: return "m_settings_autocomplete_off"
+        case .settingsRecentlyVisitedOn: return "m_settings_autocomplete_recently-visited_on"
+        case .settingsRecentlyVisitedOff: return "m_settings_autocomplete_recently-visited_off"
         case .settingsGeneralAutocompleteOn: return "m_settings_general_autocomplete_on"
         case .settingsGeneralAutocompleteOff: return "m_settings_general_autocomplete_off"
         case .settingsGeneralVoiceSearchOn: return "m_settings_general_voice_search_on"
@@ -1390,11 +1415,6 @@ extension Pixel.Event {
         case .settingsNextStepsAddWidget: return "m_settings_next_steps_add_widget"
         case .settingsShowFullSiteAddressEnabled: return "m_settings_show_full_url_on"
         case .settingsShowFullSiteAddressDisabled: return "m_settings_show_full_url_off"
-
-        // Launch
-        case .privacyProFeatureEnabled: return "m_privacy-pro_feature_enabled"
-        case .privacyProVPNAccessRevokedDialogShown: return "m_privacy-pro_vpn-access-revoked-dialog_shown"
-        case .privacyProVPNBetaStoppedWhenPrivacyProEnabled: return "m_privacy-pro_vpn-beta-stopped-when-privacy-pro-enabled"
 
         // Web
         case .privacyProOfferMonthlyPriceClick: return "m_privacy-pro_offer_monthly-price_click"

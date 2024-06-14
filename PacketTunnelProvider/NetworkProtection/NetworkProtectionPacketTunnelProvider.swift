@@ -135,6 +135,15 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             case .failed(let error):
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailureRecoveryFailed, error: error)
             }
+        case .serverMigrationAttempt(let step):
+            switch step {
+            case .begin:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionServerMigrationAttempt)
+            case .failure(let error):
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionServerMigrationAttemptFailure, error: error)
+            case .success:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionServerMigrationAttemptSuccess)
+            }
         }
     }
 
@@ -227,6 +236,12 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 return
             case .failedToParseLocationListResponse:
                 return
+            case .failedToFetchServerStatus(let error):
+                pixelEvent = .networkProtectionClientFailedToFetchServerStatus
+                pixelError = error
+            case .failedToParseServerStatusResponse(let error):
+                pixelEvent = .networkProtectionClientFailedToParseServerStatusResponse
+                pixelError = error
             }
             DailyPixel.fireDailyAndCount(pixel: pixelEvent, error: pixelError, withAdditionalParameters: params)
         }

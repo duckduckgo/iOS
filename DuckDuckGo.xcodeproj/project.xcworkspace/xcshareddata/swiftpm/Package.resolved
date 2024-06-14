@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "b78ae617c7fe66244741f489158a1f40e567e674",
-        "version" : "153.0.0"
+        "branch" : "sam/tag-153-rmf-privacy-pro-attribute-matching",
+        "revision" : "ee20b39bfd7d3696afce3d3d81201d41d72384ef"
       }
     },
     {

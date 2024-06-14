@@ -79,6 +79,11 @@ final class SubscriptionEmailViewModel: ObservableObject {
         webViewModel.url?.forComparison() == subscriptionPurchaseURL.forComparison()
     }
 
+    private var isVerifySubscriptionPage: Bool {
+        let confirmSubscriptionURL = subscriptionManager.url(for: .baseURL).appendingPathComponent("confirm")
+        return webViewModel.url?.forComparison() == confirmSubscriptionURL.forComparison()
+    }
+
     init(userScript: SubscriptionPagesUserScript,
          subFeature: SubscriptionPagesUseSubscriptionFeature,
          subscriptionManager: SubscriptionManaging) {
@@ -224,15 +229,13 @@ final class SubscriptionEmailViewModel: ObservableObject {
     private func updateBackButton(canNavigateBack: Bool) {
         
         // If the view is not Activation Success, or Welcome page, allow WebView Back Navigation
-        if !isWelcomePageOrSuccessPage {
+        if !isWelcomePageOrSuccessPage && !isVerifySubscriptionPage {
             self.state.canNavigateBack = canNavigateBack
             self.state.backButtonTitle = UserText.backButtonTitle
         } else {
             self.state.canNavigateBack = false
             self.state.backButtonTitle = UserText.settingsTitle
         }
-        
-        
     }
     
     // MARK: -

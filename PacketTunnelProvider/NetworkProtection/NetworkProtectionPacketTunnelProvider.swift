@@ -135,6 +135,15 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             case .failed(let error):
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailureRecoveryFailed, error: error)
             }
+        case .serverMigrationAttempt(let step):
+            switch step {
+            case .begin:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionServerMigrationAttempt)
+            case .failure(let error):
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionServerMigrationAttemptFailure, error: error)
+            case .success:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionServerMigrationAttemptSuccess)
+            }
         }
     }
 
@@ -213,7 +222,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 pixelEvent = .networkProtectionWireguardErrorCannotStartWireguardBackend
                 params[PixelParameters.wireguardErrorCode] = String(code)
             case .noAuthTokenFound:
-                pixelEvent = .networkProtectionNoAuthTokenFoundError
+                pixelEvent = .networkProtectionNoAccessTokenFoundError
             case .vpnAccessRevoked:
                 return
             case .unhandledError(function: let function, line: let line, error: let error):
@@ -227,6 +236,12 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 return
             case .failedToParseLocationListResponse:
                 return
+            case .failedToFetchServerStatus(let error):
+                pixelEvent = .networkProtectionClientFailedToFetchServerStatus
+                pixelError = error
+            case .failedToParseServerStatusResponse(let error):
+                pixelEvent = .networkProtectionClientFailedToParseServerStatusResponse
+                pixelError = error
             }
             DailyPixel.fireDailyAndCount(pixel: pixelEvent, error: pixelError, withAdditionalParameters: params)
         }
@@ -254,7 +269,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         super.stopTunnel(with: reason, completionHandler: completionHandler)
     }
 
-    // swiftlint:disable:next function_body_length
     @objc init() {
 
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
@@ -272,7 +286,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let entitlementsCache = UserDefaultsCache<[Entitlement]>(userDefaults: UserDefaults.standard,
                                                                  key: UserDefaultsCacheKey.subscriptionEntitlements,
                                                                  settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
-        let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.unspecified))
+
+        let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
+        let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
         let subscriptionService = SubscriptionService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
         let authService = AuthService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
         let accountManager = AccountManager(accessTokenStorage: accessTokenStorage,
@@ -285,11 +301,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             if featureVisibility.shouldMonitorEntitlement() {
                 return { accountManager.accessToken }
             }
-            return { nil } }()
-        let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
-                                                             errorEvents: nil,
-                                                             isSubscriptionEnabled: true,
-                                                             accessTokenProvider: accessTokenProvider)
+            return { nil }
+        }()
+        let tokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
 
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()

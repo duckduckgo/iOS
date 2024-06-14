@@ -70,8 +70,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     }
 
     enum ClearDataRows: Int, CaseIterable {
-        case clearAuthToken
-        case clearAllVPNData
+        case removeVPNConfiguration
     }
 
     enum DebugFeatureRows: Int, CaseIterable {
@@ -190,10 +189,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
         case .clearData:
             switch ClearDataRows(rawValue: indexPath.row) {
-            case .clearAuthToken:
-                cell.textLabel?.text = "Clear Auth Token"
-            case .clearAllVPNData:
-                cell.textLabel?.text = "Reset VPN State Completely"
+            case .removeVPNConfiguration:
+                cell.textLabel?.text = "Remove VPN Configuration"
             case .none:
                 break
             }
@@ -255,8 +252,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         switch Sections(rawValue: indexPath.section) {
         case .clearData:
             switch ClearDataRows(rawValue: indexPath.row) {
-            case .clearAuthToken: clearAuthToken()
-            case .clearAllVPNData: clearAllVPNData()
+            case .removeVPNConfiguration: deleteVPNConfiguration()
             default: break
             }
         case .debugFeature:
@@ -659,7 +655,6 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
     @MainActor
     private func refreshMetadata() async {
         let collector = DefaultVPNMetadataCollector(statusObserver: AppDependencyProvider.shared.connectionObserver,
-                                                    networkProtectionAccessManager: AppDependencyProvider.shared.networkProtectionAccessController,
                                                     tokenStore: AppDependencyProvider.shared.networkProtectionKeychainTokenStore)
         self.vpnMetadata = await collector.collectMetadata()
         self.tableView.reloadData()
@@ -703,12 +698,11 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
 
     // MARK: Selection Actions
 
-    private func clearAuthToken() {
-        try? tokenStore.deleteToken()
-    }
-
-    private func clearAllVPNData() {
-        AppDependencyProvider.shared.networkProtectionAccessController.revokeNetworkProtectionAccess()
+    private func deleteVPNConfiguration() {
+        Task {
+            await AppDependencyProvider.shared.networkProtectionTunnelController.stop()
+            await AppDependencyProvider.shared.networkProtectionTunnelController.removeVPN()
+        }
     }
 }
 

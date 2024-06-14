@@ -330,7 +330,6 @@ import WebKit
 
 #if NETWORK_PROTECTION
         widgetRefreshModel.beginObservingVPNStatus()
-        AppDependencyProvider.shared.networkProtectionAccessController.refreshNetworkProtectionAccess()
 #endif
 
         AppDependencyProvider.shared.toggleProtectionsCounter.sendEventsIfNeeded()
@@ -414,7 +413,6 @@ import WebKit
             self?.mainViewController?.segueToPrivacyPro()
         }
         window?.rootViewController?.present(alertController, animated: true) { [weak self] in
-            DailyPixel.fireDailyAndCount(pixel: .privacyProVPNAccessRevokedDialogShown)
             self?.tunnelDefaults.showEntitlementAlert = false
         }
     }
@@ -471,7 +469,6 @@ import WebKit
         StatisticsLoader.shared.load {
             StatisticsLoader.shared.refreshAppRetentionAtb()
             self.fireAppLaunchPixel()
-            self.firePrivacyProFeatureEnabledPixel()
             self.reportAdAttribution()
         }
         
@@ -542,11 +539,6 @@ import WebKit
 
         let isConnected = await AppDependencyProvider.shared.networkProtectionTunnelController.isConnected
 
-        DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
-            "reason": reason,
-            "vpn-connected": String(isConnected)
-        ])
-
         await AppDependencyProvider.shared.networkProtectionTunnelController.stop()
         await AppDependencyProvider.shared.networkProtectionTunnelController.removeVPN()
     }
@@ -602,16 +594,6 @@ import WebKit
             }
             
         }
-    }
-
-    private func firePrivacyProFeatureEnabledPixel() {
-        let subscriptionFeatureAvailability = AppDependencyProvider.shared.subscriptionFeatureAvailability
-        guard subscriptionFeatureAvailability.isFeatureAvailable,
-              subscriptionFeatureAvailability.isSubscriptionPurchaseAllowed else {
-            return
-        }
-
-        DailyPixel.fire(pixel: .privacyProFeatureEnabled)
     }
 
     private func fireFailedCompilationsPixelIfNeeded() {

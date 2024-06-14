@@ -90,8 +90,9 @@ class MainViewController: UIViewController {
     let previewsSource: TabPreviewsSource
     let appSettings: AppSettings
     private var launchTabObserver: LaunchTabNotification.Observer?
-    
-    var doRefreshAfterClear = true
+
+    var autoClearInProgress = false
+    var autoClearShouldRefreshUIAfterClear = true
 
     let bookmarksDatabase: CoreDataDatabase
     private weak var bookmarksDatabaseCleaner: BookmarkDatabaseCleaner?
@@ -321,7 +322,6 @@ class MainViewController: UIViewController {
             guard $0 != self?.tabManager.model.currentIndex else { return }
             
             DailyPixel.fire(pixel: .swipeTabsUsedDaily)
-            Pixel.fire(pixel: .swipeTabsUsed)
             self?.select(tabAt: $0)
             
         } newTab: { [weak self] in
@@ -835,7 +835,9 @@ class MainViewController: UIViewController {
                 selectTab(existing)
                 return
             } else if reuseExisting, let existing = tabManager.firstHomeTab() {
-                doRefreshAfterClear = false
+                if autoClearInProgress {
+                    autoClearShouldRefreshUIAfterClear = false
+                }
                 tabManager.selectTab(existing)
                 loadUrl(url, fromExternalLink: fromExternalLink)
             } else {
@@ -1452,7 +1454,6 @@ class MainViewController: UIViewController {
         }
         dismiss(animated: true) {
             self.present(alertController, animated: true, completion: nil)
-            DailyPixel.fireDailyAndCount(pixel: .privacyProVPNAccessRevokedDialogShown)
             self.tunnelDefaults.showEntitlementAlert = false
         }
     }
@@ -1486,12 +1487,6 @@ class MainViewController: UIViewController {
                 tunnelDefaults.enableEntitlementMessaging()
             }
 
-            if await networkProtectionTunnelController.isConnected {
-                DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
-                    "reason": "entitlement-change"
-                ])
-            }
-
             await networkProtectionTunnelController.stop()
             await networkProtectionTunnelController.removeVPN()
         }
@@ -1500,12 +1495,6 @@ class MainViewController: UIViewController {
     @objc
     private func onNetworkProtectionAccountSignOut(_ notification: Notification) {
         Task {
-            if await networkProtectionTunnelController.isConnected {
-                DailyPixel.fireDailyAndCount(pixel: .privacyProVPNBetaStoppedWhenPrivacyProEnabled, withAdditionalParameters: [
-                    "reason": "account-signed-out"
-                ])
-            }
-
             await networkProtectionTunnelController.stop()
             await networkProtectionTunnelController.removeVPN()
         }
@@ -1714,6 +1703,7 @@ extension MainViewController: OmniBarDelegate {
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
+        omniBar.cancel()
         loadQuery(query)
         hideSuggestionTray()
         hideNotificationBarIfBrokenSitePromptShown()
@@ -2403,7 +2393,7 @@ extension MainViewController: GestureToolbarButtonDelegate {
 }
 
 extension MainViewController: AutoClearWorker {
-    
+
     func clearNavigationStack() {
         dismissOmniBar()
 
@@ -2421,10 +2411,6 @@ extension MainViewController: AutoClearWorker {
     }
 
     func refreshUIAfterClear() {
-        guard doRefreshAfterClear else {
-            doRefreshAfterClear = true
-            return
-        }
         showBars()
         attachHomeScreen()
         tabsBarController?.refresh(tabsModel: tabManager.model)
@@ -2433,8 +2419,18 @@ extension MainViewController: AutoClearWorker {
     }
 
     @MainActor
-    func clearDataFinished(_: AutoClear) {
-        refreshUIAfterClear()
+    func willStartClearing(_: AutoClear) {
+        autoClearInProgress = true
+    }
+
+    @MainActor
+    func autoClearDidFinishClearing(_: AutoClear, isLaunching: Bool) {
+        if autoClearShouldRefreshUIAfterClear && isLaunching == false {
+            refreshUIAfterClear()
+        }
+
+        autoClearInProgress = false
+        autoClearShouldRefreshUIAfterClear = true
     }
 
     @MainActor

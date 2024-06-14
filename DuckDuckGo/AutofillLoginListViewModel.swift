@@ -71,6 +71,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
     var authenticationNotRequired = false
     var isCancelingSearch = false
+    var isAuthenticating = false
 
     @Published private var accounts = [SecureVaultModels.WebsiteAccount]()
     private var accountsToSuggest = [SecureVaultModels.WebsiteAccount]()
@@ -121,20 +122,14 @@ final class AutofillLoginListViewModel: ObservableObject {
         self.currentTabUrl = currentTabUrl
         self.autofillNeverPromptWebsitesManager = autofillNeverPromptWebsitesManager
 
+        if let count = getAccountsCount() {
+            authenticationNotRequired = count == 0 || AppDependencyProvider.shared.autofillLoginSession.isSessionValid
+        }
         updateData()
-        authenticationNotRequired = !hasAccountsSaved || AppDependencyProvider.shared.autofillLoginSession.isSessionValid
         setupCancellables()
     }
     
  // MARK: Public Methods
-
-    func isAutofillSurveyEnabled() -> Bool {
-        return false
-    }
-
-    func disableAutofillSurvey() {
-        appSettings.autofillSurveyEnabled = false
-    }
 
     func delete(at indexPath: IndexPath) -> Bool {
         let section = sections[indexPath.section]
@@ -181,6 +176,12 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
     
     func authenticate(completion: @escaping(AutofillLoginListAuthenticator.AuthError?) -> Void) {
+        guard !isAuthenticating else {
+            return
+        }
+
+        isAuthenticating = true
+
         if !authenticator.canAuthenticate() {
             viewState = .noAuthAvailable
             completion(nil)
@@ -196,6 +197,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
 
     func authenticateInvalidateContext() {
+        isAuthenticating = false
         authenticator.invalidateContext()
     }
 
@@ -235,7 +237,18 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
 
     // MARK: Private Methods
-    
+
+    private func getAccountsCount() -> Int? {
+        guard let secureVault = secureVault else {
+            return nil
+        }
+        do {
+            return try secureVault.accountsCount()
+        } catch {
+            return nil
+        }
+    }
+
     private func fetchAccounts() -> [SecureVaultModels.WebsiteAccount] {
         guard let secureVault = secureVault else {
             return []

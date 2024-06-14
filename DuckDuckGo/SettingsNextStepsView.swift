@@ -39,9 +39,11 @@ struct SettingsNextStepsView: View {
             }
 
             // Set Your Address Bar Position
-            NavigationLink(destination: SettingsAppearanceView().environmentObject(viewModel)) {
-                SettingsCellView(label: UserText.setYourAddressBarPosition,
-                                 image: Image("SettingsAddressBarPosition"))
+            if viewModel.state.addressbar.enabled {
+                NavigationLink(destination: SettingsAppearanceView().environmentObject(viewModel)) {
+                    SettingsCellView(label: UserText.setYourAddressBarPosition,
+                                     image: Image("SettingsAddressBarPosition"))
+                }
             }
 
             // Enable Voice Search

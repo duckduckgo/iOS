@@ -69,7 +69,7 @@ extension EventMapping where Event == NetworkProtectionError {
             pixelEvent = .networkProtectionKeychainDeleteError
             params[PixelParameters.keychainErrorCode] = String(status)
         case .noAuthTokenFound:
-            pixelEvent = .networkProtectionNoAuthTokenFoundError
+            pixelEvent = .networkProtectionNoAccessTokenFoundError
         case .vpnAccessRevoked:
             return
         case .noServerRegistrationInfo,
@@ -88,7 +88,9 @@ extension EventMapping where Event == NetworkProtectionError {
                 .wireGuardDnsResolution,
                 .wireGuardSetNetworkSettings,
                 .startWireGuardBackend,
-                .failedToRetrieveAuthToken:
+                .failedToRetrieveAuthToken,
+                .failedToFetchServerStatus,
+                .failedToParseServerStatusResponse:
             pixelEvent = .networkProtectionUnhandledError
             params[PixelParameters.function] = #function
             params[PixelParameters.line] = String(#line)

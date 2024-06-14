@@ -34,7 +34,7 @@ struct SubscriptionSettingsView: View {
     @State var isShowingGoogleView = false
     @State var isShowingRemovalNotice = false
     @State var isShowingFAQView = false
-    @State var isShowingRestoreView = false
+    @State var isShowingEmailView = false
     @State var isShowingConnectionError = false
     @State var isLoading = false
 
@@ -67,30 +67,30 @@ struct SubscriptionSettingsView: View {
         Section(header: Text(UserText.subscriptionDevicesSectionHeader),
                 footer: devicesSectionFooter) {
 
-            NavigationLink(destination: SubscriptionContainerViewFactory.makeRestoreFlow(
-                navigationCoordinator: subscriptionNavigationCoordinator,
-                subscriptionManager: AppDependencyProvider.shared.subscriptionManager),
-                           isActive: $isShowingRestoreView) {
-
-                SettingsCustomCell(content: {
-                    Text(UserText.subscriptionAddDeviceButton)
-                        .daxBodyRegular()
-                })
-
-            }.isDetailLink(false)
-
-            SettingsCellView(
-                label: "Add Email",
-                subtitle: nil)
-
-            SettingsCellView(
-                label: "Edit Email",
-                subtitle: "real-email-goes@here.com")
+            if !viewModel.state.isLoadingSubscriptionInfo {
+                NavigationLink(destination: SubscriptionContainerViewFactory.makeEmailFlow(
+                    navigationCoordinator: subscriptionNavigationCoordinator,
+                    subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
+                    onDisappear: {
+                        Task { await viewModel.fetchAndUpdateAccountEmail(cachePolicy: .reloadIgnoringLocalCacheData) }
+                    }),
+                               isActive: $isShowingEmailView) {
+                    // TODO: Extract labels
+                    if let email = viewModel.state.subscriptionEmail {
+                        SettingsCellView(label: "Edit Email",
+                                         subtitle: email)
+                    } else {
+                        SettingsCellView(label: "Add Email")
+                    }
+                }.isDetailLink(false)
+            } else {
+                SwiftUI.ProgressView()
+            }
         }
     }
 
     private var devicesSectionFooter: some View {
-        let hasEmail = true // TODO: need email here
+        let hasEmail = !(viewModel.state.subscriptionEmail ?? "").isEmpty
         let footerText = hasEmail ? UserText.subscriptionDevicesSectionWithEmailFooter : UserText.subscriptionDevicesSectionNoEmailFooter
         return Text(.init("\(footerText)")) // required to parse markdown formatting
             .environment(\.openURL, OpenURLAction { _ in
@@ -244,7 +244,7 @@ struct SubscriptionSettingsView: View {
         
         .onReceive(subscriptionNavigationCoordinator.$shouldPopToSubscriptionSettings) { shouldDismiss in
             if shouldDismiss {
-                isShowingRestoreView = false
+                isShowingEmailView = false
             }
         }
         

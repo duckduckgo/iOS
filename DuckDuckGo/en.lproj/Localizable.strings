@@ -1969,9 +1969,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Subscription Activation Title */
 "subscription.activate.title" = "Activate your subscription on this device";
 
-/* Add to another device button */
-"subscription.add.device.button" = "Add to Another Device";
-
 /* Subscription Add device Info */
 "subscription.add.device.description" = "Access your Privacy Pro subscription via an email address.";
 

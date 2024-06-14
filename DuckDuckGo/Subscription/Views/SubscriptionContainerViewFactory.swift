@@ -47,4 +47,19 @@ enum SubscriptionContainerViewFactory {
             .environmentObject(navigationCoordinator)
     }
 
+    static func makeEmailFlow(navigationCoordinator: SubscriptionNavigationCoordinator, 
+                              subscriptionManager: SubscriptionManaging,
+                              onDisappear: @escaping () -> Void) -> some View {
+        let viewModel = SubscriptionContainerViewModel(
+            subscriptionManager: subscriptionManager,
+            origin: nil,
+            userScript: SubscriptionPagesUserScript(),
+            subFeature: SubscriptionPagesUseSubscriptionFeature(subscriptionManager: subscriptionManager,
+                                                                subscriptionAttributionOrigin: nil)
+        )
+        return SubscriptionContainerView(currentView: .email, viewModel: viewModel)
+            .environmentObject(navigationCoordinator)
+            .onDisappear(perform: { onDisappear() })
+    }
+
 }

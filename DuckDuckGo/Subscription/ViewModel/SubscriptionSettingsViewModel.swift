@@ -34,6 +34,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     struct State {
         var subscriptionDetails: String = ""
+        var subscriptionEmail: String?
         var isShowingRemovalNotice: Bool = false
         var shouldDismissView: Bool = false
         var isShowingGoogleView: Bool = false
@@ -68,7 +69,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         let subscriptionFAQURL = subscriptionManager.url(for: .faq)
         self.state = State(faqURL: subscriptionFAQURL)
 
-        setupSubscriptionUpdater()
+        // TODO: validate if can be removed
+//        setupSubscriptionUpdater()
         setupNotificationObservers()
     }
     
@@ -81,12 +83,32 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     func onFirstAppear() {
         self.fetchAndUpdateSubscriptionDetails(cachePolicy: .returnCacheDataElseLoad)
     }
-    
+
+    func fetchAndUpdateAccountEmail(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad) async {
+        print("--- fetchAndUpdateAccountEmail [\(cachePolicy)]")
+        guard let token = self.subscriptionManager.accountManager.accessToken else { return }
+
+        switch await self.subscriptionManager.accountManager.fetchAccountDetails(with: token) {
+        case .success(let details):
+            DispatchQueue.main.async {
+                self.state.subscriptionEmail = details.email
+            }
+        default:
+            break
+        }
+    }
+
     private func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad,
                                                    loadingIndicator: Bool = true) {
         Task {
+            print("--- fetchAndUpdateSubscriptionDetails [\(cachePolicy)] loadingIndicator: \(loadingIndicator ? "yes" : "no")")
             if loadingIndicator { displayLoader(true) }
             guard let token = self.subscriptionManager.accountManager.accessToken else { return }
+
+            Thread.sleep(forTimeInterval: .seconds(3)) // TODO: remove it
+
+            await fetchAndUpdateAccountEmail(cachePolicy: cachePolicy)
+
             let subscriptionResult = await self.subscriptionManager.subscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
             switch subscriptionResult {
             case .success(let subscription):

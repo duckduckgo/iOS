@@ -24,7 +24,7 @@ protocol PixelFiring {
     static func fire(pixel: Pixel.Event, withAdditionalParameters params: [String: String], includedParameters: [Pixel.QueryParameters]) async throws
 }
 
-final class AdAttributionPixelReporter {
+final actor AdAttributionPixelReporter {
 
     static let isAdAttributionReportingEnabled = true
 

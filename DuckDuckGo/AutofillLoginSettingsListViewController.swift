@@ -166,7 +166,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
          syncDataProviders: SyncDataProviders,
          selectedAccount: SecureVaultModels.WebsiteAccount?,
          openSearch: Bool = false) {
-        let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter.shared)
+        let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter())
         if secureVault == nil {
             os_log("Failed to make vault")
         }
@@ -175,6 +175,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         self.selectedAccount = selectedAccount
         self.openSearch = openSearch
         super.init(nibName: nil, bundle: nil)
+
+        authenticate()
 
         syncUpdatesCancellable = syncDataProviders.credentialsAdapter.syncDidCompletePublisher
             .receive(on: DispatchQueue.main)
@@ -206,11 +208,6 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         updateViewState()
         configureNotification()
         registerForKeyboardNotifications()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        authenticate()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -325,6 +322,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private func configureNotification() {
         addObserver(for: UIApplication.didBecomeActiveNotification, selector: #selector(appDidBecomeActiveCallback))
         addObserver(for: UIApplication.willResignActiveNotification, selector: #selector(appWillResignActiveCallback))
+        addObserver(for: UIApplication.didEnterBackgroundNotification, selector: #selector(appWillResignActiveCallback))
         addObserver(for: AutofillLoginListAuthenticator.Notifications.invalidateContext, selector: #selector(authenticatorInvalidateContext))
     }
 
@@ -355,6 +353,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private func authenticate() {
         viewModel.authenticate {[weak self] error in
             guard let self = self else { return }
+            self.viewModel.isAuthenticating = false
+            
             if error != nil {
                 if error != .noAuthAvailable {
                     self.delegate?.autofillLoginSettingsListViewControllerDidFinish(self)

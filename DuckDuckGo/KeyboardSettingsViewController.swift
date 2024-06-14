@@ -45,10 +45,20 @@ class KeyboardSettingsViewController: UITableViewController {
     
     @IBAction func onNewTabValueChanged(_ sender: Any) {
         settings.onNewTab = newTabToggle.isOn
+        if settings.onNewTab {
+            Pixel.fire(pixel: .settingsKeyboardOnNewTabOn)
+        } else {
+            Pixel.fire(pixel: .settingsKeyboardOnNewTabOff)
+        }
     }
         
     @IBAction func onAppLaunchValueChanged(_ sender: Any) {
         settings.onAppLaunch = appLaunchToggle.isOn
+        if settings.onAppLaunch {
+            Pixel.fire(pixel: .settingsKeyboardOnAppLaunchOn)
+        } else {
+            Pixel.fire(pixel: .settingsKeyboardOnAppLaunchOff)
+        }
     }
     
 }

@@ -676,6 +676,30 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Importa un file HTML di segnalibri da un altro browser o esporta i segnalibri esistenti.";
 
+/* Button to open report form */
+"broken.site.report.menu.title" = "Segnala un problema con questo sito";
+
+/* Acknowledge button */
+"broken.site.report.missing.description.alert.button" = "Fatto";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.description" = "Descrivi il problema riscontrato su questo sito, così possiamo capire meglio come risolverlo.";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.title" = "Descrizione necessaria";
+
+/* Message that appears after submitting report */
+"broken.site.report.success.toast" = "Il tuo rapporto aiuta a rendere DuckDuckGo migliore per tutti.";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.no.button" = "No";
+
+/* An alert that appears after user turns off the privacy protection */
+"broken.site.report.toggle.alert.title" = "La disattivazione delle Protezioni della Privacy ha risolto il problema su questo sito?";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.yes.button" = "Sì";
+
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Invia sempre segnalazioni di arresto anomalo";
 

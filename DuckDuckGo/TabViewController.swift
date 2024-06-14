@@ -35,6 +35,7 @@ import TrackerRadarKit
 import Networking
 import SecureStorage
 import History
+import ContentScopeScripts
 
 #if NETWORK_PROTECTION
 import NetworkProtection
@@ -1598,7 +1599,10 @@ extension TabViewController: WKNavigationDelegate {
 
         case .blob:
             performBlobNavigation(navigationAction, completion: completion)
-
+        
+        case .duck:
+            performDuckNavigation(navigationAction, completion: completion)
+            
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
                 openExternally(url: url)
@@ -1608,6 +1612,7 @@ extension TabViewController: WKNavigationDelegate {
             completion(.cancel)
         }
     }
+    
 
     private func inferLoadContext(for navigationAction: WKNavigationAction) -> BrokenSiteReport.OpenerContext? {
         guard navigationAction.navigationType != .reload else { return nil }
@@ -1765,6 +1770,24 @@ extension TabViewController {
 
         self.blobDownloadTargetFrame = navigationAction.targetFrame
         completion(.allow)
+    }
+    
+    private func performDuckNavigation(_ navigationAction: WKNavigationAction,
+                                       completion: @escaping (WKNavigationActionPolicy) -> Void) {
+        guard let url = navigationAction.request.url else {
+            completion(.cancel)
+            return
+        }
+        
+        let handler = YoutubePlayerNavigationHandler()
+        let html = handler.makeHTMLFromTemplate()
+        let newRequest = handler.makeDuckPlayerRequest(from: URLRequest(url: url))
+        if #available(iOS 15.0, *) {
+            webView.loadSimulatedRequest(newRequest, responseHTML: html)
+            completion(.allow)
+        } else {
+            completion(.cancel)
+        }
     }
 
     @discardableResult

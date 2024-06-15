@@ -676,6 +676,30 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Importă un fișier HTML sau marcaje dintr-un alt browser sau exportă marcajele tale existente.";
 
+/* Button to open report form */
+"broken.site.report.menu.title" = "Raportează o problemă cu acest site";
+
+/* Acknowledge button */
+"broken.site.report.missing.description.alert.button" = "Am înțeles";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.description" = "Descrie problema pe care ai întâmpinat-o pe acest site pentru a înțelege mai bine cum să o rezolvăm.";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.title" = "Descriere necesară";
+
+/* Message that appears after submitting report */
+"broken.site.report.success.toast" = "Sesizarea ta ajută la îmbunătățirea DuckDuckGo pentru toată lumea!";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.no.button" = "Nu";
+
+/* An alert that appears after user turns off the privacy protection */
+"broken.site.report.toggle.alert.title" = "Dezactivarea Măsurilor de protecție a confidențialității a rezolvat problema de pe acest site?";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.yes.button" = "Da";
+
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Trimite întotdeauna rapoarte de cădere";
 

@@ -225,7 +225,7 @@ import WebKit
         }
 
         PixelExperimentForBrokenSites.install()
-        PixelExperiment.cleanup()
+        PixelExperiment.install()
 
         // MARK: Sync initialisation
 #if DEBUG
@@ -245,7 +245,7 @@ import WebKit
 
         syncDataProviders = SyncDataProviders(
             bookmarksDatabase: bookmarksDatabase,
-            secureVaultErrorReporter: SecureVaultReporter.shared,
+            secureVaultErrorReporter: SecureVaultReporter(),
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage(),
             syncErrorHandler: syncErrorHandler

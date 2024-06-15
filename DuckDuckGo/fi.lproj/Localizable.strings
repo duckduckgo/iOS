@@ -676,6 +676,30 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Tuo HTML-kirjanmerkkitiedosto toisesta selaimesta tai vie olemassa olevat kirjanmerkkisi.";
 
+/* Button to open report form */
+"broken.site.report.menu.title" = "Ilmoita tällä sivustolla olevasta ongelmasta";
+
+/* Acknowledge button */
+"broken.site.report.missing.description.alert.button" = "Selvä";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.description" = "Kuvaile tällä sivustolla kohtaamasi ongelma, jotta voimme ymmärtää paremmin, miten se voidaan korjata.";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.title" = "Kuvaus vaaditaan";
+
+/* Message that appears after submitting report */
+"broken.site.report.success.toast" = "Ilmoituksesi auttaa tekemään DuckDuckGosta paremman kaikille!";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.no.button" = "Ei";
+
+/* An alert that appears after user turns off the privacy protection */
+"broken.site.report.toggle.alert.title" = "Ratkaisiko yksityisyyden suojan käytöstä poistaminen tällä sivustolla olevan ongelman?";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.yes.button" = "Kyllä";
+
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Lähetä aina virheraportit";
 

@@ -31,7 +31,6 @@ import Subscription
 import NetworkProtection
 #endif
 
-// swiftlint:disable type_body_length
 final class SettingsViewModel: ObservableObject {
 
     // Dependencies
@@ -312,7 +311,6 @@ final class SettingsViewModel: ObservableObject {
         subscriptionSignOutObserver = nil
     }
 }
-// swiftlint:enable type_body_length
 
 // MARK: Private methods
 extension SettingsViewModel {

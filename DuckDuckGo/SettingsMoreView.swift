@@ -33,8 +33,6 @@ struct SettingsMoreView: View {
                              subtitle: UserText.settingsEmailProtectionDescription,
                              action: {
                 viewModel.openEmailProtection()
-                Pixel.fire(pixel: .settingsEmailProtectionOpen,
-                           withAdditionalParameters: PixelExperiment.parameters)
             },
                              disclosureIndicator: true,
                              isButton: true)

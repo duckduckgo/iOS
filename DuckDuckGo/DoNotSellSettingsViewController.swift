@@ -64,9 +64,9 @@ class DoNotSellSettingsViewController: UITableViewController {
         Pixel.fire(pixel: doNotSellToggle.isOn ? .settingsDoNotSellOn : .settingsDoNotSellOff)
         NotificationCenter.default.post(name: AppUserDefaults.Notifications.doNotSellStatusChange, object: nil)
         if appSettings.sendDoNotSell {
-            Pixel.fire(pixel: .settingsGpcOn, withAdditionalParameters: PixelExperiment.parameters)
+            Pixel.fire(pixel: .settingsGpcOn)
         } else {
-            Pixel.fire(pixel: .settingsGpcOff, withAdditionalParameters: PixelExperiment.parameters)
+            Pixel.fire(pixel: .settingsGpcOff)
         }
     }
     

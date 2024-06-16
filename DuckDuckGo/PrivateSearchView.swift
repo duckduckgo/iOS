@@ -40,10 +40,6 @@ struct PrivateSearchView: View {
         .applySettingsListModifiers(title: UserText.privateSearch,
                                     displayMode: .inline,
                                     viewModel: viewModel)
-        .onForwardNavigationAppear {
-            Pixel.fire(pixel: .settingsPrivateSearchOpen,
-                       withAdditionalParameters: PixelExperiment.parameters)
-        }
     }
 }
 
@@ -57,7 +53,7 @@ struct PrivateSearchViewSettings: View {
                 footer: Text(UserText.settingsAutocompleteSubtitle)) {
             // Autocomplete Suggestions
             SettingsCellView(label: UserText.settingsAutocomplete,
-                             accesory: .toggle(isOn: viewModel.autocompletePrivateSearchBinding))
+                             accesory: .toggle(isOn: viewModel.autocompleteBinding))
 
             if viewModel.shouldShowRecentlyVisitedSites {
                 SettingsCellView(label: UserText.settingsAutocompleteRecentlyVisited,
@@ -70,7 +66,7 @@ struct PrivateSearchViewSettings: View {
             Section(footer: Text(UserText.voiceSearchFooter)) {
                 // Private Voice Search
                 SettingsCellView(label: UserText.settingsVoiceSearch,
-                                 accesory: .toggle(isOn: viewModel.voiceSearchEnabledPrivateSearchBinding))
+                                 accesory: .toggle(isOn: viewModel.voiceSearchEnabledBinding))
             }
             .alert(isPresented: $shouldShowNoMicrophonePermissionAlert) {
                 Alert(title: Text(UserText.noVoicePermissionAlertTitle),

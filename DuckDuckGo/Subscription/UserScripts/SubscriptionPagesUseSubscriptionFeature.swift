@@ -97,10 +97,12 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         subscriptionManager.accountManager
     }
     private let appStorePurchaseFlow: AppStorePurchaseFlow
+    private let appStoreAccountManagementFlow: AppStoreAccountManagementFlow
 
     init(subscriptionManager: SubscriptionManaging, subscriptionAttributionOrigin: String?) {
         self.subscriptionManager = subscriptionManager
-        self.appStorePurchaseFlow =  AppStorePurchaseFlow(subscriptionManager: subscriptionManager)
+        self.appStorePurchaseFlow = AppStorePurchaseFlow(subscriptionManager: subscriptionManager)
+        self.appStoreAccountManagementFlow = AppStoreAccountManagementFlow(subscriptionManager: subscriptionManager)
         self.subscriptionAttributionOrigin = subscriptionAttributionOrigin
     }
 
@@ -184,7 +186,9 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     // MARK: Broker Methods (Called from WebView via UserScripts)
     func getSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
+        await appStoreAccountManagementFlow.refreshAuthTokenIfNeeded()
         let authToken = accountManager.authToken ?? Constants.empty
+
         return [Constants.token: authToken]
     }
     

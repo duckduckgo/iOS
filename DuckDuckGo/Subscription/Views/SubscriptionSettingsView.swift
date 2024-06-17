@@ -36,7 +36,6 @@ struct SubscriptionSettingsView: View {
     @State var isShowingFAQView = false
     @State var isShowingEmailView = false
     @State var isShowingConnectionError = false
-    @State var isLoading = false
 
     enum Constants {
         static let alertIcon = "Exclamation-Color-16"
@@ -67,12 +66,12 @@ struct SubscriptionSettingsView: View {
         Section(header: Text(UserText.subscriptionDevicesSectionHeader),
                 footer: devicesSectionFooter) {
 
-            if !viewModel.state.isLoadingSubscriptionInfo {
+            if !viewModel.state.isLoadingEmailInfo {
                 NavigationLink(destination: SubscriptionContainerViewFactory.makeEmailFlow(
                     navigationCoordinator: subscriptionNavigationCoordinator,
                     subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
                     onDisappear: {
-                        Task { await viewModel.fetchAndUpdateAccountEmail(cachePolicy: .reloadIgnoringLocalCacheData) }
+                        Task { await viewModel.fetchAndUpdateAccountEmail(cachePolicy: .reloadIgnoringLocalCacheData, loadingIndicator: false) }
                     }),
                                isActive: $isShowingEmailView) {
                     // TODO: Extract labels

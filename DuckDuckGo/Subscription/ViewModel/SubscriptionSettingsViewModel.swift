@@ -27,7 +27,6 @@ import Core
 final class SubscriptionSettingsViewModel: ObservableObject {
     
     private let subscriptionManager: SubscriptionManaging
-    private var subscriptionUpdateTimer: Timer?
     private var signOutObserver: Any?
     
     private var externalAllowedDomains = ["stripe.com"]
@@ -41,7 +40,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         var isShowingFAQView: Bool = false
         var subscriptionInfo: Subscription?
         var isLoadingSubscriptionInfo: Bool = false
-        
+        var isLoadingEmailInfo: Bool = false
+
         // Used to display stripe WebUI
         var stripeViewModel: SubscriptionExternalLinkViewModel?
         var isShowingStripeView: Bool = false
@@ -69,8 +69,6 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         let subscriptionFAQURL = subscriptionManager.url(for: .faq)
         self.state = State(faqURL: subscriptionFAQURL)
 
-        // TODO: validate if can be removed
-//        setupSubscriptionUpdater()
         setupNotificationObservers()
     }
     
@@ -81,62 +79,89 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }()
     
     func onFirstAppear() {
-        self.fetchAndUpdateSubscriptionDetails(cachePolicy: .returnCacheDataElseLoad)
+        Task {
+            // Load initial state from the cache
+            async let loadedEmailFromCache = await self.fetchAndUpdateAccountEmail(cachePolicy: .returnCacheDataDontLoad,
+                                                                                   loadingIndicator: false)
+            async let loadedSubscriptionFromCache = await self.fetchAndUpdateSubscriptionDetails(cachePolicy: .returnCacheDataDontLoad,
+                                                                                                 loadingIndicator: false)
+            let (hasLoadedEmailFromCache, hasLoadedSubscriptionFromCache) = await (loadedEmailFromCache, loadedSubscriptionFromCache)
+
+            // Reload remote subscription and email state
+            async let reloadedEmail = await self.fetchAndUpdateAccountEmail(cachePolicy: .reloadIgnoringLocalCacheData,
+                                                                            loadingIndicator: !hasLoadedEmailFromCache)
+            async let reloadedSubscription = await self.fetchAndUpdateSubscriptionDetails(cachePolicy: .reloadIgnoringLocalCacheData,
+                                                                                          loadingIndicator: !hasLoadedSubscriptionFromCache)
+            let (hasReloadedEmail, hasReloadedSubscription) = await (reloadedEmail, reloadedSubscription)
+
+            // In case any fetch fails show an error
+            if !hasReloadedEmail || !hasReloadedSubscription {
+                self.showConnectionError(true)
+            }
+        }
     }
 
-    func fetchAndUpdateAccountEmail(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad) async {
-        print("--- fetchAndUpdateAccountEmail [\(cachePolicy)]")
-        guard let token = self.subscriptionManager.accountManager.accessToken else { return }
+    private func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy, loadingIndicator: Bool) async -> Bool {
+        guard let token = self.subscriptionManager.accountManager.accessToken else { return false }
 
+        if loadingIndicator { displaySubscriptionLoader(true) }
+        let subscriptionResult = await self.subscriptionManager.subscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
+        switch subscriptionResult {
+        case .success(let subscription):
+            DispatchQueue.main.async {
+                self.state.subscriptionInfo = subscription
+                if loadingIndicator { self.displaySubscriptionLoader(false) }
+            }
+            await updateSubscriptionsStatusMessage(status: subscription.status,
+                                                   date: subscription.expiresOrRenewsAt,
+                                                   product: subscription.productId,
+                                                   billingPeriod: subscription.billingPeriod)
+            return true
+        default:
+            DispatchQueue.main.async {
+                if loadingIndicator { self.displaySubscriptionLoader(true) }
+            }
+            return false
+        }
+    }
+
+    func fetchAndUpdateAccountEmail(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad, loadingIndicator: Bool) async -> Bool {
+        guard let token = self.subscriptionManager.accountManager.accessToken else { return false }
+
+        if loadingIndicator { displayEmailLoader(true) }
         switch await self.subscriptionManager.accountManager.fetchAccountDetails(with: token) {
         case .success(let details):
             DispatchQueue.main.async {
                 self.state.subscriptionEmail = details.email
+                if loadingIndicator { self.displayEmailLoader(false) }
             }
+
+            // If fetched email is different then update accountManager
+            if details.email != subscriptionManager.accountManager.email {
+                let externalID = subscriptionManager.accountManager.externalID
+                subscriptionManager.accountManager.storeAccount(token: token, email: details.email, externalID: externalID)
+            }
+            return true
         default:
-            break
-        }
-    }
-
-    private func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad,
-                                                   loadingIndicator: Bool = true) {
-        Task {
-            print("--- fetchAndUpdateSubscriptionDetails [\(cachePolicy)] loadingIndicator: \(loadingIndicator ? "yes" : "no")")
-            if loadingIndicator { displayLoader(true) }
-            guard let token = self.subscriptionManager.accountManager.accessToken else { return }
-
-            Thread.sleep(forTimeInterval: .seconds(3)) // TODO: remove it
-
-            await fetchAndUpdateAccountEmail(cachePolicy: cachePolicy)
-
-            let subscriptionResult = await self.subscriptionManager.subscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
-            switch subscriptionResult {
-            case .success(let subscription):
-                DispatchQueue.main.async {
-                    self.state.subscriptionInfo = subscription
-                    if loadingIndicator { self.displayLoader(false) }
-                }
-                await updateSubscriptionsStatusMessage(status: subscription.status,
-                                                date: subscription.expiresOrRenewsAt,
-                                                product: subscription.productId,
-                                                billingPeriod: subscription.billingPeriod)
-            default:
-                DispatchQueue.main.async {
-                    if loadingIndicator { self.displayLoader(true) }
-                    self.showConnectionError(true)
-                }
-                
-                subscriptionUpdateTimer?.invalidate()
+            DispatchQueue.main.async {
+                if loadingIndicator { self.displayEmailLoader(true) }
             }
+            return false
         }
     }
-    
-    private func displayLoader(_ show: Bool) {
+
+    private func displaySubscriptionLoader(_ show: Bool) {
         DispatchQueue.main.async {
             self.state.isLoadingSubscriptionInfo = show
         }
     }
-    
+
+    private func displayEmailLoader(_ show: Bool) {
+        DispatchQueue.main.async {
+            self.state.isLoadingEmailInfo = show
+        }
+    }
+
     func manageSubscription() {
         switch state.subscriptionInfo?.platform {
         case .apple:
@@ -157,15 +182,6 @@ final class SubscriptionSettingsViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self?.state.shouldDismissView = true
             }
-        }
-    }
-    
-    // Re-fetch subscription from server ignoring cache
-    // This ensure that if the user re-subscribed or changed plan on the Apple view, state is updated
-    private func setupSubscriptionUpdater() {
-        subscriptionUpdateTimer = Timer.scheduledTimer(withTimeInterval: 8.0, repeats: true) { [weak self] _ in
-            guard let strongSelf = self else { return }
-                strongSelf.fetchAndUpdateSubscriptionDetails(cachePolicy: .reloadIgnoringLocalCacheData, loadingIndicator: false)
         }
     }
     
@@ -270,7 +286,6 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     deinit {
-        subscriptionUpdateTimer?.invalidate()
         signOutObserver = nil
     }
 }

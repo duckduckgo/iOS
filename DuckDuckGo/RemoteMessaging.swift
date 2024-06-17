@@ -219,7 +219,7 @@ struct RemoteMessaging {
                                                            privacyProPurchasePlatform: privacyProPurchasePlatform,
                                                            isPrivacyProSubscriptionActive: privacyProIsActive,
                                                            isPrivacyProSubscriptionExpiring: privacyProIsExpiring,
-                                                           isPrivacyProSubscriptionExpired: privacyProIsExpired),
+                                                           isPrivacyProSubscriptionExpired: privacyProIsExpired,
                                                            dismissedMessageIds: dismissedMessageIds),
                 percentileStore: RemoteMessagingPercentileUserDefaultsStore(userDefaults: .standard),
                 surveyActionMapper: surveyActionMapper,

@@ -34,6 +34,7 @@ struct SubscriptionSettingsView: View {
     @State var isShowingGoogleView = false
     @State var isShowingRemovalNotice = false
     @State var isShowingFAQView = false
+    @State var isShowingLearnMoreView = false
     @State var isShowingEmailView = false
     @State var isShowingConnectionError = false
 
@@ -93,8 +94,7 @@ struct SubscriptionSettingsView: View {
         let footerText = hasEmail ? UserText.subscriptionDevicesSectionWithEmailFooter : UserText.subscriptionDevicesSectionNoEmailFooter
         return Text(.init("\(footerText)")) // required to parse markdown formatting
             .environment(\.openURL, OpenURLAction { _ in
-                // TODO: open the proper url here
-                viewModel.displayFAQView(true)
+                viewModel.displayLearnMoreView(true)
                 return .handled
             })
     }
@@ -224,14 +224,22 @@ struct SubscriptionSettingsView: View {
             viewModel.displayRemovalNotice(value)
         }
         
-        // Removal Notice
+        // FAQ
         .onChange(of: viewModel.state.isShowingFAQView) { value in
             isShowingFAQView = value
         }
         .onChange(of: isShowingFAQView) { value in
             viewModel.displayFAQView(value)
         }
-        
+
+        // Learn More
+        .onChange(of: viewModel.state.isShowingLearnMoreView) { value in
+            isShowingLearnMoreView = value
+        }
+        .onChange(of: isShowingLearnMoreView) { value in
+            viewModel.displayLearnMoreView(value)
+        }
+
         // Connection Error
         .onChange(of: viewModel.state.isShowingConnectionError) { value in
             isShowingConnectionError = value
@@ -269,7 +277,11 @@ struct SubscriptionSettingsView: View {
         .sheet(isPresented: $isShowingFAQView, content: {
             SubscriptionExternalLinkView(viewModel: viewModel.state.faqViewModel, title: UserText.subscriptionFAQ)
         })
-        
+
+        .sheet(isPresented: $isShowingLearnMoreView, content: {
+            SubscriptionExternalLinkView(viewModel: viewModel.state.learnMoreViewModel, title: UserText.subscriptionFAQ)
+        })
+
         .onFirstAppear {
             viewModel.onFirstAppear()
         }

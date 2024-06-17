@@ -38,6 +38,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         var shouldDismissView: Bool = false
         var isShowingGoogleView: Bool = false
         var isShowingFAQView: Bool = false
+        var isShowingLearnMoreView: Bool = false
         var subscriptionInfo: Subscription?
         var isLoadingSubscriptionInfo: Bool = false
         var isLoadingEmailInfo: Bool = false
@@ -51,9 +52,11 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         
         // Used to display the FAQ WebUI
         var faqViewModel: SubscriptionExternalLinkViewModel
+        var learnMoreViewModel: SubscriptionExternalLinkViewModel
 
-        init(faqURL: URL) {
+        init(faqURL: URL, learnMoreURL: URL) {
             self.faqViewModel = SubscriptionExternalLinkViewModel(url: faqURL)
+            self.learnMoreViewModel = SubscriptionExternalLinkViewModel(url: learnMoreURL)
         }
     }
 
@@ -67,7 +70,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     init(subscriptionManager: SubscriptionManaging = AppDependencyProvider.shared.subscriptionManager) {
         self.subscriptionManager = subscriptionManager
         let subscriptionFAQURL = subscriptionManager.url(for: .faq)
-        self.state = State(faqURL: subscriptionFAQURL)
+        let learnMoreURL = subscriptionFAQURL.appendingPathComponent("adding-email")
+        self.state = State(faqURL: subscriptionFAQURL, learnMoreURL: learnMoreURL)
 
         setupNotificationObservers()
     }
@@ -230,7 +234,13 @@ final class SubscriptionSettingsViewModel: ObservableObject {
             state.isShowingFAQView = value
         }
     }
-    
+
+    func displayLearnMoreView(_ value: Bool) {
+        if value != state.isShowingLearnMoreView {
+            state.isShowingLearnMoreView = value
+        }
+    }
+
     func showConnectionError(_ value: Bool) {
         if value != state.isShowingConnectionError {
             DispatchQueue.main.async {

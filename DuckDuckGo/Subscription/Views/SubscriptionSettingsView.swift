@@ -239,7 +239,16 @@ struct SubscriptionSettingsView: View {
         .onChange(of: isShowingConnectionError) { value in
             viewModel.showConnectionError(value)
         }
-       
+
+        .onChange(of: isShowingEmailView) { value in
+            if value {
+                if let email = viewModel.state.subscriptionEmail, !email.isEmpty {
+                    Pixel.fire(pixel: .privacyProSubscriptionManagementEmail, debounce: 1)
+                } else {
+                    Pixel.fire(pixel: .privacyProAddDeviceEnterEmail, debounce: 1)
+                }
+            }
+        }
         
         .onReceive(subscriptionNavigationCoordinator.$shouldPopToSubscriptionSettings) { shouldDismiss in
             if shouldDismiss {

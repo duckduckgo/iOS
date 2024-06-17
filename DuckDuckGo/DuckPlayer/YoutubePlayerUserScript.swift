@@ -46,9 +46,6 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
     }
 
     func handler(forMethodNamed methodName: String) -> Subfeature.Handler? {
-        guard isEnabled else {
-            return nil
-        }
         switch MessageNames(rawValue: methodName) {
         case .getUserValues:
             return DuckPlayer.shared.handleGetUserValues

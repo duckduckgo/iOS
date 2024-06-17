@@ -649,6 +649,12 @@ class TabViewController: UIViewController {
             url = webView.url
         } else if let currentHost = url?.host, let newHost = webView.url?.host, currentHost == newHost {
             url = webView.url
+            
+            // Validate Duck Player URL
+            if let url, url.isYoutubeVideo {
+                webView.stopLoading()
+                performDuckRedirect(url: url)
+            }
         }
     }
     
@@ -1563,6 +1569,7 @@ extension TabViewController: WKNavigationDelegate {
         let allowPolicy = determineAllowPolicy()
 
         let tld = storageCache.tld
+        
 
         if navigationAction.isTargetingMainFrame()
             && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedURL?.host) {
@@ -1583,7 +1590,12 @@ extension TabViewController: WKNavigationDelegate {
         if navigationAction.isTargetingMainFrame(), navigationAction.navigationType == .backForward {
             adClickAttributionLogic.onBackForwardNavigation(mainFrameURL: webView.url)
         }
-
+        
+        if url.isYoutubeVideo {
+            performDuckRedirect(navigationAction, completion: completion)
+            return
+        }
+        
         let schemeType = SchemeHandler.schemeType(for: url)
         self.blobDownloadTargetFrame = nil
         switch schemeType {
@@ -1770,24 +1782,6 @@ extension TabViewController {
 
         self.blobDownloadTargetFrame = navigationAction.targetFrame
         completion(.allow)
-    }
-    
-    private func performDuckNavigation(_ navigationAction: WKNavigationAction,
-                                       completion: @escaping (WKNavigationActionPolicy) -> Void) {
-        guard let url = navigationAction.request.url else {
-            completion(.cancel)
-            return
-        }
-        
-        let handler = YoutubePlayerNavigationHandler()
-        let html = handler.makeHTMLFromTemplate()
-        let newRequest = handler.makeDuckPlayerRequest(from: URLRequest(url: url))
-        if #available(iOS 15.0, *) {
-            webView.loadSimulatedRequest(newRequest, responseHTML: html)
-            completion(.allow)
-        } else {
-            completion(.cancel)
-        }
     }
 
     @discardableResult
@@ -2770,6 +2764,80 @@ extension UserContentController {
                   privacyConfigurationManager: privacyConfigurationManager)
     }
 
+}
+
+
+// MARK: DuckPlayer
+extension TabViewController {
+    
+    // Redirects to the duck://player/videoID URL and call the completion handler
+    // Used when directly navigating to this page, by entering the URL
+    private func performDuckRedirect(_ navigationAction: WKNavigationAction,
+                                       completion: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        guard navigationAction.request.url != nil else {
+            completion(.cancel)
+            return
+        }
+        
+        guard let (videoID, timestamp) = navigationAction.request.url?.youtubeVideoParams else {
+            completion(.cancel)
+            return
+        }
+        
+        webView.load(URLRequest(url: .duckPlayer(videoID, timestamp: timestamp)))
+        completion(.allow)
+        
+    }
+    
+    // Create a DuckPlayer simulated navigation request and call the completion handler
+    private func performDuckNavigation(_ navigationAction: WKNavigationAction,
+                                       completion: @escaping (WKNavigationActionPolicy) -> Void) {
+        guard let url = navigationAction.request.url else {
+            completion(.cancel)
+            return
+        }
+        
+        let handler = YoutubePlayerNavigationHandler()
+        let html = handler.makeHTMLFromTemplate()
+        let newRequest = handler.makeDuckPlayerRequest(from: URLRequest(url: url))
+        if #available(iOS 15.0, *) {
+            webView.loadSimulatedRequest(newRequest, responseHTML: html)
+                    webView.load(URLRequest(url: url))
+            completion(.allow)
+        } else {
+            completion(.cancel)
+        }
+    }
+    
+    // This method is called form the URL observer, to support both
+    // direct navigation and JS redirects
+    private func performDuckRedirect(url: URL) {
+        guard let (videoID, timestamp) = url.youtubeVideoParams else {
+                return
+        }
+
+        let newURL = URL.duckPlayer(videoID, timestamp: timestamp)
+        navigateToURLAndRemovePrevious(newURL)
+    }
+    
+    // Since we are Showing DuckPlayer after loading a Youtube Page
+    // We need to remove that page from the WK history.
+    private func navigateToURLAndRemovePrevious(_ url: URL) {
+        
+        guard webView.canGoBack else {
+            // If we can't go back, just load the URL normally
+            webView.load(URLRequest(url: url))
+            return
+        }
+        
+        // This effectively removes intermediate Youtube Page From history
+        webView.goBack()
+        self.webView.load(URLRequest(url: url))
+        webView.goForward()
+    
+    }
+  
 }
 
 // swiftlint:enable file_length

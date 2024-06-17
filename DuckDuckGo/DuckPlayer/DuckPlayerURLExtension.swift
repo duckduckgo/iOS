@@ -30,10 +30,6 @@ extension String {
 extension URL {
     
     static let duckPlayerHost: String = "player"
-    
-    static func effectiveDuckPlayer(_ videoID: String, timestamp: String? = nil) -> URL {
-        return .youtubeNoCookie(videoID, timestamp: timestamp)
-    }
 
     static func duckPlayer(_ videoID: String, timestamp: String? = nil) -> URL {
         let url = "\(NavigationalScheme.duck.rawValue)://player/\(videoID)".url!

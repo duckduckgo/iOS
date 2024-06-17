@@ -1921,7 +1921,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Subscription Activation Info */
 "subscription.activate..header.description" = "Access your Privacy Pro subscription on this device via Apple ID or an email address.";
 
-/* Restore button title for Email */
+/* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "Add Email";
 
 /* Apple ID option for activation */
@@ -1947,6 +1947,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Activate subscription title */
 "subscription.activate.email.title" = "Activate Subscription";
+
+/* Button for managing email address added to subscription */
+"subscription.activate.manage.email.button" = "Manage Email";
 
 /* Button title for cancelling email deletion */
 "subscription.activate.manage.email.cancel" = "Cancel";

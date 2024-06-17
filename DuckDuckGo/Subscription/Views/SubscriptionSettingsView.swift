@@ -75,12 +75,11 @@ struct SubscriptionSettingsView: View {
                         Task { await viewModel.fetchAndUpdateAccountEmail(cachePolicy: .reloadIgnoringLocalCacheData, loadingIndicator: false) }
                     }),
                                isActive: $isShowingEmailView) {
-                    // TODO: Extract labels
                     if let email = viewModel.state.subscriptionEmail {
-                        SettingsCellView(label: "Edit Email",
+                        SettingsCellView(label: UserText.subscriptionManageEmailButton,
                                          subtitle: email)
                     } else {
-                        SettingsCellView(label: "Add Email")
+                        SettingsCellView(label: UserText.subscriptionAddEmailButton)
                     }
                 }.isDetailLink(false)
             } else {

@@ -1066,7 +1066,8 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionActivateEmail = NSLocalizedString("subscription.activate.email", value: "Email", comment: "Email option for activation")
     public static let subscriptionActivateEmailTitle = NSLocalizedString("subscription.activate.email.title", value: "Activate Subscription", comment: "Activate subscription title")
     public static let subscriptionActivateEmailDescription = NSLocalizedString("subscription.activate.email.description", value: "Use your email to activate your subscription on this device.", comment: "Description for Email activation")
-    public static let subscriptionAddEmailButton = NSLocalizedString("subscription.activate.add.email.button", value: "Add Email", comment: "Restore button title for Email")
+    public static let subscriptionAddEmailButton = NSLocalizedString("subscription.activate.add.email.button", value: "Add Email", comment: "Button for adding email address to subscription")
+    public static let subscriptionManageEmailButton = NSLocalizedString("subscription.activate.manage.email.button", value: "Manage Email", comment: "Button for managing email address added to subscription")
     public static let subscriptionActivateEmailButton = NSLocalizedString("subscription.activate.email.button", value: "Enter Email", comment: "Restore button title for Email")
             
     // Add to other devices (AppleID / Email)

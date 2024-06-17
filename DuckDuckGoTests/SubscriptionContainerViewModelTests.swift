@@ -32,25 +32,35 @@ final class SubscriptionContainerViewModelTests: XCTestCase {
         let origin = "test_origin"
         let queryParameter = URLQueryItem(name: "origin", value: "test_origin")
         let expectedURL = SubscriptionURL.purchase.subscriptionURL(environment: .production).appending(percentEncodedQueryItem: queryParameter)
+        let appStoreRestoreFlow = AppStoreRestoreFlow(subscriptionManager: mockDependencyProvider.subscriptionManager)
+        let appStorePurchaseFlow = AppStorePurchaseFlow(subscriptionManager: mockDependencyProvider.subscriptionManager,
+                                        appStoreRestoreFlow: appStoreRestoreFlow)
 
         // WHEN
         sut = .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
                     origin: origin,
                     userScript: .init(),
                     subFeature: .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
-                                      subscriptionAttributionOrigin: nil))
+                                      subscriptionAttributionOrigin: nil,
+                                     appStorePurchaseFlow: appStorePurchaseFlow,
+                                      appStoreRestoreFlow: appStoreRestoreFlow))
 
         // THEN
         XCTAssertEqual(sut.flow.purchaseURL, expectedURL)
     }
 
     func testWhenInitWithoutOriginThenSubscriptionFlowPurchaseURLDoesNotHaveOriginSet() {
+        let appStoreRestoreFlow = AppStoreRestoreFlow(subscriptionManager: mockDependencyProvider.subscriptionManager)
+        let appStorePurchaseFlow = AppStorePurchaseFlow(subscriptionManager: mockDependencyProvider.subscriptionManager,
+                                        appStoreRestoreFlow: appStoreRestoreFlow)
         // WHEN
         sut = .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
                     origin: nil,
                     userScript: .init(),
                     subFeature: .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
-                                      subscriptionAttributionOrigin: nil))
+                                      subscriptionAttributionOrigin: nil,
+                                     appStorePurchaseFlow: appStorePurchaseFlow,
+                                      appStoreRestoreFlow: appStoreRestoreFlow))
 
         // THEN
         XCTAssertEqual(sut.flow.purchaseURL, SubscriptionURL.purchase.subscriptionURL(environment: .production))

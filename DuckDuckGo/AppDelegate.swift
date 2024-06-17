@@ -537,8 +537,6 @@ import WebKit
             return
         }
 
-        let isConnected = await AppDependencyProvider.shared.networkProtectionTunnelController.isConnected
-
         await AppDependencyProvider.shared.networkProtectionTunnelController.stop()
         await AppDependencyProvider.shared.networkProtectionTunnelController.removeVPN()
     }
@@ -546,8 +544,8 @@ import WebKit
     func updateSubscriptionStatus() {
         Task {
             guard let token = accountManager.accessToken else { return }
-            var subscriptionService: SubscriptionService {
-                AppDependencyProvider.shared.subscriptionManager.subscriptionService
+            var subscriptionService: SubscriptionAPIServicing {
+                AppDependencyProvider.shared.subscriptionManager.subscriptionAPIService
             }
             if case .success(let subscription) = await subscriptionService.getSubscription(accessToken: token,
                                                                                            cachePolicy: .reloadIgnoringLocalCacheData) {
@@ -908,7 +906,7 @@ import WebKit
             return
         }
 
-        if case .success(true) = await accountManager.hasEntitlement(for: .networkProtection, cachePolicy: .returnCacheDataDontLoad) {
+        if case .success(true) = await accountManager.hasEntitlement(forProductName: .networkProtection, cachePolicy: .returnCacheDataDontLoad) {
             let items = [
                 UIApplicationShortcutItem(type: ShortcutKey.openVPNSettings,
                                           localizedTitle: UserText.netPOpenVPNQuickAction,
@@ -992,7 +990,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 #if NETWORK_PROTECTION
     func presentNetworkProtectionStatusSettingsModal() {
         Task {
-            if case .success(let hasEntitlements) = await accountManager.hasEntitlement(for: .networkProtection),
+            if case .success(let hasEntitlements) = await accountManager.hasEntitlement(forProductName: .networkProtection),
                hasEntitlements {
                 if #available(iOS 15, *) {
                     let networkProtectionRoot = NetworkProtectionRootViewController()

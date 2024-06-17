@@ -83,12 +83,13 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         self.fetchAndUpdateSubscriptionDetails(cachePolicy: .returnCacheDataElseLoad)
     }
     
-    private func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad,
+    private func fetchAndUpdateSubscriptionDetails(cachePolicy: APICachePolicy = .returnCacheDataElseLoad,
                                                    loadingIndicator: Bool = true) {
         Task {
             if loadingIndicator { displayLoader(true) }
             guard let token = self.subscriptionManager.accountManager.accessToken else { return }
-            let subscriptionResult = await self.subscriptionManager.subscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
+            let subscriptionResult = await self.subscriptionManager.subscriptionAPIService.getSubscription(accessToken: token,
+                                                                                                           cachePolicy: cachePolicy)
             switch subscriptionResult {
             case .success(let subscription):
                 DispatchQueue.main.async {
@@ -220,7 +221,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     private func manageStripeSubscription() async {
         guard let token = subscriptionManager.accountManager.accessToken,
                 let externalID = subscriptionManager.accountManager.externalID else { return }
-        let serviceResponse = await  subscriptionManager.subscriptionService.getCustomerPortalURL(accessToken: token, externalID: externalID)
+        let serviceResponse = await  subscriptionManager.subscriptionAPIService.getCustomerPortalURL(accessToken: token, externalID: externalID)
 
         // Get Stripe Customer Portal URL and update the model
         if case .success(let response) = serviceResponse {

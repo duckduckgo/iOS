@@ -786,7 +786,7 @@ extension SettingsViewModel {
             return
         }
         
-        let subscriptionResult = await subscriptionManager.subscriptionService.getSubscription(accessToken: token)
+        let subscriptionResult = await subscriptionManager.subscriptionAPIService.getSubscription(accessToken: token)
         switch subscriptionResult {
             
         case .success(let subscription):
@@ -798,7 +798,7 @@ extension SettingsViewModel {
             let entitlementsToCheck: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
 
             for entitlement in entitlementsToCheck {
-                if case .success = await subscriptionManager.accountManager.hasEntitlement(for: entitlement) {
+                if case .success = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement) {
                     currentEntitlements.append(entitlement)
                 }
             }

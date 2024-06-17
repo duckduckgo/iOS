@@ -70,12 +70,12 @@ class MockDependencyProvider: DependencyProvider {
 
         accountManager = AccountManagerMock(isUserAuthenticated: true)
         if #available(iOS 15.0, *) {
-            let subscriptionService = SubscriptionService(currentServiceEnvironment: .production)
-            let authService = AuthService(currentServiceEnvironment: .production)
+            let subscriptionService = SubscriptionAPIService(currentServiceEnvironment: .production)
+            let authService = AuthAPIService(currentServiceEnvironment: .production)
             let storePurchaseManaging = StorePurchaseManager()
             subscriptionManager = SubscriptionManagerMock(accountManager: accountManager,
-                                                          subscriptionService: subscriptionService,
-                                                          authService: authService,
+                                                          subscriptionAPIService: subscriptionService,
+                                                          authAPIService: authService,
                                                           storePurchaseManager: storePurchaseManaging,
                                                           currentEnvironment: SubscriptionEnvironment(serviceEnvironment: .production,
                                                                                                       purchasePlatform: .appStore),
@@ -86,8 +86,6 @@ class MockDependencyProvider: DependencyProvider {
         }
 
         let accessTokenProvider: () -> String? = { { "sometoken" } }()
-        let featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,
-                                                   privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager)
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
         networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
                                                                               tokenStore: networkProtectionKeychainTokenStore)

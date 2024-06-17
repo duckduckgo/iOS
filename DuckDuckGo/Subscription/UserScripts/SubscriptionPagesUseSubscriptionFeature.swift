@@ -93,14 +93,17 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     private let subscriptionAttributionOrigin: String?
     private let subscriptionManager: SubscriptionManaging
-    private var accountManager: AccountManaging {
-        subscriptionManager.accountManager
-    }
-    private let appStorePurchaseFlow: AppStorePurchaseFlow
+    private var accountManager: AccountManaging { subscriptionManager.accountManager }
+    private let appStorePurchaseFlow: AppStorePurchaseFlowing
+    private let appStoreRestoreFlow: AppStoreRestoreFlowing
 
-    init(subscriptionManager: SubscriptionManaging, subscriptionAttributionOrigin: String?) {
+    init(subscriptionManager: SubscriptionManaging,
+         subscriptionAttributionOrigin: String?,
+         appStorePurchaseFlow: AppStorePurchaseFlowing,
+         appStoreRestoreFlow: AppStoreRestoreFlowing) {
         self.subscriptionManager = subscriptionManager
-        self.appStorePurchaseFlow =  AppStorePurchaseFlow(subscriptionManager: subscriptionManager)
+        self.appStorePurchaseFlow = appStorePurchaseFlow
+        self.appStoreRestoreFlow = appStoreRestoreFlow
         self.subscriptionAttributionOrigin = subscriptionAttributionOrigin
     }
 
@@ -281,7 +284,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
 
         // Clear subscription Cache
-        subscriptionManager.subscriptionService.signOut()
+        subscriptionManager.subscriptionAPIService.signOut()
 
         let authToken = subscriptionValues.token
         if case let .success(accessToken) = await accountManager.exchangeAuthTokenToAccessToken(authToken),
@@ -324,7 +327,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func backToSettings(params: Any, original: WKScriptMessage) async -> Encodable? {
         if let accessToken = accountManager.accessToken,
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
-            switch await subscriptionManager.subscriptionService.getSubscription(accessToken: accessToken) {
+            switch await subscriptionManager.subscriptionAPIService.getSubscription(accessToken: accessToken) {
 
             case .success:
                 accountManager.storeAccount(token: accessToken,
@@ -396,8 +399,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     // MARK: Native methods - Called from ViewModels
     func restoreAccountFromAppStorePurchase() async throws {
         setTransactionStatus(.restoring)
-        
-        let appStoreRestoreFlow = AppStoreRestoreFlow(subscriptionManager: subscriptionManager)
+//        let appStoreRestoreFlow = AppStoreRestoreFlow(subscriptionManager: subscriptionManager)
         let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase()
         switch result {
         case .success:
@@ -410,7 +412,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
     
     // MARK: Utility Methods
-    func mapAppStoreRestoreErrorToTransactionError(_ error: AppStoreRestoreFlow.Error) -> UseSubscriptionError {
+    func mapAppStoreRestoreErrorToTransactionError(_ error: AppStoreRestoreFlowError) -> UseSubscriptionError {
         switch error {
         case .subscriptionExpired:
             return .subscriptionExpired

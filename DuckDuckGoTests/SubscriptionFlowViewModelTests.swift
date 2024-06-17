@@ -33,10 +33,15 @@ final class SubscriptionFlowViewModelTests: XCTestCase {
         let origin = "test_origin"
         let queryParameter = URLQueryItem(name: "origin", value: "test_origin")
         let expectedURL = SubscriptionURL.purchase.subscriptionURL(environment: .production).appending(percentEncodedQueryItem: queryParameter)
+        let appStoreRestoreFlow = AppStoreRestoreFlow(subscriptionManager: mockDependencyProvider.subscriptionManager)
+        let appStorePurchaseFlow = AppStorePurchaseFlow(subscriptionManager: mockDependencyProvider.subscriptionManager,
+                                                        appStoreRestoreFlow: appStoreRestoreFlow)
 
         // WHEN
         sut = .init(origin: origin, userScript: .init(), subFeature: .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
-                                                                           subscriptionAttributionOrigin: nil),
+                                                                           subscriptionAttributionOrigin: nil,
+                                                                           appStorePurchaseFlow: appStorePurchaseFlow,
+                                                                           appStoreRestoreFlow: appStoreRestoreFlow),
                     subscriptionManager: mockDependencyProvider.subscriptionManager)
 
         // THEN
@@ -44,13 +49,19 @@ final class SubscriptionFlowViewModelTests: XCTestCase {
     }
 
     func testWhenInitWithoutOriginThenSubscriptionFlowPurchaseURLDoesNotHaveOriginSet() {
+        let appStoreRestoreFlow = AppStoreRestoreFlow(subscriptionManager: mockDependencyProvider.subscriptionManager)
+        let appStorePurchaseFlow = AppStorePurchaseFlow(subscriptionManager: mockDependencyProvider.subscriptionManager,
+                                                        appStoreRestoreFlow: appStoreRestoreFlow)
+
         // WHEN
         sut = .init(origin: nil, userScript: .init(), subFeature: .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
-                                                                        subscriptionAttributionOrigin: nil),
+                                                                        subscriptionAttributionOrigin: nil,
+                                                                        appStorePurchaseFlow: appStorePurchaseFlow,
+                                                                        appStoreRestoreFlow: appStoreRestoreFlow),
                     subscriptionManager: mockDependencyProvider.subscriptionManager)
 
         // THEN
         XCTAssertEqual(sut.purchaseURL, SubscriptionURL.purchase.subscriptionURL(environment: .production))
     }
-    
+
 }

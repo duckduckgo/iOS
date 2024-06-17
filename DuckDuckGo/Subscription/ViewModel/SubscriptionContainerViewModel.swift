@@ -38,13 +38,15 @@ final class SubscriptionContainerViewModel: ObservableObject {
         self.userScript = userScript
         subFeature.cleanup()
         self.subFeature = subFeature
+        let appStoreAccountManagementFlow = AppStoreAccountManagementFlow(subscriptionManager: subscriptionManager)
         self.flow = SubscriptionFlowViewModel(origin: origin,
                                               userScript: userScript,
                                               subFeature: subFeature,
                                               subscriptionManager: subscriptionManager)
         self.restore = SubscriptionRestoreViewModel(userScript: userScript,
                                                     subFeature: subFeature,
-                                                    subscriptionManager: subscriptionManager)
+                                                    subscriptionManager: subscriptionManager,
+                                                    appStoreAccountManagementFlow: appStoreAccountManagementFlow)
         self.email = SubscriptionEmailViewModel(userScript: userScript,
                                                 subFeature: subFeature,
                                                 subscriptionManager: subscriptionManager)

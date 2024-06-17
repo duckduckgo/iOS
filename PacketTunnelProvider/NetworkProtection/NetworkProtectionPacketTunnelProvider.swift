@@ -289,12 +289,12 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
         let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
         let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
-        let subscriptionService = SubscriptionService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
-        let authService = AuthService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let subscriptionService = SubscriptionAPIService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let authService = AuthAPIService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
         let accountManager = AccountManager(accessTokenStorage: accessTokenStorage,
                                             entitlementsCache: entitlementsCache,
-                                            subscriptionService: subscriptionService,
-                                            authService: authService)
+                                            subscriptionAPIService: subscriptionService,
+                                            authAPIService: authService)
         self.accountManager = accountManager
         let featureVisibility = NetworkProtectionVisibilityForTunnelProvider(accountManager: accountManager)
         let accessTokenProvider: () -> String? = {
@@ -378,7 +378,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             return .success(true)
         }
 
-        let result = await accountManager.hasEntitlement(for: .networkProtection)
+        let result = await accountManager.hasEntitlement(forProductName: .networkProtection)
         switch result {
         case .success(let hasEntitlement):
             return .success(hasEntitlement)

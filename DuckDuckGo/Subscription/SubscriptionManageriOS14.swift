@@ -21,10 +21,9 @@ import Foundation
 import Subscription
 
 class SubscriptionManageriOS14: SubscriptionManaging {
-
     var accountManager: AccountManaging
-    var subscriptionService: SubscriptionService = SubscriptionService(currentServiceEnvironment: .production)
-    var authService: AuthService = AuthService(currentServiceEnvironment: .production)
+    var subscriptionAPIService: SubscriptionAPIServicing = SubscriptionAPIService(currentServiceEnvironment: .production)
+    var authAPIService: AuthAPIServicing = AuthAPIService(currentServiceEnvironment: .production)
 
     @available(iOS 15, *)
     func storePurchaseManager() -> StorePurchaseManaging {

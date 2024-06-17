@@ -247,12 +247,14 @@ import NetworkProtection
             
     private func syncAppleIDAccount() {
         Task {
-            switch await subscriptionManager.storePurchaseManager().syncAppleIDAccount() {
-            case .success:
-                showAlert(title: "Account synced!", message: "")
-            case .failure(let error):
+            do {
+                try await subscriptionManager.storePurchaseManager().syncAppleIDAccount()
+            } catch {
                 showAlert(title: "Error syncing!", message: error.localizedDescription)
+                return
             }
+
+            showAlert(title: "Account synced!", message: "")
         }
     }
     
@@ -262,7 +264,7 @@ import NetworkProtection
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Token not available")
                 return
             }
-            switch await subscriptionManager.authService.validateToken(accessToken: token) {
+            switch await subscriptionManager.authAPIService.validateToken(accessToken: token) {
             case .success(let response):
                 showAlert(title: "Token details", message: "\(response)")
             case .failure(let error):
@@ -277,7 +279,7 @@ import NetworkProtection
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
                 return
             }
-            switch await subscriptionManager.subscriptionService.getSubscription(accessToken: token, cachePolicy: .reloadIgnoringLocalCacheData) {
+            switch await subscriptionManager.subscriptionAPIService.getSubscription(accessToken: token, cachePolicy: .reloadIgnoringLocalCacheData) {
             case .success(let response):
                 showAlert(title: "Subscription info", message: "\(response)")
             case .failure(let error):
@@ -295,7 +297,7 @@ import NetworkProtection
             }
             let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
             for entitlement in entitlements {
-                if case let .success(result) = await subscriptionManager.accountManager.hasEntitlement(for: entitlement,
+                if case let .success(result) = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement,
                                                                                                        cachePolicy: .reloadIgnoringLocalCacheData) {
                     let resultSummary = "Entitlement check for \(entitlement.rawValue): \(result)"
                     results.append(resultSummary)

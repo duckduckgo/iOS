@@ -71,12 +71,12 @@ struct NetworkProtectionFeatureVisibilityMocks: NetworkProtectionFeatureVisibili
                                                                  key: UserDefaultsCacheKey.subscriptionEntitlements,
                                                                  settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
         let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
-        let subscriptionService = SubscriptionService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
-        let authService = AuthService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let subscriptionService = SubscriptionAPIService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let authService = AuthAPIService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
         accountManager = AccountManager(accessTokenStorage: accessTokenStorage,
                                         entitlementsCache: entitlementsCache,
-                                        subscriptionService: subscriptionService,
-                                        authService: authService)
+                                        subscriptionAPIService: subscriptionService,
+                                        authAPIService: authService)
     }
 
     func adding(_ additionalOptions: Options) -> NetworkProtectionFeatureVisibilityMocks {

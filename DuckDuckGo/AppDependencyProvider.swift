@@ -110,17 +110,17 @@ class AppDependencyProvider: DependencyProvider {
                                                                  key: UserDefaultsCacheKey.subscriptionEntitlements,
                                                                  settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
         let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
-        let subscriptionService = SubscriptionService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
-        let authService = AuthService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let subscriptionService = SubscriptionAPIService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let authService = AuthAPIService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
         let accountManager = AccountManager(accessTokenStorage: accessTokenStorage,
                                             entitlementsCache: entitlementsCache,
-                                            subscriptionService: subscriptionService,
-                                            authService: authService)
+                                            subscriptionAPIService: subscriptionService,
+                                            authAPIService: authService)
         if #available(iOS 15.0, *) {
             subscriptionManager = SubscriptionManager(storePurchaseManager: StorePurchaseManager(),
                                                       accountManager: accountManager,
-                                                      subscriptionService: subscriptionService,
-                                                      authService: authService,
+                                                      subscriptionAPIService: subscriptionService,
+                                                      authAPIService: authService,
                                                       subscriptionEnvironment: subscriptionEnvironment)
         } else {
             // This is used just for iOS <15, it's a sort of mocked environment that will not be used.

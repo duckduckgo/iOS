@@ -24,24 +24,36 @@ import Subscription
 enum SubscriptionContainerViewFactory {
 
     static func makeSubscribeFlow(origin: String?, navigationCoordinator: SubscriptionNavigationCoordinator, subscriptionManager: SubscriptionManaging) -> some View {
+        let appStoreRestoreFlow = AppStoreRestoreFlow(subscriptionManager: subscriptionManager)
+        let appStorePurchaseFlow = AppStorePurchaseFlow(subscriptionManager: subscriptionManager,
+                                        appStoreRestoreFlow: appStoreRestoreFlow)
+
         let viewModel = SubscriptionContainerViewModel(
             subscriptionManager: subscriptionManager,
             origin: origin,
             userScript: SubscriptionPagesUserScript(),
             subFeature: SubscriptionPagesUseSubscriptionFeature(subscriptionManager: subscriptionManager,
-                                                                subscriptionAttributionOrigin: origin)
+                                                                subscriptionAttributionOrigin: origin,
+                                                                appStorePurchaseFlow: appStorePurchaseFlow,
+                                                                appStoreRestoreFlow: appStoreRestoreFlow)
         )
         return SubscriptionContainerView(currentView: .subscribe, viewModel: viewModel)
             .environmentObject(navigationCoordinator)
     }
 
     static func makeRestoreFlow(navigationCoordinator: SubscriptionNavigationCoordinator, subscriptionManager: SubscriptionManaging) -> some View {
+        let appStoreRestoreFlow = AppStoreRestoreFlow(subscriptionManager: subscriptionManager)
+        let appStorePurchaseFlow = AppStorePurchaseFlow(subscriptionManager: subscriptionManager,
+                                        appStoreRestoreFlow: appStoreRestoreFlow)
+
         let viewModel = SubscriptionContainerViewModel(
             subscriptionManager: subscriptionManager,
             origin: nil,
             userScript: SubscriptionPagesUserScript(),
             subFeature: SubscriptionPagesUseSubscriptionFeature(subscriptionManager: subscriptionManager,
-                                                                subscriptionAttributionOrigin: nil)
+                                                                subscriptionAttributionOrigin: nil,
+                                                                appStorePurchaseFlow: appStorePurchaseFlow,
+                                                                appStoreRestoreFlow: appStoreRestoreFlow)
         )
         return SubscriptionContainerView(currentView: .restore, viewModel: viewModel)
             .environmentObject(navigationCoordinator)

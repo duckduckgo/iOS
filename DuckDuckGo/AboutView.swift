@@ -91,8 +91,7 @@ extension View {
         if #available(iOS 16.0, *) {
             tint(color)
         } else {
-            self
+            accentColor(color)
         }
     }
-
 }

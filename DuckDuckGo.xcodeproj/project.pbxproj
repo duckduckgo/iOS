@@ -694,12 +694,8 @@
 		C18ED43C2AB8364400BF3805 /* FileTextPreviewDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18ED43B2AB8364400BF3805 /* FileTextPreviewDebugViewController.swift */; };
 		C1963863283794A000298D4D /* BookmarksCachingSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1963862283794A000298D4D /* BookmarksCachingSearch.swift */; };
 		C1B7B51C28941E980098FD6A /* HomeMessageViewModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B7B51B28941E980098FD6A /* HomeMessageViewModelBuilder.swift */; };
-		C1B7B52328941F2A0098FD6A /* RemoteMessagingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B7B51F28941F2A0098FD6A /* RemoteMessagingStore.swift */; };
-		C1B7B52428941F2A0098FD6A /* RemoteMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B7B52028941F2A0098FD6A /* RemoteMessageRequest.swift */; };
 		C1B7B52528941F2A0098FD6A /* RemoteMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B7B52128941F2A0098FD6A /* RemoteMessaging.swift */; };
-		C1B7B529289420830098FD6A /* RemoteMessaging.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C1B7B527289420830098FD6A /* RemoteMessaging.xcdatamodeld */; };
 		C1B7B52D2894469D0098FD6A /* DefaultVariantManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B7B52C2894469D0098FD6A /* DefaultVariantManager.swift */; };
-		C1B7B53028944E390098FD6A /* RemoteMessagingStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B7B52F28944E390098FD6A /* RemoteMessagingStoreTests.swift */; };
 		C1B7B53428944EFA0098FD6A /* CoreDataTestUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B7B53328944EFA0098FD6A /* CoreDataTestUtilities.swift */; };
 		C1B924B72ACD6E6800EE7B06 /* AutofillNeverSavedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B924B62ACD6E6800EE7B06 /* AutofillNeverSavedTableViewCell.swift */; };
 		C1BF0BA529B63D7200482B73 /* AutofillLoginPromptHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BF0BA429B63D7200482B73 /* AutofillLoginPromptHelper.swift */; };
@@ -2301,12 +2297,8 @@
 		C1963862283794A000298D4D /* BookmarksCachingSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksCachingSearch.swift; sourceTree = "<group>"; };
 		C1B0F6412AB08BE9001EAF05 /* MockPrivacyConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPrivacyConfiguration.swift; sourceTree = "<group>"; };
 		C1B7B51B28941E980098FD6A /* HomeMessageViewModelBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeMessageViewModelBuilder.swift; sourceTree = "<group>"; };
-		C1B7B51F28941F2A0098FD6A /* RemoteMessagingStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteMessagingStore.swift; sourceTree = "<group>"; };
-		C1B7B52028941F2A0098FD6A /* RemoteMessageRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteMessageRequest.swift; sourceTree = "<group>"; };
 		C1B7B52128941F2A0098FD6A /* RemoteMessaging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteMessaging.swift; sourceTree = "<group>"; };
-		C1B7B528289420830098FD6A /* RemoteMessaging.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RemoteMessaging.xcdatamodel; sourceTree = "<group>"; };
 		C1B7B52C2894469D0098FD6A /* DefaultVariantManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultVariantManager.swift; sourceTree = "<group>"; };
-		C1B7B52F28944E390098FD6A /* RemoteMessagingStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteMessagingStoreTests.swift; sourceTree = "<group>"; };
 		C1B7B53328944EFA0098FD6A /* CoreDataTestUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataTestUtilities.swift; sourceTree = "<group>"; };
 		C1B924B62ACD6E6800EE7B06 /* AutofillNeverSavedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillNeverSavedTableViewCell.swift; sourceTree = "<group>"; };
 		C1BF0BA429B63D7200482B73 /* AutofillLoginPromptHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutofillLoginPromptHelper.swift; sourceTree = "<group>"; };
@@ -4290,18 +4282,7 @@
 		C1B7B51D28941F160098FD6A /* RemoteMessaging */ = {
 			isa = PBXGroup;
 			children = (
-				C1B7B527289420830098FD6A /* RemoteMessaging.xcdatamodeld */,
-				C1B7B52028941F2A0098FD6A /* RemoteMessageRequest.swift */,
 				C1B7B52128941F2A0098FD6A /* RemoteMessaging.swift */,
-				C1B7B51F28941F2A0098FD6A /* RemoteMessagingStore.swift */,
-			);
-			name = RemoteMessaging;
-			sourceTree = "<group>";
-		};
-		C1B7B52E28944DDC0098FD6A /* RemoteMessaging */ = {
-			isa = PBXGroup;
-			children = (
-				C1B7B52F28944E390098FD6A /* RemoteMessagingStoreTests.swift */,
 			);
 			name = RemoteMessaging;
 			sourceTree = "<group>";
@@ -4794,7 +4775,6 @@
 				851DFD88212C5ED600D95F20 /* Main */,
 				EE56DE3A2A6038F500375C41 /* NetworkProtection */,
 				F1D477C71F2139210031ED49 /* OmniBar */,
-				C1B7B52E28944DDC0098FD6A /* RemoteMessaging */,
 				98EA2C3F218BB5140023E1DC /* Settings */,
 				9FA5E44C2BF1B14100BDEF02 /* Subscription */,
 				F13B4BF71F18C9E800814661 /* Tabs */,
@@ -6415,7 +6395,6 @@
 				D63677F52BBDB1C300605BA5 /* DaxLogoNavbarTitle.swift in Sources */,
 				8524CC98246D66E100E59D45 /* String+Markdown.swift in Sources */,
 				CBEFB9142AE0844700DEDE7B /* CriticalAlerts.swift in Sources */,
-				C1B7B529289420830098FD6A /* RemoteMessaging.xcdatamodeld in Sources */,
 				986B16C425E92DF0007D23E8 /* BrowsingMenuViewController.swift in Sources */,
 				988AC355257E47C100793C64 /* RequeryLogic.swift in Sources */,
 				6FBF0F8B2BD7C0A900136CF0 /* AllProtectedCell.swift in Sources */,
@@ -6471,7 +6450,6 @@
 				F47E53D9250A97330037C686 /* OnboardingDefaultBroswerViewController.swift in Sources */,
 				F13B4BD51F183B3600814661 /* TabsModelPersistenceExtension.swift in Sources */,
 				980891A52237D4F500313A70 /* FeedbackNavigator.swift in Sources */,
-				C1B7B52328941F2A0098FD6A /* RemoteMessagingStore.swift in Sources */,
 				1E8AD1C927BFAD1500ABA377 /* DirectoryMonitor.swift in Sources */,
 				377D80222AB48554002AF251 /* FavoritesDisplayModeSyncHandler.swift in Sources */,
 				1E8AD1D127C000AB00ABA377 /* OngoingDownloadRow.swift in Sources */,
@@ -6761,7 +6739,6 @@
 				8586A11024CCCD040049720E /* TabsBarViewController.swift in Sources */,
 				F1D796F41E7C2A410019D451 /* BookmarksDelegate.swift in Sources */,
 				D664C7B92B289AA200CBFA76 /* WKUserContentController+Handler.swift in Sources */,
-				C1B7B52428941F2A0098FD6A /* RemoteMessageRequest.swift in Sources */,
 				1E8AD1D727C2E24E00ABA377 /* DownloadsListRowViewModel.swift in Sources */,
 				1E865AF0272042DB001C74F3 /* TextSizeSettingsViewController.swift in Sources */,
 				D6E0C1892B7A2E0D00D5E1E9 /* DesktopDownloadViewModel.swift in Sources */,
@@ -6908,7 +6885,6 @@
 				C14882E727F20DAB00D59F0C /* HtmlTestDataLoader.swift in Sources */,
 				F17D72391E8B35C6003E8B0E /* AppURLsTests.swift in Sources */,
 				F1134ED61F40F29F00B73467 /* StatisticsUserDefaultsTests.swift in Sources */,
-				C1B7B53028944E390098FD6A /* RemoteMessagingStoreTests.swift in Sources */,
 				98EA2C3C218B9AAD0023E1DC /* ThemeManagerTests.swift in Sources */,
 				569437292BDD487600C0881B /* SyncCredentialsAdapterTests.swift in Sources */,
 				6AC98419288055C1005FA9CA /* BarsAnimatorTests.swift in Sources */,
@@ -9777,8 +9753,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = exactVersion;
-				version = 157.0.0;
+				branch = "dominik/rmf-macos";
+				kind = branch;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
@@ -10089,16 +10065,6 @@
 			);
 			currentVersion = 85481A6A2BA46AFB00F9EFB0 /* AppRatingPrompt 2.xcdatamodel */;
 			path = AppRatingPrompt.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-		C1B7B527289420830098FD6A /* RemoteMessaging.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				C1B7B528289420830098FD6A /* RemoteMessaging.xcdatamodel */,
-			);
-			currentVersion = C1B7B528289420830098FD6A /* RemoteMessaging.xcdatamodel */;
-			path = RemoteMessaging.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

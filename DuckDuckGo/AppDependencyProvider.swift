@@ -25,6 +25,7 @@ import Bookmarks
 import Subscription
 import Common
 import NetworkProtection
+import RemoteMessaging
 
 protocol DependencyProvider {
 
@@ -64,7 +65,7 @@ class AppDependencyProvider: DependencyProvider {
     let internalUserDecider: InternalUserDecider = ContentBlocking.shared.privacyConfigurationManager.internalUserDecider
     let featureFlagger: FeatureFlagger
 
-    let remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore()
+    let remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore(database: Database.shared)
     lazy var homePageConfiguration: HomePageConfiguration = HomePageConfiguration(variantManager: variantManager,
                                                                                   remoteMessagingStore: remoteMessagingStore)
     let storageCache = StorageCache()

@@ -19,12 +19,13 @@
 
 import Foundation
 import CoreData
+import RemoteMessaging
 @testable import DuckDuckGo
 
 final class CoreData {
 
     static func remoteMessagingContainer() -> NSPersistentContainer {
-        return createInMemoryPersistentContainer(modelName: "RemoteMessaging", bundle: Bundle(for: AppDelegate.self))
+        return createInMemoryPersistentContainer(modelName: "RemoteMessaging", bundle: RemoteMessaging.bundle)
     }
 
     static func createInMemoryPersistentContainer(modelName: String, bundle: Bundle) -> NSPersistentContainer {

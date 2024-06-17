@@ -30,10 +30,6 @@ import Subscription
 
 struct RemoteMessaging {
 
-    struct Notifications {
-        static let remoteMessagesDidChange = Notification.Name("com.duckduckgo.app.RemoteMessagesDidChange")
-    }
-
     @UserDefaultsWrapper(key: .lastRemoteMessagingRefreshDate, defaultValue: .distantPast)
     static private var lastRemoteMessagingRefreshDate: Date
 

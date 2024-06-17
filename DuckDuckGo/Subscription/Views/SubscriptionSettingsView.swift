@@ -54,9 +54,19 @@ struct SubscriptionSettingsView: View {
     
     private var headerSection: some View {
         Section {
+            let isExpired = !(viewModel.state.subscriptionInfo?.isActive ?? false)
             VStack(alignment: .center, spacing: 7) {
                 Image("Privacy-Pro-96x96")
                 Text(UserText.subscriptionTitle).daxTitle2()
+
+                if isExpired {
+                    HStack {
+                        Image(Constants.alertIcon)
+                        Text(viewModel.state.subscriptionDetails)
+                            .daxSubheadRegular()
+                            .foregroundColor(Color(designSystemColor: .textSecondary))
+                    }
+                }
             }
         }
         .listRowBackground(Color.clear)
@@ -100,7 +110,7 @@ struct SubscriptionSettingsView: View {
 
     private var manageSection: some View {
         Section(header: Text(UserText.subscriptionManageTitle),
-                footer: Text(viewModel.state.subscriptionDetails)) {
+                footer: manageSectionFooter) {
             let active = viewModel.state.subscriptionInfo?.isActive ?? false
             SettingsCustomCell(content: {
 
@@ -143,6 +153,17 @@ struct SubscriptionSettingsView: View {
                         .foregroundColor(Color.init(designSystemColor: .accent))},
                                action: { viewModel.displayRemovalNotice(true) },
                                isButton: true)
+        }
+    }
+
+    private var manageSectionFooter: some View {
+        let isExpired = !(viewModel.state.subscriptionInfo?.isActive ?? false)
+        return  Group {
+            if isExpired {
+                EmptyView()
+            } else {
+                Text(viewModel.state.subscriptionDetails)
+            }
         }
     }
 

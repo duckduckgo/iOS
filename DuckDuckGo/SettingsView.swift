@@ -126,9 +126,6 @@ struct SettingsView: View {
         case let .subscriptionFlow(origin):
             SubscriptionContainerViewFactory.makeSubscribeFlow(origin: origin, navigationCoordinator: subscriptionNavigationCoordinator,
                                                                subscriptionManager: AppDependencyProvider.shared.subscriptionManager)
-        case .subscriptionRestoreFlow:
-            SubscriptionContainerViewFactory.makeRestoreFlow(navigationCoordinator: subscriptionNavigationCoordinator,
-                                                             subscriptionManager: AppDependencyProvider.shared.subscriptionManager)
         default:
             EmptyView()
         }

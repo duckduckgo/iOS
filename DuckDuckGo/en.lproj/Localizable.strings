@@ -1918,9 +1918,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Which website is broken?";
 
-/* Subscription Activation Window Title */
-"subscription.activate" = "Activate Subscription";
-
 /* Subscription Activation Info */
 "subscription.activate..header.description" = "Access your Privacy Pro subscription on this device via Apple ID or an email address.";
 
@@ -1951,9 +1948,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Activate subscription title */
 "subscription.activate.email.title" = "Activate Subscription";
 
-/* Restore button title for Managing Email */
-"subscription.activate.manage.email.button" = "Manage";
-
 /* Button title for cancelling email deletion */
 "subscription.activate.manage.email.cancel" = "Cancel";
 
@@ -1969,29 +1963,14 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Subscription Activation Title */
 "subscription.activate.title" = "Activate your subscription on this device";
 
-/* Subscription Add device Info */
-"subscription.add.device.description" = "Access your Privacy Pro subscription via an email address.";
-
-/* Add subscription to other device title  */
-"subscription.add.device.header.title" = "Use your subscription on other devices";
-
 /* Resend activation instructions button */
 "subscription.add.device.resend.instructions" = "Resend Instructions";
-
-/* Add to another device view title */
-"subscription.add.device.title" = "Add Device";
 
 /* Add email to an existing subscription */
 "subscription.add.email" = "Add an email address to activate your subscription on your other devices. We’ll only use this address to verify your subscription.";
 
-/* Button title for adding email to subscription */
-"subscription.add.email.button" = "Add Email";
-
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Add Email";
-
-/* Description for Email adding */
-"subscription.addDevice.email.description" = "Add an email address to access your subscription in DuckDuckGo on other devices. We’ll only use this address to verify your subscription.";
 
 /* Title for Alert messages */
 "subscription.alert.title" = "subscription.alert.title";
@@ -2061,9 +2040,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Help and support Section header */
 "subscription.help" = "Help and support";
-
-/* Description for Email Management options */
-"subscription.manage.email.description" = "Use this email to activate your subscription from browser settings in the DuckDuckGo app on other devices..";
 
 /* Manage Plan header */
 "subscription.manage.plan" = "Manage Plan";

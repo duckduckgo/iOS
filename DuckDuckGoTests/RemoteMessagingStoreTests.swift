@@ -149,7 +149,7 @@ class RemoteMessagingStoreTests: XCTestCase {
                                                            privacyProPurchasePlatform: nil,
                                                            isPrivacyProSubscriptionActive: false,
                                                            isPrivacyProSubscriptionExpiring: false,
-                                                           isPrivacyProSubscriptionExpired: false),
+                                                           isPrivacyProSubscriptionExpired: false,
                                                            dismissedMessageIds: []),
                 percentileStore: RemoteMessagingPercentileUserDefaultsStore(userDefaults: self.defaults),
                 surveyActionMapper: MockRemoteMessagingSurveyActionMapper(),

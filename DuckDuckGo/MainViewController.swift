@@ -82,7 +82,7 @@ class MainViewController: UIViewController {
         return emailManager
     }()
     
-    var homeController: HomeViewController?
+    var homeController: HomeViewControllerProtocol?
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
     

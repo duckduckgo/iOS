@@ -26,7 +26,7 @@ class HomeScreenTransition: TabSwitcherTransition {
     
     fileprivate let tabSwitcherSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
     
-    fileprivate func prepareSnapshots(with homeScreen: HomeViewController,
+    fileprivate func prepareSnapshots(with homeScreen: HomeViewControllerProtocol,
                                       transitionContext: UIViewControllerContextTransitioning) {
         let viewToSnapshot: UIView
         let frameToSnapshot: CGRect

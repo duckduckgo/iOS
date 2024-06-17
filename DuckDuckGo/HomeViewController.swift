@@ -26,10 +26,10 @@ import DDGSync
 import Persistence
 import RemoteMessaging
 
-class HomeViewController: UIViewController {
     
     @IBOutlet weak var ctaContainerBottom: NSLayoutConstraint!
     @IBOutlet weak var ctaContainer: UIView!
+class HomeViewController: UIViewController, HomeViewControllerProtocol {
 
     @IBOutlet weak var collectionView: HomeCollectionView!
     @IBOutlet weak var settingsButton: UIButton!
@@ -56,7 +56,11 @@ class HomeViewController: UIViewController {
             chromeDelegate?.tabBarContainer.alpha = percent
         }
     }
-    
+
+    var isDragging: Bool {
+        collectionView.isDragging
+    }
+
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
     
@@ -254,7 +258,11 @@ class HomeViewController: UIViewController {
     func onboardingCompleted() {
         showNextDaxDialog()
     }
-    
+
+    func reloadFavorites() {
+        collectionView.reloadData()
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         

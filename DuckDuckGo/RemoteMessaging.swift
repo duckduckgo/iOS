@@ -169,7 +169,7 @@ struct RemoteMessaging {
             var privacyProIsExpired: Bool = false
             let surveyActionMapper: DefaultRemoteMessagingSurveyURLBuilder
 
-            if let accessToken = AppDependencyProvider.shared.subscriptionManager.accountManager.accessToken {
+            if let accessToken = try? AppDependencyProvider.shared.subscriptionManager.accountManager.accessToken {
                 let subscriptionResult = await AppDependencyProvider.shared.subscriptionManager.subscriptionService.getSubscription(
                     accessToken: accessToken
                 )

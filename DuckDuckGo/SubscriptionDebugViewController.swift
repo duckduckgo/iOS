@@ -240,7 +240,7 @@ import NetworkProtection
         let message = subscriptionManager.accountManager.isUserAuthenticated ?
         ["Service Environment: \(subscriptionManager.currentEnvironment.serviceEnvironment.description)",
             "AuthToken: \(subscriptionManager.accountManager.authToken ?? "")",
-            "AccessToken: \(subscriptionManager.accountManager.accessToken ?? "")",
+            "AccessToken: \(try? subscriptionManager.accountManager.accessToken ?? "")",
             "Email: \(subscriptionManager.accountManager.email ?? "")"].joined(separator: "\n") : nil
         showAlert(title: title, message: message)
     }
@@ -258,7 +258,7 @@ import NetworkProtection
     
     private func validateToken() {
         Task {
-            guard let token = subscriptionManager.accountManager.accessToken else {
+            guard let token = try? subscriptionManager.accountManager.accessToken else {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Token not available")
                 return
             }
@@ -273,7 +273,7 @@ import NetworkProtection
     
     private func getSubscription() {
         Task {
-            guard let token = subscriptionManager.accountManager.accessToken else {
+            guard let token = try? subscriptionManager.accountManager.accessToken else {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
                 return
             }
@@ -289,7 +289,7 @@ import NetworkProtection
     private func getEntitlements() {
         Task {
             var results: [String] = []
-            guard subscriptionManager.accountManager.accessToken != nil else {
+            guard (try? subscriptionManager.accountManager.accessToken) != nil else {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
                 return
             }

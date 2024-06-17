@@ -776,7 +776,7 @@ extension SettingsViewModel {
         state.subscription.isSignedIn = subscriptionManager.accountManager.isUserAuthenticated
 
         // Active subscription check
-        guard let token = subscriptionManager.accountManager.accessToken else {
+        guard let token = try? subscriptionManager.accountManager.accessToken else {
             // Reset state in case cache was outdated
             state.subscription.hasActiveSubscription = false
             state.subscription.entitlements = []

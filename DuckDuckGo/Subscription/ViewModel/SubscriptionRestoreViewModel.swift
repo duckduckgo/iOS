@@ -99,7 +99,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
                 self.state.isLoading = true
             }
             
-            guard let token = accountManager.accessToken else { return }
+            guard let token = try? accountManager.accessToken else { return }
             switch await accountManager.fetchAccountDetails(with: token) {
             case .success(let details):
                 DispatchQueue.main.async {

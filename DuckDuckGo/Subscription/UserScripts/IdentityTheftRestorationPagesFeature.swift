@@ -72,7 +72,7 @@ final class IdentityTheftRestorationPagesFeature: Subfeature, ObservableObject {
     }
     
     func getAccessToken(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        if let accessToken = accountManager.accessToken {
+        if let accessToken = try? accountManager.accessToken {
             return [Constants.token: accessToken]
         } else {
             return [String: String]()

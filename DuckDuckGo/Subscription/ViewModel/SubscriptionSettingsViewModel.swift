@@ -87,7 +87,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
                                                    loadingIndicator: Bool = true) {
         Task {
             if loadingIndicator { displayLoader(true) }
-            guard let token = self.subscriptionManager.accountManager.accessToken else { return }
+            guard let token = try? self.subscriptionManager.accountManager.accessToken else { return }
             let subscriptionResult = await self.subscriptionManager.subscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
             switch subscriptionResult {
             case .success(let subscription):
@@ -218,7 +218,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
          
     private func manageStripeSubscription() async {
-        guard let token = subscriptionManager.accountManager.accessToken,
+        guard let token = try? subscriptionManager.accountManager.accessToken,
                 let externalID = subscriptionManager.accountManager.externalID else { return }
         let serviceResponse = await  subscriptionManager.subscriptionService.getCustomerPortalURL(accessToken: token, externalID: externalID)
 

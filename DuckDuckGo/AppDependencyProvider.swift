@@ -141,7 +141,7 @@ class AppDependencyProvider: DependencyProvider {
             }
 
             if isSubscriptionEnabled() {
-                return { accountManager.accessToken }
+                return { try? accountManager.accessToken }
             }
             return { nil }
         }()

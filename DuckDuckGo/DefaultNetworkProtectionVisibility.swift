@@ -37,7 +37,7 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
 
     var token: String? {
         if shouldMonitorEntitlement() {
-            return accountManager.accessToken
+            return try? accountManager.accessToken
         }
         return nil
     }

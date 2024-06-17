@@ -381,7 +381,9 @@ extension Pixel {
         case networkProtectionDisconnected
         
         case networkProtectionNoAccessTokenFoundError
-        
+        case networkProtectionAccessTokenKeychainLockedError
+        case networkProtectionAccessTokenKeychainError
+
         case networkProtectionMemoryWarning
         case networkProtectionMemoryCritical
         
@@ -1086,6 +1088,8 @@ extension Pixel.Event {
         case .networkProtectionFailedToStartTunnel: return "m_netp_failed_to_start_tunnel"
         case .networkProtectionDisconnected: return "m_netp_vpn_disconnect"
         case .networkProtectionNoAccessTokenFoundError: return "m_netp_no_access_token_found_error"
+        case .networkProtectionAccessTokenKeychainLockedError: return "m_netp_access_token_keychain_locked_error"
+        case .networkProtectionAccessTokenKeychainError: return "m_netp_access_token_keychain_error"
         case .networkProtectionMemoryWarning: return "m_netp_vpn_memory_warning"
         case .networkProtectionMemoryCritical: return "m_netp_vpn_memory_critical"
         case .networkProtectionUnhandledError: return "m_netp_unhandled_error"

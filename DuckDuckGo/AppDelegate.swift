@@ -545,7 +545,7 @@ import WebKit
 
     func updateSubscriptionStatus() {
         Task {
-            guard let token = accountManager.accessToken else { return }
+            guard let token = try? accountManager.accessToken else { return }
             var subscriptionService: SubscriptionService {
                 AppDependencyProvider.shared.subscriptionManager.subscriptionService
             }

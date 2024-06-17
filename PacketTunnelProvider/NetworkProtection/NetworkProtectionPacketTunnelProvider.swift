@@ -223,6 +223,10 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 params[PixelParameters.wireguardErrorCode] = String(code)
             case .noAuthTokenFound:
                 pixelEvent = .networkProtectionNoAccessTokenFoundError
+            case .keychainLocked:
+                pixelEvent = .networkProtectionAccessTokenKeychainLockedError
+            case .keychainError:
+                pixelEvent = .networkProtectionAccessTokenKeychainError
             case .vpnAccessRevoked:
                 return
             case .unhandledError(function: let function, line: let line, error: let error):
@@ -297,9 +301,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                                             authService: authService)
         self.accountManager = accountManager
         let featureVisibility = NetworkProtectionVisibilityForTunnelProvider(accountManager: accountManager)
-        let accessTokenProvider: () -> String? = {
+        let accessTokenProvider: () throws -> String? = {
             if featureVisibility.shouldMonitorEntitlement() {
-                return { accountManager.accessToken }
+                return { try accountManager.accessToken }
             }
             return { nil }
         }()

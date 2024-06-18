@@ -66,6 +66,13 @@ import WebKit
 #if NETWORK_PROTECTION
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
+
+    private lazy var vpnWorkaround: VPNRedditSessionWorkaround = {
+        return VPNRedditSessionWorkaround(
+            accountManager: AppDependencyProvider.shared.accountManager,
+            tunnelController: AppDependencyProvider.shared.networkProtectionTunnelController
+        )
+    }()
 #endif
 
     private var autoClear: AutoClear?
@@ -303,6 +310,7 @@ import WebKit
         let applicationState = application.applicationState
         Task {
             await autoClear?.clearDataIfEnabled(applicationState: .init(with: applicationState))
+            await vpnWorkaround.installRedditSessionWorkaround()
         }
 
         AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
@@ -498,10 +506,6 @@ import WebKit
         syncService.scheduler.notifyAppLifecycleEvent()
         fireFailedCompilationsPixelIfNeeded()
 
-        Task {
-            await refreshShortcuts()
-        }
-
 #if NETWORK_PROTECTION
         widgetRefreshModel.refreshVPNWidget()
 
@@ -512,6 +516,11 @@ import WebKit
         }
 
         presentExpiredEntitlementNotificationIfNeeded()
+
+        Task {
+            await refreshShortcuts()
+            await vpnWorkaround.installRedditSessionWorkaround()
+        }
 #endif
 
         updateSubscriptionStatus()
@@ -560,6 +569,7 @@ import WebKit
     func applicationWillResignActive(_ application: UIApplication) {
         Task {
             await refreshShortcuts()
+            await vpnWorkaround.removeRedditSessionWorkaround()
         }
     }
 

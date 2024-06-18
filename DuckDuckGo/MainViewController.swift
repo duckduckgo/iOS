@@ -2414,7 +2414,12 @@ extension MainViewController: AutoClearWorker {
         showBars()
         attachHomeScreen()
         tabsBarController?.refresh(tabsModel: tabManager.model)
-        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
+
+        if !autoClearInProgress {
+            // We don't need to refresh tabs if autoclear is in progress as nothing has happened yet
+            swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
+        }
+
         Favicons.shared.clearCache(.tabs)
     }
 

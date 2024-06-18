@@ -1,5 +1,5 @@
 //
-//  RemoteMessaging.swift
+//  RemoteMessagingClient.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -28,7 +28,7 @@ import RemoteMessaging
 import NetworkProtection
 import Subscription
 
-struct RemoteMessaging {
+struct RemoteMessagingClient {
 
     private static let endpoint: URL = {
 #if DEBUG

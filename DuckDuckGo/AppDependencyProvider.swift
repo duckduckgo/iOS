@@ -65,7 +65,7 @@ class AppDependencyProvider: DependencyProvider {
     let internalUserDecider: InternalUserDecider = ContentBlocking.shared.privacyConfigurationManager.internalUserDecider
     let featureFlagger: FeatureFlagger
 
-    let remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore(database: Database.shared)
+    let remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore(database: Database.shared, errorEvents: RemoteMessagingStoreErrorHandling())
     lazy var homePageConfiguration: HomePageConfiguration = HomePageConfiguration(variantManager: variantManager,
                                                                                   remoteMessagingStore: remoteMessagingStore)
     let storageCache = StorageCache()

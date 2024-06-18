@@ -488,19 +488,19 @@ extension Pixel {
         case adAttributionLogicWrongVendorOnSuccessfulCompilation
         case adAttributionLogicWrongVendorOnFailedCompilation
         
-        case debugBookmarkOrphanFolderNew
-        case debugBookmarkTopLevelMissingNew
-        
-        case debugFavoriteOrphanFolderNew
-        case debugFavoriteTopLevelMissingNew
-        
-        case debugCouldNotFixBookmarkFolder
-        case debugCouldNotFixFavoriteFolder
-        
-        case debugMissingTopFolderFixHasFavorites
-        case debugMissingTopFolderFixHasBookmarks
-        
-        case debugCantSaveBookmarkFix
+//        case debugBookmarkOrphanFolderNew
+//        case debugBookmarkTopLevelMissingNew
+//        
+//        case debugFavoriteOrphanFolderNew
+//        case debugFavoriteTopLevelMissingNew
+//        
+//        case debugCouldNotFixBookmarkFolder
+//        case debugCouldNotFixFavoriteFolder
+//        
+//        case debugMissingTopFolderFixHasFavorites
+//        case debugMissingTopFolderFixHasBookmarks
+//        
+//        case debugCantSaveBookmarkFix
         
         case debugCannotClearObservationsDatabase
         case debugWebsiteDataStoresNotClearedMultiple
@@ -1183,17 +1183,17 @@ extension Pixel.Event {
             
         case .emailAutofillKeychainError: return "m_email_autofill_keychain_error"
             
-        case .debugBookmarkOrphanFolderNew: return "m_d_bookmark_orphan_folder_new"
-        case .debugBookmarkTopLevelMissingNew: return "m_d_bookmark_top_level_missing_new"
-        case .debugCouldNotFixBookmarkFolder: return "m_d_cannot_fix_bookmark_folder"
-        case .debugMissingTopFolderFixHasBookmarks: return "m_d_missing_top_folder_has_bookmarks"
+//        case .debugBookmarkOrphanFolderNew: return "m_d_bookmark_orphan_folder_new"
+//        case .debugBookmarkTopLevelMissingNew: return "m_d_bookmark_top_level_missing_new"
+//        case .debugCouldNotFixBookmarkFolder: return "m_d_cannot_fix_bookmark_folder"
+//        case .debugMissingTopFolderFixHasBookmarks: return "m_d_missing_top_folder_has_bookmarks"
             
-        case .debugFavoriteOrphanFolderNew: return "m_d_favorite_orphan_folder_new"
-        case .debugFavoriteTopLevelMissingNew: return "m_d_favorite_top_level_missing_new"
-        case .debugCouldNotFixFavoriteFolder: return "m_d_cannot_fix_favorite_folder"
-        case .debugMissingTopFolderFixHasFavorites: return "m_d_missing_top_folder_has_favorites"
+//        case .debugFavoriteOrphanFolderNew: return "m_d_favorite_orphan_folder_new"
+//        case .debugFavoriteTopLevelMissingNew: return "m_d_favorite_top_level_missing_new"
+//        case .debugCouldNotFixFavoriteFolder: return "m_d_cannot_fix_favorite_folder"
+//        case .debugMissingTopFolderFixHasFavorites: return "m_d_missing_top_folder_has_favorites"
             
-        case .debugCantSaveBookmarkFix: return "m_d_cant_save_bookmark_fix"
+//        case .debugCantSaveBookmarkFix: return "m_d_cant_save_bookmark_fix"
             
         case .debugCannotClearObservationsDatabase: return "m_d_cannot_clear_observations_database"
         case .debugWebsiteDataStoresNotClearedMultiple: return "m_d_wkwebsitedatastoresnotcleared_multiple"

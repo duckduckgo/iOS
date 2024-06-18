@@ -267,6 +267,8 @@ extension Pixel {
         case autofillOnboardedUser
         case autofillLoginsStacked
 
+        case autofillMultipleAuthCallsTriggered
+
         case getDesktopCopy
         case getDesktopShare
         
@@ -319,7 +321,11 @@ extension Pixel {
         case networkProtectionEnableAttemptConnecting
         case networkProtectionEnableAttemptSuccess
         case networkProtectionEnableAttemptFailure
-        
+
+        case networkProtectionServerMigrationAttempt
+        case networkProtectionServerMigrationAttemptSuccess
+        case networkProtectionServerMigrationAttemptFailure
+
         case networkProtectionTunnelFailureDetected
         case networkProtectionTunnelFailureRecovered
         
@@ -342,6 +348,8 @@ extension Pixel {
         
         case networkProtectionClientFailedToFetchServerList
         case networkProtectionClientFailedToParseServerListResponse
+        case networkProtectionClientFailedToFetchServerStatus
+        case networkProtectionClientFailedToParseServerStatusResponse
         case networkProtectionClientFailedToEncodeRegisterKeyRequest
         case networkProtectionClientFailedToFetchRegisteredServers
         case networkProtectionClientFailedToParseRegisteredServersResponse
@@ -559,8 +567,6 @@ extension Pixel {
 
         case syncWrongEnvironment
 
-        case swipeTabsUsed
-        case swipeTabsIncorrectScrollState
         case swipeTabsUsedDaily
         case swipeToOpenNewTab
 
@@ -670,6 +676,8 @@ extension Pixel {
         case settingsGeneralOpen
         case settingsAutocompleteOn
         case settingsAutocompleteOff
+        case settingsRecentlyVisitedOn
+        case settingsRecentlyVisitedOff
         case settingsGeneralAutocompleteOn
         case settingsGeneralAutocompleteOff
         case settingsGeneralVoiceSearchOn
@@ -696,6 +704,12 @@ extension Pixel {
         case settingsShowFullSiteAddressEnabled
         case settingsShowFullSiteAddressDisabled
 
+        // Other settings
+        case settingsKeyboardOnNewTabOn
+        case settingsKeyboardOnNewTabOff
+        case settingsKeyboardOnAppLaunchOn
+        case settingsKeyboardOnAppLaunchOff
+
         // Web pixels
         case privacyProOfferMonthlyPriceClick
         case privacyProOfferYearlyPriceClick
@@ -709,6 +723,17 @@ extension Pixel {
         case secureVaultL1KeyMigration
         case secureVaultL2KeyMigration
         case secureVaultL2KeyPasswordMigration
+
+        // MARK: Experimental report broken site flows
+        case reportBrokenSiteShown
+        case reportBrokenSiteBreakageCategorySelected
+        case reportBrokenSiteSent
+        case reportBrokenSiteOverallCategorySelected
+        case reportBrokenSiteFeedbackCategorySubmitted
+        case reportBrokenSiteTogglePromptNo
+        case reportBrokenSiteTogglePromptYes
+        case reportBrokenSiteSkipToggleStep
+        case reportBrokenSiteToggleProtectionOff
 
     }
 
@@ -759,6 +784,11 @@ extension Pixel.Event {
         case .settingsAutoconsentOn: return "m_settings_autoconsent_on"
         case .settingsAutoconsentOff: return "m_settings_autoconsent_off"
             
+        case .settingsKeyboardOnNewTabOn: return "m_settings_keyboard_on-new-tab_on"
+        case .settingsKeyboardOnNewTabOff: return "m_settings_keyboard_on-new-tab_off"
+        case .settingsKeyboardOnAppLaunchOn: return "m_settings_keyboard_on-app-launch_on"
+        case .settingsKeyboardOnAppLaunchOff: return "m_settings_keyboard_on-app-launch_off"
+
         case .browsingMenuOpened: return "mb"
         case .browsingMenuNewTab: return "mb_tb"
         case .browsingMenuAddToBookmarks: return "mb_abk"
@@ -965,6 +995,8 @@ extension Pixel.Event {
         case .autofillOnboardedUser: return "m_autofill_onboardeduser"
         case .autofillLoginsStacked: return "m_autofill_logins_stacked"
 
+        case .autofillMultipleAuthCallsTriggered: return "m_autofill_multiple_auth_calls_triggered"
+
         case .getDesktopCopy: return "m_get_desktop_copy"
         case .getDesktopShare: return "m_get_desktop_share"
 
@@ -1064,7 +1096,14 @@ extension Pixel.Event {
         case .networkProtectionGeoswitchingSetNearest: return "m_netp_ev_geoswitching_set_nearest"
         case .networkProtectionGeoswitchingSetCustom: return "m_netp_ev_geoswitching_set_custom"
         case .networkProtectionGeoswitchingNoLocations: return "m_netp_ev_geoswitching_no_locations"
-            
+
+        case .networkProtectionClientFailedToFetchServerStatus: return "m_netp_server_migration_failed_to_fetch_status"
+        case .networkProtectionClientFailedToParseServerStatusResponse: return "m_netp_server_migration_failed_to_parse_response"
+
+        case .networkProtectionServerMigrationAttempt: return "m_netp_ev_server_migration_attempt"
+        case .networkProtectionServerMigrationAttemptSuccess: return "m_netp_ev_server_migration_attempt_success"
+        case .networkProtectionServerMigrationAttemptFailure: return "m_netp_ev_server_migration_attempt_failed"
+
             // MARK: remote messaging pixels
             
         case .remoteMessageShown: return "m_remote_message_shown"
@@ -1231,8 +1270,6 @@ extension Pixel.Event {
 
         case .syncWrongEnvironment: return "m_d_sync_wrong_environment_u"
 
-        case .swipeTabsUsed: return "m_swipe-tabs-used"
-        case .swipeTabsIncorrectScrollState: return "m_swipe-tabs.incorrect-scrollview-state"
         case .swipeTabsUsedDaily: return "m_swipe-tabs-used-daily"
         case .swipeToOpenNewTab: return "m_addressbar_swipe_new_tab"
 
@@ -1353,6 +1390,8 @@ extension Pixel.Event {
         case .settingsGeneralOpen: return "m_settings_general_open"
         case .settingsAutocompleteOn: return "m_settings_autocomplete_on"
         case .settingsAutocompleteOff: return "m_settings_autocomplete_off"
+        case .settingsRecentlyVisitedOn: return "m_settings_autocomplete_recently-visited_on"
+        case .settingsRecentlyVisitedOff: return "m_settings_autocomplete_recently-visited_off"
         case .settingsGeneralAutocompleteOn: return "m_settings_general_autocomplete_on"
         case .settingsGeneralAutocompleteOff: return "m_settings_general_autocomplete_off"
         case .settingsGeneralVoiceSearchOn: return "m_settings_general_voice_search_on"
@@ -1394,10 +1433,21 @@ extension Pixel.Event {
         case .networkProtectionWidgetDisconnectAttempt: return "m_netp_widget_disconnect_attempt"
         case .networkProtectionWidgetDisconnectSuccess: return "m_netp_widget_disconnect_success"
 
-            // MARK: Secure Vault
+        // MARK: Secure Vault
         case .secureVaultL1KeyMigration: return "m_secure-vault_keystore_event_l1-key-migration"
         case .secureVaultL2KeyMigration: return "m_secure-vault_keystore_event_l2-key-migration"
         case .secureVaultL2KeyPasswordMigration: return "m_secure-vault_keystore_event_l2-key-password-migration"
+
+        // MARK: Experimental report broken site flows
+        case .reportBrokenSiteShown: return "m_report-broken-site_shown"
+        case .reportBrokenSiteBreakageCategorySelected: return "m_report-broken-site_breakage-category-selected"
+        case .reportBrokenSiteSent: return "m_report-broken-site_sent"
+        case .reportBrokenSiteOverallCategorySelected: return "m_report-broken-site_overall-category-selected"
+        case .reportBrokenSiteFeedbackCategorySubmitted: return "m_report-broken-site_feedback-category-submitted"
+        case .reportBrokenSiteTogglePromptNo: return "m_report-broken-site_toggle-prompt-no"
+        case .reportBrokenSiteTogglePromptYes: return "m_report-broken-site_toggle-prompt-yes"
+        case .reportBrokenSiteSkipToggleStep: return "m_report-broken-site_skip-toggle-step"
+        case .reportBrokenSiteToggleProtectionOff: return "m_report-broken-site_toggle-protection-off"
         }
     }
 }

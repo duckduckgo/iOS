@@ -23,30 +23,32 @@ class FeedbackNavigator {
     
     static func navigate(to nextStep: Feedback.NextStep,
                          from controller: UIViewController,
-                         with model: Feedback.Model) {
+                         with model: Feedback.Model,
+                         isFromBrokenSiteReportFlow: Bool) {
         switch nextStep {
         case .presentEntries(let entries):
-            navigateToFeedbackPicker(with: entries, model: model, from: controller)
+            navigateToFeedbackPicker(with: entries, model: model, from: controller, isFromBrokenSiteReportFlow: isFromBrokenSiteReportFlow)
         case .presentForm(let formType):
-            navigateToFeedbackForm(of: formType, with: model, from: controller)
+            navigateToFeedbackForm(of: formType, with: model, from: controller, isFromBrokenSiteReportFlow: isFromBrokenSiteReportFlow)
         }
     }
     
     private static func navigateToFeedbackPicker(with entries: [FeedbackEntry],
                                                  model: Feedback.Model,
-                                                 from controller: UIViewController) {
+                                                 from controller: UIViewController,
+                                                 isFromBrokenSiteReportFlow: Bool) {
         let pickerViewController = FeedbackPickerViewController.loadFromStoryboard()
-        
-        pickerViewController.configureFor(entries: entries, with: model)
+        pickerViewController.configureFor(entries: entries, with: model, isFromBrokenSiteReportFlow: isFromBrokenSiteReportFlow)
         controller.navigationController?.pushViewController(pickerViewController, animated: true)
     }
     
     private static func navigateToFeedbackForm(of type: FeedbackFormViewController.FormType,
                                                with model: Feedback.Model,
-                                               from controller: UIViewController) {
+                                               from controller: UIViewController,
+                                               isFromBrokenSiteReportFlow: Bool) {
         let formViewController = FeedbackFormViewController.loadFromStoryboard()
         
-        formViewController.configureForNegativeSentiment(for: type, with: model)
+        formViewController.configureForNegativeSentiment(for: type, with: model, isFromBrokenSiteReportFlow: isFromBrokenSiteReportFlow)
         controller.navigationController?.pushViewController(formViewController, animated: true)
     }
 }

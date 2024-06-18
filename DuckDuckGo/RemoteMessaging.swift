@@ -30,6 +30,14 @@ import Subscription
 
 struct RemoteMessaging {
 
+    private static let endpoint: URL = {
+#if DEBUG
+        URL(string: "https://raw.githubusercontent.com/duckduckgo/remote-messaging-config/main/samples/ios/sample1.json")!
+#else
+        URL(string: "https://staticcdn.duckduckgo.com/remotemessaging/config/v1/ios-config.json")!
+#endif
+    }()
+
     @UserDefaultsWrapper(key: .lastRemoteMessagingRefreshDate, defaultValue: .distantPast)
     static private var lastRemoteMessagingRefreshDate: Date
 
@@ -145,7 +153,7 @@ struct RemoteMessaging {
                                         variantManager: VariantManager = DefaultVariantManager(),
                                         isWidgetInstalled: Bool) async throws {
 
-        let result = await Self.fetchRemoteMessages(remoteMessageRequest: RemoteMessageRequest())
+        let result = await Self.fetchRemoteMessages(remoteMessageRequest: RemoteMessageRequest(endpoint: endpoint))
 
         switch result {
         case .success(let statusResponse):

@@ -40,15 +40,46 @@ struct BookmarksDatabaseSetup {
                 errorEvents: preMigrationErrorHandling
             )
 
+        let validator = BookmarksStateValidation(keyValueStore: UserDefaults.app) { validationError, underlyingError, errorInfo in
+            switch validationError {
+            case .bookmarksStructureLost:
+                DailyPixel.fire(pixel: .debugBookmarksStructureLost,
+                                withAdditionalParameters: errorInfo,
+                                includedParameters: [.appVersion])
+            case .bookmarksStructureBroken:
+                DailyPixel.fire(pixel: .debugBookmarksInvalidRoots,
+                                withAdditionalParameters: errorInfo,
+                                includedParameters: [.appVersion])
+            case .validatorError:
+                var params = [String: String]()
+                if let cdError = underlyingError as? NSError {
+                    let processedErrors = CoreDataErrorsParser.parse(error: cdError)
+                    params = processedErrors.errorPixelParameters
+                }
+
+                DailyPixel.fireDailyAndCount(pixel: .debugBookmarksValidationFailed,
+                                             withAdditionalParameters: params,
+                                             includedParameters: [.appVersion])
+            }
+        }
+
         var migrationHappened = false
         bookmarksDatabase.loadStore { context, error in
             guard let context = assertContext(context, error, crashOnError) else { return }
+
+            validator.validateInitialState(context: context)
+
             self.migrateFromLegacyCoreDataStorageIfNeeded(context)
             migrationHappened = self.migrateToFormFactorSpecificFavorites(context, oldFavoritesOrder)
             // Add new migrations and set migrationHappened flag here. Only the last migration is relevant.
             // Also bump the int passed to the assert function below.
         }
-        
+
+        let contextForValidation = bookmarksDatabase.makeContext(concurrencyType: .privateQueueConcurrencyType)
+        contextForValidation.performAndWait {
+            validator.validateBookmarksStructure(context: contextForValidation)
+        }
+
         if migrationHappened {
             do {
                 try migrationAssertion.assert(migrationVersion: 1)

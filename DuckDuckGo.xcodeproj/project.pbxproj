@@ -754,15 +754,15 @@
 		D625AAEC2BBEF27600BC189A /* TabURLInterceptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D625AAEA2BBEEFC900BC189A /* TabURLInterceptorTests.swift */; };
 		D63657192A7BAE7C001AF19D /* EmailManagerRequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63657182A7BAE7C001AF19D /* EmailManagerRequestDelegate.swift */; };
 		D63677F52BBDB1C300605BA5 /* DaxLogoNavbarTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63677F42BBDB1C300605BA5 /* DaxLogoNavbarTitle.swift */; };
-		D63FF8842C1B20A6006DE24D /* DuckURLSchemeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63FF8832C1B20A6006DE24D /* DuckURLSchemeHandler.swift */; };
-		D63FF88A2C1B21C2006DE24D /* YouTubePlayerNavigationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63FF8892C1B21C2006DE24D /* YouTubePlayerNavigationHandler.swift */; };
-		D63FF88C2C1B21ED006DE24D /* DuckPlayerURLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63FF88B2C1B21ED006DE24D /* DuckPlayerURLExtension.swift */; };
 		D63FF8952C1B67E9006DE24D /* YoutubePlayerUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63FF8932C1B67E8006DE24D /* YoutubePlayerUserScript.swift */; };
 		D63FF8962C1B67E9006DE24D /* YoutubeOverlayUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63FF8942C1B67E8006DE24D /* YoutubeOverlayUserScript.swift */; };
 		D63FF8982C1B6A45006DE24D /* DuckPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63FF8972C1B6A45006DE24D /* DuckPlayer.swift */; };
 		D64648AD2B59936B0033090B /* SubscriptionEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64648AC2B59936B0033090B /* SubscriptionEmailView.swift */; };
 		D64648AF2B5993890033090B /* SubscriptionEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64648AE2B5993890033090B /* SubscriptionEmailViewModel.swift */; };
 		D652498E2B515A6A0056B0DE /* SubscriptionSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D652498D2B515A6A0056B0DE /* SubscriptionSettingsViewModel.swift */; };
+		D65625902C22D307006EF297 /* DuckPlayerURLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63FF88B2C1B21ED006DE24D /* DuckPlayerURLExtension.swift */; };
+		D65625922C22D340006EF297 /* YouTubePlayerNavigationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63FF8892C1B21C2006DE24D /* YouTubePlayerNavigationHandler.swift */; };
+		D65625952C22D382006EF297 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F159BDA31F0BDB5A00B4A01D /* TabViewController.swift */; };
 		D65CEA702B6AC6C9008A759B /* Subscription.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D65CEA6F2B6AC6C9008A759B /* Subscription.xcassets */; };
 		D664C7B62B289AA200CBFA76 /* SubscriptionFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7942B289AA000CBFA76 /* SubscriptionFlowViewModel.swift */; };
 		D664C7B72B289AA200CBFA76 /* Subscription.storekit in Resources */ = {isa = PBXBuildFile; fileRef = D664C7952B289AA000CBFA76 /* Subscription.storekit */; };
@@ -885,7 +885,6 @@
 		F15531942BF215F60029ED04 /* Subscription in Frameworks */ = {isa = PBXBuildFile; productRef = F15531932BF215F60029ED04 /* Subscription */; };
 		F15531962BF215F60029ED04 /* SubscriptionTestingUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = F15531952BF215F60029ED04 /* SubscriptionTestingUtilities */; };
 		F1564F032B7B915F00D454A6 /* AppDelegate+SKAD4.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1564F022B7B915F00D454A6 /* AppDelegate+SKAD4.swift */; };
-		F159BDA41F0BDB5A00B4A01D /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F159BDA31F0BDB5A00B4A01D /* TabViewController.swift */; };
 		F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15D431F1E706CC500BF2CDC /* AutocompleteViewController.swift */; };
 		F15E9F3E2BEE128200DEFDDE /* SubscriptionManageriOS14.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E9F3D2BEE128200DEFDDE /* SubscriptionManageriOS14.swift */; };
 		F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C121E572E0300DEDCAF /* TabSwitcherViewController.swift */; };
@@ -2379,7 +2378,6 @@
 		D625AAEA2BBEEFC900BC189A /* TabURLInterceptorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabURLInterceptorTests.swift; sourceTree = "<group>"; };
 		D63657182A7BAE7C001AF19D /* EmailManagerRequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailManagerRequestDelegate.swift; sourceTree = "<group>"; };
 		D63677F42BBDB1C300605BA5 /* DaxLogoNavbarTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxLogoNavbarTitle.swift; sourceTree = "<group>"; };
-		D63FF8832C1B20A6006DE24D /* DuckURLSchemeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckURLSchemeHandler.swift; sourceTree = "<group>"; };
 		D63FF8892C1B21C2006DE24D /* YouTubePlayerNavigationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubePlayerNavigationHandler.swift; sourceTree = "<group>"; };
 		D63FF88B2C1B21ED006DE24D /* DuckPlayerURLExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckPlayerURLExtension.swift; sourceTree = "<group>"; };
 		D63FF8932C1B67E8006DE24D /* YoutubePlayerUserScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubePlayerUserScript.swift; sourceTree = "<group>"; };
@@ -4422,7 +4420,6 @@
 			isa = PBXGroup;
 			children = (
 				D63FF8972C1B6A45006DE24D /* DuckPlayer.swift */,
-				D63FF8832C1B20A6006DE24D /* DuckURLSchemeHandler.swift */,
 				D63FF8892C1B21C2006DE24D /* YouTubePlayerNavigationHandler.swift */,
 				D63FF88B2C1B21ED006DE24D /* DuckPlayerURLExtension.swift */,
 				D63FF8942C1B67E8006DE24D /* YoutubeOverlayUserScript.swift */,
@@ -6445,6 +6442,7 @@
 				8586A10D24CBA7070049720E /* FindInPageActivity.swift in Sources */,
 				1E1626072968413B0004127F /* ViewExtension.swift in Sources */,
 				31A42566285A0A6300049386 /* FaviconViewModel.swift in Sources */,
+				D65625952C22D382006EF297 /* TabViewController.swift in Sources */,
 				8C4838B5221C8F7F008A6739 /* GestureToolbarButton.swift in Sources */,
 				EE276BEA2A77F823009167B6 /* NetworkProtectionRootViewController.swift in Sources */,
 				310ECFDD282A8BB0005029B3 /* EnableAutofillSettingsTableViewCell.swift in Sources */,
@@ -6477,7 +6475,6 @@
 				8536A1FD2ACF114B003AC5BA /* Theme+DesignSystem.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,
 				D6BFCB612B7525160051FF81 /* SubscriptionPIRViewModel.swift in Sources */,
-				D63FF88C2C1B21ED006DE24D /* DuckPlayerURLExtension.swift in Sources */,
 				D668D9252B693778008E2FF2 /* SubscriptionITPView.swift in Sources */,
 				C10CB5F32A1A5BDF0048E503 /* AutofillViews.swift in Sources */,
 				982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */,
@@ -6491,7 +6488,6 @@
 				9FA5E44B2BF1AF3400BDEF02 /* SubscriptionContainerViewFactory.swift in Sources */,
 				C1F341C72A6924100032057B /* EmailAddressPromptViewModel.swift in Sources */,
 				F47E53D9250A97330037C686 /* OnboardingDefaultBroswerViewController.swift in Sources */,
-				D63FF88A2C1B21C2006DE24D /* YouTubePlayerNavigationHandler.swift in Sources */,
 				F13B4BD51F183B3600814661 /* TabsModelPersistenceExtension.swift in Sources */,
 				980891A52237D4F500313A70 /* FeedbackNavigator.swift in Sources */,
 				C1B7B52328941F2A0098FD6A /* RemoteMessagingStore.swift in Sources */,
@@ -6606,6 +6602,7 @@
 				1EA51376286596A000493C6A /* PrivacyIconLogic.swift in Sources */,
 				980891A92238504B00313A70 /* UILabelExtension.swift in Sources */,
 				984D035A24ACCC7D0066CFB8 /* TabViewCell.swift in Sources */,
+				D65625922C22D340006EF297 /* YouTubePlayerNavigationHandler.swift in Sources */,
 				31951E8E2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift in Sources */,
 				F194FAED1F14E2B3009B4DF8 /* UIFontExtension.swift in Sources */,
 				F1CDD3F21F16911700BE0581 /* AboutViewControllerOld.swift in Sources */,
@@ -6682,6 +6679,7 @@
 				D6E83C312B1EA309006C8AFB /* SettingsCell.swift in Sources */,
 				85058368219C49E000ED4EDB /* HomeViewSectionRenderers.swift in Sources */,
 				1DEAADEE2BA45DFE00E25A97 /* SettingsDataClearingView.swift in Sources */,
+				D65625902C22D307006EF297 /* DuckPlayerURLExtension.swift in Sources */,
 				EE01EB432AFC1E0A0096AAC9 /* NetworkProtectionVPNLocationView.swift in Sources */,
 				7BC571202BDBB877003B0CCE /* VPNActivationDateStore.swift in Sources */,
 				9820EAF522613CD30089094D /* WebProgressWorker.swift in Sources */,
@@ -6689,7 +6687,6 @@
 				1EEF387D285B1A1100383393 /* TrackerImageCache.swift in Sources */,
 				3151F0EC27357FEE00226F58 /* VoiceSearchFeedbackViewModel.swift in Sources */,
 				1DDF402D2BA09482006850D9 /* SettingsMainSettingsView.swift in Sources */,
-				D63FF8842C1B20A6006DE24D /* DuckURLSchemeHandler.swift in Sources */,
 				85010502292FB1000033978F /* FireproofFaviconUpdater.swift in Sources */,
 				F1C4A70E1E57725800A6CA1B /* OmniBar.swift in Sources */,
 				981CA7EA2617797500E119D5 /* MainViewController+AddFavoriteFlow.swift in Sources */,
@@ -6731,7 +6728,6 @@
 				1EEF124E2850EADE003DDE57 /* PrivacyIconView.swift in Sources */,
 				37FCAAAB29911BF1000E420A /* WaitlistExtensions.swift in Sources */,
 				EE4BE0092A740BED00CD6AA8 /* ClearTextField.swift in Sources */,
-				F159BDA41F0BDB5A00B4A01D /* TabViewController.swift in Sources */,
 				F44D279C27F331BB0037F371 /* AutofillLoginPromptView.swift in Sources */,
 				F1FDC9302BF4E0B3006B1435 /* SubscriptionEnvironment+Default.swift in Sources */,
 				CBD4F13E279EBFAB00B20FD7 /* HomeMessageView.swift in Sources */,

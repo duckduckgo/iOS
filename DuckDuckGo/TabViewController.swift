@@ -716,18 +716,34 @@ class TabViewController: UIViewController {
 
     func goBack() {
         dismissJSAlertIfNeeded()
-
-        if isError {
-            hideErrorMessage()
-            url = webView.url
-            onWebpageDidStartLoading(httpsForced: false)
-            onWebpageDidFinishLoading()
-        } else if webView.canGoBack {
-            webView.goBack()
-            chromeDelegate?.omniBar.resignFirstResponder()
-        } else if openingTab != nil {
-            delegate?.tabDidRequestClose(self)
+        
+        if isDuckPlayerSourceLink() {
+            goBack(skippingHistoryItems: 2)
+        } else {
+            if isError {
+                hideErrorMessage()
+                url = webView.url
+                onWebpageDidStartLoading(httpsForced: false)
+                onWebpageDidFinishLoading()
+            } else if webView.canGoBack {
+                webView.goBack()
+                chromeDelegate?.omniBar.resignFirstResponder()
+            } else if openingTab != nil {
+                delegate?.tabDidRequestClose(self)
+            }
         }
+        
+    }
+    
+    func goBack(skippingHistoryItems: Int) {
+        
+        let backList = webView.backForwardList.backList
+        guard skippingHistoryItems > 1,
+        let lastElement = backList[safe: backList.count - skippingHistoryItems] else {
+            webView.goBack()
+            return
+        }
+        webView.go(to: lastElement)
     }
 
     func goForward() {
@@ -2775,11 +2791,6 @@ extension TabViewController {
     private func performDuckRedirect(_ navigationAction: WKNavigationAction,
                                        completion: @escaping (WKNavigationActionPolicy) -> Void) {
         
-        guard navigationAction.request.url != nil else {
-            completion(.cancel)
-            return
-        }
-        
         guard let (videoID, timestamp) = navigationAction.request.url?.youtubeVideoParams else {
             completion(.cancel)
             return
@@ -2803,7 +2814,6 @@ extension TabViewController {
         let newRequest = handler.makeDuckPlayerRequest(from: URLRequest(url: url))
         if #available(iOS 15.0, *) {
             webView.loadSimulatedRequest(newRequest, responseHTML: html)
-                    webView.load(URLRequest(url: url))
             completion(.allow)
         } else {
             completion(.cancel)
@@ -2818,25 +2828,22 @@ extension TabViewController {
         }
 
         let newURL = URL.duckPlayer(videoID, timestamp: timestamp)
-        navigateToURLAndRemovePrevious(newURL)
+        self.webView.load(URLRequest(url: newURL))
     }
     
-    // Since we are Showing DuckPlayer after loading a Youtube Page
-    // We need to remove that page from the WK history.
-    private func navigateToURLAndRemovePrevious(_ url: URL) {
+    // If we are moving back from Duck Player, coming from a Youtube video
+    private func isDuckPlayerSourceLink() -> Bool {
         
-        guard webView.canGoBack else {
-            // If we can't go back, just load the URL normally
-            webView.load(URLRequest(url: url))
-            return
+        let backList = webView.backForwardList.backList
+        
+        guard let backURL = webView.backForwardList.backItem?.url,
+              backURL.isYoutubeVideo,
+              backURL.youtubeVideoParams?.videoID == webView.url?.youtubeVideoParams?.videoID else {
+            return false
         }
-        
-        // This effectively removes intermediate Youtube Page From history
-        webView.goBack()
-        self.webView.load(URLRequest(url: url))
-        webView.goForward()
-    
+        return true
     }
+    
   
 }
 

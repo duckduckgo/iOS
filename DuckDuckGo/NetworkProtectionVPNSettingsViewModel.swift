@@ -54,7 +54,7 @@ final class NetworkProtectionVPNSettingsViewModel: ObservableObject {
             .store(in: &cancellables)
         settings.dnsSettingsPublisher
             .receive(on: DispatchQueue.main)
-            .map { $0.dnsServers }
+            .map { String(describing: $0) }
             .assign(to: \.dnsServers, onWeaklyHeld: self)
             .store(in: &cancellables)
     }

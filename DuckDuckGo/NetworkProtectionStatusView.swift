@@ -173,7 +173,7 @@ struct NetworkProtectionStatusView: View {
             }
 
             if statusModel.dnsSettings.usesCustomDNS {
-                NetworkProtectionConnectionDetailView(title: UserText.netPStatusViewCustomDNS, value: statusModel.dnsSettings.dnsServers)
+                NetworkProtectionConnectionDetailView(title: UserText.netPStatusViewCustomDNS, value: String(describing: statusModel.dnsSettings))
             }
 
             NetworkProtectionThroughputItemView(
@@ -326,13 +326,6 @@ extension NetworkProtectionDNSSettings {
     var usesCustomDNS: Bool {
         guard case .custom(let servers) = self, !servers.isEmpty else { return false }
         return true
-    }
-
-    var dnsServers: String {
-        switch self {
-        case .default: return "DuckDuckGo"
-        case .custom(let servers): return servers.joined(separator: ", ")
-        }
     }
 }
 

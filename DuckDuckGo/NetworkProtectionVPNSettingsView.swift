@@ -68,14 +68,14 @@ struct NetworkProtectionVPNSettingsView: View {
 
     func dnsSection() -> some View {
         Section {
-            HStack(spacing: 16) {
-                NavigationLink {
-                    NetworkProtectionDNSSettingsView()
-                } label: {
+            NavigationLink {
+                NetworkProtectionDNSSettingsView()
+            } label: {
+                HStack {
                     Text(UserText.vpnSettingDNSServerTitle)
                         .daxBodyRegular()
                         .foregroundColor(.init(designSystemColor: .textPrimary))
-                    Spacer(minLength: 2)
+                    Spacer()
                     Text(viewModel.dnsServers)
                         .daxBodyRegular()
                         .foregroundColor(.init(designSystemColor: .textSecondary))
@@ -83,10 +83,6 @@ struct NetworkProtectionVPNSettingsView: View {
             }
         } header: {
             Text(UserText.vpnSettingDNSSectionHeader)
-        } footer: {
-            Text(UserText.netPSecureDNSSettingFooter)
-                .daxFootnoteRegular()
-                .foregroundColor(.init(designSystemColor: .textSecondary))
         }
         .listRowBackground(Color(designSystemColor: .surface))
     }

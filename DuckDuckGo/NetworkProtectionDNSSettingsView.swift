@@ -46,6 +46,12 @@ struct NetworkProtectionDNSSettingsView: View {
                             .daxBodyRegular()
                             .foregroundStyle(Color(designSystemColor: .textPrimary))
                     }
+                } footer: {
+                    if viewModel.isCustomDNSSelected {
+                        Text(UserText.netPSecureDNSSettingFooter)
+                            .daxFootnoteRegular()
+                            .foregroundColor(.init(designSystemColor: .textSecondary))
+                    }
                 }
 
                 if viewModel.isCustomDNSSelected {
@@ -70,7 +76,7 @@ struct NetworkProtectionDNSSettingsView: View {
 
     func customDNSSection() -> some View {
         Section {
-            HStack(spacing: 16) {
+            HStack {
                 Text(UserText.vpnSettingDNSServerIPv4Title)
                     .daxBodyRegular()
                     .foregroundColor(.init(designSystemColor: .textPrimary))

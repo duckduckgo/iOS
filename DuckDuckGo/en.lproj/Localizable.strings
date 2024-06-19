@@ -1513,8 +1513,8 @@ https://duckduckgo.com/mac";
 /* Title for the Preferred Location VPN Settings item. */
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
-/* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "By default our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.";
+/* Footer text for the DNS server setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "DuckDuckGo routes DNS queries through our DNS servers so your internet provider can't see what websites you visit.";
 
 /* Title for the FAQ row in the VPN status screen. */
 "network.protection.vpn.settings.faq" = "FAQs and Support";
@@ -2399,7 +2399,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "vpn.settings.add.widget" = "Add VPN Widget to Home Screen";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
-"vpn.settings.dns.section-disclaimer" = "When using custom DNS, your queries are not encrypted through our servers. Security and privacy cannot be guaranteed. Use custom DNS carefully.";
+"vpn.settings.dns.section-disclaimer" = "Using a custom DNS server can impact browsing speeds and expose your activity to third parties if the server isn't secure or reliable.";
 
 /* Header text for the DNS section on the VPN Settings screen */
 "vpn.settings.dns.section-header" = "DNS";

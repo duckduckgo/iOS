@@ -89,7 +89,7 @@ class AutofillDebugViewController: UITableViewController {
     }
 
     private func addLogins(_ count: Int) {
-        let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter.shared)
+        let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter())
 
         for i in 1...count {
             let account = SecureVaultModels.WebsiteAccount(title: "", username: "Dax \(i)", domain: "https://fill.dev", notes: "")

@@ -651,7 +651,7 @@ class TabViewController: UIViewController {
             url = webView.url
             
             // Validate Duck Player URL
-            if let url, url.isYoutubeVideo {
+            if let url, url.isYoutubeVideo, appSettings.duckPlayerMode == .enabled {
                 webView.stopLoading()
                 performDuckRedirect(url: url)
             }
@@ -1607,7 +1607,7 @@ extension TabViewController: WKNavigationDelegate {
             adClickAttributionLogic.onBackForwardNavigation(mainFrameURL: webView.url)
         }
         
-        if url.isYoutubeVideo {
+        if url.isYoutubeVideo && appSettings.duckPlayerMode == .enabled {
             performDuckRedirect(navigationAction, completion: completion)
             return
         }

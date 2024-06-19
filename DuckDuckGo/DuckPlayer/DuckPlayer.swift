@@ -24,8 +24,19 @@ import WebKit
 import UserScript
 // import PixelKit
 
-enum DuckPlayerMode: Equatable, Codable {
+enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
     case enabled, alwaysAsk, disabled
+    
+    var description: String {
+        switch self {
+        case .enabled:
+            return "Always"
+        case .alwaysAsk:
+            return "Ask every Time"
+        case .disabled:
+            return "Never"
+        }
+    }
 
     init(_ duckPlayerMode: Bool?) {
         switch duckPlayerMode {
@@ -48,7 +59,30 @@ enum DuckPlayerMode: Equatable, Codable {
             return false
         }
     }
+    
+    var stringValue: String {
+        switch self {
+        case .enabled:
+            return "enabled"
+        case .alwaysAsk:
+            return "alwaysAsk"
+        case .disabled:
+            return "disabled"
+        }
+    }
 
+    init?(stringValue: String) {
+        switch stringValue {
+        case "enabled":
+            self = .enabled
+        case "alwaysAsk":
+            self = .alwaysAsk
+        case "disabled":
+            self = .disabled
+        default:
+            return nil
+        }
+    }
 }
 
 /// Values that the Frontend can use to determine the current state.

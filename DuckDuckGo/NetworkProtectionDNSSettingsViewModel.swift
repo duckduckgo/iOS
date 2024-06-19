@@ -28,16 +28,9 @@ final class NetworkProtectionDNSSettingsViewModel: ObservableObject {
 
     @Published public var dnsSettings: NetworkProtectionDNSSettings = .default
 
-    @Published public var isCustomDNSSelected = false {
-        didSet {
-            updateApplyButtonState()
-        }
-    }
-    @Published public var customDNSServers = "" {
-        didSet {
-            updateApplyButtonState()
-        }
-    }
+    @Published public var isCustomDNSSelected = false
+    
+    @Published public var customDNSServers = ""
 
     @Published public var isApplyButtonEnabled = false
 
@@ -67,7 +60,7 @@ final class NetworkProtectionDNSSettingsViewModel: ObservableObject {
         }
     }
 
-    private func updateApplyButtonState() {
+    func updateApplyButtonState() {
         if isCustomDNSSelected {
             isApplyButtonEnabled = !customDNSServers.isEmpty && customDNSServers.isValidIpv4Host
         } else {

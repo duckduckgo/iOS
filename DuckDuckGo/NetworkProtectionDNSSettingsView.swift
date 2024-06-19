@@ -53,6 +53,9 @@ struct NetworkProtectionDNSSettingsView: View {
                             .foregroundColor(.init(designSystemColor: .textSecondary))
                     }
                 }
+                .onChange(of: viewModel.isCustomDNSSelected) { _ in
+                    viewModel.updateApplyButtonState()
+                }
 
                 if viewModel.isCustomDNSSelected {
                     customDNSSection()
@@ -89,6 +92,9 @@ struct NetworkProtectionDNSSettingsView: View {
                     .keyboardType(.numbersAndPunctuation)
                     .multilineTextAlignment(.trailing)
                     .focused($isCustomDNSServerFocused)
+                    .onChange(of: viewModel.customDNSServers) { _ in
+                        viewModel.updateApplyButtonState()
+                    }
             }
         } header: {
             Text(UserText.vpnSettingDNSSectionHeader)

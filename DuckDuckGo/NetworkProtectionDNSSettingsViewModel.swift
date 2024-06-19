@@ -20,6 +20,7 @@
 import Foundation
 import Combine
 import NetworkProtection
+import Core
 
 final class NetworkProtectionDNSSettingsViewModel: ObservableObject {
     private let settings: VPNSettings
@@ -59,8 +60,10 @@ final class NetworkProtectionDNSSettingsViewModel: ObservableObject {
     func applyDNSSettings() {
         if isCustomDNSSelected {
             settings.dnsSettings = .custom([customDNSServers])
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionDNSUpdateCustom)
         } else {
             settings.dnsSettings = .default
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionDNSUpdateDefault)
         }
     }
 

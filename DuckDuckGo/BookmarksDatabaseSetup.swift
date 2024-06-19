@@ -40,25 +40,19 @@ struct BookmarksDatabaseSetup {
                 errorEvents: preMigrationErrorHandling
             )
 
-        let validator = BookmarksStateValidation(keyValueStore: UserDefaults.app) { validationError, underlyingError, errorInfo in
+        let validator = BookmarksStateValidation(keyValueStore: UserDefaults.app) { validationError in
             switch validationError {
             case .bookmarksStructureLost:
-                DailyPixel.fire(pixel: .debugBookmarksStructureLost,
-                                withAdditionalParameters: errorInfo,
-                                includedParameters: [.appVersion])
-            case .bookmarksStructureBroken:
+                DailyPixel.fire(pixel: .debugBookmarksStructureLost, includedParameters: [.appVersion])
+            case .bookmarksStructureBroken(let additionalParams):
                 DailyPixel.fire(pixel: .debugBookmarksInvalidRoots,
-                                withAdditionalParameters: errorInfo,
+                                withAdditionalParameters: additionalParams,
                                 includedParameters: [.appVersion])
-            case .validatorError:
-                var params = [String: String]()
-                if let cdError = underlyingError as? NSError {
-                    let processedErrors = CoreDataErrorsParser.parse(error: cdError)
-                    params = processedErrors.errorPixelParameters
-                }
+            case .validatorError(let underlyingError):
+                let processedErrors = CoreDataErrorsParser.parse(error: underlyingError as NSError)
 
                 DailyPixel.fireDailyAndCount(pixel: .debugBookmarksValidationFailed,
-                                             withAdditionalParameters: params,
+                                             withAdditionalParameters: processedErrors.errorPixelParameters,
                                              includedParameters: [.appVersion])
             }
         }

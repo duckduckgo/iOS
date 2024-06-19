@@ -30,15 +30,15 @@ public class BookmarksStateValidation {
 
     public enum ValidationError {
         case bookmarksStructureLost
-        case bookmarksStructureBroken
-        case validatorError
+        case bookmarksStructureBroken(additionalParams: [String: String])
+        case validatorError(Error)
     }
 
     let keyValueStore: KeyValueStoring
-    let errorHandler: (ValidationError, Error?, [String: String]) -> Void
+    let errorHandler: (ValidationError) -> Void
 
     public init(keyValueStore: KeyValueStoring,
-                errorHandler: @escaping (ValidationError, Error?, [String: String]) -> Void) {
+                errorHandler: @escaping (ValidationError) -> Void) {
         self.keyValueStore = keyValueStore
         self.errorHandler = errorHandler
     }
@@ -50,10 +50,10 @@ public class BookmarksStateValidation {
         do {
             let count = try context.count(for: fetch)
             if count == 0 {
-                errorHandler(.bookmarksStructureLost, nil, [:])
+                errorHandler(.bookmarksStructureLost)
             }
         } catch {
-            errorHandler(.validatorError, error, [:])
+            errorHandler(.validatorError(error))
         }
     }
 
@@ -74,18 +74,18 @@ public class BookmarksStateValidation {
         do {
             let roots = try context.fetch(request)
             if roots.count != rootUUIDs.count {
-                var additionalInfo = [String: String]()
+                var additionalParams = [String: String]()
 
                 for uuid in rootUUIDs {
-                    additionalInfo[uuid] = "\(roots.filter({ $0.uuid == uuid }).count)"
+                    additionalParams[uuid] = "\(roots.filter({ $0.uuid == uuid }).count)"
                 }
 
-                additionalInfo["is-marked-as-initialized"] = isMarkedAsInitialized ? "true" : "false"
+                additionalParams["is-marked-as-initialized"] = isMarkedAsInitialized ? "true" : "false"
 
-                errorHandler(.bookmarksStructureBroken, nil, additionalInfo)
+                errorHandler(.bookmarksStructureBroken(additionalParams: additionalParams))
             }
         } catch {
-            errorHandler(.validatorError, error, [:])
+            errorHandler(.validatorError(error))
         }
     }
 }

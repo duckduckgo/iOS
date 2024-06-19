@@ -62,7 +62,7 @@ class BookmarksStateValidationTests: XCTestCase {
             BookmarkUtils.prepareFoldersStructure(in: context)
         }
 
-        let validator = BookmarksStateValidation(keyValueStore: mockKeyValueStore) { error, _, _ in
+        let validator = BookmarksStateValidation(keyValueStore: mockKeyValueStore) { error in
             XCTFail("Did not expect error: \(error)")
         }
 
@@ -77,7 +77,7 @@ class BookmarksStateValidationTests: XCTestCase {
 
     func testWhenDatabaseIsEmptyButItHasNotBeenInitiatedThenThereIsNoError() {
 
-        let validator = BookmarksStateValidation(keyValueStore: mockKeyValueStore) { error, _, _ in
+        let validator = BookmarksStateValidation(keyValueStore: mockKeyValueStore) { error in
             XCTFail("Did not expect error: \(error)")
         }
 
@@ -92,7 +92,7 @@ class BookmarksStateValidationTests: XCTestCase {
         let expectation1 = expectation(description: "Lost structure Error raised")
         let expectation2 = expectation(description: "Broken structure Error raised")
 
-        let validator = BookmarksStateValidation(keyValueStore: mockKeyValueStore) { error, _, _ in
+        let validator = BookmarksStateValidation(keyValueStore: mockKeyValueStore) { error in
             switch error {
             case .bookmarksStructureLost:
                 expectation1.fulfill()
@@ -130,9 +130,9 @@ class BookmarksStateValidationTests: XCTestCase {
 
         let expectation = expectation(description: "Broken structure Error raised")
 
-        let validator = BookmarksStateValidation(keyValueStore: mockKeyValueStore) { error, _, errorInfo in
+        let validator = BookmarksStateValidation(keyValueStore: mockKeyValueStore) { error in
             switch error {
-            case .bookmarksStructureBroken:
+            case .bookmarksStructureBroken(let errorInfo):
                 expectation.fulfill()
 
                 XCTAssertEqual(errorInfo[FavoritesFolderID.unified.rawValue], "0")
@@ -170,9 +170,9 @@ class BookmarksStateValidationTests: XCTestCase {
 
         let expectation = expectation(description: "Broken structure Error raised")
 
-        let validator = BookmarksStateValidation(keyValueStore: mockKeyValueStore) { error, _, errorInfo in
+        let validator = BookmarksStateValidation(keyValueStore: mockKeyValueStore) { error in
             switch error {
-            case .bookmarksStructureBroken:
+            case .bookmarksStructureBroken(let errorInfo):
                 expectation.fulfill()
 
                 XCTAssertEqual(errorInfo[FavoritesFolderID.unified.rawValue], "1")

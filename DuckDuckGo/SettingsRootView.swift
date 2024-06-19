@@ -156,9 +156,6 @@ struct SettingsListModifiers: ViewModifier {
             .accentColor(Color(designSystemColor: .textPrimary))
             .environmentObject(viewModel)
             .conditionalInsetGroupedListStyle()
-            .onAppear {
-                viewModel.onAppear()
-            }
     }
 }
 

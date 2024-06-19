@@ -62,13 +62,6 @@ public extension URL {
 
     static func makeExtiURL(atb: String) -> URL { URL.exti.appendingParameter(name: Param.atb, value: atb) }
 
-    static func makeAutocompleteURL(for text: String) throws -> URL {
-        URL.autocomplete.appendingParameters([
-            Param.search: text,
-            Param.enableNavSuggestions: ParamValue.enableNavSuggestions
-        ])
-    }
-
     static func isDuckDuckGo(domain: String?) -> Bool {
         guard let domain = domain, let url = URL(string: "https://\(domain)") else { return false }
         return url.isDuckDuckGo
@@ -120,7 +113,6 @@ public extension URL {
         static let vertical = "ia"
         static let verticalRewrite = "iar"
         static let verticalMaps = "iaxm"
-        static let enableNavSuggestions = "is_nav"
         static let email = "email"
 
     }
@@ -130,7 +122,6 @@ public extension URL {
         static let source = "ddg_ios"
         static let appUsage = "app_use"
         static let searchHeader = "-1"
-        static let enableNavSuggestions = "1"
         static let emailEnabled = "1"
         static let emailDisabled = "0"
         static let majorVerticals: Set<String> = ["images", "videos", "news"]

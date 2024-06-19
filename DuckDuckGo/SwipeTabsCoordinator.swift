@@ -227,7 +227,7 @@ extension SwipeTabsCoordinator: UICollectionViewDelegate {
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard !state.isIdle else {
-            Pixel.fire(pixel: .swipeTabsIncorrectScrollState)
+            // Turns out this is needed (we used to have a pixel here)
             assertionFailure("invalid state")
             return
         }

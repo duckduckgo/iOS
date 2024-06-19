@@ -676,6 +676,30 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Eksportuoti HTML žymelių failą iš kitos naršyklės arba eksportuoti esamas žymeles.";
 
+/* Button to open report form */
+"broken.site.report.menu.title" = "Pranešti apie šios svetainės problemą";
+
+/* Acknowledge button */
+"broken.site.report.missing.description.alert.button" = "Supratau";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.description" = "Apibūdinkite šioje svetainėje kilusią problemą, kad galėtume geriau suprasti, kaip ją išspręsti.";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.title" = "Apibūdinimo tekstas";
+
+/* Message that appears after submitting report */
+"broken.site.report.success.toast" = "Jūsų pateikta informacija padeda tobulinti „DuckDuckGo“ visiems!";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.no.button" = "Ne";
+
+/* An alert that appears after user turns off the privacy protection */
+"broken.site.report.toggle.alert.title" = "Ar išjungus privatumo apsaugą buvo išspręsta šioje svetainėje kilusi problema?";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.yes.button" = "Taip";
+
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Visada siųsti strigčių ataskaitas";
 

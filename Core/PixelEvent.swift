@@ -269,6 +269,14 @@ extension Pixel {
         case autofillToggledOff
         case autofillLoginsStacked
 
+        case autofillManagementOpened
+        case autofillManagementCopyUsername
+        case autofillManagementCopyPassword
+        case autofillManagementDeleteLogin
+        case autofillManagementDeleteAllLogins
+        case autofillManagementSaveLogin
+        case autofillManagementUpdateLogin
+
         case autofillMultipleAuthCallsTriggered
 
         case getDesktopCopy
@@ -989,6 +997,21 @@ extension Pixel.Event {
         case .autofillToggledOff: return "m_autofill_toggled_off"
 
         case .autofillLoginsStacked: return "m_autofill_logins_stacked"
+
+        case .autofillManagementOpened:
+            return "m_autofill_management_opened"
+        case .autofillManagementCopyUsername:
+            return "m_autofill_management_copy_username"
+        case .autofillManagementCopyPassword:
+            return "m_autofill_management_copy_password"
+        case .autofillManagementDeleteLogin:
+            return "m_autofill_management_delete_login"
+        case .autofillManagementDeleteAllLogins:
+            return "m_autofill_management_delete_all_logins"
+        case .autofillManagementSaveLogin:
+            return "m_autofill_management_save_login"
+        case .autofillManagementUpdateLogin:
+            return "m_autofill_management_update_login"
 
         case .autofillMultipleAuthCallsTriggered: return "m_autofill_multiple_auth_calls_triggered"
 

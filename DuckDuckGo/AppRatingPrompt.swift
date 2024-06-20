@@ -141,7 +141,7 @@ class AppRatingPromptCoreDataStorage: AppRatingPromptStorage {
         do {
             results = try context.fetch(fetchRequest)
         } catch {
-            os_log("Error while fetching AppRatingPromptEntity", log: .generalLog, type: .debug, error.localizedDescription)
+            os_log("Error while fetching AppRatingPromptEntity: %s", log: .generalLog, type: .debug, error.localizedDescription)
             return nil
         }
 

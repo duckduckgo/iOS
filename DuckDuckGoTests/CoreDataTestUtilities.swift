@@ -23,10 +23,6 @@ import CoreData
 
 final class CoreData {
 
-    static func remoteMessagingContainer() -> NSPersistentContainer {
-        return createInMemoryPersistentContainer(modelName: "RemoteMessaging", bundle: Bundle(for: AppDelegate.self))
-    }
-
     static func createInMemoryPersistentContainer(modelName: String, bundle: Bundle) -> NSPersistentContainer {
         guard let modelURL = bundle.url(forResource: modelName, withExtension: "momd") else {
             fatalError("Error loading model from bundle")

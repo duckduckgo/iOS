@@ -24,6 +24,7 @@ import Combine
 import Common
 import DDGSync
 import Persistence
+import RemoteMessaging
 
 class HomeViewController: UIViewController {
     
@@ -123,7 +124,7 @@ class HomeViewController: UIViewController {
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(remoteMessagesDidChange),
-                                               name: RemoteMessaging.Notifications.remoteMessagesDidChange,
+                                               name: RemoteMessagingStore.Notifications.remoteMessagesDidChange,
                                                object: nil)
 
         registerForBookmarksChanges()

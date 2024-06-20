@@ -53,9 +53,15 @@ final class NetworkProtectionDNSSettingsViewModel: ObservableObject {
     func applyDNSSettings() {
         if isCustomDNSSelected {
             settings.dnsSettings = .custom([customDNSServers])
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionDNSUpdateCustom)
         } else {
             settings.dnsSettings = .default
+        }
+
+        /// Updating `dnsSettings` does an IPv4 conversion before actually commiting the change,
+        /// so we do a final check to see which outcome the user ends up with
+        if settings.dnsSettings.usesCustomDNS {
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionDNSUpdateCustom)
+        } else {
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionDNSUpdateDefault)
         }
     }

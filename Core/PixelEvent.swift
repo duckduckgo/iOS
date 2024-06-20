@@ -491,20 +491,10 @@ extension Pixel {
         case adAttributionLogicRequestingAttributionTimedOut
         case adAttributionLogicWrongVendorOnSuccessfulCompilation
         case adAttributionLogicWrongVendorOnFailedCompilation
-        
-        case debugBookmarkOrphanFolderNew
-        case debugBookmarkTopLevelMissingNew
-        
-        case debugFavoriteOrphanFolderNew
-        case debugFavoriteTopLevelMissingNew
-        
-        case debugCouldNotFixBookmarkFolder
-        case debugCouldNotFixFavoriteFolder
-        
-        case debugMissingTopFolderFixHasFavorites
-        case debugMissingTopFolderFixHasBookmarks
-        
-        case debugCantSaveBookmarkFix
+
+        case debugBookmarksStructureLost
+        case debugBookmarksInvalidRoots
+        case debugBookmarksValidationFailed
         
         case debugCannotClearObservationsDatabase
         case debugWebsiteDataStoresNotClearedMultiple
@@ -595,8 +585,6 @@ extension Pixel {
         case emailIncontextModalExitEarlyContinue
         
         case compilationFailed
-        
-        case appRatingPromptFetchError
 
         case protectionToggledOffBreakageReport
         case toggleProtectionsDailyCount
@@ -1194,18 +1182,10 @@ extension Pixel.Event {
             
         case .emailAutofillKeychainError: return "m_email_autofill_keychain_error"
             
-        case .debugBookmarkOrphanFolderNew: return "m_d_bookmark_orphan_folder_new"
-        case .debugBookmarkTopLevelMissingNew: return "m_d_bookmark_top_level_missing_new"
-        case .debugCouldNotFixBookmarkFolder: return "m_d_cannot_fix_bookmark_folder"
-        case .debugMissingTopFolderFixHasBookmarks: return "m_d_missing_top_folder_has_bookmarks"
-            
-        case .debugFavoriteOrphanFolderNew: return "m_d_favorite_orphan_folder_new"
-        case .debugFavoriteTopLevelMissingNew: return "m_d_favorite_top_level_missing_new"
-        case .debugCouldNotFixFavoriteFolder: return "m_d_cannot_fix_favorite_folder"
-        case .debugMissingTopFolderFixHasFavorites: return "m_d_missing_top_folder_has_favorites"
-            
-        case .debugCantSaveBookmarkFix: return "m_d_cant_save_bookmark_fix"
-            
+        case .debugBookmarksStructureLost: return "m_d_bookmarks_structure_lost"
+        case .debugBookmarksInvalidRoots: return "m_d_bookmarks_invalid_roots"
+        case .debugBookmarksValidationFailed: return "m_d_bookmarks_validation_failed"
+
         case .debugCannotClearObservationsDatabase: return "m_d_cannot_clear_observations_database"
         case .debugWebsiteDataStoresNotClearedMultiple: return "m_d_wkwebsitedatastoresnotcleared_multiple"
         case .debugWebsiteDataStoresNotClearedOne: return "m_d_wkwebsitedatastoresnotcleared_one"
@@ -1313,8 +1293,6 @@ extension Pixel.Event {
         case .toggleProtectionsDailyCount: return "m_toggle-protections-daily-count"
         case .toggleReportDoNotSend: return "m_toggle-report-do-not-send"
         case .toggleReportDismiss: return "m_toggle-report-dismiss"
-
-        case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
             
         // MARK: - Apple Ad Attribution
         case .appleAdAttribution: return "m_apple-ad-attribution"

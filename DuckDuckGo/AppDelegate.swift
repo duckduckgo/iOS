@@ -319,7 +319,7 @@ import WebKit
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
 
-        RemoteMessaging.registerBackgroundRefreshTaskHandler(
+        RemoteMessagingClient.registerBackgroundRefreshTaskHandler(
             bookmarksDatabase: bookmarksDatabase,
             favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
         )
@@ -644,7 +644,7 @@ import WebKit
 
     private func refreshRemoteMessages() {
         Task {
-            try? await RemoteMessaging.fetchAndProcess(
+            try? await RemoteMessagingClient.fetchAndProcess(
                 bookmarksDatabase: self.bookmarksDatabase,
                 favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
             )
@@ -760,9 +760,9 @@ import WebKit
                 AppConfigurationFetch.scheduleBackgroundRefreshTask()
             }
 
-            let hasRemoteMessageFetchTask = tasks.contains { $0.identifier == RemoteMessaging.Constants.backgroundRefreshTaskIdentifier }
+            let hasRemoteMessageFetchTask = tasks.contains { $0.identifier == RemoteMessagingClient.Constants.backgroundRefreshTaskIdentifier }
             if !hasRemoteMessageFetchTask {
-                RemoteMessaging.scheduleBackgroundRefreshTask()
+                RemoteMessagingClient.scheduleBackgroundRefreshTask()
             }
         }
     }

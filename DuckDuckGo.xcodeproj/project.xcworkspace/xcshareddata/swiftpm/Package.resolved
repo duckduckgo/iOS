@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "dominik/rmf-bsk",
-        "revision" : "8f22cf53f9439561d97f3ac1ec16baea32218b01"
+        "revision" : "8aecf9ec4e8ebf92a8b177e7acec09db9a7ad5e3"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "ba2ad0c3a14a8c07d7be8b50a20b47efea207e86",
-        "version" : "5.19.0"
+        "revision" : "4689746e42b24c40c18896d697ea02b854e90d35",
+        "version" : "5.21.0"
       }
     },
     {

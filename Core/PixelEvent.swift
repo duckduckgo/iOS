@@ -265,6 +265,8 @@ extension Pixel {
         case autofillActiveUser
         case autofillEnabledUser
         case autofillOnboardedUser
+        case autofillToggledOn
+        case autofillToggledOff
         case autofillLoginsStacked
 
         case autofillMultipleAuthCallsTriggered
@@ -734,6 +736,8 @@ extension Pixel {
         case reportBrokenSiteFeedbackCategorySubmitted
         case reportBrokenSiteTogglePromptNo
         case reportBrokenSiteTogglePromptYes
+        case reportBrokenSiteSkipToggleStep
+        case reportBrokenSiteToggleProtectionOff
 
     }
 
@@ -993,6 +997,9 @@ extension Pixel.Event {
         case .autofillActiveUser: return "m_autofill_activeuser"
         case .autofillEnabledUser: return "m_autofill_enableduser"
         case .autofillOnboardedUser: return "m_autofill_onboardeduser"
+        case .autofillToggledOn: return "m_autofill_toggled_on"
+        case .autofillToggledOff: return "m_autofill_toggled_off"
+
         case .autofillLoginsStacked: return "m_autofill_logins_stacked"
 
         case .autofillMultipleAuthCallsTriggered: return "m_autofill_multiple_auth_calls_triggered"
@@ -1448,6 +1455,8 @@ extension Pixel.Event {
         case .reportBrokenSiteFeedbackCategorySubmitted: return "m_report-broken-site_feedback-category-submitted"
         case .reportBrokenSiteTogglePromptNo: return "m_report-broken-site_toggle-prompt-no"
         case .reportBrokenSiteTogglePromptYes: return "m_report-broken-site_toggle-prompt-yes"
+        case .reportBrokenSiteSkipToggleStep: return "m_report-broken-site_skip-toggle-step"
+        case .reportBrokenSiteToggleProtectionOff: return "m_report-broken-site_toggle-protection-off"
         }
     }
 }

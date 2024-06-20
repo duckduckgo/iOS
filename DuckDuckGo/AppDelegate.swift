@@ -66,6 +66,13 @@ import WebKit
 #if NETWORK_PROTECTION
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
+
+    private lazy var vpnWorkaround: VPNRedditSessionWorkaround = {
+        return VPNRedditSessionWorkaround(
+            accountManager: AppDependencyProvider.shared.accountManager,
+            tunnelController: AppDependencyProvider.shared.networkProtectionTunnelController
+        )
+    }()
 #endif
 
     private var autoClear: AutoClear?
@@ -303,6 +310,7 @@ import WebKit
         let applicationState = application.applicationState
         Task {
             await autoClear?.clearDataIfEnabled(applicationState: .init(with: applicationState))
+            await vpnWorkaround.installRedditSessionWorkaround()
         }
 
         AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
@@ -498,10 +506,6 @@ import WebKit
         syncService.scheduler.notifyAppLifecycleEvent()
         fireFailedCompilationsPixelIfNeeded()
 
-        Task {
-            await refreshShortcuts()
-        }
-
 #if NETWORK_PROTECTION
         widgetRefreshModel.refreshVPNWidget()
 
@@ -512,6 +516,11 @@ import WebKit
         }
 
         presentExpiredEntitlementNotificationIfNeeded()
+
+        Task {
+            await refreshShortcuts()
+            await vpnWorkaround.installRedditSessionWorkaround()
+        }
 #endif
 
         updateSubscriptionStatus()
@@ -562,6 +571,7 @@ import WebKit
     func applicationWillResignActive(_ application: UIApplication) {
         Task {
             await refreshShortcuts()
+            await vpnWorkaround.removeRedditSessionWorkaround()
         }
     }
 
@@ -883,6 +893,7 @@ import WebKit
     private func setUpAutofillPixelReporter() {
         autofillPixelReporter = AutofillPixelReporter(
             userDefaults: .standard,
+            autofillEnabled: AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled,
             eventMapping: EventMapping<AutofillPixelEvent> {event, _, params, _ in
                 switch event {
                 case .autofillActiveUser:
@@ -891,6 +902,10 @@ import WebKit
                     Pixel.fire(pixel: .autofillEnabledUser)
                 case .autofillOnboardedUser:
                     Pixel.fire(pixel: .autofillOnboardedUser)
+                case .autofillToggledOn:
+                    Pixel.fire(pixel: .autofillToggledOn, withAdditionalParameters: params ?? [:])
+                case .autofillToggledOff:
+                    Pixel.fire(pixel: .autofillToggledOff, withAdditionalParameters: params ?? [:])
                 case .autofillLoginsStacked:
                     Pixel.fire(pixel: .autofillLoginsStacked, withAdditionalParameters: params ?? [:])
                 default:
@@ -898,6 +913,12 @@ import WebKit
                 }
             },
             installDate: StatisticsUserDefaults().installDate ?? Date())
+        
+        _ = NotificationCenter.default.addObserver(forName: AppUserDefaults.Notifications.autofillEnabledChange,
+                                                   object: nil,
+                                                   queue: nil) { [weak self] _ in
+            self?.autofillPixelReporter?.updateAutofillEnabledStatus(AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled)
+        }
     }
 
     @MainActor

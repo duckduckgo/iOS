@@ -175,20 +175,8 @@ class TabViewController: UIViewController {
     lazy var faviconUpdater = FireproofFaviconUpdater(bookmarksDatabase: bookmarksDatabase,
                                                       tab: tabModel,
                                                       favicons: Favicons.shared)
-    private lazy var refreshControl: UIRefreshControl = {
-        let refreshControl = UIRefreshControl()
-        refreshControl.addAction(UIAction { [weak self] _ in
-            guard let self else { return }
-            reload()
-            delegate?.tabDidRequestRefresh(tab: self)
-            Pixel.fire(pixel: .pullToRefresh)
-            AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.refresh)
-        }, for: .valueChanged)
 
-        refreshControl.backgroundColor = .systemBackground
-        refreshControl.tintColor = .label
-        return refreshControl
-    }()
+    private let refreshControl = UIRefreshControl()
 
     let syncService: DDGSyncing
 
@@ -464,6 +452,10 @@ class TabViewController: UIViewController {
         webView.uiDelegate = self
         webViewContainer.addSubview(webView)
         webView.scrollView.refreshControl = refreshControl
+        // Be sure to set `tintColor` after the control is attached to ScrollView otherwise haptics are gone.
+        // We don't have to care about it for this control instance the next time `setRefreshControlEnabled`
+        // is called. Looks like a bug introduced in iOS 17.4 (https://github.com/facebook/react-native/issues/43388)
+        configureRefreshControl(refreshControl)
 
         updateContentMode()
 
@@ -513,6 +505,19 @@ class TabViewController: UIViewController {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.title), options: .new, context: nil)
+    }
+
+    private func configureRefreshControl(_ control: UIRefreshControl) {
+        refreshControl.addAction(UIAction { [weak self] _ in
+            guard let self else { return }
+            reload()
+            delegate?.tabDidRequestRefresh(tab: self)
+            Pixel.fire(pixel: .pullToRefresh)
+            AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.refresh)
+        }, for: .valueChanged)
+
+        refreshControl.backgroundColor = .systemBackground
+        refreshControl.tintColor = .label
     }
 
     private func consumeCookiesThenLoadRequest(_ request: URLRequest?) {

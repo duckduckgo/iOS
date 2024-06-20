@@ -84,7 +84,6 @@ final class SettingsViewModel: ObservableObject {
     
     var shouldShowNoMicrophonePermissionAlert: Bool = false
     @Published var shouldShowEmailAlert: Bool = false
-    var autocompleteSubtitle: String?
 
     @Published var shouldShowRecentlyVisitedSites: Bool = true
 
@@ -423,7 +422,6 @@ final class SettingsViewModel: ObservableObject {
         self.syncPausedStateManager = syncPausedStateManager
 
         setupNotificationObservers()
-        autocompleteSubtitle = UserText.settingsAutocompleteSubtitle
         updateRecentlyVisitedSitesVisibility()
     }
 

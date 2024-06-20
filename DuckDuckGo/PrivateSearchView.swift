@@ -53,18 +53,17 @@ struct PrivateSearchViewSettings: View {
     @State var shouldShowNoMicrophonePermissionAlert = false
 
     var body: some View {
-        Section(header: Text(UserText.searchSettings)) {
+        Section(footer: Text(UserText.settingsAutocompleteSubtitle)) {
             // Autocomplete Suggestions
             SettingsCellView(label: UserText.settingsAutocompleteLabel,
-                             subtitle: UserText.settingsAutocompleteSubtitle,
                              accesory: .toggle(isOn: viewModel.autocompletePrivateSearchBinding))
+        }
 
-            if viewModel.shouldShowRecentlyVisitedSites {
+        if viewModel.shouldShowRecentlyVisitedSites {
+            Section(footer: Text(UserText.settingsAutocompleteRecentlyVisitedSubtitle)) {
                 SettingsCellView(label: UserText.settingsAutocompleteRecentlyVisitedLabel,
-                                 subtitle: UserText.settingsAutocompleteRecentlyVisitedSubtitle,
                                  accesory: .toggle(isOn: viewModel.autocompleteRecentlyVisitedSitesBinding))
             }
-
         }
 
         if viewModel.state.speechRecognitionAvailable {

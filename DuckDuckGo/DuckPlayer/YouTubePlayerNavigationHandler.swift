@@ -77,11 +77,8 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
     
     func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView, completion: @escaping (WKNavigationActionPolicy) -> Void) {
         
-        guard let url = navigationAction.request.url else {
-            return
-        }
-        
-        if url.isDuckPlayer {
+        if let url = navigationAction.request.url,
+            url.isDuckPlayer {
             let html = makeHTMLFromTemplate()
             let newRequest = makeDuckPlayerRequest(from: URLRequest(url: url))
             if #available(iOS 15.0, *) {
@@ -95,32 +92,34 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
     }
         
     func handleRedirect(url: URL?, webView: WKWebView) {
-            guard let url = url,
-              url.isYoutubeVideo,
-              !url.isDuckPlayer,
-              let (videoID, timestamp) = url.youtubeVideoParams else {
-            return
-        }
-
-        webView.stopLoading()
-        let newURL = URL.duckPlayer(videoID, timestamp: timestamp)
-        webView.load(URLRequest(url: newURL))
-    }
+            
+        if let url = url,
+            url.isYoutubeVideo,
+            !url.isDuckPlayer,
+            let (videoID, timestamp) = url.youtubeVideoParams {
+                webView.stopLoading()
+                let newURL = URL.duckPlayer(videoID, timestamp: timestamp)
+                webView.load(URLRequest(url: newURL))
+            }
+        
+     }
+        
     
     func handleRedirect(_ navigationAction: WKNavigationAction,
                         completion: @escaping (WKNavigationActionPolicy) -> Void,
                         webView: WKWebView) {
         
-        guard let url = navigationAction.request.url,
-                url.isYoutubeVideo,
-                !url.isDuckPlayer,
-                let (videoID, timestamp) = navigationAction.request.url?.youtubeVideoParams else {
-            completion(.cancel)
+        if let url = navigationAction.request.url,
+            url.isYoutubeVideo,
+            !url.isDuckPlayer,
+            let (videoID, timestamp) = url.youtubeVideoParams {
+            webView.load(URLRequest(url: .duckPlayer(videoID, timestamp: timestamp)))
+            completion(.allow)
             return
         }
+        completion(.cancel)
 
-        webView.load(URLRequest(url: .duckPlayer(videoID, timestamp: timestamp)))
-        completion(.allow)
+        
     }
     
     // We skip the Youtube video the was replaced with the Player

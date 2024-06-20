@@ -420,6 +420,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             NotificationCenter.default.post(name: FireproofFaviconUpdater.deleteFireproofFaviconNotification,
                                             object: nil,
                                             userInfo: [FireproofFaviconUpdater.UserInfoKeys.faviconDomain: domain])
+            Pixel.fire(pixel: .autofillManagementDeleteLogin)
         })
     }
 
@@ -492,6 +493,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                     self.syncService.scheduler.notifyDataChanged()
                     self.viewModel.resetNeverPromptWebsites()
                     self.viewModel.updateData()
+                    Pixel.fire(pixel: .autofillManagementDeleteAllLogins)
                 }
             } else {
                 self.viewModel.undoClearAllAccounts()
@@ -882,6 +884,9 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
 
         if let account = account {
             showAccountDetails(account)
+            Pixel.fire(pixel: .autofillManagementSaveLogin)
+        } else {
+            Pixel.fire(pixel: .autofillManagementUpdateLogin)
         }
     }
 

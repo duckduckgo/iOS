@@ -593,8 +593,6 @@ extension Pixel {
         case emailIncontextModalExitEarlyContinue
         
         case compilationFailed
-        
-        case appRatingPromptFetchError
 
         case protectionToggledOffBreakageReport
         case toggleProtectionsDailyCount
@@ -1309,8 +1307,6 @@ extension Pixel.Event {
         case .toggleProtectionsDailyCount: return "m_toggle-protections-daily-count"
         case .toggleReportDoNotSend: return "m_toggle-report-do-not-send"
         case .toggleReportDismiss: return "m_toggle-report-dismiss"
-
-        case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
             
         // MARK: - Apple Ad Attribution
         case .appleAdAttribution: return "m_apple-ad-attribution"

@@ -42,7 +42,7 @@ final class SubscriptionContainerViewModelTests: XCTestCase {
                     userScript: .init(),
                     subFeature: .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
                                       subscriptionAttributionOrigin: nil,
-                                     appStorePurchaseFlow: appStorePurchaseFlow,
+                                      appStorePurchaseFlow: appStorePurchaseFlow,
                                       appStoreRestoreFlow: appStoreRestoreFlow))
 
         // THEN
@@ -59,7 +59,7 @@ final class SubscriptionContainerViewModelTests: XCTestCase {
                     userScript: .init(),
                     subFeature: .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
                                       subscriptionAttributionOrigin: nil,
-                                     appStorePurchaseFlow: appStorePurchaseFlow,
+                                      appStorePurchaseFlow: appStorePurchaseFlow,
                                       appStoreRestoreFlow: appStoreRestoreFlow))
 
         // THEN

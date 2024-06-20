@@ -27,6 +27,16 @@ import DesignResourcesKit
 import SwiftUI
 
 // swiftlint:disable file_length type_body_length
+
+enum AutofillSettingsSource: String {
+    case settings
+    case overflow = "overflow_menu"
+    case sync
+    case appIconShortcut = "app_icon_shortcut"
+    case homeScreenWidget = "home_screen_widget"
+    case lockScreenWidget = "lock_screen_widget"
+}
+
 protocol AutofillLoginSettingsListViewControllerDelegate: AnyObject {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController)
 }
@@ -165,7 +175,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
          syncService: DDGSyncing,
          syncDataProviders: SyncDataProviders,
          selectedAccount: SecureVaultModels.WebsiteAccount?,
-         openSearch: Bool = false) {
+         openSearch: Bool = false,
+         source: AutofillSettingsSource) {
         let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter())
         if secureVault == nil {
             os_log("Failed to make vault")
@@ -191,6 +202,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                     }
                 }
             }
+
+        Pixel.fire(pixel: .autofillManagementOpened, withAdditionalParameters: ["source": source.rawValue])
     }
     
     required init?(coder: NSCoder) {

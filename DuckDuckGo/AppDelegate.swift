@@ -99,6 +99,19 @@ import WebKit
         AppDependencyProvider.shared.accountManager
     }
 
+    @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
+    private var didCrashDuringCrashHandlersSetUp: Bool
+
+    override init() {
+        super.init()
+
+        if !didCrashDuringCrashHandlersSetUp {
+            didCrashDuringCrashHandlersSetUp = true
+            CrashLogMessageExtractor.setUp()
+            didCrashDuringCrashHandlersSetUp = false
+        }
+    }
+
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
@@ -138,19 +151,17 @@ import WebKit
             Configuration.setURLProvider(AppConfigurationURLProvider())
         }
 
-        crashCollection.start { pixelParameters, payloads, sendReport in
+        crashCollection.startAttachingCrashLogMessages { pixelParameters, payloads, sendReport in
             pixelParameters.forEach { params in
                 Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
             }
 
             // Async dispatch because rootViewController may otherwise be nil here
             DispatchQueue.main.async {
-                guard let viewController = self.window?.rootViewController else {
-                    return
-                }
-                let dataPayloads = payloads.map { $0.jsonRepresentation() }
+                 guard let viewController = self.window?.rootViewController else { return }
+
                 let crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
-                crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: dataPayloads, from: viewController, sendReport: sendReport)
+                crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: payloads, from: viewController, sendReport: sendReport)
                 self.crashReportUploaderOnboarding = crashReportUploaderOnboarding
             }
         }
@@ -345,6 +356,11 @@ import WebKit
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
         setUpAutofillPixelReporter()
+
+        if didCrashDuringCrashHandlersSetUp {
+            Pixel.fire(pixel: .crashOnCrashHandlersSetUp)
+            didCrashDuringCrashHandlersSetUp = false
+        }
 
         return true
     }

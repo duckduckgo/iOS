@@ -294,8 +294,17 @@
                                         </tableViewCellContentView>
                                         <listContentConfiguration key="contentConfiguration" text="Crash (Exception)"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" tag="671" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="wKg-4u-kJ4">
+                                    <tableViewCell clipsSubviews="YES" tag="674" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="5a5-ut-I04">
                                         <rect key="frame" x="0.0" y="886.5" width="414" height="44.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5a5-ut-I04" id="W61-xr-Kpu">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <listContentConfiguration key="contentConfiguration" text="Crash (C++ exception)"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" tag="671" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="wKg-4u-kJ4">
+                                        <rect key="frame" x="0.0" y="931" width="414" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wKg-4u-kJ4" id="8Jc-Co-wqO">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
@@ -851,34 +860,34 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ConfigurationURLTableViewCell" id="i6Y-Di-PX3" customClass="ConfigurationURLTableViewCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="50" width="414" height="86"/>
+                                <rect key="frame" x="0.0" y="50" width="414" height="86.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="i6Y-Di-PX3" id="qn4-gq-5fa">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="86"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="86.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="pKD-Xm-Eu1">
-                                            <rect key="frame" x="20" y="11" width="374" height="64"/>
+                                            <rect key="frame" x="20" y="11" width="374" height="64.5"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="j3A-OZ-DWy">
-                                                    <rect key="frame" x="0.0" y="0.0" width="44" height="64"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="44" height="64.5"/>
                                                     <subviews>
                                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gKw-J7-XIW">
-                                                            <rect key="frame" x="0.0" y="0.0" width="44" height="21"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="44" height="21.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UrI-B0-rWf">
-                                                            <rect key="frame" x="0.0" y="21" width="44" height="21.5"/>
+                                                            <rect key="frame" x="0.0" y="21.5" width="44" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" name="accent"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6RK-ug-mZa">
-                                                            <rect key="frame" x="0.0" y="43" width="44" height="21"/>
+                                                            <rect key="frame" x="0.0" y="43" width="44" height="21.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -886,7 +895,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nkj-yK-cgm">
-                                                    <rect key="frame" x="350" y="0.0" width="24" height="64"/>
+                                                    <rect key="frame" x="350" y="0.0" width="24" height="64.5"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" image="Reload-24"/>
                                                 </button>

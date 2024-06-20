@@ -43,6 +43,7 @@ public class RemoteMessagingStoreErrorHandling: EventMapping<RemoteMessagingStor
         }
     }
 
+    @available(*, unavailable, message: "Use init() instead")
     override init(mapping: @escaping EventMapping<RemoteMessagingStoreError>.Mapping) {
         fatalError("Use init()")
     }

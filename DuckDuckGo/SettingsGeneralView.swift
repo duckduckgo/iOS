@@ -35,7 +35,8 @@ struct SettingsGeneralView: View {
 
             }
 
-            Section(footer: Text(UserText.settingsAutocompleteSubtitle)) {
+            Section(header: Text(UserText.privateSearch),
+                    footer: Text(UserText.settingsAutocompleteSubtitle)) {
                 // Autocomplete Suggestions
                 SettingsCellView(label: UserText.settingsAutocompleteLabel,
                                  accesory: .toggle(isOn: viewModel.autocompleteGeneralBinding))

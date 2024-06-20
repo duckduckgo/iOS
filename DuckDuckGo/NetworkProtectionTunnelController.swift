@@ -73,7 +73,7 @@ final class NetworkProtectionTunnelController: TunnelController {
         }
     }
 
-    init(accountManager: AccountManaging, tokenStore: NetworkProtectionKeychainTokenStore) {
+    init(accountManager: AccountManager, tokenStore: NetworkProtectionKeychainTokenStore) {
         self.tokenStore = tokenStore
         subscribeToStatusChanges()
     }

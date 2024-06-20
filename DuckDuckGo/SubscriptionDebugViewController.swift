@@ -30,7 +30,7 @@ import NetworkProtection
 @available(iOS 15.0, *) final class SubscriptionDebugViewController: UITableViewController {
 
     let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
-    private var subscriptionManager: SubscriptionManaging {
+    private var subscriptionManager: SubscriptionManager {
         AppDependencyProvider.shared.subscriptionManager
     }
 
@@ -264,7 +264,7 @@ import NetworkProtection
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Token not available")
                 return
             }
-            switch await subscriptionManager.authAPIService.validateToken(accessToken: token) {
+            switch await subscriptionManager.authEndpointService.validateToken(accessToken: token) {
             case .success(let response):
                 showAlert(title: "Token details", message: "\(response)")
             case .failure(let error):
@@ -279,7 +279,7 @@ import NetworkProtection
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
                 return
             }
-            switch await subscriptionManager.subscriptionAPIService.getSubscription(accessToken: token, cachePolicy: .reloadIgnoringLocalCacheData) {
+            switch await subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: token, cachePolicy: .reloadIgnoringLocalCacheData) {
             case .success(let response):
                 showAlert(title: "Subscription info", message: "\(response)")
             case .failure(let error):
@@ -311,7 +311,7 @@ import NetworkProtection
     private func setEnvironment(_ environment: SubscriptionEnvironment.ServiceEnvironment) {
         
         let subscriptionUserDefaults = UserDefaults(suiteName: subscriptionAppGroup)!
-        let currentSubscriptionEnvironment = SubscriptionManager.getSavedOrDefaultEnvironment(userDefaults: subscriptionUserDefaults)
+        let currentSubscriptionEnvironment = DefaultSubscriptionManager.getSavedOrDefaultEnvironment(userDefaults: subscriptionUserDefaults)
         var newSubscriptionEnvironment = SubscriptionEnvironment.default
         newSubscriptionEnvironment.serviceEnvironment = environment
 
@@ -319,7 +319,7 @@ import NetworkProtection
             subscriptionManager.accountManager.signOut()
 
             // Save Subscription environment
-            SubscriptionManager.save(subscriptionEnvironment: newSubscriptionEnvironment, userDefaults: subscriptionUserDefaults)
+            DefaultSubscriptionManager.save(subscriptionEnvironment: newSubscriptionEnvironment, userDefaults: subscriptionUserDefaults)
 
             // The VPN environment is forced to match the subscription environment
             let settings = AppDependencyProvider.shared.vpnSettings

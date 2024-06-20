@@ -26,7 +26,7 @@ import Core
 @available(iOS 15.0, *)
 final class SubscriptionSettingsViewModel: ObservableObject {
     
-    private let subscriptionManager: SubscriptionManaging
+    private let subscriptionManager: SubscriptionManager
     private var subscriptionUpdateTimer: Timer?
     private var signOutObserver: Any?
     
@@ -64,7 +64,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     @Published private(set) var state: State
 
     
-    init(subscriptionManager: SubscriptionManaging = AppDependencyProvider.shared.subscriptionManager) {
+    init(subscriptionManager: SubscriptionManager = AppDependencyProvider.shared.subscriptionManager) {
         self.subscriptionManager = subscriptionManager
         let subscriptionFAQURL = subscriptionManager.url(for: .faq)
         self.state = State(faqURL: subscriptionFAQURL)
@@ -88,7 +88,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         Task {
             if loadingIndicator { displayLoader(true) }
             guard let token = self.subscriptionManager.accountManager.accessToken else { return }
-            let subscriptionResult = await self.subscriptionManager.subscriptionAPIService.getSubscription(accessToken: token,
+            let subscriptionResult = await self.subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: token,
                                                                                                            cachePolicy: cachePolicy)
             switch subscriptionResult {
             case .success(let subscription):
@@ -221,7 +221,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     private func manageStripeSubscription() async {
         guard let token = subscriptionManager.accountManager.accessToken,
                 let externalID = subscriptionManager.accountManager.externalID else { return }
-        let serviceResponse = await  subscriptionManager.subscriptionAPIService.getCustomerPortalURL(accessToken: token, externalID: externalID)
+        let serviceResponse = await  subscriptionManager.subscriptionEndpointService.getCustomerPortalURL(accessToken: token, externalID: externalID)
 
         // Get Stripe Customer Portal URL and update the model
         if case .success(let response) = serviceResponse {

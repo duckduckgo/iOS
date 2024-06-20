@@ -31,14 +31,14 @@ final class SubscriptionContainerViewModel: ObservableObject {
     let restore: SubscriptionRestoreViewModel
     let email: SubscriptionEmailViewModel
 
-    init(subscriptionManager: SubscriptionManaging,
+    init(subscriptionManager: SubscriptionManager,
          origin: String?,
          userScript: SubscriptionPagesUserScript,
          subFeature: SubscriptionPagesUseSubscriptionFeature) {
         self.userScript = userScript
         subFeature.cleanup()
         self.subFeature = subFeature
-        let appStoreAccountManagementFlow = AppStoreAccountManagementFlow(subscriptionManager: subscriptionManager)
+        let appStoreAccountManagementFlow = DefaultAppStoreAccountManagementFlow(subscriptionManager: subscriptionManager)
         self.flow = SubscriptionFlowViewModel(origin: origin,
                                               userScript: userScript,
                                               subFeature: subFeature,

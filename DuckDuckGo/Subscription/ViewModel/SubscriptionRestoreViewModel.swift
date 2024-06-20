@@ -28,9 +28,9 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
-    let subscriptionManager: SubscriptionManaging
-    var accountManager: AccountManaging { subscriptionManager.accountManager }
-    let appStoreAccountManagementFlow: AppStoreAccountManagementFlowing
+    let subscriptionManager: SubscriptionManager
+    var accountManager: AccountManager { subscriptionManager.accountManager }
+    let appStoreAccountManagementFlow: AppStoreAccountManagementFlow
 
     private var cancellables = Set<AnyCancellable>()
     
@@ -59,8 +59,8 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         
     init(userScript: SubscriptionPagesUserScript,
          subFeature: SubscriptionPagesUseSubscriptionFeature,
-         subscriptionManager: SubscriptionManaging,
-         appStoreAccountManagementFlow: AppStoreAccountManagementFlowing,
+         subscriptionManager: SubscriptionManager,
+         appStoreAccountManagementFlow: AppStoreAccountManagementFlow,
          isAddingDevice: Bool = false) {
         self.userScript = userScript
         self.subFeature = subFeature

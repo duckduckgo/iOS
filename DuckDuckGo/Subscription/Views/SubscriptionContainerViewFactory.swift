@@ -23,10 +23,10 @@ import Subscription
 @available(iOS 15.0, *)
 enum SubscriptionContainerViewFactory {
 
-    static func makeSubscribeFlow(origin: String?, navigationCoordinator: SubscriptionNavigationCoordinator, subscriptionManager: SubscriptionManaging) -> some View {
-        let appStoreRestoreFlow = AppStoreRestoreFlow(subscriptionManager: subscriptionManager)
-        let appStorePurchaseFlow = AppStorePurchaseFlow(subscriptionManager: subscriptionManager,
-                                        appStoreRestoreFlow: appStoreRestoreFlow)
+    static func makeSubscribeFlow(origin: String?, navigationCoordinator: SubscriptionNavigationCoordinator, subscriptionManager: SubscriptionManager) -> some View {
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager)
+        let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: subscriptionManager,
+                                                               appStoreRestoreFlow: appStoreRestoreFlow)
 
         let viewModel = SubscriptionContainerViewModel(
             subscriptionManager: subscriptionManager,
@@ -41,10 +41,10 @@ enum SubscriptionContainerViewFactory {
             .environmentObject(navigationCoordinator)
     }
 
-    static func makeRestoreFlow(navigationCoordinator: SubscriptionNavigationCoordinator, subscriptionManager: SubscriptionManaging) -> some View {
-        let appStoreRestoreFlow = AppStoreRestoreFlow(subscriptionManager: subscriptionManager)
-        let appStorePurchaseFlow = AppStorePurchaseFlow(subscriptionManager: subscriptionManager,
-                                        appStoreRestoreFlow: appStoreRestoreFlow)
+    static func makeRestoreFlow(navigationCoordinator: SubscriptionNavigationCoordinator, subscriptionManager: SubscriptionManager) -> some View {
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager)
+        let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: subscriptionManager,
+                                                               appStoreRestoreFlow: appStoreRestoreFlow)
 
         let viewModel = SubscriptionContainerViewModel(
             subscriptionManager: subscriptionManager,

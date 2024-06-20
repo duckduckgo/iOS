@@ -42,8 +42,8 @@ class MockDependencyProvider: DependencyProvider {
     var userBehaviorMonitor: UserBehaviorMonitor
     var toggleProtectionsCounter: ToggleProtectionsCounter
     var subscriptionFeatureAvailability: SubscriptionFeatureAvailability
-    var subscriptionManager: SubscriptionManaging
-    var accountManager: AccountManaging
+    var subscriptionManager: SubscriptionManager
+    var accountManager: AccountManager
     var vpnFeatureVisibility: DefaultNetworkProtectionVisibility
     var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
     var networkProtectionTunnelController: NetworkProtectionTunnelController
@@ -70,13 +70,13 @@ class MockDependencyProvider: DependencyProvider {
 
         accountManager = AccountManagerMock(isUserAuthenticated: true)
         if #available(iOS 15.0, *) {
-            let subscriptionService = SubscriptionAPIService(currentServiceEnvironment: .production)
-            let authService = AuthAPIService(currentServiceEnvironment: .production)
-            let storePurchaseManaging = StorePurchaseManager()
+            let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: .production)
+            let authService = DefaultAuthEndpointService(currentServiceEnvironment: .production)
+            let storePurchaseManager = DefaultStorePurchaseManager()
             subscriptionManager = SubscriptionManagerMock(accountManager: accountManager,
-                                                          subscriptionAPIService: subscriptionService,
-                                                          authAPIService: authService,
-                                                          storePurchaseManager: storePurchaseManaging,
+                                                          subscriptionEndpointService: subscriptionService,
+                                                          authEndpointService: authService,
+                                                          storePurchaseManager: storePurchaseManager,
                                                           currentEnvironment: SubscriptionEnvironment(serviceEnvironment: .production,
                                                                                                       purchasePlatform: .appStore),
                                                           canPurchase: true)

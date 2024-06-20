@@ -95,7 +95,7 @@ import WebKit
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
     private var privacyConfigCustomURL: String?
 
-    var accountManager: AccountManaging {
+    var accountManager: AccountManager {
         AppDependencyProvider.shared.accountManager
     }
 
@@ -553,8 +553,8 @@ import WebKit
     func updateSubscriptionStatus() {
         Task {
             guard let token = accountManager.accessToken else { return }
-            var subscriptionService: SubscriptionAPIServicing {
-                AppDependencyProvider.shared.subscriptionManager.subscriptionAPIService
+            var subscriptionService: SubscriptionEndpointService {
+                AppDependencyProvider.shared.subscriptionManager.subscriptionEndpointService
             }
             if case .success(let subscription) = await subscriptionService.getSubscription(accessToken: token,
                                                                                            cachePolicy: .reloadIgnoringLocalCacheData) {

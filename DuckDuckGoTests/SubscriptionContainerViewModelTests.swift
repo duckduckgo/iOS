@@ -32,9 +32,9 @@ final class SubscriptionContainerViewModelTests: XCTestCase {
         let origin = "test_origin"
         let queryParameter = URLQueryItem(name: "origin", value: "test_origin")
         let expectedURL = SubscriptionURL.purchase.subscriptionURL(environment: .production).appending(percentEncodedQueryItem: queryParameter)
-        let appStoreRestoreFlow = AppStoreRestoreFlow(subscriptionManager: mockDependencyProvider.subscriptionManager)
-        let appStorePurchaseFlow = AppStorePurchaseFlow(subscriptionManager: mockDependencyProvider.subscriptionManager,
-                                        appStoreRestoreFlow: appStoreRestoreFlow)
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: mockDependencyProvider.subscriptionManager)
+        let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: mockDependencyProvider.subscriptionManager,
+                                                               appStoreRestoreFlow: appStoreRestoreFlow)
 
         // WHEN
         sut = .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
@@ -50,9 +50,9 @@ final class SubscriptionContainerViewModelTests: XCTestCase {
     }
 
     func testWhenInitWithoutOriginThenSubscriptionFlowPurchaseURLDoesNotHaveOriginSet() {
-        let appStoreRestoreFlow = AppStoreRestoreFlow(subscriptionManager: mockDependencyProvider.subscriptionManager)
-        let appStorePurchaseFlow = AppStorePurchaseFlow(subscriptionManager: mockDependencyProvider.subscriptionManager,
-                                        appStoreRestoreFlow: appStoreRestoreFlow)
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: mockDependencyProvider.subscriptionManager)
+        let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: mockDependencyProvider.subscriptionManager,
+                                                               appStoreRestoreFlow: appStoreRestoreFlow)
         // WHEN
         sut = .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
                     origin: nil,

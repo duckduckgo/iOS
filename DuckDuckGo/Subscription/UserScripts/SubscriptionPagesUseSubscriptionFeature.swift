@@ -92,15 +92,15 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
     
     private let subscriptionAttributionOrigin: String?
-    private let subscriptionManager: SubscriptionManaging
-    private var accountManager: AccountManaging { subscriptionManager.accountManager }
-    private let appStorePurchaseFlow: AppStorePurchaseFlowing
-    private let appStoreRestoreFlow: AppStoreRestoreFlowing
+    private let subscriptionManager: SubscriptionManager
+    private var accountManager: AccountManager { subscriptionManager.accountManager }
+    private let appStorePurchaseFlow: AppStorePurchaseFlow
+    private let appStoreRestoreFlow: AppStoreRestoreFlow
 
-    init(subscriptionManager: SubscriptionManaging,
+    init(subscriptionManager: SubscriptionManager,
          subscriptionAttributionOrigin: String?,
-         appStorePurchaseFlow: AppStorePurchaseFlowing,
-         appStoreRestoreFlow: AppStoreRestoreFlowing) {
+         appStorePurchaseFlow: AppStorePurchaseFlow,
+         appStoreRestoreFlow: AppStoreRestoreFlow) {
         self.subscriptionManager = subscriptionManager
         self.appStorePurchaseFlow = appStorePurchaseFlow
         self.appStoreRestoreFlow = appStoreRestoreFlow
@@ -284,7 +284,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
 
         // Clear subscription Cache
-        subscriptionManager.subscriptionAPIService.signOut()
+        subscriptionManager.subscriptionEndpointService.signOut()
 
         let authToken = subscriptionValues.token
         if case let .success(accessToken) = await accountManager.exchangeAuthTokenToAccessToken(authToken),
@@ -327,7 +327,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func backToSettings(params: Any, original: WKScriptMessage) async -> Encodable? {
         if let accessToken = accountManager.accessToken,
            case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
-            switch await subscriptionManager.subscriptionAPIService.getSubscription(accessToken: accessToken) {
+            switch await subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: accessToken) {
 
             case .success:
                 accountManager.storeAccount(token: accessToken,

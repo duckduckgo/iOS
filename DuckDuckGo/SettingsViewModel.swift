@@ -47,7 +47,7 @@ final class SettingsViewModel: ObservableObject {
     private let historyManager: HistoryManager
 
     // Subscription Dependencies
-    private let subscriptionManager: SubscriptionManaging
+    private let subscriptionManager: SubscriptionManager
     private var subscriptionSignOutObserver: Any?
     
     private enum UserDefaultsCacheKey: String, UserDefaultsCacheKeyStore {
@@ -407,7 +407,7 @@ final class SettingsViewModel: ObservableObject {
     // MARK: Default Init
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
-         subscriptionManager: SubscriptionManaging,
+         subscriptionManager: SubscriptionManager,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil,
@@ -786,7 +786,7 @@ extension SettingsViewModel {
             return
         }
         
-        let subscriptionResult = await subscriptionManager.subscriptionAPIService.getSubscription(accessToken: token)
+        let subscriptionResult = await subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: token)
         switch subscriptionResult {
             
         case .success(let subscription):
@@ -830,7 +830,7 @@ extension SettingsViewModel {
     @available(iOS 15.0, *)
     func restoreAccountPurchase() async {
         DispatchQueue.main.async { self.state.subscription.isRestoring = true }
-        let appStoreRestoreFlow = AppStoreRestoreFlow(subscriptionManager: subscriptionManager)
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager)
         let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase()
         switch result {
         case .success:

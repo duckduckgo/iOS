@@ -46,6 +46,10 @@ import NetworkProtection
 class TabViewController: UIViewController {
 // swiftlint:enable type_body_length
 
+    // This is pretty much the only way to test decidePolicyFor and other methods
+    // and skip dependencies while we rewrite this to use Distributed Navigation
+    var isTest: Bool = false
+    
     private struct Constants {
         static let frameLoadInterruptedErrorCode = 102
         
@@ -332,6 +336,8 @@ class TabViewController: UIViewController {
     let historyManager: HistoryManager
     let historyCapture: HistoryCapture
 
+    let youtubeNavigationHandler: DuckNavigationHandling? = YoutubePlayerNavigationHandler()
+    
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
                    appSettings: AppSettings,
@@ -652,8 +658,7 @@ class TabViewController: UIViewController {
             
             // Validate Duck Player URL
             if let url, url.isYoutubeVideo, appSettings.duckPlayerMode == .enabled {
-                webView.stopLoading()
-                performDuckRedirect(url: url)
+                youtubeNavigationHandler?.handleRedirect(url: url, webView: webView)
             }
         }
     }
@@ -717,8 +722,8 @@ class TabViewController: UIViewController {
     func goBack() {
         dismissJSAlertIfNeeded()
         
-        if isDuckPlayerSourceLink() {
-            goBack(skippingHistoryItems: 2)
+        if let handler = youtubeNavigationHandler {
+            handler.goBack(webView: webView)
         } else {
             if isError {
                 hideErrorMessage()
@@ -732,6 +737,7 @@ class TabViewController: UIViewController {
                 delegate?.tabDidRequestClose(self)
             }
         }
+        
         
     }
     
@@ -1447,31 +1453,33 @@ extension TabViewController: WKNavigationDelegate {
             })
             return
         }
-
-        if let url = navigationAction.request.url {
-            if !tabURLInterceptor.allowsNavigatingTo(url: url) {
-                decisionHandler(.cancel)
-                // If there is history or a page loaded keep the tab open
-                if self.currentlyLoadedURL != nil {
-                    refresh()
-                } else {
-                    delegate?.tabDidRequestClose(self)
+        
+        if !isTest {
+            if let url = navigationAction.request.url {
+                if !tabURLInterceptor.allowsNavigatingTo(url: url) {
+                    decisionHandler(.cancel)
+                    // If there is history or a page loaded keep the tab open
+                    if self.currentlyLoadedURL != nil {
+                        refresh()
+                    } else {
+                        delegate?.tabDidRequestClose(self)
+                    }
+                    return
                 }
+            }
+            
+            if let url = navigationAction.request.url,
+               !url.isDuckDuckGoSearch,
+               true == shouldWaitUntilContentBlockingIsLoaded({ [weak self, webView /* decision handler must be called */] in
+                   guard let self = self else {
+                       decisionHandler(.cancel)
+                       return
+                   }
+                   self.webView(webView, decidePolicyFor: navigationAction, decisionHandler: decisionHandler)
+               }) {
+                // will wait for Content Blocking to load and re-call on completion
                 return
             }
-        }
-        
-        if let url = navigationAction.request.url,
-           !url.isDuckDuckGoSearch,
-           true == shouldWaitUntilContentBlockingIsLoaded({ [weak self, webView /* decision handler must be called */] in
-               guard let self = self else {
-                   decisionHandler(.cancel)
-                   return
-               }
-               self.webView(webView, decidePolicyFor: navigationAction, decisionHandler: decisionHandler)
-           }) {
-            // will wait for Content Blocking to load and re-call on completion
-            return
         }
 
         didGoBackForward = (navigationAction.navigationType == .backForward)
@@ -1608,7 +1616,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if url.isYoutubeVideo && appSettings.duckPlayerMode == .enabled {
-            performDuckRedirect(navigationAction, completion: completion)
+            youtubeNavigationHandler?.handleRedirect(navigationAction, completion: completion, webView: webView)
             return
         }
         
@@ -1629,7 +1637,7 @@ extension TabViewController: WKNavigationDelegate {
             performBlobNavigation(navigationAction, completion: completion)
         
         case .duck:
-            performDuckNavigation(navigationAction, completion: completion)
+            youtubeNavigationHandler?.handleNavigation(navigationAction, webView: webView, completion: completion)
             
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
@@ -2782,69 +2790,5 @@ extension UserContentController {
 
 }
 
-
-// MARK: DuckPlayer
-extension TabViewController {
-    
-    // Redirects to the duck://player/videoID URL and call the completion handler
-    // Used when directly navigating to this page, by entering the URL
-    private func performDuckRedirect(_ navigationAction: WKNavigationAction,
-                                       completion: @escaping (WKNavigationActionPolicy) -> Void) {
-        
-        guard let (videoID, timestamp) = navigationAction.request.url?.youtubeVideoParams else {
-            completion(.cancel)
-            return
-        }
-        
-        webView.load(URLRequest(url: .duckPlayer(videoID, timestamp: timestamp)))
-        completion(.allow)
-        
-    }
-    
-    // Create a DuckPlayer simulated navigation request and call the completion handler
-    private func performDuckNavigation(_ navigationAction: WKNavigationAction,
-                                       completion: @escaping (WKNavigationActionPolicy) -> Void) {
-        guard let url = navigationAction.request.url else {
-            completion(.cancel)
-            return
-        }
-        
-        let handler = YoutubePlayerNavigationHandler()
-        let html = handler.makeHTMLFromTemplate()
-        let newRequest = handler.makeDuckPlayerRequest(from: URLRequest(url: url))
-        if #available(iOS 15.0, *) {
-            webView.loadSimulatedRequest(newRequest, responseHTML: html)
-            completion(.allow)
-        } else {
-            completion(.cancel)
-        }
-    }
-    
-    // This method is called form the URL observer, to support both
-    // direct navigation and JS redirects
-    private func performDuckRedirect(url: URL) {
-        guard let (videoID, timestamp) = url.youtubeVideoParams else {
-                return
-        }
-
-        let newURL = URL.duckPlayer(videoID, timestamp: timestamp)
-        self.webView.load(URLRequest(url: newURL))
-    }
-    
-    // If we are moving back from Duck Player, coming from a Youtube video
-    private func isDuckPlayerSourceLink() -> Bool {
-        
-        let backList = webView.backForwardList.backList
-        
-        guard let backURL = webView.backForwardList.backItem?.url,
-              backURL.isYoutubeVideo,
-              backURL.youtubeVideoParams?.videoID == webView.url?.youtubeVideoParams?.videoID else {
-            return false
-        }
-        return true
-    }
-    
-  
-}
 
 // swiftlint:enable file_length

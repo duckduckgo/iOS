@@ -45,10 +45,6 @@ import NetworkProtection
 // swiftlint:disable type_body_length
 class TabViewController: UIViewController {
 // swiftlint:enable type_body_length
-
-    // This is pretty much the only way to test decidePolicyFor and other methods
-    // and skip dependencies while we rewrite this to use Distributed Navigation
-    var isTest: Bool = false
     
     private struct Constants {
         static let frameLoadInterruptedErrorCode = 102
@@ -1454,33 +1450,33 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
-        if !isTest {
-            if let url = navigationAction.request.url {
-                if !tabURLInterceptor.allowsNavigatingTo(url: url) {
-                    decisionHandler(.cancel)
-                    // If there is history or a page loaded keep the tab open
-                    if self.currentlyLoadedURL != nil {
-                        refresh()
-                    } else {
-                        delegate?.tabDidRequestClose(self)
-                    }
-                    return
+        
+        if let url = navigationAction.request.url {
+            if !tabURLInterceptor.allowsNavigatingTo(url: url) {
+                decisionHandler(.cancel)
+                // If there is history or a page loaded keep the tab open
+                if self.currentlyLoadedURL != nil {
+                    refresh()
+                } else {
+                    delegate?.tabDidRequestClose(self)
                 }
-            }
-            
-            if let url = navigationAction.request.url,
-               !url.isDuckDuckGoSearch,
-               true == shouldWaitUntilContentBlockingIsLoaded({ [weak self, webView /* decision handler must be called */] in
-                   guard let self = self else {
-                       decisionHandler(.cancel)
-                       return
-                   }
-                   self.webView(webView, decidePolicyFor: navigationAction, decisionHandler: decisionHandler)
-               }) {
-                // will wait for Content Blocking to load and re-call on completion
                 return
             }
         }
+        
+        if let url = navigationAction.request.url,
+           !url.isDuckDuckGoSearch,
+           true == shouldWaitUntilContentBlockingIsLoaded({ [weak self, webView /* decision handler must be called */] in
+               guard let self = self else {
+                   decisionHandler(.cancel)
+                   return
+               }
+               self.webView(webView, decidePolicyFor: navigationAction, decisionHandler: decisionHandler)
+           }) {
+            // will wait for Content Blocking to load and re-call on completion
+            return
+        }
+        
 
         didGoBackForward = (navigationAction.navigationType == .backForward)
 

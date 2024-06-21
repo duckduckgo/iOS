@@ -83,6 +83,12 @@ struct NetworkProtectionVPNSettingsView: View {
             }
         } header: {
             Text(UserText.vpnSettingDNSSectionHeader)
+        } footer: {
+            if viewModel.usesCustomDNS {
+                Text(UserText.vpnSettingDNSSectionDisclaimer)
+            } else {
+                Text(UserText.netPSecureDNSSettingFooter)
+            }
         }
         .listRowBackground(Color(designSystemColor: .surface))
     }

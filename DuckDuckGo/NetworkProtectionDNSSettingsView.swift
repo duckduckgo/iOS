@@ -47,7 +47,7 @@ struct NetworkProtectionDNSSettingsView: View {
                             .foregroundStyle(Color(designSystemColor: .textPrimary))
                     }
                 } footer: {
-                    if viewModel.isCustomDNSSelected {
+                    if !viewModel.isCustomDNSSelected {
                         Text(UserText.netPSecureDNSSettingFooter)
                             .daxFootnoteRegular()
                             .foregroundColor(.init(designSystemColor: .textSecondary))

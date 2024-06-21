@@ -54,9 +54,5 @@ struct SettingsDataClearingView: View {
         .applySettingsListModifiers(title: UserText.dataClearing,
                                     displayMode: .inline,
                                     viewModel: viewModel)
-        .onForwardNavigationAppear {
-            Pixel.fire(pixel: .settingsDataClearingOpen,
-                       withAdditionalParameters: PixelExperiment.parameters)
-        }
     }
 }

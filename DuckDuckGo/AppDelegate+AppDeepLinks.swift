@@ -38,10 +38,6 @@ extension AppDelegate {
         case .quickLink:
             let query = AppDeepLinkSchemes.query(fromQuickLink: url)
             mainViewController.loadQueryInNewTab(query, reuseExisting: true)
-            if url == URL.emailProtectionHelpPageLink {
-                Pixel.fire(pixel: .settingsEmailProtectionLearnMore,
-                           withAdditionalParameters: PixelExperiment.parameters)
-            }
 
         case .addFavorite:
             mainViewController.startAddFavoriteFlow()

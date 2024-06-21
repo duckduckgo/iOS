@@ -23,6 +23,7 @@ import Combine
 import Foundation
 import WebKit
 import UserScript
+import Core
 
 enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
     case enabled, alwaysAsk, disabled
@@ -35,28 +36,6 @@ enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
             return "Ask every Time"
         case .disabled:
             return "Never"
-        }
-    }
-
-    init(_ duckPlayerMode: Bool?) {
-        switch duckPlayerMode {
-        case true:
-            self = .enabled
-        case false:
-            self = .disabled
-        default:
-            self = .alwaysAsk
-        }
-    }
-
-    var boolValue: Bool? {
-        switch self {
-        case .enabled:
-            return true
-        case .alwaysAsk:
-            return nil
-        case .disabled:
-            return false
         }
     }
     
@@ -114,32 +93,33 @@ public struct UserValues: Codable {
     let overlayInteracted: Bool
 }
 
-final class DuckPlayer {
-    static let usesSimulatedRequests: Bool = {
-        if #available(macOS 12.0, *) {
-            return true
-        } else {
-            return false
-        }
-    }()
+class DuckPlayerSettings {
+    
+    @UserDefaultsWrapper(key: .duckPlayerMode, defaultValue: .alwaysAsk)
+    var mode: DuckPlayerMode
+    
+    @UserDefaultsWrapper(key: .duckPlayerOverlayInteracted, defaultValue: false)
+    var overlayInteracted: Bool
+    
+    @UserDefaultsWrapper(key: .duckPlayerOverlayButtonsUsed, defaultValue: false)
+    var overlayButtonsUsed: Bool
+    
+}
 
+final class DuckPlayer {
+    
     static let duckPlayerHost: String = "player"
     static let commonName = "Duck Player"
+        
+    private var settings: DuckPlayerSettings
     
-    static let shared = DuckPlayer()
+    // @Published var mode: DuckPlayerMode
+    // @Published var overlayInteracted: Bool
+    // @Published var overlayButtonsUsed: Bool
+    
 
-    var isAvailable: Bool {
-        return true
-    }
-
-    @Published var mode: DuckPlayerMode
-
-    var overlayInteracted: Bool {
-        true
-    }
-
-    init() {
-        mode = .enabled
+    init(settings: DuckPlayerSettings = DuckPlayerSettings()) {
+        self.settings = settings
     }
 
     // MARK: - Common Message Handlers
@@ -173,8 +153,8 @@ final class DuckPlayer {
 
     private func encodeUserValues() -> UserValues {
         UserValues(
-            duckPlayerMode: .enabled,
-            overlayInteracted: true
+            duckPlayerMode: settings.mode,
+            overlayInteracted: settings.overlayInteracted
         )
     }
 

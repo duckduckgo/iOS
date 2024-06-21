@@ -29,6 +29,12 @@ protocol YoutubeOverlayUserScriptDelegate: AnyObject {
 
 final class YoutubeOverlayUserScript: NSObject, Subfeature {
 
+    private var duckPlayer: DuckPlayer
+    
+    init(duckPlayer: DuckPlayer) {
+        self.duckPlayer = duckPlayer
+    }
+    
     enum MessageOrigin {
         case duckPlayer, serpOverlay, youtubeOverlay
 
@@ -36,6 +42,8 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
             switch url.host {
             case "duckduckgo.com":
                 self = .serpOverlay
+            case "m.youtube.com":
+                self = .youtubeOverlay
             case "www.youtube.com":
                 self = .youtubeOverlay
             default:
@@ -44,12 +52,12 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
         }
     }
 
-    // let duckPlayerPreferences: DuckPlayerPreferences
     weak var broker: UserScriptMessageBroker?
     weak var delegate: YoutubeOverlayUserScriptDelegate?
     weak var webView: WKWebView?
     let messageOriginPolicy: MessageOriginPolicy = .only(rules: [
         .exact(hostname: "www.youtube.com"),
+        .exact(hostname: "m.youtube.com"),
         .exact(hostname: "duckduckgo.com")
     ])
     public var featureName: String = "duckPlayer"
@@ -76,9 +84,9 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
                 assertionFailure("YoutubeOverlayUserScript: Unexpected message origin: \(String(describing: webView?.url))")
                 return nil
             }
-            return DuckPlayer.shared.handleSetUserValuesMessage(from: origin)
+            return duckPlayer.handleSetUserValuesMessage(from: origin)
         case .getUserValues:
-            return DuckPlayer.shared.handleGetUserValues
+            return duckPlayer.handleGetUserValues
         case .openDuckPlayer:
             return handleOpenDuckPlayer
         case .sendDuckPlayerPixel:

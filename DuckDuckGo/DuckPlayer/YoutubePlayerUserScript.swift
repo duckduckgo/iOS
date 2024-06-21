@@ -22,11 +22,15 @@ import Common
 import UserScript
 
 final class YoutubePlayerUserScript: NSObject, Subfeature {
-
+    
+    private var duckPlayer: DuckPlayer
+    
+    init(duckPlayer: DuckPlayer) {
+        self.duckPlayer = duckPlayer
+    }
+    
     weak var broker: UserScriptMessageBroker?
     weak var webView: WKWebView?
-
-    var isEnabled: Bool = false
 
     // this isn't an issue to be set to 'all' because the page
     public let messageOriginPolicy: MessageOriginPolicy = .all
@@ -49,11 +53,11 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
     func handler(forMethodNamed methodName: String) -> Subfeature.Handler? {
         switch MessageNames(rawValue: methodName) {
         case .getUserValues:
-            return DuckPlayer.shared.handleGetUserValues
+            return duckPlayer.handleGetUserValues
         case .setUserValues:
-            return DuckPlayer.shared.handleSetUserValuesMessage(from: .duckPlayer)
+            return duckPlayer.handleSetUserValuesMessage(from: .duckPlayer)
         case .initialSetup:
-            return DuckPlayer.shared.initialSetup(with: webView)
+            return duckPlayer.initialSetup(with: webView)
         default:
             assertionFailure("YoutubePlayerUserScript: Failed to parse User Script message: \(methodName)")
             return nil

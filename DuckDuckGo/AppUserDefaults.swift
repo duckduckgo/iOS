@@ -77,6 +77,8 @@ public class AppUserDefaults: AppSettings {
         static let crashCollectionOptInStatus = "com.duckduckgo.ios.crashCollectionOptInStatus"
         
         static let duckPlayerMode = "com.duckduckgo.ios.duckPlayerMode"
+        static let duckPlayerOverlayInteracted = "com.duckduckgo.ios.duckPlayerOverlayInteracted"
+        static let duckPlayerOverlayButtonsUsed = "com.duckduckgo.ios.duckPlayerOverlayButtonsUsed"
     }
 
     private struct DebugKeys {
@@ -388,6 +390,7 @@ public class AppUserDefaults: AppSettings {
             userDefaults?.set(newValue.stringValue, forKey: Keys.duckPlayerMode)
         }
     }
+    
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

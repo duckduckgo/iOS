@@ -124,7 +124,6 @@ final class DuckPlayer {
     }()
 
     static let duckPlayerHost: String = "player"
-    // static let commonName = UserText.duckPlayer
     static let commonName = "Duck Player"
     
     static let shared = DuckPlayer()

@@ -54,10 +54,6 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
     ])
     public var featureName: String = "duckPlayer"
 
-    /*init(duckPlayerPreferences: DuckPlayerPreferences = DuckPlayerPreferences.shared) {
-        self.duckPlayerPreferences = duckPlayerPreferences
-    }*/
-
     // MARK: - Subfeature
 
     func with(broker: UserScriptMessageBroker) {
@@ -132,24 +128,7 @@ extension YoutubeOverlayUserScript {
         }
         let pixelName = parameters["pixelName"] as? String
 
-        /*
-        switch pixelName {
-        case "play.use":
-            duckPlayerPreferences.youtubeOverlayAnyButtonPressed = true
-            PixelKit.fire(GeneralPixel.duckPlayerViewFromYoutubeViaMainOverlay)
-            // Temporary pixel for first time user uses Duck Player
-            if AppDelegate.isNewUser {
-                PixelKit.fire(GeneralPixel.watchInDuckPlayerInitial, frequency: .legacyInitial)
-            }
-        case "play.do_not_use":
-            duckPlayerPreferences.youtubeOverlayAnyButtonPressed = true
-            PixelKit.fire(GeneralPixel.duckPlayerOverlayYoutubeWatchHere)
-        case "overlay":
-            PixelKit.fire(GeneralPixel.duckPlayerOverlayYoutubeImpressions)
-        default:
-            break
-        }
-         */
+        // To be implemented once final pixels are defined or updated
 
         return nil
     }

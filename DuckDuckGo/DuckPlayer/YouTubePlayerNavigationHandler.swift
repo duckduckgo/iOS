@@ -58,10 +58,9 @@ struct YoutubePlayerNavigationHandler {
     }
     
     private func performNavigation(_ request: URLRequest, responseHTML: String, webView: WKWebView) {
+        // iOS 14 will be soon dropped out (and it does not support simulatedRequests)
         if #available(iOS 15.0, *) {
             webView.loadSimulatedRequest(request, responseHTML: responseHTML)
-        } else {
-            // NOOP
         }
     }
     

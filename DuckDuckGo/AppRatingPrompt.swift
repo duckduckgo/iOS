@@ -20,6 +20,7 @@
 import Foundation
 import Core
 import CoreData
+import Common
 
 protocol AppRatingPromptStorage {
     
@@ -140,7 +141,7 @@ class AppRatingPromptCoreDataStorage: AppRatingPromptStorage {
         do {
             results = try context.fetch(fetchRequest)
         } catch {
-            DailyPixel.fireDailyAndCount(pixel: .appRatingPromptFetchError, error: error, includedParameters: [.appVersion])
+            os_log("Error while fetching AppRatingPromptEntity: %s", log: .generalLog, type: .debug, error.localizedDescription)
             return nil
         }
 

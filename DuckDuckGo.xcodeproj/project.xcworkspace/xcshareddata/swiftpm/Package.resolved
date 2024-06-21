@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "fcappelli/subscription_refactoring_4",
-        "revision" : "a032f46fd76c91588080c4b6d237b24d4dee6fc8"
+        "revision" : "8d1209dae8250263319f21cd1db3ca35e78aebb7"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "ba2ad0c3a14a8c07d7be8b50a20b47efea207e86",
-        "version" : "5.19.0"
+        "revision" : "4689746e42b24c40c18896d697ea02b854e90d35",
+        "version" : "5.21.0"
       }
     },
     {
@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "revision" : "ff482d6169b153fd25afa079eef3989c30ca3682",
-        "version" : "4.0.0"
+        "revision" : "924a80e20e2465dcaf3dca32c9b6e9b9968222b9",
+        "version" : "4.1.0"
       }
     },
     {

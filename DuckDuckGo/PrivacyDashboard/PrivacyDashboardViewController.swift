@@ -86,6 +86,8 @@ final class PrivacyDashboardViewController: UIViewController {
         case .overallCategorySelected: domainEvent = .reportBrokenSiteOverallCategorySelected
         case .reportBrokenSiteShown: domainEvent = .reportBrokenSiteShown
         case .reportBrokenSiteSent: domainEvent = .reportBrokenSiteSent
+        case .skipToggleStep: domainEvent = .reportBrokenSiteSkipToggleStep
+        case .toggleProtectionOff: domainEvent = .reportBrokenSiteToggleProtectionOff
         }
         if let parameters {
             Pixel.fire(pixel: domainEvent, withAdditionalParameters: parameters)

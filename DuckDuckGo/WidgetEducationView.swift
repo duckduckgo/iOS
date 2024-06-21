@@ -73,10 +73,6 @@ struct WidgetEducationView: View {
                 .padding(.top, Const.Padding.top)
             }
         }.navigationBarTitle(navBarTitle, displayMode: .inline)
-            .onForwardNavigationAppear {
-                Pixel.fire(pixel: .settingsNextStepsAddWidget,
-                           withAdditionalParameters: PixelExperiment.parameters)
-            }
     }
     
     private var secondParagraphText: Text {

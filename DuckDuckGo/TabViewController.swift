@@ -733,21 +733,9 @@ class TabViewController: UIViewController {
                 delegate?.tabDidRequestClose(self)
             }
         }
-        
-        
+
     }
     
-    func goBack(skippingHistoryItems: Int) {
-        
-        let backList = webView.backForwardList.backList
-        guard skippingHistoryItems > 1,
-        let lastElement = backList[safe: backList.count - skippingHistoryItems] else {
-            webView.goBack()
-            return
-        }
-        webView.go(to: lastElement)
-    }
-
     func goForward() {
         dismissJSAlertIfNeeded()
 
@@ -1611,7 +1599,7 @@ extension TabViewController: WKNavigationDelegate {
             adClickAttributionLogic.onBackForwardNavigation(mainFrameURL: webView.url)
         }
         
-        if url.isYoutubeVideo && appSettings.duckPlayerMode == .enabled {
+        if appSettings.duckPlayerMode == .enabled {
             youtubeNavigationHandler?.handleRedirect(navigationAction, completion: completion, webView: webView)
             return
         }

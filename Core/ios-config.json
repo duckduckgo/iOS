@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1717679238533,
+    "version": 1718626353340,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -79,6 +79,9 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "settings": {
@@ -105,7 +108,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "16c6e3fb43797e3ca13a9259569a9e4e"
+            "hash": "b9baf40f82353fbfd4e1daa45f7a60e9"
         },
         "androidBrowserConfig": {
             "exceptions": [],
@@ -307,10 +310,16 @@
                     "domain": "sports.tipico.de"
                 },
                 {
+                    "domain": "lotusbakeries.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 },
                 {
                     "domain": "instagram.com"
@@ -344,7 +353,7 @@
                     }
                 }
             },
-            "hash": "e327901635a0f00ab376e026317ab975"
+            "hash": "63f99d701b33267410e99d637e3f7778"
         },
         "autofill": {
             "exceptions": [
@@ -393,6 +402,11 @@
                 }
             },
             "hash": "bd604dcd1f7bb584185f0c1cb94a5771"
+        },
+        "brokenSiteReportExperiment": {
+            "exceptions": [],
+            "state": "enabled",
+            "hash": "52857469413a66e8b0c7b00de5589162"
         },
         "clickToLoad": {
             "exceptions": [
@@ -1001,6 +1015,9 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "settings": {
@@ -1018,7 +1035,7 @@
                 }
             },
             "state": "disabled",
-            "hash": "770f7ae0f752e976764771bccec352b2"
+            "hash": "4104bd45b436c084ff8fd0297883d40e"
         },
         "clickToPlay": {
             "exceptions": [
@@ -1027,6 +1044,9 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "settings": {
@@ -1039,7 +1059,7 @@
                 }
             },
             "state": "disabled",
-            "hash": "c5c27da452ae8ebdbc69e998c4684d51"
+            "hash": "ce034a4ede4b5e83c37410cab3bc0f50"
         },
         "clientBrandHint": {
             "exceptions": [],
@@ -1075,9 +1095,12 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
-            "hash": "593797946074a1f304add65e7543b9be"
+            "hash": "ee9d383becfe28d8a5b575b51f5c9d11"
         },
         "cookie": {
             "settings": {
@@ -1124,10 +1147,13 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "state": "disabled",
-            "hash": "7ade754b885238cd191f1a61b4eeb0b6"
+            "hash": "8ea32fe77b484cffbbf3782cc0725008"
         },
         "customUserAgent": {
             "settings": {
@@ -1261,6 +1287,9 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "settings": {
@@ -4439,7 +4468,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "c51c06a39ff0d11c62ef9ea4f9fdcd88"
+            "hash": "85bebc8a4c01285c2cfb97032a0610bb"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -4448,10 +4477,13 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "state": "disabled",
-            "hash": "dc1b4fa301193a03ddcd4bdf7ee3e610"
+            "hash": "cd2dbf279bf4eb19171c6d79bf5df183"
         },
         "extendedOnboarding": {
             "exceptions": [],
@@ -4469,9 +4501,12 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
-            "hash": "2037fcd805ece181cfffc482f262941f"
+            "hash": "d4ffa55e08a4e062a0c0f1a9e1e8275b"
         },
         "fingerprintingBattery": {
             "exceptions": [
@@ -4483,10 +4518,13 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "state": "enabled",
-            "hash": "22e0407b5a9d2ccd6f87fc829385eac2"
+            "hash": "ff7cc7acb7e549da726a89649f6b3ed1"
         },
         "fingerprintingCanvas": {
             "settings": {
@@ -4582,10 +4620,13 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "state": "disabled",
-            "hash": "d48bfb1151476f49970ffd3b1f778bf9"
+            "hash": "211fff4a5ceb8e61a12f26f2ff4f1e04"
         },
         "fingerprintingHardware": {
             "settings": {
@@ -4629,14 +4670,20 @@
                     "domain": "proton.me"
                 },
                 {
+                    "domain": "nordstrom.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "state": "enabled",
-            "hash": "75b2697f8638084e88aa1d5f6b4e4255"
+            "hash": "3049e5e3a81f6a7bb8e2549216711cbd"
         },
         "fingerprintingScreenSize": {
             "settings": {
@@ -4681,10 +4728,13 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "state": "enabled",
-            "hash": "9cc405af801c806fb2b147eea50769cd"
+            "hash": "e3474183d3c53c53df6c8f56887ca2e8"
         },
         "fingerprintingTemporaryStorage": {
             "exceptions": [
@@ -4702,10 +4752,13 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "state": "enabled",
-            "hash": "c921097148e677cae3efc68e9618a30f"
+            "hash": "7f665ed95b811d5f56a1c0e2bc3857d4"
         },
         "googleRejected": {
             "exceptions": [
@@ -4714,10 +4767,13 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "state": "disabled",
-            "hash": "dc1b4fa301193a03ddcd4bdf7ee3e610"
+            "hash": "cd2dbf279bf4eb19171c6d79bf5df183"
         },
         "gpc": {
             "state": "enabled",
@@ -4771,6 +4827,9 @@
                     "domain": "sundancecatalog.com"
                 },
                 {
+                    "domain": "noaprints.com"
+                },
+                {
                     "domain": "oreillyauto.com"
                 }
             ],
@@ -4783,7 +4842,7 @@
                     "privacy-test-pages.site"
                 ]
             },
-            "hash": "7fa15dd3c7d9b3a318088d6414653c66"
+            "hash": "105ce813c7e2db0e99f9202b4210afd6"
         },
         "harmfulApis": {
             "settings": {
@@ -4890,10 +4949,13 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "state": "disabled",
-            "hash": "f29eae11500edcda80aa8b32b12869eb"
+            "hash": "aa8430d25bbd499d1f8bed22caf34943"
         },
         "history": {
             "state": "enabled",
@@ -4905,12 +4967,15 @@
                         "steps": [
                             {
                                 "percent": 25
+                            },
+                            {
+                                "percent": 50
                             }
                         ]
                     }
                 }
             },
-            "hash": "74e191a1c2e553a121ad8f5d561d12cb"
+            "hash": "8ec044ab0b9532ae2b9852c70fd0d436"
         },
         "https": {
             "state": "enabled",
@@ -4929,9 +4994,12 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
-            "hash": "ea2c4fc84f27eb3694acd9ccf1023e95"
+            "hash": "bf47b6ce76c34dd70bc0678fa23c7c52"
         },
         "incontextSignup": {
             "exceptions": [],
@@ -4971,6 +5039,9 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "settings": {
@@ -4981,7 +5052,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "bb2ed420e76ecaf31a1f99decd370e55"
+            "hash": "79aac7de322d705ec237c688b7e60d6c"
         },
         "networkProtection": {
             "state": "enabled",
@@ -5011,10 +5082,13 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "state": "disabled",
-            "hash": "522e3e42e2612ac2811342d3f6754c5a"
+            "hash": "5dba15e93b648ef9de8be7ef3b4def33"
         },
         "performanceMetrics": {
             "state": "enabled",
@@ -5024,9 +5098,32 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
-            "hash": "936f00970c108fd646f73d00b3f3f5b5"
+            "hash": "1a1a4652687f25da9f351df157c5e051"
+        },
+        "pluginPointFocusedViewPlugin": {
+            "state": "disabled",
+            "exceptions": [],
+            "hash": "c292bb627849854515cebbded288ef5a"
+        },
+        "pluginPointNewTabPagePlugin": {
+            "state": "disabled",
+            "exceptions": [],
+            "hash": "c292bb627849854515cebbded288ef5a"
+        },
+        "pluginPointNewTabPageSectionPlugin": {
+            "state": "disabled",
+            "exceptions": [],
+            "hash": "c292bb627849854515cebbded288ef5a"
+        },
+        "pluginPointNewTabPageShortcutPlugin": {
+            "state": "disabled",
+            "exceptions": [],
+            "hash": "c292bb627849854515cebbded288ef5a"
         },
         "privacyDashboard": {
             "exceptions": [],
@@ -5110,10 +5207,13 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "state": "disabled",
-            "hash": "1cfe449de8a4fcb542757383d846c031"
+            "hash": "3c850040d1c9b3e06841b1491c5d2940"
         },
         "requestFilterer": {
             "state": "disabled",
@@ -5123,12 +5223,15 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "settings": {
                 "windowInMs": 0
             },
-            "hash": "3218faa098a2e9da61447fb63e3a5ed9"
+            "hash": "38f912d4dc34772ba00e207217eb2e86"
         },
         "runtimeChecks": {
             "state": "disabled",
@@ -5138,10 +5241,13 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "settings": {},
-            "hash": "ddb64344aa42e9593964f14b6de3d6df"
+            "hash": "5ff34abb3d8cf7087d3ca570e89cefc2"
         },
         "serviceworkerInitiatedRequests": {
             "exceptions": [
@@ -5150,10 +5256,13 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "state": "disabled",
-            "hash": "dc1b4fa301193a03ddcd4bdf7ee3e610"
+            "hash": "cd2dbf279bf4eb19171c6d79bf5df183"
         },
         "sslCertificates": {
             "state": "disabled",
@@ -6506,6 +6615,12 @@
                                 ]
                             },
                             {
+                                "rule": "google.com/adsense/search/",
+                                "domains": [
+                                    "ihowlist.com"
+                                ]
+                            },
+                            {
                                 "rule": "marketingplatform.google.com/about/enterprise",
                                 "domains": [
                                     "scrolller.com"
@@ -7037,14 +7152,7 @@
                             {
                                 "rule": "klaviyo.com/",
                                 "domains": [
-                                    "andieswim.com",
-                                    "dreamfarm.com",
-                                    "footweartruth.com",
-                                    "holdonbags.com",
-                                    "kmail-lists.com",
-                                    "nestlenutritionstore.com",
-                                    "organakratom.com",
-                                    "usafacts.org"
+                                    "<all>"
                                 ]
                             }
                         ]
@@ -8416,9 +8524,12 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
-            "hash": "3bda09ff6f21176dfe44ef81e7dc2234"
+            "hash": "96f704cb5570ef9e0db986b5a7c89b24"
         },
         "trackingCookies1p": {
             "settings": {
@@ -8433,10 +8544,13 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "state": "disabled",
-            "hash": "dab51f5ad2454727f8bc474cdd3da65b"
+            "hash": "cc77dc124b0b2985b15360217ed313a9"
         },
         "trackingCookies3p": {
             "settings": {
@@ -8448,10 +8562,13 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "state": "disabled",
-            "hash": "522e3e42e2612ac2811342d3f6754c5a"
+            "hash": "5dba15e93b648ef9de8be7ef3b4def33"
         },
         "trackingParameters": {
             "exceptions": [
@@ -8463,6 +8580,9 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 },
                 {
                     "domain": "theverge.com"
@@ -8498,7 +8618,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "8bd322bda06f2334da2a85b5f777ed90"
+            "hash": "4c4f8c40169aa3dbdd06dfcab5c8b9f8"
         },
         "userAgentRotation": {
             "settings": {
@@ -8510,10 +8630,13 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "state": "disabled",
-            "hash": "e30277704ddbf20c14136baab08519c5"
+            "hash": "5d0a0094113c803aa7c57edffd28e2f9"
         },
         "voiceSearch": {
             "exceptions": [],
@@ -8527,6 +8650,9 @@
                 },
                 {
                     "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
                 }
             ],
             "state": "enabled",
@@ -8569,24 +8695,22 @@
                     }
                 ]
             },
-            "hash": "5ed04471e74144a89c5276b30b8942a4"
+            "hash": "2ec0196d9e54a04f5dbc50bb3a48921f"
         },
         "windowsPermissionUsage": {
             "exceptions": [],
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
-        "windowsStartupBoost": {
-            "exceptions": [
-                {
-                    "domain": "marvel.com"
-                },
-                {
-                    "domain": "sundancecatalog.com"
-                }
-            ],
+        "windowsSpellChecker": {
+            "exceptions": [],
             "state": "disabled",
-            "hash": "dc1b4fa301193a03ddcd4bdf7ee3e610"
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
+        },
+        "windowsStartupBoost": {
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
         "windowsWaitlist": {
             "exceptions": [],

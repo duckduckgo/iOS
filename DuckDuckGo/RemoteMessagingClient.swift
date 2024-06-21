@@ -1,5 +1,5 @@
 //
-//  RemoteMessaging.swift
+//  RemoteMessagingClient.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -28,11 +28,15 @@ import RemoteMessaging
 import NetworkProtection
 import Subscription
 
-struct RemoteMessaging {
+struct RemoteMessagingClient {
 
-    struct Notifications {
-        static let remoteMessagesDidChange = Notification.Name("com.duckduckgo.app.RemoteMessagesDidChange")
-    }
+    private static let endpoint: URL = {
+#if DEBUG
+        URL(string: "https://raw.githubusercontent.com/duckduckgo/remote-messaging-config/main/samples/ios/sample1.json")!
+#else
+        URL(string: "https://staticcdn.duckduckgo.com/remotemessaging/config/v1/ios-config.json")!
+#endif
+    }()
 
     @UserDefaultsWrapper(key: .lastRemoteMessagingRefreshDate, defaultValue: .distantPast)
     static private var lastRemoteMessagingRefreshDate: Date
@@ -149,7 +153,7 @@ struct RemoteMessaging {
                                         variantManager: VariantManager = DefaultVariantManager(),
                                         isWidgetInstalled: Bool) async throws {
 
-        let result = await Self.fetchRemoteMessages(remoteMessageRequest: RemoteMessageRequest())
+        let result = await Self.fetchRemoteMessages(remoteMessageRequest: RemoteMessageRequest(endpoint: endpoint))
 
         switch result {
         case .success(let statusResponse):
@@ -163,6 +167,10 @@ struct RemoteMessaging {
 
             var privacyProDaysSinceSubscribed: Int = -1
             var privacyProDaysUntilExpiry: Int = -1
+            var privacyProPurchasePlatform: String?
+            var privacyProIsActive: Bool = false
+            var privacyProIsExpiring: Bool = false
+            var privacyProIsExpired: Bool = false
             let surveyActionMapper: DefaultRemoteMessagingSurveyURLBuilder
 
             if let accessToken = AppDependencyProvider.shared.subscriptionManager.accountManager.accessToken {
@@ -173,6 +181,20 @@ struct RemoteMessaging {
                 if case let .success(subscription) = subscriptionResult {
                     privacyProDaysSinceSubscribed = Calendar.current.numberOfDaysBetween(subscription.startedAt, and: Date()) ?? -1
                     privacyProDaysUntilExpiry = Calendar.current.numberOfDaysBetween(Date(), and: subscription.expiresOrRenewsAt) ?? -1
+                    privacyProPurchasePlatform = subscription.platform.rawValue
+
+                    switch subscription.status {
+                    case .autoRenewable, .gracePeriod:
+                        privacyProIsActive = true
+                    case .notAutoRenewable:
+                        privacyProIsActive = true
+                        privacyProIsExpiring = true
+                    case .expired, .inactive:
+                        privacyProIsExpired = true
+                    case .unknown:
+                        break // Not supported in RMF
+                    }
+
                     surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(statisticsStore: statisticsStore, subscription: subscription)
                 } else {
                     surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(statisticsStore: statisticsStore, subscription: nil)
@@ -180,6 +202,8 @@ struct RemoteMessaging {
             } else {
                 surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(statisticsStore: statisticsStore, subscription: nil)
             }
+
+            let dismissedMessageIds = remoteMessagingStore.fetchDismissedRemoteMessageIds()
 
             let remoteMessagingConfigMatcher = RemoteMessagingConfigMatcher(
                 appAttributeMatcher: AppAttributeMatcher(statisticsStore: statisticsStore,
@@ -195,10 +219,15 @@ struct RemoteMessaging {
                                                            isPrivacyProEligibleUser: canPurchase,
                                                            isPrivacyProSubscriber: isPrivacyProSubscriber,
                                                            privacyProDaysSinceSubscribed: privacyProDaysSinceSubscribed,
-                                                           privacyProDaysUntilExpiry: privacyProDaysUntilExpiry),
+                                                           privacyProDaysUntilExpiry: privacyProDaysUntilExpiry,
+                                                           privacyProPurchasePlatform: privacyProPurchasePlatform,
+                                                           isPrivacyProSubscriptionActive: privacyProIsActive,
+                                                           isPrivacyProSubscriptionExpiring: privacyProIsExpiring,
+                                                           isPrivacyProSubscriptionExpired: privacyProIsExpired,
+                                                           dismissedMessageIds: dismissedMessageIds),
                 percentileStore: RemoteMessagingPercentileUserDefaultsStore(userDefaults: .standard),
                 surveyActionMapper: surveyActionMapper,
-                dismissedMessageIds: remoteMessagingStore.fetchDismissedRemoteMessageIds()
+                dismissedMessageIds: dismissedMessageIds
             )
 
             let processor = RemoteMessagingConfigProcessor(remoteMessagingConfigMatcher: remoteMessagingConfigMatcher)

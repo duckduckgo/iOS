@@ -1134,4 +1134,14 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let siteNotWorkingWebsiteIsBroken = NSLocalizedString("site.not.working.website.is.broken", value: "Website Is Broken", comment: "Button that triggers flow to report broken site")
     public static let siteNotWorkingDescription = NSLocalizedString("site.not.working.description", value: "Select the option that best describes the problem you experienced.", comment: "Description on a report broken site page.")
 
+    // Broken site report experiment
+    public static let brokenSiteReportMenuTitle = NSLocalizedString("broken.site.report.menu.title", value: "Report Problem With This Site", comment: "Button to open report form")
+    public static let brokenSiteReportSuccessToast = NSLocalizedString("broken.site.report.success.toast", value: "Your report helps make DuckDuckGo better for everyone!", comment: "Message that appears after submitting report")
+    public static let brokenSiteReportMissingDescriptionAlertTitle = NSLocalizedString("broken.site.report.missing.description.alert.title", value: "Description Required", comment: "It appears as an alert after user tries to send a report without submitting any details")
+    public static let brokenSiteReportMissingDescriptionAlertDescription = NSLocalizedString("broken.site.report.missing.description.alert.description", value: "Please describe the issue you experienced on this site so we can better understand how to fix it.", comment: "It appears as an alert after user tries to send a report without submitting any details")
+    public static let brokenSiteReportMissingDescriptionAlertButton = NSLocalizedString("broken.site.report.missing.description.alert.button", value: "Got It", comment: "Acknowledge button")
+    public static let brokenSiteReportToggleAlertTitle = NSLocalizedString("broken.site.report.toggle.alert.title", value: "Did turning Privacy Protections off resolve the issue on this site?", comment: "An alert that appears after user turns off the privacy protection")
+    public static let brokenSiteReportToggleAlertYesButton = NSLocalizedString("broken.site.report.toggle.alert.yes.button", value: "Yes", comment: "Button to answer question 'Did turning off protections resolve the issue on this site?'")
+    public static let brokenSiteReportToggleAlertNoButton = NSLocalizedString("broken.site.report.toggle.alert.no.button", value: "No", comment: "Button to answer question 'Did turning off protections resolve the issue on this site?'")
+
 }

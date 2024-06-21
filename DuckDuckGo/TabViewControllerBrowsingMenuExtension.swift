@@ -28,25 +28,25 @@ import PrivacyDashboard
 
 // swiftlint:disable file_length
 extension TabViewController {
-    
+
     func buildBrowsingMenuHeaderContent() -> [BrowsingMenuEntry] {
-        
+
         var entries = [BrowsingMenuEntry]()
-        
+
         entries.append(BrowsingMenuEntry.regular(name: UserText.actionNewTab,
                                                  accessibilityLabel: UserText.keyCommandNewTab,
                                                  image: UIImage(named: "Add-24")!,
                                                  action: { [weak self] in
             self?.onNewTabAction()
         }))
-        
+
         entries.append(BrowsingMenuEntry.regular(name: UserText.actionShare, image: UIImage(named: "Share-24")!, action: { [weak self] in
             guard let self = self else { return }
             guard let menu = self.chromeDelegate?.omniBar.menuButton else { return }
             Pixel.fire(pixel: .browsingMenuShare)
             self.onShareAction(forLink: self.link!, fromView: menu)
         }))
-        
+
         entries.append(BrowsingMenuEntry.regular(name: UserText.actionCopy, image: UIImage(named: "Copy-24")!, action: { [weak self] in
             guard let strongSelf = self else { return }
             if !strongSelf.isError, let url = strongSelf.webView.url {
@@ -54,13 +54,13 @@ extension TabViewController {
             } else if let text = self?.chromeDelegate?.omniBar.textField.text {
                 strongSelf.onCopyAction(for: text)
             }
-            
+
             Pixel.fire(pixel: .browsingMenuCopy)
             let addressBarBottom = strongSelf.appSettings.currentAddressBarPosition.isBottom
             ActionMessageView.present(message: UserText.actionCopyMessage,
                                       presentationLocation: .withBottomBar(andAddressBarBottom: addressBarBottom))
         }))
-        
+
         entries.append(BrowsingMenuEntry.regular(name: UserText.actionPrint, image: UIImage(named: "Print-24")!, action: { [weak self] in
             Pixel.fire(pixel: .browsingMenuPrint)
             self?.print()
@@ -68,20 +68,21 @@ extension TabViewController {
 
         return entries
     }
-    
+
     var favoriteEntryIndex: Int { 1 }
 
     func buildBrowsingMenu(with bookmarksInterface: MenuBookmarksInteracting) -> [BrowsingMenuEntry] {
         var entries = [BrowsingMenuEntry]()
-        
+
         let linkEntries = buildLinkEntries(with: bookmarksInterface)
         entries.append(contentsOf: linkEntries)
-            
+
         if let domain = self.privacyInfo?.domain {
             entries.append(self.buildToggleProtectionEntry(forDomain: domain))
         }
 
-        entries.append(BrowsingMenuEntry.regular(name: UserText.actionReportBrokenSite,
+        let name = PixelExperiment.privacyDashboardVariant == .control ? UserText.actionReportBrokenSite : UserText.brokenSiteReportMenuTitle
+        entries.append(BrowsingMenuEntry.regular(name: name,
                                                  image: UIImage(named: "Feedback-16")!,
                                                  action: { [weak self] in
             self?.onReportBrokenSiteAction()

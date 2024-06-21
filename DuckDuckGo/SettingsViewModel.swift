@@ -226,15 +226,15 @@ final class SettingsViewModel: ObservableObject {
         )
     }
 
-var duckPlayerModeBinding: Binding<DuckPlayerMode> {
-Binding<DuckPlayerMode>(
-get: { self.state.duckPlayerMode ?? .alwaysAsk },
-set: {
-self.appSettings.duckPlayerMode = $0
-self.state.duckPlayerMode = $0
-}
-)
-}
+    var duckPlayerModeBinding: Binding<DuckPlayerMode> {
+        Binding<DuckPlayerMode>(
+            get: { self.state.duckPlayerMode ?? .alwaysAsk },
+            set: {
+                self.appSettings.duckPlayerMode = $0
+                self.state.duckPlayerMode = $0
+            }
+        )
+    }
 
     func setVoiceSearchEnabled(to value: Bool) {
         if value {

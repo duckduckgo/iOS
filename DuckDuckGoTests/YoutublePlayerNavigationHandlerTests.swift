@@ -110,13 +110,10 @@ class YoutubePlayerNavigationHandlerTests: XCTestCase {
     
     // Test for makeDuckPlayerRequest(from:)
     func testMakeDuckPlayerRequestFromOriginalRequest() {
-        // Given
         let originalRequest = URLRequest(url: URL(string: "https://www.youtube.com/watch?v=abc123&t=10s")!)
-        
-        // When
+                
         let duckPlayerRequest = YoutubePlayerNavigationHandler.makeDuckPlayerRequest(from: originalRequest)
-        
-        // Then
+                
         XCTAssertEqual(duckPlayerRequest.url?.host, "www.youtube-nocookie.com")
         XCTAssertEqual(duckPlayerRequest.url?.path, "/embed/abc123")
         XCTAssertEqual(duckPlayerRequest.url?.query?.contains("t=10s"), true)
@@ -126,14 +123,11 @@ class YoutubePlayerNavigationHandlerTests: XCTestCase {
 
     // Test for makeDuckPlayerRequest(for:timestamp:)
     func testMakeDuckPlayerRequestForVideoID() {
-        // Given
         let videoID = "abc123"
         let timestamp = "10s"
         
-        // When
         let duckPlayerRequest = YoutubePlayerNavigationHandler.makeDuckPlayerRequest(for: videoID, timestamp: timestamp)
         
-        // Then
         XCTAssertEqual(duckPlayerRequest.url?.host, "www.youtube-nocookie.com")
         XCTAssertEqual(duckPlayerRequest.url?.path, "/embed/abc123")
         XCTAssertEqual(duckPlayerRequest.url?.query?.contains("t=10s"), true)
@@ -222,7 +216,6 @@ class YoutubePlayerNavigationHandlerTests: XCTestCase {
     
     // Test for handleNavigation for duck:// links
     func testHandleNavigationWithDuckPlayerURL() {
-        // Given
         let handler = YoutubePlayerNavigationHandler()
         let mockWebView = MockWebView()
         let duckPlayerURL = URL(string: "duck://player/abc123&t=30")!

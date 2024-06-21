@@ -24,7 +24,12 @@ protocol HomeTabManaging: AnyObject {
     var isImprovedHomeTabEnabled: Bool { get }
 }
 
-final class HomeTabManager: HomeTabManaging {
+protocol HomeTabDebugging: HomeTabManaging {
+    var isLocalFlagEnabled: Bool { get set }
+    var isFeatureFlagEnabled: Bool { get }
+}
+
+final class HomeTabManager: HomeTabManaging, HomeTabDebugging {
 
     var appDefaults: AppDebugSettings
     let featureFlagger: FeatureFlagger
@@ -42,9 +47,9 @@ final class HomeTabManager: HomeTabManaging {
         isLocalFlagEnabled && isFeatureFlagEnabled
     }
 
-    // MARK: - Private
+    // MARK: - HomeTabDebugging
 
-    private var isLocalFlagEnabled: Bool {
+    var isLocalFlagEnabled: Bool {
         get {
             appDefaults.homeTabImprovementsEnabled
         }
@@ -53,7 +58,7 @@ final class HomeTabManager: HomeTabManaging {
         }
     }
 
-    private var isFeatureFlagEnabled: Bool {
+    var isFeatureFlagEnabled: Bool {
         featureFlagger.isFeatureOn(.homeTabImprovements)
     }
 }

@@ -65,12 +65,6 @@ struct SubscriptionFlowView: View {
                        isActive: $isShowingDBP,
                        label: { EmptyView() })
         
-        Button(action: {
-            dismiss()
-        }, label: {
-            Text("dismiss")
-        })
-        
         baseView
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarLeading) {

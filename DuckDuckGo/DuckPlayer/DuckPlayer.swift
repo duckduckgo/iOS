@@ -22,7 +22,6 @@ import Combine
 import Foundation
 import WebKit
 import UserScript
-// import PixelKit
 
 enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
     case enabled, alwaysAsk, disabled

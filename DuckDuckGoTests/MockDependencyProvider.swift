@@ -24,6 +24,7 @@ import DDGSync
 import Subscription
 import SubscriptionTestingUtilities
 import NetworkProtection
+import RemoteMessaging
 @testable import DuckDuckGo
 
 class MockDependencyProvider: DependencyProvider {

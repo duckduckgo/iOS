@@ -58,9 +58,5 @@ struct SettingsAppearanceView: View {
         .applySettingsListModifiers(title: UserText.settingsAppearanceSection,
                                     displayMode: .inline,
                                     viewModel: viewModel)
-        .onForwardNavigationAppear {
-            Pixel.fire(pixel: .settingsAppearanceOpen,
-                       withAdditionalParameters: PixelExperiment.parameters)
-        }
     }
 }

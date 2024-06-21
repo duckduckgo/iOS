@@ -492,20 +492,10 @@ extension Pixel {
         case adAttributionLogicRequestingAttributionTimedOut
         case adAttributionLogicWrongVendorOnSuccessfulCompilation
         case adAttributionLogicWrongVendorOnFailedCompilation
-        
-        case debugBookmarkOrphanFolderNew
-        case debugBookmarkTopLevelMissingNew
-        
-        case debugFavoriteOrphanFolderNew
-        case debugFavoriteTopLevelMissingNew
-        
-        case debugCouldNotFixBookmarkFolder
-        case debugCouldNotFixFavoriteFolder
-        
-        case debugMissingTopFolderFixHasFavorites
-        case debugMissingTopFolderFixHasBookmarks
-        
-        case debugCantSaveBookmarkFix
+
+        case debugBookmarksStructureLost
+        case debugBookmarksInvalidRoots
+        case debugBookmarksValidationFailed
         
         case debugCannotClearObservationsDatabase
         case debugWebsiteDataStoresNotClearedMultiple
@@ -596,8 +586,6 @@ extension Pixel {
         case emailIncontextModalExitEarlyContinue
         
         case compilationFailed
-        
-        case appRatingPromptFetchError
 
         case protectionToggledOffBreakageReport
         case toggleProtectionsDailyCount
@@ -666,48 +654,20 @@ extension Pixel {
         case pixelExperimentEnrollment
         case settingsPresented
         case settingsSetAsDefault
-        case settingsPrivateSearchOpen
-        case settingsPrivateSearchAutocompleteOn
-        case settingsPrivateSearchAutocompleteOff
         case settingsVoiceSearchOn
         case settingsVoiceSearchOff
-        case settingsPrivateSearchVoiceSearchOn
-        case settingsPrivateSearchVoiceSearchOff
         case settingsWebTrackingProtectionOpen
         case settingsGpcOn
         case settingsGpcOff
-        case settingsEmailProtectionOpen
-        case settingsEmailProtectionLearnMore
-        case settingsGeneralOpen
         case settingsAutocompleteOn
         case settingsAutocompleteOff
         case settingsRecentlyVisitedOn
         case settingsRecentlyVisitedOff
         case settingsGeneralAutocompleteOn
         case settingsGeneralAutocompleteOff
-        case settingsGeneralVoiceSearchOn
-        case settingsGeneralVoiceSearchOff
-        case settingsSyncOpen
-        case settingsAppearanceOpen
         case settingsAddressBarSelectorPressed
-        case settingsAddressBarTopSelected
-        case settingsAddressBarBottomSelected
-        case settingsIconSelectorPressed
-        case settingsThemeSelectorPressed
         case settingsAccessibilityOpen
         case settingsAccessiblityTextSize
-        case settingsAccessibilityVoiceSearchOn
-        case settingsAccessibilityVoiceSearchOff
-        case settingsDataClearingOpen
-        case settingsFireButtonSelectorPressed
-        case settingsDataClearingClearDataOpen
-        case settingsAutomaticallyClearDataOpen
-        case settingsAutomaticallyClearDataOn
-        case settingsAutomaticallyClearDataOff
-        case settingsNextStepsAddAppToDock
-        case settingsNextStepsAddWidget
-        case settingsShowFullSiteAddressEnabled
-        case settingsShowFullSiteAddressDisabled
 
         // Other settings
         case settingsKeyboardOnNewTabOn
@@ -1196,18 +1156,10 @@ extension Pixel.Event {
             
         case .emailAutofillKeychainError: return "m_email_autofill_keychain_error"
             
-        case .debugBookmarkOrphanFolderNew: return "m_d_bookmark_orphan_folder_new"
-        case .debugBookmarkTopLevelMissingNew: return "m_d_bookmark_top_level_missing_new"
-        case .debugCouldNotFixBookmarkFolder: return "m_d_cannot_fix_bookmark_folder"
-        case .debugMissingTopFolderFixHasBookmarks: return "m_d_missing_top_folder_has_bookmarks"
-            
-        case .debugFavoriteOrphanFolderNew: return "m_d_favorite_orphan_folder_new"
-        case .debugFavoriteTopLevelMissingNew: return "m_d_favorite_top_level_missing_new"
-        case .debugCouldNotFixFavoriteFolder: return "m_d_cannot_fix_favorite_folder"
-        case .debugMissingTopFolderFixHasFavorites: return "m_d_missing_top_folder_has_favorites"
-            
-        case .debugCantSaveBookmarkFix: return "m_d_cant_save_bookmark_fix"
-            
+        case .debugBookmarksStructureLost: return "m_d_bookmarks_structure_lost"
+        case .debugBookmarksInvalidRoots: return "m_d_bookmarks_invalid_roots"
+        case .debugBookmarksValidationFailed: return "m_d_bookmarks_validation_failed"
+
         case .debugCannotClearObservationsDatabase: return "m_d_cannot_clear_observations_database"
         case .debugWebsiteDataStoresNotClearedMultiple: return "m_d_wkwebsitedatastoresnotcleared_multiple"
         case .debugWebsiteDataStoresNotClearedOne: return "m_d_wkwebsitedatastoresnotcleared_one"
@@ -1315,8 +1267,6 @@ extension Pixel.Event {
         case .toggleProtectionsDailyCount: return "m_toggle-protections-daily-count"
         case .toggleReportDoNotSend: return "m_toggle-report-do-not-send"
         case .toggleReportDismiss: return "m_toggle-report-dismiss"
-
-        case .appRatingPromptFetchError: return "m_d_app_rating_prompt_fetch_error"
             
         // MARK: - Apple Ad Attribution
         case .appleAdAttribution: return "m_apple-ad-attribution"
@@ -1386,48 +1336,20 @@ extension Pixel.Event {
         case .pixelExperimentEnrollment: return "pixel_experiment_enrollment"
         case .settingsPresented: return "m_settings_presented"
         case .settingsSetAsDefault: return "m_settings_set_as_default"
-        case .settingsPrivateSearchOpen: return "m_settings_private_search_open"
-        case .settingsPrivateSearchAutocompleteOn: return "m_settings_private_search_autocomplete_on"
-        case .settingsPrivateSearchAutocompleteOff: return "m_settings_private_search_autocomplete_off"
         case .settingsVoiceSearchOn: return "m_settings_voice_search_on"
         case .settingsVoiceSearchOff: return "m_settings_voice_search_off"
-        case .settingsPrivateSearchVoiceSearchOn: return "m_settings_private_search_voice_search_on"
-        case .settingsPrivateSearchVoiceSearchOff: return "m_settings_private_search_voice_search_off"
         case .settingsWebTrackingProtectionOpen: return "m_settings_web_tracking_protection_open"
         case .settingsGpcOn: return "m_settings_gpc_on"
         case .settingsGpcOff: return "m_settings_gpc_off"
-        case .settingsEmailProtectionOpen: return "m_settings_email_protection_open"
-        case .settingsEmailProtectionLearnMore: return "m_settings_email_protection_learn_more"
-        case .settingsGeneralOpen: return "m_settings_general_open"
         case .settingsAutocompleteOn: return "m_settings_autocomplete_on"
         case .settingsAutocompleteOff: return "m_settings_autocomplete_off"
         case .settingsRecentlyVisitedOn: return "m_settings_autocomplete_recently-visited_on"
         case .settingsRecentlyVisitedOff: return "m_settings_autocomplete_recently-visited_off"
         case .settingsGeneralAutocompleteOn: return "m_settings_general_autocomplete_on"
         case .settingsGeneralAutocompleteOff: return "m_settings_general_autocomplete_off"
-        case .settingsGeneralVoiceSearchOn: return "m_settings_general_voice_search_on"
-        case .settingsGeneralVoiceSearchOff: return "m_settings_general_voice_search_off"
-        case .settingsSyncOpen: return "m_settings_sync_open"
-        case .settingsAppearanceOpen: return "m_settings_appearance_open"
         case .settingsAddressBarSelectorPressed: return "m_settings_address_bar_selector_pressed"
-        case .settingsAddressBarTopSelected: return "m_settings_address_bar_top_selected"
-        case .settingsAddressBarBottomSelected: return "m_settings_address_bar_bottom_selected"
-        case .settingsIconSelectorPressed: return "m_settings_icon_selector_pressed"
-        case .settingsThemeSelectorPressed: return "m_settings_theme_selector_pressed"
         case .settingsAccessibilityOpen: return "m_settings_accessibility_open"
         case .settingsAccessiblityTextSize: return "m_settings_accessiblity_text_size"
-        case .settingsAccessibilityVoiceSearchOn: return "m_settings_accessibility_voice_search_on"
-        case .settingsAccessibilityVoiceSearchOff: return "m_settings_accessibility_voice_search_off"
-        case .settingsDataClearingOpen: return "m_settings_data_clearing_open"
-        case .settingsFireButtonSelectorPressed: return "m_settings_fire_button_selector_pressed"
-        case .settingsDataClearingClearDataOpen: return "m_settings_data_clearing_clear_data_open"
-        case .settingsAutomaticallyClearDataOpen: return "m_settings_data_clearing_clear_data_open"
-        case .settingsAutomaticallyClearDataOn: return "m_settings_automatically_clear_data_on"
-        case .settingsAutomaticallyClearDataOff: return "m_settings_automatically_clear_data_off"
-        case .settingsNextStepsAddAppToDock: return "m_settings_next_steps_add_app_to_dock"
-        case .settingsNextStepsAddWidget: return "m_settings_next_steps_add_widget"
-        case .settingsShowFullSiteAddressEnabled: return "m_settings_show_full_url_on"
-        case .settingsShowFullSiteAddressDisabled: return "m_settings_show_full_url_off"
 
         // Web
         case .privacyProOfferMonthlyPriceClick: return "m_privacy-pro_offer_monthly-price_click"

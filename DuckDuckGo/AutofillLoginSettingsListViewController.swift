@@ -919,11 +919,9 @@ extension AutofillLoginSettingsListViewController: ImportPasswordsViewController
 extension AutofillLoginSettingsListViewController: EnableAutofillSettingsTableViewCellDelegate {
     func enableAutofillSettingsTableViewCell(_ cell: EnableAutofillSettingsTableViewCell, didChangeSettings value: Bool) {
         if value {
-            Pixel.fire(pixel: .autofillLoginsSettingsEnabled,
-                       withAdditionalParameters: PixelExperiment.parameters)
+            Pixel.fire(pixel: .autofillLoginsSettingsEnabled)
         } else {
-            Pixel.fire(pixel: .autofillLoginsSettingsDisabled,
-                       withAdditionalParameters: PixelExperiment.parameters)
+            Pixel.fire(pixel: .autofillLoginsSettingsDisabled)
         }
         
         viewModel.isAutofillEnabledInSettings = value

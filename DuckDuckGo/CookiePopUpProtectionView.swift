@@ -41,8 +41,7 @@ struct CookiePopUpProtectionView: View {
                                     displayMode: .inline,
                                     viewModel: viewModel)
         .onForwardNavigationAppear {
-            Pixel.fire(pixel: .settingsAutoconsentShown,
-                       withAdditionalParameters: PixelExperiment.parameters)
+            Pixel.fire(pixel: .settingsAutoconsentShown)
         }
     }
 }

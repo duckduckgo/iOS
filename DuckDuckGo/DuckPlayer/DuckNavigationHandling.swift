@@ -20,7 +20,9 @@
 import WebKit
 
 protocol DuckNavigationHandling {
-    func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView, completion: @escaping (WKNavigationActionPolicy) -> Void)
+    func handleNavigation(_ navigationAction: WKNavigationAction,
+                          webView: WKWebView,
+                          completion: @escaping (WKNavigationActionPolicy) -> Void)
     func handleRedirect(url: URL?, webView: WKWebView)
     func handleRedirect(_ navigationAction: WKNavigationAction,
                         completion: @escaping (WKNavigationActionPolicy) -> Void,

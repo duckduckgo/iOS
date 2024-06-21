@@ -74,7 +74,9 @@ struct YoutubePlayerNavigationHandler {
 
 extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
     
-    func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView, completion: @escaping (WKNavigationActionPolicy) -> Void) {
+    func handleNavigation(_ navigationAction: WKNavigationAction,
+                          webView: WKWebView,
+                          completion: @escaping (WKNavigationActionPolicy) -> Void) {
         if let url = navigationAction.request.url, url.isDuckPlayer {
             let html = Self.makeHTMLFromTemplate()
             let newRequest = Self.makeDuckPlayerRequest(from: URLRequest(url: url))
@@ -95,7 +97,9 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
         }
     }
     
-    func handleRedirect(_ navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void, webView: WKWebView) {
+    func handleRedirect(_ navigationAction: WKNavigationAction,
+                        completion: @escaping (WKNavigationActionPolicy) -> Void,
+                        webView: WKWebView) {
         if let url = navigationAction.request.url, url.isYoutubeVideo, !url.isDuckPlayer, let (videoID, timestamp) = url.youtubeVideoParams {
             webView.load(URLRequest(url: .duckPlayer(videoID, timestamp: timestamp)))
             completion(.allow)
@@ -105,7 +109,9 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
     }
     
     func goBack(webView: WKWebView) {
-        guard let backURL = webView.backForwardList.backItem?.url, backURL.isYoutubeVideo, backURL.youtubeVideoParams?.videoID == webView.url?.youtubeVideoParams?.videoID else {
+        guard let backURL = webView.backForwardList.backItem?.url,
+                backURL.isYoutubeVideo,
+                backURL.youtubeVideoParams?.videoID == webView.url?.youtubeVideoParams?.videoID else {
             webView.goBack()
             return
         }

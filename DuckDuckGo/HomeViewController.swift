@@ -26,10 +26,11 @@ import DDGSync
 import Persistence
 import RemoteMessaging
 
-    
+
+class HomeViewController: UIViewController, HomeViewControllerProtocol {
+
     @IBOutlet weak var ctaContainerBottom: NSLayoutConstraint!
     @IBOutlet weak var ctaContainer: UIView!
-class HomeViewController: UIViewController, HomeViewControllerProtocol {
 
     @IBOutlet weak var collectionView: HomeCollectionView!
     @IBOutlet weak var settingsButton: UIButton!

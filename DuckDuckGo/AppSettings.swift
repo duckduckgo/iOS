@@ -42,7 +42,7 @@ enum AddressBarPosition: String, CaseIterable, CustomStringConvertible {
     }
 }
 
-protocol AppSettings: AnyObject {
+protocol AppSettings: AnyObject, AppDebugSettings {
     var autocomplete: Bool { get set }
     var recentlyVisitedSites: Bool { get set }
     var currentThemeName: ThemeName { get set }
@@ -79,4 +79,8 @@ protocol AppSettings: AnyObject {
     var autoconsentEnabled: Bool { get set }
 
     var crashCollectionOptInStatus: CrashCollectionOptInStatus { get set }
+}
+
+protocol AppDebugSettings {
+    var homeTabImprovementsEnabled: Bool { get set }
 }

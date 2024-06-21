@@ -373,6 +373,9 @@ public class AppUserDefaults: AppSettings {
             userDefaults?.setValue(newValue.rawValue, forKey: Keys.crashCollectionOptInStatus)
         }
     }
+
+    @UserDefaultsWrapper(key: .debugHomeTabImprovementsEnabledKey, defaultValue: false)
+    var homeTabImprovementsEnabled: Bool
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

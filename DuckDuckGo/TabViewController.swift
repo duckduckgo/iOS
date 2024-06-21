@@ -45,7 +45,7 @@ import NetworkProtection
 // swiftlint:disable type_body_length
 class TabViewController: UIViewController {
 // swiftlint:enable type_body_length
-    
+
     private struct Constants {
         static let frameLoadInterruptedErrorCode = 102
         
@@ -651,9 +651,8 @@ class TabViewController: UIViewController {
             url = webView.url
         } else if let currentHost = url?.host, let newHost = webView.url?.host, currentHost == newHost {
             url = webView.url
-            
-            // Validate Duck Player URL
-            if let url, url.isYoutubeVideo, appSettings.duckPlayerMode == .enabled {
+                        
+            if appSettings.duckPlayerMode == .enabled {
                 youtubeNavigationHandler?.handleRedirect(url: url, webView: webView)
             }
         }
@@ -720,6 +719,7 @@ class TabViewController: UIViewController {
         
         if let handler = youtubeNavigationHandler {
             handler.goBack(webView: webView)
+            chromeDelegate?.omniBar.resignFirstResponder()
         } else {
             if isError {
                 hideErrorMessage()

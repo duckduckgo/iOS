@@ -1441,7 +1441,6 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
-        
         if let url = navigationAction.request.url {
             if !tabURLInterceptor.allowsNavigatingTo(url: url) {
                 decisionHandler(.cancel)
@@ -2778,6 +2777,5 @@ extension UserContentController {
     }
 
 }
-
 
 // swiftlint:enable file_length

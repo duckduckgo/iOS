@@ -589,6 +589,7 @@
 		9FA5E44B2BF1AF3400BDEF02 /* SubscriptionContainerViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA5E44A2BF1AF3400BDEF02 /* SubscriptionContainerViewFactory.swift */; };
 		9FA5E44E2BF1B16400BDEF02 /* SubscriptionContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA5E44D2BF1B16400BDEF02 /* SubscriptionContainerViewModelTests.swift */; };
 		9FB027122C2526DD009EA190 /* DaxDialogIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB027112C2526DD009EA190 /* DaxDialogIntroView.swift */; };
+		9FB027142C252E0C009EA190 /* DaxDialogBrowsersComparisonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB027132C252E0C009EA190 /* DaxDialogBrowsersComparisonView.swift */; };
 		9FF7E9822C22A1F100902BE5 /* DaxDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7E9812C22A1F100902BE5 /* DaxDialogView.swift */; };
 		AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */; };
 		AA3D854723D9E88E00788410 /* AppIconSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */; };
@@ -2204,6 +2205,7 @@
 		9FA5E44A2BF1AF3400BDEF02 /* SubscriptionContainerViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionContainerViewFactory.swift; sourceTree = "<group>"; };
 		9FA5E44D2BF1B16400BDEF02 /* SubscriptionContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionContainerViewModelTests.swift; sourceTree = "<group>"; };
 		9FB027112C2526DD009EA190 /* DaxDialogIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogIntroView.swift; sourceTree = "<group>"; };
+		9FB027132C252E0C009EA190 /* DaxDialogBrowsersComparisonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogBrowsersComparisonView.swift; sourceTree = "<group>"; };
 		9FF7E9812C22A1F100902BE5 /* DaxDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogView.swift; sourceTree = "<group>"; };
 		AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconSettingsViewController.swift; sourceTree = "<group>"; };
 		AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconSettingsCell.swift; sourceTree = "<group>"; };
@@ -4098,6 +4100,7 @@
 			children = (
 				9FF7E9812C22A1F100902BE5 /* DaxDialogView.swift */,
 				9FB027112C2526DD009EA190 /* DaxDialogIntroView.swift */,
+				9FB027132C252E0C009EA190 /* DaxDialogBrowsersComparisonView.swift */,
 			);
 			path = DaxDialogs;
 			sourceTree = "<group>";
@@ -6588,6 +6591,7 @@
 				31B2F11F287846320040427A /* NoMicPermissionAlert.swift in Sources */,
 				310C4B45281B5A9A00BA79A9 /* AutofillLoginDetailsView.swift in Sources */,
 				D62EC3C22C248AF800FC9D04 /* DuckNavigationHandling.swift in Sources */,
+				9FB027142C252E0C009EA190 /* DaxDialogBrowsersComparisonView.swift in Sources */,
 				D664C7B62B289AA200CBFA76 /* SubscriptionFlowViewModel.swift in Sources */,
 				1EFDCBC127D2393C00916BC5 /* DownloadsDeleteHelper.swift in Sources */,
 				85374D3C21AC41E700FF5A1E /* FavoritesHomeViewSectionRenderer.swift in Sources */,

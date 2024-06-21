@@ -19,223 +19,302 @@
 
 import XCTest
 import WebKit
+import ContentScopeScripts
+
 @testable import DuckDuckGo
 
-// Protocol to represent a back/forward list item
-// WLBackForwardListItem cannot be subclassed
-protocol BackForwardListItem {
+class MockWKNavigationDelegate: NSObject, WKNavigationDelegate {
+    var didFinishNavigation: ((WKWebView, WKNavigation?) -> Void)?
+    var didFailNavigation: ((WKWebView, WKNavigation?, Error) -> Void)?
+    var decidePolicyForNavigationAction: ((WKWebView, WKNavigationAction, @escaping (WKNavigationActionPolicy) -> Void) -> Void)?
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        didFinishNavigation?(webView, navigation)
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        didFailNavigation?(webView, navigation, error)
+    }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        decidePolicyForNavigationAction?(webView, navigationAction, decisionHandler) ?? decisionHandler(.allow)
+    }
+}
+
+protocol WKBackForwardListItemProtocol {
     var url: URL { get }
 }
 
-// Protocol to represent the back/forward list
-protocol BackForwardList {
-    var backItem: BackForwardListItem? { get }
-}
+extension WKBackForwardListItem: WKBackForwardListItemProtocol {}
 
-// Custom class to simulate a back/forward list item
-class MockBackForwardListItem: BackForwardListItem {
-    let url: URL
+class MockWKBackForwardListItem: WKBackForwardListItemProtocol {
+    private let _url: URL
     
     init(url: URL) {
-        self.url = url
+        self._url = url
+    }
+    
+    var url: URL {
+        return _url
     }
 }
 
-// Custom class to simulate the back/forward list
-class MockBackForwardList: BackForwardList {
-    var backItem: BackForwardListItem?
-}
-
-// Custom class to simulate WKWebView
-class MockWebView {
-    var didLoadSimulatedRequest = false
-    var didStopLoading = false
-    var didLoadRequest = false
-    var didGoBackSkippingHistoryItems = false
-    var didGoBack = false
-    var mockBackForwardList = MockBackForwardList()
-    var mockURL: URL?
+class MockWKBackForwardList: WKBackForwardList {
+    private var items: [WKBackForwardListItemProtocol]
     
-    var backForwardList: BackForwardList {
-        return mockBackForwardList
+    init(items: [WKBackForwardListItemProtocol]) {
+        self.items = items
     }
     
-    var url: URL? {
-        return mockURL
+    override var backList: [WKBackForwardListItem] {
+        return items.compactMap { $0 as? WKBackForwardListItem }
     }
     
-    func loadSimulatedRequest(_ request: URLRequest, responseHTML: String) {
-        didLoadSimulatedRequest = true
+    override var currentItem: WKBackForwardListItem? {
+        return items.last as? WKBackForwardListItem
     }
     
-    func stopLoading() {
-        didStopLoading = true
-    }
-    
-    func load(_ request: URLRequest) {
-        didLoadRequest = true
-    }
-    
-    func goBack() {
-        didGoBack = true
-    }
-    
-    func goBackSkippingHistoryItems(_ items: Int) {
-        didGoBackSkippingHistoryItems = true
+    override var forwardList: [WKBackForwardListItem] {
+        return []
     }
 }
 
-// Mock class to simulate WKNavigationAction
-class MockNavigationAction {
-    let request: URLRequest
+class MockWebView: WKWebView {
+    var didStopLoadingCalled = false
+    var lastLoadedRequest: URLRequest?
+    var lastResponseHTML: String?
+    var goToCalledWith: WKBackForwardListItem?
+    
+    override func stopLoading() {
+        didStopLoadingCalled = true
+    }
+    
+    override func load(_ request: URLRequest) -> WKNavigation? {
+        lastLoadedRequest = request
+        return nil
+    }
+    
+    override func go(to item: WKBackForwardListItem) -> WKNavigation? {
+        goToCalledWith = item
+        return nil
+    }
+}
+
+
+class MockNavigationAction: WKNavigationAction {
+    private let _request: URLRequest
     
     init(request: URLRequest) {
-        self.request = request
+        self._request = request
+    }
+    
+    override var request: URLRequest {
+        return _request
     }
 }
 
-// Example handler class (replace with your actual handler)
-struct YoutubePlayerNavigationHandler {
-    
-    func handleNavigation(_ navigationAction: MockNavigationAction, webView: MockWebView, completion: @escaping (WKNavigationActionPolicy) -> Void) {
-        guard let url = navigationAction.request.url else {
-            completion(.cancel)
-            return
-        }
-        
-        if url.host == "duckplayer.com" {
-            webView.loadSimulatedRequest(navigationAction.request, responseHTML: "<html></html>")
-            completion(.allow)
-        } else {
-            completion(.cancel)
-        }
-    }
-    
-    func handleRedirect(url: URL?, webView: MockWebView) {
-        guard let url = url else { return }
-        webView.stopLoading()
-        webView.load(URLRequest(url: url))
-    }
-    
-    func handleRedirect(_ navigationAction: MockNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void, webView: MockWebView) {
-        guard let url = navigationAction.request.url else {
-            completion(.cancel)
-            return
-        }
-        
-        webView.load(URLRequest(url: url))
-        completion(.allow)
-    }
-    
-    func goBack(webView: MockWebView) {
-        guard let backItem = webView.backForwardList.backItem, backItem.url == webView.url else {
-            webView.goBackSkippingHistoryItems(2)
-            return
-        }
-        webView.goBack()
-    }
-}
 
-// Tests
 class YoutubePlayerNavigationHandlerTests: XCTestCase {
-    
-    var webView: MockWebView!
-    var navigationHandler: YoutubePlayerNavigationHandler!
-    
+
+    var handler: YoutubePlayerNavigationHandler!
+    var webView: WKWebView!
+    var mockWebView: MockWebView!
+    var mockNavigationDelegate: MockWKNavigationDelegate!
+
     override func setUp() {
         super.setUp()
-        webView = MockWebView()
-        navigationHandler = YoutubePlayerNavigationHandler()
+        handler = YoutubePlayerNavigationHandler()
+        webView = WKWebView()
+        mockWebView = MockWebView()
+        mockNavigationDelegate = MockWKNavigationDelegate()
+        webView.navigationDelegate = mockNavigationDelegate
     }
-    
+
     override func tearDown() {
+        webView.navigationDelegate = nil
         webView = nil
-        navigationHandler = nil
+        handler = nil
+        mockWebView = nil
+        mockNavigationDelegate = nil
         super.tearDown()
     }
     
-    func testHandleNavigation_withDuckPlayerURL_allowsNavigation() {
-        let expectation = self.expectation(description: "Completion handler called")
-        let url = URL(string: "https://duckplayer.com/video")!
-        let request = URLRequest(url: url)
-        let navigationAction = MockNavigationAction(request: request)
+    // Test for htmlTemplatePath existence
+    func testHtmlTemplatePathExists() {
+        let templatePath = YoutubePlayerNavigationHandler.htmlTemplatePath
+        let fileExists = FileManager.default.fileExists(atPath: templatePath)
+        XCTAssertFalse(templatePath.isEmpty, "The template path should not be empty")
+        XCTAssertTrue(fileExists, "The template file should exist at the specified path")
+    }
+    
+    // Test for makeDuckPlayerRequest(from:)
+    func testMakeDuckPlayerRequestFromOriginalRequest() {
+        // Given
+        let originalRequest = URLRequest(url: URL(string: "https://www.youtube.com/watch?v=abc123&t=10s")!)
         
-        navigationHandler.handleNavigation(navigationAction, webView: webView) { policy in
-            XCTAssertEqual(policy, .allow)
+        // When
+        let duckPlayerRequest = YoutubePlayerNavigationHandler.makeDuckPlayerRequest(from: originalRequest)
+        
+        // Then
+        XCTAssertEqual(duckPlayerRequest.url?.host, "www.youtube-nocookie.com")
+        XCTAssertEqual(duckPlayerRequest.url?.path, "/embed/abc123")
+        XCTAssertEqual(duckPlayerRequest.url?.query?.contains("t=10s"), true)
+        XCTAssertEqual(duckPlayerRequest.value(forHTTPHeaderField: "Referer"), "http://localhost/")
+        XCTAssertEqual(duckPlayerRequest.httpMethod, "GET")
+    }
+
+    // Test for makeDuckPlayerRequest(for:timestamp:)
+    func testMakeDuckPlayerRequestForVideoID() {
+        // Given
+        let videoID = "abc123"
+        let timestamp = "10s"
+        
+        // When
+        let duckPlayerRequest = YoutubePlayerNavigationHandler.makeDuckPlayerRequest(for: videoID, timestamp: timestamp)
+        
+        // Then
+        XCTAssertEqual(duckPlayerRequest.url?.host, "www.youtube-nocookie.com")
+        XCTAssertEqual(duckPlayerRequest.url?.path, "/embed/abc123")
+        XCTAssertEqual(duckPlayerRequest.url?.query?.contains("t=10s"), true)
+        XCTAssertEqual(duckPlayerRequest.value(forHTTPHeaderField: "Referer"), "http://localhost/")
+        XCTAssertEqual(duckPlayerRequest.httpMethod, "GET")
+    }
+
+    // Test for makeHTMLFromTemplate
+    func testMakeHTMLFromTemplate() {
+        let expectedHtml = try? String(contentsOfFile: YoutubePlayerNavigationHandler.htmlTemplatePath)
+        let html = YoutubePlayerNavigationHandler.makeHTMLFromTemplate()
+        XCTAssertEqual(html, expectedHtml)
+    }
+    
+    // Validate redirects are properly triggered
+    func testHandleRedirect() {
+                        
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123&t=10s")!
+        handler.handleRedirect(url: youtubeURL, webView: mockWebView)
+        
+        XCTAssertTrue(mockWebView.didStopLoadingCalled, "Expected stopLoading to be called")
+        XCTAssertNotNil(mockWebView.lastLoadedRequest, "Expected a new request to be loaded")
+        
+        if let loadedRequest = mockWebView.lastLoadedRequest {
+            XCTAssertEqual(loadedRequest.url?.scheme, "duck")
+            XCTAssertEqual(loadedRequest.url?.host, "player")
+            XCTAssertEqual(loadedRequest.url?.path, "/abc123")
+            XCTAssertEqual(loadedRequest.url?.query?.contains("t=10s"), true)
+        }
+    }
+    
+    func testHandleRedirectForNonYouTubeVideo() {
+                        
+        let youtubeURL = URL(string: "https://www.google.com.com/watch?v=abc123&t=10s")!
+        handler.handleRedirect(url: youtubeURL, webView: mockWebView)
+        
+        XCTAssertFalse(mockWebView.didStopLoadingCalled, "Expected stopLoading not to be called")
+        XCTAssertNil(mockWebView.lastLoadedRequest, "Expected a new request not to be loaded")
+        
+    }
+    
+    func testHandleRedirectWithNavigationAction() {
+
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123&t=10s")!
+        let navigationAction = MockNavigationAction(request: URLRequest(url: youtubeURL))
+        let expectation = self.expectation(description: "Completion handler called")
+        
+        var navigationPolicy: WKNavigationActionPolicy?
+        
+        handler.handleRedirect(navigationAction, completion: { policy in
+            navigationPolicy = policy
+            expectation.fulfill()
+        }, webView: mockWebView)
+                
+        waitForExpectations(timeout: 1, handler: nil)
+        
+        XCTAssertEqual(navigationPolicy, .allow, "Expected navigation policy to be .allow")
+        XCTAssertNotNil(mockWebView.lastLoadedRequest, "Expected a new request to be loaded")
+        
+        if let loadedRequest = mockWebView.lastLoadedRequest {
+            XCTAssertEqual(loadedRequest.url?.scheme, "duck")
+            XCTAssertEqual(loadedRequest.url?.host, "player")
+            XCTAssertEqual(loadedRequest.url?.path, "/abc123")
+            XCTAssertEqual(loadedRequest.url?.query?.contains("t=10s"), true)
+        }
+    }
+    
+    func testHandleRedirectWithNavigationActionForNonYouTubeVideo() {
+
+        let youtubeURL = URL(string: "https://www.google.com.com/watch?v=abc123&t=10s")!
+        let navigationAction = MockNavigationAction(request: URLRequest(url: youtubeURL))
+        let expectation = self.expectation(description: "Completion handler called")
+        
+        var navigationPolicy: WKNavigationActionPolicy?
+        
+        handler.handleRedirect(navigationAction, completion: { policy in
+            navigationPolicy = policy
+            expectation.fulfill()
+        }, webView: mockWebView)
+                
+        waitForExpectations(timeout: 1, handler: nil)
+        
+        XCTAssertEqual(navigationPolicy, .cancel, "Expected navigation policy to be .cancel")
+        XCTAssertNil(mockWebView.lastLoadedRequest, "Expected a new request not to be loaded")
+    }
+    
+    // Test for handleNavigation for duck:// links
+    func testHandleNavigationWithDuckPlayerURL() {
+        // Given
+        let handler = YoutubePlayerNavigationHandler()
+        let mockWebView = MockWebView()
+        let duckPlayerURL = URL(string: "duck://player/abc123&t=30")!
+        let navigationAction = MockNavigationAction(request: URLRequest(url: duckPlayerURL))
+        let expectation = self.expectation(description: "Completion handler called")
+        
+        var navigationPolicy: WKNavigationActionPolicy?
+
+        handler.handleNavigation(navigationAction, webView: mockWebView) { policy in
+            navigationPolicy = policy
             expectation.fulfill()
         }
         
         waitForExpectations(timeout: 1, handler: nil)
-        XCTAssertTrue(webView.didLoadSimulatedRequest)
+        
+        XCTAssertEqual(navigationPolicy, .allow, "Expected navigation policy to be .allow")
+                
+        if let responseHTML = mockWebView.lastResponseHTML {
+            let expectedHtml = try? String(contentsOfFile: YoutubePlayerNavigationHandler.htmlTemplatePath)
+            XCTAssertEqual(responseHTML, expectedHtml)
+        }
     }
     
-    func testHandleNavigation_withNonDuckPlayerURL_cancelsNavigation() {
+    // Test for handleNavigation for non duck:// links
+    func testHandleNavigationWithNonDuckPlayerURL() {
+        let handler = YoutubePlayerNavigationHandler()
+        let mockWebView = MockWebView()
+        let duckPlayerURL = URL(string: "https://www.youtube.com/watch?v=abc123")!
+        let navigationAction = MockNavigationAction(request: URLRequest(url: duckPlayerURL))
         let expectation = self.expectation(description: "Completion handler called")
-        let url = URL(string: "https://youtube.com/video")!
-        let request = URLRequest(url: url)
-        let navigationAction = MockNavigationAction(request: request)
         
-        navigationHandler.handleNavigation(navigationAction, webView: webView) { policy in
-            XCTAssertEqual(policy, .cancel)
+        var navigationPolicy: WKNavigationActionPolicy?
+        
+        handler.handleNavigation(navigationAction, webView: mockWebView) { policy in
+            navigationPolicy = policy
             expectation.fulfill()
         }
         
         waitForExpectations(timeout: 1, handler: nil)
-        XCTAssertFalse(webView.didLoadSimulatedRequest)
+        
+        XCTAssertEqual(navigationPolicy, .cancel, "Expected navigation policy to be .cancel")
+        XCTAssertNil(mockWebView.lastLoadedRequest, "Expected a new request not to be loaded")
+        XCTAssertNil(mockWebView.lastResponseHTML, "Expected the response HTML not to be loaded")
+        
+        if let loadedRequest = mockWebView.lastLoadedRequest {
+            XCTAssertEqual(loadedRequest.url?.host, "www.youtube-nocookie.com")
+            XCTAssertEqual(loadedRequest.url?.path, "/embed/abc123")
+        }
+        
+        if let responseHTML = mockWebView.lastResponseHTML {
+            let expectedHtml = try? String(contentsOfFile: YoutubePlayerNavigationHandler.htmlTemplatePath)
+            XCTAssertEqual(responseHTML, expectedHtml)
+        }
     }
-    
-    func testHandleRedirect_withYoutubeVideoURL_stopsLoadingAndLoadsNewURL() {
-        let url = URL(string: "https://youtube.com/watch?v=example")!
-        navigationHandler.handleRedirect(url: url, webView: webView)
-        
-        XCTAssertTrue(webView.didStopLoading)
-        XCTAssertTrue(webView.didLoadRequest)
-    }
-    
-    func testHandleRedirect_withNonYoutubeVideoURL_doesNotLoadNewURL() {
-        let url = URL(string: "https://example.com")!
-        navigationHandler.handleRedirect(url: url, webView: webView)
-        
-        XCTAssertFalse(webView.didStopLoading)
-        XCTAssertFalse(webView.didLoadRequest)
-    }
-    
-    func testHandleRedirect_withNavigationAction_allowsNavigation() {
-        let expectation = self.expectation(description: "Completion handler called")
-        let url = URL(string: "https://youtube.com/watch?v=example")!
-        let request = URLRequest(url: url)
-        let navigationAction = MockNavigationAction(request: request)
-        
-        navigationHandler.handleRedirect(navigationAction, completion: { policy in
-            XCTAssertEqual(policy, .allow)
-            expectation.fulfill()
-        }, webView: webView)
-        
-        waitForExpectations(timeout: 1, handler: nil)
-        XCTAssertTrue(webView.didLoadRequest)
-    }
-    
-    func testGoBack_withMatchingVideoID_skipsHistoryItems() {
-        let backItem = MockBackForwardListItem(url: URL(string: "https://youtube.com/watch?v=example")!)
-        webView.mockBackForwardList.backItem = backItem
-        
-        let currentURL = URL(string: "https://duckplayer.com/watch?v=example")!
-        webView.mockURL = currentURL
-        
-        navigationHandler.goBack(webView: webView)
-        
-        XCTAssertTrue(webView.didGoBackSkippingHistoryItems)
-    }
-    
-    func testGoBack_withNonMatchingVideoID_goesBack() {
-        let backItem = MockBackForwardListItem(url: URL(string: "https://youtube.com/watch?v=example1")!)
-        webView.mockBackForwardList.backItem = backItem
-        
-        let currentURL = URL(string: "https://duckplayer.com/watch?v=example2")!
-        webView.mockURL = currentURL
-        
-        navigationHandler.goBack(webView: webView)
-        
-        XCTAssertTrue(webView.didGoBack)
-    }
+
 }

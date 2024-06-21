@@ -652,7 +652,7 @@ class TabViewController: UIViewController {
         } else if let currentHost = url?.host, let newHost = webView.url?.host, currentHost == newHost {
             url = webView.url
                         
-            if appSettings.duckPlayerMode == .enabled {
+            if let url, url.isYoutubeVideo, appSettings.duckPlayerMode == .enabled {
                 youtubeNavigationHandler?.handleRedirect(url: url, webView: webView)
             }
         }
@@ -1599,7 +1599,7 @@ extension TabViewController: WKNavigationDelegate {
             adClickAttributionLogic.onBackForwardNavigation(mainFrameURL: webView.url)
         }
         
-        if appSettings.duckPlayerMode == .enabled {
+        if url.isYoutubeVideo && appSettings.duckPlayerMode == .enabled {
             youtubeNavigationHandler?.handleRedirect(navigationAction, completion: completion, webView: webView)
             return
         }

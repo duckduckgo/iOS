@@ -225,8 +225,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 pixelEvent = .networkProtectionNoAccessTokenFoundError
             case .keychainLocked:
                 pixelEvent = .networkProtectionAccessTokenKeychainLockedError
-            case .keychainError:
+            case .keychainError(let status):
                 pixelEvent = .networkProtectionAccessTokenKeychainError
+                params[PixelParameters.keychainErrorCode] = String(status)
             case .vpnAccessRevoked:
                 return
             case .unhandledError(function: let function, line: let line, error: let error):

@@ -72,9 +72,9 @@ extension EventMapping where Event == NetworkProtectionError {
             pixelEvent = .networkProtectionNoAccessTokenFoundError
         case .keychainLocked:
             pixelEvent = .networkProtectionAccessTokenKeychainLockedError
-        case .keychainError(let error):
+        case .keychainError(let status):
             pixelEvent = .networkProtectionAccessTokenKeychainError
-            pixelError = error
+            params[PixelParameters.keychainErrorCode] = String(status)
         case .vpnAccessRevoked:
             return
         case .noServerRegistrationInfo,

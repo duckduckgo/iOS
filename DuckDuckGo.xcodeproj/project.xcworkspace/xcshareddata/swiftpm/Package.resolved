@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "sam/sub-access-token-throws",
-        "revision" : "d17c95ecbd20f177de854258dfd37c959476b6fd"
+        "revision" : "5315481ca683161229d689684e7b793e7863a322"
       }
     },
     {

@@ -40,45 +40,6 @@ class MockWKNavigationDelegate: NSObject, WKNavigationDelegate {
         decidePolicyForNavigationAction?(webView, navigationAction, decisionHandler) ?? decisionHandler(.allow)
     }
 }
-
-protocol WKBackForwardListItemProtocol {
-    var url: URL { get }
-}
-
-extension WKBackForwardListItem: WKBackForwardListItemProtocol {}
-
-class MockWKBackForwardListItem: WKBackForwardListItemProtocol {
-    private let _url: URL
-    
-    init(url: URL) {
-        self._url = url
-    }
-    
-    var url: URL {
-        return _url
-    }
-}
-
-class MockWKBackForwardList: WKBackForwardList {
-    private var items: [WKBackForwardListItemProtocol]
-    
-    init(items: [WKBackForwardListItemProtocol]) {
-        self.items = items
-    }
-    
-    override var backList: [WKBackForwardListItem] {
-        return items.compactMap { $0 as? WKBackForwardListItem }
-    }
-    
-    override var currentItem: WKBackForwardListItem? {
-        return items.last as? WKBackForwardListItem
-    }
-    
-    override var forwardList: [WKBackForwardListItem] {
-        return []
-    }
-}
-
 class MockWebView: WKWebView {
     var didStopLoadingCalled = false
     var lastLoadedRequest: URLRequest?
@@ -305,11 +266,6 @@ class YoutubePlayerNavigationHandlerTests: XCTestCase {
         XCTAssertEqual(navigationPolicy, .cancel, "Expected navigation policy to be .cancel")
         XCTAssertNil(mockWebView.lastLoadedRequest, "Expected a new request not to be loaded")
         XCTAssertNil(mockWebView.lastResponseHTML, "Expected the response HTML not to be loaded")
-        
-        if let loadedRequest = mockWebView.lastLoadedRequest {
-            XCTAssertEqual(loadedRequest.url?.host, "www.youtube-nocookie.com")
-            XCTAssertEqual(loadedRequest.url?.path, "/embed/abc123")
-        }
         
         if let responseHTML = mockWebView.lastResponseHTML {
             let expectedHtml = try? String(contentsOfFile: YoutubePlayerNavigationHandler.htmlTemplatePath)

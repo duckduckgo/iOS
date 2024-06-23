@@ -151,6 +151,6 @@ private enum Metrics {
 }
 
 #Preview {
-    BrowsersComparisonChart(browsers: BrowsersComparisonModel().browsers)
+    BrowsersComparisonChart(browsers: BrowsersComparisonModel.browsers)
     .padding()
 }

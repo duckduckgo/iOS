@@ -21,58 +21,61 @@ import Foundation
 
 struct BrowsersComparisonModel {
 
-    let browsers: [Browser] = [
+    static let browsers: [Browser] = [
         .init(
             type: .safari,
-            privacyFeatures: [
-                .init(
-                    type: .privateSearch,
-                    availability: .unavailable
-                ),
-                .init(
-                    type: .blockThirdPartyTrackers,
-                    availability: .partiallyAvailable
-                ),
-                .init(
-                    type: .blockCookiePopups,
-                    availability: .unavailable
-                ),
-                .init(
-                    type: .blockCreepyAds,
-                    availability: .unavailable
-                ),
-                .init(
-                    type: .eraseBrowsingData,
-                    availability: .unavailable
-                ),
-            ]
+            privacyFeatures: privacyFeatures(for: .safari)
         ),
         .init(
             type: .ddg,
-            privacyFeatures: [
-                .init(
-                    type: .privateSearch,
-                    availability: .available
-                ),
-                .init(
-                    type: .blockThirdPartyTrackers,
-                    availability: .available
-                ),
-                .init(
-                    type: .blockCookiePopups,
-                    availability: .available
-                ),
-                .init(
-                    type: .blockCreepyAds,
-                    availability: .available
-                ),
-                .init(
-                    type: .eraseBrowsingData,
-                    availability: .available
-                ),
-            ]
+            privacyFeatures: privacyFeatures(for: .ddg)
         )
     ]
+
+    private static func privacyFeatures(for browser: Browser.BrowserType) -> [PrivacyFeature] {
+        PrivacyFeature.FeatureType.allCases.map { feature in
+            let availability: PrivacyFeature.Availability
+            switch feature {
+            case .privateSearch:
+                switch browser {
+                case .ddg:
+                    availability = .available
+                case .safari:
+                    availability = .unavailable
+                }
+            case .blockThirdPartyTrackers:
+                switch browser {
+                case .ddg:
+                    availability = .available
+                case .safari:
+                    availability = .partiallyAvailable
+                }
+            case .blockCookiePopups:
+                switch browser {
+                case .ddg:
+                    availability = .available
+                case .safari:
+                    availability = .unavailable
+                }
+            case .blockCreepyAds:
+                switch browser {
+                case .ddg:
+                    availability = .available
+                case .safari:
+                    availability = .unavailable
+                }
+            case .eraseBrowsingData:
+                switch browser {
+                case .ddg:
+                    availability = .available
+                case .safari:
+                    availability = .unavailable
+                }
+            }
+
+            return PrivacyFeature(type: feature, availability: availability)
+        }
+    }
 
 }
 
@@ -116,7 +119,7 @@ extension BrowsersComparisonModel {
 
 extension BrowsersComparisonModel.PrivacyFeature {
 
-    enum FeatureType {
+    enum FeatureType: CaseIterable {
         case privateSearch
         case blockThirdPartyTrackers
         case blockCookiePopups

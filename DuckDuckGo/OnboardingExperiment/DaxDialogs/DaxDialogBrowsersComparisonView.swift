@@ -21,7 +21,6 @@ import SwiftUI
 import DuckUI
 
 struct DaxDialogBrowsersComparisonView: View {
-    private let model = BrowsersComparisonModel()
 
     let action: () -> Void
 
@@ -32,7 +31,7 @@ struct DaxDialogBrowsersComparisonView: View {
                     .foregroundColor(.primary)
                     .font(Font.system(size: 20, weight: .bold))
 
-                BrowsersComparisonChart(browsers: model.browsers)
+                BrowsersComparisonChart(browsers: BrowsersComparisonModel.browsers)
 
                 Button(action: action) {
                     Text(UserText.DaxOnboardingExperiment.BrowsersComparison.cta)

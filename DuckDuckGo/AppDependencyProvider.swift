@@ -44,8 +44,8 @@ protocol DependencyProvider {
     var toggleProtectionsCounter: ToggleProtectionsCounter { get }
     var userBehaviorMonitor: UserBehaviorMonitor { get }
     var subscriptionFeatureAvailability: SubscriptionFeatureAvailability { get }
-    var subscriptionManager: SubscriptionManaging { get }
-    var accountManager: AccountManaging { get }
+    var subscriptionManager: SubscriptionManager { get }
+    var accountManager: AccountManager { get }
     var vpnFeatureVisibility: DefaultNetworkProtectionVisibility { get }
     var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore { get }
     var networkProtectionTunnelController: NetworkProtectionTunnelController { get }
@@ -88,8 +88,8 @@ class AppDependencyProvider: DependencyProvider {
         purchasePlatform: .appStore)
 
     // Subscription
-    let subscriptionManager: SubscriptionManaging
-    var accountManager: AccountManaging {
+    let subscriptionManager: SubscriptionManager
+    var accountManager: AccountManager {
         subscriptionManager.accountManager
     }
     let vpnFeatureVisibility: DefaultNetworkProtectionVisibility
@@ -108,25 +108,25 @@ class AppDependencyProvider: DependencyProvider {
 
         // MARK: - Configure Subscription
         let subscriptionUserDefaults = UserDefaults(suiteName: subscriptionAppGroup)!
-        let subscriptionEnvironment = SubscriptionManager.getSavedOrDefaultEnvironment(userDefaults: subscriptionUserDefaults)
+        let subscriptionEnvironment = DefaultSubscriptionManager.getSavedOrDefaultEnvironment(userDefaults: subscriptionUserDefaults)
         vpnSettings.alignTo(subscriptionEnvironment: subscriptionEnvironment)
 
         let entitlementsCache = UserDefaultsCache<[Entitlement]>(userDefaults: subscriptionUserDefaults,
                                                                  key: UserDefaultsCacheKey.subscriptionEntitlements,
                                                                  settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
         let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
-        let subscriptionService = SubscriptionService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
-        let authService = AuthService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
-        let accountManager = AccountManager(accessTokenStorage: accessTokenStorage,
-                                            entitlementsCache: entitlementsCache,
-                                            subscriptionService: subscriptionService,
-                                            authService: authService)
+        let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let authService = DefaultAuthEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let accountManager = DefaultAccountManager(accessTokenStorage: accessTokenStorage,
+                                                   entitlementsCache: entitlementsCache,
+                                                   subscriptionEndpointService: subscriptionService,
+                                                   authEndpointService: authService)
         if #available(iOS 15.0, *) {
-            subscriptionManager = SubscriptionManager(storePurchaseManager: StorePurchaseManager(),
-                                                      accountManager: accountManager,
-                                                      subscriptionService: subscriptionService,
-                                                      authService: authService,
-                                                      subscriptionEnvironment: subscriptionEnvironment)
+            subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(),
+                                                             accountManager: accountManager,
+                                                             subscriptionEndpointService: subscriptionService,
+                                                             authEndpointService: authService,
+                                                             subscriptionEnvironment: subscriptionEnvironment)
         } else {
             // This is used just for iOS <15, it's a sort of mocked environment that will not be used.
             subscriptionManager = SubscriptionManageriOS14(accountManager: accountManager)

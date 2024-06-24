@@ -95,7 +95,7 @@ extension TabURLInterceptorDefault {
                 NotificationCenter.default.post(
                     name: .urlInterceptPrivacyPro,
                     object: nil,
-                    userInfo: [AttributionParameter.origin: originQueryItem?.value]
+                    userInfo: [AttributionParameter.origin: originQueryItem?.value as Any]
                 )
                 return false
             }

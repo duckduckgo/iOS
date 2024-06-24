@@ -45,6 +45,8 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
                 self = .youtubeOverlay
             case DuckPlayerSettings.OriginDomains.youtube:
                 self = .youtubeOverlay
+            case DuckPlayerSettings.OriginDomains.youtubeWWW:
+                self = .youtubeOverlay
             default:
                 return nil
             }

@@ -101,7 +101,8 @@ final class DuckPlayerSettings {
     
     public struct OriginDomains {
         static let duckduckgo = "duckduckgo.com"
-        static let youtube = "www.youtube.com"
+        static let youtubeWWW = "www.youtube.com"
+        static let youtube = "youtube.com"
         static let youtubeMobile = "m.youtube.com"
     }
     

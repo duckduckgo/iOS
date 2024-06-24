@@ -34,7 +34,7 @@ struct DaxDialogBrowsersComparisonView: View {
                 // Replace with BrowsersComparisonView
                 RoundedRectangle(cornerRadius: 15.0)
                     .foregroundColor(.blue)
-                    .overlay(Text("Placeholder"), alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    .overlay(Text("Placeholder"), alignment: .center)
 
                 Button(action: action) {
                     Text(UserText.DaxOnboardingExperiment.BrowsersComparison.cta)

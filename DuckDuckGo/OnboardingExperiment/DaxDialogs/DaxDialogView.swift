@@ -23,8 +23,6 @@ import DesignResourcesKit
 // MARK: - Metrics
 
 private enum Metrics {
-    static let darkBackground = Color(0x2F2F2F, alpha: 1)
-    static let whiteBackground = Color.white
     static let contentPadding: CGFloat = 24.0
     static let shadowRadius: CGFloat = 5.0
     static let stackSpacing: CGFloat = 10.0
@@ -98,7 +96,7 @@ struct DaxDialogView<Content: View>: View {
     }
 
     private var wrappedContent: some View {
-        let backgroundColor = colorScheme == .light ? Metrics.whiteBackground : Metrics.darkBackground
+        let backgroundColor = Color(designSystemColor: .surface)
 
         return content
             .padding(.all, Metrics.contentPadding)

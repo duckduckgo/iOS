@@ -1,8 +1,8 @@
 //
-//  SettingsSyncViewOld.swift
+//  SettingsDuckPlayerView.swift
 //  DuckDuckGo
 //
-//  Copyright © 2023 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,29 +17,24 @@
 //  limitations under the License.
 //
 
-import SwiftUI
-import SyncUI
-import UIKit
 import Core
-import DDGSync
+import SwiftUI
+import DesignResourcesKit
 
-struct SettingsSyncViewOld: View {
+struct SettingsDuckPlayerView: View {
 
     @EnvironmentObject var viewModel: SettingsViewModel
-    @EnvironmentObject var viewProvider: SettingsLegacyViewProvider
-    
-    @State var isPresentingSyncView: Bool = false
 
-    
     var body: some View {
-        if viewModel.state.sync.enabled {
+        List {
             Section {
-                SettingsCellView(label: SyncUI.UserText.syncTitle,
-                                 action: { viewModel.presentLegacyView(.sync) },
-                                 disclosureIndicator: true,
-                                 isButton: true)
+                SettingsPickerCellView(label: "Open videos in DuckPlayer",
+                                       options: DuckPlayerMode.allCases,
+                                       selectedOption: viewModel.duckPlayerModeBinding)
             }
-
         }
+        .applySettingsListModifiers(title: "Open videos in DuckPlayer",
+                                    displayMode: .inline,
+                                    viewModel: viewModel)
     }
 }

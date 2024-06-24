@@ -28,10 +28,8 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
-    let subscriptionManager: SubscriptionManaging
-    var accountManager: AccountManaging {
-        subscriptionManager.accountManager
-    }
+    let subscriptionManager: SubscriptionManager
+    var accountManager: AccountManager { subscriptionManager.accountManager }
 
     private var cancellables = Set<AnyCancellable>()
     
@@ -59,10 +57,12 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         
     init(userScript: SubscriptionPagesUserScript,
          subFeature: SubscriptionPagesUseSubscriptionFeature,
-         subscriptionManager: SubscriptionManaging) {
+         subscriptionManager: SubscriptionManager,
+         isAddingDevice: Bool = false) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.subscriptionManager = subscriptionManager
+        self.state.isAddingDevice = false
     }
     
     func onAppear() {
@@ -78,7 +78,7 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     private func cleanUp() {
         cancellables.removeAll()
     }
-    
+
     @MainActor
     private func resetState() {
         state.isShowingActivationFlow = false

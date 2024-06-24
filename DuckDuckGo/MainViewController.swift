@@ -322,7 +322,6 @@ class MainViewController: UIViewController {
             guard $0 != self?.tabManager.model.currentIndex else { return }
             
             DailyPixel.fire(pixel: .swipeTabsUsedDaily)
-            Pixel.fire(pixel: .swipeTabsUsed)
             self?.select(tabAt: $0)
             
         } newTab: { [weak self] in
@@ -1482,7 +1481,7 @@ class MainViewController: UIViewController {
     private func onEntitlementsChange(_ notification: Notification) {
         Task {
             let accountManager = AppDependencyProvider.shared.subscriptionManager.accountManager
-            guard case .success(false) = await accountManager.hasEntitlement(for: .networkProtection) else { return }
+            guard case .success(false) = await accountManager.hasEntitlement(forProductName: .networkProtection) else { return }
 
             if await networkProtectionTunnelController.isInstalled {
                 tunnelDefaults.enableEntitlementMessaging()
@@ -2415,7 +2414,12 @@ extension MainViewController: AutoClearWorker {
         showBars()
         attachHomeScreen()
         tabsBarController?.refresh(tabsModel: tabManager.model)
-        swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
+
+        if !autoClearInProgress {
+            // We don't need to refresh tabs if autoclear is in progress as nothing has happened yet
+            swipeTabsCoordinator?.refresh(tabsModel: tabManager.model)
+        }
+
         Favicons.shared.clearCache(.tabs)
     }
 

@@ -33,6 +33,7 @@ public class SchemeHandler {
         case external(Action)
         case blob
         case unknown
+        case duck
     }
 
     private enum PlatformScheme: String {
@@ -66,6 +67,8 @@ public class SchemeHandler {
         let scheme = URL.NavigationalScheme(rawValue: schemeString)
         if case .blob = scheme {
             return .blob
+        } else if case .duck = scheme {
+            return .duck
         } else if URL.NavigationalScheme.navigationalSchemes.contains(scheme) {
             return .navigational
         }
@@ -78,6 +81,8 @@ public class SchemeHandler {
         default:
             return .external(.open)
         }
+        
+        
     }
 
 }

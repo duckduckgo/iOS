@@ -242,7 +242,7 @@
 "autocomplete.history.search.duckduckgo" = "Search DuckDuckGo";
 
 /* The message text shown in suggestions */
-"autocomplete.history.warning.message" = "Suggestions now include recently visited sites. These are stored on your device and never on DuckDuckGo's servers. Turn off in settings, or clear any time with the 🔥 Fire Button.";
+"autocomplete.history.warning.message" = "Search suggestions now include your recently visited sites. Turn off in Settings, or clear anytime with the 🔥 Fire Button.";
 
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Same privacy.\nBetter search suggestions!";
@@ -673,6 +673,30 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Import an HTML file of bookmarks from another browser, or export your existing bookmarks.";
 
+/* Button to open report form */
+"broken.site.report.menu.title" = "Report Problem With This Site";
+
+/* Acknowledge button */
+"broken.site.report.missing.description.alert.button" = "Got It";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.description" = "Please describe the issue you experienced on this site so we can better understand how to fix it.";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.title" = "Description Required";
+
+/* Message that appears after submitting report */
+"broken.site.report.success.toast" = "Your report helps make DuckDuckGo better for everyone!";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.no.button" = "No";
+
+/* An alert that appears after user turns off the privacy protection */
+"broken.site.report.toggle.alert.title" = "Did turning Privacy Protections off resolve the issue on this site?";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.yes.button" = "Yes";
+
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Always Send Crash Reports";
 
@@ -843,6 +867,15 @@
 
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Download started for %@";
+
+/* Text displayed when DuckPlayer is always enabled */
+"duckPlayer.alwaysEnabled.label" = "Always";
+
+/* Text displayed when DuckPlayer is in 'Ask' mode. */
+"duckPlayer.ask.label" = "Always";
+
+/* Text displayed when DuckPlayer is in off. */
+"duckPlayer.never.label" = "Always";
 
 /* Email protection service offered by DuckDuckGo */
 "email-protection" = "Email Protection";
@@ -1673,10 +1706,16 @@ But if you *do* want a peek under the hood, you can find more information about 
 "settings.associated.apps.description" = "Disable to prevent links from automatically opening in other installed apps.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Autocomplete Suggestions";
+"settings.autocomplete" = "Search Suggestions";
 
 /* Settings label for enabling or disabling recently visited sites */
 "settings.autocomplete.recentlyvisited" = "Recently Visited Sites";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Show recently visited sites in search suggestions. Recently visited sites are private, only stored on your device, and can be cleared with the Fire Button.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Show search suggestions as you type, including your bookmarks. All searches are private.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Application Lock";

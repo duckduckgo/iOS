@@ -21,6 +21,7 @@ import BrowserServicesKit
 import Foundation
 import CoreData
 import Persistence
+import RemoteMessaging
 
 public class Database {
 
@@ -35,7 +36,7 @@ public class Database {
     static func makeCoreDataDatabase() -> CoreDataDatabase {
 
         guard let appRatingModel = CoreDataDatabase.loadModel(from: .main, named: "AppRatingPrompt"),
-              let remoteMessagingModel = CoreDataDatabase.loadModel(from: .main, named: "RemoteMessaging"),
+              let remoteMessagingModel = CoreDataDatabase.loadModel(from: RemoteMessaging.bundle, named: "RemoteMessaging"),
               let managedObjectModel = NSManagedObjectModel(byMerging: [appRatingModel,
                                                                         remoteMessagingModel,
                                                                         HTTPSUpgrade.managedObjectModel]) else {

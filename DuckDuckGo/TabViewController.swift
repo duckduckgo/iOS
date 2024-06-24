@@ -35,6 +35,7 @@ import TrackerRadarKit
 import Networking
 import SecureStorage
 import History
+import ContentScopeScripts
 
 #if NETWORK_PROTECTION
 import NetworkProtection
@@ -107,7 +108,6 @@ class TabViewController: UIViewController {
     private static let tld = AppDependencyProvider.shared.storageCache.tld
     private let adClickAttributionDetection = ContentBlocking.shared.makeAdClickAttributionDetection(tld: tld)
     let adClickAttributionLogic = ContentBlocking.shared.makeAdClickAttributionLogic(tld: tld)
-    
 
     private var httpsForced: Bool = false
     private var lastUpgradedURL: URL?
@@ -176,20 +176,8 @@ class TabViewController: UIViewController {
     lazy var faviconUpdater = FireproofFaviconUpdater(bookmarksDatabase: bookmarksDatabase,
                                                       tab: tabModel,
                                                       favicons: Favicons.shared)
-    private lazy var refreshControl: UIRefreshControl = {
-        let refreshControl = UIRefreshControl()
-        refreshControl.addAction(UIAction { [weak self] _ in
-            guard let self else { return }
-            reload()
-            delegate?.tabDidRequestRefresh(tab: self)
-            Pixel.fire(pixel: .pullToRefresh)
-            AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.refresh)
-        }, for: .valueChanged)
 
-        refreshControl.backgroundColor = .systemBackground
-        refreshControl.tintColor = .label
-        return refreshControl
-    }()
+    private let refreshControl = UIRefreshControl()
 
     let syncService: DDGSyncing
 
@@ -331,6 +319,8 @@ class TabViewController: UIViewController {
     let historyManager: HistoryManager
     let historyCapture: HistoryCapture
 
+    let youtubeNavigationHandler: DuckNavigationHandling? = YoutubePlayerNavigationHandler()
+    
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
                    appSettings: AppSettings,
@@ -465,6 +455,10 @@ class TabViewController: UIViewController {
         webView.uiDelegate = self
         webViewContainer.addSubview(webView)
         webView.scrollView.refreshControl = refreshControl
+        // Be sure to set `tintColor` after the control is attached to ScrollView otherwise haptics are gone.
+        // We don't have to care about it for this control instance the next time `setRefreshControlEnabled`
+        // is called. Looks like a bug introduced in iOS 17.4 (https://github.com/facebook/react-native/issues/43388)
+        configureRefreshControl(refreshControl)
 
         updateContentMode()
 
@@ -514,6 +508,19 @@ class TabViewController: UIViewController {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.title), options: .new, context: nil)
+    }
+
+    private func configureRefreshControl(_ control: UIRefreshControl) {
+        refreshControl.addAction(UIAction { [weak self] _ in
+            guard let self else { return }
+            reload()
+            delegate?.tabDidRequestRefresh(tab: self)
+            Pixel.fire(pixel: .pullToRefresh)
+            AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.refresh)
+        }, for: .valueChanged)
+
+        refreshControl.backgroundColor = .systemBackground
+        refreshControl.tintColor = .label
     }
 
     private func consumeCookiesThenLoadRequest(_ request: URLRequest?) {
@@ -648,6 +655,13 @@ class TabViewController: UIViewController {
             url = webView.url
         } else if let currentHost = url?.host, let newHost = webView.url?.host, currentHost == newHost {
             url = webView.url
+                        
+            if let handler = youtubeNavigationHandler,
+                let url,
+                url.isYoutubeVideo,
+                appSettings.duckPlayerMode == .enabled {
+                handler.handleRedirect(url: url, webView: webView)
+            }
         }
     }
     
@@ -709,20 +723,26 @@ class TabViewController: UIViewController {
 
     func goBack() {
         dismissJSAlertIfNeeded()
-
-        if isError {
-            hideErrorMessage()
-            url = webView.url
-            onWebpageDidStartLoading(httpsForced: false)
-            onWebpageDidFinishLoading()
-        } else if webView.canGoBack {
-            webView.goBack()
+        
+        if let handler = youtubeNavigationHandler {
+            handler.goBack(webView: webView)
             chromeDelegate?.omniBar.resignFirstResponder()
-        } else if openingTab != nil {
-            delegate?.tabDidRequestClose(self)
+        } else {
+            if isError {
+                hideErrorMessage()
+                url = webView.url
+                onWebpageDidStartLoading(httpsForced: false)
+                onWebpageDidFinishLoading()
+            } else if webView.canGoBack {
+                webView.goBack()
+                chromeDelegate?.omniBar.resignFirstResponder()
+            } else if openingTab != nil {
+                delegate?.tabDidRequestClose(self)
+            }
         }
-    }
 
+    }
+    
     func goForward() {
         dismissJSAlertIfNeeded()
 
@@ -760,6 +780,8 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
             privacyDashboard = controller
+            privacyDashboard?.delegate = self
+            breakageCategory = nil
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
@@ -1015,12 +1037,42 @@ class TabViewController: UIViewController {
         job()
     }
 
+    private var alertPresenter: AlertViewPresenter?
+    var breakageCategory: String?
+    private func schedulePrivacyProtectionsOffAlert() {
+        guard let breakageCategory else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.alertPresenter?.hide()
+            self.alertPresenter = AlertViewPresenter(title: UserText.brokenSiteReportToggleAlertTitle,
+                                                     image: "SiteBreakage",
+                                                     leftButton: (UserText.brokenSiteReportToggleAlertYesButton, { [weak self] in
+                Pixel.fire(pixel: .reportBrokenSiteTogglePromptYes)
+                (self?.parent as? MainViewController)?.segueToReportBrokenSite(mode: .afterTogglePrompt(category: breakageCategory,
+                                                                                                       didToggleProtectionsFixIssue: true))
+            }),
+                                                     rightButton: (UserText.brokenSiteReportToggleAlertNoButton, { [weak self] in
+                Pixel.fire(pixel: .reportBrokenSiteTogglePromptNo)
+                (self?.parent as? MainViewController)?.segueToReportBrokenSite(mode: .afterTogglePrompt(category: breakageCategory,
+                                                                                                       didToggleProtectionsFixIssue: false))
+            }))
+            self.alertPresenter?.present(in: self, animated: true)
+        }
+    }
+
     deinit {
         rulesCompilationMonitor.tabWillClose(tabModel.uid)
         removeObservers()
         temporaryDownloadForPreviewedFile?.cancel()
         cleanUpBeforeClosing()
     }
+}
+
+extension TabViewController: PrivacyDashboardViewControllerDelegate {
+
+    func privacyDashboardViewController(_ privacyDashboardViewController: PrivacyDashboardViewController, didSelectBreakageCategory breakageCategory: String) {
+        self.breakageCategory = breakageCategory
+    }
+
 }
 
 // MARK: - LoginFormDetectionDelegate
@@ -1424,7 +1476,7 @@ extension TabViewController: WKNavigationDelegate {
             })
             return
         }
-
+        
         if let url = navigationAction.request.url {
             if !tabURLInterceptor.allowsNavigatingTo(url: url) {
                 decisionHandler(.cancel)
@@ -1450,6 +1502,7 @@ extension TabViewController: WKNavigationDelegate {
             // will wait for Content Blocking to load and re-call on completion
             return
         }
+        
 
         didGoBackForward = (navigationAction.navigationType == .backForward)
 
@@ -1562,6 +1615,7 @@ extension TabViewController: WKNavigationDelegate {
         let allowPolicy = determineAllowPolicy()
 
         let tld = storageCache.tld
+        
 
         if navigationAction.isTargetingMainFrame()
             && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedURL?.host) {
@@ -1582,7 +1636,14 @@ extension TabViewController: WKNavigationDelegate {
         if navigationAction.isTargetingMainFrame(), navigationAction.navigationType == .backForward {
             adClickAttributionLogic.onBackForwardNavigation(mainFrameURL: webView.url)
         }
-
+        
+        if let handler = youtubeNavigationHandler,
+            url.isYoutubeVideo,
+            appSettings.duckPlayerMode == .enabled {
+            handler.handleRedirect(navigationAction, completion: completion, webView: webView)
+            return
+        }
+        
         let schemeType = SchemeHandler.schemeType(for: url)
         self.blobDownloadTargetFrame = nil
         switch schemeType {
@@ -1598,7 +1659,10 @@ extension TabViewController: WKNavigationDelegate {
 
         case .blob:
             performBlobNavigation(navigationAction, completion: completion)
-
+        
+        case .duck:
+            youtubeNavigationHandler?.handleNavigation(navigationAction, webView: webView, completion: completion)
+            
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
                 openExternally(url: url)
@@ -1608,6 +1672,7 @@ extension TabViewController: WKNavigationDelegate {
             completion(.cancel)
         }
     }
+    
 
     private func inferLoadContext(for navigationAction: WKNavigationAction) -> BrokenSiteReport.OpenerContext? {
         guard navigationAction.navigationType != .reload else { return nil }
@@ -2261,6 +2326,7 @@ extension TabViewController: UserContentControllerDelegate {
             }) {
 
             reload()
+            schedulePrivacyProtectionsOffAlert()
         }
     }
 
@@ -2306,6 +2372,10 @@ extension TabViewController: SurrogatesUserScriptDelegate {
 
     func surrogatesUserScriptShouldProcessTrackers(_ script: SurrogatesUserScript) -> Bool {
         return privacyInfo?.isFor(self.url) ?? false
+    }
+
+    func surrogatesUserScriptShouldProcessCTLTrackers(_ script: SurrogatesUserScript) -> Bool {
+        false
     }
 
     func surrogatesUserScript(_ script: SurrogatesUserScript,
@@ -2436,11 +2506,11 @@ extension TabViewController: SecureVaultManagerDelegate {
     }
     
     func secureVaultError(_ error: SecureStorageError) {
-        SecureVaultReporter.shared.secureVaultError(error)
+        SecureVaultReporter().secureVaultError(error)
     }
 
     func secureVaultKeyStoreEvent(_ event: SecureStorageKeyStoreEvent) {
-        SecureVaultReporter.shared.secureVaultKeyStoreEvent(event)
+        SecureVaultReporter().secureVaultKeyStoreEvent(event)
     }
 
     func secureVaultManagerIsEnabledStatus(_ manager: SecureVaultManager, forType type: AutofillType?) -> Bool {
@@ -2676,7 +2746,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
 
     private func confirmSavedCredentialsFor(credentialID: Int64, message: String) {
         do {
-            let vault = try AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter.shared)
+            let vault = try AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter())
             
             if let newCredential = try vault.websiteCredentialsFor(accountId: credentialID) {
                 DispatchQueue.main.async {

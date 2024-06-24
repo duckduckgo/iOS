@@ -148,6 +148,10 @@ public struct UserDefaultsWrapper<T> {
         case historyMessageDismissed = "com.duckduckgo.ios.historyMessage.dismissed"
         case pixelExperimentForBrokenSitesInstalled = "com.duckduckgo.ios.pixel.experiment.for.broken.sites.installed"
         case pixelExperimentForBrokenSitesCohort = "com.duckduckgo.ios.pixel.experiment.for.broken.sites.cohort"
+        
+        case duckPlayerMode = "com.duckduckgo.ios.duckPlayerMode"
+
+        case vpnRedditWorkaroundInstalled = "com.duckduckgo.ios.vpn.workaroundInstalled"
     }
 
     private let key: Key

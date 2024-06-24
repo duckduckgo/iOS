@@ -1,5 +1,5 @@
 //
-//  BookmarksCoreDataStorage.swift
+//  LegacyBookmarksCoreDataStorage.swift
 //  DuckDuckGo
 //
 //  Copyright © 2021 DuckDuckGo. All rights reserved.
@@ -218,10 +218,7 @@ extension LegacyBookmarksCoreDataStorage {
         guard let folder = fetchReadOnlyTopLevelFolder(withFolderType: .bookmark) else {
             fixFolderDataStructure(withFolderType: .bookmark)
 
-            // https://app.asana.com/0/414709148257752/1202779945035904/f
             guard let fixedFolder = fetchReadOnlyTopLevelFolder(withFolderType: .bookmark) else {
-                Pixel.fire(pixel: .debugCouldNotFixBookmarkFolder)
-                Thread.sleep(forTimeInterval: 1)
                 fatalError("Coudn't fix bookmark folder")
             }
             self.cachedReadOnlyTopLevelBookmarksFolder = fixedFolder
@@ -234,10 +231,7 @@ extension LegacyBookmarksCoreDataStorage {
         guard let folder = fetchReadOnlyTopLevelFolder(withFolderType: .favorite) else {
             fixFolderDataStructure(withFolderType: .favorite)
 
-            // https://app.asana.com/0/414709148257752/1202779945035904/f
             guard let fixedFolder = fetchReadOnlyTopLevelFolder(withFolderType: .favorite) else {
-                Pixel.fire(pixel: .debugCouldNotFixFavoriteFolder)
-                Thread.sleep(forTimeInterval: 1)
                 fatalError("Coudn't fix favorite folder")
             }
             self.cachedReadOnlyTopLevelFavoritesFolder = fixedFolder
@@ -273,12 +267,6 @@ extension LegacyBookmarksCoreDataStorage {
         let count = orphanedFolders.count
         let pixelParam = [PixelParameters.bookmarkErrorOrphanedFolderCount: "\(count)"]
 
-        if folderType == .favorite {
-            Pixel.fire(pixel: .debugFavoriteOrphanFolderNew, withAdditionalParameters: pixelParam)
-        } else {
-            Pixel.fire(pixel: .debugBookmarkOrphanFolderNew, withAdditionalParameters: pixelParam)
-        }
-
         // Sort all orphaned folders by number of children
         let sorted = orphanedFolders.sorted { ($0.children?.count ?? 0) > ($1.children?.count ?? 0) }
 
@@ -304,11 +292,6 @@ extension LegacyBookmarksCoreDataStorage {
      */
     private func createMissingTopLevelFolder(onContext context: NSManagedObjectContext,
                                              withFolderType folderType: TopLevelFolderType) {
-        if folderType == .favorite {
-            Pixel.fire(pixel: .debugFavoriteTopLevelMissingNew)
-        } else {
-            Pixel.fire(pixel: .debugBookmarkTopLevelMissingNew)
-        }
 
         // Get all bookmarks
         let bookmarksFetchRequest = NSFetchRequest<BookmarkManagedObject>(entityName: Constants.bookmarkClassName)
@@ -318,14 +301,6 @@ extension LegacyBookmarksCoreDataStorage {
         bookmarksFetchRequest.returnsObjectsAsFaults = false
 
         let bookmarks = try? context.fetch(bookmarksFetchRequest)
-
-        if bookmarks?.count ?? 0 > 0 {
-            if folderType == .favorite {
-                Pixel.fire(pixel: .debugMissingTopFolderFixHasFavorites)
-            } else {
-                Pixel.fire(pixel: .debugMissingTopFolderFixHasBookmarks)
-            }
-        }
 
         // Create root folder for the specified folder type
         let bookmarksFolder: BookmarkFolderManagedObject
@@ -362,7 +337,6 @@ extension LegacyBookmarksCoreDataStorage {
             do {
                 try privateContext.save()
             } catch {
-                Pixel.fire(pixel: .debugCantSaveBookmarkFix)
                 assertionFailure("Failure saving bookmark top folder fix")
             }
         }

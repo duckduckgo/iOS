@@ -26,7 +26,7 @@ import Subscription
 @available(iOS 15.0, *)
 final class SubscriptionEmailViewModel: ObservableObject {
     
-    private let subscriptionManager: SubscriptionManaging
+    private let subscriptionManager: SubscriptionManager
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     
@@ -70,7 +70,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
 
     private var cancellables = Set<AnyCancellable>()
-    var accountManager: AccountManaging { subscriptionManager.accountManager }
+    var accountManager: AccountManager { subscriptionManager.accountManager }
 
     private var isWelcomePageOrSuccessPage: Bool {
         let subscriptionActivateSuccessURL = subscriptionManager.url(for: .activateSuccess)
@@ -86,7 +86,7 @@ final class SubscriptionEmailViewModel: ObservableObject {
 
     init(userScript: SubscriptionPagesUserScript,
          subFeature: SubscriptionPagesUseSubscriptionFeature,
-         subscriptionManager: SubscriptionManaging) {
+         subscriptionManager: SubscriptionManager) {
         self.userScript = userScript
         self.subFeature = subFeature
         self.subscriptionManager = subscriptionManager

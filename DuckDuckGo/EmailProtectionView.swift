@@ -41,10 +41,6 @@ struct EmailProtectionView: View {
         .applySettingsListModifiers(title: UserText.emailProtection,
                                     displayMode: .inline,
                                     viewModel: viewModel)
-        .onForwardNavigationAppear {
-            Pixel.fire(pixel: .settingsEmailProtectionOpen,
-                       withAdditionalParameters: PixelExperiment.parameters)
-        }
         .alert(isPresented: $shouldShowEmailAlert) {
             Alert(title: Text(UserText.disableEmailProtectionAutofill),
                   message: Text(UserText.emailProtectionSigningOutAlert),

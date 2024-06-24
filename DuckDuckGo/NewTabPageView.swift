@@ -1,5 +1,5 @@
 //
-//  ImprovedHomeViewController.swift
+//  NewTabPageView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -19,38 +19,12 @@
 
 import SwiftUI
 
-final class HomeTabViewController: UIHostingController<HomeTabView>, HomeViewControllerProtocol {
-
-    let isDragging: Bool = false
-
-    weak var chromeDelegate: BrowserChromeDelegate?
-    weak var delegate: HomeControllerDelegate?
-
-    func launchNewSearch() {
-
+struct NewTabPageView: View {
+    var body: some View {
+        Text("Empty")
     }
+}
 
-    func openedAsNewTab(allowingKeyboard: Bool) {
-
-    }
-
-    func omniBarCancelPressed() {
-
-    }
-
-    func dismiss() {
-
-    }
-
-    func showNextDaxDialog() {
-
-    }
-
-    func onboardingCompleted() {
-
-    }
-
-    func reloadFavorites() {
-
-    }
+#Preview {
+    NewTabPageView()
 }

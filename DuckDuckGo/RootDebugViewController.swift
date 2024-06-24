@@ -42,7 +42,7 @@ class RootDebugViewController: UITableViewController {
         case openVanillaBrowser = 670
         case resetSendCrashLogs = 671
         case refreshConfig = 672
-        case homeTabImprovements = 674
+        case newTabPageSections = 674
     }
 
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -160,8 +160,8 @@ class RootDebugViewController: UITableViewController {
                 AppUserDefaults().crashCollectionOptInStatus = .undetermined
             case .refreshConfig:
                 fetchAssets()
-            case .homeTabImprovements:
-                let controller = UIHostingController(rootView: HomeTabImprovementsDebugView())
+            case .newTabPageSections:
+                let controller = UIHostingController(rootView: NewTabPageSectionsDebugView())
                 show(controller, sender: nil)
             }
         }

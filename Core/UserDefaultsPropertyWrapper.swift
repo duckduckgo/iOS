@@ -153,7 +153,7 @@ public struct UserDefaultsWrapper<T> {
 
         // Debug keys
 
-        case debugHomeTabImprovementsEnabledKey = "com.duckduckgo.ios.debug.homeTabImprovementsEnabled"
+        case debugNewTabPageSectionsEnabledKey = "com.duckduckgo.ios.debug.newTabPageSectionsEnabled"
     }
 
     private let key: Key

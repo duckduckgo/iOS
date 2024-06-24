@@ -1,5 +1,5 @@
 //
-//  HomeTabView.swift
+//  NewTabPage.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,14 +17,19 @@
 //  limitations under the License.
 //
 
-import SwiftUI
+import UIKit
 
-struct HomeTabView: View {
-    var body: some View {
-        Text("Empty")
-    }
-}
+protocol NewTabPage: UIViewController {
 
-#Preview {
-    HomeTabView()
+    var isDragging: Bool { get } // TODO: Mariusz, check if needed in both
+    func reloadFavorites() // TODO: Mariusz: check if needed with reactive approach
+
+    func launchNewSearch()
+    func openedAsNewTab(allowingKeyboard: Bool)
+    func omniBarCancelPressed()
+
+    func dismiss()
+
+    func showNextDaxDialog()
+    func onboardingCompleted()
 }

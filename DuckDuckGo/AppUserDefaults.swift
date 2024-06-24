@@ -374,8 +374,8 @@ public class AppUserDefaults: AppSettings {
         }
     }
 
-    @UserDefaultsWrapper(key: .debugHomeTabImprovementsEnabledKey, defaultValue: false)
-    var homeTabImprovementsEnabled: Bool
+    @UserDefaultsWrapper(key: .debugNewTabPageSectionsEnabledKey, defaultValue: false)
+    var newTabPageSectionsEnabled: Bool
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

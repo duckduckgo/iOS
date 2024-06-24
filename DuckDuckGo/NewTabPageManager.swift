@@ -1,5 +1,5 @@
 //
-//  HomeTabManager.swift
+//  NewTabPageManager.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -20,16 +20,16 @@
 import Foundation
 import BrowserServicesKit
 
-protocol HomeTabManaging: AnyObject {
-    var isImprovedHomeTabEnabled: Bool { get }
+protocol NewTabPageManaging: AnyObject {
+    var isNewTabPageSectionsEnabled: Bool { get }
 }
 
-protocol HomeTabDebugging: HomeTabManaging {
+protocol NewTabPageDebugging: NewTabPageManaging {
     var isLocalFlagEnabled: Bool { get set }
     var isFeatureFlagEnabled: Bool { get }
 }
 
-final class HomeTabManager: HomeTabManaging, HomeTabDebugging {
+final class NewTabPageManager: NewTabPageManaging, NewTabPageDebugging {
 
     var appDefaults: AppDebugSettings
     let featureFlagger: FeatureFlagger
@@ -43,22 +43,22 @@ final class HomeTabManager: HomeTabManaging, HomeTabDebugging {
 
     // MARK: - HomeTabManaging
 
-    var isImprovedHomeTabEnabled: Bool {
+    var isNewTabPageSectionsEnabled: Bool {
         isLocalFlagEnabled && isFeatureFlagEnabled
     }
 
-    // MARK: - HomeTabDebugging
+    // MARK: - NewTabPageDebugging
 
     var isLocalFlagEnabled: Bool {
         get {
-            appDefaults.homeTabImprovementsEnabled
+            appDefaults.newTabPageSectionsEnabled
         }
         set {
-            appDefaults.homeTabImprovementsEnabled = newValue
+            appDefaults.newTabPageSectionsEnabled = newValue
         }
     }
 
     var isFeatureFlagEnabled: Bool {
-        featureFlagger.isFeatureOn(.homeTabImprovements)
+        featureFlagger.isFeatureOn(.newTabPageSections)
     }
 }

@@ -83,14 +83,14 @@ class MainViewController: UIViewController {
     }()
     
     var homeViewController: HomeViewController?
-    var homeTabViewController: HomeTabViewController?
-    var homeController: HomeViewControllerProtocol? {
-        homeViewController ?? homeTabViewController
+    var newTabPageViewController: NewTabPageViewController?
+    var homeController: NewTabPage? {
+        homeViewController ?? newTabPageViewController
     }
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
     
-    let homeTabManager: HomeTabManager
+    let homeTabManager: NewTabPageManager
     let tabManager: TabManager
     let previewsSource: TabPreviewsSource
     let appSettings: AppSettings
@@ -204,7 +204,7 @@ class MainViewController: UIViewController {
                                      historyManager: historyManager,
                                      syncService: syncService)
         self.syncPausedStateManager = syncPausedStateManager
-        self.homeTabManager = HomeTabManager()
+        self.homeTabManager = NewTabPageManager()
 
         super.init(nibName: nil, bundle: nil)
         
@@ -745,9 +745,9 @@ class MainViewController: UIViewController {
             fatalError("No tab model")
         }
 
-        if homeTabManager.isImprovedHomeTabEnabled {
-            let controller = HomeTabViewController(rootView: HomeTabView())
-            homeTabViewController = controller
+        if homeTabManager.isNewTabPageSectionsEnabled {
+            let controller = NewTabPageViewController(rootView: NewTabPageView())
+            newTabPageViewController = controller
             addToContentContainer(controller: controller)
             viewCoordinator.logoContainer.isHidden = true
         } else {
@@ -771,7 +771,7 @@ class MainViewController: UIViewController {
         homeController?.willMove(toParent: nil)
         homeController?.dismiss()
         homeViewController = nil
-        homeTabViewController = nil
+        newTabPageViewController = nil
     }
 
     @IBAction func onFirePressed() {

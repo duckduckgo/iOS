@@ -1,5 +1,5 @@
 //
-//  HomeTabImprovementsDebugView.swift
+//  NewTabPageSectionsDebugView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -19,31 +19,31 @@
 
 import SwiftUI
 
-struct HomeTabImprovementsDebugView: View {
+struct NewTabPageSectionsDebugView: View {
     
-    private var homeTabDebugging: HomeTabDebugging
+    private var newTabPageDebugging: NewTabPageDebugging
     @State private var isFeatureEnabled: Bool
     private var localFlagEnabled: Binding<Bool> {
         Binding {
-            homeTabDebugging.isLocalFlagEnabled
+            newTabPageDebugging.isLocalFlagEnabled
         } set: {
-            homeTabDebugging.isLocalFlagEnabled = $0
-            isFeatureEnabled = homeTabDebugging.isImprovedHomeTabEnabled
+            newTabPageDebugging.isLocalFlagEnabled = $0
+            isFeatureEnabled = newTabPageDebugging.isNewTabPageSectionsEnabled
         }
 
     }
 
     init() {
-        let manager = HomeTabManager()
-        homeTabDebugging = manager
-        isFeatureEnabled = manager.isImprovedHomeTabEnabled
+        let manager = NewTabPageManager()
+        newTabPageDebugging = manager
+        isFeatureEnabled = manager.isNewTabPageSectionsEnabled
     }
 
     var body: some View {
         List {
             Section {
                 HStack {
-                    Text("Home tab improvements enabled")
+                    Text("New tab page sections enabled")
                     Spacer()
                     if isFeatureEnabled {
                         Image(systemName: "checkmark")
@@ -59,7 +59,7 @@ struct HomeTabImprovementsDebugView: View {
                 HStack {
                     Text("Feature flag enabled")
                     Spacer()
-                    if homeTabDebugging.isFeatureFlagEnabled {
+                    if newTabPageDebugging.isFeatureFlagEnabled {
                         Image(systemName: "checkmark")
                             .renderingMode(.template)
                             .foregroundColor(Color(designSystemColor: .accent))
@@ -84,5 +84,5 @@ struct HomeTabImprovementsDebugView: View {
 }
 
 #Preview {
-    HomeTabImprovementsDebugView()
+    NewTabPageSectionsDebugView()
 }

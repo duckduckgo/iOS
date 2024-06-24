@@ -82,5 +82,5 @@ protocol AppSettings: AnyObject, AppDebugSettings {
 }
 
 protocol AppDebugSettings {
-    var homeTabImprovementsEnabled: Bool { get set }
+    var newTabPageSectionsEnabled: Bool { get set }
 }

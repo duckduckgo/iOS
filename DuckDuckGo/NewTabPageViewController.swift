@@ -1,5 +1,5 @@
 //
-//  HomeViewControllerProtocol.swift
+//  ImprovedHomeViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,19 +17,40 @@
 //  limitations under the License.
 //
 
-import UIKit
+import SwiftUI
 
-protocol HomeViewControllerProtocol: UIViewController {
+final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTabPage {
 
-    var isDragging: Bool { get } // TODO: Mariusz, check if needed in both
-    func reloadFavorites() // TODO: Mariusz: check if needed with reactive approach
+    let isDragging: Bool = false
 
-    func launchNewSearch()
-    func openedAsNewTab(allowingKeyboard: Bool)
-    func omniBarCancelPressed()
+    weak var chromeDelegate: BrowserChromeDelegate?
+    weak var delegate: HomeControllerDelegate?
 
-    func dismiss()
+    func launchNewSearch() {
 
-    func showNextDaxDialog()
-    func onboardingCompleted()
+    }
+
+    func openedAsNewTab(allowingKeyboard: Bool) {
+
+    }
+
+    func omniBarCancelPressed() {
+
+    }
+
+    func dismiss() {
+
+    }
+
+    func showNextDaxDialog() {
+
+    }
+
+    func onboardingCompleted() {
+
+    }
+
+    func reloadFavorites() {
+
+    }
 }

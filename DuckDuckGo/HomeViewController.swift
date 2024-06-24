@@ -27,7 +27,7 @@ import Persistence
 import RemoteMessaging
 
 
-class HomeViewController: UIViewController, HomeViewControllerProtocol {
+class HomeViewController: UIViewController, NewTabPage {
 
     @IBOutlet weak var ctaContainerBottom: NSLayoutConstraint!
     @IBOutlet weak var ctaContainer: UIView!

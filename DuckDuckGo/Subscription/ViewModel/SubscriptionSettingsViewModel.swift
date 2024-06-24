@@ -105,11 +105,11 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         }
     }
 
-    private func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionService.CachePolicy, loadingIndicator: Bool) async -> Bool {
+    private func fetchAndUpdateSubscriptionDetails(cachePolicy: APICachePolicy, loadingIndicator: Bool) async -> Bool {
         guard let token = self.subscriptionManager.accountManager.accessToken else { return false }
 
         if loadingIndicator { displaySubscriptionLoader(true) }
-        let subscriptionResult = await self.subscriptionManager.subscriptionService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
+        let subscriptionResult = await self.subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
         switch subscriptionResult {
         case .success(let subscription):
             DispatchQueue.main.async {
@@ -129,7 +129,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         }
     }
 
-    func fetchAndUpdateAccountEmail(cachePolicy: SubscriptionService.CachePolicy = .returnCacheDataElseLoad, loadingIndicator: Bool) async -> Bool {
+    func fetchAndUpdateAccountEmail(cachePolicy: APICachePolicy = .returnCacheDataElseLoad, loadingIndicator: Bool) async -> Bool {
         guard let token = self.subscriptionManager.accountManager.accessToken else { return false }
 
         if loadingIndicator { displayEmailLoader(true) }

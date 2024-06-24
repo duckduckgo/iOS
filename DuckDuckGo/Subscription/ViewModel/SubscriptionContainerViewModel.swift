@@ -45,8 +45,7 @@ final class SubscriptionContainerViewModel: ObservableObject {
                                               subscriptionManager: subscriptionManager)
         self.restore = SubscriptionRestoreViewModel(userScript: userScript,
                                                     subFeature: subFeature,
-                                                    subscriptionManager: subscriptionManager,
-                                                    appStoreAccountManagementFlow: appStoreAccountManagementFlow)
+                                                    subscriptionManager: subscriptionManager)
         self.email = SubscriptionEmailViewModel(userScript: userScript,
                                                 subFeature: subFeature,
                                                 subscriptionManager: subscriptionManager)

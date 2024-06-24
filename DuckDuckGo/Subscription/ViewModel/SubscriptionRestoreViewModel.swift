@@ -62,7 +62,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         self.userScript = userScript
         self.subFeature = subFeature
         self.subscriptionManager = subscriptionManager
-        self.state.isAddingDevice = false
     }
     
     func onAppear() {

@@ -79,6 +79,8 @@ protocol AppSettings: AnyObject, AppDebugSettings {
     var autoconsentEnabled: Bool { get set }
 
     var crashCollectionOptInStatus: CrashCollectionOptInStatus { get set }
+    
+    var duckPlayerMode: DuckPlayerMode { get set }
 }
 
 protocol AppDebugSettings {

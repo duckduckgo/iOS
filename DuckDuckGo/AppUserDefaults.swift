@@ -75,6 +75,8 @@ public class AppUserDefaults: AppSettings {
         static let favoritesDisplayMode = "com.duckduckgo.ios.favoritesDisplayMode"
 
         static let crashCollectionOptInStatus = "com.duckduckgo.ios.crashCollectionOptInStatus"
+        
+        static let duckPlayerMode = "com.duckduckgo.ios.duckPlayerMode"
     }
 
     private struct DebugKeys {
@@ -376,6 +378,19 @@ public class AppUserDefaults: AppSettings {
 
     @UserDefaultsWrapper(key: .debugNewTabPageSectionsEnabledKey, defaultValue: false)
     var newTabPageSectionsEnabled: Bool
+    
+    var duckPlayerMode: DuckPlayerMode {
+        get {
+            if let value = userDefaults?.string(forKey: Keys.duckPlayerMode),
+               let mode = DuckPlayerMode(stringValue: value) {
+                return mode
+            }
+            return .alwaysAsk
+        }
+        set {
+            userDefaults?.set(newValue.stringValue, forKey: Keys.duckPlayerMode)
+        }
+    }
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

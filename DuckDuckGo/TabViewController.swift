@@ -35,6 +35,7 @@ import TrackerRadarKit
 import Networking
 import SecureStorage
 import History
+import ContentScopeScripts
 
 #if NETWORK_PROTECTION
 import NetworkProtection
@@ -318,6 +319,8 @@ class TabViewController: UIViewController {
     let historyManager: HistoryManager
     let historyCapture: HistoryCapture
 
+    let youtubeNavigationHandler: DuckNavigationHandling? = YoutubePlayerNavigationHandler()
+    
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
                    appSettings: AppSettings,
@@ -652,6 +655,13 @@ class TabViewController: UIViewController {
             url = webView.url
         } else if let currentHost = url?.host, let newHost = webView.url?.host, currentHost == newHost {
             url = webView.url
+                        
+            if let handler = youtubeNavigationHandler,
+                let url,
+                url.isYoutubeVideo,
+                appSettings.duckPlayerMode == .enabled {
+                handler.handleRedirect(url: url, webView: webView)
+            }
         }
     }
     
@@ -713,20 +723,26 @@ class TabViewController: UIViewController {
 
     func goBack() {
         dismissJSAlertIfNeeded()
-
-        if isError {
-            hideErrorMessage()
-            url = webView.url
-            onWebpageDidStartLoading(httpsForced: false)
-            onWebpageDidFinishLoading()
-        } else if webView.canGoBack {
-            webView.goBack()
+        
+        if let handler = youtubeNavigationHandler {
+            handler.goBack(webView: webView)
             chromeDelegate?.omniBar.resignFirstResponder()
-        } else if openingTab != nil {
-            delegate?.tabDidRequestClose(self)
+        } else {
+            if isError {
+                hideErrorMessage()
+                url = webView.url
+                onWebpageDidStartLoading(httpsForced: false)
+                onWebpageDidFinishLoading()
+            } else if webView.canGoBack {
+                webView.goBack()
+                chromeDelegate?.omniBar.resignFirstResponder()
+            } else if openingTab != nil {
+                delegate?.tabDidRequestClose(self)
+            }
         }
-    }
 
+    }
+    
     func goForward() {
         dismissJSAlertIfNeeded()
 
@@ -1460,7 +1476,7 @@ extension TabViewController: WKNavigationDelegate {
             })
             return
         }
-
+        
         if let url = navigationAction.request.url {
             if !tabURLInterceptor.allowsNavigatingTo(url: url) {
                 decisionHandler(.cancel)
@@ -1486,6 +1502,7 @@ extension TabViewController: WKNavigationDelegate {
             // will wait for Content Blocking to load and re-call on completion
             return
         }
+        
 
         didGoBackForward = (navigationAction.navigationType == .backForward)
 
@@ -1598,6 +1615,7 @@ extension TabViewController: WKNavigationDelegate {
         let allowPolicy = determineAllowPolicy()
 
         let tld = storageCache.tld
+        
 
         if navigationAction.isTargetingMainFrame()
             && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedURL?.host) {
@@ -1618,7 +1636,14 @@ extension TabViewController: WKNavigationDelegate {
         if navigationAction.isTargetingMainFrame(), navigationAction.navigationType == .backForward {
             adClickAttributionLogic.onBackForwardNavigation(mainFrameURL: webView.url)
         }
-
+        
+        if let handler = youtubeNavigationHandler,
+            url.isYoutubeVideo,
+            appSettings.duckPlayerMode == .enabled {
+            handler.handleRedirect(navigationAction, completion: completion, webView: webView)
+            return
+        }
+        
         let schemeType = SchemeHandler.schemeType(for: url)
         self.blobDownloadTargetFrame = nil
         switch schemeType {
@@ -1634,7 +1659,10 @@ extension TabViewController: WKNavigationDelegate {
 
         case .blob:
             performBlobNavigation(navigationAction, completion: completion)
-
+        
+        case .duck:
+            youtubeNavigationHandler?.handleNavigation(navigationAction, webView: webView, completion: completion)
+            
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
                 openExternally(url: url)
@@ -1644,6 +1672,7 @@ extension TabViewController: WKNavigationDelegate {
             completion(.cancel)
         }
     }
+    
 
     private func inferLoadContext(for navigationAction: WKNavigationAction) -> BrokenSiteReport.OpenerContext? {
         guard navigationAction.navigationType != .reload else { return nil }

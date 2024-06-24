@@ -868,6 +868,15 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Download started for %@";
 
+/* Text displayed when DuckPlayer is always enabled */
+"duckPlayer.alwaysEnabled.label" = "Always";
+
+/* Text displayed when DuckPlayer is in 'Ask' mode. */
+"duckPlayer.ask.label" = "Always";
+
+/* Text displayed when DuckPlayer is in off. */
+"duckPlayer.never.label" = "Always";
+
 /* Email protection service offered by DuckDuckGo */
 "email-protection" = "Email Protection";
 

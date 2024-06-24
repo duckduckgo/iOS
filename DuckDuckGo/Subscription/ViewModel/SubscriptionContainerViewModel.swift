@@ -38,7 +38,6 @@ final class SubscriptionContainerViewModel: ObservableObject {
         self.userScript = userScript
         subFeature.cleanup()
         self.subFeature = subFeature
-        let appStoreAccountManagementFlow = DefaultAppStoreAccountManagementFlow(subscriptionManager: subscriptionManager)
         self.flow = SubscriptionFlowViewModel(origin: origin,
                                               userScript: userScript,
                                               subFeature: subFeature,

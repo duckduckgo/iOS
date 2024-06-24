@@ -36,12 +36,14 @@ final class SubscriptionFlowViewModelTests: XCTestCase {
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: mockDependencyProvider.subscriptionManager)
         let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: mockDependencyProvider.subscriptionManager,
                                                                appStoreRestoreFlow: appStoreRestoreFlow)
-        
+        let appStoreAccountManagementFlow = DefaultAppStoreAccountManagementFlow(subscriptionManager: mockDependencyProvider.subscriptionManager)
+
         // WHEN
         sut = .init(origin: origin, userScript: .init(), subFeature: .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
                                                                            subscriptionAttributionOrigin: nil,
                                                                            appStorePurchaseFlow: appStorePurchaseFlow,
-                                                                           appStoreRestoreFlow: appStoreRestoreFlow),
+                                                                           appStoreRestoreFlow: appStoreRestoreFlow, 
+                                                                           appStoreAccountManagementFlow: appStoreAccountManagementFlow),
                     subscriptionManager: mockDependencyProvider.subscriptionManager)
         
         // THEN
@@ -52,12 +54,14 @@ final class SubscriptionFlowViewModelTests: XCTestCase {
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: mockDependencyProvider.subscriptionManager)
         let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: mockDependencyProvider.subscriptionManager,
                                                                appStoreRestoreFlow: appStoreRestoreFlow)
-        
+        let appStoreAccountManagementFlow = DefaultAppStoreAccountManagementFlow(subscriptionManager: mockDependencyProvider.subscriptionManager)
+
         // WHEN
         sut = .init(origin: nil, userScript: .init(), subFeature: .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
                                                                         subscriptionAttributionOrigin: nil,
                                                                         appStorePurchaseFlow: appStorePurchaseFlow,
-                                                                        appStoreRestoreFlow: appStoreRestoreFlow),
+                                                                        appStoreRestoreFlow: appStoreRestoreFlow,
+                                                                        appStoreAccountManagementFlow: appStoreAccountManagementFlow),
                     subscriptionManager: mockDependencyProvider.subscriptionManager)
         
         // THEN

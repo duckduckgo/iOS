@@ -38,14 +38,15 @@ struct SettingsGeneralView: View {
             Section(header: Text(UserText.privateSearch),
                     footer: Text(UserText.settingsAutocompleteSubtitle)) {
                 // Autocomplete Suggestions
-                SettingsCellView(label: UserText.settingsAutocomplete,
+                SettingsCellView(label: UserText.settingsAutocompleteLabel,
                                  accesory: .toggle(isOn: viewModel.autocompleteBinding))
+            }
 
-                if viewModel.shouldShowRecentlyVisitedSites {
-                    SettingsCellView(label: UserText.settingsAutocompleteRecentlyVisited,
+            if viewModel.shouldShowRecentlyVisitedSites {
+                Section(footer: Text(UserText.settingsAutocompleteRecentlyVisitedSubtitle)) {
+                    SettingsCellView(label: UserText.settingsAutocompleteRecentlyVisitedLabel,
                                      accesory: .toggle(isOn: viewModel.autocompleteRecentlyVisitedSitesBinding))
                 }
-
             }
 
             Section(footer: Text(UserText.voiceSearchFooter)) {

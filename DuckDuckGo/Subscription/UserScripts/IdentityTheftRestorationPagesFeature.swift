@@ -43,9 +43,9 @@ final class IdentityTheftRestorationPagesFeature: Subfeature, ObservableObject {
         static let getAccessToken = "getAccessToken"
     }
         
-    private let accountManager: AccountManaging
+    private let accountManager: AccountManager
 
-    init(accountManager: AccountManaging) {
+    init(accountManager: AccountManager) {
         self.accountManager = accountManager
     }
 

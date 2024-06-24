@@ -67,6 +67,14 @@ struct SettingsMainSettingsView: View {
                 SettingsCellView(label: UserText.dataClearing,
                                  image: Image("SettingsDataClearing"))
             }
+            
+            // Duck Player
+            if viewModel.isInternalUser {
+                NavigationLink(destination: SettingsDuckPlayerView().environmentObject(viewModel)) {
+                    SettingsCellView(label: "Duck Player",
+                                     image: Image("SettingsDuckPlayer"))
+                }
+            }
         }
 
     }

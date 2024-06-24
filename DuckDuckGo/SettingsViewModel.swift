@@ -85,6 +85,8 @@ final class SettingsViewModel: ObservableObject {
     @Published var shouldShowEmailAlert: Bool = false
 
     @Published var shouldShowRecentlyVisitedSites: Bool = true
+    
+    @Published var isInternalUser: Bool = AppDependencyProvider.shared.internalUserDecider.isInternalUser
 
     // MARK: - Deep linking
     // Used to automatically navigate to a specific section
@@ -223,6 +225,16 @@ final class SettingsViewModel: ObservableObject {
         )
     }
 
+    var duckPlayerModeBinding: Binding<DuckPlayerMode> {
+        Binding<DuckPlayerMode>(
+            get: { self.state.duckPlayerMode ?? .alwaysAsk },
+            set: {
+                self.appSettings.duckPlayerMode = $0
+                self.state.duckPlayerMode = $0
+            }
+        )
+    }
+
     func setVoiceSearchEnabled(to value: Bool) {
         if value {
             enableVoiceSearch { [weak self] result in
@@ -342,7 +354,8 @@ extension SettingsViewModel {
             loginsEnabled: featureFlagger.isFeatureOn(.autofillAccessCredentialManagement),
             networkProtection: getNetworkProtectionState(),
             subscription: SettingsState.defaults.subscription,
-            sync: getSyncState()
+            sync: getSyncState(),
+            duckPlayerMode: appSettings.duckPlayerMode
         )
         
         updateRecentlyVisitedSitesVisibility()

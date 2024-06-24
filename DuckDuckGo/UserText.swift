@@ -1145,5 +1145,13 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let brokenSiteReportToggleAlertTitle = NSLocalizedString("broken.site.report.toggle.alert.title", value: "Did turning Privacy Protections off resolve the issue on this site?", comment: "An alert that appears after user turns off the privacy protection")
     public static let brokenSiteReportToggleAlertYesButton = NSLocalizedString("broken.site.report.toggle.alert.yes.button", value: "Yes", comment: "Button to answer question 'Did turning off protections resolve the issue on this site?'")
     public static let brokenSiteReportToggleAlertNoButton = NSLocalizedString("broken.site.report.toggle.alert.no.button", value: "No", comment: "Button to answer question 'Did turning off protections resolve the issue on this site?'")
+    
+    // Duck Player
+    public static let duckPlayerAlwaysEnabledLabel = NSLocalizedString("duckPlayer.alwaysEnabled.label", value: "Always", comment: "Text displayed when DuckPlayer is always enabled")
+    public static let duckPlayerAskLabel = NSLocalizedString("duckPlayer.ask.label", value: "Always", comment: "Text displayed when DuckPlayer is in 'Ask' mode.")
+    public static let duckPlayerDisabledLabel = NSLocalizedString("duckPlayer.never.label", value: "Always", comment: "Text displayed when DuckPlayer is in off.")
+    
+    
+    
 
 }

@@ -121,7 +121,7 @@ extension BrowsersComparisonChart {
                     }
                 }
             }
-            .fixedSize(horizontal: true, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/) // Stops the Divider to expand vertically
+            .fixedSize(horizontal: true, vertical: true) // Stops the Divider to expand vertically
         }
     }
 

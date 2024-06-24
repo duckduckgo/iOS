@@ -31,11 +31,14 @@ struct NetworkProtectionVPNSettingsView: View {
             List {
                 // Widget only available for iOS 17 and up
                 if #available(iOS 17.0, *) {
-                    NavigationLink {
-                        WidgetEducationView.vpn
-                    } label: {
-                        Text(UserText.vpnSettingsAddWidget).daxBodyRegular()
+                    Section {
+                        NavigationLink {
+                            WidgetEducationView.vpn
+                        } label: {
+                            Text(UserText.vpnSettingsAddWidget).daxBodyRegular()
+                        }
                     }
+                    .listRowBackground(Color(designSystemColor: .surface))
                 }
 
                 switch viewModel.viewKind {
@@ -86,8 +89,10 @@ struct NetworkProtectionVPNSettingsView: View {
         } footer: {
             if viewModel.usesCustomDNS {
                 Text(UserText.vpnSettingDNSSectionDisclaimer)
+                    .foregroundColor(.init(designSystemColor: .textSecondary))
             } else {
                 Text(UserText.netPSecureDNSSettingFooter)
+                    .foregroundColor(.init(designSystemColor: .textSecondary))
             }
         }
         .listRowBackground(Color(designSystemColor: .surface))

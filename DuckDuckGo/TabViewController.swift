@@ -656,6 +656,7 @@ class TabViewController: UIViewController {
         } else if let currentHost = url?.host, let newHost = webView.url?.host, currentHost == newHost {
             url = webView.url
                         
+            // Redirect to YoutubePlayer if enabled
             if let handler = youtubeNavigationHandler,
                 let url,
                 url.isYoutubeVideo,
@@ -724,7 +725,8 @@ class TabViewController: UIViewController {
     func goBack() {
         dismissJSAlertIfNeeded()
         
-        if let handler = youtubeNavigationHandler {
+        if let handler = youtubeNavigationHandler,
+            appSettings.duckPlayerMode == .enabled {
             handler.goBack(webView: webView)
             chromeDelegate?.omniBar.resignFirstResponder()
         } else {

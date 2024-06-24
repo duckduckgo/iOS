@@ -97,10 +97,21 @@ public struct UserValues: Codable {
     let overlayInteracted: Bool
 }
 
-class DuckPlayerSettings {
+final class DuckPlayerSettings {
     
-    @UserDefaultsWrapper(key: .duckPlayerMode, defaultValue: .alwaysAsk)
-    var mode: DuckPlayerMode
+    public struct OriginDomains {
+        static let duckduckgo = "duckduckgo.com"
+        static let youtube = "www.youtube.com"
+        static let youtubeMobile = "m.youtube.com"
+    }
+    
+    var mode: DuckPlayerMode {
+        get {
+            AppDependencyProvider.shared.appSettings.duckPlayerMode
+        } set {
+            AppDependencyProvider.shared.appSettings.duckPlayerMode = newValue
+        }
+    }
     
     @UserDefaultsWrapper(key: .duckPlayerOverlayInteracted, defaultValue: false)
     var overlayInteracted: Bool
@@ -117,36 +128,30 @@ final class DuckPlayer {
         
     private var settings: DuckPlayerSettings
     
-    // @Published var mode: DuckPlayerMode
-    // @Published var overlayInteracted: Bool
-    // @Published var overlayButtonsUsed: Bool
-    
 
     init(settings: DuckPlayerSettings = DuckPlayerSettings()) {
         self.settings = settings
     }
-
+    
     // MARK: - Common Message Handlers
     
-    public func handleSetUserValuesMessage(
-        from origin: YoutubeOverlayUserScript.MessageOrigin
-    ) -> (_ params: Any, _ message: UserScriptMessage) -> Encodable? {
-
-        return { [weak self] params, _ -> Encodable? in
-            guard let self else {
-                return nil
-            }
-            guard let userValues: UserValues = DecodableHelper.decode(from: params) else {
-                assertionFailure("YoutubeOverlayUserScript: expected JSON representation of UserValues")
-                return nil
-            }
-                
-            return self.encodeUserValues()
+    public func setUserValues(params: Any, message: WKScriptMessage) -> Encodable? {
+        guard let userValues: UserValues = DecodableHelper.decode(from: params) else {
+            assertionFailure("DuckPlayer: expected JSON representation of UserValues")
+            return nil
         }
+        settings.mode = userValues.duckPlayerMode
+        settings.overlayInteracted = userValues.overlayInteracted
+        return userValues
     }
-
-    public func handleGetUserValues(params: Any, message: UserScriptMessage) -> Encodable? {
+    
+    public func getUserValues(params: Any, message: WKScriptMessage) -> Encodable? {
         encodeUserValues()
+    }
+    
+    @MainActor
+    public func openVideoInDuckPlayer(url: URL, webView: WKWebView) {
+        webView.load(URLRequest(url: url))
     }
 
     public func initialSetup(with webView: WKWebView?) -> (_ params: Any, _ message: UserScriptMessage) async -> Encodable? {
@@ -173,7 +178,4 @@ final class DuckPlayer {
         return InitialSetupSettings(userValues: userValues, settings: playerSettings)
     }
 
-    // MARK: - Private
-
-    private static let websiteTitlePrefix = "\(commonName) - "
 }

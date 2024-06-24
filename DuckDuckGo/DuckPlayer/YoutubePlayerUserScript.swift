@@ -53,9 +53,10 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
     func handler(forMethodNamed methodName: String) -> Subfeature.Handler? {
         switch MessageNames(rawValue: methodName) {
         case .getUserValues:
-            return duckPlayer.handleGetUserValues
+            return duckPlayer.getUserValues
         case .setUserValues:
-            return duckPlayer.handleSetUserValuesMessage(from: .duckPlayer)
+            return nil
+            // return duckPlayer.handleSetUserValuesMessage(from: .duckPlayer)
         case .initialSetup:
             return duckPlayer.initialSetup(with: webView)
         default:

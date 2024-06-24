@@ -116,9 +116,6 @@ final class DuckPlayerSettings {
     @UserDefaultsWrapper(key: .duckPlayerOverlayInteracted, defaultValue: false)
     var overlayInteracted: Bool
     
-    @UserDefaultsWrapper(key: .duckPlayerOverlayButtonsUsed, defaultValue: false)
-    var overlayButtonsUsed: Bool
-    
 }
 
 final class DuckPlayer {
@@ -144,7 +141,7 @@ final class DuckPlayer {
         settings.overlayInteracted = userValues.overlayInteracted
         return userValues
     }
-    
+        
     public func getUserValues(params: Any, message: WKScriptMessage) -> Encodable? {
         encodeUserValues()
     }

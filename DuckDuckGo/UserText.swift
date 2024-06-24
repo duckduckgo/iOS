@@ -1146,8 +1146,8 @@ But if you *do* want a peek under the hood, you can find more information about 
     
     // Duck Player
     public static let duckPlayerAlwaysEnabledLabel = NSLocalizedString("duckPlayer.alwaysEnabled.label", value: "Always", comment: "Text displayed when DuckPlayer is always enabled")
-    public static let duckPlayerAskLabel = NSLocalizedString("duckPlayer.ask.label", value: "Always", comment: "Text displayed when DuckPlayer is in 'Ask' mode.")
-    public static let duckPlayerDisabledLabel = NSLocalizedString("duckPlayer.never.label", value: "Always", comment: "Text displayed when DuckPlayer is in off.")
+    public static let duckPlayerAskLabel = NSLocalizedString("duckPlayer.ask.label", value: "Ask every time", comment: "Text displayed when DuckPlayer is in 'Ask' mode.")
+    public static let duckPlayerDisabledLabel = NSLocalizedString("duckPlayer.never.label", value: "Never", comment: "Text displayed when DuckPlayer is in off.")
     
     
     

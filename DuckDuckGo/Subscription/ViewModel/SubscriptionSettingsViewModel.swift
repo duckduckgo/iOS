@@ -109,7 +109,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         guard let token = self.subscriptionManager.accountManager.accessToken else { return false }
 
         if loadingIndicator { displaySubscriptionLoader(true) }
-        let subscriptionResult = await self.subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: token, cachePolicy: cachePolicy)
+        let subscriptionResult = await self.subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: token,
+                                                                                                            cachePolicy: cachePolicy)
         switch subscriptionResult {
         case .success(let subscription):
             DispatchQueue.main.async {

@@ -36,7 +36,7 @@ enum SubscriptionContainerViewFactory {
             subFeature: SubscriptionPagesUseSubscriptionFeature(subscriptionManager: subscriptionManager,
                                                                 subscriptionAttributionOrigin: origin,
                                                                 appStorePurchaseFlow: appStorePurchaseFlow,
-                                                                appStoreRestoreFlow: appStoreRestoreFlow, 
+                                                                appStoreRestoreFlow: appStoreRestoreFlow,
                                                                 appStoreAccountManagementFlow: appStoreAccountManagementFlow)
         )
         return SubscriptionContainerView(currentView: .subscribe, viewModel: viewModel)

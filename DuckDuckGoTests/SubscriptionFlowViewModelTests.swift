@@ -42,7 +42,7 @@ final class SubscriptionFlowViewModelTests: XCTestCase {
         sut = .init(origin: origin, userScript: .init(), subFeature: .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
                                                                            subscriptionAttributionOrigin: nil,
                                                                            appStorePurchaseFlow: appStorePurchaseFlow,
-                                                                           appStoreRestoreFlow: appStoreRestoreFlow, 
+                                                                           appStoreRestoreFlow: appStoreRestoreFlow,
                                                                            appStoreAccountManagementFlow: appStoreAccountManagementFlow),
                     subscriptionManager: mockDependencyProvider.subscriptionManager)
         

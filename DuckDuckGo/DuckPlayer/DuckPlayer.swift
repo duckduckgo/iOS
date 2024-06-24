@@ -28,35 +28,39 @@ import Core
 enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
     case enabled, alwaysAsk, disabled
     
+    private static let enabledString = "enabled"
+    private static let alwaysAskString = "alwaysAsk"
+    private static let neverString = "alwaysAsk"
+    
     var description: String {
         switch self {
         case .enabled:
-            return "Always"
+            return UserText.duckPlayerAlwaysEnabledLabel
         case .alwaysAsk:
-            return "Ask every Time"
+            return UserText.duckPlayerAskLabel
         case .disabled:
-            return "Never"
+            return UserText.duckPlayerDisabledLabel
         }
     }
     
     var stringValue: String {
         switch self {
         case .enabled:
-            return "enabled"
+            return Self.enabledString
         case .alwaysAsk:
-            return "alwaysAsk"
+            return Self.alwaysAskString
         case .disabled:
-            return "disabled"
+            return Self.neverString
         }
     }
 
     init?(stringValue: String) {
         switch stringValue {
-        case "enabled":
+        case Self.enabledString:
             self = .enabled
-        case "alwaysAsk":
+        case Self.alwaysAskString:
             self = .alwaysAsk
-        case "disabled":
+        case Self.neverString:
             self = .disabled
         default:
             return nil

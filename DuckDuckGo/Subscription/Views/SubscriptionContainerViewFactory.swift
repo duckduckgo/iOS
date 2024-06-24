@@ -47,7 +47,7 @@ enum SubscriptionContainerViewFactory {
             .environmentObject(navigationCoordinator)
     }
 
-    static func makeEmailFlow(navigationCoordinator: SubscriptionNavigationCoordinator, 
+    static func makeEmailFlow(navigationCoordinator: SubscriptionNavigationCoordinator,
                               subscriptionManager: SubscriptionManaging,
                               onDisappear: @escaping () -> Void) -> some View {
         let viewModel = SubscriptionContainerViewModel(

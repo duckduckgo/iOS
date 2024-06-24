@@ -872,10 +872,10 @@
 "duckPlayer.alwaysEnabled.label" = "Always";
 
 /* Text displayed when DuckPlayer is in 'Ask' mode. */
-"duckPlayer.ask.label" = "Always";
+"duckPlayer.ask.label" = "Ask every time";
 
 /* Text displayed when DuckPlayer is in off. */
-"duckPlayer.never.label" = "Always";
+"duckPlayer.never.label" = "Never";
 
 /* Email protection service offered by DuckDuckGo */
 "email-protection" = "Email Protection";

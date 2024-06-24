@@ -91,10 +91,10 @@ struct InitialSetupSettings: Codable {
 public struct UserValues: Codable {
     enum CodingKeys: String, CodingKey {
         case duckPlayerMode = "privatePlayerMode"
-        case overlayInteracted
+        case askModeOverlayHidden = "overlayInteracted"
     }
     let duckPlayerMode: DuckPlayerMode
-    let overlayInteracted: Bool
+    let askModeOverlayHidden: Bool
 }
 
 final class DuckPlayerSettings {
@@ -113,8 +113,8 @@ final class DuckPlayerSettings {
         }
     }
     
-    @UserDefaultsWrapper(key: .duckPlayerOverlayInteracted, defaultValue: false)
-    var overlayInteracted: Bool
+    @UserDefaultsWrapper(key: .duckPlayerAskModeOverlayHidden, defaultValue: false)
+    var askModeOverlayHidden: Bool
     
 }
 
@@ -138,7 +138,7 @@ final class DuckPlayer {
             return nil
         }
         settings.mode = userValues.duckPlayerMode
-        settings.overlayInteracted = userValues.overlayInteracted
+        settings.askModeOverlayHidden = userValues.askModeOverlayHidden
         return userValues
     }
         
@@ -160,7 +160,7 @@ final class DuckPlayer {
     private func encodeUserValues() -> UserValues {
         UserValues(
             duckPlayerMode: settings.mode,
-            overlayInteracted: settings.overlayInteracted
+            askModeOverlayHidden: settings.askModeOverlayHidden
         )
     }
 

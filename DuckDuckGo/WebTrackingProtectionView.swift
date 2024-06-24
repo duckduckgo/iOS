@@ -41,8 +41,7 @@ struct WebTrackingProtectionView: View {
                                     displayMode: .inline,
                                     viewModel: viewModel)
         .onForwardNavigationAppear {
-            Pixel.fire(pixel: .settingsWebTrackingProtectionOpen,
-                       withAdditionalParameters: PixelExperiment.parameters)
+            Pixel.fire(pixel: .settingsWebTrackingProtectionOpen)
         }
     }
 }

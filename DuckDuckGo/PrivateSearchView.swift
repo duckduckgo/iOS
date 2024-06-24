@@ -40,49 +40,25 @@ struct PrivateSearchView: View {
         .applySettingsListModifiers(title: UserText.privateSearch,
                                     displayMode: .inline,
                                     viewModel: viewModel)
-        .onForwardNavigationAppear {
-            Pixel.fire(pixel: .settingsPrivateSearchOpen,
-                       withAdditionalParameters: PixelExperiment.parameters)
-        }
     }
 }
 
 struct PrivateSearchViewSettings: View {
 
     @EnvironmentObject var viewModel: SettingsViewModel
-    @State var shouldShowNoMicrophonePermissionAlert = false
 
     var body: some View {
         Section(footer: Text(UserText.settingsAutocompleteSubtitle)) {
             // Autocomplete Suggestions
             SettingsCellView(label: UserText.settingsAutocompleteLabel,
-                             accesory: .toggle(isOn: viewModel.autocompletePrivateSearchBinding))
+                             accesory: .toggle(isOn: viewModel.autocompleteBinding))
         }
+
 
         if viewModel.shouldShowRecentlyVisitedSites {
             Section(footer: Text(UserText.settingsAutocompleteRecentlyVisitedSubtitle)) {
                 SettingsCellView(label: UserText.settingsAutocompleteRecentlyVisitedLabel,
                                  accesory: .toggle(isOn: viewModel.autocompleteRecentlyVisitedSitesBinding))
-            }
-        }
-
-        if viewModel.state.speechRecognitionAvailable {
-            Section(footer: Text(UserText.voiceSearchFooter)) {
-                // Private Voice Search
-                SettingsCellView(label: UserText.settingsVoiceSearch,
-                                 accesory: .toggle(isOn: viewModel.voiceSearchEnabledPrivateSearchBinding))
-            }
-            .alert(isPresented: $shouldShowNoMicrophonePermissionAlert) {
-                Alert(title: Text(UserText.noVoicePermissionAlertTitle),
-                      message: Text(UserText.noVoicePermissionAlertMessage),
-                      dismissButton: .default(Text(UserText.noVoicePermissionAlertOKbutton),
-                      action: {
-                        viewModel.shouldShowNoMicrophonePermissionAlert = false
-                    })
-                )
-            }
-            .onChange(of: viewModel.shouldShowNoMicrophonePermissionAlert) { value in
-                shouldShowNoMicrophonePermissionAlert = value
             }
         }
 

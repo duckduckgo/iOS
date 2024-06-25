@@ -656,12 +656,12 @@ extension Pixel {
         case settingsWebTrackingProtectionOpen
         case settingsGpcOn
         case settingsGpcOff
-        case settingsAutocompleteOn
-        case settingsAutocompleteOff
-        case settingsRecentlyVisitedOn
-        case settingsRecentlyVisitedOff
         case settingsGeneralAutocompleteOn
         case settingsGeneralAutocompleteOff
+        case settingsPrivateSearchAutocompleteOn
+        case settingsPrivateSearchAutocompleteOff
+        case settingsRecentlyVisitedOn
+        case settingsRecentlyVisitedOff
         case settingsAddressBarSelectorPressed
         case settingsAccessibilityOpen
         case settingsAccessiblityTextSize
@@ -1335,12 +1335,12 @@ extension Pixel.Event {
         case .settingsWebTrackingProtectionOpen: return "m_settings_web_tracking_protection_open"
         case .settingsGpcOn: return "m_settings_gpc_on"
         case .settingsGpcOff: return "m_settings_gpc_off"
-        case .settingsAutocompleteOn: return "m_settings_autocomplete_on"
-        case .settingsAutocompleteOff: return "m_settings_autocomplete_off"
-        case .settingsRecentlyVisitedOn: return "m_settings_autocomplete_recently-visited_on"
-        case .settingsRecentlyVisitedOff: return "m_settings_autocomplete_recently-visited_off"
         case .settingsGeneralAutocompleteOn: return "m_settings_general_autocomplete_on"
         case .settingsGeneralAutocompleteOff: return "m_settings_general_autocomplete_off"
+        case .settingsPrivateSearchAutocompleteOn: return "m_settings_private_search_autocomplete_on"
+        case .settingsPrivateSearchAutocompleteOff: return "m_settings_private_search_autocomplete_off"
+        case .settingsRecentlyVisitedOn: return "m_settings_autocomplete_recently-visited_on"
+        case .settingsRecentlyVisitedOff: return "m_settings_autocomplete_recently-visited_off"
         case .settingsAddressBarSelectorPressed: return "m_settings_address_bar_selector_pressed"
         case .settingsAccessibilityOpen: return "m_settings_accessibility_open"
         case .settingsAccessiblityTextSize: return "m_settings_accessiblity_text_size"

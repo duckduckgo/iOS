@@ -154,13 +154,36 @@ final class SettingsViewModel: ObservableObject {
         )
     }
 
-    var autocompleteBinding: Binding<Bool> {
+    var autocompleteGeneralBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.autocomplete },
             set: {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
                 self.updateRecentlyVisitedSitesVisibility()
+                
+                if $0 {
+                    Pixel.fire(pixel: .settingsGeneralAutocompleteOn)
+                } else {
+                    Pixel.fire(pixel: .settingsGeneralAutocompleteOff)
+                }
+            }
+        )
+    }
+
+    var autocompletePrivateSearchBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.autocomplete },
+            set: {
+                self.appSettings.autocomplete = $0
+                self.state.autocomplete = $0
+                self.updateRecentlyVisitedSitesVisibility()
+
+                if $0 {
+                    Pixel.fire(pixel: .settingsPrivateSearchAutocompleteOn)
+                } else {
+                    Pixel.fire(pixel: .settingsPrivateSearchAutocompleteOff)
+                }
             }
         )
     }

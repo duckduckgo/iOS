@@ -40,9 +40,9 @@ public class AppUserDefaults: AppSettings {
         public static let showsFullURLAddressSettingChanged = Notification.Name("com.duckduckgo.app.ShowsFullURLAddressSettingChanged")
         public static let autofillDebugScriptToggled = Notification.Name("com.duckduckgo.app.DidToggleAutofillDebugScript")
     }
-    
+
     private let groupName: String
-    
+
     struct Keys {
         static let autocompleteKey = "com.duckduckgo.app.autocompleteDisabledKey"
         static let recentlyVisitedSites = "com.duckduckgo.app.recentlyVisitedSitesKey"
@@ -52,7 +52,7 @@ public class AppUserDefaults: AppSettings {
         static let autoClearTimingKey = "com.duckduckgo.app.autoClearTimingKey"
         
         static let homePage = "com.duckduckgo.app.homePage"
-        
+
         static let foregroundFetchStartCount = "com.duckduckgo.app.fgFetchStartCount"
         static let foregroundFetchNoDataCount = "com.duckduckgo.app.fgFetchNoDataCount"
         static let foregroundFetchNewDataCount = "com.duckduckgo.app.fgFetchNewDataCount"
@@ -60,7 +60,7 @@ public class AppUserDefaults: AppSettings {
         static let backgroundFetchStartCount = "com.duckduckgo.app.bgFetchStartCount"
         static let backgroundFetchNoDataCount = "com.duckduckgo.app.bgFetchNoDataCount"
         static let backgroundFetchNewDataCount = "com.duckduckgo.app.bgFetchNewDataCount"
-        
+
         static let backgroundFetchTaskExpirationCount = "com.duckduckgo.app.bgFetchTaskExpirationCount"
         
         static let notificationsEnabled = "com.duckduckgo.app.notificationsEnabled"
@@ -71,11 +71,11 @@ public class AppUserDefaults: AppSettings {
         
         static let autofillCredentialsEnabled = "com.duckduckgo.ios.autofillCredentialsEnabled"
         static let autofillIsNewInstallForOnByDefault = "com.duckduckgo.ios.autofillIsNewInstallForOnByDefault"
-        
+
         static let favoritesDisplayMode = "com.duckduckgo.ios.favoritesDisplayMode"
-        
+
         static let crashCollectionOptInStatus = "com.duckduckgo.ios.crashCollectionOptInStatus"
-        
+
         static let duckPlayerMode = "com.duckduckgo.ios.duckPlayerMode"
         static let duckPlayerAskModeOverlayHidden = "com.duckduckgo.ios.duckPlayerAskModeOverlayHidden"
     }
@@ -84,7 +84,7 @@ public class AppUserDefaults: AppSettings {
         static let inspectableWebViewsEnabledKey = "com.duckduckgo.ios.debug.inspectableWebViewsEnabled"
         static let autofillDebugScriptEnabledKey = "com.duckduckgo.ios.debug.autofillDebugScriptEnabled"
     }
-    
+
     private var userDefaults: UserDefaults? {
         return UserDefaults(suiteName: groupName)
     }

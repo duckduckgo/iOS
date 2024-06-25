@@ -877,6 +877,21 @@
 /* Text displayed when DuckPlayer is in off. */
 "duckPlayer.never.label" = "Always";
 
+/* Footer label in the settings screen for Duck Player */
+"duckplayer.settings.footer" = "DuckDuckGo provides all the privacy essentials you need to protect yourself as you browse the web.";
+
+/* Text explaining what Duck Player is in the settings screen. */
+"duckplayer.settings.info-text" = "Duck Player provides a clean viewing experience without personalized ads and prevents viewing activity from influencing your YouTube recommendations.";
+
+/* Button that takes the user to learn more about Duck Player. */
+"duckplayer.settings.learn-more" = "Learn More";
+
+/* Settings screen cell text for DuckPlayer settings */
+"duckplayer.settings.open-videos-in" = "Open Videos in Duck Player";
+
+/* Settings screen cell text for DuckPlayer settings */
+"duckplayer.settings.title" = "Duck Player";
+
 /* Email protection service offered by DuckDuckGo */
 "email-protection" = "Email Protection";
 

@@ -56,7 +56,7 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
     struct Handlers {
         static let setUserValues = "setUserValues"
         static let getUserValues = "getUserValues"
-        static let openInDuckPlayer = "openInDuckPlayer"
+        static let openDuckPlayer = "openDuckPlayer"
         static let sendDuckPlayerPixel = "sendDuckPlayerPixel"
     }
 
@@ -84,8 +84,8 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
             return duckPlayer.setUserValues
         case Handlers.getUserValues:
             return duckPlayer.getUserValues
-        case Handlers.openInDuckPlayer:
-            return openInDuckPlayer
+        case Handlers.openDuckPlayer:
+            return openDuckPlayer
         case Handlers.sendDuckPlayerPixel:
             return handleSendJSPixel
         default:
@@ -103,14 +103,9 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
     }
 
     // MARK: - Private Methods
-
-    private func setUservalues(params: Any, original: WKScriptMessage) async -> Encodable? {
-        
-        duckPlayer.setUserValues(params: params, message: original)
-    }
     
     @MainActor
-    private func openInDuckPlayer(params: Any, original: WKScriptMessage) -> Encodable? {
+    private func openDuckPlayer(params: Any, original: WKScriptMessage) -> Encodable? {
         guard let dict = params as? [String: Any],
                 let href = dict["href"] as? String,
                 let url = href.url,

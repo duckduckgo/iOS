@@ -152,10 +152,10 @@ final class DuckPlayer {
         webView.load(URLRequest(url: url))
     }
 
-    public func initialSetup(with webView: WKWebView?) -> (_ params: Any, _ message: UserScriptMessage) async -> Encodable? {
-        return { _, _ in
-            return await self.encodedSettings(with: webView)
-        }
+    @MainActor
+    public func initialSetup(params: Any, message: WKScriptMessage) async -> Encodable? {
+        let webView = message.webView
+        return await self.encodedSettings(with: webView)
     }
 
     private func encodeUserValues() -> UserValues {

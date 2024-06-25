@@ -77,6 +77,7 @@ public class AppUserDefaults: AppSettings {
         static let crashCollectionOptInStatus = "com.duckduckgo.ios.crashCollectionOptInStatus"
         
         static let duckPlayerMode = "com.duckduckgo.ios.duckPlayerMode"
+        static let duckPlayerAskModeOverlayHidden = "com.duckduckgo.ios.duckPlayerAskModeOverlayHidden"
     }
 
     private struct DebugKeys {

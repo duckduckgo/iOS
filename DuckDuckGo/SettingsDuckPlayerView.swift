@@ -22,7 +22,7 @@ import SwiftUI
 import DesignResourcesKit
 
 struct SettingsDuckPlayerView: View {
-    static let privacyPolicyURL = URL(string: "https://duckduckgo.com/duckduckgo-help-pages/duck-player/")!
+    private static let learnMoreURL = URL(string: "https://duckduckgo.com/duckduckgo-help-pages/duck-player/")!
 
     @EnvironmentObject var viewModel: SettingsViewModel
     var body: some View {
@@ -41,7 +41,7 @@ struct SettingsDuckPlayerView: View {
                     .padding(.top, 12)
 
                 Link(UserText.settingsDuckPlayerLearnMore,
-                     destination: SettingsDuckPlayerView.privacyPolicyURL)
+                     destination: SettingsDuckPlayerView.learnMoreURL)
                 .daxBodyRegular()
                 .accentColor(Color.init(designSystemColor: .accent))
             }

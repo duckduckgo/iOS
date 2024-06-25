@@ -73,7 +73,7 @@ final class NetworkProtectionTunnelController: TunnelController {
         }
     }
 
-    init(accountManager: AccountManaging, tokenStore: NetworkProtectionKeychainTokenStore) {
+    init(accountManager: AccountManager, tokenStore: NetworkProtectionKeychainTokenStore) {
         self.tokenStore = tokenStore
         subscribeToStatusChanges()
     }
@@ -189,6 +189,9 @@ final class NetworkProtectionTunnelController: TunnelController {
         }
         options[NetworkProtectionOptionKey.selectedEnvironment] = AppDependencyProvider.shared.vpnSettings
             .selectedEnvironment.rawValue as NSString
+        if let data = try? JSONEncoder().encode(AppDependencyProvider.shared.vpnSettings.dnsSettings) {
+            options[NetworkProtectionOptionKey.dnsSettings] = NSData(data: data)
+        }
 
         do {
             try tunnelManager.connection.startVPNTunnel(options: options)

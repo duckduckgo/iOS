@@ -82,10 +82,15 @@ class MainViewController: UIViewController {
         return emailManager
     }()
     
-    var homeController: HomeViewController?
+    var homeViewController: HomeViewController?
+    var newTabPageViewController: NewTabPageViewController?
+    var homeController: NewTabPage? {
+        homeViewController ?? newTabPageViewController
+    }
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
     
+    let homeTabManager: NewTabPageManager
     let tabManager: TabManager
     let previewsSource: TabPreviewsSource
     let appSettings: AppSettings
@@ -199,6 +204,7 @@ class MainViewController: UIViewController {
                                      historyManager: historyManager,
                                      syncService: syncService)
         self.syncPausedStateManager = syncPausedStateManager
+        self.homeTabManager = NewTabPageManager()
 
         super.init(nibName: nil, bundle: nil)
         
@@ -446,7 +452,7 @@ class MainViewController: UIViewController {
 
     @objc
     private func keyboardWillHide() {
-        if homeController?.collectionView.isDragging == true, keyboardShowing {
+        if homeController?.isDragging == true, keyboardShowing {
             Pixel.fire(pixel: .addressBarGestureDismiss)
         }
     }
@@ -627,7 +633,7 @@ class MainViewController: UIViewController {
                 }
                 self.menuBookmarksViewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
                 self.favoritesViewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
-                self.homeController?.collectionView.reloadData()
+                self.homeController?.reloadFavorites()
                 WidgetCenter.shared.reloadAllTimelines()
             }
     }
@@ -642,7 +648,7 @@ class MainViewController: UIViewController {
             .sink { [weak self] _ in
                 self?.favoritesViewModel.reloadData()
                 DispatchQueue.main.async {
-                    self?.homeController?.collectionView.reloadData()
+                    self?.homeController?.reloadFavorites()
                 }
             }
     }
@@ -726,6 +732,8 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func attachHomeScreen() {
+        guard !autoClearInProgress else { return }
+        
         viewCoordinator.logoContainer.isHidden = false
         findInPageView.isHidden = true
         chromeManager.detach()
@@ -739,18 +747,23 @@ class MainViewController: UIViewController {
             fatalError("No tab model")
         }
 
-        let controller = HomeViewController.loadFromStoryboard(model: tabModel,
-                                                               favoritesViewModel: favoritesViewModel,
-                                                               appSettings: appSettings,
-                                                               syncService: syncService,
-                                                               syncDataProviders: syncDataProviders)
+        if homeTabManager.isNewTabPageSectionsEnabled {
+            let controller = NewTabPageViewController(rootView: NewTabPageView())
+            newTabPageViewController = controller
+            addToContentContainer(controller: controller)
+            viewCoordinator.logoContainer.isHidden = true
+        } else {
+            let controller = HomeViewController.loadFromStoryboard(model: tabModel,
+                                                                   favoritesViewModel: favoritesViewModel,
+                                                                   appSettings: appSettings,
+                                                                   syncService: syncService,
+                                                                   syncDataProviders: syncDataProviders)
 
-        homeController = controller
-
-        controller.chromeDelegate = self
-        controller.delegate = self
-
-        addToContentContainer(controller: controller)
+            controller.delegate = self
+            controller.chromeDelegate = self
+            homeViewController = controller
+            addToContentContainer(controller: controller)
+        }
 
         refreshControls()
         syncService.scheduler.requestSyncImmediately()
@@ -759,7 +772,8 @@ class MainViewController: UIViewController {
     fileprivate func removeHomeScreen() {
         homeController?.willMove(toParent: nil)
         homeController?.dismiss()
-        homeController = nil
+        homeViewController = nil
+        newTabPageViewController = nil
     }
 
     @IBAction func onFirePressed() {
@@ -967,9 +981,9 @@ class MainViewController: UIViewController {
         addChild(controller)
         viewCoordinator.contentContainer.subviews.forEach { $0.removeFromSuperview() }
         viewCoordinator.contentContainer.addSubview(controller.view)
+        controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         controller.view.frame = viewCoordinator.contentContainer.bounds
         controller.didMove(toParent: self)
-
     }
 
     fileprivate func updateCurrentTab() {
@@ -1481,7 +1495,7 @@ class MainViewController: UIViewController {
     private func onEntitlementsChange(_ notification: Notification) {
         Task {
             let accountManager = AppDependencyProvider.shared.subscriptionManager.accountManager
-            guard case .success(false) = await accountManager.hasEntitlement(for: .networkProtection) else { return }
+            guard case .success(false) = await accountManager.hasEntitlement(forProductName: .networkProtection) else { return }
 
             if await networkProtectionTunnelController.isInstalled {
                 tunnelDefaults.enableEntitlementMessaging()
@@ -1903,7 +1917,7 @@ extension MainViewController: FavoritesOverlayDelegate {
     func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: BookmarkEntity) {
         guard let url = favorite.urlObject else { return }
         Pixel.fire(pixel: .favoriteLaunchedWebsite)
-        homeController?.chromeDelegate = nil
+        homeViewController?.chromeDelegate = nil
         dismissOmniBar()
         Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .fireproof, fromCache: .tabs)
         if url.isBookmarklet() {
@@ -1926,7 +1940,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
     }
 
     func autocomplete(selectedSuggestion suggestion: Suggestion) {
-        homeController?.chromeDelegate = nil
+        homeViewController?.chromeDelegate = nil
         dismissOmniBar()
         viewCoordinator.omniBar.cancel()
         switch suggestion {

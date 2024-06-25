@@ -404,6 +404,9 @@ extension Pixel {
         case networkProtectionWidgetDisconnectAttempt
         case networkProtectionWidgetDisconnectSuccess
 
+        case networkProtectionDNSUpdateCustom
+        case networkProtectionDNSUpdateDefault
+
         // MARK: remote messaging pixels
         
         case remoteMessageShown
@@ -1068,6 +1071,9 @@ extension Pixel.Event {
         case .networkProtectionServerMigrationAttempt: return "m_netp_ev_server_migration_attempt"
         case .networkProtectionServerMigrationAttemptSuccess: return "m_netp_ev_server_migration_attempt_success"
         case .networkProtectionServerMigrationAttemptFailure: return "m_netp_ev_server_migration_attempt_failed"
+
+        case .networkProtectionDNSUpdateCustom: return "m_netp_ev_update_dns_custom"
+        case .networkProtectionDNSUpdateDefault: return "m_netp_ev_update_dns_default"
 
             // MARK: remote messaging pixels
             

@@ -101,7 +101,7 @@ class FromHomeScreenTransition: HomeScreenTransition {
         tabSwitcherViewController.view.frame = transitionContext.finalFrame(for: tabSwitcherViewController)
         tabSwitcherViewController.prepareForPresentation()
         
-        guard let homeScreen = mainViewController.homeController,
+        guard let homeScreen = mainViewController.homeViewController,
               let tab = mainViewController.tabManager.model.currentTab,
               let rowIndex = tabSwitcherViewController.tabsModel.indexOf(tab: tab),
               let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: IndexPath(row: rowIndex, section: 0))
@@ -176,7 +176,7 @@ class ToHomeScreenTransition: HomeScreenTransition {
         prepareSubviews(using: transitionContext)
         
         guard let mainViewController = transitionContext.viewController(forKey: .to) as? MainViewController,
-              let homeScreen = mainViewController.homeController,
+              let homeScreen = mainViewController.homeViewController,
               let tab = mainViewController.tabManager.model.currentTab,
               let rowIndex = tabSwitcherViewController.tabsModel.indexOf(tab: tab),
               let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: IndexPath(row: rowIndex, section: 0))

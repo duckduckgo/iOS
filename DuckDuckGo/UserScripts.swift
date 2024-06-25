@@ -33,6 +33,9 @@ final class UserScripts: UserScriptsProvider {
     let contentScopeUserScript: ContentScopeUserScript
     let contentScopeUserScriptIsolated: ContentScopeUserScript
     let autoconsentUserScript: AutoconsentUserScript
+    let specialPages: SpecialPagesUserScript?
+    let youtubeOverlayScript: YoutubeOverlayUserScript?
+    let youtubePlayerUserScript: YoutubePlayerUserScript?
 
     private(set) var faviconScript = FaviconUserScript()
     private(set) var navigatorPatchScript = NavigatorSharePatchUserScript()
@@ -55,6 +58,20 @@ final class UserScripts: UserScriptsProvider {
                                                                 properties: sourceProvider.contentScopeProperties,
                                                                 isIsolated: true)
         autoconsentUserScript = AutoconsentUserScript(config: sourceProvider.privacyConfigurationManager.privacyConfig)
+        
+        specialPages = SpecialPagesUserScript()
+        youtubeOverlayScript = YoutubeOverlayUserScript()
+        youtubePlayerUserScript = YoutubePlayerUserScript()
+        if let youtubeOverlayScript {
+            contentScopeUserScriptIsolated.registerSubfeature(delegate: youtubeOverlayScript)
+        }
+        if let specialPages = specialPages {
+            if let youtubePlayerUserScript {
+                specialPages.registerSubfeature(delegate: youtubePlayerUserScript)
+            }
+            userScripts.append(specialPages)
+        }
+        
     }
 
     lazy var userScripts: [UserScript] = [

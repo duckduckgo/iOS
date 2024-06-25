@@ -726,6 +726,8 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func attachHomeScreen() {
+        guard !autoClearInProgress else { return }
+        
         viewCoordinator.logoContainer.isHidden = false
         findInPageView.isHidden = true
         chromeManager.detach()

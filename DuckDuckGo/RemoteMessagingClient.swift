@@ -174,7 +174,7 @@ struct RemoteMessagingClient {
             let surveyActionMapper: DefaultRemoteMessagingSurveyURLBuilder
 
             if let accessToken = AppDependencyProvider.shared.subscriptionManager.accountManager.accessToken {
-                let subscriptionResult = await AppDependencyProvider.shared.subscriptionManager.subscriptionService.getSubscription(
+                let subscriptionResult = await AppDependencyProvider.shared.subscriptionManager.subscriptionEndpointService.getSubscription(
                     accessToken: accessToken
                 )
 

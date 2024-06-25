@@ -46,7 +46,7 @@ final class SettingsViewModel: ObservableObject {
     private let historyManager: HistoryManager
 
     // Subscription Dependencies
-    private let subscriptionManager: SubscriptionManaging
+    private let subscriptionManager: SubscriptionManager
     private var subscriptionSignOutObserver: Any?
     
     private enum UserDefaultsCacheKey: String, UserDefaultsCacheKeyStore {
@@ -83,9 +83,10 @@ final class SettingsViewModel: ObservableObject {
     
     var shouldShowNoMicrophonePermissionAlert: Bool = false
     @Published var shouldShowEmailAlert: Bool = false
-    var autocompleteSubtitle: String?
 
     @Published var shouldShowRecentlyVisitedSites: Bool = true
+    
+    @Published var isInternalUser: Bool = AppDependencyProvider.shared.internalUserDecider.isInternalUser
 
     // MARK: - Deep linking
     // Used to automatically navigate to a specific section
@@ -224,6 +225,16 @@ final class SettingsViewModel: ObservableObject {
         )
     }
 
+    var duckPlayerModeBinding: Binding<DuckPlayerMode> {
+        Binding<DuckPlayerMode>(
+            get: { self.state.duckPlayerMode ?? .alwaysAsk },
+            set: {
+                self.appSettings.duckPlayerMode = $0
+                self.state.duckPlayerMode = $0
+            }
+        )
+    }
+
     func setVoiceSearchEnabled(to value: Bool) {
         if value {
             enableVoiceSearch { [weak self] result in
@@ -287,7 +298,7 @@ final class SettingsViewModel: ObservableObject {
     // MARK: Default Init
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
-         subscriptionManager: SubscriptionManaging,
+         subscriptionManager: SubscriptionManager,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil,
@@ -303,7 +314,6 @@ final class SettingsViewModel: ObservableObject {
         self.syncPausedStateManager = syncPausedStateManager
 
         setupNotificationObservers()
-        autocompleteSubtitle = UserText.settingsAutocompleteSubtitle
         updateRecentlyVisitedSitesVisibility()
     }
 
@@ -344,7 +354,8 @@ extension SettingsViewModel {
             loginsEnabled: featureFlagger.isFeatureOn(.autofillAccessCredentialManagement),
             networkProtection: getNetworkProtectionState(),
             subscription: SettingsState.defaults.subscription,
-            sync: getSyncState()
+            sync: getSyncState(),
+            duckPlayerMode: appSettings.duckPlayerMode
         )
         
         updateRecentlyVisitedSitesVisibility()
@@ -656,7 +667,7 @@ extension SettingsViewModel {
             return
         }
         
-        let subscriptionResult = await subscriptionManager.subscriptionService.getSubscription(accessToken: token)
+        let subscriptionResult = await subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: token)
         switch subscriptionResult {
             
         case .success(let subscription):
@@ -668,7 +679,7 @@ extension SettingsViewModel {
             let entitlementsToCheck: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
 
             for entitlement in entitlementsToCheck {
-                if case .success = await subscriptionManager.accountManager.hasEntitlement(for: entitlement) {
+                if case .success = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement) {
                     currentEntitlements.append(entitlement)
                 }
             }
@@ -700,7 +711,7 @@ extension SettingsViewModel {
     @available(iOS 15.0, *)
     func restoreAccountPurchase() async {
         DispatchQueue.main.async { self.state.subscription.isRestoring = true }
-        let appStoreRestoreFlow = AppStoreRestoreFlow(subscriptionManager: subscriptionManager)
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager)
         let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase()
         switch result {
         case .success:

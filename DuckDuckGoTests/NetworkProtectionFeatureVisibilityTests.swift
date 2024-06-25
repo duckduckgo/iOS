@@ -32,7 +32,7 @@ final class NetworkProtectionFeatureVisibilityTests: XCTestCase {
         XCTAssertFalse(mockWithNothing.shouldMonitorEntitlement())
         XCTAssertFalse(mockWithNothing.shouldShowVPNShortcut())
     }
-
+    
     func testPrivacyProLaunched() {
         // Waitlist beta OFF, not current waitlist user -> Enforce entitlement check, nothing else
         let mockWithNothingElse = NetworkProtectionFeatureVisibilityMocks(with: [.isPrivacyProLaunched])
@@ -44,7 +44,7 @@ final class NetworkProtectionFeatureVisibilityTests: XCTestCase {
 struct NetworkProtectionFeatureVisibilityMocks: NetworkProtectionFeatureVisibility {
     
     let accountManager: AccountManager
-
+    
     func shouldShowVPNShortcut() -> Bool {
         if isPrivacyProLaunched() {
             return accountManager.isUserAuthenticated
@@ -52,41 +52,41 @@ struct NetworkProtectionFeatureVisibilityMocks: NetworkProtectionFeatureVisibili
             return false
         }
     }
-
+    
     struct Options: OptionSet {
         let rawValue: Int
-
+        
         static let isPrivacyProLaunched = Options(rawValue: 1 << 0)
     }
-
+    
     let options: Options
-
+    
     init(with options: Options) {
         self.options = options
         
         let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
         let subscriptionUserDefaults = UserDefaults(suiteName: subscriptionAppGroup)!
-        let subscriptionEnvironment = SubscriptionManager.getSavedOrDefaultEnvironment(userDefaults: subscriptionUserDefaults)
+        let subscriptionEnvironment = DefaultSubscriptionManager.getSavedOrDefaultEnvironment(userDefaults: subscriptionUserDefaults)
         let entitlementsCache = UserDefaultsCache<[Entitlement]>(userDefaults: subscriptionUserDefaults,
                                                                  key: UserDefaultsCacheKey.subscriptionEntitlements,
                                                                  settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
         let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
-        let subscriptionService = SubscriptionService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
-        let authService = AuthService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
-        accountManager = AccountManager(accessTokenStorage: accessTokenStorage,
-                                        entitlementsCache: entitlementsCache,
-                                        subscriptionService: subscriptionService,
-                                        authService: authService)
+        let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let authService = DefaultAuthEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        accountManager = DefaultAccountManager(accessTokenStorage: accessTokenStorage,
+                                               entitlementsCache: entitlementsCache,
+                                               subscriptionEndpointService: subscriptionService,
+                                               authEndpointService: authService)
     }
-
+    
     func adding(_ additionalOptions: Options) -> NetworkProtectionFeatureVisibilityMocks {
         NetworkProtectionFeatureVisibilityMocks(with: options.union(additionalOptions))
     }
-
+    
     func isPrivacyProLaunched() -> Bool {
         options.contains(.isPrivacyProLaunched)
     }
-
+    
     func shouldMonitorEntitlement() -> Bool {
         isPrivacyProLaunched()
     }

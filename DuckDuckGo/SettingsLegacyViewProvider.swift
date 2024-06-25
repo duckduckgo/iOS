@@ -99,7 +99,8 @@ class SettingsLegacyViewProvider: ObservableObject {
         return AutofillLoginSettingsListViewController(appSettings: self.appSettings,
                                                        syncService: self.syncService,
                                                        syncDataProviders: self.syncDataProviders,
-                                                       selectedAccount: selectedAccount)
+                                                       selectedAccount: selectedAccount,
+                                                       source: .settings)
     }
     
     var debug: UIViewController {

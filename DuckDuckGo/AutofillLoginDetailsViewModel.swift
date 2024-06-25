@@ -247,9 +247,11 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         case .username:
             message = UserText.autofillCopyToastUsernameCopied
             UIPasteboard.general.string = username
+            Pixel.fire(pixel: .autofillManagementCopyUsername)
         case .password:
             message = UserText.autofillCopyToastPasswordCopied
             UIPasteboard.general.string = password
+            Pixel.fire(pixel: .autofillManagementCopyPassword)
         case .address:
             message = UserText.autofillCopyToastAddressCopied
             UIPasteboard.general.string = address

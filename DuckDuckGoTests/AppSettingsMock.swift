@@ -81,8 +81,8 @@ class AppSettingsMock: AppSettings {
     var autoconsentEnabled = true
 
     var crashCollectionOptInStatus: CrashCollectionOptInStatus = .undetermined
-    
-    var duckPlayerMode: DuckDuckGo.DuckPlayerMode = .alwaysAsk
-    
 
+    var newTabPageSectionsEnabled: Bool = false
+
+    var duckPlayerMode: DuckDuckGo.DuckPlayerMode = .alwaysAsk
 }

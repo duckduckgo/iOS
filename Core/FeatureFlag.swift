@@ -33,6 +33,7 @@ public enum FeatureFlag: String {
     case autoconsentOnByDefault
     case history
     case historyRollout
+    case newTabPageSections
 }
 
 extension FeatureFlag: FeatureFlagSourceProviding {
@@ -62,7 +63,8 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .remoteReleasable(.feature(.history))
         case .historyRollout:
             return .remoteReleasable(.subfeature(HistorySubFeature.onByDefault))
-
+        case .newTabPageSections:
+            return .internalOnly
         }
     }
 }

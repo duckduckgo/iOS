@@ -375,6 +375,9 @@ public class AppUserDefaults: AppSettings {
             userDefaults?.setValue(newValue.rawValue, forKey: Keys.crashCollectionOptInStatus)
         }
     }
+
+    @UserDefaultsWrapper(key: .debugNewTabPageSectionsEnabledKey, defaultValue: false)
+    var newTabPageSectionsEnabled: Bool
     
     var duckPlayerMode: DuckPlayerMode {
         get {

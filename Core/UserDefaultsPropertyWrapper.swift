@@ -152,6 +152,10 @@ public struct UserDefaultsWrapper<T> {
         case duckPlayerMode = "com.duckduckgo.ios.duckPlayerMode"
 
         case vpnRedditWorkaroundInstalled = "com.duckduckgo.ios.vpn.workaroundInstalled"
+
+        // Debug keys
+
+        case debugNewTabPageSectionsEnabledKey = "com.duckduckgo.ios.debug.newTabPageSectionsEnabled"
     }
 
     private let key: Key

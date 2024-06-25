@@ -313,12 +313,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             defaults: .networkProtectionGroupDefaults,
             wrappee: notificationsPresenter
         )
-        let locationListRepo = NetworkProtectionLocationListCompositeRepository(
-            environment: settings.selectedEnvironment,
-            tokenStore: tokenStore,
-            errorEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
-            isSubscriptionEnabled: true
-        )
         notificationsPresenter.requestAuthorization()
         super.init(notificationsPresenter: notificationsPresenterDecorator,
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),

@@ -116,26 +116,8 @@ struct RemoteMessagingClient {
         var favoritesCount = 0
         let context = bookmarksDatabase.makeContext(concurrencyType: .privateQueueConcurrencyType)
         context.performAndWait {
-            let displayedFavoritesFolder = BookmarkUtils.fetchFavoritesFolder(withUUID: favoritesDisplayMode.displayedFolder.rawValue, in: context)!
-
-            let bookmarksCountRequest = BookmarkEntity.fetchRequest()
-            bookmarksCountRequest.predicate = NSPredicate(
-                format: "SUBQUERY(%K, $x, $x CONTAINS %@).@count == 0 AND %K == false AND %K == false AND (%K == NO OR %K == nil)",
-                #keyPath(BookmarkEntity.favoriteFolders),
-                displayedFavoritesFolder,
-                #keyPath(BookmarkEntity.isFolder),
-                #keyPath(BookmarkEntity.isPendingDeletion),
-                #keyPath(BookmarkEntity.isStub), #keyPath(BookmarkEntity.isStub))
-            bookmarksCount = (try? context.count(for: bookmarksCountRequest)) ?? 0
-
-            let favoritesCountRequest = BookmarkEntity.fetchRequest()
-            favoritesCountRequest.predicate = NSPredicate(format: "%K CONTAINS %@ AND %K == false AND %K == false AND (%K == NO OR %K == nil)",
-                                                          #keyPath(BookmarkEntity.favoriteFolders),
-                                                          displayedFavoritesFolder,
-                                                          #keyPath(BookmarkEntity.isFolder),
-                                                          #keyPath(BookmarkEntity.isPendingDeletion),
-                                                          #keyPath(BookmarkEntity.isStub), #keyPath(BookmarkEntity.isStub))
-            favoritesCount = (try? context.count(for: favoritesCountRequest)) ?? 0
+            bookmarksCount = BookmarkUtils.numberOfBookmarks(in: context)
+            favoritesCount = BookmarkUtils.numberOfFavorites(for: favoritesDisplayMode, in: context)
         }
         
         let isWidgetInstalled = await AppDependencyProvider.shared.appSettings.isWidgetInstalled()

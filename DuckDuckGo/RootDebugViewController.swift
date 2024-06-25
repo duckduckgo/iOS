@@ -28,6 +28,7 @@ import Configuration
 import Persistence
 import DDGSync
 import NetworkProtection
+import SwiftUI
 
 class RootDebugViewController: UITableViewController {
 
@@ -41,6 +42,7 @@ class RootDebugViewController: UITableViewController {
         case openVanillaBrowser = 670
         case resetSendCrashLogs = 671
         case refreshConfig = 672
+        case newTabPageSections = 674
     }
 
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -158,6 +160,9 @@ class RootDebugViewController: UITableViewController {
                 AppUserDefaults().crashCollectionOptInStatus = .undetermined
             case .refreshConfig:
                 fetchAssets()
+            case .newTabPageSections:
+                let controller = UIHostingController(rootView: NewTabPageSectionsDebugView())
+                show(controller, sender: nil)
             }
         }
     }

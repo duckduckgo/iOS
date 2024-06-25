@@ -376,6 +376,9 @@ public class AppUserDefaults: AppSettings {
             userDefaults?.setValue(newValue.rawValue, forKey: Keys.crashCollectionOptInStatus)
         }
     }
+
+    @UserDefaultsWrapper(key: .debugNewTabPageSectionsEnabledKey, defaultValue: false)
+    var newTabPageSectionsEnabled: Bool
     
     var duckPlayerMode: DuckPlayerMode {
         get {
@@ -391,8 +394,6 @@ public class AppUserDefaults: AppSettings {
             userDefaults?.set(false, forKey: Keys.duckPlayerAskModeOverlayHidden)
         }
     }
-    
-}
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {
     

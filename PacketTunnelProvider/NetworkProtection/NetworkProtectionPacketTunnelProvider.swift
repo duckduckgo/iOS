@@ -35,7 +35,7 @@ import WidgetKit
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
     private var cancellables = Set<AnyCancellable>()
-    private let accountManager: AccountManaging
+    private let accountManager: AccountManager
 
     // MARK: - PacketTunnelProvider.Event reporting
 
@@ -289,12 +289,12 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
         let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
         let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
-        let subscriptionService = SubscriptionService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
-        let authService = AuthService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
-        let accountManager = AccountManager(accessTokenStorage: accessTokenStorage,
-                                            entitlementsCache: entitlementsCache,
-                                            subscriptionService: subscriptionService,
-                                            authService: authService)
+        let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let authService = DefaultAuthEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let accountManager = DefaultAccountManager(accessTokenStorage: accessTokenStorage,
+                                                   entitlementsCache: entitlementsCache,
+                                                   subscriptionEndpointService: subscriptionService,
+                                                   authEndpointService: authService)
         self.accountManager = accountManager
         let featureVisibility = NetworkProtectionVisibilityForTunnelProvider(accountManager: accountManager)
         let accessTokenProvider: () -> String? = {
@@ -372,13 +372,13 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
     }
 
-    private static func entitlementCheck(accountManager: AccountManaging) async -> Result<Bool, Error> {
+    private static func entitlementCheck(accountManager: AccountManager) async -> Result<Bool, Error> {
         
         guard NetworkProtectionVisibilityForTunnelProvider(accountManager: accountManager).shouldMonitorEntitlement() else {
             return .success(true)
         }
 
-        let result = await accountManager.hasEntitlement(for: .networkProtection)
+        let result = await accountManager.hasEntitlement(forProductName: .networkProtection)
         switch result {
         case .success(let hasEntitlement):
             return .success(hasEntitlement)

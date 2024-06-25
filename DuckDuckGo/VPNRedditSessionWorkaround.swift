@@ -28,10 +28,10 @@ final class VPNRedditSessionWorkaround {
     @UserDefaultsWrapper(key: .vpnRedditWorkaroundInstalled, defaultValue: false)
     var vpnWorkaroundInstalled: Bool
 
-    private let accountManager: AccountManaging
+    private let accountManager: AccountManager
     private let tunnelController: TunnelController
 
-    init(accountManager: AccountManaging, tunnelController: TunnelController) {
+    init(accountManager: AccountManager, tunnelController: TunnelController) {
         self.accountManager = accountManager
         self.tunnelController = tunnelController
     }

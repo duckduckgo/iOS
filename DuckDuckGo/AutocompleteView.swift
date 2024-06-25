@@ -199,15 +199,25 @@ private struct SuggestionView: View {
                 SuggestionListItem(icon: Image("Globe-24"),
                                    title: url.formattedForSuggestion())
 
-            case .bookmark(let title, let url, let isFavorite, _):
-                SuggestionListItem(icon: Image(isFavorite ? "Bookmark-Fav-24" :"Bookmark-24"),
+            case .bookmark(let title, let url, let isFavorite, _) where isFavorite:
+                SuggestionListItem(icon: Image("Bookmark-Fav-24"),
                                    title: title,
                                    subtitle: url.formattedForSuggestion())
+
+            case .bookmark(let title, let url, _, _):
+                SuggestionListItem(icon: Image("Bookmark-24"),
+                                   title: title,
+                                   subtitle: url.formattedForSuggestion())
+
+            case .historyEntry(_, let url, _) where url.isDuckDuckGoSearch:
+                SuggestionListItem(icon: Image("History-24"),
+                                   title: url.searchQuery ?? "",
+                                   subtitle: UserText.autocompleteSearchDuckDuckGo)
 
             case .historyEntry(let title, let url, _):
                 SuggestionListItem(icon: Image("History-24"),
                                    title: title ?? "",
-                                   subtitle: url.isDuckDuckGoSearch ? UserText.autocompleteSearchDuckDuckGo : url.formattedForSuggestion())
+                                   subtitle: url.formattedForSuggestion())
 
             case .internalPage, .unknown:
                 FailedAssertionView("Unknown or unsupported suggestion type")

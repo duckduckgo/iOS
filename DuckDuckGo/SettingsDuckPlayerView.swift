@@ -22,18 +22,42 @@ import SwiftUI
 import DesignResourcesKit
 
 struct SettingsDuckPlayerView: View {
+    static let privacyPolicyURL = URL(string: "https://duckduckgo.com/duckduckgo-help-pages/duck-player/")!
 
     @EnvironmentObject var viewModel: SettingsViewModel
-
     var body: some View {
         List {
+            VStack(alignment: .center) {
+                Image("SettingsDuckPlayerHero")
+                    .padding(.top, -20) // Adjust for the image padding
+
+                Text(UserText.settingsDuckPlayerTitle)
+                    .daxTitle3()
+
+                Text(UserText.settingsDuckPlayerInfoText)
+                    .daxBodyRegular()
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(Color(designSystemColor: .textSecondary))
+                    .padding(.top, 12)
+
+                Link(UserText.settingsDuckPlayerLearnMore,
+                     destination: SettingsDuckPlayerView.privacyPolicyURL)
+                .daxBodyRegular()
+                .accentColor(Color.init(designSystemColor: .accent))
+            }
+            .listRowBackground(Color.clear)
+
             Section {
-                SettingsPickerCellView(label: "Open videos in DuckPlayer",
+                SettingsPickerCellView(label: UserText.settingsOpenVideosInDuckPlayerLabel,
                                        options: DuckPlayerMode.allCases,
                                        selectedOption: viewModel.duckPlayerModeBinding)
+            } footer: {
+                Text(UserText.settingsDuckPlayerFooter)
+                    .daxFootnoteRegular()
+                    .multilineTextAlignment(.center)
             }
         }
-        .applySettingsListModifiers(title: "Open videos in DuckPlayer",
+        .applySettingsListModifiers(title: UserText.settingsDuckPlayerTitle,
                                     displayMode: .inline,
                                     viewModel: viewModel)
     }

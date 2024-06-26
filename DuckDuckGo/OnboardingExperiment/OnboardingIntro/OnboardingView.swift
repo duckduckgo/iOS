@@ -56,7 +56,7 @@ struct OnboardingView: View {
         .transition(.opacity)
     }
 
-    func backgroundWrapped(view: some View) -> some View {
+    private func backgroundWrapped(view: some View) -> some View {
         ZStack {
             Image(.onboardingBackground)
                 .resizable()
@@ -66,7 +66,7 @@ struct OnboardingView: View {
         }
     }
 
-    func mainView(state: ViewState.Intro) -> some View {
+    private func mainView(state: ViewState.Intro) -> some View {
         GeometryReader { geometry in
             VStack(alignment: .center) {
                 switch state {
@@ -84,7 +84,7 @@ struct OnboardingView: View {
         }
     }
 
-    var chooseBrowserView: some View {
+    private var chooseBrowserView: some View {
         OnboardingDefaultBrowserView(
             setAsDefaultBrowserAction: {
                 model.setDefaultBrowserAction()
@@ -95,7 +95,7 @@ struct OnboardingView: View {
         )
     }
 
-    var landingView: some View {
+    private var landingView: some View {
         return LandingView()
             .ignoresSafeArea(edges: .bottom)
             .frame(maxHeight: .infinity, alignment: .bottom)
@@ -108,7 +108,7 @@ struct OnboardingView: View {
             }
     }
 
-    var introView: some View {
+    private var introView: some View {
         DaxDialogIntroView {
             withAnimation {
                 model.startOnboardingAction()
@@ -118,7 +118,7 @@ struct OnboardingView: View {
         .padding()
     }
 
-    var browsersComparisonView: some View {
+    private var browsersComparisonView: some View {
         DaxDialogBrowsersComparisonView {
             withAnimation {
                 model.chooseBrowserAction()

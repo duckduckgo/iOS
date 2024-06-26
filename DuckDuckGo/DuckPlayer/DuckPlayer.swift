@@ -99,6 +99,12 @@ public struct UserValues: Codable {
 
 final class DuckPlayerSettings {
     
+    private var appSettings: AppSettings
+    
+    init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
+        self.appSettings = appSettings
+    }
+    
     public struct OriginDomains {
         static let duckduckgo = "duckduckgo.com"
         static let youtubeWWW = "www.youtube.com"
@@ -108,9 +114,9 @@ final class DuckPlayerSettings {
     
     var mode: DuckPlayerMode {
         get {
-            AppDependencyProvider.shared.appSettings.duckPlayerMode
+            appSettings.duckPlayerMode
         } set {
-            AppDependencyProvider.shared.appSettings.duckPlayerMode = newValue
+            appSettings.duckPlayerMode = newValue
         }
     }
     

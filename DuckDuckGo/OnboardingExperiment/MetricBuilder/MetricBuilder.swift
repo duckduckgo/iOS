@@ -56,7 +56,7 @@ final class MetricBuilder<T> {
     }
 
     private func isIPhoneSmallScreen(_ frame: CGSize) -> Bool {
-        frame.height > 0 && frame.height <= 667
+        frame.height > 0 && frame.height <= 667 //iPhone SE
     }
 
     private func isIPad(_ verticalSizeClass: UserInterfaceSizeClass?, _ horizontalSizeClass: UserInterfaceSizeClass?) -> Bool {

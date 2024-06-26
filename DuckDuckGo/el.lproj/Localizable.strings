@@ -245,7 +245,7 @@
 "autocomplete.history.search.duckduckgo" = "Αναζήτηση DuckDuckGo";
 
 /* The message text shown in suggestions */
-"autocomplete.history.warning.message" = "Οι προτάσεις περιλαμβάνουν πλέον ιστότοπους που επισκεφθήκατε πρόσφατα. Αποθηκεύονται στη συσκευή σας και ποτέ στους διακομιστές του DuckDuckGo. Απενεργοποιήστε τη λειτουργία από τις ρυθμίσεις ή καταργήστε τη οποιαδήποτε στιγμή με το 🔥 Fire Button.";
+"autocomplete.history.warning.message" = "Οι προτάσεις αναζήτησης περιλαμβάνουν πλέον τους ιστότοπους που επισκεφθήκατε πρόσφατα. Απενεργοποιήστε τη λειτουργία από τις Ρυθμίσεις ή καταργήστε την οποιαδήποτε στιγμή με το κουμπί 🔥 Fire Button.";
 
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Ίδιο απόρρητο.\nΚαλύτερες προτάσεις αναζήτησης!";
@@ -1799,10 +1799,16 @@
 "settings.associated.apps.description" = "Απενεργοποιήστε για να αποτρέψετε το αυτόματο άνοιγμα συνδέσμων σε άλλες εγκατεστημένες εφαρμογές.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Εμφάνιση προτάσεων αυτόματης συμπλήρωσης";
+"settings.autocomplete" = "Προτάσεις αναζήτησης";
 
 /* Settings label for enabling or disabling recently visited sites */
 "settings.autocomplete.recentlyvisited" = "Πρόσφατα επισκεφθέντες ιστότοποι";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Προβολή ιστότοπων που επισκεφθήκατε πρόσφατα σε προτάσεις αναζήτησης. Οι ιστότοποι που επισκεφθήκατε πρόσφατα είναι ιδιωτικοί, αποθηκεύονται μόνο στη συσκευή σας και μπορούν να διαγραφούν με το κουμπί Fire Button.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Προβολή προτάσεων αναζήτησης καθώς πληκτρολογείτε, συμπεριλαμβανομένων των σελιδοδεικτών σας. Όλες οι αναζητήσεις είναι ιδιωτικές.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Κλείδωμα εφαρμογής";

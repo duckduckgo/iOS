@@ -26,16 +26,32 @@ extension OmniBar {
         static func addressForDisplay(url: URL, showsFullURL: Bool) -> NSAttributedString {
 
             if !showsFullURL, let shortAddress = shortURLString(url) {
+                
+                if url.isDuckPlayer {
+                    return NSAttributedString(
+                        string: "Duck Player",
+                        attributes: [.foregroundColor: ThemeManager.shared.currentTheme.searchBarTextColor])
+                }
+                
                 return NSAttributedString(
                     string: shortAddress,
                     attributes: [.foregroundColor: ThemeManager.shared.currentTheme.searchBarTextColor])
+                                
             } else {
+                
+                if url.isDuckPlayer,
+                    let (videoID, _) = url.youtubeVideoParams {
+                    return NSAttributedString(
+                        string: URL.duckPlayer(videoID).absoluteString,
+                        attributes: [.foregroundColor: ThemeManager.shared.currentTheme.searchBarTextColor])
+                }
+                
                 return deemphasisePath(forUrl: url)
             }
         }
 
         static func deemphasisePath(forUrl url: URL) -> NSAttributedString {
-
+            
             let s = url.absoluteString
             let attributedString = NSMutableAttributedString(string: s)
             guard let c = URLComponents(url: url, resolvingAgainstBaseURL: true) else {

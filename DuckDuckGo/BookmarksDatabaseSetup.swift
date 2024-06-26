@@ -72,6 +72,21 @@ struct BookmarksDatabaseSetup {
         let contextForValidation = bookmarksDatabase.makeContext(concurrencyType: .privateQueueConcurrencyType)
         contextForValidation.performAndWait {
             validator.validateBookmarksStructure(context: contextForValidation)
+
+            let stateRepair = BookmarksStateRepair(keyValueStore: UserDefaults.app)
+            let status = stateRepair.validateAndRepairPendingDeletionState(in: contextForValidation)
+            switch status {
+            case .alreadyPerformed, .noBrokenData:
+                break
+            case .dataRepaired:
+                Pixel.fire(pixel: .debugBookmarksPendingDeletionFixed)
+            case .repairError(let underlyingError):
+                let processedErrors = CoreDataErrorsParser.parse(error: underlyingError as NSError)
+
+                DailyPixel.fireDailyAndCount(pixel: .debugBookmarksPendingDeletionRepairError,
+                                             withAdditionalParameters: processedErrors.errorPixelParameters,
+                                             includedParameters: [.appVersion])
+            }
         }
 
         if migrationHappened {

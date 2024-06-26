@@ -42,6 +42,8 @@ final class NetworkProtectionVPNSettingsViewModel: ObservableObject {
     }
 
     @Published public var excludeLocalNetworks: Bool = true
+    @Published public var usesCustomDNS = false
+    @Published public var dnsServers: String = UserText.vpnSettingDNSServerDefaultValue
 
     init(notificationsAuthorization: NotificationsAuthorizationControlling, settings: VPNSettings) {
         self.settings = settings
@@ -50,6 +52,16 @@ final class NetworkProtectionVPNSettingsViewModel: ObservableObject {
         settings.excludeLocalNetworksPublisher
             .receive(on: DispatchQueue.main)
             .assign(to: \.excludeLocalNetworks, onWeaklyHeld: self)
+            .store(in: &cancellables)
+        settings.dnsSettingsPublisher
+            .receive(on: DispatchQueue.main)
+            .map { $0.usesCustomDNS }
+            .assign(to: \.usesCustomDNS, onWeaklyHeld: self)
+            .store(in: &cancellables)
+        settings.dnsSettingsPublisher
+            .receive(on: DispatchQueue.main)
+            .map { String(describing: $0) }
+            .assign(to: \.dnsServers, onWeaklyHeld: self)
             .store(in: &cancellables)
     }
 

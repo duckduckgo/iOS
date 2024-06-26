@@ -23,25 +23,37 @@ import Subscription
 @available(iOS 15.0, *)
 enum SubscriptionContainerViewFactory {
 
-    static func makeSubscribeFlow(origin: String?, navigationCoordinator: SubscriptionNavigationCoordinator, subscriptionManager: SubscriptionManaging) -> some View {
+    static func makeSubscribeFlow(origin: String?, navigationCoordinator: SubscriptionNavigationCoordinator, subscriptionManager: SubscriptionManager) -> some View {
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager)
+        let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: subscriptionManager,
+                                                               appStoreRestoreFlow: appStoreRestoreFlow)
+
         let viewModel = SubscriptionContainerViewModel(
             subscriptionManager: subscriptionManager,
             origin: origin,
             userScript: SubscriptionPagesUserScript(),
             subFeature: SubscriptionPagesUseSubscriptionFeature(subscriptionManager: subscriptionManager,
-                                                                subscriptionAttributionOrigin: origin)
+                                                                subscriptionAttributionOrigin: origin,
+                                                                appStorePurchaseFlow: appStorePurchaseFlow,
+                                                                appStoreRestoreFlow: appStoreRestoreFlow)
         )
         return SubscriptionContainerView(currentView: .subscribe, viewModel: viewModel)
             .environmentObject(navigationCoordinator)
     }
 
-    static func makeRestoreFlow(navigationCoordinator: SubscriptionNavigationCoordinator, subscriptionManager: SubscriptionManaging) -> some View {
+    static func makeRestoreFlow(navigationCoordinator: SubscriptionNavigationCoordinator, subscriptionManager: SubscriptionManager) -> some View {
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager)
+        let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: subscriptionManager,
+                                                               appStoreRestoreFlow: appStoreRestoreFlow)
+
         let viewModel = SubscriptionContainerViewModel(
             subscriptionManager: subscriptionManager,
             origin: nil,
             userScript: SubscriptionPagesUserScript(),
             subFeature: SubscriptionPagesUseSubscriptionFeature(subscriptionManager: subscriptionManager,
-                                                                subscriptionAttributionOrigin: nil)
+                                                                subscriptionAttributionOrigin: nil,
+                                                                appStorePurchaseFlow: appStorePurchaseFlow,
+                                                                appStoreRestoreFlow: appStoreRestoreFlow)
         )
         return SubscriptionContainerView(currentView: .restore, viewModel: viewModel)
             .environmentObject(navigationCoordinator)

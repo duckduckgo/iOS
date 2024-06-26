@@ -28,9 +28,9 @@ import Subscription
 
 struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
     private let userDefaults: UserDefaults
-    private let accountManager: AccountManaging
+    private let accountManager: AccountManager
 
-    init(userDefaults: UserDefaults, accountManager: AccountManaging) {
+    init(userDefaults: UserDefaults, accountManager: AccountManager) {
         self.userDefaults = userDefaults
         self.accountManager = accountManager
     }

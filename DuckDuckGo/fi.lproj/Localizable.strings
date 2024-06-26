@@ -245,7 +245,7 @@
 "autocomplete.history.search.duckduckgo" = "Hae DuckDuckGo:sta";
 
 /* The message text shown in suggestions */
-"autocomplete.history.warning.message" = "Äskettäin käydyt sivustot sisältyvät nyt ehdotuksiin. Ne tallennetaan laitteellesi, ei koskaan DuckDuckGon palvelimille. Voit poistaa tämän käytöstä asetuksissa tai tyhjentää sivustotiedot milloin tahansa 🔥 Fire Buttonilla.";
+"autocomplete.history.warning.message" = "Hakuehdotuksiin sisältyvät nyt myös viimeksi käymäsi sivustot. Voit poistaa tämän käytöstä asetuksissa tai tyhjentää sivustotiedot milloin tahansa 🔥 Fire Buttonilla.";
 
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Sama tietoja,\nparempia hakuehdotuksia!";
@@ -1799,10 +1799,16 @@
 "settings.associated.apps.description" = "Ota pois käytöstä estääksesi linkkejä avautumasta automaattisesti muissa asennetuissa sovelluksissa.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Näytä automaattisen täydennyksen ehdotukset";
+"settings.autocomplete" = "Hakuehdotukset";
 
 /* Settings label for enabling or disabling recently visited sites */
 "settings.autocomplete.recentlyvisited" = "Viimeksi käydyt sivustot";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Näytä viimeksi käydyt sivustot hakuehdotuksissa. Viimeksi käydyt sivustot ovat yksityisiä, tallennetaan vain laitteeseen ja ne voidaan tyhjentää Fire Buttonilla.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Näytä hakuehdotuksia kirjoittaessasi, mukaan lukien kirjanmerkit. Kaikki haut ovat yksityisiä.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Sovelluksen lukitus";

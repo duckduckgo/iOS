@@ -82,7 +82,7 @@ struct SettingsSubscriptionView: View {
             .daxBodyRegular()
     }
 
-    private var subscriptionManager: SubscriptionManaging {
+    private var subscriptionManager: SubscriptionManager {
         AppDependencyProvider.shared.subscriptionManager
     }
 

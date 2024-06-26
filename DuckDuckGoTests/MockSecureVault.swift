@@ -163,6 +163,10 @@ final class MockSecureVault<T: AutofillDatabaseProvider>: AutofillSecureVault {
         return storedIdentities
     }
 
+    func identitiesCount() throws -> Int {
+        return storedIdentities.count
+    }
+
     func identityFor(id: Int64) throws -> SecureVaultModels.Identity? {
         return storedIdentities.first { $0.id == id }
     }
@@ -365,6 +369,10 @@ class MockDatabaseProvider: AutofillDatabaseProvider {
 
     func identities() throws -> [SecureVaultModels.Identity] {
         return Array(_identities.values)
+    }
+
+    func identitiesCount() throws -> Int {
+        return _identities.count
     }
 
     func identityForIdentityId(_ identityId: Int64) throws -> SecureVaultModels.Identity? {

@@ -592,6 +592,7 @@
 		9FB027122C2526DD009EA190 /* DaxDialogIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB027112C2526DD009EA190 /* DaxDialogIntroView.swift */; };
 		9FB027142C252E0C009EA190 /* DaxDialogBrowsersComparisonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB027132C252E0C009EA190 /* DaxDialogBrowsersComparisonView.swift */; };
 		9FB027192C26BC29009EA190 /* BrowsersComparisonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB027182C26BC29009EA190 /* BrowsersComparisonModel.swift */; };
+		9FE08BD62C2A60CD001D5EBC /* MetricBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE08BD52C2A60CD001D5EBC /* MetricBuilder.swift */; };
 		9FE08BDA2C2A86D0001D5EBC /* URLOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE08BD92C2A86D0001D5EBC /* URLOpener.swift */; };
 		9FF7E9822C22A1F100902BE5 /* DaxDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7E9812C22A1F100902BE5 /* DaxDialogView.swift */; };
 		9FF7E9862C23D10300902BE5 /* BrowsersComparisonChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7E9852C23D10300902BE5 /* BrowsersComparisonChart.swift */; };
@@ -2212,6 +2213,7 @@
 		9FB027112C2526DD009EA190 /* DaxDialogIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogIntroView.swift; sourceTree = "<group>"; };
 		9FB027132C252E0C009EA190 /* DaxDialogBrowsersComparisonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogBrowsersComparisonView.swift; sourceTree = "<group>"; };
 		9FB027182C26BC29009EA190 /* BrowsersComparisonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsersComparisonModel.swift; sourceTree = "<group>"; };
+		9FE08BD52C2A60CD001D5EBC /* MetricBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricBuilder.swift; sourceTree = "<group>"; };
 		9FE08BD92C2A86D0001D5EBC /* URLOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLOpener.swift; sourceTree = "<group>"; };
 		9FF7E9812C22A1F100902BE5 /* DaxDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogView.swift; sourceTree = "<group>"; };
 		9FF7E9852C23D10300902BE5 /* BrowsersComparisonChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsersComparisonChart.swift; sourceTree = "<group>"; };
@@ -4122,9 +4124,18 @@
 			path = BrowsersComparison;
 			sourceTree = "<group>";
 		};
+		9FE08BD42C2A60BD001D5EBC /* MetricBuilder */ = {
+			isa = PBXGroup;
+			children = (
+				9FE08BD52C2A60CD001D5EBC /* MetricBuilder.swift */,
+			);
+			path = MetricBuilder;
+			sourceTree = "<group>";
+		};
 		9FF7E9802C22A19800902BE5 /* OnboardingExperiment */ = {
 			isa = PBXGroup;
 			children = (
+				9FE08BD42C2A60BD001D5EBC /* MetricBuilder */,
 				9FB027172C26BC0F009EA190 /* BrowsersComparison */,
 				9FB027102C2526A8009EA190 /* DaxDialogs */,
 			);
@@ -6491,6 +6502,7 @@
 				6FBF0F8B2BD7C0A900136CF0 /* AllProtectedCell.swift in Sources */,
 				1E4F4A5A297193DE00625985 /* MainViewController+CookiesManaged.swift in Sources */,
 				8586A10D24CBA7070049720E /* FindInPageActivity.swift in Sources */,
+				9FE08BD62C2A60CD001D5EBC /* MetricBuilder.swift in Sources */,
 				1E1626072968413B0004127F /* ViewExtension.swift in Sources */,
 				31A42566285A0A6300049386 /* FaviconViewModel.swift in Sources */,
 				D65625952C22D382006EF297 /* TabViewController.swift in Sources */,

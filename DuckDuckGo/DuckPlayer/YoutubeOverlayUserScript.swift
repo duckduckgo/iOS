@@ -21,38 +21,54 @@ import Foundation
 import WebKit
 import Common
 import UserScript
-// import PixelKit
-
-protocol YoutubeOverlayUserScriptDelegate: AnyObject {
-    func youtubeOverlayUserScriptDidRequestDuckPlayer(with url: URL, in webView: WKWebView)
-}
 
 final class YoutubeOverlayUserScript: NSObject, Subfeature {
-
+        
+    private var duckPlayer: DuckPlayer
+    
+    struct Constants {
+        static let featureName = "duckPlayer"
+    }
+    
+    init(duckPlayer: DuckPlayer) {
+        self.duckPlayer = duckPlayer
+    }
+    
     enum MessageOrigin {
         case duckPlayer, serpOverlay, youtubeOverlay
 
         init?(url: URL) {
             switch url.host {
-            case "duckduckgo.com":
+            case DuckPlayerSettings.OriginDomains.duckduckgo:
                 self = .serpOverlay
-            case "www.youtube.com":
+            case DuckPlayerSettings.OriginDomains.youtubeMobile:
+                self = .youtubeOverlay
+            case DuckPlayerSettings.OriginDomains.youtube:
+                self = .youtubeOverlay
+            case DuckPlayerSettings.OriginDomains.youtubeWWW:
                 self = .youtubeOverlay
             default:
                 return nil
             }
         }
     }
+    
+    struct Handlers {
+        static let setUserValues = "setUserValues"
+        static let getUserValues = "getUserValues"
+        static let openDuckPlayer = "openDuckPlayer"
+        static let sendDuckPlayerPixel = "sendDuckPlayerPixel"
+    }
 
-    // let duckPlayerPreferences: DuckPlayerPreferences
     weak var broker: UserScriptMessageBroker?
-    weak var delegate: YoutubeOverlayUserScriptDelegate?
     weak var webView: WKWebView?
+    
     let messageOriginPolicy: MessageOriginPolicy = .only(rules: [
-        .exact(hostname: "www.youtube.com"),
-        .exact(hostname: "duckduckgo.com")
+        .exact(hostname: DuckPlayerSettings.OriginDomains.duckduckgo),
+        .exact(hostname: DuckPlayerSettings.OriginDomains.youtube),
+        .exact(hostname: DuckPlayerSettings.OriginDomains.youtubeMobile)
     ])
-    public var featureName: String = "duckPlayer"
+    public var featureName: String = Constants.featureName
 
     // MARK: - Subfeature
 
@@ -62,29 +78,19 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
 
     // MARK: - MessageNames
 
-    enum MessageNames: String, CaseIterable {
-        case setUserValues
-        case getUserValues
-        case openDuckPlayer
-        case sendDuckPlayerPixel
-    }
-
     func handler(forMethodNamed methodName: String) -> Subfeature.Handler? {
-        switch MessageNames(rawValue: methodName) {
-        case .setUserValues:
-            guard let url = webView?.url, let origin = MessageOrigin(url: url) else {
-                assertionFailure("YoutubeOverlayUserScript: Unexpected message origin: \(String(describing: webView?.url))")
-                return nil
-            }
-            return DuckPlayer.shared.handleSetUserValuesMessage(from: origin)
-        case .getUserValues:
-            return DuckPlayer.shared.handleGetUserValues
-        case .openDuckPlayer:
-            return handleOpenDuckPlayer
-        case .sendDuckPlayerPixel:
+        switch methodName {
+        case Handlers.setUserValues:
+            return duckPlayer.setUserValues
+        case Handlers.getUserValues:
+            return duckPlayer.getUserValues
+        case Handlers.openDuckPlayer:
+            return openDuckPlayer
+        case Handlers.sendDuckPlayerPixel:
             return handleSendJSPixel
         default:
             assertionFailure("YoutubeOverlayUserScript: Failed to parse User Script message: \(methodName)")
+            // TODO: Send pixel here
             return nil
         }
     }
@@ -97,19 +103,18 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
     }
 
     // MARK: - Private Methods
-
+    
     @MainActor
-    private func handleOpenDuckPlayer(params: Any, message: UserScriptMessage) -> Encodable? {
+    private func openDuckPlayer(params: Any, original: WKScriptMessage) -> Encodable? {
         guard let dict = params as? [String: Any],
-              let href = dict["href"] as? String,
-              let url = href.url,
-              url.isDuckURLScheme,
-              let webView = message.messageWebView
-        else {
-            assertionFailure("YoutubeOverlayUserScript: expected duck:// URL")
+                let href = dict["href"] as? String,
+                let url = href.url,
+                let webView = original.webView else {
+            assertionFailure("Could not parse WKMessage to obtain video details")
+            // TODO: Send Pixel Here
             return nil
         }
-        self.delegate?.youtubeOverlayUserScriptDidRequestDuckPlayer(with: url, in: webView)
+        duckPlayer.openVideoInDuckPlayer(url: url, webView: webView)
         return nil
     }
 
@@ -127,8 +132,7 @@ extension YoutubeOverlayUserScript {
             return nil
         }
         let pixelName = parameters["pixelName"] as? String
-
-        // To be implemented once final pixels are defined or updated
+        
 
         return nil
     }

@@ -414,6 +414,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             return connectedMessage(for: connectedDate)
         case .connecting, .reasserting:
             return UserText.netPStatusConnecting
+        case .snoozing:
+            return "Snoozing"
         }
     }
 

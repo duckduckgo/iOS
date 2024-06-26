@@ -79,6 +79,7 @@ import WebKit
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?
 
+    private(set) var remoteMessagingClient: RemoteMessagingClient!
     private(set) var syncService: DDGSync!
     private(set) var syncDataProviders: SyncDataProviders!
     private var syncDidFinishCancellable: AnyCancellable?
@@ -319,10 +320,14 @@ import WebKit
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
 
-        RemoteMessagingClient.registerBackgroundRefreshTaskHandler(
+        let remoteMessagingClient = RemoteMessagingClient(
             bookmarksDatabase: bookmarksDatabase,
-            favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
+            appSettings: AppDependencyProvider.shared.appSettings,
+            internalUserDecider: AppDependencyProvider.shared.internalUserDecider
         )
+
+        remoteMessagingClient.registerBackgroundRefreshTaskHandler(with: AppDependencyProvider.shared.remoteMessagingStore)
+        self.remoteMessagingClient = remoteMessagingClient
 
         UNUserNotificationCenter.current().delegate = self
         
@@ -642,10 +647,7 @@ import WebKit
 
     private func refreshRemoteMessages() {
         Task {
-            try? await RemoteMessagingClient.fetchAndProcess(
-                bookmarksDatabase: self.bookmarksDatabase,
-                favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
-            )
+            try? await remoteMessagingClient.fetchAndProcess(remoteMessagingStore: AppDependencyProvider.shared.remoteMessagingStore)
         }
     }
 

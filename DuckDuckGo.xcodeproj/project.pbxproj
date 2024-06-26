@@ -173,6 +173,7 @@
 		31CC224928369B38001654A4 /* AutofillLoginSettingsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CC224828369B38001654A4 /* AutofillLoginSettingsListViewController.swift */; };
 		31DD208427395A5A008FB313 /* VoiceSearchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD208327395A5A008FB313 /* VoiceSearchHelper.swift */; };
 		31DE43C22C2C480D00F8C51F /* DuckPlayerFeaturePresentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DE43C12C2C480D00F8C51F /* DuckPlayerFeaturePresentationView.swift */; };
+		31DE43C42C2C60E800F8C51F /* DuckPlayerModalPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DE43C32C2C60E800F8C51F /* DuckPlayerModalPresenter.swift */; };
 		31E69A63280F4CB600478327 /* DuckUI in Frameworks */ = {isa = PBXBuildFile; productRef = 31E69A62280F4CB600478327 /* DuckUI */; };
 		31EF52E1281B3BDC0034796E /* AutofillLoginListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EF52E0281B3BDC0034796E /* AutofillLoginListItemViewModel.swift */; };
 		3712091E2C21E390003ADF3D /* RemoteMessagingStoreErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3712091D2C21E390003ADF3D /* RemoteMessagingStoreErrorHandling.swift */; };
@@ -1274,6 +1275,7 @@
 		31CC224828369B38001654A4 /* AutofillLoginSettingsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginSettingsListViewController.swift; sourceTree = "<group>"; };
 		31DD208327395A5A008FB313 /* VoiceSearchHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSearchHelper.swift; sourceTree = "<group>"; };
 		31DE43C12C2C480D00F8C51F /* DuckPlayerFeaturePresentationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckPlayerFeaturePresentationView.swift; sourceTree = "<group>"; };
+		31DE43C32C2C60E800F8C51F /* DuckPlayerModalPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckPlayerModalPresenter.swift; sourceTree = "<group>"; };
 		31EF52E0281B3BDC0034796E /* AutofillLoginListItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginListItemViewModel.swift; sourceTree = "<group>"; };
 		3712091D2C21E390003ADF3D /* RemoteMessagingStoreErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteMessagingStoreErrorHandling.swift; sourceTree = "<group>"; };
 		372A0FEF2B2389590033BF7F /* SyncMetricsEventsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMetricsEventsHandler.swift; sourceTree = "<group>"; };
@@ -4441,6 +4443,7 @@
 				D63FF8932C1B67E8006DE24D /* YoutubePlayerUserScript.swift */,
 				31BC5F402C2B0B540004DF37 /* DuckPlayer.xcassets */,
 				31DE43C12C2C480D00F8C51F /* DuckPlayerFeaturePresentationView.swift */,
+				31DE43C32C2C60E800F8C51F /* DuckPlayerModalPresenter.swift */,
 			);
 			path = DuckPlayer;
 			sourceTree = "<group>";
@@ -6384,6 +6387,7 @@
 				C1CDA3162AFB9C7F006D1476 /* AutofillNeverPromptWebsitesManager.swift in Sources */,
 				D668D9272B6937D2008E2FF2 /* SubscriptionITPViewModel.swift in Sources */,
 				F1CA3C371F045878005FADB3 /* PrivacyStore.swift in Sources */,
+				31DE43C42C2C60E800F8C51F /* DuckPlayerModalPresenter.swift in Sources */,
 				37FCAAC029930E26000E420A /* FailedAssertionView.swift in Sources */,
 				4BBBBA922B03291700D965DA /* VPNWaitlistUserText.swift in Sources */,
 				F4E1936625AF722F001D2666 /* HighlightCutOutView.swift in Sources */,

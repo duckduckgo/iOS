@@ -1232,6 +1232,9 @@ extension TabViewController: WKNavigationDelegate {
         linkProtection.setMainFrameUrl(webView.url)
         referrerTrimming.onBeginNavigation(to: webView.url)
         adClickAttributionDetection.onStartNavigation(url: webView.url)
+        if let url = webView.url {
+            DuckPlayerModalPresenter().presentDuckPlayerFeatureModalIfNecessary(on: self, url: url)
+        }
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {

@@ -23,25 +23,29 @@ import DuckUI
 
 struct DuckPlayerFeaturePresentationView: View {
     var body: some View {
-        List {
             ZStack {
-                VStack(alignment: .center, spacing: 18) {
+                VStack(alignment: .center, spacing: stackVerticalSpacing) {
                     Image(systemName: "video")
+                        .frame(width: heroImageSize.width, height: heroImageSize.height)
+                        .background(Color.red)
 
                     Text(UserText.duckPlayerPresentationModalTitle)
                         .daxTitle3()
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color(designSystemColor: .textPrimary))
+                        .minimumScaleFactor(0.8)
 
                     Text(UserText.duckPlayerPresentationModalBody)
                         .daxBodyRegular()
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color(designSystemColor: .textSecondary))
+                        .minimumScaleFactor(0.8)
 
                     Button(UserText.duckPlayerPresentationModalDismissButton, action: dismissButtonTapped)
                         .buttonStyle(PrimaryButtonStyle())
                         .frame(maxWidth: 310)
                 }
+                .padding(.horizontal, 20)
 
                 VStack {
                     HStack {
@@ -55,14 +59,40 @@ struct DuckPlayerFeaturePresentationView: View {
                     Spacer()
                 }
             }
-            .listRowBackground(Color.clear)
+            .padding()
 
+            .background(Color(designSystemColor: .backgroundSheets))
         }
-        //.background(Color(designSystemColor: .backgroundSheets))
-    }
 
     func dismissButtonTapped() {
         print("Dismiss")
+    }
+}
+
+extension DuckPlayerFeaturePresentationView {
+
+    private var canAdjustSizeDynamically: Bool {
+        if #available(iOS 16.0, *) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    private var heroImageSize: CGSize {
+        if canAdjustSizeDynamically {
+            return .init(width: 260, height: 180)
+        } else {
+            return .init(width: 240, height: 160)
+        }
+    }
+
+    private var stackVerticalSpacing: CGFloat {
+        if canAdjustSizeDynamically {
+            return 22
+        } else {
+            return 18
+        }
     }
 }
 

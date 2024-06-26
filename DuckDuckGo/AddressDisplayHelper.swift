@@ -24,28 +24,18 @@ extension OmniBar {
     struct AddressDisplayHelper {
 
         static func addressForDisplay(url: URL, showsFullURL: Bool) -> NSAttributedString {
-
+            
+            if url.isDuckPlayer,
+                let playerURL = getDuckPlayerURL(url: url, showsFullURL: showsFullURL) {
+                return playerURL
+            }
+            
             if !showsFullURL, let shortAddress = shortURLString(url) {
-                
-                if url.isDuckPlayer {
-                    return NSAttributedString(
-                        string: "Duck Player",
-                        attributes: [.foregroundColor: ThemeManager.shared.currentTheme.searchBarTextColor])
-                }
-                
                 return NSAttributedString(
                     string: shortAddress,
                     attributes: [.foregroundColor: ThemeManager.shared.currentTheme.searchBarTextColor])
                                 
             } else {
-                
-                if url.isDuckPlayer,
-                    let (videoID, _) = url.youtubeVideoParams {
-                    return NSAttributedString(
-                        string: URL.duckPlayer(videoID).absoluteString,
-                        attributes: [.foregroundColor: ThemeManager.shared.currentTheme.searchBarTextColor])
-                }
-                
                 return deemphasisePath(forUrl: url)
             }
         }
@@ -87,6 +77,21 @@ extension OmniBar {
             }
 
             return url.host?.droppingWwwPrefix()
+        }
+        
+        private static func getDuckPlayerURL(url: URL, showsFullURL: Bool) -> NSAttributedString? {
+            if !showsFullURL {
+                return NSAttributedString(
+                    string: "Duck Player",
+                    attributes: [.foregroundColor: ThemeManager.shared.currentTheme.searchBarTextColor])
+            } else {
+                if let (videoID, _) = url.youtubeVideoParams {
+                    return NSAttributedString(
+                        string: URL.duckPlayer(videoID).absoluteString,
+                        attributes: [.foregroundColor: ThemeManager.shared.currentTheme.searchBarTextColor])
+                }
+            }
+            return nil
         }
     }
 }

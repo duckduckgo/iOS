@@ -79,6 +79,7 @@ extension BrowsersComparisonChart {
                     .lineLimit(nil)
                     .lineSpacing(3)
                     .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Spacer()
 

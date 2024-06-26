@@ -837,7 +837,7 @@ import WebKit
                 mainViewController?.clearNavigationStack()
                 // Give the `clearNavigationStack` call time to complete.
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [weak self] in
-                    self?.mainViewController?.launchAutofillLogins(openSearch: true)
+                    self?.mainViewController?.launchAutofillLogins(openSearch: true, source: .appIconShortcut)
                 }
                 Pixel.fire(pixel: .autofillLoginsLaunchAppShortcut)
                 return

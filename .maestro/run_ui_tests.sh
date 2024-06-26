@@ -7,7 +7,6 @@ app_location=$derived_data_path/Build/Products/Debug-iphonesimulator/DuckDuckGo.
 device_uuid_path="$derived_data_path/device_uuid.txt"
 run_log="$derived_data_path/run_log.txt"
 
-flow_location=".maestro/release_tests"
 app_bundle="com.duckduckgo.mobile.ios"
 
 ## Functions
@@ -62,6 +61,28 @@ run_flow() {
 
 check_is_root
 
+# Parse command line arguments
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        --run-flow) run_flow=1; run_flow_file="$2"; shift ;;
+        --flow-location) flow_location="$2"; shift ;;
+        *) fail "Unknown parameter passed: $1" ;;
+    esac
+    shift
+done
+
+if [ ! -d "$flow_location" ]; then
+	fail "Invalid flow location $flow_location, use --flow-location .maestro/flow_folder "
+fi
+
+if [ -n "$run_flow" ]; then
+	if [ ! -f $run_flow_file ]; then
+		fail "$run_flow_file is not a file"
+	fi
+fi
+
+# Run the selected tests
+
 echo
 echo "ℹ️ Running UI tests"
 
@@ -82,21 +103,12 @@ fi
 
 open -a Simulator
 
-# Parse command line arguments
-while [[ "$#" -gt 0 ]]; do
-    case $1 in
-        --run-flow) run_flow=1; run_flow_file="$2"; shift ;;
-        *) fail "Unknown parameter passed: $1" ;;
-    esac
-    shift
-done
-
 echo "ℹ️ creating run log in $run_log"
 rm $run_log
 
 log_message $run_log "START"
 
-if [ $run_flow -eq 1 ]; then
+if [ -n "$run_flow" ]; then
 	if [ ! -f $run_flow_file ]; then
 		fail "$run_flow_file is not a file"
 	fi

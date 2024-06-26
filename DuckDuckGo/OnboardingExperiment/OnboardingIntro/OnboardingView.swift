@@ -23,17 +23,6 @@ import SwiftUI
 
 struct OnboardingView: View {
 
-    enum ViewState: Equatable {
-        enum Intro: Equatable {
-            case startOnboardingDialog
-            case browsersComparisonDialog
-        }
-
-        case landing
-        case onboarding(Intro)
-        case chooseBrowser
-    }
-
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @ObservedObject private var model: OnboardingIntroViewModel
@@ -57,12 +46,13 @@ struct OnboardingView: View {
     }
 
     private func backgroundWrapped(view: some View) -> some View {
-        ZStack {
-            Image(.onboardingBackground)
-                .resizable()
-                .ignoresSafeArea()
+        GeometryReader { proxy in
+            ZStack {
+                OnboardingBackground()
+                    .frame(width: proxy.size.width, height: proxy.size.height)
 
-            view
+                view
+            }
         }
     }
 
@@ -129,7 +119,24 @@ struct OnboardingView: View {
     }
 }
 
-// MARK: - LandingView
+// MARK: - View State
+
+extension OnboardingView {
+
+    enum ViewState: Equatable {
+        enum Intro: Equatable {
+            case startOnboardingDialog
+            case browsersComparisonDialog
+        }
+
+        case landing
+        case onboarding(Intro)
+        case chooseBrowser
+    }
+    
+}
+
+// MARK: - Landing View
 
 extension OnboardingView {
     
@@ -165,7 +172,7 @@ extension OnboardingView {
 private enum Metrics {
     static let iconSize = CGSize(width: 70, height: 70)
     static let titleWidth = MetricBuilder<CGFloat?>(iPhone: 252, iPad: nil)
-    static let hikerImage = MetricBuilder<ImageResource>(iPhone: .hiker, iPad: .hikerLarge).smallIphone(.hikerSmall)
+    static let hikerImage = MetricBuilder<ImageResource>(iPhone: .hiker, iPad: .hiker).smallIphone(.hikerSmall)
     static let daxDialogDelay: TimeInterval = 2.0
     static let dialogVerticalOffsetPercentage = MetricBuilder<CGFloat>(iPhone: 0.1, iPad: 0.2).smallIphone(0.05)
 }

@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "a44c3cd45a5df6bcd7cee01ea766dcfda09d9121",
-        "version" : "161.1.0"
+        "branch" : "sam/silence-tunnel-startup-noise-without-access-token",
+        "revision" : "e28219abb2cb629fe6b1d37a9c9a67da67184673"
       }
     },
     {

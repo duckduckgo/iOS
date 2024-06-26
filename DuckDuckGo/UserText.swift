@@ -1174,6 +1174,10 @@ But if you *do* want a peek under the hood, you can find more information about 
                 public static let eraseBrowsingData = NSLocalizedString("onboarding.browsers.features.eraseBrowsingData.title", value: "Swiftly erase browsing data", comment: "Message to highlight browser capability ofswiftly erase browsing data")
             }
         }
+
+        enum DefaultBrowser {
+            public static let message = NSLocalizedString("onboarding.defaultBrowser.message", value: "Open links with peace of mind, every time.", comment: "Subheader message for the screen to choose DuckDuckGo as default browser")
+        }
     }
 
 }

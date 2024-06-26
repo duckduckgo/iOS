@@ -1555,6 +1555,9 @@ https://duckduckgo.com/mac";
 /* The title of the dialog to show the privacy features that DuckDuckGo offers */
 "onboarding.browsers.title" = "Privacy protections activated!";
 
+/* Subheader message for the screen to choose DuckDuckGo as default browser */
+"onboarding.defaultBrowser.message" = "Open links with peace of mind, every time.";
+
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Let’s do it!";
 

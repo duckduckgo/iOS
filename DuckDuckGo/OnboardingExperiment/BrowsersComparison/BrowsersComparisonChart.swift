@@ -22,18 +22,17 @@ import SwiftUI
 // MARK: - Chart View
 
 struct BrowsersComparisonChart: View {
-    let browsers: [BrowsersComparisonModel.Browser]
+    let privacyFeatures: [BrowsersComparisonModel.PrivacyFeature]
 
     var body: some View {
         VStack(spacing: Metrics.stackSpacing) {
-            Header(browsers: browsers)
-                .frame(height: 60)
-            HStack(spacing: Metrics.stackSpacing) {
-                let features = browsers.first.map(\.privacyFeatures) ?? []
-                FeaturesList(features: features)
-                AvailabilityColumns(browsers: browsers)
+            Header(browsers: BrowsersComparisonModel.Browser.allCases)
+                .frame(height: Metrics.headerHeight)
 
+            ForEach(privacyFeatures, id: \.type) { feature in
+                Row(feature: feature)
             }
+
         }
     }
 }
@@ -46,14 +45,14 @@ extension BrowsersComparisonChart {
         let browsers: [BrowsersComparisonModel.Browser]
 
         var body: some View {
-            HStack(alignment: .top, spacing: Metrics.stackSpacing) {
+            HStack(alignment: .top) {
                 Spacer()
 
-                ForEach(Array(browsers.map(\.type).enumerated()), id: \.offset) { index, browser in
+                ForEach(Array(browsers.enumerated()), id: \.offset) { index, browser in
                     Image(browser.image)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: Metrics.viewSize.width, height: Metrics.viewSize.height)
+                        .frame(width: Metrics.imageContainerSize.width, height: Metrics.imageContainerSize.height)
 
                     if index < browsers.count - 1 {
                         Divider()
@@ -65,76 +64,47 @@ extension BrowsersComparisonChart {
 
 }
 
-// MARK: - Vertical Features List
+// MARK: - Row
 
 extension BrowsersComparisonChart {
 
-    struct FeaturesList: View {
-        let features: [BrowsersComparisonModel.PrivacyFeature]
+    struct Row: View {
+        let feature: BrowsersComparisonModel.PrivacyFeature
 
         var body: some View {
-            VStack(spacing: Metrics.stackSpacing) {
-                ForEach(features, id: \.type) { feature in
-                    FeaturesListItem(title: feature.type.title)
-                        .frame(height: Metrics.viewSize.height)
-                }
-            }
-        }
-    }
-
-    struct FeaturesListItem: View {
-        let title: String
-
-        var body: some View {
-            VStack(alignment: .leading) {
-
-                Spacer()
-
-                Text(verbatim: title)
+            HStack {
+                Text(verbatim: feature.type.title)
                     .font(Metrics.font)
                     .foregroundColor(.primary)
+                    .lineLimit(nil)
+                    .lineSpacing(3)
+                    .multilineTextAlignment(.leading)
 
                 Spacer()
 
-                Divider()
+                BrowsersSupport(browsersSupport: feature.browsersSupport)
             }
+            Divider()
         }
     }
 
 }
 
-// MARK: - Browser Comparison Columns
+// MARK: - Row + BrowsersSupport
 
-extension BrowsersComparisonChart {
+extension BrowsersComparisonChart.Row {
 
-    struct AvailabilityColumns: View {
-        let browsers: [BrowsersComparisonModel.Browser]
-
-        var body: some View {
-            HStack(spacing: Metrics.stackSpacing) {
-                ForEach(Array(browsers.enumerated()), id: \.offset) { index, browser in
-                    AvailabilityColumnsItem(browser: browser)
-                        .frame(width: Metrics.viewSize.width)
-
-                    if index < browsers.count - 1 {
-                        Divider()
-                    }
-                }
-            }
-            .fixedSize(horizontal: true, vertical: true) // Stops the Divider to expand vertically
-        }
-    }
-
-    struct AvailabilityColumnsItem: View {
-        let browser: BrowsersComparisonModel.Browser
+    struct BrowsersSupport: View {
+        let browsersSupport: [BrowsersComparisonModel.PrivacyFeature.BrowserSupport]
 
         var body: some View {
-            VStack(alignment: .center, spacing: Metrics.stackSpacing) {
-                ForEach(browser.privacyFeatures, id: \.type) { feature in
-                    Image(feature.availability.image)
-                        .frame(width: Metrics.viewSize.width, height: Metrics.viewSize.height)
+            ForEach(Array(browsersSupport.enumerated()), id: \.offset) { index, browserSupport in
+                Image(browserSupport.availability.image)
+                    .frame(width: Metrics.imageContainerSize.width, height: Metrics.imageContainerSize.height)
 
+                if index < browsersSupport.count - 1 {
                     Divider()
+                        .frame(height: Metrics.imageContainerSize.height)
                 }
             }
         }
@@ -146,11 +116,12 @@ extension BrowsersComparisonChart {
 
 private enum Metrics {
     static let stackSpacing: CGFloat = 0.0
-    static let viewSize = CGSize(width: 50.0, height: 50.0)
+    static let headerHeight: CGFloat = 60
+    static let imageContainerSize = CGSize(width: 50.0, height: 50.0)
     static let font = Font.system(size: 15.0)
 }
 
 #Preview {
-    BrowsersComparisonChart(browsers: BrowsersComparisonModel.browsers)
+    BrowsersComparisonChart(privacyFeatures: BrowsersComparisonModel.privacyFeatures)
     .padding()
 }

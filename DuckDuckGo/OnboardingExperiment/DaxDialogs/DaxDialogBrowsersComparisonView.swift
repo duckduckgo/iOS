@@ -31,7 +31,7 @@ struct DaxDialogBrowsersComparisonView: View {
                     .foregroundColor(.primary)
                     .font(Font.system(size: 20, weight: .bold))
 
-                BrowsersComparisonChart(browsers: BrowsersComparisonModel.browsers)
+                BrowsersComparisonChart(privacyFeatures: BrowsersComparisonModel.privacyFeatures)
 
                 Button(action: action) {
                     Text(UserText.DaxOnboardingExperiment.BrowsersComparison.cta)

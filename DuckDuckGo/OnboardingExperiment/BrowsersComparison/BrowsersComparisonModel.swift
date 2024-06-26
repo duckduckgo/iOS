@@ -21,19 +21,14 @@ import Foundation
 
 struct BrowsersComparisonModel {
 
-    static let browsers: [Browser] = [
-        .init(
-            type: .safari,
-            privacyFeatures: privacyFeatures(for: .safari)
-        ),
-        .init(
-            type: .ddg,
-            privacyFeatures: privacyFeatures(for: .ddg)
-        )
-    ]
+    static let privacyFeatures: [PrivacyFeature] = {
+        PrivacyFeature.FeatureType.allCases.map { featureType in
+            PrivacyFeature(type: featureType, browsersSupport: browsersSupport(for: featureType))
+        }
+    }()
 
-    private static func privacyFeatures(for browser: Browser.BrowserType) -> [PrivacyFeature] {
-        PrivacyFeature.FeatureType.allCases.map { feature in
+    private static func browsersSupport(for feature: PrivacyFeature.FeatureType) -> [PrivacyFeature.BrowserSupport] {
+        Browser.allCases.map { browser in
             let availability: PrivacyFeature.Availability
             switch feature {
             case .privateSearch:
@@ -73,7 +68,7 @@ struct BrowsersComparisonModel {
                 }
             }
 
-            return PrivacyFeature(type: feature, availability: availability)
+            return PrivacyFeature.BrowserSupport(browser: browser, availability: availability)
         }
     }
 
@@ -83,16 +78,7 @@ struct BrowsersComparisonModel {
 
 extension BrowsersComparisonModel {
 
-    struct Browser {
-        let type: BrowserType
-        let privacyFeatures: [PrivacyFeature]
-    }
-
-}
-
-extension BrowsersComparisonModel.Browser {
-
-    enum BrowserType {
+    enum Browser: CaseIterable {
         case safari
         case ddg
 
@@ -112,12 +98,17 @@ extension BrowsersComparisonModel {
 
     struct PrivacyFeature {
         let type: FeatureType
-        let availability: Availability
+        let browsersSupport: [BrowserSupport]
     }
 
 }
 
 extension BrowsersComparisonModel.PrivacyFeature {
+
+    struct BrowserSupport {
+        let browser: BrowsersComparisonModel.Browser
+        let availability: Availability
+    }
 
     enum FeatureType: CaseIterable {
         case privateSearch

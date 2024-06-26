@@ -1186,8 +1186,8 @@ extension Pixel.Event {
         case .debugBookmarksInvalidRoots: return "m_d_bookmarks_invalid_roots"
         case .debugBookmarksValidationFailed: return "m_d_bookmarks_validation_failed"
 
-        case .debugBookmarksPendingDeletionFixed: return "m_d_bookmarks_pending_deletion_fixed"
-        case .debugBookmarksPendingDeletionRepairError: return "m_d_bookmarks_pending_deletion_repair_error"
+        case .debugBookmarksPendingDeletionFixed: return "m_debug_bookmarks_pending_deletion_fixed"
+        case .debugBookmarksPendingDeletionRepairError: return "m_debug_bookmarks_pending_deletion_repair_error"
 
         case .debugCannotClearObservationsDatabase: return "m_d_cannot_clear_observations_database"
         case .debugWebsiteDataStoresNotClearedMultiple: return "m_d_wkwebsitedatastoresnotcleared_multiple"

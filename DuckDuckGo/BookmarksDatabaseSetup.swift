@@ -72,21 +72,7 @@ struct BookmarksDatabaseSetup {
         let contextForValidation = bookmarksDatabase.makeContext(concurrencyType: .privateQueueConcurrencyType)
         contextForValidation.performAndWait {
             validator.validateBookmarksStructure(context: contextForValidation)
-
-            let stateRepair = BookmarksStateRepair(keyValueStore: UserDefaults.app)
-            let status = stateRepair.validateAndRepairPendingDeletionState(in: contextForValidation)
-            switch status {
-            case .alreadyPerformed, .noBrokenData:
-                break
-            case .dataRepaired:
-                Pixel.fire(pixel: .debugBookmarksPendingDeletionFixed)
-            case .repairError(let underlyingError):
-                let processedErrors = CoreDataErrorsParser.parse(error: underlyingError as NSError)
-
-                DailyPixel.fireDailyAndCount(pixel: .debugBookmarksPendingDeletionRepairError,
-                                             withAdditionalParameters: processedErrors.errorPixelParameters,
-                                             includedParameters: [.appVersion])
-            }
+            repairDeletedFlag(context: contextForValidation)
         }
 
         if migrationHappened {
@@ -99,7 +85,24 @@ struct BookmarksDatabaseSetup {
 
         return migrationHappened
     }
-    
+
+    private func repairDeletedFlag(context: NSManagedObjectContext) {
+        let stateRepair = BookmarksStateRepair(keyValueStore: UserDefaults.app)
+        let status = stateRepair.validateAndRepairPendingDeletionState(in: context)
+        switch status {
+        case .alreadyPerformed, .noBrokenData:
+            break
+        case .dataRepaired:
+            Pixel.fire(pixel: .debugBookmarksPendingDeletionFixed)
+        case .repairError(let underlyingError):
+            let processedErrors = CoreDataErrorsParser.parse(error: underlyingError as NSError)
+
+            DailyPixel.fireDailyAndCount(pixel: .debugBookmarksPendingDeletionRepairError,
+                                         withAdditionalParameters: processedErrors.errorPixelParameters,
+                                         includedParameters: [.appVersion])
+        }
+    }
+
     private func migrateToFormFactorSpecificFavorites(_ context: NSManagedObjectContext, _ oldFavoritesOrder: [String]?) -> Bool {
         do {
             BookmarkFormFactorFavoritesMigration.migrateToFormFactorSpecificFavorites(byCopyingExistingTo: .mobile,

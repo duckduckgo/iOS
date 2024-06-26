@@ -142,25 +142,22 @@ final class RemoteMessagingClient: RemoteMessagingClientBase {
 #endif
     }()
 
-    init(
+    convenience init(
         bookmarksDatabase: CoreDataDatabase,
         appSettings: AppSettings,
         internalUserDecider: InternalUserDecider
     ) {
-        self.bookmarksDatabase = bookmarksDatabase
-        self.appSettings = appSettings
-        self.internalUserDecider = internalUserDecider
-
         let provider = RemoteMessagingConfigMatcherProvider(
             bookmarksDatabase: bookmarksDatabase,
             appSettings: appSettings,
             internalUserDecider: internalUserDecider
         )
-        super.init(endpoint: Self.endpoint, configMatcherProvider: provider)
+        self.init(configMatcherProvider: provider)
     }
-    private let bookmarksDatabase: CoreDataDatabase
-    private let appSettings: AppSettings
-    private let internalUserDecider: InternalUserDecider
+
+    init(configMatcherProvider: RemoteMessagingConfigMatcherProviding) {
+        super.init(endpoint: Self.endpoint, configMatcherProvider: configMatcherProvider)
+    }
 
     @UserDefaultsWrapper(key: .lastRemoteMessagingRefreshDate, defaultValue: .distantPast)
     static private var lastRemoteMessagingRefreshDate: Date
@@ -180,9 +177,7 @@ extension RemoteMessagingClient {
     }
 
     func registerBackgroundRefreshTaskHandler(with store: RemoteMessagingStoring) {
-        let bookmarksDatabase = self.bookmarksDatabase
-        let appSettings = self.appSettings
-        let internalUserDecider = self.internalUserDecider
+        let provider = self.configMatcherProvider
 
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundRefreshTaskIdentifier, using: nil) { task in
             guard Self.shouldRefresh else {
@@ -190,11 +185,7 @@ extension RemoteMessagingClient {
                 Self.scheduleBackgroundRefreshTask()
                 return
             }
-            let client = RemoteMessagingClient(
-                bookmarksDatabase: bookmarksDatabase,
-                appSettings: appSettings,
-                internalUserDecider: internalUserDecider
-            )
+            let client = RemoteMessagingClient(configMatcherProvider: provider)
             Self.backgroundRefreshTaskHandler(bgTask: task, client: client, store: store)
         }
     }

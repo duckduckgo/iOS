@@ -245,7 +245,7 @@
 "autocomplete.history.search.duckduckgo" = "Meklēt DuckDuckGo";
 
 /* The message text shown in suggestions */
-"autocomplete.history.warning.message" = "Ieteikumi tagad ietver nesen apmeklētās vietnes. Tās tiek saglabātas tikai tavā ierīcē, nevis DuckDuckGo serveros. Izslēdz iestatījumos vai jebkurā laikā notīri ar 🔥 Fire Button.";
+"autocomplete.history.warning.message" = "Meklēšanas ieteikumi tagad ietver tavas nesen apmeklētās vietnes. Izslēdz sadaļā Iestatījumi vai jebkurā laikā notīri ar 🔥 Fire Button.";
 
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Tas pats privātums.\nLabāki meklēšanas ieteikumi!";
@@ -1799,10 +1799,16 @@
 "settings.associated.apps.description" = "Atspējo, lai novērstu saišu automātisku atvēršanu citās instalētajās lietotnēs.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Automātiski pabeigt ieteikumus";
+"settings.autocomplete" = "Meklēšanas ieteikumi";
 
 /* Settings label for enabling or disabling recently visited sites */
 "settings.autocomplete.recentlyvisited" = "Nesen apmeklētās vietnes";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Meklēšanas ieteikumos rādīt nesen apmeklētās vietnes. Nesen apmeklētās vietnes ir privātas, tiek saglabātas tikai tavā ierīcē, un tās var notīrīt, izmantojot pogu Fire Button.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Rakstīšanas laikā tiks rādīti meklēšanas ieteikumi, tostarp tavas grāmatzīmes. Visi meklējumi ir privāti.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Lietojumprogrammas bloķēšana";

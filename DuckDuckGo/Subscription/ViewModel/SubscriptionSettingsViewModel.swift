@@ -133,6 +133,14 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     func fetchAndUpdateAccountEmail(cachePolicy: APICachePolicy = .returnCacheDataElseLoad, loadingIndicator: Bool) async -> Bool {
         guard let token = self.subscriptionManager.accountManager.accessToken else { return false }
 
+        switch cachePolicy {
+        case .returnCacheDataDontLoad, .returnCacheDataElseLoad:
+            self.state.subscriptionEmail = self.subscriptionManager.accountManager.email
+            return true
+        case .reloadIgnoringLocalCacheData:
+            break
+        }
+
         if loadingIndicator { displayEmailLoader(true) }
         switch await self.subscriptionManager.accountManager.fetchAccountDetails(with: token) {
         case .success(let details):

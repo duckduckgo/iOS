@@ -1534,6 +1534,39 @@ https://duckduckgo.com/mac";
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Pop-up Hidden";
 
+/* Button to change the default browser */
+"onboarding.browsers.cta" = "Choose Your Browser";
+
+/* Message to highlight browser capability of blocking cookie pop-ups */
+"onboarding.browsers.features.cookiePopups.title" = "Block cookie pop-ups";
+
+/* Message to highlight browser capability of blocking creepy ads */
+"onboarding.browsers.features.creepyAds.title" = "Block creepy ads";
+
+/* Message to highlight browser capability ofswiftly erase browsing data */
+"onboarding.browsers.features.eraseBrowsingData.title" = "Swiftly erase browsing data";
+
+/* Message to highlight browser capability of private searches */
+"onboarding.browsers.features.privateSearch.title" = "Search privately by default";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.browsers.features.trackerBlocker.title" = "Block 3rd-party trackers";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.browsers.title" = "Privacy protections activated!";
+
+/* Subheader message for the screen to choose DuckDuckGo as default browser */
+"onboarding.defaultBrowser.message" = "Open links with peace of mind, every time.";
+
+/* Button to continue the onboarding process */
+"onboarding.intro.cta" = "Let’s do it!";
+
+/* The message of the onboarding dialog popup */
+"onboarding.intro.message" = "Ready for a better, more private internet?";
+
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Hi there.";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Add Widget";
 

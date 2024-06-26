@@ -1154,4 +1154,30 @@ But if you *do* want a peek under the hood, you can find more information about 
     
     
 
+    // MARK: -  Dax Onboarding Experiment
+    public enum DaxOnboardingExperiment {
+        enum Intro {
+            public static let title = NSLocalizedString("onboarding.intro.title", value: "Hi there.", comment: "The title of the onboarding dialog popup")
+            public static let message = NSLocalizedString("onboarding.intro.message", value: "Ready for a better, more private internet?", comment: "The message of the onboarding dialog popup")
+            public static let cta = NSLocalizedString("onboarding.intro.cta", value: "Let’s do it!", comment: "Button to continue the onboarding process")
+        }
+
+        enum BrowsersComparison {
+            public static let title = NSLocalizedString("onboarding.browsers.title", value: "Privacy protections activated!", comment: "The title of the dialog to show the privacy features that DuckDuckGo offers")
+            public static let cta = NSLocalizedString("onboarding.browsers.cta", value: "Choose Your Browser", comment: "Button to change the default browser")
+
+            enum Features {
+                public static let privateSearch = NSLocalizedString("onboarding.browsers.features.privateSearch.title", value: "Search privately by default", comment: "Message to highlight browser capability of private searches")
+                public static let trackerBlockers = NSLocalizedString("onboarding.browsers.features.trackerBlocker.title", value: "Block 3rd-party trackers", comment: "Message to highlight browser capability ofblocking 3rd party trackers")
+                public static let cookiePopups = NSLocalizedString("onboarding.browsers.features.cookiePopups.title", value: "Block cookie pop-ups", comment: "Message to highlight browser capability of blocking cookie pop-ups")
+                public static let creepyAds = NSLocalizedString("onboarding.browsers.features.creepyAds.title", value: "Block creepy ads", comment: "Message to highlight browser capability of blocking creepy ads")
+                public static let eraseBrowsingData = NSLocalizedString("onboarding.browsers.features.eraseBrowsingData.title", value: "Swiftly erase browsing data", comment: "Message to highlight browser capability ofswiftly erase browsing data")
+            }
+        }
+
+        enum DefaultBrowser {
+            public static let message = NSLocalizedString("onboarding.defaultBrowser.message", value: "Open links with peace of mind, every time.", comment: "Subheader message for the screen to choose DuckDuckGo as default browser")
+        }
+    }
+
 }

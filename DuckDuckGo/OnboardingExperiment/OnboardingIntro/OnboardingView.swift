@@ -172,7 +172,7 @@ extension OnboardingView {
 private enum Metrics {
     static let iconSize = CGSize(width: 70, height: 70)
     static let titleWidth = MetricBuilder<CGFloat?>(iPhone: 252, iPad: nil)
-    static let hikerImage = MetricBuilder<ImageResource>(iPhone: .hiker, iPad: .hiker).smallIphone(.hikerSmall)
+    static let hikerImage = MetricBuilder<ImageResource>(value: .hiker).smallIphone(.hikerSmall)
     static let daxDialogDelay: TimeInterval = 2.0
     static let dialogVerticalOffsetPercentage = MetricBuilder<CGFloat>(iPhone: 0.1, iPad: 0.2).smallIphone(0.05)
 }

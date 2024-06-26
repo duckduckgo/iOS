@@ -30,7 +30,11 @@ final class MetricBuilder<T> {
         iPadValue = iPad
     }
 
-    func smallIphone(_ value: T?) -> Self {
+    convenience init(value: T) {
+        self.init(iPhone: value, iPad: value)
+    }
+
+    func smallIphone(_ value: T) -> Self {
         iPhoneSmallScreen = value
         return self
     }

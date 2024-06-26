@@ -245,7 +245,7 @@
 "autocomplete.history.search.duckduckgo" = "Sök med DuckDuckGo";
 
 /* The message text shown in suggestions */
-"autocomplete.history.warning.message" = "Nyligen besökta webbplatser inkluderas nu i förslag. Dessa lagras på din enhet – aldrig på servrar hos DuckDuckGo. Stäng av funktionen i inställningarna, eller rensa när som helst med 🔥 Fire Button.";
+"autocomplete.history.warning.message" = "Sökförslag inkluderar nu dina nyligen besökta webbplatser. Stäng av funktionen i inställningarna, eller rensa när som helst med 🔥 Fire Button.";
 
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Samma integritet.\nBättre sökförslag!";
@@ -1799,10 +1799,16 @@
 "settings.associated.apps.description" = "Inaktivera för att förhindra att länkar automatiskt öppnas i andra installerade appar.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Visa Autoslutför förslag";
+"settings.autocomplete" = "Sökförslag";
 
 /* Settings label for enabling or disabling recently visited sites */
 "settings.autocomplete.recentlyvisited" = "Senast besökta webbplatser";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Visa nyligen besökta webbplatser i sökförslag. Nyligen besökta webbplatser är privata. De lagras endast på din enhet och kan rensas med Fire Button.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Visa sökförslag medan du skriver, inklusive dina bokmärken. Alla sökningar är privata.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "App-lås";

@@ -525,11 +525,7 @@ import WebKit
         }
 #endif
 
-        AppDependencyProvider.shared.subscriptionManager.updateSubscriptionStatus { isActive in
-            if isActive {
-                DailyPixel.fire(pixel: .privacyProSubscriptionActive)
-            }
-        }
+        updateSubscriptionStatus()
 
         let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)
         importPasswordsStatusHandler.checkSyncSuccessStatus()
@@ -554,6 +550,14 @@ import WebKit
 
         await AppDependencyProvider.shared.networkProtectionTunnelController.stop()
         await AppDependencyProvider.shared.networkProtectionTunnelController.removeVPN()
+    }
+
+    func updateSubscriptionStatus() {
+        AppDependencyProvider.shared.subscriptionManager.updateSubscriptionStatus { isActive in
+            if isActive {
+                DailyPixel.fire(pixel: .privacyProSubscriptionActive)
+            }
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

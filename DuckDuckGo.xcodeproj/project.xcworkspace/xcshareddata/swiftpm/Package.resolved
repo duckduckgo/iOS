@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "jacek/toggle-reports-limiter",
-        "revision" : "47429695f98139d7f9d820fe47901a99051a3683"
+        "revision" : "c312fa2a3bc871813fd88543b1dc0d264c52a761"
       }
     },
     {

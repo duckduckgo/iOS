@@ -73,6 +73,8 @@ private enum Metrics {
     static let viewWidth: CGFloat = 325.0
 }
 
+// MARK: - Preview
+
 #Preview {
     OnboardingDefaultBrowserView(setAsDefaultBrowserAction: {}, cancelAction: {})
 }

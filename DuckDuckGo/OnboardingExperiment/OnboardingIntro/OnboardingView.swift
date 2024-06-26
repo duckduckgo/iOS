@@ -124,14 +124,18 @@ struct OnboardingView: View {
 extension OnboardingView {
 
     enum ViewState: Equatable {
-        enum Intro: Equatable {
-            case startOnboardingDialog
-            case browsersComparisonDialog
-        }
-
         case landing
         case onboarding(Intro)
         case chooseBrowser
+    }
+    
+}
+
+extension OnboardingView.ViewState {
+
+    enum Intro: Equatable {
+        case startOnboardingDialog
+        case browsersComparisonDialog
     }
     
 }

@@ -33,7 +33,7 @@ final class MockURLOpener: URLOpener {
         return canOpenURL
     }
 
-    func open(_ url: URL, options: [UIApplication.OpenExternalURLOptionsKey : Any], completionHandler completion: ((Bool) -> Void)?) {
+    func open(_ url: URL, options: [UIApplication.OpenExternalURLOptionsKey: Any], completionHandler completion: ((Bool) -> Void)?) {
         didCallOpenURL = true
         capturedURL = url
     }

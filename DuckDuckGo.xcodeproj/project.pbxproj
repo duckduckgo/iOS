@@ -584,6 +584,7 @@
 		98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1D7217B37010011A0D4 /* Theme.swift */; };
 		98F6EA472863124100720957 /* ContentBlockerRulesLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F6EA462863124100720957 /* ContentBlockerRulesLists.swift */; };
 		98F78B8E22419093007CACF4 /* ThemableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F78B8D22419093007CACF4 /* ThemableNavigationController.swift */; };
+		9F23B8032C2BCD0000950875 /* DaxDialogStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F23B8022C2BCD0000950875 /* DaxDialogStyles.swift */; };
 		9F23B8062C2BE22700950875 /* OnboardingIntroViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F23B8052C2BE22700950875 /* OnboardingIntroViewModelTests.swift */; };
 		9F23B8092C2BE9B700950875 /* MockURLOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F23B8082C2BE9B700950875 /* MockURLOpener.swift */; };
 		9F2510142BF5809E0096DB16 /* SubscriptionFlowViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2510132BF5809E0096DB16 /* SubscriptionFlowViewModelTests.swift */; };
@@ -2209,6 +2210,7 @@
 		98F3A1D7217B37010011A0D4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		98F6EA462863124100720957 /* ContentBlockerRulesLists.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesLists.swift; sourceTree = "<group>"; };
 		98F78B8D22419093007CACF4 /* ThemableNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemableNavigationController.swift; sourceTree = "<group>"; };
+		9F23B8022C2BCD0000950875 /* DaxDialogStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogStyles.swift; sourceTree = "<group>"; };
 		9F23B8052C2BE22700950875 /* OnboardingIntroViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingIntroViewModelTests.swift; sourceTree = "<group>"; };
 		9F23B8082C2BE9B700950875 /* MockURLOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLOpener.swift; sourceTree = "<group>"; };
 		9F2510132BF5809E0096DB16 /* SubscriptionFlowViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionFlowViewModelTests.swift; sourceTree = "<group>"; };
@@ -4150,6 +4152,7 @@
 			isa = PBXGroup;
 			children = (
 				9FE08BD22C2A5B88001D5EBC /* OnboardingTextStyles.swift */,
+				9F23B8022C2BCD0000950875 /* DaxDialogStyles.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -6607,6 +6610,7 @@
 				83BE9BC3215D69C1009844D9 /* AppConfigurationFetch.swift in Sources */,
 				37CF91622BB474AA00BADCAE /* CrashCollectionOnboardingView.swift in Sources */,
 				1EEC460627A9499600E75FCB /* DownloadsList.swift in Sources */,
+				9F23B8032C2BCD0000950875 /* DaxDialogStyles.swift in Sources */,
 				C1641EAF2BC2F5140012607A /* ImportPasswordsViewController.swift in Sources */,
 				D63FF8982C1B6A45006DE24D /* DuckPlayer.swift in Sources */,
 				85B9CB8921AEBDD5009001F1 /* FavoriteHomeCell.swift in Sources */,

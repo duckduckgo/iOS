@@ -323,7 +323,8 @@ import WebKit
         let remoteMessagingClient = RemoteMessagingClient(
             bookmarksDatabase: bookmarksDatabase,
             appSettings: AppDependencyProvider.shared.appSettings,
-            internalUserDecider: AppDependencyProvider.shared.internalUserDecider
+            internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
+            configurationStore: ConfigurationStore.shared
         )
 
         remoteMessagingClient.registerBackgroundRefreshTaskHandler(with: AppDependencyProvider.shared.remoteMessagingStore)

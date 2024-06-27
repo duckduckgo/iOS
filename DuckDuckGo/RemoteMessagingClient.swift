@@ -18,6 +18,7 @@
 //
 
 import Common
+import Configuration
 import Foundation
 import Core
 import BackgroundTasks
@@ -27,31 +28,45 @@ import Bookmarks
 import RemoteMessaging
 
 final class RemoteMessagingClient: RemoteMessagingProcessing {
-    let configMatcherProvider: RemoteMessaging.RemoteMessagingConfigMatcherProviding
 
-    let endpoint: URL = {
+    struct Constants {
+        static let backgroundRefreshTaskIdentifier = "com.duckduckgo.app.remoteMessageRefresh"
+        static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 60 * 4
+        static let endpoint: URL = {
 #if DEBUG
-        URL(string: "https://raw.githubusercontent.com/duckduckgo/remote-messaging-config/main/samples/ios/sample1.json")!
+            URL(string: "https://staticcdn.kapusta.cc/macos-desktop-browser/remote-messaging-config.json")!
 #else
-        URL(string: "https://staticcdn.duckduckgo.com/remotemessaging/config/v1/ios-config.json")!
+            URL(string: "https://staticcdn.duckduckgo.com/remotemessaging/config/v1/ios-config.json")!
 #endif
-    }()
+        }()
+    }
+
+    let configurationFetcher: RemoteMessagingConfigFetching
+    let configMatcherProvider: RemoteMessagingConfigMatcherProviding
+
+    let endpoint: URL = Constants.endpoint
 
     convenience init(
         bookmarksDatabase: CoreDataDatabase,
         appSettings: AppSettings,
-        internalUserDecider: InternalUserDecider
+        internalUserDecider: InternalUserDecider,
+        configurationStore: ConfigurationStoring
     ) {
         let provider = RemoteMessagingConfigMatcherProvider(
             bookmarksDatabase: bookmarksDatabase,
             appSettings: appSettings,
             internalUserDecider: internalUserDecider
         )
-        self.init(configMatcherProvider: provider)
+        let configurationFetcher = RemoteMessagingConfigFetcher(
+            configurationFetcher: ConfigurationFetcher(store: configurationStore, urlSession: .session(), log: .remoteMessaging, eventMapping: nil),
+            configurationStore: ConfigurationStore.shared
+        )
+        self.init(configMatcherProvider: provider, configurationFetcher: configurationFetcher)
     }
 
-    init(configMatcherProvider: RemoteMessagingConfigMatcherProviding) {
+    init(configMatcherProvider: RemoteMessagingConfigMatcherProviding, configurationFetcher: RemoteMessagingConfigFetching) {
         self.configMatcherProvider = configMatcherProvider
+        self.configurationFetcher = configurationFetcher
     }
 
     @UserDefaultsWrapper(key: .lastRemoteMessagingRefreshDate, defaultValue: .distantPast)
@@ -62,17 +77,13 @@ final class RemoteMessagingClient: RemoteMessagingProcessing {
 
 extension RemoteMessagingClient {
 
-    struct Constants {
-        static let backgroundRefreshTaskIdentifier = "com.duckduckgo.app.remoteMessageRefresh"
-        static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 60 * 4
-    }
-
     static private var shouldRefresh: Bool {
         return Date().timeIntervalSince(Self.lastRemoteMessagingRefreshDate) > Constants.minimumConfigurationRefreshInterval
     }
 
     func registerBackgroundRefreshTaskHandler(with store: RemoteMessagingStoring) {
-        let provider = self.configMatcherProvider
+        let provider = configMatcherProvider
+        let fetcher = configurationFetcher
 
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundRefreshTaskIdentifier, using: nil) { task in
             guard Self.shouldRefresh else {
@@ -80,7 +91,7 @@ extension RemoteMessagingClient {
                 Self.scheduleBackgroundRefreshTask()
                 return
             }
-            let client = RemoteMessagingClient(configMatcherProvider: provider)
+            let client = RemoteMessagingClient(configMatcherProvider: provider, configurationFetcher: fetcher)
             Self.backgroundRefreshTaskHandler(bgTask: task, client: client, store: store)
         }
     }

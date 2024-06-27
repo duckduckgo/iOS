@@ -48,7 +48,7 @@ run_flow() {
 
 	echo "⏲️ Starting flow $( basename $flow)"
 
-	maestro test $flow
+	maestro --udid=$device_uuid test $flow
 	if [ $? -ne 0 ]; then
 		log_message $run_log "❌ FAIL: $flow"
 		echo "🚨 Flow failed $flow"

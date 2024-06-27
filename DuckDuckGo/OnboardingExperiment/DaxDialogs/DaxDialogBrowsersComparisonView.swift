@@ -31,10 +31,7 @@ struct DaxDialogBrowsersComparisonView: View {
                     .foregroundColor(.primary)
                     .font(Font.system(size: 20, weight: .bold))
 
-                // Replace with BrowsersComparisonView
-                RoundedRectangle(cornerRadius: 15.0)
-                    .foregroundColor(.blue)
-                    .overlay(Text("Placeholder"), alignment: .center)
+                BrowsersComparisonChart(privacyFeatures: BrowsersComparisonModel.privacyFeatures)
 
                 Button(action: action) {
                     Text(UserText.DaxOnboardingExperiment.BrowsersComparison.cta)

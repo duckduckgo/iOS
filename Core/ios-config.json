@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1718626353340,
+    "version": 1719225510541,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -1127,7 +1127,13 @@
                 "firstPartyCookiePolicy": {
                     "threshold": 604800,
                     "maxAge": 604800
-                }
+                },
+                "thirdPartyCookieNames": [
+                    "user_id",
+                    "__Secure-3PAPISID",
+                    "SAPISID",
+                    "APISID"
+                ]
             },
             "exceptions": [
                 {
@@ -1153,7 +1159,7 @@
                 }
             ],
             "state": "disabled",
-            "hash": "8ea32fe77b484cffbbf3782cc0725008"
+            "hash": "e045fd25b82f8ac2cbd02877153bd9c2"
         },
         "customUserAgent": {
             "settings": {
@@ -1166,6 +1172,10 @@
                     {
                         "domain": "www.canva.com",
                         "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1818"
+                    },
+                    {
+                        "domain": "xfinity.com",
+                        "reason": "https://github.com/duckduckgo/privacy-configuration/pull/2149"
                     }
                 ],
                 "ddgDefaultSites": [
@@ -1183,13 +1193,16 @@
                     },
                     {
                         "domain": "www.canva.com"
+                    },
+                    {
+                        "domain": "xfinity.com"
                     }
                 ],
                 "omitVersionSites": []
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "7b787a78fe7eda2de81bf909c55df9e7"
+            "hash": "2ed8c3ccd40db2d9dca1e7ecc4231045"
         },
         "dbp": {
             "state": "disabled",
@@ -1206,6 +1219,11 @@
         },
         "duckPlayer": {
             "exceptions": [],
+            "features": {
+                "pip": {
+                    "state": "disabled"
+                }
+            },
             "settings": {
                 "tryDuckPlayerLink": "https://www.youtube.com/watch?v=yKWIA-Pys4c",
                 "overlays": {
@@ -1270,7 +1288,7 @@
                 ]
             },
             "state": "disabled",
-            "hash": "59ef4ce748dc657aa3d42756131dcb16"
+            "hash": "314df3f87ca501a86eb1d04db8bf7bbc"
         },
         "dummyWebMessageListener": {
             "exceptions": [],
@@ -4673,6 +4691,9 @@
                     "domain": "nordstrom.com"
                 },
                 {
+                    "domain": "xfinity.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -4683,7 +4704,7 @@
                 }
             ],
             "state": "enabled",
-            "hash": "3049e5e3a81f6a7bb8e2549216711cbd"
+            "hash": "3699efa9a1d8b78441d4c526e71245df"
         },
         "fingerprintingScreenSize": {
             "settings": {
@@ -4821,6 +4842,9 @@
                     "domain": "monstergear.monsterenergy.com"
                 },
                 {
+                    "domain": "npr.org"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -4842,7 +4866,7 @@
                     "privacy-test-pages.site"
                 ]
             },
-            "hash": "105ce813c7e2db0e99f9202b4210afd6"
+            "hash": "6d6722d98cebce3bae7fda3b1be9bf8b"
         },
         "harmfulApis": {
             "settings": {
@@ -6034,6 +6058,12 @@
                                 "domains": [
                                     "shapermint.com"
                                 ]
+                            },
+                            {
+                                "rule": "datadoghq-browser-agent.com",
+                                "domains": [
+                                    "indeed.com"
+                                ]
                             }
                         ]
                     },
@@ -6201,7 +6231,7 @@
                     "dynamicyield.com": {
                         "rules": [
                             {
-                                "rule": "cdn.dynamicyield.com/api/",
+                                "rule": "dynamicyield.com/api/",
                                 "domains": [
                                     "<all>"
                                 ]
@@ -7249,6 +7279,12 @@
                                 ]
                             },
                             {
+                                "rule": "digital-cloud-west.medallia.com/",
+                                "domains": [
+                                    "walgreens.com"
+                                ]
+                            },
+                            {
                                 "rule": "survey.medallia.com/",
                                 "domains": [
                                     "<all>"
@@ -7977,6 +8013,16 @@
                             }
                         ]
                     },
+                    "siteimproveanalytics.com": {
+                        "rules": [
+                            {
+                                "rule": "siteimproveanalytics.com",
+                                "domains": [
+                                    "codot.gov"
+                                ]
+                            }
+                        ]
+                    },
                     "skimresources.com": {
                         "rules": [
                             {
@@ -8529,7 +8575,7 @@
                     "domain": "noaprints.com"
                 }
             ],
-            "hash": "96f704cb5570ef9e0db986b5a7c89b24"
+            "hash": "17e4849349a0968a744a171fbcc09f1d"
         },
         "trackingCookies1p": {
             "settings": {
@@ -8653,6 +8699,9 @@
                 },
                 {
                     "domain": "noaprints.com"
+                },
+                {
+                    "domain": "wsj.com"
                 }
             ],
             "state": "enabled",
@@ -8695,9 +8744,14 @@
                     }
                 ]
             },
-            "hash": "2ec0196d9e54a04f5dbc50bb3a48921f"
+            "hash": "25d935f0276cd0d81fc6f25811f7cb36"
         },
         "windowsPermissionUsage": {
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
+        },
+        "windowsPrecisionScroll": {
             "exceptions": [],
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"

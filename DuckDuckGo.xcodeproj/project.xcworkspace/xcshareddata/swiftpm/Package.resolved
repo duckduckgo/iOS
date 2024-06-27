@@ -32,7 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "355f43e0be789ada8244f2619c4846fe257806b9"
+        "revision" : "d44d7dcc1f267d78b8d1ad54e276c156040d42e0",
+        "version" : "161.1.3"
       }
     },
     {
@@ -58,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
       "state" : {
-        "revision" : "10aeff1ec7f533d1705233a9b14f9393a699b1c0",
-        "version" : "11.0.2"
+        "revision" : "2b81745565db09eee8c1cd44d38eefa1011a9f0a",
+        "version" : "12.0.1"
       }
     },
     {
@@ -137,10 +138,10 @@
     {
       "identity" : "swift-argument-parser",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-argument-parser.git",
+      "location" : "https://github.com/apple/swift-argument-parser",
       "state" : {
-        "revision" : "0fbc8848e389af3bb55c182bc19ca9d5dc2f255b",
-        "version" : "1.4.0"
+        "revision" : "46989693916f56d1186bd59ac15124caef896560",
+        "version" : "1.3.1"
       }
     },
     {

@@ -20,15 +20,14 @@
 import Foundation
 import Subscription
 
-class SubscriptionManageriOS14: SubscriptionManaging {
-
-    var accountManager: AccountManaging
-    var subscriptionService: SubscriptionService = SubscriptionService(currentServiceEnvironment: .production)
-    var authService: AuthService = AuthService(currentServiceEnvironment: .production)
+class SubscriptionManageriOS14: SubscriptionManager {
+    var accountManager: AccountManager
+    var subscriptionEndpointService: SubscriptionEndpointService = DefaultSubscriptionEndpointService(currentServiceEnvironment: .production)
+    var authEndpointService: AuthEndpointService = DefaultAuthEndpointService(currentServiceEnvironment: .production)
 
     @available(iOS 15, *)
-    func storePurchaseManager() -> StorePurchaseManaging {
-        StorePurchaseManager()
+    func storePurchaseManager() -> StorePurchaseManager {
+        DefaultStorePurchaseManager()
     }
     var currentEnvironment: SubscriptionEnvironment = SubscriptionEnvironment.default
     var canPurchase: Bool = false
@@ -39,7 +38,7 @@ class SubscriptionManageriOS14: SubscriptionManaging {
         URL(string: "https://duckduckgo.com")!
     }
 
-    init(accountManager: AccountManaging) {
+    init(accountManager: AccountManager) {
         self.accountManager = accountManager
     }
 }

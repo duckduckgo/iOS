@@ -48,14 +48,15 @@ struct PrivateSearchViewSettings: View {
     @EnvironmentObject var viewModel: SettingsViewModel
 
     var body: some View {
-        Section(header: Text(UserText.searchSettings),
-                footer: Text(UserText.settingsAutocompleteSubtitle)) {
+        Section(footer: Text(UserText.settingsAutocompleteSubtitle)) {
             // Autocomplete Suggestions
-            SettingsCellView(label: UserText.settingsAutocomplete,
-                             accesory: .toggle(isOn: viewModel.autocompleteBinding))
+            SettingsCellView(label: UserText.settingsAutocompleteLabel,
+                             accesory: .toggle(isOn: viewModel.autocompletePrivateSearchBinding))
+        }
 
-            if viewModel.shouldShowRecentlyVisitedSites {
-                SettingsCellView(label: UserText.settingsAutocompleteRecentlyVisited,
+        if viewModel.shouldShowRecentlyVisitedSites {
+            Section(footer: Text(UserText.settingsAutocompleteRecentlyVisitedSubtitle)) {
+                SettingsCellView(label: UserText.settingsAutocompleteRecentlyVisitedLabel,
                                  accesory: .toggle(isOn: viewModel.autocompleteRecentlyVisitedSitesBinding))
             }
         }

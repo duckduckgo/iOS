@@ -95,7 +95,7 @@ import WebKit
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
     private var privacyConfigCustomURL: String?
 
-    var accountManager: AccountManaging {
+    var accountManager: AccountManager {
         AppDependencyProvider.shared.accountManager
     }
 
@@ -546,8 +546,6 @@ import WebKit
             return
         }
 
-        let isConnected = await AppDependencyProvider.shared.networkProtectionTunnelController.isConnected
-
         await AppDependencyProvider.shared.networkProtectionTunnelController.stop()
         await AppDependencyProvider.shared.networkProtectionTunnelController.removeVPN()
     }
@@ -555,8 +553,8 @@ import WebKit
     func updateSubscriptionStatus() {
         Task {
             guard let token = accountManager.accessToken else { return }
-            var subscriptionService: SubscriptionService {
-                AppDependencyProvider.shared.subscriptionManager.subscriptionService
+            var subscriptionService: SubscriptionEndpointService {
+                AppDependencyProvider.shared.subscriptionManager.subscriptionEndpointService
             }
             if case .success(let subscription) = await subscriptionService.getSubscription(accessToken: token,
                                                                                            cachePolicy: .reloadIgnoringLocalCacheData) {
@@ -849,7 +847,7 @@ import WebKit
                 mainViewController?.clearNavigationStack()
                 // Give the `clearNavigationStack` call time to complete.
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [weak self] in
-                    self?.mainViewController?.launchAutofillLogins(openSearch: true)
+                    self?.mainViewController?.launchAutofillLogins(openSearch: true, source: .appIconShortcut)
                 }
                 Pixel.fire(pixel: .autofillLoginsLaunchAppShortcut)
                 return
@@ -929,7 +927,7 @@ import WebKit
             return
         }
 
-        if case .success(true) = await accountManager.hasEntitlement(for: .networkProtection, cachePolicy: .returnCacheDataDontLoad) {
+        if case .success(true) = await accountManager.hasEntitlement(forProductName: .networkProtection, cachePolicy: .returnCacheDataDontLoad) {
             let items = [
                 UIApplicationShortcutItem(type: ShortcutKey.openVPNSettings,
                                           localizedTitle: UserText.netPOpenVPNQuickAction,
@@ -1013,7 +1011,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 #if NETWORK_PROTECTION
     func presentNetworkProtectionStatusSettingsModal() {
         Task {
-            if case .success(let hasEntitlements) = await accountManager.hasEntitlement(for: .networkProtection),
+            if case .success(let hasEntitlements) = await accountManager.hasEntitlement(forProductName: .networkProtection),
                hasEntitlements {
                 if #available(iOS 15, *) {
                     let networkProtectionRoot = NetworkProtectionRootViewController()

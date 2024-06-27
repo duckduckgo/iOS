@@ -245,7 +245,7 @@
 "autocomplete.history.search.duckduckgo" = "Otsi DuckDuckGo'st";
 
 /* The message text shown in suggestions */
-"autocomplete.history.warning.message" = "Soovitused hõlmavad nüüd hiljuti külastatud saite. Need salvestatakse sinu seadmesse ja mitte kunagi DuckDuckGo serveritesse. Saad selle välja lülitada seadetes või tühjendada igal ajal nupu 🔥 Fire Button abil.";
+"autocomplete.history.warning.message" = "Otsingusoovitused hõlmavad nüüd sinu hiljuti külastatud saite. Saad selle välja lülitada seadetes või tühjendada igal ajal nupu 🔥 Fire Button abil.";
 
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Sama privaatsus.\nParemad otsingusoovitused!";
@@ -1799,10 +1799,16 @@
 "settings.associated.apps.description" = "Keela, et takistada linkide automaatset avanemist teistes installitud rakendustes.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Automaatselt täidetavad ettepanekud";
+"settings.autocomplete" = "Otsingusoovitused";
 
 /* Settings label for enabling or disabling recently visited sites */
 "settings.autocomplete.recentlyvisited" = "Hiljuti külastatud saidid";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Kuva hiljuti külastatud saidid otsingusoovitustes. Viimased külastatud saidid on privaatsed, salvestatakse ainult sinu seadmesse ja neid saab tühjendada nupu Fire Button abil.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Kuva sisestamisel otsingusoovitusi, sealhulgas järjehoidjaid. Kõik otsingud on privaatsed.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Rakenduse lukk";

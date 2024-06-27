@@ -21,12 +21,13 @@ import Foundation
 import ContentScopeScripts
 import WebKit
 
-struct YoutubePlayerNavigationHandler {
+final class YoutubePlayerNavigationHandler {
     
-    var appSettings: AppSettings
+    var duckPlayerMode: DuckPlayerMode
     
-    init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
-        self.appSettings = appSettings
+    init(duckPlayerMode: DuckPlayerMode = AppDependencyProvider.shared.appSettings.duckPlayerMode) {
+        self.duckPlayerMode = duckPlayerMode
+        registerForNotificationChanges()
     }
     
     private static let templateDirectory = "pages/duckplayer"
@@ -75,6 +76,25 @@ struct YoutubePlayerNavigationHandler {
         let duckPlayerRequest = Self.makeDuckPlayerRequest(from: request)
         performNavigation(duckPlayerRequest, responseHTML: html, webView: webView)
     }
+    
+    private func registerForNotificationChanges() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updatePlayerMode),
+                                               name: AppUserDefaults.Notifications.duckPlayerModeChanged,
+                                               object: nil)
+    }
+
+    
+    @objc private func updatePlayerMode(_ notification: Notification) {
+        if let mode = notification.object as? DuckPlayerMode {
+            self.duckPlayerMode = mode
+        }
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
 }
 
 extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
@@ -89,7 +109,7 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
         // If DuckPlayer is Enabled or in ask mode, render the video
         if let url = navigationAction.request.url,
             url.isDuckURLScheme,
-            appSettings.duckPlayerMode == .enabled || appSettings.duckPlayerMode == .alwaysAsk {
+            duckPlayerMode == .enabled || duckPlayerMode == .alwaysAsk {
             let html = Self.makeHTMLFromTemplate()
             let newRequest = Self.makeDuckPlayerRequest(from: URLRequest(url: url))
             if #available(iOS 15.0, *) {
@@ -100,7 +120,7 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
         }
         
         // DuckPlayer is disabled, so we redirect to the video in YouTube
-        if let url = navigationAction.request.url, let (videoID, timestamp) = url.youtubeVideoParams, appSettings.duckPlayerMode == .disabled {
+        if let url = navigationAction.request.url, let (videoID, timestamp) = url.youtubeVideoParams, duckPlayerMode == .disabled {
             webView.load(URLRequest(url: URL.youtube(videoID, timestamp: timestamp)))
             completion(.allow)
             return
@@ -141,7 +161,7 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
         guard let backURL = webView.backForwardList.backItem?.url,
                 backURL.isYoutubeVideo,
                 backURL.youtubeVideoParams?.videoID == webView.url?.youtubeVideoParams?.videoID,
-                appSettings.duckPlayerMode == .enabled else {
+                duckPlayerMode == .enabled else {
             webView.goBack()
             return
         }

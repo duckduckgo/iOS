@@ -348,7 +348,6 @@ class TabViewController: UIViewController {
         decorate()
         addTextSizeObserver()
         subscribeToEmailProtectionSignOutNotification()
-
         registerForDownloadsNotifications()
 
         if #available(iOS 16.4, *) {
@@ -359,7 +358,7 @@ class TabViewController: UIViewController {
         observeNetPConnectionStatusChanges()
 #endif
     }
-
+    
     @available(iOS 16.4, *)
     private func registerForInspectableWebViewNotifications() {
         NotificationCenter.default.addObserver(self,

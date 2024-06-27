@@ -21,10 +21,13 @@ import Foundation
 import WebKit
 import Common
 import UserScript
+import Combine
 
 final class YoutubeOverlayUserScript: NSObject, Subfeature {
         
     private var duckPlayer: DuckPlayer
+    private var userValuesCancellable = Set<AnyCancellable>()
+    weak var webView: WKWebView?
     
     struct Constants {
         static let featureName = "duckPlayer"
@@ -32,6 +35,17 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
     
     init(duckPlayer: DuckPlayer) {
         self.duckPlayer = duckPlayer
+        super.init()
+        subscribeToDuckPlayerMode()
+    }
+    
+    // Listen to DuckPlayer Settings changed
+    private func subscribeToDuckPlayerMode() {
+        duckPlayer.$userValues
+            .sink { [weak self] updatedValues in
+                self?.userValuesUpdated(userValues: updatedValues)
+            }
+            .store(in: &userValuesCancellable)
     }
     
     enum MessageOrigin {

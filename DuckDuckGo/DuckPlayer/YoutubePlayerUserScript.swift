@@ -20,10 +20,12 @@
 import WebKit
 import Common
 import UserScript
+import Combine
 
 final class YoutubePlayerUserScript: NSObject, Subfeature {
     
     private var duckPlayer: DuckPlayer
+    weak var webView: WKWebView?
     
     struct Constants {
         static let featureName = "duckPlayerPage"
@@ -35,8 +37,21 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
         static let initialSetup = "initialSetup"
     }
     
+    private var userValuesCancellable = Set<AnyCancellable>()
+    
     init(duckPlayer: DuckPlayer) {
         self.duckPlayer = duckPlayer
+        super.init()
+        subscribeToDuckPlayerMode()
+    }
+    
+    // Listen to DuckPlayer Settings changed
+    private func subscribeToDuckPlayerMode() {
+        duckPlayer.$userValues
+            .sink { [weak self] updatedValues in
+                self?.userValuesUpdated(userValues: updatedValues)
+            }
+            .store(in: &userValuesCancellable)
     }
     
     weak var broker: UserScriptMessageBroker?

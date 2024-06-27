@@ -126,9 +126,11 @@ final class DuckPlayer {
         
     private var settings: DuckPlayerSettings
     
-
-    init(settings: DuckPlayerSettings = DuckPlayerSettings()) {
+    @Published var userValues: UserValues
+    
+    init(settings: DuckPlayerSettings = DuckPlayerSettings(), userValues: UserValues? = nil) {
         self.settings = settings
+        self.userValues = userValues ?? UserValues(duckPlayerMode: settings.mode, askModeOverlayHidden: settings.askModeOverlayHidden)
     }
     
     // MARK: - Common Message Handlers
@@ -174,6 +176,25 @@ final class DuckPlayer {
         let userValues = encodeUserValues()
 
         return InitialSetupSettings(userValues: userValues, settings: playerSettings)
+    }
+    
+    private func registerForNotificationChanges() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updatePlayerMode),
+                                               name: AppUserDefaults.Notifications.duckPlayerModeChanged,
+                                               object: nil)
+    }
+
+    
+    @objc private func updatePlayerMode(_ notification: Notification) {
+        if let mode = notification.object as? DuckPlayerMode {
+            settings.mode = mode
+            userValues = encodeUserValues()
+        }
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
 }

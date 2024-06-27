@@ -20,7 +20,6 @@
 import WebKit
 
 protocol DuckNavigationHandling {
-    var appSettings: AppSettings { get }
     func handleNavigation(_ navigationAction: WKNavigationAction,
                           webView: WKWebView,
                           completion: @escaping (WKNavigationActionPolicy) -> Void)

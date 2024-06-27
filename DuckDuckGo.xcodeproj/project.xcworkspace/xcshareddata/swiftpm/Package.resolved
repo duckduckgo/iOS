@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "dominik/rmf-refactor",
-        "revision" : "04d08714b3ad481107b66a32e75bd1de3a8d09a9"
+        "branch" : "dominik/rmf-macos",
+        "revision" : "987ed3d4d8b98226b6452a8df93fc72bfa803657"
       }
     },
     {

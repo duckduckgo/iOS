@@ -9825,7 +9825,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "dominik/rmf-refactor";
+				branch = "dominik/rmf-macos";
 				kind = branch;
 			};
 		};

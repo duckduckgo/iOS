@@ -51,8 +51,14 @@ struct OnboardingActions: View {
 
 extension OnboardingActions {
     class Model: ObservableObject {
-        @Published var primaryButtonTitle = ""
-        @Published var secondaryButtonTitle = ""
-        @Published var isContinueEnabled = true
+        @Published var primaryButtonTitle: String
+        @Published var secondaryButtonTitle: String
+        @Published var isContinueEnabled: Bool
+
+        init(primaryButtonTitle: String = "", secondaryButtonTitle: String = "", isContinueEnabled: Bool = true) {
+            self.primaryButtonTitle = primaryButtonTitle
+            self.secondaryButtonTitle = secondaryButtonTitle
+            self.isContinueEnabled = isContinueEnabled
+        }
     }
 }

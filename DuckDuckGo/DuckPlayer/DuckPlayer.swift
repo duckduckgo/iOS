@@ -30,7 +30,7 @@ enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
     
     private static let enabledString = "enabled"
     private static let alwaysAskString = "alwaysAsk"
-    private static let neverString = "alwaysAsk"
+    private static let neverString = "disabled"
     
     var description: String {
         switch self {

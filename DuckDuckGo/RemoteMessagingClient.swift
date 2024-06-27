@@ -26,9 +26,10 @@ import Persistence
 import Bookmarks
 import RemoteMessaging
 
-final class RemoteMessagingClient: RemoteMessagingClientBase {
+final class RemoteMessagingClient: RemoteMessagingProcessing {
+    let configMatcherProvider: RemoteMessaging.RemoteMessagingConfigMatcherProviding
 
-    private static let endpoint: URL = {
+    let endpoint: URL = {
 #if DEBUG
         URL(string: "https://raw.githubusercontent.com/duckduckgo/remote-messaging-config/main/samples/ios/sample1.json")!
 #else
@@ -50,7 +51,7 @@ final class RemoteMessagingClient: RemoteMessagingClientBase {
     }
 
     init(configMatcherProvider: RemoteMessagingConfigMatcherProviding) {
-        super.init(endpoint: Self.endpoint, configMatcherProvider: configMatcherProvider)
+        self.configMatcherProvider = configMatcherProvider
     }
 
     @UserDefaultsWrapper(key: .lastRemoteMessagingRefreshDate, defaultValue: .distantPast)
@@ -109,7 +110,7 @@ extension RemoteMessagingClient {
     static func backgroundRefreshTaskHandler(bgTask: BGTask, client: RemoteMessagingClient, store: RemoteMessagingStoring) {
         let fetchAndProcessTask = Task {
             do {
-                try await client.fetchAndProcess(remoteMessagingStore: store)
+                try await client.fetchAndProcess(using: store)
                 Self.lastRemoteMessagingRefreshDate = Date()
                 scheduleBackgroundRefreshTask()
                 bgTask.setTaskCompleted(success: true)

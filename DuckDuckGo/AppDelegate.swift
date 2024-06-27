@@ -647,7 +647,7 @@ import WebKit
 
     private func refreshRemoteMessages() {
         Task {
-            try? await remoteMessagingClient.fetchAndProcess(remoteMessagingStore: AppDependencyProvider.shared.remoteMessagingStore)
+            try? await remoteMessagingClient.fetchAndProcess(using: AppDependencyProvider.shared.remoteMessagingStore)
         }
     }
 

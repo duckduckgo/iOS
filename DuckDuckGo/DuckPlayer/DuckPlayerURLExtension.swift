@@ -49,7 +49,7 @@ extension URL {
     var isDuckURLScheme: Bool {
         navigationalScheme == .duck
     }
-    
+
     private var isYoutubeWatch: Bool {
         guard let host else { return false }
         return host.contains("youtube.com") && path == "/watch"

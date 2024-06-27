@@ -245,7 +245,7 @@
 "autocomplete.history.search.duckduckgo" = "Rechercher avec DuckDuckGo";
 
 /* The message text shown in suggestions */
-"autocomplete.history.warning.message" = "Les suggestions incluent désormais les sites récemment visités. Ils sont stockés sur votre appareil, jamais sur les serveurs de DuckDuckGo. Désactivez cette option dans les paramètres ou effacez à tout moment grâce au Fire Button 🔥.";
+"autocomplete.history.warning.message" = "Les suggestions de recherche incluent désormais les sites que vous avez récemment visités. Désactivez cette option dans Réglages ou effacez à tout moment grâce au Fire Button 🔥.";
 
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "La confidentialité reste la même.\nLes suggestions de recherche s'améliorent !";
@@ -1799,10 +1799,16 @@
 "settings.associated.apps.description" = "Désactiver pour empêcher l'ouverture automatique des liens dans d'autres applications installées.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Afficher les suggestions de saisie semi-automatique";
+"settings.autocomplete" = "Suggestions de recherche";
 
 /* Settings label for enabling or disabling recently visited sites */
 "settings.autocomplete.recentlyvisited" = "Sites récemment visités";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Affichez les sites récemment visités dans les suggestions de recherche. Les sites récemment visités sont confidentiels, ne sont stockés que sur votre appareil et peuvent être effacés avec le Fire Button.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Affichez les suggestions de recherche au fur et à mesure que vous tapez, y compris vos signets. Toutes les recherches sont privées.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Verrouillage de l'application";

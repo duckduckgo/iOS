@@ -245,7 +245,7 @@
 "autocomplete.history.search.duckduckgo" = "Vyhledat prostřednictvím DuckDuckGo";
 
 /* The message text shown in suggestions */
-"autocomplete.history.warning.message" = "Návrhy teď zahrnují poslední navštívené stránky. Ty se ukládají přímo v zařízení a nikdy na serverech DuckDuckGo. Vypnout se dají v nastaveních nebo je můžeš kdykoli vymazat tlačítkem 🔥 Fire Button.";
+"autocomplete.history.warning.message" = "Návrhy vyhledávání teď zahrnují tvoje nedávno navštívené stránky. Vypnout se dají v nastavení nebo je můžeš kdykoli vymazat tlačítkem 🔥 Fire Button.";
 
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Stejné soukromí.\nLepší návrhy pro vyhledávání!";
@@ -1799,10 +1799,16 @@
 "settings.associated.apps.description" = "Zakažte, chcete-li zabránit automatickému otevírání odkazů v jiných nainstalovaných aplikacích.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Zobrazit návrhy automatického doplňování";
+"settings.autocomplete" = "Návrhy vyhledávání";
 
 /* Settings label for enabling or disabling recently visited sites */
 "settings.autocomplete.recentlyvisited" = "Nedávno navštívené stránky";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Zobrazovat poslední navštívené weby v návrzích vyhledávání. Poslední navštívené weby jsou soukromé, ukládají se jen do tvého zařízení a dají se vymazat tlačítkem Fire Button.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Nech si při psaní zobrazovat návrhy vyhledávání včetně záložek. Všechna vyhledávání jsou soukromá.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Zámek aplikace";

@@ -656,7 +656,6 @@ class TabViewController: UIViewController {
         } else if let currentHost = url?.host, let newHost = webView.url?.host, currentHost == newHost {
             url = webView.url
                         
-            // Redirect to YoutubePlayer if enabled
             if let handler = youtubeNavigationHandler,
                 let url,
                 url.isYoutubeVideo,
@@ -725,24 +724,30 @@ class TabViewController: UIViewController {
     func goBack() {
         dismissJSAlertIfNeeded()
         
-        if let handler = youtubeNavigationHandler,
-            appSettings.duckPlayerMode == .enabled {
+        if let url = url, url.isDuckPlayer, let handler = youtubeNavigationHandler {
             handler.goBack(webView: webView)
             chromeDelegate?.omniBar.resignFirstResponder()
-        } else {
-            if isError {
-                hideErrorMessage()
-                url = webView.url
-                onWebpageDidStartLoading(httpsForced: false)
-                onWebpageDidFinishLoading()
-            } else if webView.canGoBack {
-                webView.goBack()
-                chromeDelegate?.omniBar.resignFirstResponder()
-            } else if openingTab != nil {
-                delegate?.tabDidRequestClose(self)
-            }
+            return
         }
 
+        if isError {
+            hideErrorMessage()
+            url = webView.url
+            onWebpageDidStartLoading(httpsForced: false)
+            onWebpageDidFinishLoading()
+            return
+        }
+
+        if webView.canGoBack {
+            webView.goBack()
+            chromeDelegate?.omniBar.resignFirstResponder()
+            return
+        }
+
+        if openingTab != nil {
+            delegate?.tabDidRequestClose(self)
+        }
+        
     }
     
     func goForward() {

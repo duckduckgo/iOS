@@ -150,8 +150,13 @@ public struct UserDefaultsWrapper<T> {
         case pixelExperimentForBrokenSitesCohort = "com.duckduckgo.ios.pixel.experiment.for.broken.sites.cohort"
         
         case duckPlayerMode = "com.duckduckgo.ios.duckPlayerMode"
+        case duckPlayerAskModeOverlayHidden = "com.duckduckgo.ios.duckPlayerAskModeOverlayHidden"
 
         case vpnRedditWorkaroundInstalled = "com.duckduckgo.ios.vpn.workaroundInstalled"
+
+        // Debug keys
+
+        case debugNewTabPageSectionsEnabledKey = "com.duckduckgo.ios.debug.newTabPageSectionsEnabled"
     }
 
     private let key: Key

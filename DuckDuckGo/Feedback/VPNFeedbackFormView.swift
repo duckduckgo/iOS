@@ -25,8 +25,7 @@ import NetworkProtection
 @available(iOS 15.0, *)
 struct VPNFeedbackFormCategoryView: View {
     @Environment(\.dismiss) private var dismiss
-    let collector = DefaultVPNMetadataCollector(statusObserver: AppDependencyProvider.shared.connectionObserver,
-                                                tokenStore: AppDependencyProvider.shared.networkProtectionKeychainTokenStore)
+    let collector = DefaultVPNMetadataCollector(statusObserver: AppDependencyProvider.shared.connectionObserver)
 
     var body: some View {
         VStack {

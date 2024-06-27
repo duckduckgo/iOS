@@ -269,6 +269,14 @@ extension Pixel {
         case autofillToggledOff
         case autofillLoginsStacked
 
+        case autofillManagementOpened
+        case autofillManagementCopyUsername
+        case autofillManagementCopyPassword
+        case autofillManagementDeleteLogin
+        case autofillManagementDeleteAllLogins
+        case autofillManagementSaveLogin
+        case autofillManagementUpdateLogin
+
         case autofillMultipleAuthCallsTriggered
 
         case getDesktopCopy
@@ -403,6 +411,9 @@ extension Pixel {
         case networkProtectionWidgetConnectSuccess
         case networkProtectionWidgetDisconnectAttempt
         case networkProtectionWidgetDisconnectSuccess
+
+        case networkProtectionDNSUpdateCustom
+        case networkProtectionDNSUpdateDefault
 
         // MARK: remote messaging pixels
         
@@ -656,12 +667,12 @@ extension Pixel {
         case settingsWebTrackingProtectionOpen
         case settingsGpcOn
         case settingsGpcOff
-        case settingsAutocompleteOn
-        case settingsAutocompleteOff
-        case settingsRecentlyVisitedOn
-        case settingsRecentlyVisitedOff
         case settingsGeneralAutocompleteOn
         case settingsGeneralAutocompleteOff
+        case settingsPrivateSearchAutocompleteOn
+        case settingsPrivateSearchAutocompleteOff
+        case settingsRecentlyVisitedOn
+        case settingsRecentlyVisitedOff
         case settingsAddressBarSelectorPressed
         case settingsAccessibilityOpen
         case settingsAccessiblityTextSize
@@ -960,6 +971,21 @@ extension Pixel.Event {
 
         case .autofillLoginsStacked: return "m_autofill_logins_stacked"
 
+        case .autofillManagementOpened:
+            return "m_autofill_management_opened"
+        case .autofillManagementCopyUsername:
+            return "m_autofill_management_copy_username"
+        case .autofillManagementCopyPassword:
+            return "m_autofill_management_copy_password"
+        case .autofillManagementDeleteLogin:
+            return "m_autofill_management_delete_login"
+        case .autofillManagementDeleteAllLogins:
+            return "m_autofill_management_delete_all_logins"
+        case .autofillManagementSaveLogin:
+            return "m_autofill_management_save_login"
+        case .autofillManagementUpdateLogin:
+            return "m_autofill_management_update_login"
+
         case .autofillMultipleAuthCallsTriggered: return "m_autofill_multiple_auth_calls_triggered"
 
         case .getDesktopCopy: return "m_get_desktop_copy"
@@ -1068,6 +1094,9 @@ extension Pixel.Event {
         case .networkProtectionServerMigrationAttempt: return "m_netp_ev_server_migration_attempt"
         case .networkProtectionServerMigrationAttemptSuccess: return "m_netp_ev_server_migration_attempt_success"
         case .networkProtectionServerMigrationAttemptFailure: return "m_netp_ev_server_migration_attempt_failed"
+
+        case .networkProtectionDNSUpdateCustom: return "m_netp_ev_update_dns_custom"
+        case .networkProtectionDNSUpdateDefault: return "m_netp_ev_update_dns_default"
 
             // MARK: remote messaging pixels
             
@@ -1335,12 +1364,12 @@ extension Pixel.Event {
         case .settingsWebTrackingProtectionOpen: return "m_settings_web_tracking_protection_open"
         case .settingsGpcOn: return "m_settings_gpc_on"
         case .settingsGpcOff: return "m_settings_gpc_off"
-        case .settingsAutocompleteOn: return "m_settings_autocomplete_on"
-        case .settingsAutocompleteOff: return "m_settings_autocomplete_off"
-        case .settingsRecentlyVisitedOn: return "m_settings_autocomplete_recently-visited_on"
-        case .settingsRecentlyVisitedOff: return "m_settings_autocomplete_recently-visited_off"
         case .settingsGeneralAutocompleteOn: return "m_settings_general_autocomplete_on"
         case .settingsGeneralAutocompleteOff: return "m_settings_general_autocomplete_off"
+        case .settingsPrivateSearchAutocompleteOn: return "m_settings_private_search_autocomplete_on"
+        case .settingsPrivateSearchAutocompleteOff: return "m_settings_private_search_autocomplete_off"
+        case .settingsRecentlyVisitedOn: return "m_settings_autocomplete_recently-visited_on"
+        case .settingsRecentlyVisitedOff: return "m_settings_autocomplete_recently-visited_off"
         case .settingsAddressBarSelectorPressed: return "m_settings_address_bar_selector_pressed"
         case .settingsAccessibilityOpen: return "m_settings_accessibility_open"
         case .settingsAccessiblityTextSize: return "m_settings_accessiblity_text_size"

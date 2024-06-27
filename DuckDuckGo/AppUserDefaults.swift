@@ -77,6 +77,7 @@ public class AppUserDefaults: AppSettings {
         static let crashCollectionOptInStatus = "com.duckduckgo.ios.crashCollectionOptInStatus"
         
         static let duckPlayerMode = "com.duckduckgo.ios.duckPlayerMode"
+        static let duckPlayerAskModeOverlayHidden = "com.duckduckgo.ios.duckPlayerAskModeOverlayHidden"
     }
 
     private struct DebugKeys {
@@ -375,6 +376,9 @@ public class AppUserDefaults: AppSettings {
             userDefaults?.setValue(newValue.rawValue, forKey: Keys.crashCollectionOptInStatus)
         }
     }
+
+    @UserDefaultsWrapper(key: .debugNewTabPageSectionsEnabledKey, defaultValue: false)
+    var newTabPageSectionsEnabled: Bool
     
     var duckPlayerMode: DuckPlayerMode {
         get {
@@ -385,7 +389,9 @@ public class AppUserDefaults: AppSettings {
             return .alwaysAsk
         }
         set {
+            // Here we set both the DuckPlayer mode and the overlayInteracte
             userDefaults?.set(newValue.stringValue, forKey: Keys.duckPlayerMode)
+            userDefaults?.set(false, forKey: Keys.duckPlayerAskModeOverlayHidden)
         }
     }
 }

@@ -1,0 +1,65 @@
+# autofill.yaml
+appId: com.duckduckgo.mobile.ios
+tags:
+    - release
+
+---
+
+# Set up 
+- clearState
+- launchApp
+- runFlow: 
+    file: ../shared/onboarding.yaml
+
+# Capture login credentials
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://privacy-test-pages.site/autofill/autoprompt/0-standard-signup-form.html"
+- pressKey: Enter
+- tapOn: 
+    text: "Got it"
+- assertVisible: "Password generation during signup"
+- tapOn: 
+    text: "Email"
+- inputText: "test@example.com"
+- tapOn: 
+    text: "Password"
+- assertVisible: "Use a strong password from DuckDuckGo?"
+- tapOn: 
+    text: "Use Strong Password"
+- tapOn:
+    text: "Sign up"
+- assertVisible: "Success"
+
+# Validate passcode requested when accessing passwords for the first time
+- tapOn: "Browsing Menu"
+- tapOn: "Passwords"
+- assertVisible: "Unlock device to access passwords"
+- inputText: "passcode"
+- pressKey: Enter
+
+# Validate it was saved 
+- assertVisible: "privacy-test-pages.site"
+- assertVisible: "test@example.com"
+
+## Others
+
+# Capture login credentials on sign up
+# https://privacy-test-pages.site/autofill/signup.html
+# Fill credentials on login
+# https://privacy-test-pages.site/autofill/autoprompt/1-standard-login-form.html
+# Multi-step login
+# https://privacy-test-pages.site/autofill/autoprompt/3-multistep-form.html
+
+# * Confirm authentication is required to access the Passwords screen when there are saved passwords (note that no auth is required if there are no saved passwords or when returning to the passwords screen within 15 seconds)
+# * Confirm that failed authentication blocks access to the screen
+# * Confirm that when on the Passwords screen that when minimising the app and returning to foreground authentication is required to view saved passwords
+# Confirm disabling autofill disables the save & fill prompts
+
+# Manually save a login (via the + nav bar button)
+# Update a saved login
+# Delete a saved login 
+# Search passwords
+# Delete all passwords

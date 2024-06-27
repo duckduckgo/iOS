@@ -144,8 +144,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             case .success:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionServerMigrationAttemptSuccess)
             }
-        case .tunnelStartWithoutAccessToken:
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartAttemptWithoutAccessToken)
+        case .tunnelStartOnDemandWithoutAccessToken:
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartAttemptOnDemandWithoutAccessToken)
         }
     }
 

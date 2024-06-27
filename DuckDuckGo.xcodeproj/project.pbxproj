@@ -9821,7 +9821,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "michal/update-manage-subscription";
+				branch = "michal/make-entitlements-public";
 				kind = branch;
 			};
 		};

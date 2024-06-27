@@ -1,12 +1,12 @@
+#!/bin/zsh
+
 ### Run UI tests
+
+source .maestro/common.sh
 
 ## Constants
 
-derived_data_path=DerivedData
-app_location=$derived_data_path/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
-device_uuid_path="$derived_data_path/device_uuid.txt"
 run_log="$derived_data_path/run_log.txt"
-
 app_bundle="com.duckduckgo.mobile.ios"
 
 ## Functions

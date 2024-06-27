@@ -1,9 +1,10 @@
+#!/bin/zsh
+
 ### Set up environment for UI testing
 
+source .maestro/common.sh
+
 ## Constants
-derived_data_path=DerivedData
-app_location=$derived_data_path/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
-device_uuid_path="$derived_data_path/device_uuid.txt"
 
 # The simulator command requires the hyphens
 target_device="iPhone-15"
@@ -11,28 +12,36 @@ target_os="iOS-17-2"
 
 ## Functions
 
-fail() {
-    echo "‼️ $1"
-    exit 1
-}
+check_maestro() {
 
-check_is_root() {
-    if [ ! -d ".maestro" ]; then
-        fail "Please run from the root of the iOS directory"
-    fi
-}
+    local command_name="maestro"
+    local known_version="1.36.0"
 
-check_command() {
-    if ! command -v "$1" &> /dev/null; then
-        echo "‼️ Error: $1 is not installed. See source of this script for information."
-        echo
+    if command -v $command_name > /dev/null 2>&1; then
+      local version_output=$($command_name -v 2>&1)
+      
+      local command_version=$(echo $version_output | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')
+
+      if [[ $command_version == $known_version ]]; then
+        echo "ℹ️ maestro version matches: $command_version"
+      else
+        echo "‼️ maestro version does not match. Expected: $known_version, Got: $command_version"
         exit 1
+      fi
+    else
+      echo "‼️ maestro not found install using the following commands:"
+      echo
+      echo "curl -Ls \"https://get.maestro.mobile.dev\" | bash"
+      echo "brew tap facebook/fb"
+      echo "brew install facebook/fb/idb-companion"
+      echo
+      exit 1
     fi
 }
 
 build_app() {
 
-    if [ -f "$derived_data_path" ]; then
+    if [ -d "$derived_data_path" ]; then
         echo "⚠️ Removing previously created $derived_data_path"
         rm -rf $derived_data_path
     fi
@@ -53,13 +62,7 @@ check_is_root
 echo
 echo "ℹ️  Checking environment for UI testing with maestro"
 
-## If maestro is not installed run the following commands
-#
-# curl -Ls "https://get.maestro.mobile.dev" | bash
-# brew tap facebook/fb
-# brew install facebook/fb/idb-companion
-#
-check_command maestro
+check_maestro
 check_command xcodebuild
 check_command xcrun
 
@@ -69,19 +72,24 @@ echo
 # Parse command line arguments
 while [[ "$#" -gt 0 ]]; do
     case $1 in
-        --skip-build) skip_build=1; shift ;;
+        --skip-build) 
+            skip_build=1 ;;
         *)
     esac
     shift
 done
 
-if [ ! -n "$skip_build" ]; then
+if [ -n "$skip_build" ]; then
     echo "Skipping build"
+else
     build_app
 fi
 
 echo "ℹ️ Closing all simulators"
+
 killall Simulator
+
+echo "ℹ️ Starting simulator for maestro"
 
 device_uuid=$(xcrun simctl create "$target_device $target_os (maestro)" "com.apple.CoreSimulator.SimDeviceType.$target_device" "com.apple.CoreSimulator.SimRuntime.$target_os")
 if [ $? -ne 0 ]; then

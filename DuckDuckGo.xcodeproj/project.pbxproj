@@ -607,7 +607,9 @@
 		9FA5E44E2BF1B16400BDEF02 /* SubscriptionContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA5E44D2BF1B16400BDEF02 /* SubscriptionContainerViewModelTests.swift */; };
 		9FB027122C2526DD009EA190 /* DaxDialogIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB027112C2526DD009EA190 /* DaxDialogIntroView.swift */; };
 		9FB027142C252E0C009EA190 /* DaxDialogBrowsersComparisonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB027132C252E0C009EA190 /* DaxDialogBrowsersComparisonView.swift */; };
+		9FB027192C26BC29009EA190 /* BrowsersComparisonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB027182C26BC29009EA190 /* BrowsersComparisonModel.swift */; };
 		9FF7E9822C22A1F100902BE5 /* DaxDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7E9812C22A1F100902BE5 /* DaxDialogView.swift */; };
+		9FF7E9862C23D10300902BE5 /* BrowsersComparisonChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7E9852C23D10300902BE5 /* BrowsersComparisonChart.swift */; };
 		AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */; };
 		AA3D854723D9E88E00788410 /* AppIconSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */; };
 		AA3D854923DA1DFB00788410 /* AppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854823DA1DFB00788410 /* AppIcon.swift */; };
@@ -2242,7 +2244,9 @@
 		9FA5E44D2BF1B16400BDEF02 /* SubscriptionContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionContainerViewModelTests.swift; sourceTree = "<group>"; };
 		9FB027112C2526DD009EA190 /* DaxDialogIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogIntroView.swift; sourceTree = "<group>"; };
 		9FB027132C252E0C009EA190 /* DaxDialogBrowsersComparisonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogBrowsersComparisonView.swift; sourceTree = "<group>"; };
+		9FB027182C26BC29009EA190 /* BrowsersComparisonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsersComparisonModel.swift; sourceTree = "<group>"; };
 		9FF7E9812C22A1F100902BE5 /* DaxDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogView.swift; sourceTree = "<group>"; };
+		9FF7E9852C23D10300902BE5 /* BrowsersComparisonChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsersComparisonChart.swift; sourceTree = "<group>"; };
 		AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconSettingsViewController.swift; sourceTree = "<group>"; };
 		AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconSettingsCell.swift; sourceTree = "<group>"; };
 		AA3D854823DA1DFB00788410 /* AppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIcon.swift; sourceTree = "<group>"; };
@@ -4204,9 +4208,19 @@
 			path = DaxDialogs;
 			sourceTree = "<group>";
 		};
+		9FB027172C26BC0F009EA190 /* BrowsersComparison */ = {
+			isa = PBXGroup;
+			children = (
+				9FB027182C26BC29009EA190 /* BrowsersComparisonModel.swift */,
+				9FF7E9852C23D10300902BE5 /* BrowsersComparisonChart.swift */,
+			);
+			path = BrowsersComparison;
+			sourceTree = "<group>";
+		};
 		9FF7E9802C22A19800902BE5 /* OnboardingExperiment */ = {
 			isa = PBXGroup;
 			children = (
+				9FB027172C26BC0F009EA190 /* BrowsersComparison */,
 				9FB027102C2526A8009EA190 /* DaxDialogs */,
 			);
 			path = OnboardingExperiment;
@@ -6693,6 +6707,7 @@
 				981FED6E22025151008488D7 /* BlankSnapshotViewController.swift in Sources */,
 				D66F683D2BB333C100AE93E2 /* SubscriptionContainerView.swift in Sources */,
 				851B128822200575004781BC /* Onboarding.swift in Sources */,
+				9FB027192C26BC29009EA190 /* BrowsersComparisonModel.swift in Sources */,
 				3151F0EE2735800800226F58 /* VoiceSearchFeedbackView.swift in Sources */,
 				37CF91642BB4A82A00BADCAE /* CrashCollectionOnboardingViewModel.swift in Sources */,
 				857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */,
@@ -6789,6 +6804,7 @@
 				CB5418632BD90CD000C2CD26 /* BrokenSitePromptViewModel.swift in Sources */,
 				F1D477C61F2126CC0031ED49 /* OmniBarState.swift in Sources */,
 				85F2FFCD2211F615006BB258 /* MainViewController+KeyCommands.swift in Sources */,
+				9FF7E9862C23D10300902BE5 /* BrowsersComparisonChart.swift in Sources */,
 				4B274F602AFEAECC003F0745 /* NetworkProtectionWidgetRefreshModel.swift in Sources */,
 				858650D9246B0D3C00C36F8A /* DaxOnboardingViewController.swift in Sources */,
 				312E5746283BB04A00C18FA0 /* AutofillEmptySearchView.swift in Sources */,

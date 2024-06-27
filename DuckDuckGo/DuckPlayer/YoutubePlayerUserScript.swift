@@ -88,6 +88,6 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
     }
     
     deinit {
-        
+        userValuesCancellable.removeAll()
     }
 }

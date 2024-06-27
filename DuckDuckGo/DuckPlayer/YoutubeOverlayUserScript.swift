@@ -136,6 +136,10 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
     struct UserValuesNotification: Encodable {
         let userValuesNotification: UserValues
     }
+    
+    deinit {
+        userValuesCancellable.removeAll()
+    }
 }
 
 extension YoutubeOverlayUserScript {

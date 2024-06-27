@@ -25,7 +25,6 @@ import Combine
 final class YoutubePlayerUserScript: NSObject, Subfeature {
     
     private var duckPlayer: DuckPlayer
-    weak var webView: WKWebView?
     
     struct Constants {
         static let featureName = "duckPlayerPage"
@@ -48,6 +47,7 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
     // Listen to DuckPlayer Settings changed
     private func subscribeToDuckPlayerMode() {
         duckPlayer.$userValues
+            .dropFirst()
             .sink { [weak self] updatedValues in
                 self?.userValuesUpdated(userValues: updatedValues)
             }
@@ -81,9 +81,13 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
         }
     }
 
-    func userValuesUpdated(userValues: UserValues) {
-        if let webView = webView {
+    public func userValuesUpdated(userValues: UserValues) {
+        if let webView {
             broker?.push(method: "onUserValuesChanged", params: userValues, for: self, into: webView)
         }
+    }
+    
+    deinit {
+        
     }
 }

@@ -27,7 +27,6 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
         
     private var duckPlayer: DuckPlayer
     private var userValuesCancellable = Set<AnyCancellable>()
-    weak var webView: WKWebView?
     
     struct Constants {
         static let featureName = "duckPlayer"
@@ -42,6 +41,7 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
     // Listen to DuckPlayer Settings changed
     private func subscribeToDuckPlayerMode() {
         duckPlayer.$userValues
+            .dropFirst()
             .sink { [weak self] updatedValues in
                 self?.userValuesUpdated(userValues: updatedValues)
             }
@@ -110,10 +110,9 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
     }
 
     public func userValuesUpdated(userValues: UserValues) {
-        guard let webView = webView else {
-            return assertionFailure("Could not access webView")
+        if let webView {
+            broker?.push(method: "onUserValuesChanged", params: userValues, for: self, into: webView)
         }
-        broker?.push(method: "onUserValuesChanged", params: userValues, for: self, into: webView)
     }
 
     // MARK: - Private Methods

@@ -99,6 +99,12 @@ public struct UserValues: Codable {
 
 final class DuckPlayerSettings {
     
+    var appSettings: AppSettings
+    
+    init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
+        self.appSettings = appSettings
+    }
+    
     public struct OriginDomains {
         static let duckduckgo = "duckduckgo.com"
         static let youtubeWWW = "www.youtube.com"
@@ -108,9 +114,9 @@ final class DuckPlayerSettings {
     
     var mode: DuckPlayerMode {
         get {
-            AppDependencyProvider.shared.appSettings.duckPlayerMode
+            appSettings.duckPlayerMode
         } set {
-            AppDependencyProvider.shared.appSettings.duckPlayerMode = newValue
+            appSettings.duckPlayerMode = newValue
         }
     }
     
@@ -131,6 +137,7 @@ final class DuckPlayer {
     init(settings: DuckPlayerSettings = DuckPlayerSettings(), userValues: UserValues? = nil) {
         self.settings = settings
         self.userValues = userValues ?? UserValues(duckPlayerMode: settings.mode, askModeOverlayHidden: settings.askModeOverlayHidden)
+        registerForNotificationChanges()
     }
     
     // MARK: - Common Message Handlers
@@ -140,8 +147,10 @@ final class DuckPlayer {
             assertionFailure("DuckPlayer: expected JSON representation of UserValues")
             return nil
         }
+                
         settings.mode = userValues.duckPlayerMode
         settings.askModeOverlayHidden = userValues.askModeOverlayHidden
+        
         return userValues
     }
         
@@ -188,7 +197,6 @@ final class DuckPlayer {
     
     @objc private func updatePlayerMode(_ notification: Notification) {
         if let mode = notification.object as? DuckPlayerMode {
-            settings.mode = mode
             userValues = encodeUserValues()
         }
     }

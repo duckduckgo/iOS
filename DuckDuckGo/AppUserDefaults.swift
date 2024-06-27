@@ -390,7 +390,7 @@ public class AppUserDefaults: AppSettings {
             return .alwaysAsk
         }
         set {
-            // Here we set both the DuckPlayer mode and the overlayInteracte
+            // Here we set both the DuckPlayer mode and the duckPlayerAskModeOverlayHidden
             userDefaults?.set(newValue.stringValue, forKey: Keys.duckPlayerMode)
             userDefaults?.set(false, forKey: Keys.duckPlayerAskModeOverlayHidden)
             NotificationCenter.default.post(name: AppUserDefaults.Notifications.duckPlayerModeChanged,

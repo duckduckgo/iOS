@@ -349,7 +349,7 @@ class TabViewController: UIViewController {
         addTextSizeObserver()
         subscribeToEmailProtectionSignOutNotification()
         registerForDownloadsNotifications()
-
+        
         if #available(iOS 16.4, *) {
             registerForInspectableWebViewNotifications()
         }
@@ -358,6 +358,12 @@ class TabViewController: UIViewController {
         observeNetPConnectionStatusChanges()
 #endif
     }
+    
+    private func configureDuckPlayerUserScripts() {
+        userScripts?.youtubeOverlayScript?.webView = webView
+        userScripts?.youtubePlayerUserScript?.webView = webView
+    }
+    
     
     @available(iOS 16.4, *)
     private func registerForInspectableWebViewNotifications() {
@@ -2319,12 +2325,14 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
         userScripts.loginFormDetectionScript?.delegate = self
         userScripts.autoconsentUserScript.delegate = self
-
+        userScripts.youtubeOverlayScript?.webView = webView
+        userScripts.youtubePlayerUserScript?.webView = webView
+        
         performanceMetrics = PerformanceMetricsSubfeature(targetWebview: webView)
         userScripts.contentScopeUserScriptIsolated.registerSubfeature(delegate: performanceMetrics!)
 
         adClickAttributionLogic.onRulesChanged(latestRules: ContentBlocking.shared.contentBlockingManager.currentRules)
-
+        
         let tdsKey = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
         let notificationsTriggeringReload = [
             PreserveLogins.Notifications.loginDetectionStateChanged,

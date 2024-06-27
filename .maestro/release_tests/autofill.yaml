@@ -41,8 +41,29 @@ tags:
 - pressKey: Enter
 
 # Validate it was saved 
+- assertVisible: "Passwords"
 - assertVisible: "privacy-test-pages.site"
 - assertVisible: "test@example.com"
+
+- tapOn: "Close"
+
+# Validate it will be prompted
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://privacy-test-pages.site/autofill/autoprompt/1-standard-login-form.html"
+- pressKey: Enter
+
+- assertVisible: "Use a saved password?"
+- assertVisible: "test@example.com"
+- tapOn: "test@example.com"
+
+- assertVisible: "Unlock to use saved password"
+- inputText: "passcode"
+- pressKey: Enter
+
+- assertVisible: "Submitted!"
 
 ## Others
 

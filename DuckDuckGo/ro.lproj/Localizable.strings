@@ -245,7 +245,7 @@
 "autocomplete.history.search.duckduckgo" = "Căutare DuckDuckGo";
 
 /* The message text shown in suggestions */
-"autocomplete.history.warning.message" = "Sugestiile includ acum site-uri vizitate recent. Acestea sunt stocate pe dispozitivul tău și niciodată pe serverele DuckDuckGo. Dezactivează-le din setări sau șterge-le în orice moment cu ajutorul Fire Button 🔥.";
+"autocomplete.history.warning.message" = "Sugestiile de căutare includ acum site-urile accesate recent. Dezactivează-le din Setări sau șterge-le în orice moment cu ajutorul Fire Button 🔥.";
 
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Aceeași confidențialitate.\nSugestii de căutare mai bune!";
@@ -1799,10 +1799,16 @@
 "settings.associated.apps.description" = "Dezactivează pentru a preveni deschiderea automată a linkurilor în alte aplicații instalate.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Afișează sugestiile de completare automată";
+"settings.autocomplete" = "Sugestii de căutare";
 
 /* Settings label for enabling or disabling recently visited sites */
 "settings.autocomplete.recentlyvisited" = "Site-uri vizitate recent";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Afișează site-urile accesate recent în sugestiile de căutare. Site-urile accesate recent sunt private, stocate doar pe dispozitiv și pot fi șterse cu Fire Button.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Afișează sugestii de căutare, inclusiv marcajele tale, pe măsură ce tastezi. Toate căutările sunt private.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Blocarea aplicației";

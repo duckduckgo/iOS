@@ -654,8 +654,7 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
 
     @MainActor
     private func refreshMetadata() async {
-        let collector = DefaultVPNMetadataCollector(statusObserver: AppDependencyProvider.shared.connectionObserver,
-                                                    tokenStore: AppDependencyProvider.shared.networkProtectionKeychainTokenStore)
+        let collector = DefaultVPNMetadataCollector(statusObserver: AppDependencyProvider.shared.connectionObserver)
         self.vpnMetadata = await collector.collectMetadata()
         self.tableView.reloadData()
     }

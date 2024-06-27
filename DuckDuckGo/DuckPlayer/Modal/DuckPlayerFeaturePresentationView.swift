@@ -20,19 +20,20 @@
 import SwiftUI
 import DesignResourcesKit
 import DuckUI
+import Lottie
 
 struct DuckPlayerFeaturePresentationView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
+    @State private var isAnimating: Bool = false
+    var dismisPresentation: (() -> Void)?
 
     var body: some View {
         ZStack {
 
             VStack(alignment: .center, spacing: stackVerticalSpacing) {
-                Image(systemName: "video")
-                    .frame(width: Constants.heroImageSize.width, height: Constants.heroImageSize.height)
-                    .background(Color.red)
-
+                animation
+                
                 Text(UserText.duckPlayerPresentationModalTitle)
                     .daxTitle2()
                     .multilineTextAlignment(.center)
@@ -51,8 +52,9 @@ struct DuckPlayerFeaturePresentationView: View {
                     .buttonStyle(PrimaryButtonStyle())
                     .frame(maxWidth: 310)
             }
-            .padding(.horizontal, 20)
+            .padding(.horizontal, 30)
             .padding(.top, contentVerticalPadding)
+            .padding(.bottom)
 
             VStack {
                 HStack {
@@ -63,16 +65,29 @@ struct DuckPlayerFeaturePresentationView: View {
                             .daxBodyRegular()
                             .frame(width: 30, height: 30)
                     }
+                    .padding(8)
                 }
                 Spacer()
             }
         }
-        .padding()
         .background(Color(designSystemColor: .backgroundSheets))
     }
 
-    func dismissButtonTapped() {
-        print("Dismiss")
+    private func dismissButtonTapped() {
+        dismisPresentation?()
+    }
+
+    @ViewBuilder
+    private var animation: some View {
+        LottieView(lottieFile: "DuckPlayer-ModalAnimation",
+                   isAnimating: $isAnimating)
+        .frame(width: Constants.heroImageSize.width, height: Constants.heroImageSize.height)
+        .cornerRadius(8)
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                isAnimating = true
+            }
+        }
     }
 }
 
@@ -81,7 +96,6 @@ extension DuckPlayerFeaturePresentationView {
     enum Constants {
         static let heroImageSize: CGSize = .init(width: 302, height: 180)
     }
-
 
     private var isSpaceConstrained: Bool {
         verticalSizeClass == .compact
@@ -97,9 +111,9 @@ extension DuckPlayerFeaturePresentationView {
 
     private var contentVerticalPadding: CGFloat {
         if isSpaceConstrained {
-            return 0
+            return 4
         } else {
-            return 50
+            return 40
         }
     }
 }

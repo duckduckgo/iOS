@@ -27,6 +27,10 @@ struct DuckPlayerModalPresenter {
         let hostingController = createHostingController()
         configurePresentationStyle(for: hostingController, on: viewController)
         viewController.present(hostingController, animated: true, completion: nil)
+        
+        hostingController.rootView.dismisPresentation = {
+            viewController.dismiss(animated: true)
+        }
     }
 
     private func createHostingController() -> UIHostingController<DuckPlayerFeaturePresentationView> {

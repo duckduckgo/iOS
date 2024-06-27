@@ -23,12 +23,6 @@ import SwiftUI
 
 struct DuckPlayerModalPresenter {
 
-    func presentDuckPlayerFeatureModalIfNecessary(on viewController: UIViewController, url: URL) {
-        // Add flag to know if this was presented before
-        guard url.isYoutubeMain else { return }
-        presentDuckPlayerFeatureModal(on: viewController)
-    }
-
     func presentDuckPlayerFeatureModal(on viewController: UIViewController) {
         let hostingController = createHostingController()
         configurePresentationStyle(for: hostingController, on: viewController)

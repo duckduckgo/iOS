@@ -245,7 +245,7 @@
 "autocomplete.history.search.duckduckgo" = "DuckDuckGo'da Ara";
 
 /* The message text shown in suggestions */
-"autocomplete.history.warning.message" = "Öneriler artık son ziyaret edilen siteleri de içeriyor. Bunlar cihazınızda saklanır, hiçbir zaman DuckDuckGo'nun sunucularında saklanmaz. Bunları ayarlardan kapatabilir veya 🔥 Fire Button ile istediğiniz zaman temizleyebilirsiniz.";
+"autocomplete.history.warning.message" = "Arama önerileri artık son ziyaret ettiğiniz siteleri de içeriyor. Ayarlardan kapatabilir veya istediğiniz zaman 🔥 Fire Button ile temizleyebilirsiniz.";
 
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Aynı gizlilik.\nDaha iyi arama önerileri!";
@@ -1799,10 +1799,16 @@
 "settings.associated.apps.description" = "Bağlantıların yüklenmiş olan diğer uygulamalarda otomatik olarak açılmasını önlemek için devre dışı bırakın.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Otomatik Tamamlama Önerileri";
+"settings.autocomplete" = "Arama Önerileri";
 
 /* Settings label for enabling or disabling recently visited sites */
 "settings.autocomplete.recentlyvisited" = "Son Ziyaret Edilen Siteler";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Son ziyaret edilen siteleri arama önerilerinde göster. Son ziyaret edilen siteler özeldir, yalnızca cihazınızda saklanır ve Fire Button ile temizlenebilir.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Yazarken yer imleriniz de dahil olmak üzere arama önerilerini gösterin. Tüm aramalar özeldir.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Uygulama Kilidi";

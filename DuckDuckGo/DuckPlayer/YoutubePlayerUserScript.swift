@@ -22,15 +22,29 @@ import Common
 import UserScript
 
 final class YoutubePlayerUserScript: NSObject, Subfeature {
-
+    
+    private var duckPlayer: DuckPlayer
+    
+    struct Constants {
+        static let featureName = "duckPlayerPage"
+    }
+    
+    struct Handlers {
+        static let setUserValues = "setUserValues"
+        static let getUserValues = "getUserValues"
+        static let initialSetup = "initialSetup"
+    }
+    
+    init(duckPlayer: DuckPlayer) {
+        self.duckPlayer = duckPlayer
+    }
+    
     weak var broker: UserScriptMessageBroker?
     weak var webView: WKWebView?
-
-    var isEnabled: Bool = false
-
-    // this isn't an issue to be set to 'all' because the page
+    
+    // Allow all origins as this is a 'specialPage'
     public let messageOriginPolicy: MessageOriginPolicy = .all
-    public let featureName: String = "duckPlayerPage"
+    public let featureName: String = Constants.featureName
 
     // MARK: - Subfeature
 
@@ -38,22 +52,14 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
         self.broker = broker
     }
 
-    // MARK: - MessageNames
-
-    enum MessageNames: String, CaseIterable {
-        case setUserValues
-        case getUserValues
-        case initialSetup
-    }
-
     func handler(forMethodNamed methodName: String) -> Subfeature.Handler? {
-        switch MessageNames(rawValue: methodName) {
-        case .getUserValues:
-            return DuckPlayer.shared.handleGetUserValues
-        case .setUserValues:
-            return DuckPlayer.shared.handleSetUserValuesMessage(from: .duckPlayer)
-        case .initialSetup:
-            return DuckPlayer.shared.initialSetup(with: webView)
+        switch methodName {
+        case Handlers.getUserValues:
+            return duckPlayer.getUserValues
+        case Handlers.setUserValues:
+            return duckPlayer.setUserValues
+        case Handlers.initialSetup:
+            return duckPlayer.initialSetup
         default:
             assertionFailure("YoutubePlayerUserScript: Failed to parse User Script message: \(methodName)")
             return nil

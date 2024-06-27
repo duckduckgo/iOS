@@ -1163,9 +1163,8 @@ But if you *do* want a peek under the hood, you can find more information about 
     
     // Duck Player
     public static let duckPlayerAlwaysEnabledLabel = NSLocalizedString("duckPlayer.alwaysEnabled.label", value: "Always", comment: "Text displayed when DuckPlayer is always enabled")
-    public static let duckPlayerAskLabel = NSLocalizedString("duckPlayer.ask.label", value: "Always", comment: "Text displayed when DuckPlayer is in 'Ask' mode.")
-    public static let duckPlayerDisabledLabel = NSLocalizedString("duckPlayer.never.label", value: "Always", comment: "Text displayed when DuckPlayer is in off.")
-
+    public static let duckPlayerAskLabel = NSLocalizedString("duckPlayer.ask.label", value: "Ask every time", comment: "Text displayed when DuckPlayer is in 'Ask' mode.")
+    public static let duckPlayerDisabledLabel = NSLocalizedString("duckPlayer.never.label", value: "Never", comment: "Text displayed when DuckPlayer is in off.")
     public static let settingsOpenVideosInDuckPlayerLabel = NSLocalizedString("duckplayer.settings.open-videos-in", value: "Open Videos in Duck Player", comment: "Settings screen cell text for DuckPlayer settings")
     public static let settingsDuckPlayerTitle = NSLocalizedString("duckplayer.settings.title", value: "Duck Player", comment: "Settings screen cell text for DuckPlayer settings")
 
@@ -1173,6 +1172,5 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsDuckPlayerFooter = NSLocalizedString("duckplayer.settings.footer", value: "DuckDuckGo provides all the privacy essentials you need to protect yourself as you browse the web.", comment: "Footer label in the settings screen for Duck Player")
     public static let settingsDuckPlayerLearnMore = NSLocalizedString("duckplayer.settings.learn-more", value: "Learn More", comment: "Button that takes the user to learn more about Duck Player.")
     public static let settingsDuckPlayerInfoText = NSLocalizedString("duckplayer.settings.info-text", value: "Duck Player provides a clean viewing experience without personalized ads and prevents viewing activity from influencing your YouTube recommendations.", comment: "Text explaining what Duck Player is in the settings screen.")
-
 
 }

@@ -872,10 +872,10 @@
 "duckPlayer.alwaysEnabled.label" = "Always";
 
 /* Text displayed when DuckPlayer is in 'Ask' mode. */
-"duckPlayer.ask.label" = "Always";
+"duckPlayer.ask.label" = "Ask every time";
 
 /* Text displayed when DuckPlayer is in off. */
-"duckPlayer.never.label" = "Always";
+"duckPlayer.never.label" = "Never";
 
 /* Footer label in the settings screen for Duck Player */
 "duckplayer.settings.footer" = "DuckDuckGo provides all the privacy essentials you need to protect yourself as you browse the web.";

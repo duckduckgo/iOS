@@ -245,7 +245,7 @@
 "autocomplete.history.search.duckduckgo" = "Przeszukaj DuckDuckGo";
 
 /* The message text shown in suggestions */
-"autocomplete.history.warning.message" = "Obecnie sugestie obejmują ostatnio odwiedzone witryny. Są one przechowywane na Twoim urządzeniu, nigdy na serwerach DuckDuckGo. Możesz je wyłączyć w ustawieniach lub w każdej chwili wyczyścić za pomocą przycisku 🔥 Fire Button.";
+"autocomplete.history.warning.message" = "Obecnie sugestie wyszukiwania obejmują ostatnio odwiedzone witryny. Możesz je wyłączyć w ustawieniach lub w każdej chwili wyczyścić za pomocą przycisku 🔥 Fire Button.";
 
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Ta sama prywatność.\nLepsze sugestie podczas wyszukiwania!";
@@ -1799,10 +1799,16 @@
 "settings.associated.apps.description" = "Wyłącz, aby uniemożliwić automatyczne otwieranie łączy w innych zainstalowanych aplikacjach.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Pokaż sugestie autouzupełniania";
+"settings.autocomplete" = "Sugestie wyszukiwania";
 
 /* Settings label for enabling or disabling recently visited sites */
 "settings.autocomplete.recentlyvisited" = "Ostatnio odwiedzone witryny";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Pokaż ostatnio odwiedzone witryny w sugestiach wyszukiwania. Ostatnio odwiedzane witryny są prywatne, przechowywane tylko na Twoim urządzeniu i można je wyczyścić za pomocą funkcji Fire Button.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Wyświetlaj sugestie wyszukiwania podczas wpisywania, łącznie z zakładkami. Wszystkie wyszukiwania są prywatne.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Blokada aplikacji";

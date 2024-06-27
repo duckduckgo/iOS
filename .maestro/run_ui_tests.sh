@@ -61,34 +61,36 @@ run_flow() {
 
 check_is_root
 
+if [ ! -f "$device_uuid_path" ]; then
+	fail "Please run setup-ui-tests.sh first"
+fi
+
 # Parse command line arguments
 while [[ "$#" -gt 0 ]]; do
     case $1 in
-        --run-flow) run_flow=1; run_flow_file="$2"; shift ;;
-        --flow-location) flow_location="$2"; shift ;;
+        --run-flow) 
+			run_flow=1 
+			run_flow_file="$2"
+			if [ ! -f $run_flow_file ]; then
+				fail "$run_flow_file is not a file"
+			fi
+
+			shift ;;
+        --flow-location) 
+			flow_location="$2"
+			if [ ! -d "$flow_location" ]; then
+				fail "Invalid flow location $flow_location, use --flow-location .maestro/flow_folder "
+			fi
+			shift ;;
         *) fail "Unknown parameter passed: $1" ;;
     esac
     shift
 done
 
-if [ ! -d "$flow_location" ]; then
-	fail "Invalid flow location $flow_location, use --flow-location .maestro/flow_folder "
-fi
-
-if [ -n "$run_flow" ]; then
-	if [ ! -f $run_flow_file ]; then
-		fail "$run_flow_file is not a file"
-	fi
-fi
-
 # Run the selected tests
 
 echo
 echo "ℹ️ Running UI tests"
-
-if [ ! -f "$device_uuid_path" ]; then
-	fail "Please run scripts/setup-ui-tests.sh first"
-fi
 
 device_uuid=$(cat $device_uuid_path)
 echo "ℹ️ using device $device_uuid"

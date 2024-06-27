@@ -22,38 +22,15 @@ import DesignResourcesKit
 import DuckUI
 
 struct DuckPlayerFeaturePresentationView: View {
-
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
-
-    private let heroImageSize: CGSize = .init(width: 302, height: 180)
-
-    private var isSpaceConstrained: Bool {
-        horizontalSizeClass == .compact && verticalSizeClass == .compact
-    }
-
-    private var stackVerticalSpacing: CGFloat {
-        if isSpaceConstrained {
-            return 5
-        } else {
-            return 22
-        }
-    }
-
-    private var contentVerticalPadding: CGFloat {
-        if isSpaceConstrained {
-            return 5
-        } else {
-            return 50
-        }
-    }
 
     var body: some View {
         ZStack {
 
             VStack(alignment: .center, spacing: stackVerticalSpacing) {
                 Image(systemName: "video")
-                    .frame(width: heroImageSize.width, height: heroImageSize.height)
+                    .frame(width: Constants.heroImageSize.width, height: Constants.heroImageSize.height)
                     .background(Color.red)
 
                 Text(UserText.duckPlayerPresentationModalTitle)
@@ -84,11 +61,11 @@ struct DuckPlayerFeaturePresentationView: View {
                         Image(systemName: "xmark")
                             .foregroundColor(Color(designSystemColor: .textPrimary))
                             .daxBodyRegular()
+                            .frame(width: 30, height: 30)
                     }
                 }
                 Spacer()
             }
-
         }
         .padding()
         .background(Color(designSystemColor: .backgroundSheets))
@@ -96,6 +73,34 @@ struct DuckPlayerFeaturePresentationView: View {
 
     func dismissButtonTapped() {
         print("Dismiss")
+    }
+}
+
+extension DuckPlayerFeaturePresentationView {
+
+    enum Constants {
+        static let heroImageSize: CGSize = .init(width: 302, height: 180)
+    }
+
+
+    private var isSpaceConstrained: Bool {
+        verticalSizeClass == .compact
+    }
+
+    private var stackVerticalSpacing: CGFloat {
+        if isSpaceConstrained {
+            return 5
+        } else {
+            return 22
+        }
+    }
+
+    private var contentVerticalPadding: CGFloat {
+        if isSpaceConstrained {
+            return 0
+        } else {
+            return 50
+        }
     }
 }
 

@@ -24,4 +24,5 @@ public enum NetworkProtectionNotificationIdentifier: String {
     case superseded = "network-protection.notification.superseded"
     case test = "network-protection.notification.test"
     case entitlement = "network-protection.notification.entitlement"
+    case snoozeEnded = "network-protection.notification.snooze-ended"
 }

@@ -78,7 +78,7 @@ final class NetworkProtectionDebugUtilities {
             return
         }
 
-        try? await activeSession.sendProviderMessage(.startSnooze(60))
+        try? await activeSession.sendProviderMessage(.startSnooze(15))
     }
 }
 

@@ -94,7 +94,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case shutDown
         case showEntitlementMessaging
         case resetEntitlementMessaging
-        case start60SecondSnooze
+        case start15SecondSnooze
     }
 
     enum NetworkPathRows: Int, CaseIterable {
@@ -388,8 +388,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             cell.textLabel?.text = "Show Entitlement Messaging"
         case .resetEntitlementMessaging:
             cell.textLabel?.text = "Reset Entitlement Messaging"
-        case .start60SecondSnooze:
-            cell.textLabel?.text = "Snooze For 60 Seconds"
+        case .start15SecondSnooze:
+            cell.textLabel?.text = "Snooze For 15 Seconds"
         case .none:
             break
         }
@@ -409,9 +409,9 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             UserDefaults.networkProtectionGroupDefaults.enableEntitlementMessaging()
         case .resetEntitlementMessaging:
             UserDefaults.networkProtectionGroupDefaults.resetEntitlementMessaging()
-        case .start60SecondSnooze:
+        case .start15SecondSnooze:
             Task {
-                try await NetworkProtectionDebugUtilities().startSnooze()
+                await NetworkProtectionDebugUtilities().startSnooze()
             }
         case .none:
             break

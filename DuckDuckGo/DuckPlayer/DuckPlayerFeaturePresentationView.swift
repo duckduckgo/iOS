@@ -22,77 +22,80 @@ import DesignResourcesKit
 import DuckUI
 
 struct DuckPlayerFeaturePresentationView: View {
-    var body: some View {
-            ZStack {
-                VStack(alignment: .center, spacing: stackVerticalSpacing) {
-                    Image(systemName: "video")
-                        .frame(width: heroImageSize.width, height: heroImageSize.height)
-                        .background(Color.red)
 
-                    Text(UserText.duckPlayerPresentationModalTitle)
-                        .daxTitle3()
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(Color(designSystemColor: .textPrimary))
-                        .minimumScaleFactor(0.8)
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
 
-                    Text(UserText.duckPlayerPresentationModalBody)
-                        .daxBodyRegular()
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(Color(designSystemColor: .textSecondary))
-                        .minimumScaleFactor(0.8)
+    private let heroImageSize: CGSize = .init(width: 302, height: 180)
 
-                    Button(UserText.duckPlayerPresentationModalDismissButton, action: dismissButtonTapped)
-                        .buttonStyle(PrimaryButtonStyle())
-                        .frame(maxWidth: 310)
-                }
-                .padding(.horizontal, 20)
-
-                VStack {
-                    HStack {
-                        Spacer()
-                        Button(action: dismissButtonTapped) {
-                            Image(systemName: "xmark")
-                                .foregroundColor(Color(designSystemColor: .textPrimary))
-                                .daxBodyRegular()
-                        }
-                    }
-                    Spacer()
-                }
-            }
-            .padding()
-
-            .background(Color(designSystemColor: .backgroundSheets))
-        }
-
-    func dismissButtonTapped() {
-        print("Dismiss")
-    }
-}
-
-extension DuckPlayerFeaturePresentationView {
-
-    private var canAdjustSizeDynamically: Bool {
-        if #available(iOS 16.0, *) {
-            return true
-        } else {
-            return false
-        }
-    }
-
-    private var heroImageSize: CGSize {
-        if canAdjustSizeDynamically {
-            return .init(width: 260, height: 180)
-        } else {
-            return .init(width: 240, height: 160)
-        }
+    private var isSpaceConstrained: Bool {
+        horizontalSizeClass == .compact && verticalSizeClass == .compact
     }
 
     private var stackVerticalSpacing: CGFloat {
-        if canAdjustSizeDynamically {
-            return 22
+        if isSpaceConstrained {
+            return 5
         } else {
-            return 18
+            return 22
         }
+    }
+
+    private var contentVerticalPadding: CGFloat {
+        if isSpaceConstrained {
+            return 5
+        } else {
+            return 50
+        }
+    }
+
+    var body: some View {
+        ZStack {
+
+            VStack(alignment: .center, spacing: stackVerticalSpacing) {
+                Image(systemName: "video")
+                    .frame(width: heroImageSize.width, height: heroImageSize.height)
+                    .background(Color.red)
+
+                Text(UserText.duckPlayerPresentationModalTitle)
+                    .daxTitle2()
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(Color(designSystemColor: .textPrimary))
+                    .minimumScaleFactor(0.8)
+
+                Text(UserText.duckPlayerPresentationModalBody)
+                    .daxBodyRegular()
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(Color(designSystemColor: .textSecondary))
+                    .minimumScaleFactor(0.8)
+
+                Spacer()
+
+                Button(UserText.duckPlayerPresentationModalDismissButton, action: dismissButtonTapped)
+                    .buttonStyle(PrimaryButtonStyle())
+                    .frame(maxWidth: 310)
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, contentVerticalPadding)
+
+            VStack {
+                HStack {
+                    Spacer()
+                    Button(action: dismissButtonTapped) {
+                        Image(systemName: "xmark")
+                            .foregroundColor(Color(designSystemColor: .textPrimary))
+                            .daxBodyRegular()
+                    }
+                }
+                Spacer()
+            }
+
+        }
+        .padding()
+        .background(Color(designSystemColor: .backgroundSheets))
+    }
+
+    func dismissButtonTapped() {
+        print("Dismiss")
     }
 }
 

@@ -21,17 +21,19 @@ import Common
 import UIKit
 import Core
 
-class AppIconManager {
+final class AppIconManager {
 
     static var shared = AppIconManager()
+    
+    private init() {}
 
     var isAppIconChangeSupported: Bool {
         UIApplication.shared.supportsAlternateIcons
     }
 
-    func changeAppIcon(_ appIcon: AppIcon, completionHandler: ((Error?) -> Void)? = nil) {
+    func changeAppIcon(_ appIcon: AppIcon, completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
         if self.appIcon == appIcon {
-            completionHandler?(nil)
+            completionHandler?(.success(()))
             return
         }
 
@@ -39,9 +41,9 @@ class AppIconManager {
         UIApplication.shared.setAlternateIconName(alternateIconName) { error in
             if let error = error {
                 os_log("Error while changing app icon: %s", log: .generalLog, type: .debug, error.localizedDescription)
-                completionHandler?(error)
+                completionHandler?(.failure(error))
             } else {
-                completionHandler?(nil)
+                completionHandler?(.success(()))
             }
         }
     }

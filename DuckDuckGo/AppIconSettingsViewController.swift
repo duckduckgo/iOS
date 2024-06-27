@@ -80,15 +80,15 @@ class AppIconWorker {
     public func changeAppIcon(_ appIcon: AppIcon,
                               completion: @escaping (_ success: Bool) -> Void) {
         AppIconManager.shared.changeAppIcon(appIcon) { error in
-            guard error == nil else {
+            switch error {
+            case .success:
                 DispatchQueue.main.async {
                     completion(true)
                 }
-                return
-            }
-
-            DispatchQueue.main.async {
-                completion(false)
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    completion(false)
+                }
             }
         }
     }

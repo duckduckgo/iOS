@@ -70,6 +70,16 @@ final class NetworkProtectionDebugUtilities {
         }
         try? await activeSession.sendProviderMessage(message)
     }
+
+    // MARK: - Snooze
+
+    func startSnooze() async {
+        guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+            return
+        }
+
+        try? await activeSession.sendProviderMessage(.startSnooze(60))
+    }
 }
 
 private extension NetworkProtectionSimulationOption {

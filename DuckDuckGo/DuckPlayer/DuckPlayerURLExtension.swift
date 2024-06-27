@@ -54,11 +54,6 @@ extension URL {
         guard let host else { return false }
         return host.contains("youtube.com") && path == "/watch"
     }
-    
-    var isYoutubeMain: Bool {
-        guard let host else { return false }
-        return host.contains("youtube.com") && path == "/"
-    }
 
     private var isYoutubeNoCookie: Bool {
         host == "www.youtube-nocookie.com" && pathComponents.count == 3 && pathComponents[safe: 1] == "embed"

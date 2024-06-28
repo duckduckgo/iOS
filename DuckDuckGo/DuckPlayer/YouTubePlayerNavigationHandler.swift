@@ -98,7 +98,7 @@ final class YoutubePlayerNavigationHandler {
 }
 
 extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
-    
+
     // Handle rendering the simulated request if the URL is duck://
     // and DuckPlayer is either enabled or alwaysAsk
     @MainActor

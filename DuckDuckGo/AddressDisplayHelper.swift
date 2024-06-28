@@ -82,7 +82,7 @@ extension OmniBar {
         private static func getDuckPlayerURL(url: URL, showsFullURL: Bool) -> NSAttributedString? {
             if !showsFullURL {
                 return NSAttributedString(
-                    string: "Duck Player",
+                    string: UserText.duckPlayerFeatureName,
                     attributes: [.foregroundColor: ThemeManager.shared.currentTheme.searchBarTextColor])
             } else {
                 if let (videoID, _) = url.youtubeVideoParams {

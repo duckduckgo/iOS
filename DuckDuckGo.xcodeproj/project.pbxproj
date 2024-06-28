@@ -9829,8 +9829,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = exactVersion;
-				version = 162.0.0;
+				branch = "michal/signout-on-401";
+				kind = branch;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

@@ -22,12 +22,12 @@ import SwiftUI
 struct EmptyStateFavoritesView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     
-    @State var padding: CGFloat = 10
+    @State var headerPadding: CGFloat = 10
 
     var body: some View {
             VStack(spacing: 16) {
                 FavoritesSectionHeader()
-                    .padding(.horizontal, padding)
+                    .padding(.horizontal, headerPadding)
 
                 NewTabPageGridView { placeholdersCount in
                     let placeholders = (0..<placeholdersCount).map { $0 }
@@ -46,7 +46,7 @@ struct EmptyStateFavoritesView: View {
                     let allColumnsWidth = columnsCount * NewTabPageGrid.Item.edgeSize
                     let leftoverWidth = fullWidth - allColumnsWidth
                     let spacingSize = leftoverWidth / (columnsCount)
-                    self.padding = spacingSize / 2
+                    self.headerPadding = spacingSize / 2
                 })
             }
     }

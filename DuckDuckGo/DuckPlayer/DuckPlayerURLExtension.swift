@@ -49,12 +49,12 @@ extension URL {
     var isDuckURLScheme: Bool {
         navigationalScheme == .duck
     }
-    
+
     private var isYoutubeWatch: Bool {
         guard let host else { return false }
         return host.contains("youtube.com") && path == "/watch"
     }
-    
+
     private var isYoutubeNoCookie: Bool {
         host == "www.youtube-nocookie.com" && pathComponents.count == 3 && pathComponents[safe: 1] == "embed"
     }

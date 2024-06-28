@@ -495,6 +495,7 @@ public struct UserText {
     static let netPStatusViewLocation = NSLocalizedString("network.protection.status.view.location", value: "Location", comment: "Location label shown in NetworkProtection's status view.")
     static let netPStatusViewIPAddress = NSLocalizedString("network.protection.status.view.ip.address", value: "IP Address", comment: "IP Address label shown in NetworkProtection's status view.")
     static let netPStatusViewConnectionDetails = NSLocalizedString("network.protection.status.view.connection.details", value: "Connection Details", comment: "Connection details label shown in NetworkProtection's status view.")
+    static let netPStatusViewCustomDNS = NSLocalizedString("network.protection.status.view.custom.dns", value: "DNS Server", comment: "Custom DNS label shown in NetworkProtection's status view.")
     static let netPStatusViewSettingsSectionTitle = NSLocalizedString("network.protection.status.view.settings.section.title", value: "Manage", comment: "Label shown on the title of the settings section in NetworkProtection's status view.")
     static let netPVPNSettingsTitle = NSLocalizedString("network.protection.vpn.settings.title", value: "VPN Settings", comment: "Title for the VPN Settings screen.")
     static let netPVPNSettingsFAQ = NSLocalizedString("network.protection.vpn.settings.faq", value: "FAQs and Support", comment: "Title for the FAQ row in the VPN status screen.")
@@ -523,11 +524,13 @@ public struct UserText {
     static let vpnDataVolume = NSLocalizedString("network.protection.vpn.data-volume", value: "Data Volume", comment: "Title for the data volume section in the VPN status screen")
     static let vpnAbout = NSLocalizedString("network.protection.vpn.about", value: "About", comment: "Title of the About section in the VPN status screen")
     static let netPExcludeLocalNetworksSettingTitle = NSLocalizedString("network.protection.vpn.exclude.local.networks.setting.title", value: "Exclude Local Networks", comment: "Title for the Exclude Local Networks setting item.")
+    static let netPExcludeLocalNetworksSettingHeader = NSLocalizedString("network.protection.vpn.exclude.local.networks.setting.header", value: "General", comment: "Header text for the Exclude Local Networks setting item.")
     static let netPExcludeLocalNetworksSettingFooter = NSLocalizedString("network.protection.vpn.exclude.local.networks.setting.footer", value: "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.", comment: "Footer text for the Exclude Local Networks setting item.")
-    static let netPSecureDNSSettingFooter = NSLocalizedString("network.protection.vpn.secure.dns.setting.footer", value: "Our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.", comment: "Footer text for the Always on VPN setting item.")
+    static let netPSecureDNSSettingFooter = NSLocalizedString("network.protection.vpn.secure.dns.setting.footer", value: "DuckDuckGo routes DNS queries through our DNS servers so your internet provider can't see what websites you visit.", comment: "Footer text for the DNS server setting item.")
     static let netPTurnOnNotificationsButtonTitle = NSLocalizedString("network.protection.turn.on.notifications.button.title", value: "Turn On Notifications", comment: "Title for the button to link to the iOS app settings and enable notifications app-wide.")
     static let netPTurnOnNotificationsSectionFooter = NSLocalizedString("network.protection.turn.on.notifications.section.footer", value: "Allow DuckDuckGo to notify you if your connection drops or VPN status changes.", comment: "Footer text under the button to link to the iOS app settings and enable notifications app-wide.")
-    static let netPVPNAlertsToggleTitle = NSLocalizedString("network.protection.vpn.alerts.toggle.title", value: "VPN Alerts", comment: "Title for the toggle for VPN alerts.")
+    static let netPVPNAlertsSectionHeader = NSLocalizedString("network.protection.vpn.alerts.section.header", value: "Notifications", comment: "Section header for the toggle for VPN notifications.")
+    static let netPVPNAlertsToggleTitle = NSLocalizedString("network.protection.vpn.alerts.toggle.title", value: "VPN Notifications", comment: "Title for the toggle for VPN notifications.")
     static let netPVPNAlertsToggleSectionFooter = NSLocalizedString("network.protection.vpn.alerts.toggle.section.footer", value: "Get notified if your connection drops or VPN status changes.", comment: "List section footer for the toggle for VPN alerts.")
     static let netPFrequentlyAskedQuestionsTitle = NSLocalizedString("network.protection.faq.title", value: "DuckDuckGo VPN FAQ", comment: "Title for the VPN FAQ screen.")
 
@@ -576,6 +579,18 @@ public struct UserText {
 
     public static let vpnSettingsAddWidget = NSLocalizedString("vpn.settings.add.widget", value: "Add VPN Widget to Home Screen", comment: "VPN settings screen cell text for adding the VPN widget to the home screen")
     public static let addVPNWidgetSettingsThirdParagraph = NSLocalizedString("vpn.addWidget.settings.title", value: "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.", comment: "Title for the VPN widget onboarding screen")
+
+    // MARK: Custom DNS
+
+    public static let vpnSettingDNSSectionHeader = NSLocalizedString("vpn.settings.dns.section-header", value: "DNS", comment: "Header text for the DNS section on the VPN Settings screen")
+    public static let vpnSettingDNSServerTitle = NSLocalizedString("vpn.settings.dns.server.title", value: "DNS Server", comment: "Title for the DNS Server row on the VPN Settings screen")
+    public static var vpnSettingDNSSectionDisclaimer = NSLocalizedString("vpn.settings.dns.section-disclaimer", value: "Using a custom DNS server can impact browsing speeds and expose your activity to third parties if the server isn't secure or reliable.", comment: "Disclaimer for the DNS Server section on the DNS Server screen")
+    public static let vpnSettingDNSServerDefaultValue = NSLocalizedString("vpn.settings.dns.server.default.value", value: "DuckDuckGo", comment: "Default value for the DNS Server row on the VPN Settings screen")
+    public static let vpnSettingDNSServerOptionRecommended = NSLocalizedString("vpn.settings.dns.server.option.default", value: "DuckDuckGo (Recommended)", comment: "Recommended option for the DNS Server setting")
+    public static let vpnSettingDNSServerOptionCustom = NSLocalizedString("vpn.settings.dns.server.option.custom", value: "Custom", comment: "Custom option for the DNS Server setting")
+    public static let vpnSettingDNSServerIPv4Title = NSLocalizedString("vpn.settings.dns.server.ipv4.title", value: "IPv4 Address", comment: "Title for the IPv4 Address setting")
+    public static let vpnSettingDNSServerScreenTitle = NSLocalizedString("vpn.settings.dns.server.screen.title", value: "DNS Server", comment: "Title for the DNS Server setting screen")
+    public static let vpnSettingDNSServerApplyButtonTitle = NSLocalizedString("vpn.settings.dns.server.apply.button.title", value: "Apply", comment: "Title for the Apply button on the DNS Server setting screen")
 
     // MARK: Notifications
     
@@ -975,11 +990,13 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsCustomizeSection = NSLocalizedString("settings.customize", value: "Customize", comment: "Settings title for the customize section")
     public static let settingsKeyboard = NSLocalizedString("settings.keyboard", value: "Keyboard", comment: "Settings screen cell for Keyboard")
     public static let settingsPreviews = NSLocalizedString("settings.previews", value: "Long-Press Previews", comment: "Settings screen cell for long press previews")
-    public static let settingsAutocomplete = NSLocalizedString("settings.autocomplete", value: "Autocomplete Suggestions", comment: "Settings screen cell for autocomplete")
-    public static let settingsAutocompleteRecentlyVisited = NSLocalizedString("settings.autocomplete.recentlyvisited", value: "Recently Visited Sites", comment: "Settings label for enabling or disabling recently visited sites")
+    public static let settingsAutocompleteLabel = NSLocalizedString("settings.autocomplete", value: "Search Suggestions", comment: "Settings screen cell for autocomplete")
+    public static let settingsAutocompleteSubtitle = NSLocalizedString("settings.autocomplete.subtitle", value: "Show search suggestions as you type, including your bookmarks. All searches are private.", comment: "Subtitle for Search Suggestions setting")
 
-    // Hardcoded for the experiment
-    public static let settingsAutocompleteSubtitle = "See private search suggestions as you type, including your bookmarks and recently visited sites. Recent sites are only stored on your device and can be cleared with the Fire Button."
+    public static let settingsAutocompleteRecentlyVisitedLabel = NSLocalizedString("settings.autocomplete.recentlyvisited", value: "Recently Visited Sites", comment: "Settings label for enabling or disabling recently visited sites")
+
+    public static let settingsAutocompleteRecentlyVisitedSubtitle = NSLocalizedString("settings.autocomplete.recentlyvisited.subtitle", value: "Show recently visited sites in search suggestions. Recently visited sites are private, only stored on your device, and can be cleared with the Fire Button.", comment: "Settings label for enabling or disabling recently visited sites")
+
     public static let settingsVoiceSearch = NSLocalizedString("settings.voice.search", value: "Private Voice Search", comment: "Settings screen cell for voice search")
     public static let settingsAssociatedApps = NSLocalizedString("settings.associated.apps", value: "Open Links in Associated Apps", comment: "Settings screen cell for opening links in associated apps")
     public static let settingsAssociatedAppsDescription = NSLocalizedString("settings.associated.apps.description", value: "Disable to prevent links from automatically opening in other installed apps.", comment: "Description for associated apps description")
@@ -1124,7 +1141,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     // Autocomplete
     public static let autocompleteHistoryWarningTitle = NSLocalizedString("autocomplete.history.warning.title", value: "Same privacy.\nBetter search suggestions!", comment: "Title for message show in suggestions")
-    public static let autocompleteHistoryWarningDescription = NSLocalizedString("autocomplete.history.warning.message", value: "Suggestions now include recently visited sites. These are stored on your device and never on DuckDuckGo's servers. Turn off in settings, or clear any time with the 🔥 Fire Button.", comment: "The message text shown in suggestions")
+    public static let autocompleteHistoryWarningDescription = NSLocalizedString("autocomplete.history.warning.message", value: "Search suggestions now include your recently visited sites. Turn off in Settings, or clear anytime with the 🔥 Fire Button.", comment: "The message text shown in suggestions")
     public static let autocompleteSearchDuckDuckGo = NSLocalizedString("autocomplete.history.search.duckduckgo", value: "Search DuckDuckGo", comment: "Subtitle for search history items")
 
     // Site not working
@@ -1143,5 +1160,21 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let brokenSiteReportToggleAlertTitle = NSLocalizedString("broken.site.report.toggle.alert.title", value: "Did turning Privacy Protections off resolve the issue on this site?", comment: "An alert that appears after user turns off the privacy protection")
     public static let brokenSiteReportToggleAlertYesButton = NSLocalizedString("broken.site.report.toggle.alert.yes.button", value: "Yes", comment: "Button to answer question 'Did turning off protections resolve the issue on this site?'")
     public static let brokenSiteReportToggleAlertNoButton = NSLocalizedString("broken.site.report.toggle.alert.no.button", value: "No", comment: "Button to answer question 'Did turning off protections resolve the issue on this site?'")
+    
+    // Duck Player
+    public static let duckPlayerAlwaysEnabledLabel = NSLocalizedString("duckPlayer.alwaysEnabled.label", value: "Always", comment: "Text displayed when DuckPlayer is always enabled")
+    public static let duckPlayerAskLabel = NSLocalizedString("duckPlayer.ask.label", value: "Ask every time", comment: "Text displayed when DuckPlayer is in 'Ask' mode.")
+    public static let duckPlayerDisabledLabel = NSLocalizedString("duckPlayer.never.label", value: "Never", comment: "Text displayed when DuckPlayer is in off.")
+    public static let settingsOpenVideosInDuckPlayerLabel = NSLocalizedString("duckplayer.settings.open-videos-in", value: "Open Videos in Duck Player", comment: "Settings screen cell text for DuckPlayer settings")
+    public static let settingsDuckPlayerTitle = NSLocalizedString("duckplayer.settings.title", value: "Duck Player", comment: "Settings screen cell text for DuckPlayer settings")
+
+    public static let settingsOpenVideosInDuckPlayerTitle = NSLocalizedString("duckplayer.settings.title", value: "Duck Player", comment: "Settings screen cell text for DuckPlayer settings")
+    public static let settingsDuckPlayerFooter = NSLocalizedString("duckplayer.settings.footer", value: "DuckDuckGo provides all the privacy essentials you need to protect yourself as you browse the web.", comment: "Footer label in the settings screen for Duck Player")
+    public static let settingsDuckPlayerLearnMore = NSLocalizedString("duckplayer.settings.learn-more", value: "Learn More", comment: "Button that takes the user to learn more about Duck Player.")
+    public static let settingsDuckPlayerInfoText = NSLocalizedString("duckplayer.settings.info-text", value: "Duck Player provides a clean viewing experience without personalized ads and prevents viewing activity from influencing your YouTube recommendations.", comment: "Text explaining what Duck Player is in the settings screen.")
+
+    public static let duckPlayerPresentationModalTitle = NSLocalizedString("duckplayer.presentation.modal.title", value: "Drowning in ads on YouTube? Try Duck Player!", comment: "Two line title (separated by \n) for the feature explanation")
+    public static let duckPlayerPresentationModalBody = NSLocalizedString("duckplayer.presentation.modal.body", value: "Duck Player lets you watch YouTube without targeted ads in a theater-like experience in DuckDuckGo and what you watch won’t influence your recommendations.", comment: "Body text for the modal feature explanation")
+    public static let duckPlayerPresentationModalDismissButton = NSLocalizedString("duckplayer.presentation.modal.dismiss-button", value: "Got it!", comment: "Button that will dismiss the modal")
 
 }

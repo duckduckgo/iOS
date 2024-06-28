@@ -95,7 +95,7 @@ import WebKit
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
     private var privacyConfigCustomURL: String?
 
-    var accountManager: AccountManaging {
+    var accountManager: AccountManager {
         AppDependencyProvider.shared.accountManager
     }
 
@@ -319,7 +319,7 @@ import WebKit
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
 
-        RemoteMessaging.registerBackgroundRefreshTaskHandler(
+        RemoteMessagingClient.registerBackgroundRefreshTaskHandler(
             bookmarksDatabase: bookmarksDatabase,
             favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
         )
@@ -546,8 +546,6 @@ import WebKit
             return
         }
 
-        let isConnected = await AppDependencyProvider.shared.networkProtectionTunnelController.isConnected
-
         await AppDependencyProvider.shared.networkProtectionTunnelController.stop()
         await AppDependencyProvider.shared.networkProtectionTunnelController.removeVPN()
     }
@@ -555,8 +553,8 @@ import WebKit
     func updateSubscriptionStatus() {
         Task {
             guard let token = accountManager.accessToken else { return }
-            var subscriptionService: SubscriptionService {
-                AppDependencyProvider.shared.subscriptionManager.subscriptionService
+            var subscriptionService: SubscriptionEndpointService {
+                AppDependencyProvider.shared.subscriptionManager.subscriptionEndpointService
             }
             if case .success(let subscription) = await subscriptionService.getSubscription(accessToken: token,
                                                                                            cachePolicy: .reloadIgnoringLocalCacheData) {
@@ -644,7 +642,7 @@ import WebKit
 
     private func refreshRemoteMessages() {
         Task {
-            try? await RemoteMessaging.fetchAndProcess(
+            try? await RemoteMessagingClient.fetchAndProcess(
                 bookmarksDatabase: self.bookmarksDatabase,
                 favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
             )
@@ -760,9 +758,9 @@ import WebKit
                 AppConfigurationFetch.scheduleBackgroundRefreshTask()
             }
 
-            let hasRemoteMessageFetchTask = tasks.contains { $0.identifier == RemoteMessaging.Constants.backgroundRefreshTaskIdentifier }
+            let hasRemoteMessageFetchTask = tasks.contains { $0.identifier == RemoteMessagingClient.Constants.backgroundRefreshTaskIdentifier }
             if !hasRemoteMessageFetchTask {
-                RemoteMessaging.scheduleBackgroundRefreshTask()
+                RemoteMessagingClient.scheduleBackgroundRefreshTask()
             }
         }
     }
@@ -849,7 +847,7 @@ import WebKit
                 mainViewController?.clearNavigationStack()
                 // Give the `clearNavigationStack` call time to complete.
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [weak self] in
-                    self?.mainViewController?.launchAutofillLogins(openSearch: true)
+                    self?.mainViewController?.launchAutofillLogins(openSearch: true, source: .appIconShortcut)
                 }
                 Pixel.fire(pixel: .autofillLoginsLaunchAppShortcut)
                 return
@@ -893,6 +891,7 @@ import WebKit
     private func setUpAutofillPixelReporter() {
         autofillPixelReporter = AutofillPixelReporter(
             userDefaults: .standard,
+            autofillEnabled: AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled,
             eventMapping: EventMapping<AutofillPixelEvent> {event, _, params, _ in
                 switch event {
                 case .autofillActiveUser:
@@ -901,6 +900,10 @@ import WebKit
                     Pixel.fire(pixel: .autofillEnabledUser)
                 case .autofillOnboardedUser:
                     Pixel.fire(pixel: .autofillOnboardedUser)
+                case .autofillToggledOn:
+                    Pixel.fire(pixel: .autofillToggledOn, withAdditionalParameters: params ?? [:])
+                case .autofillToggledOff:
+                    Pixel.fire(pixel: .autofillToggledOff, withAdditionalParameters: params ?? [:])
                 case .autofillLoginsStacked:
                     Pixel.fire(pixel: .autofillLoginsStacked, withAdditionalParameters: params ?? [:])
                 default:
@@ -908,6 +911,12 @@ import WebKit
                 }
             },
             installDate: StatisticsUserDefaults().installDate ?? Date())
+        
+        _ = NotificationCenter.default.addObserver(forName: AppUserDefaults.Notifications.autofillEnabledChange,
+                                                   object: nil,
+                                                   queue: nil) { [weak self] _ in
+            self?.autofillPixelReporter?.updateAutofillEnabledStatus(AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled)
+        }
     }
 
     @MainActor
@@ -918,7 +927,7 @@ import WebKit
             return
         }
 
-        if case .success(true) = await accountManager.hasEntitlement(for: .networkProtection, cachePolicy: .returnCacheDataDontLoad) {
+        if case .success(true) = await accountManager.hasEntitlement(forProductName: .networkProtection, cachePolicy: .returnCacheDataDontLoad) {
             let items = [
                 UIApplicationShortcutItem(type: ShortcutKey.openVPNSettings,
                                           localizedTitle: UserText.netPOpenVPNQuickAction,
@@ -1002,7 +1011,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 #if NETWORK_PROTECTION
     func presentNetworkProtectionStatusSettingsModal() {
         Task {
-            if case .success(let hasEntitlements) = await accountManager.hasEntitlement(for: .networkProtection),
+            if case .success(let hasEntitlements) = await accountManager.hasEntitlement(forProductName: .networkProtection),
                hasEntitlements {
                 if #available(iOS 15, *) {
                     let networkProtectionRoot = NetworkProtectionRootViewController()

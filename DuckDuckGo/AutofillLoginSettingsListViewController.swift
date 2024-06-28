@@ -27,6 +27,16 @@ import DesignResourcesKit
 import SwiftUI
 
 // swiftlint:disable file_length type_body_length
+
+enum AutofillSettingsSource: String {
+    case settings
+    case overflow = "overflow_menu"
+    case sync
+    case appIconShortcut = "app_icon_shortcut"
+    case homeScreenWidget = "home_screen_widget"
+    case lockScreenWidget = "lock_screen_widget"
+}
+
 protocol AutofillLoginSettingsListViewControllerDelegate: AnyObject {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController)
 }
@@ -165,7 +175,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
          syncService: DDGSyncing,
          syncDataProviders: SyncDataProviders,
          selectedAccount: SecureVaultModels.WebsiteAccount?,
-         openSearch: Bool = false) {
+         openSearch: Bool = false,
+         source: AutofillSettingsSource) {
         let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter())
         if secureVault == nil {
             os_log("Failed to make vault")
@@ -191,6 +202,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                     }
                 }
             }
+
+        Pixel.fire(pixel: .autofillManagementOpened, withAdditionalParameters: ["source": source.rawValue])
     }
     
     required init?(coder: NSCoder) {
@@ -420,6 +433,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             NotificationCenter.default.post(name: FireproofFaviconUpdater.deleteFireproofFaviconNotification,
                                             object: nil,
                                             userInfo: [FireproofFaviconUpdater.UserInfoKeys.faviconDomain: domain])
+            Pixel.fire(pixel: .autofillManagementDeleteLogin)
         })
     }
 
@@ -492,6 +506,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                     self.syncService.scheduler.notifyDataChanged()
                     self.viewModel.resetNeverPromptWebsites()
                     self.viewModel.updateData()
+                    Pixel.fire(pixel: .autofillManagementDeleteAllLogins)
                 }
             } else {
                 self.viewModel.undoClearAllAccounts()
@@ -882,6 +897,9 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
 
         if let account = account {
             showAccountDetails(account)
+            Pixel.fire(pixel: .autofillManagementSaveLogin)
+        } else {
+            Pixel.fire(pixel: .autofillManagementUpdateLogin)
         }
     }
 
@@ -919,11 +937,9 @@ extension AutofillLoginSettingsListViewController: ImportPasswordsViewController
 extension AutofillLoginSettingsListViewController: EnableAutofillSettingsTableViewCellDelegate {
     func enableAutofillSettingsTableViewCell(_ cell: EnableAutofillSettingsTableViewCell, didChangeSettings value: Bool) {
         if value {
-            Pixel.fire(pixel: .autofillLoginsSettingsEnabled,
-                       withAdditionalParameters: PixelExperiment.parameters)
+            Pixel.fire(pixel: .autofillLoginsSettingsEnabled)
         } else {
-            Pixel.fire(pixel: .autofillLoginsSettingsDisabled,
-                       withAdditionalParameters: PixelExperiment.parameters)
+            Pixel.fire(pixel: .autofillLoginsSettingsDisabled)
         }
         
         viewModel.isAutofillEnabledInSettings = value

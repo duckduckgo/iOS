@@ -24,6 +24,7 @@ import DDGSync
 import Subscription
 import SubscriptionTestingUtilities
 import NetworkProtection
+import RemoteMessaging
 @testable import DuckDuckGo
 
 class MockDependencyProvider: DependencyProvider {
@@ -42,8 +43,8 @@ class MockDependencyProvider: DependencyProvider {
     var userBehaviorMonitor: UserBehaviorMonitor
     var toggleProtectionsCounter: ToggleProtectionsCounter
     var subscriptionFeatureAvailability: SubscriptionFeatureAvailability
-    var subscriptionManager: SubscriptionManaging
-    var accountManager: AccountManaging
+    var subscriptionManager: SubscriptionManager
+    var accountManager: AccountManager
     var vpnFeatureVisibility: DefaultNetworkProtectionVisibility
     var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
     var networkProtectionTunnelController: NetworkProtectionTunnelController
@@ -68,15 +69,15 @@ class MockDependencyProvider: DependencyProvider {
         toggleProtectionsCounter = defaultProvider.toggleProtectionsCounter
         subscriptionFeatureAvailability = defaultProvider.subscriptionFeatureAvailability
 
-        accountManager = AccountManagerMock(isUserAuthenticated: true)
+        accountManager = AccountManagerMock()
         if #available(iOS 15.0, *) {
-            let subscriptionService = SubscriptionService(currentServiceEnvironment: .production)
-            let authService = AuthService(currentServiceEnvironment: .production)
-            let storePurchaseManaging = StorePurchaseManager()
+            let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: .production)
+            let authService = DefaultAuthEndpointService(currentServiceEnvironment: .production)
+            let storePurchaseManager = DefaultStorePurchaseManager()
             subscriptionManager = SubscriptionManagerMock(accountManager: accountManager,
-                                                          subscriptionService: subscriptionService,
-                                                          authService: authService,
-                                                          storePurchaseManager: storePurchaseManaging,
+                                                          subscriptionEndpointService: subscriptionService,
+                                                          authEndpointService: authService,
+                                                          storePurchaseManager: storePurchaseManager,
                                                           currentEnvironment: SubscriptionEnvironment(serviceEnvironment: .production,
                                                                                                       purchasePlatform: .appStore),
                                                           canPurchase: true)
@@ -86,8 +87,6 @@ class MockDependencyProvider: DependencyProvider {
         }
 
         let accessTokenProvider: () -> String? = { { "sometoken" } }()
-        let featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,
-                                                   privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager)
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
         networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
                                                                               tokenStore: networkProtectionKeychainTokenStore)

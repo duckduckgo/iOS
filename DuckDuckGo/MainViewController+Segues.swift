@@ -284,8 +284,7 @@ extension MainViewController {
                                                   deepLink: deepLinkTarget,
                                                   historyManager: historyManager,
                                                   syncPausedStateManager: syncPausedStateManager)
-        Pixel.fire(pixel: .settingsPresented,
-                   withAdditionalParameters: PixelExperiment.parameters)
+        Pixel.fire(pixel: .settingsPresented)
 
         if let navigationController = self.presentedViewController as? UINavigationController,
            let settingsHostingController = navigationController.viewControllers.first as? SettingsHostingController {

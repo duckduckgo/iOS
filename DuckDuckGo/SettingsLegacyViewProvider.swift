@@ -62,7 +62,6 @@ class SettingsLegacyViewProvider: ObservableObject {
              autoclearData,
              keyboard,
              netP,
-             about,
              feedback, debug
     }
     
@@ -82,7 +81,6 @@ class SettingsLegacyViewProvider: ObservableObject {
     var autoclearData: UIViewController { instantiate("AutoClearSettingsViewController", fromStoryboard: "Settings") }
     var keyboard: UIViewController { instantiate("Keyboard", fromStoryboard: "Settings") }
     var feedback: UIViewController { instantiate("Feedback", fromStoryboard: "Feedback") }
-    var about: UIViewController { AboutViewControllerOld() }
 
     @available(iOS 15, *)
     var netP: UIViewController { NetworkProtectionRootViewController() }
@@ -101,7 +99,8 @@ class SettingsLegacyViewProvider: ObservableObject {
         return AutofillLoginSettingsListViewController(appSettings: self.appSettings,
                                                        syncService: self.syncService,
                                                        syncDataProviders: self.syncDataProviders,
-                                                       selectedAccount: selectedAccount)
+                                                       selectedAccount: selectedAccount,
+                                                       source: .settings)
     }
     
     var debug: UIViewController {

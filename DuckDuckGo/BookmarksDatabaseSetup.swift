@@ -40,15 +40,41 @@ struct BookmarksDatabaseSetup {
                 errorEvents: preMigrationErrorHandling
             )
 
+        let validator = BookmarksStateValidation(keyValueStore: UserDefaults.app) { validationError in
+            switch validationError {
+            case .bookmarksStructureLost:
+                DailyPixel.fire(pixel: .debugBookmarksStructureLost, includedParameters: [.appVersion])
+            case .bookmarksStructureBroken(let additionalParams):
+                DailyPixel.fire(pixel: .debugBookmarksInvalidRoots,
+                                withAdditionalParameters: additionalParams,
+                                includedParameters: [.appVersion])
+            case .validatorError(let underlyingError):
+                let processedErrors = CoreDataErrorsParser.parse(error: underlyingError as NSError)
+
+                DailyPixel.fireDailyAndCount(pixel: .debugBookmarksValidationFailed,
+                                             withAdditionalParameters: processedErrors.errorPixelParameters,
+                                             includedParameters: [.appVersion])
+            }
+        }
+
         var migrationHappened = false
         bookmarksDatabase.loadStore { context, error in
             guard let context = assertContext(context, error, crashOnError) else { return }
+
+            validator.validateInitialState(context: context)
+
             self.migrateFromLegacyCoreDataStorageIfNeeded(context)
             migrationHappened = self.migrateToFormFactorSpecificFavorites(context, oldFavoritesOrder)
             // Add new migrations and set migrationHappened flag here. Only the last migration is relevant.
             // Also bump the int passed to the assert function below.
         }
-        
+
+        let contextForValidation = bookmarksDatabase.makeContext(concurrencyType: .privateQueueConcurrencyType)
+        contextForValidation.performAndWait {
+            validator.validateBookmarksStructure(context: contextForValidation)
+            repairDeletedFlag(context: contextForValidation)
+        }
+
         if migrationHappened {
             do {
                 try migrationAssertion.assert(migrationVersion: 1)
@@ -59,7 +85,24 @@ struct BookmarksDatabaseSetup {
 
         return migrationHappened
     }
-    
+
+    private func repairDeletedFlag(context: NSManagedObjectContext) {
+        let stateRepair = BookmarksStateRepair(keyValueStore: UserDefaults.app)
+        let status = stateRepair.validateAndRepairPendingDeletionState(in: context)
+        switch status {
+        case .alreadyPerformed, .noBrokenData:
+            break
+        case .dataRepaired:
+            Pixel.fire(pixel: .debugBookmarksPendingDeletionFixed)
+        case .repairError(let underlyingError):
+            let processedErrors = CoreDataErrorsParser.parse(error: underlyingError as NSError)
+
+            DailyPixel.fireDailyAndCount(pixel: .debugBookmarksPendingDeletionRepairError,
+                                         withAdditionalParameters: processedErrors.errorPixelParameters,
+                                         includedParameters: [.appVersion])
+        }
+    }
+
     private func migrateToFormFactorSpecificFavorites(_ context: NSManagedObjectContext, _ oldFavoritesOrder: [String]?) -> Bool {
         do {
             BookmarkFormFactorFavoritesMigration.migrateToFormFactorSpecificFavorites(byCopyingExistingTo: .mobile,

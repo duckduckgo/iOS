@@ -38,21 +38,21 @@ struct DuckPlayerFeaturePresentationView: View {
                     .daxTitle2()
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color(designSystemColor: .textPrimary))
-                    .minimumScaleFactor(0.8)
+                    .minimumScaleFactor(Constants.textMinimumScaleFactor)
 
                 Text(UserText.duckPlayerPresentationModalBody)
                     .daxBodyRegular()
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color(designSystemColor: .textSecondary))
-                    .minimumScaleFactor(0.8)
+                    .minimumScaleFactor(Constants.textMinimumScaleFactor)
 
                 Spacer()
 
                 Button(UserText.duckPlayerPresentationModalDismissButton, action: dismissButtonTapped)
                     .buttonStyle(PrimaryButtonStyle())
-                    .frame(maxWidth: 310)
+                    .frame(maxWidth: Constants.buttonCTAMaxWidth)
             }
-            .padding(.horizontal, 30)
+            .padding(.horizontal, Constants.horizontalPadding)
             .padding(.top, contentVerticalPadding)
             .padding(.bottom)
 
@@ -60,10 +60,10 @@ struct DuckPlayerFeaturePresentationView: View {
                 HStack {
                     Spacer()
                     Button(action: dismissButtonTapped) {
-                        Image(systemName: "xmark")
+                        Image(systemName: Constants.closeButtonSystemImage)
                             .foregroundColor(Color(designSystemColor: .textPrimary))
                             .daxBodyRegular()
-                            .frame(width: 30, height: 30)
+                            .frame(width: Constants.closeButtonSize.width, height: Constants.closeButtonSize.height)
                     }
                     .padding(8)
                 }
@@ -84,7 +84,7 @@ struct DuckPlayerFeaturePresentationView: View {
         .frame(width: Constants.heroImageSize.width, height: Constants.heroImageSize.height)
         .cornerRadius(8)
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Constants.animationDelay) {
                 isAnimating = true
             }
         }
@@ -95,6 +95,13 @@ extension DuckPlayerFeaturePresentationView {
 
     enum Constants {
         static let heroImageSize: CGSize = .init(width: 302, height: 180)
+        static let closeButtonSystemImage = "xmark"
+        static let closeButtonSize: CGSize = .init(width: 30, height: 30)
+        static let buttonCTAMaxWidth: CGFloat = 310
+        static let textMinimumScaleFactor: CGFloat = 0.8
+        static let horizontalPadding: CGFloat = 30
+        static let animationDelay: Double = 2
+
     }
 
     private var isSpaceConstrained: Bool {

@@ -9829,8 +9829,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "sam/silence-tunnel-startup-noise-without-access-token";
-				kind = branch;
+				kind = exactVersion;
+				version = 162.0.0;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

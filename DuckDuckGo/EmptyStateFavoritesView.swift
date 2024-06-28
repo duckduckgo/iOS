@@ -30,7 +30,7 @@ struct EmptyStateFavoritesView: View {
                     .padding(.horizontal, headerPadding)
 
                 NewTabPageGridView { placeholdersCount in
-                    let placeholders = (0..<placeholdersCount).map { $0 }
+                    let placeholders = Array(0..<placeholdersCount)
                     ForEach(placeholders, id: \.self) { _ in
                         FavoriteEmptyStateItem()
                             .frame(width: NewTabPageGrid.Item.edgeSize, height: NewTabPageGrid.Item.edgeSize)

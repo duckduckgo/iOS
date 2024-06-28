@@ -1999,6 +1999,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Subscription Activation Info */
 "subscription.activate.description" = "Your subscription is automatically available in DuckDuckGo on any device signed in to your Apple ID.";
 
+/* Button for editing email address added to subscription */
+"subscription.activate.edit.email.button" = "Edit Email";
+
+/* View Title for editing your email account */
+"subscription.activate.edit.email.title" = "Edit Email";
+
 /* Email option for activation */
 "subscription.activate.email" = "Email";
 
@@ -2011,17 +2017,11 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Activate subscription title */
 "subscription.activate.email.title" = "Activate Subscription";
 
-/* Button for managing email address added to subscription */
-"subscription.activate.manage.email.button" = "Manage Email";
-
 /* Button title for cancelling email deletion */
 "subscription.activate.manage.email.cancel" = "Cancel";
 
 /* Button title for confirming email deletion */
 "subscription.activate.manage.email.OK" = "OK";
-
-/* View Title for managing your email account */
-"subscription.activate.manage.email.title" = "Manage Email";
 
 /* Restore button title for AppleID */
 "subscription.activate.restore.apple" = "Restore Purchase";

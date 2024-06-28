@@ -1084,7 +1084,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionActivateEmailTitle = NSLocalizedString("subscription.activate.email.title", value: "Activate Subscription", comment: "Activate subscription title")
     public static let subscriptionActivateEmailDescription = NSLocalizedString("subscription.activate.email.description", value: "Use your email to activate your subscription on this device.", comment: "Description for Email activation")
     public static let subscriptionAddEmailButton = NSLocalizedString("subscription.activate.add.email.button", value: "Add Email", comment: "Button for adding email address to subscription")
-    public static let subscriptionManageEmailButton = NSLocalizedString("subscription.activate.manage.email.button", value: "Manage Email", comment: "Button for managing email address added to subscription")
+    public static let subscriptionEditEmailButton = NSLocalizedString("subscription.activate.edit.email.button", value: "Edit Email", comment: "Button for editing email address added to subscription")
     public static let subscriptionActivateEmailButton = NSLocalizedString("subscription.activate.email.button", value: "Enter Email", comment: "Restore button title for Email")
             
     // Add to other devices (AppleID / Email)
@@ -1099,7 +1099,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionRestoreAddEmailTitle = NSLocalizedString("subscription.add.email.title", value: "Add Email", comment: "View title for adding email to subscription")
     
     // Manage Subscription Email
-    public static let subscriptionManageEmailTitle = NSLocalizedString("subscription.activate.manage.email.title", value: "Manage Email", comment: "View Title for managing your email account")
+    public static let subscriptionEditEmailTitle = NSLocalizedString("subscription.activate.edit.email.title", value: "Edit Email", comment: "View Title for editing your email account")
     public static let subscriptionManageEmailCancelButton = NSLocalizedString("subscription.activate.manage.email.cancel", value: "Cancel", comment: "Button title for cancelling email deletion")
     public static let subscriptionManageEmailOKButton = NSLocalizedString("subscription.activate.manage.email.OK", value: "OK", comment: "Button title for confirming email deletion")
     

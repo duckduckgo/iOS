@@ -86,7 +86,7 @@ struct SubscriptionSettingsView: View {
                     }),
                                isActive: $isShowingEmailView) {
                     if let email = viewModel.state.subscriptionEmail {
-                        SettingsCellView(label: UserText.subscriptionManageEmailButton,
+                        SettingsCellView(label: UserText.subscriptionEditEmailButton,
                                          subtitle: email)
                     } else {
                         SettingsCellView(label: UserText.subscriptionAddEmailButton)

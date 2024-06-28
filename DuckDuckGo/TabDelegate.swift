@@ -92,4 +92,6 @@ protocol TabDelegate: AnyObject {
     func tabDidRequestRefresh(tab: TabViewController)
 
     func tabDidRequestNavigationToDifferentSite(tab: TabViewController)
+
+    func tabDidRequestShowing(tooltip: DaxDialogs.BrowsingSpec)
 }

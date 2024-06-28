@@ -1343,7 +1343,8 @@ extension TabViewController: WKNavigationDelegate {
 
             self?.chromeDelegate?.omniBar.resignFirstResponder()
             self?.chromeDelegate?.setBarsHidden(false, animated: true)
-            self?.performSegue(withIdentifier: "DaxDialog", sender: spec)
+            //self?.performSegue(withIdentifier: "DaxDialog", sender: spec)
+            self?.delegate?.tabDidRequestShowing(tooltip: spec)
 
             if spec == DaxDialogs.BrowsingSpec.withoutTrackers {
                 self?.woShownRecently = true

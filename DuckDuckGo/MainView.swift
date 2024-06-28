@@ -109,7 +109,6 @@ extension MainViewFactory {
         superview.addSubview(coordinator.navigationBarContainer)
     }
 
-    final class ContentContainer: UIView { }
     private func createContentContainer() {
         coordinator.contentContainer = ContentContainer()
         superview.addSubview(coordinator.contentContainer)
@@ -346,4 +345,28 @@ extension MainViewFactory {
         ])
     }
 
+}
+
+final class ContentContainer: UIView {
+    let stackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.distribution = .fill
+        view.alignment = .fill
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+
+        addSubview(stackView)
+
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: topAnchor),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+        ])
+    }
 }

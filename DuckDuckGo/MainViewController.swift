@@ -60,7 +60,9 @@ class MainViewController: UIViewController {
     weak var notificationView: UIView?
 
     var chromeManager: BrowserChromeManager!
-    
+
+    var daxController: DaxDialogViewController?
+
     var allowContentUnderflow = false {
         didSet {
             viewCoordinator.constraints.contentContainerTop.constant = allowContentUnderflow ? contentUnderflow : 0
@@ -977,8 +979,17 @@ class MainViewController: UIViewController {
     private func addToContentContainer(controller: UIViewController) {
         viewCoordinator.contentContainer.isHidden = false
         addChild(controller)
-        viewCoordinator.contentContainer.subviews.forEach { $0.removeFromSuperview() }
-        viewCoordinator.contentContainer.addSubview(controller.view)
+//        viewCoordinator.contentContainer.stackView.arrangedSubviews.forEach(viewCoordinator.contentContainer.stackView.removeArrangedSubview)
+        viewCoordinator.contentContainer.stackView.subviews.forEach {
+            $0.removeFromSuperview()
+        }
+
+        let view = UIView()
+        //view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(hex: "FFD7CC")
+        view.isHidden = true
+        viewCoordinator.contentContainer.stackView.addArrangedSubview(view)
+        viewCoordinator.contentContainer.stackView.addArrangedSubview(controller.view)
         controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         controller.view.frame = viewCoordinator.contentContainer.bounds
         controller.didMove(toParent: self)
@@ -2286,6 +2297,43 @@ extension MainViewController: TabDelegate {
 
     func tabDidRequestNavigationToDifferentSite(tab: TabViewController) {
         hideNotificationBarIfBrokenSitePromptShown()
+    }
+
+    func tabDidRequestShowing(tooltip: DaxDialogs.BrowsingSpec) {
+        guard let containerView = viewCoordinator.contentContainer.stackView.arrangedSubviews.first else {
+            assertionFailure()
+            return
+        }
+
+        let controller = UIStoryboard(name: "DaxOnboarding", bundle: nil).instantiateViewController(withIdentifier: "DaxDialog") as! DaxDialogViewController
+        controller.message = tooltip.message
+        controller.cta = tooltip.cta
+        daxController = controller
+
+//        controller.modalTransitionStyle = .crossDissolve
+//        controller.modalPresentationStyle = .overCurrentContext
+//        present(controller, animated: true)
+
+
+        addChild(controller)
+        containerView.addSubview(controller.view)
+        controller.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            controller.view.heightAnchor.constraint(equalToConstant: 400),
+            controller.view.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15.0),
+            controller.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -15.0),
+            controller.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            controller.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+        ])
+        didMove(toParent: self)
+
+        UIView.animate(withDuration: 0.3) {
+            containerView.isHidden = false
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            self.daxController?.start()
+        }
+
     }
 
 }

@@ -23,7 +23,7 @@ class MainViewCoordinator {
 
     let superview: UIView
 
-    var contentContainer: UIView!
+    var contentContainer: ContentContainer!
     var lastToolbarButton: UIBarButtonItem!
     var logo: UIImageView!
     var logoContainer: UIView!

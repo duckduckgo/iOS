@@ -25,8 +25,8 @@ protocol DuckNavigationHandling {
                           completion: @escaping (WKNavigationActionPolicy) -> Void)
     func handleURLChange(url: URL?, webView: WKWebView)
     func handleDecidePolicyFor(_ navigationAction: WKNavigationAction,
-                        completion: @escaping (WKNavigationActionPolicy) -> Void,
-                        webView: WKWebView)
+                               completion: @escaping (WKNavigationActionPolicy) -> Void,
+                               webView: WKWebView)
     func handleGoBack(webView: WKWebView)
     func handleReload(webView: WKWebView)
 }

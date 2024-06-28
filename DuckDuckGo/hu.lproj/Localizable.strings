@@ -245,7 +245,7 @@
 "autocomplete.history.search.duckduckgo" = "DuckDuckGo keresés";
 
 /* The message text shown in suggestions */
-"autocomplete.history.warning.message" = "A javaslatok között már a legutóbb meglátogatott webhelyek is szerepelnek. Ezeket az eszközödön tároljuk, és soha nem a DuckDuckGo szerverein. A beállításokban kikapcsolhatod, vagy bármikor törölheted a 🔥 Tűz gombbal.";
+"autocomplete.history.warning.message" = "A keresési javaslatok között már a legutóbb meglátogatott webhelyek is szerepelnek. A Beállítások alatt kikapcsolhatod, vagy bármikor törölheted a 🔥 Tűz gombbal.";
 
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Ugyanolyan adatvédelem.\nJobb keresési javaslatok!";
@@ -1799,10 +1799,16 @@
 "settings.associated.apps.description" = "Letiltásával megakadályozhatod, hogy a hivatkozások automatikusan megnyíljanak más telepített alkalmazásokban.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Automatikus kiegészítési javaslatok megjelenítése";
+"settings.autocomplete" = "Keresési javaslatok";
 
 /* Settings label for enabling or disabling recently visited sites */
 "settings.autocomplete.recentlyvisited" = "Legutóbb meglátogatott webhelyek";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "A legutóbb meglátogatott webhelyek megjelenítése a keresési javaslatokban. A legutóbb meglátogatott webhelyek privátak, csak az eszközödön tárolódnak, és a Tűz gombbal törölheted őket.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Keresési javaslatok megjelenítése gépelés közben, beleértve a könyvjelzőket is. Minden keresés privát.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Alkalmazás zárolás";

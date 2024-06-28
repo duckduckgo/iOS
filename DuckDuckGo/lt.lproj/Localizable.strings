@@ -245,7 +245,7 @@
 "autocomplete.history.search.duckduckgo" = "Ieškoti DuckDuckGo";
 
 /* The message text shown in suggestions */
-"autocomplete.history.warning.message" = "Dabar į pasiūlymus įtraukiamos neseniai aplankytos svetainės. Jos saugomos jūsų įrenginyje ir niekada – „DuckDuckGo“ serveriuose. Išjunkite nustatymuose arba bet kada ištrinkite naudodami mygtuką 🔥 „Fire Button“.";
+"autocomplete.history.warning.message" = "Dabar paieškos pasiūlymuose bus rodomos ir neseniai aplankytos svetainės. Išjunkite nustatymuose arba bet kada išvalykite naudodami mygtuką 🔥 „Fire Button“.";
 
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Tas pats privatumas.\nGeresni paieškos pasiūlymai!";
@@ -1799,10 +1799,16 @@
 "settings.associated.apps.description" = "Išjungti, kad nuorodos automatiškai neatsidarytų kitose įdiegtose programose.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Rodyti automatinio užbaigimo pasiūlymus";
+"settings.autocomplete" = "Paieškos pasiūlymai";
 
 /* Settings label for enabling or disabling recently visited sites */
 "settings.autocomplete.recentlyvisited" = "Neseniai aplankytos svetainės";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Rodyti neseniai aplankytas interneto svetaines paieškos pasiūlymuose. Neseniai aplankytos interneto svetainės yra privačios, saugomos tik jūsų įrenginyje ir gali būti išvalytos naudojant mygtuką „Fire Button“.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Įvesdami tekstą matysite paieškos pasiūlymus, įskaitant žymes. Visos paieškos yra privačios.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Programos užraktas";

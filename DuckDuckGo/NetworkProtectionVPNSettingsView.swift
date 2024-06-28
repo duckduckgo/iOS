@@ -31,11 +31,14 @@ struct NetworkProtectionVPNSettingsView: View {
             List {
                 // Widget only available for iOS 17 and up
                 if #available(iOS 17.0, *) {
-                    NavigationLink {
-                        WidgetEducationView.vpn
-                    } label: {
-                        Text(UserText.vpnSettingsAddWidget).daxBodyRegular()
+                    Section {
+                        NavigationLink {
+                            WidgetEducationView.vpn
+                        } label: {
+                            Text(UserText.vpnSettingsAddWidget).daxBodyRegular()
+                        }
                     }
+                    .listRowBackground(Color(designSystemColor: .surface))
                 }
 
                 switch viewModel.viewKind {
@@ -46,6 +49,7 @@ struct NetworkProtectionVPNSettingsView: View {
 
                 toggleSection(
                     text: UserText.netPExcludeLocalNetworksSettingTitle,
+                    headerText: UserText.netPExcludeLocalNetworksSettingHeader,
                     footerText: UserText.netPExcludeLocalNetworksSettingFooter
                 ) {
                     Toggle("", isOn: $viewModel.excludeLocalNetworks)
@@ -54,16 +58,7 @@ struct NetworkProtectionVPNSettingsView: View {
                         }
                 }
 
-                Section {
-                    HStack(spacing: 16) {
-                        Image("Info-Solid-24")
-                            .foregroundColor(.init(designSystemColor: .icons).opacity(0.3))
-                        Text(UserText.netPSecureDNSSettingFooter)
-                            .daxFootnoteRegular()
-                            .foregroundColor(.init(designSystemColor: .textSecondary))
-                    }
-                }
-                .listRowBackground(Color(designSystemColor: .surface))
+                dnsSection()
             }
         }
         .applyInsetGroupedListStyle()
@@ -74,8 +69,37 @@ struct NetworkProtectionVPNSettingsView: View {
         }
     }
 
+    func dnsSection() -> some View {
+        Section {
+            NavigationLink {
+                NetworkProtectionDNSSettingsView()
+            } label: {
+                HStack {
+                    Text(UserText.vpnSettingDNSServerTitle)
+                        .daxBodyRegular()
+                        .foregroundColor(.init(designSystemColor: .textPrimary))
+                    Spacer()
+                    Text(viewModel.dnsServers)
+                        .daxBodyRegular()
+                        .foregroundColor(.init(designSystemColor: .textSecondary))
+                }
+            }
+        } header: {
+            Text(UserText.vpnSettingDNSSectionHeader)
+        } footer: {
+            if viewModel.usesCustomDNS {
+                Text(UserText.vpnSettingDNSSectionDisclaimer)
+                    .foregroundColor(.init(designSystemColor: .textSecondary))
+            } else {
+                Text(UserText.netPSecureDNSSettingFooter)
+                    .foregroundColor(.init(designSystemColor: .textSecondary))
+            }
+        }
+        .listRowBackground(Color(designSystemColor: .surface))
+    }
+
     @ViewBuilder
-    func toggleSection(text: String, footerText: String, @ViewBuilder toggle: () -> some View) -> some View {
+    func toggleSection(text: String, headerText: String, footerText: String, @ViewBuilder toggle: () -> some View) -> some View {
         Section {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
@@ -88,6 +112,8 @@ struct NetworkProtectionVPNSettingsView: View {
                 toggle()
                     .toggleStyle(SwitchToggleStyle(tint: .init(designSystemColor: .accent)))
             }
+        } header: {
+            Text(headerText)
         } footer: {
             Text(footerText)
                 .foregroundColor(.init(designSystemColor: .textSecondary))
@@ -125,6 +151,8 @@ struct NetworkProtectionVPNSettingsView: View {
                 )
             )
             .toggleStyle(SwitchToggleStyle(tint: .init(designSystemColor: .accent)))
+        } header: {
+            Text(UserText.netPVPNAlertsSectionHeader)
         } footer: {
             Text(UserText.netPVPNAlertsToggleSectionFooter)
                 .foregroundColor(.init(designSystemColor: .textSecondary))

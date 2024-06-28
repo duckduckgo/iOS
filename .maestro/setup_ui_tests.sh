@@ -2,7 +2,7 @@
 
 ### Set up environment for UI testing
 
-source .maestro/common.sh
+source $(dirname $0)/common.sh
 
 ## Constants
 
@@ -47,7 +47,13 @@ build_app() {
     fi
 
     echo "⏲️ Building the app"
-    set -o pipefail && xcodebuild -scheme "DuckDuckGo" -destination "platform=iOS Simulator,name=iPhone 15,OS=17.2" -derivedDataPath "$derived_data_path" -skipPackagePluginValidation -skipMacroValidation ONLY_ACTIVE_ARCH=NO | tee xcodebuild.log
+    set -o pipefail && xcodebuild -project "$project_root"/DuckDuckGo.xcodeproj \
+                                  -scheme "DuckDuckGo" \
+                                  -destination "platform=iOS Simulator,name=iPhone 15,OS=17.2" \
+                                  -derivedDataPath "$derived_data_path" \
+                                  -skipPackagePluginValidation \
+                                  -skipMacroValidation \
+                                  ONLY_ACTIVE_ARCH=NO | tee xcodebuild.log
     if [ $? -ne 0 ]; then
         echo "‼️ Unable to build app into $derived_data_path"
         exit 1
@@ -56,8 +62,6 @@ build_app() {
 }
 
 ## Main Script
-
-check_is_root
 
 echo
 echo "ℹ️  Checking environment for UI testing with maestro"

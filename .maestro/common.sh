@@ -4,21 +4,24 @@
 
 ## Constants
 
-derived_data_path=DerivedData
-app_location=$derived_data_path/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+project_root=$(realpath $(dirname $0)/..)
+derived_data_path="$project_root"/DerivedData
+app_location="$derived_data_path/Build/Products/Debug-iphonesimulator/DuckDuckGo.app"
 device_uuid_path="$derived_data_path/device_uuid.txt"
+
+echo
+echo "Configuration: "
+echo "project_root: $project_root"
+echo "derived_data_path: $derived_data_path"
+echo "app_location: $app_location"
+echo "device_uuid_path: $device_uuid_path"
 
 ## Functions
 
 fail() {
     echo "‼️ $1"
+    echo
     exit 1
-}
-
-check_is_root() {
-    if [ ! -d ".maestro" ]; then
-        fail "Please run from the root of the iOS directory"
-    fi
 }
 
 check_command() {

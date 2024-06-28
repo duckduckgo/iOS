@@ -2,25 +2,17 @@
 
 ### Run UI tests
 
-source .maestro/common.sh
+source $(dirname $0)/common.sh
 
 ## Constants
 
 run_log="$derived_data_path/run_log.txt"
 app_bundle="com.duckduckgo.mobile.ios"
 
+echo "run_log: $run_log"
+echo "app_bundle: $app_bundle"
+
 ## Functions
-
-fail() {
-    echo "‼️ $1"
-    exit 1
-}
-
-check_is_root() {
-    if [ ! -d ".maestro" ]; then
-        fail "Please run from the root of the iOS directory"
-    fi
-}
 
 log_message() {
     local run_log="$1"
@@ -57,46 +49,38 @@ run_flow() {
 	fi
 }
 
-## Main Script
+show_usage() {
+	echo "ℹ️ Usage: $1 /path/to/flow.yaml | /path/folder/of/flows/"
+	echo
+	exit 1
+}
 
-check_is_root
+## Main Script
 
 if [ ! -f "$device_uuid_path" ]; then
 	fail "Please run setup-ui-tests.sh first"
 fi
 
-# Parse command line arguments
-while [[ "$#" -gt 0 ]]; do
-    case $1 in
-        --run-flow) 
-			run_flow=1 
-			run_flow_file="$2"
-			if [ ! -f $run_flow_file ]; then
-				fail "$run_flow_file is not a file"
-			fi
+if [ -z $1 ]; then
+	show_usage $0
+fi
 
-			shift ;;
-        --flow-location) 
-			flow_location="$2"
-			if [ ! -d "$flow_location" ]; then
-				fail "Invalid flow location $flow_location, use --flow-location .maestro/flow_folder "
-			fi
-			shift ;;
-        *) fail "Unknown parameter passed: $1" ;;
-    esac
-    shift
-done
+if [ ! -f $1 ] && [ ! -d $1 ]; then
+	echo "‼️ $1 is not a file or directory"
+	show_usage $0
+fi
 
 # Run the selected tests
 
 echo
-echo "ℹ️ Running UI tests"
+echo "ℹ️ Running UI tests for $1"
 
 device_uuid=$(cat $device_uuid_path)
 echo "ℹ️ using device $device_uuid"
 
 killall Simulator
 
+xcrun simctl shutdown $device_uuid
 xcrun simctl boot $device_uuid
 if [ $? -ne 0 ]; then
     echo "‼️ Unable to boot simulator"
@@ -106,18 +90,16 @@ fi
 open -a Simulator
 
 echo "ℹ️ creating run log in $run_log"
-rm $run_log
+if [ -f $run_log ]; then
+	rm $run_log
+fi
 
 log_message $run_log "START"
 
-if [ -n "$run_flow" ]; then
-	if [ ! -f $run_flow_file ]; then
-		fail "$run_flow_file is not a file"
-	fi
-
-	run_flow $device_uuid $run_flow_file
-else
-	for file in "$flow_location"/*.yaml; do
+if [ -f $1 ]; then
+	run_flow $device_uuid $1
+elif [ -d $1 ]; then
+	for file in "$1"/*.yaml; do
 		run_flow $device_uuid $file
 	done
 fi
@@ -127,7 +109,7 @@ log_message $run_log "END"
 cat $run_log
 
 echo 
-echo "Log at $run_log"
+echo "Log at $(realpath $run_log)"
 echo
 
 if grep -q "FAIL" $run_log; then

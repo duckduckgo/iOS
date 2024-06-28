@@ -18,13 +18,42 @@
 //
 
 import SwiftUI
+import DuckUI
 
 struct NewTabPageView: View {
+    @ObservedObject var favoritesModel: FavoritesModel
+
     var body: some View {
-        Text("Empty")
+        ScrollView {
+            VStack {
+                if favoritesModel.isEmpty {
+                    EmptyStateFavoritesView()
+                        .padding(Constant.sectionPadding)
+                } else {
+                    FavoritesView(model: favoritesModel)
+                        .padding(Constant.sectionPadding)
+                }
+
+                ShortcutsView()
+                    .padding(Constant.sectionPadding)
+
+                Button(action: {
+                    // Temporary action for testing purposes
+                    favoritesModel.toggleFavoritesPresence()
+                }, label: {
+                    NewTabPageCustomizeButtonView()
+                }).buttonStyle(SecondaryFillButtonStyle(compact: true, fullWidth: false))
+                    .padding(EdgeInsets(top: 56, leading: 0, bottom: 16, trailing: 0))
+            }
+        }
+        .background(Color(designSystemColor: .background))
+    }
+
+    private struct Constant {
+        static let sectionPadding = EdgeInsets(top: 16, leading: 24, bottom: 16, trailing: 24)
     }
 }
 
 #Preview {
-    NewTabPageView()
+    NewTabPageView(favoritesModel: FavoritesModel())
 }

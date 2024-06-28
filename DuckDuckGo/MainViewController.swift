@@ -746,7 +746,7 @@ class MainViewController: UIViewController {
         }
 
         if homeTabManager.isNewTabPageSectionsEnabled {
-            let controller = NewTabPageViewController(rootView: NewTabPageView())
+            let controller = NewTabPageViewController(rootView: NewTabPageView(favoritesModel: FavoritesModel()))
             newTabPageViewController = controller
             addToContentContainer(controller: controller)
             viewCoordinator.logoContainer.isHidden = true

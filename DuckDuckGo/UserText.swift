@@ -1151,7 +1151,9 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let duckPlayerAskLabel = NSLocalizedString("duckPlayer.ask.label", value: "Always", comment: "Text displayed when DuckPlayer is in 'Ask' mode.")
     public static let duckPlayerDisabledLabel = NSLocalizedString("duckPlayer.never.label", value: "Always", comment: "Text displayed when DuckPlayer is in off.")
     
-    
-    
-
+    // Home Tab Shortcuts
+    public static let homeTabShortcutBookmarks = NSLocalizedString("home.tab.shortcut.bookmarks", value: "Bookmarks", comment: "Shortcut title leading to Bookmarks")
+    public static let homeTabShortcutAIChat = NSLocalizedString("home.tab.shortcut.ai.chat", value: "AI Chat", comment: "Shortcut title leading to AI Chat")
+    public static let homeTabShortcutVPN = NSLocalizedString("home.tab.shortcut.vpn", value: "VPN", comment: "Shortcut title leading to VPN")
+    public static let homeTabShortcutPasswords = NSLocalizedString("home.tab.shortcut.passwords", value: "Passwords", comment: "Shortcut title leading to Passwords")
 }

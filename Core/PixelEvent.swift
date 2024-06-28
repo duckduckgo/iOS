@@ -313,6 +313,7 @@ extension Pixel {
         case networkProtectionControllerStartFailure
 
         case networkProtectionTunnelStartAttempt
+        case networkProtectionTunnelStartAttemptOnDemandWithoutAccessToken
         case networkProtectionTunnelStartSuccess
         case networkProtectionTunnelStartFailure
 
@@ -338,7 +339,7 @@ extension Pixel {
 
         case networkProtectionTunnelFailureDetected
         case networkProtectionTunnelFailureRecovered
-        
+
         case networkProtectionLatency(quality: NetworkProtectionLatencyMonitor.ConnectionQuality)
         case networkProtectionLatencyError
         
@@ -1023,6 +1024,7 @@ extension Pixel.Event {
         case .networkProtectionControllerStartSuccess: return "m_netp_controller_start_success"
         case .networkProtectionControllerStartFailure: return "m_netp_controller_start_failure"
         case .networkProtectionTunnelStartAttempt: return "m_netp_tunnel_start_attempt"
+        case .networkProtectionTunnelStartAttemptOnDemandWithoutAccessToken: return "m_netp_tunnel_start_attempt_on_demand_without_access_token"
         case .networkProtectionTunnelStartSuccess: return "m_netp_tunnel_start_success"
         case .networkProtectionTunnelStartFailure: return "m_netp_tunnel_start_failure"
         case .networkProtectionTunnelStopAttempt: return "m_netp_tunnel_stop_attempt"

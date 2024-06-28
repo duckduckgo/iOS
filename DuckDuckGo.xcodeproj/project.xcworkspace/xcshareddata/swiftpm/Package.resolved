@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "sam/silence-tunnel-startup-noise-without-access-token",
-        "revision" : "7f33c2e1b5ce7c641decd5f16e10726d667c2ddb"
+        "revision" : "91328a2094935361ef54865c9b27f02bb23cc70c"
       }
     },
     {

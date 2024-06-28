@@ -196,9 +196,7 @@ final class DuckPlayer {
 
     
     @objc private func updatePlayerMode(_ notification: Notification) {
-        if let mode = notification.object as? DuckPlayerMode {
             userValues = encodeUserValues()
-        }
     }
 
     deinit {

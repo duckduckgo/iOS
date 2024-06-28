@@ -148,8 +148,8 @@ extension YoutubeOverlayUserScript {
         guard let body = message.messageBody as? [String: Any], let parameters = body["params"] as? [String: Any] else {
             return nil
         }
-        let pixelName = parameters["pixelName"] as? String
-        
+        // let pixelName = parameters["pixelName"] as? String
+        // To be implemented at a later point
 
         return nil
     }

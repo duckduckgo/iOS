@@ -3,6 +3,16 @@
     {
       "filename" : "DDGDefaultBrowser.pdf",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "DDGDefaultBrowserDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

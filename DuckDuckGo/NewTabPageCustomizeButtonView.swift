@@ -23,7 +23,7 @@ import DuckUI
 struct NewTabPageCustomizeButtonView: View {
     var body: some View {
         HStack {
-            Image("Options-16")
+            Image(.options16)
             Text("Customize")
         }
     }

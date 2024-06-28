@@ -31,7 +31,7 @@ struct FavoritesSectionHeader: View {
             Spacer()
 
             Button(action: {}, label: {
-                Image("Info-12")
+                Image(.info12)
             }).tintIfAvailable(Color(designSystemColor: .textPrimary))
         })
     }

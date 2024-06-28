@@ -34,15 +34,7 @@ struct FavoritesView: View {
             let collapsedMaxItemsCount = NewTabPageGrid.columnsCount(for: horizontalSizeClass) * 2
 
             if model.isEmpty {
-                FavoritesSectionHeader()
-                NewTabPageGridView { columnsCount in
-                    let range = (0..<columnsCount).map { $0 }
-                    ForEach(range, id: \.self) { _ in
-                        FavoriteEmptyStateItem()
-                            .frame(width: NewTabPageGrid.Item.edgeSize,
-                                   height: NewTabPageGrid.Item.edgeSize)
-                    }
-                }
+                FavoritesEmptyStateView()
             } else {
                 let data = isCollapsed ? Array(model.allFavorites.prefix(collapsedMaxItemsCount)) : model.allFavorites
 
@@ -52,14 +44,14 @@ struct FavoritesView: View {
                             .frame(width: NewTabPageGrid.Item.edgeSize)
                     }
                 }
-            }
 
-            if model.allFavorites.count > collapsedMaxItemsCount {
-                Button(action: {
-                    isCollapsed.toggle()
-                }, label: {
-                    ToggleExpandButtonView(isIndicatingExpand: isCollapsed).padding()
-                })
+                if model.allFavorites.count > collapsedMaxItemsCount {
+                    Button(action: {
+                        isCollapsed.toggle()
+                    }, label: {
+                        ToggleExpandButtonView(isIndicatingExpand: isCollapsed).padding()
+                    })
+                }
             }
         }
         .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)

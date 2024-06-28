@@ -1,5 +1,5 @@
 //
-//  FavoritesModel.swift
+//  FavoritesEmptyStateView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,28 +17,22 @@
 //  limitations under the License.
 //
 
-import Foundation
+import SwiftUI
 
-struct Favorite: Identifiable, Equatable {
-    let id: Int
-}
-
-final class FavoritesModel: ObservableObject {
-
-    @Published private(set) var allFavorites: [Favorite]
-    var isEmpty: Bool {
-        allFavorites.isEmpty
-    }
-
-    init() {
-        self.allFavorites = []
-    }
-
-    func toggleFavoritesPresence() {
-        if isEmpty {
-            allFavorites = (1...50).map { Favorite(id: $0) }
-        } else {
-            allFavorites = []
+struct FavoritesEmptyStateView: View {
+    var body: some View {
+        FavoritesSectionHeader()
+        NewTabPageGridView { columnsCount in
+            let items = Array(0..<columnsCount)
+            ForEach(items, id: \.self) { _ in
+                FavoriteEmptyStateItem()
+                    .frame(width: NewTabPageGrid.Item.edgeSize,
+                           height: NewTabPageGrid.Item.edgeSize)
+            }
         }
     }
+}
+
+#Preview {
+    FavoritesEmptyStateView()
 }

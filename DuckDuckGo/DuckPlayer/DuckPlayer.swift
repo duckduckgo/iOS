@@ -23,6 +23,7 @@ import Combine
 import Foundation
 import WebKit
 import UserScript
+import Core
 
 enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
     case enabled, alwaysAsk, disabled
@@ -39,28 +40,6 @@ enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
             return UserText.duckPlayerAskLabel
         case .disabled:
             return UserText.duckPlayerDisabledLabel
-        }
-    }
-
-    init(_ duckPlayerMode: Bool?) {
-        switch duckPlayerMode {
-        case true:
-            self = .enabled
-        case false:
-            self = .disabled
-        default:
-            self = .alwaysAsk
-        }
-    }
-
-    var boolValue: Bool? {
-        switch self {
-        case .enabled:
-            return true
-        case .alwaysAsk:
-            return nil
-        case .disabled:
-            return false
         }
     }
     
@@ -112,73 +91,83 @@ struct InitialSetupSettings: Codable {
 public struct UserValues: Codable {
     enum CodingKeys: String, CodingKey {
         case duckPlayerMode = "privatePlayerMode"
-        case overlayInteracted
+        case askModeOverlayHidden = "overlayInteracted"
     }
     let duckPlayerMode: DuckPlayerMode
-    let overlayInteracted: Bool
+    let askModeOverlayHidden: Bool
+}
+
+final class DuckPlayerSettings {
+    
+    private var appSettings: AppSettings
+    
+    init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
+        self.appSettings = appSettings
+    }
+    
+    public struct OriginDomains {
+        static let duckduckgo = "duckduckgo.com"
+        static let youtubeWWW = "www.youtube.com"
+        static let youtube = "youtube.com"
+        static let youtubeMobile = "m.youtube.com"
+    }
+    
+    var mode: DuckPlayerMode {
+        get {
+            appSettings.duckPlayerMode
+        } set {
+            appSettings.duckPlayerMode = newValue
+        }
+    }
+    
+    @UserDefaultsWrapper(key: .duckPlayerAskModeOverlayHidden, defaultValue: false)
+    var askModeOverlayHidden: Bool
+    
 }
 
 final class DuckPlayer {
-    static let usesSimulatedRequests: Bool = {
-        if #available(macOS 12.0, *) {
-            return true
-        } else {
-            return false
-        }
-    }()
-
+    
     static let duckPlayerHost: String = "player"
     static let commonName = "Duck Player"
+        
+    private var settings: DuckPlayerSettings
     
-    static let shared = DuckPlayer()
 
-    var isAvailable: Bool {
-        return true
+    init(settings: DuckPlayerSettings = DuckPlayerSettings()) {
+        self.settings = settings
     }
-
-    @Published var mode: DuckPlayerMode
-
-    var overlayInteracted: Bool {
-        true
-    }
-
-    init() {
-        mode = .enabled
-    }
-
+    
     // MARK: - Common Message Handlers
     
-    public func handleSetUserValuesMessage(
-        from origin: YoutubeOverlayUserScript.MessageOrigin
-    ) -> (_ params: Any, _ message: UserScriptMessage) -> Encodable? {
-
-        return { [weak self] params, _ -> Encodable? in
-            guard let self else {
-                return nil
-            }
-            guard let userValues: UserValues = DecodableHelper.decode(from: params) else {
-                assertionFailure("YoutubeOverlayUserScript: expected JSON representation of UserValues")
-                return nil
-            }
-                
-            return self.encodeUserValues()
+    public func setUserValues(params: Any, message: WKScriptMessage) -> Encodable? {
+        guard let userValues: UserValues = DecodableHelper.decode(from: params) else {
+            assertionFailure("DuckPlayer: expected JSON representation of UserValues")
+            return nil
         }
+        settings.mode = userValues.duckPlayerMode
+        settings.askModeOverlayHidden = userValues.askModeOverlayHidden
+        return userValues
     }
-
-    public func handleGetUserValues(params: Any, message: UserScriptMessage) -> Encodable? {
+        
+    public func getUserValues(params: Any, message: WKScriptMessage) -> Encodable? {
         encodeUserValues()
     }
+    
+    @MainActor
+    public func openVideoInDuckPlayer(url: URL, webView: WKWebView) {
+        webView.load(URLRequest(url: url))
+    }
 
-    public func initialSetup(with webView: WKWebView?) -> (_ params: Any, _ message: UserScriptMessage) async -> Encodable? {
-        return { _, _ in
-            return await self.encodedSettings(with: webView)
-        }
+    @MainActor
+    public func initialSetup(params: Any, message: WKScriptMessage) async -> Encodable? {
+        let webView = message.webView
+        return await self.encodedSettings(with: webView)
     }
 
     private func encodeUserValues() -> UserValues {
         UserValues(
-            duckPlayerMode: .enabled,
-            overlayInteracted: true
+            duckPlayerMode: settings.mode,
+            askModeOverlayHidden: settings.askModeOverlayHidden
         )
     }
 
@@ -193,7 +182,4 @@ final class DuckPlayer {
         return InitialSetupSettings(userValues: userValues, settings: playerSettings)
     }
 
-    // MARK: - Private
-
-    private static let websiteTitlePrefix = "\(commonName) - "
 }

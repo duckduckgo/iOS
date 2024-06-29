@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "michal/make-entitlements-public",
-        "revision" : "af03c66c5c5fbfacbc46ec3c63fc03db1602d5ac"
+        "revision" : "39e10c8eeddeb03750350597bd55fd8c43b5fd83",
+        "version" : "163.0.1"
       }
     },
     {

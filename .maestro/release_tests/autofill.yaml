@@ -47,7 +47,7 @@ tags:
 
 - tapOn: "Close"
 
-# Validate it will be prompted
+# Validate standard form
 - assertVisible:
     id: "searchEntry"
 - tapOn: 
@@ -62,5 +62,28 @@ tags:
 - assertVisible: "Unlock to use saved password"
 - inputText: "passcode"
 - pressKey: Enter
+
+- assertVisible: "Submitted!"
+
+# Validate multistep form
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://privacy-test-pages.site/autofill/autoprompt/3-multistep-form.html"
+- pressKey: Enter
+
+- assertVisible: "Use a saved password?"
+- assertVisible: "test@example.com"
+- tapOn: "test@example.com"
+
+- assertVisible: "Unlock to use saved password"
+- inputText: "passcode"
+- pressKey: Enter
+
+- assertVisible: "Password"
+- tapOn: "Password"
+
+- assertVisible: "Use a saved password?"
+- assertVisible: "test@example.com"
+- tapOn: "test@example.com"
 
 - assertVisible: "Submitted!"

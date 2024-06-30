@@ -90,6 +90,7 @@ class MainViewController: UIViewController {
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
     
+    let homePageConfiguration: HomePageConfiguration
     let homeTabManager: NewTabPageManager
     let tabManager: TabManager
     let previewsSource: TabPreviewsSource
@@ -180,6 +181,7 @@ class MainViewController: UIViewController {
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
         historyManager: HistoryManager,
+        homePageConfiguration: HomePageConfiguration,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
         appSettings: AppSettings,
@@ -190,6 +192,7 @@ class MainViewController: UIViewController {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
         self.historyManager = historyManager
+        self.homePageConfiguration = homePageConfiguration
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
@@ -740,7 +743,7 @@ class MainViewController: UIViewController {
         
         currentTab?.dismiss()
         removeHomeScreen()
-        AppDependencyProvider.shared.homePageConfiguration.refresh()
+        homePageConfiguration.refresh()
 
         // Access the tab model directly as we don't want to create a new tab controller here
         guard let tabModel = tabManager.model.currentTab else {
@@ -753,7 +756,8 @@ class MainViewController: UIViewController {
             addToContentContainer(controller: controller)
             viewCoordinator.logoContainer.isHidden = true
         } else {
-            let controller = HomeViewController.loadFromStoryboard(model: tabModel,
+            let controller = HomeViewController.loadFromStoryboard(homePageConfiguration: homePageConfiguration,
+                                                                   model: tabModel,
                                                                    favoritesViewModel: favoritesViewModel,
                                                                    appSettings: appSettings,
                                                                    syncService: syncService,

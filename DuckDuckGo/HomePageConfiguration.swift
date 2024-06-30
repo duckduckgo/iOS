@@ -48,8 +48,7 @@ final class HomePageConfiguration {
 
     var homeMessages: [HomeMessage] = []
 
-    init(variantManager: VariantManager? = nil,
-         remoteMessagingStore: RemoteMessagingStore = AppDependencyProvider.shared.remoteMessagingStore) {
+    init(variantManager: VariantManager? = nil, remoteMessagingStore: RemoteMessagingStore) {
         homeMessageStorage = HomeMessageStorage(variantManager: variantManager)
         self.remoteMessagingStore = remoteMessagingStore
         homeMessages = buildHomeMessages()

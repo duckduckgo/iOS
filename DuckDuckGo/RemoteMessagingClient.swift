@@ -59,7 +59,7 @@ final class RemoteMessagingClient: RemoteMessagingProcessing {
         )
         let configurationFetcher = RemoteMessagingConfigFetcher(
             configurationFetcher: ConfigurationFetcher(store: configurationStore, urlSession: .session(), log: .remoteMessaging, eventMapping: nil),
-            configurationStore: ConfigurationStore.shared
+            configurationStore: configurationStore
         )
         self.init(configMatcherProvider: provider, configurationFetcher: configurationFetcher)
     }

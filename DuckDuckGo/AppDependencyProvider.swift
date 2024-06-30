@@ -33,8 +33,6 @@ protocol DependencyProvider {
     var variantManager: VariantManager { get }
     var internalUserDecider: InternalUserDecider { get }
     var featureFlagger: FeatureFlagger { get }
-    var remoteMessagingStore: RemoteMessagingStore { get }
-    var homePageConfiguration: HomePageConfiguration { get }
     var storageCache: StorageCache { get }
     var voiceSearchHelper: VoiceSearchHelperProtocol { get }
     var downloadManager: DownloadManager { get }
@@ -65,13 +63,6 @@ class AppDependencyProvider: DependencyProvider {
     let internalUserDecider: InternalUserDecider = ContentBlocking.shared.privacyConfigurationManager.internalUserDecider
     let featureFlagger: FeatureFlagger
 
-    let remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore(
-        database: Database.shared,
-        errorEvents: RemoteMessagingStoreErrorHandling(),
-        log: .remoteMessaging
-    )
-    lazy var homePageConfiguration: HomePageConfiguration = HomePageConfiguration(variantManager: variantManager,
-                                                                                  remoteMessagingStore: remoteMessagingStore)
     let storageCache = StorageCache()
     let voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper()
     let downloadManager = DownloadManager()

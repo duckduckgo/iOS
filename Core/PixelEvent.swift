@@ -269,6 +269,14 @@ extension Pixel {
         case autofillToggledOff
         case autofillLoginsStacked
 
+        case autofillManagementOpened
+        case autofillManagementCopyUsername
+        case autofillManagementCopyPassword
+        case autofillManagementDeleteLogin
+        case autofillManagementDeleteAllLogins
+        case autofillManagementSaveLogin
+        case autofillManagementUpdateLogin
+
         case autofillMultipleAuthCallsTriggered
 
         case getDesktopCopy
@@ -305,6 +313,7 @@ extension Pixel {
         case networkProtectionControllerStartFailure
 
         case networkProtectionTunnelStartAttempt
+        case networkProtectionTunnelStartAttemptOnDemandWithoutAccessToken
         case networkProtectionTunnelStartSuccess
         case networkProtectionTunnelStartFailure
 
@@ -330,7 +339,7 @@ extension Pixel {
 
         case networkProtectionTunnelFailureDetected
         case networkProtectionTunnelFailureRecovered
-        
+
         case networkProtectionLatency(quality: NetworkProtectionLatencyMonitor.ConnectionQuality)
         case networkProtectionLatencyError
         
@@ -496,7 +505,10 @@ extension Pixel {
         case debugBookmarksStructureLost
         case debugBookmarksInvalidRoots
         case debugBookmarksValidationFailed
-        
+
+        case debugBookmarksPendingDeletionFixed
+        case debugBookmarksPendingDeletionRepairError
+
         case debugCannotClearObservationsDatabase
         case debugWebsiteDataStoresNotClearedMultiple
         case debugWebsiteDataStoresNotClearedOne
@@ -659,12 +671,12 @@ extension Pixel {
         case settingsWebTrackingProtectionOpen
         case settingsGpcOn
         case settingsGpcOff
-        case settingsAutocompleteOn
-        case settingsAutocompleteOff
-        case settingsRecentlyVisitedOn
-        case settingsRecentlyVisitedOff
         case settingsGeneralAutocompleteOn
         case settingsGeneralAutocompleteOff
+        case settingsPrivateSearchAutocompleteOn
+        case settingsPrivateSearchAutocompleteOff
+        case settingsRecentlyVisitedOn
+        case settingsRecentlyVisitedOff
         case settingsAddressBarSelectorPressed
         case settingsAccessibilityOpen
         case settingsAccessiblityTextSize
@@ -963,6 +975,21 @@ extension Pixel.Event {
 
         case .autofillLoginsStacked: return "m_autofill_logins_stacked"
 
+        case .autofillManagementOpened:
+            return "m_autofill_management_opened"
+        case .autofillManagementCopyUsername:
+            return "m_autofill_management_copy_username"
+        case .autofillManagementCopyPassword:
+            return "m_autofill_management_copy_password"
+        case .autofillManagementDeleteLogin:
+            return "m_autofill_management_delete_login"
+        case .autofillManagementDeleteAllLogins:
+            return "m_autofill_management_delete_all_logins"
+        case .autofillManagementSaveLogin:
+            return "m_autofill_management_save_login"
+        case .autofillManagementUpdateLogin:
+            return "m_autofill_management_update_login"
+
         case .autofillMultipleAuthCallsTriggered: return "m_autofill_multiple_auth_calls_triggered"
 
         case .getDesktopCopy: return "m_get_desktop_copy"
@@ -997,6 +1024,7 @@ extension Pixel.Event {
         case .networkProtectionControllerStartSuccess: return "m_netp_controller_start_success"
         case .networkProtectionControllerStartFailure: return "m_netp_controller_start_failure"
         case .networkProtectionTunnelStartAttempt: return "m_netp_tunnel_start_attempt"
+        case .networkProtectionTunnelStartAttemptOnDemandWithoutAccessToken: return "m_netp_tunnel_start_attempt_on_demand_without_access_token"
         case .networkProtectionTunnelStartSuccess: return "m_netp_tunnel_start_success"
         case .networkProtectionTunnelStartFailure: return "m_netp_tunnel_start_failure"
         case .networkProtectionTunnelStopAttempt: return "m_netp_tunnel_stop_attempt"
@@ -1159,6 +1187,9 @@ extension Pixel.Event {
         case .debugBookmarksStructureLost: return "m_d_bookmarks_structure_lost"
         case .debugBookmarksInvalidRoots: return "m_d_bookmarks_invalid_roots"
         case .debugBookmarksValidationFailed: return "m_d_bookmarks_validation_failed"
+
+        case .debugBookmarksPendingDeletionFixed: return "m_debug_bookmarks_pending_deletion_fixed"
+        case .debugBookmarksPendingDeletionRepairError: return "m_debug_bookmarks_pending_deletion_repair_error"
 
         case .debugCannotClearObservationsDatabase: return "m_d_cannot_clear_observations_database"
         case .debugWebsiteDataStoresNotClearedMultiple: return "m_d_wkwebsitedatastoresnotcleared_multiple"
@@ -1341,12 +1372,12 @@ extension Pixel.Event {
         case .settingsWebTrackingProtectionOpen: return "m_settings_web_tracking_protection_open"
         case .settingsGpcOn: return "m_settings_gpc_on"
         case .settingsGpcOff: return "m_settings_gpc_off"
-        case .settingsAutocompleteOn: return "m_settings_autocomplete_on"
-        case .settingsAutocompleteOff: return "m_settings_autocomplete_off"
-        case .settingsRecentlyVisitedOn: return "m_settings_autocomplete_recently-visited_on"
-        case .settingsRecentlyVisitedOff: return "m_settings_autocomplete_recently-visited_off"
         case .settingsGeneralAutocompleteOn: return "m_settings_general_autocomplete_on"
         case .settingsGeneralAutocompleteOff: return "m_settings_general_autocomplete_off"
+        case .settingsPrivateSearchAutocompleteOn: return "m_settings_private_search_autocomplete_on"
+        case .settingsPrivateSearchAutocompleteOff: return "m_settings_private_search_autocomplete_off"
+        case .settingsRecentlyVisitedOn: return "m_settings_autocomplete_recently-visited_on"
+        case .settingsRecentlyVisitedOff: return "m_settings_autocomplete_recently-visited_off"
         case .settingsAddressBarSelectorPressed: return "m_settings_address_bar_selector_pressed"
         case .settingsAccessibilityOpen: return "m_settings_accessibility_open"
         case .settingsAccessiblityTextSize: return "m_settings_accessiblity_text_size"

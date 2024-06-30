@@ -72,7 +72,7 @@ struct YoutubePlayerNavigationHandler {
 }
 
 extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
-    
+
     func handleNavigation(_ navigationAction: WKNavigationAction,
                           webView: WKWebView,
                           completion: @escaping (WKNavigationActionPolicy) -> Void) {

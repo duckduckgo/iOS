@@ -65,8 +65,8 @@ struct VPNMetadata: Encodable {
     }
 
     struct PrivacyProInfo: Encodable {
-        let hasToken: Bool
-        let subscriptionActive: Bool
+        let hasPrivacyProAccount: Bool
+        let hasVPNEntitlement: Bool
     }
 
     struct LastDisconnectError: Encodable {
@@ -114,18 +114,18 @@ protocol VPNMetadataCollector {
 final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
-    private let tokenStore: NetworkProtectionTokenStore
+    private let accountManager: AccountManager
     private let settings: VPNSettings
     private let defaults: UserDefaults
 
     init(statusObserver: ConnectionStatusObserver,
          serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
-         tokenStore: NetworkProtectionTokenStore,
+         accountManager: AccountManager = AppDependencyProvider.shared.subscriptionManager.accountManager,
          settings: VPNSettings = .init(defaults: .networkProtectionGroupDefaults),
          defaults: UserDefaults = .networkProtectionGroupDefaults) {
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
-        self.tokenStore = tokenStore
+        self.accountManager = accountManager
         self.settings = settings
         self.defaults = defaults
     }
@@ -136,7 +136,7 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
         let networkInfoMetadata = await collectNetworkInformation()
         let vpnState = await collectVPNState()
         let vpnSettingsState = collectVPNSettingsState()
-        let privacyProInfo = collectPrivacyProInfo()
+        let privacyProInfo = await collectPrivacyProInfo()
 
         return VPNMetadata(
             appInfo: appInfoMetadata,
@@ -253,20 +253,14 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
         )
     }
 
-    func collectPrivacyProInfo() -> VPNMetadata.PrivacyProInfo {
-        var hasToken: Bool {
-            guard let token = try? tokenStore.fetchToken(),
-                  !token.hasPrefix(NetworkProtectionKeychainTokenStore.authTokenPrefix) else {
-                return false
-            }
-            return true
-        }
-
+    func collectPrivacyProInfo() async -> VPNMetadata.PrivacyProInfo {
+        let hasVPNEntitlement = (try? await accountManager.hasEntitlement(forProductName: .networkProtection).get()) ?? false
         return .init(
-            hasToken: hasToken,
-            subscriptionActive: AppDependencyProvider.shared.subscriptionManager.accountManager.isUserAuthenticated
+            hasPrivacyProAccount: accountManager.isUserAuthenticated,
+            hasVPNEntitlement: hasVPNEntitlement
         )
     }
+
 }
 
 private extension NSError {

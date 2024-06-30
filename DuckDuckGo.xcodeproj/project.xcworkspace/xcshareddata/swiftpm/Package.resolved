@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "michal/signout-on-401",
-        "revision" : "297db22686e19a8786e741992ca3983261607b51"
+        "revision" : "be669f88c20b862b43e6267004c45022447209ee",
+        "version" : "164.0.0"
       }
     },
     {

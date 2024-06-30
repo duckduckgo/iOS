@@ -24,7 +24,7 @@ import SwiftUI
 struct SubscriptionContainerView: View {
     
     enum CurrentView {
-        case subscribe, restore
+        case subscribe, restore, email
     }
     
     @Environment(\.dismiss) var dismiss
@@ -54,6 +54,8 @@ struct SubscriptionContainerView: View {
                 SubscriptionRestoreView(viewModel: restoreViewModel,
                                         emailViewModel: emailViewModel,
                                         currentView: $currentViewState).environmentObject(subscriptionNavigationCoordinator)
+            case .email:
+                SubscriptionEmailView(viewModel: emailViewModel)
             }
         }
     }

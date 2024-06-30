@@ -344,6 +344,8 @@ import WebKit
 
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
+        AppDependencyProvider.shared.subscriptionManager.loadInitialData()
+
         setUpAutofillPixelReporter()
 
         return true
@@ -551,18 +553,10 @@ import WebKit
     }
 
     func updateSubscriptionStatus() {
-        Task {
-            guard let token = accountManager.accessToken else { return }
-            var subscriptionService: SubscriptionEndpointService {
-                AppDependencyProvider.shared.subscriptionManager.subscriptionEndpointService
+        AppDependencyProvider.shared.subscriptionManager.updateSubscriptionStatus { isActive in
+            if isActive {
+                DailyPixel.fire(pixel: .privacyProSubscriptionActive)
             }
-            if case .success(let subscription) = await subscriptionService.getSubscription(accessToken: token,
-                                                                                           cachePolicy: .reloadIgnoringLocalCacheData) {
-                if subscription.isActive {
-                    DailyPixel.fire(pixel: .privacyProSubscriptionActive)
-                }
-            }
-            await accountManager.fetchEntitlements(cachePolicy: .reloadIgnoringLocalCacheData)
         }
     }
 

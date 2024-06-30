@@ -419,8 +419,8 @@ extension TabViewController {
     }
 
     private func onToggleProtectionAction(forDomain domain: String, isProtected: Bool) {
-        let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
-        if isProtected && ToggleReportsFeature(privacyConfiguration: config).isEnabled {
+        let manager = ToggleReportsManager(feature: ToggleReportsFeature(manager: ContentBlocking.shared.privacyConfigurationManager))
+        if isProtected && manager.shouldShowToggleReport {
             delegate?.tab(self, didRequestToggleReportWithCompletionHandler: { [weak self] didSendReport in
                 self?.togglePrivacyProtection(domain: domain, didSendReport: didSendReport)
             })

@@ -35,6 +35,7 @@ final class SubscriptionContainerViewModelTests: XCTestCase {
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: mockDependencyProvider.subscriptionManager)
         let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: mockDependencyProvider.subscriptionManager,
                                                                appStoreRestoreFlow: appStoreRestoreFlow)
+        let appStoreAccountManagementFlow = DefaultAppStoreAccountManagementFlow(subscriptionManager: mockDependencyProvider.subscriptionManager)
 
         // WHEN
         sut = .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
@@ -43,7 +44,8 @@ final class SubscriptionContainerViewModelTests: XCTestCase {
                     subFeature: .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
                                       subscriptionAttributionOrigin: nil,
                                       appStorePurchaseFlow: appStorePurchaseFlow,
-                                      appStoreRestoreFlow: appStoreRestoreFlow))
+                                      appStoreRestoreFlow: appStoreRestoreFlow,
+                                      appStoreAccountManagementFlow: appStoreAccountManagementFlow))
 
         // THEN
         XCTAssertEqual(sut.flow.purchaseURL, expectedURL)
@@ -53,6 +55,8 @@ final class SubscriptionContainerViewModelTests: XCTestCase {
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: mockDependencyProvider.subscriptionManager)
         let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: mockDependencyProvider.subscriptionManager,
                                                                appStoreRestoreFlow: appStoreRestoreFlow)
+        let appStoreAccountManagementFlow = DefaultAppStoreAccountManagementFlow(subscriptionManager: mockDependencyProvider.subscriptionManager)
+
         // WHEN
         sut = .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
                     origin: nil,
@@ -60,7 +64,8 @@ final class SubscriptionContainerViewModelTests: XCTestCase {
                     subFeature: .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
                                       subscriptionAttributionOrigin: nil,
                                       appStorePurchaseFlow: appStorePurchaseFlow,
-                                      appStoreRestoreFlow: appStoreRestoreFlow))
+                                      appStoreRestoreFlow: appStoreRestoreFlow,
+                                      appStoreAccountManagementFlow: appStoreAccountManagementFlow))
 
         // THEN
         XCTAssertEqual(sut.flow.purchaseURL, SubscriptionURL.purchase.subscriptionURL(environment: .production))

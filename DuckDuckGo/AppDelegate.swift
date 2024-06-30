@@ -344,6 +344,8 @@ import WebKit
 
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
+        AppDependencyProvider.shared.subscriptionManager.loadInitialData()
+
         setUpAutofillPixelReporter()
 
         return true

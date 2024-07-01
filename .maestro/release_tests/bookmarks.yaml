@@ -23,18 +23,6 @@ tags:
 - runFlow:
     file: ../shared/onboarding_browsing.yaml
  
-# Load Site
-- assertVisible:
-    id: "searchEntry"
-- tapOn: 
-    id: "searchEntry"
-- inputText: "https://privacy-test-pages.site"
-- pressKey: Enter
-
-# Manage onboarding
-- runFlow:
-    file: ../shared/onboarding_browsing.yaml
-    
 # Bookmark site
 - assertVisible: "Browsing menu"
 - tapOn: "Browsing menu"

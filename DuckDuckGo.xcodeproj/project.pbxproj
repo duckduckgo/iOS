@@ -252,6 +252,7 @@
 		6AC98419288055C1005FA9CA /* BarsAnimatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC98418288055C1005FA9CA /* BarsAnimatorTests.swift */; };
 		6F03CAFC2C32C6F6004179A8 /* NewTabPageMessagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F03CAFB2C32C6F6004179A8 /* NewTabPageMessagesModel.swift */; };
 		6F03CAFE2C32DD08004179A8 /* HomePageMessagesConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F03CAFD2C32DD08004179A8 /* HomePageMessagesConfiguration.swift */; };
+		6F03CB022C32ED47004179A8 /* NewTabPageMessagesModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F03CB002C32ED42004179A8 /* NewTabPageMessagesModelTests.swift */; };
 		6F03CB052C32EFCC004179A8 /* MockPixelFiring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F03CB032C32EFA8004179A8 /* MockPixelFiring.swift */; };
 		6F03CB072C32F173004179A8 /* PixelFiring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F03CB062C32F173004179A8 /* PixelFiring.swift */; };
 		6F03CB092C32F331004179A8 /* PixelFiringAsync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F03CB082C32F331004179A8 /* PixelFiringAsync.swift */; };
@@ -1361,6 +1362,7 @@
 		6AC98418288055C1005FA9CA /* BarsAnimatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsAnimatorTests.swift; sourceTree = "<group>"; };
 		6F03CAFB2C32C6F6004179A8 /* NewTabPageMessagesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageMessagesModel.swift; sourceTree = "<group>"; };
 		6F03CAFD2C32DD08004179A8 /* HomePageMessagesConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageMessagesConfiguration.swift; sourceTree = "<group>"; };
+		6F03CB002C32ED42004179A8 /* NewTabPageMessagesModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageMessagesModelTests.swift; sourceTree = "<group>"; };
 		6F03CB032C32EFA8004179A8 /* MockPixelFiring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPixelFiring.swift; sourceTree = "<group>"; };
 		6F03CB062C32F173004179A8 /* PixelFiring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelFiring.swift; sourceTree = "<group>"; };
 		6F03CB082C32F331004179A8 /* PixelFiringAsync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelFiringAsync.swift; sourceTree = "<group>"; };
@@ -3395,6 +3397,14 @@
 			name = Messages;
 			sourceTree = "<group>";
 		};
+		6F03CAFF2C32ED22004179A8 /* NewTabPage */ = {
+			isa = PBXGroup;
+			children = (
+				6F03CB002C32ED42004179A8 /* NewTabPageMessagesModelTests.swift */,
+			);
+			name = NewTabPage;
+			sourceTree = "<group>";
+		};
 		6FB1FE9C2C24D4060075B68B /* NewTabPageSectionsDebugView */ = {
 			isa = PBXGroup;
 			children = (
@@ -4931,6 +4941,7 @@
 		F12D98401F266B30003C2EE3 /* DuckDuckGo */ = {
 			isa = PBXGroup;
 			children = (
+				6F03CAFF2C32ED22004179A8 /* NewTabPage */,
 				569437222BDD402600C0881B /* Sync */,
 				6FF9157F2B88E04F0042AC87 /* AdAttribution */,
 				CB48D3342B90CEBD00631D8B /* UserBehaviorMonitor */,
@@ -7081,6 +7092,7 @@
 				317045C02858C6B90016ED1F /* AutofillInterfaceEmailTruncatorTests.swift in Sources */,
 				6FD3AEE32B8F4EEB0060FCCC /* AdAttributionPixelReporterTests.swift in Sources */,
 				987130C6294AAB9F00AB05E0 /* BookmarkListViewModelTests.swift in Sources */,
+				6F03CB022C32ED47004179A8 /* NewTabPageMessagesModelTests.swift in Sources */,
 				F1134ED21F40EF3A00B73467 /* JsonTestDataLoader.swift in Sources */,
 				850250B520D80419002199C7 /* AtbAndVariantCleanupTests.swift in Sources */,
 				834DF992248FDE1A0075EA48 /* UserAgentTests.swift in Sources */,

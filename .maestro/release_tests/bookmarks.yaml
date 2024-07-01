@@ -101,6 +101,7 @@ tags:
 # Delete bookmark
 - tapOn: "Edit"
 - tapOn: "chevron"
+- hideKeyboard
 - assertVisible: "Delete"
 - tapOn: "Delete"
 - assertVisible: "Delete?"

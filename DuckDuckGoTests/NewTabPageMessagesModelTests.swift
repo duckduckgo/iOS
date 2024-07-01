@@ -35,7 +35,7 @@ final class NewTabPageMessagesModelTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-
+        PixelFiringMock.tearDown()
     }
 
     func testUpdatesOnNotification() {

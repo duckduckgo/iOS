@@ -159,7 +159,7 @@ final class AdAttributionPixelReporterTests: XCTestCase {
     private func createSUT() -> AdAttributionPixelReporter {
         AdAttributionPixelReporter(fetcherStorage: fetcherStorage,
                                    attributionFetcher: attributionFetcher,
-                                   pixelFiring: PixelFiringsAsyncMock.self)
+                                   pixelFiring: PixelFiringMock.self)
     }
 }
 
@@ -176,34 +176,6 @@ class AdAttributionFetcherMock: AdAttributionFetcher {
     func fetch() async -> AdServicesAttributionResponse? {
         fetchResponse
     }
-}
-
-final actor PixelFiringsAsyncMock: PixelFiringAsync {
-    static var expectedFireError: Error?
-
-    static var lastParams: [String: String]?
-    static var lastPixel: Pixel.Event?
-    static var lastIncludedParams: [Pixel.QueryParameters]?
-    static func fire(pixel: Pixel.Event,
-                     withAdditionalParameters params: [String: String],
-                     includedParameters: [Pixel.QueryParameters]) async throws {
-        lastParams = params
-        lastPixel = pixel
-        lastIncludedParams = includedParameters
-
-        if let expectedFireError {
-            throw expectedFireError
-        }
-    }
-
-    static func tearDown() {
-        lastParams = nil
-        lastPixel = nil
-        lastIncludedParams = nil
-        expectedFireError = nil
-    }
-
-    private init() {}
 }
 
 extension AdServicesAttributionResponse {

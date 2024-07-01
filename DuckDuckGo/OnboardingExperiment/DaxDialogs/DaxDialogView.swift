@@ -47,26 +47,34 @@ struct DaxDialogView<Content: View>: View {
     @State private var logoPosition: LogoPosition
     private let cornerRadius: CGFloat
     private let arrowSize: CGSize
+    private let onTapGesture: (() -> Void)?
     private let content: Content
 
     init(
         logoPosition: LogoPosition,
         cornerRadius: CGFloat = 16.0,
         arrowSize: CGSize = .init(width: 16.0, height: 8.0),
+        onTapGesture: (() -> Void)? = nil,
         @ViewBuilder content: () -> Content
     ) {
         _logoPosition = State(initialValue: logoPosition)
         self.cornerRadius = cornerRadius
         self.arrowSize = arrowSize
+        self.onTapGesture = onTapGesture
         self.content = content()
     }
 
     var body: some View {
-        switch logoPosition {
-        case .top:
-            topLogoViewContentView
-        case .left:
-            leftLogoContentView
+        Group {
+            switch logoPosition {
+            case .top:
+                topLogoViewContentView
+            case .left:
+                leftLogoContentView
+            }
+        }
+        .onTapGesture {
+            onTapGesture?()
         }
     }
 

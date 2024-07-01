@@ -113,7 +113,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     func launchAutofillViewController() {
         guard let mainVC = view.window?.rootViewController as? MainViewController else { return }
         dismiss(animated: true)
-        mainVC.launchAutofillLogins()
+        mainVC.launchAutofillLogins(source: .sync)
     }
 
     func launchBookmarksViewController() {

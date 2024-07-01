@@ -1,8 +1,8 @@
 //
-//  SettingsLoginsView.swift
+//  NewTabPageView.swift
 //  DuckDuckGo
 //
-//  Copyright © 2023 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,25 +18,13 @@
 //
 
 import SwiftUI
-import UIKit
-import Core
-import DDGSync
-import BrowserServicesKit
 
-struct SettingsLoginsView: View {
-    
-    @EnvironmentObject var viewModel: SettingsViewModel
-    
+struct NewTabPageView: View {
     var body: some View {
-        if viewModel.state.loginsEnabled {
-            Section {
-                SettingsCellView(label: UserText.settingsLogins,
-                                 action: { viewModel.presentLegacyView(.logins) },
-                                 disclosureIndicator: true,
-                                 isButton: true)
-            }
-        }
-            
+        Text("Empty")
     }
- 
+}
+
+#Preview {
+    NewTabPageView()
 }

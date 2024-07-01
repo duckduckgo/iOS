@@ -27,6 +27,7 @@ import Kingfisher
 import LinkPresentation
 import NetworkProtection
 import Persistence
+import SwiftUI
 import UIKit
 import WebKit
 
@@ -37,12 +38,13 @@ class RootDebugViewController: UITableViewController {
         case crashFatalError = 666
         case crashMemory = 667
         case crashException = 673
-        case crashCxxException = 674
+        case crashCxxException = 675
         case toggleInspectableWebViews = 668
         case toggleInternalUserState = 669
         case openVanillaBrowser = 670
         case resetSendCrashLogs = 671
         case refreshConfig = 672
+        case newTabPageSections = 674
     }
 
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -162,6 +164,9 @@ class RootDebugViewController: UITableViewController {
                 AppUserDefaults().crashCollectionOptInStatus = .undetermined
             case .refreshConfig:
                 fetchAssets()
+            case .newTabPageSections:
+                let controller = UIHostingController(rootView: NewTabPageSectionsDebugView())
+                show(controller, sender: nil)
             }
         }
     }

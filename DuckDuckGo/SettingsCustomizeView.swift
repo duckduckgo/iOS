@@ -34,12 +34,13 @@ struct SettingsCustomizeView: View {
                              disclosureIndicator: true,
                              isButton: true)
             
-            SettingsCellView(label: UserText.settingsAutocomplete,
-                             subtitle: viewModel.autocompleteSubtitle,
+            SettingsCellView(label: UserText.settingsAutocompleteLabel,
+                             subtitle: UserText.settingsAutocompleteSubtitle,
                              accesory: .toggle(isOn: viewModel.autocompleteBinding))
 
             if viewModel.shouldShowRecentlyVisitedSites {
-                SettingsCellView(label: UserText.settingsAutocompleteRecentlyVisited,
+                SettingsCellView(label: UserText.settingsAutocompleteRecentlyVisitedLabel,
+                                 subtitle: UserText.settingsAutocompleteRecentlyVisitedSubtitle,
                                  accesory: .toggle(isOn: viewModel.autocompleteRecentlyVisitedSitesBinding))
             }
 

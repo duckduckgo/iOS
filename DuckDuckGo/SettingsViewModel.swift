@@ -47,7 +47,7 @@ final class SettingsViewModel: ObservableObject {
     private let historyManager: HistoryManager
 
     // Subscription Dependencies
-    private let subscriptionManager: SubscriptionManaging
+    private let subscriptionManager: SubscriptionManager
     private var subscriptionSignOutObserver: Any?
     
     private enum UserDefaultsCacheKey: String, UserDefaultsCacheKeyStore {
@@ -84,9 +84,10 @@ final class SettingsViewModel: ObservableObject {
     
     var shouldShowNoMicrophonePermissionAlert: Bool = false
     @Published var shouldShowEmailAlert: Bool = false
-    var autocompleteSubtitle: String?
 
     @Published var shouldShowRecentlyVisitedSites: Bool = true
+    
+    @Published var isInternalUser: Bool = AppDependencyProvider.shared.internalUserDecider.isInternalUser
 
     // MARK: - Deep linking
     // Used to automatically navigate to a specific section
@@ -101,7 +102,6 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.state.appTheme = $0
                 ThemeManager.shared.enableTheme(with: $0)
-                Pixel.fire(pixel: .settingsThemeSelectorPressed, withAdditionalParameters: PixelExperiment.parameters)
             }
         )
     }
@@ -119,8 +119,6 @@ final class SettingsViewModel: ObservableObject {
                 } completion: {
                     // no op
                 }
-                Pixel.fire(pixel: .settingsFireButtonSelectorPressed,
-                           withAdditionalParameters: PixelExperiment.parameters)
             }
         )
     }
@@ -133,13 +131,6 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.currentAddressBarPosition = $0
                 self.state.addressbar.position = $0
-                if $0 == .top {
-                    Pixel.fire(pixel: .settingsAddressBarTopSelected,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                } else {
-                    Pixel.fire(pixel: .settingsAddressBarBottomSelected,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                }
             }
         )
     }
@@ -150,13 +141,6 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.state.showsFullURL = $0
                 self.appSettings.showFullSiteAddress = $0
-                if $0 {
-                    Pixel.fire(pixel: .settingsShowFullSiteAddressEnabled,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                } else {
-                    Pixel.fire(pixel: .settingsShowFullSiteAddressDisabled,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                }
             }
         )
     }
@@ -171,25 +155,23 @@ final class SettingsViewModel: ObservableObject {
         )
     }
 
-    var autocompleteBinding: Binding<Bool> {
+    var autocompleteGeneralBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.autocomplete },
             set: {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
                 self.updateRecentlyVisitedSitesVisibility()
+                
                 if $0 {
-                    Pixel.fire(pixel: .settingsAutocompleteOn,
-                               withAdditionalParameters: PixelExperiment.parameters)
+                    Pixel.fire(pixel: .settingsGeneralAutocompleteOn)
                 } else {
-                    Pixel.fire(pixel: .settingsAutocompleteOff,
-                               withAdditionalParameters: PixelExperiment.parameters)
+                    Pixel.fire(pixel: .settingsGeneralAutocompleteOff)
                 }
             }
         )
     }
 
-    // Remove after Settings experiment
     var autocompletePrivateSearchBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.autocomplete },
@@ -197,12 +179,11 @@ final class SettingsViewModel: ObservableObject {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
                 self.updateRecentlyVisitedSitesVisibility()
+
                 if $0 {
-                    Pixel.fire(pixel: .settingsPrivateSearchAutocompleteOn,
-                               withAdditionalParameters: PixelExperiment.parameters)
+                    Pixel.fire(pixel: .settingsPrivateSearchAutocompleteOn)
                 } else {
-                    Pixel.fire(pixel: .settingsPrivateSearchAutocompleteOff,
-                               withAdditionalParameters: PixelExperiment.parameters)
+                    Pixel.fire(pixel: .settingsPrivateSearchAutocompleteOff)
                 }
             }
         )
@@ -223,25 +204,6 @@ final class SettingsViewModel: ObservableObject {
         )
     }
 
-    // Remove after Settings experiment
-    var autocompleteGeneralBinding: Binding<Bool> {
-        Binding<Bool>(
-            get: { self.state.autocomplete },
-            set: {
-                self.appSettings.autocomplete = $0
-                self.state.autocomplete = $0
-                self.updateRecentlyVisitedSitesVisibility()
-                if $0 {
-                    Pixel.fire(pixel: .settingsGeneralAutocompleteOn,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                } else {
-                    Pixel.fire(pixel: .settingsGeneralAutocompleteOff,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                }
-            }
-        )
-    }
-
     var gpcBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.sendDoNotSell },
@@ -250,11 +212,9 @@ final class SettingsViewModel: ObservableObject {
                 self.state.sendDoNotSell = $0
                 NotificationCenter.default.post(name: AppUserDefaults.Notifications.doNotSellStatusChange, object: nil)
                 if $0 {
-                    Pixel.fire(pixel: .settingsGpcOn,
-                               withAdditionalParameters: PixelExperiment.parameters)
+                    Pixel.fire(pixel: .settingsGpcOn)
                 } else {
-                    Pixel.fire(pixel: .settingsGpcOff,
-                               withAdditionalParameters: PixelExperiment.parameters)
+                    Pixel.fire(pixel: .settingsGpcOff)
                 }
             }
         )
@@ -267,11 +227,9 @@ final class SettingsViewModel: ObservableObject {
                 self.appSettings.autoconsentEnabled = $0
                 self.state.autoconsentEnabled = $0
                 if $0 {
-                    Pixel.fire(pixel: .settingsAutoconsentOn,
-                               withAdditionalParameters: PixelExperiment.parameters)
+                    Pixel.fire(pixel: .settingsAutoconsentOn)
                 } else {
-                    Pixel.fire(pixel: .settingsAutoconsentOff,
-                               withAdditionalParameters: PixelExperiment.parameters)
+                    Pixel.fire(pixel: .settingsAutoconsentOff)
                 }
             }
         )
@@ -283,63 +241,20 @@ final class SettingsViewModel: ObservableObject {
             set: { newValue in
                 self.setVoiceSearchEnabled(to: newValue)
                 if newValue {
-                    Pixel.fire(pixel: .settingsVoiceSearchOn,
-                               withAdditionalParameters: PixelExperiment.parameters)
+                    Pixel.fire(pixel: .settingsVoiceSearchOn)
                 } else {
-                    Pixel.fire(pixel: .settingsVoiceSearchOff,
-                               withAdditionalParameters: PixelExperiment.parameters)
+                    Pixel.fire(pixel: .settingsVoiceSearchOff)
                 }
             }
         )
     }
 
-    // Remove after Settings experiment
-    var voiceSearchEnabledPrivateSearchBinding: Binding<Bool> {
-        Binding<Bool>(
-            get: { self.state.voiceSearchEnabled },
-            set: { newValue in
-                self.setVoiceSearchEnabled(to: newValue)
-                if newValue {
-                    Pixel.fire(pixel: .settingsPrivateSearchVoiceSearchOn,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                } else {
-                    Pixel.fire(pixel: .settingsPrivateSearchVoiceSearchOff,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                }
-            }
-        )
-    }
-
-    // Remove after Settings experiment
-    var voiceSearchEnabledGeneralBinding: Binding<Bool> {
-        Binding<Bool>(
-            get: { self.state.voiceSearchEnabled },
-            set: { newValue in
-                self.setVoiceSearchEnabled(to: newValue)
-                if newValue {
-                    Pixel.fire(pixel: .settingsGeneralVoiceSearchOn,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                } else {
-                    Pixel.fire(pixel: .settingsGeneralVoiceSearchOff,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                }
-            }
-        )
-    }
-
-    // Remove after Settings experiment
-    var voiceSearchEnabledAccessibilityBinding: Binding<Bool> {
-        Binding<Bool>(
-            get: { self.state.voiceSearchEnabled },
-            set: { newValue in
-                self.setVoiceSearchEnabled(to: newValue)
-                if newValue {
-                    Pixel.fire(pixel: .settingsAccessibilityVoiceSearchOn,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                } else {
-                    Pixel.fire(pixel: .settingsAccessibilityVoiceSearchOff,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                }
+    var duckPlayerModeBinding: Binding<DuckPlayerMode> {
+        Binding<DuckPlayerMode>(
+            get: { self.state.duckPlayerMode ?? .alwaysAsk },
+            set: {
+                self.appSettings.duckPlayerMode = $0
+                self.state.duckPlayerMode = $0
             }
         )
     }
@@ -407,7 +322,7 @@ final class SettingsViewModel: ObservableObject {
     // MARK: Default Init
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
-         subscriptionManager: SubscriptionManaging,
+         subscriptionManager: SubscriptionManager,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil,
@@ -423,7 +338,6 @@ final class SettingsViewModel: ObservableObject {
         self.syncPausedStateManager = syncPausedStateManager
 
         setupNotificationObservers()
-        autocompleteSubtitle = UserText.settingsAutocompleteSubtitle
         updateRecentlyVisitedSitesVisibility()
     }
 
@@ -465,7 +379,8 @@ extension SettingsViewModel {
             loginsEnabled: featureFlagger.isFeatureOn(.autofillAccessCredentialManagement),
             networkProtection: getNetworkProtectionState(),
             subscription: SettingsState.defaults.subscription,
-            sync: getSyncState()
+            sync: getSyncState(),
+            duckPlayerMode: appSettings.duckPlayerMode
         )
         
         updateRecentlyVisitedSitesVisibility()
@@ -564,8 +479,7 @@ extension SettingsViewModel {
     }
     
     func setAsDefaultBrowser() {
-        Pixel.fire(pixel: .settingsSetAsDefault,
-                   withAdditionalParameters: PixelExperiment.parameters)
+        Pixel.fire(pixel: .settingsSetAsDefault)
         guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
         UIApplication.shared.open(url)
     }
@@ -627,33 +541,26 @@ extension SettingsViewModel {
         switch view {
         
         case .addToDock:
-            firePixel(.settingsNextStepsAddAppToDock,
-                      withAdditionalParameters: PixelExperiment.parameters)
             presentViewController(legacyViewProvider.addToDock, modal: true)
         case .sync:
-            firePixel(.settingsSyncOpen,
-                      withAdditionalParameters: PixelExperiment.parameters)
             pushViewController(legacyViewProvider.syncSettings)
         case .appIcon: pushViewController(legacyViewProvider.appIcon)
         case .unprotectedSites: pushViewController(legacyViewProvider.unprotectedSites)
         case .fireproofSites: pushViewController(legacyViewProvider.fireproofSites)
         case .autoclearData:
-            firePixel(.settingsAutomaticallyClearDataOpen, withAdditionalParameters: PixelExperiment.parameters)
             pushViewController(legacyViewProvider.autoclearData)
         case .keyboard: pushViewController(legacyViewProvider.keyboard)
-        case .about: pushViewController(legacyViewProvider.about)
         case .debug: pushViewController(legacyViewProvider.debug)
             
         case .feedback:
             presentViewController(legacyViewProvider.feedback, modal: false)
         case .logins:
-            firePixel(.autofillSettingsOpened, withAdditionalParameters: PixelExperiment.parameters)
+            firePixel(.autofillSettingsOpened)
             pushViewController(legacyViewProvider.loginSettings(delegate: self,
                                                             selectedAccount: state.activeWebsiteAccount))
 
         case .textSize:
-            firePixel(.settingsAccessiblityTextSize,
-                      withAdditionalParameters: PixelExperiment.parameters)
+            firePixel(.settingsAccessiblityTextSize)
             pushViewController(legacyViewProvider.textSettings)
 
         case .gpc:
@@ -666,8 +573,7 @@ extension SettingsViewModel {
 #if NETWORK_PROTECTION
         case .netP:
             if #available(iOS 15, *) {
-                firePixel(.privacyProVPNSettings,
-                          withAdditionalParameters: PixelExperiment.parameters)
+                firePixel(.privacyProVPNSettings)
                 pushViewController(legacyViewProvider.netP)
             }
 #endif
@@ -703,7 +609,6 @@ extension SettingsViewModel {
         case dbp
         case itr
         case subscriptionFlow(origin: String? = nil)
-        case subscriptionRestoreFlow
         // Add other cases as needed
 
         var id: String {
@@ -712,7 +617,6 @@ extension SettingsViewModel {
             case .dbp: return "dbp"
             case .itr: return "itr"
             case .subscriptionFlow: return "subscriptionFlow"
-            case .subscriptionRestoreFlow: return "subscriptionRestoreFlow"
             // Ensure all cases are covered
             }
         }
@@ -786,7 +690,7 @@ extension SettingsViewModel {
             return
         }
         
-        let subscriptionResult = await subscriptionManager.subscriptionService.getSubscription(accessToken: token)
+        let subscriptionResult = await subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: token)
         switch subscriptionResult {
             
         case .success(let subscription):
@@ -798,7 +702,7 @@ extension SettingsViewModel {
             let entitlementsToCheck: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
 
             for entitlement in entitlementsToCheck {
-                if case .success = await subscriptionManager.accountManager.hasEntitlement(for: entitlement) {
+                if case .success = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement) {
                     currentEntitlements.append(entitlement)
                 }
             }
@@ -830,7 +734,7 @@ extension SettingsViewModel {
     @available(iOS 15.0, *)
     func restoreAccountPurchase() async {
         DispatchQueue.main.async { self.state.subscription.isRestoring = true }
-        let appStoreRestoreFlow = AppStoreRestoreFlow(subscriptionManager: subscriptionManager)
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager)
         let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase()
         switch result {
         case .success:

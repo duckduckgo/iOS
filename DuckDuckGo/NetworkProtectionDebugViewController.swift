@@ -135,14 +135,14 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     private var connectionTestResults: [ConnectionTestResult] = []
     private var connectionTestResultError: String?
     private let connectionTestQueue = DispatchQueue(label: "com.duckduckgo.ios.vpnDebugConnectionTestQueue")
-    private let accountManager: AccountManaging
+    private let accountManager: AccountManager
 
     // MARK: Lifecycle
 
     required init?(coder: NSCoder,
                    tokenStore: NetworkProtectionTokenStore,
                    debugFeatures: NetworkProtectionDebugFeatures = NetworkProtectionDebugFeatures(),
-                   accountManager: AccountManaging) {
+                   accountManager: AccountManager) {
         
         self.debugFeatures = debugFeatures
         self.tokenStore = tokenStore
@@ -654,8 +654,7 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
 
     @MainActor
     private func refreshMetadata() async {
-        let collector = DefaultVPNMetadataCollector(statusObserver: AppDependencyProvider.shared.connectionObserver,
-                                                    tokenStore: AppDependencyProvider.shared.networkProtectionKeychainTokenStore)
+        let collector = DefaultVPNMetadataCollector(statusObserver: AppDependencyProvider.shared.connectionObserver)
         self.vpnMetadata = await collector.collectMetadata()
         self.tableView.reloadData()
     }

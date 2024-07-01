@@ -245,7 +245,7 @@
 "autocomplete.history.search.duckduckgo" = "Iščite po DuckDuckGo";
 
 /* The message text shown in suggestions */
-"autocomplete.history.warning.message" = "Predlogi zdaj vključujejo nedavno obiskana spletna mesta. Ta so shranjena v vaši napravi in nikoli v strežnikih DuckDuckGo. Funkcijo izklopite v nastavitvah ali pa seznam kadar koli počistite z gumbom Fire Button 🔥.";
+"autocomplete.history.warning.message" = "Iskalni predlogi zdaj vključujejo vaša nedavno obiskana spletna mesta. Izklopite v nastavitvah ali pa seznam kadar koli počistite z gumbom Fire Button 🔥.";
 
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Enaka raven zasebnosti.\nBoljši predlogi iskanja!";
@@ -1799,10 +1799,16 @@
 "settings.associated.apps.description" = "Onemogoči, da preprečiš samodejno odpiranje povezav v drugih nameščenih aplikacijah.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Pokaži predloge za samodokončanje";
+"settings.autocomplete" = "Predlogi za iskanje";
 
 /* Settings label for enabling or disabling recently visited sites */
 "settings.autocomplete.recentlyvisited" = "Nedavno obiskana spletna mesta";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Prikaži nedavno obiskana spletna mesta v predlogih za iskanje. Nedavno obiskana spletna mesta so zasebna, shranjena samo v vaši napravi in jih lahko izbrišete z gumbom Fire Button.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Med vnašanjem si oglejte predloge iskanja, vključno z zaznamki. Vsa iskanja so zasebna.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Zaklepanje aplikacije";

@@ -24,9 +24,9 @@ import Subscription
 
 struct NetworkProtectionVisibilityForTunnelProvider: NetworkProtectionFeatureVisibility {
 
-    private let accountManager: AccountManaging
+    private let accountManager: AccountManager
 
-    init(accountManager: AccountManaging) {
+    init(accountManager: AccountManager) {
         self.accountManager = accountManager
     }
 

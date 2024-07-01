@@ -32,25 +32,40 @@ final class SubscriptionContainerViewModelTests: XCTestCase {
         let origin = "test_origin"
         let queryParameter = URLQueryItem(name: "origin", value: "test_origin")
         let expectedURL = SubscriptionURL.purchase.subscriptionURL(environment: .production).appending(percentEncodedQueryItem: queryParameter)
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: mockDependencyProvider.subscriptionManager)
+        let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: mockDependencyProvider.subscriptionManager,
+                                                               appStoreRestoreFlow: appStoreRestoreFlow)
+        let appStoreAccountManagementFlow = DefaultAppStoreAccountManagementFlow(subscriptionManager: mockDependencyProvider.subscriptionManager)
 
         // WHEN
         sut = .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
                     origin: origin,
                     userScript: .init(),
                     subFeature: .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
-                                      subscriptionAttributionOrigin: nil))
+                                      subscriptionAttributionOrigin: nil,
+                                      appStorePurchaseFlow: appStorePurchaseFlow,
+                                      appStoreRestoreFlow: appStoreRestoreFlow,
+                                      appStoreAccountManagementFlow: appStoreAccountManagementFlow))
 
         // THEN
         XCTAssertEqual(sut.flow.purchaseURL, expectedURL)
     }
 
     func testWhenInitWithoutOriginThenSubscriptionFlowPurchaseURLDoesNotHaveOriginSet() {
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: mockDependencyProvider.subscriptionManager)
+        let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: mockDependencyProvider.subscriptionManager,
+                                                               appStoreRestoreFlow: appStoreRestoreFlow)
+        let appStoreAccountManagementFlow = DefaultAppStoreAccountManagementFlow(subscriptionManager: mockDependencyProvider.subscriptionManager)
+
         // WHEN
         sut = .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
                     origin: nil,
                     userScript: .init(),
                     subFeature: .init(subscriptionManager: mockDependencyProvider.subscriptionManager,
-                                      subscriptionAttributionOrigin: nil))
+                                      subscriptionAttributionOrigin: nil,
+                                      appStorePurchaseFlow: appStorePurchaseFlow,
+                                      appStoreRestoreFlow: appStoreRestoreFlow,
+                                      appStoreAccountManagementFlow: appStoreAccountManagementFlow))
 
         // THEN
         XCTAssertEqual(sut.flow.purchaseURL, SubscriptionURL.purchase.subscriptionURL(environment: .production))

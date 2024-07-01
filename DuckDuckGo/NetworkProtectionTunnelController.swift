@@ -26,6 +26,13 @@ import NetworkExtension
 import NetworkProtection
 import Subscription
 
+enum VPNConfigurationRemovalReason: String {
+    case didBecomeActiveCheck
+    case entitlementCheck
+    case signedOut
+    case debugMenu
+}
+
 final class NetworkProtectionTunnelController: TunnelController {
     static var shouldSimulateFailure: Bool = false
 
@@ -114,8 +121,18 @@ final class NetworkProtectionTunnelController: TunnelController {
         tunnelManager.connection.stopVPNTunnel()
     }
 
-    func removeVPN() async {
-        try? await tunnelManager?.removeFromPreferences()
+    func removeVPN(reason: VPNConfigurationRemovalReason) async {
+        do {
+            try await tunnelManager?.removeFromPreferences()
+
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionVPNConfigurationRemoved, withAdditionalParameters: [
+                PixelParameters.reason: reason.rawValue
+            ])
+        } catch {
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionVPNConfigurationRemovalFailed, error: error, withAdditionalParameters: [
+                PixelParameters.reason: reason.rawValue
+            ])
+        }
     }
 
     // MARK: - Connection Status Querying

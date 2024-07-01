@@ -30,7 +30,7 @@ enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
     
     private static let enabledString = "enabled"
     private static let alwaysAskString = "alwaysAsk"
-    private static let neverString = "alwaysAsk"
+    private static let neverString = "disabled"
     
     var description: String {
         switch self {
@@ -99,7 +99,7 @@ public struct UserValues: Codable {
 
 final class DuckPlayerSettings {
     
-    private var appSettings: AppSettings
+    var appSettings: AppSettings
     
     init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
         self.appSettings = appSettings
@@ -132,9 +132,12 @@ final class DuckPlayer {
         
     private var settings: DuckPlayerSettings
     
-
-    init(settings: DuckPlayerSettings = DuckPlayerSettings()) {
+    @Published var userValues: UserValues
+    
+    init(settings: DuckPlayerSettings = DuckPlayerSettings(), userValues: UserValues? = nil) {
         self.settings = settings
+        self.userValues = userValues ?? UserValues(duckPlayerMode: settings.mode, askModeOverlayHidden: settings.askModeOverlayHidden)
+        registerForNotificationChanges()
     }
     
     // MARK: - Common Message Handlers
@@ -144,8 +147,10 @@ final class DuckPlayer {
             assertionFailure("DuckPlayer: expected JSON representation of UserValues")
             return nil
         }
+                
         settings.mode = userValues.duckPlayerMode
         settings.askModeOverlayHidden = userValues.askModeOverlayHidden
+        
         return userValues
     }
         
@@ -180,6 +185,22 @@ final class DuckPlayer {
         let userValues = encodeUserValues()
 
         return InitialSetupSettings(userValues: userValues, settings: playerSettings)
+    }
+    
+    private func registerForNotificationChanges() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updatePlayerMode),
+                                               name: AppUserDefaults.Notifications.duckPlayerModeChanged,
+                                               object: nil)
+    }
+
+    
+    @objc private func updatePlayerMode(_ notification: Notification) {
+            userValues = encodeUserValues()
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
 }

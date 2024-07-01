@@ -25,10 +25,14 @@ import DesignResourcesKit
 
 extension OmniBar: NibLoading {}
 
+public enum OmniBarIcon: String {
+    case duckPlayer = "DuckPlayerIcon"
+}
+
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
 class OmniBar: UIView {
-
+   
     public static let didLayoutNotification = Notification.Name("com.duckduckgo.app.OmniBarDidLayout")
     
     @IBOutlet weak var searchLoupe: UIView!
@@ -69,6 +73,9 @@ class OmniBar: UIView {
     
     private var privacyIconAndTrackersAnimator = PrivacyIconAndTrackersAnimator()
     private var notificationAnimator = OmniBarNotificationAnimator()
+    
+    // Set up a view to add a custom icon to the Omnibar
+    private var customIconView: UIImageView = UIImageView(frame: CGRect(x: 4, y: 8, width: 26, height: 26))
 
     static func loadFromXib() -> OmniBar {
         return OmniBar.load(nibName: "OmniBar")
@@ -263,10 +270,23 @@ class OmniBar: UIView {
               !privacyIconAndTrackersAnimator.isAnimatingForDaxDialog
         else { return }
         
+        if privacyInfo.url.isDuckPlayer {
+            showCustomIcon(icon: .duckPlayer)
+            return
+        }
+
+        customIconView.isHidden = true
         privacyInfoContainer.privacyIcon.isHidden = false
-        
         let icon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
         privacyInfoContainer.privacyIcon.updateIcon(icon)
+    }
+    
+    // Support static custom icons, for things like internal pages, for example
+    func showCustomIcon(icon: OmniBarIcon) {
+        privacyInfoContainer.privacyIcon.isHidden = true
+        customIconView.image = UIImage(named: icon.rawValue)
+        privacyInfoContainer.addSubview(customIconView)
+        customIconView.isHidden = false
     }
     
     public func startTrackersAnimation(_ privacyInfo: PrivacyInfo, forDaxDialog: Bool) {

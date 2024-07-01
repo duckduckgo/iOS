@@ -54,7 +54,6 @@ struct FavoritesView: View {
                 }
             }
         }
-        .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
     }
     
     private func emptyIcon() -> Image {

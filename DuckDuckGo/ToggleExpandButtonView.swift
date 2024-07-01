@@ -27,7 +27,6 @@ struct ToggleExpandButtonView: View {
     var body: some View {
         Text(isIndicatingExpand ? "Show more" : "Show less")
             .daxCaption()
-            .fixedSize(horizontal: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
     }
 }
 

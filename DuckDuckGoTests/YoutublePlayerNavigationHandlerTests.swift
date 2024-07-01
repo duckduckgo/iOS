@@ -202,10 +202,10 @@ class YoutubePlayerNavigationHandlerTests: XCTestCase {
     func testHandleURLChangeDuckPlayerEnabled() {
         let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123&t=10s")!
         
-        var playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         playerSettings.setMode(.alwaysAsk)
-        var player = MockDuckPlayer(settings: playerSettings)
-        var handler = YoutubePlayerNavigationHandler(duckPlayer: player)
+        let player = MockDuckPlayer(settings: playerSettings)
+        let handler = YoutubePlayerNavigationHandler(duckPlayer: player)
         
         handler.handleURLChange(url: youtubeURL, webView: mockWebView)
         
@@ -224,10 +224,10 @@ class YoutubePlayerNavigationHandlerTests: XCTestCase {
     func testHandleURLChangeDuckPlayerDisabled() {
         let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123&t=10s")!
         
-        var playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         playerSettings.setMode(.disabled)
-        var player = MockDuckPlayer(settings: playerSettings)
-        var handler = YoutubePlayerNavigationHandler(duckPlayer: player)
+        let player = MockDuckPlayer(settings: playerSettings)
+        let handler = YoutubePlayerNavigationHandler(duckPlayer: player)
         
         handler.handleURLChange(url: youtubeURL, webView: mockWebView)
         
@@ -240,10 +240,10 @@ class YoutubePlayerNavigationHandlerTests: XCTestCase {
     func testHandleURLChangeForNonYouTubeVideo() {
         let nonYouTubeURL = URL(string: "https://www.google.com")!
         
-        var playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         playerSettings.setMode(.disabled)
-        var player = MockDuckPlayer(settings: playerSettings)
-        var handler = YoutubePlayerNavigationHandler(duckPlayer: player)
+        let player = MockDuckPlayer(settings: playerSettings)
+        let handler = YoutubePlayerNavigationHandler(duckPlayer: player)
         
         handler.handleURLChange(url: nonYouTubeURL, webView: mockWebView)
         
@@ -260,9 +260,9 @@ class YoutubePlayerNavigationHandlerTests: XCTestCase {
         
         var navigationPolicy: WKNavigationActionPolicy?
         
-        var playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         playerSettings.setMode(.alwaysAsk)
-        var player = MockDuckPlayer(settings: playerSettings)
+        let player = MockDuckPlayer(settings: playerSettings)
         var handler = YoutubePlayerNavigationHandler(duckPlayer: player)
         
         handler.handleDecidePolicyFor(navigationAction, completion: { policy in
@@ -292,9 +292,9 @@ class YoutubePlayerNavigationHandlerTests: XCTestCase {
         
         var navigationPolicy: WKNavigationActionPolicy?
         
-        var playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         playerSettings.setMode(.disabled)
-        var player = MockDuckPlayer(settings: playerSettings)
+        let player = MockDuckPlayer(settings: playerSettings)
         var handler = YoutubePlayerNavigationHandler(duckPlayer: player)
         
         handler.handleDecidePolicyFor(navigationAction, completion: { policy in
@@ -363,10 +363,10 @@ class YoutubePlayerNavigationHandlerTests: XCTestCase {
                 
         mockWebView.setCurrentURL(duckPlayerURL)
         
-        var playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         playerSettings.setMode(.alwaysAsk)
-        var player = MockDuckPlayer(settings: playerSettings)
-        var handler = YoutubePlayerNavigationHandler(duckPlayer: player)
+        let player = MockDuckPlayer(settings: playerSettings)
+        let handler = YoutubePlayerNavigationHandler(duckPlayer: player)
 
         handler.handleReload(webView: mockWebView)
         
@@ -388,8 +388,8 @@ class YoutubePlayerNavigationHandlerTests: XCTestCase {
         
         var playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         playerSettings.setMode(.disabled)
-        var player = MockDuckPlayer(settings: playerSettings)
-        var handler = YoutubePlayerNavigationHandler(duckPlayer: player)
+        let player = MockDuckPlayer(settings: playerSettings)
+        let handler = YoutubePlayerNavigationHandler(duckPlayer: player)
 
         handler.handleReload(webView: mockWebView)
         
@@ -404,10 +404,10 @@ class YoutubePlayerNavigationHandlerTests: XCTestCase {
         // Simulate the current URL
         mockWebView.setCurrentURL(nonDuckPlayerURL)
         
-        var playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         playerSettings.setMode(.alwaysAsk)
-        var player = MockDuckPlayer(settings: playerSettings)
-        var handler = YoutubePlayerNavigationHandler(duckPlayer: player)
+        let player = MockDuckPlayer(settings: playerSettings)
+        let handler = YoutubePlayerNavigationHandler(duckPlayer: player)
 
         handler.handleReload(webView: mockWebView)
         XCTAssertNil(mockWebView.lastLoadedRequest, "Expected a new request not to be loaded")
@@ -420,10 +420,10 @@ class YoutubePlayerNavigationHandlerTests: XCTestCase {
         // Simulate the current URL
         mockWebView.setCurrentURL(nonDuckPlayerURL)
         
-        var playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         playerSettings.setMode(.disabled)
-        var player = MockDuckPlayer(settings: playerSettings)
-        var handler = YoutubePlayerNavigationHandler(duckPlayer: player)
+        let player = MockDuckPlayer(settings: playerSettings)
+        let handler = YoutubePlayerNavigationHandler(duckPlayer: player)
 
         handler.handleReload(webView: mockWebView)
         XCTAssertNil(mockWebView.lastLoadedRequest, "Expected a new request not to be loaded")

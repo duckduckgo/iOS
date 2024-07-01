@@ -159,7 +159,7 @@ final class AdAttributionPixelReporterTests: XCTestCase {
     private func createSUT() -> AdAttributionPixelReporter {
         AdAttributionPixelReporter(fetcherStorage: fetcherStorage,
                                    attributionFetcher: attributionFetcher,
-                                   pixelFiring: PixelFiringMock.self)
+                                   pixelFiring: PixelFiringsAsyncMock.self)
     }
 }
 
@@ -178,7 +178,7 @@ class AdAttributionFetcherMock: AdAttributionFetcher {
     }
 }
 
-final actor PixelFiringMock: PixelFiring {
+final actor PixelFiringsAsyncMock: PixelFiringAsync {
     static var expectedFireError: Error?
 
     static var lastParams: [String: String]?

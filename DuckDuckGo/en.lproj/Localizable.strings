@@ -1243,6 +1243,18 @@
 /* Home is this context is the bottom home row (dock) */
 "home.row.reminder.title" = "Take DuckDuckGo home";
 
+/* Shortcut title leading to AI Chat */
+"home.tab.shortcut.ai.chat" = "AI Chat";
+
+/* Shortcut title leading to Bookmarks */
+"home.tab.shortcut.bookmarks" = "Bookmarks";
+
+/* Shortcut title leading to Passwords */
+"home.tab.shortcut.passwords" = "Passwords";
+
+/* Shortcut title leading to VPN */
+"home.tab.shortcut.vpn" = "VPN";
+
 /* This describes empty tab */
 "homeTab.searchAndFavorites" = "Search or enter address";
 

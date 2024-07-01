@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sabrina/new-onboarding",
-        "revision" : "736b43933583a9be8fbdbc8fb101896b9d9e78c5"
+        "revision" : "912001a8676345e96a8be360d5a6e3dca6d8e0ec",
+        "version" : "164.2.0"
       }
     },
     {

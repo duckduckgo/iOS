@@ -1162,6 +1162,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     
     // Duck Player
     public static let duckPlayerAlwaysEnabledLabel = NSLocalizedString("duckPlayer.alwaysEnabled.label", value: "Always", comment: "Text displayed when DuckPlayer is always enabled")
+
     public static let duckPlayerAskLabel = NSLocalizedString("duckPlayer.ask.label", value: "Ask every time", comment: "Text displayed when DuckPlayer is in 'Ask' mode.")
     public static let duckPlayerDisabledLabel = NSLocalizedString("duckPlayer.never.label", value: "Never", comment: "Text displayed when DuckPlayer is in off.")
     public static let settingsOpenVideosInDuckPlayerLabel = NSLocalizedString("duckplayer.settings.open-videos-in", value: "Open Videos in Duck Player", comment: "Settings screen cell text for DuckPlayer settings")
@@ -1176,4 +1177,9 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let duckPlayerPresentationModalBody = NSLocalizedString("duckplayer.presentation.modal.body", value: "Duck Player lets you watch YouTube without targeted ads in a theater-like experience in DuckDuckGo and what you watch won’t influence your recommendations.", comment: "Body text for the modal feature explanation")
     public static let duckPlayerPresentationModalDismissButton = NSLocalizedString("duckplayer.presentation.modal.dismiss-button", value: "Got it!", comment: "Button that will dismiss the modal")
 
+    // Home Tab Shortcuts
+    public static let homeTabShortcutBookmarks = NSLocalizedString("home.tab.shortcut.bookmarks", value: "Bookmarks", comment: "Shortcut title leading to Bookmarks")
+    public static let homeTabShortcutAIChat = NSLocalizedString("home.tab.shortcut.ai.chat", value: "AI Chat", comment: "Shortcut title leading to AI Chat")
+    public static let homeTabShortcutVPN = NSLocalizedString("home.tab.shortcut.vpn", value: "VPN", comment: "Shortcut title leading to VPN")
+    public static let homeTabShortcutPasswords = NSLocalizedString("home.tab.shortcut.passwords", value: "Passwords", comment: "Shortcut title leading to Passwords")
 }

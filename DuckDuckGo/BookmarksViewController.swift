@@ -390,6 +390,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             }
     }
 
+    // swiftlint:disable function_body_length
     private func deleteBookmarkAfterSwipe(_ bookmark: BookmarkEntity,
                                           _ indexPath: IndexPath,
                                           _ completion: @escaping (Bool) -> Void) {
@@ -451,6 +452,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             completion(true)
         }
     }
+    // swiftlint:enable function_body_length
 
     private func configureSelector() {
         favoritesContainer.backgroundColor = tableView.backgroundColor

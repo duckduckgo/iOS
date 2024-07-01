@@ -1503,7 +1503,7 @@ class MainViewController: UIViewController {
             }
 
             await networkProtectionTunnelController.stop()
-            await networkProtectionTunnelController.removeVPN()
+            await networkProtectionTunnelController.removeVPN(reason: .entitlementCheck)
         }
     }
 
@@ -1511,7 +1511,7 @@ class MainViewController: UIViewController {
     private func onNetworkProtectionAccountSignOut(_ notification: Notification) {
         Task {
             await networkProtectionTunnelController.stop()
-            await networkProtectionTunnelController.removeVPN()
+            await networkProtectionTunnelController.removeVPN(reason: .signedOut)
         }
     }
 #endif

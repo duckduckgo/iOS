@@ -114,8 +114,25 @@ final class NetworkProtectionTunnelController: TunnelController {
         tunnelManager.connection.stopVPNTunnel()
     }
 
-    func removeVPN() async {
-        try? await tunnelManager?.removeFromPreferences()
+    enum RemovalReason: String {
+        case didBecomeActiveCheck
+        case entitlementCheck
+        case signedOut
+        case debugMenu
+    }
+
+    func removeVPN(reason: RemovalReason) async {
+        do {
+            try await tunnelManager?.removeFromPreferences()
+
+            Pixel.fire(pixel: .networkProtectionVPNConfigurationRemoved, withAdditionalParameters: [
+                "reason": reason.rawValue
+            ])
+        } catch {
+            Pixel.fire(pixel: .networkProtectionVPNConfigurationRemovalFailed, withAdditionalParameters: [
+                "reason": reason.rawValue
+            ])
+        }
     }
 
     // MARK: - Connection Status Querying

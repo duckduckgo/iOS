@@ -41,7 +41,7 @@ struct NewTabPageView: View {
                 ForEach(messagesModel.homeMessageViewModels, id: \.messageId) { messageModel in
                     HomeMessageView(viewModel: messageModel)
                         .frame(maxWidth: horizontalSizeClass == .regular ? Constant.messageMaximumWidthPad : Constant.messageMaximumWidth)
-                        .padding()
+                        .padding(16)
                 }
 
                 // MARK: Favorites

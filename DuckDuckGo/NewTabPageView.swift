@@ -84,29 +84,6 @@ struct NewTabPageView: View {
     NewTabPageView(messagesModel: NewTabPageMessagesModel(), favoritesModel: FavoritesModel())
 }
 
-#if DEBUG
-final class PreviewMessagesConfiguration: HomePageMessagesConfiguration {
-    private(set) var homeMessages: [HomeMessage]
-
-    init(homeMessages: [HomeMessage]) {
-        self.homeMessages = homeMessages
-    }
-
-    func refresh() {
-
-    }
-
-    func didAppear(_ homeMessage: HomeMessage) {
-        // no-op
-    }
-
-    func dismissHomeMessage(_ homeMessage: HomeMessage) {
-        homeMessages = homeMessages.dropLast()
-    }
-}
-#endif
-
-
 #Preview("With message") {
     NewTabPageView(
         messagesModel: NewTabPageMessagesModel(
@@ -125,4 +102,24 @@ final class PreviewMessagesConfiguration: HomePageMessagesConfiguration {
         ),
         favoritesModel: FavoritesModel()
     )
+}
+
+private final class PreviewMessagesConfiguration: HomePageMessagesConfiguration {
+    private(set) var homeMessages: [HomeMessage]
+
+    init(homeMessages: [HomeMessage]) {
+        self.homeMessages = homeMessages
+    }
+
+    func refresh() {
+
+    }
+
+    func didAppear(_ homeMessage: HomeMessage) {
+        // no-op
+    }
+
+    func dismissHomeMessage(_ homeMessage: HomeMessage) {
+        homeMessages = homeMessages.dropLast()
+    }
 }

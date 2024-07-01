@@ -25,39 +25,31 @@ import SwiftUI
 struct FavoritesView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @ObservedObject var model: FavoritesModel
-
+    
     @State var isCollapsed: Bool = true
-
+    
     var body: some View {
         VStack(alignment: .center) {
             
             let collapsedMaxItemsCount = NewTabPageGrid.columnsCount(for: horizontalSizeClass) * 2
-
-            if model.isEmpty {
-                FavoritesEmptyStateView()
-            } else {
-                let data = isCollapsed ? Array(model.allFavorites.prefix(collapsedMaxItemsCount)) : model.allFavorites
-
-                NewTabPageGridView { _ in
-                    ForEach(data) { item in
-                        FavoriteItemView(favicon: emptyIcon(), name: "\(item.id)")
-                            .frame(width: NewTabPageGrid.Item.edgeSize)
-                    }
-                }
-
-                if model.allFavorites.count > collapsedMaxItemsCount {
-                    Button(action: {
-                        isCollapsed.toggle()
-                    }, label: {
-                        ToggleExpandButtonView(isIndicatingExpand: isCollapsed).padding()
-                    })
+            
+            let data = isCollapsed ? Array(model.allFavorites.prefix(collapsedMaxItemsCount)) : model.allFavorites
+            
+            NewTabPageGridView { _ in
+                ForEach(data) { item in
+                    FavoriteItemView(favicon: nil, name: "\(item.id)")
+                        .frame(width: NewTabPageGrid.Item.edgeSize)
                 }
             }
+            
+            if model.allFavorites.count > collapsedMaxItemsCount {
+                Button(action: {
+                    isCollapsed.toggle()
+                }, label: {
+                    ToggleExpandButtonView(isIndicatingExpand: isCollapsed).padding()
+                })
+            }
         }
-    }
-    
-    private func emptyIcon() -> Image {
-        Image(systemName: "square.grid.3x3.middle.filled")
     }
 }
 

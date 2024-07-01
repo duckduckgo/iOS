@@ -27,7 +27,7 @@ struct NewTabPageView: View {
         ScrollView {
             VStack {
                 if favoritesModel.isEmpty {
-                    EmptyStateFavoritesView()
+                    FavoritesEmptyStateView()
                         .padding(Constant.sectionPadding)
                 } else {
                     FavoritesView(model: favoritesModel)

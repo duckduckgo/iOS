@@ -57,5 +57,5 @@ private struct FavoriteIconView: View {
 }
 
 #Preview {
-    FavoriteItemView(favicon: nil, name: "Text")
+    FavoriteItemView(favicon: nil, name: "Text").frame(width: 64, height: 64)
 }

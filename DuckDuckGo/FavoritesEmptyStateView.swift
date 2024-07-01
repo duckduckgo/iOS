@@ -20,19 +20,44 @@
 import SwiftUI
 
 struct FavoritesEmptyStateView: View {
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    
+    @State var headerPadding: CGFloat = 10
+
     var body: some View {
-        FavoritesSectionHeader()
-        NewTabPageGridView { columnsCount in
-            let items = Array(0..<columnsCount)
-            ForEach(items, id: \.self) { _ in
-                FavoriteEmptyStateItem()
-                    .frame(width: NewTabPageGrid.Item.edgeSize,
-                           height: NewTabPageGrid.Item.edgeSize)
+            VStack(spacing: 16) {
+                FavoritesSectionHeader()
+                    .padding(.horizontal, headerPadding)
+
+                NewTabPageGridView { placeholdersCount in
+                    let placeholders = Array(0..<placeholdersCount)
+                    ForEach(placeholders, id: \.self) { _ in
+                        FavoriteEmptyStateItem()
+                            .frame(width: NewTabPageGrid.Item.edgeSize, height: NewTabPageGrid.Item.edgeSize)
+                    }
+                }.overlay(
+                    GeometryReader(content: { geometry in
+                        Color.clear.preference(key: WidthKey.self, value: geometry.frame(in: .local).width)
+                    })
+                )
+                .onPreferenceChange(WidthKey.self, perform: { fullWidth in
+                    let columnsCount = Double(NewTabPageGrid.columnsCount(for: horizontalSizeClass))
+                    let allColumnsWidth = columnsCount * NewTabPageGrid.Item.edgeSize
+                    let leftoverWidth = fullWidth - allColumnsWidth
+                    let spacingSize = leftoverWidth / (columnsCount)
+                    self.headerPadding = spacingSize / 2
+                })
             }
-        }
     }
 }
 
 #Preview {
     FavoritesEmptyStateView()
+}
+
+private struct WidthKey: PreferenceKey {
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
+    }
+    static var defaultValue: CGFloat = .zero
 }

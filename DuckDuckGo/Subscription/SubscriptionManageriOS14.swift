@@ -32,7 +32,7 @@ class SubscriptionManageriOS14: SubscriptionManager {
     var currentEnvironment: SubscriptionEnvironment = SubscriptionEnvironment.default
     var canPurchase: Bool = false
     func loadInitialData() {}
-    func updateSubscriptionStatus(completion: @escaping (Bool) -> Void) {}
+    func refreshCachedSubscriptionAndEntitlements(completion: @escaping (Bool) -> Void) {}
 
     func url(for type: SubscriptionURL) -> URL {
         URL(string: "https://duckduckgo.com")!

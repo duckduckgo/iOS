@@ -23,10 +23,10 @@ import WebKit
 
 final class YoutubePlayerNavigationHandler {
     
-    var duckPlayerMode: DuckPlayerMode
+    var duckPlayerSettings: DuckPlayerSettings
     
-    init(duckPlayerMode: DuckPlayerMode = AppDependencyProvider.shared.appSettings.duckPlayerMode) {
-        self.duckPlayerMode = duckPlayerMode
+    init(duckPlayerSettings: DuckPlayerSettings = DuckPlayerSettings()) {
+        self.duckPlayerSettings = duckPlayerSettings
         registerForNotificationChanges()
     }
     
@@ -87,7 +87,7 @@ final class YoutubePlayerNavigationHandler {
     
     @objc private func updatePlayerMode(_ notification: Notification) {
         if let mode = notification.object as? DuckPlayerMode {
-            self.duckPlayerMode = mode
+            self.duckPlayerSettings.mode = mode
         }
     }
 
@@ -109,7 +109,7 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
         // If DuckPlayer is Enabled or in ask mode, render the video
         if let url = navigationAction.request.url,
             url.isDuckURLScheme,
-            duckPlayerMode == .enabled || duckPlayerMode == .alwaysAsk {
+           duckPlayerSettings.mode == .enabled || duckPlayerSettings.mode == .alwaysAsk {
             let html = Self.makeHTMLFromTemplate()
             let newRequest = Self.makeDuckPlayerRequest(from: URLRequest(url: url))
             if #available(iOS 15.0, *) {
@@ -120,7 +120,7 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
         }
         
         // DuckPlayer is disabled, so we redirect to the video in YouTube
-        if let url = navigationAction.request.url, let (videoID, timestamp) = url.youtubeVideoParams, duckPlayerMode == .disabled {
+        if let url = navigationAction.request.url, let (videoID, timestamp) = url.youtubeVideoParams, duckPlayerSettings.mode == .disabled {
             webView.load(URLRequest(url: URL.youtube(videoID, timestamp: timestamp)))
             completion(.allow)
             return
@@ -134,7 +134,7 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
     // such as changes triggered via JS
     @MainActor
     func handleURLChange(url: URL?, webView: WKWebView) {
-        if let url = url, url.isYoutubeVideo, !url.isDuckPlayer, let (videoID, timestamp) = url.youtubeVideoParams {
+        if let url = url, url.isYoutubeVideo, !url.isDuckPlayer, let (videoID, timestamp) = url.youtubeVideoParams, duckPlayerSettings.mode == .enabled || duckPlayerSettings.mode == .alwaysAsk {
             webView.stopLoading()
             let newURL = URL.duckPlayer(videoID, timestamp: timestamp)
             webView.load(URLRequest(url: newURL))
@@ -147,12 +147,15 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
     func handleDecidePolicyFor(_ navigationAction: WKNavigationAction,
                                completion: @escaping (WKNavigationActionPolicy) -> Void,
                                webView: WKWebView) {
-        if let url = navigationAction.request.url, url.isYoutubeVideo, !url.isDuckPlayer, let (videoID, timestamp) = url.youtubeVideoParams {
+        if let url = navigationAction.request.url,
+            url.isYoutubeVideo,
+            !url.isDuckPlayer, let (videoID, timestamp) = url.youtubeVideoParams,
+            duckPlayerSettings.mode == .enabled || duckPlayerSettings.mode == .alwaysAsk {
             webView.load(URLRequest(url: .duckPlayer(videoID, timestamp: timestamp)))
             completion(.allow)
             return
         }
-        completion(.cancel)
+        completion(.allow)
     }
     
     // Handle Webview BackButton on DuckPlayer videos
@@ -161,7 +164,7 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
         guard let backURL = webView.backForwardList.backItem?.url,
                 backURL.isYoutubeVideo,
                 backURL.youtubeVideoParams?.videoID == webView.url?.youtubeVideoParams?.videoID,
-                duckPlayerMode == .enabled else {
+                duckPlayerSettings.mode == .enabled else {
             webView.goBack()
             return
         }

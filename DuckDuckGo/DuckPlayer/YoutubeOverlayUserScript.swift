@@ -25,14 +25,14 @@ import Combine
 
 final class YoutubeOverlayUserScript: NSObject, Subfeature {
         
-    var duckPlayer: DuckPlayer
+    var duckPlayer: DuckPlayerProtocol
     private var cancellables = Set<AnyCancellable>()
     
     struct Constants {
         static let featureName = "duckPlayer"
     }
     
-    init(duckPlayer: DuckPlayer) {
+    init(duckPlayer: DuckPlayerProtocol) {
         self.duckPlayer = duckPlayer
         super.init()
         subscribeToDuckPlayerMode()

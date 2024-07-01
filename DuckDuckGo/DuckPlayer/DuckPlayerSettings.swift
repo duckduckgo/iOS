@@ -64,7 +64,18 @@ enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
     }
 }
 
-final class DuckPlayerSettings {
+protocol DuckPlayerSettingsProtocol {
+    
+    var duckPlayerSettingsPublisher: AnyPublisher<Void, Never> { get }
+    var mode: DuckPlayerMode { get set }
+    var askModeOverlayHidden: Bool { get set }
+    
+    init(appSettings: AppSettings, privacyConfigManager: PrivacyConfigurationManaging)
+    
+    func triggerNotification()
+}
+
+final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
     
     private var appSettings: AppSettings
     private let privacyConfigManager: PrivacyConfigurationManaging

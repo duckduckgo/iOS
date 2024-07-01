@@ -24,7 +24,7 @@ import Combine
 
 final class YoutubePlayerUserScript: NSObject, Subfeature {
     
-    var duckPlayer: DuckPlayer
+    var duckPlayer: DuckPlayerProtocol
     private var cancellables = Set<AnyCancellable>()
     
     struct Constants {
@@ -37,7 +37,7 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
         static let initialSetup = "initialSetup"
     }
     
-    init(duckPlayer: DuckPlayer) {
+    init(duckPlayer: DuckPlayerProtocol) {
         self.duckPlayer = duckPlayer
         super.init()
         subscribeToDuckPlayerMode()

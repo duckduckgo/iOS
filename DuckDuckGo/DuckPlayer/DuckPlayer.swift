@@ -54,15 +54,27 @@ public struct UserValues: Codable {
     let askModeOverlayHidden: Bool
 }
 
-final class DuckPlayer {
+protocol DuckPlayerProtocol {
+    
+    var settings: DuckPlayerSettingsProtocol { get }
+    
+    init(settings: DuckPlayerSettingsProtocol)
+
+    func setUserValues(params: Any, message: WKScriptMessage) -> Encodable?
+    func getUserValues(params: Any, message: WKScriptMessage) -> Encodable?
+    func openVideoInDuckPlayer(url: URL, webView: WKWebView)
+    func initialSetup(params: Any, message: WKScriptMessage) async -> Encodable?
+}
+
+
+final class DuckPlayer: DuckPlayerProtocol {
     
     static let duckPlayerHost: String = "player"
     static let commonName = "Duck Player"
         
-    private(set) var settings: DuckPlayerSettings
+    private(set) var settings: DuckPlayerSettingsProtocol
     
-    init(settings: DuckPlayerSettings = DuckPlayerSettings(),
-         userValues: UserValues? = nil) {
+    init(settings: DuckPlayerSettingsProtocol = DuckPlayerSettings()) {
         self.settings = settings
     }
     
@@ -111,10 +123,6 @@ final class DuckPlayer {
         let userValues = encodeUserValues()
 
         return InitialSetupSettings(userValues: userValues, settings: playerSettings)
-    }
-        
-    func updatePlayerMode(_ mode: DuckPlayerMode) {
-        settings.mode = mode
     }
     
 }

@@ -319,7 +319,7 @@ class TabViewController: UIViewController {
     let historyManager: HistoryManager
     let historyCapture: HistoryCapture
     
-    var duckPlayer = DuckPlayer()
+    var duckPlayer: DuckPlayerProtocol = DuckPlayer()
     var youtubeNavigationHandler: DuckNavigationHandling?
     
     required init?(coder aDecoder: NSCoder,

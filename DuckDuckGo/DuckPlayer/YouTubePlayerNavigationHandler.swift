@@ -23,9 +23,9 @@ import WebKit
 
 final class YoutubePlayerNavigationHandler {
     
-    var duckPlayer: DuckPlayer
+    var duckPlayer: DuckPlayerProtocol
     
-    init(duckPlayer: DuckPlayer) {
+    init(duckPlayer: DuckPlayerProtocol) {
         self.duckPlayer = duckPlayer
     }
     
@@ -163,7 +163,8 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
     func handleReload(webView: WKWebView) {
         if let url = webView.url, url.isDuckPlayer,
             !url.isDuckURLScheme,
-            let (videoID, timestamp) = url.youtubeVideoParams {
+            let (videoID, timestamp) = url.youtubeVideoParams,
+            duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk {
             webView.load(URLRequest(url: .duckPlayer(videoID, timestamp: timestamp)))
         } else {
             webView.reload()

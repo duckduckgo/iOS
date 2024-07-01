@@ -116,7 +116,7 @@ extension RemoteMessagingClient {
         let store = store
 
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundRefreshTaskIdentifier, using: nil) { task in
-            guard privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .remoteMessaging) && Self.shouldRefresh else {
+            guard Self.shouldRefresh else {
                 task.setTaskCompleted(success: true)
                 Self.scheduleBackgroundRefreshTask()
                 return

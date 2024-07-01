@@ -41,7 +41,6 @@ struct EmptyStateFavoritesView: View {
                     })
                 )
                 .onPreferenceChange(WidthKey.self, perform: { fullWidth in
-                    print(fullWidth)
                     let columnsCount = Double(NewTabPageGrid.columnsCount(for: horizontalSizeClass))
                     let allColumnsWidth = columnsCount * NewTabPageGrid.Item.edgeSize
                     let leftoverWidth = fullWidth - allColumnsWidth

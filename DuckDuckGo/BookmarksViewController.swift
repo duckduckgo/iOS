@@ -390,7 +390,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             }
     }
 
-    // swiftlint:disable function_body_length
     private func deleteBookmarkAfterSwipe(_ bookmark: BookmarkEntity,
                                           _ indexPath: IndexPath,
                                           _ completion: @escaping (Bool) -> Void) {
@@ -409,14 +408,9 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         }
 
         func countAllChildrenInFolder(_ folder: BookmarkEntity) -> Int {
-            var count = 0
-            folder.childrenArray.forEach { bookmark in
-                count += 1
-                if bookmark.isFolder {
-                    count += countAllChildrenInFolder(bookmark)
-                }
+            return folder.childrenArray.reduce(0) { partialResult, entity in
+                return partialResult + 1 + (entity.isFolder ? countAllChildrenInFolder(entity) : 0)
             }
-            return count
         }
 
         func deleteFolder() {
@@ -452,7 +446,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             completion(true)
         }
     }
-    // swiftlint:enable function_body_length
 
     private func configureSelector() {
         favoritesContainer.backgroundColor = tableView.backgroundColor

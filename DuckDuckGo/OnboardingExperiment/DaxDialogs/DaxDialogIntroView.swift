@@ -23,47 +23,37 @@ import DuckUI
 struct DaxDialogIntroView: View {
 
     let action: () -> Void
-    
+
     @State private var showButton = false
+    @State private var animateText = true
 
     var body: some View {
-        DaxDialogView(logoPosition: .top) {
-                DaxAnimatableContent(
-                    verticalSpacing: 24.0,
-                    title: UserText.DaxOnboardingExperiment.Intro.title + "\n\n" + UserText.DaxOnboardingExperiment.Intro.message,
-                    items: [
-                        AnyView(
-                            Button(action: action) {
-                                Text(UserText.DaxOnboardingExperiment.Intro.cta)
-                            }
-                                .buttonStyle(PrimaryButtonStyle())
-                        ),
-                        AnyView(
-                            Button(action: action) {
-                                Text(UserText.DaxOnboardingExperiment.Intro.cta)
-                            }
-                                .buttonStyle(PrimaryButtonStyle())
-                        ),
-                    ]
-                )
-//                Group {
-//                    AnimatableText(UserText.DaxOnboardingExperiment.Intro.title)
-//
-//                    AnimatableText(UserText.DaxOnboardingExperiment.Intro.message) {
-//                        withAnimation {
-//                            showButton = true
-//                        }
-//                    }
-//                }
-//                .foregroundColor(.primary)
-//                .font(Font.system(size: 20, weight: .bold))
+        DaxDialogView(
+            logoPosition: .top,
+            onTapGesture: {
+                withAnimation {
+                    showButton = true
+                    animateText = false
+                }
+            },
+            content: {
+                VStack(spacing: 24.0) {
+                    AnimatableTypingText(UserText.DaxOnboardingExperiment.Intro.title, startAnimating: $animateText) {
+                        withAnimation {
+                            showButton = true
+                        }
+                    }
+                    .foregroundColor(.primary)
+                    .font(Font.system(size: 20, weight: .bold))
 
-//                Button(action: action) {
-//                    Text(UserText.DaxOnboardingExperiment.Intro.cta)
-//                }
-//                .buttonStyle(PrimaryButtonStyle())
-//                .visibility(showButton ? .visible : .invisible)
+                    Button(action: action) {
+                        Text(UserText.DaxOnboardingExperiment.Intro.cta)
+                    }
+                    .buttonStyle(PrimaryButtonStyle())
+                    .visibility(showButton ? .visible : .invisible)
+                }
             }
+        )
     }
 }
 
@@ -79,75 +69,4 @@ struct DaxDialogIntroView: View {
     DaxDialogIntroView(action: {})
         .padding()
         .preferredColorScheme(.dark)
-}
-
-struct DaxAnimatableContent: View {
-    private let title: String
-    private let items: [AnyView]
-    private let verticalSpacing: CGFloat
-    private let animationDuration: TimeInterval
-
-    @State private var isDisplayingBody = false
-    @State private var requestedStopAnimating = false
-    @State private var opacity: CGFloat = 0.0
-
-    init(
-        verticalSpacing: CGFloat,
-        title: String,
-        items: [AnyView],
-        animationDuration: TimeInterval = 1.0
-    ) {
-        self.verticalSpacing = verticalSpacing
-        self.title = title
-        self.items = items
-        self.animationDuration = animationDuration
-    }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: verticalSpacing) {
-            AnimatableText(title, typingDisabled: requestedStopAnimating) {
-                withAnimation {
-                    isDisplayingBody = true
-                }
-            }
-            .foregroundColor(.primary)
-            .font(Font.system(size: 20, weight: .bold))
-
-            ForEach(Array(items.enumerated()), id: \.offset) { index, item in
-                item
-                    //.visibility(isDisplayingBody ? .visible : .invisible)
-                    .opacity(opacity)
-                    .animation(requestedStopAnimating ? nil : .default.delay(Double(index) * animationDuration))
-            }
-        }
-        .onTapGesture {
-            withAnimation {
-                requestedStopAnimating = true
-                opacity = 1.0
-            }
-        }
-    }
-
-}
-
-struct SequentialAnimatableContent: View {
-    private let items: [AnyView]
-    private let animationDuration: TimeInterval
-
-    @State var isDisplayingContent = false
-
-    init(items: [AnyView], animationDuration: TimeInterval = 0.3) {
-        self.items = items
-        self.animationDuration = animationDuration
-    }
-
-    var body: some View {
-        ForEach(Array(items.enumerated()), id: \.offset) { index, item in
-            item
-//                .visibility(isDisplayingContent ? .visible : .invisible)
-                .opacity(isDisplayingContent ? 1 : 0)
-                .animation(.default.delay(Double(index) * animationDuration))
-        }
-    }
-
 }

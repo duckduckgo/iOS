@@ -125,12 +125,12 @@ final class NetworkProtectionTunnelController: TunnelController {
         do {
             try await tunnelManager?.removeFromPreferences()
 
-            Pixel.fire(pixel: .networkProtectionVPNConfigurationRemoved, withAdditionalParameters: [
-                "reason": reason.rawValue
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionVPNConfigurationRemoved, withAdditionalParameters: [
+                PixelParameters.reason: reason.rawValue
             ])
         } catch {
-            Pixel.fire(pixel: .networkProtectionVPNConfigurationRemovalFailed, withAdditionalParameters: [
-                "reason": reason.rawValue
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionVPNConfigurationRemovalFailed, error: error, withAdditionalParameters: [
+                PixelParameters.reason: reason.rawValue
             ])
         }
     }

@@ -1106,6 +1106,7 @@ extension Pixel.Event {
         case .networkProtectionDNSUpdateDefault: return "m_netp_ev_update_dns_default"
 
         case .networkProtectionVPNConfigurationRemoved: return "m_netp_vpn_configuration_removed"
+        case .networkProtectionVPNConfigurationRemovalFailed: return "m_netp_vpn_configuration_removal_failed"
 
             // MARK: remote messaging pixels
             

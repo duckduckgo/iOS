@@ -82,7 +82,6 @@ import WebKit
 
     private(set) var homePageConfiguration: HomePageConfiguration!
 
-    private(set) var remoteMessagingStore: RemoteMessagingStoring!
     private(set) var remoteMessagingClient: RemoteMessagingClient!
 
     private(set) var syncService: DDGSync!
@@ -289,20 +288,17 @@ import WebKit
             bookmarksDatabase: bookmarksDatabase,
             appSettings: AppDependencyProvider.shared.appSettings,
             internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
-            configurationStore: ConfigurationStore.shared
-        )
-        let remoteMessagingStore = RemoteMessagingStore(
+            configurationStore: ConfigurationStore.shared,
             database: Database.shared,
             errorEvents: RemoteMessagingStoreErrorHandling(),
-            log: .remoteMessaging
+            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager
         )
 
-        remoteMessagingClient.registerBackgroundRefreshTaskHandler(with: remoteMessagingStore)
-        self.remoteMessagingStore = remoteMessagingStore
+        remoteMessagingClient.registerBackgroundRefreshTaskHandler()
         self.remoteMessagingClient = remoteMessagingClient
 
         homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
-                                                      remoteMessagingStore: remoteMessagingStore)
+                                                      remoteMessagingClient: remoteMessagingClient)
 
         let previewsSource = TabPreviewsSource()
         let historyManager = makeHistoryManager(AppDependencyProvider.shared.appSettings,
@@ -663,7 +659,7 @@ import WebKit
 
     private func refreshRemoteMessages() {
         Task {
-            try? await remoteMessagingClient.fetchAndProcess(using: remoteMessagingStore)
+            try? await remoteMessagingClient.fetchAndProcess(using: remoteMessagingClient.store)
         }
     }
 

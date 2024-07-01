@@ -41,16 +41,25 @@ final class RemoteMessagingClient: RemoteMessagingProcessing {
         }()
     }
 
+    let endpoint: URL = Constants.endpoint
     let configurationFetcher: RemoteMessagingConfigFetching
     let configMatcherProvider: RemoteMessagingConfigMatcherProviding
+    let store: RemoteMessagingStoring
+    let privacyConfigurationManager: PrivacyConfigurationManaging
 
-    let endpoint: URL = Constants.endpoint
+    var isRemoteMessagingEnabled: Bool {
+        privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .remoteMessaging)
+    }
 
     convenience init(
         bookmarksDatabase: CoreDataDatabase,
         appSettings: AppSettings,
         internalUserDecider: InternalUserDecider,
-        configurationStore: ConfigurationStoring
+        configurationStore: ConfigurationStoring,
+        database: CoreDataDatabase,
+        notificationCenter: NotificationCenter = .default,
+        errorEvents: EventMapping<RemoteMessagingStoreError>?,
+        privacyConfigurationManager: PrivacyConfigurationManaging
     ) {
         let provider = RemoteMessagingConfigMatcherProvider(
             bookmarksDatabase: bookmarksDatabase,
@@ -61,12 +70,31 @@ final class RemoteMessagingClient: RemoteMessagingProcessing {
             configurationFetcher: ConfigurationFetcher(store: configurationStore, urlSession: .session(), log: .remoteMessaging, eventMapping: nil),
             configurationStore: configurationStore
         )
-        self.init(configMatcherProvider: provider, configurationFetcher: configurationFetcher)
+        let remoteMessagingStore = RemoteMessagingStore(
+            database: database,
+            notificationCenter: notificationCenter,
+            errorEvents: errorEvents,
+            privacyConfigurationManager: privacyConfigurationManager,
+            log: .remoteMessaging
+        )
+        self.init(
+            configMatcherProvider: provider,
+            configurationFetcher: configurationFetcher,
+            store: remoteMessagingStore,
+            privacyConfigurationManager: privacyConfigurationManager
+        )
     }
 
-    init(configMatcherProvider: RemoteMessagingConfigMatcherProviding, configurationFetcher: RemoteMessagingConfigFetching) {
+    init(
+        configMatcherProvider: RemoteMessagingConfigMatcherProviding,
+        configurationFetcher: RemoteMessagingConfigFetching,
+        store: RemoteMessagingStoring,
+        privacyConfigurationManager: PrivacyConfigurationManaging
+    ) {
         self.configMatcherProvider = configMatcherProvider
         self.configurationFetcher = configurationFetcher
+        self.store = store
+        self.privacyConfigurationManager = privacyConfigurationManager
     }
 
     @UserDefaultsWrapper(key: .lastRemoteMessagingRefreshDate, defaultValue: .distantPast)
@@ -78,21 +106,28 @@ final class RemoteMessagingClient: RemoteMessagingProcessing {
 extension RemoteMessagingClient {
 
     static private var shouldRefresh: Bool {
-        return Date().timeIntervalSince(Self.lastRemoteMessagingRefreshDate) > Constants.minimumConfigurationRefreshInterval
+        Date().timeIntervalSince(Self.lastRemoteMessagingRefreshDate) > Constants.minimumConfigurationRefreshInterval
     }
 
-    func registerBackgroundRefreshTaskHandler(with store: RemoteMessagingStoring) {
+    func registerBackgroundRefreshTaskHandler() {
         let provider = configMatcherProvider
         let fetcher = configurationFetcher
+        let privacyConfigurationManager = privacyConfigurationManager
+        let store = store
 
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundRefreshTaskIdentifier, using: nil) { task in
-            guard Self.shouldRefresh else {
+            guard privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .remoteMessaging) && Self.shouldRefresh else {
                 task.setTaskCompleted(success: true)
                 Self.scheduleBackgroundRefreshTask()
                 return
             }
-            let client = RemoteMessagingClient(configMatcherProvider: provider, configurationFetcher: fetcher)
-            Self.backgroundRefreshTaskHandler(bgTask: task, client: client, store: store)
+            let client = RemoteMessagingClient(
+                configMatcherProvider: provider,
+                configurationFetcher: fetcher,
+                store: store,
+                privacyConfigurationManager: privacyConfigurationManager
+            )
+            Self.backgroundRefreshTaskHandler(bgTask: task, client: client)
         }
     }
 
@@ -118,11 +153,13 @@ extension RemoteMessagingClient {
         #endif
     }
 
-    static func backgroundRefreshTaskHandler(bgTask: BGTask, client: RemoteMessagingClient, store: RemoteMessagingStoring) {
+    static func backgroundRefreshTaskHandler(bgTask: BGTask, client: RemoteMessagingClient) {
         let fetchAndProcessTask = Task {
             do {
-                try await client.fetchAndProcess(using: store)
-                Self.lastRemoteMessagingRefreshDate = Date()
+                if client.isRemoteMessagingEnabled {
+                    try await client.fetchAndProcess(using: client.store)
+                    Self.lastRemoteMessagingRefreshDate = Date()
+                }
                 scheduleBackgroundRefreshTask()
                 bgTask.setTaskCompleted(success: true)
             } catch {

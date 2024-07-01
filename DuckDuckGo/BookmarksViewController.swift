@@ -431,7 +431,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             return
         }
 
-        if bookmark.isFolder, bookmark.children?.count ?? 0 > 0 {
+        if bookmark.isFolder && !bookmark.childrenArray.isEmpty {
             let title = String(format: UserText.deleteBookmarkFolderAlertTitle, bookmark.title ?? "")
             let count = countAllChildrenInFolder(bookmark)
             let message = UserText.deleteBookmarkFolderAlertMessage(numberOfChildren: count)
@@ -444,6 +444,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                 completion(true)
             }
             present(alertController, animated: true)
+        } else if bookmark.isFolder {
+            delete()
         } else {
             showBookmarkDeletedMessage(bookmark)
             delete()

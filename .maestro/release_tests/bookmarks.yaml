@@ -9,10 +9,6 @@ tags:
 - clearState
 - launchApp
 - runFlow: 
-    when: 
-      visible: 
-        text: "Let’s Do It!"
-        index: 0
     file: ../shared/onboarding.yaml
 
 # Load Site
@@ -25,10 +21,6 @@ tags:
 
 # Manage onboarding
 - runFlow:
-    when:
-      visible:
-        text: "Got It"
-        index: 0
     file: ../shared/onboarding_browsing.yaml
     
 # Bookmark site
@@ -37,6 +29,18 @@ tags:
 - assertVisible: "Add Bookmark"
 - tapOn: "Add Bookmark"
 
+# Verify bookmark appears in search results and can be launched
+- tapOn: "Tab Switcher"
+- tapOn: "New Tab"
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "pri"
+- assertVisible: "Privacy Test Pages - Home"
+- assertVisible: "privacy-test-pages.site"
+- tapOn: "Privacy Test Pages - Home"
+
 # Verify site has been bookmarked
 - assertVisible: "Browsing menu"
 - tapOn: "Browsing menu"
@@ -44,18 +48,79 @@ tags:
 - tapOn: "Bookmarks"
 - assertVisible: "Privacy Test Pages - Home"
 
-# Delete bookmark
+# Edit bookmark
 - assertVisible: "Edit"
 - tapOn: "Edit"
-- assertVisible: "Remove Privacy Test Pages - Home"
-- tapOn: "Remove Privacy Test Pages - Home"
-- assertVisible: 
-    text: "Delete"
-    index: 0
-- tapOn: 
-    text: "Delete"
-    index: 0
+- tapOn: "chevron"
+- assertVisible: "Add Folder"
+
+# Add folder
+- tapOn: "Add Folder"
+- assertVisible: "Add Folder"
+- assertVisible: "Save"
+- assertVisible: "Bookmarks"
+- assertVisible: "Title"
+- tapOn: "Title"
+- inputText: "Test Folder"
+- tapOn: "Save"
+- assertVisible: "Edit Bookmark"
+- assertVisible: "Add Folder"
+- assertVisible: "Test Folder"
+- tapOn: "Save"
+- tapOn: "Done"
+- assertNotVisible: "Remove Privacy Test Pages - Home"
+- assertVisible: "Test Folder"
+- tapOn: "Test Folder"
+- assertVisible: "Privacy Test Pages - Home"
+
+# Move folder
+- assertVisible: "Edit"
+- tapOn: "Edit"
+- tapOn: "chevron"
+- assertVisible: "Add Folder"
+
+- tapOn: "Add Folder"
+- assertVisible: "Add Folder"
+- assertVisible: "Save"
+- assertVisible: "Bookmarks"
+- assertVisible: "Title"
+- tapOn: "Title"
+- inputText: "Test Folder 2"
+- tapOn: "Save"
+- assertVisible: "Edit Bookmark"
+- assertVisible: "Add Folder"
+- assertVisible: "Test Folder"
+- tapOn: "Save"
+- tapOn: "Done"
+- assertNotVisible: "Remove Privacy Test Pages - Home"
+- assertVisible: "Test Folder"
+- tapOn: "Test Folder"
+- assertVisible: "Test Folder 2"
+- tapOn: "Test Folder 2"
+
+# Delete bookmark
+- tapOn: "Edit"
+- tapOn: "chevron"
+- assertVisible: "Delete"
+- tapOn: "Delete"
+- assertVisible: "Delete?"
+- tapOn: "Delete"
 
 # Verify site has been removed from bookmarks
 - assertNotVisible: "Privacy Test Pages - Home"
+- assertVisible: "Test Folder 2"
+- assertVisible: "Test Folder"
+- tapOn: "Test Folder"
+- assertNotVisible: "Privacy Test Pages - Home"
+- assertVisible: "Bookmarks"
+- tapOn: "Bookmarks"
+
+# Remove folder
+- tapOn: "Edit"
+- assertVisible: "Remove Test Folder"
+- tapOn: "Remove Test Folder"
+- assertVisible: "Delete"
+- tapOn: "Delete"
+- assertVisible: "Delete Test Folder?"
+- tapOn: "Delete"
 - assertVisible: "No bookmarks added yet"

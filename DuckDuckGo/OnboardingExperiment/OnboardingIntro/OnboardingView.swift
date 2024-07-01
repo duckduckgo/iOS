@@ -23,6 +23,8 @@ import SwiftUI
 
 struct OnboardingView: View {
 
+    @Namespace var animationNamespace
+
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @ObservedObject private var model: OnboardingIntroViewModel
@@ -86,7 +88,7 @@ struct OnboardingView: View {
     }
 
     private var landingView: some View {
-        return LandingView()
+        return LandingView(animationNamespace: animationNamespace)
             .ignoresSafeArea(edges: .bottom)
             .frame(maxHeight: .infinity, alignment: .bottom)
             .onAppear {
@@ -99,7 +101,7 @@ struct OnboardingView: View {
     }
 
     private var introView: some View {
-        DaxDialogIntroView {
+        DaxDialogIntroView(animationNamespace: animationNamespace) {
             withAnimation {
                 model.startOnboardingAction()
             }
@@ -145,6 +147,8 @@ extension OnboardingView.ViewState {
 extension OnboardingView {
     
     struct LandingView: View {
+        var animationNamespace: Namespace.ID
+
         @Environment(\.verticalSizeClass) private var verticalSizeClass
         @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
@@ -155,6 +159,7 @@ extension OnboardingView {
 
                     Image(.daxIcon)
                         .resizable()
+                        .matchedGeometryEffect(id: "DaxIcon", in: animationNamespace)
                         .frame(width: Metrics.iconSize.width, height: Metrics.iconSize.height)
 
                     Text(UserText.onboardingWelcomeHeader)

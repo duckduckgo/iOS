@@ -37,6 +37,8 @@ private enum Metrics {
 
 struct DaxDialogView<Content: View>: View {
 
+    let animationNamespace: Namespace.ID
+
     enum LogoPosition {
         case top
         case left
@@ -51,6 +53,7 @@ struct DaxDialogView<Content: View>: View {
     private let content: Content
 
     init(
+        animationNamespace: Namespace.ID = Namespace().wrappedValue,
         logoPosition: LogoPosition,
         cornerRadius: CGFloat = 16.0,
         arrowSize: CGSize = .init(width: 16.0, height: 8.0),
@@ -58,6 +61,7 @@ struct DaxDialogView<Content: View>: View {
         @ViewBuilder content: () -> Content
     ) {
         _logoPosition = State(initialValue: logoPosition)
+        self.animationNamespace = animationNamespace
         self.cornerRadius = cornerRadius
         self.arrowSize = arrowSize
         self.onTapGesture = onTapGesture
@@ -99,6 +103,7 @@ struct DaxDialogView<Content: View>: View {
     private var daxLogo: some View {
         Image(.daxIcon)
             .resizable()
+            .matchedGeometryEffect(id: "DaxIcon", in: animationNamespace)
             .aspectRatio(contentMode: .fill)
             .frame(width: Metrics.DaxLogo.size, height: Metrics.DaxLogo.size)
     }

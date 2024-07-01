@@ -22,6 +22,8 @@ import DuckUI
 
 struct DaxDialogIntroView: View {
 
+    let animationNamespace: Namespace.ID
+
     let action: () -> Void
 
     @State private var showButton = false
@@ -29,6 +31,7 @@ struct DaxDialogIntroView: View {
 
     var body: some View {
         DaxDialogView(
+            animationNamespace: animationNamespace,
             logoPosition: .top,
             onTapGesture: {
                 withAnimation {
@@ -60,13 +63,13 @@ struct DaxDialogIntroView: View {
 // MARK: - Preview
 
 #Preview("Intro Dialog - Light Mode") {
-    DaxDialogIntroView(action: {})
+    DaxDialogIntroView(animationNamespace: Namespace().wrappedValue, action: {})
         .padding()
         .preferredColorScheme(.light)
 }
 
 #Preview("Intro Dialog - Dark Mode") {
-    DaxDialogIntroView(action: {})
+    DaxDialogIntroView(animationNamespace: Namespace().wrappedValue, action: {})
         .padding()
         .preferredColorScheme(.dark)
 }

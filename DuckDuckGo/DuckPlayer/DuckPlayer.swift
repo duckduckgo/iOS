@@ -100,9 +100,14 @@ public struct UserValues: Codable {
 final class DuckPlayerSettings {
     
     var appSettings: AppSettings
+    private let privacyConfigManager: PrivacyConfigurationManaging
+    private var isFeatureEnabled: Bool
     
-    init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
+    init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
+         privacyConfigManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
         self.appSettings = appSettings
+        self.privacyConfigManager = privacyConfigManager
+        self.isFeatureEnabled = privacyConfigManager.privacyConfig.isEnabled(featureKey: .duckPlayer)
     }
     
     public struct OriginDomains {
@@ -114,7 +119,11 @@ final class DuckPlayerSettings {
     
     var mode: DuckPlayerMode {
         get {
-            appSettings.duckPlayerMode
+            if isFeatureEnabled {
+                appSettings.duckPlayerMode
+            } else {
+                .disabled
+            }
         } set {
             appSettings.duckPlayerMode = newValue
         }
@@ -134,7 +143,8 @@ final class DuckPlayer {
     
     @Published var userValues: UserValues
     
-    init(settings: DuckPlayerSettings = DuckPlayerSettings(), userValues: UserValues? = nil) {
+    init(settings: DuckPlayerSettings = DuckPlayerSettings(),
+         userValues: UserValues? = nil) {
         self.settings = settings
         self.userValues = userValues ?? UserValues(duckPlayerMode: settings.mode, askModeOverlayHidden: settings.askModeOverlayHidden)
         registerForNotificationChanges()

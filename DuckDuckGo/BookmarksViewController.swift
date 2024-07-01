@@ -393,7 +393,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     private func deleteBookmarkAfterSwipe(_ bookmark: BookmarkEntity,
                                           _ indexPath: IndexPath,
                                           _ completion: @escaping (Bool) -> Void) {
-
         func delete() {
             let oldCount = viewModel.bookmarks.count
             viewModel.softDeleteBookmark(bookmark)

@@ -43,7 +43,7 @@ struct NewTabPageView: View {
                 }, label: {
                     NewTabPageCustomizeButtonView()
                 }).buttonStyle(SecondaryFillButtonStyle(compact: true, fullWidth: false))
-                    .padding(EdgeInsets(top: 56, leading: 0, bottom: 16, trailing: 0))
+                    .padding(EdgeInsets(top: 88, leading: 0, bottom: 16, trailing: 0))
             }
         }
         .background(Color(designSystemColor: .background))

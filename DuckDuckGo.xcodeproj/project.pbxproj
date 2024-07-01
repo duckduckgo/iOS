@@ -604,6 +604,7 @@
 		9FE08BDC2C2A88FA001D5EBC /* OnboardingIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE08BDB2C2A88FA001D5EBC /* OnboardingIntroViewController.swift */; };
 		9FEA22272C2D2BDA006B03BF /* RootDebugViewController+Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA22262C2D2BDA006B03BF /* RootDebugViewController+Onboarding.swift */; };
 		9FEA22292C2E38FA006B03BF /* AnimatableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA22282C2E38FA006B03BF /* AnimatableText.swift */; };
+		9FEA222E2C324ECD006B03BF /* ViewVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA222D2C324ECD006B03BF /* ViewVisibility.swift */; };
 		9FF7E9822C22A1F100902BE5 /* DaxDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7E9812C22A1F100902BE5 /* DaxDialogView.swift */; };
 		9FF7E9862C23D10300902BE5 /* BrowsersComparisonChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7E9852C23D10300902BE5 /* BrowsersComparisonChart.swift */; };
 		AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */; };
@@ -2235,6 +2236,7 @@
 		9FE08BDB2C2A88FA001D5EBC /* OnboardingIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingIntroViewController.swift; sourceTree = "<group>"; };
 		9FEA22262C2D2BDA006B03BF /* RootDebugViewController+Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RootDebugViewController+Onboarding.swift"; sourceTree = "<group>"; };
 		9FEA22282C2E38FA006B03BF /* AnimatableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableText.swift; sourceTree = "<group>"; };
+		9FEA222D2C324ECD006B03BF /* ViewVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewVisibility.swift; sourceTree = "<group>"; };
 		9FF7E9812C22A1F100902BE5 /* DaxDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogView.swift; sourceTree = "<group>"; };
 		9FF7E9852C23D10300902BE5 /* BrowsersComparisonChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsersComparisonChart.swift; sourceTree = "<group>"; };
 		AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconSettingsViewController.swift; sourceTree = "<group>"; };
@@ -2901,6 +2903,7 @@
 				EE4BE0082A740BED00CD6AA8 /* ClearTextField.swift */,
 				CB825C912C071B1400BCC586 /* AlertView.swift */,
 				CB825C952C071C9300BCC586 /* AlertViewPresenter.swift */,
+				9FEA222D2C324ECD006B03BF /* ViewVisibility.swift */,
 			);
 			name = SwiftUI;
 			sourceTree = "<group>";
@@ -6913,6 +6916,7 @@
 				F1D796F41E7C2A410019D451 /* BookmarksDelegate.swift in Sources */,
 				D664C7B92B289AA200CBFA76 /* WKUserContentController+Handler.swift in Sources */,
 				1E8AD1D727C2E24E00ABA377 /* DownloadsListRowViewModel.swift in Sources */,
+				9FEA222E2C324ECD006B03BF /* ViewVisibility.swift in Sources */,
 				1E865AF0272042DB001C74F3 /* TextSizeSettingsViewController.swift in Sources */,
 				D6E0C1892B7A2E0D00D5E1E9 /* DesktopDownloadViewModel.swift in Sources */,
 				8524CC9A246DA81700E59D45 /* FullscreenDaxDialogViewController.swift in Sources */,

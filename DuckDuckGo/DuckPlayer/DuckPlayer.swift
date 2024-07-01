@@ -25,49 +25,6 @@ import WebKit
 import UserScript
 import Core
 
-enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
-    case enabled, alwaysAsk, disabled
-    
-    private static let enabledString = "enabled"
-    private static let alwaysAskString = "alwaysAsk"
-    private static let neverString = "disabled"
-    
-    var description: String {
-        switch self {
-        case .enabled:
-            return UserText.duckPlayerAlwaysEnabledLabel
-        case .alwaysAsk:
-            return UserText.duckPlayerAskLabel
-        case .disabled:
-            return UserText.duckPlayerDisabledLabel
-        }
-    }
-    
-    var stringValue: String {
-        switch self {
-        case .enabled:
-            return Self.enabledString
-        case .alwaysAsk:
-            return Self.alwaysAskString
-        case .disabled:
-            return Self.neverString
-        }
-    }
-
-    init?(stringValue: String) {
-        switch stringValue {
-        case Self.enabledString:
-            self = .enabled
-        case Self.alwaysAskString:
-            self = .alwaysAsk
-        case Self.neverString:
-            self = .disabled
-        default:
-            return nil
-        }
-    }
-}
-
 /// Values that the Frontend can use to determine the current state.
 struct InitialSetupSettings: Codable {
     struct PlayerSettings: Codable {
@@ -97,57 +54,16 @@ public struct UserValues: Codable {
     let askModeOverlayHidden: Bool
 }
 
-final class DuckPlayerSettings {
-    
-    var appSettings: AppSettings
-    private let privacyConfigManager: PrivacyConfigurationManaging
-    private var isFeatureEnabled: Bool
-    
-    init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
-         privacyConfigManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
-        self.appSettings = appSettings
-        self.privacyConfigManager = privacyConfigManager
-        self.isFeatureEnabled = privacyConfigManager.privacyConfig.isEnabled(featureKey: .duckPlayer)
-    }
-    
-    public struct OriginDomains {
-        static let duckduckgo = "duckduckgo.com"
-        static let youtubeWWW = "www.youtube.com"
-        static let youtube = "youtube.com"
-        static let youtubeMobile = "m.youtube.com"
-    }
-    
-    var mode: DuckPlayerMode {
-        get {
-            if isFeatureEnabled {
-                appSettings.duckPlayerMode
-            } else {
-                .disabled
-            }
-        } set {
-            appSettings.duckPlayerMode = newValue
-        }
-    }
-    
-    @UserDefaultsWrapper(key: .duckPlayerAskModeOverlayHidden, defaultValue: false)
-    var askModeOverlayHidden: Bool
-    
-}
-
 final class DuckPlayer {
     
     static let duckPlayerHost: String = "player"
     static let commonName = "Duck Player"
         
-    private var settings: DuckPlayerSettings
-    
-    @Published var userValues: UserValues
+    private(set) var settings: DuckPlayerSettings
     
     init(settings: DuckPlayerSettings = DuckPlayerSettings(),
          userValues: UserValues? = nil) {
         self.settings = settings
-        self.userValues = userValues ?? UserValues(duckPlayerMode: settings.mode, askModeOverlayHidden: settings.askModeOverlayHidden)
-        registerForNotificationChanges()
     }
     
     // MARK: - Common Message Handlers
@@ -196,21 +112,9 @@ final class DuckPlayer {
 
         return InitialSetupSettings(userValues: userValues, settings: playerSettings)
     }
+        
+    func updatePlayerMode(_ mode: DuckPlayerMode) {
+        settings.mode = mode
+    }
     
-    private func registerForNotificationChanges() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(updatePlayerMode),
-                                               name: AppUserDefaults.Notifications.duckPlayerModeChanged,
-                                               object: nil)
-    }
-
-    
-    @objc private func updatePlayerMode(_ notification: Notification) {
-            userValues = encodeUserValues()
-    }
-
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-
 }

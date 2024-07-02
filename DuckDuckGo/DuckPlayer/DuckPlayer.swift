@@ -25,49 +25,6 @@ import WebKit
 import UserScript
 import Core
 
-enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
-    case enabled, alwaysAsk, disabled
-    
-    private static let enabledString = "enabled"
-    private static let alwaysAskString = "alwaysAsk"
-    private static let neverString = "disabled"
-    
-    var description: String {
-        switch self {
-        case .enabled:
-            return UserText.duckPlayerAlwaysEnabledLabel
-        case .alwaysAsk:
-            return UserText.duckPlayerAskLabel
-        case .disabled:
-            return UserText.duckPlayerDisabledLabel
-        }
-    }
-    
-    var stringValue: String {
-        switch self {
-        case .enabled:
-            return Self.enabledString
-        case .alwaysAsk:
-            return Self.alwaysAskString
-        case .disabled:
-            return Self.neverString
-        }
-    }
-
-    init?(stringValue: String) {
-        switch stringValue {
-        case Self.enabledString:
-            self = .enabled
-        case Self.alwaysAskString:
-            self = .alwaysAsk
-        case Self.neverString:
-            self = .disabled
-        default:
-            return nil
-        }
-    }
-}
-
 /// Values that the Frontend can use to determine the current state.
 struct InitialSetupSettings: Codable {
     struct PlayerSettings: Codable {
@@ -97,47 +54,28 @@ public struct UserValues: Codable {
     let askModeOverlayHidden: Bool
 }
 
-final class DuckPlayerSettings {
+protocol DuckPlayerProtocol {
     
-    var appSettings: AppSettings
+    var settings: DuckPlayerSettingsProtocol { get }
     
-    init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
-        self.appSettings = appSettings
-    }
-    
-    public struct OriginDomains {
-        static let duckduckgo = "duckduckgo.com"
-        static let youtubeWWW = "www.youtube.com"
-        static let youtube = "youtube.com"
-        static let youtubeMobile = "m.youtube.com"
-    }
-    
-    var mode: DuckPlayerMode {
-        get {
-            appSettings.duckPlayerMode
-        } set {
-            appSettings.duckPlayerMode = newValue
-        }
-    }
-    
-    @UserDefaultsWrapper(key: .duckPlayerAskModeOverlayHidden, defaultValue: false)
-    var askModeOverlayHidden: Bool
-    
+    init(settings: DuckPlayerSettingsProtocol)
+
+    func setUserValues(params: Any, message: WKScriptMessage) -> Encodable?
+    func getUserValues(params: Any, message: WKScriptMessage) -> Encodable?
+    func openVideoInDuckPlayer(url: URL, webView: WKWebView)
+    func initialSetup(params: Any, message: WKScriptMessage) async -> Encodable?
 }
 
-final class DuckPlayer {
+
+final class DuckPlayer: DuckPlayerProtocol {
     
     static let duckPlayerHost: String = "player"
     static let commonName = "Duck Player"
         
-    private var settings: DuckPlayerSettings
+    private(set) var settings: DuckPlayerSettingsProtocol
     
-    @Published var userValues: UserValues
-    
-    init(settings: DuckPlayerSettings = DuckPlayerSettings(), userValues: UserValues? = nil) {
+    init(settings: DuckPlayerSettingsProtocol = DuckPlayerSettings()) {
         self.settings = settings
-        self.userValues = userValues ?? UserValues(duckPlayerMode: settings.mode, askModeOverlayHidden: settings.askModeOverlayHidden)
-        registerForNotificationChanges()
     }
     
     // MARK: - Common Message Handlers
@@ -147,10 +85,8 @@ final class DuckPlayer {
             assertionFailure("DuckPlayer: expected JSON representation of UserValues")
             return nil
         }
-                
-        settings.mode = userValues.duckPlayerMode
-        settings.askModeOverlayHidden = userValues.askModeOverlayHidden
-        
+        settings.setMode(userValues.duckPlayerMode)
+        settings.setOverlayHidden(userValues.askModeOverlayHidden)
         return userValues
     }
         
@@ -187,20 +123,4 @@ final class DuckPlayer {
         return InitialSetupSettings(userValues: userValues, settings: playerSettings)
     }
     
-    private func registerForNotificationChanges() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(updatePlayerMode),
-                                               name: AppUserDefaults.Notifications.duckPlayerModeChanged,
-                                               object: nil)
-    }
-
-    
-    @objc private func updatePlayerMode(_ notification: Notification) {
-            userValues = encodeUserValues()
-    }
-
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-
 }

@@ -101,6 +101,7 @@ struct SettingsState {
     var sync: SyncSettings
     
     // Duck Player Mode
+    var duckPlayerEnabled: Bool
     var duckPlayerMode: DuckPlayerMode?
     
     static var defaults: SettingsState {
@@ -137,6 +138,7 @@ struct SettingsState {
                                        platform: .unknown,
                                        isShowingStripeView: false),
             sync: SyncSettings(enabled: false, title: ""),
+            duckPlayerEnabled: false,
             duckPlayerMode: .alwaysAsk
         )
     }

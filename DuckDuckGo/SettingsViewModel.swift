@@ -382,6 +382,7 @@ extension SettingsViewModel {
             networkProtection: getNetworkProtectionState(),
             subscription: SettingsState.defaults.subscription,
             sync: getSyncState(),
+            duckPlayerEnabled: featureFlagger.isFeatureOn(.duckPlayer),
             duckPlayerMode: appSettings.duckPlayerMode
         )
         

@@ -26,7 +26,7 @@ import DesignResourcesKit
 extension OmniBar: NibLoading {}
 
 public enum OmniBarIcon: String {
-    case duckPlayer = "DuckPlayerIcon"
+    case duckPlayer = "DuckPlayerURLIcon"
 }
 
 // swiftlint:disable file_length

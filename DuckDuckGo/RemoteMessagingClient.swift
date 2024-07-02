@@ -45,11 +45,7 @@ final class RemoteMessagingClient: RemoteMessagingProcessing {
     let configurationFetcher: RemoteMessagingConfigFetching
     let configMatcherProvider: RemoteMessagingConfigMatcherProviding
     let store: RemoteMessagingStoring
-    let privacyConfigurationManager: PrivacyConfigurationManaging
-
-    var isRemoteMessagingEnabled: Bool {
-        privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .remoteMessaging)
-    }
+    let remoteMessagingAvailabilityProvider: RemoteMessagingAvailabilityProviding
 
     convenience init(
         bookmarksDatabase: CoreDataDatabase,
@@ -59,7 +55,7 @@ final class RemoteMessagingClient: RemoteMessagingProcessing {
         database: CoreDataDatabase,
         notificationCenter: NotificationCenter = .default,
         errorEvents: EventMapping<RemoteMessagingStoreError>?,
-        privacyConfigurationManager: PrivacyConfigurationManaging
+        remoteMessagingAvailabilityProvider: RemoteMessagingAvailabilityProviding
     ) {
         let provider = RemoteMessagingConfigMatcherProvider(
             bookmarksDatabase: bookmarksDatabase,
@@ -74,14 +70,14 @@ final class RemoteMessagingClient: RemoteMessagingProcessing {
             database: database,
             notificationCenter: notificationCenter,
             errorEvents: errorEvents,
-            privacyConfigurationManager: privacyConfigurationManager,
+            remoteMessagingAvailabilityProvider: remoteMessagingAvailabilityProvider,
             log: .remoteMessaging
         )
         self.init(
             configMatcherProvider: provider,
             configurationFetcher: configurationFetcher,
             store: remoteMessagingStore,
-            privacyConfigurationManager: privacyConfigurationManager
+            remoteMessagingAvailabilityProvider: remoteMessagingAvailabilityProvider
         )
     }
 
@@ -89,12 +85,12 @@ final class RemoteMessagingClient: RemoteMessagingProcessing {
         configMatcherProvider: RemoteMessagingConfigMatcherProviding,
         configurationFetcher: RemoteMessagingConfigFetching,
         store: RemoteMessagingStoring,
-        privacyConfigurationManager: PrivacyConfigurationManaging
+        remoteMessagingAvailabilityProvider: RemoteMessagingAvailabilityProviding
     ) {
         self.configMatcherProvider = configMatcherProvider
         self.configurationFetcher = configurationFetcher
         self.store = store
-        self.privacyConfigurationManager = privacyConfigurationManager
+        self.remoteMessagingAvailabilityProvider = remoteMessagingAvailabilityProvider
     }
 
     @UserDefaultsWrapper(key: .lastRemoteMessagingRefreshDate, defaultValue: .distantPast)
@@ -112,7 +108,7 @@ extension RemoteMessagingClient {
     func registerBackgroundRefreshTaskHandler() {
         let provider = configMatcherProvider
         let fetcher = configurationFetcher
-        let privacyConfigurationManager = privacyConfigurationManager
+        let remoteMessagingAvailabilityProvider = remoteMessagingAvailabilityProvider
         let store = store
 
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundRefreshTaskIdentifier, using: nil) { task in
@@ -125,7 +121,7 @@ extension RemoteMessagingClient {
                 configMatcherProvider: provider,
                 configurationFetcher: fetcher,
                 store: store,
-                privacyConfigurationManager: privacyConfigurationManager
+                remoteMessagingAvailabilityProvider: remoteMessagingAvailabilityProvider
             )
             Self.backgroundRefreshTaskHandler(bgTask: task, client: client)
         }
@@ -156,7 +152,7 @@ extension RemoteMessagingClient {
     static func backgroundRefreshTaskHandler(bgTask: BGTask, client: RemoteMessagingClient) {
         let fetchAndProcessTask = Task {
             do {
-                if client.isRemoteMessagingEnabled {
+                if client.remoteMessagingAvailabilityProvider.isRemoteMessagingAvailable {
                     try await client.fetchAndProcess(using: client.store)
                     Self.lastRemoteMessagingRefreshDate = Date()
                 }

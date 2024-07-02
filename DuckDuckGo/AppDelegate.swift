@@ -284,18 +284,18 @@ import WebKit
                 })
             }
 
-        let remoteMessagingClient = RemoteMessagingClient(
+        remoteMessagingClient = RemoteMessagingClient(
             bookmarksDatabase: bookmarksDatabase,
             appSettings: AppDependencyProvider.shared.appSettings,
             internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
             configurationStore: ConfigurationStore.shared,
             database: Database.shared,
             errorEvents: RemoteMessagingStoreErrorHandling(),
-            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager
+            remoteMessagingAvailabilityProvider: PrivacyConfigurationRemoteMessagingAvailabilityProvider(
+                privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager
+            )
         )
-
         remoteMessagingClient.registerBackgroundRefreshTaskHandler()
-        self.remoteMessagingClient = remoteMessagingClient
 
         homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
                                                       remoteMessagingClient: remoteMessagingClient)

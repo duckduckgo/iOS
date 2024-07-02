@@ -628,6 +628,11 @@
 		9FE08BDA2C2A86D0001D5EBC /* URLOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE08BD92C2A86D0001D5EBC /* URLOpener.swift */; };
 		9FE08BDC2C2A88FA001D5EBC /* OnboardingIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE08BDB2C2A88FA001D5EBC /* OnboardingIntroViewController.swift */; };
 		9FEA22272C2D2BDA006B03BF /* RootDebugViewController+Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA22262C2D2BDA006B03BF /* RootDebugViewController+Onboarding.swift */; };
+		9FEA22292C2E38FA006B03BF /* AnimatableTypingText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA22282C2E38FA006B03BF /* AnimatableTypingText.swift */; };
+		9FEA222E2C324ECD006B03BF /* ViewVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA222D2C324ECD006B03BF /* ViewVisibility.swift */; };
+		9FEA22302C325125006B03BF /* AnimatableTypingTextModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA222F2C325125006B03BF /* AnimatableTypingTextModelTests.swift */; };
+		9FEA22322C3270BD006B03BF /* TimerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA22312C3270BD006B03BF /* TimerInterface.swift */; };
+		9FEA22352C327226006B03BF /* MockTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA22332C3271DC006B03BF /* MockTimer.swift */; };
 		9FF7E9822C22A1F100902BE5 /* DaxDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7E9812C22A1F100902BE5 /* DaxDialogView.swift */; };
 		9FF7E9862C23D10300902BE5 /* BrowsersComparisonChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7E9852C23D10300902BE5 /* BrowsersComparisonChart.swift */; };
 		AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */; };
@@ -2287,6 +2292,11 @@
 		9FE08BD92C2A86D0001D5EBC /* URLOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLOpener.swift; sourceTree = "<group>"; };
 		9FE08BDB2C2A88FA001D5EBC /* OnboardingIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingIntroViewController.swift; sourceTree = "<group>"; };
 		9FEA22262C2D2BDA006B03BF /* RootDebugViewController+Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RootDebugViewController+Onboarding.swift"; sourceTree = "<group>"; };
+		9FEA22282C2E38FA006B03BF /* AnimatableTypingText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableTypingText.swift; sourceTree = "<group>"; };
+		9FEA222D2C324ECD006B03BF /* ViewVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewVisibility.swift; sourceTree = "<group>"; };
+		9FEA222F2C325125006B03BF /* AnimatableTypingTextModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableTypingTextModelTests.swift; sourceTree = "<group>"; };
+		9FEA22312C3270BD006B03BF /* TimerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerInterface.swift; sourceTree = "<group>"; };
+		9FEA22332C3271DC006B03BF /* MockTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTimer.swift; sourceTree = "<group>"; };
 		9FF7E9812C22A1F100902BE5 /* DaxDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogView.swift; sourceTree = "<group>"; };
 		9FF7E9852C23D10300902BE5 /* BrowsersComparisonChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsersComparisonChart.swift; sourceTree = "<group>"; };
 		AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconSettingsViewController.swift; sourceTree = "<group>"; };
@@ -2957,6 +2967,8 @@
 				EE4BE0082A740BED00CD6AA8 /* ClearTextField.swift */,
 				CB825C912C071B1400BCC586 /* AlertView.swift */,
 				CB825C952C071C9300BCC586 /* AlertViewPresenter.swift */,
+				9FEA222D2C324ECD006B03BF /* ViewVisibility.swift */,
+				9FEA22282C2E38FA006B03BF /* AnimatableTypingText.swift */,
 			);
 			name = SwiftUI;
 			sourceTree = "<group>";
@@ -5226,6 +5238,7 @@
 				1E6A4D682984208800A371D3 /* LocaleExtension.swift */,
 				56D855692BEA9169009F9698 /* CurrentDateProviding.swift */,
 				9FE08BD92C2A86D0001D5EBC /* URLOpener.swift */,
+				9FEA22312C3270BD006B03BF /* TimerInterface.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -5304,6 +5317,7 @@
 				C185ED652BD43A5500BAE9DC /* MockDDGSyncing.swift */,
 				6F03CB032C32EFA8004179A8 /* MockPixelFiring.swift */,
 				9F23B8082C2BE9B700950875 /* MockURLOpener.swift */,
+				9FEA22332C3271DC006B03BF /* MockTimer.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -5352,6 +5366,7 @@
 			children = (
 				F1E092C01E92A72E00732CCC /* UIColorExtensionTests.swift */,
 				F194FAFA1F14E622009B4DF8 /* UIFontExtensionTests.swift */,
+				9FEA222F2C325125006B03BF /* AnimatableTypingTextModelTests.swift */,
 			);
 			name = UserInterface;
 			sourceTree = "<group>";
@@ -6749,6 +6764,7 @@
 				31B524572715BB23002225AB /* WebJSAlert.swift in Sources */,
 				C1641EB32BC2F53C0012607A /* ImportPasswordsViewModel.swift in Sources */,
 				8536A1FD2ACF114B003AC5BA /* Theme+DesignSystem.swift in Sources */,
+				9FEA22292C2E38FA006B03BF /* AnimatableTypingText.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,
 				D6BFCB612B7525160051FF81 /* SubscriptionPIRViewModel.swift in Sources */,
 				D668D9252B693778008E2FF2 /* SubscriptionITPView.swift in Sources */,
@@ -7076,6 +7092,7 @@
 				F1D796F41E7C2A410019D451 /* BookmarksDelegate.swift in Sources */,
 				D664C7B92B289AA200CBFA76 /* WKUserContentController+Handler.swift in Sources */,
 				1E8AD1D727C2E24E00ABA377 /* DownloadsListRowViewModel.swift in Sources */,
+				9FEA222E2C324ECD006B03BF /* ViewVisibility.swift in Sources */,
 				1E865AF0272042DB001C74F3 /* TextSizeSettingsViewController.swift in Sources */,
 				D6E0C1892B7A2E0D00D5E1E9 /* DesktopDownloadViewModel.swift in Sources */,
 				8524CC9A246DA81700E59D45 /* FullscreenDaxDialogViewController.swift in Sources */,
@@ -7172,6 +7189,7 @@
 				987130C5294AAB9F00AB05E0 /* BookmarkEditorViewModelTests.swift in Sources */,
 				BDFF03262BA3DA4900F324C9 /* NetworkProtectionFeatureVisibilityTests.swift in Sources */,
 				D62EC3BA2C246A7000FC9D04 /* YoutublePlayerNavigationHandlerTests.swift in Sources */,
+				9FEA22302C325125006B03BF /* AnimatableTypingTextModelTests.swift in Sources */,
 				8341D807212D5E8D000514C2 /* HashExtensionTest.swift in Sources */,
 				C1D21E2F293A599C006E5A05 /* AutofillLoginSessionTests.swift in Sources */,
 				85D2187924BF6B8B004373D2 /* FaviconSourcesProviderTests.swift in Sources */,
@@ -7243,6 +7261,7 @@
 				851DFD8A212C5EE800D95F20 /* TabSwitcherButtonTests.swift in Sources */,
 				98983096255B5019003339A2 /* BookmarksCachingSearchTests.swift in Sources */,
 				D6B67A122C332B6E002122EB /* DuckPlayerMocks.swift in Sources */,
+				9FEA22352C327226006B03BF /* MockTimer.swift in Sources */,
 				EE7917912A83DE93008DFF28 /* CombineTestUtilities.swift in Sources */,
 				8540BD5223D8C2220057FDD2 /* PreserveLoginsTests.swift in Sources */,
 				85F200072217032E006BB258 /* AddressDisplayHelperTests.swift in Sources */,
@@ -7423,6 +7442,7 @@
 				85D2187624BF6164004373D2 /* FaviconSourcesProvider.swift in Sources */,
 				98B000532915C46E0034BCA0 /* LegacyBookmarksStoreMigration.swift in Sources */,
 				85200FA11FBC5BB5001AF290 /* DDGPersistenceContainer.swift in Sources */,
+				9FEA22322C3270BD006B03BF /* TimerInterface.swift in Sources */,
 				1E4DCF4C27B6A4CB00961E25 /* URLFileExtension.swift in Sources */,
 				EE50053029C3BA0800AE0773 /* InternalUserStore.swift in Sources */,
 				F1D477CB1F2149C40031ED49 /* Type.swift in Sources */,

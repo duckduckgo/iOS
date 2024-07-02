@@ -833,6 +833,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         guard let url = bookmark.urlObject else { return }
         dismiss()
         Pixel.fire(pixel: .bookmarkLaunchList)
+        DailyPixel.fire(pixel: .bookmarkLaunchedDaily)
         delegate?.bookmarksDidSelect(url: url)
     }
 

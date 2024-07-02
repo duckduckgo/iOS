@@ -211,6 +211,8 @@ class HomeViewController: UIViewController, NewTabPage {
         guard presentedViewController?.isBeingDismissed ?? true else { return }
 
         Pixel.fire(pixel: .homeScreenShown)
+        sendDailyOpenPixel()
+        
         showNextDaxDialog()
         
         collectionView.didAppear()
@@ -319,11 +321,22 @@ class HomeViewController: UIViewController, NewTabPage {
         .init(syncService: syncService, syncBookmarksAdapter: syncDataProviders.bookmarksAdapter)
 }
 
+private extension HomeViewController {
+    func sendDailyOpenPixel() {
+
+        let favoritesCount = favoritesViewModel.favorites.count
+        let bucket = HomePageDisplayDailyPixelBucket(favoritesCount: favoritesCount)
+
+        DailyPixel.fire(pixel: .newTabPageDisplayedDaily, withAdditionalParameters: ["FavoriteCount": bucket.value])
+    }
+}
+
 extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {
     
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect favorite: BookmarkEntity) {
         guard let url = favorite.urlObject else { return }
         Pixel.fire(pixel: .favoriteLaunchedNTP)
+        DailyPixel.fire(pixel: .favoriteLaunchedNTPDaily)
         Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .fireproof, fromCache: .tabs)
         delegate?.home(self, didRequestUrl: url)
     }

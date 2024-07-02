@@ -56,7 +56,6 @@ struct SettingsDuckPlayerView: View {
                     .daxFootnoteRegular()
                     .multilineTextAlignment(.center)
             }
-            
         }
         .applySettingsListModifiers(title: UserText.duckPlayerFeatureName,
                                     displayMode: .inline,

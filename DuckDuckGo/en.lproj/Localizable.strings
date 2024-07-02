@@ -1606,11 +1606,8 @@ https://duckduckgo.com/mac";
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Let’s do it!";
 
-/* The message of the onboarding dialog popup */
-"onboarding.intro.message" = "Ready for a better, more private internet?";
-
 /* The title of the onboarding dialog popup */
-"onboarding.intro.title" = "Hi there.";
+"onboarding.intro.title" = "Hi there.\n\nReady for a better, more private internet?";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Add Widget";

@@ -35,7 +35,7 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
     func testExample() throws {
         let appStorePurchaseFlow = AppStorePurchaseFlowMock(purchaseSubscriptionResult: .success("TransactionJWS"),
-                                                            completeSubscriptionPurchaseResult: .success(PurchaseUpdate(type: "type", token: "token")))
+                                                            completeSubscriptionPurchaseResult: .success(PurchaseUpdate(type: "t", token: "t")))
         let appStoreAccountManagementFlow = AppStoreAccountManagementFlowMock(refreshAuthTokenIfNeededResult: .success("Something"))
         let feature = SubscriptionPagesUseSubscriptionFeature(subscriptionManager: SubscriptionMockFactory.subscriptionManager,
                                                              subscriptionAttributionOrigin: "???",

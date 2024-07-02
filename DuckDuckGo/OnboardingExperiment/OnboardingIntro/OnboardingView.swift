@@ -46,14 +46,7 @@ struct OnboardingView: View {
     }
 
     private func backgroundWrapped(view: some View) -> some View {
-        GeometryReader { proxy in
-            ZStack {
-                OnboardingBackground()
-                    .frame(width: proxy.size.width, height: proxy.size.height)
-
-                view
-            }
-        }
+        view.background(OnboardingBackground())
     }
 
     private func mainView(state: ViewState.Intro) -> some View {

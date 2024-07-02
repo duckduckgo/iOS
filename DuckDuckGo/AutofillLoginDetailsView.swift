@@ -88,6 +88,7 @@ struct AutofillLoginDetailsView: View {
                              placeholderText: UserText.autofillLoginDetailsEditTitlePlaceholder,
                              autoCapitalizationType: .words,
                              disableAutoCorrection: false)
+                .accessibilityIdentifier("Field_PasswordName")
             }
 
             Section {
@@ -95,18 +96,21 @@ struct AutofillLoginDetailsView: View {
                              subtitle: $viewModel.username,
                              placeholderText: UserText.autofillLoginDetailsEditUsernamePlaceholder,
                              keyboardType: .emailAddress)
+                .accessibilityIdentifier("Field_Username")
 
                 if viewModel.viewMode == .new {
                     editableCell(UserText.autofillLoginDetailsPassword,
                                  subtitle: $viewModel.password,
                                  placeholderText: UserText.autofillLoginDetailsEditPasswordPlaceholder,
                                  secure: true)
+                    .accessibilityIdentifier("Field_Password")
                 } else {
                     EditablePasswordCell(title: UserText.autofillLoginDetailsPassword,
                                          placeholderText: UserText.autofillLoginDetailsEditPasswordPlaceholder,
                                          password: $viewModel.password,
                                          userVisiblePassword: .constant(viewModel.userVisiblePassword),
                                          isPasswordHidden: $viewModel.isPasswordHidden)
+                    .accessibilityIdentifier("Field_Password")
                 }
             }
             
@@ -115,11 +119,13 @@ struct AutofillLoginDetailsView: View {
                              subtitle: $viewModel.address,
                              placeholderText: UserText.autofillLoginDetailsEditURLPlaceholder,
                              keyboardType: .URL)
+                .accessibilityIdentifier("Field_Address")
             }
             
             Section {
                 editableMultilineCell(UserText.autofillLoginDetailsNotes,
                                       subtitle: $viewModel.notes)
+                .accessibilityIdentifier("Field_Notes")
             }
 
             if viewModel.viewMode == .edit {

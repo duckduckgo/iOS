@@ -24,7 +24,7 @@ import Common
 
 struct FaviconsHelper {
     
-    private static  let tld: TLD = AppDependencyProvider.shared.storageCache.tld
+    private static let tld: TLD = AppDependencyProvider.shared.storageCache.tld
     
     static func loadFaviconSync(forDomain domain: String?,
                                 usingCache cacheType: Favicons.CacheType,
@@ -135,5 +135,4 @@ struct FaviconsHelper {
         return icon.withRenderingMode(.alwaysOriginal)
     }
 
-    
 }

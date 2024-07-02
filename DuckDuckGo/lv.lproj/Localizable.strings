@@ -1657,6 +1657,9 @@
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Aiziet!";
 
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Sveiki!\n\nVai esi gatavs labākam, privātākam Internetam?";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Pievienot logrīku";
 

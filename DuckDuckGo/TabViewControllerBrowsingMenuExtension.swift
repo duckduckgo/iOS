@@ -220,6 +220,7 @@ extension TabViewController {
     private func performSaveBookmarkAction(for link: Link,
                                            with bookmarksInterface: MenuBookmarksInteracting) {
         Pixel.fire(pixel: .browsingMenuAddToBookmarks)
+        DailyPixel.fire(pixel: .addBookmarkDaily)
         bookmarksInterface.createBookmark(title: link.title ?? "", url: link.url)
         favicons.loadFavicon(forDomain: link.url.host, intoCache: .fireproof, fromCache: .tabs)
         syncService.scheduler.notifyDataChanged()
@@ -261,6 +262,7 @@ extension TabViewController {
                                               image: UIImage(named: "Favorite-16")!,
                                               action: { [weak self] in
             Pixel.fire(pixel: addToFavoriteFlow ? .browsingMenuAddToFavoritesAddFavoriteFlow : .browsingMenuAddToFavorites)
+            DailyPixel.fire(pixel: .addFavoriteDaily)
             self?.performAddFavoriteAction(for: link, with: bookmarksInterface)
         })
         return entry

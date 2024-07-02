@@ -1,0 +1,74 @@
+# backgrounding.yaml
+appId: com.duckduckgo.mobile.ios
+tags:
+    - release
+
+---
+
+# Set up 
+- clearState
+- launchApp
+- runFlow: 
+    file: ../shared/onboarding.yaml
+
+# Load Site
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://privacy-test-pages.site"
+- pressKey: Enter
+
+# Manage onboarding
+- runFlow:
+    file: ../shared/onboarding_browsing.yaml
+
+# Go home and hover there a bit
+- pressKey: Home
+- swipe:  
+    start: 50%, 50%
+    end: 10%, 50%
+- swipe:  
+    start: 10%, 50%
+    end: 50%, 50%
+- tapOn: "DuckDuckGo"
+
+# Validate
+- assertVisible: "Privacy Test Pages"
+- assertVisible: "Browsing menu"
+- tapOn: "Browsing menu"
+- assertVisible: "Add Bookmark"
+- tapOn: "Add Bookmark"
+- tapOn: 
+    id: PrivacyIcon
+- assertVisible: "Protections are ON for this site"
+- tapOn: "Done"
+
+# Run background assertion from new tab page
+- assertVisible: "Tab Switcher"
+- tapOn: "Tab Switcher"
+- tapOn: "New Tab"
+
+# Go home and hover there a bit
+- pressKey: Home
+- swipe:  
+    start: 50%, 50%
+    end: 10%, 50%
+- swipe:  
+    start: 10%, 50%
+    end: 50%, 50%
+- tapOn: "DuckDuckGo"
+
+# Check menus
+- tapOn: "Cancel"
+- tapOn: "Settings"
+- assertVisible: "Default Browser"
+
+- assertVisible: "Bookmarks"
+- tapOn: "Bookmarks"
+- assertVisible: "Privacy Test Pages - Home"
+- tapOn: "Done"
+
+- assertVisible: "Tab Switcher"
+- tapOn: "Tab Switcher"
+

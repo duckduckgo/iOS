@@ -170,7 +170,7 @@
                                                             <rect key="frame" x="0.0" y="2" width="43" height="38"/>
                                                         </imageView>
                                                     </subviews>
-                                                    <accessibility key="accessibilityConfiguration">
+                                                    <accessibility key="accessibilityConfiguration" identifier="PrivacyIcon">
                                                         <accessibilityTraits key="traits" button="YES"/>
                                                         <bool key="isElement" value="YES"/>
                                                     </accessibility>

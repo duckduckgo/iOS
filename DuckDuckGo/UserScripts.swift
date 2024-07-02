@@ -65,6 +65,12 @@ final class UserScripts: UserScriptsProvider {
                                                                 isIsolated: true)
         autoconsentUserScript = AutoconsentUserScript(config: sourceProvider.privacyConfigurationManager.privacyConfig)
         
+        // Special pages - Such as Duck Player
+        specialPages = SpecialPagesUserScript()
+        if let specialPages {
+            userScripts.append(specialPages)
+        }
+        
     }
     
 
@@ -88,15 +94,10 @@ final class UserScripts: UserScriptsProvider {
     // Initialize DuckPlayer scripts
     private func initializeDuckPlayer() {
         if let duckPlayer {
-            specialPages = SpecialPagesUserScript()
             youtubeOverlayScript = YoutubeOverlayUserScript(duckPlayer: duckPlayer)
             youtubePlayerUserScript = YoutubePlayerUserScript(duckPlayer: duckPlayer)
             youtubeOverlayScript.map { contentScopeUserScriptIsolated.registerSubfeature(delegate: $0) }
             youtubePlayerUserScript.map { specialPages?.registerSubfeature(delegate: $0) }
-        }
-
-        if let specialPages {
-            userScripts.append(specialPages)
         }
     }
     

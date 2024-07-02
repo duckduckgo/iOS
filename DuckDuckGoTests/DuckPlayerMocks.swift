@@ -103,6 +103,9 @@ final class MockDuckPlayerSettings: DuckPlayerSettingsProtocol {
         self.mode = mode
     }
     
+    func setOverlayHidden(_ overlayHidden: Bool) {
+        self.askModeOverlayHidden = overlayHidden
+    }
     
 }
 

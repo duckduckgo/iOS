@@ -81,6 +81,7 @@ protocol AppSettings: AnyObject, AppDebugSettings {
     var crashCollectionOptInStatus: CrashCollectionOptInStatus { get set }
     
     var duckPlayerMode: DuckPlayerMode { get set }
+    var duckPlayerAskModeOverlayHidden: Bool { get set }
 }
 
 protocol AppDebugSettings {

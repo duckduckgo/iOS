@@ -67,11 +67,13 @@ enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
 protocol DuckPlayerSettingsProtocol {
     
     var duckPlayerSettingsPublisher: AnyPublisher<Void, Never> { get }
-    var mode: DuckPlayerMode { get set }
-    var askModeOverlayHidden: Bool { get set }
+    var mode: DuckPlayerMode { get }
+    var askModeOverlayHidden: Bool { get }
     
     init(appSettings: AppSettings, privacyConfigManager: PrivacyConfigurationManaging)
     
+    func setMode(_ mode: DuckPlayerMode)
+    func setOverlayHidden(_ overlayHidden: Bool)
     func triggerNotification()
 }
 
@@ -116,15 +118,18 @@ final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
     }
     
     var mode: DuckPlayerMode {
-        get {
-            if isFeatureEnabled {
-                return appSettings.duckPlayerMode
-            } else {
-                return .disabled
-            }
+        if isFeatureEnabled {
+            return appSettings.duckPlayerMode
+        } else {
+            return .disabled
         }
-        set {
-            appSettings.duckPlayerMode = newValue
+    }
+    
+    var overlayHidden: Bool {
+        if isFeatureEnabled {
+            return appSettings.duckPlayerAskModeOverlayHidden
+        } else {
+            return false
         }
     }
     
@@ -144,13 +149,27 @@ final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
     
     private func registerForNotificationChanges() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(updateSettings),
-                                               name: AppUserDefaults.Notifications.duckPlayerModeChanged,
+                                               selector: #selector(publishUpdate),
+                                               name: AppUserDefaults.Notifications.duckPlayerSettingsUpdated,
                                                object: nil)
     }
     
-    @objc private func updateSettings(_ notification: Notification) {
-       triggerNotification()
+    func setMode(_ mode: DuckPlayerMode) {
+        if mode != appSettings.duckPlayerMode {
+            appSettings.duckPlayerMode = mode
+            triggerNotification()
+        }
+    }
+    
+    func setOverlayHidden(_ overlayHidden: Bool) {
+        if overlayHidden != appSettings.duckPlayerAskModeOverlayHidden {
+            appSettings.duckPlayerAskModeOverlayHidden = overlayHidden
+            triggerNotification()
+        }
+    }
+    
+    @objc private func publishUpdate(_ notification: Notification) {
+        triggerNotification()
     }
     
     func triggerNotification() {

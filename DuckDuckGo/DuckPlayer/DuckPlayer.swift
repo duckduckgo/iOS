@@ -85,10 +85,8 @@ final class DuckPlayer: DuckPlayerProtocol {
             assertionFailure("DuckPlayer: expected JSON representation of UserValues")
             return nil
         }
-                
-        settings.mode = userValues.duckPlayerMode
-        settings.askModeOverlayHidden = userValues.askModeOverlayHidden
-        
+        settings.setMode(userValues.duckPlayerMode)
+        settings.setOverlayHidden(userValues.askModeOverlayHidden)
         return userValues
     }
         

@@ -416,6 +416,9 @@ extension Pixel {
         case networkProtectionDNSUpdateCustom
         case networkProtectionDNSUpdateDefault
 
+        case networkProtectionVPNConfigurationRemoved
+        case networkProtectionVPNConfigurationRemovalFailed
+
         // MARK: remote messaging pixels
         
         case remoteMessageShown
@@ -647,7 +650,6 @@ extension Pixel {
         case privacyProRestoreAfterPurchaseAttempt
         case privacyProSubscriptionActivated
         case privacyProWelcomeAddDevice
-        case privacyProSettingsAddDevice
         case privacyProAddDeviceEnterEmail
         case privacyProWelcomeVPN
         case privacyProWelcomePersonalInformationRemoval
@@ -1103,6 +1105,9 @@ extension Pixel.Event {
         case .networkProtectionDNSUpdateCustom: return "m_netp_ev_update_dns_custom"
         case .networkProtectionDNSUpdateDefault: return "m_netp_ev_update_dns_default"
 
+        case .networkProtectionVPNConfigurationRemoved: return "m_netp_vpn_configuration_removed"
+        case .networkProtectionVPNConfigurationRemovalFailed: return "m_netp_vpn_configuration_removal_failed"
+
             // MARK: remote messaging pixels
             
         case .remoteMessageShown: return "m_remote_message_shown"
@@ -1348,7 +1353,6 @@ extension Pixel.Event {
         case .privacyProRestoreAfterPurchaseAttempt: return "m_privacy-pro_app_subscription-restore-after-purchase-attempt_success"
         case .privacyProSubscriptionActivated: return "m_privacy-pro_app_subscription_activated_u"
         case .privacyProWelcomeAddDevice: return "m_privacy-pro_welcome_add-device_click_u"
-        case .privacyProSettingsAddDevice: return "m_privacy-pro_settings_add-device_click"
         case .privacyProAddDeviceEnterEmail: return "m_privacy-pro_add-device_enter-email_click"
         case .privacyProWelcomeVPN: return "m_privacy-pro_welcome_vpn_click_u"
         case .privacyProWelcomePersonalInformationRemoval: return "m_privacy-pro_welcome_personal-information-removal_click_u"

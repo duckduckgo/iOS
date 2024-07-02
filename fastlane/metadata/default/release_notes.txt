@@ -1,2 +1,5 @@
-Bug fixes and other improvements.
+- Bug fixes and other improvements.
+
+For Privacy Pro subscribers:
+- You can now specify a custom DNS server under VPN Settings to route your DNS queries through while the VPN is active.
 

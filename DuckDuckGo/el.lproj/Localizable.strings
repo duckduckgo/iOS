@@ -1633,6 +1633,33 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Κρυφό αναδυόμενο παράθυρο";
 
+/* Button to change the default browser */
+"onboarding.browsers.cta" = "Επιλέξτε το πρόγραμμα περιήγησής σας";
+
+/* Message to highlight browser capability of blocking cookie pop-ups */
+"onboarding.browsers.features.cookiePopups.title" = "Αποκλεισμός αναδυόμενων παραθύρων cookie";
+
+/* Message to highlight browser capability of blocking creepy ads */
+"onboarding.browsers.features.creepyAds.title" = "Αποκλεισμός στοχευμένων διαφημίσεων";
+
+/* Message to highlight browser capability ofswiftly erase browsing data */
+"onboarding.browsers.features.eraseBrowsingData.title" = "Γρήγορη διαγραφή δεδομένων περιήγησης";
+
+/* Message to highlight browser capability of private searches */
+"onboarding.browsers.features.privateSearch.title" = "Ιδιωτική αναζήτηση βάσει προεπιλογής";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.browsers.features.trackerBlocker.title" = "Αποκλείστε εφαρμογές παρακολούθησης τρίτων";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.browsers.title" = "H προστασία προσωπικών δεδομένων energopoi;huhke!";
+
+/* Subheader message for the screen to choose DuckDuckGo as default browser */
+"onboarding.defaultBrowser.message" = "Ανοίξτε συνδέσμους με ηρεμία και ασφάλεια, κάθε φορά.";
+
+/* Button to continue the onboarding process */
+"onboarding.intro.cta" = "Ας το δοκιμάσουμε!";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Προσθήκη γραφικού στοιχείου";
 

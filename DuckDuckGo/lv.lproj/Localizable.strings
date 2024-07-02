@@ -1633,6 +1633,33 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Uznirstošais logs paslēpts";
 
+/* Button to change the default browser */
+"onboarding.browsers.cta" = "Izvēlies pārlūku";
+
+/* Message to highlight browser capability of blocking cookie pop-ups */
+"onboarding.browsers.features.cookiePopups.title" = "Bloķē sīkfailu uznirstošos logus";
+
+/* Message to highlight browser capability of blocking creepy ads */
+"onboarding.browsers.features.creepyAds.title" = "Bloķē kaitinošas reklāmas";
+
+/* Message to highlight browser capability ofswiftly erase browsing data */
+"onboarding.browsers.features.eraseBrowsingData.title" = "Ātri izdzēs pārlūkošanas datus";
+
+/* Message to highlight browser capability of private searches */
+"onboarding.browsers.features.privateSearch.title" = "Meklē privāti pēc noklusējuma";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.browsers.features.trackerBlocker.title" = "Bloķē trešo pušu izsekotājus";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.browsers.title" = "Privātuma aizsardzība ir aktivizēta!";
+
+/* Subheader message for the screen to choose DuckDuckGo as default browser */
+"onboarding.defaultBrowser.message" = "Katru reizi atver saites bez raizēm.";
+
+/* Button to continue the onboarding process */
+"onboarding.intro.cta" = "Aiziet!";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Pievienot logrīku";
 

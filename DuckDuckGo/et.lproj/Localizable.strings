@@ -1633,6 +1633,33 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Hüpikaken on peidetud";
 
+/* Button to change the default browser */
+"onboarding.browsers.cta" = "Vali oma brauser";
+
+/* Message to highlight browser capability of blocking cookie pop-ups */
+"onboarding.browsers.features.cookiePopups.title" = "Blokeeri küpsiste hüpikaknad";
+
+/* Message to highlight browser capability of blocking creepy ads */
+"onboarding.browsers.features.creepyAds.title" = "Blokeeri sihitud reklaamid";
+
+/* Message to highlight browser capability ofswiftly erase browsing data */
+"onboarding.browsers.features.eraseBrowsingData.title" = "Sirvimisandmete kiire kustutamine";
+
+/* Message to highlight browser capability of private searches */
+"onboarding.browsers.features.privateSearch.title" = "Otsi vaikimisi privaatselt";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.browsers.features.trackerBlocker.title" = "Blokeeri kolmanda poole jälgurid";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.browsers.title" = "Privaatsuskaitsed on aktiveeritud!";
+
+/* Subheader message for the screen to choose DuckDuckGo as default browser */
+"onboarding.defaultBrowser.message" = "Ava linke igal ajal, rahuliku meelega.";
+
+/* Button to continue the onboarding process */
+"onboarding.intro.cta" = "Teeme ära!";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Lisa vidin";
 

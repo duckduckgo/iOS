@@ -1633,6 +1633,33 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Pop-up verborgen";
 
+/* Button to change the default browser */
+"onboarding.browsers.cta" = "Kies je browser";
+
+/* Message to highlight browser capability of blocking cookie pop-ups */
+"onboarding.browsers.features.cookiePopups.title" = "Blokkeer cookiepop-ups";
+
+/* Message to highlight browser capability of blocking creepy ads */
+"onboarding.browsers.features.creepyAds.title" = "Blokkeer enge advertenties";
+
+/* Message to highlight browser capability ofswiftly erase browsing data */
+"onboarding.browsers.features.eraseBrowsingData.title" = "Wis browsegegevens in een handomdraai";
+
+/* Message to highlight browser capability of private searches */
+"onboarding.browsers.features.privateSearch.title" = "Standaard privé zoeken";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.browsers.features.trackerBlocker.title" = "Blokkeer trackers van derden";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.browsers.title" = "Privacybescherming geactiveerd!";
+
+/* Subheader message for the screen to choose DuckDuckGo as default browser */
+"onboarding.defaultBrowser.message" = "Open links altijd met een gerust hart.";
+
+/* Button to continue the onboarding process */
+"onboarding.intro.cta" = "Laten we het doen!";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Widget toevoegen";
 

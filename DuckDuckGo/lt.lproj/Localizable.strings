@@ -1633,6 +1633,33 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Iškylantysis langas paslėptas";
 
+/* Button to change the default browser */
+"onboarding.browsers.cta" = "Pasirinkite naršyklę";
+
+/* Message to highlight browser capability of blocking cookie pop-ups */
+"onboarding.browsers.features.cookiePopups.title" = "Blokuoti slapukų iššokančiuosius langus";
+
+/* Message to highlight browser capability of blocking creepy ads */
+"onboarding.browsers.features.creepyAds.title" = "Blokuokite taikomus skelbimus";
+
+/* Message to highlight browser capability ofswiftly erase browsing data */
+"onboarding.browsers.features.eraseBrowsingData.title" = "Greitai ištrinkite naršymo duomenis";
+
+/* Message to highlight browser capability of private searches */
+"onboarding.browsers.features.privateSearch.title" = "Vykdykite paiešką privačiai pagal numatytąjį nustatymą";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.browsers.features.trackerBlocker.title" = "Blokuoja trečiųjų šalių stebėjimo priemones";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.browsers.title" = "Privatumo apsaugos priemonės įjungtos!";
+
+/* Subheader message for the screen to choose DuckDuckGo as default browser */
+"onboarding.defaultBrowser.message" = "Kiekvieną kartą be jaudulio atverkite nuorodas.";
+
+/* Button to continue the onboarding process */
+"onboarding.intro.cta" = "Pirmyn!";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Pridėti valdiklį";
 

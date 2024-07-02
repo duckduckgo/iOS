@@ -25,7 +25,10 @@ struct OnboardingBackground: View {
         Image(.daxOnboardingBackground)
             .resizable()
             .aspectRatio(contentMode: .fill)
-            .background(Gradient())
+            .background(
+                Gradient()
+                    .ignoresSafeArea()
+            )
     }
 }
 

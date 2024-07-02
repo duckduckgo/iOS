@@ -46,11 +46,7 @@ struct OnboardingView: View {
     }
 
     private func backgroundWrapped(view: some View) -> some View {
-        view
-            .background(
-                OnboardingBackground()
-                    .ignoresSafeArea()
-            )
+        view.background(OnboardingBackground())
     }
 
     private func mainView(state: ViewState.Intro) -> some View {

@@ -3,10 +3,8 @@
 appId: com.duckduckgo.mobile.ios
 ---
 
-- assertVisible:
-    text: "Got It"
-    index: 0
-- tapOn:
-    text: "Got It"
-    index: 0
-
+- assertVisible: "Got It"
+- assertVisible: "Hide"
+- tapOn: "Hide"
+- assertVisible: "Hide Tips Forever"
+- tapOn: "Hide Tips Forever"

@@ -1,0 +1,82 @@
+# bookmarks-multi.yaml
+appId: com.duckduckgo.mobile.ios
+tags:
+    - release
+
+---
+
+# Set up 
+- clearState
+- launchApp
+- runFlow: 
+    file: ../shared/onboarding.yaml
+
+# Load Site
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://privacy-test-pages.site"
+- pressKey: Enter
+
+# Manage onboarding
+- runFlow:
+    file: ../shared/onboarding_browsing.yaml
+ 
+# Bookmark many pages
+- evalScript: ${output.counter = 0}
+- repeat:
+    while:
+      true: ${output.counter < 4}
+    commands:
+        - assertVisible:
+            id: "searchEntry"
+        - tapOn: 
+            id: "searchEntry"
+        - inputText: ${ 'https://example.com/' + output.counter }
+        - pressKey: Enter
+        - assertVisible: "Example Domain"
+        - tapOn: "Tab Switcher"
+        - tapOn: "New Tab"
+        - evalScript: ${output.counter += 1}
+
+- tapOn: "Cancel"
+- tapOn: "Tab Switcher"
+- tapOn: "Add all tabs as bookmarks"
+
+- assertVisible: "Bookmark All Tabs?"
+- tapOn: "Bookmark"
+- tapOn: "Done"
+
+- assertVisible: "Bookmarks"
+- tapOn: "Bookmarks"
+
+- tapOn: "Add Folder"
+- inputText: "Examples"
+- tapOn: "Save"
+
+- tapOn: "Edit"
+
+- evalScript: ${output.counter = 0}
+- repeat:
+    while:
+      true: ${output.counter < 4}
+    commands:
+        - tapOn: "chevron"
+        - tapOn: "Examples"
+        - tapOn: "Save"
+        - evalScript: ${output.counter += 1}
+
+- assertVisible: "Done"
+- tapOn: "Done"
+- assertNotVisible: "Example"
+- assertVisible: "Examples"
+- tapOn: "Edit"
+- assertVisible: "Remove Examples"
+- tapOn: "Remove Examples"
+- tapOn: "Delete"
+- assertVisible: "Delete Examples?"
+- assertVisible: "Are you sure you want to delete this folder and 4 items?"
+- tapOn: "Delete"
+- tapOn: "Done"
+- assertVisible: "No bookmarks added yet"

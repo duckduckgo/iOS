@@ -1626,6 +1626,7 @@ extension TabViewController: WKNavigationDelegate {
         return true
     }
 
+    // swiftlint:disable function_body_length
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
         let allowPolicy = determineAllowPolicy()
 
@@ -1678,7 +1679,7 @@ extension TabViewController: WKNavigationDelegate {
         
         case .duck:
             if let handler = youtubeNavigationHandler {
-                youtubeNavigationHandler?.handleNavigation(navigationAction, webView: webView, completion: completion)
+                handler.handleNavigation(navigationAction, webView: webView, completion: completion)
                 return
             }
             completion(.cancel)
@@ -1692,6 +1693,7 @@ extension TabViewController: WKNavigationDelegate {
             completion(.cancel)
         }
     }
+    // swiftlint:enable function_body_length
     
 
     private func inferLoadContext(for navigationAction: WKNavigationAction) -> BrokenSiteReport.OpenerContext? {

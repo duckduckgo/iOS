@@ -56,6 +56,18 @@ struct SettingsDuckPlayerView: View {
                     .daxFootnoteRegular()
                     .multilineTextAlignment(.center)
             }
+            
+            Section {
+                SettingsCellView(label: "Override YouTube app",
+                                 accesory: .toggle(isOn: viewModel.addressBarShowsFullURL))
+                
+            } footer: {
+                Text("Open YouTube links in DuckDuckGo instead of the YouTube app.")
+                    .daxFootnoteRegular()
+                    .multilineTextAlignment(.center)
+            }
+            
+            
         }
         .applySettingsListModifiers(title: UserText.duckPlayerFeatureName,
                                     displayMode: .inline,

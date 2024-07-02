@@ -69,8 +69,6 @@ struct OnboardingView: View {
                 }
             }
             .offset(y: geometry.size.height * Metrics.dialogVerticalOffsetPercentage.build(v: verticalSizeClass, h: horizontalSizeClass))
-            .transition(.opacity)
-            .animation(.easeInOut(duration: 0.5))
         }
     }
 

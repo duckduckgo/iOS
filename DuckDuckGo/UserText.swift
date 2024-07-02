@@ -1180,8 +1180,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     // MARK: -  Dax Onboarding Experiment
     public enum DaxOnboardingExperiment {
         enum Intro {
-            public static let title = NSLocalizedString("onboarding.intro.title", value: "Hi there.", comment: "The title of the onboarding dialog popup")
-            public static let message = NSLocalizedString("onboarding.intro.message", value: "Ready for a better, more private internet?", comment: "The message of the onboarding dialog popup")
+            public static let title = NSLocalizedString("onboarding.intro.title", value: "Hi there.\n\nReady for a better, more private internet?", comment: "The title of the onboarding dialog popup")
             public static let cta = NSLocalizedString("onboarding.intro.cta", value: "Let’s do it!", comment: "Button to continue the onboarding process")
         }
 

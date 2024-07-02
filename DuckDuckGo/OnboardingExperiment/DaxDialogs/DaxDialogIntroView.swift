@@ -24,25 +24,37 @@ struct DaxDialogIntroView: View {
 
     let action: () -> Void
 
+    @State private var showButton = false
+    @State private var animateText = true
+
     var body: some View {
-        DaxDialogView(logoPosition: .top) {
-            VStack(alignment: .leading, spacing: 24.0) {
-                Group {
-                    Text(UserText.DaxOnboardingExperiment.Intro.title)
-
-                    Text(UserText.DaxOnboardingExperiment.Intro.message)
+        DaxDialogView(
+            logoPosition: .top,
+            onTapGesture: {
+                withAnimation {
+                    showButton = true
+                    animateText = false
                 }
-                .foregroundColor(.primary)
-                .font(Font.system(size: 20, weight: .bold))
+            },
+            content: {
+                VStack(spacing: 24.0) {
+                    AnimatableTypingText(UserText.DaxOnboardingExperiment.Intro.title, startAnimating: $animateText) {
+                        withAnimation {
+                            showButton = true
+                        }
+                    }
+                    .foregroundColor(.primary)
+                    .font(Font.system(size: 20, weight: .bold))
 
-                Button(action: action) {
-                    Text(UserText.DaxOnboardingExperiment.Intro.cta)
+                    Button(action: action) {
+                        Text(UserText.DaxOnboardingExperiment.Intro.cta)
+                    }
+                    .buttonStyle(PrimaryButtonStyle())
+                    .visibility(showButton ? .visible : .invisible)
                 }
-                .buttonStyle(PrimaryButtonStyle())
             }
-        }
+        )
     }
-
 }
 
 // MARK: - Preview

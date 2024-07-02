@@ -178,34 +178,6 @@ class AdAttributionFetcherMock: AdAttributionFetcher {
     }
 }
 
-final actor PixelFiringMock: PixelFiring {
-    static var expectedFireError: Error?
-
-    static var lastParams: [String: String]?
-    static var lastPixel: Pixel.Event?
-    static var lastIncludedParams: [Pixel.QueryParameters]?
-    static func fire(pixel: Pixel.Event,
-                     withAdditionalParameters params: [String: String],
-                     includedParameters: [Pixel.QueryParameters]) async throws {
-        lastParams = params
-        lastPixel = pixel
-        lastIncludedParams = includedParameters
-
-        if let expectedFireError {
-            throw expectedFireError
-        }
-    }
-
-    static func tearDown() {
-        lastParams = nil
-        lastPixel = nil
-        lastIncludedParams = nil
-        expectedFireError = nil
-    }
-
-    private init() {}
-}
-
 extension AdServicesAttributionResponse {
     init(attribution: Bool) {
         self.init(

@@ -22,14 +22,10 @@ import SwiftUI
 struct OnboardingBackground: View {
 
     var body: some View {
-        ZStack {
-            Gradient()
-
-            Image(.daxOnboardingBackground)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-        }
-        .ignoresSafeArea()
+        Image(.daxOnboardingBackground)
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .background(Gradient())
     }
 }
 
@@ -74,10 +70,9 @@ private extension OnboardingBackground {
         private func gradient(colorStops: [SwiftUI.Gradient.Stop]) -> some View {
             LinearGradient(
                 stops: colorStops,
-                startPoint: UnitPoint(x: 0, y: 0.5),
-                endPoint: UnitPoint(x: 1, y: 0.5)
+                startPoint: UnitPoint(x: 0.5, y: 0),
+                endPoint: UnitPoint(x: 0.5, y: 1)
             )
-            .rotationEffect(Angle(degrees: 90))
         }
 
     }

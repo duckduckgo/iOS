@@ -1660,6 +1660,9 @@
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Pirmyn!";
 
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Sveiki.\n\nAr esate pasiruošę geresniam ir privatesniam internetui?";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Pridėti valdiklį";
 

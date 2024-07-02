@@ -1660,6 +1660,9 @@
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Učinimo to!";
 
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Bok!\n\nJesi li spreman za bolji, privatniji internet?";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Dodaj widget";
 

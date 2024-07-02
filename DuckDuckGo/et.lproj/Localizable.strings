@@ -1660,6 +1660,9 @@
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Teeme ära!";
 
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Tere!\n\nKas oled valmis kasutama paremat ja privaatsemat internetti?";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Lisa vidin";
 

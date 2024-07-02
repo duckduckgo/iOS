@@ -1660,6 +1660,9 @@
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Pojďme na to!";
 
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Zdravíme tě.\n\nTěšíš se na lepší internet s větší ochranou soukromí?";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Přidat widget";
 

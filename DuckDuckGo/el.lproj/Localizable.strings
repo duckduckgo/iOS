@@ -1660,6 +1660,9 @@
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Ας το δοκιμάσουμε!";
 
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Γεια σας.\n\nΈτοιμοι για ένα καλύτερο και πιο ιδιωτικό διαδίκτυο;";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Προσθήκη γραφικού στοιχείου";
 

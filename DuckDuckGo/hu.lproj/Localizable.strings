@@ -1660,6 +1660,9 @@
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Rajta, csináljuk!";
 
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Szia!\n\nKészen állsz egy jobb, privátabb internetre?";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Minialkalmazás hozzáadása";
 

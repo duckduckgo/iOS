@@ -1660,6 +1660,9 @@
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Поехали!";
 
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Привет!\n\nКачественный интернет с защитой данных заказывали?";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Добавить виджет";
 

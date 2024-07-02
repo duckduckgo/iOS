@@ -1660,6 +1660,9 @@
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Să începem!";
 
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Salut!\n\nEști gata pentru un internet mai bun și mai privat?";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Adăugare widget";
 

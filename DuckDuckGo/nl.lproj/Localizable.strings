@@ -1660,6 +1660,9 @@
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Laten we het doen!";
 
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Hoi.\n\nKlaar voor een beter internet met meer privacy?";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Widget toevoegen";
 

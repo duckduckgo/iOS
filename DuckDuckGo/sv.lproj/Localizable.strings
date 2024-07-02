@@ -1660,6 +1660,9 @@
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Vi kör!";
 
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Hej!\n\nÄr du redo för ett bättre, mer privat internet?";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Lägg till widget";
 

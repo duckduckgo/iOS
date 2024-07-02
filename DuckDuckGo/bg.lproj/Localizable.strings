@@ -1660,6 +1660,9 @@
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Да го направим!";
 
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Здравейте.\n\nГотови ли сте за по-добро и по-поверително изживяване в интернет?";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Добави приспособлението";
 

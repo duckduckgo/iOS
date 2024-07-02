@@ -1660,6 +1660,9 @@
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Hadi Başlayalım!";
 
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Merhaba.\n\nDaha iyi, daha özel bir internete hazır mısınız?";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Widget Ekle";
 

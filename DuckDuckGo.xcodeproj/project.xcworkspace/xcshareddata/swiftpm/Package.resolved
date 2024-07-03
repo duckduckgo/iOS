@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "a9a41a03ab6a230b424c3f3f5f689c9021c61c5e",
-        "version" : "164.2.1"
+        "branch" : "sam/update-ppro-status-attribute",
+        "revision" : "196f46bd523fbd97c0df6e70b4e57c0822671ce9"
       }
     },
     {

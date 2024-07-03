@@ -63,7 +63,7 @@ struct OnboardingTryVisitingSiteDialog: View {
     }
 }
 
-struct FireButtonDialog: View {
+struct OnboardingFireButtonDialog: View {
     let secondMessage = NSAttributedString(string: "Give it a try! ☝️")
 
     var attributedMessage: NSAttributedString {
@@ -87,7 +87,7 @@ struct FireButtonDialog: View {
     }
 }
 
-struct FirstSearchDoneDialog: View {
+struct OnboardingFirstSearchDoneDialog: View {
 
     @State var showNextScreen: Bool = false
     @State var shouldFollowUp: Bool
@@ -113,6 +113,23 @@ struct FirstSearchDoneDialog: View {
     }
 }
 
+struct OnboardingFinalDialog: View {
+    let title = "You’ve got this!"
+    let message = [NSAttributedString(string: "Remember every time you browse with me a creepy ad loses it’s wings.")]
+    let cta = "High five!"
+    let imageName = "Success-128"
+    let highFiveAction: () -> Void
+
+    var body: some View {
+        ContextualDaxDialog(
+            title: title,
+            message: message,
+            imageName: imageName,
+            cta: cta,
+            action: highFiveAction
+        )
+    }
+}
 
 #Preview("Try Search") {
     OnboardingTrySearchDialog(action: { _ in })
@@ -130,12 +147,16 @@ struct FirstSearchDoneDialog: View {
 }
 
 #Preview("Try Fire Button") {
-    FireButtonDialog()
+    OnboardingFireButtonDialog()
         .padding()
 }
 
 #Preview("First Search Dialog") {
-    FirstSearchDoneDialog(shouldFollowUp: true, listAction: {_ in }, gotItAction: {})
+    OnboardingFirstSearchDoneDialog(shouldFollowUp: true, listAction: {_ in }, gotItAction: {})
         .padding()
 }
 
+#Preview("Final Dialog") {
+    OnboardingFinalDialog(highFiveAction: {})
+        .padding()
+}

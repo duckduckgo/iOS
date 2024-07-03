@@ -9,10 +9,6 @@ tags:
 - clearState
 - launchApp
 - runFlow: 
-    when: 
-      visible: 
-        text: "Let’s Do It!"
-        index: 0
     file: ../shared/onboarding.yaml
 
 # Load Site
@@ -25,10 +21,6 @@ tags:
 
 # Manage onboarding
 - runFlow:
-    when:
-      visible:
-        text: "Got It"
-        index: 0
     file: ../shared/onboarding_browsing.yaml
 
 # Add site to favorites from menu
@@ -48,6 +40,18 @@ tags:
 - tapOn: "Browsing menu"
 - assertVisible: "Add Favorite"
 - tapOn: "Add Favorite"
+
+# Check favourites on new tab page
+- tapOn: "Tab Switcher"
+- tapOn: "New Tab"
+- assertVisible: "Privacy Test Pages - Home"
+- tapOn: "Privacy Test Pages - Home"
+- assertVisible: "privacy-test-pages.site"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "pri"
+- assertVisible: "Bookmark-Fav-24"
+- tapOn: "Cancel"
 
 # Check favorites from bookmarks screen
 - assertVisible: "Browsing menu"

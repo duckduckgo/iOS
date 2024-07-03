@@ -26,9 +26,9 @@ struct HomePageDisplayDailyPixelBucket {
     init(favoritesCount: Int) {
 
         switch favoritesCount {
-        case 0...0:
+        case 0:
             value = "0"
-        case 1...1:
+        case 1:
             value = "1"
         case 2...3:
             value = "2-3"

@@ -21,6 +21,17 @@ import SwiftUI
 
 final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTabPage {
 
+    init() {
+        let newTabPageView = NewTabPageView(messagesModel: NewTabPageMessagesModel(),
+                                            favoritesModel: FavoritesModel())
+        super.init(rootView: newTabPageView)
+    }
+    
+    @available(*, unavailable)
+    @MainActor required dynamic init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     let isDragging: Bool = false
 
     weak var chromeDelegate: BrowserChromeDelegate?

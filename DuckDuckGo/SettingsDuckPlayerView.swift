@@ -31,7 +31,7 @@ struct SettingsDuckPlayerView: View {
                 Image("SettingsDuckPlayerHero")
                     .padding(.top, -20) // Adjust for the image padding
 
-                Text(UserText.settingsDuckPlayerTitle)
+                Text(UserText.duckPlayerFeatureName)
                     .daxTitle3()
 
                 Text(UserText.settingsDuckPlayerInfoText)
@@ -57,7 +57,7 @@ struct SettingsDuckPlayerView: View {
                     .multilineTextAlignment(.center)
             }
         }
-        .applySettingsListModifiers(title: UserText.settingsDuckPlayerTitle,
+        .applySettingsListModifiers(title: UserText.duckPlayerFeatureName,
                                     displayMode: .inline,
                                     viewModel: viewModel)
     }

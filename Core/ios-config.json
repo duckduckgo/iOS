@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1719225510541,
+    "version": 1719853254811,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -301,6 +301,9 @@
                     "domain": "malmostadsteater.se"
                 },
                 {
+                    "domain": "hertz.co.uk"
+                },
+                {
                     "domain": "hertz.com"
                 },
                 {
@@ -353,7 +356,7 @@
                     }
                 }
             },
-            "hash": "63f99d701b33267410e99d637e3f7778"
+            "hash": "c47027bc9d235b909d868f5ffa97d3c9"
         },
         "autofill": {
             "exceptions": [
@@ -1011,6 +1014,72 @@
                     "domain": "pocketbook.digital"
                 },
                 {
+                    "domain": "vinted.at"
+                },
+                {
+                    "domain": "vinted.be"
+                },
+                {
+                    "domain": "vinted.com"
+                },
+                {
+                    "domain": "vinted.co.uk"
+                },
+                {
+                    "domain": "vinted.cz"
+                },
+                {
+                    "domain": "vinted.de"
+                },
+                {
+                    "domain": "vinted.dk"
+                },
+                {
+                    "domain": "vinted.es"
+                },
+                {
+                    "domain": "vinted.fi"
+                },
+                {
+                    "domain": "vinted.fr"
+                },
+                {
+                    "domain": "vinted.gr"
+                },
+                {
+                    "domain": "vinted.hr"
+                },
+                {
+                    "domain": "vinted.hu"
+                },
+                {
+                    "domain": "vinted.it"
+                },
+                {
+                    "domain": "vinted.lt"
+                },
+                {
+                    "domain": "vinted.lu"
+                },
+                {
+                    "domain": "vinted.nl"
+                },
+                {
+                    "domain": "vinted.pl"
+                },
+                {
+                    "domain": "vinted.pt"
+                },
+                {
+                    "domain": "vinted.ro"
+                },
+                {
+                    "domain": "vinted.se"
+                },
+                {
+                    "domain": "vinted.sk"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -1035,7 +1104,7 @@
                 }
             },
             "state": "disabled",
-            "hash": "4104bd45b436c084ff8fd0297883d40e"
+            "hash": "1d9a8170b92ba9902d28fad82713a403"
         },
         "clickToPlay": {
             "exceptions": [
@@ -1289,11 +1358,6 @@
             },
             "state": "disabled",
             "hash": "314df3f87ca501a86eb1d04db8bf7bbc"
-        },
-        "dummyWebMessageListener": {
-            "exceptions": [],
-            "state": "disabled",
-            "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
         "elementHiding": {
             "exceptions": [
@@ -2452,6 +2516,15 @@
                             {
                                 "selector": "[class*='mps-']",
                                 "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "eporner.com",
+                        "rules": [
+                            {
+                                "selector": "#admobiletop",
+                                "type": "hide"
                             }
                         ]
                     },
@@ -4486,7 +4559,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "85bebc8a4c01285c2cfb97032a0610bb"
+            "hash": "573f3bc0a0f15e5dc7d561034e7a082d"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -5239,6 +5312,11 @@
             "state": "disabled",
             "hash": "3c850040d1c9b3e06841b1491c5d2940"
         },
+        "remoteMessaging": {
+            "state": "enabled",
+            "exceptions": [],
+            "hash": "697382e31649d84b01166f1dc6f790d6"
+        },
         "requestFilterer": {
             "state": "disabled",
             "exceptions": [
@@ -5312,6 +5390,18 @@
             "exceptions": [],
             "minSupportedVersion": "7.104.0",
             "hash": "d7dca6ee484eadebb5133e3f15fd9f41"
+        },
+        "toggleReports": {
+            "state": "enabled",
+            "exceptions": [],
+            "settings": {
+                "dismissLogicEnabled": true,
+                "dismissInterval": 172800,
+                "promptLimitLogicEnabled": true,
+                "promptInterval": 172800,
+                "maxPromptCount": 3
+            },
+            "hash": "a05b4413a3745762c46ec89aa5037693"
         },
         "trackerAllowlist": {
             "state": "enabled",
@@ -8745,6 +8835,16 @@
                 ]
             },
             "hash": "25d935f0276cd0d81fc6f25811f7cb36"
+        },
+        "webViewBlobDownload": {
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
+        },
+        "windowsExternalPreviewReleases": {
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
         "windowsPermissionUsage": {
             "exceptions": [],

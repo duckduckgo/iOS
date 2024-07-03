@@ -24,18 +24,24 @@ extension OmniBar {
     struct AddressDisplayHelper {
 
         static func addressForDisplay(url: URL, showsFullURL: Bool) -> NSAttributedString {
-
+            
+            if url.isDuckPlayer,
+                let playerURL = getDuckPlayerURL(url: url, showsFullURL: showsFullURL) {
+                return playerURL
+            }
+            
             if !showsFullURL, let shortAddress = shortURLString(url) {
                 return NSAttributedString(
                     string: shortAddress,
                     attributes: [.foregroundColor: ThemeManager.shared.currentTheme.searchBarTextColor])
+                                
             } else {
                 return deemphasisePath(forUrl: url)
             }
         }
 
         static func deemphasisePath(forUrl url: URL) -> NSAttributedString {
-
+            
             let s = url.absoluteString
             let attributedString = NSMutableAttributedString(string: s)
             guard let c = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
@@ -71,6 +77,21 @@ extension OmniBar {
             }
 
             return url.host?.droppingWwwPrefix()
+        }
+        
+        private static func getDuckPlayerURL(url: URL, showsFullURL: Bool) -> NSAttributedString? {
+            if !showsFullURL {
+                return NSAttributedString(
+                    string: UserText.duckPlayerFeatureName,
+                    attributes: [.foregroundColor: ThemeManager.shared.currentTheme.searchBarTextColor])
+            } else {
+                if let (videoID, _) = url.youtubeVideoParams {
+                    return NSAttributedString(
+                        string: URL.duckPlayer(videoID).absoluteString,
+                        attributes: [.foregroundColor: ThemeManager.shared.currentTheme.searchBarTextColor])
+                }
+            }
+            return nil
         }
     }
 }

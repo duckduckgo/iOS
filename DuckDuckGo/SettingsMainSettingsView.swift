@@ -71,8 +71,8 @@ struct SettingsMainSettingsView: View {
             // Duck Player
             if viewModel.isInternalUser {
                 NavigationLink(destination: SettingsDuckPlayerView().environmentObject(viewModel)) {
-                    SettingsCellView(label: "Duck Player",
-                                     image: Image("SettingsDuckPlayer"))
+                    SettingsCellView(label: UserText.duckPlayerFeatureName,
+                                     image: Image("DuckPlayerIcon"))
                 }
             }
         }

@@ -21,10 +21,12 @@ import Foundation
 import WebKit
 import Common
 import UserScript
+import Combine
 
 final class YoutubeOverlayUserScript: NSObject, Subfeature {
         
     private var duckPlayer: DuckPlayer
+    private var userValuesCancellable = Set<AnyCancellable>()
     
     struct Constants {
         static let featureName = "duckPlayer"
@@ -32,6 +34,18 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
     
     init(duckPlayer: DuckPlayer) {
         self.duckPlayer = duckPlayer
+        super.init()
+        subscribeToDuckPlayerMode()
+    }
+    
+    // Listen to DuckPlayer Settings changed
+    private func subscribeToDuckPlayerMode() {
+        duckPlayer.$userValues
+            .dropFirst()
+            .sink { [weak self] updatedValues in
+                self?.userValuesUpdated(userValues: updatedValues)
+            }
+            .store(in: &userValuesCancellable)
     }
     
     enum MessageOrigin {
@@ -96,10 +110,9 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
     }
 
     public func userValuesUpdated(userValues: UserValues) {
-        guard let webView = webView else {
-            return assertionFailure("Could not access webView")
+        if let webView {
+            broker?.push(method: "onUserValuesChanged", params: userValues, for: self, into: webView)
         }
-        broker?.push(method: "onUserValuesChanged", params: userValues, for: self, into: webView)
     }
 
     // MARK: - Private Methods
@@ -123,6 +136,10 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
     struct UserValuesNotification: Encodable {
         let userValuesNotification: UserValues
     }
+    
+    deinit {
+        userValuesCancellable.removeAll()
+    }
 }
 
 extension YoutubeOverlayUserScript {
@@ -131,8 +148,8 @@ extension YoutubeOverlayUserScript {
         guard let body = message.messageBody as? [String: Any], let parameters = body["params"] as? [String: Any] else {
             return nil
         }
-        let pixelName = parameters["pixelName"] as? String
-        
+        // let pixelName = parameters["pixelName"] as? String
+        // To be implemented at a later point
 
         return nil
     }

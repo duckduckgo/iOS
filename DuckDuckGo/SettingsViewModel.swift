@@ -251,7 +251,9 @@ final class SettingsViewModel: ObservableObject {
 
     var duckPlayerModeBinding: Binding<DuckPlayerMode> {
         Binding<DuckPlayerMode>(
-            get: { self.state.duckPlayerMode ?? .alwaysAsk },
+            get: {
+                return self.state.duckPlayerMode ?? .alwaysAsk
+            },
             set: {
                 self.appSettings.duckPlayerMode = $0
                 self.state.duckPlayerMode = $0

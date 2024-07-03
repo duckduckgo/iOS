@@ -34,6 +34,7 @@ import WidgetKit
 // Initial implementation for initial Network Protection tests. Will be fleshed out with https://app.asana.com/0/1203137811378537/1204630829332227/f
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
+    private static var vpnLogger = VPNLogger()
     private var cancellables = Set<AnyCancellable>()
     private let accountManager: AccountManager
 
@@ -48,6 +49,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                             withAdditionalParameters: [PixelParameters.vpnCohort: UniquePixel.cohort(from: defaults.vpnFirstEnabled)],
                             includedParameters: [.appVersion, .atb])
         case .reportConnectionAttempt(attempt: let attempt):
+            vpnLogger.log(attempt)
+
             switch attempt {
             case .connecting:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptConnecting,
@@ -63,6 +66,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                                              includedParameters: [.appVersion, .atb])
             }
         case .reportTunnelFailure(result: let result):
+            vpnLogger.log(result)
+
             switch result {
             case .failureDetected:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelFailureDetected, includedParameters: [.appVersion, .atb])
@@ -72,6 +77,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 defaults.updateNetworkPath(with: newPath)
             }
         case .reportLatency(result: let result):
+            vpnLogger.log(result)
+
             switch result {
             case .error:
                 DailyPixel.fire(pixel: .networkProtectionLatencyError, includedParameters: [.appVersion, .atb])
@@ -80,6 +87,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionLatency(quality: quality), includedParameters: [.appVersion, .atb])
             }
         case .rekeyAttempt(let step):
+            vpnLogger.log(step, named: "Rekey")
+
             switch step {
             case .begin:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionRekeyAttempt)
@@ -89,6 +98,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionRekeyCompleted)
             }
         case .tunnelStartAttempt(let step):
+            vpnLogger.log(step, named: "Tunnel Start")
+
             switch step {
             case .begin:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartAttempt)
@@ -98,6 +109,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartSuccess)
             }
         case .tunnelStopAttempt(let step):
+            vpnLogger.log(step, named: "Tunnel Stop")
+
             switch step {
             case .begin:
                 Pixel.fire(pixel: .networkProtectionTunnelStopAttempt)
@@ -107,6 +120,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStopSuccess)
             }
         case .tunnelUpdateAttempt(let step):
+            vpnLogger.log(step, named: "Tunnel Update")
+
             switch step {
             case .begin:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelUpdateAttempt)
@@ -116,6 +131,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelUpdateSuccess)
             }
         case .tunnelWakeAttempt(let step):
+            vpnLogger.log(step, named: "Tunnel Wake")
+
             switch step {
             case .begin:
                 Pixel.fire(pixel: .networkProtectionTunnelWakeAttempt)
@@ -125,6 +142,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelWakeSuccess)
             }
         case .failureRecoveryAttempt(let step):
+            vpnLogger.log(step)
+
             switch step {
             case .started:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailureRecoveryStarted)
@@ -136,6 +155,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailureRecoveryFailed, error: error)
             }
         case .serverMigrationAttempt(let step):
+            vpnLogger.log(step, named: "Server Migration")
+
             switch step {
             case .begin:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionServerMigrationAttempt)
@@ -145,6 +166,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionServerMigrationAttemptSuccess)
             }
         case .tunnelStartOnDemandWithoutAccessToken:
+            vpnLogger.logStartingWithoutAuthToken()
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartAttemptOnDemandWithoutAccessToken)
         }
     }
@@ -391,5 +413,5 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 }
 
 // swiftlint:enable type_body_length
-
+// swiftlint:disable:next file_length
 #endif

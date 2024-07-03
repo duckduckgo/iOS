@@ -440,6 +440,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             present(alertController, animated: true)
         } else if bookmark.isFolder {
             delete()
+            completion(true)
         } else {
             showBookmarkDeletedMessage(bookmark)
             delete()

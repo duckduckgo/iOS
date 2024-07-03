@@ -25,14 +25,14 @@ import Combine
 
 final class YoutubeOverlayUserScript: NSObject, Subfeature {
         
-    private var duckPlayer: DuckPlayer
-    private var userValuesCancellable = Set<AnyCancellable>()
+    var duckPlayer: DuckPlayerProtocol
+    private var cancellables = Set<AnyCancellable>()
     
     struct Constants {
         static let featureName = "duckPlayer"
     }
     
-    init(duckPlayer: DuckPlayer) {
+    init(duckPlayer: DuckPlayerProtocol) {
         self.duckPlayer = duckPlayer
         super.init()
         subscribeToDuckPlayerMode()
@@ -40,12 +40,11 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
     
     // Listen to DuckPlayer Settings changed
     private func subscribeToDuckPlayerMode() {
-        duckPlayer.$userValues
-            .dropFirst()
-            .sink { [weak self] updatedValues in
-                self?.userValuesUpdated(userValues: updatedValues)
+        duckPlayer.settings.duckPlayerSettingsPublisher
+            .sink { [weak self] in
+                self?.handleSettingsChange()
             }
-            .store(in: &userValuesCancellable)
+            .store(in: &cancellables)
     }
     
     enum MessageOrigin {
@@ -131,23 +130,22 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
         return nil
     }
 
-    // MARK: - UserValuesNotification
-
-    struct UserValuesNotification: Encodable {
-        let userValuesNotification: UserValues
+    private func handleSettingsChange() {
+        let values = UserValues(duckPlayerMode: duckPlayer.settings.mode, askModeOverlayHidden: duckPlayer.settings.askModeOverlayHidden)
+        userValuesUpdated(userValues: values)
     }
     
     deinit {
-        userValuesCancellable.removeAll()
+        cancellables.removeAll()
     }
 }
 
 extension YoutubeOverlayUserScript {
     @MainActor
     func handleSendJSPixel(params: Any, message: UserScriptMessage) -> Encodable? {
-        guard let body = message.messageBody as? [String: Any], let parameters = body["params"] as? [String: Any] else {
-            return nil
-        }
+        // guard let body = message.messageBody as? [String: Any], let parameters = body["params"] as? [String: Any] else {
+        //    return nil
+        // }
         // let pixelName = parameters["pixelName"] as? String
         // To be implemented at a later point
 

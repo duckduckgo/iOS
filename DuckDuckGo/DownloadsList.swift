@@ -24,7 +24,7 @@ struct DownloadsList: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: DownloadsListViewModel
     @State var editMode: EditMode = .inactive
-    @State private var selectedRowModelToCancel: OngoingDownloadRowViewModel? = nil
+    @State private var selectedRowModelToCancel: OngoingDownloadRowViewModel?
 
     var body: some View {
         NavigationView {

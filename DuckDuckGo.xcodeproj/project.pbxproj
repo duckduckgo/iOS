@@ -779,6 +779,7 @@
 		CBEFB9142AE0844700DEDE7B /* CriticalAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEFB9102ADFFE7900DEDE7B /* CriticalAlerts.swift */; };
 		CBFCB30E2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFCB30D2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift */; };
 		D60170BD2BA34CE8001911B5 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60170BB2BA32DD6001911B5 /* Subscription.swift */; };
+		D6037E692C32F2E7009AAEC0 /* DuckPlayerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6037E682C32F2E7009AAEC0 /* DuckPlayerSettings.swift */; };
 		D60B1F272B9DDE5A00AE4760 /* SubscriptionGoogleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60B1F262B9DDE5A00AE4760 /* SubscriptionGoogleView.swift */; };
 		D61CDA162B7CF77300A0FBB9 /* Subscription in Frameworks */ = {isa = PBXBuildFile; productRef = D61CDA152B7CF77300A0FBB9 /* Subscription */; };
 		D61CDA182B7CF78300A0FBB9 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = D61CDA172B7CF78300A0FBB9 /* ZIPFoundation */; };
@@ -823,6 +824,7 @@
 		D68DF81E2B5830380023DBEA /* SubscriptionRestoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68DF81D2B5830380023DBEA /* SubscriptionRestoreViewModel.swift */; };
 		D69FBF762B28BE3600B505F1 /* SettingsSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69FBF752B28BE3600B505F1 /* SettingsSubscriptionView.swift */; };
 		D6ACEA322BBD55BF008FADDF /* TabURLInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6ACEA312BBD55BF008FADDF /* TabURLInterceptor.swift */; };
+		D6B67A122C332B6E002122EB /* DuckPlayerMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B67A112C332B6E002122EB /* DuckPlayerMocks.swift */; };
 		D6BFCB5F2B7524AA0051FF81 /* SubscriptionPIRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BFCB5E2B7524AA0051FF81 /* SubscriptionPIRView.swift */; };
 		D6BFCB612B7525160051FF81 /* SubscriptionPIRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BFCB602B7525160051FF81 /* SubscriptionPIRViewModel.swift */; };
 		D6D95CE32B6D9F8800960317 /* AsyncHeadlessWebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D95CE22B6D9F8800960317 /* AsyncHeadlessWebViewModel.swift */; };
@@ -2431,6 +2433,7 @@
 		CBF14FC627970C8A001D94D0 /* HomeMessageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBFCB30D2B2CD47800253E9E /* ConfigurationURLDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationURLDebugViewController.swift; sourceTree = "<group>"; };
 		D60170BB2BA32DD6001911B5 /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
+		D6037E682C32F2E7009AAEC0 /* DuckPlayerSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckPlayerSettings.swift; sourceTree = "<group>"; };
 		D60B1F262B9DDE5A00AE4760 /* SubscriptionGoogleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionGoogleView.swift; sourceTree = "<group>"; };
 		D625AAEA2BBEEFC900BC189A /* TabURLInterceptorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabURLInterceptorTests.swift; sourceTree = "<group>"; };
 		D62EC3B82C246A5600FC9D04 /* YoutublePlayerNavigationHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutublePlayerNavigationHandlerTests.swift; sourceTree = "<group>"; };
@@ -2472,6 +2475,7 @@
 		D68DF81D2B5830380023DBEA /* SubscriptionRestoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionRestoreViewModel.swift; sourceTree = "<group>"; };
 		D69FBF752B28BE3600B505F1 /* SettingsSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSubscriptionView.swift; sourceTree = "<group>"; };
 		D6ACEA312BBD55BF008FADDF /* TabURLInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabURLInterceptor.swift; sourceTree = "<group>"; };
+		D6B67A112C332B6E002122EB /* DuckPlayerMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckPlayerMocks.swift; sourceTree = "<group>"; };
 		D6BFCB5E2B7524AA0051FF81 /* SubscriptionPIRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPIRView.swift; sourceTree = "<group>"; };
 		D6BFCB602B7525160051FF81 /* SubscriptionPIRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPIRViewModel.swift; sourceTree = "<group>"; };
 		D6D95CE22B6D9F8800960317 /* AsyncHeadlessWebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncHeadlessWebViewModel.swift; sourceTree = "<group>"; };
@@ -4544,8 +4548,9 @@
 		D62EC3B72C24695800FC9D04 /* DuckPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				D62EC3B82C246A5600FC9D04 /* YoutublePlayerNavigationHandlerTests.swift */,
+				D6B67A112C332B6E002122EB /* DuckPlayerMocks.swift */,
 				D62EC3BB2C2470E000FC9D04 /* DuckPlayerTests.swift */,
+				D62EC3B82C246A5600FC9D04 /* YoutublePlayerNavigationHandlerTests.swift */,
 				D62EC3BD2C24710F00FC9D04 /* DuckPlayerURLExtensionTests.swift */,
 			);
 			name = DuckPlayer;
@@ -4557,6 +4562,7 @@
 				31DE43C82C2DAA8F00F8C51F /* Modal */,
 				31DE43C72C2DAA7F00F8C51F /* Resources */,
 				D63FF8972C1B6A45006DE24D /* DuckPlayer.swift */,
+				D6037E682C32F2E7009AAEC0 /* DuckPlayerSettings.swift */,
 				D62EC3C12C248AF800FC9D04 /* DuckNavigationHandling.swift */,
 				D63FF8892C1B21C2006DE24D /* YouTubePlayerNavigationHandler.swift */,
 				D63FF88B2C1B21ED006DE24D /* DuckPlayerURLExtension.swift */,
@@ -6683,6 +6689,7 @@
 				8528AE7C212EF4A200D0BD74 /* AppRatingPrompt.swift in Sources */,
 				BD2F39EB2C19F955005B19E7 /* NetworkProtectionDNSSettingsView.swift in Sources */,
 				CB2A7EEF283D185100885F67 /* RulesCompilationMonitor.swift in Sources */,
+				D6037E692C32F2E7009AAEC0 /* DuckPlayerSettings.swift in Sources */,
 				1DEAADF22BA4716C00E25A97 /* SettingsStatus.swift in Sources */,
 				C18ED43C2AB8364400BF3805 /* FileTextPreviewDebugViewController.swift in Sources */,
 				1EEF12502851016B003DDE57 /* PrivacyIconAndTrackersAnimator.swift in Sources */,
@@ -7107,6 +7114,7 @@
 				8536A1CA209AF6490050739E /* HomeRowReminderTests.swift in Sources */,
 				851DFD8A212C5EE800D95F20 /* TabSwitcherButtonTests.swift in Sources */,
 				98983096255B5019003339A2 /* BookmarksCachingSearchTests.swift in Sources */,
+				D6B67A122C332B6E002122EB /* DuckPlayerMocks.swift in Sources */,
 				EE7917912A83DE93008DFF28 /* CombineTestUtilities.swift in Sources */,
 				8540BD5223D8C2220057FDD2 /* PreserveLoginsTests.swift in Sources */,
 				85F200072217032E006BB258 /* AddressDisplayHelperTests.swift in Sources */,

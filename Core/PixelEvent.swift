@@ -714,6 +714,12 @@ extension Pixel {
         case reportBrokenSiteSkipToggleStep
         case reportBrokenSiteToggleProtectionOff
 
+        // MARK: New Tab Page baseline engagement
+        case addFavoriteDaily
+        case addBookmarkDaily
+        case favoriteLaunchedNTPDaily
+        case bookmarkLaunchedDaily
+        case newTabPageDisplayedDaily
     }
 
 }
@@ -1416,6 +1422,13 @@ extension Pixel.Event {
         case .reportBrokenSiteTogglePromptYes: return "m_report-broken-site_toggle-prompt-yes"
         case .reportBrokenSiteSkipToggleStep: return "m_report-broken-site_skip-toggle-step"
         case .reportBrokenSiteToggleProtectionOff: return "m_report-broken-site_toggle-protection-off"
+
+        // MARK: New Tab Page baseline engagement
+        case .addFavoriteDaily: return "m_add_favorite_daily"
+        case .addBookmarkDaily: return "m_add_bookmark_daily"
+        case .favoriteLaunchedNTPDaily: return "m_favorite_launched_ntp_daily"
+        case .bookmarkLaunchedDaily: return "m_bookmark_launched_daily"
+        case .newTabPageDisplayedDaily: return "m_new_tab_page_displayed_daily"
         }
     }
 }

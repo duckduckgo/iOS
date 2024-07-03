@@ -36,7 +36,7 @@ struct NewTabPageGridView<Content: View>: View {
     }
 
     private func flexibleColumns(_ count: Int) -> [GridItem] {
-        Array(repeating: GridItem(.flexible(minimum: NewTabPageGrid.Item.edgeSize)), count: count)
+        Array(repeating: GridItem(.flexible(minimum: NewTabPageGrid.Item.edgeSize), alignment: .top), count: count)
     }
 }
 

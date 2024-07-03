@@ -37,7 +37,6 @@ final class HomePageDisplayDailyPixelBucketTests: XCTestCase {
             for count in range.key {
                 let bucket = HomePageDisplayDailyPixelBucket(favoritesCount: count)
 
-                print("\(count): \(range.value)")
                 XCTAssertEqual(bucket.value, range.value)
             }
         }

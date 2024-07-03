@@ -211,7 +211,7 @@ class HomeViewController: UIViewController, NewTabPage {
         guard presentedViewController?.isBeingDismissed ?? true else { return }
 
         Pixel.fire(pixel: .homeScreenShown)
-        sendDailyOpenPixel()
+        sendDailyDisplayPixel()
         
         showNextDaxDialog()
         
@@ -322,7 +322,7 @@ class HomeViewController: UIViewController, NewTabPage {
 }
 
 private extension HomeViewController {
-    func sendDailyOpenPixel() {
+    func sendDailyDisplayPixel() {
 
         let favoritesCount = favoritesViewModel.favorites.count
         let bucket = HomePageDisplayDailyPixelBucket(favoritesCount: favoritesCount)

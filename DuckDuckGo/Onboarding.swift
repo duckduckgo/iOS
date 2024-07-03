@@ -21,7 +21,7 @@ import Foundation
 import Core
 import UserNotifications
 
-protocol Onboarding {
+protocol Onboarding: UIViewController {
     
     var delegate: OnboardingDelegate? { get set }
     

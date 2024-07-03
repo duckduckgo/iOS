@@ -158,7 +158,7 @@ import WebKit
 
             // Async dispatch because rootViewController may otherwise be nil here
             DispatchQueue.main.async {
-                 guard let viewController = self.window?.rootViewController else { return }
+                guard let viewController = self.window?.rootViewController else { return }
 
                 let crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
                 crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: payloads, from: viewController, sendReport: sendReport)

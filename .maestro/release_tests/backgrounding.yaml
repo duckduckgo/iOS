@@ -63,6 +63,7 @@ tags:
 - tapOn: "Cancel"
 - tapOn: "Settings"
 - assertVisible: "Default Browser"
+- tapOn: "Done"
 
 - assertVisible: "Bookmarks"
 - tapOn: "Bookmarks"

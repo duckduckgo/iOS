@@ -87,6 +87,32 @@ struct FireButtonDialog: View {
     }
 }
 
+struct FirstSearchDoneDialog: View {
+
+    @State var showNextScreen: Bool = false
+    @State var shouldFollowUp: Bool
+    let listAction: (_ index: Int) -> Void
+    let message = [NSAttributedString(string: "That’s DuckDuckGo Search. Private. Fast. Fewer ads.")]
+    let cta = "Got it!"
+    let gotItAction: () -> Void
+
+    var body: some View {
+        if showNextScreen {
+            OnboardingTryVisitingSiteDialog(logoPosition: .left, action: listAction)
+        } else {
+            ContextualDaxDialog(
+                message: message,
+                cta: cta) {
+                    if shouldFollowUp {
+                        showNextScreen = true
+                    } else {
+                        gotItAction()
+                    }
+            }
+        }
+    }
+}
+
 
 #Preview("Try Search") {
     OnboardingTrySearchDialog(action: { _ in })
@@ -103,8 +129,13 @@ struct FireButtonDialog: View {
         .padding()
 }
 
-#Preview("Try Site Left") {
+#Preview("Try Fire Button") {
     FireButtonDialog()
+        .padding()
+}
+
+#Preview("First Search Dialog") {
+    FirstSearchDoneDialog(shouldFollowUp: true, listAction: {_ in }, gotItAction: {})
         .padding()
 }
 

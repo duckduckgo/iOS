@@ -18,13 +18,108 @@
 //
 
 import SwiftUI
+import DuckUI
+import RemoteMessaging
 
 struct NewTabPageView: View {
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+
+    @ObservedObject var messagesModel: NewTabPageMessagesModel
+    @ObservedObject var favoritesModel: FavoritesModel
+
+    init(messagesModel: NewTabPageMessagesModel, favoritesModel: FavoritesModel) {
+        self.messagesModel = messagesModel
+        self.favoritesModel = favoritesModel
+
+        self.messagesModel.load()
+    }
+
     var body: some View {
-        Text("Empty")
+        ScrollView {
+            VStack {
+                // MARK: Messages
+                ForEach(messagesModel.homeMessageViewModels, id: \.messageId) { messageModel in
+                    HomeMessageView(viewModel: messageModel)
+                        .frame(maxWidth: horizontalSizeClass == .regular ? Constant.messageMaximumWidthPad : Constant.messageMaximumWidth)
+                        .padding(16)
+                }
+
+                // MARK: Favorites
+                if favoritesModel.isEmpty {
+                    FavoritesEmptyStateView()
+                        .padding(Constant.sectionPadding)
+                } else {
+                    FavoritesView(model: favoritesModel)
+                        .padding(Constant.sectionPadding)
+                }
+
+                // MARK: Shortcuts
+                ShortcutsView()
+                    .padding(Constant.sectionPadding)
+
+                // MARK: Customize
+                Button(action: {
+                    // Temporary action for testing purposes
+                    favoritesModel.toggleFavoritesPresence()
+                }, label: {
+                    NewTabPageCustomizeButtonView()
+                }).buttonStyle(SecondaryFillButtonStyle(compact: true, fullWidth: false))
+                    .padding(EdgeInsets(top: 88, leading: 0, bottom: 16, trailing: 0))
+            }
+        }
+        .background(Color(designSystemColor: .background))
+    }
+
+    private struct Constant {
+        static let sectionPadding = EdgeInsets(top: 16, leading: 24, bottom: 16, trailing: 24)
+
+        static let messageMaximumWidth: CGFloat = 380
+        static let messageMaximumWidthPad: CGFloat = 455
     }
 }
 
-#Preview {
-    NewTabPageView()
+// MARK: - Preview
+
+#Preview("Regular") {
+    NewTabPageView(messagesModel: NewTabPageMessagesModel(), favoritesModel: FavoritesModel())
+}
+
+#Preview("With message") {
+    NewTabPageView(
+        messagesModel: NewTabPageMessagesModel(
+            homePageMessagesConfiguration: PreviewMessagesConfiguration(
+                homeMessages: [
+                    HomeMessage.remoteMessage(
+                        remoteMessage: RemoteMessageModel(
+                            id: "0",
+                            content: .small(titleText: "Title", descriptionText: "Description"),
+                            matchingRules: [],
+                            exclusionRules: []
+                        )
+                    )
+                ]
+            )
+        ),
+        favoritesModel: FavoritesModel()
+    )
+}
+
+private final class PreviewMessagesConfiguration: HomePageMessagesConfiguration {
+    private(set) var homeMessages: [HomeMessage]
+
+    init(homeMessages: [HomeMessage]) {
+        self.homeMessages = homeMessages
+    }
+
+    func refresh() {
+
+    }
+
+    func didAppear(_ homeMessage: HomeMessage) {
+        // no-op
+    }
+
+    func dismissHomeMessage(_ homeMessage: HomeMessage) {
+        homeMessages = homeMessages.dropLast()
+    }
 }

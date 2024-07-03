@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "anh/netp/sanitize-location-selection",
-        "revision" : "5563a1db7e73f186d166bc7d16d511c48f36ed9a"
+        "revision" : "b8e61b76598bf1bfe819b299bf084f2da28827d9"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "4689746e42b24c40c18896d697ea02b854e90d35",
-        "version" : "5.21.0"
+        "revision" : "7ac68ae3bc052fa59adbc1ba8fd5cb5849a6bc99",
+        "version" : "5.25.0"
       }
     },
     {

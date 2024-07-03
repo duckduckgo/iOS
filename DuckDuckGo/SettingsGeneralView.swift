@@ -39,7 +39,7 @@ struct SettingsGeneralView: View {
                     footer: Text(UserText.settingsAutocompleteSubtitle)) {
                 // Autocomplete Suggestions
                 SettingsCellView(label: UserText.settingsAutocompleteLabel,
-                                 accesory: .toggle(isOn: viewModel.autocompleteBinding))
+                                 accesory: .toggle(isOn: viewModel.autocompleteGeneralBinding))
             }
 
             if viewModel.shouldShowRecentlyVisitedSites {

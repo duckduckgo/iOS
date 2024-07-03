@@ -24,7 +24,7 @@ import Common
 import Core
 import Bookmarks
 
-final class HomePageConfiguration {
+final class HomePageConfiguration: HomePageMessagesConfiguration {
     
     enum Component: Equatable {
         case navigationBarSearch(fixed: Bool)

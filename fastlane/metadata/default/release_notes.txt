@@ -1,3 +1,5 @@
-Bug fixes and other improvements.
+- Bug fixes and other improvements.
 
-Join our fully distributed team and help raise the standard of trust online! https://duckduckgo.com/hiring
+For Privacy Pro subscribers:
+- You can now specify a custom DNS server under VPN Settings to route your DNS queries through while the VPN is active.
+

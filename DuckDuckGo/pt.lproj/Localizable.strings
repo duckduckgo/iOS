@@ -245,7 +245,7 @@
 "autocomplete.history.search.duckduckgo" = "Pesquisar no DuckDuckGo";
 
 /* The message text shown in suggestions */
-"autocomplete.history.warning.message" = "As sugestões incluem agora sites visitados recentemente. Estes são armazenados no teu dispositivo e nunca nos servidores da DuckDuckGo. Desativa esta funcionalidade nas definições ou apaga os sites guardados em qualquer altura com o 🔥 Fire Button.";
+"autocomplete.history.warning.message" = "Agora, as sugestões de pesquisa incluem os sites visitados recentemente. Desativa esta funcionalidade nas definições ou limpa os sites guardados em qualquer altura com o 🔥 Fire Button.";
 
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "A mesma privacidade.\nMelhores sugestões de pesquisa!";
@@ -1799,10 +1799,16 @@
 "settings.associated.apps.description" = "Desative para prevenir que ligações sejam abertas automaticamente noutras aplicações instaladas.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Mostrar sugestões de preenchimento automático";
+"settings.autocomplete" = "Sugestões de pesquisa";
 
 /* Settings label for enabling or disabling recently visited sites */
 "settings.autocomplete.recentlyvisited" = "Sites visitados recentemente";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Mostrar sites visitados recentemente nas sugestões de pesquisa. Os sites visitados recentemente são privados, guardados apenas no teu dispositivo e podem ser apagados com o Fire Button.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Mostra sugestões de pesquisa enquanto escreves, incluindo os teus marcadores. Todas as pesquisas são privadas.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Bloqueio de aplicações";

@@ -31,6 +31,7 @@ import Subscription
 import NetworkProtection
 #endif
 
+// swiftlint:disable type_body_length
 final class SettingsViewModel: ObservableObject {
 
     // Dependencies
@@ -154,13 +155,36 @@ final class SettingsViewModel: ObservableObject {
         )
     }
 
-    var autocompleteBinding: Binding<Bool> {
+    var autocompleteGeneralBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.autocomplete },
             set: {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
                 self.updateRecentlyVisitedSitesVisibility()
+                
+                if $0 {
+                    Pixel.fire(pixel: .settingsGeneralAutocompleteOn)
+                } else {
+                    Pixel.fire(pixel: .settingsGeneralAutocompleteOff)
+                }
+            }
+        )
+    }
+
+    var autocompletePrivateSearchBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.autocomplete },
+            set: {
+                self.appSettings.autocomplete = $0
+                self.state.autocomplete = $0
+                self.updateRecentlyVisitedSitesVisibility()
+
+                if $0 {
+                    Pixel.fire(pixel: .settingsPrivateSearchAutocompleteOn)
+                } else {
+                    Pixel.fire(pixel: .settingsPrivateSearchAutocompleteOff)
+                }
             }
         )
     }
@@ -227,7 +251,9 @@ final class SettingsViewModel: ObservableObject {
 
     var duckPlayerModeBinding: Binding<DuckPlayerMode> {
         Binding<DuckPlayerMode>(
-            get: { self.state.duckPlayerMode ?? .alwaysAsk },
+            get: {
+                return self.state.duckPlayerMode ?? .alwaysAsk
+            },
             set: {
                 self.appSettings.duckPlayerMode = $0
                 self.state.duckPlayerMode = $0
@@ -321,6 +347,7 @@ final class SettingsViewModel: ObservableObject {
         subscriptionSignOutObserver = nil
     }
 }
+// swiftlint:enable type_body_length
 
 // MARK: Private methods
 extension SettingsViewModel {
@@ -584,7 +611,6 @@ extension SettingsViewModel {
         case dbp
         case itr
         case subscriptionFlow(origin: String? = nil)
-        case subscriptionRestoreFlow
         // Add other cases as needed
 
         var id: String {
@@ -593,7 +619,6 @@ extension SettingsViewModel {
             case .dbp: return "dbp"
             case .itr: return "itr"
             case .subscriptionFlow: return "subscriptionFlow"
-            case .subscriptionRestoreFlow: return "subscriptionRestoreFlow"
             // Ensure all cases are covered
             }
         }

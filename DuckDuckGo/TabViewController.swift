@@ -348,9 +348,8 @@ class TabViewController: UIViewController {
         decorate()
         addTextSizeObserver()
         subscribeToEmailProtectionSignOutNotification()
-
         registerForDownloadsNotifications()
-
+        
         if #available(iOS 16.4, *) {
             registerForInspectableWebViewNotifications()
         }
@@ -359,7 +358,13 @@ class TabViewController: UIViewController {
         observeNetPConnectionStatusChanges()
 #endif
     }
-
+    
+    private func configureDuckPlayerUserScripts() {
+        userScripts?.youtubeOverlayScript?.webView = webView
+        userScripts?.youtubePlayerUserScript?.webView = webView
+    }
+    
+    
     @available(iOS 16.4, *)
     private func registerForInspectableWebViewNotifications() {
         NotificationCenter.default.addObserver(self,
@@ -660,7 +665,7 @@ class TabViewController: UIViewController {
                 let url,
                 url.isYoutubeVideo,
                 appSettings.duckPlayerMode == .enabled {
-                handler.handleRedirect(url: url, webView: webView)
+                handler.handleURLChange(url: url, webView: webView)
             }
         }
     }
@@ -713,7 +718,11 @@ class TabViewController: UIViewController {
     public func reload() {
         updateContentMode()
         cachedRuntimeConfigurationForDomain = [:]
-        webView.reload()
+        if let url = webView.url, url.isDuckPlayer, let handler = youtubeNavigationHandler {
+            handler.handleReload(webView: webView)
+        } else {
+            webView.reload()
+        }
         privacyDashboard?.dismiss(animated: true)
     }
     
@@ -724,23 +733,30 @@ class TabViewController: UIViewController {
     func goBack() {
         dismissJSAlertIfNeeded()
         
-        if let handler = youtubeNavigationHandler {
-            handler.goBack(webView: webView)
+        if let url = url, url.isDuckPlayer, let handler = youtubeNavigationHandler {
+            handler.handleGoBack(webView: webView)
             chromeDelegate?.omniBar.resignFirstResponder()
-        } else {
-            if isError {
-                hideErrorMessage()
-                url = webView.url
-                onWebpageDidStartLoading(httpsForced: false)
-                onWebpageDidFinishLoading()
-            } else if webView.canGoBack {
-                webView.goBack()
-                chromeDelegate?.omniBar.resignFirstResponder()
-            } else if openingTab != nil {
-                delegate?.tabDidRequestClose(self)
-            }
+            return
         }
 
+        if isError {
+            hideErrorMessage()
+            url = webView.url
+            onWebpageDidStartLoading(httpsForced: false)
+            onWebpageDidFinishLoading()
+            return
+        }
+
+        if webView.canGoBack {
+            webView.goBack()
+            chromeDelegate?.omniBar.resignFirstResponder()
+            return
+        }
+
+        if openingTab != nil {
+            delegate?.tabDidRequestClose(self)
+        }
+        
     }
     
     func goForward() {
@@ -1640,7 +1656,7 @@ extension TabViewController: WKNavigationDelegate {
         if let handler = youtubeNavigationHandler,
             url.isYoutubeVideo,
             appSettings.duckPlayerMode == .enabled {
-            handler.handleRedirect(navigationAction, completion: completion, webView: webView)
+            handler.handleDecidePolicyFor(navigationAction, completion: completion, webView: webView)
             return
         }
         
@@ -2309,12 +2325,14 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
         userScripts.loginFormDetectionScript?.delegate = self
         userScripts.autoconsentUserScript.delegate = self
-
+        userScripts.youtubeOverlayScript?.webView = webView
+        userScripts.youtubePlayerUserScript?.webView = webView
+        
         performanceMetrics = PerformanceMetricsSubfeature(targetWebview: webView)
         userScripts.contentScopeUserScriptIsolated.registerSubfeature(delegate: performanceMetrics!)
 
         adClickAttributionLogic.onRulesChanged(latestRules: ContentBlocking.shared.contentBlockingManager.currentRules)
-
+        
         let tdsKey = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
         let notificationsTriggeringReload = [
             PreserveLogins.Notifications.loginDetectionStateChanged,

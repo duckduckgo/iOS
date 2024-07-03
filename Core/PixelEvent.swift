@@ -313,6 +313,7 @@ extension Pixel {
         case networkProtectionControllerStartFailure
 
         case networkProtectionTunnelStartAttempt
+        case networkProtectionTunnelStartAttemptOnDemandWithoutAccessToken
         case networkProtectionTunnelStartSuccess
         case networkProtectionTunnelStartFailure
 
@@ -338,7 +339,7 @@ extension Pixel {
 
         case networkProtectionTunnelFailureDetected
         case networkProtectionTunnelFailureRecovered
-        
+
         case networkProtectionLatency(quality: NetworkProtectionLatencyMonitor.ConnectionQuality)
         case networkProtectionLatencyError
         
@@ -414,6 +415,9 @@ extension Pixel {
 
         case networkProtectionDNSUpdateCustom
         case networkProtectionDNSUpdateDefault
+
+        case networkProtectionVPNConfigurationRemoved
+        case networkProtectionVPNConfigurationRemovalFailed
 
         // MARK: remote messaging pixels
         
@@ -504,7 +508,10 @@ extension Pixel {
         case debugBookmarksStructureLost
         case debugBookmarksInvalidRoots
         case debugBookmarksValidationFailed
-        
+
+        case debugBookmarksPendingDeletionFixed
+        case debugBookmarksPendingDeletionRepairError
+
         case debugCannotClearObservationsDatabase
         case debugWebsiteDataStoresNotClearedMultiple
         case debugWebsiteDataStoresNotClearedOne
@@ -643,7 +650,6 @@ extension Pixel {
         case privacyProRestoreAfterPurchaseAttempt
         case privacyProSubscriptionActivated
         case privacyProWelcomeAddDevice
-        case privacyProSettingsAddDevice
         case privacyProAddDeviceEnterEmail
         case privacyProWelcomeVPN
         case privacyProWelcomePersonalInformationRemoval
@@ -667,12 +673,12 @@ extension Pixel {
         case settingsWebTrackingProtectionOpen
         case settingsGpcOn
         case settingsGpcOff
-        case settingsAutocompleteOn
-        case settingsAutocompleteOff
-        case settingsRecentlyVisitedOn
-        case settingsRecentlyVisitedOff
         case settingsGeneralAutocompleteOn
         case settingsGeneralAutocompleteOff
+        case settingsPrivateSearchAutocompleteOn
+        case settingsPrivateSearchAutocompleteOff
+        case settingsRecentlyVisitedOn
+        case settingsRecentlyVisitedOff
         case settingsAddressBarSelectorPressed
         case settingsAccessibilityOpen
         case settingsAccessiblityTextSize
@@ -1020,6 +1026,7 @@ extension Pixel.Event {
         case .networkProtectionControllerStartSuccess: return "m_netp_controller_start_success"
         case .networkProtectionControllerStartFailure: return "m_netp_controller_start_failure"
         case .networkProtectionTunnelStartAttempt: return "m_netp_tunnel_start_attempt"
+        case .networkProtectionTunnelStartAttemptOnDemandWithoutAccessToken: return "m_netp_tunnel_start_attempt_on_demand_without_access_token"
         case .networkProtectionTunnelStartSuccess: return "m_netp_tunnel_start_success"
         case .networkProtectionTunnelStartFailure: return "m_netp_tunnel_start_failure"
         case .networkProtectionTunnelStopAttempt: return "m_netp_tunnel_stop_attempt"
@@ -1097,6 +1104,9 @@ extension Pixel.Event {
 
         case .networkProtectionDNSUpdateCustom: return "m_netp_ev_update_dns_custom"
         case .networkProtectionDNSUpdateDefault: return "m_netp_ev_update_dns_default"
+
+        case .networkProtectionVPNConfigurationRemoved: return "m_netp_vpn_configuration_removed"
+        case .networkProtectionVPNConfigurationRemovalFailed: return "m_netp_vpn_configuration_removal_failed"
 
             // MARK: remote messaging pixels
             
@@ -1182,6 +1192,9 @@ extension Pixel.Event {
         case .debugBookmarksStructureLost: return "m_d_bookmarks_structure_lost"
         case .debugBookmarksInvalidRoots: return "m_d_bookmarks_invalid_roots"
         case .debugBookmarksValidationFailed: return "m_d_bookmarks_validation_failed"
+
+        case .debugBookmarksPendingDeletionFixed: return "m_debug_bookmarks_pending_deletion_fixed"
+        case .debugBookmarksPendingDeletionRepairError: return "m_debug_bookmarks_pending_deletion_repair_error"
 
         case .debugCannotClearObservationsDatabase: return "m_d_cannot_clear_observations_database"
         case .debugWebsiteDataStoresNotClearedMultiple: return "m_d_wkwebsitedatastoresnotcleared_multiple"
@@ -1340,7 +1353,6 @@ extension Pixel.Event {
         case .privacyProRestoreAfterPurchaseAttempt: return "m_privacy-pro_app_subscription-restore-after-purchase-attempt_success"
         case .privacyProSubscriptionActivated: return "m_privacy-pro_app_subscription_activated_u"
         case .privacyProWelcomeAddDevice: return "m_privacy-pro_welcome_add-device_click_u"
-        case .privacyProSettingsAddDevice: return "m_privacy-pro_settings_add-device_click"
         case .privacyProAddDeviceEnterEmail: return "m_privacy-pro_add-device_enter-email_click"
         case .privacyProWelcomeVPN: return "m_privacy-pro_welcome_vpn_click_u"
         case .privacyProWelcomePersonalInformationRemoval: return "m_privacy-pro_welcome_personal-information-removal_click_u"
@@ -1364,12 +1376,12 @@ extension Pixel.Event {
         case .settingsWebTrackingProtectionOpen: return "m_settings_web_tracking_protection_open"
         case .settingsGpcOn: return "m_settings_gpc_on"
         case .settingsGpcOff: return "m_settings_gpc_off"
-        case .settingsAutocompleteOn: return "m_settings_autocomplete_on"
-        case .settingsAutocompleteOff: return "m_settings_autocomplete_off"
-        case .settingsRecentlyVisitedOn: return "m_settings_autocomplete_recently-visited_on"
-        case .settingsRecentlyVisitedOff: return "m_settings_autocomplete_recently-visited_off"
         case .settingsGeneralAutocompleteOn: return "m_settings_general_autocomplete_on"
         case .settingsGeneralAutocompleteOff: return "m_settings_general_autocomplete_off"
+        case .settingsPrivateSearchAutocompleteOn: return "m_settings_private_search_autocomplete_on"
+        case .settingsPrivateSearchAutocompleteOff: return "m_settings_private_search_autocomplete_off"
+        case .settingsRecentlyVisitedOn: return "m_settings_autocomplete_recently-visited_on"
+        case .settingsRecentlyVisitedOff: return "m_settings_autocomplete_recently-visited_off"
         case .settingsAddressBarSelectorPressed: return "m_settings_address_bar_selector_pressed"
         case .settingsAccessibilityOpen: return "m_settings_accessibility_open"
         case .settingsAccessiblityTextSize: return "m_settings_accessiblity_text_size"

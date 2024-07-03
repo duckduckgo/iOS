@@ -654,8 +654,7 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
 
     @MainActor
     private func refreshMetadata() async {
-        let collector = DefaultVPNMetadataCollector(statusObserver: AppDependencyProvider.shared.connectionObserver,
-                                                    tokenStore: AppDependencyProvider.shared.networkProtectionKeychainTokenStore)
+        let collector = DefaultVPNMetadataCollector(statusObserver: AppDependencyProvider.shared.connectionObserver)
         self.vpnMetadata = await collector.collectMetadata()
         self.tableView.reloadData()
     }
@@ -701,7 +700,7 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
     private func deleteVPNConfiguration() {
         Task {
             await AppDependencyProvider.shared.networkProtectionTunnelController.stop()
-            await AppDependencyProvider.shared.networkProtectionTunnelController.removeVPN()
+            await AppDependencyProvider.shared.networkProtectionTunnelController.removeVPN(reason: .debugMenu)
         }
     }
 }

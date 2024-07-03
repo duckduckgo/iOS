@@ -95,15 +95,19 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     private let subscriptionManager: SubscriptionManager
     private var accountManager: AccountManager { subscriptionManager.accountManager }
     private let appStorePurchaseFlow: AppStorePurchaseFlow
+
     private let appStoreRestoreFlow: AppStoreRestoreFlow
+    private let appStoreAccountManagementFlow: AppStoreAccountManagementFlow
 
     init(subscriptionManager: SubscriptionManager,
          subscriptionAttributionOrigin: String?,
          appStorePurchaseFlow: AppStorePurchaseFlow,
-         appStoreRestoreFlow: AppStoreRestoreFlow) {
+         appStoreRestoreFlow: AppStoreRestoreFlow,
+         appStoreAccountManagementFlow: AppStoreAccountManagementFlow) {
         self.subscriptionManager = subscriptionManager
         self.appStorePurchaseFlow = appStorePurchaseFlow
         self.appStoreRestoreFlow = appStoreRestoreFlow
+        self.appStoreAccountManagementFlow = appStoreAccountManagementFlow
         self.subscriptionAttributionOrigin = subscriptionAttributionOrigin
     }
 
@@ -187,7 +191,9 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     // MARK: Broker Methods (Called from WebView via UserScripts)
     func getSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
+        await appStoreAccountManagementFlow.refreshAuthTokenIfNeeded()
         let authToken = accountManager.authToken ?? Constants.empty
+
         return [Constants.token: authToken]
     }
     
@@ -399,7 +405,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     // MARK: Native methods - Called from ViewModels
     func restoreAccountFromAppStorePurchase() async throws {
         setTransactionStatus(.restoring)
-//        let appStoreRestoreFlow = AppStoreRestoreFlow(subscriptionManager: subscriptionManager)
         let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase()
         switch result {
         case .success:

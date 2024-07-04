@@ -21,12 +21,6 @@ import Foundation
 import Common
 import Core
 
-public extension Notification.Name {
-
-    static let userBehaviorDidMatchExperimentVariant = Notification.Name("com.duckduckgo.app.userBehaviorDidMatchExperimentVariant")
-
-}
-
 protocol UserBehaviorStoring {
 
     var didRefreshTimestamp: Date? { get set }
@@ -48,12 +42,18 @@ final class UserBehaviorStore: UserBehaviorStoring {
 
 }
 
+public enum UserBehaviorEvent: String {
+
+    case reloadTwiceWithin12Seconds = "reload-twice-within-12-seconds"
+    case reloadThreeTimesWithin20Seconds = "reload-three-times-within-20-seconds"
+
+}
+
 final class UserBehaviorMonitor {
 
     enum Action: Equatable {
 
         case refresh
-        case reopenApp
 
     }
 
@@ -81,35 +81,22 @@ final class UserBehaviorMonitor {
         set { store.didRefreshCounter = newValue }
     }
 
-    func handleAction(_ action: Action, date: Date = Date()) {
-        switch action {
-        case .refresh:
-            fireEventIfActionOccurredRecently(within: 12.0, since: didRefreshTimestamp, eventToFire: .reloadTwiceWithin12Seconds)
-            fireEventIfActionOccurredRecently(within: 24.0, since: didRefreshTimestamp, eventToFire: .reloadTwiceWithin24Seconds)
-            didRefreshTimestamp = date
-            
-            if didRefreshCounter == 0 {
-                didDoubleRefreshTimestamp = date
-            }
-            didRefreshCounter += 1
-            if didRefreshCounter > 2 {
-                fireEventIfActionOccurredRecently(within: 20.0, since: didDoubleRefreshTimestamp, eventToFire: .reloadThreeTimesWithin20Seconds)
-                fireEventIfActionOccurredRecently(within: 40.0, since: didDoubleRefreshTimestamp, eventToFire: .reloadThreeTimesWithin40Seconds)
-                didRefreshCounter = 0
-            }
-        case .reopenApp:
-            fireEventIfActionOccurredRecently(within: 30.0, since: didRefreshTimestamp, eventToFire: .reloadAndRestartWithin30Seconds)
-            fireEventIfActionOccurredRecently(within: 50.0, since: didRefreshTimestamp, eventToFire: .reloadAndRestartWithin50Seconds)
+    func handleRefreshAction(date: Date = Date()) {
+        fireEventIfActionOccurredRecently(within: 12.0, since: didRefreshTimestamp, eventToFire: .reloadTwiceWithin12Seconds)
+        didRefreshTimestamp = date
+
+        if didRefreshCounter == 0 {
+            didDoubleRefreshTimestamp = date
+        }
+        didRefreshCounter += 1
+        if didRefreshCounter > 2 {
+            fireEventIfActionOccurredRecently(within: 20.0, since: didDoubleRefreshTimestamp, eventToFire: .reloadThreeTimesWithin20Seconds)
+            didRefreshCounter = 0
         }
 
         func fireEventIfActionOccurredRecently(within interval: Double = 30.0, since timestamp: Date?, eventToFire: UserBehaviorEvent) {
             if let timestamp = timestamp, date.timeIntervalSince(timestamp) < interval {
                 eventMapping.fire(eventToFire)
-                if PixelExperimentForBrokenSites.cohort == eventToFire.matchingPixelExperimentVariant {
-                    NotificationCenter.default.post(name: .userBehaviorDidMatchExperimentVariant,
-                                                    object: self,
-                                                    userInfo: [UserBehaviorEvent.Key.event: eventToFire])
-                }
             }
         }
     }
@@ -122,11 +109,7 @@ final class AppUserBehaviorMonitor {
         let domainEvent: Pixel.Event
         switch event {
         case .reloadTwiceWithin12Seconds: domainEvent = .userBehaviorReloadTwiceWithin12Seconds
-        case .reloadTwiceWithin24Seconds: domainEvent = .userBehaviorReloadTwiceWithin24Seconds
-        case .reloadAndRestartWithin30Seconds: domainEvent = .userBehaviorReloadAndRestartWithin30Seconds
-        case .reloadAndRestartWithin50Seconds: domainEvent = .userBehaviorReloadAndRestartWithin50Seconds
         case .reloadThreeTimesWithin20Seconds: domainEvent = .userBehaviorReloadThreeTimesWithin20Seconds
-        case .reloadThreeTimesWithin40Seconds: domainEvent = .userBehaviorReloadThreeTimesWithin40Seconds
         }
         Pixel.fire(pixel: domainEvent)
     }

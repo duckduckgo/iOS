@@ -1307,7 +1307,7 @@ class MainViewController: UIViewController {
             self?.brokenSitePromptViewHostingController = nil
             Pixel.fire(pixel: .siteNotWorkingDismiss, withAdditionalParameters: parameters)
         }, onDidSubmit: { [weak self] in
-            self?.segueToReportBrokenSite(mode: .prompt(event.rawValue))
+//            self?.segueToReportBrokenSite(entryPoint: .prompt(event.rawValue)) //TODO!
             self?.hideNotification()
             self?.userDidInteractWithBrokenSitePrompt = true
             self?.brokenSitePromptViewHostingController = nil
@@ -2166,7 +2166,7 @@ extension MainViewController: TabDelegate {
     }
 
     func tab(_ tab: TabViewController, didRequestToggleReportWithCompletionHandler completionHandler: @escaping (Bool) -> Void) {
-        segueToReportBrokenSite(mode: .toggleReport(completionHandler: completionHandler))
+        segueToReportBrokenSite(entryPoint: .toggleReport(completionHandler: completionHandler))
     }
 
     func tabDidRequestBookmarks(tab: TabViewController) {

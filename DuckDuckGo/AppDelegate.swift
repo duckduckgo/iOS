@@ -340,8 +340,6 @@ import WebKit
         widgetRefreshModel.beginObservingVPNStatus()
 #endif
 
-        AppDependencyProvider.shared.toggleProtectionsCounter.sendEventsIfNeeded()
-
         AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
         AppDependencyProvider.shared.subscriptionManager.loadInitialData()

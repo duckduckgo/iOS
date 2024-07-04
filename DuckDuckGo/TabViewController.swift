@@ -822,7 +822,7 @@ class TabViewController: UIViewController {
     private func makePrivacyDashboardViewController(coder: NSCoder) -> PrivacyDashboardViewController? {
         PrivacyDashboardViewController(coder: coder,
                                        privacyInfo: privacyInfo,
-                                       dashboardMode: .dashboard,
+                                       entryPoint: .dashboard,
                                        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                        contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
                                        breakageAdditionalInfo: makeBreakageAdditionalInfo())
@@ -1063,13 +1063,13 @@ class TabViewController: UIViewController {
                                                      image: "SiteBreakage",
                                                      leftButton: (UserText.brokenSiteReportToggleAlertYesButton, { [weak self] in
                 Pixel.fire(pixel: .reportBrokenSiteTogglePromptYes)
-                (self?.parent as? MainViewController)?.segueToReportBrokenSite(mode: .afterTogglePrompt(category: breakageCategory,
-                                                                                                       didToggleProtectionsFixIssue: true))
+                (self?.parent as? MainViewController)?.segueToReportBrokenSite(entryPoint: .afterTogglePrompt(category: breakageCategory,
+                                                                                                              didToggleProtectionsFixIssue: true))
             }),
                                                      rightButton: (UserText.brokenSiteReportToggleAlertNoButton, { [weak self] in
                 Pixel.fire(pixel: .reportBrokenSiteTogglePromptNo)
-                (self?.parent as? MainViewController)?.segueToReportBrokenSite(mode: .afterTogglePrompt(category: breakageCategory,
-                                                                                                       didToggleProtectionsFixIssue: false))
+                (self?.parent as? MainViewController)?.segueToReportBrokenSite(entryPoint: .afterTogglePrompt(category: breakageCategory,
+                                                                                                              didToggleProtectionsFixIssue: false))
             }))
             self.alertPresenter?.present(in: self, animated: true)
         }

@@ -34,17 +34,18 @@ extension Pixel: OnboardingPixelFiring {
 
 // MARK: - OnboardingPixelReporter
 
-protocol OnboardingIntroPixelReporter {
+protocol OnboardingIntroImpressionReporting {
     func trackOnboardingIntroImpression()
+}
+
+protocol OnboardingIntroPixelReporting: OnboardingIntroImpressionReporting {
     func trackBrowserComparisonImpression()
     func trackChooseBrowserCTAAction()
 }
 
-typealias OnboardingPixelReporter = OnboardingIntroPixelReporter
-
 // MARK: - Implementation
 
-final class OnboardingPixelHandler {
+final class OnboardingPixelReporter {
     private let pixel: OnboardingPixelFiring.Type
 
     init(pixel: OnboardingPixelFiring.Type = Pixel.self) {
@@ -59,7 +60,7 @@ final class OnboardingPixelHandler {
 
 // MARK: - OnboardingAnalytics + Intro
 
-extension OnboardingPixelHandler: OnboardingIntroPixelReporter {
+extension OnboardingPixelReporter: OnboardingIntroPixelReporting {
 
     func trackOnboardingIntroImpression() {
         fire(event: .onboardingIntroShown)

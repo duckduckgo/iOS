@@ -21,11 +21,11 @@ import XCTest
 import Core
 @testable import DuckDuckGo
 
-final class OnobardingPixelReporterTests: XCTestCase {
-    private var sut: OnboardingPixelHandler!
+final class OnboardingPixelReporterTests: XCTestCase {
+    private var sut: OnboardingPixelReporter!
 
     override func setUpWithError() throws {
-        sut = OnboardingPixelHandler(pixel: OnboardingPixelFireMock.self)
+        sut = OnboardingPixelReporter(pixel: OnboardingPixelFireMock.self)
         try super.setUpWithError()
     }
 

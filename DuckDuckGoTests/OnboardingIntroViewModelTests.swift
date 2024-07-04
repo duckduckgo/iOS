@@ -149,7 +149,7 @@ final class OnboardingIntroViewModelTests: XCTestCase {
 
 }
 
-private final class OnboardingIntroPixelReporterMock: OnboardingIntroPixelReporter {
+private final class OnboardingIntroPixelReporterMock: OnboardingIntroPixelReporting {
     private(set) var didCallTrackOnboardingIntroImpression = false
     private(set) var didCallTrackBrowserComparisonImpression = false
     private(set) var didCallTrackChooseBrowserCTAAction = false

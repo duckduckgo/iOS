@@ -25,10 +25,10 @@ final class OnboardingIntroViewModel: ObservableObject {
     @Published private(set) var state: OnboardingView.ViewState = .landing
 
     var onCompletingOnboardingIntro: (() -> Void)?
-    private let pixelReporter: OnboardingIntroPixelReporter
+    private let pixelReporter: OnboardingIntroPixelReporting
     private let urlOpener: URLOpener
 
-    init(pixelReporter: OnboardingIntroPixelReporter = OnboardingPixelHandler(), urlOpener: URLOpener = UIApplication.shared) {
+    init(pixelReporter: OnboardingIntroPixelReporting = OnboardingPixelReporter(), urlOpener: URLOpener = UIApplication.shared) {
         self.pixelReporter = pixelReporter
         self.urlOpener = urlOpener
     }

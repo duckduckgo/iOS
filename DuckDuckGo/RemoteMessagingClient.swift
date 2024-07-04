@@ -187,7 +187,6 @@ struct RemoteMessagingClient {
                     case .autoRenewable, .gracePeriod:
                         privacyProIsActive = true
                     case .notAutoRenewable:
-                        privacyProIsActive = true
                         privacyProIsExpiring = true
                     case .expired, .inactive:
                         privacyProIsExpired = true

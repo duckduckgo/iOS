@@ -20,7 +20,7 @@
 import Foundation
 import Core
 
-class CapturingAdapterErrorHandler: SyncErrorHandling {    
+class CapturingAdapterErrorHandler: SyncErrorHandling {
     var handleBookmarkErrorCalled = false
     var syncCredentialsSuccededCalled = false
     var handleCredentialErrorCalled = false

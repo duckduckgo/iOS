@@ -43,11 +43,11 @@ public final class VPNLogger {
 
         switch step {
         case .begin:
-            os_log("🔵 %{public}@ attempt begins", log: log, type: .info, name)
+            os_log("🔵 %{public}@ attempt begins", log: log, name)
         case .failure(let error):
             os_log("🔴 %{public}@ attempt failed with error: %{public}@", log: log, type: .error, name, error.localizedDescription)
         case .success:
-            os_log("🟢 %{public}@ attempt succeeded", log: log, type: .info, name)
+            os_log("🟢 %{public}@ attempt succeeded", log: log, name)
         }
     }
 
@@ -56,11 +56,11 @@ public final class VPNLogger {
 
         switch step {
         case .connecting:
-            os_log("🔵 Connection attempt detected", log: log, type: .info)
+            os_log("🔵 Connection attempt detected", log: log)
         case .failure:
             os_log("🔴 Connection attempt failed", log: log, type: .error)
         case .success:
-            os_log("🟢 Connection attempt successful", log: log, type: .info)
+            os_log("🟢 Connection attempt successful", log: log)
         }
     }
 
@@ -69,13 +69,13 @@ public final class VPNLogger {
 
         switch step {
         case .started:
-            os_log("🔵 Failure Recovery attempt started", log: log, type: .info)
+            os_log("🔵 Failure Recovery attempt started", log: log)
         case .failed(let error):
             os_log("🔴 Failure Recovery attempt failed with error: %{public}@", log: log, type: .error, error.localizedDescription)
         case .completed(let health):
             switch health {
             case .healthy:
-                os_log("🟢 Failure Recovery attempt completed", log: log, type: .info)
+                os_log("🟢 Failure Recovery attempt completed", log: log)
             case .unhealthy:
                 os_log("🔴 Failure Recovery attempt ended as unhealthy", log: log, type: .error)
             }
@@ -89,9 +89,9 @@ public final class VPNLogger {
         case .failureDetected:
             os_log("🔴 Tunnel failure detected", log: log, type: .error)
         case .failureRecovered:
-            os_log("🟢 Tunnel failure recovered", log: log, type: .info)
+            os_log("🟢 Tunnel failure recovered", log: log)
         case .networkPathChanged:
-            os_log("🔵 Tunnel recovery detected path change", log: log, type: .info)
+            os_log("🔵 Tunnel recovery detected path change", log: log)
         }
     }
 
@@ -102,7 +102,7 @@ public final class VPNLogger {
         case .error:
             os_log("🔴 There was an error logging the latency", log: log, type: .error)
         case .quality(let quality):
-            os_log("Connection quality is: %{public}@", log: log, type: .info, quality.rawValue)
+            os_log("Connection quality is: %{public}@", log: log, quality.rawValue)
         }
     }
 }

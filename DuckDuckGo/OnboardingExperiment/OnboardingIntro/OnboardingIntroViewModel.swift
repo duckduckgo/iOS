@@ -25,18 +25,22 @@ final class OnboardingIntroViewModel: ObservableObject {
     @Published private(set) var state: OnboardingView.ViewState = .landing
 
     var onCompletingOnboardingIntro: (() -> Void)?
+    private let pixelReporter: OnboardingIntroPixelReporter
     private let urlOpener: URLOpener
 
-    init(urlOpener: URLOpener = UIApplication.shared) {
+    init(pixelReporter: OnboardingIntroPixelReporter = OnboardingPixelHandler(), urlOpener: URLOpener = UIApplication.shared) {
+        self.pixelReporter = pixelReporter
         self.urlOpener = urlOpener
     }
 
     func onAppear() {
         state = .onboarding(.startOnboardingDialog)
+        pixelReporter.trackOnboardingIntroImpression()
     }
 
     func startOnboardingAction() {
         state = .onboarding(.browsersComparisonDialog)
+        pixelReporter.trackBrowserComparisonImpression()
     }
 
     func setDefaultBrowserAction() {

@@ -40,7 +40,7 @@ public class AppUserDefaults: AppSettings {
         public static let showsFullURLAddressSettingChanged = Notification.Name("com.duckduckgo.app.ShowsFullURLAddressSettingChanged")
         public static let autofillDebugScriptToggled = Notification.Name("com.duckduckgo.app.DidToggleAutofillDebugScript")
         public static let duckPlayerSettingsUpdated = Notification.Name("com.duckduckgo.app.DuckPlayerSettingsUpdated")
-        public static let appDataClearingUpdated = Notification.Name("com.duckduckgo.app.dataClearningUpdates")
+        public static let appDataClearingUpdated = Notification.Name("com.duckduckgo.app.dataClearingUpdates")
     }
 
     private let groupName: String

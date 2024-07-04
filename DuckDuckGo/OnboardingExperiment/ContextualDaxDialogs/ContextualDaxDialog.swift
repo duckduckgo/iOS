@@ -25,12 +25,14 @@ struct ContextualDaxDialog: View {
     
     var logoPosition: DaxDialogLogoPosition = .left
     var title: String?
-    let message: [NSAttributedString]
+    let message: NSAttributedString
     var list: [ContextualOnboardingListItem] = []
     var listAction: ((_ index: Int) -> Void)?
     var imageName: String?
     var cta: String?
     var action: (() -> Void)?
+
+    @State private var currentDisplayIndex: Int = 0
 
     var body: some View {
         DaxDialogView(logoPosition: logoPosition) {
@@ -56,14 +58,10 @@ struct ContextualDaxDialog: View {
 
     @ViewBuilder
     private var messageView: some View {
-        VStack(alignment: .leading, spacing: 24) {
-            ForEach(message.indices, id: \.self) { index in
-                if #available(iOS 15, *){
-                    Text(AttributedString(message[index]))
-                } else {
-                    Text(message[index].string)
-                }
-            }
+        if #available(iOS 15, *){
+            Text(AttributedString(message))
+        } else {
+            Text(message.string)
         }
     }
 
@@ -101,11 +99,17 @@ struct ContextualDaxDialog: View {
         }
     }
 
+    private func updateDisplayIndex() {
+        let totalComponents = 5  // corresponds to title, message, list, image, action
+        if currentDisplayIndex < totalComponents - 1 {
+            currentDisplayIndex += 1
+        }
+    }
 
 }
 
 #Preview("Intro Dialog - text") {
-    let fullString = "Instantly clear your browsing activity with the Fire Button."
+    let fullString = "Instantly clear your browsing activity with the Fire Button.\n\n Give it a try! ☝️"
     let boldString = "Fire Button."
 
     let attributedString = NSMutableAttributedString(string: fullString)
@@ -118,14 +122,13 @@ struct ContextualDaxDialog: View {
         attributedString.addAttributes(boldFontAttribute, range: nsBoldRange)
     }
 
-    let contextualText = [attributedString, NSMutableAttributedString(string: "Give it a try! ☝️")]
-    return ContextualDaxDialog(message: contextualText)
+    return ContextualDaxDialog(message: attributedString)
         .padding()
         .preferredColorScheme(.light)
 }
 
 #Preview("Intro Dialog - text and button") {
-    let contextualText = [ NSMutableAttributedString(string: "Sabrina is the best"), NSMutableAttributedString(string: "Believe me! ☝️")]
+    let contextualText = NSMutableAttributedString(string: "Sabrina is the best\n\nBelieve me! ☝️")
     return ContextualDaxDialog(
         message: contextualText,
         cta: "Got it!",
@@ -135,7 +138,7 @@ struct ContextualDaxDialog: View {
 }
 
 #Preview("Intro Dialog - title, text, image and button") {
-    let contextualText = [ NSMutableAttributedString(string: "Sabrina is the best!"), NSMutableAttributedString(string: "Believe me! ☝️")]
+    let contextualText = NSMutableAttributedString(string: "Sabrina is the best\n\nBelieve me! ☝️")
     return ContextualDaxDialog(
         title: "Who is the best?",
         message: contextualText,
@@ -147,7 +150,7 @@ struct ContextualDaxDialog: View {
 }
 
 #Preview("Intro Dialog - title, text, list") {
-    let contextualText = [ NSMutableAttributedString(string: "Sabrina is the best!, Alessandro is ok I guess...")]
+    let contextualText = NSMutableAttributedString(string: "Sabrina is the best!\n\n Alessandro is ok I guess...")
     let list = [
         ContextualOnboardingListItem.search(title: "Search"),
         ContextualOnboardingListItem.site(title: "Website"),

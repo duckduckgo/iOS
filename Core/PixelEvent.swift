@@ -313,6 +313,7 @@ extension Pixel {
         case networkProtectionControllerStartFailure
 
         case networkProtectionTunnelStartAttempt
+        case networkProtectionTunnelStartAttemptOnDemandWithoutAccessToken
         case networkProtectionTunnelStartSuccess
         case networkProtectionTunnelStartFailure
 
@@ -338,7 +339,7 @@ extension Pixel {
 
         case networkProtectionTunnelFailureDetected
         case networkProtectionTunnelFailureRecovered
-        
+
         case networkProtectionLatency(quality: NetworkProtectionLatencyMonitor.ConnectionQuality)
         case networkProtectionLatencyError
         
@@ -414,6 +415,9 @@ extension Pixel {
 
         case networkProtectionDNSUpdateCustom
         case networkProtectionDNSUpdateDefault
+
+        case networkProtectionVPNConfigurationRemoved
+        case networkProtectionVPNConfigurationRemovalFailed
 
         // MARK: remote messaging pixels
         
@@ -504,7 +508,10 @@ extension Pixel {
         case debugBookmarksStructureLost
         case debugBookmarksInvalidRoots
         case debugBookmarksValidationFailed
-        
+
+        case debugBookmarksPendingDeletionFixed
+        case debugBookmarksPendingDeletionRepairError
+
         case debugCannotClearObservationsDatabase
         case debugWebsiteDataStoresNotClearedMultiple
         case debugWebsiteDataStoresNotClearedOne
@@ -643,7 +650,6 @@ extension Pixel {
         case privacyProRestoreAfterPurchaseAttempt
         case privacyProSubscriptionActivated
         case privacyProWelcomeAddDevice
-        case privacyProSettingsAddDevice
         case privacyProAddDeviceEnterEmail
         case privacyProWelcomeVPN
         case privacyProWelcomePersonalInformationRemoval
@@ -708,6 +714,12 @@ extension Pixel {
         case reportBrokenSiteSkipToggleStep
         case reportBrokenSiteToggleProtectionOff
 
+        // MARK: New Tab Page baseline engagement
+        case addFavoriteDaily
+        case addBookmarkDaily
+        case favoriteLaunchedNTPDaily
+        case bookmarkLaunchedDaily
+        case newTabPageDisplayedDaily
     }
 
 }
@@ -1020,6 +1032,7 @@ extension Pixel.Event {
         case .networkProtectionControllerStartSuccess: return "m_netp_controller_start_success"
         case .networkProtectionControllerStartFailure: return "m_netp_controller_start_failure"
         case .networkProtectionTunnelStartAttempt: return "m_netp_tunnel_start_attempt"
+        case .networkProtectionTunnelStartAttemptOnDemandWithoutAccessToken: return "m_netp_tunnel_start_attempt_on_demand_without_access_token"
         case .networkProtectionTunnelStartSuccess: return "m_netp_tunnel_start_success"
         case .networkProtectionTunnelStartFailure: return "m_netp_tunnel_start_failure"
         case .networkProtectionTunnelStopAttempt: return "m_netp_tunnel_stop_attempt"
@@ -1097,6 +1110,9 @@ extension Pixel.Event {
 
         case .networkProtectionDNSUpdateCustom: return "m_netp_ev_update_dns_custom"
         case .networkProtectionDNSUpdateDefault: return "m_netp_ev_update_dns_default"
+
+        case .networkProtectionVPNConfigurationRemoved: return "m_netp_vpn_configuration_removed"
+        case .networkProtectionVPNConfigurationRemovalFailed: return "m_netp_vpn_configuration_removal_failed"
 
             // MARK: remote messaging pixels
             
@@ -1182,6 +1198,9 @@ extension Pixel.Event {
         case .debugBookmarksStructureLost: return "m_d_bookmarks_structure_lost"
         case .debugBookmarksInvalidRoots: return "m_d_bookmarks_invalid_roots"
         case .debugBookmarksValidationFailed: return "m_d_bookmarks_validation_failed"
+
+        case .debugBookmarksPendingDeletionFixed: return "m_debug_bookmarks_pending_deletion_fixed"
+        case .debugBookmarksPendingDeletionRepairError: return "m_debug_bookmarks_pending_deletion_repair_error"
 
         case .debugCannotClearObservationsDatabase: return "m_d_cannot_clear_observations_database"
         case .debugWebsiteDataStoresNotClearedMultiple: return "m_d_wkwebsitedatastoresnotcleared_multiple"
@@ -1340,7 +1359,6 @@ extension Pixel.Event {
         case .privacyProRestoreAfterPurchaseAttempt: return "m_privacy-pro_app_subscription-restore-after-purchase-attempt_success"
         case .privacyProSubscriptionActivated: return "m_privacy-pro_app_subscription_activated_u"
         case .privacyProWelcomeAddDevice: return "m_privacy-pro_welcome_add-device_click_u"
-        case .privacyProSettingsAddDevice: return "m_privacy-pro_settings_add-device_click"
         case .privacyProAddDeviceEnterEmail: return "m_privacy-pro_add-device_enter-email_click"
         case .privacyProWelcomeVPN: return "m_privacy-pro_welcome_vpn_click_u"
         case .privacyProWelcomePersonalInformationRemoval: return "m_privacy-pro_welcome_personal-information-removal_click_u"
@@ -1404,6 +1422,13 @@ extension Pixel.Event {
         case .reportBrokenSiteTogglePromptYes: return "m_report-broken-site_toggle-prompt-yes"
         case .reportBrokenSiteSkipToggleStep: return "m_report-broken-site_skip-toggle-step"
         case .reportBrokenSiteToggleProtectionOff: return "m_report-broken-site_toggle-protection-off"
+
+        // MARK: New Tab Page baseline engagement
+        case .addFavoriteDaily: return "m_add_favorite_daily"
+        case .addBookmarkDaily: return "m_add_bookmark_daily"
+        case .favoriteLaunchedNTPDaily: return "m_favorite_launched_ntp_daily"
+        case .bookmarkLaunchedDaily: return "m_bookmark_launched_daily"
+        case .newTabPageDisplayedDaily: return "m_new_tab_page_displayed_daily"
         }
     }
 }

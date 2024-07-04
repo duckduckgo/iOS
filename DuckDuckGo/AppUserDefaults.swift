@@ -39,6 +39,7 @@ public class AppUserDefaults: AppSettings {
         public static let addressBarPositionChanged = Notification.Name("com.duckduckgo.app.AddressBarPositionChanged")
         public static let showsFullURLAddressSettingChanged = Notification.Name("com.duckduckgo.app.ShowsFullURLAddressSettingChanged")
         public static let autofillDebugScriptToggled = Notification.Name("com.duckduckgo.app.DidToggleAutofillDebugScript")
+        public static let duckPlayerSettingsUpdated = Notification.Name("com.duckduckgo.app.DuckPlayerSettingsUpdated")
     }
 
     private let groupName: String
@@ -389,9 +390,23 @@ public class AppUserDefaults: AppSettings {
             return .alwaysAsk
         }
         set {
-            // Here we set both the DuckPlayer mode and the overlayInteracte
             userDefaults?.set(newValue.stringValue, forKey: Keys.duckPlayerMode)
-            userDefaults?.set(false, forKey: Keys.duckPlayerAskModeOverlayHidden)
+            NotificationCenter.default.post(name: AppUserDefaults.Notifications.duckPlayerSettingsUpdated,
+                                            object: duckPlayerMode)
+        }
+    }
+    
+    var duckPlayerAskModeOverlayHidden: Bool {
+        get {
+            if let value = userDefaults?.bool(forKey: Keys.duckPlayerAskModeOverlayHidden) {
+                return value
+            }
+            return false
+        }
+        set {
+            userDefaults?.set(newValue, forKey: Keys.duckPlayerAskModeOverlayHidden)
+            NotificationCenter.default.post(name: AppUserDefaults.Notifications.duckPlayerSettingsUpdated,
+                                            object: duckPlayerMode)
         }
     }
 }

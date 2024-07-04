@@ -21,17 +21,30 @@ import Foundation
 import WebKit
 import Common
 import UserScript
+import Combine
 
 final class YoutubeOverlayUserScript: NSObject, Subfeature {
         
-    private var duckPlayer: DuckPlayer
+    var duckPlayer: DuckPlayerProtocol
+    private var cancellables = Set<AnyCancellable>()
     
     struct Constants {
         static let featureName = "duckPlayer"
     }
     
-    init(duckPlayer: DuckPlayer) {
+    init(duckPlayer: DuckPlayerProtocol) {
         self.duckPlayer = duckPlayer
+        super.init()
+        subscribeToDuckPlayerMode()
+    }
+    
+    // Listen to DuckPlayer Settings changed
+    private func subscribeToDuckPlayerMode() {
+        duckPlayer.settings.duckPlayerSettingsPublisher
+            .sink { [weak self] in
+                self?.handleSettingsChange()
+            }
+            .store(in: &cancellables)
     }
     
     enum MessageOrigin {
@@ -96,10 +109,9 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
     }
 
     public func userValuesUpdated(userValues: UserValues) {
-        guard let webView = webView else {
-            return assertionFailure("Could not access webView")
+        if let webView {
+            broker?.push(method: "onUserValuesChanged", params: userValues, for: self, into: webView)
         }
-        broker?.push(method: "onUserValuesChanged", params: userValues, for: self, into: webView)
     }
 
     // MARK: - Private Methods
@@ -118,21 +130,24 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
         return nil
     }
 
-    // MARK: - UserValuesNotification
-
-    struct UserValuesNotification: Encodable {
-        let userValuesNotification: UserValues
+    private func handleSettingsChange() {
+        let values = UserValues(duckPlayerMode: duckPlayer.settings.mode, askModeOverlayHidden: duckPlayer.settings.askModeOverlayHidden)
+        userValuesUpdated(userValues: values)
+    }
+    
+    deinit {
+        cancellables.removeAll()
     }
 }
 
 extension YoutubeOverlayUserScript {
     @MainActor
     func handleSendJSPixel(params: Any, message: UserScriptMessage) -> Encodable? {
-        guard let body = message.messageBody as? [String: Any], let parameters = body["params"] as? [String: Any] else {
-            return nil
-        }
-        let pixelName = parameters["pixelName"] as? String
-        
+        // guard let body = message.messageBody as? [String: Any], let parameters = body["params"] as? [String: Any] else {
+        //    return nil
+        // }
+        // let pixelName = parameters["pixelName"] as? String
+        // To be implemented at a later point
 
         return nil
     }

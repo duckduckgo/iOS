@@ -318,8 +318,9 @@ class TabViewController: UIViewController {
 
     let historyManager: HistoryManager
     let historyCapture: HistoryCapture
-
-    let youtubeNavigationHandler: DuckNavigationHandling? = YoutubePlayerNavigationHandler()
+    
+    var duckPlayer: DuckPlayerProtocol = DuckPlayer()
+    var youtubeNavigationHandler: DuckNavigationHandling?
     
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
@@ -348,9 +349,11 @@ class TabViewController: UIViewController {
         decorate()
         addTextSizeObserver()
         subscribeToEmailProtectionSignOutNotification()
-
         registerForDownloadsNotifications()
-
+        
+        // Setup DuckPlayer navigation handler
+        self.youtubeNavigationHandler = YoutubePlayerNavigationHandler(duckPlayer: duckPlayer)
+        
         if #available(iOS 16.4, *) {
             registerForInspectableWebViewNotifications()
         }
@@ -359,7 +362,8 @@ class TabViewController: UIViewController {
         observeNetPConnectionStatusChanges()
 #endif
     }
-
+    
+    
     @available(iOS 16.4, *)
     private func registerForInspectableWebViewNotifications() {
         NotificationCenter.default.addObserver(self,
@@ -659,8 +663,8 @@ class TabViewController: UIViewController {
             if let handler = youtubeNavigationHandler,
                 let url,
                 url.isYoutubeVideo,
-                appSettings.duckPlayerMode == .enabled {
-                handler.handleRedirect(url: url, webView: webView)
+                duckPlayer.settings.mode == .enabled {
+                handler.handleURLChange(url: url, webView: webView)
             }
         }
     }
@@ -713,7 +717,11 @@ class TabViewController: UIViewController {
     public func reload() {
         updateContentMode()
         cachedRuntimeConfigurationForDomain = [:]
-        webView.reload()
+        if let url = webView.url, url.isDuckPlayer, let handler = youtubeNavigationHandler {
+            handler.handleReload(webView: webView)
+        } else {
+            webView.reload()
+        }
         privacyDashboard?.dismiss(animated: true)
     }
     
@@ -725,7 +733,7 @@ class TabViewController: UIViewController {
         dismissJSAlertIfNeeded()
         
         if let url = url, url.isDuckPlayer, let handler = youtubeNavigationHandler {
-            handler.goBack(webView: webView)
+            handler.handleGoBack(webView: webView)
             chromeDelegate?.omniBar.resignFirstResponder()
             return
         }
@@ -1618,6 +1626,7 @@ extension TabViewController: WKNavigationDelegate {
         return true
     }
 
+    // swiftlint:disable function_body_length
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
         let allowPolicy = determineAllowPolicy()
 
@@ -1644,10 +1653,11 @@ extension TabViewController: WKNavigationDelegate {
             adClickAttributionLogic.onBackForwardNavigation(mainFrameURL: webView.url)
         }
         
-        if let handler = youtubeNavigationHandler,
+        if navigationAction.isTargetingMainFrame(),
+            let handler = youtubeNavigationHandler,
             url.isYoutubeVideo,
-            appSettings.duckPlayerMode == .enabled {
-            handler.handleRedirect(navigationAction, completion: completion, webView: webView)
+            duckPlayer.settings.mode == .enabled {
+            handler.handleDecidePolicyFor(navigationAction, completion: completion, webView: webView)
             return
         }
         
@@ -1668,7 +1678,11 @@ extension TabViewController: WKNavigationDelegate {
             performBlobNavigation(navigationAction, completion: completion)
         
         case .duck:
-            youtubeNavigationHandler?.handleNavigation(navigationAction, webView: webView, completion: completion)
+            if let handler = youtubeNavigationHandler {
+                handler.handleNavigation(navigationAction, webView: webView, completion: completion)
+                return
+            }
+            completion(.cancel)
             
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
@@ -1679,6 +1693,7 @@ extension TabViewController: WKNavigationDelegate {
             completion(.cancel)
         }
     }
+    // swiftlint:enable function_body_length
     
 
     private func inferLoadContext(for navigationAction: WKNavigationAction) -> BrokenSiteReport.OpenerContext? {
@@ -2316,12 +2331,17 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
         userScripts.loginFormDetectionScript?.delegate = self
         userScripts.autoconsentUserScript.delegate = self
-
+        
+        // Setup DuckPlayer
+        userScripts.duckPlayer = duckPlayer
+        userScripts.youtubeOverlayScript?.webView = webView
+        userScripts.youtubePlayerUserScript?.webView = webView
+        
         performanceMetrics = PerformanceMetricsSubfeature(targetWebview: webView)
         userScripts.contentScopeUserScriptIsolated.registerSubfeature(delegate: performanceMetrics!)
 
         adClickAttributionLogic.onRulesChanged(latestRules: ContentBlocking.shared.contentBlockingManager.currentRules)
-
+        
         let tdsKey = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
         let notificationsTriggeringReload = [
             PreserveLogins.Notifications.loginDetectionStateChanged,

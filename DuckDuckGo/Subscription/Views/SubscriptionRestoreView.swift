@@ -23,7 +23,6 @@ import DesignResourcesKit
 import Core
 
 @available(iOS 15.0, *)
-// swiftlint:disable type_body_length
 struct SubscriptionRestoreView: View {
 
     @Environment(\.dismiss) var dismiss
@@ -65,18 +64,11 @@ struct SubscriptionRestoreView: View {
     }
     
     var body: some View {
-        if viewModel.state.isAddingDevice {
-            ZStack {
-                baseView
-            }
-        } else {
-            ZStack {
-                baseView
-                
-                if viewModel.state.transactionStatus != .idle {
-                    PurchaseInProgressView(status: getTransactionStatus())
-                }
-              
+        ZStack {
+            baseView
+
+            if viewModel.state.transactionStatus != .idle {
+                PurchaseInProgressView(status: getTransactionStatus())
             }
         }
     }
@@ -153,8 +145,6 @@ struct SubscriptionRestoreView: View {
             .onAppear {
                 viewModel.onAppear()
             }
-
-                
     }
 
     // MARK: -
@@ -182,38 +172,15 @@ struct SubscriptionRestoreView: View {
             
             if !viewModel.state.isLoading {
                 VStack(alignment: .leading) {
-                    if !viewModel.state.isAddingDevice {
-                        Text(UserText.subscriptionActivateEmailDescription)
-                            .daxSubheadRegular()
-                            .foregroundColor(Color(designSystemColor: .textSecondary))
-                        getCellButton(buttonText: UserText.subscriptionActivateEmailButton,
-                                      action: {
-                            DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailStart)
-                            DailyPixel.fire(pixel: .privacyProWelcomeAddDevice)
-                            viewModel.showActivationFlow(true)
-                        })
-                    } else if viewModel.state.subscriptionEmail == nil {
-                        Text(UserText.subscriptionAddDeviceEmailDescription)
-                            .daxSubheadRegular()
-                            .foregroundColor(Color(designSystemColor: .textSecondary))
-                        getCellButton(buttonText: UserText.subscriptionRestoreAddEmailButton,
-                                      action: {
-                            Pixel.fire(pixel: .privacyProAddDeviceEnterEmail, debounce: 1)
-                            viewModel.showActivationFlow(true)
-                        })
-                    } else {
-                        Text(viewModel.state.subscriptionEmail ?? "").daxSubheadSemibold()
-                        Text(UserText.subscriptionManageEmailDescription)
-                            .daxSubheadRegular()
-                            .foregroundColor(Color(designSystemColor: .textSecondary))
-                        HStack {
-                            getCellButton(buttonText: UserText.subscriptionManageEmailButton,
-                                          action: {
-                                Pixel.fire(pixel: .privacyProSubscriptionManagementEmail, debounce: 1)
-                                viewModel.showActivationFlow(true)
-                            })
-                        }
-                    }
+                    Text(UserText.subscriptionActivateEmailDescription)
+                        .daxSubheadRegular()
+                        .foregroundColor(Color(designSystemColor: .textSecondary))
+                    getCellButton(buttonText: UserText.subscriptionActivateEmailButton,
+                                  action: {
+                        DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailStart)
+                        DailyPixel.fire(pixel: .privacyProWelcomeAddDevice)
+                        viewModel.showActivationFlow(true)
+                    })
                 }
             } else {
                 SwiftUI.ProgressView()
@@ -258,11 +225,11 @@ struct SubscriptionRestoreView: View {
     private var headerView: some View {
         VStack(spacing: Constants.headerLineSpacing) {
             Image(Constants.heroImage)
-            Text(viewModel.state.isAddingDevice ? UserText.subscriptionAddDeviceHeaderTitle : UserText.subscriptionActivateTitle)
+            Text(UserText.subscriptionActivateTitle)
                 .daxHeadline()
                 .multilineTextAlignment(.center)
                 .foregroundColor(Color(designSystemColor: .textPrimary))
-            Text(viewModel.state.isAddingDevice ? UserText.subscriptionAddDeviceDescription : UserText.subscriptionActivateHeaderDescription)
+            Text(UserText.subscriptionActivateHeaderDescription)
                 .daxFootnoteRegular()
                 .foregroundColor(Color(designSystemColor: .textSecondary))
                 .multilineTextAlignment(.center)
@@ -272,22 +239,20 @@ struct SubscriptionRestoreView: View {
     
     @ViewBuilder
     private var footerView: some View {
-        if !viewModel.state.isAddingDevice {
-            VStack(alignment: .leading, spacing: Constants.footerLineSpacing) {
-                Text(UserText.subscriptionActivateDescription)
-                    .daxFootnoteRegular()
-                    .foregroundColor(Color(designSystemColor: .textSecondary))
-                Button(action: {
-                     viewModel.restoreAppstoreTransaction()
-                }, label: {
-                    Text(UserText.subscriptionRestoreAppleID)
-                        .daxFootnoteSemibold()
-                        .foregroundColor(Color(designSystemColor: .accent))
-                })
-            }
+        VStack(alignment: .leading, spacing: Constants.footerLineSpacing) {
+            Text(UserText.subscriptionActivateDescription)
+                .daxFootnoteRegular()
+                .foregroundColor(Color(designSystemColor: .textSecondary))
+            Button(action: {
+                viewModel.restoreAppstoreTransaction()
+            }, label: {
+                Text(UserText.subscriptionRestoreAppleID)
+                    .daxFootnoteSemibold()
+                    .foregroundColor(Color(designSystemColor: .accent))
+            })
         }
     }
-       
+
     private func getAlert() -> Alert {
         switch viewModel.state.activationResult {
         case .activated:
@@ -336,4 +301,3 @@ struct SubscriptionRestoreView: View {
     }
     
 }
-// swiftlint:enable type_body_length

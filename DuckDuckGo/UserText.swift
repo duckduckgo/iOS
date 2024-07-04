@@ -1030,13 +1030,20 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionTitle = NSLocalizedString("subscription.title", value: "Privacy Pro", comment: "Navigation bar Title for subscriptions")
     public static let subscriptionCloseButton = NSLocalizedString("subscription.close", value: "Close", comment: "Navigation Button for closing subscription view")
     
-    static func subscriptionInfo(status: String, expiration: String) -> String {
-        let localized = NSLocalizedString("subscription.subscription.active.caption",
-                                          value: "Your subscription %@ on %@",
-                                          comment: "Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)'")
-        return String(format: localized, status, expiration)
+    static func renewingSubscriptionInfo(billingPeriod: String, renewalDate: String) -> String {
+        let localized = NSLocalizedString("subscription.subscription.renewing.caption",
+                                          value: "Your %@ subscription renews on %@.",
+                                          comment: "Subscription renewal info. This reads as 'Your (monthly or annual) subscription renews on (date)'")
+        return String(format: localized, billingPeriod, renewalDate)
     }
-    
+
+    static func expiringSubscriptionInfo(billingPeriod: String, expiryDate: String) -> String {
+        let localized = NSLocalizedString("subscription.subscription.expiring.caption",
+                                          value: "Your %@ subscription expires on %@.",
+                                          comment: "Subscription expiration info. This reads as 'Your (monthly or annual) subscription expires on (date)'")
+        return String(format: localized, billingPeriod, expiryDate)
+    }
+
     static func expiredSubscriptionInfo(expiration: String) -> String {
         let localized = NSLocalizedString("subscription.subscription.expired.caption",
                                           value: "Your subscription expired on %@",
@@ -1044,20 +1051,19 @@ But if you *do* want a peek under the hood, you can find more information about 
         return String(format: localized, expiration)
     }
     
-    public static let subscriptionRenews = NSLocalizedString("subscription.renews", value: "renews", comment: "text for renewal string")
-    public static let subscriptionExpires = NSLocalizedString("subscription.expires", value: "expires", comment: "text for expiration string")
-    public static let subscriptionMonthly = NSLocalizedString("subscription.monthly", value: "Monthly Subscription", comment: "Subscription type")
-    public static let subscriptionAnnual = NSLocalizedString("subscription.annual", value: "Annual Subscription", comment: "Subscription type")
-    
-    public static let subscriptionManageDevices = NSLocalizedString("subscription.manage.devices", value: "Manage Devices", comment: "Header for the device management section")
-    public static let subscriptionAddDeviceButton = NSLocalizedString("subscription.add.device.button", value: "Add to Another Device", comment: "Add to another device button")
+    public static let subscriptionMonthlyBillingPeriod = NSLocalizedString("subscription.billing.period.monthly", value: "monthly", comment: "Subscription monthly billing period type")
+    public static let subscriptionAnnualBillingPeriod = NSLocalizedString("subscription.billing.period.annual", value: "annual", comment: "Subscription annual billing period type")
+
+    public static let subscriptionDevicesSectionHeader = NSLocalizedString("subscription.devices.header", value: "Activate on Other Devices", comment: "Header for section for activating subscription on other devices")
+    public static let subscriptionDevicesSectionNoEmailFooter = NSLocalizedString("subscription.devices.no.email.footer", value: "Add an optional email to your subscription or use your Apple ID to access Privacy Pro on other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**", comment: "Footer for section for activating subscription on other devices when email was not yet added")
+    public static let subscriptionDevicesSectionWithEmailFooter = NSLocalizedString("subscription.devices.with.email.footer", value: "Use this email to activate your subscription in Settings > Privacy Pro in the DuckDuckGo app on your other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**", comment: "Footer for section for activating subscription on other devices when email is added")
     public static let subscriptionRemoveFromDevice = NSLocalizedString("subscription.remove.from.device.button", value: "Remove From This Device", comment: "Remove from this device button")
     public static let subscriptionManageTitle = NSLocalizedString("subscription.manage.title", value: "Subscription", comment: "Header for the subscription section")
     public static let subscriptionManagePlan = NSLocalizedString("subscription.manage.plan", value: "Manage Plan", comment: "Manage Plan header")
-    public static let subscriptionChangePlan = NSLocalizedString("subscription.change.plan", value: "Change Plan or Billing", comment: "Change plan or billing title")
+    public static let subscriptionChangePlan = NSLocalizedString("subscription.change.plan", value: "Update Plan or Cancel", comment: "Change plan or cancel title")
     public static let subscriptionHelpAndSupport = NSLocalizedString("subscription.help", value: "Help and support", comment: "Help and support Section header")
-    public static let subscriptionFAQ = NSLocalizedString("subscription.faq", value: "Privacy Pro FAQ", comment: "FAQ Button")
-    public static let subscriptionFAQFooter = NSLocalizedString("subscription.faq.description", value: "Get answers to frequently asked questions about Privacy Pro in our help pages.", comment: "FAQ Description")
+    public static let subscriptionFAQ = NSLocalizedString("subscription.faq", value: "FAQs and Support", comment: "FAQ Button")
+    public static let subscriptionFAQFooter = NSLocalizedString("subscription.faq.description", value: "Get answers to frequently asked questions or contact Privacy Pro support from our help pages.", comment: "FAQ Description")
     
     // Remove subscription confirmation
     public static let subscriptionRemoveFromDeviceConfirmTitle = NSLocalizedString("subscription.remove.from.device.title", value: "Remove from this device?", comment: "Remove from device confirmation dialog title")
@@ -1067,7 +1073,6 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionRemovalConfirmation = NSLocalizedString("subscription.cancel.message", value: "Your subscription has been removed from this device.", comment: "Subscription Removal confirmation message")
     
     // Subscription Restore
-    public static let subscriptionActivate = NSLocalizedString("subscription.activate", value: "Activate Subscription", comment: "Subscription Activation Window Title")
     public static let subscriptionActivateTitle = NSLocalizedString("subscription.activate.title", value: "Activate your subscription on this device", comment: "Subscription Activation Title")
     public static let subscriptionActivateDescription = NSLocalizedString("subscription.activate.description", value: "Your subscription is automatically available in DuckDuckGo on any device signed in to your Apple ID.", comment: "Subscription Activation Info")
     public static let subscriptionActivateHeaderDescription = NSLocalizedString("subscription.activate..header.description", value: "Access your Privacy Pro subscription on this device via Apple ID or an email address.", comment: "Subscription Activation Info")
@@ -1078,14 +1083,11 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionActivateEmail = NSLocalizedString("subscription.activate.email", value: "Email", comment: "Email option for activation")
     public static let subscriptionActivateEmailTitle = NSLocalizedString("subscription.activate.email.title", value: "Activate Subscription", comment: "Activate subscription title")
     public static let subscriptionActivateEmailDescription = NSLocalizedString("subscription.activate.email.description", value: "Use your email to activate your subscription on this device.", comment: "Description for Email activation")
-    public static let subscriptionAddDeviceEmailDescription = NSLocalizedString("subscription.addDevice.email.description", value: "Add an email address to access your subscription in DuckDuckGo on other devices. We’ll only use this address to verify your subscription.", comment: "Description for Email adding")
-    public static let subscriptionAddEmailButton = NSLocalizedString("subscription.activate.add.email.button", value: "Add Email", comment: "Restore button title for Email")
+    public static let subscriptionAddEmailButton = NSLocalizedString("subscription.activate.add.email.button", value: "Add Email", comment: "Button for adding email address to subscription")
+    public static let subscriptionEditEmailButton = NSLocalizedString("subscription.activate.edit.email.button", value: "Edit Email", comment: "Button for editing email address added to subscription")
     public static let subscriptionActivateEmailButton = NSLocalizedString("subscription.activate.email.button", value: "Enter Email", comment: "Restore button title for Email")
             
     // Add to other devices (AppleID / Email)
-    public static let subscriptionAddDeviceTitle = NSLocalizedString("subscription.add.device.title", value: "Add Device", comment: "Add to another device view title")
-    public static let subscriptionAddDeviceHeaderTitle = NSLocalizedString("subscription.add.device.header.title", value: "Use your subscription on other devices", comment: "Add subscription to other device title ")
-    public static let subscriptionAddDeviceDescription = NSLocalizedString("subscription.add.device.description", value: "Access your Privacy Pro subscription via an email address.", comment: "Subscription Add device Info")
     public static let subscriptionAvailableInApple = NSLocalizedString("subscription.available.apple", value: "Privacy Pro is available on any device signed in to the same Apple ID.", comment: "Subscription availability message on Apple devices")
     public static let subscriptionManageEmailResendInstructions = NSLocalizedString("subscription.add.device.resend.instructions", value: "Resend Instructions", comment: "Resend activation instructions button")
     
@@ -1094,13 +1096,10 @@ But if you *do* want a peek under the hood, you can find more information about 
     
     // Add Email To subscription
     public static let subscriptionAddEmail = NSLocalizedString("subscription.add.email", value: "Add an email address to activate your subscription on your other devices. We’ll only use this address to verify your subscription.", comment: "Add email to an existing subscription")
-    public static let subscriptionRestoreAddEmailButton = NSLocalizedString("subscription.add.email.button", value: "Add Email", comment: "Button title for adding email to subscription")
     public static let subscriptionRestoreAddEmailTitle = NSLocalizedString("subscription.add.email.title", value: "Add Email", comment: "View title for adding email to subscription")
     
     // Manage Subscription Email
-    public static let subscriptionManageEmailDescription = NSLocalizedString("subscription.manage.email.description", value: "Use this email to activate your subscription from browser settings in the DuckDuckGo app on other devices..", comment: "Description for Email Management options")
-    public static let subscriptionManageEmailButton = NSLocalizedString("subscription.activate.manage.email.button", value: "Manage", comment: "Restore button title for Managing Email")
-    public static let subscriptionManageEmailTitle = NSLocalizedString("subscription.activate.manage.email.title", value: "Manage Email", comment: "View Title for managing your email account")
+    public static let subscriptionEditEmailTitle = NSLocalizedString("subscription.activate.edit.email.title", value: "Edit Email", comment: "View Title for editing your email account")
     public static let subscriptionManageEmailCancelButton = NSLocalizedString("subscription.activate.manage.email.cancel", value: "Cancel", comment: "Button title for cancelling email deletion")
     public static let subscriptionManageEmailOKButton = NSLocalizedString("subscription.activate.manage.email.OK", value: "OK", comment: "Button title for confirming email deletion")
     
@@ -1163,14 +1162,24 @@ But if you *do* want a peek under the hood, you can find more information about 
     
     // Duck Player
     public static let duckPlayerAlwaysEnabledLabel = NSLocalizedString("duckPlayer.alwaysEnabled.label", value: "Always", comment: "Text displayed when DuckPlayer is always enabled")
+
     public static let duckPlayerAskLabel = NSLocalizedString("duckPlayer.ask.label", value: "Ask every time", comment: "Text displayed when DuckPlayer is in 'Ask' mode.")
     public static let duckPlayerDisabledLabel = NSLocalizedString("duckPlayer.never.label", value: "Never", comment: "Text displayed when DuckPlayer is in off.")
     public static let settingsOpenVideosInDuckPlayerLabel = NSLocalizedString("duckplayer.settings.open-videos-in", value: "Open Videos in Duck Player", comment: "Settings screen cell text for DuckPlayer settings")
-    public static let settingsDuckPlayerTitle = NSLocalizedString("duckplayer.settings.title", value: "Duck Player", comment: "Settings screen cell text for DuckPlayer settings")
+    public static let duckPlayerFeatureName = NSLocalizedString("duckplayer.settings.title", value: "Duck Player", comment: "Settings screen cell text for DuckPlayer settings")
 
     public static let settingsOpenVideosInDuckPlayerTitle = NSLocalizedString("duckplayer.settings.title", value: "Duck Player", comment: "Settings screen cell text for DuckPlayer settings")
     public static let settingsDuckPlayerFooter = NSLocalizedString("duckplayer.settings.footer", value: "DuckDuckGo provides all the privacy essentials you need to protect yourself as you browse the web.", comment: "Footer label in the settings screen for Duck Player")
     public static let settingsDuckPlayerLearnMore = NSLocalizedString("duckplayer.settings.learn-more", value: "Learn More", comment: "Button that takes the user to learn more about Duck Player.")
     public static let settingsDuckPlayerInfoText = NSLocalizedString("duckplayer.settings.info-text", value: "Duck Player provides a clean viewing experience without personalized ads and prevents viewing activity from influencing your YouTube recommendations.", comment: "Text explaining what Duck Player is in the settings screen.")
 
+    public static let duckPlayerPresentationModalTitle = NSLocalizedString("duckplayer.presentation.modal.title", value: "Drowning in ads on YouTube? Try Duck Player!", comment: "Two line title (separated by \n) for the feature explanation")
+    public static let duckPlayerPresentationModalBody = NSLocalizedString("duckplayer.presentation.modal.body", value: "Duck Player lets you watch YouTube without targeted ads in a theater-like experience in DuckDuckGo and what you watch won’t influence your recommendations.", comment: "Body text for the modal feature explanation")
+    public static let duckPlayerPresentationModalDismissButton = NSLocalizedString("duckplayer.presentation.modal.dismiss-button", value: "Got it!", comment: "Button that will dismiss the modal")
+
+    // Home Tab Shortcuts
+    public static let homeTabShortcutBookmarks = NSLocalizedString("home.tab.shortcut.bookmarks", value: "Bookmarks", comment: "Shortcut title leading to Bookmarks")
+    public static let homeTabShortcutAIChat = NSLocalizedString("home.tab.shortcut.ai.chat", value: "AI Chat", comment: "Shortcut title leading to AI Chat")
+    public static let homeTabShortcutVPN = NSLocalizedString("home.tab.shortcut.vpn", value: "VPN", comment: "Shortcut title leading to VPN")
+    public static let homeTabShortcutPasswords = NSLocalizedString("home.tab.shortcut.passwords", value: "Passwords", comment: "Shortcut title leading to Passwords")
 }

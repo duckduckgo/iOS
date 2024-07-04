@@ -707,7 +707,7 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
     private func deleteVPNConfiguration() {
         Task {
             await AppDependencyProvider.shared.networkProtectionTunnelController.stop()
-            await AppDependencyProvider.shared.networkProtectionTunnelController.removeVPN()
+            await AppDependencyProvider.shared.networkProtectionTunnelController.removeVPN(reason: .debugMenu)
         }
     }
 }

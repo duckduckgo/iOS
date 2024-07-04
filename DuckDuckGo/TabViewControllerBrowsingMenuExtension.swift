@@ -220,6 +220,7 @@ extension TabViewController {
     private func performSaveBookmarkAction(for link: Link,
                                            with bookmarksInterface: MenuBookmarksInteracting) {
         Pixel.fire(pixel: .browsingMenuAddToBookmarks)
+        DailyPixel.fire(pixel: .addBookmarkDaily)
         bookmarksInterface.createBookmark(title: link.title ?? "", url: link.url)
         favicons.loadFavicon(forDomain: link.url.host, intoCache: .fireproof, fromCache: .tabs)
         syncService.scheduler.notifyDataChanged()
@@ -261,6 +262,7 @@ extension TabViewController {
                                               image: UIImage(named: "Favorite-16")!,
                                               action: { [weak self] in
             Pixel.fire(pixel: addToFavoriteFlow ? .browsingMenuAddToFavoritesAddFavoriteFlow : .browsingMenuAddToFavorites)
+            DailyPixel.fire(pixel: .addFavoriteDaily)
             self?.performAddFavoriteAction(for: link, with: bookmarksInterface)
         })
         return entry
@@ -419,8 +421,8 @@ extension TabViewController {
     }
 
     private func onToggleProtectionAction(forDomain domain: String, isProtected: Bool) {
-        let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
-        if isProtected && ToggleReportsFeature(privacyConfiguration: config).isEnabled {
+        let manager = ToggleReportsManager(feature: ToggleReportsFeature(manager: ContentBlocking.shared.privacyConfigurationManager))
+        if isProtected && manager.shouldShowToggleReport {
             delegate?.tab(self, didRequestToggleReportWithCompletionHandler: { [weak self] didSendReport in
                 self?.togglePrivacyProtection(domain: domain, didSendReport: didSendReport)
             })

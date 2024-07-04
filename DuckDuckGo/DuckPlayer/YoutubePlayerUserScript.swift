@@ -20,10 +20,12 @@
 import WebKit
 import Common
 import UserScript
+import Combine
 
 final class YoutubePlayerUserScript: NSObject, Subfeature {
     
-    private var duckPlayer: DuckPlayer
+    var duckPlayer: DuckPlayerProtocol
+    private var cancellables = Set<AnyCancellable>()
     
     struct Constants {
         static let featureName = "duckPlayerPage"
@@ -35,8 +37,19 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
         static let initialSetup = "initialSetup"
     }
     
-    init(duckPlayer: DuckPlayer) {
+    init(duckPlayer: DuckPlayerProtocol) {
         self.duckPlayer = duckPlayer
+        super.init()
+        subscribeToDuckPlayerMode()
+    }
+    
+    // Listen to DuckPlayer Settings changed
+    private func subscribeToDuckPlayerMode() {
+        duckPlayer.settings.duckPlayerSettingsPublisher
+            .sink { [weak self] in
+                self?.handleSettingsChange()
+            }
+            .store(in: &cancellables)
     }
     
     weak var broker: UserScriptMessageBroker?
@@ -66,9 +79,19 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
         }
     }
 
-    func userValuesUpdated(userValues: UserValues) {
-        if let webView = webView {
+    public func userValuesUpdated(userValues: UserValues) {
+        if let webView {
             broker?.push(method: "onUserValuesChanged", params: userValues, for: self, into: webView)
         }
     }
+    
+    private func handleSettingsChange() {
+        let values = UserValues(duckPlayerMode: duckPlayer.settings.mode, askModeOverlayHidden: duckPlayer.settings.askModeOverlayHidden)
+        userValuesUpdated(userValues: values)
+    }
+    
+    deinit {
+        cancellables.removeAll()
+    }
+    
 }

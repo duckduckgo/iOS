@@ -508,8 +508,6 @@ import WebKit
 #if NETWORK_PROTECTION
         widgetRefreshModel.refreshVPNWidget()
 
-        stopTunnelAndShowThankYouMessagingIfNeeded()
-
         if tunnelDefaults.showEntitlementAlert {
             presentExpiredEntitlementAlert()
         }
@@ -517,6 +515,7 @@ import WebKit
         presentExpiredEntitlementNotificationIfNeeded()
 
         Task {
+            await stopAndRemoveVPNIfNotAuthenticated()
             await refreshShortcuts()
             await vpnWorkaround.installRedditSessionWorkaround()
         }
@@ -532,25 +531,14 @@ import WebKit
         importPasswordsStatusHandler.checkSyncSuccessStatus()
     }
 
-    private func stopTunnelAndShowThankYouMessagingIfNeeded() {
-        if accountManager.isUserAuthenticated {
-            return
-        }
-
-        if AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched() && !accountManager.isUserAuthenticated {
-            Task {
-                await self.stopAndRemoveVPN(with: "subscription-check")
-            }
-        }
-    }
-
-    private func stopAndRemoveVPN(with reason: String) async {
-        guard await AppDependencyProvider.shared.networkProtectionTunnelController.isInstalled else {
+    private func stopAndRemoveVPNIfNotAuthenticated() async {
+        // Only remove the VPN if the user is not authenticated, and it's installed:
+        guard !accountManager.isUserAuthenticated, await AppDependencyProvider.shared.networkProtectionTunnelController.isInstalled else {
             return
         }
 
         await AppDependencyProvider.shared.networkProtectionTunnelController.stop()
-        await AppDependencyProvider.shared.networkProtectionTunnelController.removeVPN()
+        await AppDependencyProvider.shared.networkProtectionTunnelController.removeVPN(reason: .didBecomeActiveCheck)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

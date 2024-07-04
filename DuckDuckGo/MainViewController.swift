@@ -736,7 +736,7 @@ class MainViewController: UIViewController {
         }
 
         if homeTabManager.isNewTabPageSectionsEnabled {
-            let controller = NewTabPageViewController(rootView: NewTabPageView(favoritesModel: FavoritesModel()))
+            let controller = NewTabPageViewController()
             newTabPageViewController = controller
             addToContentContainer(controller: controller)
             viewCoordinator.logoContainer.isHidden = true
@@ -1434,7 +1434,7 @@ class MainViewController: UIViewController {
             }
 
             await networkProtectionTunnelController.stop()
-            await networkProtectionTunnelController.removeVPN()
+            await networkProtectionTunnelController.removeVPN(reason: .entitlementCheck)
         }
     }
 
@@ -1442,7 +1442,7 @@ class MainViewController: UIViewController {
     private func onNetworkProtectionAccountSignOut(_ notification: Notification) {
         Task {
             await networkProtectionTunnelController.stop()
-            await networkProtectionTunnelController.removeVPN()
+            await networkProtectionTunnelController.removeVPN(reason: .signedOut)
         }
     }
 #endif

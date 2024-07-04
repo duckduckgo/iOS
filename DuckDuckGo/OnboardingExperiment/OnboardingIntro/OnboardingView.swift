@@ -37,8 +37,6 @@ struct OnboardingView: View {
             backgroundWrapped(view: landingView)
         case let .onboarding(viewState):
             backgroundWrapped(view: mainView(state: viewState))
-        case .chooseBrowser:
-            chooseBrowserView
         }
     }
 
@@ -62,17 +60,6 @@ struct OnboardingView: View {
         }
     }
 
-    private var chooseBrowserView: some View {
-        OnboardingDefaultBrowserView(
-            setAsDefaultBrowserAction: {
-                model.setDefaultBrowserAction()
-            },
-            cancelAction: {
-                model.cancelSetDefaultBrowserAction()
-            }
-        )
-    }
-
     private var landingView: some View {
         return LandingView()
             .ignoresSafeArea(edges: .bottom)
@@ -93,11 +80,13 @@ struct OnboardingView: View {
     }
 
     private var browsersComparisonView: some View {
-        DaxDialogBrowsersComparisonView {
-            withAnimation {
-                model.chooseBrowserAction()
+        DaxDialogBrowsersComparisonView(
+            setAsDefaultBrowserAction: {
+                model.setDefaultBrowserAction()
+            }, cancelAction: {
+                model.cancelSetDefaultBrowserAction()
             }
-        }
+        )
         .onboardingDaxDialogStyle()
         .padding()
     }
@@ -110,7 +99,6 @@ extension OnboardingView {
     enum ViewState: Equatable {
         case landing
         case onboarding(Intro)
-        case chooseBrowser
     }
     
 }

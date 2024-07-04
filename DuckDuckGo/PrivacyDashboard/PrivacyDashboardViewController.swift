@@ -289,7 +289,7 @@ extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
         }
     }
 
-    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController, 
+    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController,
                                     didSetPermission permissionName: String,
                                     to state: PermissionAuthorizationState) {
         // not supported on iOS

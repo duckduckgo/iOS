@@ -231,7 +231,6 @@ import WebKit
             historyMessageManager.dismiss()
         }
 
-        PixelExperimentForBrokenSites.install()
         PixelExperiment.install()
 
         // MARK: Sync initialisation

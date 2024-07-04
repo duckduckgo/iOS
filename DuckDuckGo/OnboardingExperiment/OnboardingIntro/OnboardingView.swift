@@ -32,17 +32,14 @@ struct OnboardingView: View {
     }
 
     var body: some View {
-        Group {
-            switch model.state {
-            case .landing:
-                backgroundWrapped(view: landingView)
-            case let .onboarding(viewState):
-                backgroundWrapped(view: mainView(state: viewState))
-            case .chooseBrowser:
-                chooseBrowserView
-            }
+        switch model.state {
+        case .landing:
+            backgroundWrapped(view: landingView)
+        case let .onboarding(viewState):
+            backgroundWrapped(view: mainView(state: viewState))
+        case .chooseBrowser:
+            chooseBrowserView
         }
-        .transition(.opacity)
     }
 
     private func backgroundWrapped(view: some View) -> some View {
@@ -82,18 +79,14 @@ struct OnboardingView: View {
             .frame(maxHeight: .infinity, alignment: .bottom)
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + Metrics.daxDialogDelay) {
-                    withAnimation {
-                        model.onAppear()
-                    }
+                    model.onAppear()
                 }
             }
     }
 
     private var introView: some View {
         DaxDialogIntroView {
-            withAnimation {
-                model.startOnboardingAction()
-            }
+            model.startOnboardingAction()
         }
         .onboardingDaxDialogStyle()
         .padding()

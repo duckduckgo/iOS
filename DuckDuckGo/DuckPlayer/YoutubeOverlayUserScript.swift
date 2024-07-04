@@ -22,6 +22,7 @@ import WebKit
 import Common
 import UserScript
 import Combine
+import Core
 
 final class YoutubeOverlayUserScript: NSObject, Subfeature {
         
@@ -143,11 +144,25 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
 extension YoutubeOverlayUserScript {
     @MainActor
     func handleSendJSPixel(params: Any, message: UserScriptMessage) -> Encodable? {
-        // guard let body = message.messageBody as? [String: Any], let parameters = body["params"] as? [String: Any] else {
-        //    return nil
-        // }
-        // let pixelName = parameters["pixelName"] as? String
-        // To be implemented at a later point
+         guard let body = message.messageBody as? [String: Any], let parameters = body["params"] as? [String: Any] else {
+            return nil
+         }
+         let pixelName = parameters["pixelName"] as? String
+        
+        switch pixelName {
+        case "play.use":
+            Pixel.fire(Pixel.Event.duckPlayerViewFromYoutubeViaMainOverlay)
+            UniquePixel.fire(Pixel.Event.watchInDuckPlayerInitial)
+                
+        case "play.do_not_use":
+            Pixel.fire(Pixel.Event.duckPlayerOverlayYoutubeWatchHere)
+                    
+        case "overlay":
+            Pixel.fire(Pixel.Event.duckPlayerOverlayYoutubeImpressions)
+            
+        default:
+            break
+        }
 
         return nil
     }

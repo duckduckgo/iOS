@@ -720,6 +720,27 @@ extension Pixel {
         case favoriteLaunchedNTPDaily
         case bookmarkLaunchedDaily
         case newTabPageDisplayedDaily
+
+        // MARK: DuckPlayer        
+        case duckPlayerDailyUniqueView
+        case duckPlayerViewFromYoutubeViaMainOverlay
+        case duckPlayerViewFromYoutubeViaHoverButton
+        case duckPlayerViewFromYoutubeAutomatic
+        case duckPlayerViewFromSERP
+        case duckPlayerViewFromOther
+        case duckPlayerOverlayYoutubeImpressions
+        case duckPlayerOverlayYoutubeWatchHere
+        case duckPlayerSettingAlwaysDuckPlayer
+        case duckPlayerSettingAlwaysOverlaySERP
+        case duckPlayerSettingAlwaysOverlayYoutube
+        case duckPlayerSettingAlwaysSettings
+        case duckPlayerSettingNeverOverlaySERP
+        case duckPlayerSettingNeverOverlayYoutube
+        case duckPlayerSettingNeverSettings
+        case duckPlayerSettingBackToDefault
+        case duckPlayerWatchOnYoutube
+        case watchInDuckPlayerInitial
+        
     }
 
 }

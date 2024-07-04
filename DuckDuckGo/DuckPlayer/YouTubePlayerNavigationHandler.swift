@@ -20,6 +20,7 @@
 import Foundation
 import ContentScopeScripts
 import WebKit
+import Core
 
 final class YoutubePlayerNavigationHandler {
     
@@ -86,6 +87,14 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
     func handleNavigation(_ navigationAction: WKNavigationAction,
                           webView: WKWebView,
                           completion: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        // Daily Unique View Pixel
+        if let url = navigationAction.request.url,
+           url.isDuckPlayer,
+           duckPlayer.settings.mode != .disabled {
+            let setting = duckPlayer.settings.mode == .enabled ? "always" : "default"
+            DailyPixel.fire(pixel: Pixel.Event.duckPlayerDailyUniqueView, withAdditionalParameters: ["setting": setting])
+        }
         
         // If DuckPlayer is Enabled or in ask mode, render the video
         if let url = navigationAction.request.url,

@@ -28,6 +28,15 @@
       }
     },
     {
+      "identity" : "browserserviceskit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
+      "state" : {
+        "revision" : "912001a8676345e96a8be360d5a6e3dca6d8e0ec",
+        "version" : "164.2.0"
+      }
+    },
+    {
       "identity" : "content-scope-scripts",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
@@ -113,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "branch" : "shane/toggle-report-translations",
-        "revision" : "f539b267022729ab88f98a49d9e42b603060c9df"
+        "revision" : "924a80e20e2465dcaf3dca32c9b6e9b9968222b9",
+        "version" : "4.1.0"
       }
     },
     {

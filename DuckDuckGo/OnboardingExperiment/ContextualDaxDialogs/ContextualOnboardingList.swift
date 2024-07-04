@@ -39,11 +39,11 @@ enum ContextualOnboardingListItem {
 
     var imageName: String {
         switch self {
-        case .search(_):
+        case .search:
             return "SuggestLoupe"
-        case .site(_):
+        case .site:
             return "SuggestGlobe"
-        case .surprise(_):
+        case .surprise:
             return "Wand-16"
         }
     }
@@ -57,7 +57,9 @@ struct ContextualOnboardingListView: View {
     var body: some View {
         VStack {
             ForEach(list.indices, id: \.self) { index in
-                Button(action: { action(index) }) {
+                Button(action: {
+                    action(index)
+                }) {
                     HStack {
                         Image(list[index].imageName)
                             .frame(width: iconSize, height: iconSize)
@@ -88,4 +90,3 @@ struct ContextualOnboardingListView: View {
     return ContextualOnboardingListView(list: list) { _ in }
         .padding()
 }
-

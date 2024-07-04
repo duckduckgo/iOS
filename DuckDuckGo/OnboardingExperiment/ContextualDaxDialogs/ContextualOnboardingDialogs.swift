@@ -125,7 +125,7 @@ struct OnboardingTrackersDoneDialog: View {
                 message: message,
                 cta: cta) {
                     showNextScreen = true
-                }
+            }
         }
     }
 }
@@ -171,7 +171,7 @@ struct OnboardingFinalDialog: View {
 }
 
 #Preview("First Search Dialog") {
-    OnboardingFirstSearchDoneDialog(shouldFollowUp: true, listAction: {_ in }, gotItAction: {})
+    OnboardingFirstSearchDoneDialog(shouldFollowUp: true, listAction: { _ in }, gotItAction: {})
         .padding()
 }
 
@@ -181,6 +181,8 @@ struct OnboardingFinalDialog: View {
 }
 
 #Preview("Trackers Dialog") {
-    OnboardingTrackersDoneDialog(message: NSAttributedString(string: "Heads up! Instagram.com is owned by Facebook.\n\nFacebook’s trackers lurk on about 40% of top websites 😱 but don’t worry!\n\nI’ll block Facebook from seeing your activity on those sites."))
+    OnboardingTrackersDoneDialog(
+        message: NSAttributedString(string: "Heads up! Instagram Facebook.\n\nFacebook’sof top websites 😱 but don’t worry!\n\nI’ll block Facebook from seeing  sites.")
+    )
         .padding()
 }
